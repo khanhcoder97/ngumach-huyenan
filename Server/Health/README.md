@@ -1,6 +1,6 @@
 # Ngu Mach Huyen An — Health Server
 
-Minimal ASP.NET Core API (net10.0) exposing the health check and the P1 authoritative movement slice.
+Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritative movement slice, and the QOD-03 combat service skeleton.
 
 ## Endpoints
 
@@ -21,7 +21,7 @@ dotnet run --project Server/Health/Health.csproj
 
 The service listens on `http://localhost:5000` unless `ASPNETCORE_URLS` or launch settings override it.
 
-The server loads `Implementation/Content/map_bounds.json` at startup by walking up from the working directory, content root and application base directory. Override with `Content__MapBoundsPath=/absolute/path/map_bounds.json` if needed. Startup fails if the configured map is unknown, the spawn is outside bounds, or the movement configuration is inconsistent.
+The server loads `Implementation/Content/map_bounds.json` at startup by walking up from the working directory, content root and application base directory. Override with `Content__MapBoundsPath=/absolute/path/map_bounds.json` if needed. It likewise loads the canonical combat skills from `Implementation/Content/Examples/SkillDefinition`; override with `Content__SkillsPath=/absolute/path/SkillDefinition`. Startup fails if the configured map is unknown, the spawn is outside bounds, the movement configuration is inconsistent, or a skill definition is invalid.
 
 ```bash
 dotnet build Server/Health/Health.csproj
@@ -116,6 +116,18 @@ curl -i http://localhost:5000/p1/world/<SESSION_ID> \
 
 The response uses the same envelope as a successful move.
 
+## Combat skeleton (QOD-03)
+
+No combat endpoint is exposed yet. The registered `ICombatService` is the server-side seam for the future `combat.input` command:
+
+- `ICombatSkillCatalog` loads `SK-MK-01..03` from canonical `SkillDefinition` content (class, cooldown, MP cost, targeting type, range, max targets). No balance values are duplicated in C#.
+- `ICombatTargetProvider` is an in-memory target registry. It starts empty, so non-self skills return `target_not_found` until the world layer registers mobs or players.
+- `InMemoryCombatService.Resolve(PlayerSession, CombatCommand)` validates the command, then applies gates in order: skill/class, per-actor `inputSequence`, target existence/map/alive/range, cooldown, and MP cost. Accepted casts decrement MP, advance `LastInputSequence` and `Revision`, and return a schema-shaped `combat.effect` `CombatEvent`. `LastInputSequence` is shared with movement, so clients must keep one monotonic input sequence per actor.
+- Client `aimX`/`aimY` and `clientTimeUtc` are validated but not trusted. Damage and hit resolution are intentionally not implemented because no canonical damage formula or character stats exist yet; the returned event carries no `damage` or `hit`.
+- `combat.effect` is returned to the caller, not broadcast; transport and persistence arrive with the real-time layer.
+
+Internal failure codes: `unknown_skill`, `skill_not_available`, `invalid_target`, `target_not_found`, `target_not_alive`, `out_of_range`, `cooldown_active`, `insufficient_resource`, `unsupported_resource`, plus the shared `invalid_payload` and `stale_sequence`.
+
 ## Movement rules
 
 - The server owns position. Client coordinates are never accepted; only a direction from `MoveIntent` is used.
@@ -141,6 +153,11 @@ The response uses the same envelope as a successful move.
 
 Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond=8`.
 
+| Content key | Purpose |
+|---|---|
+| `Content:MapBoundsPath` | Optional absolute/relative override for `map_bounds.json` |
+| `Content:SkillsPath` | Optional absolute/relative override for the `SkillDefinition` directory |
+
 ## Errors
 
 | Status | Code | Meaning |
@@ -160,7 +177,7 @@ All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and
 
 | # | Step | Expected |
 |---|---|---|
-| 1 | `dotnet run --project Server/Health/Health.csproj` | Starts; logs `Loaded map bounds for 46 maps` |
+| 1 | `dotnet run --project Server/Health/Health.csproj` | Starts; logs `Loaded map bounds for 46 maps` and `Loaded 3 combat skills` |
 | 2 | `GET /health` | `200`, `status: ok`, echoed `X-Correlation-ID` |
 | 3 | Create session with `CHR_MINH_KIEM_01` | `201`, `Location` header, `MAP_BEN_MUA`, `x=18`, `y=0`, `revision=1` |
 | 4 | Move `inputSequence=1`, `moveX=1` | `200`, `x>18`, `revision=2` |
@@ -175,5 +192,7 @@ All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and
 ## Current limits
 
 - Sessions are in memory and lost on restart; there is no database, authentication or real-time transport.
-- `entities` is always empty; mobs, combat, quest, inventory and teleport services are the next QOD-03 increment and are not exposed here.
+- `entities` is always empty and the combat target registry starts empty; combat is a service skeleton with no HTTP/WS endpoint.
+- Damage, hit chance, telegraphs, death and loot are not implemented; `combat.effect` only records an accepted cast and its cooldown.
+- Quest, inventory and teleport services remain for later QOD-03 increments.
 - Movement speed and starting HP/MP are slice defaults, not locked balance values.

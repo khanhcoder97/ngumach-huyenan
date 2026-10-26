@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
 using Server.Health.Endpoints;
+using Server.Health.Gameplay.Combat;
 using Server.Health.World;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,18 @@ builder.Services.AddSingleton(serviceProvider =>
     var path = MapBoundsLoader.DiscoverPath(configuration, environment.ContentRootPath);
     return MapBoundsLoader.Load(path);
 });
+builder.Services.AddSingleton<ICombatSkillCatalog>(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    var directory = CombatSkillCatalogLoader.DiscoverDirectory(
+        configuration, environment.ContentRootPath);
+    return CombatSkillCatalogLoader.Load(directory);
+});
+builder.Services.AddSingleton<InMemoryCombatTargetProvider>();
+builder.Services.AddSingleton<ICombatTargetProvider>(
+    serviceProvider => serviceProvider.GetRequiredService<InMemoryCombatTargetProvider>());
+builder.Services.AddSingleton<ICombatService, InMemoryCombatService>();
 
 var app = builder.Build();
 
@@ -27,6 +40,9 @@ var worldOptions = app.Services.GetRequiredService<IOptions<P1WorldOptions>>().V
 var mapBounds = app.Services.GetRequiredService<MapBoundsCatalog>();
 P1WorldOptionsValidator.Validate(worldOptions, mapBounds);
 app.Logger.LogInformation("Loaded map bounds for {MapCount} maps.", mapBounds.Count);
+
+var combatSkills = app.Services.GetRequiredService<ICombatSkillCatalog>();
+app.Logger.LogInformation("Loaded {SkillCount} combat skills.", combatSkills.Count);
 
 const string CorrelationIdHeader = "X-Correlation-ID";
 const int MaxCorrelationIdLength = 64;
