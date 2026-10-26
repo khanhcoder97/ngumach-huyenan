@@ -156,7 +156,7 @@ All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and
 
 ## Manual verification
 
-`dotnet` and Unity are not installed in the current authoring environment, so this slice has **not been compiled or run** here. Both Python validators pass. Run the table below on a machine with the .NET SDK.
+`dotnet` and Unity are not installed in the current authoring environment. The `server-build` GitHub Actions workflow compiles this project on .NET 10 and passes; the runtime table below still needs to be run on a machine with the .NET SDK. Both Python validators pass locally.
 
 | # | Step | Expected |
 |---|---|---|
