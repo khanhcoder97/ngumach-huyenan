@@ -1,0 +1,54 @@
+name: server-smoke
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build server
+        run: dotnet build Server/Health/Health.csproj --configuration Release
+      - name: Start server
+        working-directory: Server/Health
+        run: |
+          dotnet bin/Release/net10.0/Health.dll --urls http://127.0.0.1:5080 > "$GITHUB_WORKSPACE/server-smoke.log" 2>&1 &
+          echo $! > "$GITHUB_WORKSPACE/server-smoke.pid"
+          for attempt in $(seq 1 60); do
+            if curl --silent --fail http://127.0.0.1:5080/health > /dev/null; then
+              echo "Server healthy after ${attempt}s"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "::error::Server did not become healthy within 60s"
+          cat "$GITHUB_WORKSPACE/server-smoke.log"
+          exit 1
+      - name: Run P1 smoke tests
+        run: python3 Server/Health/Smoke/smoke_p1.py http://127.0.0.1:5080
+      - name: Stop server
+        if: always()
+        run: |
+          if [ -f server-smoke.pid ]; then
+            kill "$(cat server-smoke.pid)" 2>/dev/null || true
+          fi
+      - name: Upload server log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-smoke-log
+          path: server-smoke.log
+          if-no-files-found: ignore
