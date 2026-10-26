@@ -82,7 +82,6 @@ ID_UNIQUENESS_FILES = [
     "Currency_Production_Data_vi.csv",
     "Class_Passive_Production_Data_vi.csv",
 ]
-MANIFEST_GLOB = "*manifest*.csv"
 ENCODING = "utf-8-sig"
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -161,11 +160,15 @@ def read_json(path, errors):
 
 def find_manifest(docs_dir, errors):
     """Locate the single manifest CSV in the docs directory."""
-    candidates = sorted(p for p in docs_dir.glob(MANIFEST_GLOB) if p.is_file())
+    # Match case-insensitively because production files use "Manifest" while
+    # POSIX globbing is case-sensitive.
+    candidates = sorted(
+        p for p in docs_dir.glob("*.csv") if p.is_file() and "manifest" in p.name.lower()
+    )
     if not candidates:
         errors.append(
-            f"{docs_dir}: no manifest CSV found (expected a file matching "
-            f"'{MANIFEST_GLOB}')"
+            f"{docs_dir}: no manifest CSV found (expected a CSV file whose "
+            f"name contains 'manifest')"
         )
         return None
     if len(candidates) > 1:
