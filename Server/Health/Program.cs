@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
 using Server.Health.Endpoints;
+using Server.Health.Gameplay.Inventory;
+using Server.Health.Gameplay.Teleport;
 using Server.Health.World;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,9 @@ builder.Services.Configure<P1WorldOptions>(
     builder.Configuration.GetSection(P1WorldOptions.SectionName));
 builder.Services.AddSingleton<ServerClock>();
 builder.Services.AddSingleton<ISessionStore, InMemorySessionStore>();
+builder.Services.AddSingleton<IInventoryStateStore, InMemoryInventoryStateStore>();
+builder.Services.AddSingleton<IInventoryService, InMemoryInventoryService>();
+builder.Services.AddSingleton<ITeleportService, InMemoryTeleportService>();
 builder.Services.AddSingleton(serviceProvider =>
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
