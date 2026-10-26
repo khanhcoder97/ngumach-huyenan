@@ -1,0 +1,5 @@
+{
+  "healthUrl": "http://127.0.0.1:5000/health",
+  "healthTimeoutSeconds": 3,
+  "healthPollIntervalSeconds": 10
+}

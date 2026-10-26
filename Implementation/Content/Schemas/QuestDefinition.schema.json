@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/schemas/QuestDefinition.schema.json",
+  "title": "QuestDefinition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "questId",
+    "titleKey",
+    "graphId",
+    "questType",
+    "levelBand",
+    "startNpcId",
+    "turnInNpcId",
+    "prerequisiteQuestIds",
+    "objectives",
+    "rewards",
+    "unlocks",
+    "sourceRef"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "questId": {
+      "type": "string",
+      "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{2}$"
+    },
+    "titleKey": {
+      "type": "string",
+      "pattern": "^QUEST\\.[A-Z0-9-]+\\.TITLE$"
+    },
+    "graphId": {
+      "type": "string",
+      "pattern": "^GRAPH_[A-Z0-9_]+$"
+    },
+    "questType": {
+      "type": "string",
+      "enum": ["MAIN", "SIDE", "DAILY", "WEEKLY", "CLASS", "GUILD", "EVENT"]
+    },
+    "levelBand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
+      }
+    },
+    "startNpcId": {
+      "type": "string",
+      "pattern": "^NPC_[A-Z0-9_]+$"
+    },
+    "turnInNpcId": {
+      "type": "string",
+      "pattern": "^NPC_[A-Z0-9_]+$"
+    },
+    "prerequisiteQuestIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{2}$"
+      }
+    },
+    "objectives": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["objectiveId", "type", "targetIds", "count", "mapId"],
+        "properties": {
+          "objectiveId": {
+            "type": "string",
+            "pattern": "^OBJ_[A-Z0-9_]+$"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["COLLECT", "KILL", "INTERACT", "ESCORT", "BOSS", "TALK"]
+          },
+          "targetIds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9_]+$"
+            }
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "mapId": {
+            "type": "string",
+            "pattern": "^MAP_[A-Z0-9_]+$"
+          }
+        }
+      }
+    },
+    "rewards": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["currency", "itemIds", "xpRule"],
+      "properties": {
+        "currency": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["currencyId", "amount"],
+            "properties": {
+              "currencyId": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Z0-9_]+$"
+              },
+              "amount": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "itemIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z0-9][A-Z0-9_-]+$"
+          }
+        },
+        "xpRule": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "unlocks": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "sourceRef": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

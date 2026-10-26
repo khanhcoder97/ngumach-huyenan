@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "recordId": "MAN-BM-NODE_BM_ORE_01",
+  "mapId": "MAP_BEN_MUA",
+  "nodeId": "NODE_BM_ORE_01",
+  "designState": "NEW_PROPOSED",
+  "profession": "MINING",
+  "gatherItemId": "MAT-ORE-01",
+  "toolId": "TOOL-PICK-01",
+  "qualityTier": "I",
+  "professionLevelRequired": 1,
+  "yieldMin": 1,
+  "yieldMax": 2,
+  "respawnSeconds": 60,
+  "position": {
+    "xWu": 21,
+    "yWu": 0
+  },
+  "sourceRef": "World_Spawn_Gathering_Manifest_vi.csv#MAN-BM-NODE_BM_ORE_01"
+}

@@ -1,0 +1,38 @@
+{
+  "mapId": "MAP_BEN_MUA",
+  "serverTick": 1200,
+  "revision": 42,
+  "serverTimeUtc": "2026-10-23T20:00:00Z",
+  "self": {
+    "characterId": "CHR_MINH_KIEM_01",
+    "classId": "CLASS_MINH_KIEM",
+    "x": 18,
+    "y": 0,
+    "hp": 100,
+    "maxHp": 100,
+    "mp": 50,
+    "maxMp": 50,
+    "swordIntent": 2
+  },
+  "entities": [
+    {
+      "entityId": "MOB_CARPLING",
+      "kind": "MOB",
+      "x": 21,
+      "y": 0,
+      "hp": 30,
+      "maxHp": 30,
+      "state": "CHASE"
+    },
+    {
+      "entityId": "BOSS_MANG_COT",
+      "kind": "BOSS",
+      "x": 330,
+      "y": 0,
+      "hp": 1200,
+      "maxHp": 1200,
+      "state": "IDLE",
+      "telegraphId": "TELEGRAPH_MANG_COT_SLAM"
+    }
+  ]
+}

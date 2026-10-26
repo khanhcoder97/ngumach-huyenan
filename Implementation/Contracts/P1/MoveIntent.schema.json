@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/contracts/p1/MoveIntent.schema.json",
+  "title": "P1 world move intent payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "inputSequence",
+    "moveX",
+    "moveY"
+  ],
+  "properties": {
+    "inputSequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "moveX": {
+      "type": "number",
+      "minimum": -1,
+      "maximum": 1
+    },
+    "moveY": {
+      "type": "number",
+      "minimum": -1,
+      "maximum": 1
+    },
+    "clientTimeUtc": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    }
+  }
+}

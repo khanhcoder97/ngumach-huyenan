@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "mapId": "MAP_BEN_MUA",
+  "displayNameKey": "MAP.MAP_BEN_MUA.NAME",
+  "mapKind": "OVERWORLD",
+  "widthWu": 360,
+  "heightWu": 72,
+  "floorYWu": 0,
+  "levelBand": {
+    "min": 1,
+    "max": 10
+  },
+  "spawnPoint": {
+    "xWu": 18,
+    "yWu": 0
+  },
+  "assetKey": "Art/Environment/MAP_BEN_MUA",
+  "sourceRef": "Map_Production_Atlas_vi.md#Map-01-Ben-Mua"
+}

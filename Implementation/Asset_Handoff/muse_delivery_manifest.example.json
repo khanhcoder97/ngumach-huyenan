@@ -1,0 +1,21 @@
+{
+  "assetPackId": "p1_hero_vanguard",
+  "assetPackVersion": "v0.1.0",
+  "owner": "Muse",
+  "sourceLicense": "original",
+  "assets": [
+    {
+      "assetId": "CHR_HERO_VANGUARD_IDLE",
+      "path": "Client/Assets/Art/Characters/hero_vanguard_idle.png",
+      "kind": "sprite_sheet",
+      "status": "draft",
+      "pixelWidth": 384,
+      "pixelHeight": 512,
+      "pixelsPerUnit": 20,
+      "pivot": "bottom_center",
+      "directions": ["N", "NE", "E", "SE", "S", "SW", "W", "NW"],
+      "animations": [{"name": "idle", "framesPerDirection": 4, "fps": 6, "loop": true}],
+      "previewPath": "Client/Assets/Art/Previews/hero_vanguard_idle_preview.png"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/contracts/p1/InventorySnapshot.schema.json",
+  "title": "P1 inventory snapshot payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "inventoryRevision",
+    "items",
+    "currencies"
+  ],
+  "properties": {
+    "inventoryRevision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "items": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "instanceId",
+          "templateId",
+          "stack",
+          "location",
+          "durability",
+          "version"
+        ],
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "pattern": "^ITM_[A-Z0-9_]+$"
+          },
+          "templateId": {
+            "type": "string",
+            "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)*$"
+          },
+          "stack": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "location": {
+            "type": "string",
+            "enum": [
+              "BAG",
+              "EQUIPPED",
+              "BANK"
+            ]
+          },
+          "slot": {
+            "type": "string",
+            "pattern": "^[A-Z_]+$"
+          },
+          "durability": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "currencies": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "currencyId",
+          "amount"
+        ],
+        "properties": {
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[A-Z0-9_]+$"
+          },
+          "amount": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  }
+}

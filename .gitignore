@@ -1,0 +1,36 @@
+# Unity generated files
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+MemoryCaptures/
+Recordings/
+
+# IDE and OS files
+.vs/
+.idea/
+.vscode/
+*.csproj
+*.sln
+*.user
+*.pidb
+*.suo
+.DS_Store
+Thumbs.db
+
+# Local configuration and generated reports
+Client/Assets/Resources/client-config.local.json
+Implementation/Reports/*.local.json
+
+# Source-art scratch/export folders; approved sources are explicitly versioned.
+Art_Source/Exports/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Keep the server project file; Unity-generated client projects stay ignored
+!Server/Health/Health.csproj

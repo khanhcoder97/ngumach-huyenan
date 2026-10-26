@@ -1,0 +1,14 @@
+# Replace all placeholders with real GitHub account handles, then rename to CODEOWNERS.
+
+/Client/Assets/Art/ @MUSE_GITHUB_USERNAME
+/Client/Assets/UI/Art/ @MUSE_GITHUB_USERNAME
+/Client/Assets/Tilemaps/ @MUSE_GITHUB_USERNAME
+/Client/Assets/VFX/ @MUSE_GITHUB_USERNAME
+/Client/Assets/Animation/ @MUSE_GITHUB_USERNAME
+/Client/Assets/ArtManifests/ @MUSE_GITHUB_USERNAME @OPENCODE_GITHUB_USERNAME
+/Client/Assets/Scripts/ @OPENCODE_GITHUB_USERNAME
+/Client/Assets/Prefabs/ @OPENCODE_GITHUB_USERNAME
+/Client/Assets/Scenes/ @OPENCODE_GITHUB_USERNAME
+/Server/ @QODER_GITHUB_USERNAME
+/Implementation/Contracts/ @QODER_GITHUB_USERNAME
+/Implementation/Tools/ @QODER_GITHUB_USERNAME

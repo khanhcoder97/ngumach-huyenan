@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/contracts/p1/QuestState.schema.json",
+  "title": "P1 quest state payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "questId",
+    "state",
+    "stepId",
+    "objectiveCounters",
+    "revision"
+  ],
+  "properties": {
+    "questId": {
+      "type": "string",
+      "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{2}$"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "LOCKED",
+        "AVAILABLE",
+        "ACTIVE",
+        "READY_TO_TURN_IN",
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
+    "stepId": {
+      "type": "string",
+      "pattern": "^STEP_[A-Z0-9_]+$"
+    },
+    "objectiveCounters": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

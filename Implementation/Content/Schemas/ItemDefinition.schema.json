@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/schemas/ItemDefinition.schema.json",
+  "title": "ItemDefinition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "itemId",
+    "displayNameKey",
+    "category",
+    "slot",
+    "requiredLevel",
+    "rarity",
+    "binding",
+    "tradeable",
+    "sourceMapId",
+    "iconKey",
+    "sourceRef"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "itemId": {
+      "type": "string",
+      "pattern": "^[A-Z0-9][A-Z0-9_-]+$"
+    },
+    "displayNameKey": {
+      "type": "string",
+      "pattern": "^ITEM\\.[A-Z0-9-]+\\.[A-Z0-9_]+$"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "EQUIPMENT_WEAPON",
+        "EQUIPMENT_ARMOR",
+        "EQUIPMENT_ACCESSORY",
+        "CONSUMABLE",
+        "MATERIAL",
+        "QUEST",
+        "COSMETIC",
+        "TOOL",
+        "CURRENCY",
+        "RECIPE",
+        "PET",
+        "MOUNT"
+      ]
+    },
+    "slot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requiredLevel": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "rarity": {
+      "type": "string",
+      "enum": ["COMMON", "REFINED", "SPIRIT", "ARCANE", "RELIC", "FIXED"]
+    },
+    "binding": {
+      "type": "string",
+      "enum": ["NONE", "ON_EQUIP", "ON_PICKUP", "QUEST"]
+    },
+    "tradeable": {
+      "type": "boolean"
+    },
+    "sourceMapId": {
+      "type": "string",
+      "pattern": "^MAP_[A-Z0-9_]+$"
+    },
+    "iconKey": {
+      "type": "string",
+      "pattern": "^UI/Items/[A-Za-z0-9_-]+$"
+    },
+    "sourceRef": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

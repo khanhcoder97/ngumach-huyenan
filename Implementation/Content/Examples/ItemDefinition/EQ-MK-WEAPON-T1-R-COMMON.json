@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "itemId": "EQ-MK-WEAPON-T1-R-COMMON",
+  "displayNameKey": "ITEM.EQ-MK-WEAPON-T1-R-COMMON.NAME",
+  "category": "EQUIPMENT_WEAPON",
+  "slot": "WEAPON_MAIN",
+  "requiredLevel": 1,
+  "rarity": "COMMON",
+  "binding": "ON_EQUIP",
+  "tradeable": true,
+  "sourceMapId": "MAP_BEN_MUA",
+  "iconKey": "UI/Items/EQ-MK-WEAPON-T1-R-COMMON",
+  "sourceRef": "Item_Rarity_Variant_Catalog_vi.csv#EQ-MK-WEAPON-T1-R-COMMON"
+}

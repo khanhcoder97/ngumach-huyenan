@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Minh Kiếm — chibi HD character redesign proposal</title>
+  <desc id="desc">A smooth high-definition vector character sheet inspired by chibi knight proportions, with front, side and back views. Original design proposal, not approved production art.</desc>
+  <defs>
+    <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#111b2b"/><stop offset="1" stop-color="#25334a"/></linearGradient>
+    <linearGradient id="plate" x2=".9" y2="1"><stop stop-color="#fff8df"/><stop offset=".32" stop-color="#c9d5dc"/><stop offset=".7" stop-color="#788c9f"/><stop offset="1" stop-color="#e1e6df"/></linearGradient>
+    <linearGradient id="blue" x2=".9" y2="1"><stop stop-color="#3974ce"/><stop offset=".5" stop-color="#17418d"/><stop offset="1" stop-color="#0b2356"/></linearGradient>
+    <linearGradient id="gold" x2="0" y2="1"><stop stop-color="#fff0a1"/><stop offset=".45" stop-color="#e7b844"/><stop offset="1" stop-color="#98601a"/></linearGradient>
+    <linearGradient id="hair" x2=".7" y2="1"><stop stop-color="#c27b43"/><stop offset=".5" stop-color="#794324"/><stop offset="1" stop-color="#3e2a25"/></linearGradient>
+    <linearGradient id="skin" x2="0" y2="1"><stop stop-color="#ffe1bc"/><stop offset="1" stop-color="#d99b70"/></linearGradient>
+    <linearGradient id="sword" x2="1" y2="0"><stop stop-color="#8295a8"/><stop offset=".48" stop-color="#fffef5"/><stop offset="1" stop-color="#8da3b6"/></linearGradient>
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="220%"><feGaussianBlur stdDeviation="13"/></filter>
+    <pattern id="stars" width="110" height="110" patternUnits="userSpaceOnUse"><circle cx="8" cy="23" r="1.3" fill="#f2ddb0" opacity=".32"/><circle cx="67" cy="82" r="1" fill="#9bbce8" opacity=".28"/><path d="M92 15v7m-3.5-3.5h7" stroke="#e7d397" stroke-opacity=".22"/></pattern>
+    <g id="sigil"><path d="M0-22 19-11 19 11 0 22-19 11-19-11Z" fill="#102e68" stroke="url(#gold)" stroke-width="4"/><path d="M0-12 10-6 10 6 0 12-10 6-10-6Z" fill="none" stroke="#fff1ae" stroke-width="2"/><circle r="3.5" fill="#f6cf66"/></g>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/><rect width="1600" height="1000" fill="url(#stars)"/>
+  <path d="M0 148H1600" stroke="#d1a64e" stroke-opacity=".6"/>
+  <text x="66" y="72" fill="#f4e6c2" font-family="Georgia,serif" font-size="38" letter-spacing="4">MINH KIẾM · TÂN THIẾT KẾ</text>
+  <text x="68" y="111" fill="#b9c9dd" font-family="Arial,sans-serif" font-size="15" letter-spacing="3">CHIBI HERO PROPORTIONS · HD VECTOR CONCEPT · ART-P1-002 · V2</text>
+  <rect x="1260" y="47" width="274" height="42" rx="21" fill="#6b3c29" stroke="#e4ae6d"/>
+  <text x="1397" y="74" text-anchor="middle" fill="#fff0d7" font-family="Arial,sans-serif" font-weight="700" font-size="13" letter-spacing="1.5">PROPOSAL · CHỜ DUYỆT</text>
+
+  <!-- Main character turnarounds -->
+  <rect x="48" y="180" width="1060" height="758" rx="20" fill="#172439" fill-opacity=".86" stroke="#9a783b" stroke-opacity=".78"/>
+  <text x="78" y="220" fill="#ecd89f" font-family="Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="2">TURNAROUND · ĐẦU LỚN / THÂN GỌN / SILHOUETTE KIẾM SĨ</text>
+  <path d="M400 255V875M744 255V875" stroke="#d8c391" stroke-opacity=".18" stroke-dasharray="3 9"/>
+  <ellipse cx="226" cy="824" rx="104" ry="17" fill="#000" opacity=".36" filter="url(#softShadow)"/>
+  <ellipse cx="573" cy="824" rx="88" ry="16" fill="#000" opacity=".34" filter="url(#softShadow)"/>
+  <ellipse cx="915" cy="824" rx="104" ry="17" fill="#000" opacity=".36" filter="url(#softShadow)"/>
+
+  <!-- Front view -->
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <!-- cape silhouette -->
+    <path d="M167 466Q132 484 126 560L110 728Q153 783 221 788Q292 780 334 729L310 553Q302 489 272 466Z" fill="url(#blue)" stroke="#c38e35" stroke-width="5"/>
+    <path d="M145 531Q207 557 294 529M126 711Q216 742 322 709" fill="none" stroke="#5d91e2" stroke-opacity=".65" stroke-width="4"/>
+    <path d="M178 612 220 590 260 614 252 661 220 680 186 660Z" fill="#16418a" stroke="url(#gold)" stroke-width="3"/>
+    <path d="M220 604 230 624 254 626 236 641 242 665 220 651 198 665 204 641 186 626 210 624Z" fill="url(#gold)"/>
+    <!-- hair back + face -->
+    <path d="M151 338Q138 266 183 239Q224 208 269 245Q312 278 294 373L281 446 166 445Z" fill="url(#hair)" stroke="#35241f" stroke-width="5"/>
+    <ellipse cx="223" cy="334" rx="76" ry="86" fill="url(#skin)" stroke="#673c2c" stroke-width="4"/>
+    <path d="M150 332Q143 264 191 240Q234 216 273 251Q299 276 295 332L277 312Q264 295 246 291Q215 324 165 315Z" fill="url(#hair)" stroke="#3a2922" stroke-width="5"/>
+    <path d="M153 306Q167 278 187 269M182 254Q199 242 213 240M250 253Q275 269 281 291" fill="none" stroke="#e1a166" stroke-width="6" opacity=".58"/>
+    <path d="M164 327Q184 309 205 324M241 324Q263 308 280 325" fill="none" stroke="#5a3325" stroke-width="5"/>
+    <ellipse cx="190" cy="337" rx="12" ry="17" fill="#60351f"/><ellipse cx="257" cy="337" rx="12" ry="17" fill="#60351f"/>
+    <ellipse cx="193" cy="333" rx="4" ry="6" fill="#fff8e8"/><ellipse cx="260" cy="333" rx="4" ry="6" fill="#fff8e8"/>
+    <path d="M216 352 212 367 223 370M205 389Q222 398 241 386" fill="none" stroke="#9c5a48" stroke-width="3"/>
+    <circle cx="177" cy="370" r="7" fill="#e48c78" opacity=".5"/><circle cx="267" cy="370" r="7" fill="#e48c78" opacity=".5"/>
+    <!-- neck and torso -->
+    <path d="M195 411 193 449Q220 469 249 448L248 409Z" fill="url(#skin)" stroke="#8e5639" stroke-width="3"/>
+    <path d="M165 443Q220 420 278 443L307 525 284 615Q220 644 158 615L137 526Z" fill="url(#plate)" stroke="#43586c" stroke-width="5"/>
+    <path d="M174 453 220 477 266 451 253 500 220 521 187 500Z" fill="#233d5a" stroke="url(#gold)" stroke-width="4"/>
+    <path d="M220 478 235 510 220 533 205 510Z" fill="url(#gold)"/>
+    <path d="M154 508Q220 536 288 506M157 571Q220 594 285 570" fill="none" stroke="#71889a" stroke-width="4"/>
+    <path d="M164 531 218 550 276 529" fill="none" stroke="#f7f2de" stroke-opacity=".75" stroke-width="5"/>
+    <!-- pauldrons -->
+    <path d="M136 453Q111 432 91 461L84 498Q105 520 145 506L165 474Z" fill="url(#plate)" stroke="#536b7d" stroke-width="5"/>
+    <path d="M274 453Q300 432 322 461L329 498Q304 520 266 506L248 474Z" fill="url(#plate)" stroke="#536b7d" stroke-width="5"/>
+    <path d="M99 467Q119 451 147 468M286 468Q309 450 321 469" fill="none" stroke="url(#gold)" stroke-width="6"/>
+    <!-- arms / gauntlets -->
+    <path d="M100 500Q82 530 91 579L112 601 142 581 138 520Z" fill="url(#plate)" stroke="#536b7d" stroke-width="5"/>
+    <path d="M311 500Q334 530 322 579L301 601 271 581 275 520Z" fill="url(#plate)" stroke="#536b7d" stroke-width="5"/>
+    <path d="M91 566 137 577M278 577 323 566" stroke="url(#gold)" stroke-width="5"/>
+    <path d="M97 588Q112 578 131 590L135 622Q116 639 96 621Z" fill="#283e57" stroke="url(#gold)" stroke-width="3"/>
+    <path d="M281 590Q302 578 317 588L318 621Q298 639 278 622Z" fill="#283e57" stroke="url(#gold)" stroke-width="3"/>
+    <!-- waist and skirt tassets -->
+    <path d="M161 603Q220 627 281 603L288 644Q220 665 154 643Z" fill="#243a55" stroke="url(#gold)" stroke-width="4"/>
+    <path d="M198 621 220 631 242 621 238 647 220 658 202 647Z" fill="url(#gold)"/>
+    <path d="M159 642 212 654 204 741 151 750 135 699Z" fill="url(#plate)" stroke="#536b7d" stroke-width="4"/>
+    <path d="M281 642 228 654 236 741 289 750 305 699Z" fill="url(#plate)" stroke="#536b7d" stroke-width="4"/>
+    <path d="M159 659 199 670M282 659 242 670M148 719 199 709M291 719 241 709" stroke="url(#gold)" stroke-width="4"/>
+    <use href="#sigil" x="220" y="574" transform="scale(.72) translate(86 223)"/>
+    <!-- legs and boots -->
+    <path d="M177 733 218 739 211 794 171 801 155 778Z" fill="#253a50" stroke="#50667a" stroke-width="4"/>
+    <path d="M225 739 265 733 287 778 269 801 229 794Z" fill="#253a50" stroke="#50667a" stroke-width="4"/>
+    <path d="M170 781Q191 793 212 782L212 814Q187 832 153 815L151 800Z" fill="url(#plate)" stroke="#52687a" stroke-width="4"/>
+    <path d="M228 782Q249 793 272 781L291 800 287 815Q252 832 227 814Z" fill="url(#plate)" stroke="#52687a" stroke-width="4"/>
+    <path d="M156 805 207 807M231 807 286 805" stroke="url(#gold)" stroke-width="5"/>
+    <!-- sword -->
+    <path d="M110 601 57 755Q54 766 64 769L78 765 139 614Z" fill="url(#sword)" stroke="#32465c" stroke-width="4"/>
+    <path d="M103 603 145 618M104 609 92 590" stroke="url(#gold)" stroke-width="8"/>
+    <path d="M107 610 91 636" stroke="#34465a" stroke-width="8"/>
+    <path d="M65 760 79 765" stroke="#fff" stroke-width="3"/>
+  </g>
+
+  <!-- Side view simplified -->
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <path d="M526 469Q493 491 504 585L496 740Q541 773 594 741L604 562Q599 494 573 468Z" fill="url(#blue)" stroke="#be8c3d" stroke-width="4"/>
+    <path d="M541 257Q507 266 508 323Q508 387 552 410Q596 384 586 308Q579 263 541 257Z" fill="url(#hair)" stroke="#39281f" stroke-width="4"/>
+    <path d="M535 283Q572 277 578 316L570 367 542 380 523 345Z" fill="url(#skin)" stroke="#8b5539" stroke-width="3"/>
+    <path d="M516 305Q515 268 544 260Q575 260 585 296L567 291 553 280 535 301Z" fill="url(#hair)" stroke="#3b2922" stroke-width="4"/>
+    <ellipse cx="563" cy="328" rx="6" ry="10" fill="#60351f"/><path d="M565 347l14 3-11 7" fill="none" stroke="#955742" stroke-width="2.5"/>
+    <path d="M530 413 530 449 565 450 566 411Z" fill="url(#skin)" stroke="#8b5539" stroke-width="3"/>
+    <path d="M517 448Q557 431 590 456L610 524 592 604 531 615 503 542Z" fill="url(#plate)" stroke="#536a7c" stroke-width="4"/>
+    <path d="M517 465 555 479 587 456 590 487 563 522 531 515Z" fill="#203a59" stroke="url(#gold)" stroke-width="3"/>
+    <path d="M504 467Q488 452 477 479L479 519 508 527 522 490Z" fill="url(#plate)" stroke="#536a7c" stroke-width="4"/>
+    <path d="M590 474Q607 471 611 503L601 559 579 555 578 505Z" fill="url(#plate)" stroke="#536a7c" stroke-width="4"/>
+    <path d="M525 604 587 597 596 641 570 720 513 744 504 695Z" fill="url(#plate)" stroke="#536a7c" stroke-width="4"/>
+    <path d="M531 627 584 618M518 698 572 683" stroke="url(#gold)" stroke-width="4"/>
+    <path d="M521 727 555 734 552 789 509 798 499 777Z" fill="#263b51" stroke="#536a7c" stroke-width="4"/>
+    <path d="M505 781 551 783 556 813 493 815Z" fill="url(#plate)" stroke="#536a7c" stroke-width="4"/>
+    <path d="M595 536 640 693" stroke="url(#sword)" stroke-width="10"/><path d="M630 687 653 696M605 551 622 542" stroke="url(#gold)" stroke-width="7"/>
+    <use href="#sigil" x="557" y="554" transform="scale(.55) translate(457 453)"/>
+  </g>
+
+  <!-- Back view -->
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <path d="M844 471Q811 486 808 555L793 728Q840 779 913 785Q983 779 1033 728L1013 555Q1005 489 973 471Z" fill="url(#blue)" stroke="#be8c3d" stroke-width="5"/>
+    <path d="M835 534Q920 562 1001 533M803 710Q913 746 1023 711" fill="none" stroke="#5792e6" stroke-opacity=".65" stroke-width="4"/>
+    <path d="M920 603 951 621 951 660 920 680 889 660 889 621Z" fill="#13356f" stroke="url(#gold)" stroke-width="4"/>
+    <path d="M920 610 930 632 954 636 936 651 941 673 920 660 899 673 904 651 886 636 910 632Z" fill="url(#gold)"/>
+    <path d="M847 338Q833 263 875 239Q923 208 967 247Q1005 281 986 379L966 433 862 428Z" fill="url(#hair)" stroke="#35241f" stroke-width="5"/>
+    <path d="M847 306Q867 253 913 244Q958 249 978 296L964 333Q943 317 920 292Q887 321 850 328Z" fill="url(#hair)" stroke="#35241f" stroke-width="4"/>
+    <path d="M870 268Q901 241 932 244" fill="none" stroke="#e1a166" stroke-width="6" opacity=".55"/>
+    <path d="M874 414 871 450Q920 471 965 449L962 411Z" fill="#344b60" stroke="#263b50" stroke-width="3"/>
+    <path d="M846 445Q920 421 991 445L1011 525 989 614Q920 644 851 614L829 525Z" fill="url(#plate)" stroke="#536a7c" stroke-width="5"/>
+    <path d="M859 457 920 488 979 457 964 505 920 535 874 505Z" fill="#263d59" stroke="url(#gold)" stroke-width="4"/>
+    <path d="M839 457Q813 437 794 466L785 501Q808 524 847 508L866 476Z" fill="url(#plate)" stroke="#536b7d" stroke-width="5"/>
+    <path d="M1002 457Q1027 438 1048 466L1054 501Q1033 524 995 508L976 476Z" fill="url(#plate)" stroke="#536b7d" stroke-width="5"/>
+    <path d="M860 604Q920 629 981 604L990 645Q920 665 850 645Z" fill="#263d59" stroke="url(#gold)" stroke-width="4"/>
+    <path d="M852 644 911 656 902 741 840 751 820 699Z" fill="url(#plate)" stroke="#536b7d" stroke-width="4"/>
+    <path d="M989 644 930 656 939 741 1001 751 1021 699Z" fill="url(#plate)" stroke="#536b7d" stroke-width="4"/>
+    <path d="M869 735 910 741 903 795 862 802 843 779Z" fill="#253a50" stroke="#50667a" stroke-width="4"/>
+    <path d="M930 741 971 735 993 779 974 802 934 795Z" fill="#253a50" stroke="#50667a" stroke-width="4"/>
+    <path d="M860 781Q883 792 905 782L904 814Q878 832 843 815L841 800Z" fill="url(#plate)" stroke="#52687a" stroke-width="4"/>
+    <path d="M934 782Q957 792 980 781L998 800 994 815Q959 832 933 814Z" fill="url(#plate)" stroke="#52687a" stroke-width="4"/>
+    <path d="M1038 506 1080 681" stroke="url(#sword)" stroke-width="10"/><path d="M1068 674 1092 685M1048 520 1065 511" stroke="url(#gold)" stroke-width="7"/>
+  </g>
+  <text x="220" y="878" fill="#dfd3b4" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" letter-spacing="2">FRONT</text>
+  <text x="570" y="878" fill="#dfd3b4" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" letter-spacing="2">PROFILE</text>
+  <text x="914" y="878" fill="#dfd3b4" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" letter-spacing="2">BACK</text>
+
+  <!-- Notes -->
+  <rect x="1130" y="180" width="420" height="758" rx="20" fill="#172439" fill-opacity=".92" stroke="#9a783b" stroke-opacity=".78"/>
+  <text x="1165" y="223" fill="#ecd89f" font-family="Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="2">THIẾT KẾ NHẬN DIỆN</text>
+  <text x="1165" y="270" fill="#f2e7cf" font-family="Georgia,serif" font-size="26">Kiếm sĩ hộ ấn</text>
+  <text x="1165" y="300" fill="#b9c9dd" font-family="Arial,sans-serif" font-size="14">Nhỏ nhắn, lanh lợi; bình tĩnh khi giao chiến.</text>
+  <path d="M1165 324H1515" stroke="#687b90"/>
+  <text x="1165" y="361" fill="#e2c779" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.5">ĐIỂM GIỮ LẠI</text>
+  <text x="1165" y="394" fill="#d9e1e8" font-family="Arial,sans-serif" font-size="14">• Giáp bạc, đường viền đồng vàng</text>
+  <text x="1165" y="421" fill="#d9e1e8" font-family="Arial,sans-serif" font-size="14">• Áo choàng xanh lam, phù hiệu lục giác</text>
+  <text x="1165" y="448" fill="#d9e1e8" font-family="Arial,sans-serif" font-size="14">• Tóc nâu hạt dẻ, gương mặt trẻ trung</text>
+  <text x="1165" y="475" fill="#d9e1e8" font-family="Arial,sans-serif" font-size="14">• Kiếm thẳng nhỏ, đọc rõ ở silhouette</text>
+  <path d="M1165 498H1515" stroke="#687b90"/>
+  <text x="1165" y="535" fill="#e2c779" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.5">TỈ LỆ &amp; CHẤT LIỆU</text>
+  <text x="1165" y="568" fill="#d9e1e8" font-family="Arial,sans-serif" font-size="14">Đầu khoảng 40% chiều cao nhân vật.</text>
+  <text x="1165" y="595" fill="#d9e1e8" font-family="Arial,sans-serif" font-size="14">Thân gọn, tay/chân ngắn; khớp bo mềm.</text>
+  <text x="1165" y="622" fill="#d9e1e8" font-family="Arial,sans-serif" font-size="14">Bề mặt vẽ tay HD, highlight mượt;</text>
+  <text x="1165" y="646" fill="#d9e1e8" font-family="Arial,sans-serif" font-size="14">không pixel grid hay viền răng cưa.</text>
+  <path d="M1165 671H1515" stroke="#687b90"/>
+  <text x="1165" y="708" fill="#e2c779" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.5">CẦN ĐỒNG BỘ TRƯỚC RIG</text>
+  <text x="1165" y="741" fill="#d9e1e8" font-family="Arial,sans-serif" font-size="14">Tỷ lệ mới làm khác tỉ lệ hero 5 WU</text>
+  <text x="1165" y="766" fill="#d9e1e8" font-family="Arial,sans-serif" font-size="14">trong Art Bible. Chốt lại scale rig,</text>
+  <text x="1165" y="791" fill="#d9e1e8" font-family="Arial,sans-serif" font-size="14">camera và collision trong gameplay.</text>
+  <rect x="1165" y="825" width="347" height="59" rx="10" fill="#5f3928" stroke="#d0a05a"/>
+  <text x="1182" y="850" fill="#fff0d7" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1">CONCEPT ONLY · CHƯA DUYỆT</text>
+  <text x="1182" y="870" fill="#e5c9a7" font-family="Arial,sans-serif" font-size="11">Không thay thế atlas / rig / sprite runtime.</text>
+  <text x="67" y="973" fill="#9caec1" font-family="Arial,sans-serif" font-size="11" letter-spacing="1.2">STYLE REFERENCE: CHIBI ARMORED SWORDSMAN · ORIGINAL LẠC CHÂU DESIGN · NO KPAH ASSET REUSE · NO PIXEL ART</text>
+</svg>

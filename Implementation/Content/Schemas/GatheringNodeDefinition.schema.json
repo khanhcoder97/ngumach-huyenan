@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/schemas/GatheringNodeDefinition.schema.json",
+  "title": "GatheringNodeDefinition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordId",
+    "mapId",
+    "nodeId",
+    "designState",
+    "profession",
+    "gatherItemId",
+    "toolId",
+    "qualityTier",
+    "professionLevelRequired",
+    "yieldMin",
+    "yieldMax",
+    "respawnSeconds",
+    "position",
+    "sourceRef"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "recordId": {
+      "type": "string",
+      "pattern": "^MAN-[A-Z0-9]+-NODE_[A-Z0-9_]+$"
+    },
+    "mapId": {
+      "type": "string",
+      "pattern": "^MAP_[A-Z0-9_]+$"
+    },
+    "nodeId": {
+      "type": "string",
+      "pattern": "^NODE_[A-Z0-9_]+$"
+    },
+    "designState": {
+      "type": "string",
+      "enum": [
+        "ATLAS_ANCHOR",
+        "ATLAS_QUEST_WAVE",
+        "ACTIVITY_PLACEMENT",
+        "ATLAS_SPAWN",
+        "ATLAS_EVENT_POOL",
+        "ATLAS_BOSS",
+        "ACTIVITY_BOSS",
+        "ATLAS_QUEST_ACTOR",
+        "NEW_PROPOSED",
+        "REPLACED",
+        "CUT"
+      ]
+    },
+    "profession": {
+      "type": "string",
+      "enum": ["MINING", "HERBALISM", "LOGGING"]
+    },
+    "gatherItemId": {
+      "type": "string",
+      "pattern": "^[A-Z0-9][A-Z0-9_-]+$"
+    },
+    "toolId": {
+      "type": "string",
+      "pattern": "^[A-Z0-9][A-Z0-9_-]+$"
+    },
+    "qualityTier": {
+      "type": "string",
+      "enum": ["I", "II", "III"]
+    },
+    "professionLevelRequired": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "yieldMin": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "yieldMax": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "respawnSeconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "position": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["xWu", "yWu"],
+      "properties": {
+        "xWu": {
+          "type": "number"
+        },
+        "yWu": {
+          "type": "number"
+        }
+      }
+    },
+    "sourceRef": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/schemas/MapDefinition.schema.json",
+  "title": "MapDefinition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "mapId",
+    "displayNameKey",
+    "mapKind",
+    "widthWu",
+    "heightWu",
+    "floorYWu",
+    "levelBand",
+    "spawnPoint",
+    "assetKey",
+    "sourceRef"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "mapId": {
+      "type": "string",
+      "pattern": "^MAP_[A-Z0-9_]+$"
+    },
+    "displayNameKey": {
+      "type": "string",
+      "pattern": "^MAP\\.[A-Z0-9_]+\\.[A-Z0-9_]+$"
+    },
+    "mapKind": {
+      "type": "string",
+      "enum": ["OVERWORLD", "CITY", "DUNGEON", "RAID", "TOWER", "BATTLEGROUND", "PRIVATE_POCKET"]
+    },
+    "widthWu": {
+      "type": "number",
+      "minimum": 1
+    },
+    "heightWu": {
+      "type": "number",
+      "minimum": 1
+    },
+    "floorYWu": {
+      "type": "number"
+    },
+    "levelBand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
+      }
+    },
+    "spawnPoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["xWu", "yWu"],
+      "properties": {
+        "xWu": {
+          "type": "number"
+        },
+        "yWu": {
+          "type": "number"
+        }
+      }
+    },
+    "assetKey": {
+      "type": "string",
+      "pattern": "^Art/Environment/MAP_[A-Z0-9_]+$"
+    },
+    "sourceRef": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

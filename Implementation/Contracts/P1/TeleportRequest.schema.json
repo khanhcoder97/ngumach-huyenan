@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/contracts/p1/TeleportRequest.schema.json",
+  "title": "P1 teleport request payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mapId",
+    "xWu",
+    "yWu",
+    "reason"
+  ],
+  "properties": {
+    "mapId": {
+      "type": "string",
+      "pattern": "^MAP_[A-Z0-9_]+$"
+    },
+    "xWu": {
+      "type": "number"
+    },
+    "yWu": {
+      "type": "number"
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "QUEST",
+        "DEATH_RETURN",
+        "CITY_RETURN",
+        "ADMIN"
+      ]
+    }
+  }
+}

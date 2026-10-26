@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-MK-03",
+  "classId": "CLASS_MINH_KIEM",
+  "displayNameKey": "SKILL.SK-MK-03.NAME",
+  "cooldownSeconds": 10,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 22
+  },
+  "targeting": {
+    "type": "CONE",
+    "angleDegrees": 100,
+    "maxTargets": 5
+  },
+  "coefficients": {
+    "pve": 1.9,
+    "boss": 1.9,
+    "pvp": 0.65
+  },
+  "telegraphSeconds": 0.1,
+  "vfxKey": "VFX/Skill/SK-MK-03",
+  "sourceRef": "Content_Bible_Ngu_Mach_Huyen_An_vi.md#Minh-Kiem"
+}

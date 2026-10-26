@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-MK-02",
+  "classId": "CLASS_MINH_KIEM",
+  "displayNameKey": "SKILL.SK-MK-02.NAME",
+  "cooldownSeconds": 8,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 16
+  },
+  "targeting": {
+    "type": "DASH",
+    "rangeWu": 5.5,
+    "maxTargets": 1
+  },
+  "coefficients": {
+    "pve": 1.5,
+    "boss": 1.5,
+    "pvp": 0.65
+  },
+  "telegraphSeconds": 0.15,
+  "vfxKey": "VFX/Skill/SK-MK-02",
+  "sourceRef": "Content_Bible_Ngu_Mach_Huyen_An_vi.md#Minh-Kiem"
+}

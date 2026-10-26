@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-MK-01",
+  "classId": "CLASS_MINH_KIEM",
+  "displayNameKey": "SKILL.SK-MK-01.NAME",
+  "cooldownSeconds": 10,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 12
+  },
+  "targeting": {
+    "type": "SELF",
+    "rangeWu": 2.2,
+    "angleDegrees": 120,
+    "maxTargets": 1
+  },
+  "coefficients": {
+    "pve": 1.8,
+    "boss": 1.8,
+    "pvp": 0.65
+  },
+  "telegraphSeconds": 0.4,
+  "vfxKey": "VFX/Skill/SK-MK-01",
+  "sourceRef": "Content_Bible_Ngu_Mach_Huyen_An_vi.md#Minh-Kiem"
+}

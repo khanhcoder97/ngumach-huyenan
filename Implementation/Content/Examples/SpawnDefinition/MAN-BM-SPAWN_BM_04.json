@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "recordId": "MAN-BM-SPAWN_BM_04",
+  "mapId": "MAP_BEN_MUA",
+  "zoneId": "OVERWORLD",
+  "recordType": "MOB_GROUP",
+  "designState": "ATLAS_SPAWN",
+  "spawnGroupId": "SPAWN_BM_04",
+  "entityIds": ["MOB_CARPLING", "MOB_WATERROOT"],
+  "quantity": 3,
+  "composition": "MOB_CARPLING×2 + MOB_WATERROOT×1",
+  "position": {
+    "xWu": 160,
+    "yWu": 0
+  },
+  "patrolRadiusWu": 7,
+  "levelBand": {
+    "min": 1,
+    "max": 10
+  },
+  "respawnSeconds": 24,
+  "condition": "Tắt khi P00-05 boss trigger",
+  "lootTableId": "LT_MOB_CARPLING",
+  "sourceRef": "World_Spawn_Gathering_Manifest_vi.csv#MAN-BM-SPAWN_BM_04"
+}

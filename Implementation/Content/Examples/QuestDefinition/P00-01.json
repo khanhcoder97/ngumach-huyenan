@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "questId": "P00-01",
+  "titleKey": "QUEST.P00-01.TITLE",
+  "graphId": "GRAPH_P00_01",
+  "questType": "MAIN",
+  "levelBand": {
+    "min": 1,
+    "max": 10
+  },
+  "startNpcId": "NPC_LYAN",
+  "turnInNpcId": "NPC_TA_VAN_KHANH",
+  "prerequisiteQuestIds": [],
+  "objectives": [
+    {
+      "objectiveId": "OBJ_P00_01_PACKAGES",
+      "type": "COLLECT",
+      "targetIds": ["OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03"],
+      "count": 3,
+      "mapId": "MAP_BEN_MUA"
+    }
+  ],
+  "rewards": {
+    "currency": [
+      {
+        "currencyId": "COIN",
+        "amount": 20
+      }
+    ],
+    "itemIds": ["EQ-MK-CHEST-T1-R-COMMON"],
+    "xpRule": "LEVEL_BAND_BASE"
+  },
+  "unlocks": ["P00-02"],
+  "sourceRef": "Quest_and_Narrative_Production_Spec_vi.md#P00-01"
+}
