@@ -55,9 +55,11 @@ Một bundle asset có thể được dùng bởi OpenCode khi và chỉ khi:
 
 ## Giao tiếp giữa agent
 
+- Công việc được giao và cập nhật trong GitHub Issues gắn nhãn `agent:muse`, `agent:opencode`, `agent:qoder`; mỗi agent comment xác nhận nhận việc, branch, tiến độ và blocker.
 - Yêu cầu thay đổi asset hoặc contract: tạo GitHub Issue với label `integration` rồi liên kết vào PR.
 - Thay đổi chặn tiến độ: ghi trong `Implementation/Work_Orders/Integration_Notes.md` và mở Issue cùng ngày.
 - OpenCode không merge asset PR trước khi kiểm tra Unity import; Muse không merge thay đổi C#; Qoder không merge thay đổi client/art.
+- Ba issue điều phối ban đầu: Muse #1, OpenCode #2, Qoder #3. Agent phải liên kết PR về issue tương ứng.
 
 ## Khôi phục khi asset PR bị lỗi
 

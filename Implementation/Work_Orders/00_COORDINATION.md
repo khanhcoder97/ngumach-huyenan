@@ -29,3 +29,13 @@ Tài liệu này là đầu mối điều phối. Mỗi agent chỉ sửa các k
 - Không làm lệch chuẩn pixel rendering.
 - Mọi endpoint hoặc asset có manifest/README ngắn mô tả cách dùng.
 - Đã chạy validator liên quan nếu môi trường cài công cụ: `python Implementation/Tools/validate_content.py`, `python Implementation/Tools/validate_contracts.py`, Unity import/build hoặc `dotnet build`.
+
+## GitHub issue queue
+
+Mọi công việc của agent được nhận và cập nhật qua GitHub Issues; không coi file work order trong máy local là thông báo giao việc. Agent comment vào issue để nhận việc, ghi branch, cập nhật tiến độ và báo blocker. Mỗi PR phải liên kết issue tương ứng; merge vào `main` chỉ sau review và kiểm tra thuộc phạm vi.
+
+- Muse pixel-art delivery: https://github.com/khanhcoder97/ngumach-huyenan/issues/1
+- OpenCode Unity client P1 slice: https://github.com/khanhcoder97/ngumach-huyenan/issues/2
+- Qoder authoritative server P1 slice: https://github.com/khanhcoder97/ngumach-huyenan/issues/3
+
+Issues hiện chưa gán GitHub username cụ thể. Agent nhận việc bằng comment; khi có username GitHub của từng agent thì gán issue để GitHub gửi thông báo trực tiếp.
