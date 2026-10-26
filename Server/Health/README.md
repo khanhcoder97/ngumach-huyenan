@@ -1,6 +1,6 @@
 # Ngu Mach Huyen An — Health Server
 
-Minimal ASP.NET Core API (net10.0) exposing the health check and the P1 authoritative movement slice.
+Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritative movement slice, and the QOD-03 quest service skeleton.
 
 ## Endpoints
 
@@ -21,7 +21,7 @@ dotnet run --project Server/Health/Health.csproj
 
 The service listens on `http://localhost:5000` unless `ASPNETCORE_URLS` or launch settings override it.
 
-The server loads `Implementation/Content/map_bounds.json` at startup by walking up from the working directory, content root and application base directory. Override with `Content__MapBoundsPath=/absolute/path/map_bounds.json` if needed. Startup fails if the configured map is unknown, the spawn is outside bounds, or the movement configuration is inconsistent.
+The server loads `Implementation/Content/map_bounds.json` at startup by walking up from the working directory, content root and application base directory. Override with `Content__MapBoundsPath=/absolute/path/map_bounds.json` if needed. It likewise loads canonical `QuestDefinition` content from `Implementation/Content/Examples/QuestDefinition`; override with `Content__QuestsPath=/absolute/path/QuestDefinition`. Startup fails if the configured map is unknown, the spawn is outside bounds, the movement configuration is inconsistent, or a quest definition is invalid.
 
 ```bash
 dotnet build Server/Health/Health.csproj
@@ -116,6 +116,19 @@ curl -i http://localhost:5000/p1/world/<SESSION_ID> \
 
 The response uses the same envelope as a successful move.
 
+## Quest skeleton (QOD-03)
+
+No quest endpoint is exposed yet. The registered `IQuestService` is the server-side seam for future accept/progress/turn-in commands:
+
+- `IQuestCatalog` loads canonical `QuestDefinition` files (currently `P00-01`) from `Implementation/Content/Examples/QuestDefinition`; unknown quest IDs are rejected.
+- `InMemoryQuestService` keeps per-character state behind `IQuestStateStore` and supports `GetState`, `GetStates`, `Accept`, `RecordObjective`, `TurnIn` and `Fail`.
+- Allowed transitions: `LOCKED → AVAILABLE` when all prerequisites are `COMPLETED`, `AVAILABLE → ACTIVE` on accept, `ACTIVE → READY_TO_TURN_IN` when every canonical objective counter reaches its count, `READY_TO_TURN_IN → COMPLETED` on turn-in, and `ACTIVE`/`READY_TO_TURN_IN → FAILED` on failure.
+- Objective progress is clamped to the canonical objective count and updates `revision`; invalid transitions return the current snapshot with `invalid_transition`. State rows are created lazily on first query/accept, and prerequisite availability is refreshed lazily on read.
+- `RecordObjective` is an internal seam for server-side gameplay events (kill, collect, interact), not raw client input; a future endpoint must derive the amount from authoritative events.
+- Canonical `QuestDefinition` has no step graph, so the initial `stepId` is derived from the first objective (`OBJ_…` → `STEP_…`); `P00-01` yields `STEP_P00_01_PACKAGES`.
+- Rewards, XP, currency and items are not granted. Level-band eligibility is not enforced because `PlayerSession` has no level field yet.
+- Internal failure codes: `unknown_quest`, `quest_not_found`, `invalid_transition`, `unknown_objective`, `invalid_amount`, plus the shared `invalid_payload`.
+
 ## Movement rules
 
 - The server owns position. Client coordinates are never accepted; only a direction from `MoveIntent` is used.
@@ -141,6 +154,11 @@ The response uses the same envelope as a successful move.
 
 Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond=8`.
 
+| Content key | Purpose |
+|---|---|
+| `Content:MapBoundsPath` | Optional absolute/relative override for `map_bounds.json` |
+| `Content:QuestsPath` | Optional absolute/relative override for the `QuestDefinition` directory |
+
 ## Errors
 
 | Status | Code | Meaning |
@@ -160,7 +178,7 @@ All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and
 
 | # | Step | Expected |
 |---|---|---|
-| 1 | `dotnet run --project Server/Health/Health.csproj` | Starts; logs `Loaded map bounds for 46 maps` |
+| 1 | `dotnet run --project Server/Health/Health.csproj` | Starts; logs `Loaded map bounds for 46 maps` and `Loaded quest definitions: 1.` |
 | 2 | `GET /health` | `200`, `status: ok`, echoed `X-Correlation-ID` |
 | 3 | Create session with `CHR_MINH_KIEM_01` | `201`, `Location` header, `MAP_BEN_MUA`, `x=18`, `y=0`, `revision=1` |
 | 4 | Move `inputSequence=1`, `moveX=1` | `200`, `x>18`, `revision=2` |
@@ -175,5 +193,6 @@ All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and
 ## Current limits
 
 - Sessions are in memory and lost on restart; there is no database, authentication or real-time transport.
-- `entities` is always empty; mobs, combat, quest, inventory and teleport services are the next QOD-03 increment and are not exposed here.
+- `entities` is always empty; mobs and the combat/inventory/teleport services are not exposed here.
+- Quest state is in memory, has no endpoint, and only one canonical `QuestDefinition` (`P00-01`) is loaded. Rewards, level-band eligibility and multi-step graphs are not implemented.
 - Movement speed and starting HP/MP are slice defaults, not locked balance values.
