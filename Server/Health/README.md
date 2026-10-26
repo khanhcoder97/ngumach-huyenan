@@ -131,7 +131,7 @@ The response uses the same envelope as a successful move.
 
 | Key | Value | Source |
 |---|---|---|
-| `P1World:DefaultMapId` | `MAP_BEN_MUA` | Canonical P1 map (replaces the stale `MAP_LANG_MOI` reference in the work order) |
+| `P1World:DefaultMapId` | `MAP_BEN_MUA` | Canonical P1 map |
 | `P1World:SpawnX` / `SpawnY` | `18` / `0` | `MapDefinition/MAP_BEN_MUA.json` spawn point |
 | `P1World:MoveSpeedWuPerSecond` | `6.0` | **Provisional** slice value; not yet locked in production data |
 | `P1World:MaxStepSeconds` | `0.25` | Rejects long-frame jumps |
