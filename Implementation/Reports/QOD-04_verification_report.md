@@ -74,7 +74,7 @@ Success responses add `schemaVersion`, `requestId`, `sessionId`, `serverTimeUtc`
 - `entities` is always empty in P1; the client should not expect mobs or other players yet.
 - Movement speed and starting HP/MP are provisional slice values, not locked balance data.
 - QOD-03 combat, quest, inventory and teleport skeletons are delivered in sibling PRs #7–#9 and are registered without endpoints; the client must not call or assume them yet.
-- `Implementation/HANDOFF_OPENCODE_P1.md` still mentions `MAP_LANG_MOI`; its owner must update it. The server intentionally rejects that map.
+- `Implementation/HANDOFF_OPENCODE_P1.md` now points to `MAP_BEN_MUA`; the server intentionally rejects `MAP_LANG_MOI`.
 
 ### Running the smoke test locally
 

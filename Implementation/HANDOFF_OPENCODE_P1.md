@@ -27,7 +27,7 @@ Use existing content and contracts as the source of truth:
 1. Under `Server/Health/`, add a small in-memory world/session service. Keep `Program.cs` as the API composition root; place models/services in separate, clearly named files.
 2. Add `POST /p1/sessions`.
    - Generates a server session ID.
-   - Creates a player in `MAP_LANG_MOI` at a valid configured spawn or documented safe default within canonical map bounds.
+   - Creates a player in `MAP_BEN_MUA` at a valid configured spawn or documented safe default within canonical map bounds.
    - Returns a response compatible with the P1 envelope conventions.
 3. Add `POST /p1/move`.
    - Accepts the existing `MoveIntent` field shape.
@@ -46,7 +46,7 @@ Use existing content and contracts as the source of truth:
 
 - `dotnet run --project Server/Health/Health.csproj` starts the service.
 - `/health` still behaves as documented.
-- A newly created session can move inside `MAP_LANG_MOI`.
+- A newly created session can move inside `MAP_BEN_MUA`.
 - A request with a stale sequence number is rejected without changing its stored position.
 - Out-of-bounds target coordinate is handled predictably and documented.
 - The response always includes `X-Correlation-ID`.
