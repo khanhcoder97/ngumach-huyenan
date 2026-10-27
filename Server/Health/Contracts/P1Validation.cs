@@ -41,6 +41,12 @@ public static class P1Validation
         new(@"^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
             RegexOptions.CultureInvariant);
 
+    private static readonly Regex TargetIdPattern =
+        new(@"^[A-Z][A-Z0-9_]*$", RegexOptions.CultureInvariant);
+
+    private static readonly Regex SkillIdPattern =
+        new(@"^SK-MK-0[1-3]$", RegexOptions.CultureInvariant);
+
     private static readonly Regex QuestIdPattern =
         new(@"^[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{2}$", RegexOptions.CultureInvariant);
 
@@ -69,6 +75,12 @@ public static class P1Validation
         value is not null &&
         value.Length <= CharacterIdMaxLength &&
         CharacterIdPattern.IsMatch(value);
+
+    public static bool IsTargetId(string? value) =>
+        value is not null && TargetIdPattern.IsMatch(value);
+
+    public static bool IsSkillId(string? value) =>
+        value is not null && SkillIdPattern.IsMatch(value);
 
     public static bool IsQuestId(string? value) =>
         value is not null && QuestIdPattern.IsMatch(value);
