@@ -1,6 +1,32 @@
+using System.Text.Json.Serialization;
+using Microsoft.Extensions.Options;
+using Server.Health.Endpoints;
+using Server.Health.World;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow;
+});
+builder.Services.Configure<P1WorldOptions>(
+    builder.Configuration.GetSection(P1WorldOptions.SectionName));
+builder.Services.AddSingleton<ServerClock>();
+builder.Services.AddSingleton<ISessionStore, InMemorySessionStore>();
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    var path = MapBoundsLoader.DiscoverPath(configuration, environment.ContentRootPath);
+    return MapBoundsLoader.Load(path);
+});
+
 var app = builder.Build();
+
+var worldOptions = app.Services.GetRequiredService<IOptions<P1WorldOptions>>().Value;
+var mapBounds = app.Services.GetRequiredService<MapBoundsCatalog>();
+P1WorldOptionsValidator.Validate(worldOptions, mapBounds);
+app.Logger.LogInformation("Loaded map bounds for {MapCount} maps.", mapBounds.Count);
 
 const string CorrelationIdHeader = "X-Correlation-ID";
 const int MaxCorrelationIdLength = 64;
@@ -45,5 +71,7 @@ app.MapGet("/health", (HttpContext context) =>
         correlationId
     });
 });
+
+app.MapP1Endpoints();
 
 app.Run();
