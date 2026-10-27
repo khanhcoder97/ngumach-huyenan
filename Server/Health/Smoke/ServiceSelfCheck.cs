@@ -1,0 +1,377 @@
+using Microsoft.Extensions.Options;
+using Server.Health.Contracts;
+using Server.Health.Gameplay.Combat;
+using Server.Health.Gameplay.Inventory;
+using Server.Health.Gameplay.Quests;
+using Server.Health.Gameplay.Teleport;
+using Server.Health.World;
+
+namespace Server.Health.Smoke;
+
+public static class ServiceSelfCheck
+{
+    private const string PlayerClassId = "CLASS_MINH_KIEM";
+
+    public static int Run(IServiceProvider services, ILogger logger)
+    {
+        var options = services.GetRequiredService<IOptions<P1WorldOptions>>().Value;
+        var maps = services.GetRequiredService<MapBoundsCatalog>();
+        var combat = services.GetRequiredService<ICombatService>();
+        var combatSkills = services.GetRequiredService<ICombatSkillCatalog>();
+        var targets = services.GetRequiredService<InMemoryCombatTargetProvider>();
+        var quests = services.GetRequiredService<IQuestService>();
+        var questCatalog = services.GetRequiredService<IQuestCatalog>();
+        var inventory = services.GetRequiredService<IInventoryService>();
+        var teleport = services.GetRequiredService<ITeleportService>();
+
+        var results = new List<(string Name, bool Passed, string? Detail)>();
+        void Check(string name, bool passed, string? detail = null) =>
+            results.Add((name, passed, detail));
+
+        PlayerSession NewPlayer(
+            string characterId,
+            string classId = PlayerClassId,
+            int hp = 100,
+            int mp = 50) =>
+            new(
+                $"SES_{Guid.NewGuid():N}",
+                characterId,
+                classId,
+                options.DefaultMapId,
+                options.SpawnX,
+                options.SpawnY,
+                hp,
+                options.StartingMaxHp,
+                mp,
+                options.StartingMaxMp,
+                DateTimeOffset.UtcNow);
+
+        Check("combat.catalog", combatSkills.Count == 3, $"count={combatSkills.Count}");
+
+        var combatActor = NewPlayer("CHR_SELFCHECK_COMBAT");
+        var badSkill = combat.Resolve(
+            combatActor, new CombatCommand { InputSequence = 1, SkillId = "SK-MK-99" });
+        Check(
+            "combat.invalid_skill_input",
+            badSkill.Failure?.Code == P1ErrorCodes.InvalidPayload,
+            badSkill.Failure?.Code);
+
+        var wrongClass = NewPlayer(
+            "CHR_SELFCHECK_CLASS", classId: "CLASS_LUYEN_TAM");
+        var wrongClassCast = combat.Resolve(
+            wrongClass, new CombatCommand { InputSequence = 1, SkillId = "SK-MK-01" });
+        Check(
+            "combat.class_gate",
+            wrongClassCast.Failure?.Code == CombatErrorCodes.SkillNotAvailable,
+            wrongClassCast.Failure?.Code);
+
+        var staleActor = NewPlayer("CHR_SELFCHECK_STALE");
+        staleActor.LastInputSequence = 1;
+        var staleCast = combat.Resolve(
+            staleActor, new CombatCommand { InputSequence = 1, SkillId = "SK-MK-01" });
+        Check(
+            "combat.stale_sequence",
+            staleCast.Failure?.Code == P1ErrorCodes.StaleSequence,
+            staleCast.Failure?.Code);
+
+        var selfCast = combat.Resolve(
+            combatActor, new CombatCommand { InputSequence = 1, SkillId = "SK-MK-01" });
+        Check(
+            "combat.self_cast",
+            selfCast.Accepted &&
+            selfCast.Event?.Payload.TargetId == combatActor.CharacterId &&
+            combatActor.Mp == options.StartingMp - 12 &&
+            combatActor.LastInputSequence == 1 &&
+            combatActor.Revision == 2,
+            $"mp={combatActor.Mp} revision={combatActor.Revision}");
+
+        var cooldownCast = combat.Resolve(
+            combatActor, new CombatCommand { InputSequence = 2, SkillId = "SK-MK-01" });
+        Check(
+            "combat.cooldown",
+            cooldownCast.Failure?.Code == CombatErrorCodes.CooldownActive,
+            cooldownCast.Failure?.Code);
+
+        var missingTarget = combat.Resolve(
+            NewPlayer("CHR_SELFCHECK_TARGET"),
+            new CombatCommand { InputSequence = 1, SkillId = "SK-MK-03", TargetId = "TGT_MISSING" });
+        Check(
+            "combat.target_not_found",
+            missingTarget.Failure?.Code == CombatErrorCodes.TargetNotFound,
+            missingTarget.Failure?.Code);
+
+        targets.Upsert(new CombatTarget(
+            "TGT_SELFCHECK_FAR", options.DefaultMapId, options.SpawnX + 50, options.SpawnY, 10));
+        var farCast = combat.Resolve(
+            NewPlayer("CHR_SELFCHECK_RANGE"),
+            new CombatCommand { InputSequence = 1, SkillId = "SK-MK-02", TargetId = "TGT_SELFCHECK_FAR" });
+        Check(
+            "combat.out_of_range",
+            farCast.Failure?.Code == CombatErrorCodes.OutOfRange,
+            farCast.Failure?.Code);
+
+        var noMpCast = combat.Resolve(
+            NewPlayer("CHR_SELFCHECK_MP", mp: 0),
+            new CombatCommand { InputSequence = 1, SkillId = "SK-MK-01" });
+        Check(
+            "combat.insufficient_resource",
+            noMpCast.Failure?.Code == CombatErrorCodes.InsufficientResource,
+            noMpCast.Failure?.Code);
+
+        Check("quest.catalog", questCatalog.Count == 1, $"count={questCatalog.Count}");
+
+        var questActor = NewPlayer("CHR_SELFCHECK_QUEST");
+        var questInitial = quests.GetState(questActor.CharacterId, "P00-01");
+        Check(
+            "quest.initial_available",
+            questInitial.State?.State == QuestStates.Available,
+            questInitial.State?.State);
+
+        var questAccepted = quests.Accept(questActor, "P00-01");
+        Check(
+            "quest.accept",
+            questAccepted.Accepted && questAccepted.State?.State == QuestStates.Active,
+            questAccepted.State?.State);
+
+        var badObjective = quests.RecordObjective(
+            questActor, "P00-01", "OBJ_SELFCHECK_UNKNOWN", 1);
+        Check(
+            "quest.unknown_objective",
+            badObjective.Failure?.Code == QuestErrorCodes.UnknownObjective,
+            badObjective.Failure?.Code);
+
+        var questProgressed = quests.RecordObjective(
+            questActor, "P00-01", "OBJ_P00_01_PACKAGES", 3);
+        Check(
+            "quest.ready_to_turn_in",
+            questProgressed.State?.State == QuestStates.ReadyToTurnIn &&
+            questProgressed.State.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 3,
+            questProgressed.State?.State);
+
+        var overProgress = quests.RecordObjective(
+            questActor, "P00-01", "OBJ_P00_01_PACKAGES", 10);
+        var overCount = overProgress.State?.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES");
+        Check(
+            "quest.progress_clamped",
+            overCount == 3,
+            overCount?.ToString());
+
+        var questCompleted = quests.TurnIn(questActor, "P00-01");
+        Check(
+            "quest.completed",
+            questCompleted.State?.State == QuestStates.Completed,
+            questCompleted.State?.State);
+
+        var reAccept = quests.Accept(questActor, "P00-01");
+        Check(
+            "quest.invalid_transition",
+            reAccept.Failure?.Code == QuestErrorCodes.InvalidTransition,
+            reAccept.Failure?.Code);
+
+        var unknownQuest = quests.GetState(questActor.CharacterId, "P99-99");
+        Check(
+            "quest.unknown_quest",
+            unknownQuest.Failure?.Code == QuestErrorCodes.UnknownQuest,
+            unknownQuest.Failure?.Code);
+
+        var inventoryActor = NewPlayer("CHR_SELFCHECK_INVENTORY");
+        var emptyInventory = inventory.GetSnapshot(inventoryActor.CharacterId);
+        Check(
+            "inventory.empty",
+            emptyInventory.InventoryRevision == 0 && emptyInventory.Items.Count == 0,
+            $"revision={emptyInventory.InventoryRevision}");
+
+        var granted = inventory.Apply(inventoryActor, new InventoryMutation
+        {
+            AddItems =
+            [
+                new ItemGrant
+                {
+                    TemplateId = "EQ-MK-CHEST-T1-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag,
+                    Durability = 100
+                }
+            ],
+            CurrencyDeltas = [new CurrencyDelta { CurrencyId = "COIN", Amount = 20 }]
+        });
+        Check(
+            "inventory.grant",
+            granted.IsSuccess &&
+            granted.Snapshot!.InventoryRevision == 1 &&
+            granted.Snapshot.Items.Count == 1 &&
+            granted.Snapshot.Currencies.Single().Amount == 20,
+            granted.ErrorCode ?? $"revision={granted.Snapshot?.InventoryRevision}");
+
+        var equipped = inventory.Apply(inventoryActor, new InventoryMutation
+        {
+            ExpectedRevision = 1,
+            AddItems =
+            [
+                new ItemGrant
+                {
+                    TemplateId = "EQ-MK-CHEST-T1-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Equipped,
+                    Slot = "CHEST",
+                    Durability = 100
+                }
+            ]
+        });
+        Check(
+            "inventory.equip",
+            equipped.IsSuccess &&
+            equipped.Snapshot!.InventoryRevision == 2 &&
+            equipped.Snapshot.Items.Count == 2,
+            equipped.ErrorCode ?? $"revision={equipped.Snapshot?.InventoryRevision}");
+
+        var slotClash = inventory.Apply(inventoryActor, new InventoryMutation
+        {
+            ExpectedRevision = 2,
+            AddItems =
+            [
+                new ItemGrant
+                {
+                    TemplateId = "EQ-MK-CHEST-T1-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Equipped,
+                    Slot = "CHEST",
+                    Durability = 100
+                }
+            ]
+        });
+        Check(
+            "inventory.slot_occupied",
+            slotClash.ErrorCode == InventoryErrorCodes.SlotOccupied,
+            slotClash.ErrorCode);
+
+        var missingItem = inventory.Apply(inventoryActor, new InventoryMutation
+        {
+            RemoveItems = [new ItemRemoval { InstanceId = "ITM_SELFCHECK_MISSING", Stack = 1 }]
+        });
+        Check(
+            "inventory.item_not_found",
+            missingItem.ErrorCode == InventoryErrorCodes.ItemNotFound,
+            missingItem.ErrorCode);
+
+        var overdraw = inventory.Apply(inventoryActor, new InventoryMutation
+        {
+            CurrencyDeltas = [new CurrencyDelta { CurrencyId = "COIN", Amount = -1000 }]
+        });
+        Check(
+            "inventory.insufficient_currency",
+            overdraw.ErrorCode == InventoryErrorCodes.InsufficientCurrency,
+            overdraw.ErrorCode);
+
+        var staleWrite = inventory.Apply(inventoryActor, new InventoryMutation
+        {
+            ExpectedRevision = 1,
+            CurrencyDeltas = [new CurrencyDelta { CurrencyId = "COIN", Amount = 1 }]
+        });
+        Check(
+            "inventory.revision_conflict",
+            staleWrite.ErrorCode == InventoryErrorCodes.RevisionConflict && staleWrite.Retryable,
+            staleWrite.ErrorCode);
+
+        Check(
+            "inventory.rejections_do_not_mutate",
+            inventory.GetSnapshot(inventoryActor.CharacterId).InventoryRevision == 2,
+            inventory.GetSnapshot(inventoryActor.CharacterId).InventoryRevision.ToString());
+
+        var bagItem = inventory.GetSnapshot(inventoryActor.CharacterId)
+            .Items.Single(item => item.Location == InventoryLocations.Bag);
+        var removed = inventory.Apply(inventoryActor, new InventoryMutation
+        {
+            RemoveItems = [new ItemRemoval { InstanceId = bagItem.InstanceId, Stack = 1 }]
+        });
+        Check(
+            "inventory.remove",
+            removed.IsSuccess &&
+            removed.Snapshot!.Items.Count == 1 &&
+            removed.Snapshot.InventoryRevision == 3,
+            removed.ErrorCode ?? $"revision={removed.Snapshot?.InventoryRevision}");
+
+        var teleportActor = NewPlayer("CHR_SELFCHECK_TELEPORT");
+        var badMapShape = teleport.Teleport(
+            teleportActor,
+            new TeleportCommand("BEN_MUA", options.SpawnX, options.SpawnY, TeleportReasons.Quest));
+        Check(
+            "teleport.invalid_map_payload",
+            badMapShape.ErrorCode == P1ErrorCodes.InvalidPayload,
+            badMapShape.ErrorCode);
+
+        var unknownMap = teleport.Teleport(
+            teleportActor,
+            new TeleportCommand("MAP_SELFCHECK_UNKNOWN", options.SpawnX, options.SpawnY, TeleportReasons.Quest));
+        Check(
+            "teleport.unknown_map",
+            unknownMap.ErrorCode == TeleportErrorCodes.InvalidMap,
+            unknownMap.ErrorCode);
+
+        maps.TryResolve(options.DefaultMapId, out var bounds);
+        var outside = teleport.Teleport(
+            teleportActor,
+            new TeleportCommand(options.DefaultMapId, bounds.XMax + 10, options.SpawnY, TeleportReasons.Quest));
+        Check(
+            "teleport.out_of_bounds",
+            outside.ErrorCode == TeleportErrorCodes.OutOfBounds,
+            outside.ErrorCode);
+
+        var badReason = teleport.Teleport(
+            teleportActor,
+            new TeleportCommand(options.DefaultMapId, options.SpawnX, options.SpawnY, "NOWHERE"));
+        Check(
+            "teleport.invalid_reason",
+            badReason.ErrorCode == TeleportErrorCodes.InvalidReason,
+            badReason.ErrorCode);
+
+        var prematureRespawn = teleport.Teleport(
+            teleportActor,
+            new TeleportCommand(options.DefaultMapId, options.SpawnX, options.SpawnY, TeleportReasons.DeathReturn));
+        Check(
+            "teleport.death_return_requires_death",
+            prematureRespawn.ErrorCode == TeleportErrorCodes.InvalidCondition,
+            prematureRespawn.ErrorCode);
+
+        var moved = teleport.Teleport(
+            teleportActor,
+            new TeleportCommand(options.DefaultMapId, 10, 5, TeleportReasons.Quest));
+        Check(
+            "teleport.success",
+            moved.IsSuccess &&
+            teleportActor.X == 10 &&
+            teleportActor.Y == 5 &&
+            moved.Snapshot!.Revision == 2,
+            moved.ErrorCode ?? $"x={teleportActor.X} revision={moved.Snapshot?.Revision}");
+
+        var defeated = NewPlayer("CHR_SELFCHECK_DEFEATED", hp: 0);
+        var respawn = teleport.Teleport(
+            defeated,
+            new TeleportCommand(options.DefaultMapId, options.SpawnX, options.SpawnY, TeleportReasons.DeathReturn));
+        Check(
+            "teleport.death_return",
+            respawn.IsSuccess && respawn.Snapshot!.Self.Hp == 0,
+            respawn.ErrorCode);
+
+        var failures = results.Count(result => !result.Passed);
+        foreach (var (name, passed, detail) in results)
+        {
+            if (passed)
+            {
+                logger.LogInformation("PASS {Check}", name);
+            }
+            else
+            {
+                logger.LogError("FAIL {Check}: {Detail}", name, detail);
+            }
+        }
+
+        logger.LogInformation(
+            "Service self-check: {Passed} passed, {Failed} failed, {Total} total.",
+            results.Count - failures,
+            failures,
+            results.Count);
+
+        return failures == 0 ? 0 : 1;
+    }
+}

@@ -232,9 +232,19 @@ python3 Server/Health/Smoke/smoke_p1.py http://127.0.0.1:5080
 
 Stop the background server process afterward. See `Implementation/Reports/QOD-04_verification_report.md` for the verification summary and OpenCode integration conditions.
 
+## Domain service self-check
+
+The four QOD-03 skeletons have no HTTP endpoints yet, so `server-smoke` exercises them in-process before starting the listener:
+
+```bash
+dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
+```
+
+The flag boots the DI container and canonical content, then runs 34 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the full `P00-01` quest flow through `COMPLETED`, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
+
 ## Manual verification
 
-`dotnet` and Unity are not installed in the current authoring environment. The `server-build` workflow compiles this project on .NET 10, and `server-smoke` runs the runtime checks above. Both Python validators pass locally. The table below remains the manual equivalent for a machine with the .NET SDK.
+`dotnet` and Unity are not installed in the current authoring environment. The `server-build` workflow compiles this project on .NET 10, and `server-smoke` runs the runtime checks above plus the domain self-check. Both Python validators pass locally. The table below remains the manual equivalent for a machine with the .NET SDK.
 
 | # | Step | Expected |
 |---|---|---|

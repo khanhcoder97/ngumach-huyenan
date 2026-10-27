@@ -5,9 +5,14 @@ using Server.Health.Gameplay.Combat;
 using Server.Health.Gameplay.Inventory;
 using Server.Health.Gameplay.Quests;
 using Server.Health.Gameplay.Teleport;
+using Server.Health.Smoke;
 using Server.Health.World;
 
-var builder = WebApplication.CreateBuilder(args);
+var selfCheck = args.Contains("--self-check", StringComparer.Ordinal);
+var builder = WebApplication.CreateBuilder(
+    selfCheck
+        ? args.Where(argument => !string.Equals(argument, "--self-check", StringComparison.Ordinal)).ToArray()
+        : args);
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
@@ -62,6 +67,11 @@ app.Logger.LogInformation("Loaded {SkillCount} combat skills.", combatSkills.Cou
 
 var quests = app.Services.GetRequiredService<IQuestCatalog>();
 app.Logger.LogInformation("Loaded quest definitions: {QuestCount}.", quests.Count);
+
+if (selfCheck)
+{
+    return ServiceSelfCheck.Run(app.Services, app.Logger);
+}
 
 const string CorrelationIdHeader = "X-Correlation-ID";
 const int MaxCorrelationIdLength = 64;
