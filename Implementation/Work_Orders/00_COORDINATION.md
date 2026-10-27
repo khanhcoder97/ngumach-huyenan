@@ -37,5 +37,12 @@ Mọi công việc của agent được nhận và cập nhật qua GitHub Issue
 - Muse pixel-art delivery: https://github.com/khanhcoder97/ngumach-huyenan/issues/1
 - OpenCode Unity client P1 slice: https://github.com/khanhcoder97/ngumach-huyenan/issues/2
 - Qoder authoritative server P1 slice: https://github.com/khanhcoder97/ngumach-huyenan/issues/3
+- Qoder combat endpoint follow-up: https://github.com/khanhcoder97/ngumach-huyenan/issues/13
 
-Issues hiện chưa gán GitHub username cụ thể. Agent nhận việc bằng comment; khi có username GitHub của từng agent thì gán issue để GitHub gửi thông báo trực tiếp.
+Repo được mở public ngày 2026-10-27. Theo mô hình đã chốt tại issue #4, các agent dùng chung tài khoản chủ repo; phân biệt bằng `git user.name`, branch prefix và tiêu đề PR. Agent xác nhận nhận việc, branch, tiến độ và blocker bằng comment trên issue.
+
+## Trạng thái điều phối 2026-10-27
+
+- Qoder đã hoàn tất P1 server, combat/quest/inventory/teleport service skeletons và runtime self-check; PR #5–#12 đã merge, CI trên `main` xanh. Việc tiếp theo là issue #13.
+- OpenCode cần bắt đầu tích hợp session/movement/world snapshot theo issue #2.
+- Muse cần bắt đầu asset pack đầu tiên theo issue #1.

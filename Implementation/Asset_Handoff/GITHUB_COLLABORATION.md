@@ -4,24 +4,21 @@
 
 Muse làm asset trên máy ảo riêng. Asset chỉ đi vào nhánh `main` qua GitHub Pull Request (PR), có manifest, preview và kiểm tra import Unity. OpenCode và Qoder tiếp tục làm mã nguồn ở nhánh riêng, không chờ quyền truy cập trực tiếp vào máy Muse.
 
-## Khởi tạo một lần bởi quản trị dự án
+## Truy cập repo
 
-1. Tạo GitHub repository riêng tư `NGUMACHHUYENAN` và thêm ba tài khoản Muse, OpenCode, Qoder quyền Write.
-2. Từ thư mục dự án hiện tại, gắn remote và đẩy baseline:
+Repo `khanhcoder97/ngumach-huyenan` hiện public. Các agent clone từ `main`; quyền ghi hiện dùng chung tài khoản chủ repo theo quyết định ở GitHub issue #4. Không đưa token vào issue, PR, source hoặc file cấu hình.
 
 ```powershell
-git remote add origin <GITHUB_REPOSITORY_URL>
-git add .
-git commit -m "chore: establish project baseline and collaboration workflow"
-git push -u origin main
+git clone https://github.com/khanhcoder97/ngumach-huyenan.git
+cd ngumach-huyenan
+git lfs install
+git config user.name "Muse"  # đổi thành OpenCode / Qoder theo agent
+git config user.email "khanhcoder97@users.noreply.github.com"
+git switch -c muse/p1-first-asset-pack  # OpenCode: opencode/p1-client-integration
+                                          # Qoder: qoder/qod-06-combat-endpoint
 ```
 
-3. Trên GitHub, bật branch protection cho `main`:
-   - Bắt buộc Pull Request.
-   - Cấm force push và xóa branch.
-   - Bắt buộc một review trước khi merge.
-   - Bắt buộc kiểm tra `content-validation` và `contract-validation` khi các workflow này được thêm vào CI.
-4. Điền tên GitHub thật vào `.github/CODEOWNERS.example`, sau đó đổi tên thành `.github/CODEOWNERS`.
+`git user.name` giúp nhận diện agent trong commit; branch prefix và tiêu đề PR là định danh bổ sung. Chỉ owner merge vào `main`. Nếu branch ruleset chưa bật, owner kiểm tra PR và yêu cầu CI xanh trước khi merge.
 
 ## Nhánh và phạm vi
 
@@ -59,7 +56,7 @@ Một bundle asset có thể được dùng bởi OpenCode khi và chỉ khi:
 - Yêu cầu thay đổi asset hoặc contract: tạo GitHub Issue với label `integration` rồi liên kết vào PR.
 - Thay đổi chặn tiến độ: ghi trong `Implementation/Work_Orders/Integration_Notes.md` và mở Issue cùng ngày.
 - OpenCode không merge asset PR trước khi kiểm tra Unity import; Muse không merge thay đổi C#; Qoder không merge thay đổi client/art.
-- Ba issue điều phối ban đầu: Muse #1, OpenCode #2, Qoder #3. Agent phải liên kết PR về issue tương ứng.
+- Issues điều phối: Muse #1, OpenCode #2, Qoder P1 #3, Qoder combat endpoint #13. Agent phải liên kết PR về issue tương ứng; khi scope tiếp diễn, tạo issue mới hoặc ghi rõ milestone kế tiếp trên issue.
 
 ## Khôi phục khi asset PR bị lỗi
 
