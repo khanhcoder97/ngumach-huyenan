@@ -47,7 +47,7 @@ Tạo `MAP_THANG_LONG` theo bản đồ thiết kế hiện có:
 - 3 tileset: `thang_long_ground`, `thang_long_architecture`, `thang_long_props`.
 - Tile palette và 3 map chunk minh họa: cổng nam, quảng trường/khán đài PvP, khu chợ và lò rèn.
 - Tạo minimap icon pixel cho cổng dịch chuyển, NPC, lò rèn, chợ, bang hội, nhiệm vụ, PvP.
-- Mỗi chunk có PNG overview, layer list và placement manifest để OpenCode dựng Tilemap.
+- Mỗi chunk có PNG overview, layer list và placement manifest để tích hợp Tilemap khi Unity workstream tiếp tục.
 
 ### MUSE-04: Quái, boss, thu thập
 
@@ -63,9 +63,13 @@ Theo ID canonical trong content, tạo roster theo thứ tự map đầu game:
 - HUD/UI art: frame status, minimap frame, skill slot, hotbar, inventory slot, equipment slot, button normal/hover/disabled, tooltip, modal panel.
 - UI chỉ cung cấp texture/9-slice/icon; OpenCode chịu trách nhiệm layout và xử lý tương tác.
 
-## Bàn giao qua GitHub`r`n`r`nTuân thủ `Implementation/Asset_Handoff/GITHUB_COLLABORATION.md`: làm trên branch `muse/<scope>`, commit asset qua Git LFS, cập nhật manifest và mở Asset Handoff PR. Không gửi ZIP hay asset rời cho agent khác.`r`n`r`n## Bàn giao cho các agent khác
+## Bàn giao qua GitHub
+
+Tuân thủ `Implementation/Asset_Handoff/GITHUB_COLLABORATION.md`: làm trên branch `muse/<scope>`, commit asset qua Git LFS, cập nhật manifest và mở Asset Handoff PR. Không gửi ZIP hay asset rời cho agent khác. CI kiểm tra manifest/PNG; engine import được ghi `unverified` cho đến khi có Unity-capable machine.
+
+## Bàn giao cho các agent khác
 
 - `Client/Assets/ArtManifests/muse_delivery_manifest.json` liệt kê đường dẫn, kích thước, PPU, pivot, animation state và trạng thái.
 - `Client/Assets/ArtManifests/muse_integration_notes.md` ghi asset nào thay thế placeholder nào.
-- Không ghi đè prefab/scene do OpenCode tạo.
+- Không ghi đè prefab/scene của Unity client workstream.
 

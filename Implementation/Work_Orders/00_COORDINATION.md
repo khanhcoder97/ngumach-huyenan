@@ -5,7 +5,7 @@ Tài liệu này là đầu mối điều phối. Mỗi agent chỉ sửa các k
 | Agent | Trách nhiệm chính | Tài liệu giao việc |
 |---|---|---|
 | Muse | Toàn bộ hình ảnh pixel art, animation, tilemap, VFX và UI art | `01_MUSE_PIXEL_ART.md` |
-| OpenCode | Unity client: gameplay runtime, điều khiển, networking client, UI logic | `02_OPENCODE_CLIENT.md` |
+| OpenCode | GitHub asset handoff validator và CI; Unity client chuyển thành backlog khi có máy build phù hợp | `02_OPENCODE_CLIENT.md` |
 | Qoder | ASP.NET Core authoritative server, gameplay systems, dữ liệu và kiểm thử | `03_QODER_SERVER_CONTENT.md` |
 
 ## Quy ước chung
@@ -35,7 +35,7 @@ Tài liệu này là đầu mối điều phối. Mỗi agent chỉ sửa các k
 Mọi công việc của agent được nhận và cập nhật qua GitHub Issues; không coi file work order trong máy local là thông báo giao việc. Agent comment vào issue để nhận việc, ghi branch, cập nhật tiến độ và báo blocker. Mỗi PR phải liên kết issue tương ứng; merge vào `main` chỉ sau review và kiểm tra thuộc phạm vi.
 
 - Muse pixel-art delivery: https://github.com/khanhcoder97/ngumach-huyenan/issues/1
-- OpenCode Unity client P1 slice: https://github.com/khanhcoder97/ngumach-huyenan/issues/2
+- OpenCode asset handoff validator: https://github.com/khanhcoder97/ngumach-huyenan/issues/2
 - Qoder authoritative server P1 slice: https://github.com/khanhcoder97/ngumach-huyenan/issues/3
 - Qoder combat endpoint follow-up: https://github.com/khanhcoder97/ngumach-huyenan/issues/13
 
@@ -44,5 +44,5 @@ Repo được mở public ngày 2026-10-27. Theo mô hình đã chốt tại iss
 ## Trạng thái điều phối 2026-10-27
 
 - Qoder đã hoàn tất P1 server, combat/quest/inventory/teleport service skeletons và runtime self-check; PR #5–#12 đã merge, CI trên `main` xanh. Việc tiếp theo là issue #13.
-- OpenCode cần bắt đầu tích hợp session/movement/world snapshot theo issue #2.
+- OpenCode cần triển khai asset handoff validator không cần Unity theo issue #2; client runtime được hoãn.
 - Muse cần bắt đầu asset pack đầu tiên theo issue #1.
