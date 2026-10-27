@@ -1,6 +1,6 @@
 # Ngu Mach Huyen An — Health Server
 
-Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritative movement slice, and the QOD-03 combat and quest service skeletons.
+Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritative movement slice, and the QOD-03 combat, quest, inventory and teleport service skeletons.
 
 ## Endpoints
 
@@ -152,6 +152,32 @@ No quest endpoint is exposed yet. The registered `IQuestService` is the server-s
 - `idempotencyKey` is validated but movement is not deduplicated in P1; the monotonic sequence is the replay guard. Economic actions will add idempotency records later.
 - `serverTick` is derived from a monotonic process clock at the canonical 20 ticks/second.
 
+## Inventory skeleton
+
+`IInventoryService` owns the authoritative per-character inventory. It is registered in DI but is not exposed over HTTP yet. `GetSnapshot` returns a payload shaped like `Implementation/Contracts/P1/InventorySnapshot.schema.json`.
+
+`Apply(session, InventoryMutation)` is a single all-or-nothing transaction:
+
+- Validation runs before any state changes. Character, template, instance, location, slot and currency identifiers follow the P1 patterns.
+- `expectedRevision` is optional. If present and stale, the call returns `revision_conflict` with `retryable = true` and the current snapshot. Otherwise the inventory revision increments exactly once.
+- Grants always create a new `ITM_<32 uppercase hex>` instance because the item catalog and its stack limits are not loaded yet; there is no automatic stack merging.
+- Removals address `instanceId`. An unknown instance returns `item_not_found`, over-removal returns `insufficient_items`, and the item version increments whenever its stack changes.
+- `EQUIPPED` slots must be unique. A taken slot returns `slot_occupied`.
+- Currency deltas are aggregated; a negative resulting balance returns `insufficient_currency`, and zero balances are omitted from snapshots.
+- Durability is caller-supplied and is not yet validated against item content.
+
+State is in memory and there is no seed inventory; a new character starts with no items and no currency.
+
+## Teleport skeleton
+
+`ITeleportService.Teleport(session, TeleportCommand)` is the authoritative teleport path. It is registered in DI but is not exposed over HTTP yet. The command is shaped like `Implementation/Contracts/P1/TeleportRequest.schema.json`.
+
+- `mapId` must match `^MAP_[A-Z0-9_]+$` and exist in `map_bounds.json`; an unknown map returns `invalid_map`.
+- Coordinates must be finite and inside that map's bounds. Teleport does not clamp; outside bounds returns `out_of_bounds`.
+- `reason` must be one of `QUEST`, `DEATH_RETURN`, `CITY_RETURN`, `ADMIN`. `DEATH_RETURN` requires `hp <= 0`; every other reason requires `hp > 0`, otherwise `invalid_condition`.
+- On success the session map, position and revision are updated under the session lock, and `LastMoveAtUtc` is reset so elapsed time before the teleport cannot be spent as movement.
+- Teleport does not revive, heal or reset the movement sequence; respawn and death behavior stay in separate services.
+
 ## Configuration (`appsettings.json`)
 
 | Key | Value | Source |
@@ -183,7 +209,7 @@ Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond
 | 422 | `invalid_map` | Session map is not in `map_bounds.json` |
 | 422 | `movement_too_far` | Defensive guard if a configured step exceeds `MaxStepDistanceWu` |
 
-All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and `correlationId`.
+All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and `correlationId`. The inventory and teleport service error codes listed above are domain results; they have no HTTP mapping yet.
 
 ## Manual verification
 
@@ -209,4 +235,6 @@ All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and
 - `entities` is always empty; the combat target registry starts empty and the combat, quest, inventory and teleport services are not exposed over HTTP.
 - Combat is a service skeleton with no endpoint: damage, hit chance, telegraphs, death and loot are not implemented, and `combat.effect` only records an accepted cast and its cooldown.
 - Quest state is in memory, has no endpoint, and only one canonical `QuestDefinition` (`P00-01`) is loaded. Rewards, level-band eligibility and multi-step graphs are not implemented.
+- Inventory has no item catalog, stack-limit enforcement, durability rules or seeded starting items.
+- Teleport uses map bounds only; there is no walkability, portal, cooldown or respawn logic.
 - Movement speed and starting HP/MP are slice defaults, not locked balance values.

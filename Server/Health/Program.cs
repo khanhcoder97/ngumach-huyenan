@@ -2,7 +2,9 @@ using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
 using Server.Health.Endpoints;
 using Server.Health.Gameplay.Combat;
+using Server.Health.Gameplay.Inventory;
 using Server.Health.Gameplay.Quests;
+using Server.Health.Gameplay.Teleport;
 using Server.Health.World;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,6 +46,9 @@ builder.Services.AddSingleton<IQuestCatalog>(serviceProvider =>
 });
 builder.Services.AddSingleton<IQuestStateStore, InMemoryQuestStateStore>();
 builder.Services.AddSingleton<IQuestService, InMemoryQuestService>();
+builder.Services.AddSingleton<IInventoryStateStore, InMemoryInventoryStateStore>();
+builder.Services.AddSingleton<IInventoryService, InMemoryInventoryService>();
+builder.Services.AddSingleton<ITeleportService, InMemoryTeleportService>();
 
 var app = builder.Build();
 
