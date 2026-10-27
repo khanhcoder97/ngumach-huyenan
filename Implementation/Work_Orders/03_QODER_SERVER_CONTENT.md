@@ -21,7 +21,7 @@ Xây dựng authoritative server slice đủ để client tạo session, di chuy
 ### QOD-01: Session và movement authoritative
 
 1. Giữ `GET /health` và correlation-ID middleware hiện có.
-2. `POST /p1/sessions`: tạo server session, player state, spawn hợp lệ trong `MAP_LANG_MOI`.
+2. `POST /p1/sessions`: tạo server session, player state, spawn hợp lệ trong `MAP_BEN_MUA`.
 3. `POST /p1/move`: kiểm tra session, sequence, map, movement distance/tick và map bounds; clamp/reject có mã lỗi rõ ràng.
 4. `GET /p1/world/{sessionId}`: trả `WorldSnapshot` authoritative mới nhất.
 5. Load map bounds từ `Implementation/Content/map_bounds.json`, không hard-code toàn bộ bounds.

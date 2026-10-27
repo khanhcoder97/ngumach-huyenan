@@ -182,7 +182,7 @@ State is in memory and there is no seed inventory; a new character starts with n
 
 | Key | Value | Source |
 |---|---|---|
-| `P1World:DefaultMapId` | `MAP_BEN_MUA` | Canonical P1 map (replaces the stale `MAP_LANG_MOI` reference in the work order) |
+| `P1World:DefaultMapId` | `MAP_BEN_MUA` | Canonical P1 map |
 | `P1World:SpawnX` / `SpawnY` | `18` / `0` | `MapDefinition/MAP_BEN_MUA.json` spawn point |
 | `P1World:MoveSpeedWuPerSecond` | `6.0` | **Provisional** slice value; not yet locked in production data |
 | `P1World:MaxStepSeconds` | `0.25` | Rejects long-frame jumps |
@@ -211,9 +211,30 @@ Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond
 
 All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and `correlationId`. The inventory and teleport service error codes listed above are domain results; they have no HTTP mapping yet.
 
+## Runtime smoke test
+
+The `server-smoke` GitHub Actions workflow builds the server, starts it on `127.0.0.1:5080`, and runs `Server/Health/Smoke/smoke_p1.py`. The script uses only the Python standard library and verifies:
+
+- `/health` returns `200` and echoes `X-Correlation-ID`.
+- Session creation returns `201`, a `Location` header, the canonical spawn and `revision=1`.
+- A valid move advances `x`, returns `revision=2` and keeps `y` unchanged.
+- Replaying that sequence returns `409 stale_sequence`; the snapshot position and revision do not change.
+- Wrong character, missing session header, unknown session and a 31-character `requestId` return the expected errors.
+- A later move with sequence `2` succeeds, proving rejected requests did not consume the sequence.
+
+Run the same flow locally:
+
+```bash
+dotnet build Server/Health/Health.csproj --configuration Release
+(cd Server/Health && dotnet bin/Release/net10.0/Health.dll --urls http://127.0.0.1:5080) &
+python3 Server/Health/Smoke/smoke_p1.py http://127.0.0.1:5080
+```
+
+Stop the background server process afterward. See `Implementation/Reports/QOD-04_verification_report.md` for the verification summary and OpenCode integration conditions.
+
 ## Manual verification
 
-`dotnet` and Unity are not installed in the current authoring environment. The `server-build` GitHub Actions workflow compiles this project on .NET 10 and passes; the runtime table below still needs to be run on a machine with the .NET SDK. Both Python validators pass locally.
+`dotnet` and Unity are not installed in the current authoring environment. The `server-build` workflow compiles this project on .NET 10, and `server-smoke` runs the runtime checks above. Both Python validators pass locally. The table below remains the manual equivalent for a machine with the .NET SDK.
 
 | # | Step | Expected |
 |---|---|---|
