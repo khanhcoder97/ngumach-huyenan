@@ -50,7 +50,7 @@ public static class ServiceSelfCheck
 
         var combatActor = NewPlayer("CHR_SELFCHECK_COMBAT");
         var badSkill = combat.Resolve(
-            combatActor, new CombatCommand { InputSequence = 1, SkillId = "SK-MK-99" });
+            combatActor, new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-99" });
         Check(
             "combat.invalid_skill_input",
             badSkill.Failure?.Code == P1ErrorCodes.InvalidPayload,
@@ -59,7 +59,7 @@ public static class ServiceSelfCheck
         var wrongClass = NewPlayer(
             "CHR_SELFCHECK_CLASS", classId: "CLASS_LUYEN_TAM");
         var wrongClassCast = combat.Resolve(
-            wrongClass, new CombatCommand { InputSequence = 1, SkillId = "SK-MK-01" });
+            wrongClass, new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-01" });
         Check(
             "combat.class_gate",
             wrongClassCast.Failure?.Code == CombatErrorCodes.SkillNotAvailable,
@@ -68,14 +68,14 @@ public static class ServiceSelfCheck
         var staleActor = NewPlayer("CHR_SELFCHECK_STALE");
         staleActor.LastInputSequence = 1;
         var staleCast = combat.Resolve(
-            staleActor, new CombatCommand { InputSequence = 1, SkillId = "SK-MK-01" });
+            staleActor, new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-01" });
         Check(
             "combat.stale_sequence",
             staleCast.Failure?.Code == P1ErrorCodes.StaleSequence,
             staleCast.Failure?.Code);
 
         var selfCast = combat.Resolve(
-            combatActor, new CombatCommand { InputSequence = 1, SkillId = "SK-MK-01" });
+            combatActor, new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-01" });
         Check(
             "combat.self_cast",
             selfCast.Accepted &&
@@ -86,7 +86,7 @@ public static class ServiceSelfCheck
             $"mp={combatActor.Mp} revision={combatActor.Revision}");
 
         var cooldownCast = combat.Resolve(
-            combatActor, new CombatCommand { InputSequence = 2, SkillId = "SK-MK-01" });
+            combatActor, new CombatCommand { AimX = 0, AimY = 0, InputSequence = 2, SkillId = "SK-MK-01" });
         Check(
             "combat.cooldown",
             cooldownCast.Failure?.Code == CombatErrorCodes.CooldownActive,
@@ -94,7 +94,7 @@ public static class ServiceSelfCheck
 
         var missingTarget = combat.Resolve(
             NewPlayer("CHR_SELFCHECK_TARGET"),
-            new CombatCommand { InputSequence = 1, SkillId = "SK-MK-03", TargetId = "TGT_MISSING" });
+            new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-03", TargetId = "TGT_MISSING" });
         Check(
             "combat.target_not_found",
             missingTarget.Failure?.Code == CombatErrorCodes.TargetNotFound,
@@ -104,7 +104,7 @@ public static class ServiceSelfCheck
             "TGT_SELFCHECK_FAR", options.DefaultMapId, options.SpawnX + 50, options.SpawnY, 10));
         var farCast = combat.Resolve(
             NewPlayer("CHR_SELFCHECK_RANGE"),
-            new CombatCommand { InputSequence = 1, SkillId = "SK-MK-02", TargetId = "TGT_SELFCHECK_FAR" });
+            new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-02", TargetId = "TGT_SELFCHECK_FAR" });
         Check(
             "combat.out_of_range",
             farCast.Failure?.Code == CombatErrorCodes.OutOfRange,
@@ -112,7 +112,7 @@ public static class ServiceSelfCheck
 
         var noMpCast = combat.Resolve(
             NewPlayer("CHR_SELFCHECK_MP", mp: 0),
-            new CombatCommand { InputSequence = 1, SkillId = "SK-MK-01" });
+            new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-01" });
         Check(
             "combat.insufficient_resource",
             noMpCast.Failure?.Code == CombatErrorCodes.InsufficientResource,
