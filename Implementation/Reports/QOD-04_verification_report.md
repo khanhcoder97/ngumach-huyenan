@@ -96,7 +96,8 @@ No production code, contracts, content or dependencies changed.
 
 ## Remaining work
 
-1. Owner review and merge of PRs #6–#10 in order (#6 first; #7–#10 are stacked on it).
-2. After #6 merges, retarget #7–#10 to `main` and re-run checks.
-3. Expand runtime tests when endpoints for combat/quest/inventory/teleport exist.
-4. Replace in-memory persistence and add authentication/transport only after P1 acceptance.
+1. Owner review and merge of PRs #6–#10, starting with #6.
+2. After #6 merges, retarget #7–#10 to `main`. A local merge simulation shows #7 and #10 merge cleanly; #8 conflicts in `P1Validation.cs`, `Program.cs`, `README.md`, and #9 conflicts in `Program.cs`, `README.md`. Rebase/resolve in order #7 → #8 → #9 and re-run every check.
+3. Add a no-package runtime harness for the combat/quest/inventory/teleport services; they currently have compile-time verification only.
+4. Expand runtime tests when endpoints for combat/quest/inventory/teleport exist.
+5. Replace in-memory persistence and add authentication/transport only after P1 acceptance.
