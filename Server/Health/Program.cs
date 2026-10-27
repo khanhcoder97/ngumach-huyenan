@@ -70,7 +70,8 @@ app.Logger.LogInformation("Loaded quest definitions: {QuestCount}.", quests.Coun
 
 if (selfCheck)
 {
-    return ServiceSelfCheck.Run(app.Services, app.Logger);
+    Environment.ExitCode = ServiceSelfCheck.Run(app.Services, app.Logger);
+    return;
 }
 
 const string CorrelationIdHeader = "X-Correlation-ID";
