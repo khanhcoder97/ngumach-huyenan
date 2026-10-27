@@ -3,7 +3,7 @@
 **Trạng thái:** brief sản xuất, chưa phải concept đã duyệt hay asset production.  
 **Gói liên quan:** `ART-P1-002` character sheet, `ART-P1-003` combat clips, `ART-P1-017` skill VFX trong `Art_Production_Queue_P1_vi.md`.
 
-**Hướng concept đang review:** pixel-art turnaround theo ảnh tham chiếu người dùng (chibi kiếm sĩ; tóc nâu; giáp bạc viền vàng; choàng xanh; kiếm thẳng). Hai SVG concept cũ đã chuyển khỏi Unity Assets vào `docs/production/Art_Concepts_History/`, chỉ lưu lịch sử và không được dùng làm runtime/nguồn hình để upscale. Sprite sheet pixel art production sẽ được tạo theo `Pixel_Art_Production_Standard_vi.md`; hiện chưa có công cụ tạo ảnh tích hợp khả dụng trong phiên.
+**Tạo hình đã chốt (chủ dự án, 2026-10-27, DEC-015):** chibi kiếm sĩ tóc xanh gai; kiếm vàng bản lớn, guard gắn ngọc lục giác; áo choàng đỏ; áo teal viền trắng; khóa thắt lưng lục giác vàng; giáp thép đen (gunmetal) viền vàng ấm ở vai, găng tay, ống chân và ủng. Hai SVG concept cũ đã chuyển khỏi Unity Assets vào `docs/production/Art_Concepts_History/`, chỉ lưu lịch sử và không được dùng làm runtime/nguồn hình để upscale. Sheet đi bộ draft v2 đã được Muse dựng theo tạo hình này và qua audit (48/48 cell, 6 frame khác nhau mỗi hàng, không tái dùng frame giữa các hàng, SW là gương khớp tuyệt đối của SE); đang chờ duyệt cuối trước khi vào repo.
 
 ## 1. Nguồn chuẩn và ranh giới
 
@@ -14,19 +14,19 @@
 
 ## 2. Silhouette và model sheet
 
-**Kích thước chuẩn:** bounds actor cao 5 WU (2,5 m), capsule gameplay cao 3,6 WU; sprite hero cao khoảng 100 source px ở 20 PPU, hiển thị khoảng 300 px tại 1080p scale 3×. Dùng page sprite sheet lossless tối đa 1024² cho hero; frame table/pivot/anchor được ghi riêng. Vẽ turnaround front/side/back, portrait, swatches, props, năm biểu cảm và scale figure cạnh NPC/quái chuẩn bằng pixel art.
+**Kích thước chuẩn:** bounds actor cao 5 WU (2,5 m), capsule gameplay cao 3,6 WU (không đổi theo art). Sheet gameplay dùng cell 48×64 source px ở 20 PPU, lưới 8 hướng × 6 frame = 288×512, pivot bottom-center; hiển thị 192 px tại 1080p scale 3×. Turnaround front/side/back, portrait, swatches, props, năm biểu cảm và scale figure cạnh NPC/quái chuẩn vẫn là deliverable thiết kế bổ sung bằng pixel art.
 
-**Silhouette đề xuất:** chibi đầu lớn/thân gọn (đầu khoảng 40% chiều cao sprite), tóc nâu, vai giáp tròn, tay chân ngắn, ủng chắc. Giáp bạc viền vàng và áo choàng xanh tạo mảng tương phản; biểu tượng lục giác nhỏ ở ngực/lưng. Tư thế kiếm sĩ bình tĩnh, một tay gần chuôi, lưỡi kiếm tách nền và không chồng lên chân. Mỗi frame dùng pixel cluster gọn, outline 1–2 pixel nguồn, không anti-aliasing.
+**Silhouette đã chốt:** chibi đầu lớn/thân gọn, tóc xanh gai dựng, vai giáp thép đen góc cạnh, tay chân ngắn, ủng chắc. Kiếm vàng bản lớn là điểm nhấn silhouette chính; áo choàng đỏ bay sau vai tạo mảng tương phản. Tư thế sẵn sàng chiến đấu, biểu cảm lạnh và quyết tâm (hướng NGẦU đã chốt, không mềm/dễ thương). Mỗi frame dùng pixel cluster gọn, outline 1–2 pixel nguồn, không anti-aliasing.
 
-**Trang phục đề xuất:** giáp bạc chia mảng lớn ở ngực, vai, cẳng tay, hông và ống chân; viền vàng ấm; khớp xanh than để tách lớp. Áo choàng xanh lam có phù hiệu lục giác nguyên bản ở lưng. Thắt lưng/bao kiếm gọn; sprite sheet có thể tách layer nhưng từng layer phải giữ pixel grid và không làm thay đổi collision/hitbox.
+**Trang phục đã chốt:** giáp thép đen (gunmetal) ở vai, găng tay, ống chân và ủng, viền vàng ấm; áo teal viền trắng; thắt lưng có khóa lục giác vàng; áo choàng đỏ. Sprite sheet có thể tách layer nhưng từng layer phải giữ pixel grid và không làm thay đổi collision/hitbox.
 
-**Vũ khí:** kiếm thẳng bản mảnh, chuôi bọc tối để tách khỏi bàn tay, guard gợi motif lục giác nhưng không phát sáng ở trạng thái thường. Phân lớp sprite hoặc vẽ variant riêng để thay ngoại trang `COS-WP-01` mà không đổi anchor, hitbox hoặc timing.
+**Vũ khí:** kiếm vàng bản lớn (broad sword), guard gắn ngọc lục giác, không phát sáng ở trạng thái thường. Đây là tạo hình thị giác đã chốt; thông số gameplay của class (kiếm thẳng hệ Kim) giữ nguyên theo combat spec. Phân lớp sprite hoặc vẽ variant riêng để thay ngoại trang `COS-WP-01` mà không đổi anchor, hitbox hoặc timing.
 
-**Palette key:** xanh lam cho choàng; bạc lạnh cho giáp; vàng ấm cho viền; nâu hạt dẻ cho tóc; xanh than cho khớp/bao kiếm; da ấm. Tối đa 24–40 màu cho bộ nhân vật; dùng palette ramp pixel và highlight theo cụm. Trên nền mưa xanh Bến Mưa, viền sáng quanh choàng và tương phản bạc/xanh phải giữ silhouette; LowFX giữ palette và cue.
+**Palette key:** đỏ cho choàng; vàng cho kiếm và khóa thắt lưng; thép đen (gunmetal) cho giáp; vàng ấm cho viền giáp; xanh dương cho tóc; teal cho áo; da ấm. Tối đa 24–40 màu cho bộ nhân vật; dùng palette ramp pixel và highlight theo cụm. Trên nền mưa xanh Bến Mưa, mảng đỏ của choàng và vàng của kiếm phải giữ silhouette; LowFX giữ palette và cue.
 
 ## 3. Sprite sheet, layer và anchor
 
-- Sprite sheet dùng frame pixel vẽ thủ công; variant đầu/tóc, thân, vai, tay, giáp hông, ống chân, choàng và phụ kiện chỉ tách layer khi composite giữ nguyên pixel grid/pivot. Choàng có 2–3 frame phụ để gợi chuyển động, không bone-warp. Tách kiếm/bao kiếm hoặc vẽ variant; anchor tọa độ pixel để đổi vũ khí.
+- Sprite sheet gameplay: lưới 8 hàng hướng (N, NE, E, SE, S, SW, W, NW) × 6 frame walk, cell 48×64, nền trong suốt; sản xuất theo quy trình strip từng hướng → ghép bằng code → audit đếm pixel (xem `Pixel_Art_Production_Standard_vi.md` §8). Variant đầu/tóc, thân, vai, tay, giáp hông, ống chân, choàng và phụ kiện chỉ tách layer khi composite giữ nguyên pixel grid/pivot. Choàng có 2–3 frame phụ để gợi chuyển động, không bone-warp. Tách kiếm/bao kiếm hoặc vẽ variant; anchor tọa độ pixel để đổi vũ khí.
 - Bắt buộc có anchor tay cầm, đầu kiếm, hông/bao kiếm, chân và tâm thân để gắn VFX/đạo cụ. Tên socket kỹ thuật do engineering chốt trong prefab; không biến tên socket thành content ID.
 - Collision capsule không đổi theo frame/ngoại trang. Sprite animation không quyết định vị trí mạng, trúng đòn, hướng tấn công hoặc reward.
 - Sheet phải có silhouette trung tính, đồng minh và mục tiêu. Outline đội/target là layer UI/render riêng, không tô lại texture gốc.
@@ -55,7 +55,7 @@
 
 **Đường dẫn đề xuất:** `Assets/Art/Characters/CLASS_MINH_KIEM/` với source pixel PNG/layers, atlas pages lossless ≤1024², palette, frame/pivot/anchor table, thumbnail, import preset và preview nền trong suốt; ID leaf giữ nguyên theo registry.
 
-Nghiệm thu ART-P1-002/003 khi: turnaround/palette được duyệt; sprite cao xấp xỉ 100 source px/300 output px ở 1080p scale 3×; cạnh pixel sạch, không shimmer/bleed; kiếm thay được độc lập; 3 kỹ năng có pose/cue đúng spec; collision không bị frame art điều khiển; kiểm tra 16:9/20:9/mobile và integer scale; LowFX vẫn truyền đạt đỡ chuẩn, hướng lướt, ba nhát chém và telegraph boss.
+Nghiệm thu ART-P1-002/003 khi: tạo hình/palette đã chốt được duyệt; sheet đạt audit đếm pixel (đủ 48/48 cell, 6 frame khác nhau mỗi hàng, không tái dùng frame giữa các hàng, hàng gương khớp tuyệt đối); cạnh pixel sạch, không shimmer/bleed; kiếm thay được độc lập; 3 kỹ năng có pose/cue đúng spec; collision không bị frame art điều khiển; kiểm tra 16:9/20:9/mobile và integer scale; LowFX vẫn truyền đạt đỡ chuẩn, hướng lướt, ba nhát chém và telegraph boss.
 
 ## 7. Cần xử lý trước khi khóa clip
 

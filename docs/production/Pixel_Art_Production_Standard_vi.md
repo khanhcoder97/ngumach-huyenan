@@ -1,13 +1,13 @@
 # CHUẨN SẢN XUẤT PIXEL ART — NGŨ MẠCH: HUYỀN ẤN
 
-**Trạng thái:** art direction hiện hành theo quyết định chủ dự án ngày 2026-10-26; thay toàn bộ định hướng HD vẽ tay/rig của tài liệu cũ.  
+**Trạng thái:** art direction hiện hành theo quyết định chủ dự án ngày 2026-10-26; **bản sửa 2026-10-27 theo DEC-015** khóa định dạng sheet nhân vật 8 hướng, cell 48×64 (Mẫu A) và tạo hình Minh Kiếm đã chốt, thay các dòng mâu thuẫn tương ứng của bản 2026-10-26.  
 **Phạm vi:** nhân vật, quái, boss, map, VFX, thời tiết, icon, HUD, menu, portrait, preview ngoại trang và mọi hình runtime.  
 **Nguồn chuẩn:** tài liệu này khóa cách dựng/render; các spec domain giữ nguyên ID, gameplay, tọa độ WU, thời gian server và nội dung.
 
 ## 1. Ngôn ngữ hình ảnh
 
 - Pixel art 2D ngang, vẽ pixel thủ công theo cụm màu có chủ ý; silhouette lớn, tương phản rõ, chi tiết trang phục/kiến trúc gợi chất fantasy võ hiệp Lạc Châu nguyên bản.
-- Tham chiếu hình ảnh người chơi cung cấp ngày 2026-10-26: tỉ lệ chibi kiếm sĩ, tóc nâu, giáp bạc viền vàng, áo choàng xanh và kiếm. Dùng như hướng mỹ thuật tổng quát; không sao chép nhân vật/tên/huy hiệu cụ thể trong ảnh.
+- Tham chiếu tạo hình đã chốt ngày 2026-10-27 (DEC-015): chibi kiếm sĩ tóc xanh gai, kiếm vàng bản lớn với guard gắn ngọc lục giác, áo choàng đỏ, áo teal viền trắng, khóa thắt lưng lục giác vàng, giáp thép đen (gunmetal) viền vàng ấm. Dùng như hướng mỹ thuật tổng quát; không sao chép nhân vật/tên/huy hiệu cụ thể trong ảnh tham chiếu.
 - Không vector line art, tranh raster HD được thu nhỏ, AI upscale, blur, anti-aliasing, gradient mượt, normal-map lighting hoặc skeletal deformation làm biến dạng cụm pixel. Ánh sáng/gradient chỉ được vẽ thành dải pixel/banding hoặc dithering có kiểm soát.
 - Màu là một phần tín hiệu nhưng không phải tín hiệu duy nhất. Telegraph, đội, rarity và trạng thái luôn khác nhau cả về silhouette, pattern, icon hoặc motion.
 - Giữ rào chắn nguyên bản: không lấy hoặc tái dựng sprite, UI, tên riêng, âm thanh hay hình nhận diện từ KPAH/JAR.
@@ -20,7 +20,7 @@
 | Pixels Per Unit | 20 px/WU; 1 WU vẫn bằng 0,5 m |
 | Base camera view | 32×18 WU ở 16:9 |
 | World pixel step | 0,05 WU; render origin/camera/sprite pivot snap vào lưới này |
-| Hero | actor bounds cao 5 WU; sprite thường 96–112 source px có trim/pivot; target khoảng 300 screen px ở output 1920×1080 |
+| Hero | actor bounds cao 5 WU, capsule gameplay 3,6 WU (không đổi); sheet nhân vật dùng cell 48×64 source px, pivot bottom-center; hiển thị 192 screen px ở output 1920×1080 (scale 3×) |
 | Tile art | tile nền chuẩn 16×16 source px (0,8 WU); module lớn là bội nguyên của tile, placement gameplay tiếp tục dùng WU |
 
 Unity dùng URP 2D + Pixel Perfect Camera, Reference Resolution 640×360, Assets Pixels Per Unit 20, integer upscale; đầu ra 720p/1080p/1440p lần lượt dùng scale 2×/3×/4×. Tỉ lệ không chia hết dùng integer viewport có letterbox/pillarbox; không kéo scale phân số lên sprite. Với 20:9 landscape giữ 360 logical pixel chiều cao và mở rộng chiều ngang; vùng gameplay/camera không được cấp lợi thế đối kháng riêng cho thiết bị. Portrait dùng layout UI riêng, không ép xoay/scale sprite.
@@ -36,7 +36,7 @@ Unity dùng URP 2D + Pixel Perfect Camera, Reference Resolution 640×360, Assets
 ## 4. Animation, camera và combat readability
 
 - Animation vẽ frame-by-frame. Idle 4–6 frame ở 6–8 fps; walk/run 6–8 frame ở 8–12 fps; hit/reaction 2–4 frame; kỹ năng chủ lực 5–10 frame cho từng pha. Giữ thời gian gameplay theo spec và server tick; không đổi thời lượng/collision theo số frame vẽ.
-- Gameplay camera là side-on; di chuyển/trận chiến có sprite trái/phải. Có pose front/back/side bổ sung cho menu, preview, hội thoại khi content cần; không bắt buộc 8-way sheet.
+- Gameplay dùng sprite sheet **8 hướng**, thứ tự hàng `N, NE, E, SE, S, SW, W, NW` (DEC-015, Mẫu A). Walk: 6 frame/hướng ở 8 fps, loop, pivot bottom-center. Hướng đối xứng được phép lật gương bằng code (ví dụ SW từ SE) nhưng chỉ nghiệm thu khi audit xác nhận khớp tuyệt đối từng pixel. Pose front/back/side cho menu, preview, hội thoại lấy từ chính các hàng của sheet hoặc vẽ bổ sung khi content cần.
 - Gameplay collider, attack shape, range, movement, hit result và reward không được lấy từ opaque sprite bounds/frame event. Chỉ vẽ cue; server xác nhận kết quả. Pivot/foot contact ổn định giữa frame để nhân vật không rung.
 - Hạn chế shake theo pixel step và thời lượng trong Combat spec. Không subpixel-scroll nền gameplay: camera snap theo pixel; parallax dùng hệ số di chuyển nhưng vị trí render cuối vẫn lượng tử hóa.
 
@@ -60,4 +60,4 @@ Mỗi asset ghi `asset_id`, entity/map/skill link, source PNG/layer, cell/frame 
 
 - Giữ nguyên schema, ID, map WU, spawn/gather placement, quest, combat balance, network/server contracts và nội dung. Thay visual export, animation representation, camera render, import preset, UI art và tiêu chí nghiệm thu.
 - Các concept SVG cũ của Minh Kiếm chỉ là hồ sơ ý tưởng lịch sử, không phải art source/runtime; thay bằng sprite concept pixel-art trước bước model/animation production.
-- Trình tạo ảnh tích hợp chưa khả dụng trong phiên này. Chưa tạo/gán sprite raster production; dùng CLI image generation chỉ khi được chủ dự án xác nhận rõ phương án CLI và máy đã có `OPENAI_API_KEY`. Nghệ sĩ có thể tạo source pixel art thủ công theo chuẩn này.
+- Quy trình sản xuất của Muse (DEC-015): sinh ảnh theo từng strip một hướng, ghép sheet bằng code theo đúng lưới cell, rồi **audit bằng đếm pixel** trước khi gọi là đạt — đủ số cell theo kế hoạch, mọi frame trong một hàng khác nhau, không tái dùng frame giữa các hàng, hàng gương phải khớp tuyệt đối. Bản draft lưu ở workspace của Muse; chỉ sau khi chủ dự án duyệt mới bàn giao vào repo bằng nhánh `muse/` + PR theo quy trình handoff.
