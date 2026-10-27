@@ -47,6 +47,12 @@ public static class P1Validation
     private static readonly Regex SkillIdPattern =
         new(@"^SK-MK-0[1-3]$", RegexOptions.CultureInvariant);
 
+    private static readonly Regex QuestIdPattern =
+        new(@"^[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{2}$", RegexOptions.CultureInvariant);
+
+    private static readonly Regex ObjectiveIdPattern =
+        new(@"^OBJ_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
+
     public static bool IsHex32(string? value)
     {
         if (value is null || value.Length != 32)
@@ -75,6 +81,12 @@ public static class P1Validation
 
     public static bool IsSkillId(string? value) =>
         value is not null && SkillIdPattern.IsMatch(value);
+
+    public static bool IsQuestId(string? value) =>
+        value is not null && QuestIdPattern.IsMatch(value);
+
+    public static bool IsObjectiveId(string? value) =>
+        value is not null && ObjectiveIdPattern.IsMatch(value);
 
     public static bool TryParseUtc(string? value, out DateTimeOffset parsed)
     {

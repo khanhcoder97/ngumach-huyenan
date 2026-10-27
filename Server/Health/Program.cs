@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
 using Server.Health.Endpoints;
 using Server.Health.Gameplay.Combat;
+using Server.Health.Gameplay.Quests;
 using Server.Health.World;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +34,16 @@ builder.Services.AddSingleton<InMemoryCombatTargetProvider>();
 builder.Services.AddSingleton<ICombatTargetProvider>(
     serviceProvider => serviceProvider.GetRequiredService<InMemoryCombatTargetProvider>());
 builder.Services.AddSingleton<ICombatService, InMemoryCombatService>();
+builder.Services.AddSingleton<IQuestCatalog>(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    var directory = QuestCatalogLoader.DiscoverDirectory(
+        configuration, environment.ContentRootPath);
+    return QuestCatalogLoader.Load(directory);
+});
+builder.Services.AddSingleton<IQuestStateStore, InMemoryQuestStateStore>();
+builder.Services.AddSingleton<IQuestService, InMemoryQuestService>();
 
 var app = builder.Build();
 
@@ -43,6 +54,9 @@ app.Logger.LogInformation("Loaded map bounds for {MapCount} maps.", mapBounds.Co
 
 var combatSkills = app.Services.GetRequiredService<ICombatSkillCatalog>();
 app.Logger.LogInformation("Loaded {SkillCount} combat skills.", combatSkills.Count);
+
+var quests = app.Services.GetRequiredService<IQuestCatalog>();
+app.Logger.LogInformation("Loaded quest definitions: {QuestCount}.", quests.Count);
 
 const string CorrelationIdHeader = "X-Correlation-ID";
 const int MaxCorrelationIdLength = 64;
