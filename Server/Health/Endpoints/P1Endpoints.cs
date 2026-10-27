@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
 using Server.Health.Contracts;
+using Server.Health.Gameplay.Combat;
 using Server.Health.World;
 
 namespace Server.Health.Endpoints;
@@ -15,6 +16,7 @@ public static class P1Endpoints
     {
         app.MapPost("/p1/sessions", CreateSessionAsync);
         app.MapPost("/p1/move", MoveAsync);
+        app.MapPost("/p1/combat", CombatAsync);
         app.MapGet("/p1/world/{sessionId}", GetWorld);
         return app;
     }
@@ -263,12 +265,131 @@ public static class P1Endpoints
         return P1Results.Success(requestId, session.SessionId, snapshot);
     }
 
+    private static async Task<IResult> CombatAsync(
+        HttpContext context,
+        ISessionStore sessions,
+        ICombatService combat,
+        ServerClock clock,
+        ILoggerFactory loggerFactory)
+    {
+        var requestId = NewRequestId();
+
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge)
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status413PayloadTooLarge,
+                P1ErrorCodes.InvalidPayload, ["body"]);
+        }
+
+        if (string.IsNullOrWhiteSpace(body) || !context.Request.HasJsonContentType())
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status400BadRequest,
+                P1ErrorCodes.InvalidPayload, ["body"]);
+        }
+
+        CombatEnvelope? envelope;
+        try
+        {
+            envelope = JsonSerializer.Deserialize<CombatEnvelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status400BadRequest,
+                P1ErrorCodes.InvalidPayload, ["body"]);
+        }
+
+        if (envelope?.RequestId is { } incomingRequestId &&
+            P1Validation.IsHex32(incomingRequestId))
+        {
+            requestId = incomingRequestId;
+        }
+
+        var fieldErrors = P1Validation.ValidateCombatEnvelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status400BadRequest,
+                P1ErrorCodes.InvalidPayload, fieldErrors);
+        }
+
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status400BadRequest,
+                P1ErrorCodes.InvalidPayload, ["X-Session-ID"]);
+        }
+
+        var session = sessions.Find(sessionId);
+        if (session is null)
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status404NotFound,
+                P1ErrorCodes.SessionNotFound, ["X-Session-ID"]);
+        }
+
+        if (!string.Equals(envelope!.CharacterId, session.CharacterId, StringComparison.Ordinal))
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status400BadRequest,
+                P1ErrorCodes.InvalidPayload, ["characterId"], session.Revision);
+        }
+
+        var payload = envelope.Payload!;
+        var outcome = combat.Resolve(session, new CombatCommand
+        {
+            InputSequence = payload.InputSequence,
+            SkillId = payload.SkillId,
+            TargetId = payload.TargetId,
+            AimX = payload.AimX,
+            AimY = payload.AimY,
+            ClientTimeUtc = payload.ClientTimeUtc
+        });
+
+        var logger = loggerFactory.CreateLogger("P1.Combat");
+        if (outcome.Accepted && outcome.Event is { } combatEvent)
+        {
+            logger.LogDebug(
+                "Accepted {SkillId} cast sequence {Sequence} for {SessionId}",
+                payload.SkillId, payload.InputSequence, session.SessionId);
+
+            return P1Results.CombatSuccess(requestId, session.SessionId, combatEvent);
+        }
+
+        var failure = outcome.Failure!;
+        logger.LogDebug(
+            "Rejected {SkillId} cast sequence {Sequence} for {SessionId}: {Code}",
+            payload.SkillId, payload.InputSequence, session.SessionId, failure.Code);
+
+        return P1Results.Error(
+            context, clock, requestId, CombatErrorStatus(failure.Code),
+            failure.Code, failure.FieldErrors, session.Revision, failure.Retryable);
+    }
+
+    private static int CombatErrorStatus(string code) => code switch
+    {
+        P1ErrorCodes.InvalidPayload => StatusCodes.Status400BadRequest,
+        CombatErrorCodes.UnknownSkill => StatusCodes.Status400BadRequest,
+        CombatErrorCodes.SkillNotAvailable => StatusCodes.Status400BadRequest,
+        CombatErrorCodes.InvalidTarget => StatusCodes.Status400BadRequest,
+        P1ErrorCodes.StaleSequence => StatusCodes.Status409Conflict,
+        CombatErrorCodes.CooldownActive => StatusCodes.Status409Conflict,
+        CombatErrorCodes.TargetNotAlive => StatusCodes.Status409Conflict,
+        CombatErrorCodes.InsufficientResource => StatusCodes.Status409Conflict,
+        CombatErrorCodes.TargetNotFound => StatusCodes.Status404NotFound,
+        CombatErrorCodes.OutOfRange => StatusCodes.Status422UnprocessableEntity,
+        CombatErrorCodes.UnsupportedResource => StatusCodes.Status422UnprocessableEntity,
+        _ => StatusCodes.Status400BadRequest
+    };
+
     private static IResult GetWorld(
         HttpContext context,
         string sessionId,
         ISessionStore sessions,
-        ServerClock clock)
-    {
+        ServerClock clock)    {
         var requestId = NewRequestId();
         var session = sessions.Find(sessionId.Trim());
         if (session is null)

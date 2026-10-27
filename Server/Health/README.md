@@ -10,6 +10,7 @@ Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritati
 | POST | `/p1/sessions` | Create an in-memory player session on `MAP_BEN_MUA` |
 | POST | `/p1/move` | Submit a `MoveIntent` envelope for the session in `X-Session-ID` |
 | GET | `/p1/world/{sessionId}` | Read the latest authoritative `WorldSnapshot` |
+| POST | `/p1/combat` | Submit a `CombatInput` envelope for the session in `X-Session-ID` |
 
 Every response, including errors, carries `X-Correlation-ID`. A safe incoming value (1–64 characters of ASCII letters, digits, `-`, `_`, `.`) is echoed; otherwise a new GUID is generated.
 
@@ -116,9 +117,73 @@ curl -i http://localhost:5000/p1/world/<SESSION_ID> \
 
 The response uses the same envelope as a successful move.
 
-## Combat skeleton (QOD-03)
+## Combat
 
-No combat endpoint is exposed yet. The registered `ICombatService` is the server-side seam for the future `combat.input` command:
+`POST /p1/combat` accepts a P1 `Envelope` whose payload is `CombatInput` and uses the same `X-Session-ID` header. Fields follow `Implementation/Contracts/P1/CombatInput.schema.json`; `inputSequence`, `skillId`, `aimX` and `aimY` are required, `targetId` is required for non-self skills.
+
+```bash
+curl -i -X POST http://localhost:5000/p1/combat \
+  -H "Content-Type: application/json" \
+  -H "X-Session-ID: <SESSION_ID>" \
+  -H "X-Correlation-ID: demo-combat-1" \
+  -d '{
+    "schemaVersion": 1,
+    "requestId": "33333333333333333333333333333333",
+    "idempotencyKey": "44444444444444444444444444444444",
+    "sentAtUtc": "2026-10-26T07:00:02Z",
+    "characterId": "CHR_MINH_KIEM_01",
+    "payload": {
+      "inputSequence": 3,
+      "skillId": "SK-MK-01",
+      "aimX": 1,
+      "aimY": 0
+    }
+  }'
+```
+
+A successful cast returns `200` with the schema-shaped `combat.effect` event, the session ID and the post-cast `revision`:
+
+```json
+{
+  "schemaVersion": 1,
+  "requestId": "33333333333333333333333333333333",
+  "sessionId": "<SESSION_ID>",
+  "serverTimeUtc": "2026-10-26T07:00:02Z",
+  "revision": 4,
+  "result": {
+    "eventId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "eventType": "combat.effect",
+    "aggregateId": "CHR_MINH_KIEM_01",
+    "aggregateRevision": 4,
+    "emittedAtUtc": "2026-10-26T07:00:02Z",
+    "schemaVersion": 1,
+    "payload": {
+      "sourceId": "CHR_MINH_KIEM_01",
+      "targetId": "CHR_MINH_KIEM_01",
+      "skillId": "SK-MK-01",
+      "cooldownEndsAtUtc": "2026-10-26T07:00:12Z"
+    }
+  }
+}
+```
+
+- `SK-MK-01` is `SELF`, so the caller is its own target and no world entity is needed. `SK-MK-02` without `targetId` returns `400 invalid_payload`; `SK-MK-02/03` with an unregistered target returns `404 target_not_found`. Damage, hit chance and death are intentionally absent until canonical stat/damage data and authoritative world targets exist.
+- The server still owns results: `aimX`/`aimY` and `clientTimeUtc` are validated but never trusted for damage or hit resolution.
+- **One input sequence per character.** `inputSequence` is shared with `/p1/move`; a combat cast advances `LastInputSequence` exactly like a move, so the client must keep a single strictly increasing counter across both endpoints. Reusing a sequence returns `409 stale_sequence`.
+- Rejected casts do not consume the sequence and do not change `revision`, MP or position.
+
+## Snapshot
+
+```bash
+curl -i http://localhost:5000/p1/world/<SESSION_ID> \
+  -H "X-Correlation-ID: demo-world"
+```
+
+The response uses the same envelope as a successful move.
+
+## Combat internals (QOD-03/QOD-06)
+
+`POST /p1/combat` exposes `ICombatService` for the self-targeting `SK-MK-01` path. The service stays the server-side seam for future `combat.input` work:
 
 - `ICombatSkillCatalog` loads `SK-MK-01..03` from canonical `SkillDefinition` content (class, cooldown, MP cost, targeting type, range, max targets). No balance values are duplicated in C#.
 - `ICombatTargetProvider` is an in-memory target registry. It starts empty, so non-self skills return `target_not_found` until the world layer registers mobs or players.
@@ -208,8 +273,12 @@ Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond
 | 413 | `invalid_payload` | Request body over 8 KB |
 | 422 | `invalid_map` | Session map is not in `map_bounds.json` |
 | 422 | `movement_too_far` | Defensive guard if a configured step exceeds `MaxStepDistanceWu` |
+| 400 | `unknown_skill`, `skill_not_available`, `invalid_target` | Combat skill or target input the server refuses |
+| 404 | `target_not_found` | Combat target is not registered in the authoritative world |
+| 409 | `cooldown_active`, `insufficient_resource`, `target_not_alive` | Combat gate rejected the cast; `stale_sequence` also applies |
+| 422 | `out_of_range`, `unsupported_resource` | Combat cast outside configured range or using an unsupported resource |
 
-All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and `correlationId`. The inventory and teleport service error codes listed above are domain results; they have no HTTP mapping yet.
+All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and `correlationId`. Quest, inventory and teleport service codes listed above are domain results; they have no HTTP mapping yet.
 
 ## Runtime smoke test
 
@@ -234,7 +303,7 @@ Stop the background server process afterward. See `Implementation/Reports/QOD-04
 
 ## Domain service self-check
 
-The four QOD-03 skeletons have no HTTP endpoints yet, so `server-smoke` exercises them in-process before starting the listener:
+The quest, inventory and teleport skeletons have no HTTP surface yet, and the combat endpoint only reaches the self-targeting `SK-MK-01`, so `server-smoke` also exercises the services in-process before starting the listener:
 
 ```bash
 dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
@@ -258,13 +327,19 @@ The flag boots the DI container and canonical content, then runs 34 assertions c
 | 8 | Move with an unknown session ID | `404 session_not_found` |
 | 9 | Send sequences 1..20 with `moveX=-1`, ~300 ms apart | `x` decreases and stops at `0` |
 | 10 | Move with a 31-character `requestId` | `400 invalid_payload` |
-| 11 | Any request | Response always has `X-Correlation-ID` |
+| 11 | Combat `inputSequence=3` with `SK-MK-01` | `200`, `combat.effect`, `aggregateRevision=4`, MP 50→38 |
+| 12 | Repeat combat `inputSequence=3` | `409 stale_sequence`; MP unchanged |
+| 13 | Combat `inputSequence=4` with `SK-MK-01` immediately | `409 cooldown_active`, `retryable: true` |
+| 14 | Move with `inputSequence=3` after that cast | `409 stale_sequence` (sequence shared with combat) |
+| 15 | Combat `SK-MK-02` without `targetId` | `400 invalid_payload`, field `targetId` |
+| 16 | Combat `SK-MK-03` with unknown `targetId` | `404 target_not_found` |
+| 17 | Any request | Response always has `X-Correlation-ID` |
 
 ## Current limits
 
 - Sessions are in memory and lost on restart; there is no database, authentication or real-time transport.
-- `entities` is always empty; the combat target registry starts empty and the combat, quest, inventory and teleport services are not exposed over HTTP.
-- Combat is a service skeleton with no endpoint: damage, hit chance, telegraphs, death and loot are not implemented, and `combat.effect` only records an accepted cast and its cooldown.
+- `entities` is always empty; the combat target registry starts empty, so only the self-targeting `SK-MK-01` can be cast over HTTP. Quest, inventory and teleport services are not exposed.
+- Combat has no damage, hit chance, telegraphs, death or loot: `combat.effect` only records an accepted cast and its cooldown.
 - Quest state is in memory, has no endpoint, and only one canonical `QuestDefinition` (`P00-01`) is loaded. Rewards, level-band eligibility and multi-step graphs are not implemented.
 - Inventory has no item catalog, stack-limit enforcement, durability rules or seeded starting items.
 - Teleport uses map bounds only; there is no walkability, portal, cooldown or respawn logic.

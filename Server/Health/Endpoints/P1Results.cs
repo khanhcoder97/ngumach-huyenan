@@ -23,6 +23,19 @@ internal static class P1Results
         return Results.Json(response, statusCode: statusCode);
     }
 
+    public static IResult CombatSuccess(
+        string requestId,
+        string sessionId,
+        CombatEvent combatEvent) =>
+        Results.Json(new P1CombatResponse
+        {
+            RequestId = requestId,
+            SessionId = sessionId,
+            ServerTimeUtc = combatEvent.EmittedAtUtc,
+            Revision = combatEvent.AggregateRevision,
+            Result = combatEvent
+        });
+
     public static IResult Error(
         HttpContext context,
         ServerClock clock,
@@ -30,7 +43,8 @@ internal static class P1Results
         int statusCode,
         string code,
         IReadOnlyList<string>? fieldErrors = null,
-        long? revision = null)
+        long? revision = null,
+        bool retryable = false)
     {
         var response = new P1Response
         {
@@ -41,7 +55,7 @@ internal static class P1Results
             {
                 Code = code,
                 MessageKey = $"P1.ERROR.{code.ToUpperInvariant()}",
-                Retryable = false,
+                Retryable = retryable,
                 FieldErrors = fieldErrors ?? Array.Empty<string>(),
                 CorrelationId = context.TraceIdentifier
             }

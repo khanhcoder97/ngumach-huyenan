@@ -50,6 +50,27 @@ def move_envelope(sequence, move_x, move_y, character_id=CHARACTER_ID, request_i
     }
 
 
+def combat_envelope(sequence, skill_id, target_id=None, character_id=CHARACTER_ID,
+                    request_id="3" * 32):
+    payload = {
+        "inputSequence": sequence,
+        "skillId": skill_id,
+        "aimX": 1,
+        "aimY": 0,
+    }
+    if target_id is not None:
+        payload["targetId"] = target_id
+
+    return {
+        "schemaVersion": 1,
+        "requestId": request_id,
+        "idempotencyKey": "4" * 32,
+        "sentAtUtc": sent_at_utc(),
+        "characterId": character_id,
+        "payload": payload,
+    }
+
+
 def expect_correlation(headers, expected):
     check(headers.get("X-Correlation-ID") == expected,
           f"expected correlation {expected}, got {headers.get('X-Correlation-ID')}")
@@ -160,6 +181,121 @@ def main():
     check(second.get("y", 0) < 0, f"second move did not advance y: {second.get('y')}")
     check(second.get("x") == moved_x, f"second move changed x: {second.get('x')}")
     expect_correlation(headers, "smoke-second-move")
+
+    status, headers, body = call(
+        "POST", "/p1/combat", combat_envelope(3, "SK-MK-01"),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-combat"})
+    check(status == 200, f"combat returned {status}: {body}")
+    check(body.get("revision") == 4, f"combat revision {body.get('revision')}")
+    event = body.get("result") or {}
+    event_payload = event.get("payload") or {}
+    check(event.get("eventType") == "combat.effect",
+          f"unexpected event type {event.get('eventType')}")
+    check(event_payload.get("sourceId") == CHARACTER_ID,
+          f"unexpected source {event_payload.get('sourceId')}")
+    check(event_payload.get("targetId") == CHARACTER_ID,
+          f"self cast target {event_payload.get('targetId')}")
+    check(event_payload.get("skillId") == "SK-MK-01",
+          f"unexpected skill {event_payload.get('skillId')}")
+    check("damage" not in event_payload and "hit" not in event_payload,
+          "combat must not invent damage or hit")
+    cooldown_ends = event_payload.get("cooldownEndsAtUtc") or ""
+    check(cooldown_ends.endswith("Z"), f"unexpected cooldown {cooldown_ends}")
+    expect_correlation(headers, "smoke-combat")
+
+    status, headers, body = call(
+        "POST", "/p1/move", move_envelope(3, 1, 0),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-move-after-combat"})
+    check(status == 409, f"move reusing combat sequence returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "stale_sequence",
+          f"unexpected move error {error.get('code')}")
+    expect_correlation(headers, "smoke-move-after-combat")
+
+    status, headers, body = call(
+        "GET", f"/p1/world/{session_id}",
+        headers={"X-Correlation-ID": "smoke-world-after-combat"})
+    check(status == 200, f"world after combat returned {status}: {body}")
+    after_combat = (body.get("result") or {}).get("self") or {}
+    check(after_combat.get("mp") == 38, f"combat mp {after_combat.get('mp')}")
+    check(after_combat.get("x") == moved_x, "combat changed x")
+    check(after_combat.get("y") == second.get("y"), "combat changed y")
+    check(body.get("revision") == 4, f"world revision after combat {body.get('revision')}")
+    expect_correlation(headers, "smoke-world-after-combat")
+
+    status, headers, body = call(
+        "POST", "/p1/combat", combat_envelope(3, "SK-MK-01"),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-combat-stale"})
+    check(status == 409, f"replayed combat returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "stale_sequence", f"unexpected error {error.get('code')}")
+    check(error.get("retryable") is False, "stale_sequence must not be retryable")
+    expect_correlation(headers, "smoke-combat-stale")
+
+    status, headers, body = call(
+        "POST", "/p1/combat", combat_envelope(4, "SK-MK-01"),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-combat-cooldown"})
+    check(status == 409, f"cooldown combat returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "cooldown_active", f"unexpected error {error.get('code')}")
+    check(error.get("retryable") is True, "cooldown_active should be retryable")
+    expect_correlation(headers, "smoke-combat-cooldown")
+
+    status, headers, body = call(
+        "POST", "/p1/combat", combat_envelope(4, "SK-MK-01"),
+        {"X-Correlation-ID": "smoke-combat-no-session"})
+    check(status == 400, f"combat without session returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "invalid_payload", f"unexpected error {error.get('code')}")
+    check("X-Session-ID" in (error.get("fieldErrors") or []),
+          f"X-Session-ID missing from {error.get('fieldErrors')}")
+    expect_correlation(headers, "smoke-combat-no-session")
+
+    status, headers, body = call(
+        "POST", "/p1/combat", combat_envelope(4, "SK-MK-01"),
+        {"X-Session-ID": "e" * 32, "X-Correlation-ID": "smoke-combat-unknown-session"})
+    check(status == 404, f"combat unknown session returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "session_not_found", f"unexpected error {error.get('code')}")
+    expect_correlation(headers, "smoke-combat-unknown-session")
+
+    status, headers, body = call(
+        "POST", "/p1/combat", combat_envelope(4, "SK-MK-09"),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-combat-bad-skill"})
+    check(status == 400, f"invalid skill returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "invalid_payload", f"unexpected error {error.get('code')}")
+    check("payload.skillId" in (error.get("fieldErrors") or []),
+          f"payload.skillId missing from {error.get('fieldErrors')}")
+    expect_correlation(headers, "smoke-combat-bad-skill")
+
+    status, headers, body = call(
+        "POST", "/p1/combat", combat_envelope(4, "SK-MK-02"),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-combat-no-target"})
+    check(status == 400, f"missing target returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "invalid_payload", f"unexpected error {error.get('code')}")
+    check("targetId" in (error.get("fieldErrors") or []),
+          f"targetId missing from {error.get('fieldErrors')}")
+    expect_correlation(headers, "smoke-combat-no-target")
+
+    status, headers, body = call(
+        "POST", "/p1/combat",
+        combat_envelope(4, "SK-MK-03", target_id="TGT_SMOKE_UNKNOWN"),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-combat-unknown-target"})
+    check(status == 404, f"unknown target returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "target_not_found", f"unexpected error {error.get('code')}")
+    check(error.get("retryable") is True, "target_not_found should be retryable")
+    expect_correlation(headers, "smoke-combat-unknown-target")
+
+    time.sleep(0.1)
+    status, headers, body = call(
+        "POST", "/p1/move", move_envelope(4, 1, 0),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-move-after-rejections"})
+    check(status == 200, f"move after rejections returned {status}: {body}")
+    check(body.get("revision") == 5, f"move revision after combat {body.get('revision')}")
+    expect_correlation(headers, "smoke-move-after-rejections")
 
     print(f"PASS: {CHECKS} smoke checks against {BASE_URL}")
 

@@ -174,4 +174,79 @@ public static class P1Validation
         double.IsFinite(component) &&
         component >= -1 &&
         component <= 1;
+
+    public static List<string> ValidateCombatEnvelope(CombatEnvelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        if (envelope.SchemaVersion != 1)
+        {
+            errors.Add("schemaVersion");
+        }
+
+        if (!IsHex32(envelope.RequestId))
+        {
+            errors.Add("requestId");
+        }
+
+        if (!IsHex32(envelope.IdempotencyKey))
+        {
+            errors.Add("idempotencyKey");
+        }
+
+        if (!TryParseUtc(envelope.SentAtUtc, out _))
+        {
+            errors.Add("sentAtUtc");
+        }
+
+        if (!IsCharacterId(envelope.CharacterId))
+        {
+            errors.Add("characterId");
+        }
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+            return errors;
+        }
+
+        var payload = envelope.Payload;
+        if (payload.InputSequence is null || payload.InputSequence.Value < 1)
+        {
+            errors.Add("payload.inputSequence");
+        }
+
+        if (!IsSkillId(payload.SkillId))
+        {
+            errors.Add("payload.skillId");
+        }
+
+        if (payload.TargetId is not null && !IsTargetId(payload.TargetId))
+        {
+            errors.Add("payload.targetId");
+        }
+
+        if (!IsUnitComponent(payload.AimX))
+        {
+            errors.Add("payload.aimX");
+        }
+
+        if (!IsUnitComponent(payload.AimY))
+        {
+            errors.Add("payload.aimY");
+        }
+
+        if (payload.ClientTimeUtc is not null &&
+            !TryParseUtc(payload.ClientTimeUtc, out _))
+        {
+            errors.Add("payload.clientTimeUtc");
+        }
+
+        return errors;
+    }
 }
