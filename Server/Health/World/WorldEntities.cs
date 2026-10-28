@@ -39,7 +39,7 @@ public static class WorldEntityStates
 
 public sealed record WorldEntityTemplate(string TemplateId, string Kind);
 
-public sealed class WorldEntity
+public sealed class WorldEntityInstance
 {
     private readonly object _syncRoot = new();
 
@@ -108,7 +108,7 @@ public sealed class WorldEntityCatalog
 {
     public WorldEntityCatalog(
         IReadOnlyList<WorldEntityTemplate> templates,
-        IReadOnlyList<WorldEntity> entities)
+        IReadOnlyList<WorldEntityInstance> entities)
     {
         Templates = templates;
         Entities = entities;
@@ -116,7 +116,7 @@ public sealed class WorldEntityCatalog
 
     public IReadOnlyList<WorldEntityTemplate> Templates { get; }
 
-    public IReadOnlyList<WorldEntity> Entities { get; }
+    public IReadOnlyList<WorldEntityInstance> Entities { get; }
 
     public int Count => Entities.Count;
 }
@@ -232,7 +232,7 @@ public static class WorldEntityLoader
             templates.Add(new WorldEntityTemplate(template.TemplateId, template.Kind!));
         }
 
-        var entities = new List<WorldEntity>(file.Entities?.Count ?? 0);
+        var entities = new List<WorldEntityInstance>(file.Entities?.Count ?? 0);
         var entityIds = new HashSet<string>(StringComparer.Ordinal);
         foreach (var source in file.Entities ?? [])
         {
@@ -308,7 +308,7 @@ public static class WorldEntityLoader
                     $"{path}: {source.EntityId} respawnSeconds must be >= 0.");
             }
 
-            var entity = new WorldEntity
+            var entity = new WorldEntityInstance
             {
                 EntityId = source.EntityId,
                 RecordId = source.RecordId,
@@ -359,7 +359,7 @@ public static class WorldEntityLoader
 
 public sealed class WorldEntityRegistry
 {
-    private readonly IReadOnlyDictionary<string, WorldEntity> _entities;
+    private readonly IReadOnlyDictionary<string, WorldEntityInstance> _entities;
     private readonly IServerClock _clock;
 
     public WorldEntityRegistry(WorldEntityCatalog catalog, IServerClock clock)
@@ -371,9 +371,9 @@ public sealed class WorldEntityRegistry
 
     public int Count => _entities.Count;
 
-    public IEnumerable<WorldEntity> All => _entities.Values;
+    public IEnumerable<WorldEntityInstance> All => _entities.Values;
 
-    public bool TryGet(string entityId, out WorldEntity entity) =>
+    public bool TryGet(string entityId, out WorldEntityInstance entity) =>
         _entities.TryGetValue(entityId, out entity!);
 
     public bool Despawn(string entityId)
