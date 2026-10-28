@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "generator": "built-in image_gen.imagegen",
+  "date": "2026-10-29",
+  "scope": "Art direction reference boards",
+  "assets": [
+    {
+      "id": "01_minh_kiem_model_sheet",
+      "path": "docs/production/Art_Concept_References/v1/01_minh_kiem_model_sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "4a6d13ab6ebd2e5918e8534cef630b755a19d4aff15b9a84e4db19252b7fb5bf",
+      "status": "DIRECTION_CANDIDATE_NOT_RUNTIME",
+      "review": "Visually inspected; corrections listed in README_vi.md; no native-grid/palette/engine certification"
+    },
+    {
+      "id": "02_ben_mua_thang_long_environment",
+      "path": "docs/production/Art_Concept_References/v1/02_ben_mua_thang_long_environment.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "49ef4ae0eece733796e6d84094ff4e065ec805301de0af14b2071c5611132138",
+      "status": "DIRECTION_CANDIDATE_NOT_RUNTIME",
+      "review": "Visually inspected; corrections listed in README_vi.md; no native-grid/palette/engine certification"
+    },
+    {
+      "id": "03_npc_creature_board",
+      "path": "docs/production/Art_Concept_References/v1/03_npc_creature_board.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "d41ab5f17da6258fbba23d052063607b69c1729ba8aebb2334614b1627fc8f8f",
+      "status": "DIRECTION_CANDIDATE_NOT_RUNTIME",
+      "review": "Visually inspected; corrections listed in README_vi.md; no native-grid/palette/engine certification"
+    },
+    {
+      "id": "04_pixel_hud_components_vfx",
+      "path": "docs/production/Art_Concept_References/v1/04_pixel_hud_components_vfx.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "7de6e989ed77b4de43ce8c3bf697da69b236bfc482e4a4a66fe9a9f8e5201ef6",
+      "status": "DIRECTION_CANDIDATE_NOT_RUNTIME",
+      "review": "Visually inspected; corrections listed in README_vi.md; no native-grid/palette/engine certification",
+      "layoutStatus": "SUPERSEDED_BY_06_SKILL_ARC_V2"
+    },
+    {
+      "id": "05_five_classes_lineup",
+      "path": "docs/production/Art_Concept_References/v1/05_five_classes_lineup.png",
+      "width": 2172,
+      "height": 724,
+      "sha256": "e3b2bcda9331fbb4d782a052c582ce856e402b76ff82fd4779a90f748e8066ed",
+      "status": "DIRECTION_CANDIDATE_NOT_RUNTIME",
+      "review": "Visually inspected; corrections listed in README_vi.md; no native-grid/palette/engine certification"
+    },
+    {
+      "id": "06_pixel_hud_skill_arc_v2",
+      "path": "docs/production/Art_Concept_References/v1/06_pixel_hud_skill_arc_v2.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "cd41a18636913b304efba2388cff7337953d3f3673ea0972eb0a5556809ee110",
+      "status": "CONCEPT_REFERENCE_NOT_RUNTIME",
+      "layoutStatus": "CURRENT_ARC_REQUESTED_BY_USER",
+      "review": "six circular slots 1..6 visually inspected; exact geometry, canonical glyphs and hit targets require runtime asset implementation"
+    }
+  ]
+}

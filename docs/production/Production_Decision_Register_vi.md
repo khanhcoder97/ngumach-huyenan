@@ -46,3 +46,7 @@ Theo yêu cầu chủ dự án bổ sung toàn bộ các miền còn thiếu, kh
 ## DEC-018 — Fantasy kể qua khám phá và cinema (2026-10-28)
 
 Theo yêu cầu chủ dự án, narrative v2 bổ sung chiều sâu cho nhân vật/lore và beat khám phá đủ76 quest hiện hữu, kèm20 cảnh video/63 shot giao Muse. Mở đầu chỉ gợi chuông/thư, không spoil Cơ/thí nghiệm; mốc300 năm là vỡ Huyền Ấn,30 năm là thí nghiệm thế hệ hiện tại. Giữ ending chung, avatar đa lớp/diện mạo và runtime quest/reward IDs. Video chỉ presentation có skip/fallback/replay, authority trên server. Tài liệu và prompt chưa chứng minh video đã tạo; dialogue CSV cũ vẫn cần line-edit trước voice production.
+
+## DEC-019 — HUD vòng cung (2026-10-29)
+
+Chủ dự án yêu cầu6ô kỹ năng tạo vòng cung quanh nút tấn công lớn góc phải dưới theo ảnh layout tham khảo. Dùng HUD_Skill_Arc_Layout_vi.md và concept06; thay bố cục grid của board04 và công thức bán cung cũ. Giữ skill IDs, mechanics, số slot và input authority; ảnh mẫu chỉ tham chiếu layout. Các concept khác trong reference v1 vẫn là direction candidates, chưa đồng nghĩa owner phê duyệt toàn bộ art.
