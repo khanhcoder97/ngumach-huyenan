@@ -58,6 +58,16 @@ MANIFEST_REQUIRED_NONEMPTY = [
     "art_ref",
     "source_ref",
 ]
+
+# DEC-016 §4 (docs/production/Top_Down_Gameplay_World_Spec_vi.md): wire ranges
+# are world units converted once from the canonical metre values at 1 WU = 0.5 m.
+SKILL_RANGE_WU_CANONICAL = {
+    "SK-MK-01": 4.4,  # 2.2 m
+    "SK-MK-02": 11.0,  # 5.5 m
+}
+# SK-MK-03 (Kiếm Trận) has no authoritative range yet; damage rollout stays
+# blocked until a numeric config is locked, so it must not carry rangeWu.
+SKILL_IDS_WITHOUT_RANGE = {"SK-MK-03"}
 COORD_COLUMNS = ["x_wu", "y_wu"]
 
 # Canonical content rules: manifest positions are validated against these
@@ -681,6 +691,25 @@ def check_definition_schemas(schemas, examples, errors):
             validate_json_schema(example, schema, label, errors)
 
 
+def check_skill_range_units(examples, errors):
+    for path, example in examples.get("SkillDefinition", []):
+        label = f"SkillDefinition/{path.name}"
+        skill_id = example.get("skillId")
+        targeting = example.get("targeting") or {}
+        if skill_id in SKILL_RANGE_WU_CANONICAL:
+            expected = SKILL_RANGE_WU_CANONICAL[skill_id]
+            if targeting.get("rangeWu") != expected:
+                errors.append(
+                    f"{label}: targeting.rangeWu {targeting.get('rangeWu')} != "
+                    f"{expected} WU (DEC-016 §4 metre-to-WU conversion)"
+                )
+        elif skill_id in SKILL_IDS_WITHOUT_RANGE and "rangeWu" in targeting:
+            errors.append(
+                f"{label}: {skill_id} has no authoritative range; "
+                "do not add targeting.rangeWu before the numeric config is locked"
+            )
+
+
 def check_definition_references(
     examples, manifest_rows, map_config, item_ids, npc_ids, currency_ids,
     class_ids, quest_ids, graph_ids, errors
@@ -1059,6 +1088,7 @@ def main(argv=None):
 
     schemas, examples = load_definition_data(content_dir, errors)
     check_definition_schemas(schemas, examples, errors)
+    check_skill_range_units(examples, errors)
     if examples:
         check_definition_references(
             examples,
