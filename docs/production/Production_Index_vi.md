@@ -171,3 +171,5 @@ Các tài liệu mới xác định hành vi cần xây dựng; audit runtime v�
 ### Thăng Long v2 và pixel giản lược
 
 Capital_Scale_and_Simple_Pixel_v2_vi.md quy định extent12phường/chunk/migration và kit đơn giản. DesignBaselines/thang_long_layout_v2.json giữ target thiết kế chưa active; Art_Concept_References/v2 phân biệt macro overview và gameplay street corner.
+
+- Hub_Wide_Camera_Profile_vi.md (DEC-021): tầm nhìn48×27WU trong hub, HUD giữ size, combat STANDARD; profile cần tích hợp client/map flow.

@@ -182,5 +182,20 @@
       "bridge": 1,
       "waterFrames": 4
     }
+  },
+  "hubCameraProfile": {
+    "name": "HUB_WIDE",
+    "logicalWorldResolution": [
+      960,
+      540
+    ],
+    "pixelsPerUnit": 20,
+    "viewWu": [
+      48,
+      27
+    ],
+    "uiScalesWithWorldCamera": false,
+    "competitiveProfile": "STANDARD",
+    "activation": "REQUIRES_CLIENT_MAP_FLOW_INTEGRATION"
   }
 }

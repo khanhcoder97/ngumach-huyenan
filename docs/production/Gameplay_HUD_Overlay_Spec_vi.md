@@ -203,3 +203,7 @@ CSS tokens cốt lõi: `--hud-slate`, `--hud-brass`, `--hud-gold`, `--bar-hp`, `
 - Thời gian cast, hiệu lực, telegraph/VFX: `Combat_Skills_VFX_Animation_Spec_vi.md`.
 - Tài nguyên lớp và cooldown cấp 1: `Content_Bible_Ngu_Mach_Huyen_An_vi.md`.
 - Stat, slot trang bị, binding, ví và vật phẩm: `Character_Equipment_Inventory_Spec_vi.md`, `Item_Catalog_and_Set_Bible_vi.md`.
+
+### Camera hub và HUD
+
+DEC-021 tăng vùng world trong hub48×27WU, không thu nhỏ nút/chữ/minimap/joystick. Dùng canvas UI độc lập world render960×540; giữ6skill arc theo HUD_Skill_Arc_Layout_vi.md. Min48dp vẫn cần đo device; không lấy size hero trên màn để scale UI.

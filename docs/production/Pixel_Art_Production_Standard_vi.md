@@ -69,3 +69,7 @@ DEC-016 và `Top_Down_Gameplay_World_Spec_vi.md` chốt góc nhìn từ trên, d
 ## 10. Mức chi tiết đơn giản (DEC-020)
 
 Đích mới là pixel game dễ sản xuất: material3tone+1highlight, module nhà/tile dùng lại, texture noise thấp, nước4frame. Giữ640×360/20PPU/48×64/8hướng và integer scale; rõ/nét không đồng nghĩa thêm hàng nghìn chi tiết. Capital_Scale_and_Simple_Pixel_v2_vi.md và Art_Concept_References/v2/02_simple_pixel_street.png là hướng tham chiếu; board v1 nhiều chi tiết chỉ còn mood/material, không mật độ source runtime.
+
+## 11. Ngoại lệ logical render cho hub (DEC-021)
+
+Hub an toàn dùng target960×540 world render/20PPU để nhìn48×27WU; baseline combat640×360 giữ nguyên. HUD là canvas riêng không thu nhỏ theo camera. Chi tiết fallback/device/integer scale ở Hub_Wide_Camera_Profile_vi.md, không dùng fractional zoom làm mờ pixel.

@@ -6,7 +6,7 @@ Chủ dự án muốn kinh thành rộng nhiều khu và đồ họa pixel đơn
 
 MAP_THANG_LONG mục tiêu quy hoạch **2048×1536 WU** (1024×768m theo1WU=0,5m), mặt phẳngXY, gồm12phường theo lưới4×3, mỗi vùng quy hoạch512×512WU. Đây là footprint tổng thể gồm phố/kênh/sân/vườn, không đồng nghĩa toàn bộ diện tích đều có nhà hoặc walkable. Đủ lớn để khám phá, không cố tạo đường dài vô nghĩa.
 
-Camera cơ sở32×18WU chỉ thấy khoảng1/5461 diện tích tổng thể tại một thời điểm. Với tốc độ config P1 hiện tại6WU/s, chạy đường thẳng hết chiều ngang là341,3s (~5phút41giây); đường thực vòng1,5lần là~8phút32giây, chưa tính dừng. Đi tham quan nhiều khu có thể20–30phút theo mục tiêu playtest. Đây là ước tính có công thức, không hứa “vô tận”. Không tăng tốc/quãng đường skill để giả độ rộng.
+Camera combat cơ sở32×18WU; hub bổ sung HUB_WIDE48×27WU theo Hub_Wide_Camera_Profile_vi.md, tăng2,25lần diện tích nhìn, HUD giữ kích thước. Với tốc độ config P1 hiện tại6WU/s, chạy đường thẳng hết chiều ngang là341,3s (~5phút41giây); đường thực vòng1,5lần là~8phút32giây, chưa tính dừng. Đi tham quan nhiều khu có thể20–30phút theo mục tiêu playtest. Đây là ước tính có công thức, không hứa “vô tận”. Không tăng tốc/quãng đường skill để giả độ rộng.
 
 Các cửa hàng thường dùng tập trung trong service core, người chơi đi khám phá tùy ý ngoài core. Sau khi tự khám phá các trạm, mở tuyến dẫn lộ nội thành miễn phí theo rule cũ; không buộc chạy5phút mỗi lần sửa đồ. Tuyến phải có khoảng nghỉ, hồ/sân/điểm nhìn và hoạt động truyện thay vì lấp nhà liên tục.
 
@@ -59,3 +59,7 @@ Mỗi record ghi canonical recordId, oldXY, newXY, floorId, newDistrict, sourceV
 Muse: một chunk phố pixel đơn giản và top-down overview có12phường; cung cấp tile modules/native previews, không tạo toàn thành bằng một ảnh. OpenCode: contact sheet/coverage kiểm counts và source metadata, không cần Unity máy local. Qoder: proposal migration layout v2 sau khi nhận geometry, giữ flag content v1 khi chưa có nav thật. Codex review độ đọc ở native trước khi nhân rộng.
 
 Art proof trước: pose, tile kit, mockup640×360. Gameplay proof sau: actor di chuyển qua ranh chunk, collision không seam, mái không che target, không tải toàn thành vào camera, route/quest không hỏng. Quy mô quy hoạch lớn không thay nghiệm thu những chunk thực sự chơi được.
+
+## Camera trong kinh thành
+
+Đọc Hub_Wide_Camera_Profile_vi.md: world render960×540/20PPU, vùng48×27WU cho hub, STANDARD640×360 cho combat/PvP. Logical640×360 đã nêu ở phần pixel là baseline chung; hub có profile riêng không thay source assets hoặc thu nhỏ UI.
