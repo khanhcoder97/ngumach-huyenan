@@ -34,6 +34,7 @@ ID_FIELDS = {
     "templateId": "item",
     "currencyId": "currency",
     "entityId": "entity",
+    "npcId": "entity",
     "classId": "class",
 }
 
