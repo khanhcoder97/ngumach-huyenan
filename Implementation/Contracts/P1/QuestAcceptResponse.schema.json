@@ -2,13 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ngumach.local/contracts/p1/QuestAcceptResponse.schema.json",
   "title": "P1 quest accept response",
-  "description": "On success and on every post-resolution rejection, result carries the current QuestState; error explains a rejection. Requests rejected before the session or quest resolves (invalid payload, unknown session) may omit result.",
+  "description": "On success and on every post-resolution rejection, result carries the current QuestState; error explains a rejection. Requests rejected before the session resolves (invalid payload, unknown session) omit sessionId and result.",
   "type": "object",
   "additionalProperties": false,
   "required": [
     "schemaVersion",
     "requestId",
-    "sessionId",
     "serverTimeUtc"
   ],
   "properties": {
@@ -67,7 +66,7 @@
         },
         "revision": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 0
         }
       }
     },
@@ -107,7 +106,7 @@
           "type": "array",
           "items": {
             "type": "string",
-            "pattern": "^[A-Za-z0-9_.\\[\\]]+$"
+            "pattern": "^[A-Za-z0-9_.\\[\\]-]+$"
           }
         },
         "correlationId": {

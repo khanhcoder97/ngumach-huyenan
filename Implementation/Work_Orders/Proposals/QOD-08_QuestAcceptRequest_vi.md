@@ -29,9 +29,9 @@ Payload giữ đúng hai trường đã chốt trong Addendum §2; **không** th
 
 ## 3. Thứ tự guard (bắt buộc, đúng Addendum §2)
 
-1. `X-Session-ID` tồn tại và `characterId` trong envelope khớp session → sai: `400 invalid_payload`, thiếu session: `404 session_not_found`.
+1. `X-Session-ID` có mặt (thiếu → `400 invalid_payload`); session tồn tại (không có → `404 session_not_found`); `characterId` trong envelope khớp session (không khớp → `400 invalid_payload`).
 2. `questId` có trong canonical quest catalog → sai format: `400 invalid_payload`; không có: `404 quest_not_found`.
-3. `npcId` bằng `startNpcId` canonical của quest (`QuestDefinition`, không hard-code) → sai: `422 npc_mismatch`.
+3. `npcId` bằng `startNpcId` canonical của quest (đọc từ file `QuestDefinition`, không hard-code; loader server cần bổ sung field — mục 7) → sai: `422 npc_mismatch`.
 4. Actor và NPC cùng `mapId` và cùng `floorId`. P1 chỉ có floor `OVERWORLD` theo DEC-016; không có floor link.
 5. Khoảng cách đo từ chân ≤ **5 WU** (DEC-016 §3) và đường tương tác không bị tường/polygon blocked chắn → sai: `422 out_of_range`.
 6. Prerequisites đã `COMPLETED` và level trong `levelBand` của quest → sai: `422 prerequisite_not_met`.
@@ -61,11 +61,12 @@ Guard 4–6 cần dữ liệu server chưa có (NPC registry có toạ độ/flo
 
 ## 5. Lỗi và response schema
 
-`result` luôn chứa `QuestState` hiện hành khi session và quest đã resolve — kể cả khi bị từ chối — nên client không cần đọc state từ field không định nghĩa. Request hỏng trước bước resolve (sai envelope, thiếu session) có thể không có `result`.
+`result` luôn chứa `QuestState` hiện hành khi session và quest đã resolve — kể cả khi bị từ chối — nên client không cần đọc state từ field không định nghĩa. Request hỏng trước bước resolve (sai envelope, thiếu session) không có `sessionId` lẫn `result`.
 
 | HTTP | `error.code` | Nguyên nhân | `retryable` |
 |---|---|---|---|
-| 400 | `invalid_payload` | Envelope/payload sai shape, body > 8 KB, thiếu `X-Session-ID`, `characterId` không khớp | false |
+| 400 | `invalid_payload` | Envelope/payload sai shape, thiếu `X-Session-ID`, `characterId` không khớp | false |
+| 413 | `invalid_payload` | Body > 8 KB (giữ hành vi của `/p1/move` và `/p1/combat`) | false |
 | 404 | `session_not_found` | Session không tồn tại | false |
 | 404 | `quest_not_found` | `questId` không có trong catalog | false |
 | 422 | `npc_mismatch` | `npcId` ≠ `startNpcId` | false |
@@ -74,6 +75,8 @@ Guard 4–6 cần dữ liệu server chưa có (NPC registry có toạ độ/flo
 | 409 | `invalid_transition` | State không phải `AVAILABLE` | false |
 | 409 | `revision_conflict` | Quest state đổi giữa lúc đọc guard và lúc commit (double accept đồng thời) | true |
 | 409 | `idempotency_conflict` | Cùng `idempotencyKey` nhưng payload khác | false |
+
+Mapping nội bộ cần giữ khi implement: service trả `unknown_quest` khi ID không có trong catalog và `quest_not_found` khi thiếu state row; HTTP map **cả hai** về `404 quest_not_found` để client chỉ thấy một mã cho "quest không dùng được". Riêng `LOCKED` (thiếu prerequisite) phải map thành `422 prerequisite_not_met` ở guard 6, **không** dùng `invalid_transition`; chỉ `ACTIVE`/`READY_TO_TURN_IN`/`COMPLETED`/`FAILED` mới là `409 invalid_transition`.
 
 Ví dụ từ chối sau resolve (state nằm trong `result`, không nằm trong `error.data`):
 
@@ -94,7 +97,7 @@ Ví dụ từ chối sau resolve (state nằm trong `result`, không nằm trong
     "code": "prerequisite_not_met",
     "messageKey": "P1.ERROR.PREREQUISITE_NOT_MET",
     "retryable": false,
-    "fieldErrors": ["state"],
+    "fieldErrors": [],
     "correlationId": "demo-accept"
   }
 }
@@ -113,8 +116,9 @@ Ví dụ từ chối sau resolve (state nằm trong `result`, không nằm trong
 Endpoint giữ **off** cho tới khi server có đủ:
 
 1. NPC world registry: `npcId → mapId, floorId, x, y` lấy từ manifest canonical (hiện chỉ có CSV trong `docs/production/`, chưa load vào server).
-2. Level profile trong `PlayerSession` (hiện không có trường level) và `levelBand` từ `QuestDefinition`.
-3. Floor/walkability contract: `floorId`, walkable/blocked polygons, floor links (DEC-016 yêu cầu bundle v2; P1 chỉ có `OVERWORLD`).
+2. `startNpcId` trong `QuestDefinition` server: `QuestCatalogLoader` hiện chỉ đọc `questId`, `questType`, `levelBand`, prerequisites, objectives và `initialStepId`; chưa mang `startNpcId`/`turnInNpcId` dù file content có. Guard 3 chưa thể chạy nếu thiếu field này.
+3. Level profile trong `PlayerSession` (hiện không có trường level); `levelBand` thì `QuestDefinition` đã có (`MinLevel`/`MaxLevel`).
+4. Floor/walkability contract: `floorId`, walkable/blocked polygons, floor links (DEC-016 yêu cầu bundle v2; P1 chỉ có `OVERWORLD`).
 
 Cho phép dev stub có flag (ví dụ `P1:QuestAccept:Enabled=true`) chỉ khi log rõ `DEV STUB: proximity/level guards disabled`, không map endpoint khi flag off (client nhận 404 như endpoint chưa tồn tại), và không tuyên bố P1 đạt gate vì stub này.
 
