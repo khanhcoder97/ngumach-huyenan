@@ -173,3 +173,10 @@ Các tài liệu mới xác định hành vi cần xây dựng; audit runtime v�
 Capital_Scale_and_Simple_Pixel_v2_vi.md quy định extent12phường/chunk/migration và kit đơn giản. DesignBaselines/thang_long_layout_v2.json giữ target thiết kế chưa active; Art_Concept_References/v2 phân biệt macro overview và gameplay street corner.
 
 - Hub_Wide_Camera_Profile_vi.md (DEC-021): tầm nhìn48×27WU trong hub, HUD giữ size, combat STANDARD; profile cần tích hợp client/map flow.
+
+### Skill và VFX art v1 (2026-10-29)
+
+- Skill_VFX_Art_Direction_v1_vi.md:5ngôn ngữ effect,3pha, event adapter/lifetime, layer/LowFX, export và sửa lỗi concept.
+- Skill_VFX_Cards_v1_vi.md:30thẻ skill riêng, prep/release/fade/attach/shape/icon/sound/LowFX.
+- Art_Concept_References/skill_vfx_v1/:5board PNG thực, prompts và reference manifest SHA256; không phải runtime atlas.
+- ../../Implementation/Content/DesignBaselines/skill_vfx_art_v1.json: art handoff design-only, không thay30SkillDefinitions runtime.
