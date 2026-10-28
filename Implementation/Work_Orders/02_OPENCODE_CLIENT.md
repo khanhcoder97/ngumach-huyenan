@@ -1,5 +1,9 @@
 # OpenCode — GitHub Asset Pipeline Validator
 
+## Gói tiếp theo đang được giao — 2026-10-29
+
+OPC-05 đã bàn giao; PR #31 là coverage follow-up đang review. Tiếp tục cả gói OPC-06→10 trong `05_OPENCODE_ASSET_PIPELINE_EPIC.md` theo cơ chế `04_CONTINUOUS_DELIVERY_20261029.md`. Phạm vi được mở rộng sang schema migration có review, PNG/meta hardening, browser preview và release tooling; các hạn chế phạm vi OPC-05 bên dưới không chặn gói mới. Không cần Unity; không dừng sau mỗi PR nếu còn phần độc lập được giao.
+
 ## Lý do đổi phạm vi
 
 Máy phát triển hiện không đủ tài nguyên để cài Unity Editor. Tạm hoãn Unity client runtime cho tới khi có máy build phù hợp. Hạng mục hiện tại chạy bằng Python tiêu chuẩn và GitHub Actions, không cần Unity, .NET hay engine cài trên máy.
