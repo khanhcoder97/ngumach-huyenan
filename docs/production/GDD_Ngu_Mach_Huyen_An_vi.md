@@ -91,7 +91,7 @@ Cơ Vô Tướng không muốn hủy diệt thế giới; ông muốn xóa khác
 | Mở đầu: Nước không soi bóng | 1–10 | Bến Mưa, Đầm Chuông | Giao thư; điều tra cá chết/chuông dưới nước; tìm dân mất tích; hộ tống Ly An; chọn môn phái. Mảnh ấn phát sáng nhưng chưa rõ lý do. | **Mãng Cốt**, linh thú bị Nghịch Mạch xâm thực |
 | I: Năm lời thề | 11–20 | Thành Thanh Lạc, Thăng Long Thành | Dự lễ nhập môn; thử thách môn phái; tìm kẻ giả phù tín; phá tượng đá; thuyết phục năm môn phái ngừng giao chiến. C1-06 đưa bằng chứng tới thủ phủ; Hạ Mặc lần theo dấu resin về Lâm Triều. | **Tượng Hành Hỏa**, máy canh cổ |
 | II: Rừng nhớ tên người | 21–35 | Lâm Triều, Rễ Ngủ | Tìm đội đốn cây; thu hồi ký ức bị rễ hút; hộ tống thuốc giải; tìm đường nước bị khóa; mở lại mạch suối. Nhật ký cho thấy Cơ Vô Tướng đã tới trước khủng hoảng. | **Cổ Thụ Trăm Mắt**, rễ/ảo ảnh/vùng an toàn di chuyển |
-| III: Lò không tắt | 36–50 | Sa Hỏa, Trạm Tro | Hộ tống đoàn xe nước; điều tra lò rèn; giải cứu thợ mỏ bị cưỡng ép; ngăn lò phun lửa; quyết định công bố bằng chứng hay giao các trưởng môn. Quyết định chỉ đổi hội thoại/danh vọng, không tách máy chủ. | **Lò Trời**, tắt ba van mạch |
+| III: Lò không tắt | 36–50 | Sa Hỏa, Trạm Tro | Hộ tống đoàn xe nước; điều tra lò rèn; giải cứu thợ mỏ mắc kẹt và tìm hiểu món nợ nước; ngăn lò phun lửa; quyết định công bố bằng chứng hay giao các trưởng môn. Quyết định chỉ đổi hội thoại/danh vọng, không tách máy chủ. | **Lò Trời**, tắt ba van mạch |
 | IV: Thành không có chủ | 51–65 | Trấn Sơn, Ải Cờ | Sơ tán dân; ngăn hai đoàn quân; điều tra lệnh giả; bang hội giữ ba cổng trong công thành cốt truyện; đối đầu Tống Bành và lấy bản đồ năm tháp. | **Tống Bành – Thiết Giáp Tướng**, phá khiên bằng mục tiêu môi trường |
 | V: Thành phố dưới Bạch Uyên | 66–80 | Bạch Uyên, Đài Quan Trắc | Lặn xuống di tích; sửa ba trạm áp suất; ghép nhật ký; đối mặt ký ức người chết trong thí nghiệm đầu; đưa sự thật về Thanh Lạc. Không môn phái nào vô can, nhưng không phe nào một mình gây tai họa. | **Mẫu Xà Thủy**, đổi nhịp theo thủy triều |
 | VI: Nghịch Mạch | 81–100 | Vực Nghịch Mạch, Năm Tháp | Khôi phục năm tháp; chặn quái; lấy lõi ấn; đánh Cơ Vô Tướng ba pha; raid 10 người kích hoạt năm trụ và chia đội phòng thủ/gây sát thương. Kết cục chung là sửa Huyền Ấn để năm mạch trao đổi nhưng không bị một người điều khiển. | **Cơ Vô Tướng / Hợp Mạch** |
@@ -363,3 +363,7 @@ Chiến trường hàng trăm người, nhà tùy biến tự do, thú lai giố
 3. Tất cả kinh tế/tiến trình có kiểm tra server; client chỉ là giao diện.
 4. Làm prototype trước: một vùng, một lớp, một quest, một boss, túi và một món đồ nâng cấp được.
 5. Sau prototype mới mở rộng đủ năm lớp; mỗi feature cần schema và tiêu chí hoàn thành trước khi sản xuất hàng loạt.
+
+### Narrative v2 và cinema
+
+Áp dụng Narrative_Depth_and_Discovery_vi.md, 76 quest beats trong Narrative_Quest_Beats_v2.json và20 cảnh/63 shot trong Cinema_Production_Pack_v1.json. Quest/cinema bổ sung khám phá, điều tra, chăm sóc và ký ức; video do Muse sản xuất, không thay gameplay authority hoặc khóa lựa chọn ngoại hình avatar. Giao thức sản xuất ở Cinema_Muse_Directors_Pack_vi.md.

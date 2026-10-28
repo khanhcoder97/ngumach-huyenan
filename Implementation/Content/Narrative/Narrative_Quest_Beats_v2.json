@@ -1,0 +1,766 @@
+{
+  "schemaVersion": 1,
+  "activation": "DESIGN_HANDOFF",
+  "quests": [
+    {
+      "questId": "P00-01",
+      "title": "Thư qua bến",
+      "clue": "Dấu dây buộc ba gia đình khác nhau trên kiện hàng.",
+      "dramaticQuestion": "Ai đã làm rơi hàng và vì sao không quay lại?",
+      "playerAgency": "Đặt kiện ngay ngắn hoặc hỏi tên người nhận.",
+      "payoff": "Ly An bớt dè chừng; không tiết lộ người viết thư.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "P00-02",
+      "title": "Chuông không người",
+      "clue": "Cúi nhìn mới thấy vòng chuông, đứng trên bờ chỉ nghe nửa âm.",
+      "dramaticQuestion": "Âm thanh phát từ vật nào?",
+      "playerAgency": "So ba gợn nước trước khi kết luận.",
+      "payoff": "Nhật ký ghi quan sát, chưa gọi đây là linh hồn.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "P00-03",
+      "title": "Dưới mặt đầm",
+      "clue": "Hai dân được cứu nhớ bóng dưới nước khác nhau.",
+      "dramaticQuestion": "Ký ức có thể đúng từng phần không?",
+      "playerAgency": "Hỏi mỗi người điều họ nhìn thấy, không ép chọn ai nói dối.",
+      "payoff": "Ly An nhận ra cần đối chiếu lời khai.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "P00-04",
+      "title": "Người giữ bờ",
+      "clue": "Ly An dừng buộc dây túi cho người bị thương ở checkpoint.",
+      "dramaticQuestion": "Cô sợ mất thư hay mất người?",
+      "playerAgency": "Hỏi về công việc đưa thư trong khoảng nghỉ an toàn.",
+      "payoff": "Cô nói mình muốn thư có người nhận, không tiết lộ huyết thống.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "P00-05",
+      "title": "Mảnh ấn đầu tiên",
+      "clue": "Sau trận nước soi đúng trời trước khi mảnh ấn sáng.",
+      "dramaticQuestion": "Linh thú tấn công hay đang đau?",
+      "playerAgency": "Quan sát nước trở lại rồi tương tác mảnh ấn.",
+      "payoff": "Tạ nhận ra dấu cũ nhưng chưa thú tội.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C1-01",
+      "title": "Cổng Thanh Lạc",
+      "clue": "Năm cờ quay khác hướng trong một luồng gió.",
+      "dramaticQuestion": "Bình yên này dựa trên điều gì?",
+      "playerAgency": "Nghe thợ treo cờ và người gác cổng riêng.",
+      "payoff": "Thấy thành có đời sống ngoài tranh chấp phái.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C1-02",
+      "title": "Bài thử môn phái",
+      "clue": "Thầy sửa tư thế sau cú đánh hụt, không mắng học trò.",
+      "dramaticQuestion": "Sức mạnh có thể dùng để bảo vệ ai?",
+      "playerAgency": "Chọn một câu hỏi về trách nhiệm môn phái.",
+      "payoff": "Lớp đã chọn được xác nhận, không đổi class.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C1-03",
+      "title": "Phù tín giả",
+      "clue": "Phù giả có vết lặp máy móc, phù tay có chỗ sửa.",
+      "dramaticQuestion": "Dấu chuẩn có chắc do người có quyền tạo?",
+      "playerAgency": "Đối chiếu hình/miêu tả thay vì pixel hunt.",
+      "payoff": "Hạ Mặc đặt giả thuyết có tuyến gia công.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C1-04",
+      "title": "Tượng mở mắt",
+      "clue": "Tượng đổi mục tiêu khi phù giả rơi khỏi hộ vệ.",
+      "dramaticQuestion": "Máy đang bảo vệ ai theo luật nào?",
+      "playerAgency": "Giúp hộ vệ nhặt lại đồ sau trận.",
+      "payoff": "Người chơi thấy cơ chế sai có thể gây hại mà không có ác ý.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C1-05",
+      "title": "Năm lời thề",
+      "clue": "Khoảng trống trong bản khắc có cùng mép cắt.",
+      "dramaticQuestion": "Ai có lợi khi xóa dữ liệu?",
+      "playerAgency": "Hỏi một trưởng phái về chỗ trống thay vì cáo buộc.",
+      "payoff": "Đình chiến tạm mở đường điều tra.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C1-06",
+      "title": "Con dấu qua phố",
+      "clue": "Hóa đơn, dấu lò và sổ không trùng thời điểm.",
+      "dramaticQuestion": "Một cửa hàng có thể biết toàn tuyến không?",
+      "playerAgency": "Niêm chứng cứ hoặc sao bản công khai che tên nhân chứng.",
+      "payoff": "Resin dẫn tới Lâm Triều, chưa kết tội thương nhân.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C2-01",
+      "title": "Đội đốn cây mất tích",
+      "clue": "Rìu còn nguyên, cơm hộp nguội, không vết máu.",
+      "dramaticQuestion": "Mất tích có phải bị giết không?",
+      "playerAgency": "Xem đồ nghề và lần dấu chân trước combat.",
+      "payoff": "Quản đốn Mộc hy vọng tìm người sống.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C2-02",
+      "title": "Tên trên vỏ cây",
+      "clue": "Nước qua vỏ cây làm hiện tên đã ghi tử trận.",
+      "dramaticQuestion": "Tên trong sổ hay người còn sống mới là sự thật?",
+      "playerAgency": "Hỏi người thân tên gọi thường ngày.",
+      "payoff": "Bắt đầu nghi ngờ hồ sơ ba mươi năm trước.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C2-03",
+      "title": "Đường nước khóa",
+      "clue": "Van bị gài từ phía trong, dây sửa đã cũ.",
+      "dramaticQuestion": "Người đóng van từng muốn chặn gì?",
+      "playerAgency": "Nghe thợ máy kể khi nghỉ checkpoint.",
+      "payoff": "Không đặt timer cho đoạn trò chuyện.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C2-04",
+      "title": "Ký ức người lạ",
+      "clue": "Ba ký ức: tay ký, cửa đóng, người chờ.",
+      "dramaticQuestion": "Ai đã lựa chọn im lặng?",
+      "playerAgency": "Cho Tạ tự nói hoặc yêu cầu chỉ chữ ký.",
+      "payoff": "Ông nhận trách nhiệm, không nhận tha thứ tự động.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C2-05",
+      "title": "Mạch suối trở lại",
+      "clue": "Rễ giữ một tiếng chưa có người đáp.",
+      "dramaticQuestion": "Mở dòng có đồng nghĩa trả ký ức không?",
+      "playerAgency": "Dừng nghe khi nước chảy lại.",
+      "payoff": "Nhật ký cho thấy Cơ từng cứu một vùng.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C3-01",
+      "title": "Đoàn xe cạn nước",
+      "clue": "Sầm tự san phần nước của mình vào bồn.",
+      "dramaticQuestion": "Đường nhanh cứu thời gian của ai?",
+      "playerAgency": "Chọn tuyến như policy cũ và hỏi về những xe trước.",
+      "payoff": "Thương nhân có trách nhiệm người thật.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C3-02",
+      "title": "Tro trong phổi",
+      "clue": "Thợ giữ lò dù đã được mở cửa.",
+      "dramaticQuestion": "Ở lại có luôn là tự nguyện không?",
+      "playerAgency": "Nghe món nợ nước của một người thợ.",
+      "payoff": "Không giản lược họ thành tù nhân hoặc kẻ xấu.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C3-03",
+      "title": "Bản khắc dưới lò",
+      "clue": "Bản khắc cấp nước miễn phí bị ghi đè quota.",
+      "dramaticQuestion": "Lòng tốt bắt đầu đổi thành kiểm soát khi nào?",
+      "playerAgency": "Sắp ba mảnh theo dấu mài và ngày.",
+      "payoff": "Hạ Mặc nhìn thấy lý do nhưng chưa biện hộ cho Cơ.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C3-04",
+      "title": "Ba van lửa",
+      "clue": "Nhịp kẹp báo áp suất trước đèn.",
+      "dramaticQuestion": "Có thể dùng hiểu biết nghề thay sức mạnh không?",
+      "playerAgency": "Đọc hình/nhịp và nhờ thợ chỉ lại.",
+      "payoff": "Mọi cue nghe có equivalent visual.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C3-05",
+      "title": "Lò Trời",
+      "clue": "Lò tắt để lộ tên người xin giảm quota.",
+      "dramaticQuestion": "Công bố bằng chứng thế nào không hại người sống?",
+      "playerAgency": "Công khai có che tên hoặc giao hội đồng có biên nhận.",
+      "payoff": "Kết thúc chung, journal ghi cách bảo vệ nhân chứng.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C4-01",
+      "title": "Dân qua cổng",
+      "clue": "Dân mang đồ, chuyện kể và cả im lặng qua cổng.",
+      "dramaticQuestion": "Điều gì cần giữ khi rời nhà?",
+      "playerAgency": "Nghe một người trong lúc đoàn nghỉ.",
+      "payoff": "Tuyến hộ tống có nhân vật, không ba nhóm vô danh.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C4-02",
+      "title": "Mệnh lệnh không dấu",
+      "clue": "Hai sứ giả đều tin lệnh của mình.",
+      "dramaticQuestion": "Ai có quyền gọi bên kia phản bội?",
+      "playerAgency": "Đặt dấu sáp cạnh giờ đóng cổng.",
+      "payoff": "Bằng chứng chống hệ thống giả lệnh, không chế nhạo lính.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C4-03",
+      "title": "Ba cổng thành",
+      "clue": "Mỗi cổng có một người giữ chỗ cho người chưa về.",
+      "dramaticQuestion": "Giữ thành là giữ đất hay người?",
+      "playerAgency": "Sửa nỏ và chỉ lối trong objective có sẵn.",
+      "payoff": "NPC cảm ơn hành động cứu hộ cụ thể.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C4-04",
+      "title": "Cờ trên tường",
+      "clue": "Kho tiếp tế có cả chăn và bảng tên dân.",
+      "dramaticQuestion": "Đổi cờ có đủ kết thúc nạn này không?",
+      "playerAgency": "Xem bảng sau khi chiếm kho.",
+      "payoff": "Không chuyển siege truyện thành PvP bắt buộc.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C4-05",
+      "title": "Thiết Giáp Tướng",
+      "clue": "Tống bỏ găng để đặt con dấu xuống.",
+      "dramaticQuestion": "Tuân lệnh có xóa trách nhiệm không?",
+      "playerAgency": "Hỏi về lệnh đầu tiên ông biết là giả.",
+      "payoff": "Ông phải làm chứng, không thành đồng đội thưởng.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C5-01",
+      "title": "Đài Lặn",
+      "clue": "Dây phơi cũ trở thành dây dẫn lặn.",
+      "dramaticQuestion": "Thành phố chết hay vẫn có người chăm?",
+      "playerAgency": "Quan sát đồ dùng trước khi mở cửa.",
+      "payoff": "Không cần thu hết vật lưu niệm để tiến quest.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C5-02",
+      "title": "Ba buồng áp suất",
+      "clue": "Ba trạm giữ nhịp như ba phần câu nói.",
+      "dramaticQuestion": "Có thể khôi phục dòng bằng phối hợp không?",
+      "playerAgency": "Đối chiếu cue hình/âm/chữ.",
+      "payoff": "Không ép nghe chính xác hoặc phân biệt màu đơn độc.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C5-03",
+      "title": "Người viết nhật ký",
+      "clue": "Một trang nhật ký có tên bị cạo nhưng nét tay còn.",
+      "dramaticQuestion": "Ai được quyết định lời khai được ghi lại?",
+      "playerAgency": "Hạ Mặc xin phép trước khi sao lời người sống sót.",
+      "payoff": "Không ép xem lại ký ức sang chấn.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C5-04",
+      "title": "Lời khai năm môn phái",
+      "clue": "Năm lời khai cùng bỏ qua một khoảng thời gian.",
+      "dramaticQuestion": "Một phần đúng có thể che điều gì?",
+      "playerAgency": "Đối chiếu từng lời với vật chứng tìm được.",
+      "payoff": "Không phái nào bị quy thành giống loài ác.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C5-05",
+      "title": "Mẫu Xà Thủy",
+      "clue": "Mẫu Xà cuộn quanh lõi theo nhịp nước.",
+      "dramaticQuestion": "Lõi là chiến lợi phẩm hay thứ đang giữ thành?",
+      "playerAgency": "Quan sát triều ổn định trước khi rời.",
+      "payoff": "Nhận lõi đi cùng trách nhiệm điều tiết.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C6-01",
+      "title": "Năm đội, năm tháp",
+      "clue": "Mỗi trụ cần một việc dân vùng ấy vẫn làm hằng ngày.",
+      "dramaticQuestion": "Ai thực sự giữ thế giới vận hành?",
+      "playerAgency": "Giúp dẫn nước, chỉnh dấu, nối tin trong tương tác có sẵn.",
+      "payoff": "Không quy công cho một anh hùng duy nhất.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C6-02",
+      "title": "Cửa mạch mở",
+      "clue": "Cảnh báo của Cơ dùng từ an toàn nhưng khóa mọi đường ra.",
+      "dramaticQuestion": "An toàn còn nghĩa gì nếu không thể từ chối?",
+      "playerAgency": "Đọc thông báo và kiểm đường cứu hộ.",
+      "payoff": "Người chơi có lý do phản đối ngoài thù hận.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C6-03",
+      "title": "Lõi môn phái",
+      "clue": "Thầy trao lõi kèm lời nhờ bảo vệ người khác phái.",
+      "dramaticQuestion": "Trung thành với phái có đồng nghĩa giữ riêng sức mạnh?",
+      "playerAgency": "Chọn cách gọi lại lời thề đầu chương.",
+      "payoff": "Mỹ phẩm giữ reward cũ, không buff theo lựa chọn.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C6-04",
+      "title": "Người muốn cứu thế giới",
+      "clue": "Cơ chia nước rồi giấu đơn xin dừng máy.",
+      "dramaticQuestion": "Một người tốt đã tự cho mình quyền gì?",
+      "playerAgency": "Đáp lại bằng Sa Hỏa hoặc Bạch Uyên đã chứng kiến.",
+      "payoff": "Hiểu động cơ nhưng không tha trách nhiệm.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "C6-05",
+      "title": "Huyền Ấn mới",
+      "clue": "Năm trụ mở qua nhau, không hội về avatar.",
+      "dramaticQuestion": "Sửa thế giới có cần một người làm chủ không?",
+      "playerAgency": "Hoàn cơ chế raid rồi xem kết thúc tùy chọn.",
+      "payoff": "Cơ giúp ổn định máy và chịu xét xử; hậu quả còn tồn tại.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-BM-01",
+      "title": "Lưới rách",
+      "clue": "Mỗi nút lưới vá theo tay người làm.",
+      "dramaticQuestion": "Vì sao giữ tấm lưới cũ?",
+      "playerAgency": "Hỏi một mắt vá trước khi trả.",
+      "payoff": "Ngư dân móc lưới lên nhà, không biến mất như loot.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-BM-02",
+      "title": "Đèn cho người lạc",
+      "clue": "Đèn cuối quay về phía người còn ở đầm.",
+      "dramaticQuestion": "Ai đang đợi ai?",
+      "playerAgency": "Chọn nhìn lại đường đã thắp.",
+      "payoff": "Đường an toàn đọc được cả khi tắt âm.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-BM-03",
+      "title": "Mầm lau lạ",
+      "clue": "Mầm lau quay khỏi nước bẩn.",
+      "dramaticQuestion": "Cây chỉ ra điều gì?",
+      "playerAgency": "So nơi mọc trên đất và trong nước.",
+      "payoff": "Dược sư có lý do nghiên cứu thay vì chỉ xin đồ.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-BM-04",
+      "title": "Dấu chân thứ sáu",
+      "clue": "Dấu thứ sáu khác độ sâu năm dấu trước.",
+      "dramaticQuestion": "Có người quay lại không?",
+      "playerAgency": "Giữ túi niêm phong và kể điều đã thấy.",
+      "payoff": "Không mở thư bằng cutscene trái lựa chọn.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-BM-05",
+      "title": "Bữa cơm sau mưa",
+      "clue": "Bếp giữ sẵn một bát chưa có người ngồi.",
+      "dramaticQuestion": "Người vắng mặt được nhớ thế nào?",
+      "playerAgency": "Giúp đặt bát sau nấu.",
+      "payoff": "Mở recipe như cũ, có đoạn đời thường.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-TL-01",
+      "title": "Bảng tin trống",
+      "clue": "Bảng tin có dấu đinh mới trên chỗ cũ.",
+      "dramaticQuestion": "Ai chưa dám nhờ giúp?",
+      "playerAgency": "Đọc cả yêu cầu nhỏ.",
+      "payoff": "Không mọi giúp đỡ đều là truy nã.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-TL-02",
+      "title": "Năm lá cờ",
+      "clue": "Năm vải cờ dùng năm kiểu vá.",
+      "dramaticQuestion": "Khác nhau có nhất thiết chia rẽ?",
+      "playerAgency": "Treo theo biểu tượng đủ năm.",
+      "payoff": "Không đưa phái người chơi lên cao hơn.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-TL-03",
+      "title": "Món đồ thất lạc",
+      "clue": "Nhẫn có vết sửa không dấu quý.",
+      "dramaticQuestion": "Giá trị nằm ở vật liệu hay người giữ?",
+      "playerAgency": "Đối chiếu lời chủ với vết sửa.",
+      "payoff": "Không có kết tội dựa độ giàu.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-TL-04",
+      "title": "Người mới nhập môn",
+      "clue": "NPC tập đấu biết sợ bị chê.",
+      "dramaticQuestion": "Ai được phép học chậm?",
+      "playerAgency": "Cho xem lại động tác.",
+      "payoff": "Thua tập không phạt vật phẩm.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-TL-05",
+      "title": "Sổ kho Sầm Quỹ",
+      "clue": "Một hóa đơn sai cứu chỗ thiếu hàng.",
+      "dramaticQuestion": "Sai có luôn là gian lận không?",
+      "playerAgency": "Hỏi trước khi báo thiếu.",
+      "payoff": "Sầm sửa sổ công khai.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-LT-01",
+      "title": "Thuốc cho tiều phu",
+      "clue": "Tiều phu đặt thuốc cạnh cây mình đốn.",
+      "dramaticQuestion": "Con người và rừng mắc nợ gì?",
+      "playerAgency": "Nghe trước khi nhận lời cảm ơn.",
+      "payoff": "Không bắt bỏ nghề để được coi tốt.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-LT-02",
+      "title": "Tổ chim rơi",
+      "clue": "Chim mẹ nhìn từ xa, không lao vào combat.",
+      "dramaticQuestion": "Cứu có cần sở hữu không?",
+      "playerAgency": "Đặt tổ rồi lùi.",
+      "payoff": "Không biến chim thành pet bắt buộc.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-LT-03",
+      "title": "Nấm biết hát",
+      "clue": "Nấm hát khác khi gió đổi.",
+      "dramaticQuestion": "Cần nghe hay cần hiểu nhịp?",
+      "playerAgency": "Dùng hình gợi nhịp thay âm.",
+      "payoff": "Hỗ trợ accessibility không giảm thưởng.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-LT-04",
+      "title": "Người nhớ nhầm",
+      "clue": "Ba ký ức kể ba ngày khác nhau.",
+      "dramaticQuestion": "Nhớ nhầm có xóa con người không?",
+      "playerAgency": "Sắp đồ theo mùa thay ép chọn người nói dối.",
+      "payoff": "Tiều phu được giữ điều riêng tư.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-LT-05",
+      "title": "Cầu dây mục",
+      "clue": "Cầu mới giữ một đoạn dây cũ làm tay vịn.",
+      "dramaticQuestion": "Sửa có nghĩa xóa sạch quá khứ không?",
+      "playerAgency": "Nghe đoàn qua cầu.",
+      "payoff": "Tuyến traversal vẫn top-down.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-SH-01",
+      "title": "Bản đồ nước",
+      "clue": "Cọc chỉ đường có hình cho người không biết chữ.",
+      "dramaticQuestion": "Ai dễ lạc nhất?",
+      "playerAgency": "Đặt biểu tượng rõ hướng.",
+      "payoff": "Không thêm màu-only puzzle.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-SH-02",
+      "title": "Lưỡi búa nguội",
+      "clue": "Búa nguội còn dấu tên thợ học việc.",
+      "dramaticQuestion": "Mất công cụ là mất việc hay danh dự?",
+      "playerAgency": "Trả đúng người.",
+      "payoff": "Không thay bằng vũ khí power mới.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-SH-03",
+      "title": "Gió mang tro",
+      "clue": "Gió lùa làm tắt bớt tiếng ho.",
+      "dramaticQuestion": "Lao động đổi gì khi có một luồng gió?",
+      "playerAgency": "Dừng nhìn người thợ thở.",
+      "payoff": "Không mô tả bệnh bằng hiệu ứng giật gân.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-SH-04",
+      "title": "Đoàn xe lạc",
+      "clue": "Xe phụ chở bình rỗng để đổi bình đầy.",
+      "dramaticQuestion": "Ai bị bỏ lại khi tối ưu tuyến?",
+      "playerAgency": "Chọn lời trấn an người giữ xe.",
+      "payoff": "Không đổi reward tuyến chính.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-SH-05",
+      "title": "Bản nhạc lò rèn",
+      "clue": "Ba dụng cụ gõ thành nhịp gọi nghỉ.",
+      "dramaticQuestion": "Âm nghề có thể là âm nhạc không?",
+      "playerAgency": "Chơi lại bằng cue hình/chữ.",
+      "payoff": "Có khoảnh khắc chung quanh lò không combat.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-TS-01",
+      "title": "Tên trên bia",
+      "clue": "Có tên chỉ còn nửa nét.",
+      "dramaticQuestion": "Ghi lại cho ai đọc?",
+      "playerAgency": "Hỏi cách đọc trước khi khắc.",
+      "payoff": "Không tự đặt danh sách người chết mới.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-TS-02",
+      "title": "Thùng tiếp tế",
+      "clue": "Thùng cuối nhẹ vì đã chia dọc đường.",
+      "dramaticQuestion": "Kỷ luật có chỗ cho tương trợ không?",
+      "playerAgency": "Ghi lượng giao thật.",
+      "payoff": "Không dạy exploit thiếu hàng nhận đủ.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-TS-03",
+      "title": "Mũi tên mắc tường",
+      "clue": "Tên mắc tường từ cả hai hướng.",
+      "dramaticQuestion": "Ai được gọi là người bảo vệ?",
+      "playerAgency": "Nhìn mặt sau ụ nỏ.",
+      "payoff": "Không xóa trách nhiệm kẻ ban lệnh.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-TS-04",
+      "title": "Lời xin lỗi của người lính",
+      "clue": "Lá thư không đòi người nhận tha thứ.",
+      "dramaticQuestion": "Lời xin lỗi được quyền chờ điều gì?",
+      "playerAgency": "Giao thư không đọc hộ.",
+      "payoff": "Không buộc đoàn tụ đẹp để đóng quest.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-TS-05",
+      "title": "Kèn báo động",
+      "clue": "Kèn có nhịp sơ tán khác nhịp xung phong.",
+      "dramaticQuestion": "Âm lệnh có cứu người không?",
+      "playerAgency": "Phát theo ký hiệu đã học.",
+      "payoff": "Chỉ huy dân khác chiến thắng bằng giết.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-BU-01",
+      "title": "Đèn đáy biển",
+      "clue": "Đèn mới soi cả biển số nhà cũ.",
+      "dramaticQuestion": "Ai còn tìm đường về?",
+      "playerAgency": "Giữ tấm biển thay tháo.",
+      "payoff": "Không reset thảm họa như chưa từng xảy ra.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-BU-02",
+      "title": "Bản đồ rong",
+      "clue": "Cá hiếm đi qua mảnh bản đồ.",
+      "dramaticQuestion": "Khám phá có cần lấy mọi thứ không?",
+      "playerAgency": "Chờ cá đi rồi nhặt.",
+      "payoff": "Không thưởng giết cá trái objective.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-BU-03",
+      "title": "Khoang kín",
+      "clue": "Khoang khô có đồ cứu hộ được buộc gọn.",
+      "dramaticQuestion": "Ai đã chuẩn bị cho người đến sau?",
+      "playerAgency": "Để lại đường thoát khi mở rương.",
+      "payoff": "Không thêm bẫy giết người đọc lore.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-BU-04",
+      "title": "Tiếng hát trong vỏ ốc",
+      "clue": "Vỏ ốc giữ tiếng sinh hoạt, không chỉ lời tiên tri.",
+      "dramaticQuestion": "Thành phố còn được nhớ bằng gì?",
+      "playerAgency": "Nghe hoặc đọc transcript.",
+      "payoff": "Không phát spoiler C5-03 trước guard.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-BU-05",
+      "title": "Thợ lặn nghỉ hưu",
+      "clue": "Thợ nghỉ hưu vẫn giữ dụng cụ cùn.",
+      "dramaticQuestion": "Khi nào một người được nghỉ?",
+      "playerAgency": "Giúp chế bộ sửa rồi ngồi nghe.",
+      "payoff": "Không ép NPC quay lại lao động để có happy ending.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-VN-01",
+      "title": "Bóng đi trước",
+      "clue": "Bóng lặp sớm hơn bước chân.",
+      "dramaticQuestion": "Điều thấy trước có thành số phận không?",
+      "playerAgency": "Dừng tại mốc để xem bóng vẫn lặp.",
+      "payoff": "Không biến nhân vật thành tiên tri toàn năng.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-VN-02",
+      "title": "Ba chiếc đồng hồ",
+      "clue": "Ba đồng hồ chỉ ba lượt đo.",
+      "dramaticQuestion": "Đồng bộ có cần xóa lịch sử đo không?",
+      "playerAgency": "Chụp/ghi lại trước chỉnh.",
+      "payoff": "Giữ journal vật chứng gốc.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-VN-03",
+      "title": "Mảnh trời cũ",
+      "clue": "Mảnh trời soi thời tiết khác.",
+      "dramaticQuestion": "Ký ức có thể ở sai chỗ không?",
+      "playerAgency": "Đưa Ly An đối chiếu thư.",
+      "payoff": "Không xác nhận du hành thời gian mới.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-VN-04",
+      "title": "Cửa không có bản lề",
+      "clue": "Nút có hình nổi ngoài màu.",
+      "dramaticQuestion": "Ai bị bỏ ngoài khi thiết kế cánh cửa?",
+      "playerAgency": "Dùng hình hoặc nhãn.",
+      "payoff": "Puzzle không khóa người mù màu.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-VN-05",
+      "title": "Lời nhắn của Cơ",
+      "clue": "Năm bản ghi có một lần Cơ im lặng.",
+      "dramaticQuestion": "Một khoảng lặng che điều gì?",
+      "playerAgency": "Giữ thứ tự thời gian thay ghép có lợi.",
+      "payoff": "Không mở C6-04 sớm nếu quest guard chưa đạt.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-DM-01",
+      "title": "Người canh trụ",
+      "clue": "Người giữ trụ kể công của người khác.",
+      "dramaticQuestion": "Chiến thắng thuộc về ai?",
+      "playerAgency": "Nghe hết hoặc đọc recap.",
+      "payoff": "Không năm người lặp cùng câu cảm ơn.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-DM-02",
+      "title": "Năm món ăn",
+      "clue": "Năm món cần chờ nhau chín.",
+      "dramaticQuestion": "Cùng bàn có phải cùng khẩu vị?",
+      "playerAgency": "Chọn chỗ mời khách.",
+      "payoff": "Không tạo buff quyền lực từ hòa giải.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-DM-03",
+      "title": "Vết nứt còn lại",
+      "clue": "Vết nứt nhỏ vẫn cần vá.",
+      "dramaticQuestion": "Cứu thế giới có kết thúc công việc không?",
+      "playerAgency": "Nhìn tác dụng sau sửa.",
+      "payoff": "Mạch Triều nối hậu truyện, không phủ nhận ending.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-DM-04",
+      "title": "Tấm bia không tên",
+      "clue": "Tấm bia chừa chỗ cho tên chưa tìm được.",
+      "dramaticQuestion": "Một bản lịch sử có được phép chưa xong?",
+      "playerAgency": "Ghi năm nhân chứng với đồng ý.",
+      "payoff": "Không giả toàn bộ sự thật đã biết.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    },
+    {
+      "questId": "SQ-DM-05",
+      "title": "Chuyến thư mới",
+      "clue": "Một người nhận thư bắt đầu viết hồi âm.",
+      "dramaticQuestion": "Người thường có quyền trả lời lịch sử không?",
+      "playerAgency": "Ngồi đợi hoặc tiếp tục đường.",
+      "payoff": "Ending mở bằng đời sống, không kẻ thù mới.",
+      "scope": "PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE",
+      "newAnchorPolicy": "PROPOSAL_REQUIRED_IF_NEW_WORLD_PLACEMENT"
+    }
+  ]
+}

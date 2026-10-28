@@ -1,0 +1,949 @@
+{
+  "schemaVersion": 1,
+  "owner": "Muse",
+  "activation": "DESIGN_HANDOFF",
+  "scenes": [
+    {
+      "sceneId": "CIN_001",
+      "questId": "P00-01",
+      "title": "Nước không soi bóng",
+      "triggerDescription": "Trước accept lần đầu, nhân vật đã ở safe narrative layer",
+      "revealTier": "OPENING",
+      "purpose": "Gợi cảm giác lạ và việc nhỏ cần giúp, chưa giải thích Huyền Ấn",
+      "characters": [
+        "NPC_LYAN"
+      ],
+      "durationSeconds": 36,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_001_S01",
+          "durationSeconds": 6,
+          "camera": "WIDE_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Rainy riverside settlement at dawn. A wooden landing, wet bamboo baskets and extinguished paper lamps. Ripples move away from falling drops once, then become ordinary. Leave the center walkway open. No people yet.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_001_S02",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. A frayed rope slides along a wet wooden landing as a small parcel presses against the edge. The rope catches on a bamboo peg. No human hands or magical symbols yet.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_001_S03",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. A rain-wet bronze bell shape is visible only in the water reflection beneath a wooden pier. Above the water there is no bell. A single ripple interrupts the shape. Do not reveal any machine or villain.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_001_S04",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. A five-groove seal on a closed rain-dark envelope, resting safely in the couriers open satchel. One drop runs across the wax; the seal remains intact. Do not show the letter content.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_001_S05",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Ly An, rain-blue short cloak with earth-yellow trim and a large cross-body courier bag, kneels to stop a small wooden parcel from sliding toward water. Her side-tied hair and soaked sleeve remain consistent. She looks toward an offscreen helper, not at the camera.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_001_S06",
+          "durationSeconds": 6,
+          "camera": "TOPDOWN_MATCH",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Top-down rainy landing matching Ben Mua entry composition, the small parcel now secured beside the wooden post. Ly An stands just north of the safe player arrival space. Hold the last second motionless for a handoff to gameplay. No player avatar in frame.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Ly An: Giữ giúp tôi đầu dây. Đừng để kiện ấy trôi."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_002",
+      "questId": "P00-02",
+      "title": "Âm cuối dưới nước",
+      "triggerDescription": "Sau khi đã quan sát đủ ba gợn nước",
+      "revealTier": "OPENING",
+      "purpose": "Đưa người chơi từ nghe đồn sang quan sát",
+      "characters": [
+        "NPC_TA_VAN_KHANH"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_002_S01",
+          "durationSeconds": 6,
+          "camera": "GROUND_DETAIL",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Three separate concentric ripple patterns drift toward the same submerged stone channel. A small reed leaf turns upstream while rain falls normally. Camera stays still at water level.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_002_S02",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Ta Van Khanh in a dark blue-black wardens robe, bandaged arm and broken sword on his back, lowers his good hand toward water. He stops before touching it. No flashback image.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_002_S03",
+          "durationSeconds": 6,
+          "camera": "TOPDOWN_MATCH",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Return to a strict top-down view of the same reed bank and stone channel; ripples stop at a hairline crack, leaving a readable calm surface for the gameplay transition.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Tạ Vân Khanh: Trên bờ chỉ nghe nửa tiếng. Phần còn lại ở dưới ấy."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_003",
+      "questId": "P00-03",
+      "title": "Hai người, hai bóng",
+      "triggerDescription": "Sau rescue objectives, ở khoảng nghỉ an toàn",
+      "revealTier": "OPENING",
+      "purpose": "Ký ức có góc nhìn, dân không chỉ là mục tiêu cứu",
+      "characters": [
+        "NPC_LYAN"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_003_S01",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Two rescued adult fishers sit separately beside a sheltered wooden post; one holds a torn net, the other a paddle. Both look at the pool from different angles. No visible written text.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_003_S02",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. A shallow puddle holds two overlapping incomplete silhouettes for one second, then only the reeds remain. Suggest an uncertain memory without a clear face or identified hero.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_003_S03",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Ly An places a dry cloth between the two fishers and listens without pointing at either one. Her thumb leaves the edge of the sealed envelope.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Ly An: Có thể họ đã đứng ở hai chỗ khác nhau. Cứ để họ kể."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_004",
+      "questId": "P00-05",
+      "title": "Vết đau của linh thú",
+      "triggerDescription": "Private arena ready-check trước combat, chưa mở timer",
+      "revealTier": "OPENING",
+      "purpose": "Tạo căng thẳng và lý do ổn định mạch",
+      "characters": [
+        "BOSS_MANG_COT"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_004_S01",
+          "durationSeconds": 6,
+          "camera": "WIDE_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Bone-scaled swamp serpent Mang Cot raises its broken-horned head beside a blocked stone watercourse. Rain-blue moss on its segmented neck. Its movement is pained and heavy, not a triumphant roar.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_004_S02",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. A distorted current presses against the serpent ribs; pale reed fragments travel the wrong way. The serpent recoils from the current rather than from an unseen sword.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_004_S03",
+          "durationSeconds": 6,
+          "camera": "TOPDOWN_MATCH",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Strict top-down arena wide shot. The serpent withdraws into the northern pool; leave the southern arrival area unobstructed. No attacks, damage numbers or fake gameplay telegraphs. End on a stable gameplay camera frame.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Ly An: Nó cứ tránh chỗ nước ấy."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_005",
+      "questId": "C1-01",
+      "title": "Một thành phố vẫn sống",
+      "triggerDescription": "Lần đầu tới Thanh Lạc, trước khi mở tương tác đại diện",
+      "revealTier": "CHAPTER_1",
+      "purpose": "Cho vẻ đẹp đời sống giữa căng thẳng",
+      "characters": [],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_005_S01",
+          "durationSeconds": 6,
+          "camera": "WIDE_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Thanh Lac courtyard in late morning, muted lacquer-red roofs and blue-green stone paths. Merchants lift shutters, an adult repairs a flag, a tea stall sets out bowls. No battle.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_005_S02",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Five small faction flags with distinct geometric elemental motifs pull in different directions in one courtyard breeze. No letters or emblems copied from another game.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_005_S03",
+          "durationSeconds": 6,
+          "camera": "TOPDOWN_MATCH",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Top-down courtyard with five paths converging around an empty public notice stand. People continue small daily tasks; leave the player arrival corridor clear.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Ly An: Ở đây ai cũng nói mình giữ bình yên. Hãy nghe xem họ đang giữ cho ai."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_006",
+      "questId": "C1-06",
+      "title": "Con dấu qua phố",
+      "triggerDescription": "Sau ledger/forge/archive clues, trước report",
+      "revealTier": "CHAPTER_1",
+      "purpose": "Dấu vết đi qua người vô can",
+      "characters": [
+        "NPC_HA_MAC",
+        "NPC_SAM_CHU_QUY"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_006_S01",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Thang Long market under amber awnings. Sam Chu Quy, a stocky middle-aged merchant in red-brown robes with a wooden scale, places three folded trade slips on a table. The slips have abstract marks only.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_006_S02",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Close view of a brass workshop stamp beside a green resin fiber trapped in rough paper. A gloved hand aligns the impressions without revealing a readable name. No arrest or guilty reaction.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_006_S03",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Ha Mac, slim scholar in paper-grey and ink-blue robes with folded magnifier and paper pockets, moves a clean cover over one name area and offers a blank duplicate sheet. Busy market remains calm behind him.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Hạ Mặc: Ba thứ cùng đi qua một tuyến. Chưa có thứ nào bảo người bán biết mình đang chở gì."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_007",
+      "questId": "C2-02",
+      "title": "Tên trong vỏ cây",
+      "triggerDescription": "Sau khi người chơi đối chiếu đủ bốn tên",
+      "revealTier": "CHAPTER_2",
+      "purpose": "Rừng lưu điều bị giấy tờ bỏ quên",
+      "characters": [
+        "NPC_LYAN"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_007_S01",
+          "durationSeconds": 6,
+          "camera": "WIDE_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Ancient rain-green forest. A shallow restored trickle reaches exposed bark; clustered pale fungi mark a safe footpath. No enemies enter the shot.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_007_S02",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Water follows four shallow carved grooves in living bark. The grooves brighten gently as abstract name-like strokes, never readable generated lettering. A leaf shadow passes across them.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_007_S03",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Ly An lays a copied registry slip beside the bark without tearing either. She holds the paper steady but does not point at a conclusion. Maintain courier reference design.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Ly An: Trong sổ người ấy đã mất. Ở đây vẫn có người gọi tên."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_008",
+      "questId": "C2-04",
+      "title": "Bàn tay đã ký",
+      "triggerDescription": "Sau ba memory interactions, trước đối thoại thú nhận",
+      "revealTier": "CHAPTER_2",
+      "purpose": "Trách nhiệm cá nhân của Tạ",
+      "characters": [
+        "NPC_TA_VAN_KHANH"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_008_S01",
+          "durationSeconds": 6,
+          "camera": "MEMORY_DETAIL",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Thirty years earlier, close view only: a young adult wardens hand signs an abstract order with a brush, then pauses over the seal. Restrained desaturated indigo palette, no readable text.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_008_S02",
+          "durationSeconds": 6,
+          "camera": "MEMORY_WIDE",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Same historical chamber, now seen from outside a closing wooden gate. An adult waits holding an empty water vessel. The gate shuts slowly; no execution or violence is shown.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_008_S03",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Present-day Ta Van Khanh lowers his bandaged arm beside the forest pool. He looks toward the offscreen listener and keeps his good hand visible instead of hiding it in his robe.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Tạ Vân Khanh: Không ai ép tay ta ký. Đó mới là điều khó nói."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_009",
+      "questId": "C2-05",
+      "title": "Tiếng rừng được đáp",
+      "triggerDescription": "Sau boss clear và tương tác nguồn suối",
+      "revealTier": "CHAPTER_2",
+      "purpose": "Payoff chữa lành có giới hạn",
+      "characters": [],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_009_S01",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. A freed spring flows between split roots. Small trapped light flecks detach from bark and drift along the water, with hard-edged pixel clusters rather than bloom.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_009_S02",
+          "durationSeconds": 6,
+          "camera": "WIDE_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. A forest clearing brightens slightly as workers hear familiar distant voices. One tree remains dark and quiet. Do not show ghost faces or a complete solved forest.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_009_S03",
+          "durationSeconds": 6,
+          "camera": "TOPDOWN_MATCH",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Top-down safe spring path; water resumes through the channel toward the southern exit. A still unlit root remains off to one side as an optional discovery cue.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Ly An: Có tiếng đã được trả lời. Có tiếng mình còn chưa biết gọi thế nào."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_010",
+      "questId": "C3-01",
+      "title": "Bình nước cuối xe",
+      "triggerDescription": "Trước route choice, không chạy escort timer",
+      "revealTier": "CHAPTER_3",
+      "purpose": "Cho Sầm chiều sâu qua hành động",
+      "characters": [
+        "NPC_SAM_CHU_QUY"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_010_S01",
+          "durationSeconds": 6,
+          "camera": "WIDE_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Ash-gold desert caravan rests under rough cloth shade. A large communal water barrel stands nearly empty. Adults repair wheel bindings; no ambush in frame.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_010_S02",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Sam Chu Quy quietly pours half the water from his personal clay flask into the communal vessel. Keep the amount modest and the gesture practical, with no heroic glow.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_010_S03",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. He replaces the flask and checks two route cords laid on a map cloth. No readable map text. One cord is shorter and passes jagged stones; the other curves toward scattered shade.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Sầm Chủ Quỹ: Đường ngắn thì đỡ khát. Nếu xe qua được."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_011",
+      "questId": "C3-03",
+      "title": "Chữ khắc bị sửa",
+      "triggerDescription": "Sau ghép đủ ba bản khắc",
+      "revealTier": "CHAPTER_3",
+      "purpose": "Thấy ân huệ dần thành kiểm soát",
+      "characters": [
+        "NPC_HA_MAC"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_011_S01",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Three copper relief fragments join on a workshop table. Earlier open-hand water-sharing symbols sit beneath a later row of restrictive counting marks. All marks abstract, no generated text.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_011_S02",
+          "durationSeconds": 6,
+          "camera": "MEMORY_MEDIUM",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. A younger Co Vo Tuong, adult engineer without his current mechanical back frame, hands a clay cup of water to another adult worker. His expression is tired and sincere.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_011_S03",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Return to present-day relief. Ha Macs brush stops over the later chisel scars, leaving a small blank margin in his notes rather than filling it with a quick accusation.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Hạ Mặc: Nét sau không xóa được điều tốt trước đó. Cũng không được dùng điều tốt để xóa nét sau."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_012",
+      "questId": "C3-05",
+      "title": "Giữ tên người sống",
+      "triggerDescription": "Sau boss clear, trước choice UI",
+      "revealTier": "CHAPTER_3",
+      "purpose": "Hỏi cách đưa sự thật ra ngoài",
+      "characters": [
+        "NPC_HA_MAC"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_012_S01",
+          "durationSeconds": 6,
+          "camera": "WIDE_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. The great furnace cools behind a safe workshop platform. Workers remove dust masks and sit. Heat is suggested by stepped orange palette, no smooth shimmer.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_012_S02",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Ha Mac sets the recovered journal between a public-copy sheet and a sealed archive folder. He covers a witness name area with a narrow paper strip. No option is selected for the player.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_012_S03",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. He withdraws both hands and waits for an offscreen response. Two papers remain equally lit. Hold the final composition for the choice overlay added by the game.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Hạ Mặc: Có thể đưa chuyện này ra ánh sáng mà không đẩy người làm chứng vào lửa."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_013",
+      "questId": "C4-01",
+      "title": "Qua cổng, còn người đợi",
+      "triggerDescription": "Sau nhóm dân đầu qua gate, timer paused theo checkpoint",
+      "revealTier": "CHAPTER_4",
+      "purpose": "Chiến tranh qua đời sống dân",
+      "characters": [
+        "NPC_REFUGEE_LEADER",
+        "NPC_LYAN"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_013_S01",
+          "durationSeconds": 6,
+          "camera": "WIDE_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Tran Son refuge gate in muted stone-blue afternoon. Three small adult refugee groups carry a repaired bowl, a rolled sleeping mat and a cloth bundle. No anonymous screaming crowd.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_013_S02",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. The refugee leader in patched layered clothes and folded map counts arrivals on their fingers, then leaves one finger raised for somebody still outside the frame.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_013_S03",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Ly An ties a clean route ribbon to the safe gatepost and turns back toward the road. The gate remains open; do not imply a missing person is dead.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Trưởng đoàn: Chưa đóng cổng. Còn một người đi sau."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_014",
+      "questId": "C4-05",
+      "title": "Dấu lệnh đặt xuống",
+      "triggerDescription": "Sau boss encounter resolved, trước interrogation",
+      "revealTier": "CHAPTER_4",
+      "purpose": "Kết thúc hành động, bắt đầu chịu trách nhiệm",
+      "characters": [
+        "NPC_TONG_BANH"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_014_S01",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Tong Banh kneels beside disconnected siege armor plates, asymmetrical large shoulder guard and torn command banner. No blood or execution, no triumphant hero close-up.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_014_S02",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. He removes one armored glove and sets the command seal on bare stone with a deliberate hand. A visible worn edge matches earlier abstract impressions.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_014_S03",
+          "durationSeconds": 6,
+          "camera": "WIDE_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Refugees remain in the background behind an open safe gate while Tong Banh stays separated in the foreground. Leave an offscreen space for questioning, not reconciliation.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Tống Bành: Ta biết lệnh ấy là giả. Ta vẫn cho đóng dấu."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_015",
+      "questId": "C5-01",
+      "title": "Thành phố dưới nước",
+      "triggerDescription": "Sau lấy bình khí và mở cửa phế tích",
+      "revealTier": "CHAPTER_5",
+      "purpose": "Kinh ngạc yên tĩnh và dấu người ở",
+      "characters": [
+        "NPC_DIVER_LEAD"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_015_S01",
+          "durationSeconds": 6,
+          "camera": "WIDE_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. A drowned fantasy city under deep teal water. Red-tile roof fragments, stone arches and quiet window frames. Bubbles move in restrained pixel clusters, no modern diving equipment.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_015_S02",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. A dining bowl is tied to a stone table with old cord; a former clothesline now guides a divers hand toward the next doorway. No floating corpses or treasure glitter.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_015_S03",
+          "durationSeconds": 6,
+          "camera": "TOPDOWN_MATCH",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Top-down view of the safe ruin corridor and three pressure-station motifs in the distance. A warm lamp identifies the route; end aligned to the gameplay plane.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Đội trưởng thợ lặn: Lần trước có người đã buộc dây này cho chúng ta."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_016",
+      "questId": "C5-03",
+      "title": "Quyền được kể lại",
+      "triggerDescription": "Sau đối chiếu đủ bốn trang và nhân chứng cho phép",
+      "revealTier": "CHAPTER_5",
+      "purpose": "Hạ Mặc học xin phép",
+      "characters": [
+        "NPC_HA_MAC"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_016_S01",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Recovered journal paper dries beneath a shaded lamp. One line has been scraped away but the pressure marks remain. The exact name will be typeset later, never generate text.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_016_S02",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Ha Mac places his pen flat on the table and waits opposite an adult survivor whose face stays out of frame. No forced touch, no magical extraction of memory.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_016_S03",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. The survivor gently turns one page toward Ha Mac. Only then does his hand lift the pen. Preserve the quiet gesture and space, no celebratory light burst.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Hạ Mặc: Tôi có thể ghi lại phần ông muốn kể không?"
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_017",
+      "questId": "C5-05",
+      "title": "Lõi và dòng triều",
+      "triggerDescription": "Sau boss clear và điều hòa triều",
+      "revealTier": "CHAPTER_5",
+      "purpose": "Lấy lõi không phải cướp kho báu",
+      "characters": [
+        "BOSS_TIDE_SERPENT"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_017_S01",
+          "durationSeconds": 6,
+          "camera": "WIDE_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. In a still teal-memory plane, the water serpent circles a crystal core beneath broken arches. Mirror scales catch small stepped highlights, no glowing rainbow aura.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_017_S02",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Three pressure channels settle into an alternating rhythm around the core. The core remains supported by the channels rather than floating into a hero chest.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_017_S03",
+          "durationSeconds": 6,
+          "camera": "WIDE_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. The serpents remembered silhouette recedes into deeper water as the safe current opens. This is a memory image after combat, not a resurrection or replacement gameplay outcome.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Đội trưởng thợ lặn: Mang lõi đi thì phải giữ đường nước còn lại."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_018",
+      "questId": "C6-04",
+      "title": "Điều ông không cho ai từ chối",
+      "triggerDescription": "Sau phase1 resolved, trước dialogue, boss timer off",
+      "revealTier": "CHAPTER_6",
+      "purpose": "Động cơ thật mà không miễn trách nhiệm",
+      "characters": [
+        "NPC_CO_VO_TUONG"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_018_S01",
+          "durationSeconds": 6,
+          "camera": "MEMORY_MEDIUM",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Thirty years earlier, younger adult engineer Co Vo Tuong shares his own water ration beside a drought gauge. One other adult places a folded petition near his hand. No current-day mechanical frame.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_018_S02",
+          "durationSeconds": 6,
+          "camera": "MEMORY_DETAIL",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. His hand moves the petition beneath a ledger and closes the cover instead of answering. A dry water ring remains on the desk. Keep the action small and morally legible.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_018_S03",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Present Co Vo Tuong with ink-black cloak, copper chest core, cracked half porcelain mask and mechanical back brace faces an offscreen listener across a stopped machine. His hand trembles once.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Cơ Vô Tướng: Ta không còn chấp nhận phần ta không biết.",
+        "Người chơi: Ở Sa Hỏa ông đã cho nước. Ở nơi khác, người ta không được hỏi vì sao nước mất."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_019",
+      "questId": "C6-05",
+      "title": "Năm mạch, không một chủ nhân",
+      "triggerDescription": "Sau raid victory transaction, tại lobby cá nhân",
+      "revealTier": "ENDING",
+      "purpose": "Kết luận qua hợp tác và hậu quả",
+      "characters": [
+        "NPC_LYAN",
+        "NPC_CO_VO_TUONG"
+      ],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_019_S01",
+          "durationSeconds": 6,
+          "camera": "WIDE_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Five elemental pillars form a ring with visible channels between neighbors. Distinct geometric motifs for metal wood water fire earth. Energy passes laterally, never all converging into one avatar.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_019_S02",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Co Vo Tuong braces one failing mechanical lever while other wardens secure the surrounding controls. He is supervised, not crowned or worshipped. No death sacrifice.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_019_S03",
+          "durationSeconds": 6,
+          "camera": "WIDE_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. At dawn a river begins to flow through repaired channels, patchwork roofs and unfinished scaffolds remain. Couriers and workers move in small groups. Recovery has begun but the land is not instantly pristine.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Ly An: Lần này không ai giữ hết năm con đường."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    },
+    {
+      "sceneId": "CIN_020",
+      "questId": "SQ-DM-05",
+      "title": "Thư có hồi âm",
+      "triggerDescription": "Sau campaign và giao thư hậu truyện",
+      "revealTier": "EPILOGUE",
+      "purpose": "Trả lịch sử về người thường",
+      "characters": [],
+      "durationSeconds": 18,
+      "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+      "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+      "shots": [
+        {
+          "shotId": "CIN_020_S01",
+          "durationSeconds": 6,
+          "camera": "MEDIUM_STATIC",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. An ordinary adult villager opens a delivered letter at a repaired riverside table. Their worn bowl and a newly tied lamp echo the opening settlement, now in calm daylight.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_020_S02",
+          "durationSeconds": 6,
+          "camera": "DETAIL_LOCKED",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. The villager turns a fresh sheet toward the light and begins an answer with a brush. Paper remains blank abstract strokes for later typesetting, no legible generated text.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        },
+        {
+          "shotId": "CIN_020_S03",
+          "durationSeconds": 6,
+          "camera": "TOPDOWN_MATCH",
+          "prompt": "Original Vietnamese-inspired fantasy pixel-art cinematic for Ngu Mach Huyen An; intentional hard-edged clusters, restrained palette, crisp shapes, no smooth gradients. Compose at logical 640x360, 16:9. Animation poses held at 8-12 fps inside a 30 fps delivery; do not interpolate or morph characters. Use approved character and environment reference frames supplied by Muse. Fixed shot camera, no 3D orbit. No HUD, watermark, logo, baked subtitles, readable generated writing, photorealism, sexualized character design, gore, smooth bloom, copied franchise symbols, or unapproved character changes. Top-down view of the table and open village path. A folded reply rests beside the bowl, while daily work continues outside. End without a villain stinger or portal explosion.",
+          "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+          "dialoguePolicy": "Audio/subtitles added separately in editing; no lip-sync required"
+        }
+      ],
+      "dialogueLines": [
+        "Người nhận thư: Chờ một chút. Tôi muốn gửi lại vài lời."
+      ],
+      "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+      "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+      "serverAuthority": "Quest/reward committed independently; no video callback grants gameplay state"
+    }
+  ]
+}
