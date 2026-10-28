@@ -241,6 +241,8 @@ curl -i -X POST http://localhost:5000/p1/quests/accept \
 
 Guards run in order: session → quest catalog → `npcId` = canonical `startNpcId` → same map/floor → foot distance ≤ `MaxInteractionDistanceWu` → prerequisites/level → `AVAILABLE`. Success flips the quest to `ACTIVE` exactly once and leaves position, HP/MP and the movement/combat `inputSequence` untouched. `idempotencyKey` is scoped to the character: replaying the same key with the same payload returns the first result; the same key with a different payload returns `409 idempotency_conflict`.
 
+Line of sight is enforced from `MapTopology` bundles (`Implementation/Content/Examples/MapTopology`): a query must share `mapId`+`floorId`, stay inside walkable polygons, and not cross a blocked polygon from the actor foot to the NPC anchor. Only bundles with `reviewState: REVIEWED` are used; the shipped fixture is `SYNTHETIC_TEST_ONLY`, so the current server reports `not_enforced` and the endpoint keeps its DEV STUB warning. Bundle rules are documented in `Implementation/Work_Orders/Proposals/QOD-10_MapTopology_vi.md` and validated by `python Implementation/Tools/validate_topology.py`.
+
 NPC anchors come from `Implementation/Content/Runtime/npc_anchors.json`, generated from the canonical spawn manifest:
 
 ```bash
@@ -332,6 +334,7 @@ Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond
 | `Content:QuestsPath` | Optional absolute/relative override for the `QuestDefinition` directory |
 | `Content:SkillsPath` | Optional absolute/relative override for the `SkillDefinition` directory |
 | `Content:NpcAnchorsPath` | Optional absolute/relative override for `Implementation/Content/Runtime/npc_anchors.json` |
+| `Content:TopologyPath` | Optional absolute/relative override for the `MapTopology` bundle directory |
 
 ## Errors
 
@@ -385,7 +388,7 @@ Quest and inventory HTTP surfaces are read-only, teleport has no endpoint, and c
 dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
 ```
 
-The flag boots the DI container and canonical content, then runs 45 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the full `P00-01` quest flow through `COMPLETED`, quest accept guards and idempotency, the NPC anchor registry, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
+The flag boots the DI container and canonical content, then runs 57 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency and line-of-sight geometry (clear, wall, hole, corner, floor, non-finite, outside, not-enforced), the NPC anchor registry, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
 
 ## Manual verification
 
@@ -423,7 +426,7 @@ The flag boots the DI container and canonical content, then runs 45 assertions c
 - Sessions are in memory and lost on restart; there is no database, authentication or real-time transport.
 - `entities` is always empty; the combat target registry starts empty, so only the self-targeting `SK-MK-01` can be cast over HTTP. Teleport has no endpoint.
 - Combat has no damage, hit chance, telegraphs, death or loot: `combat.effect` only records an accepted cast and its cooldown.
-- Quest state is in memory; accept exists but is feature-flagged off by default and skips the interaction line-of-sight guard (no walkability bundle). Turn-in, rewards, party progress and multi-step graphs are not implemented.
+- Quest state is in memory; accept exists but is feature-flagged off by default. Line-of-sight runs only for `REVIEWED` topology bundles; the shipped bundle is synthetic, so it is `not_enforced` until Muse delivers the Bến Mưa layout. Turn-in, rewards, party progress and multi-step graphs are not implemented.
 - Inventory is read-only over HTTP and starts empty: no item catalog, stack-limit enforcement, durability rules, seeded starting items or mutation endpoint.
 - Teleport uses map bounds only; there is no walkability, portal, cooldown or respawn logic.
 - Movement speed and starting HP/MP are slice defaults, not locked balance values.

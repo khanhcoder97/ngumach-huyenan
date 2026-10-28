@@ -41,5 +41,17 @@ OK: all contract validation checks passed.
 
 - `content-validation` CI chạy thêm `validate_topology.py` sau `validate_content.py`, nên bundle hỏng sẽ fail PR.
 - Fixture `SYNTHETIC_TEST_ROOM_MAP_BEN_MUA.json` có `reviewState: SYNTHETIC_TEST_ONLY`, **không** phải layout Bến Mưa canonical; chưa có bundle `REVIEWED` nào.
-- Bước 2 (geometry service + LOS enforcement cho quest accept) chưa làm trong PR này; quest accept vẫn feature-flag off và log `DEV STUB`.
+- Bước 2 (geometry service + LOS enforcement cho quest accept) nằm trong PR #35 — xem §4. Production vẫn feature-flag off vì chưa có bundle `REVIEWED`.
 - Cần Muse bàn giao layout Bến Mưa đã review trước khi bật enforcement trên môi trường thật.
+
+## 4. Bước 2 — geometry/LOS (PR #35, CI `server-smoke` chạy 2026-10-28)
+
+```text
+Loaded topology bundles: 1 (reviewed 0).
+Service self-check: 57 passed, 0 failed, 57 total.
+PASS: 161 smoke checks against http://127.0.0.1:5080
+```
+
+12 assertion mới: `los.clear`, `los.wall`, `los.endpoint_in_wall`, `los.hole`, `los.corner_touch`, `los.floor`, `los.nonfinite`, `los.outside_walkable`, `los.not_enforced_without_reviewed_bundle`, `quest_accept.los_blocked`, `quest_accept.los_blocked_state`, `quest_accept.los_allowed`.
+
+HTTP smoke vẫn 161 check như trước vì bundle duy nhất là `SYNTHETIC_TEST_ONLY` nên accept trả nhánh `not_enforced` (DEV STUB); đường LOS bị chặn chỉ được chứng minh trong self-check với bundle `REVIEWED` dựng trong bộ nhớ.
