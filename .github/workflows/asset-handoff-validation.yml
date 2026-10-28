@@ -51,6 +51,9 @@ jobs:
       - name: Validator unit tests
         run: python -m unittest discover -s Implementation/Asset_Handoff/tests -v
 
+      - name: Coverage report is reproducible
+        run: python Implementation/Asset_Handoff/coverage_audit.py --check
+
       - name: Self check on the shipped example manifest
         run: >-
           python Implementation/Asset_Handoff/validate_asset_delivery.py
