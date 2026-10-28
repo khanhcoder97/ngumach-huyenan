@@ -1,0 +1,89 @@
+name: asset-handoff-validation
+
+# Runs only when art, the delivery manifest or the handoff tooling changes.
+# No Unity, no .NET and no third-party Python packages are installed.
+
+on:
+  pull_request:
+    paths:
+      - "Client/Assets/Art/**"
+      - "Client/Assets/ArtManifests/**"
+      - "Client/Assets/UI/Art/**"
+      - "Client/Assets/Tilemaps/**"
+      - "Client/Assets/VFX/**"
+      - "Client/Assets/Animation/**"
+      - "Implementation/Asset_Handoff/**"
+      - ".github/workflows/asset-handoff-validation.yml"
+  push:
+    branches: [main]
+    paths:
+      - "Client/Assets/Art/**"
+      - "Client/Assets/ArtManifests/**"
+      - "Client/Assets/UI/Art/**"
+      - "Client/Assets/Tilemaps/**"
+      - "Client/Assets/VFX/**"
+      - "Client/Assets/Animation/**"
+      - "Implementation/Asset_Handoff/**"
+      - ".github/workflows/asset-handoff-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout with Git LFS content
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Confirm LFS objects were fetched
+        run: |
+          git lfs version
+          echo "tracked LFS files: $(git lfs ls-files | wc -l)"
+
+      - name: Validator unit tests
+        run: python -m unittest discover -s Implementation/Asset_Handoff/tests -v
+
+      - name: Self check on the shipped example manifest
+        run: >-
+          python Implementation/Asset_Handoff/validate_asset_delivery.py
+          --skip-file-checks
+          --manifest Implementation/Asset_Handoff/muse_delivery_manifest.example.json
+
+      - name: Collect changed files
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -eu
+          if [ -n "${BASE_SHA:-}" ]; then
+            git diff --name-only "${BASE_SHA}" "${GITHUB_SHA}" > changed.txt
+          elif git rev-parse --verify -q "${GITHUB_SHA}~1" >/dev/null; then
+            git diff --name-only "${GITHUB_SHA}~1" "${GITHUB_SHA}" > changed.txt
+          else
+            git show --name-only --pretty=format: "${GITHUB_SHA}" > changed.txt
+          fi
+          echo "changed paths:"; sed 's/^/  /' changed.txt
+
+      - name: Validate the delivered asset manifest
+        run: >-
+          python Implementation/Asset_Handoff/validate_asset_delivery.py
+          --changed-files changed.txt
+          --allow-missing-manifest
+          --report asset-handoff-report.txt
+
+      - name: Upload findings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: asset-handoff-report
+          path: |
+            asset-handoff-report.txt
+            changed.txt
+          if-no-files-found: ignore
