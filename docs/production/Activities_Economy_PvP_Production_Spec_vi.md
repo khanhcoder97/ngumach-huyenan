@@ -1,6 +1,9 @@
 # ĐẶC TẢ DUNGEON, RAID, BOSS, KINH TẾ VÀ HOẠT ĐỘNG
 ## Ngũ Mạch: Huyền Ấn — bản sản xuất v1.1
 
+> DEC-016 (2026-10-28): áp dụng `Top_Down_Gameplay_World_Spec_vi.md`. Các bảng kích thước/placement cũ là blockout chưa nghiệm thu top-down. Y luôn là Bắc–Nam trên mặt đất. “Platform” là bệ/cầu/vùng an toàn có đường đi hoặc floor link, không yêu cầu nhảy; chiều cao silhouette/capsule cũ không dùng làm collider. ID được giữ; không tự chuyển tọa độ cũ thành độ cao.
+
+
 ### 1. Quy tắc hoạt động dùng chung
 
 - Encounter chạy trên instance riêng cho nhóm; người chơi đơn có thể vào các dungeon campaign 5 người với bot hỗ trợ không cấp loot/achievement, nếu sản phẩm quyết định bật. Mặc định không có bot trong raid.

@@ -5,7 +5,7 @@
 
 Một modal có ba khu vực nghiệp vụ: **Ngoại trang**, **Vật phẩm buff**, **NPC & Dịch vụ**. Modal mở từ Character, HUD quick slot, cửa hàng NPC, class master, guild clerk, Bảng Truy Nã và NPC_RAID_KEEPER. Dịch vụ khớp theo `npcId + mapId + serviceId + playerState`; client không tự dựng cửa hàng hoặc quyết định quyền mua/vào boss.
 
-Ngũ Mạch là game hành động 2D ngang pixel art theo `Pixel_Art_Production_Standard_vi.md`. Preview là **sân khấu sprite pixel-art** (không viewport 3D); chuyển frame/góc front/back/side có asset, không xoay hoặc scale phân số làm mờ pixel. Ngoại trang là mỹ phẩm thuần; buff dùng item/cooldown trong catalog; lệnh boss là vé tài khoản cho Thí Luyện Hồi Ức và không thay quota loot game gốc.
+Ngũ Mạch là game hành động 2D nhìn từ trên pixel art theo `Pixel_Art_Production_Standard_vi.md`. Preview là **sân khấu sprite pixel-art** (không viewport 3D); chuyển frame/góc front/back/side có asset, không xoay hoặc scale phân số làm mờ pixel. Ngoại trang là mỹ phẩm thuần; buff dùng item/cooldown trong catalog; lệnh boss là vé tài khoản cho Thí Luyện Hồi Ức và không thay quota loot game gốc.
 
 Nguồn chuẩn: `Item_Master_Catalog_vi.csv`, `Item_Rarity_Variant_Catalog_vi.csv`, `Item_Catalog_and_Set_Bible_vi.md`, `Activities_Economy_PvP_Production_Spec_vi.md`, `Map_Production_Atlas_vi.md`, `Guild_Social_Spec_vi.md`, `Character_Equipment_Inventory_Spec_vi.md` và `Art_Entity_Weather_UI_Visual_Bible_vi.md`. Tên, ID, stat, giá, source và unlock state chỉ do content registry/server trả.
 
@@ -221,7 +221,7 @@ Mọi trường preset/art, palette, appearance slot, skin compatibility, dyeabl
 - Mobile hit target 48×48dp, gesture rotate không chặn cuộn grid; có nút xoay trái/phải thay cho drag; slider zoom có reset.
 - Body text 15–17px PC/14–16sp mobile; màu trạng thái luôn có label/icon; timer đọc được bằng screen reader `Còn 12 phút 08 giây`.
 - Reduced motion tắt xoay tự động, shimmer/aura particles và camera ease; LowFX không tắt icon active buff hoặc trạng thái cooldown.
-- Cache tối đa một character sprite set + một NPC portrait cùng lúc; swap cosmetic sprite variant/layer không reload toàn scene; không render 3D viewport trên client side-scroller.
+- Cache tối đa một character sprite set + một NPC portrait cùng lúc; swap cosmetic sprite variant/layer không reload toàn scene; không render 3D viewport trên client nhìn từ trên.
 
 ### 10. Handoff checklist
 

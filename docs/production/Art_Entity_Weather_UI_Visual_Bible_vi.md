@@ -1,11 +1,14 @@
 # ART BIBLE: TẠO HÌNH NPC, QUÁI, THỜI TIẾT VÀ SKIN UI
 ## Ngũ Mạch: Huyền Ấn — pixel art production v2.0
 
+> DEC-016 (2026-10-28): áp dụng `Top_Down_Gameplay_World_Spec_vi.md`. Các bảng kích thước/placement cũ là blockout chưa nghiệm thu top-down. Y luôn là Bắc–Nam trên mặt đất. “Platform” là bệ/cầu/vùng an toàn có đường đi hoặc floor link, không yêu cầu nhảy; chiều cao silhouette/capsule cũ không dùng làm collider. ID được giữ; không tự chuyển tọa độ cũ thành độ cao.
+
+
 ### 1. Quy chuẩn hình ảnh tổng thể
 
 **Ngôn ngữ tạo hình:** fantasy võ hiệp huyền thuật pixel art, lấy chất liệu từ thủ công vùng sông–rừng–sa mạc–thành đá nhưng dùng kiến trúc, phù văn, nhân vật và trang phục nguyên bản của Lạc Châu. Vẽ theo cụm pixel sạch, silhouette rõ, palette có giới hạn, shading theo dải màu/dither; không dùng anti-aliasing, blur hay gradient mượt. Tuyệt đối không dùng sprite/UI/âm thanh/hình cắt hoặc dấu hiệu nhận diện từ KPAH/JAR tham chiếu. Chuẩn kỹ thuật chi tiết theo [`Pixel_Art_Production_Standard_vi.md`](Pixel_Art_Production_Standard_vi.md).
 
-**Tỉ lệ chuẩn:** giữ map 1 WU=0,5m, actor silhouette 5 WU, collision capsule 3,6 WU, camera 18 WU ở 16:9. Sprite 20 PPU trên logical canvas 640×360 nên hero cao khoảng 100 source px; output 1080p phóng nguyên 3× thành khoảng 300 screen px. Boss cao 1,6–3 lần theo spec. Gameplay sprite frame-based; pivot chân và anchor vũ khí/tay/đầu/hông/tâm thân khai báo theo pixel. Animation không điều khiển vị trí server.
+**Tỉ lệ chuẩn:** giữ map 1 WU=0,5m, hero cell 48×64 px, footprint capsule ngang 1,2×0,6 WU, camera 18 WU ở 16:9. Sprite 20 PPU trên logical canvas 640×360 nên hero nằm trong cell cao 64 source px; output 1080p phóng nguyên 3× thành tối đa 192 screen px. Boss cao 1,6–3 lần theo spec. Gameplay sprite frame-based; pivot chân và anchor vũ khí/tay/đầu/hông/tâm thân khai báo theo pixel. Animation không điều khiển vị trí server.
 
 **Lưới asset:**
 - Actor thường dùng sprite sheet 512²–1024² chia page theo state; boss 1024²–2048²/page theo phase/layer. Không ép mọi frame thành cùng ô nếu trim metadata/pivot vẫn chính xác.

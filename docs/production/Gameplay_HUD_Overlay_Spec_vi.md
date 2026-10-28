@@ -3,7 +3,7 @@
 
 ### 1. Phạm vi và nguyên tắc
 
-Đặc tả này khóa bố cục HUD khi nhân vật đang ở trong bản đồ khám phá, chiến đấu thường, đánh boss hoặc tham gia hoạt động nhóm. HUD pixel art phủ trên game viewport pixel-art 2D ngang, theo `Pixel_Art_Production_Standard_vi.md`. Icon/frame/font dùng pixel asset point-filtered, pixel snap và scale nguyên; không trộn vector/HD icon hoặc blur vào bộ UI.
+Đặc tả này khóa bố cục HUD khi nhân vật đang ở trong bản đồ khám phá, chiến đấu thường, đánh boss hoặc tham gia hoạt động nhóm. HUD pixel art phủ trên game viewport pixel-art 2D nhìn từ trên, theo `Pixel_Art_Production_Standard_vi.md`. Icon/frame/font dùng pixel asset point-filtered, pixel snap và scale nguyên; không trộn vector/HD icon hoặc blur vào bộ UI.
 
 Ưu tiên theo thứ tự: **nhìn được nhân vật và telegraph → đọc nhanh HP/MP và cơ chế lớp → thao tác chiến đấu → đọc nhiệm vụ/vị trí → mở tiện ích**. Các góc màn hình chứa nhóm thông tin bền; vùng trung tâm và dải giữa phía dưới được giữ thoáng để đọc combat. HUD không che toàn thân boss, vòng telegraph, lối thoát, tương tác nhiệm vụ hoặc chữ thoại quan trọng.
 
@@ -106,7 +106,7 @@ Khi boss xuất hiện, quest tracker tự rút thành 1–2 dòng và cho boss 
 
 Ở giữa joystick có nút chuyển `Đi / Chạy / Nước rút` dạng 3 trạng thái; trạng thái đang chọn có vòng sáng + nhãn. Nếu game mode hoặc combat không cho phép, nút disable và giải thích lý do; HUD không tự tạo stamina hoặc thay đổi tốc độ ngoài dữ liệu gameplay.
 
-**PC/tay cầm:** joystick ẩn; A/D hoặc stick trái di chuyển theo GDD; nhảy/interact theo keybind hiện hành. Mọi keybind có thể remap; khi tay cầm được dùng, icon nút đổi sang glyph của controller. Không show cùng lúc hai bộ phím nếu không bật accessibility prompt.
+**PC/tay cầm:** joystick ẩn; WASD/mũi tên hoặc stick trái di chuyển XY 8 hướng; né/interact theo keybind DEC-016. Mọi keybind có thể remap; khi tay cầm được dùng, icon nút đổi sang glyph của controller. Không show cùng lúc hai bộ phím nếu không bật accessibility prompt.
 
 **Telemetry sát mép dưới trái:** dòng gọn `X 128.4  Y 0.0 · 19:42 · 60 FPS`; tọa độ dùng WU và làm tròn 0.1, giờ là giờ máy chủ, FPS là client render rate. Mobile mặc định ẩn FPS/tọa độ sau tùy chọn `HUD → Hiện telemetry`; PC mặc định chỉ hiện ping và giờ, F10 bật tọa độ/FPS để debug. Dòng telemetry không nhận input và không hiện trong screenshot/cinematic nếu bật hide-overlay.
 
