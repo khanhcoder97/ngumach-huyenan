@@ -119,6 +119,10 @@ public static class ServiceSelfCheck
             noMpCast.Failure?.Code);
 
         Check("quest.catalog", questCatalog.Count == 1, $"count={questCatalog.Count}");
+        Check(
+            "quest.catalog_ids",
+            questCatalog.QuestIds.SequenceEqual(new[] { "P00-01" }, StringComparer.Ordinal),
+            string.Join(",", questCatalog.QuestIds));
 
         var questActor = NewPlayer("CHR_SELFCHECK_QUEST");
         var questInitial = quests.GetState(questActor.CharacterId, "P00-01");

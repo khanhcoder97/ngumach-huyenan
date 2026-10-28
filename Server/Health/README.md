@@ -11,6 +11,8 @@ Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritati
 | POST | `/p1/move` | Submit a `MoveIntent` envelope for the session in `X-Session-ID` |
 | GET | `/p1/world/{sessionId}` | Read the latest authoritative `WorldSnapshot` |
 | POST | `/p1/combat` | Submit a `CombatInput` envelope for the session in `X-Session-ID` |
+| GET | `/p1/quests/{sessionId}` | Read the authoritative quest states for the session character |
+| GET | `/p1/inventory/{sessionId}` | Read the authoritative `InventorySnapshot` for the session character |
 
 Every response, including errors, carries `X-Correlation-ID`. A safe incoming value (1–64 characters of ASCII letters, digits, `-`, `_`, `.`) is echoed; otherwise a new GUID is generated.
 
@@ -181,6 +183,42 @@ curl -i http://localhost:5000/p1/world/<SESSION_ID> \
 
 The response uses the same envelope as a successful move.
 
+## Quest and inventory reads
+
+Both are read-only projections for client UI. No accept/turn-in or add/remove command is exposed; those stay server-side seams.
+
+```bash
+curl -i http://localhost:5000/p1/quests/<SESSION_ID> \
+  -H "X-Correlation-ID: demo-quests"
+
+curl -i http://localhost:5000/p1/inventory/<SESSION_ID> \
+  -H "X-Correlation-ID: demo-inventory"
+```
+
+`/p1/quests/{sessionId}` returns one `QuestState` per canonical `QuestDefinition`, using the state already validated by `QuestState.schema.json`:
+
+```json
+{
+  "schemaVersion": 1,
+  "requestId": "55555555555555555555555555555555",
+  "sessionId": "<SESSION_ID>",
+  "serverTimeUtc": "2026-10-26T07:00:03Z",
+  "result": [
+    {
+      "questId": "P00-01",
+      "state": "AVAILABLE",
+      "stepId": "STEP_P00_01_PACKAGES",
+      "objectiveCounters": { "OBJ_P00_01_PACKAGES": 0 },
+      "revision": 1
+    }
+  ]
+}
+```
+
+`/p1/inventory/{sessionId}` returns an `InventorySnapshot`. A session that has not been granted anything yet returns `inventoryRevision: 0` with empty `items` and `currencies`; the server does not seed starting gear.
+
+Unknown session IDs return `404 session_not_found`. Reading quest state creates the row lazily so availability is refreshed; it never changes position, revision or resources of the world snapshot.
+
 ## Combat internals (QOD-03/QOD-06)
 
 `POST /p1/combat` exposes `ICombatService` for the self-targeting `SK-MK-01` path. The service stays the server-side seam for future `combat.input` work:
@@ -195,7 +233,7 @@ Internal failure codes: `unknown_skill`, `skill_not_available`, `invalid_target`
 
 ## Quest skeleton (QOD-03)
 
-No quest endpoint is exposed yet. The registered `IQuestService` is the server-side seam for future accept/progress/turn-in commands:
+`GET /p1/quests/{sessionId}` exposes the state list read-only. No accept/turn-in command is exposed yet; `IQuestService` remains the server-side seam for those:
 
 - `IQuestCatalog` loads canonical `QuestDefinition` files (currently `P00-01`) from `Implementation/Content/Examples/QuestDefinition`; unknown quest IDs are rejected.
 - `InMemoryQuestService` keeps per-character state behind `IQuestStateStore` and supports `GetState`, `GetStates`, `Accept`, `RecordObjective`, `TurnIn` and `Fail`.
@@ -219,7 +257,7 @@ No quest endpoint is exposed yet. The registered `IQuestService` is the server-s
 
 ## Inventory skeleton
 
-`IInventoryService` owns the authoritative per-character inventory. It is registered in DI but is not exposed over HTTP yet. `GetSnapshot` returns a payload shaped like `Implementation/Contracts/P1/InventorySnapshot.schema.json`.
+`IInventoryService` owns the authoritative per-character inventory. It is exposed read-only through `GET /p1/inventory/{sessionId}`; `Apply` stays a server-side seam with no HTTP surface. `GetSnapshot` returns a payload shaped like `Implementation/Contracts/P1/InventorySnapshot.schema.json`.
 
 `Apply(session, InventoryMutation)` is a single all-or-nothing transaction:
 
@@ -303,13 +341,13 @@ Stop the background server process afterward. See `Implementation/Reports/QOD-04
 
 ## Domain service self-check
 
-The quest, inventory and teleport skeletons have no HTTP surface yet, and the combat endpoint only reaches the self-targeting `SK-MK-01`, so `server-smoke` also exercises the services in-process before starting the listener:
+Quest and inventory HTTP surfaces are read-only, teleport has no endpoint, and combat only reaches the self-targeting `SK-MK-01`, so `server-smoke` also exercises the services in-process before starting the listener:
 
 ```bash
 dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
 ```
 
-The flag boots the DI container and canonical content, then runs 34 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the full `P00-01` quest flow through `COMPLETED`, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
+The flag boots the DI container and canonical content, then runs 35 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the full `P00-01` quest flow through `COMPLETED`, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
 
 ## Manual verification
 
@@ -333,14 +371,16 @@ The flag boots the DI container and canonical content, then runs 34 assertions c
 | 14 | Move with `inputSequence=3` after that cast | `409 stale_sequence` (sequence shared with combat) |
 | 15 | Combat `SK-MK-02` without `targetId` | `400 invalid_payload`, field `targetId` |
 | 16 | Combat `SK-MK-03` with unknown `targetId` | `404 target_not_found` |
-| 17 | Any request | Response always has `X-Correlation-ID` |
+| 17 | `GET /p1/quests/{sessionId}` | `200`, one `P00-01` entry, `state: AVAILABLE`, counters `{"OBJ_P00_01_PACKAGES": 0}` |
+| 18 | `GET /p1/inventory/{sessionId}` | `200`, `inventoryRevision: 0`, empty `items` and `currencies` |
+| 19 | Any request | Response always has `X-Correlation-ID` |
 
 ## Current limits
 
 - Sessions are in memory and lost on restart; there is no database, authentication or real-time transport.
-- `entities` is always empty; the combat target registry starts empty, so only the self-targeting `SK-MK-01` can be cast over HTTP. Quest, inventory and teleport services are not exposed.
+- `entities` is always empty; the combat target registry starts empty, so only the self-targeting `SK-MK-01` can be cast over HTTP. Teleport has no endpoint.
 - Combat has no damage, hit chance, telegraphs, death or loot: `combat.effect` only records an accepted cast and its cooldown.
-- Quest state is in memory, has no endpoint, and only one canonical `QuestDefinition` (`P00-01`) is loaded. Rewards, level-band eligibility and multi-step graphs are not implemented.
-- Inventory has no item catalog, stack-limit enforcement, durability rules or seeded starting items.
+- Quest state is in memory and read-only over HTTP; only one canonical `QuestDefinition` (`P00-01`) is loaded. Accept, turn-in, rewards, level-band eligibility and multi-step graphs are not implemented.
+- Inventory is read-only over HTTP and starts empty: no item catalog, stack-limit enforcement, durability rules, seeded starting items or mutation endpoint.
 - Teleport uses map bounds only; there is no walkability, portal, cooldown or respawn logic.
 - Movement speed and starting HP/MP are slice defaults, not locked balance values.

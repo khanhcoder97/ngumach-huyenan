@@ -36,6 +36,32 @@ internal static class P1Results
             Result = combatEvent
         });
 
+    public static IResult QuestsSuccess(
+        string requestId,
+        string sessionId,
+        ServerClock clock,
+        IReadOnlyList<QuestState> states) =>
+        Results.Json(new P1QuestListResponse
+        {
+            RequestId = requestId,
+            SessionId = sessionId,
+            ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+            Result = states
+        });
+
+    public static IResult InventorySuccess(
+        string requestId,
+        string sessionId,
+        ServerClock clock,
+        InventorySnapshot snapshot) =>
+        Results.Json(new P1InventoryResponse
+        {
+            RequestId = requestId,
+            SessionId = sessionId,
+            ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+            Result = snapshot
+        });
+
     public static IResult Error(
         HttpContext context,
         ServerClock clock,
