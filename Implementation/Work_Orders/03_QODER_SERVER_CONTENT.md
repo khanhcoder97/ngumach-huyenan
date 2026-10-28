@@ -1,5 +1,9 @@
 # Qoder — Authoritative Server, Gameplay Systems và Content Integration
 
+## Gói tiếp theo đang được giao — 2026-10-29
+
+QOD-10 topology/LOS đã merge qua #34/#35. Nhận tiếp toàn gói QOD-11→15 tại `06_QODER_GAMEPLAY_LOOP_EPIC.md`, theo `04_CONTINUOUS_DELIVERY_20261029.md`: world/tick/movement, combat/quái, quest/exploration/gathering, reward transaction và headless E2E. Giữ production gates khi chưa có reviewed data. Không dừng sau mỗi PR nếu còn mốc độc lập; các mục P1 cũ bên dưới là lịch sử nền tảng, không phải điểm kết thúc gói mới.
+
 ## Phạm vi sở hữu
 
 Bạn sở hữu backend, contract implementation, validation and data loading:

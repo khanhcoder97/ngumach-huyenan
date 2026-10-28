@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "mapId": "MAP_THANG_LONG",
+  "layoutVersion": 2,
+  "activation": "DESIGN_ONLY_REQUIRES_MIGRATION",
+  "coordinateSystem": "TOP_DOWN_XY",
+  "targetBoundsWu": {
+    "xMin": 0,
+    "xMax": 2048,
+    "yMin": 0,
+    "yMax": 1536
+  },
+  "logicalResolution": [
+    640,
+    360
+  ],
+  "pixelsPerUnit": 20,
+  "tileSizePx": 16,
+  "chunkSizeWu": [
+    64,
+    64
+  ],
+  "chunkGrid": [
+    32,
+    24
+  ],
+  "referenceMoveSpeedWuPerSecond": 6.0,
+  "migrationRequired": [
+    "mapBounds",
+    "topology",
+    "placements",
+    "NPC anchors",
+    "portals",
+    "city routes",
+    "quest triggers",
+    "camera",
+    "arrival checkpoints"
+  ],
+  "districts": [
+    {
+      "districtId": "CAP_D01",
+      "nameVi": "Cửa Tây Nam và ngoại phố",
+      "boundsWu": {
+        "xMin": 0,
+        "xMax": 512,
+        "yMin": 0,
+        "yMax": 512
+      },
+      "topologyState": "PLANNING_NOT_NAV_APPROVED"
+    },
+    {
+      "districtId": "CAP_D02",
+      "nameVi": "Phường Bang Hội",
+      "boundsWu": {
+        "xMin": 512,
+        "xMax": 1024,
+        "yMin": 0,
+        "yMax": 512
+      },
+      "topologyState": "PLANNING_NOT_NAV_APPROVED"
+    },
+    {
+      "districtId": "CAP_D03",
+      "nameVi": "Bách Công",
+      "boundsWu": {
+        "xMin": 1024,
+        "xMax": 1536,
+        "yMin": 0,
+        "yMax": 512
+      },
+      "topologyState": "PLANNING_NOT_NAV_APPROVED"
+    },
+    {
+      "districtId": "CAP_D04",
+      "nameVi": "Cửa Đông Nam",
+      "boundsWu": {
+        "xMin": 1536,
+        "xMax": 2048,
+        "yMin": 0,
+        "yMax": 512
+      },
+      "topologyState": "PLANNING_NOT_NAV_APPROVED"
+    },
+    {
+      "districtId": "CAP_D05",
+      "nameVi": "Bến Sông Ngự",
+      "boundsWu": {
+        "xMin": 0,
+        "xMax": 512,
+        "yMin": 512,
+        "yMax": 1024
+      },
+      "topologyState": "PLANNING_NOT_NAV_APPROVED"
+    },
+    {
+      "districtId": "CAP_D06",
+      "nameVi": "Phường Giao Dịch",
+      "boundsWu": {
+        "xMin": 512,
+        "xMax": 1024,
+        "yMin": 512,
+        "yMax": 1024
+      },
+      "topologyState": "PLANNING_NOT_NAV_APPROVED"
+    },
+    {
+      "districtId": "CAP_D07",
+      "nameVi": "Quảng trường Long Môn",
+      "boundsWu": {
+        "xMin": 1024,
+        "xMax": 1536,
+        "yMin": 512,
+        "yMax": 1024
+      },
+      "topologyState": "PLANNING_NOT_NAV_APPROVED"
+    },
+    {
+      "districtId": "CAP_D08",
+      "nameVi": "Đại Chợ",
+      "boundsWu": {
+        "xMin": 1536,
+        "xMax": 2048,
+        "yMin": 512,
+        "yMax": 1024
+      },
+      "topologyState": "PLANNING_NOT_NAV_APPROVED"
+    },
+    {
+      "districtId": "CAP_D09",
+      "nameVi": "Hồ và vườn",
+      "boundsWu": {
+        "xMin": 0,
+        "xMax": 512,
+        "yMin": 1024,
+        "yMax": 1536
+      },
+      "topologyState": "PLANNING_NOT_NAV_APPROVED"
+    },
+    {
+      "districtId": "CAP_D10",
+      "nameVi": "Công Văn",
+      "boundsWu": {
+        "xMin": 512,
+        "xMax": 1024,
+        "yMin": 1024,
+        "yMax": 1536
+      },
+      "topologyState": "PLANNING_NOT_NAV_APPROVED"
+    },
+    {
+      "districtId": "CAP_D11",
+      "nameVi": "Hoàng thành fantasy",
+      "boundsWu": {
+        "xMin": 1024,
+        "xMax": 1536,
+        "yMin": 1024,
+        "yMax": 1536
+      },
+      "topologyState": "PLANNING_NOT_NAV_APPROVED"
+    },
+    {
+      "districtId": "CAP_D12",
+      "nameVi": "Phố ở Đông Bắc",
+      "boundsWu": {
+        "xMin": 1536,
+        "xMax": 2048,
+        "yMin": 1024,
+        "yMax": 1536
+      },
+      "topologyState": "PLANNING_NOT_NAV_APPROVED"
+    }
+  ],
+  "firstBuild": {
+    "districtId": "CAP_D06",
+    "chunkCount": 1,
+    "geometry": "NOT_YET_AUTHORED",
+    "kitCaps": {
+      "terrainTiles": 48,
+      "architectureModules": 12,
+      "props": 12,
+      "trees": 2,
+      "bridge": 1,
+      "waterFrames": 4
+    }
+  },
+  "hubCameraProfile": {
+    "name": "HUB_WIDE",
+    "logicalWorldResolution": [
+      960,
+      540
+    ],
+    "pixelsPerUnit": 20,
+    "viewWu": [
+      48,
+      27
+    ],
+    "uiScalesWithWorldCamera": false,
+    "competitiveProfile": "STANDARD",
+    "activation": "REQUIRES_CLIENT_MAP_FLOW_INTEGRATION"
+  }
+}

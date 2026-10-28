@@ -1,6 +1,6 @@
 # QOD-10 — Hợp đồng top-down topology và LOS tương tác
 
-**Trạng thái:** Bước 1 (contract + fixture + validator) hoàn tất chờ review. Bước 2 (service/LOS) chỉ làm sau contract review; quest accept vẫn `P1:QuestAccept:Enabled=false` + `DEV STUB` cho tới khi có bundle `REVIEWED`.
+**Trạng thái:** Bước 1 (contract + fixture + validator) đã merge qua PR #34. Bước 2 (geometry service + LOS guard) implement trong PR #35. Chưa có bundle `REVIEWED` của Bến Mưa nên production vẫn `P1:QuestAccept:Enabled=false`, query trả `not_enforced` và server log `DEV STUB`.
 **Issue:** #32. **Nguồn:** `docs/production/Top_Down_Gameplay_World_Spec_vi.md` (DEC-016), `Production_Rules_Complete_v1_vi.md`, `Production_Completion_Addendum_vi.md` §2. **Canonical IDs:** `MAP_BEN_MUA`, `NPC_LYAN`, record `MAN-BM-NPC_LYAN`.
 
 ## 1. Phạm vi
@@ -68,12 +68,13 @@ File: `Implementation/Content/Examples/MapTopology/<name>.json`; schema `Impleme
 
 Fixture này **không phải** layout Bến Mưa và không được dùng làm nav canonical; nó chỉ chứng minh shape + validator + (bước 2) thuật toán.
 
-## 6. Tích hợp quest accept (bước 2, chưa làm trong PR này)
+## 6. Tích hợp quest accept (bước 2, đã implement)
 
 - Thêm `IWorldGeometryCatalog` + loader; chỉ bundle `REVIEWED` mới được dùng để chặn LOS.
 - Query: cùng `mapId`+`floorId`, khoảng cách chân ≤ 5 WU, đoạn không cắt blocked/ra ngoài walkable.
 - Khi chưa có bundle `REVIEWED`: giữ `P1:QuestAccept:Enabled=false` (route không map) và `DEV STUB` như hiện tại; không bỏ guard để gọi production.
-- Không đổi idempotency, `inputSequence`, revision, reward trong PR này.
+- Geometry service triển khai trong `Server/Health/World/WorldGeometry.cs` (+ loader `MapTopology.cs`); self-check phủ 12 case geometry/LOS, gồm accept bị chặn bởi tường và accept hợp lệ phía Tây.
+- Không đổi idempotency, `inputSequence`, revision hay reward.
 
 ## 7. Bằng chứng (chạy thật)
 

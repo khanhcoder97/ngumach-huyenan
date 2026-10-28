@@ -158,3 +158,25 @@ Các tài liệu mới xác định hành vi cần xây dựng; audit runtime v�
 - ../../Implementation/Content/Narrative/Narrative_Quest_Beats_v2.json: 76/76 quest có clue, câu hỏi, player agency và payoff riêng.
 - ../../Implementation/Content/Narrative/Cinema_Production_Pack_v1.json: 20 cảnh/63 prompt shot6giây, dialogue, trigger, spoiler guard, fallback và delivery owner Muse.
 - ../../Implementation/Tools/validate_narrative.py: kiểm coverage, refs, scene/shot IDs và duration; không chứng nhận chất lượng video hoặc canon bằng máy.
+
+### Mẫu mỹ thuật và kế hoạch sửa chất lượng (2026-10-29)
+
+- Art_Concept_References/v1/README_vi.md: năm board PNG, phạm vi reference, lỗi ảnh sinh cần sửa và gate native pose trước full animation.
+- Art_Concept_References/v1/generation_prompts.json: prompt thực tế và công cụ built-in đã dùng.
+- Art_Concept_References/v1/reference_manifest.json: kích thước/SHA256/status của từng board, không phải runtime asset manifest.
+- Art_Completion_Plan_20261029_vi.md: thứ tự hoàn thiện slice, environment/UI/cinema/roster còn lại và phân công review.
+
+- HUD_Skill_Arc_Layout_vi.md: cập nhật2026-10-29 theo chủ dự án,6slot tròn vòng cung quanh attack; concept06 thay layout grid của04.
+
+### Thăng Long v2 và pixel giản lược
+
+Capital_Scale_and_Simple_Pixel_v2_vi.md quy định extent12phường/chunk/migration và kit đơn giản. DesignBaselines/thang_long_layout_v2.json giữ target thiết kế chưa active; Art_Concept_References/v2 phân biệt macro overview và gameplay street corner.
+
+- Hub_Wide_Camera_Profile_vi.md (DEC-021): tầm nhìn48×27WU trong hub, HUD giữ size, combat STANDARD; profile cần tích hợp client/map flow.
+
+### Skill và VFX art v1 (2026-10-29)
+
+- Skill_VFX_Art_Direction_v1_vi.md:5ngôn ngữ effect,3pha, event adapter/lifetime, layer/LowFX, export và sửa lỗi concept.
+- Skill_VFX_Cards_v1_vi.md:30thẻ skill riêng, prep/release/fade/attach/shape/icon/sound/LowFX.
+- Art_Concept_References/skill_vfx_v1/:5board PNG thực, prompts và reference manifest SHA256; không phải runtime atlas.
+- ../../Implementation/Content/DesignBaselines/skill_vfx_art_v1.json: art handoff design-only, không thay30SkillDefinitions runtime.

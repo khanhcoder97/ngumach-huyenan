@@ -1,5 +1,9 @@
 # Phân công ba agent — Ngũ Mạch: Huyền Ấn
 
+## Chương trình hiện hành từ 2026-10-29
+
+Đọc `04_CONTINUOUS_DELIVERY_20261029.md` trước các backlog P1 bên dưới. OpenCode nhận gói OPC-06→10 tại `05_OPENCODE_ASSET_PIPELINE_EPIC.md`; Qoder nhận QOD-11→15 tại `06_QODER_GAMEPLAY_LOOP_EPIC.md`. Được làm tiếp mốc độc lập sau mỗi PR, giữ review gate và worktree riêng. Muse tiếp tục hàng đợi art/map/UI/VFX/cinema theo #1/#29/#39. Quyền sửa mở rộng và các profile camera mới ghi tại work order 04; bảng cũ bên dưới chỉ là baseline ban đầu.
+
 Tài liệu này là đầu mối điều phối. Mỗi agent chỉ sửa các khu vực mình sở hữu. Mọi định nghĩa gameplay dùng ID chuẩn trong `docs/production/` và `Implementation/Content/`.
 
 | Agent | Trách nhiệm chính | Tài liệu giao việc |

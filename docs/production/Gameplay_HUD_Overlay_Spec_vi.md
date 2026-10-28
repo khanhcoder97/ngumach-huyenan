@@ -114,7 +114,7 @@ Khi boss xuất hiện, quest tracker tự rút thành 1–2 dòng và cho boss 
 
 **Nút chính đánh thường:** vòng kim loại 94–104 dp mobile/82–92 px PC, đặt trong góc phải dưới cách lề 28–36 dp; icon vũ khí/đòn đánh, nhãn `Đánh`, viền vàng mảnh. Tap/click phát một đòn; giữ chỉ tiếp tục combo nếu Combat Spec cho phép; nút không tự target qua tường. Khi đang cast/khóa hành động, hiện vòng trạng thái chứ không nhận nhấn giả.
 
-**Vòng cung kỹ năng:** sáu ô theo loadout hiện hành — bốn skill chủ động, skill cơ động/phòng thủ, tuyệt kỹ — đặt trên nửa vòng tròn phía trên nút đánh, từ trái qua đỉnh tới phải (tọa độ tâm `x=cx+r·cos(θ)`, `y=cy+r·sin(θ)`, `θ=180°..360°`), bán kính 142–166 dp mobile/122–148 px PC. Slot 48–58 dp mobile, 44–54 px PC; khoảng cách tâm tối thiểu 58 dp. Cấu hình tay trái/tay phải đảo toàn bộ cụm, không đảo thứ tự logic skill. Ultimate có viền đồng kép; skill cơ động có glyph mũi tên/né.
+**Vòng cung kỹ năng (cập nhật2026-10-29):** sáu slot tròn bao quanh nút đánh lớn ở góc phải dưới, vòng cung chạy từ trái-dưới lên phía trên, toàn cụm nằm trong safe area. Không dùng lưới2hàng hoặc bán cung tràn cạnh phải. Geometry/input/icon/QA lấy từ `HUD_Skill_Arc_Layout_vi.md`, concept `Art_Concept_References/v1/06_pixel_hud_skill_arc_v2.png`. Logical640×360: attack center(584,310), r26, skill orbit80/r13, góc[200,174,148,122,96,70], x=cx+r cos(theta), y=cy−r sin(theta). Touch target tối thiểu48dp và không overlap; cần dịch/tăng cả nhóm theo device thay vì scale phân số texture.
 
 | Trạng thái skill | Hình ảnh | Input/âm thanh |
 |---|---|---|
@@ -129,7 +129,7 @@ Cooldown là kết quả từ server; sweep vẽ theo thời gian còn lại đ�
 
 **Nút tiện ích phía trên cung:** `Khóa mục tiêu` và `Đổi bộ kỹ năng`. Khóa mục tiêu có 3 state: chưa khóa, đã khóa (viền vàng), mục tiêu mất tầm/line-of-sight (viền đứt). Đổi bộ chỉ khả dụng ngoài combat/hub theo rule GDD; trong combat hiển thị lý do disable. Không có click-through vào nút đánh khi nhấn các tiện ích.
 
-**Phím PC:** hiển thị `J`/chuột trái cho đòn thường, Q/W/E/R cho bốn skill, Shift cho cơ động, 1/2 cho ultimate theo mapping mặc định; đây là hint có thể đổi trong Settings. Nếu người chơi remap, badge thay theo key map. Nút chuột không được đọc nếu con trỏ đang thao tác panel.
+**Phím PC:** J/chuột trái đánh thường,1–6 kỹ năng,Space/Shift né,F tương tác,Q/E thuốc theo DEC-016; badge lấy keybind hiện hành. Input text/modal chặn gameplay hotkey.
 
 ### 9. Trạng thái gameplay và ưu tiên hiển thị
 
@@ -141,7 +141,7 @@ Cooldown là kết quả từ server; sweep vẽ theo thời gian còn lại đ�
 | HP dưới 25% | icon cảnh báo + viền HP pulse 1Hz; có tùy chọn tắt âm/rung nhưng không tắt biểu tượng |
 | Thăng cấp | viền portrait và EXP hoàn tất; toast góc trái trên 3s; không che skill đang dùng |
 | Nhận loot | toast tối đa 2 dòng, tự tắt 4s; nút chạm mở chi tiết, không tự trang bị |
-| Tương tác NPC/đồ vật | nút `Tương tác` xuất hiện gần cụm hành động, gợi ý phím E trên PC; không chồng nút đánh |
+| Tương tác NPC/đồ vật | nút `Tương tác` xuất hiện gần cụm hành động, gợi ý phím F trên PC; không chồng nút đánh |
 | Chat nhập liệu | joystick vẫn hoạt động nếu người chơi bật; skill input bị khóa trong ô nhập để tránh gửi chiêu nhầm |
 | Mất kết nối | ribbon trạng thái rõ, ping/đồng bộ; chặn cast/giao dịch khi server chưa xác nhận; không tự xóa thao tác pending |
 | Cinematic/death/respawn | có thể ẩn joystick/hub; portrait và thông tin quan trọng vẫn nhìn được; nút bỏ qua/hồi sinh tách biệt |
@@ -203,3 +203,7 @@ CSS tokens cốt lõi: `--hud-slate`, `--hud-brass`, `--hud-gold`, `--bar-hp`, `
 - Thời gian cast, hiệu lực, telegraph/VFX: `Combat_Skills_VFX_Animation_Spec_vi.md`.
 - Tài nguyên lớp và cooldown cấp 1: `Content_Bible_Ngu_Mach_Huyen_An_vi.md`.
 - Stat, slot trang bị, binding, ví và vật phẩm: `Character_Equipment_Inventory_Spec_vi.md`, `Item_Catalog_and_Set_Bible_vi.md`.
+
+### Camera hub và HUD
+
+DEC-021 tăng vùng world trong hub48×27WU, không thu nhỏ nút/chữ/minimap/joystick. Dùng canvas UI độc lập world render960×540; giữ6skill arc theo HUD_Skill_Arc_Layout_vi.md. Min48dp vẫn cần đo device; không lấy size hero trên màn để scale UI.

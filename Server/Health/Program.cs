@@ -63,6 +63,16 @@ builder.Services.AddSingleton(serviceProvider =>
     return NpcAnchorLoader.Load(path);
 });
 builder.Services.AddSingleton<IQuestAcceptService, InMemoryQuestAcceptService>();
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    var directory = MapTopologyLoader.DiscoverDirectory(
+        configuration, environment.ContentRootPath);
+    var maps = serviceProvider.GetRequiredService<MapBoundsCatalog>();
+    return MapTopologyLoader.Load(directory, maps);
+});
+builder.Services.AddSingleton<IWorldGeometryService, WorldGeometryService>();
 builder.Services.AddSingleton<IInventoryStateStore, InMemoryInventoryStateStore>();
 builder.Services.AddSingleton<IInventoryService, InMemoryInventoryService>();
 builder.Services.AddSingleton<ITeleportService, InMemoryTeleportService>();
@@ -83,6 +93,12 @@ app.Logger.LogInformation("Loaded quest definitions: {QuestCount}.", quests.Coun
 var npcAnchors = app.Services.GetRequiredService<NpcAnchorCatalog>();
 NpcAnchorValidator.Validate(npcAnchors, mapBounds);
 app.Logger.LogInformation("Loaded NPC anchors: {AnchorCount}.", npcAnchors.Count);
+
+var topology = app.Services.GetRequiredService<WorldGeometryCatalog>();
+app.Logger.LogInformation(
+    "Loaded topology bundles: {BundleCount} (reviewed {ReviewedCount}).",
+    topology.Count,
+    topology.ReviewedCount);
 
 foreach (var questId in quests.QuestIds)
 {
