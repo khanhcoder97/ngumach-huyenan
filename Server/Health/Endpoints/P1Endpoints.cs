@@ -3,6 +3,8 @@ using System.Text.Json;
 using Microsoft.Extensions.Options;
 using Server.Health.Contracts;
 using Server.Health.Gameplay.Combat;
+using Server.Health.Gameplay.Inventory;
+using Server.Health.Gameplay.Quests;
 using Server.Health.World;
 
 namespace Server.Health.Endpoints;
@@ -18,6 +20,8 @@ public static class P1Endpoints
         app.MapPost("/p1/move", MoveAsync);
         app.MapPost("/p1/combat", CombatAsync);
         app.MapGet("/p1/world/{sessionId}", GetWorld);
+        app.MapGet("/p1/quests/{sessionId}", GetQuests);
+        app.MapGet("/p1/inventory/{sessionId}", GetInventory);
         return app;
     }
 
@@ -389,7 +393,8 @@ public static class P1Endpoints
         HttpContext context,
         string sessionId,
         ISessionStore sessions,
-        ServerClock clock)    {
+        ServerClock clock)
+    {
         var requestId = NewRequestId();
         var session = sessions.Find(sessionId.Trim());
         if (session is null)
@@ -406,6 +411,58 @@ public static class P1Endpoints
         }
 
         return P1Results.Success(requestId, session.SessionId, snapshot);
+    }
+
+    private static IResult GetQuests(
+        HttpContext context,
+        string sessionId,
+        ISessionStore sessions,
+        IQuestCatalog catalog,
+        IQuestService quests,
+        ServerClock clock)
+    {
+        var requestId = NewRequestId();
+        var session = sessions.Find(sessionId.Trim());
+        if (session is null)
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status404NotFound,
+                P1ErrorCodes.SessionNotFound, ["sessionId"]);
+        }
+
+        var states = new List<QuestState>();
+        foreach (var questId in catalog.QuestIds)
+        {
+            if (quests.GetState(session.CharacterId, questId).State is { } state)
+            {
+                states.Add(state);
+            }
+        }
+
+        return P1Results.QuestsSuccess(requestId, session.SessionId, clock, states);
+    }
+
+    private static IResult GetInventory(
+        HttpContext context,
+        string sessionId,
+        ISessionStore sessions,
+        IInventoryService inventory,
+        ServerClock clock)
+    {
+        var requestId = NewRequestId();
+        var session = sessions.Find(sessionId.Trim());
+        if (session is null)
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status404NotFound,
+                P1ErrorCodes.SessionNotFound, ["sessionId"]);
+        }
+
+        return P1Results.InventorySuccess(
+            requestId,
+            session.SessionId,
+            clock,
+            inventory.GetSnapshot(session.CharacterId));
     }
 
     private static string NewRequestId() => Guid.NewGuid().ToString("N");

@@ -297,6 +297,48 @@ def main():
     check(body.get("revision") == 5, f"move revision after combat {body.get('revision')}")
     expect_correlation(headers, "smoke-move-after-rejections")
 
+    status, headers, body = call(
+        "GET", f"/p1/quests/{session_id}",
+        headers={"X-Correlation-ID": "smoke-quests"})
+    check(status == 200, f"quests returned {status}: {body}")
+    quests = body.get("result") or []
+    check(len(quests) == 1, f"unexpected quest list {quests}")
+    quest = quests[0] if quests else {}
+    check(quest.get("questId") == "P00-01", f"unexpected quest id {quest.get('questId')}")
+    check(quest.get("state") == "AVAILABLE", f"unexpected quest state {quest.get('state')}")
+    check(quest.get("stepId") == "STEP_P00_01_PACKAGES", f"unexpected step {quest.get('stepId')}")
+    check(quest.get("objectiveCounters") == {"OBJ_P00_01_PACKAGES": 0},
+          f"unexpected counters {quest.get('objectiveCounters')}")
+    check(quest.get("revision") == 1, f"quest revision {quest.get('revision')}")
+    expect_correlation(headers, "smoke-quests")
+
+    status, headers, body = call(
+        "GET", "/p1/quests/" + "d" * 32,
+        headers={"X-Correlation-ID": "smoke-quests-unknown-session"})
+    check(status == 404, f"unknown quest session returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "session_not_found", f"unexpected error {error.get('code')}")
+    expect_correlation(headers, "smoke-quests-unknown-session")
+
+    status, headers, body = call(
+        "GET", f"/p1/inventory/{session_id}",
+        headers={"X-Correlation-ID": "smoke-inventory"})
+    check(status == 200, f"inventory returned {status}: {body}")
+    snapshot = body.get("result") or {}
+    check(snapshot.get("inventoryRevision") == 0,
+          f"inventory revision {snapshot.get('inventoryRevision')}")
+    check(snapshot.get("items") == [], f"inventory items {snapshot.get('items')}")
+    check(snapshot.get("currencies") == [], f"inventory currencies {snapshot.get('currencies')}")
+    expect_correlation(headers, "smoke-inventory")
+
+    status, headers, body = call(
+        "GET", "/p1/inventory/" + "d" * 32,
+        headers={"X-Correlation-ID": "smoke-inventory-unknown-session"})
+    check(status == 404, f"unknown inventory session returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "session_not_found", f"unexpected error {error.get('code')}")
+    expect_correlation(headers, "smoke-inventory-unknown-session")
+
     print(f"PASS: {CHECKS} smoke checks against {BASE_URL}")
 
 

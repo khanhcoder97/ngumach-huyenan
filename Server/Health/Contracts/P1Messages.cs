@@ -120,3 +120,21 @@ public sealed class P1CombatResponse
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public CombatEvent? Result { get; init; }
 }
+
+public sealed class P1QuestListResponse
+{
+    public int SchemaVersion { get; init; } = 1;
+    public required string RequestId { get; init; }
+    public required string SessionId { get; init; }
+    public required string ServerTimeUtc { get; init; }
+    public required IReadOnlyList<QuestState> Result { get; init; }
+}
+
+public sealed class P1InventoryResponse
+{
+    public int SchemaVersion { get; init; } = 1;
+    public required string RequestId { get; init; }
+    public required string SessionId { get; init; }
+    public required string ServerTimeUtc { get; init; }
+    public required InventorySnapshot Result { get; init; }
+}

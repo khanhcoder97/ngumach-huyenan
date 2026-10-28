@@ -4,6 +4,8 @@ public interface IQuestCatalog
 {
     int Count { get; }
 
+    IReadOnlyList<string> QuestIds { get; }
+
     bool TryGet(string questId, out QuestDefinition definition);
 }
 
@@ -17,6 +19,9 @@ public sealed class QuestCatalog : IQuestCatalog
     }
 
     public int Count => _quests.Count;
+
+    public IReadOnlyList<string> QuestIds =>
+        _quests.Keys.OrderBy(questId => questId, StringComparer.Ordinal).ToArray();
 
     public bool TryGet(string questId, out QuestDefinition definition)
     {
