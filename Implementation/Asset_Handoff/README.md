@@ -1,8 +1,16 @@
-# Asset handoff validation (OPC-05)
+# Asset handoff validation (OPC-05, OPC-06 draft)
 
 `validate_asset_delivery.py` kiểm tra bundle pixel art mà Muse bàn giao, chỉ bằng Python
 standard library. Không cần Unity, .NET hay package bên thứ ba; chạy được trên máy local
 và trong GitHub Actions (`.github/workflows/asset-handoff-validation.yml`).
+
+Từ OPC-06, validator đọc được hai phiên bản manifest:
+
+| `manifestVersion` | Phiên bản | Schema |
+|---|---|---|
+| vắng mặt hoặc `1` | legacy v1 (manifest Muse hiện tại) | `asset_delivery_manifest.schema.json` |
+| `2` | v2 draft, có frame geometry | `asset_delivery_manifest.v2.schema.json` |
+| khác | unsupported, exit 1 | — |
 
 ## Chạy local
 
@@ -28,6 +36,38 @@ python -m unittest discover -s Implementation/Asset_Handoff/tests -v
 ```
 
 Tuỳ chọn: `--root PATH`, `--manifest PATH`, `--schema PATH`, `--report FILE`, `-q`.
+Nếu không truyền `--schema`, validator tự chọn schema v1/v2 theo `manifestVersion`.
+
+### Manifest v2 draft (OPC-06)
+
+```powershell
+# Fixture actor 8 hướng (288×512, 6 frame/hướng, frame 48×64)
+python Implementation/Asset_Handoff/validate_asset_delivery.py `
+  --manifest Implementation/Asset_Handoff/fixtures/manifest_v2/valid_actor_8dir.json `
+  --skip-file-checks
+
+# Migration dry-run: in diff, không sửa manifest nguồn
+python Implementation/Asset_Handoff/migrate_manifest_v2.py
+
+# Chỉ kiểm tra migration có khả thi (CI)
+python Implementation/Asset_Handoff/migrate_manifest_v2.py --quiet
+
+# Ghi proposal ra file mới sau review (không bao giờ ghi đè nguồn)
+python Implementation/Asset_Handoff/migrate_manifest_v2.py --output out/muse_delivery_manifest.v2.json
+```
+
+Quy tắc layout v2:
+
+- `direction_rows`: `pixelHeight = frameSize.height × directionCount`;
+  `pixelWidth = frameSize.width × framesPerDirection` (clip đầu); nhiều clip phải khai
+  báo `columnStart` và không overlap. Đúng 8 hướng theo thứ tự
+  `N, NE, E, SE, S, SW, W, NW`.
+- `strip`: một hàng, `pixelHeight = frameSize.height`, animation dùng
+  `frames`/`frameCount` + `frameStart` tùy chọn, không overlap.
+- Layout khác trả unsupported; validator không suy frame rect từ số frame.
+
+Chi tiết và câu hỏi review: `OPC-06_manifest_v2_proposal.md`. Manifest Muse vẫn là v1;
+PR tooling này không rewrite manifest của Muse.
 
 ## Input tối thiểu
 
@@ -88,7 +128,11 @@ FAIL: 2 problem(s) in Client/Assets/ArtManifests/muse_delivery_manifest.json
    `kind = sprite_sheet` phải có đúng 8 hướng theo thứ tự `N, NE, E, SE, S, SW, W, NW`.
 5. Mỗi animation cần `name`, frame count (`framesPerDirection`, hoặc `frames`/`frameCount`)
    và `fps` trong khoảng `0 < fps <= 60`. Không yêu cầu mọi animation cùng số frame.
-6. Khi truyền `--changed-files`: mọi PNG art bị chạm tới phải xuất hiện trong manifest.
+6. Với manifest v2: kiểm tra `frameSize`, `layout`, `isDirectional`, grid/hướng và clip
+   range như mô tả ở trên; sai grid hoặc clip vượt biên là lỗi, không chỉ warning. Với
+   manifest legacy v1: `frames x directions` không chia hết sheet vẫn chỉ là WARN để giữ
+   tương thích.
+7. Khi truyền `--changed-files`: mọi PNG art bị chạm tới phải xuất hiện trong manifest.
 
 ## Giới hạn
 
@@ -96,8 +140,12 @@ FAIL: 2 problem(s) in Client/Assets/ArtManifests/muse_delivery_manifest.json
   kiểm tra palette, alpha hay số màu.
 * Không kiểm chứng Unity import (PPU thật, Point filter, mipmap, pivot trong `.meta`) vì
   chưa có máy chạy Unity; engine import được ghi nhận là **unverified**.
-* Schema giao nhận chưa có `frameWidth`/`frameHeight`, nên validator chỉ cảnh báo (WARN) khi
-  `frames x directions` không chia hết kích thước sheet, không coi đó là lỗi. Đã mở integration
-  issue đề nghị bổ sung metadata frame size vào schema.
+* Schema giao nhận v1 chưa có `frameWidth`/`frameHeight`, nên với manifest legacy
+  validator chỉ cảnh báo (WARN) khi `frames x directions` không chia hết kích thước sheet.
+  Manifest v2 (OPC-06 draft) đã có `frameSize`/`layout`/`isDirectional` và kiểm tra grid,
+  hướng, clip range ở mức lỗi. Proposal và câu hỏi review nằm trong
+  `OPC-06_manifest_v2_proposal.md`.
+* Chỉ layout `direction_rows` và `strip` được hỗ trợ trong v2 draft; layout khác trả
+  unsupported, không đoán frame rect.
 * `tileSize`, `pivot` chỉ là chuỗi tự do theo schema hiện tại; validator chưa đối chiếu với
   kích thước tile thực tế.

@@ -57,6 +57,19 @@ jobs:
           --skip-file-checks
           --manifest Implementation/Asset_Handoff/muse_delivery_manifest.example.json
 
+      - name: Validate v2 manifest fixtures
+        run: |
+          set -eu
+          for fixture in Implementation/Asset_Handoff/fixtures/manifest_v2/valid_*.json; do
+            echo "validating ${fixture}"
+            python Implementation/Asset_Handoff/validate_asset_delivery.py \
+              --manifest "${fixture}" \
+              --skip-file-checks
+          done
+
+      - name: Migration dry-run on the legacy manifest
+        run: python Implementation/Asset_Handoff/migrate_manifest_v2.py --quiet
+
       - name: Collect changed files
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}

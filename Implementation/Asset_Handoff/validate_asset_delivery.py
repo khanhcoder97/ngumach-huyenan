@@ -40,12 +40,15 @@ import struct
 import sys
 from pathlib import Path
 
+import manifest_geometry
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MANIFEST = "Client/Assets/ArtManifests/muse_delivery_manifest.json"
 DEFAULT_SCHEMA = "Implementation/Asset_Handoff/asset_delivery_manifest.schema.json"
+V2_SCHEMA = "Implementation/Asset_Handoff/asset_delivery_manifest.v2.schema.json"
 
 # The locked eight-direction order of the pixel art standard (clockwise from north).
-DIRECTIONS = ("N", "NE", "E", "SE", "S", "SW", "W", "NW")
+DIRECTIONS = manifest_geometry.DIRECTIONS
 DIRECTION_REQUIRED_KINDS = ("sprite_sheet",)
 # Kinds whose delivered file is not an image, so no IHDR comparison is possible.
 NON_IMAGE_KINDS = ("tilemap", "animation")
@@ -299,7 +302,7 @@ def check_animations(label, asset, report):
             report.error(label, path, f"{field}.loop", "loop must be a boolean")
 
 
-def check_asset_file(label, asset, target, rel, info, report):
+def check_asset_file(label, asset, target, rel, info, report, *, version=1):
     """Compare manifest geometry and frame grid with the real PNG header."""
     width, height = asset.get("pixelWidth"), asset.get("pixelHeight")
     if isinstance(width, int) and width != info.width:
@@ -312,7 +315,8 @@ def check_asset_file(label, asset, target, rel, info, report):
         report.warn(label, rel, "path", "interlaced PNG (Adam7) is unusual for pixel art")
     if info.bit_depth not in (1, 2, 4, 8):
         report.warn(label, rel, "path", f"unusual PNG bit depth {info.bit_depth}")
-    _check_frame_grid(label, rel, asset, info, report)
+    if version == 1:
+        _check_frame_grid(label, rel, asset, info, report)
 
 
 def _check_frame_grid(label, rel, asset, info, report):
@@ -338,8 +342,24 @@ def _check_frame_grid(label, rel, asset, info, report):
 
 def validate_manifest(manifest, schema, root, *, check_files=True, changed=None,
                       manifest_rel=DEFAULT_MANIFEST):
-    """Validate a manifest document; returns (errors, warnings) lists of strings."""
+    """Validate a manifest document; returns (errors, warnings) lists of strings.
+
+    ``manifestVersion`` absent or 1 selects the legacy v1 rules; 2 selects the
+    OPC-06 v2 geometry rules. The caller picks the matching schema; this function
+    still rejects unsupported versions before schema validation so the message is
+    precise instead of a bare ``const`` mismatch.
+    """
     report = Report()
+    version = manifest.get("manifestVersion", 1)
+    if isinstance(version, bool) or version not in (1, 2):
+        report.error(
+            None,
+            manifest_rel,
+            "manifestVersion",
+            f"unsupported manifestVersion {version!r}; supported versions are "
+            "1 (legacy, may be omitted) and 2",
+        )
+        return report.errors, report.warnings
     validate = schema_validator()
     schema_errors = []
     validate(manifest, schema, "manifest", schema_errors)
@@ -415,7 +435,7 @@ def validate_manifest(manifest, schema, root, *, check_files=True, changed=None,
                 except ValueError as exc:
                     report.error(label, rel, "path", f"unreadable PNG: {exc}")
                 else:
-                    check_asset_file(label, asset, target, rel, info, report)
+                    check_asset_file(label, asset, target, rel, info, report, version=version)
 
         preview = asset.get("previewPath")
         preview_rel, preview_problem = inspect_repo_path(preview)
@@ -450,7 +470,10 @@ def validate_manifest(manifest, schema, root, *, check_files=True, changed=None,
                     except ValueError as exc:
                         report.error(label, preview_rel, "previewPath", f"unreadable preview: {exc}")
 
-        check_directions(label, asset, report)
+        if version == 2:
+            manifest_geometry.validate_v2_asset(label, asset, report)
+        else:
+            check_directions(label, asset, report)
         check_animations(label, asset, report)
 
     _check_cross_references(manifest, report)
@@ -503,11 +526,22 @@ def _asset_label(manifest, message):
     return None
 
 
+def schema_path_for(manifest):
+    """Pick the schema that matches the manifest version marker."""
+    version = manifest.get("manifestVersion", 1)
+    if version == 1:
+        return DEFAULT_SCHEMA
+    if version == 2:
+        return V2_SCHEMA
+    return None
+
+
 def build_parser():
     parser = argparse.ArgumentParser(description="Validate a Muse asset delivery manifest.")
     parser.add_argument("--root", default=str(REPO_ROOT), help="repository root (default: auto-detect)")
     parser.add_argument("--manifest", default=DEFAULT_MANIFEST, help="manifest path, relative to --root")
-    parser.add_argument("--schema", default=DEFAULT_SCHEMA, help="delivery schema path, relative to --root")
+    parser.add_argument("--schema", default=None,
+                        help="explicit schema path; default: select v1 or v2 from manifestVersion")
     parser.add_argument("--changed-files", default=None,
                         help="file with one repo-relative path per line, or '-' for stdin")
     parser.add_argument("--allow-missing-manifest", action="store_true",
@@ -542,7 +576,6 @@ def main(argv=None):
     manifest_rel = args.manifest.replace("\\", "/")
     try:
         changed = read_changed_files(args.changed_files)
-        schema = load_json(root / args.schema.replace("\\", "/"))
         manifest_path = root / manifest_rel
         if not manifest_path.is_file():
             touched = art_png_changes(changed)
@@ -553,6 +586,16 @@ def main(argv=None):
                       else " (use --allow-missing-manifest when no art has been delivered)")
             raise EnvironmentProblem(f"asset manifest not found at {manifest_rel}{detail}")
         manifest = load_json(manifest_path)
+        version = manifest.get("manifestVersion", 1)
+        if isinstance(version, bool) or version not in (1, 2):
+            print(f"ERROR   [-] file={manifest_rel} field=manifestVersion :: "
+                  f"unsupported manifestVersion {version!r}; supported versions are "
+                  "1 (legacy, may be omitted) and 2")
+            print(f"FAIL: 1 problem(s) in {manifest_rel}")
+            return EXIT_VALIDATION
+        schema_rel = (args.schema.replace("\\", "/") if args.schema
+                      else schema_path_for(manifest))
+        schema = load_json(root / schema_rel)
     except EnvironmentProblem as exc:
         print(f"ENVIRONMENT ERROR: {exc}", file=sys.stderr)
         return EXIT_ENVIRONMENT

@@ -1,0 +1,26 @@
+{
+  "manifestVersion": 2,
+  "assetPackId": "p1_effect_fixture",
+  "assetPackVersion": "v0.1.0",
+  "owner": "Muse",
+  "sourceLicense": "original",
+  "assets": [
+    {
+      "assetId": "VFX_FIXTURE_SLASH",
+      "path": "Client/Assets/VFX/Fixtures/fixture_slash.png",
+      "kind": "vfx_sheet",
+      "status": "draft",
+      "pixelWidth": 96,
+      "pixelHeight": 64,
+      "pixelsPerUnit": 20,
+      "pivot": "center",
+      "isDirectional": false,
+      "layout": "strip",
+      "frameSize": {"width": 24, "height": 64},
+      "animations": [
+        {"name": "slash", "frames": 4, "fps": 12, "loop": false}
+      ],
+      "previewPath": "Client/Assets/VFX/Fixtures/fixture_slash_preview.png"
+    }
+  ]
+}
