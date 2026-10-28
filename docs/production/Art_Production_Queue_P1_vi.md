@@ -61,3 +61,7 @@ Mỗi gói bàn giao gồm source pixel PNG/layer, export sprite sheet/atlas, ce
 Queue item vẫn chờ nghiệm thu. Hai SVG concept Minh Kiếm là hồ sơ cũ, không pixel art; không dùng làm texture, atlas hay upscale. Chưa item nào qua `CONCEPT_APPROVED`; `ART-P1-002` cần sprite concept pixel art mới. Cổng: `CONCEPT_APPROVED` → `SPRITE_APPROVED` → `ANIM_APPROVED` → `INTEGRATED` → `DEVICE_QA`. Người duyệt kiểm ID link, silhouette, pivot, 20 PPU, palette, frame cadence, telegraph readability, mobile memory/FPS, license/provenance và preview scale nguyên.
 
 **Giới hạn công cụ hiện tại:** phiên làm việc này không cung cấp built-in image generation. Vì vậy chưa tạo concept raster hoặc sprite final; queue ghi rõ đầu ra cần làm để nghệ sĩ/phiên có ImageGen xử lý sau. Không dùng API/CLI image generator nếu chưa được người dùng chọn phương thức đó.
+
+## Cơ chế Mãng Cốt bổ sung
+
+Thiết kế ba đòn đã được cụ thể hóa tại Production_Rules_Complete_v1_vi.md mục4: cone quét thân, circle lặn/trồi và annulus vòng bọt. Dòng BLOCKED_DESIGN_APPROVAL cũ cho đề xuất đòn thứ ba là lịch sử; dùng baseline mới để tạo art prototype, chưa coi là cân bằng đã playtest.
