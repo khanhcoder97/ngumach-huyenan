@@ -71,6 +71,18 @@ def combat_envelope(sequence, skill_id, target_id=None, character_id=CHARACTER_I
     }
 
 
+def quest_accept_envelope(quest_id, npc_id, character_id=CHARACTER_ID,
+                          request_id="5" * 32, idempotency_key="9" * 32):
+    return {
+        "schemaVersion": 1,
+        "requestId": request_id,
+        "idempotencyKey": idempotency_key,
+        "sentAtUtc": sent_at_utc(),
+        "characterId": character_id,
+        "payload": {"questId": quest_id, "npcId": npc_id},
+    }
+
+
 def expect_correlation(headers, expected):
     check(headers.get("X-Correlation-ID") == expected,
           f"expected correlation {expected}, got {headers.get('X-Correlation-ID')}")
@@ -338,6 +350,123 @@ def main():
     error = body.get("error") or {}
     check(error.get("code") == "session_not_found", f"unexpected error {error.get('code')}")
     expect_correlation(headers, "smoke-inventory-unknown-session")
+
+    sequence = 4
+    status, headers, body = call(
+        "GET", f"/p1/world/{session_id}",
+        headers={"X-Correlation-ID": "smoke-walk-start"})
+    check(status == 200, f"world before accept returned {status}: {body}")
+    walker_x = ((body.get("result") or {}).get("self") or {}).get("x", 0)
+    while walker_x < 37.5:
+        sequence += 1
+        time.sleep(0.3)
+        status, headers, body = call(
+            "POST", "/p1/move", move_envelope(sequence, 1, 0),
+            {"X-Session-ID": session_id, "X-Correlation-ID": f"smoke-walk-{sequence}"})
+        check(status == 200, f"walk move {sequence} returned {status}: {body}")
+        walker_x = ((body.get("result") or {}).get("self") or {}).get("x", walker_x)
+
+    check(walker_x >= 37.5, f"walker stopped at {walker_x}")
+
+    status, headers, body = call(
+        "GET", f"/p1/world/{session_id}",
+        headers={"X-Correlation-ID": "smoke-world-pre-accept"})
+    check(status == 200, f"world pre-accept returned {status}: {body}")
+    world_revision_before_accept = body.get("revision")
+
+    status, headers, body = call(
+        "POST", "/p1/quests/accept", quest_accept_envelope("P00-01", "NPC_LYAN"),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-quest-accept"})
+    check(status == 200, f"quest accept returned {status}: {body}")
+    accepted = body.get("result") or {}
+    check(accepted.get("state") == "ACTIVE", f"quest state {accepted.get('state')}")
+    check(accepted.get("revision") == 2, f"quest revision {accepted.get('revision')}")
+    check(body.get("sessionId") == session_id, f"accept session {body.get('sessionId')}")
+    expect_correlation(headers, "smoke-quest-accept")
+
+    status, headers, body = call(
+        "POST", "/p1/quests/accept", quest_accept_envelope("P00-01", "NPC_LYAN"),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-quest-accept-replay"})
+    check(status == 200, f"accept replay returned {status}: {body}")
+    replayed = body.get("result") or {}
+    check(replayed.get("state") == "ACTIVE", f"replay state {replayed.get('state')}")
+    check(replayed.get("revision") == 2, f"replay revision {replayed.get('revision')}")
+    expect_correlation(headers, "smoke-quest-accept-replay")
+
+    status, headers, body = call(
+        "POST", "/p1/quests/accept",
+        quest_accept_envelope("P00-01", "NPC_TA_VAN_KHANH"),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-quest-accept-key-conflict"})
+    check(status == 409, f"key conflict returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "idempotency_conflict", f"unexpected error {error.get('code')}")
+    expect_correlation(headers, "smoke-quest-accept-key-conflict")
+
+    status, headers, body = call(
+        "POST", "/p1/quests/accept",
+        quest_accept_envelope("P00-01", "NPC_LYAN", idempotency_key="8" * 32,
+                              request_id="7" * 32),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-quest-accept-second"})
+    check(status == 409, f"second accept returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "invalid_transition", f"unexpected error {error.get('code')}")
+    check(((body.get("result") or {}).get("state")) == "ACTIVE", "second accept changed state")
+    check(((body.get("result") or {}).get("revision")) == 2,
+          "second accept changed revision")
+    expect_correlation(headers, "smoke-quest-accept-second")
+
+    status, headers, body = call(
+        "POST", "/p1/quests/accept",
+        quest_accept_envelope("P00-01", "NPC_TA_VAN_KHANH", idempotency_key="6" * 32,
+                              request_id="4" * 32),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-quest-accept-npc"})
+    check(status == 422, f"npc mismatch returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "npc_mismatch", f"unexpected error {error.get('code')}")
+    expect_correlation(headers, "smoke-quest-accept-npc")
+
+    status, headers, body = call(
+        "POST", "/p1/quests/accept",
+        quest_accept_envelope("P99-99", "NPC_LYAN", idempotency_key="3" * 32,
+                              request_id="2" * 32),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-quest-accept-unknown"})
+    check(status == 404, f"unknown quest returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "quest_not_found", f"unexpected error {error.get('code')}")
+    expect_correlation(headers, "smoke-quest-accept-unknown")
+
+    status, headers, body = call(
+        "GET", f"/p1/quests/{session_id}",
+        headers={"X-Correlation-ID": "smoke-quests-after-accept"})
+    check(status == 200, f"quests after accept returned {status}: {body}")
+    after_accept = (body.get("result") or [{}])[0]
+    check(after_accept.get("state") == "ACTIVE", f"read back state {after_accept.get('state')}")
+    expect_correlation(headers, "smoke-quests-after-accept")
+
+    status, headers, body = call(
+        "GET", f"/p1/world/{session_id}",
+        headers={"X-Correlation-ID": "smoke-world-after-accept"})
+    check(status == 200, f"world after accept returned {status}: {body}")
+    check(body.get("revision") == world_revision_before_accept,
+          f"accept changed world revision {body.get('revision')} != {world_revision_before_accept}")
+    expect_correlation(headers, "smoke-world-after-accept")
+
+    status, headers, body = call(
+        "POST", "/p1/sessions",
+        {"characterId": "CHR_SMOKE_FAR_01"},
+        {"X-Correlation-ID": "smoke-far-session"})
+    check(status == 201, f"far session returned {status}: {body}")
+    far_session_id = body.get("sessionId")
+    status, headers, body = call(
+        "POST", "/p1/quests/accept",
+        quest_accept_envelope("P00-01", "NPC_LYAN", character_id="CHR_SMOKE_FAR_01",
+                              idempotency_key="1" * 31 + "0", request_id="0" * 31 + "1"),
+        {"X-Session-ID": far_session_id, "X-Correlation-ID": "smoke-quest-accept-far"})
+    check(status == 422, f"far accept returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "out_of_range", f"unexpected error {error.get('code')}")
+    check(error.get("retryable") is True, "out_of_range should be retryable")
+    expect_correlation(headers, "smoke-quest-accept-far")
 
     print(f"PASS: {CHECKS} smoke checks against {BASE_URL}")
 

@@ -14,6 +14,7 @@ public sealed class P1WorldOptions
     public int StartingMaxHp { get; set; } = 100;
     public int StartingMp { get; set; } = 50;
     public int StartingMaxMp { get; set; } = 50;
+    public int StartingLevel { get; set; } = 1;
 }
 
 public static class P1WorldOptionsValidator
@@ -69,6 +70,11 @@ public static class P1WorldOptionsValidator
         {
             throw new InvalidOperationException(
                 "P1World starting HP must satisfy 0 <= StartingHp <= StartingMaxHp and StartingMaxHp > 0.");
+        }
+
+        if (options.StartingLevel < 1 || options.StartingLevel > 100)
+        {
+            throw new InvalidOperationException("P1World:StartingLevel must be within 1..100.");
         }
 
         if (options.StartingMaxMp < 0 ||

@@ -23,6 +23,8 @@ public static class ServiceSelfCheck
         var questCatalog = services.GetRequiredService<IQuestCatalog>();
         var inventory = services.GetRequiredService<IInventoryService>();
         var teleport = services.GetRequiredService<ITeleportService>();
+        var questAccept = services.GetRequiredService<IQuestAcceptService>();
+        var npcAnchors = services.GetRequiredService<NpcAnchorCatalog>();
 
         var results = new List<(string Name, bool Passed, string? Detail)>();
         void Check(string name, bool passed, string? detail = null) =>
@@ -177,6 +179,85 @@ public static class ServiceSelfCheck
             "quest.unknown_quest",
             unknownQuest.Failure?.Code == QuestErrorCodes.UnknownQuest,
             unknownQuest.Failure?.Code);
+
+        Check(
+            "npc.registry",
+            npcAnchors.Count > 0 &&
+            npcAnchors.TryResolve("NPC_LYAN", options.DefaultMapId, out var lyanAnchor) &&
+            lyanAnchor.X == 42 &&
+            lyanAnchor.Y == 0,
+            $"count={npcAnchors.Count}");
+
+        var startNpcOk = questCatalog.TryGet("P00-01", out var p0001) &&
+                         string.Equals(p0001.StartNpcId, "NPC_LYAN", StringComparison.Ordinal);
+        Check("quest.start_npc", startNpcOk, p0001?.StartNpcId);
+
+        var accepter = NewPlayer("CHR_SELFCHECK_ACCEPT");
+        accepter.X = 42;
+        accepter.Y = 0;
+        var accepted = questAccept.Accept(
+            accepter, "P00-01", "NPC_LYAN", new string('a', 32));
+        Check(
+            "quest_accept.success",
+            accepted.Accepted &&
+            accepted.State?.State == QuestStates.Active &&
+            accepted.State.Revision == 2,
+            accepted.Failure?.Code ?? $"state={accepted.State?.State}");
+
+        var replayed = questAccept.Accept(
+            accepter, "P00-01", "NPC_LYAN", new string('a', 32));
+        Check(
+            "quest_accept.replay",
+            replayed.Accepted && replayed.State?.Revision == 2,
+            replayed.Failure?.Code);
+
+        var keyConflict = questAccept.Accept(
+            accepter, "P00-01", "NPC_TA_VAN_KHANH", new string('a', 32));
+        Check(
+            "quest_accept.idempotency_conflict",
+            keyConflict.Failure?.Code == QuestAcceptErrorCodes.IdempotencyConflict,
+            keyConflict.Failure?.Code);
+
+        var secondAccept = questAccept.Accept(
+            accepter, "P00-01", "NPC_LYAN", new string('b', 32));
+        Check(
+            "quest_accept.invalid_transition",
+            secondAccept.Failure?.Code == QuestErrorCodes.InvalidTransition,
+            secondAccept.Failure?.Code);
+
+        var farActor = NewPlayer("CHR_SELFCHECK_ACCEPT_FAR");
+        var tooFar = questAccept.Accept(
+            farActor, "P00-01", "NPC_LYAN", new string('c', 32));
+        Check(
+            "quest_accept.out_of_range",
+            tooFar.Failure?.Code == QuestAcceptErrorCodes.OutOfRange && tooFar.Failure.Retryable,
+            tooFar.Failure?.Code);
+
+        var wrongNpc = questAccept.Accept(
+            NewPlayer("CHR_SELFCHECK_ACCEPT_NPC"),
+            "P00-01", "NPC_TA_VAN_KHANH", new string('d', 32));
+        Check(
+            "quest_accept.npc_mismatch",
+            wrongNpc.Failure?.Code == QuestAcceptErrorCodes.NpcMismatch,
+            wrongNpc.Failure?.Code);
+
+        var highLevel = NewPlayer("CHR_SELFCHECK_ACCEPT_LEVEL");
+        highLevel.X = 42;
+        highLevel.Level = 11;
+        var levelGate = questAccept.Accept(
+            highLevel, "P00-01", "NPC_LYAN", new string('e', 32));
+        Check(
+            "quest_accept.level_band",
+            levelGate.Failure?.Code == QuestAcceptErrorCodes.PrerequisiteNotMet,
+            levelGate.Failure?.Code);
+
+        var missingQuest = questAccept.Accept(
+            NewPlayer("CHR_SELFCHECK_ACCEPT_UNKNOWN"),
+            "P99-99", "NPC_LYAN", new string('f', 32));
+        Check(
+            "quest_accept.unknown_quest",
+            missingQuest.Failure?.Code == QuestErrorCodes.QuestNotFound,
+            missingQuest.Failure?.Code);
 
         var inventoryActor = NewPlayer("CHR_SELFCHECK_INVENTORY");
         var emptyInventory = inventory.GetSnapshot(inventoryActor.CharacterId);

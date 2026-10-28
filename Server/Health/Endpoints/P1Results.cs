@@ -62,6 +62,47 @@ internal static class P1Results
             Result = snapshot
         });
 
+    public static IResult QuestAcceptSuccess(
+        string requestId,
+        string sessionId,
+        ServerClock clock,
+        QuestState state) =>
+        Results.Json(new P1QuestAcceptResponse
+        {
+            RequestId = requestId,
+            SessionId = sessionId,
+            ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+            Result = state
+        });
+
+    public static IResult QuestAcceptError(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        string? sessionId,
+        int statusCode,
+        string code,
+        IReadOnlyList<string>? fieldErrors,
+        bool retryable,
+        QuestState? state) =>
+        Results.Json(
+            new P1QuestAcceptResponse
+            {
+                RequestId = requestId,
+                SessionId = sessionId,
+                ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+                Result = state,
+                Error = new P1Error
+                {
+                    Code = code,
+                    MessageKey = $"P1.ERROR.{code.ToUpperInvariant()}",
+                    Retryable = retryable,
+                    FieldErrors = fieldErrors ?? Array.Empty<string>(),
+                    CorrelationId = context.TraceIdentifier
+                }
+            },
+            statusCode: statusCode);
+
     public static IResult Error(
         HttpContext context,
         ServerClock clock,

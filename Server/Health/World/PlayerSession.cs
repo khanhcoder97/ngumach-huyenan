@@ -33,6 +33,7 @@ public sealed class PlayerSession
     public string SessionId { get; }
     public string CharacterId { get; }
     public string ClassId { get; }
+    public int Level { get; set; } = 1;
     public string MapId { get; set; }
     public DateTimeOffset CreatedAtUtc { get; }
     public object SyncRoot { get; } = new();

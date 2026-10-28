@@ -13,6 +13,7 @@ Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritati
 | POST | `/p1/combat` | Submit a `CombatInput` envelope for the session in `X-Session-ID` |
 | GET | `/p1/quests/{sessionId}` | Read the authoritative quest states for the session character |
 | GET | `/p1/inventory/{sessionId}` | Read the authoritative `InventorySnapshot` for the session character |
+| POST | `/p1/quests/accept` | Accept an `AVAILABLE` quest for the session in `X-Session-ID` (feature-flagged, off by default) |
 
 Every response, including errors, carries `X-Correlation-ID`. A safe incoming value (1–64 characters of ASCII letters, digits, `-`, `_`, `.`) is echoed; otherwise a new GUID is generated.
 
@@ -219,6 +220,33 @@ curl -i http://localhost:5000/p1/inventory/<SESSION_ID> \
 
 Unknown session IDs return `404 session_not_found`. Reading quest state creates the row lazily so availability is refreshed; it never changes position, revision or resources of the world snapshot.
 
+## Quest accept (feature-flagged)
+
+`POST /p1/quests/accept` is mapped only when `P1:QuestAccept:Enabled=true`; otherwise the route does not exist (`404`). It is **off by default** because the interaction line-of-sight guard has no walkability bundle yet — enabling it logs `DEV STUB: P1:QuestAccept is enabled...` at startup. Contract: `Implementation/Contracts/P1/QuestAcceptRequest.schema.json` + `QuestAcceptResponse.schema.json`; proposal and guard order in `Implementation/Work_Orders/Proposals/QOD-08_QuestAcceptRequest_vi.md`.
+
+```bash
+curl -i -X POST http://localhost:5000/p1/quests/accept \
+  -H "Content-Type: application/json" \
+  -H "X-Session-ID: <SESSION_ID>" \
+  -H "X-Correlation-ID: demo-accept" \
+  -d '{
+    "schemaVersion": 1,
+    "requestId": "55555555555555555555555555555555",
+    "idempotencyKey": "99999999999999999999999999999999",
+    "sentAtUtc": "2026-10-28T07:00:00Z",
+    "characterId": "CHR_MINH_KIEM_01",
+    "payload": { "questId": "P00-01", "npcId": "NPC_LYAN" }
+  }'
+```
+
+Guards run in order: session → quest catalog → `npcId` = canonical `startNpcId` → same map/floor → foot distance ≤ `MaxInteractionDistanceWu` → prerequisites/level → `AVAILABLE`. Success flips the quest to `ACTIVE` exactly once and leaves position, HP/MP and the movement/combat `inputSequence` untouched. `idempotencyKey` is scoped to the character: replaying the same key with the same payload returns the first result; the same key with a different payload returns `409 idempotency_conflict`.
+
+NPC anchors come from `Implementation/Content/Runtime/npc_anchors.json`, generated from the canonical spawn manifest:
+
+```bash
+python Implementation/Tools/build_npc_anchors.py
+```
+
 ## Combat internals (QOD-03/QOD-06)
 
 `POST /p1/combat` exposes `ICombatService` for the self-targeting `SK-MK-01` path. The service stays the server-side seam for future `combat.input` work:
@@ -292,14 +320,18 @@ State is in memory and there is no seed inventory; a new character starts with n
 | `P1World:MaxStepDistanceWu` | `1.5` | Safety bound; must be ≥ speed × max step |
 | `P1World:StartingHp` / `MaxHp` | `100` / `100` | `WorldSnapshot.example.json` |
 | `P1World:StartingMp` / `MaxMp` | `50` / `50` | `WorldSnapshot.example.json` |
+| `P1World:StartingLevel` | `1` | Session level used by the quest level-band guard |
+| `P1:QuestAccept:Enabled` | `false` | Maps `/p1/quests/accept`; dev stub until walkability exists |
+| `P1:QuestAccept:MaxInteractionDistanceWu` | `5` | DEC-016 NPC interaction distance |
 
-Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond=8`.
+Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond=8` or `P1__QuestAccept__Enabled=true`.
 
 | Content key | Purpose |
 |---|---|
 | `Content:MapBoundsPath` | Optional absolute/relative override for `map_bounds.json` |
 | `Content:QuestsPath` | Optional absolute/relative override for the `QuestDefinition` directory |
 | `Content:SkillsPath` | Optional absolute/relative override for the `SkillDefinition` directory |
+| `Content:NpcAnchorsPath` | Optional absolute/relative override for `Implementation/Content/Runtime/npc_anchors.json` |
 
 ## Errors
 
@@ -315,6 +347,12 @@ Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond
 | 404 | `target_not_found` | Combat target is not registered in the authoritative world |
 | 409 | `cooldown_active`, `insufficient_resource`, `target_not_alive` | Combat gate rejected the cast; `stale_sequence` also applies |
 | 422 | `out_of_range`, `unsupported_resource` | Combat cast outside configured range or using an unsupported resource |
+| 404 | `quest_not_found` | Quest accept: `questId` is not in the canonical catalog |
+| 422 | `npc_mismatch` | Quest accept: `npcId` is not the quest's canonical `startNpcId` |
+| 422 | `out_of_range` | Quest accept: different map/floor, or farther than 5 WU |
+| 422 | `prerequisite_not_met` | Quest accept: prerequisites incomplete or level outside the band |
+| 409 | `invalid_transition` | Quest accept: state is not `AVAILABLE` |
+| 409 | `idempotency_conflict` | Quest accept: same `idempotencyKey` with a different payload |
 
 All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and `correlationId`. Quest, inventory and teleport service codes listed above are domain results; they have no HTTP mapping yet.
 
@@ -347,7 +385,7 @@ Quest and inventory HTTP surfaces are read-only, teleport has no endpoint, and c
 dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
 ```
 
-The flag boots the DI container and canonical content, then runs 35 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the full `P00-01` quest flow through `COMPLETED`, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
+The flag boots the DI container and canonical content, then runs 45 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the full `P00-01` quest flow through `COMPLETED`, quest accept guards and idempotency, the NPC anchor registry, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
 
 ## Manual verification
 
@@ -373,14 +411,19 @@ The flag boots the DI container and canonical content, then runs 35 assertions c
 | 16 | Combat `SK-MK-03` with unknown `targetId` | `404 target_not_found` |
 | 17 | `GET /p1/quests/{sessionId}` | `200`, one `P00-01` entry, `state: AVAILABLE`, counters `{"OBJ_P00_01_PACKAGES": 0}` |
 | 18 | `GET /p1/inventory/{sessionId}` | `200`, `inventoryRevision: 0`, empty `items` and `currencies` |
-| 19 | Any request | Response always has `X-Correlation-ID` |
+| 19 | Walk east to `x >= 37.5`, then accept `P00-01` from `NPC_LYAN` | `200`, `state: ACTIVE`, `revision: 2` |
+| 20 | Replay accept with the same `idempotencyKey` and payload | `200`, same state and revision, no second transition |
+| 21 | Accept again with a new key | `409 invalid_transition`; state/revision unchanged |
+| 22 | Same key with `npcId = NPC_TA_VAN_KHANH` | `409 idempotency_conflict` |
+| 23 | Accept `P00-01` from a fresh session at spawn | `422 out_of_range`, `retryable: true` |
+| 24 | Any request | Response always has `X-Correlation-ID` |
 
 ## Current limits
 
 - Sessions are in memory and lost on restart; there is no database, authentication or real-time transport.
 - `entities` is always empty; the combat target registry starts empty, so only the self-targeting `SK-MK-01` can be cast over HTTP. Teleport has no endpoint.
 - Combat has no damage, hit chance, telegraphs, death or loot: `combat.effect` only records an accepted cast and its cooldown.
-- Quest state is in memory and read-only over HTTP; only one canonical `QuestDefinition` (`P00-01`) is loaded. Accept, turn-in, rewards, level-band eligibility and multi-step graphs are not implemented.
+- Quest state is in memory; accept exists but is feature-flagged off by default and skips the interaction line-of-sight guard (no walkability bundle). Turn-in, rewards, party progress and multi-step graphs are not implemented.
 - Inventory is read-only over HTTP and starts empty: no item catalog, stack-limit enforcement, durability rules, seeded starting items or mutation endpoint.
 - Teleport uses map bounds only; there is no walkability, portal, cooldown or respawn logic.
 - Movement speed and starting HP/MP are slice defaults, not locked balance values.
