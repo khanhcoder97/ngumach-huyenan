@@ -1,5 +1,9 @@
 # Cơ chế cộng tác GitHub
 
+## Cập nhật quyền và nhịp làm việc 2026-10-29
+
+Các gói liên tục và quyền sửa mở rộng tại `Implementation/Work_Orders/04_CONTINUOUS_DELIVERY_20261029.md` được ưu tiên hơn bảng phạm vi ban đầu bên dưới. OpenCode nhận toàn bộ dây chuyền asset không Unity OPC-06→10; Qoder nhận vòng chơi authoritative QOD-11→15. Mỗi mốc vẫn qua PR/review; mở PR xong tiếp tục phần độc lập hoặc stacked branch thay vì chờ giao một tác vụ nhỏ mới. Issue gói việc và work orders 05/06 chứa acceptance criteria. Không tự merge hoặc bỏ gate chưa đủ dữ liệu.
+
 ## Mục tiêu
 
 Muse làm asset trên máy ảo riêng. Asset chỉ đi vào nhánh `main` qua GitHub Pull Request (PR), có manifest, preview và asset-handoff CI validation. Unity import/runtime integration được ghi rõ là chưa xác minh cho tới khi có máy Unity phù hợp.
