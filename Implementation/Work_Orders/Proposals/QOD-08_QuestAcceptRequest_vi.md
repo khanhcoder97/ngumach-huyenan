@@ -1,6 +1,6 @@
 # QOD-08 — Hợp đồng nhận quest (`QuestAcceptRequest` / `QuestAcceptResponse`)
 
-**Trạng thái:** hợp đồng hoàn chỉnh, **chưa implement endpoint**. Theo `Production_Completion_Addendum_vi.md` §2 và `Top_Down_Gameplay_World_Spec_vi.md` (DEC-016), endpoint chỉ được bật khi server có NPC world registry + level profile; hiện tại phải giữ feature flag off.
+**Trạng thái:** hợp đồng hoàn chỉnh; endpoint đã implement trong PR #27 và **mặc định tắt** bằng `P1:QuestAccept:Enabled`. NPC anchor registry và level profile đã có, nên các guard 1–7 chạy thật trừ line-of-sight (chưa có walkability bundle — server log `DEV STUB` khi bật). Production chỉ bật flag sau khi có bundle này.
 **Issue:** #20. **Canonical IDs:** `P00-01`, `NPC_LYAN`, `GRAPH_P00_01`, `STEP_P00_01_PACKAGES`, `OBJ_P00_01_PACKAGES`, `MAP_BEN_MUA`.
 
 ## 1. Phạm vi
