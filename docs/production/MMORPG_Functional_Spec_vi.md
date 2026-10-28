@@ -26,7 +26,7 @@ Mức ưu tiên: **P0** bắt buộc cho vertical slice/alpha; **P1** cần cho 
 | Social | party 5, raid 10, friends, block, invite, LFG, presence | P0/P1 | social service |
 | Guild | create, rank, permission, quest, contribution, vault, siege | P1 | guild authority |
 | Pet/mount | summon pet/passive/feed/gear, mount ngoài combat | P1 | companion |
-| Life | mining, wood, herb, farm 6 plots, fishing, minigame | P1 | activity service |
+| Life | mining, wood, herb, farm 5 plots, fishing, minigame | P1 | activity service |
 | PvP | duel, arena 3v3, siege 20v20; gear normalization | P1 | match service |
 | Endgame | 4 dungeon, 2 raid, 6 world bosses, final raid boss, 30-floor tower, event pool | P1 | encounter |
 | UX | HUD, key rebinding, LowFX, subtitles, colorblind patterns | P0 | client settings |
@@ -57,7 +57,7 @@ Mức ưu tiên: **P0** bắt buộc cho vertical slice/alpha; **P1** cần cho 
 - Level 1–100, EXP từ quest/PvE/events/exploration; repeated farm giảm dần reward nhỏ nhưng không giảm first clear/quest.
 - Năm stat: Sức mạnh, Linh lực, Nhanh nhẹn, Thể chất, Vận khí; phân bổ có preview/confirm, server kiểm point budget.
 - Sáu ô active skill mở ở 1/4/8/12/16/30; ultimate mở cấp 30; 8 passive nodes/class (hai nhánh × bốn node; cấp mở 20/40/60/80), tối đa hai passive được trang bị. Hai preset; đổi ở hub/rest point, không đổi giữa boss/PvP. Chi tiết import: `Class_Passive_Production_Data_vi.csv`.
-- Class trial trong opening. Đổi lớp sau campaign threshold qua chi phí hiển thị, không trong encounter.
+- Class trial trong opening. Lớp cố định sau tạo; cảnh class trial xác nhận lớp, không đổi lớp/preset thành lớp khác.
 - Năm regional trust flags, honor môn phái và guild contribution mở thoại/cosmetic/recipe, không khóa ending.
 - Achievement theo first clear, collect, social, craft, boss strategy, season; thưởng cosmetic/title/emote/tiện ích nhẹ.
 - Leaderboard tách theo activity/season; privacy có thể ẩn tên công khai.
@@ -107,7 +107,7 @@ Item template tách item instance. Equip/use/sell/trade/mail/craft/salvage/upgra
 
 Một pet active; một passive pet skill; pet đi theo bằng path riêng, collision off trong combat; auto-loot chỉ nguyên liệu thường, không loot gear/quest/locked. Năm companion được thiết kế, 4 pet gear slots, level cap bằng config. Mount +10% speed ngoài combat, tắt trong instance/PvP; các mount cùng tốc độ.
 
-Khai khoáng/hái dược/đốn gỗ: node sở hữu theo shard, tương tác 1,2s, bị damage thì ngắt; chỉ cấp nghề khi harvest hợp lệ. Farm 6 luống, trồng/tưới/thời gian/thu hoạch; offline growth cap 24h + grace. Fishing/minigame có daily cap reward chính; lượt thêm chỉ điểm/cosmetic.
+Khai khoáng/hái dược/đốn gỗ: node sở hữu theo shard, tương tác 1,2s, bị damage thì ngắt; chỉ cấp nghề khi harvest hợp lệ. Farm 5 luống, trồng/tưới/thời gian/thu hoạch; offline growth cap 24h + grace. Fishing/minigame có daily cap reward chính; lượt thêm chỉ điểm/cosmetic.
 
 ### 11. Endgame, live events và PvP
 

@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "bundleId": "DESIGN_COMPLETION_V1",
+  "activation": "DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION",
+  "sourceRef": "docs/production/Production_Rules_Complete_v1_vi.md",
+  "units": {
+    "distance": "WU",
+    "metersPerWu": 0.5,
+    "rate": "fraction",
+    "time": "seconds"
+  },
+  "levelCap": 100,
+  "attributes": [
+    "STR",
+    "INT",
+    "AGI",
+    "VIT",
+    "LUK"
+  ],
+  "initialAttributes": [
+    5,
+    5,
+    5,
+    5,
+    5
+  ],
+  "pointsPerLevel": 5,
+  "baseHp": 100,
+  "baseMp": 50,
+  "hpPerLevel": 28,
+  "hpPerVit": 14,
+  "mpPerLevel": 12,
+  "mpPerInt": 8,
+  "classes": [
+    {
+      "classId": "CLASS_MINH_KIEM",
+      "allocationWeights": [
+        3,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "classId": "CLASS_ANH_DAO",
+      "allocationWeights": [
+        1,
+        0,
+        3,
+        1,
+        0
+      ]
+    },
+    {
+      "classId": "CLASS_HUYEN_BUT",
+      "allocationWeights": [
+        0,
+        3,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "classId": "CLASS_THACH_CHUY",
+      "allocationWeights": [
+        1,
+        0,
+        0,
+        4,
+        0
+      ]
+    },
+    {
+      "classId": "CLASS_LINH_CUNG",
+      "allocationWeights": [
+        0,
+        0,
+        3,
+        1,
+        1
+      ]
+    }
+  ],
+  "combat": {
+    "tickHz": 20,
+    "critMultiplier": 1.5,
+    "baseHitChance": 0.9,
+    "hitMin": 0.05,
+    "hitMax": 0.98,
+    "pveDodgeCap": 0.25,
+    "pvpDodgeCap": 0.15,
+    "pvpCritCap": 0.25,
+    "pveCritCap": 0.5,
+    "pveResistCap": 0.5,
+    "pvpResistCap": 0.3,
+    "damageReductionCap": 0.8,
+    "basicMeleeRangeWu": 4.0,
+    "skillRangeMigrationWu": {
+      "SK-MK-01": 4.4,
+      "SK-MK-02": 11.0,
+      "SK-MK-03": 4.4
+    }
+  },
+  "caps": {
+    "farmPlots": 5,
+    "farmOutputPerAccountDay": 12,
+    "fishingCatchesPerAccountDay": 20,
+    "charactersPerAccount": 4,
+    "activePets": 1
+  },
+  "formulaVersion": "completion_v1"
+}

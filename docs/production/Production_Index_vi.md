@@ -140,3 +140,13 @@ Các mục sau có giá trị đề xuất để xây slice; nhà sản xuất c
 - `Production_Completion_Addendum_vi.md`: điều kiện content lock, quest accept/reward, transaction, persistence, UI states và nghiệm thu.
 - `Production_Audit_20261028_vi.md`: kết quả kiểm tra và phần bàn giao thực tế của agents.
 - `../../Implementation/Reports/TopDown_Placement_Migration_20261028.json`: hàng đợi review 349 placement, chưa có tọa độ approved.
+
+### Gói đặc tả bổ sung DEC-017
+
+1. Production_Rules_Complete_v1_vi.md — baseline numeric và state rules cho progression/combat/AI/quest/item/social/UI.
+2. Online_Persistence_Release_Complete_vi.md — account ownership, network, persistence/migration, rollout, monitoring/recovery và release evidence.
+3. Content_Export_and_Asset_Completion_vi.md — field coverage, topology map, pixel/animation handoff và gate đủ nội dung.
+4. ../../Implementation/Content/DesignBaselines/completion_v1.json — số liệu mới, trạng thái DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION.
+5. ../../Implementation/Content/DesignBaselines/level_progression_v1.json — bảng100 cấp, EXP và point budget.
+
+Các tài liệu mới xác định hành vi cần xây dựng; audit runtime vẫn chưa đạt full game. Chỉ cập nhật trạng thái đó khi có record/asset/implementation và evidence tương ứng.

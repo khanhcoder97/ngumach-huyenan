@@ -38,3 +38,7 @@ Mỗi quyết định dưới đây được áp dụng đồng nhất cho GDD, 
 ## DEC-016 — Góc nhìn từ trên (2026-10-28)
 
 Chủ dự án xác nhận gameplay 2D nhìn từ trên, di chuyển XY 8 hướng. `Top_Down_Gameplay_World_Spec_vi.md` thay mọi luật side-scroll/jump, Y-height và capsule cũ. Giữ 640×360, 20 PPU và sheet 48×64 theo DEC-015; footprint hero 1,2×0,6 WU. 349 anchors cần review topology theo hồ sơ migration, không đổi ID/coordinate silently. `Production_Completion_Addendum_vi.md` khóa bổ sung hành vi giao nhận quest/transaction/UI; không coi đây là bằng chứng đã implementation.
+
+## DEC-017 — Gói luật hoàn thiện thiết kế v1 (2026-10-28)
+
+Theo yêu cầu chủ dự án bổ sung toàn bộ các miền còn thiếu, khóa baseline thiết kế trong Production_Rules_Complete_v1_vi.md, Online_Persistence_Release_Complete_vi.md và Content_Export_and_Asset_Completion_vi.md. Gói xác định progression/stat/damage/status/AI/quest/economy/UI/network/persistence/ops, thay các câu mâu thuẫn lớp cố định/đổi lớp và farm6/5. Bảng số mới là tuning v1 do agent thiết kế, cần playtest; không tự bật trên runtime P1. Thay loader/schema cần migration PR riêng, giữ tương thích và IDs. Quyết định này không thay phê duyệt thị trường/pháp lý/CCU hoặc nghiệm thu map/device.
