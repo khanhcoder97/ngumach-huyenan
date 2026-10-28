@@ -26,3 +26,11 @@ Ghi yêu cầu liên-agent theo mẫu:
 - Canonical IDs involved: `P00-01`, `STEP_P00_01_PACKAGES`, `OBJ_P00_01_PACKAGES`, `MAP_BEN_MUA`.
 - Blocking: no.
 - Proposed acceptance check: a brand-new session reads `P00-01` as `AVAILABLE` with counter `0` and an inventory with `inventoryRevision: 0` plus empty `items`/`currencies`. Accept/turn-in and item grants have no endpoint yet — do not synthesize them client-side.
+
+## 2026-10-28 — From Qoder to OpenCode
+
+- Context: `POST /p1/quests/accept` now exists behind `P1:QuestAccept:Enabled` (default **false**; CI smoke enables it). Contract and guard order are locked in `Implementation/Work_Orders/Proposals/QOD-08_QuestAcceptRequest_vi.md`.
+- Requested interface or asset: P1 `Envelope` + `{ "questId": "P00-01", "npcId": "NPC_LYAN" }` payload, session in `X-Session-ID`. Success returns `result` = current `QuestState` (`ACTIVE`, revision 2). Errors include `npc_mismatch`, `out_of_range`, `prerequisite_not_met`, `invalid_transition`, `idempotency_conflict`, always with `result` = current state once the session resolved.
+- Canonical IDs involved: `P00-01`, `NPC_LYAN`, `STEP_P00_01_PACKAGES`, `OBJ_P00_01_PACKAGES`, `MAP_BEN_MUA`.
+- Blocking: no, but production must keep the flag off until the walkability bundle exists — interaction line-of-sight is a logged dev stub.
+- Proposed acceptance check: client keeps `idempotencyKey` stable for retries of the same accept and must not send a new key to "force" a retry; a new key after success returns `409 invalid_transition`. Accept does not consume the movement/combat `inputSequence` or change the world revision.

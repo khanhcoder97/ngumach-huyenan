@@ -46,6 +46,22 @@ public sealed class CombatIntent
     public string? ClientTimeUtc { get; init; }
 }
 
+public sealed class QuestAcceptEnvelope
+{
+    public int? SchemaVersion { get; init; }
+    public string? RequestId { get; init; }
+    public string? IdempotencyKey { get; init; }
+    public string? SentAtUtc { get; init; }
+    public string? CharacterId { get; init; }
+    public QuestAcceptIntent? Payload { get; init; }
+}
+
+public sealed class QuestAcceptIntent
+{
+    public string? QuestId { get; init; }
+    public string? NpcId { get; init; }
+}
+
 public sealed class WorldSnapshot
 {
     public required string MapId { get; init; }
@@ -137,4 +153,21 @@ public sealed class P1InventoryResponse
     public required string SessionId { get; init; }
     public required string ServerTimeUtc { get; init; }
     public required InventorySnapshot Result { get; init; }
+}
+
+public sealed class P1QuestAcceptResponse
+{
+    public int SchemaVersion { get; init; } = 1;
+    public required string RequestId { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? SessionId { get; init; }
+
+    public required string ServerTimeUtc { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public QuestState? Result { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public P1Error? Error { get; init; }
 }

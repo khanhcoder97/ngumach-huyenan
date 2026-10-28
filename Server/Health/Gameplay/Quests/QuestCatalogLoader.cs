@@ -23,6 +23,9 @@ public static class QuestCatalogLoader
     private static readonly Regex StepIdPattern =
         new(@"^STEP_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
 
+    private static readonly Regex NpcIdPattern =
+        new(@"^NPC_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
+
     public static string DiscoverDirectory(IConfiguration configuration, string contentRoot)
     {
         var configured = configuration["Content:QuestsPath"];
@@ -243,9 +246,17 @@ public static class QuestCatalogLoader
                     $"{path}: derived step ID '{initialStepId}' is invalid.");
             }
 
+            var startNpcId = file.StartNpcId;
+            if (startNpcId is null || !NpcIdPattern.IsMatch(startNpcId))
+            {
+                throw new InvalidOperationException(
+                    $"{path}: startNpcId '{startNpcId}' is invalid.");
+            }
+
             var quest = new QuestDefinition(
                 questId,
                 file.QuestType!,
+                startNpcId,
                 levelBand.Min.Value,
                 levelBand.Max.Value,
                 prerequisiteIds,
@@ -266,6 +277,7 @@ public static class QuestCatalogLoader
         public int SchemaVersion { get; init; }
         public string? QuestId { get; init; }
         public string? QuestType { get; init; }
+        public string? StartNpcId { get; init; }
         public LevelBandFile? LevelBand { get; init; }
         public List<string>? PrerequisiteQuestIds { get; init; }
         public List<ObjectiveFile>? Objectives { get; init; }

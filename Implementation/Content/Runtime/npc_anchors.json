@@ -1,0 +1,839 @@
+{
+  "schemaVersion": 1,
+  "sourceRef": "docs/production/World_Spawn_Gathering_Manifest_vi.csv",
+  "floorRule": "DEC-016: P1 ground floor is OVERWORLD only",
+  "anchors": [
+    {
+      "npcId": "NPC_ACTIVITY_STEWARD",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "xWu": 42.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-DNM-NPC_ACTIVITY_STEWARD"
+    },
+    {
+      "npcId": "NPC_ACTIVITY_STEWARD",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 548.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_ACTIVITY_STEWARD"
+    },
+    {
+      "npcId": "NPC_ARENA_REWARD_CLERK",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 599.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_ARENA_REWARD_CLERK"
+    },
+    {
+      "npcId": "NPC_ARENA_STEWARD",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 587.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_ARENA_STEWARD"
+    },
+    {
+      "npcId": "NPC_BLACKSMITH",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 409.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_BLACKSMITH"
+    },
+    {
+      "npcId": "NPC_BLACKSMITH",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 102.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_BLACKSMITH"
+    },
+    {
+      "npcId": "NPC_BM_RESCUE_01",
+      "mapId": "MAP_BEN_MUA",
+      "xWu": 135.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BM-NPC_BM_RESCUE_01"
+    },
+    {
+      "npcId": "NPC_BM_RESCUE_02",
+      "mapId": "MAP_BEN_MUA",
+      "xWu": 148.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BM-NPC_BM_RESCUE_02"
+    },
+    {
+      "npcId": "NPC_BOAT_KEEPER",
+      "mapId": "MAP_BEN_MUA",
+      "xWu": 343.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BM-NPC_BOAT_KEEPER"
+    },
+    {
+      "npcId": "NPC_BY_DIVER_01",
+      "mapId": "MAP_BACH_UYEN",
+      "xWu": 34.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BY-NPC_BY_DIVER_01"
+    },
+    {
+      "npcId": "NPC_BY_DIVER_02",
+      "mapId": "MAP_BACH_UYEN",
+      "xWu": 46.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BY-NPC_BY_DIVER_02"
+    },
+    {
+      "npcId": "NPC_BY_DIVER_03",
+      "mapId": "MAP_BACH_UYEN",
+      "xWu": 58.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BY-NPC_BY_DIVER_03"
+    },
+    {
+      "npcId": "NPC_BY_WITNESS_ANH_DAO",
+      "mapId": "MAP_BACH_UYEN",
+      "xWu": 226.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BY-NPC_BY_WITNESS_ANH_DAO"
+    },
+    {
+      "npcId": "NPC_BY_WITNESS_HUYEN_BUT",
+      "mapId": "MAP_BACH_UYEN",
+      "xWu": 238.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BY-NPC_BY_WITNESS_HUYEN_BUT"
+    },
+    {
+      "npcId": "NPC_BY_WITNESS_LINH_CUNG",
+      "mapId": "MAP_BACH_UYEN",
+      "xWu": 262.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BY-NPC_BY_WITNESS_LINH_CUNG"
+    },
+    {
+      "npcId": "NPC_BY_WITNESS_MINH_KIEM",
+      "mapId": "MAP_BACH_UYEN",
+      "xWu": 214.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BY-NPC_BY_WITNESS_MINH_KIEM"
+    },
+    {
+      "npcId": "NPC_BY_WITNESS_THACH_CHUY",
+      "mapId": "MAP_BACH_UYEN",
+      "xWu": 250.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BY-NPC_BY_WITNESS_THACH_CHUY"
+    },
+    {
+      "npcId": "NPC_CAPTAIN_TRAN_SON",
+      "mapId": "MAP_TRAN_SON",
+      "xWu": 57.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TS-NPC_CAPTAIN_TRAN_SON"
+    },
+    {
+      "npcId": "NPC_CARAVAN_GUARD",
+      "mapId": "MAP_SA_HOA",
+      "xWu": 43.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-SH-NPC_CARAVAN_GUARD"
+    },
+    {
+      "npcId": "NPC_CLASS_TRIAL",
+      "mapId": "MAP_BEN_MUA",
+      "xWu": 188.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BM-NPC_CLASS_TRIAL"
+    },
+    {
+      "npcId": "NPC_CLASS_TRIAL",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 186.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_CLASS_TRIAL"
+    },
+    {
+      "npcId": "NPC_COURT_ARCHIVIST",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 758.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_COURT_ARCHIVIST"
+    },
+    {
+      "npcId": "NPC_CO_VO_TUONG",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "xWu": 312.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-VM-NPC_CO_VO_TUONG"
+    },
+    {
+      "npcId": "NPC_DG02_WORKER_01",
+      "mapId": "MAP_DG_02",
+      "xWu": 58.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-DG02-NPC_DG02_WORKER_01"
+    },
+    {
+      "npcId": "NPC_DG02_WORKER_02",
+      "mapId": "MAP_DG_02",
+      "xWu": 128.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-DG02-NPC_DG02_WORKER_02"
+    },
+    {
+      "npcId": "NPC_DG02_WORKER_03",
+      "mapId": "MAP_DG_02",
+      "xWu": 198.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-DG02-NPC_DG02_WORKER_03"
+    },
+    {
+      "npcId": "NPC_DG02_WORKER_04",
+      "mapId": "MAP_DG_02",
+      "xWu": 268.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-DG02-NPC_DG02_WORKER_04"
+    },
+    {
+      "npcId": "NPC_DIVER_LEAD",
+      "mapId": "MAP_BACH_UYEN",
+      "xWu": 26.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BY-NPC_DIVER_LEAD"
+    },
+    {
+      "npcId": "NPC_FISHER_01",
+      "mapId": "MAP_BEN_MUA",
+      "xWu": 112.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BM-NPC_FISHER_01"
+    },
+    {
+      "npcId": "NPC_FOREMAN_MOC",
+      "mapId": "MAP_LAM_TRIEU",
+      "xWu": 72.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-LT-NPC_FOREMAN_MOC"
+    },
+    {
+      "npcId": "NPC_FORGE_MASTER",
+      "mapId": "MAP_SA_HOA",
+      "xWu": 232.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-SH-NPC_FORGE_MASTER"
+    },
+    {
+      "npcId": "NPC_GUARD_CAPTAIN",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 18.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_GUARD_CAPTAIN"
+    },
+    {
+      "npcId": "NPC_GUILD_CLERK",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 636.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_GUILD_CLERK"
+    },
+    {
+      "npcId": "NPC_GUILD_CLERK",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 309.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_GUILD_CLERK"
+    },
+    {
+      "npcId": "NPC_GUILD_SCOUT",
+      "mapId": "MAP_TRAN_SON",
+      "xWu": 114.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TS-NPC_GUILD_SCOUT"
+    },
+    {
+      "npcId": "NPC_HA_MAC",
+      "mapId": "MAP_BACH_UYEN",
+      "xWu": 245.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BY-NPC_HA_MAC"
+    },
+    {
+      "npcId": "NPC_HA_MAC",
+      "mapId": "MAP_LAM_TRIEU",
+      "xWu": 18.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-LT-NPC_HA_MAC"
+    },
+    {
+      "npcId": "NPC_HA_MAC",
+      "mapId": "MAP_SA_HOA",
+      "xWu": 312.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-SH-NPC_HA_MAC"
+    },
+    {
+      "npcId": "NPC_HA_MAC",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 723.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_HA_MAC"
+    },
+    {
+      "npcId": "NPC_HA_MAC",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 155.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_HA_MAC"
+    },
+    {
+      "npcId": "NPC_LT_MECHANIC",
+      "mapId": "MAP_LAM_TRIEU",
+      "xWu": 292.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-LT-NPC_LT_MECHANIC"
+    },
+    {
+      "npcId": "NPC_LYAN",
+      "mapId": "MAP_BEN_MUA",
+      "xWu": 42.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BM-NPC_LYAN"
+    },
+    {
+      "npcId": "NPC_LYAN",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "xWu": 24.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-DNM-NPC_LYAN"
+    },
+    {
+      "npcId": "NPC_LYAN",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 30.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_LYAN"
+    },
+    {
+      "npcId": "NPC_LYAN",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "xWu": 24.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-VM-NPC_LYAN"
+    },
+    {
+      "npcId": "NPC_MASTER_ANH_DAO",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 234.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_MASTER_ANH_DAO"
+    },
+    {
+      "npcId": "NPC_MASTER_ANH_DAO",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "xWu": 40.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-VM-NPC_MASTER_ANH_DAO"
+    },
+    {
+      "npcId": "NPC_MASTER_HUYEN_BUT",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 250.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_MASTER_HUYEN_BUT"
+    },
+    {
+      "npcId": "NPC_MASTER_HUYEN_BUT",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "xWu": 48.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-VM-NPC_MASTER_HUYEN_BUT"
+    },
+    {
+      "npcId": "NPC_MASTER_LINH_CUNG",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 282.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_MASTER_LINH_CUNG"
+    },
+    {
+      "npcId": "NPC_MASTER_LINH_CUNG",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "xWu": 64.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-VM-NPC_MASTER_LINH_CUNG"
+    },
+    {
+      "npcId": "NPC_MASTER_MINH_KIEM",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 218.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_MASTER_MINH_KIEM"
+    },
+    {
+      "npcId": "NPC_MASTER_MINH_KIEM",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "xWu": 32.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-VM-NPC_MASTER_MINH_KIEM"
+    },
+    {
+      "npcId": "NPC_MASTER_THACH_CHUY",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 266.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_MASTER_THACH_CHUY"
+    },
+    {
+      "npcId": "NPC_MASTER_THACH_CHUY",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "xWu": 56.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-VM-NPC_MASTER_THACH_CHUY"
+    },
+    {
+      "npcId": "NPC_MEDIC_BEN",
+      "mapId": "MAP_BEN_MUA",
+      "xWu": 30.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BM-NPC_MEDIC_BEN"
+    },
+    {
+      "npcId": "NPC_MEDIC_SA_HOA",
+      "mapId": "MAP_SA_HOA",
+      "xWu": 82.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-SH-NPC_MEDIC_SA_HOA"
+    },
+    {
+      "npcId": "NPC_MUSHROOMER",
+      "mapId": "MAP_LAM_TRIEU",
+      "xWu": 187.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-LT-NPC_MUSHROOMER"
+    },
+    {
+      "npcId": "NPC_PRESSURE_KEEPER",
+      "mapId": "MAP_BACH_UYEN",
+      "xWu": 178.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BY-NPC_PRESSURE_KEEPER"
+    },
+    {
+      "npcId": "NPC_RAID_KEEPER",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 566.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_RAID_KEEPER"
+    },
+    {
+      "npcId": "NPC_RAID_KEEPER",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "xWu": 329.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-VM-NPC_RAID_KEEPER"
+    },
+    {
+      "npcId": "NPC_REFUGEE_LEADER",
+      "mapId": "MAP_TRAN_SON",
+      "xWu": 26.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TS-NPC_REFUGEE_LEADER"
+    },
+    {
+      "npcId": "NPC_RELIC_MERCHANT",
+      "mapId": "MAP_BACH_UYEN",
+      "xWu": 42.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BY-NPC_RELIC_MERCHANT"
+    },
+    {
+      "npcId": "NPC_RELIC_MERCHANT",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 366.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_RELIC_MERCHANT"
+    },
+    {
+      "npcId": "NPC_REPAIRER",
+      "mapId": "MAP_TRAN_SON",
+      "xWu": 63.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TS-NPC_REPAIRER"
+    },
+    {
+      "npcId": "NPC_SAM_CHU_QUY",
+      "mapId": "MAP_SA_HOA",
+      "xWu": 26.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-SH-NPC_SAM_CHU_QUY"
+    },
+    {
+      "npcId": "NPC_SH_WORKER_01",
+      "mapId": "MAP_SA_HOA",
+      "xWu": 127.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-SH-NPC_SH_WORKER_01"
+    },
+    {
+      "npcId": "NPC_SH_WORKER_02",
+      "mapId": "MAP_SA_HOA",
+      "xWu": 136.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-SH-NPC_SH_WORKER_02"
+    },
+    {
+      "npcId": "NPC_SH_WORKER_03",
+      "mapId": "MAP_SA_HOA",
+      "xWu": 145.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-SH-NPC_SH_WORKER_03"
+    },
+    {
+      "npcId": "NPC_SH_WORKER_04",
+      "mapId": "MAP_SA_HOA",
+      "xWu": 154.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-SH-NPC_SH_WORKER_04"
+    },
+    {
+      "npcId": "NPC_SIEGE_CLERK",
+      "mapId": "MAP_TRAN_SON",
+      "xWu": 84.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TS-NPC_SIEGE_CLERK"
+    },
+    {
+      "npcId": "NPC_TA_VAN_KHANH",
+      "mapId": "MAP_BEN_MUA",
+      "xWu": 64.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-BM-NPC_TA_VAN_KHANH"
+    },
+    {
+      "npcId": "NPC_TA_VAN_KHANH",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "xWu": 46.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-VM-NPC_TA_VAN_KHANH"
+    },
+    {
+      "npcId": "NPC_TELEPORTER",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 339.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_TELEPORTER"
+    },
+    {
+      "npcId": "NPC_TL_APOTHECARY",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 181.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TL_APOTHECARY"
+    },
+    {
+      "npcId": "NPC_TL_AUCTION_CLERK",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 316.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TL_AUCTION_CLERK"
+    },
+    {
+      "npcId": "NPC_TL_BANKER",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 322.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TL_BANKER"
+    },
+    {
+      "npcId": "NPC_TL_BEAST_TENDER",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 673.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TL_BEAST_TENDER"
+    },
+    {
+      "npcId": "NPC_TL_CIVILIAN_01",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 118.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TL_CIVILIAN_01"
+    },
+    {
+      "npcId": "NPC_TL_CIVILIAN_02",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 154.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TL_CIVILIAN_02"
+    },
+    {
+      "npcId": "NPC_TL_CIVILIAN_03",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 218.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TL_CIVILIAN_03"
+    },
+    {
+      "npcId": "NPC_TL_CIVILIAN_04",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 270.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TL_CIVILIAN_04"
+    },
+    {
+      "npcId": "NPC_TL_CIVILIAN_05",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 345.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TL_CIVILIAN_05"
+    },
+    {
+      "npcId": "NPC_TL_CIVILIAN_06",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 438.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TL_CIVILIAN_06"
+    },
+    {
+      "npcId": "NPC_TL_CIVILIAN_07",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 533.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TL_CIVILIAN_07"
+    },
+    {
+      "npcId": "NPC_TL_CIVILIAN_08",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 650.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TL_CIVILIAN_08"
+    },
+    {
+      "npcId": "NPC_TL_GATEKEEPER_E",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 876.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TL_GATEKEEPER_E"
+    },
+    {
+      "npcId": "NPC_TL_GATEKEEPER_W",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 24.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TL_GATEKEEPER_W"
+    },
+    {
+      "npcId": "NPC_TL_GUARD_RESCUE",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 190.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_TL_GUARD_RESCUE"
+    },
+    {
+      "npcId": "NPC_TL_WITNESS_01",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 112.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_TL_WITNESS_01"
+    },
+    {
+      "npcId": "NPC_TL_WITNESS_02",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 203.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_TL_WITNESS_02"
+    },
+    {
+      "npcId": "NPC_TONG_BANH",
+      "mapId": "MAP_TRAN_SON",
+      "xWu": 315.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TS-NPC_TONG_BANH"
+    },
+    {
+      "npcId": "NPC_TRADER",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 237.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_TRADER"
+    },
+    {
+      "npcId": "NPC_TRADER",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 72.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_TRADER"
+    },
+    {
+      "npcId": "NPC_TS_ENVOY_01",
+      "mapId": "MAP_TRAN_SON",
+      "xWu": 118.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TS-NPC_TS_ENVOY_01"
+    },
+    {
+      "npcId": "NPC_TS_ENVOY_02",
+      "mapId": "MAP_TRAN_SON",
+      "xWu": 146.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TS-NPC_TS_ENVOY_02"
+    },
+    {
+      "npcId": "NPC_TS_REFUGEE_A",
+      "mapId": "MAP_TRAN_SON",
+      "xWu": 66.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TS-NPC_TS_REFUGEE_A"
+    },
+    {
+      "npcId": "NPC_TS_REFUGEE_B",
+      "mapId": "MAP_TRAN_SON",
+      "xWu": 142.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TS-NPC_TS_REFUGEE_B"
+    },
+    {
+      "npcId": "NPC_TS_REFUGEE_C",
+      "mapId": "MAP_TRAN_SON",
+      "xWu": 232.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TS-NPC_TS_REFUGEE_C"
+    },
+    {
+      "npcId": "NPC_VAN_NHU",
+      "mapId": "MAP_THANG_LONG",
+      "xWu": 455.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TH-NPC_VAN_NHU"
+    },
+    {
+      "npcId": "NPC_VAN_NHU",
+      "mapId": "MAP_THANH_LAC",
+      "xWu": 124.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-TL-NPC_VAN_NHU"
+    },
+    {
+      "npcId": "NPC_WATER_KEEPER",
+      "mapId": "MAP_LAM_TRIEU",
+      "xWu": 324.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-LT-NPC_WATER_KEEPER"
+    },
+    {
+      "npcId": "NPC_WATER_SELLER",
+      "mapId": "MAP_SA_HOA",
+      "xWu": 110.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-SH-NPC_WATER_SELLER"
+    },
+    {
+      "npcId": "NPC_WOODCUTTER_01",
+      "mapId": "MAP_LAM_TRIEU",
+      "xWu": 88.0,
+      "yWu": 0.0,
+      "floorId": "OVERWORLD",
+      "sourceRecordId": "MAN-LT-NPC_WOODCUTTER_01"
+    }
+  ]
+}

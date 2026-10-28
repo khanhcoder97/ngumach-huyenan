@@ -51,6 +51,18 @@ builder.Services.AddSingleton<IQuestCatalog>(serviceProvider =>
 });
 builder.Services.AddSingleton<IQuestStateStore, InMemoryQuestStateStore>();
 builder.Services.AddSingleton<IQuestService, InMemoryQuestService>();
+builder.Services.Configure<QuestAcceptOptions>(
+    builder.Configuration.GetSection(QuestAcceptOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<QuestAcceptOptions>>().Value);
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    var path = NpcAnchorLoader.DiscoverPath(configuration, environment.ContentRootPath);
+    return NpcAnchorLoader.Load(path);
+});
+builder.Services.AddSingleton<IQuestAcceptService, InMemoryQuestAcceptService>();
 builder.Services.AddSingleton<IInventoryStateStore, InMemoryInventoryStateStore>();
 builder.Services.AddSingleton<IInventoryService, InMemoryInventoryService>();
 builder.Services.AddSingleton<ITeleportService, InMemoryTeleportService>();
@@ -67,6 +79,33 @@ app.Logger.LogInformation("Loaded {SkillCount} combat skills.", combatSkills.Cou
 
 var quests = app.Services.GetRequiredService<IQuestCatalog>();
 app.Logger.LogInformation("Loaded quest definitions: {QuestCount}.", quests.Count);
+
+var npcAnchors = app.Services.GetRequiredService<NpcAnchorCatalog>();
+NpcAnchorValidator.Validate(npcAnchors, mapBounds);
+app.Logger.LogInformation("Loaded NPC anchors: {AnchorCount}.", npcAnchors.Count);
+
+foreach (var questId in quests.QuestIds)
+{
+    if (!quests.TryGet(questId, out var questDefinition))
+    {
+        continue;
+    }
+
+    if (!npcAnchors.HasAnchorFor(questDefinition.StartNpcId))
+    {
+        throw new InvalidOperationException(
+            $"Quest '{questId}' start NPC '{questDefinition.StartNpcId}' has no anchor.");
+    }
+}
+
+var questAcceptOptions = app.Services.GetRequiredService<QuestAcceptOptions>();
+QuestAcceptOptionsValidator.Validate(questAcceptOptions);
+if (questAcceptOptions.Enabled)
+{
+    app.Logger.LogWarning(
+        "DEV STUB: P1:QuestAccept is enabled. Interaction line-of-sight is not " +
+        "enforced because no walkability bundle exists.");
+}
 
 if (selfCheck)
 {

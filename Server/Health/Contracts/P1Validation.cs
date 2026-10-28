@@ -53,6 +53,9 @@ public static class P1Validation
     private static readonly Regex ObjectiveIdPattern =
         new(@"^OBJ_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
 
+    private static readonly Regex NpcIdPattern =
+        new(@"^NPC_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
+
     public static bool IsHex32(string? value)
     {
         if (value is null || value.Length != 32)
@@ -87,6 +90,9 @@ public static class P1Validation
 
     public static bool IsObjectiveId(string? value) =>
         value is not null && ObjectiveIdPattern.IsMatch(value);
+
+    public static bool IsNpcId(string? value) =>
+        value is not null && NpcIdPattern.IsMatch(value);
 
     public static bool TryParseUtc(string? value, out DateTimeOffset parsed)
     {
@@ -245,6 +251,59 @@ public static class P1Validation
             !TryParseUtc(payload.ClientTimeUtc, out _))
         {
             errors.Add("payload.clientTimeUtc");
+        }
+
+        return errors;
+    }
+
+    public static List<string> ValidateQuestAcceptEnvelope(QuestAcceptEnvelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        if (envelope.SchemaVersion != 1)
+        {
+            errors.Add("schemaVersion");
+        }
+
+        if (!IsHex32(envelope.RequestId))
+        {
+            errors.Add("requestId");
+        }
+
+        if (!IsHex32(envelope.IdempotencyKey))
+        {
+            errors.Add("idempotencyKey");
+        }
+
+        if (!TryParseUtc(envelope.SentAtUtc, out _))
+        {
+            errors.Add("sentAtUtc");
+        }
+
+        if (!IsCharacterId(envelope.CharacterId))
+        {
+            errors.Add("characterId");
+        }
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+            return errors;
+        }
+
+        if (!IsQuestId(envelope.Payload.QuestId))
+        {
+            errors.Add("payload.questId");
+        }
+
+        if (!IsNpcId(envelope.Payload.NpcId))
+        {
+            errors.Add("payload.npcId");
         }
 
         return errors;

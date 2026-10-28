@@ -22,6 +22,15 @@ public static class P1Endpoints
         app.MapGet("/p1/world/{sessionId}", GetWorld);
         app.MapGet("/p1/quests/{sessionId}", GetQuests);
         app.MapGet("/p1/inventory/{sessionId}", GetInventory);
+
+        var questAccept = app.ServiceProvider
+            .GetRequiredService<IOptions<QuestAcceptOptions>>()
+            .Value;
+        if (questAccept.Enabled)
+        {
+            app.MapPost("/p1/quests/accept", QuestAcceptAsync);
+        }
+
         return app;
     }
 
@@ -116,7 +125,10 @@ public static class P1Endpoints
             options.StartingMaxHp,
             options.StartingMp,
             options.StartingMaxMp,
-            now);
+            now)
+        {
+            Level = options.StartingLevel
+        };
 
         sessions.Add(session);
         var snapshot = WorldSnapshotFactory.Create(session, clock);
@@ -386,6 +398,124 @@ public static class P1Endpoints
         CombatErrorCodes.TargetNotFound => StatusCodes.Status404NotFound,
         CombatErrorCodes.OutOfRange => StatusCodes.Status422UnprocessableEntity,
         CombatErrorCodes.UnsupportedResource => StatusCodes.Status422UnprocessableEntity,
+        _ => StatusCodes.Status400BadRequest
+    };
+
+    private static async Task<IResult> QuestAcceptAsync(
+        HttpContext context,
+        ISessionStore sessions,
+        IQuestAcceptService questAccept,
+        ServerClock clock,
+        ILoggerFactory loggerFactory)
+    {
+        var requestId = NewRequestId();
+
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge)
+        {
+            return P1Results.QuestAcceptError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status413PayloadTooLarge, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false, state: null);
+        }
+
+        if (string.IsNullOrWhiteSpace(body) || !context.Request.HasJsonContentType())
+        {
+            return P1Results.QuestAcceptError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false, state: null);
+        }
+
+        QuestAcceptEnvelope? envelope;
+        try
+        {
+            envelope = JsonSerializer.Deserialize<QuestAcceptEnvelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.QuestAcceptError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false, state: null);
+        }
+
+        if (envelope?.RequestId is { } incomingRequestId &&
+            P1Validation.IsHex32(incomingRequestId))
+        {
+            requestId = incomingRequestId;
+        }
+
+        var fieldErrors = P1Validation.ValidateQuestAcceptEnvelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.QuestAcceptError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                fieldErrors, retryable: false, state: null);
+        }
+
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return P1Results.QuestAcceptError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["X-Session-ID"], retryable: false, state: null);
+        }
+
+        var session = sessions.Find(sessionId);
+        if (session is null)
+        {
+            return P1Results.QuestAcceptError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status404NotFound, P1ErrorCodes.SessionNotFound,
+                ["X-Session-ID"], retryable: false, state: null);
+        }
+
+        if (!string.Equals(envelope!.CharacterId, session.CharacterId, StringComparison.Ordinal))
+        {
+            return P1Results.QuestAcceptError(
+                context, clock, requestId, session.SessionId,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["characterId"], retryable: false, state: null);
+        }
+
+        var payload = envelope.Payload!;
+        var outcome = questAccept.Accept(
+            session, payload.QuestId!, payload.NpcId!, envelope.IdempotencyKey!);
+
+        var logger = loggerFactory.CreateLogger("P1.QuestAccept");
+        if (outcome.Accepted && outcome.State is { } acceptedState)
+        {
+            logger.LogDebug(
+                "Accepted quest {QuestId} via {NpcId} for {SessionId}",
+                payload.QuestId, payload.NpcId, session.SessionId);
+
+            return P1Results.QuestAcceptSuccess(
+                requestId, session.SessionId, clock, acceptedState);
+        }
+
+        var failure = outcome.Failure!;
+        logger.LogDebug(
+            "Rejected quest {QuestId} via {NpcId} for {SessionId}: {Code}",
+            payload.QuestId, payload.NpcId, session.SessionId, failure.Code);
+
+        return P1Results.QuestAcceptError(
+            context, clock, requestId, session.SessionId,
+            QuestAcceptStatus(failure.Code), failure.Code,
+            failure.FieldErrors, failure.Retryable, outcome.State);
+    }
+
+    private static int QuestAcceptStatus(string code) => code switch
+    {
+        QuestErrorCodes.QuestNotFound => StatusCodes.Status404NotFound,
+        QuestAcceptErrorCodes.NpcMismatch => StatusCodes.Status422UnprocessableEntity,
+        QuestAcceptErrorCodes.OutOfRange => StatusCodes.Status422UnprocessableEntity,
+        QuestAcceptErrorCodes.PrerequisiteNotMet => StatusCodes.Status422UnprocessableEntity,
+        QuestAcceptErrorCodes.IdempotencyConflict => StatusCodes.Status409Conflict,
+        QuestAcceptErrorCodes.RevisionConflict => StatusCodes.Status409Conflict,
+        QuestErrorCodes.InvalidTransition => StatusCodes.Status409Conflict,
         _ => StatusCodes.Status400BadRequest
     };
 

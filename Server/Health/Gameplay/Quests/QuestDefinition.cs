@@ -38,6 +38,7 @@ public static class QuestObjectiveTypes
 public sealed record QuestDefinition(
     string QuestId,
     string QuestType,
+    string StartNpcId,
     int MinLevel,
     int MaxLevel,
     IReadOnlyList<string> PrerequisiteQuestIds,
