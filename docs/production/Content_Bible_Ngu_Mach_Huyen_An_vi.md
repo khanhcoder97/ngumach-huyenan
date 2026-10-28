@@ -4,7 +4,7 @@ Tài liệu bổ sung các nội dung và thông số đủ cụ thể để đ�
 
 ## 1. Cinematic mở đầu và giọng kể
 
-Mưa trút xuống Bến Mưa. Chiếc chuông dưới hồ rung dù không ai chạm. Mặt nước phản chiếu bầu trời không có mặt trăng. Ly An trao cho nhân vật một phong thư niêm sáp: “Đưa tới Thanh Lạc. Đừng mở, dù người nhận có nói tên cô.” Mãng Cốt trồi lên, phong thư vỡ niêm; mảnh Huyền Ấn trong đó bay vào tay nhân vật. Tạ Vân Khanh đến trễ, nhận ra dấu hiệu từng xuất hiện trước khi năm tháp thất thủ. Cảnh cuối là năm lá cờ môn phái cùng rung trong gió.
+Mưa trút xuống Bến Mưa. Người chơi gặp Ly An đang giữ một kiện hàng bên bến, giúp cô rồi mới nhận phong thư còn niêm sáp. Tiếng chuông chỉ trọn khi nhìn xuống nước; không có cảnh giết boss hay nhận mảnh ấn trước khi vào gameplay. Niêm thư rạn dần trong P00-04; sau encounter Mãng Cốt và tương tác nguồn ở P00-05, mảnh Huyền Ấn mới phản ứng. Tạ Vân Khanh nhận ra dấu hiệu nhưng chưa kể lịch sử. Storyboard/prompt mở đầu xem CIN_001 trong Cinema_Muse_Directors_Pack_vi.md; tuyến truyện sâu theo Narrative_Depth_and_Discovery_vi.md.
 
 Lời thoại ngắn, chia đoạn dưới 12 dòng trên mobile. NPC không giải thích toàn bộ lịch sử cùng lúc; người chơi ghép manh mối từ thư, vật chứng và lời khai. Mỗi lựa chọn thoại chỉ thay lời thoại, danh vọng hoặc mỹ phẩm; kết thúc chiến dịch là chung cho mọi người.
 

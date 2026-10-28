@@ -18,3 +18,7 @@ jobs:
           python-version: "3.12"
       - name: Validate production content
         run: python Implementation/Tools/validate_content.py
+      - name: Validate map topology bundles
+        run: python Implementation/Tools/validate_topology.py
+      - name: Validate narrative and cinema handoff
+        run: python Implementation/Tools/validate_narrative.py

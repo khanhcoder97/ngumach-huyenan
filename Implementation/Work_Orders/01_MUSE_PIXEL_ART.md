@@ -77,3 +77,7 @@ Tuân thủ `Implementation/Asset_Handoff/GITHUB_COLLABORATION.md`: làm trên b
 ## Cập nhật 2026-10-28
 
 Đã có walk Minh Kiếm (PR #17). Ưu tiên tiếp theo: blockout Bến Mưa theo DEC-016/top-down XY; bổ sung idle/combat sau khi chốt timing server. Được duy trì builder/demo hiện có trên máy ảo Unity, bàn giao log exact SHA và video; không tự đổi server/network contract. Thăng Long tiếp tục trong backlog art, áp dụng topology nhìn từ trên.
+
+## CINEMA-01 — Video fantasy narrative (2026-10-28)
+
+Muse phụ trách storyboard và sản xuất video theo DEC-018. Đọc Narrative_Depth_and_Discovery_vi.md, Cinema_Muse_Directors_Pack_vi.md và Cinema_Production_Pack_v1.json. Thêm phạm vi được ghi: Art_Source/Cinematics/, Client/Assets/Cinematics/, Implementation/Content/Narrative/Deliveries/. Dùng manifest video sidecar riêng, không sửa manifest sprite v1. Bắt đầu CIN_001/002/004: contact sheets và animatic trước render final; kèm prompt/reference/model metadata, preview/stems/subtitle và log engine nếu đã chạy. Không tạo avatar Minh Kiếm cố định cho mọi người chơi; dùng offscreen/POV hoặc composite từ avatar được chọn. Không sửa server quest/reward state từ video callback. Branch muse/cinema-opening-ben-mua, PR liên kết issue cinema mới; báo tool limitations ngay, không nhận video chưa được tạo là done.

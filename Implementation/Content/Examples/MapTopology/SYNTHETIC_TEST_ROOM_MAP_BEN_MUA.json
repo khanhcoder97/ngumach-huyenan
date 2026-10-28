@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "mapId": "MAP_BEN_MUA",
+  "layoutVersion": 1,
+  "bundleVersion": 2,
+  "coordinateSystem": "TOP_DOWN_XY",
+  "reviewState": "SYNTHETIC_TEST_ONLY",
+  "bounds": {
+    "xMin": 0,
+    "xMax": 360,
+    "yMin": -12,
+    "yMax": 72
+  },
+  "floorIds": ["OVERWORLD"],
+  "walkablePolygons": [
+    {
+      "floorId": "OVERWORLD",
+      "points": [
+        { "xWu": 30, "yWu": -10 },
+        { "xWu": 60, "yWu": -10 },
+        { "xWu": 60, "yWu": 10 },
+        { "xWu": 30, "yWu": 10 }
+      ]
+    }
+  ],
+  "blockedPolygons": [
+    {
+      "floorId": "OVERWORLD",
+      "points": [
+        { "xWu": 45, "yWu": -10 },
+        { "xWu": 46, "yWu": -10 },
+        { "xWu": 46, "yWu": 10 },
+        { "xWu": 45, "yWu": 10 }
+      ]
+    },
+    {
+      "floorId": "OVERWORLD",
+      "points": [
+        { "xWu": 52, "yWu": 2 },
+        { "xWu": 54, "yWu": 2 },
+        { "xWu": 54, "yWu": 4 },
+        { "xWu": 52, "yWu": 4 }
+      ]
+    },
+    {
+      "floorId": "OVERWORLD",
+      "points": [
+        { "xWu": 60, "yWu": 10 },
+        { "xWu": 64, "yWu": 10 },
+        { "xWu": 64, "yWu": 14 },
+        { "xWu": 60, "yWu": 14 }
+      ]
+    }
+  ],
+  "placements": [
+    {
+      "recordId": "MAN-BM-NPC_LYAN",
+      "npcId": "NPC_LYAN",
+      "floorId": "OVERWORLD",
+      "xWu": 42,
+      "yWu": 0
+    }
+  ],
+  "sourceRefs": [
+    "docs/production/Top_Down_Gameplay_World_Spec_vi.md",
+    "docs/production/Production_Decision_Register_vi.md#DEC-016",
+    "synthetic fixture for QOD-10; NOT the reviewed Bến Mưa layout"
+  ]
+}

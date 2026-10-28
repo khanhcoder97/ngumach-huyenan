@@ -42,3 +42,7 @@ Chủ dự án xác nhận gameplay 2D nhìn từ trên, di chuyển XY 8 hướ
 ## DEC-017 — Gói luật hoàn thiện thiết kế v1 (2026-10-28)
 
 Theo yêu cầu chủ dự án bổ sung toàn bộ các miền còn thiếu, khóa baseline thiết kế trong Production_Rules_Complete_v1_vi.md, Online_Persistence_Release_Complete_vi.md và Content_Export_and_Asset_Completion_vi.md. Gói xác định progression/stat/damage/status/AI/quest/economy/UI/network/persistence/ops, thay các câu mâu thuẫn lớp cố định/đổi lớp và farm6/5. Bảng số mới là tuning v1 do agent thiết kế, cần playtest; không tự bật trên runtime P1. Thay loader/schema cần migration PR riêng, giữ tương thích và IDs. Quyết định này không thay phê duyệt thị trường/pháp lý/CCU hoặc nghiệm thu map/device.
+
+## DEC-018 — Fantasy kể qua khám phá và cinema (2026-10-28)
+
+Theo yêu cầu chủ dự án, narrative v2 bổ sung chiều sâu cho nhân vật/lore và beat khám phá đủ76 quest hiện hữu, kèm20 cảnh video/63 shot giao Muse. Mở đầu chỉ gợi chuông/thư, không spoil Cơ/thí nghiệm; mốc300 năm là vỡ Huyền Ấn,30 năm là thí nghiệm thế hệ hiện tại. Giữ ending chung, avatar đa lớp/diện mạo và runtime quest/reward IDs. Video chỉ presentation có skip/fallback/replay, authority trên server. Tài liệu và prompt chưa chứng minh video đã tạo; dialogue CSV cũ vẫn cần line-edit trước voice production.
