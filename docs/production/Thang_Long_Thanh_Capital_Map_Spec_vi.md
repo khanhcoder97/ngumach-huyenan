@@ -1,6 +1,9 @@
 # ĐẶC TẢ SẢN XUẤT MAP THĂNG LONG THÀNH
 ## Ngũ Mạch: Huyền Ấn — trung tâm đô hội và cửa ngõ liên vùng v1.0
 
+> DEC-020 (2026-10-29): quy hoạch mục tiêu thành phố2048×1536WU/12phường theo Capital_Scale_and_Simple_Pixel_v2_vi.md. Các bảng900×96/3cell/x-only bên dưới là layout v1 đang chờ migration, không còn là mục tiêu quy mô toàn thành. Registry/runtime giữv1 cho đến khi bundle geometry/placement/quest/route đồng bộ; không chuyển tọa độ bằng ảnh concept.
+
+
 > DEC-016 (2026-10-28): áp dụng `Top_Down_Gameplay_World_Spec_vi.md`. Các bảng kích thước/placement cũ là blockout chưa nghiệm thu top-down. Y luôn là Bắc–Nam trên mặt đất. “Platform” là bệ/cầu/vùng an toàn có đường đi hoặc floor link, không yêu cầu nhảy; chiều cao silhouette/capsule cũ không dùng làm collider. ID được giữ; không tự chuyển tọa độ cũ thành độ cao.
 
 

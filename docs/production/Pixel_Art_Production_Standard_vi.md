@@ -65,3 +65,7 @@ Mỗi asset ghi `asset_id`, entity/map/skill link, source PNG/layer, cell/frame 
 ## 9. Camera và footprint hiện hành
 
 DEC-016 và `Top_Down_Gameplay_World_Spec_vi.md` chốt góc nhìn từ trên, di chuyển XY 8 hướng. Các số actor 5 WU/capsule 3,6 WU cũ đã hết hiệu lực; 48×64 px/20 PPU không được kéo lên 5 WU. Menu portrait là preview riêng; gameplay mobile vẫn landscape.
+
+## 10. Mức chi tiết đơn giản (DEC-020)
+
+Đích mới là pixel game dễ sản xuất: material3tone+1highlight, module nhà/tile dùng lại, texture noise thấp, nước4frame. Giữ640×360/20PPU/48×64/8hướng và integer scale; rõ/nét không đồng nghĩa thêm hàng nghìn chi tiết. Capital_Scale_and_Simple_Pixel_v2_vi.md và Art_Concept_References/v2/02_simple_pixel_street.png là hướng tham chiếu; board v1 nhiều chi tiết chỉ còn mood/material, không mật độ source runtime.
