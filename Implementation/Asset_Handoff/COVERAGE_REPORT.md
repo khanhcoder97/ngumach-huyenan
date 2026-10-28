@@ -8,8 +8,8 @@
 > python Implementation/Asset_Handoff/coverage_audit.py --check
 > ```
 
-- **Source commit:** `312db69fa661770b4e84ce70069e97948ab03e92` — last commit touching the evidence files (not the report commit).
-- **Evidence digest:** `2b5feca684200eed288475c2cdd46fc5d49eef063efad32ff17f3d9ed1aeb7d7` over 38 files (SHA256 per file in §8).
+- **Source commit:** `0576b86c577f11ef3a4aab8b9809bb6332256450` — last commit touching the evidence files (not the report commit).
+- **Evidence digest:** `f11743ed7188977a1343b2e5f2c686a7c49aa8cab07192dae5269a573a52000b` over 38 files (SHA256 per file in §8).
 - **Phạm vi:** chỉ đọc nguồn; không sửa schema, manifest, asset, `.meta`, server hay gameplay numeric.
 
 ## 1. Kết luận
@@ -200,7 +200,7 @@ File text được hash ở dạng **LF chuẩn hoá** để Windows và Linux c
 | `Implementation/Content/Schemas/SkillDefinition.schema.json` | 2486 | `41828ae02441ac28a1d8c8593cc8c7544e392ec4a25765fb53cd3af4077e79b1` |
 | `Implementation/Content/Schemas/SpawnDefinition.schema.json` | 2767 | `5eb263a1e9d0b574eddfd3c6421df546d312d05625ee26ad36d59ea2c53801ea` |
 | `docs/production/Class_Passive_Production_Data_vi.csv` | 14134 | `ff7eb9a6050af44376219b9b96bc8f44434bc163b4b237e8bab04a743e2d91e8` |
-| `docs/production/Combat_Skills_VFX_Animation_Spec_vi.md` | 24463 | `6cd69cdb3b859c044cb89b16a25a7ed0f48cb859d21d752490f81a9e0eda02b9` |
+| `docs/production/Combat_Skills_VFX_Animation_Spec_vi.md` | 25133 | `9c9e074f4383d1a86aa827238eb7dfff997f62242c51a9809a88917c3790763d` |
 | `docs/production/Currency_Production_Data_vi.csv` | 4268 | `d99f6fff5c435526a1cc30e8675dc4aa34dadec7f553ff2b85184713ecfad7dc` |
 | `docs/production/Elite_Variant_Data_vi.csv` | 3412 | `adceffb77ddfdb7d5198436e8fff1bd7a834001b1c3e61abd43ade6f670c52c4` |
 | `docs/production/Item_Master_Catalog_vi.csv` | 316960 | `77e1405963fab1e915c56a8b738e347bd60809c6cf1fb78bee5831202e67065c` |
@@ -210,9 +210,9 @@ File text được hash ở dạng **LF chuẩn hoá** để Windows và Linux c
 | `docs/production/NPC_Actor_Production_Registry_vi.csv` | 32835 | `d9743b8148620e00dd0762eca2bfd1b733b7a8808583725a381262fd004cd52a` |
 | `docs/production/Online_Persistence_Release_Complete_vi.md` | 9433 | `14ec979208e5d563882ab184115f34683791973180888d6b6c089c6b81855f2e` |
 | `docs/production/Pet_Mount_Production_Data_vi.csv` | 5100 | `383a40438f741931a26a5e3e19fa6d2b5527ffaa6c69bb45875ef162e6bf2d73` |
-| `docs/production/Pixel_Art_Production_Standard_vi.md` | 9324 | `d94e7b6eb9bb0b0f0f33760b9d10d5d84e74b6429b2b6227bce30bf1bb27df19` |
+| `docs/production/Pixel_Art_Production_Standard_vi.md` | 10186 | `52bfc0a84a504d3d47bd34beb8f8d3c3c0ce5d1a3fd201d013a1f35ed6535c83` |
 | `docs/production/Quest_Dialogue_Production_Data_vi.csv` | 109074 | `a5c8017edec32b4e70a5da4f87128a0405a9837d58120a19839b52f675e88ed4` |
 | `docs/production/Weekly_Boss_Rotation_Data_vi.csv` | 3201 | `940214ce7a34978487403520c50ffef825da7da94210eeb3b1841d46f4e372e2` |
 | `docs/production/World_Spawn_Gathering_Manifest_vi.csv` | 198229 | `7fe2d4d5229e2fb7a93eb8c0fd452b741cb5f050c49a9c72bee30f8eff06c457` |
 
-**Evidence digest:** `2b5feca684200eed288475c2cdd46fc5d49eef063efad32ff17f3d9ed1aeb7d7`
+**Evidence digest:** `f11743ed7188977a1343b2e5f2c686a7c49aa8cab07192dae5269a573a52000b`
