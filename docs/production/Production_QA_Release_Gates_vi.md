@@ -37,7 +37,7 @@ Test server rules trước UI presentation; mọi kiểm tra kinh tế/PvP chạ
 
 ## 3. Regression map/content
 
-Mỗi map kiểm tra đường đi đầu-cuối, bounds, camera, collision, jump/ladder/platform, portal, spawn phase, safe zone, weather occlusion, mobile touch safe areas, NPC interact distance và không có soft-lock quest. Tối thiểu test với 1 người chơi mới, một nhân vật cấp cap, party đủ người và reconnect giữa encounter. Manifest `NEW_PROPOSED` phải được level design sign-off hoặc còn bị đánh dấu blockout; không chuyển sang release content khi chưa đo navmesh/collision.
+Mỗi map kiểm tra đường đi đầu-cuối, bounds, camera, collision, đường đi XY/cầu/thang chuyển tầng, portal, spawn phase, safe zone, weather occlusion, mobile touch safe areas, NPC interact distance và không có soft-lock quest. Tối thiểu test với 1 người chơi mới, một nhân vật cấp cap, party đủ người và reconnect giữa encounter. Manifest `NEW_PROPOSED` phải được level design sign-off hoặc còn bị đánh dấu blockout; không chuyển sang release content khi chưa đo navmesh/collision.
 
 | Suite | Cases cần có |
 |---|---|

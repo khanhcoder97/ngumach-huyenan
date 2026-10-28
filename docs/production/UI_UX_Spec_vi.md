@@ -3,7 +3,7 @@
 
 ### 1. Mục tiêu trải nghiệm và nền tảng
 
-- Game 2D ngang pixel art; UI dùng cùng ngôn ngữ pixel art với panel sơn mài/giấy dó/đồng chạm được vẽ thành cụm pixel. Theo `Pixel_Art_Production_Standard_vi.md`; không blur, vector icon hoặc fractional scaling.
+- Game 2D nhìn từ trên pixel art; UI dùng cùng ngôn ngữ pixel art với panel sơn mài/giấy dó/đồng chạm được vẽ thành cụm pixel. Theo `Pixel_Art_Production_Standard_vi.md`; không blur, vector icon hoặc fractional scaling.
 - Điện thoại: ngang, vùng render tối thiểu 1280×720 tương đương; hỗ trợ tỷ lệ 16:9 đến 20:9. Safe area theo notch/cạnh bo. Không xoay UI theo dọc.
 - PC: 16:9/16:10, chuột + bàn phím, tay cầm là tùy chọn. Chuẩn tham chiếu 1920×1080. UI scale 80–125%, chọn trong cài đặt.
 - Thiết kế ưu tiên 3 thao tác: đọc mục tiêu, chiến đấu, nhặt/nhận nhiệm vụ. Các màn quản lý sâu mở bằng panel lớn; không khóa di chuyển quá lâu ngoài combat.
@@ -36,7 +36,7 @@ HUD có thể kéo thả bố cục và lưu 3 preset: mặc định, ít che m�
 
 **Controls mobile:** joystick trái 136–152dp; đánh thường 94–104dp; 6 kỹ năng trên cung bán kính 142–166dp, ô 48–58dp. Bốn skill chủ động, skill cơ động/phòng thủ và tuyệt kỹ theo loadout. Tất cả có thể kéo bố cục/đảo tay trái; Auto-combat không xuất hiện trong PvP, siege, boss raid; nếu tính năng auto PvE được đưa vào sau thì tắt kỹ năng tốn tài nguyên/né boss theo mặc định.
 
-**Controls PC:** di chuyển A/D, nhảy Space, tương tác E, đánh thường J/chuột trái; skill Q/W/E/R/1/2, né Shift, potion 3/4. Rebind tất cả. Có thể dùng chuột trái click hướng đánh, nhưng không click-to-move mặc định để tránh xung đột combat side-scroll.
+**Controls PC:** WASD/mũi tên di chuyển 8 hướng; F tương tác; J/chuột trái đánh thường; skill 1–6; Space/Shift né; Q hồi HP, E hồi MP; Tab đổi mục tiêu. Rebind tất cả, từ chối bind trùng trong cùng context. Có thể dùng chuột trái click hướng đánh, nhưng click-to-move chỉ là tùy chọn khi có pathfinding XY hợp lệ.
 
 ### 4. Màn hình đăng nhập, tạo nhân vật và chọn nhân vật
 

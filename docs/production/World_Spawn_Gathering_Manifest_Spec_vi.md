@@ -1,6 +1,9 @@
 # MANIFEST VỊ TRÍ NPC, QUÁI VÀ TÀI NGUYÊN
 ## Ngũ Mạch: Huyền Ấn — đặc tả dữ liệu world placement v1.0
 
+> DEC-016 (2026-10-28): áp dụng `Top_Down_Gameplay_World_Spec_vi.md`. Các bảng kích thước/placement cũ là blockout chưa nghiệm thu top-down. Y luôn là Bắc–Nam trên mặt đất. “Platform” là bệ/cầu/vùng an toàn có đường đi hoặc floor link, không yêu cầu nhảy; chiều cao silhouette/capsule cũ không dùng làm collider. ID được giữ; không tự chuyển tọa độ cũ thành độ cao.
+
+
 ### 1. Mục đích và phạm vi
 
 Manifest là bảng bàn giao vị trí theo map cho level design, gameplay, narrative, art và backend. Mỗi hàng mô tả một NPC, một nhóm quái/boss, một node thu thập hoặc một vật thể tương tác có quy tắc xuất hiện. CSV là bản import; XLSX có cùng dữ liệu để rà soát thủ công.
@@ -55,7 +58,7 @@ Trong bản này có 176 hàng `ATLAS_*`, 27 hàng `ACTIVITY_*` và 130 hàng `N
 
 ### 4. Quy ước tọa độ và nhóm
 
-- Đơn vị không gian là **WU**; 1 WU = 0,5 m. `x_wu`,`y_wu` là tọa độ local của `map_id`. Trục X chạy theo hướng tiến của map ngang; Y là độ cao mặt đứng/platform, không phải tâm sprite. Chiều sâu layer dùng Z riêng ngoài manifest.
+- Đơn vị không gian là **WU**; 1 WU = 0,5 m. `x_wu`,`y_wu` là tọa độ local của `map_id`. X tăng về Đông, Y tăng về Bắc trên mặt đất; tọa độ là pivot chân. Độ cao kiến trúc không lưu vào Y. Cầu chồng đường cần floorId trong bundle v2.
 - Actor NPC/quái/node được neo tại tâm gameplay hoặc socket ghi trong `position_details`. Với NPC có tuần tra, `x_wu`,`y_wu` là điểm neo đầu tiên; `patrol_path` ghi các waypoint và thứ tự.
 - `quantity` là tổng số actor/node trong bản ghi khi nhóm đầy đủ. `composition` nêu từng ID và số lượng; tổng số trong composition phải bằng `quantity`. Ví dụ: `MOB_DREAM_ROOT×3 + MOB_MOSS_BEAST×2` có `quantity=5`.
 - Một hàng nhóm có thể chứa nhiều loại quái. `entity_id` giữ danh sách ID duy nhất, phân cách bằng `|`; `spawn_group_id` là khóa instance của nhóm. Các lần xuất hiện của cùng boss có thể chia sẻ `entity_id` nhưng phải khác `spawn_group_id` hoặc `map_id`.

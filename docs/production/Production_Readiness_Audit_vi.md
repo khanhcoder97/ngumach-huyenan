@@ -1,11 +1,11 @@
 # RÀ SOÁT MỨC SẴN SÀNG SẢN XUẤT
-## Ngũ Mạch: Huyền Ấn — audit tài liệu v1.3 · 26-10-2026
+## Ngũ Mạch: Huyền Ấn — audit cập nhật 28-10-2026
 
 ### 1. Kết luận
 
-Bộ tài liệu hiện đã đạt mức **production-spec baseline để đội kỹ thuật, nội dung và AI agent bắt đầu triển khai toàn bộ phạm vi game đã định nghĩa**. Các luật liên hệ nhiều hệ thống đã được khóa; những miền từng thiếu dữ liệu có ID, schema, điều kiện, cap, quy tắc server và đầu vào import.
+**Chưa đủ để AI triển khai và hoàn thiện toàn game chỉ từ gói hiện tại mà không có thêm dữ liệu/thiết kế.** Tài liệu bao phủ phạm vi rộng nhưng runtime definitions mới có 1 class, 3 skill, 1 quest, 1 item, 1 map, 1 spawn và 1 node. Các catalogue mô tả không thay schema/data executable.
 
-Bộ tài liệu **không thể tự biến thành game hoàn chỉnh**. Đã có Unity/server/content-validation scaffold; chưa có scene gameplay, sprite sheets/tilemaps/VFX/audio pixel-art production, UI art cuối, server game chạy thật, playtest hoặc sign-off vận hành/pháp lý. Các mục này là sản xuất và phê duyệt sau đặc tả.
+Đọc `Production_Completion_Addendum_vi.md` và `Top_Down_Gameplay_World_Spec_vi.md` trước khi triển khai. DEC-016 chốt góc nhìn từ trên theo chủ dự án; 349 placements giữ ID nhưng chờ review top-down. Báo cáo bằng chứng và backlog tại `Production_Audit_20261028_vi.md`. Các bảng bên dưới là lịch sử baseline, không phải chứng nhận content lock hiện tại.
 
 ### 2. Đầu vào production đã được bổ sung
 
@@ -51,4 +51,4 @@ Bộ tài liệu **không thể tự biến thành game hoàn chỉnh**. Đã c�
 
 Bắt đầu/hoàn thiện P0 theo AI_Agent_Implementation_Plan_vi.md, gồm Pixel Perfect camera/import preset/smoke scene; sau đó làm vertical slice Bến Mưa. Dùng Production_Technical_Contracts_vi.md và CSV làm schema/import source. Trước khi mở rộng nội dung, ký duyệt map placements trong slice và đo performance trên PC/mobile mục tiêu. Sau đó triển khai P2–P5 theo release gates; khóa các phê duyệt bên ngoài trước alpha/release.
 
-**Phán định:** các gap tài liệu cho gameplay, mode PvP, passive, boss rotation, NPC archetype, pet/mount, life-sim, currency/reward, API contract và QA plan đã có baseline triển khai. Đội có thể bắt đầu build mà không cần tự phát minh luật cốt lõi. Game vẫn cần code, media, map review, cân bằng thực tế và quyết định của product/ops/legal trước khi hoàn tất hoặc phát hành.
+**Phán định cập nhật:** tiếp tục vertical slice có kiểm soát; chưa đạt content lock/P1 end-to-end/release. Các gate chờ nằm trong báo cáo 2026-10-28.

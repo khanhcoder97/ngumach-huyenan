@@ -3,7 +3,7 @@
 **Tài liệu thiết kế game (GDD) — bản nền v1.0**  
 Ngày lập: 22/10/2026  
 Tên hiện tại: **Ngũ Mạch: Huyền Ấn** (working title; chưa tra cứu/đăng ký nhãn hiệu)  
-Thể loại: MMORPG hành động 2D nhìn ngang, giả tưởng võ hiệp – huyền thuật  
+Thể loại: MMORPG hành động 2D nhìn từ trên, giả tưởng võ hiệp – huyền thuật
 Nền tảng: PC và điện thoại, dùng chung máy chủ/tài khoản  
 Ngôn ngữ phát hành đầu tiên: tiếng Việt
 

@@ -1,0 +1,3847 @@
+{
+  "coordinateSystem": "TOP_DOWN_XY",
+  "decision": "DEC-016",
+  "source": "docs/production/World_Spawn_Gathering_Manifest_vi.csv",
+  "sourceSha256": "e258961a5d978de5a5f098441f9359b7d92fb53aaba24d8807d6d8ab73e6a8e0",
+  "records": [
+    {
+      "recordId": "MAN-BM-NPC_LYAN",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "42",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-NPC_TA_VAN_KHANH",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "64",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-NPC_CLASS_TRIAL",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "188",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-NPC_FISHER_01",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "112",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-NPC_MEDIC_BEN",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "30",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-NPC_BOAT_KEEPER",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "343",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-NPC_BM_RESCUE_01",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "135",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-NPC_BM_RESCUE_02",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "148",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_LYAN",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "30",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_HA_MAC",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "155",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_GUARD_CAPTAIN",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "18",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_CLASS_TRIAL",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "186",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_MASTER_MINH_KIEM",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "218",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_MASTER_ANH_DAO",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "234",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_MASTER_HUYEN_BUT",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "250",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_MASTER_THACH_CHUY",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "266",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_MASTER_LINH_CUNG",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "282",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_BLACKSMITH",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "102",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_TRADER",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "72",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_VAN_NHU",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "124",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_GUILD_CLERK",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "309",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_TELEPORTER",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "339",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_TL_WITNESS_01",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "112",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_TL_WITNESS_02",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "203",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-NPC_TL_GUARD_RESCUE",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "190",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TL_GATEKEEPER_W",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "24",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TRADER",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "237",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TL_APOTHECARY",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "181",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TL_AUCTION_CLERK",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "316",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TL_BANKER",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "322",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_RELIC_MERCHANT",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "366",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_BLACKSMITH",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "409",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_VAN_NHU",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "455",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_ACTIVITY_STEWARD",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "548",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_RAID_KEEPER",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "566",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_ARENA_STEWARD",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "587",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_ARENA_REWARD_CLERK",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "599",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_GUILD_CLERK",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "636",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TL_BEAST_TENDER",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "673",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_HA_MAC",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "723",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_COURT_ARCHIVIST",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "758",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TL_GATEKEEPER_E",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "876",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TL_CIVILIAN_01",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "118",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TL_CIVILIAN_02",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "154",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TL_CIVILIAN_03",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "218",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TL_CIVILIAN_04",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "270",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TL_CIVILIAN_05",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "345",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TL_CIVILIAN_06",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "438",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TL_CIVILIAN_07",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "533",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TH-NPC_TL_CIVILIAN_08",
+      "mapId": "MAP_THANG_LONG",
+      "originalXY": [
+        "650",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-NPC_FOREMAN_MOC",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "72",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-NPC_WATER_KEEPER",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "324",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-NPC_HA_MAC",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "18",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-NPC_WOODCUTTER_01",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "88",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-NPC_MUSHROOMER",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "187",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-NPC_LT_MECHANIC",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "292",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NPC_SAM_CHU_QUY",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "26",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NPC_MEDIC_SA_HOA",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "82",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NPC_FORGE_MASTER",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "232",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NPC_HA_MAC",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "312",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NPC_CARAVAN_GUARD",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "43",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NPC_WATER_SELLER",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "110",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NPC_SH_WORKER_01",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "127",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NPC_SH_WORKER_02",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "136",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NPC_SH_WORKER_03",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "145",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NPC_SH_WORKER_04",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "154",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NPC_REFUGEE_LEADER",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "26",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NPC_CAPTAIN_TRAN_SON",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "57",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NPC_GUILD_SCOUT",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "114",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NPC_TONG_BANH",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "315",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NPC_SIEGE_CLERK",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "84",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NPC_REPAIRER",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "63",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NPC_TS_REFUGEE_A",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "66",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NPC_TS_REFUGEE_B",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "142",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NPC_TS_REFUGEE_C",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "232",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NPC_TS_ENVOY_01",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "118",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NPC_TS_ENVOY_02",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "146",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NPC_DIVER_LEAD",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "26",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NPC_HA_MAC",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "245",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NPC_PRESSURE_KEEPER",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "178",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NPC_RELIC_MERCHANT",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "42",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NPC_BY_DIVER_01",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "34",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NPC_BY_DIVER_02",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "46",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NPC_BY_DIVER_03",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "58",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NPC_BY_WITNESS_MINH_KIEM",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "214",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NPC_BY_WITNESS_ANH_DAO",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "226",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NPC_BY_WITNESS_HUYEN_BUT",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "238",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NPC_BY_WITNESS_THACH_CHUY",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "250",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NPC_BY_WITNESS_LINH_CUNG",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "262",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-NPC_LYAN",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "24",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-NPC_TA_VAN_KHANH",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "46",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-NPC_MASTER_MINH_KIEM",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "32",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-NPC_MASTER_ANH_DAO",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "40",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-NPC_MASTER_HUYEN_BUT",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "48",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-NPC_MASTER_THACH_CHUY",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "56",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-NPC_MASTER_LINH_CUNG",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "64",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-NPC_CO_VO_TUONG",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "312",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-NPC_RAID_KEEPER",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "329",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-NPC_LYAN",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "24",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-NPC_ACTIVITY_STEWARD",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "42",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-SPAWN_BM_01",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "84",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-SPAWN_BM_02",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "116",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-SPAWN_BM_03",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "143",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-SPAWN_BM_04",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "160",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-WAVE_BM_ESCORT_A",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "80",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-WAVE_BM_ESCORT_B",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "120",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-SPAWN_BM_05_QUEST",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "178",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-SPAWN_BM_06",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "270",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-SPAWN_BM_07",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "303",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-EVENT_BOSS_BM_MANG_COT",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "178",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-SPAWN_TL_TRIAL_01",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "143",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-SPAWN_TL_TRIAL_02",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "178",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-SPAWN_TL_ROOFTOP",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "300",
+        "8"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-SPAWN_TL_IMPOSTOR",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "300",
+        "8"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-SPAWN_TL_STATUES_A",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "142",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-SPAWN_TL_STATUES_B",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "188",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TL-EVENT_BOSS_TL_FLAME_SENTINEL",
+      "mapId": "MAP_THANH_LAC",
+      "originalXY": [
+        "178",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-SPAWN_LT_01",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "42",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-SPAWN_LT_02",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "103",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-SPAWN_LT_03",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "147",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-SPAWN_LT_04",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "209",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-SPAWN_LT_05_QUEST",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "231",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-SPAWN_LT_06",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "286",
+        "5"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-SPAWN_LT_07",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "337",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-WAVE_LT_QUEST_01",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "99",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-WAVE_LT_VALVE_A",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "310",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-WAVE_LT_VALVE_B",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "332",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-SPAWN_LT_MEMORY_ELITE",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "210",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-EVENT_BOSS_LT_ANCIENT_TREE",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "231",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-SPAWN_SH_01",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "75",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-SPAWN_SH_02",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "123",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-SPAWN_SH_03",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "174",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-SPAWN_SH_04",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "205",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-SPAWN_SH_05_QUEST",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "246",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-SPAWN_SH_06",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "305",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-WAVE_SH_CARAVAN_A",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "102",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-WAVE_SH_CARAVAN_B",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "132",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-SPAWN_SH_WATCHER",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "205",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-WAVE_SH_VALVE_A",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "222",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-WAVE_SH_VALVE_B",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "246",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-WAVE_SH_VALVE_C",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "270",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-EVENT_BOSS_SH_FURNACE",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "246",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-SPAWN_TS_01",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "94",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-SPAWN_TS_02",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "147",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-SPAWN_TS_03",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "215",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-SPAWN_TS_04",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "267",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-SPAWN_TS_05_QUEST",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "326",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-WAVE_TS_ESCORT_A",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "94",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-WAVE_TS_ESCORT_B",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "147",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-EVENT_BOSS_TS_TONG_BANH",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "326",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-SPAWN_BY_01",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "83",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-SPAWN_BY_02",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "117",
+        "7"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-SPAWN_BY_03",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "156",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-SPAWN_BY_04",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "222",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-SPAWN_BY_05_QUEST",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "322",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-SPAWN_BY_06",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "280",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-WAVE_BY_PRESSURE_A",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "145",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-WAVE_BY_PRESSURE_B",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "168",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-WAVE_BY_PRESSURE_C",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "191",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-EVENT_BOSS_BY_TIDE_SERPENT",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "322",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-SPAWN_VM_01",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "83",
+        "3"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-SPAWN_VM_02",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "137",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-WAVE_VM_PILLAR_1",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "162",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-WAVE_VM_PILLAR_2",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "182",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-WAVE_VM_PILLAR_3",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "202",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-SPAWN_VM_04",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "258",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-SPAWN_VM_05_QUEST",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "312",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-SPAWN_VM_06",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "211",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-WAVE_VM_CLASS_TRIAL_1",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "244",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-WAVE_VM_CLASS_TRIAL_2",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "260",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-WAVE_VM_CLASS_TRIAL_3",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "276",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_KIM_N1",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "65",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_KIM_N2",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "83",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_KIM_N3",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "101",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_KIM_ELITE",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "83",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_KIM_MINIBOSS",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "83",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_MOC_N1",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "118",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_MOC_N2",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "136",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_MOC_N3",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "154",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_MOC_ELITE",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "136",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_MOC_MINIBOSS",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "136",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_THUY_N1",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "173",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_THUY_N2",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "191",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_THUY_N3",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "209",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_THUY_ELITE",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "191",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_THUY_MINIBOSS",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "191",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_HOA_N1",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "228",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_HOA_N2",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "246",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_HOA_N3",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "264",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_HOA_ELITE",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "246",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_HOA_MINIBOSS",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "246",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_THO_N1",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "283",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_THO_N2",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "301",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_THO_N3",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "319",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_THO_ELITE",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "301",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-SPAWN_DNM_THO_MINIBOSS",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "301",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-NODE_BM_ORE_01",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "21",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-NODE_BM_HERB_01",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "76",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-NODE_BM_WOOD_01",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "94",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-NODE_BM_ORE_02",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "88",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-NODE_BM_HERB_02",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "132",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-NODE_LT_ORE_01",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "23",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-NODE_LT_HERB_01",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "139",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-NODE_LT_WOOD_01",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "82",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-NODE_LT_HERB_02",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "187",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-NODE_LT_ORE_02",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "178",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NODE_SH_ORE_01",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "82",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NODE_SH_HERB_01",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "169",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NODE_SH_ORE_02",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "128",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NODE_SH_HERB_02",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "194",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-SH-NODE_SH_ORE_03",
+      "mapId": "MAP_SA_HOA",
+      "originalXY": [
+        "289",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NODE_TS_ORE_01",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "74",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NODE_TS_WOOD_01",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "28",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NODE_TS_ORE_02",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "148",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NODE_TS_WOOD_02",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "203",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TS-NODE_TS_ORE_03",
+      "mapId": "MAP_TRAN_SON",
+      "originalXY": [
+        "278",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NODE_BY_ORE_01",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NODE_BY_HERB_01",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "67",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NODE_BY_HERB_02",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "185",
+        "5"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NODE_BY_ORE_02",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "249",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-NODE_BY_HERB_03",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "220",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-NODE_VM_ORE_01",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "81",
+        "3"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-NODE_VM_HERB_01",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "124",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-NODE_VM_HERB_02",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "193",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-NODE_VM_ORE_02",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "258",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-NODE_VM_HERB_03",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "241",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-NODE_DNM_ORE_KIM",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "80",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-NODE_DNM_HERB_MOC",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "140",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-NODE_DNM_WOOD_MOC",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "150",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-NODE_DNM_HERB_HOA",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "248",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-NODE_DNM_ORE_THO",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "302",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TSS-SIEGE_BLUE_ENGINE_A",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "66",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TSS-SIEGE_BLUE_ENGINE_B",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TSS-SIEGE_RED_ENGINE_A",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "294",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TSS-SIEGE_RED_ENGINE_B",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "320",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TSS-SIEGE_WEST_NPC_GUARD",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "72",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TSS-SIEGE_EAST_NPC_GUARD",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "288",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG01-DG01_WAVE_VAN_A",
+      "mapId": "MAP_DG_01",
+      "originalXY": [
+        "72",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG01-DG01_WAVE_VAN_B",
+      "mapId": "MAP_DG_01",
+      "originalXY": [
+        "190",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG01-DG01_TEN_CARVINGS",
+      "mapId": "MAP_DG_01",
+      "originalXY": [
+        "112",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG01-DG01_TEN_CARVINGS_2",
+      "mapId": "MAP_DG_01",
+      "originalXY": [
+        "246",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG01-DG01_BOSS_YOUNG_TREE",
+      "mapId": "MAP_DG_01",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG02-DG02_WAVE_1",
+      "mapId": "MAP_DG_02",
+      "originalXY": [
+        "70",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG02-DG02_WAVE_2",
+      "mapId": "MAP_DG_02",
+      "originalXY": [
+        "145",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG02-DG02_WAVE_3",
+      "mapId": "MAP_DG_02",
+      "originalXY": [
+        "240",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG02-NPC_DG02_WORKER_01",
+      "mapId": "MAP_DG_02",
+      "originalXY": [
+        "58",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG02-NPC_DG02_WORKER_02",
+      "mapId": "MAP_DG_02",
+      "originalXY": [
+        "128",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG02-NPC_DG02_WORKER_03",
+      "mapId": "MAP_DG_02",
+      "originalXY": [
+        "198",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG02-NPC_DG02_WORKER_04",
+      "mapId": "MAP_DG_02",
+      "originalXY": [
+        "268",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG02-DG02_BOSS_ASH_FURNACE",
+      "mapId": "MAP_DG_02",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG03-DG03_FALSE_ORDER",
+      "mapId": "MAP_DG_03",
+      "originalXY": [
+        "84",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG03-DG03_FALSE_ORDER_WAVE",
+      "mapId": "MAP_DG_03",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG03-DG03_ESCORT_ENEMIES",
+      "mapId": "MAP_DG_03",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG03-DG03_BOSS_SIEGE_ENGINE",
+      "mapId": "MAP_DG_03",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG04-DG04_PRESSURE_ROOM_A",
+      "mapId": "MAP_DG_04",
+      "originalXY": [
+        "82",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG04-DG04_PRESSURE_ROOM_B",
+      "mapId": "MAP_DG_04",
+      "originalXY": [
+        "240",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG04-DG04_TIDE_WAVE",
+      "mapId": "MAP_DG_04",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DG04-DG04_BOSS_YOUNG_SERPENT",
+      "mapId": "MAP_DG_04",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-RD01-RD01_PRESSURE_WAVE_1",
+      "mapId": "MAP_RD_01",
+      "originalXY": [
+        "60",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-RD01-RD01_PRESSURE_WAVE_2",
+      "mapId": "MAP_RD_01",
+      "originalXY": [
+        "150",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-RD01-RD01_PRESSURE_WAVE_3",
+      "mapId": "MAP_RD_01",
+      "originalXY": [
+        "240",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-RD01-RD01_PRESSURE_WAVE_4",
+      "mapId": "MAP_RD_01",
+      "originalXY": [
+        "300",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-RD01-RD01_RIFT_ADDS",
+      "mapId": "MAP_RD_01",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-RD01-RD01_BOSS_PRESSURE_HEART",
+      "mapId": "MAP_RD_01",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-RD02-RD02_PILLAR_WAVES",
+      "mapId": "MAP_RD_02",
+      "originalXY": [
+        "182",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-RD02-RD02_ROLE_ADDS",
+      "mapId": "MAP_RD_02",
+      "originalXY": [
+        "182",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-RD02-RD02_BOSS_COSM",
+      "mapId": "MAP_RD_02",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA01-TOWER_F21_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F01",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA01-TOWER_F21_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F01",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA02-TOWER_F22_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F02",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA02-TOWER_F22_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F02",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA03-TOWER_F23_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F03",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA03-TOWER_F23_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F03",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA04-TOWER_F24_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F04",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA04-TOWER_F24_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F04",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA05-TOWER_F25_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F05",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA05-TOWER_F25_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F05",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA05-TOWER_F25_BOSS",
+      "mapId": "MAP_LAC_AN_TOWER_F05",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA06-TOWER_F26_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F06",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA06-TOWER_F26_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F06",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA07-TOWER_F27_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F07",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA07-TOWER_F27_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F07",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA08-TOWER_F28_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F08",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA08-TOWER_F28_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F08",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA09-TOWER_F29_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F09",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA09-TOWER_F29_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F09",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA10-TOWER_F10_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F10",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA10-TOWER_F10_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F10",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA10-TOWER_F10_BOSS",
+      "mapId": "MAP_LAC_AN_TOWER_F10",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA11-TOWER_F11_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F11",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA11-TOWER_F11_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F11",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA12-TOWER_F12_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F12",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA12-TOWER_F12_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F12",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA13-TOWER_F13_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F13",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA13-TOWER_F13_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F13",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA14-TOWER_F14_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F14",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA14-TOWER_F14_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F14",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA15-TOWER_F15_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F15",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA15-TOWER_F15_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F15",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA15-TOWER_F15_BOSS",
+      "mapId": "MAP_LAC_AN_TOWER_F15",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA16-TOWER_F16_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F16",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA16-TOWER_F16_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F16",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA17-TOWER_F17_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F17",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA17-TOWER_F17_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F17",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA18-TOWER_F18_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F18",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA18-TOWER_F18_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F18",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA19-TOWER_F19_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F19",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA19-TOWER_F19_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F19",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA20-TOWER_F20_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F20",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA20-TOWER_F20_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F20",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA20-TOWER_F20_BOSS",
+      "mapId": "MAP_LAC_AN_TOWER_F20",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA21-TOWER_F21_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F21",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA21-TOWER_F21_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F21",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA22-TOWER_F22_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F22",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA22-TOWER_F22_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F22",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA23-TOWER_F23_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F23",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA23-TOWER_F23_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F23",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA24-TOWER_F24_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F24",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA24-TOWER_F24_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F24",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA25-TOWER_F25_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F25",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA25-TOWER_F25_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F25",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA25-TOWER_F25_BOSS",
+      "mapId": "MAP_LAC_AN_TOWER_F25",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA26-TOWER_F26_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F26",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA26-TOWER_F26_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F26",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA27-TOWER_F27_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F27",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA27-TOWER_F27_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F27",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA28-TOWER_F28_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F28",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA28-TOWER_F28_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F28",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA29-TOWER_F29_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F29",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA29-TOWER_F29_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F29",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA30-TOWER_F30_PACK_A",
+      "mapId": "MAP_LAC_AN_TOWER_F30",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA30-TOWER_F30_PACK_B",
+      "mapId": "MAP_LAC_AN_TOWER_F30",
+      "originalXY": [
+        "255",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-TA30-TOWER_F30_BOSS_SOCKET",
+      "mapId": "MAP_LAC_AN_TOWER_F30",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BM-FISHING-LINH",
+      "mapId": "MAP_BEN_MUA",
+      "originalXY": [
+        "132",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-FISHING-MACH",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "185",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-DNM-FISHING-TRO",
+      "mapId": "MAP_DAI_NGU_MACH",
+      "originalXY": [
+        "240",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-LT-FISHING-RE",
+      "mapId": "MAP_LAM_TRIEU",
+      "originalXY": [
+        "158",
+        "-3"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BY-FISHING-BANG",
+      "mapId": "MAP_BACH_UYEN",
+      "originalXY": [
+        "168",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-VM-FISHING-VUC",
+      "mapId": "MAP_VUC_NGHICH_MACH",
+      "originalXY": [
+        "182",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BG10-SPAWN-BLUE",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "28",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BG10-SPAWN-RED",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "332",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BG10-POINT-W",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "92",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BG10-POINT-M",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "180",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BG10-POINT-E",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "268",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BG10-RELIC-ALTAR",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "180",
+        "7"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BG10-HOME-BLUE",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "40",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BG10-HOME-RED",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "320",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BG10-FLANK-W",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "132",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    },
+    {
+      "recordId": "MAN-BG10-FLANK-E",
+      "mapId": "MAP_TRAN_SON_SIEGE",
+      "originalXY": [
+        "228",
+        "0"
+      ],
+      "reviewState": "TOPDOWN_REVIEW_REQUIRED",
+      "approvedXY": null,
+      "floorId": null
+    }
+  ]
+}

@@ -1,6 +1,9 @@
 # ĐẶC TẢ SẢN XUẤT MAP THĂNG LONG THÀNH
 ## Ngũ Mạch: Huyền Ấn — trung tâm đô hội và cửa ngõ liên vùng v1.0
 
+> DEC-016 (2026-10-28): áp dụng `Top_Down_Gameplay_World_Spec_vi.md`. Các bảng kích thước/placement cũ là blockout chưa nghiệm thu top-down. Y luôn là Bắc–Nam trên mặt đất. “Platform” là bệ/cầu/vùng an toàn có đường đi hoặc floor link, không yêu cầu nhảy; chiều cao silhouette/capsule cũ không dùng làm collider. ID được giữ; không tự chuyển tọa độ cũ thành độ cao.
+
+
 ### 1. Vai trò trong game
 
 **Thăng Long Thành** (`MAP_THANG_LONG`) là thủ phủ, chợ lớn và điểm tập trung xã hội của Ngũ Mạch. Đây là map an toàn, lớn nhất game; người chơi gặp nhau, mua/bán, gửi đồ, nhận truy nã, rèn/nâng cấp, quản lý bang, tìm nhóm hoạt động và tham gia Giải Đấu Trường Long Môn hàng tuần. Thành cũng là điểm điều phối dịch chuyển đến các vùng đã mở.
@@ -12,9 +15,9 @@ Ngôn ngữ hình ảnh là pixel art fantasy Việt cổ nguyên bản: tườn
 ### 2. Kích thước, camera và chia vùng tải
 
 - Kích thước graybox: **900×96 WU** (450×48m), rộng gấp 2,5 lần vùng 360 WU thường và là map lớn nhất.
-- Hệ trục dùng chuẩn Atlas: sàn chính `Y=0`, props/player/NPC đặt theo tọa độ tâm; camera 32 WU ngang, 18 WU cao ở 16:9.
+- Hệ trục dùng chuẩn Atlas: `Y=0` là đường tham chiếu trên mặt đất, player/NPC đặt theo pivot chân; camera 32 WU ngang, 18 WU cao ở 16:9.
 - Chia streaming thành 3 cell liền mạch: `THANG_LONG_CELL_WEST x=0..299`, `THANG_LONG_CELL_CENTER x=300..599`, `THANG_LONG_CELL_EAST x=600..899`. Tải trước cell kế tiếp khi người chơi cách biên 40 WU; seamless, không có màn chờ hoặc chặn camera.
-- Mọi tương tác dùng khoảng cách tối đa 5 WU; lối chính rộng tối thiểu 10 WU, tuyến xe hàng rộng 14 WU. Tối đa 2 tầng platform gameplay trong một khung; mái nhà chủ yếu là silhouette nền.
+- Mọi tương tác dùng khoảng cách tối đa 5 WU; lối chính rộng tối thiểu 10 WU, tuyến xe hàng rộng 14 WU. Cầu chồng đường dùng floorId; mái nhà có chế độ che khuất để luôn thấy actor và telegraph.
 - Entry lần đầu tại `(24,0)`; điểm hồi sinh an toàn `(520,0)` ở quảng trường trung tâm. Không spawn quái ngoài instance.
 - Để giữ độ rộng mà không buộc người chơi chạy qua 28 màn camera mỗi lần đổi dịch vụ, bản đồ có xe điện/cổng dẫn lộ an toàn miễn phí tại `CITYROUTE_THANG_LONG_WEST=(24,0)`, `CITYROUTE_THANG_LONG_MARKET=(237,0)`, `CITYROUTE_THANG_LONG_EXCHANGE=(316,0)`, `CITYROUTE_THANG_LONG_FORGE=(409,0)`, `CITYROUTE_THANG_LONG_PLAZA=(520,0)`, `CITYROUTE_THANG_LONG_GUILD=(636,0)`, `CITYROUTE_THANG_LONG_ARCHIVE=(758,0)`, `CITYROUTE_THANG_LONG_EAST=(876,0)`. Mini-map chọn một điểm đã khám phá, fade 0,4s; không hoạt động trong PvP/instance/escort. Đây là route nội thành, không mở map ngoài hay bỏ quest.
 

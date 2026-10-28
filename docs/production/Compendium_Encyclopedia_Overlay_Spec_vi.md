@@ -5,7 +5,7 @@
 
 Bách khoa Lạc Châu là sổ tra cứu kiến thức trong game, mở được từ menu chính/HUD, nhật ký nhiệm vụ, bản đồ, item tooltip, bestiary và NPC chức năng. Cửa sổ giúp người chơi tìm vật phẩm, nhiệm vụ, boss, quái, kỹ năng và địa điểm; giải thích cách dùng và nguồn sở hữu; điều hướng sang hệ thống tương ứng nếu đã mở khóa. Đây là lớp tra cứu và điều hướng: chọn kết quả không tự mua, dùng, rèn, nhận thưởng hay tiêu vật phẩm.
 
-Đây là dự án Ngũ Mạch: Huyền Ấn, hình ảnh fantasy võ hiệp pixel-art 2D ngang theo `Pixel_Art_Production_Standard_vi.md`; không sao chép UI, dữ liệu hay asset từ KPAH. Tên item, phẩm chất, nghề, lớp, map và ID phải lấy từ content registry của game. Nguồn chuẩn hiện có:
+Đây là dự án Ngũ Mạch: Huyền Ấn, hình ảnh fantasy võ hiệp pixel-art 2D nhìn từ trên theo `Pixel_Art_Production_Standard_vi.md`; không sao chép UI, dữ liệu hay asset từ KPAH. Tên item, phẩm chất, nghề, lớp, map và ID phải lấy từ content registry của game. Nguồn chuẩn hiện có:
 
 - Item và phẩm chất: `Item_Master_Catalog_vi.csv`, `Item_Rarity_Variant_Catalog_vi.csv`, `Item_Catalog_and_Set_Bible_vi.md`.
 - Nhiệm vụ và diễn biến: `Quest_and_Narrative_Production_Spec_vi.md`, `Content_Bible_Ngu_Mach_Huyen_An_vi.md`.

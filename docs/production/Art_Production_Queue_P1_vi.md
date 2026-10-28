@@ -1,12 +1,15 @@
 # ART PRODUCTION QUEUE — VERTICAL SLICE BẾN MƯA
 
+
+> DEC-016 (2026-10-28): áp dụng `Top_Down_Gameplay_World_Spec_vi.md`. Các bảng kích thước/placement cũ là blockout chưa nghiệm thu top-down. Y luôn là Bắc–Nam trên mặt đất. “Platform” là bệ/cầu/vùng an toàn có đường đi hoặc floor link, không yêu cầu nhảy; chiều cao silhouette/capsule cũ không dùng làm collider. ID được giữ; không tự chuyển tọa độ cũ thành độ cao.
+
 ## 1. Mục đích và nguồn chuẩn
 
 Tài liệu này chuyển art bible thành một gói sản xuất có thứ tự cho P1. Đây là queue quản lý và nghiệm thu, không thay thế source art, sprite atlas hay animation clip. Quyết định màu sắc, tỷ lệ, layer, budget và naming lấy từ `Art_Entity_Weather_UI_Visual_Bible_vi.md`; gameplay cue lấy từ `Combat_Skills_VFX_Animation_Spec_vi.md`; ID/map/placement lấy từ Map Atlas và `World_Spawn_Gathering_Manifest_vi.csv`.
 
 **Art lock:** pixel-art 2D frame-based cho fantasy võ hiệp huyền thuật Lạc Châu nguyên bản; dùng logical 640×360, 20 PPU, integer scale, point filtering, lossless sprite import và pixel-snapped camera. Tham chiếu chibi kiếm sĩ người dùng gửi ngày 2026-10-26; không sao chép cụ thể nhân vật/huy hiệu. Không trích xuất/tái tạo asset nhận diện từ KPAH/JAR. UI và telegraph không dùng màu làm tín hiệu duy nhất. Chi tiết ở `Pixel_Art_Production_Standard_vi.md`.
 
-**Đơn vị:** 1 WU = 0,5 m; hero bounds cao 5 WU, capsule cao 3,6 WU; sprite nguồn khoảng 100 px ở 20 PPU, hiển thị khoảng 300 px ở 1080p scale 3×. Tile nền 16×16 px; placement data tiếp tục ghi WU. NPC/actor đứng sàn tại Y=0 trừ khi placement chỉ rõ platform. Animation không điều khiển vị trí authoritative của server.
+**Đơn vị:** 1 WU = 0,5 m; hero cell 48×64 px, footprint capsule ngang 1,2×0,6 WU; sprite nguồn cao tối đa 64 px ở 20 PPU, hiển thị tối đa 192 px ở 1080p scale 3×. Tile nền 16×16 px; placement data tiếp tục ghi WU. NPC/actor dùng pivot chân tại XY trên mặt đất; floorId riêng nếu cầu chồng đường. Animation không điều khiển vị trí authoritative của server.
 
 **Open design issue:** tiêu chí P1 yêu cầu boss có tối thiểu 3 đòn telegraph; hồ sơ Mãng Cốt hiện mô tả quét thân và lặn/trồi nhưng chưa định nghĩa rõ đòn thứ ba. Phương án art/gameplay đề xuất để duyệt là quét đuôi thấp thành cung ngang, cue hình vòng/cung + tiếng rít trước 0,9s, không hất người chơi khỏi arena. Đây chỉ là đề xuất; animation/VFX cho đòn này giữ `BLOCKED_DESIGN_APPROVAL`, không coi là cơ chế đã khóa.
 
@@ -16,7 +19,7 @@ Thứ tự khóa phụ thuộc P1: (1) camera/scale test và hero Minh Kiếm; (
 
 | Queue | Gói art | Deliverable cần bàn giao | Phụ thuộc / nghiệm thu |
 |---|---|---|---|
-| ART-P1-001 | Pixel scale/camera calibration | scene test 640×360 logical; hero 5 WU/100px, enemy 4 WU/80px, boss 15 WU/300px; output 720p/1080p/1440p | integer scale, no blur/bleed/shimmer; gameplay không lộ pixel crop bất công |
+| ART-P1-001 | Pixel scale/camera calibration | scene test 640×360 logical; hero cell 3,2 WU/64px, enemy 4 WU/80px, boss 15 WU/300px; output 720p/1080p/1440p | integer scale, no blur/bleed/shimmer; gameplay không lộ pixel crop bất công |
 | ART-P1-002 | Hero Minh Kiếm | pixel character sheet front/side/back, palette/face/hair/weapon; sprite layers/variants, pixel anchors; source + atlas page tối đa 1024² | idle silhouette, team/target outline pixel overlay; dễ đọc nền sáng/tối; concept art pixel được duyệt |
 | ART-P1-003 | Hero combat clips | sprite sheets idle/run/jump/fall/land/hurt/death/interact/combo 3 hit/dodge/SK-MK-01/02/03 | frame art khớp timing spec; event không gây damage; pivot ổn định; né giữ silhouette suốt clip |
 | ART-P1-004 | Vũ khí/ngoại hình starter | `EQ-MK-WEAPON-T1`, `EQ-MK-CHEST-T1`, `COS-CLOAK-01`, `COS-WP-01` | thay được weapon/body layer; icon item tách actor render; không đổi hitbox/animation |

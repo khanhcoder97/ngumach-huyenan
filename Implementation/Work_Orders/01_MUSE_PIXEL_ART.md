@@ -31,12 +31,12 @@ Không sửa C# runtime, server, contracts, schema hoặc `docs/production/`.
 
 ### MUSE-02: Nhân vật chơi được
 
-Tạo prototype nhân vật gốc `hero_vanguard`:
+Tạo prototype nhân vật gốc `CLASS_MINH_KIEM` (asset prefix `minh_kiem`):
 
 - Sheet 8 hướng, frame 48×64 px, 20 PPU.
 - Idle: 4 frame/hướng, walk: 6 frame/hướng, run: 8 frame/hướng.
 - Combat: attack_01 6 frame, hurt 3 frame, cast 6 frame, death 6 frame; tối thiểu hướng S/E/N/W trong đợt đầu, sau đó hoàn thiện 8 hướng.
-- Bộ áo giáp lam than, viền vàng cũ, áo choàng ngắn; tuyệt đối không mô phỏng sprite hay thiết kế cụ thể từ ảnh tham khảo.
+- Tạo hình đúng DEC-015: tóc xanh gai, áo choàng đỏ, áo teal và kiếm vàng; tuyệt đối không mô phỏng sprite hay thiết kế cụ thể từ ảnh tham khảo.
 - Tạo animation event sheet: frame đánh trúng, frame bật VFX, frame kết thúc recovery.
 
 ### MUSE-03: Thăng Long Thành
@@ -73,3 +73,7 @@ Tuân thủ `Implementation/Asset_Handoff/GITHUB_COLLABORATION.md`: làm trên b
 - `Client/Assets/ArtManifests/muse_integration_notes.md` ghi asset nào thay thế placeholder nào.
 - Không ghi đè prefab/scene của Unity client workstream.
 
+
+## Cập nhật 2026-10-28
+
+Đã có walk Minh Kiếm (PR #17). Ưu tiên tiếp theo: blockout Bến Mưa theo DEC-016/top-down XY; bổ sung idle/combat sau khi chốt timing server. Được duy trì builder/demo hiện có trên máy ảo Unity, bàn giao log exact SHA và video; không tự đổi server/network contract. Thăng Long tiếp tục trong backlog art, áp dụng topology nhìn từ trên.

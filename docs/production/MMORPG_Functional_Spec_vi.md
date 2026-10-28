@@ -3,7 +3,7 @@
 
 ### 1. Phạm vi và nguyên tắc
 
-Định nghĩa chức năng bắt buộc của MMORPG 2D ngang PC/mobile: tạo nhân vật, vào thế giới nhiều người, chiến đấu, làm nhiệm vụ, phát triển nhân vật, giao dịch, chơi cùng nhóm/bang và tham gia hoạt động. Kinh tế, combat, quest và quyền truy cập do server quyết định.
+Định nghĩa chức năng bắt buộc của MMORPG 2D nhìn từ trên PC/mobile: tạo nhân vật, vào thế giới nhiều người, chiến đấu, làm nhiệm vụ, phát triển nhân vật, giao dịch, chơi cùng nhóm/bang và tham gia hoạt động. Kinh tế, combat, quest và quyền truy cập do server quyết định.
 
 Mức ưu tiên: **P0** bắt buộc cho vertical slice/alpha; **P1** cần cho launch; **P2** có thể thêm sau nhưng chuẩn bị data/API; **Cấu hình** chỉnh qua server config/live ops.
 
@@ -14,7 +14,7 @@ Mức ưu tiên: **P0** bắt buộc cho vertical slice/alpha; **P1** cần cho 
 | Tài khoản | đăng nhập, chọn server, session, đăng xuất, reconnect | P0 | account service |
 | Nhân vật | tạo/chọn/xóa có thời gian chờ, tên, lớp, diện mạo, 4 slot | P0 | character service |
 | Thế giới | map, shard/kênh, chuyển vùng, teleport, hồi sinh | P0 | world/zone |
-| Điều khiển | đi, nhảy, rơi, tương tác, camera, tay cầm | P0 | server xác thực movement |
+| Điều khiển | đi 8 hướng, né, tương tác, camera, tay cầm | P0 | server xác thực movement |
 | Combat | đánh thường, 6 skill, né, tài nguyên lớp, target, aggro, status, death | P0 | combat authority |
 | PvE | quái thường/elite/boss, loot, party contribution, respawn | P0 | world/combat/loot |
 | Quest | main/side/daily/weekly/class/guild, dialogue, objective, reward | P0 | quest authority |
@@ -44,9 +44,9 @@ Mức ưu tiên: **P0** bắt buộc cho vertical slice/alpha; **P1** cần cho 
 
 ### 4. Thế giới, di chuyển và vùng
 
-**Movement:** client gửi input intent tối đa 20Hz; server kiểm tốc độ, nhảy, collision, platform, knockback. Client dự đoán chuyển động của mình rồi hòa giải; người khác được nội suy. Không chấp nhận client ghi trực tiếp tọa độ. Anti-cheat đánh dấu velocity/teleport bất thường để xem xét, không tự xóa nhân vật.
+**Movement:** client gửi input intent tối đa 20Hz; server kiểm tốc độ XY, collision trên mặt đất, knockback và vùng đi được. Client dự đoán chuyển động của mình rồi hòa giải; người khác được nội suy. Không chấp nhận client ghi trực tiếp tọa độ. Anti-cheat đánh dấu velocity/teleport bất thường để xem xét, không tự xóa nhân vật.
 
-**Zone/map:** dữ liệu gồm MapID, bounds, layers, platform/collision, portals, NPC anchors, spawn groups, weather profile, encounter sockets. Nhiều shard/kênh mỗi vùng; đổi kênh chỉ ở hub; leader có thể mời party theo nếu encounter cho phép. Teleport cần điểm đích đã mở, không combat/raid; lưu nhân vật trước khi đổi map.
+**Zone/map:** dữ liệu gồm MapID, bounds, layers, walkable polygons/collision, floor links, portals, NPC anchors, spawn groups, weather profile, encounter sockets. Nhiều shard/kênh mỗi vùng; đổi kênh chỉ ở hub; leader có thể mời party theo nếu encounter cho phép. Teleport cần điểm đích đã mở, không combat/raid; lưu nhân vật trước khi đổi map.
 
 **Death:** HP=0 vào downed 15s trong PvE nhóm; đồng minh hồi sinh; solo về checkpoint. Sau hồi sinh có 2s movement safety nhưng không miễn nhiễm tấn công. Death không rơi item, không giảm durability. Rules boss/checkpoint theo Activities Spec.
 
