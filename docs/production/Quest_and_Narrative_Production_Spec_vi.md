@@ -22,7 +22,7 @@ Tài liệu sản xuất cho narrative, quest scripting, localization và quest 
 | P00-02 Chuông không người | NPC_TA_VAN_KHANH | kiểm 3 gợn nước; hạ 4 Cá Linh; quay lại báo cáo | chuông vang từ dưới hồ, không có âm thanh trên bờ | quái respawn; thưởng XP/thuốc; mở khóa minimap/target |
 | P00-03 Dưới mặt đầm | NPC_LYAN | phá 3 Rễ Nước; tương tác 2 dân mắc kẹt; né một đợt sóng | một dân nói bóng dưới hồ giống nhân vật | chết hồi tại Bến Gỗ; dân được cứu giữ trạng thái; giày/thuốc; mở P00-04 |
 | P00-04 Người giữ bờ | NPC_TA_VAN_KHANH | hộ tống Ly An qua checkpoint x=80 và x=120; hạ 2 đợt 3 quái | Ly An thấy phù sáp trong thư tự rạn; người chơi học đánh khi bảo vệ NPC | escort reset về checkpoint gần nhất; XP, 30 Đồng, thuốc; mở boss |
-| P00-05 Mảnh ấn đầu tiên | NPC_TA_VAN_KHANH tại Đầm Chuông | vào boss ring; hạ Mãng Cốt; tương tác mảnh ấn; chọn môn phái ở NPC_CLASS_TRIAL | mảnh ấn gọi tên “Huyền Ấn”; Tạ Vân Khanh che giấu một ký ức | boss reset khi cả đội rời; vũ khí lớp EQ-[CLASS]-WEAPON-T1-R-COMMON, mở Thanh Lạc/Chương I |
+| P00-05 Mảnh ấn đầu tiên | NPC_TA_VAN_KHANH tại Đầm Chuông | vào boss ring; hạ Mãng Cốt; tương tác mảnh ấn; xác nhận môn phái đã chọn ở NPC_CLASS_TRIAL | mảnh ấn gọi tên “Huyền Ấn”; Tạ Vân Khanh che giấu một ký ức | boss reset khi cả đội rời; vũ khí lớp EQ-[CLASS]-WEAPON-T1-R-COMMON, mở Thanh Lạc/Chương I |
 
 ### Chương I — Năm lời thề (cấp 11–20)
 
@@ -190,9 +190,13 @@ Mỗi dòng là một quest nhỏ độc lập; mục tiêu có checkpoint, thư
 
 ## 5. Quest acceptance / failure
 
-- Escort NPC không thể đi xa hơn camera + 12m; khi rơi khỏi đường, snap tới checkpoint có animation.
+- Escort NPC không thể đi xa hơn camera + 12m; khi kẹt path top-down, quay về checkpoint hợp lệ bằng recovery có animation.
 - Quái quest có icon riêng và respawn 20s sau khi chết; người chơi cùng party chia tiến độ nếu ở trong 35m.
 - Item quest nằm trong quest pouch, không chiếm túi và không thể bán/phân giải.
 - Boss solo/party có vùng báo đòn rõ; nếu người chơi rời encounter quá 60s, tiến độ boss reset nhưng quest không mất.
 - Raid quest progress tính theo clear; người disconnect có thể nhận clear nếu reconnect trước khi boss chết + 60s và đã tham gia encounter tối thiểu 30%.
 - Thưởng one-time quest dùng unique transaction id. Quest daily/weekly dùng reset bucket server-side.
+
+## Biên tập narrative v2
+
+Narrative_Depth_and_Discovery_vi.md và Narrative_Quest_Beats_v2.json bổ sung clue/câu hỏi/hành động/payoff cho đủ76 quest. Quest_Dialogue_Production_Data_vi.csv còn là baseline executable graph/text; lời thoại mẫu không được thu voice như final copy. Video có subtitle riêng từ Cinema_Production_Pack_v1.json, không ghi đè speaker/graph ID cũ. Mọi bổ sung anchor/flag mới phải review trước runtime.

@@ -150,3 +150,11 @@ Các mục sau có giá trị đề xuất để xây slice; nhà sản xuất c
 5. ../../Implementation/Content/DesignBaselines/level_progression_v1.json — bảng100 cấp, EXP và point budget.
 
 Các tài liệu mới xác định hành vi cần xây dựng; audit runtime vẫn chưa đạt full game. Chỉ cập nhật trạng thái đó khi có record/asset/implementation và evidence tương ứng.
+
+### Narrative v2 / cinema (DEC-018)
+
+- Narrative_Depth_and_Discovery_vi.md: canon/timeline/reveal gates, character arcs, chapter story, exploration và cinematic policy.
+- Cinema_Muse_Directors_Pack_vi.md: đạo diễn, storyboard opening, audio/subtitle/continuity, prompt workflow và nghiệm thu.
+- ../../Implementation/Content/Narrative/Narrative_Quest_Beats_v2.json: 76/76 quest có clue, câu hỏi, player agency và payoff riêng.
+- ../../Implementation/Content/Narrative/Cinema_Production_Pack_v1.json: 20 cảnh/63 prompt shot6giây, dialogue, trigger, spoiler guard, fallback và delivery owner Muse.
+- ../../Implementation/Tools/validate_narrative.py: kiểm coverage, refs, scene/shot IDs và duration; không chứng nhận chất lượng video hoặc canon bằng máy.
