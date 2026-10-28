@@ -11,6 +11,7 @@ using UnityEngine;
 public sealed class PlayerController2D : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 3.2f;
+    [SerializeField] private float runSpeedMultiplier = 1.6f;
 
     private Rigidbody2D body;
     private Vector2 moveInput;
@@ -19,6 +20,9 @@ public sealed class PlayerController2D : MonoBehaviour
     public Vector2 FacingDirection { get; private set; } = Vector2.down;
 
     public bool IsMoving => moveInput.sqrMagnitude > 0.0001f;
+
+    /// <summary>True while a Shift key is held (run modifier).</summary>
+    public bool IsRunning { get; private set; }
 
     private void Awake()
     {
@@ -33,13 +37,16 @@ public sealed class PlayerController2D : MonoBehaviour
         if (moveInput.sqrMagnitude > 1f)
             moveInput.Normalize();
 
+        IsRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
         if (IsMoving)
             FacingDirection = SnapTo8(moveInput);
     }
 
     private void FixedUpdate()
     {
-        body.velocity = moveInput * moveSpeed;
+        float speed = moveSpeed * (IsRunning ? runSpeedMultiplier : 1f);
+        body.velocity = moveInput * speed;
     }
 
     private static Vector2 SnapTo8(Vector2 v)
