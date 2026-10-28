@@ -26,6 +26,26 @@ public sealed class MoveIntent
     public string? ClientTimeUtc { get; init; }
 }
 
+public sealed class CombatEnvelope
+{
+    public int? SchemaVersion { get; init; }
+    public string? RequestId { get; init; }
+    public string? IdempotencyKey { get; init; }
+    public string? SentAtUtc { get; init; }
+    public string? CharacterId { get; init; }
+    public CombatIntent? Payload { get; init; }
+}
+
+public sealed class CombatIntent
+{
+    public int? InputSequence { get; init; }
+    public string? SkillId { get; init; }
+    public string? TargetId { get; init; }
+    public double? AimX { get; init; }
+    public double? AimY { get; init; }
+    public string? ClientTimeUtc { get; init; }
+}
+
 public sealed class WorldSnapshot
 {
     public required string MapId { get; init; }
@@ -87,4 +107,16 @@ public sealed class P1Error
     public required bool Retryable { get; init; }
     public required IReadOnlyList<string> FieldErrors { get; init; }
     public required string CorrelationId { get; init; }
+}
+
+public sealed class P1CombatResponse
+{
+    public int SchemaVersion { get; init; } = 1;
+    public required string RequestId { get; init; }
+    public required string SessionId { get; init; }
+    public required string ServerTimeUtc { get; init; }
+    public required long Revision { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public CombatEvent? Result { get; init; }
 }
