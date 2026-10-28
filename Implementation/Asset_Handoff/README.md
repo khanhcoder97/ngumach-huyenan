@@ -47,7 +47,8 @@ Kết quả ghi vào `COVERAGE_REPORT.md` và `coverage_report.json` (cùng thư
   chiếu với cell 48×64 đã khóa;
 * đọc `.meta` tĩnh để kiểm PPU, filter, mipmap, compression, pivot, tên/rect lưới sprite —
   **không cần Unity**;
-* ghi SHA256 từng file evidence và `sourceCommit` của lần thay đổi nguồn gần nhất.
+* ghi SHA256 từng file evidence và `sourceCommit` của lần thay đổi nguồn gần nhất. File text
+  được hash ở dạng LF chuẩn hoá để Windows/Linux cho cùng report; PNG giữ byte gốc.
 
 `--check` trả exit code 1 khi report đã commit không còn khớp nguồn. Engine playback vẫn là
 **unverified**; audit chỉ xác nhận metadata tĩnh và header PNG.

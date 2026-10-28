@@ -43,6 +43,10 @@ REPORT_SCHEMA = "opc05b.coverage_report/1"
 MD_NAME = "COVERAGE_REPORT.md"
 JSON_NAME = "coverage_report.json"
 
+# Text evidence is hashed in canonical LF form so Windows and Linux checkouts
+# produce the same report. Binaries (PNG) are hashed byte-for-byte.
+TEXT_SUFFIXES = frozenset({".json", ".csv", ".md", ".meta", ".py", ".yml", ".yaml", ".txt"})
+
 MANIFEST_PATH = "Client/Assets/ArtManifests/muse_delivery_manifest.json"
 MANIFEST_SCHEMA_PATH = "Implementation/Asset_Handoff/asset_delivery_manifest.schema.json"
 EXAMPLES_DIR = "Implementation/Content/Examples"
@@ -101,12 +105,16 @@ SPRITE_ALIGNMENTS = {
 # --------------------------------------------------------------------------- #
 # helpers
 # --------------------------------------------------------------------------- #
+def file_bytes(path: Path) -> bytes:
+    """Return canonical bytes: LF for text sources, raw bytes for binaries."""
+    data = path.read_bytes()
+    if path.suffix.lower() in TEXT_SUFFIXES:
+        return data.replace(b"\r\n", b"\n")
+    return data
+
+
 def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1 << 16), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
+    return hashlib.sha256(file_bytes(path)).hexdigest()
 
 
 class Evidence:
@@ -122,7 +130,7 @@ class Evidence:
         if rel not in self.items:
             self.items[rel] = {
                 "path": rel,
-                "bytes": resolved.stat().st_size,
+                "bytes": len(file_bytes(resolved)),
                 "sha256": sha256_file(resolved),
             }
         return self.items[rel]
@@ -1353,6 +1361,8 @@ def render_markdown(report: dict) -> str:
 
     # --- 8. evidence ------------------------------------------------------- #
     add("## 8. Evidence (SHA256)")
+    add("")
+    add("File text được hash ở dạng **LF chuẩn hoá** để Windows và Linux cho cùng kết quả; PNG giữ byte gốc.")
     add("")
     add("| File | Bytes | SHA256 |")
     add("|---|---:|---|")

@@ -9,7 +9,7 @@
 > ```
 
 - **Source commit:** `312db69fa661770b4e84ce70069e97948ab03e92` — last commit touching the evidence files (not the report commit).
-- **Evidence digest:** `0022d6e2df10695dcc1be11c027864a4243b04c2f1aa32a34c2e0b50f94083a0` over 38 files (SHA256 per file in §8).
+- **Evidence digest:** `2b5feca684200eed288475c2cdd46fc5d49eef063efad32ff17f3d9ed1aeb7d7` over 38 files (SHA256 per file in §8).
 - **Phạm vi:** chỉ đọc nguồn; không sửa schema, manifest, asset, `.meta`, server hay gameplay numeric.
 
 ## 1. Kết luận
@@ -172,45 +172,47 @@ Script chỉ dùng standard library, không cần Unity/.NET, không ghi vào ng
 
 ## 8. Evidence (SHA256)
 
+File text được hash ở dạng **LF chuẩn hoá** để Windows và Linux cho cùng kết quả; PNG giữ byte gốc.
+
 | File | Bytes | SHA256 |
 |---|---:|---|
 | `Client/Assets/Art/Characters/MinhKiem/minh_kiem_walk.png` | 185988 | `bbec07fba1e9c598fc4cfdb1bf2e225cd4dc7038f55911b5de948b30d9b0582d` |
-| `Client/Assets/Art/Characters/MinhKiem/minh_kiem_walk.png.meta` | 26077 | `0427bd6bf764593a1b141a178d0f66104364eb42f3ad52b7b060d6129a83603c` |
+| `Client/Assets/Art/Characters/MinhKiem/minh_kiem_walk.png.meta` | 24969 | `6e330253f69ca7faacbd7ff4b16e6b3a3bd87e53ef65dc2bd1ed2a67baf9574a` |
 | `Client/Assets/Art/Previews/minh_kiem_walk_preview_x4.png` | 259371 | `a94be2844bd9f057a4557ccdf10c74f9e9fc7197ed4bc36c11d8eaaf6a027128` |
 | `Client/Assets/ArtManifests/muse_delivery_manifest.json` | 530 | `02f1517f1dfef94afae5827fe0af1e8c251c406a407790255258541618bb5508` |
-| `Implementation/Asset_Handoff/asset_delivery_manifest.schema.json` | 1709 | `c0e8cc36556b71d0d5638280633a0fa803109d06a352ff26bf468a3679a87d3f` |
-| `Implementation/Content/Examples/ClassDefinition/CLASS_MINH_KIEM.json` | 361 | `800e35c3e511aa0f86924396ca0e25238a6511c3fe94d1785160e5ac84db9b16` |
-| `Implementation/Content/Examples/GatheringNodeDefinition/MAN-BM-NODE_BM_ORE_01.json` | 498 | `912d84800c18be18ab5ddc799d69bdaf611d942b37342f7af6673580faab0c5e` |
-| `Implementation/Content/Examples/ItemDefinition/EQ-MK-WEAPON-T1-R-COMMON.json` | 446 | `3939b136140f128343a38ab789f7919af5f22a0bf8e27b0375264ef0e69b579b` |
-| `Implementation/Content/Examples/MapDefinition/MAP_BEN_MUA.json` | 399 | `28ee36620089c36f68acb624ff916224583c4697a4d6cf04112673d90a2280fe` |
-| `Implementation/Content/Examples/MapTopology/SYNTHETIC_TEST_ROOM_MAP_BEN_MUA.json` | 1603 | `b2cc1ec1d3e7b4516ce2eb138004c309cac7e27ba6e9d8379df2bb045c8a421e` |
-| `Implementation/Content/Examples/QuestDefinition/P00-01.json` | 831 | `8b07690a28d59b7d7632bd35eca92011c0ce1bde4940c2094561513e78e5f239` |
-| `Implementation/Content/Examples/SkillDefinition/SK-MK-01.json` | 547 | `1a6a3dac28747252fa0759ce8d1ca713a0e960a188830f3ade1ef80d9042300f` |
-| `Implementation/Content/Examples/SkillDefinition/SK-MK-02.json` | 520 | `8d096fe9bef6f1e37064025c66849fc580f604cd61fc559d5a011210ed1fa0fc` |
-| `Implementation/Content/Examples/SkillDefinition/SK-MK-03.json` | 526 | `d7b1fd51e893c1bf92c9ee66ff5cc245c495f8b57ef1d89f687222440ef85fa2` |
-| `Implementation/Content/Examples/SpawnDefinition/MAN-BM-SPAWN_BM_04.json` | 659 | `9d3dc9002d198f82f695ce90acc1293c1111e91787ae5fa1e2e7c6651f5605a1` |
-| `Implementation/Content/Schemas/ClassDefinition.schema.json` | 1462 | `b24e2b539954121790431d04409a8ea1044fac61d0dbfe337cd118217a8d39a3` |
-| `Implementation/Content/Schemas/GatheringNodeDefinition.schema.json` | 2329 | `eaa6dda5e0eed27d1b9a2b9f40980c2f30c222408cdb8f8848e41e7943cbb75b` |
-| `Implementation/Content/Schemas/ItemDefinition.schema.json` | 1824 | `a4c21d9538aa863596e59db0af5b590a12bbd6b8417b1e17e166b19760e200d2` |
-| `Implementation/Content/Schemas/MapDefinition.schema.json` | 1912 | `cca41906d1f212e161e459d0ebe191da12a995d0612c2ee1d70c331b282307a7` |
-| `Implementation/Content/Schemas/MapTopology.schema.json` | 4021 | `35ab48758848467984e98c11f7c150369774249d28d2335791423240ec3c730d` |
-| `Implementation/Content/Schemas/QuestDefinition.schema.json` | 3991 | `793c5fdd9eec74d6808a7298cfa8bbef77a0a683d5a9fb126bd57798fe5b2627` |
-| `Implementation/Content/Schemas/SkillDefinition.schema.json` | 2599 | `30eaadddbc49e21db69076533ac6eb96af591b4406294459f96b75f8c9993763` |
-| `Implementation/Content/Schemas/SpawnDefinition.schema.json` | 2902 | `215f9d6000b58057a3d6f2ac22f62e7917c55847a85df42f47bef6c09dee2325` |
-| `docs/production/Class_Passive_Production_Data_vi.csv` | 14175 | `222a632e956ec28973a93bfa12ba02f3d35ac00635b023a9c70592c9147483c4` |
-| `docs/production/Combat_Skills_VFX_Animation_Spec_vi.md` | 24643 | `b06cf267dba3e9c9081ef8d6137c547885f6b7145eee4e91ec98f89f3032ced9` |
-| `docs/production/Currency_Production_Data_vi.csv` | 4285 | `f8ce724b7c86d1b573062655ad9f75d6befbacac599b44868a693127a2bbc680` |
-| `docs/production/Elite_Variant_Data_vi.csv` | 3422 | `55d6bf6cba08d2d56822e6b1225ef1804db6749fa69fbd0dc38e9c631dab2822` |
-| `docs/production/Item_Master_Catalog_vi.csv` | 317517 | `498f4d83f30b4c98685948438097c84fed619d85e0740eeab1ede9d0fe67d2f6` |
-| `docs/production/Item_Rarity_Variant_Catalog_vi.csv` | 1172433 | `63a122284894ad28482b943ffbc55115f59fd564105a611ddb4714d4c0f568ce` |
-| `docs/production/Life_Sim_Content_Data_vi.csv` | 4007 | `c2e5ebc92a82a6bd9b417d934b2bd0bee570739b63d8a197528c626278c9f69c` |
-| `docs/production/Loot_Recipe_Reward_Production_Data_vi.csv` | 65212 | `9cf8dd3f4e8cd2e6cffd28ad7672b38b9ee51884b567e21fe391d843fbe2f15b` |
-| `docs/production/NPC_Actor_Production_Registry_vi.csv` | 32919 | `fb1337c510dae7574f5c8496e7e9cf9d06e1608749d9defd70b954e5f7bea83c` |
-| `docs/production/Online_Persistence_Release_Complete_vi.md` | 9501 | `7e1794b0d4f375621d8c3e47a9a9027ab2e59ccd8d0e89f68a976de38756083f` |
-| `docs/production/Pet_Mount_Production_Data_vi.csv` | 5111 | `8494b2da5edb3196631e8840e824442a7f360afbd438bae08d6719dc03815864` |
-| `docs/production/Pixel_Art_Production_Standard_vi.md` | 9391 | `d37dce6d037cafcb7cbb00a2533355463360d51968fb5920209b3923c969dbb9` |
-| `docs/production/Quest_Dialogue_Production_Data_vi.csv` | 109305 | `c544456090124c2251722abcd5f934b5dd1e89cd1e423f029df19172aa2b07bb` |
-| `docs/production/Weekly_Boss_Rotation_Data_vi.csv` | 3208 | `d8597aece2ec931099b9894b8184ce64807a86e93307b9ae3867cb86c6a03907` |
-| `docs/production/World_Spawn_Gathering_Manifest_vi.csv` | 198579 | `e258961a5d978de5a5f098441f9359b7d92fb53aaba24d8807d6d8ab73e6a8e0` |
+| `Implementation/Asset_Handoff/asset_delivery_manifest.schema.json` | 1672 | `ae9fa6333f19ac0b643a9469c7001d3d3c0641f5f12403491ea08837e09c7e91` |
+| `Implementation/Content/Examples/ClassDefinition/CLASS_MINH_KIEM.json` | 350 | `4ccf673b833afcd0e911c29b2a40af432c401fe979906b698d0de6a511e8aabd` |
+| `Implementation/Content/Examples/GatheringNodeDefinition/MAN-BM-NODE_BM_ORE_01.json` | 478 | `74858bec57eb3224154af7432bdb14a1b66c87cfb303b8a9682c5aa74759e738` |
+| `Implementation/Content/Examples/ItemDefinition/EQ-MK-WEAPON-T1-R-COMMON.json` | 432 | `ce579ce5455f117514b786a66d2d9e5ea4a779c435838514d354c1e7d70774aa` |
+| `Implementation/Content/Examples/MapDefinition/MAP_BEN_MUA.json` | 380 | `058902045c7217f096e96dd079b01a56ff464e2a7eb2c7cf5c5b44a2cc20d84d` |
+| `Implementation/Content/Examples/MapTopology/SYNTHETIC_TEST_ROOM_MAP_BEN_MUA.json` | 1534 | `93b42365ba1a81442478be05167ada53c7cda5e3b79444ef2550504531b0a854` |
+| `Implementation/Content/Examples/QuestDefinition/P00-01.json` | 796 | `17f8f62fef04271a14d69682c6f45205720b7f1775bbff994fe9c30e2cc40da8` |
+| `Implementation/Content/Examples/SkillDefinition/SK-MK-01.json` | 522 | `1e8ed5782af0f70a441ee8c804fa942fdb83d29b961d2757d39b845486ea2f56` |
+| `Implementation/Content/Examples/SkillDefinition/SK-MK-02.json` | 496 | `ac50bf48fb959d017fbc318c4a6d8d16f95ec6f8c2ce9e006b60a49f2bfcb7db` |
+| `Implementation/Content/Examples/SkillDefinition/SK-MK-03.json` | 502 | `b83d8238a1dfd0e4f9ba74ef0f9b2297136d3e87f6204638656e2b307c69a64a` |
+| `Implementation/Content/Examples/SpawnDefinition/MAN-BM-SPAWN_BM_04.json` | 634 | `507d6717bcaa2e538a0de3a8731a238a7acbc4f8b329b3bc168f512b00be2395` |
+| `Implementation/Content/Schemas/ClassDefinition.schema.json` | 1401 | `045be22dbf9b8347d3bd890df4ff8a0ef759025ed562860b8f0985823bfe9f22` |
+| `Implementation/Content/Schemas/GatheringNodeDefinition.schema.json` | 2222 | `d0750bef512db90b9b00ae524b1a0692f0b82f8ba5a55bdcbcf26b771efffa6f` |
+| `Implementation/Content/Schemas/ItemDefinition.schema.json` | 1740 | `9b2b678953f4f2deeed79fd5fe7f3e8baa30e5f6ceb6e848c758a887ab5999c5` |
+| `Implementation/Content/Schemas/MapDefinition.schema.json` | 1825 | `8ad694333bdf88e3a6fba44d5b668f4e82100fd0ed9b4d720817ba2e956aec2a` |
+| `Implementation/Content/Schemas/MapTopology.schema.json` | 3866 | `64dc86be7b34812805c81d8fff56a0bf4fb706795e1cfa9f0f9487f8b81313f9` |
+| `Implementation/Content/Schemas/QuestDefinition.schema.json` | 3829 | `1cdb0a8282e98ff5f3c81dce10e785f83cdacb605dcb1dbff44e35b751e624d8` |
+| `Implementation/Content/Schemas/SkillDefinition.schema.json` | 2486 | `41828ae02441ac28a1d8c8593cc8c7544e392ec4a25765fb53cd3af4077e79b1` |
+| `Implementation/Content/Schemas/SpawnDefinition.schema.json` | 2767 | `5eb263a1e9d0b574eddfd3c6421df546d312d05625ee26ad36d59ea2c53801ea` |
+| `docs/production/Class_Passive_Production_Data_vi.csv` | 14134 | `ff7eb9a6050af44376219b9b96bc8f44434bc163b4b237e8bab04a743e2d91e8` |
+| `docs/production/Combat_Skills_VFX_Animation_Spec_vi.md` | 24463 | `6cd69cdb3b859c044cb89b16a25a7ed0f48cb859d21d752490f81a9e0eda02b9` |
+| `docs/production/Currency_Production_Data_vi.csv` | 4268 | `d99f6fff5c435526a1cc30e8675dc4aa34dadec7f553ff2b85184713ecfad7dc` |
+| `docs/production/Elite_Variant_Data_vi.csv` | 3412 | `adceffb77ddfdb7d5198436e8fff1bd7a834001b1c3e61abd43ade6f670c52c4` |
+| `docs/production/Item_Master_Catalog_vi.csv` | 316960 | `77e1405963fab1e915c56a8b738e347bd60809c6cf1fb78bee5831202e67065c` |
+| `docs/production/Item_Rarity_Variant_Catalog_vi.csv` | 1170197 | `3577a02a29fd85412b498f386ca6f818dfcc36228501e6c4c8b0999620a53c3f` |
+| `docs/production/Life_Sim_Content_Data_vi.csv` | 3995 | `9dd37e9264602662a0a5b142a38092df481b7683f562d607414aeaf02605d65f` |
+| `docs/production/Loot_Recipe_Reward_Production_Data_vi.csv` | 64990 | `431df808d6a2ce627de5b97d81d749ef5c62065f0609bb85a8c3db417d650d4b` |
+| `docs/production/NPC_Actor_Production_Registry_vi.csv` | 32835 | `d9743b8148620e00dd0762eca2bfd1b733b7a8808583725a381262fd004cd52a` |
+| `docs/production/Online_Persistence_Release_Complete_vi.md` | 9433 | `14ec979208e5d563882ab184115f34683791973180888d6b6c089c6b81855f2e` |
+| `docs/production/Pet_Mount_Production_Data_vi.csv` | 5100 | `383a40438f741931a26a5e3e19fa6d2b5527ffaa6c69bb45875ef162e6bf2d73` |
+| `docs/production/Pixel_Art_Production_Standard_vi.md` | 9324 | `d94e7b6eb9bb0b0f0f33760b9d10d5d84e74b6429b2b6227bce30bf1bb27df19` |
+| `docs/production/Quest_Dialogue_Production_Data_vi.csv` | 109074 | `a5c8017edec32b4e70a5da4f87128a0405a9837d58120a19839b52f675e88ed4` |
+| `docs/production/Weekly_Boss_Rotation_Data_vi.csv` | 3201 | `940214ce7a34978487403520c50ffef825da7da94210eeb3b1841d46f4e372e2` |
+| `docs/production/World_Spawn_Gathering_Manifest_vi.csv` | 198229 | `7fe2d4d5229e2fb7a93eb8c0fd452b741cb5f050c49a9c72bee30f8eff06c457` |
 
-**Evidence digest:** `0022d6e2df10695dcc1be11c027864a4243b04c2f1aa32a34c2e0b50f94083a0`
+**Evidence digest:** `2b5feca684200eed288475c2cdd46fc5d49eef063efad32ff17f3d9ed1aeb7d7`
