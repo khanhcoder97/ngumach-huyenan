@@ -259,6 +259,116 @@ public static class ServiceSelfCheck
             missingQuest.Failure?.Code == QuestErrorCodes.QuestNotFound,
             missingQuest.Failure?.Code);
 
+        MapPolygon Rect(double x1, double y1, double x2, double y2) =>
+            new("OVERWORLD",
+            [
+                new TopologyPoint(x1, y1),
+                new TopologyPoint(x2, y1),
+                new TopologyPoint(x2, y2),
+                new TopologyPoint(x1, y2)
+            ]);
+
+        maps.TryResolve(options.DefaultMapId, out var topologyBounds);
+        var reviewedTopology = new MapTopologyBundle
+        {
+            MapId = options.DefaultMapId,
+            LayoutVersion = 1,
+            BundleVersion = 2,
+            ReviewState = TopologyReviewStates.Reviewed,
+            IsReviewed = true,
+            Bounds = topologyBounds,
+            FloorIds = ["OVERWORLD"],
+            WalkablePolygons = [Rect(30, -10, 60, 10)],
+            BlockedPolygons = [Rect(45, -10, 46, 10), Rect(52, 2, 54, 4)],
+            Placements = [new TopologyPlacement(
+                "MAN-BM-NPC_LYAN", "NPC_LYAN", "OVERWORLD", 42, 0)]
+        };
+        var geometry = new WorldGeometryService(
+            new WorldGeometryCatalog([reviewedTopology]));
+
+        var clearLine = geometry.CheckLineOfSight(
+            options.DefaultMapId, "OVERWORLD", 35, 0, 42, 0);
+        Check("los.clear", clearLine.Status == LineOfSightStatus.Allowed, clearLine.Reason);
+
+        var wallLine = geometry.CheckLineOfSight(
+            options.DefaultMapId, "OVERWORLD", 50, 0, 42, 0);
+        Check("los.wall", wallLine.Status == LineOfSightStatus.Blocked, wallLine.Reason);
+
+        var endpointInWall = geometry.CheckLineOfSight(
+            options.DefaultMapId, "OVERWORLD", 45.5, 0, 42, 0);
+        Check(
+            "los.endpoint_in_wall",
+            endpointInWall.Status == LineOfSightStatus.Blocked,
+            endpointInWall.Reason);
+
+        var holeLine = geometry.CheckLineOfSight(
+            options.DefaultMapId, "OVERWORLD", 50, 3, 56, 3);
+        Check("los.hole", holeLine.Status == LineOfSightStatus.Blocked, holeLine.Reason);
+
+        var cornerLine = geometry.CheckLineOfSight(
+            options.DefaultMapId, "OVERWORLD", 50, 4, 58, 4);
+        Check(
+            "los.corner_touch",
+            cornerLine.Status == LineOfSightStatus.Blocked,
+            cornerLine.Reason);
+
+        var floorLine = geometry.CheckLineOfSight(
+            options.DefaultMapId, "UNDERGROUND", 35, 0, 42, 0);
+        Check("los.floor", floorLine.Status == LineOfSightStatus.Blocked, floorLine.Reason);
+
+        var nonfiniteLine = geometry.CheckLineOfSight(
+            options.DefaultMapId, "OVERWORLD", double.NaN, 0, 42, 0);
+        Check(
+            "los.nonfinite",
+            nonfiniteLine.Status == LineOfSightStatus.Blocked,
+            nonfiniteLine.Reason);
+
+        var outsideLine = geometry.CheckLineOfSight(
+            options.DefaultMapId, "OVERWORLD", 20, 0, 42, 0);
+        Check(
+            "los.outside_walkable",
+            outsideLine.Status == LineOfSightStatus.Blocked,
+            outsideLine.Reason);
+
+        var shippedGeometry = services.GetRequiredService<IWorldGeometryService>();
+        var notEnforced = shippedGeometry.CheckLineOfSight(
+            options.DefaultMapId, "OVERWORLD", 35, 0, 42, 0);
+        Check(
+            "los.not_enforced_without_reviewed_bundle",
+            notEnforced.Status == LineOfSightStatus.NotEnforced,
+            notEnforced.Reason?.ToString());
+
+        var losAccept = new InMemoryQuestAcceptService(
+            questCatalog, quests, npcAnchors, geometry,
+            services.GetRequiredService<QuestAcceptOptions>());
+
+        var blockedActor = NewPlayer("CHR_SELFCHECK_LOS_BLOCKED");
+        blockedActor.X = 50;
+        blockedActor.Y = 0;
+        var blockedAccept = losAccept.Accept(
+            blockedActor, "P00-01", "NPC_LYAN", new string('1', 31) + "0");
+        Check(
+            "quest_accept.los_blocked",
+            blockedAccept.Failure?.Code == QuestAcceptErrorCodes.OutOfRange &&
+            blockedAccept.Failure.Retryable,
+            blockedAccept.Failure?.Code);
+
+        var blockedState = quests.GetState(blockedActor.CharacterId, "P00-01").State;
+        Check(
+            "quest_accept.los_blocked_state",
+            blockedState is { State: QuestStates.Available, Revision: 1 },
+            blockedState?.State);
+
+        var clearActor = NewPlayer("CHR_SELFCHECK_LOS_CLEAR");
+        clearActor.X = 35;
+        clearActor.Y = 0;
+        var clearAccept = losAccept.Accept(
+            clearActor, "P00-01", "NPC_LYAN", new string('2', 31) + "0");
+        Check(
+            "quest_accept.los_allowed",
+            clearAccept.Accepted && clearAccept.State?.State == QuestStates.Active,
+            clearAccept.Failure?.Code);
+
         var inventoryActor = NewPlayer("CHR_SELFCHECK_INVENTORY");
         var emptyInventory = inventory.GetSnapshot(inventoryActor.CharacterId);
         Check(

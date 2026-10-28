@@ -13,6 +13,7 @@ public sealed class InMemoryQuestAcceptService : IQuestAcceptService
     private readonly IQuestCatalog _catalog;
     private readonly IQuestService _quests;
     private readonly NpcAnchorCatalog _anchors;
+    private readonly IWorldGeometryService _geometry;
     private readonly QuestAcceptOptions _options;
     private readonly ConcurrentDictionary<(string CharacterId, string Key), IdempotencyEntry>
         _entries = new();
@@ -21,11 +22,13 @@ public sealed class InMemoryQuestAcceptService : IQuestAcceptService
         IQuestCatalog catalog,
         IQuestService quests,
         NpcAnchorCatalog anchors,
+        IWorldGeometryService geometry,
         QuestAcceptOptions options)
     {
         _catalog = catalog;
         _quests = quests;
         _anchors = anchors;
+        _geometry = geometry;
         _options = options;
     }
 
@@ -84,6 +87,14 @@ public sealed class InMemoryQuestAcceptService : IQuestAcceptService
         var deltaY = actor.Y - anchor.Y;
         var distance = Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
         if (distance > _options.MaxInteractionDistanceWu + 1e-9)
+        {
+            return QuestAcceptOutcome.Rejected(
+                QuestAcceptErrorCodes.OutOfRange, retryable: true, current);
+        }
+
+        var lineOfSight = _geometry.CheckLineOfSight(
+            actor.MapId, GroundFloor, actor.X, actor.Y, anchor.X, anchor.Y);
+        if (lineOfSight.IsBlocked)
         {
             return QuestAcceptOutcome.Rejected(
                 QuestAcceptErrorCodes.OutOfRange, retryable: true, current);
