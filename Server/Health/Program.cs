@@ -21,6 +21,8 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 builder.Services.Configure<P1WorldOptions>(
     builder.Configuration.GetSection(P1WorldOptions.SectionName));
 builder.Services.AddSingleton<ServerClock>();
+builder.Services.AddSingleton<IServerClock>(
+    serviceProvider => serviceProvider.GetRequiredService<ServerClock>());
 builder.Services.AddSingleton<ISessionStore, InMemorySessionStore>();
 builder.Services.AddSingleton(serviceProvider =>
 {
@@ -73,6 +75,17 @@ builder.Services.AddSingleton(serviceProvider =>
     return MapTopologyLoader.Load(directory, maps);
 });
 builder.Services.AddSingleton<IWorldGeometryService, WorldGeometryService>();
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    var path = WorldEntityLoader.DiscoverPath(configuration, environment.ContentRootPath);
+    return WorldEntityLoader.Load(
+        path, serviceProvider.GetRequiredService<MapBoundsCatalog>());
+});
+builder.Services.AddSingleton(serviceProvider => new WorldEntityRegistry(
+    serviceProvider.GetRequiredService<WorldEntityCatalog>(),
+    serviceProvider.GetRequiredService<IServerClock>()));
 builder.Services.AddSingleton<IInventoryStateStore, InMemoryInventoryStateStore>();
 builder.Services.AddSingleton<IInventoryService, InMemoryInventoryService>();
 builder.Services.AddSingleton<ITeleportService, InMemoryTeleportService>();
@@ -99,6 +112,17 @@ app.Logger.LogInformation(
     "Loaded topology bundles: {BundleCount} (reviewed {ReviewedCount}).",
     topology.Count,
     topology.ReviewedCount);
+
+var worldEntities = app.Services.GetRequiredService<WorldEntityRegistry>();
+app.Logger.LogInformation(
+    "Loaded world entities: {EntityCount} (mobs {MobCount}, bosses {BossCount}, " +
+    "nodes {NodeCount}, npcs {NpcCount}).",
+    worldEntities.Count,
+    worldEntities.All.Count(entity => entity.Kind == WorldEntityKinds.Mob),
+    worldEntities.All.Count(entity => entity.Kind == WorldEntityKinds.Boss),
+    worldEntities.All.Count(entity => entity.Kind == WorldEntityKinds.GatherNode ||
+                                      entity.Kind == WorldEntityKinds.Interactable),
+    worldEntities.All.Count(entity => entity.Kind == WorldEntityKinds.Npc));
 
 foreach (var questId in quests.QuestIds)
 {

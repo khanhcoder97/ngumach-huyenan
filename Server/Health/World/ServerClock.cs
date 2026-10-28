@@ -2,7 +2,7 @@ using System.Diagnostics;
 
 namespace Server.Health.World;
 
-public sealed class ServerClock
+public sealed class ServerClock : IServerClock
 {
     // Production technical contract: 20 authoritative simulation ticks per second.
     public const int TicksPerSecond = 20;

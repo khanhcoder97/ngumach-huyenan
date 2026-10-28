@@ -188,6 +188,72 @@ public static class ServiceSelfCheck
             lyanAnchor.Y == 0,
             $"count={npcAnchors.Count}");
 
+        var worldEntities = services.GetRequiredService<WorldEntityRegistry>();
+        Check("world.registry", worldEntities.Count == 24, $"count={worldEntities.Count}");
+
+        var npcEntity = worldEntities.TryGet("ENT_MAN_BM_NPC_LYAN", out var foundNpc)
+            ? foundNpc
+            : null;
+        Check(
+            "world.npc_entity",
+            npcEntity is { Kind: WorldEntityKinds.Npc, State: WorldEntityStates.Active } &&
+            npcEntity.X == 42 &&
+            npcEntity.Y == 0,
+            npcEntity?.Kind);
+
+        var mobEntity = worldEntities.TryGet("ENT_MAN_BM_SPAWN_BM_01", out var foundMob)
+            ? foundMob
+            : null;
+        Check(
+            "world.mob_entity",
+            mobEntity is
+            {
+                Kind: WorldEntityKinds.Mob,
+                State: WorldEntityStates.Alive,
+                Quantity: 3,
+                RespawnSeconds: 18
+            } &&
+            mobEntity.X == 84,
+            mobEntity?.Kind);
+
+        var worldCatalog = services.GetRequiredService<WorldEntityCatalog>();
+        var manualClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 29, 0, 0, 0, TimeSpan.Zero));
+        var manualWorld = new WorldEntityRegistry(worldCatalog, manualClock);
+
+        Check("world.despawn_unknown", !manualWorld.Despawn("ENT_MISSING"));
+
+        var despawned = manualWorld.Despawn("ENT_MAN_BM_SPAWN_BM_01") &&
+                        manualWorld.TryGet("ENT_MAN_BM_SPAWN_BM_01", out var deadMob) &&
+                        deadMob.State == WorldEntityStates.Dead &&
+                        deadMob.Revision == 2;
+        Check("world.despawn_mob", despawned);
+
+        var beforeRespawn = manualWorld.Update();
+        Check(
+            "world.respawn_wait",
+            beforeRespawn == 0 &&
+            manualWorld.TryGet("ENT_MAN_BM_SPAWN_BM_01", out var waitingMob) &&
+            waitingMob.State == WorldEntityStates.Dead,
+            $"respawned={beforeRespawn}");
+
+        manualClock.Advance(TimeSpan.FromSeconds(18));
+        var respawned = manualWorld.Update();
+        Check(
+            "world.respawn",
+            respawned == 1 &&
+            manualWorld.TryGet("ENT_MAN_BM_SPAWN_BM_01", out var revivedMob) &&
+            revivedMob.State == WorldEntityStates.Alive &&
+            revivedMob.Revision == 3,
+            $"respawned={respawned}");
+
+        Check("world.despawn_npc_rejected", !manualWorld.Despawn("ENT_MAN_BM_NPC_LYAN"));
+
+        var nodeCleared = manualWorld.Despawn("ENT_MAN_BM_NODE_BM_ORE_01") &&
+                          manualWorld.TryGet("ENT_MAN_BM_NODE_BM_ORE_01", out var node) &&
+                          node.State == WorldEntityStates.Depleted;
+        Check("world.node_lifecycle", nodeCleared);
+
         var startNpcOk = questCatalog.TryGet("P00-01", out var p0001) &&
                          string.Equals(p0001.StartNpcId, "NPC_LYAN", StringComparison.Ordinal);
         Check("quest.start_npc", startNpcOk, p0001?.StartNpcId);
