@@ -167,3 +167,9 @@ Các tài liệu mới xác định hành vi cần xây dựng; audit runtime v�
 - Art_Completion_Plan_20261029_vi.md: thứ tự hoàn thiện slice, environment/UI/cinema/roster còn lại và phân công review.
 
 - HUD_Skill_Arc_Layout_vi.md: cập nhật2026-10-29 theo chủ dự án,6slot tròn vòng cung quanh attack; concept06 thay layout grid của04.
+
+### Thăng Long v2 và pixel giản lược
+
+Capital_Scale_and_Simple_Pixel_v2_vi.md quy định extent12phường/chunk/migration và kit đơn giản. DesignBaselines/thang_long_layout_v2.json giữ target thiết kế chưa active; Art_Concept_References/v2 phân biệt macro overview và gameplay street corner.
+
+- Hub_Wide_Camera_Profile_vi.md (DEC-021): tầm nhìn48×27WU trong hub, HUD giữ size, combat STANDARD; profile cần tích hợp client/map flow.

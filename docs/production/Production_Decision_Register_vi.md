@@ -50,3 +50,11 @@ Theo yêu cầu chủ dự án, narrative v2 bổ sung chiều sâu cho nhân v�
 ## DEC-019 — HUD vòng cung (2026-10-29)
 
 Chủ dự án yêu cầu6ô kỹ năng tạo vòng cung quanh nút tấn công lớn góc phải dưới theo ảnh layout tham khảo. Dùng HUD_Skill_Arc_Layout_vi.md và concept06; thay bố cục grid của board04 và công thức bán cung cũ. Giữ skill IDs, mechanics, số slot và input authority; ảnh mẫu chỉ tham chiếu layout. Các concept khác trong reference v1 vẫn là direction candidates, chưa đồng nghĩa owner phê duyệt toàn bộ art.
+
+## DEC-020 — Kinh thành rộng và pixel art giản lược (2026-10-29)
+
+Chủ dự án yêu cầu Thăng Long có quy mô kinh thành lớn và pixel game dễ làm nhưng sắc nét. Thiết kế mục tiêu2048×1536WU/12phường, chunk64WU, sản xuất một chunk service street trước; dimension2048×1536 là phương án quy hoạch cụ thể do Codex đề xuất để đáp ứng yêu cầu, cần xác nhận bằng blockout/playtest, chưa active runtime. Giữ pipeline pixel top-down, giảm chi tiết/tái dùng module, không đổi engine. Layout v1/runtime bounds được giữ cho đến migration đồng bộ theo Capital_Scale_and_Simple_Pixel_v2_vi.md. HUD vòng cung DEC-019 giữ hiệu lực. Concept macro không phải screenshot một màn gameplay hoặc topology approved.
+
+## DEC-021 — Tăng tầm nhìn hub (2026-10-29)
+
+Chủ dự án yêu cầu tầm nhìn bao quát hơn trong hub. HUB_WIDE target48×27WU với world render960×540,20PPU; STANDARD32×18WU cho combat/competitive. Mở rộng1,5lần mỗi chiều,2,25lần diện tích. HUD giữ size/safe area độc lập;6skill arc DEC019 không đổi. Tài liệu Hub_Wide_Camera_Profile_vi.md quy định device fallback/integer viewport/streaming và nghiệm thu; C# map flow chưa tích hợp thì không tuyên bố camera đã chạy runtime.
