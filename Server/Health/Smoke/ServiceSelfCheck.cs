@@ -343,7 +343,7 @@ public static class ServiceSelfCheck
             services.GetRequiredService<QuestAcceptOptions>());
 
         var blockedActor = NewPlayer("CHR_SELFCHECK_LOS_BLOCKED");
-        blockedActor.X = 50;
+        blockedActor.X = 46.5;
         blockedActor.Y = 0;
         var blockedAccept = losAccept.Accept(
             blockedActor, "P00-01", "NPC_LYAN", new string('1', 31) + "0");
@@ -360,7 +360,7 @@ public static class ServiceSelfCheck
             blockedState?.State);
 
         var clearActor = NewPlayer("CHR_SELFCHECK_LOS_CLEAR");
-        clearActor.X = 35;
+        clearActor.X = 38;
         clearActor.Y = 0;
         var clearAccept = losAccept.Accept(
             clearActor, "P00-01", "NPC_LYAN", new string('2', 31) + "0");
