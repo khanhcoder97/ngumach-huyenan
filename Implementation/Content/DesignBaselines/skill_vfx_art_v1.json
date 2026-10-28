@@ -1,0 +1,1018 @@
+{
+  "schemaVersion": 1,
+  "activation": "DESIGN_ONLY_REQUIRES_ASSET_AND_EVENT_INTEGRATION",
+  "classes": [
+    {
+      "classId": "CLASS_MINH_KIEM",
+      "elementVi": "Kim",
+      "seedPalette": [
+        "#FFF0CD",
+        "#E8BB63",
+        "#B78543",
+        "#52616B"
+      ]
+    },
+    {
+      "classId": "CLASS_ANH_DAO",
+      "elementVi": "Hỏa",
+      "seedPalette": [
+        "#FFF0CD",
+        "#EE8A35",
+        "#B74531",
+        "#49292E"
+      ]
+    },
+    {
+      "classId": "CLASS_HUYEN_BUT",
+      "elementVi": "Thủy",
+      "seedPalette": [
+        "#D9F6ED",
+        "#73D5D6",
+        "#367BAD",
+        "#23385D"
+      ]
+    },
+    {
+      "classId": "CLASS_THACH_CHUY",
+      "elementVi": "Thổ",
+      "seedPalette": [
+        "#E5D0A3",
+        "#BC935B",
+        "#7E715C",
+        "#3B3B3A"
+      ]
+    },
+    {
+      "classId": "CLASS_LINH_CUNG",
+      "elementVi": "Mộc",
+      "seedPalette": [
+        "#F0E7B7",
+        "#AAC568",
+        "#5A8A54",
+        "#284B43"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "skillId": "SK-MK-01",
+      "nameVi": "Phản Quang",
+      "classId": "CLASS_MINH_KIEM",
+      "hudSlot": 1,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-MK-01",
+      "mechanicsSourceText": "Vai trò: đỡ phản công. CD 10s, 12 MP. Nhấn tạo thế thủ 0,4s, giảm 70% sát thương; nếu đòn cận chiến trúng trong cửa đỡ, phản 180% sát thương vũ khí và nhận 2 Kiếm Ý. Nếu không có đòn chạm, kết thúc với giảm sát thương hụt 20%. Hoạt ảnh: hạ trọng tâm, đưa kiếm chéo trước ngực; 6 frame đầu viền bạc mảnh báo thế đỡ. Khi đỡ thành công, kiếm phát một vòng cung lục giác màu vàng nhạt, âm thanh kim loại khô; không tạo flash màn hình. Boss không bị choáng, người chơi nhận thông báo “Đỡ chuẩn” cạnh thanh tài nguyên. Vùng đỡ 120 độ phía trước, cự ly 2,2m.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Hai góc lục giác bạc trước mũi kiếm",
+        "release": "Phản kích một cung vàng trắng CHỈ khi đỡ thành công",
+        "fade": "Hai mảnh kim loại ngắn tắt"
+      },
+      "attachMode": "CASTER_FRONT",
+      "shapeKey": "COUNTER_CONE",
+      "maxModuleCellPx": 128,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "COUNTER_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/metal_parry",
+      "iconSilhouetteVi": "kiếm trước khiên",
+      "lowFxPolicyVi": "giữ viền guard và một cung, bỏ spark",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-MK-02",
+      "nameVi": "Tầm Long",
+      "classId": "CLASS_MINH_KIEM",
+      "hudSlot": 2,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-MK-02",
+      "mechanicsSourceText": "Vai trò: áp sát/đánh mục tiêu đầu. CD 8s, 16 MP, lao 5,5m, 150%, +1 Kiếm Ý. Chuẩn bị 0,15s, lướt 0,20s, hồi 0,24s. Mũi kiếm kéo vệt trắng bạc có lõi vàng; nhân vật không biến mất. Hit là một hình thoi mảnh trước người, không xuyên tường; nếu va chướng ngại thì dừng ở mép. Tạo vạch bụi nhỏ ở điểm dừng. Quái thường bị lùi 0,25m, boss tích Choáng Mạch.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Mũi thoi tại đầu kiếm chỉ hướng lao",
+        "release": "Vệt đâm thẳng mảnh theo đường server, actor luôn thấy",
+        "fade": "Bụi nhỏ điểm dừng"
+      },
+      "attachMode": "CASTER_TRAIL",
+      "shapeKey": "DASH_LINE",
+      "maxModuleCellPx": 256,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "DASH_PATH_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/metal_thrust",
+      "iconSilhouetteVi": "mũi kiếm và mũi tên",
+      "lowFxPolicyVi": "giữ đầu vệt/điểm dừng, bỏ fragment giữa",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-MK-03",
+      "nameVi": "Kiếm Trận",
+      "classId": "CLASS_MINH_KIEM",
+      "hudSlot": 3,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-MK-03",
+      "mechanicsSourceText": "Vai trò: quét nhóm. CD 10s, 22 MP, hình quạt 100 độ, tổng 190%, tối đa 5 mục tiêu. Ba nhát có nhịp 0,10/0,12/0,14s: ngang, chéo lên, chém xuống; trọng số sát thương 45/55/90%. VFX ba cung kiếm vàng trắng lệch nhau, cung thứ ba dày nhất; mỗi cung tồn tại dưới 0,22s. Đánh trúng nhiều mục tiêu có số sát thương tách riêng, không cộng dồn một con số che mục tiêu. Ưu tiên trúng địch gần nhất trong quạt.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Một cung kiếm ngắn đầu nhịp",
+        "release": "Ba cung lệch45/55/90 theo hit timeline, cung ba dày nhất",
+        "fade": "Từng cung vỡ ngắn, không nổ"
+      },
+      "attachMode": "CASTER_FRONT",
+      "shapeKey": "TRIPLE_FAN",
+      "maxModuleCellPx": 128,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "MULTI_HIT_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/metal_three_cuts",
+      "iconSilhouetteVi": "ba cung kiếm",
+      "lowFxPolicyVi": "giữ đủ ba nhịp, giảm mảnh phụ",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-MK-04",
+      "nameVi": "Thiết Y",
+      "classId": "CLASS_MINH_KIEM",
+      "hudSlot": 4,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-MK-04",
+      "mechanicsSourceText": "Vai trò: phòng thủ cá nhân. CD 16s, 24 MP, khiên bằng 12% HP tối đa trong 4s, không cộng dồn. Động tác cắm kiếm cạnh thân rồi kéo vòng sáng kim loại mờ quanh vai và ngực. Khiên hiển thị một viền lục giác xanh bạc ở chân thanh HP, không phủ toàn thân. Khi bị đánh, viền nứt theo lượng khiên mất; hết thời gian tự tan thành bụi sáng. Nội tại Thủ Nhất cộng thêm 4% giá trị khiên theo quy tắc Bible.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Ba góc lục giác dựng viền nhỏ",
+        "release": "Viền khiên cạnh vai/HP, không khối kín che thân",
+        "fade": "Nứt khi hấp thụ rồi tan khi hết buff"
+      },
+      "attachMode": "CASTER_BODY",
+      "shapeKey": "SHIELD_RIM",
+      "maxModuleCellPx": 96,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "SHIELD_STATE",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/metal_shield",
+      "iconSilhouetteVi": "lục giác có tấm chắn",
+      "lowFxPolicyVi": "chỉ viền và status, bỏ orbiting pieces",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-MK-05",
+      "nameVi": "Bạch Hồng (cơ động)",
+      "classId": "CLASS_MINH_KIEM",
+      "hudSlot": 5,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-MK-05",
+      "mechanicsSourceText": "Vai trò: vượt ngang, xóa chậm. CD 9s, 10 MP, lướt 6m ngang, không gây sát thương. Vệt kiếm mảnh trắng xanh chạy sau nhân vật trong 0,16s; nhân vật luôn thấy rõ tại đầu/cuối pha. Xóa trạng thái Chậm khi khởi động, không xóa choáng, trói, độc hoặc vùng khóa. Không cho đi xuyên tường/địch lớn; va chạm dừng lướt. Không có hitbox sát thương.",
+      "role": "MOBILITY",
+      "visualPhases": {
+        "prep": "Một nét trắng xanh sau gót",
+        "release": "Trail lướt mảnh theo vector server, KHÔNG hit spark",
+        "fade": "Hai vạch gió tắt"
+      },
+      "attachMode": "CASTER_TRAIL",
+      "shapeKey": "MOVE_ONLY",
+      "maxModuleCellPx": 128,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "DASH_PATH_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/air_step",
+      "iconSilhouetteVi": "hai vệt gió",
+      "lowFxPolicyVi": "giữ điểm đầu/cuối, không nổ",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-MK-06",
+      "nameVi": "Vạn Tượng Quy Nhất (tuyệt kỹ)",
+      "classId": "CLASS_MINH_KIEM",
+      "hudSlot": 6,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-MK-06",
+      "mechanicsSourceText": "Vai trò: đường kiếm dồn sát thương. CD 60s, 40 MP. Tấn công đường thẳng 7m, 260% + 60% mỗi Kiếm Ý, tối đa 5 mục tiêu; tiêu Kiếm Ý khi server chấp nhận. 0,70s kết tụ: các nét kim loại nhỏ hội về mũi kiếm, nhân vật giữ dáng ngang vững. Sau báo trước là đường chém ngang rộng 0,8m, vệt vàng trắng phân lớp, tồn tại 0,35s. Camera rung tối đa 0,12s tại hit, không cắt cảnh; số Kiếm Ý được hiển thị thành năm vạch sáng tắt theo số đã dùng. Boss nhận sát thương và Choáng Mạch, không bị đứng im.",
+      "role": "ULTIMATE",
+      "visualPhases": {
+        "prep": "Năm vạch Kiếm Ý hội về đầu kiếm",
+        "release": "Một đường kiếm vàng trắng dài, không laser phủ màn",
+        "fade": "Sáu đoạn thẳng vỡ rồi tắt"
+      },
+      "attachMode": "CASTER_FRONT",
+      "shapeKey": "ULTIMATE_LINE",
+      "maxModuleCellPx": 512,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "ULTIMATE_RELEASE_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/metal_resonance",
+      "iconSilhouetteVi": "năm vạch hội vào kiếm",
+      "lowFxPolicyVi": "giữ line outline và số tầng, bỏ bụi dọc",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-AD-01",
+      "nameVi": "Huyết Nguyệt",
+      "classId": "CLASS_ANH_DAO",
+      "hudSlot": 1,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-AD-01",
+      "mechanicsSourceText": "Vai trò: chảy máu đơn mục tiêu. CD 8s, 14 MP, đòn 140% và chảy máu 3 lần ×25% trong 4s. Chém vòng cung đỏ sẫm, rìa cam chỉ sáng lúc cắt; tránh máu bắn hoặc hình ảnh bạo lực. Dấu chảy máu là ba vệt đỏ nhỏ chạy dọc viền thanh máu mục tiêu, mỗi tick có âm thanh rất nhẹ. Nhận Nhiệt theo quy tắc lớp: đòn trúng cho 1 Nhiệt tối đa một lần mỗi 1,5s.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Mép đao đỏ than hiện một nét",
+        "release": "Cung chém đỏ cam đơn mục tiêu",
+        "fade": "Ba vệt status tại TARGET, không máu"
+      },
+      "attachMode": "CASTER_FRONT",
+      "shapeKey": "CUT_AND_BLEED",
+      "maxModuleCellPx": 128,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "HIT_AND_STATUS_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/ember_cut",
+      "iconSilhouetteVi": "lưỡi liềm ba vạch",
+      "lowFxPolicyVi": "giữ cung/status, bỏ ember rơi",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-AD-02",
+      "nameVi": "Tàn Hỏa",
+      "classId": "CLASS_ANH_DAO",
+      "hudSlot": 2,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-AD-02",
+      "mechanicsSourceText": "Vai trò: gài nổ. CD 12s, 18 MP. Gắn dấu 5s; đòn tiếp theo của người chơi lên mục tiêu kích nổ 120% vùng nhỏ, hoặc 180% nếu có đủ 5 Nhiệt tại lúc kích hoạt. Dấu là một vòng than đỏ quanh chân địch với năm khe sáng; đồng đội nhìn thấy biểu tượng nhỏ, không phải vòng sàn. Nổ bán kính 1,5m, VFX bụi than hướng ra ngoài và tia lửa ngắn. Nếu dấu hết hạn thì tắt, không tự nổ. Mỗi mục tiêu chỉ mang một dấu từ cùng người chơi.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Dấu than năm khe đặt ở TARGET, không caster",
+        "release": "Nổ gọn chỉ khi server xác nhận đòn kế kích dấu",
+        "fade": "Hết hạn không kích thì âm thầm tắt"
+      },
+      "attachMode": "TARGET_FOOT",
+      "shapeKey": "DELAYED_MARK",
+      "maxModuleCellPx": 128,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "MARK_TRIGGER_OR_EXPIRE",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/ember_pop",
+      "iconSilhouetteVi": "vòng than có chốt",
+      "lowFxPolicyVi": "giữ dấu và pulse trigger, bỏ debris",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-AD-03",
+      "nameVi": "Xích Ảnh",
+      "classId": "CLASS_ANH_DAO",
+      "hudSlot": 3,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-AD-03",
+      "mechanicsSourceText": "Vai trò: hai nhát, thưởng vị trí sau lưng quái. CD 10s, 20 MP, hai hit ×85%. Nhát đầu lướt chéo ngắn 1m, nhát sau đảo cổ tay chém ngược. Mỗi nhát có cửa hitbox riêng 0,10s, tổng góc 80 độ. Nếu nhát hai chạm phía sau quái thường, tăng theo nội tại Bóng Sát (+8%); boss dùng hướng vị trí của người chơi khi lệnh được xác nhận. Vệt lửa tối, không dùng ảnh phân thân gây nhầm với nhân vật thật.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Cung thấp đầu nhịp và trọng tâm chéo",
+        "release": "Hai slash thuận/ngược tách nhịp, không actor clone",
+        "fade": "Hai vệt đứt tắt"
+      },
+      "attachMode": "CASTER_FRONT",
+      "shapeKey": "TWO_CUTS",
+      "maxModuleCellPx": 128,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "MULTI_HIT_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/ember_double_cut",
+      "iconSilhouetteVi": "hai cung ngược",
+      "lowFxPolicyVi": "giữ hai hit, không ghost",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-AD-04",
+      "nameVi": "Tước Mạch",
+      "classId": "CLASS_ANH_DAO",
+      "hudSlot": 4,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-AD-04",
+      "mechanicsSourceText": "Vai trò: làm chậm/tích Choáng Mạch. CD 14s, 22 MP, 160%, chậm 25% trong 2,5s; boss nhận Choáng Mạch thay hiệu ứng khống chế. Hoạt ảnh chém dọc từ vai xuống, thanh lửa mỏng dừng ở vị trí hit. Quái thường có dấu ba vệt xích đỏ trên chân; boss có biểu tượng mạch bị nứt cạnh tên hiệu ứng. Không khóa hoạt ảnh mục tiêu; không cộng dồn thời gian làm chậm.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Một nét đao dọc mảnh",
+        "release": "Ba dấu xích tại chân target sau hit",
+        "fade": "Status mờ theo expiry"
+      },
+      "attachMode": "TARGET_FOOT",
+      "shapeKey": "SLOW_MARK",
+      "maxModuleCellPx": 128,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "HIT_AND_STATUS_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/ember_chain",
+      "iconSilhouetteVi": "đao cắt ba vạch",
+      "lowFxPolicyVi": "giữ dấu chậm, bỏ sparks",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-AD-05",
+      "nameVi": "Ảnh Bộ (cơ động)",
+      "classId": "CLASS_ANH_DAO",
+      "hudSlot": 5,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-AD-05",
+      "mechanicsSourceText": "Vai trò: đổi vị trí. CD 8s, 10 MP, lướt 6m, xóa khóa mục tiêu của quái thường; không tàng hình. Nhân vật thu thấp người và trượt qua làn khói than trong 0,22s; silhouette được viền màu cam để đồng đội không mất dấu. Khóa mục tiêu boss không bị xóa. Không tạo ảo ảnh có thể bị nhắm.",
+      "role": "MOBILITY",
+      "visualPhases": {
+        "prep": "Khói than thấp ở gót",
+        "release": "Viền cam mỏng giữ silhouette, KHÔNG impact",
+        "fade": "Khói rách hai đoạn tắt"
+      },
+      "attachMode": "CASTER_TRAIL",
+      "shapeKey": "MOVE_ONLY",
+      "maxModuleCellPx": 128,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "DASH_PATH_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/ember_step",
+      "iconSilhouetteVi": "bước chân khói",
+      "lowFxPolicyVi": "chỉ đường viền/đầu cuối",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-AD-06",
+      "nameVi": "Tử Diệm (tuyệt kỹ)",
+      "classId": "CLASS_ANH_DAO",
+      "hudSlot": 6,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-AD-06",
+      "mechanicsSourceText": "Vai trò: nổ diện nhỏ, tiêu Nhiệt. CD 60s, 35 MP, 230% vùng nhỏ +45% mỗi Nhiệt, tiêu sạch Nhiệt. 0,55s tích lực: lưỡi đao hút các hạt than vào sống đao; vòng cảnh báo cá nhân 1,7m tông đỏ đen chỉ báo vùng gây sát thương, không phải vùng nguy hiểm cho chính người chơi. Chém xoay một vòng thấp, lửa bùng 0,25s, tắt nhanh để thấy boss. Mỗi tầng Nhiệt thêm một vòng nhỏ ở điểm hit, tối đa 5 vòng; số vòng đồng bộ biểu tượng Nhiệt.",
+      "role": "ULTIMATE",
+      "visualPhases": {
+        "prep": "Than hội vào sống đao, số tầng lấy resource",
+        "release": "Một quét vòng thấp đỏ cam, giữa trống",
+        "fade": "Tối đa năm cánh than theo Nhiệt đã tiêu"
+      },
+      "attachMode": "CASTER_FOOT",
+      "shapeKey": "EMBER_SWEEP",
+      "maxModuleCellPx": 256,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "ULTIMATE_RELEASE_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/ember_low_burst",
+      "iconSilhouetteVi": "vòng đao năm khe",
+      "lowFxPolicyVi": "giữ cung ngoài, số tầng bằng HUD",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-HB-01",
+      "nameVi": "Mực Triều",
+      "classId": "CLASS_HUYEN_BUT",
+      "hudSlot": 1,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-HB-01",
+      "mechanicsSourceText": "Vai trò: đạn sóng xuyên quái thường. CD 6s, 12 MP, 130%, đường thẳng 5m, xuyên tối đa 3 quái thường. Vẽ nét ngang bằng bút; nét mực xanh lam chuyển thành sóng có rìa giấy loang, không giống đạn phép tròn. Đầu sóng cao 0,8m, bay 0,25s; mỗi mục tiêu trúng có dấu chấm mực nhỏ. Boss chặn đường đạn; không xuyên tường. Nội tại Nét Mực giảm 1s CD sau tổng ba lần trúng hợp lệ.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Nét bút ngang xanh mực",
+        "release": "Sóng mực dẹt có rìa giấy, không cầu sáng",
+        "fade": "Ba giọt mực tách"
+      },
+      "attachMode": "PROJECTILE",
+      "shapeKey": "INK_WAVE",
+      "maxModuleCellPx": 128,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "PROJECTILE_STATE",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/ink_wave",
+      "iconSilhouetteVi": "nét bút và sóng",
+      "lowFxPolicyVi": "giữ đầu sóng, bỏ splash phụ",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-HB-02",
+      "nameVi": "Hàn Châm",
+      "classId": "CLASS_HUYEN_BUT",
+      "hudSlot": 2,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-HB-02",
+      "mechanicsSourceText": "Vai trò: làm chậm/khống chế nhẹ. CD 12s, 18 MP, 110%, chậm 35% trong 2s; quái nhỏ đóng băng 0,6s. Bút chấm ba điểm sáng xanh trước khi một kim băng mảnh bay đi. Trúng tạo hình băng dạng cánh hoa trên chân, không phủ thân. Boss nhận làm chậm theo giới hạn PvE hoặc tích Choáng Mạch tùy bảng kháng; không đóng băng boss. Cửa báo trước 0,18s, tốc độ đạn đủ để đọc và né ở cự ly xa.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Ba chấm cyan ở đầu bút",
+        "release": "Kim băng mảnh, cánh băng tại chân target",
+        "fade": "Cánh băng gãy nhỏ"
+      },
+      "attachMode": "PROJECTILE_AND_TARGET",
+      "shapeKey": "ICE_NEEDLE",
+      "maxModuleCellPx": 96,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "PROJECTILE_HIT_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/ice_tick",
+      "iconSilhouetteVi": "kim băng ba chấm",
+      "lowFxPolicyVi": "giữ needle/status, bỏ vỡ vụn",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-HB-03",
+      "nameVi": "Thủy Kính",
+      "classId": "CLASS_HUYEN_BUT",
+      "hudSlot": 3,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-HB-03",
+      "mechanicsSourceText": "Vai trò: khiên đồng đội. CD 16s, 22 MP, khiên 10% HP tối đa trong 4s; chỉ giữ khiên lớn nhất. Chọn mục tiêu đồng minh theo hướng con trỏ/joystick hỗ trợ: ưu tiên đồng minh gần tâm nút, nếu không chọn thì người gần nhất trong 6m có HP thấp nhất. Một nét tròn xanh ngọc khép quanh mục tiêu, mặt kính mỏng nghiêng 15 độ; khiên không che nhân vật. Nội tại Tĩnh Thủy thêm phần khiên theo bảng nội tại khi mục tiêu thấp HP; quy tắc không cộng dồn bắt buộc.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Vòng nước khép quanh chân ĐỒNG MINH",
+        "release": "Hai mép kính mỏng, mặt và thân mở",
+        "fade": "Vòng tách hai giọt khi shield hết"
+      },
+      "attachMode": "ALLY_BODY",
+      "shapeKey": "ALLY_SHIELD",
+      "maxModuleCellPx": 96,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "SHIELD_STATE",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/water_glass",
+      "iconSilhouetteVi": "kính nước bao khiên",
+      "lowFxPolicyVi": "giữ mép kính và status",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-HB-04",
+      "nameVi": "Mưa Tinh",
+      "classId": "CLASS_HUYEN_BUT",
+      "hudSlot": 4,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-HB-04",
+      "mechanicsSourceText": "Vai trò: hồi máu vùng. CD 18s, 28 MP, bán kính 3m; hồi 8% HP +2% mỗi giây trong 3s; tiêu 2 Thủy Ấn tăng tổng hồi 30%. Vẽ một vòng tròn xanh nhạt trên mặt đất, báo trước 0,45s; giọt sáng rơi thẳng trong vùng, không làm giảm tương phản nền. Hồi tick ở 0/1/2/3s; người rời vùng sau khi nhận tick vẫn giữ lượng đã hồi. Tối đa 5 người theo nội tại Chia Dòng; thứ tự ưu tiên: người chơi, thành viên nhóm trong vùng theo % HP thấp nhất. Không hồi mục tiêu ngoài party/guild.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Vòng đứt cyan báo vùng trên đất",
+        "release": "Mưa thưa trong vùng, tick heal chỉ từ server",
+        "fade": "Ngừng mưa, gợn cuối tan"
+      },
+      "attachMode": "GROUND_ZONE",
+      "shapeKey": "HEAL_RAIN",
+      "maxModuleCellPx": 256,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "HEAL_ZONE_STATE",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/water_rain_soft",
+      "iconSilhouetteVi": "mưa trên vòng",
+      "lowFxPolicyVi": "giữ biên/tick icon, giảm giọt50%",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-HB-05",
+      "nameVi": "Lưu Thủy Bộ (cơ động)",
+      "classId": "CLASS_HUYEN_BUT",
+      "hudSlot": 5,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-HB-05",
+      "mechanicsSourceText": "Vai trò: lùi giữ khoảng cách. CD 10s, 10 MP, lùi 4m và tăng 20% tốc chạy trong 1,5s. Nhân vật xoay vai, bước trượt ngược, để lại hai nét nước mỏng. Hướng lùi theo vector ngược hướng mặt; có thể chỉnh bằng joystick, không xuyên địch/tường. Vệt nước không gây sát thương và tan sau 0,3s.",
+      "role": "MOBILITY",
+      "visualPhases": {
+        "prep": "Hai nét nước dưới chân",
+        "release": "Lùi ngược facing theo server, không projectile",
+        "fade": "Hai dấu bước tan trong0,3s"
+      },
+      "attachMode": "CASTER_TRAIL",
+      "shapeKey": "MOVE_ONLY",
+      "maxModuleCellPx": 128,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "DASH_PATH_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/water_step",
+      "iconSilhouetteVi": "hai vệt nước ngược",
+      "lowFxPolicyVi": "giữ foot trail, bỏ crest",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-HB-06",
+      "nameVi": "Long Mạch Hồi Nguyên (tuyệt kỹ)",
+      "classId": "CLASS_HUYEN_BUT",
+      "hudSlot": 6,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-HB-06",
+      "mechanicsSourceText": "Vai trò: hồi nhóm và giải trạng thái. CD 70s, 45 MP; hồi 12% HP cho nhóm và giải một Chậm hoặc Độc, chịu giới hạn raid. Nhân vật viết một vòng ấn lớn dưới chân; nét chữ cách điệu là hình học hư cấu, không dùng ký tự giả Hán sai nghĩa. Sóng xanh lam tràn ra bán kính 8m trong 0,45s, đồng minh nhận một dải sáng từ chân lên vai. Chỉ mục tiêu party trong cùng encounter được hồi; raid áp dụng hệ số cấu hình (mặc định 70% từ ngoài party), tránh vượt ngân sách hồi. Không xóa stun/khóa cơ chế boss.",
+      "role": "ULTIMATE",
+      "visualPhases": {
+        "prep": "Ấn hình học hư cấu dưới caster, không chữ giả",
+        "release": "Sóng đất thấp đến ally, heal/cleanse từ state",
+        "fade": "Vòng đứt và giọt tắt"
+      },
+      "attachMode": "GROUND_ZONE_AND_ALLIES",
+      "shapeKey": "GROUP_RESTORE",
+      "maxModuleCellPx": 512,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "GROUP_HEAL_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/water_chime",
+      "iconSilhouetteVi": "vòng nước ba dấu",
+      "lowFxPolicyVi": "giữ wave outline và ally indicator",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-TC-01",
+      "nameVi": "Trấn Sơn",
+      "classId": "CLASS_THACH_CHUY",
+      "hudSlot": 1,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-TC-01",
+      "mechanicsSourceText": "Vai trò: đánh đơn mục tiêu, giảm tốc. CD 8s, 14 MP, 170%, giảm tốc 20% trong 2s. Nâng chùy qua vai, nện chéo xuống; chuẩn bị 0,25s cho tiếng rít đá. Hitbox hình quạt 60 độ, sâu 2,6m. Vết nứt đất chỉ là decal ngắn 0,35s, không tồn tại như chướng ngại. Quái hiện bụi vàng xám ở chân; boss nhận Choáng Mạch.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Chùy qua vai, wedge đất ngắn",
+        "release": "Nứt góc cạnh nhỏ trước target, không terrain mới",
+        "fade": "Bụi đá lắng"
+      },
+      "attachMode": "CASTER_FRONT",
+      "shapeKey": "HAMMER_IMPACT",
+      "maxModuleCellPx": 128,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "HIT_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/stone_hit",
+      "iconSilhouetteVi": "chùy nứt đá",
+      "lowFxPolicyVi": "giữ crack/tick, giảm debris",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-TC-02",
+      "nameVi": "Chấn Địa",
+      "classId": "CLASS_THACH_CHUY",
+      "hudSlot": 2,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-TC-02",
+      "mechanicsSourceText": "Vai trò: sát thương quanh thân/hất quái nhỏ. CD 14s, 20 MP, vòng bán kính 3m gây 120%; quái thường hất 0,5s. Nâng chùy thẳng, vòng bụi mỏng hiện trên đất 0,35s, sau đó sóng đá thấp lan ra. Đường kính tối đa 6m; mép ngoài dùng mảnh đá nhỏ, không dựng khối có thể hiểu là platform. Boss không hất, có thanh tích lũy Choáng Mạch.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Vòng bụi mỏng quanh caster",
+        "release": "Sóng đá thấp lan từ tâm",
+        "fade": "Mảnh nhỏ lắng, không platform"
+      },
+      "attachMode": "CASTER_FOOT",
+      "shapeKey": "RADIAL_SHOCK",
+      "maxModuleCellPx": 256,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "SHOCKWAVE_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/stone_ring",
+      "iconSilhouetteVi": "chùy hai vòng",
+      "lowFxPolicyVi": "giữ vòng ngoài, bỏ đá cao",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-TC-03",
+      "nameVi": "Thiết Bích",
+      "classId": "CLASS_THACH_CHUY",
+      "hudSlot": 3,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-TC-03",
+      "mechanicsSourceText": "Vai trò: giảm sát thương nhận. CD 18s, 24 MP, giảm 25% sát thương trong 4s; tiêu 2 Thế tăng lên 35%. Hạ chùy làm trụ, hiện ba mảng giáp đá trên vai/lưng/đầu gối, không biến nhân vật thành khối đá. Viền buff màu đất sáng quanh thanh HP; khi bị đánh, mảng nứt theo thời gian còn lại. Không cộng dồn, lần dùng mới chỉ làm mới thời lượng.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Ba phiến nhỏ vai/lưng/gối",
+        "release": "Phiến sát thân, không cage",
+        "fade": "Nứt rồi vỡ khi buff hết"
+      },
+      "attachMode": "CASTER_BODY",
+      "shapeKey": "ARMOR_BUFF",
+      "maxModuleCellPx": 96,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "BUFF_STATE",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/stone_armor",
+      "iconSilhouetteVi": "ba giáp đá",
+      "lowFxPolicyVi": "giữ ba plates, bỏ bụi quanh",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-TC-04",
+      "nameVi": "Khiêu Chiến",
+      "classId": "CLASS_THACH_CHUY",
+      "hudSlot": 4,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-TC-04",
+      "mechanicsSourceText": "Vai trò: điều hướng quái thường. CD 20s, 16 MP; quái thường trong 6m ưu tiên tấn công người dùng trong 4s; boss không bị ép đổi mục tiêu. Nhân vật gõ chùy xuống đất, phát vòng âm thanh dạng đường gợn màu đất. Quái thường có mũi tên nhỏ hướng về người chơi, chỉ hiển thị trong 0,7s; biểu tượng khiêu chiến cạnh tên quái giữ 4s. Thủ lĩnh có miễn nhiễm nhưng vẫn nhận sát thương nếu kỹ năng có cấu hình sát thương riêng (mặc định không gây damage).",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Gõ chùy một nhịp, vòng âm đất",
+        "release": "Chevron ở quái thường hướng về caster",
+        "fade": "Sóng âm tan, không damage spark"
+      },
+      "attachMode": "CASTER_FOOT_AND_TARGETS",
+      "shapeKey": "TAUNT_RING",
+      "maxModuleCellPx": 256,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "TAUNT_STATE",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/stone_call",
+      "iconSilhouetteVi": "chùy và chevron",
+      "lowFxPolicyVi": "giữ threat glyph, bỏ debris",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-TC-05",
+      "nameVi": "Phá Nham (cơ động)",
+      "classId": "CLASS_THACH_CHUY",
+      "hudSlot": 5,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-TC-05",
+      "mechanicsSourceText": "Vai trò: lao ngắn/ngắt hoạt ảnh quái nhỏ. CD 10s, 12 MP, lao 4m gây 100%, ngắt hoạt ảnh quái thường. Chuẩn bị 0,22s, người chơi ghì vai sau chùy, sau đó lao thẳng với một dải bụi sát mặt đất. Va mục tiêu thường tạo vòng đá nhỏ và ngắt động tác không phải boss; không xuyên tường. Boss không bị interrupt, chỉ nhận sát thương và Choáng Mạch.",
+      "role": "MOBILITY",
+      "visualPhases": {
+        "prep": "Ghì vai sau chùy",
+        "release": "Dải bụi thấp theo lao, vòng đá gọn tại hit hợp lệ",
+        "fade": "Bụi lắng ở điểm dừng"
+      },
+      "attachMode": "CASTER_TRAIL",
+      "shapeKey": "DASH_HIT",
+      "maxModuleCellPx": 256,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "DASH_HIT_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/stone_charge",
+      "iconSilhouetteVi": "vai và đầu chùy",
+      "lowFxPolicyVi": "giữ đầu/đích và impact nhỏ",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-TC-06",
+      "nameVi": "Sơn Thần Giáng Thế (tuyệt kỹ)",
+      "classId": "CLASS_THACH_CHUY",
+      "hudSlot": 6,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-TC-06",
+      "mechanicsSourceText": "Vai trò: vùng chắn ngắn và sát thương. CD 70s, 40 MP, vùng 4m tồn tại 5s, gây 180%; tiêu Thế tăng tối đa 2s. Cắm chùy, tạo một vòng chắn bằng các phiến đá thấp cao 0,55m; khoảng mở hướng camera giúp người chơi nhìn thấy bên trong. Vùng tấn công đánh một lần khi tạo, sau đó không tick damage. Đá mờ dần từ giây cuối; không chặn di chuyển đồng minh, đạn đồng minh hoặc telegraph boss. Mỗi Thế làm một phiến sáng và thêm tối đa 2s.",
+      "role": "ULTIMATE",
+      "visualPhases": {
+        "prep": "Các đế đá thấp chỉ vùng",
+        "release": "Phiến thấp có lối mở phía camera, KHÔNG collision",
+        "fade": "Giảm plates từ giây cuối rồi bụi tắt"
+      },
+      "attachMode": "GROUND_ZONE",
+      "shapeKey": "OPEN_SANCTUARY",
+      "maxModuleCellPx": 512,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "SANCTUARY_STATE",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/stone_sanctuary",
+      "iconSilhouetteVi": "vòng đá mở",
+      "lowFxPolicyVi": "giữ biên/vài slab, không che telegraph",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-LC-01",
+      "nameVi": "Khóa Mạch",
+      "classId": "CLASS_LINH_CUNG",
+      "hudSlot": 1,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-LC-01",
+      "mechanicsSourceText": "Vai trò: đánh dấu tăng sát thương nhóm. CD 10s, 16 MP, 130%, dấu 5s khiến nhóm gây thêm 3%, không cộng dồn. Bắn một mũi tên lá dài, quỹ đạo dễ đọc; khi trúng hiện dây rễ xanh ngọc nhỏ quấn quanh viền mục tiêu. Biểu tượng dấu hiện cạnh HP quái; nếu nhiều cung thủ, ưu tiên dấu có thời lượng còn lại dài nhất hoặc từ người chơi có đóng góp gần nhất theo cấu hình, không cộng nhiều buff. Nội tại Ghim Dấu tăng thời lượng 1s.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Đầu tên hình lá",
+        "release": "Một tên dài trúng, dấu nhánh tại target",
+        "fade": "Vệt lá gãy, mark tồn tại theo server"
+      },
+      "attachMode": "PROJECTILE_AND_TARGET",
+      "shapeKey": "LEAF_MARK",
+      "maxModuleCellPx": 128,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "PROJECTILE_MARK_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/leaf_arrow",
+      "iconSilhouetteVi": "tên và dấu nhánh",
+      "lowFxPolicyVi": "giữ arrowhead/mark",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-LC-02",
+      "nameVi": "Dây Gai",
+      "classId": "CLASS_LINH_CUNG",
+      "hudSlot": 2,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-LC-02",
+      "mechanicsSourceText": "Vai trò: bẫy làm chậm. CD 14s, 18 MP, bán kính 2m gây 90%, làm chậm quái thường 40% trong 2,5s. Bắn hạt giống xuống điểm chọn, vòng rễ xanh lục hiện 0,45s báo vùng; dây gai mọc thấp từ đất. Bẫy tồn tại tối đa 4s nếu không trúng; chỉ kích hoạt một lần. Boss không bị root/chậm nếu có kháng, vẫn có thể tích Choáng Mạch. VFX không che texture đất cảnh báo.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Một hạt đặt xuống điểm đất",
+        "release": "Ba nhánh gai thấp trong vòng bẫy",
+        "fade": "Thu gai khi trigger/expire, không tự nổ"
+      },
+      "attachMode": "GROUND_ZONE",
+      "shapeKey": "ROOT_TRAP",
+      "maxModuleCellPx": 256,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "TRAP_STATE",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/root_grow",
+      "iconSilhouetteVi": "hạt và ba gai",
+      "lowFxPolicyVi": "giữ trap boundary và cue trigger",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-LC-03",
+      "nameVi": "Liên Châu",
+      "classId": "CLASS_LINH_CUNG",
+      "hudSlot": 3,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-LC-03",
+      "mechanicsSourceText": "Vai trò: sát thương nhiều hit. CD 8s, 18 MP, 5 mũi ×45%, tối đa 3 mũi trên cùng một mục tiêu. Loạt tên bắn trong 0,55s với khoảng 0,11s; độ lệch quạt tối đa 12 độ; mục tiêu khóa gần con trỏ đầu tiên. Mỗi tên có trail lá 0,12s và va chạm riêng để đọc số hit. Hệ thống mục tiêu giới hạn 3 tên vào một mục tiêu nhằm giữ vai trò đa mục tiêu, không cho bắn tự động nhân damage lên boss.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Năm chấm nhỏ bên dây cung",
+        "release": "Năm tên theo nhịp0,11s, không bắn đồng thời do ảnh",
+        "fade": "Vệt lá tan từng tên"
+      },
+      "attachMode": "PROJECTILES",
+      "shapeKey": "FIVE_ARROW_VOLLEY",
+      "maxModuleCellPx": 256,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "VOLLEY_PROJECTILE_STATE",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/leaf_volley",
+      "iconSilhouetteVi": "năm mũi tên",
+      "lowFxPolicyVi": "giữ đủ5head, giảm trail",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-LC-04",
+      "nameVi": "Tán Hoa",
+      "classId": "CLASS_LINH_CUNG",
+      "hudSlot": 4,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-LC-04",
+      "mechanicsSourceText": "Vai trò: hình nón gần. CD 12s, 20 MP, góc 100 độ, tổng 150%, giảm 30% nếu mục tiêu ở quá gần. Bắn loạt cánh gỗ/hoa mảnh theo hình quạt, không phát nổ. Ranh giới gần là 0,8m; mục tiêu trong đó nhận 70% tổng hệ số để tránh chồng hitbox cận cảnh. Tông xanh non/vàng kem, không dùng cánh quá lớn. Có số lượng 5–7 cánh chính và hạt phụ giới hạn.",
+      "role": "ACTIVE",
+      "visualPhases": {
+        "prep": "Năm đến bảy cánh gỗ mở quạt",
+        "release": "Quạt cánh100độ, không cầu nổ",
+        "fade": "Cánh rơi thành cụm nhỏ"
+      },
+      "attachMode": "CASTER_FRONT",
+      "shapeKey": "WOOD_FAN",
+      "maxModuleCellPx": 256,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "FAN_HIT_CONFIRMED",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/leaf_fan",
+      "iconSilhouetteVi": "quạt năm cánh",
+      "lowFxPolicyVi": "giữ cánh chính, bỏ bụi lá",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-LC-05",
+      "nameVi": "Phi Diệp (cơ động)",
+      "classId": "CLASS_LINH_CUNG",
+      "hudSlot": 5,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-LC-05",
+      "mechanicsSourceText": "Vai trò: lùi đồng thời phản kích. CD 9s, 12 MP, lùi 5m và bắn 80%. Hoạt ảnh kéo cung trong lúc trượt lùi, hitbox tên đi sau 0,12s; nếu lùi bị vật cản thì dừng và vẫn bắn theo hướng ban đầu. Vệt lá chỉ theo đường bay, không tạo hit nếu phát bắn bị server từ chối. Dùng cho điều khiển chuột và joystick; không tự tìm đường vòng.",
+      "role": "MOBILITY",
+      "visualPhases": {
+        "prep": "Dấu lá sau gót, cung hướng trước",
+        "release": "Lùi theo server và một tên phản kích riêng",
+        "fade": "Foot trail tắt, hit tên chỉ khi confirmed"
+      },
+      "attachMode": "CASTER_TRAIL_AND_PROJECTILE",
+      "shapeKey": "RETREAT_AND_ARROW",
+      "maxModuleCellPx": 256,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "RETREAT_ARROW_STATE",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/leaf_retreat",
+      "iconSilhouetteVi": "cung và bước lùi",
+      "lowFxPolicyVi": "giữ một tên và hai dấu chân",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    },
+    {
+      "skillId": "SK-LC-06",
+      "nameVi": "Bách Tiễn Quy Tông (tuyệt kỹ)",
+      "classId": "CLASS_LINH_CUNG",
+      "hudSlot": 6,
+      "sourceRef": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md#SK-LC-06",
+      "mechanicsSourceText": "Vai trò: vùng sát thương có báo trước. CD 65s, 40 MP; báo vùng 1,2s, mưa tên bán kính 6m tổng 300%; tiêu 3 Mộc Tiêu tăng 20%. Người chơi chọn điểm trong tầm 12m; hình tròn xanh rêu viền vàng hiện đủ 1,2s, tâm có ba vòng mũi tên để người chơi phân biệt mình tạo và boss cảnh báo. Mưa tên rơi theo 4 đợt trong 0,8s, tổng 300% chia đều; tối đa 8 mục tiêu thường, boss nhận damage theo hệ số. Khi tiêu 3 Mộc Tiêu, vòng tâm sáng thêm ba vạch, không thay đổi vùng/timing để tránh nhầm telegraph.",
+      "role": "ULTIMATE",
+      "visualPhases": {
+        "prep": "Vòng rêu viền ochre, ba glyph tên",
+        "release": "Bốn đợt mưa tên trong vùng đã khóa",
+        "fade": "Vệt tên ngắn tắt, không cây mọc ngoài vùng"
+      },
+      "attachMode": "GROUND_ZONE",
+      "shapeKey": "ARROW_RAIN",
+      "maxModuleCellPx": 512,
+      "sourcePixelsPerUnit": 20,
+      "visualKeyFrameBudget": {
+        "prep": 2,
+        "release": 3,
+        "fade": 3
+      },
+      "visualPlaybackFps": 12,
+      "timingPolicy": "EVENT_GATED_HOLD_OR_LOOP; NOT frameCount/fps = gameplay duration",
+      "cueSemantic": "ARROW_RAIN_STATE",
+      "wireStatus": "REQUIRES_EVENT_ADAPTER_NOT_NEW_WIRE_ENUM",
+      "soundKey": "SFX/SKILL/leaf_rain",
+      "iconSilhouetteVi": "ba tên trên vòng",
+      "lowFxPolicyVi": "giữ ranh/nhịp4đợt, giảm tên trang trí",
+      "collisionPolicy": "NO_VFX_COLLIDER; server shape owns damage/LOS",
+      "status": "DESIGN_HANDOFF_NOT_RUNTIME_ASSET"
+    }
+  ]
+}

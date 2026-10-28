@@ -151,10 +151,10 @@ Vai trò: vùng sát thương có báo trước. CD 65s, 40 MP; báo vùng 1,2s,
 | Nhóm asset | Yêu cầu bàn giao |
 |---|---|
 | Actor sprite | frame-based sheet với pivot chân ổn định, anchor vũ khí/tay/chân/ngực/đầu khai báo pixel; layer/variant đổi giáp vẫn snap vào cùng grid; frame art không quyết định vị trí mạng |
-| Animation | idle, chạy, nhảy, rơi, đáp, đánh thường 3 hit, hurt, chết, tương tác, 6 skill, né; clip có marker chuẩn bị/hit/recovery |
+| Animation | idle, chạy, đánh thường 3 hit, hurt, chết, tương tác, 6 skill, né; clip có marker chuẩn bị/hit/recovery |
 | VFX | file riêng cho cast, travel, impact, buff/debuff, miss; pivot và scale world-unit; bản low-VFX giảm hạt |
 | Audio | cast ngắn, impact nhẹ/nặng, miss, buff, debuff, ultimate; không lấy sample gây giật mình hoặc âm lượng đột biến |
-| UI icon | nền vuông 128×128, silhouette dễ đọc ở 48×48; lớp phủ cooldown do client vẽ, không bake vào hình |
+| UI icon | source32×32, preview64/96px integer scale, silhouette đọc ở native; lớp phủ cooldown do client vẽ, không bake vào hình |
 | QA nội dung | clip showcase nền sáng/tối, ít nhất 1 mục tiêu thường và 1 boss; kiểm tra mù màu, giảm rung, giảm lóe, cấu hình VFX thấp |
 
 ### Danh mục trạng thái dùng chung
@@ -178,3 +178,7 @@ Vai trò: vùng sát thương có báo trước. CD 65s, 40 MP; báo vùng 1,2s,
 5. Các nút tắt giảm rung/lóe/hạt và giới hạn hiệu ứng hoạt động cho toàn bộ skill, không chỉ tuyệt kỹ.
 6. Số damage, buff, trạng thái và hiệu ứng âm thanh phải còn đọc được ở màn hình 16:9, 16:10 và 20:9.
 
+
+## Handoff hình kỹ năng 2026-10-29
+
+Skill_VFX_Art_Direction_v1_vi.md và Skill_VFX_Cards_v1_vi.md mở rộng đầy đủ30skill thành ba pha art và cue/lifetime/LowFX.5board concept được tạo mới, không trích sprite tham khảo. Các jump/fall/land trong asset list lịch sử không là luật platformer (DEC016); icon source32px theo hướng pixel giản lược. Kỹ năng ghi “ngang” được hiểu trong mặt phẳngXY theo aim, không giới hạn chỉ trái-phải. Visual module size/frame count không thay range/duration/damage server. Ảnh sinh sai guard/target/phiến đá phải sửa theo tài liệu handoff trước production.

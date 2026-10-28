@@ -85,3 +85,7 @@ Muse phụ trách storyboard và sản xuất video theo DEC-018. Đọc Narrati
 ## ART-REV-01 — Native quality gate trước nhân rộng (2026-10-29)
 
 Đọc docs/production/Art_Concept_References/v1/README_vi.md và Art_Completion_Plan_20261029_vi.md; kéo Git LFS để có5PNG. Dùng reference/invariants và sửa sai ảnh sinh được ghi cụ thể; không crop/resize board thành runtime sprite. Ưu tiên3pose Minh Kiếm S/SE/N native48×64 + preview4×, sau review mới8hướng/walk/attack. Board chưa là owner approval hoặc engine proof. Tách cinema #29 khỏi pose fix; dùng mẫu Ly An/Bến Mưa cho storyboard. Giao một bước đạt trước khi render128clip. Art/source master được lưu ở Art_Source/, PNG export runtime vào Client Assets và manifest hiện hành; không đưa board docs vào runtime manifest.
+
+## VFX-01 — Bộ30kỹ năng theo concept5môn phái
+
+Giao mẫu ảnh tại docs/production/Art_Concept_References/skill_vfx_v1,5board6hàng×3pha. Đọc Skill_VFX_Art_Direction_v1_vi.md và Skill_VFX_Cards_v1_vi.md; DesignBaselines/skill_vfx_art_v1.json có component/attach/cue/LowFX. Bắt đầu MK01 guard+counter và HB04 heal-zone, native PNG trong suốt/palette/timeline/light-dark preview; sửa các lỗi target/shape đã ghi. Cần event adapter để tích hợp, không gây damage từ animation hoặc tự đổi MP/CD. Giao1–3skill/PR sau review, không tạo full240directional sheets trước mẫu đầu. Giữ quality gate pose/map/cinema hiện có, báo một hàng đợi rõ thay vì bỏ các milestone cũ.
