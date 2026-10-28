@@ -158,3 +158,10 @@ Các tài liệu mới xác định hành vi cần xây dựng; audit runtime v�
 - ../../Implementation/Content/Narrative/Narrative_Quest_Beats_v2.json: 76/76 quest có clue, câu hỏi, player agency và payoff riêng.
 - ../../Implementation/Content/Narrative/Cinema_Production_Pack_v1.json: 20 cảnh/63 prompt shot6giây, dialogue, trigger, spoiler guard, fallback và delivery owner Muse.
 - ../../Implementation/Tools/validate_narrative.py: kiểm coverage, refs, scene/shot IDs và duration; không chứng nhận chất lượng video hoặc canon bằng máy.
+
+### Mẫu mỹ thuật và kế hoạch sửa chất lượng (2026-10-29)
+
+- Art_Concept_References/v1/README_vi.md: năm board PNG, phạm vi reference, lỗi ảnh sinh cần sửa và gate native pose trước full animation.
+- Art_Concept_References/v1/generation_prompts.json: prompt thực tế và công cụ built-in đã dùng.
+- Art_Concept_References/v1/reference_manifest.json: kích thước/SHA256/status của từng board, không phải runtime asset manifest.
+- Art_Completion_Plan_20261029_vi.md: thứ tự hoàn thiện slice, environment/UI/cinema/roster còn lại và phân công review.
