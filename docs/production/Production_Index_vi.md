@@ -165,3 +165,5 @@ Các tài liệu mới xác định hành vi cần xây dựng; audit runtime v�
 - Art_Concept_References/v1/generation_prompts.json: prompt thực tế và công cụ built-in đã dùng.
 - Art_Concept_References/v1/reference_manifest.json: kích thước/SHA256/status của từng board, không phải runtime asset manifest.
 - Art_Completion_Plan_20261029_vi.md: thứ tự hoàn thiện slice, environment/UI/cinema/roster còn lại và phân công review.
+
+- HUD_Skill_Arc_Layout_vi.md: cập nhật2026-10-29 theo chủ dự án,6slot tròn vòng cung quanh attack; concept06 thay layout grid của04.

@@ -56,3 +56,7 @@ Reference board không phải edit target. Bắt đầu từ bố cục silhouet
 Ví dụ Gate A: “Draw original Minh Kiếm native pixel sprite in a single48×64 transparent cell, facing S, foot pivot bottom center. Match approved blue hair/red cape/teal ivory tunic/gunmetal armor/gold sword with one GREEN HEXAGON guard gem. Three large hair clusters,2cape folds,3tones per material,1px outer contour. Feet separate, sword clear of torso. No headband unless design reviewer approves it, no blur/gradients/extra limbs. Deliver source native plus4×nearest preview; this is one pose, not a full sprite sheet.”
 
 Nếu công cụ không tạo đúng48×64, Muse phải pixel-redraw/cleanup ở editor rồi export; không chỉ resize ảnh lớn và gọi là completed. Ghi phương pháp thật trong PR.
+
+## HUD thay thế theo yêu cầu chủ dự án
+
+06_pixel_hud_skill_arc_v2.png là concept HUD hiện hành:6slot tròn vòng cung quanh nút đánh. Board04 lưới2hàng bị supersede về layout, chỉ còn tham chiếu component/material. Chi tiết HUD_Skill_Arc_Layout_vi.md nằm ở docs/production. User đã xác nhận kiểu bố trí; các image glyph/text vẫn phải sửa theo registry, không được coi toàn ảnh là owner approval.

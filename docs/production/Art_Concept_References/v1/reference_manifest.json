@@ -38,7 +38,8 @@
       "height": 941,
       "sha256": "7de6e989ed77b4de43ce8c3bf697da69b236bfc482e4a4a66fe9a9f8e5201ef6",
       "status": "DIRECTION_CANDIDATE_NOT_RUNTIME",
-      "review": "Visually inspected; corrections listed in README_vi.md; no native-grid/palette/engine certification"
+      "review": "Visually inspected; corrections listed in README_vi.md; no native-grid/palette/engine certification",
+      "layoutStatus": "SUPERSEDED_BY_06_SKILL_ARC_V2"
     },
     {
       "id": "05_five_classes_lineup",
@@ -48,6 +49,16 @@
       "sha256": "e3b2bcda9331fbb4d782a052c582ce856e402b76ff82fd4779a90f748e8066ed",
       "status": "DIRECTION_CANDIDATE_NOT_RUNTIME",
       "review": "Visually inspected; corrections listed in README_vi.md; no native-grid/palette/engine certification"
+    },
+    {
+      "id": "06_pixel_hud_skill_arc_v2",
+      "path": "docs/production/Art_Concept_References/v1/06_pixel_hud_skill_arc_v2.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "cd41a18636913b304efba2388cff7337953d3f3673ea0972eb0a5556809ee110",
+      "status": "CONCEPT_REFERENCE_NOT_RUNTIME",
+      "layoutStatus": "CURRENT_ARC_REQUESTED_BY_USER",
+      "review": "six circular slots 1..6 visually inspected; exact geometry, canonical glyphs and hit targets require runtime asset implementation"
     }
   ]
 }
