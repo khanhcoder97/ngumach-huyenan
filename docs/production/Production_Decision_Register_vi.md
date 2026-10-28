@@ -34,3 +34,7 @@ Mỗi quyết định dưới đây được áp dụng đồng nhất cho GDD, 
 
 
 
+
+## DEC-016 — Góc nhìn từ trên (2026-10-28)
+
+Chủ dự án xác nhận gameplay 2D nhìn từ trên, di chuyển XY 8 hướng. `Top_Down_Gameplay_World_Spec_vi.md` thay mọi luật side-scroll/jump, Y-height và capsule cũ. Giữ 640×360, 20 PPU và sheet 48×64 theo DEC-015; footprint hero 1,2×0,6 WU. 349 anchors cần review topology theo hồ sơ migration, không đổi ID/coordinate silently. `Production_Completion_Addendum_vi.md` khóa bổ sung hành vi giao nhận quest/transaction/UI; không coi đây là bằng chứng đã implementation.

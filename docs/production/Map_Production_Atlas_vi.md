@@ -1,13 +1,16 @@
 # ATLAS SẢN XUẤT MAP VÀ BLOCKOUT
 ## Ngũ Mạch: Huyền Ấn — bản sản xuất v1.0
 
+> DEC-016 (2026-10-28): áp dụng `Top_Down_Gameplay_World_Spec_vi.md`. Các bảng kích thước/placement cũ là blockout chưa nghiệm thu top-down. Y luôn là Bắc–Nam trên mặt đất. “Platform” là bệ/cầu/vùng an toàn có đường đi hoặc floor link, không yêu cầu nhảy; chiều cao silhouette/capsule cũ không dùng làm collider. ID được giữ; không tự chuyển tọa độ cũ thành độ cao.
+
+
 ### 1. Hệ tọa độ và quy ước đặt cảnh
 
 Đây là tài liệu chuẩn cho level design, world building và AI dựng blockout. Tên/ID map, NPC, spawn và cổng dịch chuyển là khóa tham chiếu, có thể đổi hiển thị nhưng không đổi ID sau khi nội dung đã phát hành.
 
-- Map 2D ngang. Kích thước blockout chuẩn mỗi vùng: X=0..360 WU, Y=0..72 WU; ngoại lệ thủ phủ `MAP_THANG_LONG` rộng 900×96 WU. 1 WU=0,5m; map chuẩn rộng 180m, Thăng Long Thành rộng 450m.
-- Sàn chính Y=0 là mặt đất nhân vật đứng; các giá trị Y dương là độ cao mặt platform, không phải tọa độ tâm sprite. Chiều sâu giả lập bằng layer Z riêng, không dùng trục Y.
-- Máy quay ngang 32 WU, cao 18 WU ở 16:9; trên 20:9 giữ chiều cao 18 WU và mở ngang tối đa 40 WU. Actor sprite có bounds silhouette 5 WU (100 source px/300 output px ở 1080p, 20 PPU), capsule collision cao 3,6 WU. Tầm nhảy tối đa 7 WU ngang / 5 WU cao; platform gameplay phải nằm trong giới hạn này.
+- Map 2D nhìn từ trên. Kích thước blockout chuẩn mỗi vùng: X=0..360 WU, Y=0..72 WU; ngoại lệ thủ phủ `MAP_THANG_LONG` rộng 900×96 WU. 1 WU=0,5m; map chuẩn rộng 180m, Thăng Long Thành rộng 450m.
+- X tăng về Đông, Y tăng về Bắc trên mặt đất. Tọa độ actor là pivot chân. Y không biểu diễn độ cao; tầng cầu/sàn dùng floorId và liên kết riêng. Z chỉ phục vụ render.
+- Camera nhìn từ trên 32×18 WU ở 16:9; PvP giữ cùng vùng nhìn. Hero dùng cell 48×64 px, footprint capsule ngang 1,2×0,6 WU tại pivot chân. Di chuyển và né trên mặt phẳng XY; không có nhảy platformer.
 - Tọa độ trong bảng là điểm neo tâm, trừ khi ghi rõ “đầu/cuối”. Quái spawn theo điểm trung tâm và bán kính tuần tra. NPC đứng yên theo tọa độ; NPC đi tuần được ghi hướng/tuyến.
 - Kích thước prop là WU, theo rộng × cao. Prop decor nằm ở layer xa/giữa/gần; prop collision có tên riêng. Không đặt bụi/cỏ cao che nhân vật. Nền nước có thể trang trí nhưng mép bờ, độ sâu, vùng bơi phải có collision/nav rõ.
 - Mỗi khu gồm cổng vào, một đường chính dễ nhận, tối đa hai nhánh phụ, điểm nghỉ/teleport, vùng encounter và một landmark nhìn thấy từ camera. Collision của decor không tự động bật.
@@ -266,10 +269,10 @@ Spawn event pool theo cánh: mỗi cánh có 3 nhóm N (mỗi nhóm 4 quái), 1 
 - Mỗi map có điểm hồi sinh an toàn, cách spawn quái ít nhất 18 WU; khi chết trong boss encounter hồi tại checkpoint instance, không về hub.
 - Bảng spawn/NPC/node có tọa độ từng hàng nằm trong `World_Spawn_Gathering_Manifest_vi.csv`; đọc thêm `World_Spawn_Gathering_Manifest_Spec_vi.md` để phân biệt anchor từ Atlas với vị trí activity/node đề xuất. Atlas vẫn là nguồn hình học, props, đường đi và cổng.
 - Level designer cần kiểm tra mọi mục tiêu quest nằm trong vùng camera hoặc được dẫn marker; không đặt collectible sau collision không thể tới.
-- Tối đa 3 tầng platform gameplay nhìn thấy cùng lúc trong camera; không để cây/nóc nhà che vị trí nhảy.
+- Cầu có floorId riêng khi chồng đường; mái/cây che actor phải chuyển sang trạng thái che khuất theo Top_Down_Gameplay_World_Spec_vi.md.
 - Quái không spawn bên trong cổng, cầu thang, vùng tương tác, boss arena đang đóng hoặc trong khoảng escort.
 - Đường đi cốt truyện có bề rộng tối thiểu 8 WU; đường combat boss tối thiểu 16 WU nếu boss có vùng quét ngang.
-- Kiểm tra mỗi platform bằng đường nhảy hợp lệ, kiểm tra mọi prop collision ở tốc độ chạy, né, đẩy lùi; NPC không được đứng trên collision chỉ decor.
+- Kiểm tra đường XY qua cầu/cổng/thang ở tốc độ chạy, né, đẩy lùi; NPC phải đứng trong vùng walkable đúng floorId.
 - Bản vẽ hoàn thiện cần xuất scene graybox có nhãn tọa độ 20 WU, screenshot từng map ở tỷ lệ 16:9, bảng spawn và trigger được validate trong editor.
 
 ### 14. Fishing anchors và farm pocket

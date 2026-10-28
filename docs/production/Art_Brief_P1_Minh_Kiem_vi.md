@@ -1,5 +1,8 @@
 # Art Brief P1 — Nhân vật Minh Kiếm
 
+
+> DEC-016 (2026-10-28): áp dụng `Top_Down_Gameplay_World_Spec_vi.md`. Các bảng kích thước/placement cũ là blockout chưa nghiệm thu top-down. Y luôn là Bắc–Nam trên mặt đất. “Platform” là bệ/cầu/vùng an toàn có đường đi hoặc floor link, không yêu cầu nhảy; chiều cao silhouette/capsule cũ không dùng làm collider. ID được giữ; không tự chuyển tọa độ cũ thành độ cao.
+
 **Trạng thái:** brief sản xuất, chưa phải concept đã duyệt hay asset production.  
 **Gói liên quan:** `ART-P1-002` character sheet, `ART-P1-003` combat clips, `ART-P1-017` skill VFX trong `Art_Production_Queue_P1_vi.md`.
 
@@ -14,7 +17,7 @@
 
 ## 2. Silhouette và model sheet
 
-**Kích thước chuẩn:** bounds actor cao 5 WU (2,5 m), capsule gameplay cao 3,6 WU (không đổi theo art). Sheet gameplay dùng cell 48×64 source px ở 20 PPU, lưới 8 hướng × 6 frame = 288×512, pivot bottom-center; hiển thị 192 px tại 1080p scale 3×. Turnaround front/side/back, portrait, swatches, props, năm biểu cảm và scale figure cạnh NPC/quái chuẩn vẫn là deliverable thiết kế bổ sung bằng pixel art.
+**Kích thước chuẩn:** cell hiển thị 2,4×3,2 WU; footprint capsule ngang 1,2×0,6 WU, offset (0;0,3). Sheet gameplay dùng cell 48×64 source px ở 20 PPU, lưới 8 hướng × 6 frame = 288×512, pivot bottom-center; hiển thị 192 px tại 1080p scale 3×. Turnaround front/side/back, portrait, swatches, props, năm biểu cảm và scale figure cạnh NPC/quái chuẩn vẫn là deliverable thiết kế bổ sung bằng pixel art.
 
 **Silhouette đã chốt:** chibi đầu lớn/thân gọn, tóc xanh gai dựng, vai giáp thép đen góc cạnh, tay chân ngắn, ủng chắc. Kiếm vàng bản lớn là điểm nhấn silhouette chính; áo choàng đỏ bay sau vai tạo mảng tương phản. Tư thế sẵn sàng chiến đấu, biểu cảm lạnh và quyết tâm (hướng NGẦU đã chốt, không mềm/dễ thương). Mỗi frame dùng pixel cluster gọn, outline 1–2 pixel nguồn, không anti-aliasing.
 
@@ -59,4 +62,4 @@ Nghiệm thu ART-P1-002/003 khi: tạo hình/palette đã chốt được duyệ
 
 ## 7. Cần xử lý trước khi khóa clip
 
-Combat Skills spec và art documents trước đây từng dùng hai chiều cao hero khác nhau; pixel-art migration hiện thống nhất actor bounds 5 WU, capsule 3,6 WU và 20 PPU. Hai SVG concept trước đây không phải pixel art, chỉ lưu lịch sử; concept sprite sheet mới sẽ tuân chuẩn art pipeline và cần duyệt trước export production.
+Combat Skills spec và art documents trước đây từng dùng hai chiều cao hero khác nhau; DEC-016 thay chiều cao collider cũ bằng footprint mặt đất 1,2×0,6 WU; sheet 48×64 px và 20 PPU. Hai SVG concept trước đây không phải pixel art, chỉ lưu lịch sử; concept sprite sheet mới sẽ tuân chuẩn art pipeline và cần duyệt trước export production.

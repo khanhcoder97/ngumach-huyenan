@@ -6,7 +6,7 @@
 
 ## 1. Ngôn ngữ hình ảnh
 
-- Pixel art 2D ngang, vẽ pixel thủ công theo cụm màu có chủ ý; silhouette lớn, tương phản rõ, chi tiết trang phục/kiến trúc gợi chất fantasy võ hiệp Lạc Châu nguyên bản.
+- Pixel art 2D nhìn từ trên, vẽ pixel thủ công theo cụm màu có chủ ý; silhouette lớn, tương phản rõ, chi tiết trang phục/kiến trúc gợi chất fantasy võ hiệp Lạc Châu nguyên bản.
 - Tham chiếu tạo hình đã chốt ngày 2026-10-27 (DEC-015): chibi kiếm sĩ tóc xanh gai, kiếm vàng bản lớn với guard gắn ngọc lục giác, áo choàng đỏ, áo teal viền trắng, khóa thắt lưng lục giác vàng, giáp thép đen (gunmetal) viền vàng ấm. Dùng như hướng mỹ thuật tổng quát; không sao chép nhân vật/tên/huy hiệu cụ thể trong ảnh tham chiếu.
 - Không vector line art, tranh raster HD được thu nhỏ, AI upscale, blur, anti-aliasing, gradient mượt, normal-map lighting hoặc skeletal deformation làm biến dạng cụm pixel. Ánh sáng/gradient chỉ được vẽ thành dải pixel/banding hoặc dithering có kiểm soát.
 - Màu là một phần tín hiệu nhưng không phải tín hiệu duy nhất. Telegraph, đội, rarity và trạng thái luôn khác nhau cả về silhouette, pattern, icon hoặc motion.
@@ -20,7 +20,7 @@
 | Pixels Per Unit | 20 px/WU; 1 WU vẫn bằng 0,5 m |
 | Base camera view | 32×18 WU ở 16:9 |
 | World pixel step | 0,05 WU; render origin/camera/sprite pivot snap vào lưới này |
-| Hero | actor bounds cao 5 WU, capsule gameplay 3,6 WU (không đổi); sheet nhân vật dùng cell 48×64 source px, pivot bottom-center; hiển thị 192 screen px ở output 1920×1080 (scale 3×) |
+| Hero | cell hiển thị tối đa 2,4×3,2 WU; footprint capsule ngang 1,2×0,6 WU, offset (0;0,3); sheet nhân vật dùng cell 48×64 source px, pivot bottom-center; hiển thị 192 screen px ở output 1920×1080 (scale 3×) |
 | Tile art | tile nền chuẩn 16×16 source px (0,8 WU); module lớn là bội nguyên của tile, placement gameplay tiếp tục dùng WU |
 
 Unity dùng URP 2D + Pixel Perfect Camera, Reference Resolution 640×360, Assets Pixels Per Unit 20, integer upscale; đầu ra 720p/1080p/1440p lần lượt dùng scale 2×/3×/4×. Tỉ lệ không chia hết dùng integer viewport có letterbox/pillarbox; không kéo scale phân số lên sprite. Với 20:9 landscape giữ 360 logical pixel chiều cao và mở rộng chiều ngang; vùng gameplay/camera không được cấp lợi thế đối kháng riêng cho thiết bị. Portrait dùng layout UI riêng, không ép xoay/scale sprite.
@@ -61,3 +61,7 @@ Mỗi asset ghi `asset_id`, entity/map/skill link, source PNG/layer, cell/frame 
 - Giữ nguyên schema, ID, map WU, spawn/gather placement, quest, combat balance, network/server contracts và nội dung. Thay visual export, animation representation, camera render, import preset, UI art và tiêu chí nghiệm thu.
 - Các concept SVG cũ của Minh Kiếm chỉ là hồ sơ ý tưởng lịch sử, không phải art source/runtime; thay bằng sprite concept pixel-art trước bước model/animation production.
 - Quy trình sản xuất của Muse (DEC-015): sinh ảnh theo từng strip một hướng, ghép sheet bằng code theo đúng lưới cell, rồi **audit bằng đếm pixel** trước khi gọi là đạt — đủ số cell theo kế hoạch, mọi frame trong một hàng khác nhau, không tái dùng frame giữa các hàng, hàng gương phải khớp tuyệt đối. Bản draft lưu ở workspace của Muse; chỉ sau khi chủ dự án duyệt mới bàn giao vào repo bằng nhánh `muse/` + PR theo quy trình handoff.
+
+## 9. Camera và footprint hiện hành
+
+DEC-016 và `Top_Down_Gameplay_World_Spec_vi.md` chốt góc nhìn từ trên, di chuyển XY 8 hướng. Các số actor 5 WU/capsule 3,6 WU cũ đã hết hiệu lực; 48×64 px/20 PPU không được kéo lên 5 WU. Menu portrait là preview riêng; gameplay mobile vẫn landscape.

@@ -3,7 +3,7 @@
 
 ### 1. Mục đích
 
-Bộ tài liệu chuyển ý tưởng MMORPG 2D ngang thành đặc tả có thể chia việc cho đội gameplay, narrative, UI/UX, 2D art, level design, backend và QA. Tên Ngũ Mạch: Huyền Ấn hiện là tên làm việc, chưa tra cứu hoặc đăng ký thương hiệu.
+Bộ tài liệu chuyển ý tưởng MMORPG 2D nhìn từ trên thành đặc tả có thể chia việc cho đội gameplay, narrative, UI/UX, 2D art, level design, backend và QA. Tên Ngũ Mạch: Huyền Ấn hiện là tên làm việc, chưa tra cứu hoặc đăng ký thương hiệu.
 
 Đây là game mới, chỉ dùng KPAH làm tham chiếu ở mức thể loại/vòng lặp MMORPG 2D cổ điển. JAR đã phân tích chứa bytecode Java và tài nguyên đóng gói, không chứa mã nguồn Java gốc đầy đủ hay nội dung máy chủ để xác thực toàn bộ cốt truyện/cân bằng. Tên phái, truyện, nhân vật, nhiệm vụ, map, UI, con số và asset trong các tài liệu này là thiết kế mới. Không chép tên nhân vật, thoại, bản đồ, hình, âm thanh hoặc dữ liệu độc quyền của KPAH.
 
@@ -59,10 +59,10 @@ Bộ tài liệu chuyển ý tưởng MMORPG 2D ngang thành đặc tả có th�
 
 | Hạng mục | Quyết định |
 |---|---|
-| Thể loại/hình ảnh | MMORPG hành động 2D ngang pixel art; frame-based sprites, tilemap và UI raster theo `Pixel_Art_Production_Standard_vi.md` |
+| Thể loại/hình ảnh | MMORPG hành động 2D nhìn từ trên pixel art; frame-based sprites, tilemap và UI raster theo `Pixel_Art_Production_Standard_vi.md` |
 | Nền tảng | PC + Android/iOS, dùng chung tài khoản/máy chủ; mobile chơi ngang |
 | Engine baseline | Unity 6.3 LTS/C#, backend authoritative; thay engine cần cập nhật kiến trúc |
-| Camera/world | camera ngang; 1 WU=0,5m; vùng chuẩn 360×72 WU; Thăng Long Thành 900×96 WU; sàn chính Y=0 |
+| Camera/world | camera orthographic nhìn từ trên; 1 WU=0,5m; vùng chuẩn 360×72 WU; Thăng Long Thành 900×96 WU; Y=0 là trục đường tham chiếu trên mặt đất |
 | Môn phái | Minh Kiếm/Kim, Ảnh Đao/Hỏa, Huyền Bút/Thủy, Thạch Chùy/Thổ, Linh Cung/Mộc |
 | Campaign | 6 chương, cấp 1–100; 36 quest chính và 40 quest phụ trong bản tài liệu |
 | Endgame | 4 dungeon 5 người, 2 raid 10 người × 3 encounter, 6 boss thế giới + 1 raid boss cuối, Tháp Lạc Ấn 30 tầng |
@@ -99,7 +99,7 @@ Không giao hai agent sửa cùng một schema hay ID registry song song. Mọi 
 ### 6. Vertical slice bắt buộc trước sản xuất nội dung hàng loạt
 
 Xây Bến Mưa từ x=0 đến x=202, bao gồm:
-- Tạo nhân vật, chọn một phái, spawn tại x=18; di chuyển/nhảy/đánh thường/né.
+- Tạo nhân vật, chọn một phái, spawn tại x=18; di chuyển 8 hướng/đánh thường/né.
 - HUD mobile + PC; portrait/HP/MP/quest tracker/minimap/6 skill slots.
 - P00-01 đến P00-05; NPC Ly An/Tạ Vân Khanh/class trial; 3 kiện hàng, dân mắc kẹt, escort checkpoint và Mãng Cốt.
 - 3 cụm quái thường, loot, túi 100 ô, trang bị EQ-[CLASS]-WEAPON-T1-R-COMMON, potion, quest reward idempotent.
@@ -133,3 +133,10 @@ Các mục sau có giá trị đề xuất để xây slice; nhà sản xuất c
 
 
 
+
+### Cập nhật bắt buộc 2026-10-28
+
+- `Top_Down_Gameplay_World_Spec_vi.md`: DEC-016, trục XY, camera, footprint, input, collision, migration toàn bộ map.
+- `Production_Completion_Addendum_vi.md`: điều kiện content lock, quest accept/reward, transaction, persistence, UI states và nghiệm thu.
+- `Production_Audit_20261028_vi.md`: kết quả kiểm tra và phần bàn giao thực tế của agents.
+- `../../Implementation/Reports/TopDown_Placement_Migration_20261028.json`: hàng đợi review 349 placement, chưa có tọa độ approved.
