@@ -42,9 +42,13 @@ Bốn fixture v2 hợp lệ pass qua CLI với `--skip-file-checks`; fixture
 `invalid_grid_mismatch.json` fail đúng field `frameSize` với lỗi
 `pixelWidth 288 is not divisible by frameSize.width 40`.
 
+## Kết quả CI
+
+PR #43 trên head `58f7d9e2f33780306614472665d0b59163659dc0`: cả 5 workflow
+(`build`, `smoke`, 3 × `validate`) pass.
+
 ## Chưa xác minh
 
-- CI Linux của PR này: cập nhật sau khi workflow chạy.
 - Unity playback/FPS thực: unverified (không có Unity).
 - PNG chunk/CRC, alpha, `.meta` import: thuộc OPC-07.
 - Manifest Muse chưa chuyển sang v2; chờ review proposal #33.
