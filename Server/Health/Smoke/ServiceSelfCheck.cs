@@ -103,7 +103,12 @@ public static class ServiceSelfCheck
             missingTarget.Failure?.Code);
 
         targets.Upsert(new CombatTarget(
-            "TGT_SELFCHECK_FAR", options.DefaultMapId, options.SpawnX + 50, options.SpawnY, 10));
+            "TGT_SELFCHECK_FAR",
+            options.DefaultMapId,
+            "OVERWORLD",
+            options.SpawnX + 50,
+            options.SpawnY,
+            Alive: true));
         var farCast = combat.Resolve(
             NewPlayer("CHR_SELFCHECK_RANGE"),
             new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-02", TargetId = "TGT_SELFCHECK_FAR" });
@@ -111,6 +116,49 @@ public static class ServiceSelfCheck
             "combat.out_of_range",
             farCast.Failure?.Code == CombatErrorCodes.OutOfRange,
             farCast.Failure?.Code);
+
+        var worldTargets = services.GetRequiredService<ICombatTargetProvider>();
+        var resolvedMob = worldTargets.TryResolve("ENT_MAN_BM_SPAWN_BM_01", out var mobTarget);
+        Check(
+            "combat.world_target",
+            resolvedMob &&
+            mobTarget is { MapId: "MAP_BEN_MUA", FloorId: "OVERWORLD", X: 84, IsAlive: true },
+            mobTarget?.EntityId);
+        Check(
+            "combat.world_target_npc_rejected",
+            !worldTargets.TryResolve("ENT_MAN_BM_NPC_LYAN", out _));
+
+        var worldRangeCast = combat.Resolve(
+            NewPlayer("CHR_SELFCHECK_WORLD_RANGE"),
+            new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-02", TargetId = "ENT_MAN_BM_SPAWN_BM_01" });
+        Check(
+            "combat.world_target_out_of_range",
+            worldRangeCast.Failure?.Code == CombatErrorCodes.OutOfRange,
+            worldRangeCast.Failure?.Code);
+
+        var worldConeActor = NewPlayer("CHR_SELFCHECK_WORLD_CONE");
+        var worldConeCast = combat.Resolve(
+            worldConeActor,
+            new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-03", TargetId = "ENT_MAN_BM_SPAWN_BM_01" });
+        Check(
+            "combat.world_target_resolves",
+            worldConeCast.Accepted && worldConeActor.Mp == 28,
+            worldConeCast.Failure?.Code);
+
+        targets.Upsert(new CombatTarget(
+            "TGT_SELFCHECK_OTHER_FLOOR",
+            options.DefaultMapId,
+            "UNDERGROUND",
+            options.SpawnX + 1,
+            options.SpawnY,
+            Alive: true));
+        var floorCast = combat.Resolve(
+            NewPlayer("CHR_SELFCHECK_FLOOR"),
+            new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-03", TargetId = "TGT_SELFCHECK_OTHER_FLOOR" });
+        Check(
+            "combat.floor_mismatch",
+            floorCast.Failure?.Code == CombatErrorCodes.TargetNotFound,
+            floorCast.Failure?.Code);
 
         var noMpCast = combat.Resolve(
             NewPlayer("CHR_SELFCHECK_MP", mp: 0),

@@ -254,7 +254,7 @@ python Implementation/Tools/build_npc_anchors.py
 `POST /p1/combat` exposes `ICombatService` for the self-targeting `SK-MK-01` path. The service stays the server-side seam for future `combat.input` work:
 
 - `ICombatSkillCatalog` loads `SK-MK-01..03` from canonical `SkillDefinition` content (class, cooldown, MP cost, targeting type, range, max targets). No balance values are duplicated in C#.
-- `ICombatTargetProvider` is an in-memory target registry. It starts empty, so non-self skills return `target_not_found` until the world layer registers mobs or players.
+- `ICombatTargetProvider` is a composite: the world-entity registry resolves alive mobs/bosses by entity instance ID (map/floor/position from canonical placements), plus an in-memory registry used by dev/test. Non-self skills still return `target_not_found` for dead, NPC or unregistered IDs.
 - `InMemoryCombatService.Resolve(PlayerSession, CombatCommand)` validates the command, then applies gates in order: skill/class, per-actor `inputSequence`, target existence/map/alive/range, cooldown, and MP cost. Accepted casts decrement MP, advance `LastInputSequence` and `Revision`, and return a schema-shaped `combat.effect` `CombatEvent`. `LastInputSequence` is shared with movement, so clients must keep one monotonic input sequence per actor.
 - Client `aimX`/`aimY` and `clientTimeUtc` are validated but not trusted. Damage and hit resolution are intentionally not implemented because no canonical damage formula or character stats exist yet; the returned event carries no `damage` or `hit`.
 - `combat.effect` is returned to the caller, not broadcast; transport and persistence arrive with the real-time layer.
@@ -392,7 +392,7 @@ Quest and inventory HTTP surfaces are read-only, teleport has no endpoint, and c
 dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
 ```
 
-The flag boots the DI container and canonical content, then runs 75 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency, line-of-sight and swept-walk geometry (clear, wall, large step, hole, corner, floor, non-finite, outside, footprint, not-enforced), the NPC anchor registry, the Bến Mưa world-entity registry with despawn/respawn under a manual clock, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
+The flag boots the DI container and canonical content, then runs 80 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), world-target resolution and floor checks, the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency, line-of-sight and swept-walk geometry (clear, wall, large step, hole, corner, floor, non-finite, outside, footprint, not-enforced), the NPC anchor registry, the Bến Mưa world-entity registry with despawn/respawn under a manual clock, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
 
 ## Manual verification
 
@@ -428,7 +428,7 @@ The flag boots the DI container and canonical content, then runs 75 assertions c
 ## Current limits
 
 - Sessions are in memory and lost on restart; there is no database, authentication or real-time transport.
-- `entities` is always empty; the combat target registry starts empty, so only the self-targeting `SK-MK-01` can be cast over HTTP. Teleport has no endpoint.
+- `entities` is always empty in snapshots; combat can target alive world mobs/bosses by instance ID, but there is still no damage, death, loot or mob AI. Teleport has no endpoint.
 - The Bến Mưa world-entity registry (`world_entities_bm.json`: 24 canonical placements, 19 templates) is loaded with despawn/respawn state, but no endpoint, combat target or HP/stat wiring uses it yet.
 - Combat has no damage, hit chance, telegraphs, death or loot: `combat.effect` only records an accepted cast and its cooldown.
 - Quest state is in memory; accept exists but is feature-flagged off by default. Line-of-sight runs only for `REVIEWED` topology bundles; the shipped bundle is synthetic, so it is `not_enforced` until Muse delivers the Bến Mưa layout. Turn-in, rewards, party progress and multi-step graphs are not implemented.

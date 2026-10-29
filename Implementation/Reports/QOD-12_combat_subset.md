@@ -56,3 +56,11 @@ Xem proposal `Implementation/Work_Orders/Proposals/QOD-12_CombatCastEvent_vi.md`
 2. `SK-MK-03` thiếu `rangeWu` → chưa thể kiểm range/angle.
 3. Chưa có bundle topology `REVIEWED` → LOS trong combat chỉ chạy khi có fixture review; production gate OFF.
 4. VFX 30 skill là design-only, không dùng làm nguồn damage/range.
+
+## 8. QOD-12b một phần — world targets (đã implement)
+
+- `WorldEntityTargetProvider` resolve mob/boss instance `ENT_*` từ `WorldEntityRegistry`; chỉ trả target khi `State = ALIVE`; map/floor/position lấy từ spawn canonical.
+- `CombatTarget` đổi sang `(EntityId, MapId, FloorId, X, Y, Alive)`; combat service reject `target_not_found` khi khác map **hoặc** khác floor; `PlayerSession.FloorId` mặc định `OVERWORLD`.
+- DI: `ICombatTargetProvider` là composite (world registry + in-memory test registry), nên self-check/dev vẫn upsert target giả được.
+- Test mới: resolve mob 84,0; NPC bị từ chối; `SK-MK-02` ngoài 11 WU → `out_of_range`; `SK-MK-03` (chưa có range) resolve target thật và trừ MP 22; target khác floor → `target_not_found`. Tổng self-check 80.
+- Vẫn **không** có damage/HP: mob chết/aggro/leash/respawn AI là phần tiếp theo của QOD-12b, dùng config fixture có nhãn.
