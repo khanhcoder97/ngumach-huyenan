@@ -49,8 +49,8 @@ public sealed class WorldEntityInstance
     public required IReadOnlyList<string> TemplateIds { get; init; }
     public required string MapId { get; init; }
     public required string FloorId { get; init; }
-    public required double X { get; internal set; }
-    public required double Y { get; internal set; }
+    public required double X { get; set; }
+    public required double Y { get; set; }
     public required int Quantity { get; init; }
     public required int RespawnSeconds { get; init; }
 
