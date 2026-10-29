@@ -274,7 +274,7 @@ internal static class Program
         {
             if (args.Length == 2 && args[0] == "--http") await HttpChecks(args[1]);
             else if (args.Length == 2 && args[0] == "--http-dev") await HttpDevQuestChecks(args[1]);
-            else { await RunCases(); AudioChecks.Run(); }
+            else { await RunCases(); AudioChecks.Run(); InputGateChecks.Run(); }
             return 0;
         }
         catch (Exception e) { Console.Error.WriteLine(e); return 1; }

@@ -1,5 +1,11 @@
 # Client online P1 — đợt triển khai đầu của Codex
 
+## Cập nhật input 2026-10-30
+
+Client dùng chung `P1GameplayInputGate` để chặn movement và cast hotkey/click khi journal/bag/audio mở, khi slider/text đang nhập, hoặc app mất focus/pause. Khi đóng/trở lại phải có frame thả toàn bộ movement/1–3/F/touch/mouse trước khi điều khiển lại; một phím giữ xuyên modal không tự chạy nhân vật. Esc chỉ đóng panel đang mở, trả focus về nút đã mở; không tạo session mới, cancel pending command hoặc coi game server đã pause. Pending/retry lane và server authority giữ nguyên. Pointer input được kiểm lại tại callback, không chỉ đặt nút disabled trên một frame cũ.
+
+Core có15 assertion policy mới, chạy cùng suite cũ trên CI. Unity source **chưa compile/test trên Editor**. Muse cần kiểm exact head của #51: giữW mở túi→thả chuột/đóngEsc vẫn giữW→đứng yên→thảW→bấmW mới đi; giữ1 khi đóng audio không cast; các nút skill không hoạt động dưới modal; F trong journal không tự accept; click nút nhận quest vẫn gửi request bình thường. Alt-tab/suspend khi giữjoystick, quay lại phải thả rồi bấm lại; adjust slider bằng arrow không đi nhân vật; Esc trả focus đúng opener. Kiểm pointer capture hai ngón và desktop mouse, không suy PASS engine từ policy assertions.
+
 Đợt audio tiếp theo: xem [Client_Audio_Integration_P1_vi.md](Client_Audio_Integration_P1_vi.md). Đã viết mixer/policy/Unity bridge và mapping UI/accept; chưa có Unity compile/playback evidence, PR vẫn draft.
 
 ## Phần đã viết

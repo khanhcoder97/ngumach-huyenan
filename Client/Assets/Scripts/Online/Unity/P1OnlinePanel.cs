@@ -19,10 +19,12 @@ namespace NguMach.Client.P1
         private Action returnToTitle;
         private Label status, vitals, location, message, detailText, targetText;
         private VisualElement details, safeRoot, wheel, audioPanel;
-        private Button accept, retry, sync, leave, attack;
+        private Button accept, retry, sync, leave, attack, journalButton, bagButton, audioButton;
+        private Button detailOpener;
+        private readonly P1GameplayInputGate inputGate = new P1GameplayInputGate();
         private readonly Button[] skills = new Button[6];
         private Vector2 touchMove, keyboardMove;
-        private bool touchHeld, actionBusy, closing;
+        private bool touchHeld, actionBusy, closing, applicationPaused;
         private P1ActorPresenter presenter;
         private GameObject proxy;
         private Texture2D proxyTexture;
@@ -76,7 +78,8 @@ namespace NguMach.Client.P1
                 {
                     if (!actionBusy && client.SessionId != null)
                     {
-                        Vector2 movement = details.style.display.value == DisplayStyle.Flex || audioPanel.style.display.value == DisplayStyle.Flex ? Vector2.zero : touchHeld ? touchMove : keyboardMove;
+                        RefreshInputSurface();
+                        Vector2 movement = inputGate.AllowsGameplay ? (touchHeld ? touchMove : keyboardMove) : Vector2.zero;
                         if (client.State == P1ConnectionState.Ready && movement.sqrMagnitude > 0.001f)
                         {
                             Show(await client.MoveAsync(movement.x, movement.y, life.Token));
@@ -105,9 +108,22 @@ namespace NguMach.Client.P1
         private void Update()
         {
             if (client == null || closing) return;
+            RefreshInputSurface();
+            if (!Application.isFocused || applicationPaused) { ClearHeldInput(); RenderCooldowns(); return; }
+            if (Input.GetKeyDown(KeyCode.Escape) && ModalOpen)
+            {
+                if (audioPanel.style.display.value == DisplayStyle.Flex) ToggleAudio();
+                else ToggleDetails(detailMode);
+                ClearHeldInput(); RenderCooldowns(); return;
+            }
             keyboardMove = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+            bool hotkeysReleased = !Input.GetKey(KeyCode.Alpha1) && !Input.GetKey(KeyCode.Alpha2) &&
+                !Input.GetKey(KeyCode.Alpha3) && !Input.GetKey(KeyCode.F);
+            // Intents were cleared on close/focus loss; physical held pointers still need release.
+            bool pointersReleased = !touchHeld && Input.touchCount == 0 && !Input.GetMouseButton(0);
+            inputGate.ObserveControls(keyboardMove.sqrMagnitude < 0.001f, hotkeysReleased, pointersReleased);
             if (presenter != null && !touchHeld && keyboardMove.sqrMagnitude < 0.001f) presenter.SetIdle();
-            if (audioPanel.style.display.value != DisplayStyle.Flex)
+            if (inputGate.AllowsGameplay)
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1)) Cast(0);
                 if (Input.GetKeyDown(KeyCode.Alpha2)) Cast(1);
@@ -116,7 +132,20 @@ namespace NguMach.Client.P1
             }
             RenderCooldowns();
         }
-        private void OnApplicationFocus(bool focused) { if (!focused) { keyboardMove = touchMove = Vector2.zero; touchHeld = false; } }
+        private bool ModalOpen { get { return details != null && details.style.display.value == DisplayStyle.Flex ||
+            audioPanel != null && audioPanel.style.display.value == DisplayStyle.Flex; } }
+        private void ClearHeldInput() { keyboardMove = touchMove = Vector2.zero; touchHeld = false; }
+        private void RefreshInputSurface()
+        {
+            var focused = document == null ? null : document.rootVisualElement.panel?.focusController?.focusedElement;
+            bool editing = focused is TextField || focused is Slider || focused is SliderInt;
+            inputGate.SetSurface(Application.isFocused, applicationPaused, ModalOpen, editing);
+            if (!inputGate.AllowsGameplay) ClearHeldInput();
+        }
+        private void OnApplicationFocus(bool focused)
+        { if (!focused) { inputGate.Reset(); ClearHeldInput(); } }
+        private void OnApplicationPause(bool paused)
+        { applicationPaused = paused; if (paused) { inputGate.Reset(); ClearHeldInput(); } }
         private async void RunAction(Func<Task<P1Result>> action)
         {
             if (actionBusy || closing) return;
@@ -133,7 +162,8 @@ namespace NguMach.Client.P1
         }
         private void Cast(int slot)
         {
-            if (slot >= 3 || !skills[slot].enabledSelf) return;
+            RefreshInputSurface();
+            if (!inputGate.AllowsGameplay || slot < 0 || slot >= 3 || !skills[slot].enabledSelf) return;
             var aim = presenter == null ? Vector2.down : presenter.Facing;
             string target = slot == 0 ? null : selectedTarget;
             audioPlayer.LocalUi("SFX/UI/confirm");
@@ -191,9 +221,9 @@ namespace NguMach.Client.P1
             status = Text("connection.Connecting"); vitals = new Label(); location = new Label();
             statusPanel.Add(status); statusPanel.Add(vitals); statusPanel.Add(location); safeRoot.Add(statusPanel);
             var toolbar = new VisualElement(); toolbar.style.flexDirection = FlexDirection.Row; toolbar.style.flexWrap = Wrap.Wrap;
-            toolbar.Add(ActionButton("ui.journal", () => ToggleDetails("quests"), null));
-            toolbar.Add(ActionButton("ui.bag", () => ToggleDetails("inventory"), null));
-            toolbar.Add(ActionButton("ui.audio", ToggleAudio, null));
+            journalButton = ActionButton("ui.journal", () => ToggleDetails("quests"), null); toolbar.Add(journalButton);
+            bagButton = ActionButton("ui.bag", () => ToggleDetails("inventory"), null); toolbar.Add(bagButton);
+            audioButton = ActionButton("ui.audio", ToggleAudio, null); toolbar.Add(audioButton);
             sync = ActionButton("ui.sync", () => RunAction(async () => { var r = await client.ReadWorldAsync(life.Token); if (!r.Success) return r;
                 r = await client.ReadQuestsAsync(life.Token); return r.Success ? await client.ReadInventoryAsync(life.Token) : r; })); toolbar.Add(sync);
             retry = ActionButton("ui.retry", () => RunAction(() => client.RetryPendingAsync(life.Token))); toolbar.Add(retry);
@@ -223,7 +253,9 @@ namespace NguMach.Client.P1
             {
                 var direction = axes[i].normalized; var button = new Button { text = names[i] }; button.style.position = Position.Absolute;
                 button.style.left = i % 3 * 54; button.style.top = i / 3 * 54; button.style.width = 54; button.style.height = 54;
-                button.RegisterCallback<PointerDownEvent>(ev => { touchMove = direction; touchHeld = true; button.CapturePointer(ev.pointerId); ev.StopPropagation(); });
+                button.RegisterCallback<PointerDownEvent>(ev => { RefreshInputSurface();
+                    if (!inputGate.AllowsGameplay || client.State != P1ConnectionState.Ready || actionBusy) { ev.StopPropagation(); return; }
+                    touchMove = direction; touchHeld = true; button.CapturePointer(ev.pointerId); ev.StopPropagation(); });
                 button.RegisterCallback<PointerUpEvent>(ev => { touchHeld = false; touchMove = Vector2.zero; button.ReleasePointer(ev.pointerId); ev.StopPropagation(); });
                 button.RegisterCallback<PointerCaptureOutEvent>(ev => { touchHeld = false; touchMove = Vector2.zero; });
                 movement.Add(button);
@@ -270,15 +302,19 @@ namespace NguMach.Client.P1
         private void ToggleDetails(string mode)
         {
             bool open = !(details.style.display.value == DisplayStyle.Flex && detailMode == mode);
+            detailOpener = mode == "quests" ? journalButton : bagButton;
             details.style.display = open ? DisplayStyle.Flex : DisplayStyle.None; audioPanel.style.display = DisplayStyle.None;
             audioPlayer.LocalUi(open ? "SFX/UI/panel_open" : "SFX/UI/panel_close"); audioPlayer.SaveSettings();
-            detailMode = mode; touchHeld = false; Render();
+            detailMode = mode; inputGate.Reset(); ClearHeldInput(); RefreshInputSurface(); Render();
+            if (open) { details.focusable = true; details.Focus(); } else detailOpener?.Focus();
         }
         private void ToggleAudio()
         {
             bool open = audioPanel.style.display.value != DisplayStyle.Flex;
             audioPanel.style.display = open ? DisplayStyle.Flex : DisplayStyle.None; details.style.display = DisplayStyle.None;
-            audioPlayer.LocalUi(open ? "SFX/UI/panel_open" : "SFX/UI/panel_close"); audioPlayer.SaveSettings(); touchHeld = false;
+            audioPlayer.LocalUi(open ? "SFX/UI/panel_open" : "SFX/UI/panel_close"); audioPlayer.SaveSettings();
+            inputGate.Reset(); ClearHeldInput(); RefreshInputSurface();
+            if (open) { audioPanel.focusable = true; audioPanel.Focus(); } else audioButton?.Focus();
         }
         private void Render()
         {
@@ -321,7 +357,7 @@ namespace NguMach.Client.P1
                 if (client.Inventory.items.Length == 0) text.AppendLine(P1Copy.Get("bag.empty"));
             }
             detailText.text = text.ToString(); accept.style.display = detailMode == "quests" ? DisplayStyle.Flex : DisplayStyle.None; accept.SetEnabled(ready && available);
-            for (int i = 0; i < 6; i++) skills[i].SetEnabled(ready && i < 3 && (i == 0 || selectedTarget != null));
+            for (int i = 0; i < 6; i++) skills[i].SetEnabled(ready && inputGate.AllowsGameplay && i < 3 && (i == 0 || selectedTarget != null));
             RenderCooldowns();
         }
         private void RenderCooldowns()
@@ -334,7 +370,7 @@ namespace NguMach.Client.P1
                     DateTimeOffset.TryParse(end, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var until))
                     seconds = (until - sampledServerTime).TotalSeconds - (Time.realtimeSinceStartup - sampledAt);
                 skills[i].text = P1Copy.Get("skill." + (i+1)) + (seconds > 0 ? "\n" + Math.Ceiling(seconds) + "s" : "");
-                bool ready = client.State == P1ConnectionState.Ready && !actionBusy && (i == 0 || selectedTarget != null);
+                bool ready = client.State == P1ConnectionState.Ready && !actionBusy && inputGate.AllowsGameplay && (i == 0 || selectedTarget != null);
                 skills[i].SetEnabled(ready && seconds <= 0);
             }
         }
