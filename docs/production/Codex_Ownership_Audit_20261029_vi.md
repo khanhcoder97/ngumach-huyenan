@@ -36,4 +36,6 @@ OpenCode vẫn sở hữu #40 và preview tooling, không bị gọi lại làm 
 
 ## Những điều đợt này không chứng minh
 
+Cập nhật thực thi tiếp theo: audio direction v1 và catalogue63cue đã được viết (30skill key canonical,33cue chung); clip/source/license vẫn MISSING, chưa đóng CX-04. Client online triển khai tại PR #51 với core/HTTP CI riêng; chưa chứng minh Unity-specific UI/transport/presenter hoặc device playback. Các dòng trạng thái trong bảng trên là snapshot của đợt audit ban đầu, không dùng thay bằng chứng theo PR hiện hành.
+
 Không có build Unity mới, clip audio mới, map reviewed mới, mobile benchmark hoặc full campaign đã chạy. 15dòng copy mới chưa lồng tiếng;230dòng vẫn giữ graph baseline cần exporter và authoritative quest implementation. Quyết định thiết kế không tự bật runtime feature flag.

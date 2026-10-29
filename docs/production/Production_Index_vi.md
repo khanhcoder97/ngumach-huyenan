@@ -189,3 +189,9 @@ Capital_Scale_and_Simple_Pixel_v2_vi.md quy định extent12phường/chunk/migr
 - `P1_Design_Resolution_20261029_vi.md`:source map numeric, ví dụ kiểm công thức, rangeMK03 và semantic cast/VFX; không tự kích hoạt runtime.
 - `Opening_Dialogue_Editorial_Notes_vi.md`:15dòng mở đầu đã line-edit, giữ graph/guards/keys và reveal gates,215dòng còn baseline.
 - `Reviews/Opening_Editorial_Check_20261029.json`:bằng chứng diff230hàng/15text-status edits/không đổi field logic; chưa là Unity subtitle/voice QA.
+
+### Âm thanh gameplay v1 — 2026-10-29
+
+- `Audio_Production_Direction_v1_vi.md`:bản sắc5phái, cảnh báo3đòn Mãng Cốt, mixer/voice budget, semantic trigger, dedupe/loop/cancel, khả năng nghe và handoff.
+- `../../Implementation/Content/DesignBaselines/audio_cues_v1.json`:63cue thiết kế (30skill/33shared), tất cả clip MISSING; không tự vào runtime hoặc manifest sprite.
+- `../../Tools/ProductionReview/validate_audio_baseline.py`:kiểm cueKey/reference/budget/status, không nghiệm thu clip/nhạc/license/engine.
