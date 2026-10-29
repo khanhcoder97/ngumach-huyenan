@@ -95,6 +95,18 @@ def interact_envelope(target_id, character_id=CHARACTER_ID, request_id="8" * 32,
     }
 
 
+def turnin_envelope(quest_id, npc_id, character_id=CHARACTER_ID,
+                    request_id="30" * 32, idempotency_key="31" * 32):
+    return {
+        "schemaVersion": 1,
+        "requestId": request_id,
+        "idempotencyKey": idempotency_key,
+        "sentAtUtc": sent_at_utc(),
+        "characterId": character_id,
+        "payload": {"questId": quest_id, "npcId": npc_id},
+    }
+
+
 def expect_correlation(headers, expected):
     check(headers.get("X-Correlation-ID") == expected,
           f"expected correlation {expected}, got {headers.get('X-Correlation-ID')}")
@@ -765,6 +777,90 @@ def main():
     check((body.get("result") or {}).get("inventoryRevision") == 1,
           "rejected gather must not grant items twice")
     expect_correlation(headers, "smoke-gather-no-double")
+
+    # ─── turn-in ────────────────────────────────────────────
+
+    while walker_x < 64:
+        sequence += 1
+        time.sleep(0.3)
+        status, headers, body = call(
+            "POST", "/p1/move", move_envelope(sequence, 1, 0),
+            {"X-Session-ID": session_id, "X-Correlation-ID": f"smoke-walk-turnin-{sequence}"})
+        check(status == 200, f"walk turnin move {sequence} returned {status}: {body}")
+        walker_x = ((body.get("result") or {}).get("self") or {}).get("x", walker_x)
+
+    status, headers, body = call(
+        "POST", "/p1/quests/turnin",
+        turnin_envelope("P00-01", "NPC_TA_VAN_KHANH",
+                        idempotency_key="32" * 16, request_id="33" * 16),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-turnin"})
+    check(status == 200, f"turnin returned {status}: {body}")
+    turnin_result = body.get("result") or {}
+    quest_state = turnin_result.get("questState") or {}
+    check(quest_state.get("state") == "COMPLETED",
+          f"turnin quest state {quest_state.get('state')}")
+    check(quest_state.get("revision") == 6,
+          f"turnin quest revision {quest_state.get('revision')}")
+    rewards = turnin_result.get("rewards") or {}
+    check(len(rewards.get("currency") or []) == 1, f"currency count {rewards.get('currency')}")
+    check(rewards["currency"][0].get("currencyId") == "COIN",
+          f"currency id {rewards['currency'][0].get('currencyId')}")
+    check(rewards["currency"][0].get("amount") == 20,
+          f"currency amount {rewards['currency'][0].get('amount')}")
+    check(len(rewards.get("items") or []) == 1, f"item count {rewards.get('items')}")
+    check(rewards["items"][0].get("templateId") == "EQ-MK-CHEST-T1-R-COMMON",
+          f"item template {rewards['items'][0].get('templateId')}")
+    check(rewards["items"][0].get("stack") == 1,
+          f"item stack {rewards['items'][0].get('stack')}")
+    check(rewards["items"][0].get("location") == "BAG",
+          f"item location {rewards['items'][0].get('location')}")
+    xp = rewards.get("xp") or {}
+    check(xp.get("xpRule") == "LEVEL_BAND_BASE",
+          f"xp rule {xp.get('xpRule')}")
+    check(xp.get("applied") is False, f"xp applied {xp.get('applied')}")
+    check(turnin_result.get("unlocks") == ["P00-02"],
+          f"unlocks {turnin_result.get('unlocks')}")
+    expect_correlation(headers, "smoke-turnin")
+
+    # replay same key
+    status, headers, body = call(
+        "POST", "/p1/quests/turnin",
+        turnin_envelope("P00-01", "NPC_TA_VAN_KHANH",
+                        idempotency_key="32" * 16, request_id="34" * 16),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-turnin-replay"})
+    check(status == 200, f"turnin replay returned {status}: {body}")
+    replay_result = body.get("result") or {}
+    check((replay_result.get("questState") or {}).get("state") == "COMPLETED",
+          f"replay state {(replay_result.get('questState') or {}).get('state')}")
+    expect_correlation(headers, "smoke-turnin-replay")
+
+    # second turn-in with new key → invalid_transition
+    status, headers, body = call(
+        "POST", "/p1/quests/turnin",
+        turnin_envelope("P00-01", "NPC_TA_VAN_KHANH",
+                        idempotency_key="35" * 16, request_id="36" * 16),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-turnin-second"})
+    check(status == 409, f"second turnin returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "invalid_transition",
+          f"second turnin error {error.get('code')}")
+    expect_correlation(headers, "smoke-turnin-second")
+
+    # inventory readback: no double reward
+    status, headers, body = call(
+        "GET", f"/p1/inventory/{session_id}",
+        headers={"X-Correlation-ID": "smoke-turnin-inventory"})
+    check(status == 200, f"turnin inventory returned {status}: {body}")
+    inv = body.get("result") or {}
+    check(len(inv.get("currencies") or []) == 1,
+          f"inventory currencies after turnin {inv.get('currencies')}")
+    check(inv["currencies"][0].get("amount") == 20,
+          f"coin amount {inv['currencies'][0].get('amount')}")
+    check(len(inv.get("items") or []) == 1,
+          f"inventory items after turnin {inv.get('items')}")
+    check(inv["items"][0].get("templateId") == "EQ-MK-CHEST-T1-R-COMMON",
+          f"inv item template {inv['items'][0].get('templateId')}")
+    expect_correlation(headers, "smoke-turnin-inventory")
 
     print(f"PASS: {CHECKS} smoke checks against {BASE_URL}")
 

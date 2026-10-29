@@ -40,6 +40,14 @@ public static class P1Endpoints
             app.MapPost("/p1/world/interact", InteractAsync);
         }
 
+        var turnIn = app.ServiceProvider
+            .GetRequiredService<IOptions<QuestTurnInOptions>>()
+            .Value;
+        if (turnIn.Enabled)
+        {
+            app.MapPost("/p1/quests/turnin", TurnInAsync);
+        }
+
         return app;
     }
 
@@ -664,6 +672,124 @@ public static class P1Endpoints
         InteractionErrorCodes.ProfessionLevelInsufficient =>
             StatusCodes.Status422UnprocessableEntity,
         InteractionErrorCodes.IdempotencyConflict => StatusCodes.Status409Conflict,
+        _ => StatusCodes.Status400BadRequest
+    };
+
+    private static async Task<IResult> TurnInAsync(
+        HttpContext context,
+        ISessionStore sessions,
+        IQuestTurnInService questTurnIn,
+        ServerClock clock,
+        ILoggerFactory loggerFactory)
+    {
+        var requestId = NewRequestId();
+
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge)
+        {
+            return P1Results.TurnInError(
+                context, clock, requestId, sessionId: string.Empty,
+                StatusCodes.Status413PayloadTooLarge, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        if (string.IsNullOrWhiteSpace(body) || !context.Request.HasJsonContentType())
+        {
+            return P1Results.TurnInError(
+                context, clock, requestId, sessionId: string.Empty,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        TurnInEnvelope? envelope;
+        try
+        {
+            envelope = JsonSerializer.Deserialize<TurnInEnvelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.TurnInError(
+                context, clock, requestId, sessionId: string.Empty,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        if (envelope?.RequestId is { } incomingRequestId &&
+            P1Validation.IsHex32(incomingRequestId))
+        {
+            requestId = incomingRequestId;
+        }
+
+        var fieldErrors = P1Validation.ValidateTurnInEnvelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.TurnInError(
+                context, clock, requestId, sessionId: string.Empty,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                fieldErrors, retryable: false);
+        }
+
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return P1Results.TurnInError(
+                context, clock, requestId, sessionId: string.Empty,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        var session = sessions.Find(sessionId);
+        if (session is null)
+        {
+            return P1Results.TurnInError(
+                context, clock, requestId, sessionId: string.Empty,
+                StatusCodes.Status404NotFound, P1ErrorCodes.SessionNotFound,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        if (!string.Equals(envelope!.CharacterId, session.CharacterId, StringComparison.Ordinal))
+        {
+            return P1Results.TurnInError(
+                context, clock, requestId, session.SessionId,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["characterId"], retryable: false);
+        }
+
+        var payload = envelope.Payload!;
+        var outcome = questTurnIn.TurnIn(
+            session, payload.QuestId!, payload.NpcId!, envelope.IdempotencyKey!);
+
+        var logger = loggerFactory.CreateLogger("P1.QuestTurnIn");
+        if (outcome.Accepted && outcome.Result is { } result)
+        {
+            logger.LogDebug(
+                "Accepted turn-in {QuestId} via {NpcId} for {SessionId}",
+                payload.QuestId, payload.NpcId, session.SessionId);
+
+            return P1Results.TurnInSuccess(
+                requestId, session.SessionId, clock, result);
+        }
+
+        var failure = outcome.Failure!;
+        logger.LogDebug(
+            "Rejected turn-in {QuestId} via {NpcId} for {SessionId}: {Code}",
+            payload.QuestId, payload.NpcId, session.SessionId, failure.Code);
+
+        return P1Results.TurnInError(
+            context, clock, requestId, session.SessionId,
+            TurnInStatus(failure.Code), failure.Code,
+            failure.FieldErrors, failure.Retryable);
+    }
+
+    private static int TurnInStatus(string code) => code switch
+    {
+        P1ErrorCodes.InvalidPayload => StatusCodes.Status400BadRequest,
+        P1ErrorCodes.SessionNotFound => StatusCodes.Status404NotFound,
+        QuestErrorCodes.QuestNotFound => StatusCodes.Status404NotFound,
+        QuestTurnInErrorCodes.NpcMismatch => StatusCodes.Status422UnprocessableEntity,
+        QuestTurnInErrorCodes.OutOfRange => StatusCodes.Status422UnprocessableEntity,
+        QuestTurnInErrorCodes.IdempotencyConflict => StatusCodes.Status409Conflict,
+        QuestErrorCodes.InvalidTransition => StatusCodes.Status409Conflict,
         _ => StatusCodes.Status400BadRequest
     };
 

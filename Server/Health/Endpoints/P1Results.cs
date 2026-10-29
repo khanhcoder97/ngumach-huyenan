@@ -169,4 +169,43 @@ internal static class P1Results
 
         return Results.Json(response, statusCode: statusCode);
     }
+
+    public static IResult TurnInSuccess(
+        string requestId,
+        string sessionId,
+        ServerClock clock,
+        TurnInResult result) =>
+        Results.Json(new P1TurnInResponse
+        {
+            RequestId = requestId,
+            SessionId = sessionId,
+            ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+            Result = result
+        });
+
+    public static IResult TurnInError(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        string sessionId,
+        int statusCode,
+        string code,
+        IReadOnlyList<string>? fieldErrors,
+        bool retryable) =>
+        Results.Json(
+            new P1TurnInResponse
+            {
+                RequestId = requestId,
+                SessionId = sessionId,
+                ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+                Error = new P1Error
+                {
+                    Code = code,
+                    MessageKey = $"P1.ERROR.{code.ToUpperInvariant()}",
+                    Retryable = retryable,
+                    FieldErrors = fieldErrors ?? Array.Empty<string>(),
+                    CorrelationId = context.TraceIdentifier
+                }
+            },
+            statusCode: statusCode);
 }
