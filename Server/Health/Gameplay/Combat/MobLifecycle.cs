@@ -138,31 +138,31 @@ public sealed class MobLifecycleService
                 continue;
             }
 
-            brain.TargetCharacterId = target.CharacterId;
+            brain.TargetCharacterId = target.EntityId;
             var targetDistanceFromHome =
                 Distance(target.X, target.Y, brain.HomeX, brain.HomeY);
             if (targetDistanceFromHome > _options.LeashRadiusWu)
             {
-                Transition(entity, brain, MobBehaviorStates.Return, now, target.CharacterId, events);
+                Transition(entity, brain, MobBehaviorStates.Return, now, target.EntityId, events);
                 continue;
             }
 
             var distanceToTarget = Distance(entity.X, entity.Y, target.X, target.Y);
             if (string.Equals(brain.State, MobBehaviorStates.Idle, StringComparison.Ordinal))
             {
-                Transition(entity, brain, MobBehaviorStates.Aggro, now, target.CharacterId, events);
+                Transition(entity, brain, MobBehaviorStates.Aggro, now, target.EntityId, events);
             }
             else if (string.Equals(brain.State, MobBehaviorStates.Aggro, StringComparison.Ordinal) ||
                      string.Equals(brain.State, MobBehaviorStates.Return, StringComparison.Ordinal))
             {
-                Transition(entity, brain, MobBehaviorStates.Chase, now, target.CharacterId, events);
+                Transition(entity, brain, MobBehaviorStates.Chase, now, target.EntityId, events);
             }
 
             if (distanceToTarget <= _options.AttackRangeWu)
             {
                 if (string.Equals(brain.State, MobBehaviorStates.Chase, StringComparison.Ordinal))
                 {
-                    Transition(entity, brain, MobBehaviorStates.Attack, now, target.CharacterId, events);
+                    Transition(entity, brain, MobBehaviorStates.Attack, now, target.EntityId, events);
                 }
 
                 if (string.Equals(brain.State, MobBehaviorStates.Attack, StringComparison.Ordinal) &&
@@ -174,7 +174,7 @@ public sealed class MobLifecycleService
                         MobBehaviorStates.Attack,
                         MobBehaviorStates.Attack,
                         now,
-                        target.CharacterId));
+                        target.EntityId));
                 }
 
                 continue;
