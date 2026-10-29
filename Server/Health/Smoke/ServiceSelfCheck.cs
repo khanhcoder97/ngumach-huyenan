@@ -1,3 +1,4 @@
+using System.Threading;
 using Microsoft.Extensions.Options;
 using Server.Health.Contracts;
 using Server.Health.Gameplay.Combat;
@@ -1106,6 +1107,167 @@ public static class ServiceSelfCheck
             interactInventory.GetSnapshot(professionActor.CharacterId).Items.Count == 0,
             professionGate.Failure?.Code);
 
+        // ─── barrier-coordinated concurrency + failure injection (QOD-A) ───
+
+        var raceInventory = new InMemoryInventoryService(new InMemoryInventoryStateStore());
+        var raceInteractions = new InMemoryInteractionService(
+            new WorldEntityRegistry(
+                new WorldEntityCatalog(
+                    [],
+                    [
+                        MakeFixtureNode("ENT_SELFCHECK_RACE_NODE", "MAN-BM-NODE_BM_ORE_01", 21, 60),
+                        MakeFixtureInteractable(
+                            "ENT_SELFCHECK_RACE_PKG", "MAN-BM-OBJ_BM_PACKAGE_01", 36, 20)
+                    ]),
+                interactClock),
+            worldRecords,
+            interactQuests,
+            raceInventory,
+            services.GetRequiredService<IWorldGeometryService>(),
+            interactClock,
+            fixedRoller,
+            new GatherClaimStore(interactClock),
+            interactOptions);
+
+        // Same key, same payload in parallel: both requests must replay the
+        // winner's stored result — one interactionId, one yield.
+        var raceActor = NewPlayer("CHR_SELFCHECK_RACE_GATHER");
+        raceActor.X = 21;
+        raceActor.Y = 0;
+        var sameKeyRace = Guid.NewGuid().ToString("N");
+        var sameKeyRaceOutcomes = new InteractionOutcome[2];
+        RunBarrierParallel(2, index =>
+        {
+            sameKeyRaceOutcomes[index] = raceInteractions.Interact(
+                raceActor, "ENT_SELFCHECK_RACE_NODE", sameKeyRace);
+        });
+        var sameKeyRaceAccepted = sameKeyRaceOutcomes.Count(outcome => outcome.Accepted);
+        var sameKeyRaceIds = sameKeyRaceOutcomes
+            .Where(outcome => outcome.Accepted)
+            .Select(outcome => outcome.Result!.InteractionId)
+            .Distinct()
+            .Count();
+        Check(
+            "interact.parallel_same_key_single_result",
+            sameKeyRaceAccepted == 2 &&
+            sameKeyRaceIds == 1 &&
+            ReferenceEquals(sameKeyRaceOutcomes[0].Result, sameKeyRaceOutcomes[1].Result) &&
+            raceInventory.GetSnapshot(raceActor.CharacterId).Items.Count == 1,
+            $"accepted={sameKeyRaceAccepted} distinctIds={sameKeyRaceIds} " +
+            $"codes={string.Join(",", sameKeyRaceOutcomes.Select(o => o.Failure?.Code ?? "ok"))}");
+
+        // Two different keys, same character/node in parallel: exactly one
+        // claim wins, the other gets the per-character cooldown.
+        var twoKeyActor = NewPlayer("CHR_SELFCHECK_RACE_2KEY");
+        twoKeyActor.X = 21;
+        twoKeyActor.Y = 0;
+        var twoKeyOutcomes = new InteractionOutcome[2];
+        RunBarrierParallel(2, index =>
+        {
+            twoKeyOutcomes[index] = raceInteractions.Interact(
+                twoKeyActor, "ENT_SELFCHECK_RACE_NODE", Guid.NewGuid().ToString("N"));
+        });
+        var twoKeyAccepted = twoKeyOutcomes.Count(outcome => outcome.Accepted);
+        var twoKeyCooldown = twoKeyOutcomes.Count(outcome =>
+            !outcome.Accepted &&
+            outcome.Failure?.Code == InteractionErrorCodes.TargetNotAvailable);
+        Check(
+            "interact.parallel_two_keys_single_grant",
+            twoKeyAccepted == 1 && twoKeyCooldown == 1 &&
+            raceInventory.GetSnapshot(twoKeyActor.CharacterId).Items.Count == 1,
+            $"accepted={twoKeyAccepted} " +
+            $"codes={string.Join(",", twoKeyOutcomes.Select(o => o.Failure?.Code ?? "ok"))}");
+
+        // Two characters claim the same node in parallel: per-character
+        // shards mean both win independently.
+        var shardA = NewPlayer("CHR_SELFCHECK_SHARD_A");
+        shardA.X = 21;
+        shardA.Y = 0;
+        var shardB = NewPlayer("CHR_SELFCHECK_SHARD_B");
+        shardB.X = 21;
+        shardB.Y = 0;
+        var shardActors = new[] { shardA, shardB };
+        var shardOutcomes = new InteractionOutcome[2];
+        RunBarrierParallel(2, index =>
+        {
+            shardOutcomes[index] = raceInteractions.Interact(
+                shardActors[index], "ENT_SELFCHECK_RACE_NODE", Guid.NewGuid().ToString("N"));
+        });
+        Check(
+            "interact.parallel_two_characters_independent",
+            shardOutcomes.All(outcome => outcome.Accepted) &&
+            raceInventory.GetSnapshot(shardA.CharacterId).Items.Count == 1 &&
+            raceInventory.GetSnapshot(shardB.CharacterId).Items.Count == 1,
+            $"codes={string.Join(",", shardOutcomes.Select(o => o.Failure?.Code ?? "ok"))}");
+
+        // Two characters race for one shared INTERACTABLE: the registry's
+        // atomic check-and-set lets exactly one collect.
+        var pkgA = NewPlayer("CHR_SELFCHECK_RACE_PKG_A");
+        pkgA.X = 36;
+        pkgA.Y = 0;
+        var pkgB = NewPlayer("CHR_SELFCHECK_RACE_PKG_B");
+        pkgB.X = 36;
+        pkgB.Y = 0;
+        var pkgActors = new[] { pkgA, pkgB };
+        var pkgOutcomes = new InteractionOutcome[2];
+        RunBarrierParallel(2, index =>
+        {
+            pkgOutcomes[index] = raceInteractions.Interact(
+                pkgActors[index], "ENT_SELFCHECK_RACE_PKG", Guid.NewGuid().ToString("N"));
+        });
+        var pkgAccepted = pkgOutcomes.Count(outcome => outcome.Accepted);
+        var pkgDepleted = pkgOutcomes.Count(outcome =>
+            !outcome.Accepted &&
+            outcome.Failure?.Code == InteractionErrorCodes.TargetNotAvailable);
+        Check(
+            "interact.parallel_shared_interactable_single_claim",
+            pkgAccepted == 1 && pkgDepleted == 1,
+            $"accepted={pkgAccepted} " +
+            $"codes={string.Join(",", pkgOutcomes.Select(o => o.Failure?.Code ?? "ok"))}");
+
+        // Failure after the reservation: the claim is released by token, the
+        // node stays claimable and the retry grants exactly once.
+        var failInventory = new InMemoryInventoryService(new InMemoryInventoryStateStore());
+        var failOnceInventory = new FailOnceInventoryDecorator(failInventory);
+        var failInteractions = new InMemoryInteractionService(
+            new WorldEntityRegistry(
+                new WorldEntityCatalog(
+                    [],
+                    [MakeFixtureNode("ENT_SELFCHECK_FAIL_NODE", "MAN-BM-NODE_BM_ORE_01", 21, 60)]),
+                interactClock),
+            worldRecords,
+            interactQuests,
+            failOnceInventory,
+            services.GetRequiredService<IWorldGeometryService>(),
+            interactClock,
+            fixedRoller,
+            new GatherClaimStore(interactClock),
+            interactOptions);
+
+        var failGatherer = NewPlayer("CHR_SELFCHECK_GATHER_FAIL");
+        failGatherer.X = 21;
+        failGatherer.Y = 0;
+        var failedGather = failInteractions.Interact(
+            failGatherer, "ENT_SELFCHECK_FAIL_NODE", Guid.NewGuid().ToString("N"));
+        Check(
+            "interact.fail_after_reserve_rejected",
+            !failedGather.Accepted &&
+            failedGather.Failure is
+            {
+                Code: InteractionErrorCodes.TargetNotAvailable,
+                Retryable: true
+            } &&
+            failInventory.GetSnapshot(failGatherer.CharacterId).Items.Count == 0,
+            failedGather.Failure?.Code);
+
+        var retriedGather = failInteractions.Interact(
+            failGatherer, "ENT_SELFCHECK_FAIL_NODE", Guid.NewGuid().ToString("N"));
+        Check(
+            "interact.fail_after_reserve_retry_grants_once",
+            retriedGather.Accepted &&
+            failInventory.GetSnapshot(failGatherer.CharacterId) is { Items: { Count: 1 } },
+            retriedGather.Failure?.Code);
+
         var inventoryActor = NewPlayer("CHR_SELFCHECK_INVENTORY");
         var emptyInventory = inventory.GetSnapshot(inventoryActor.CharacterId);
         Check(
@@ -1317,5 +1479,52 @@ public static class ServiceSelfCheck
         }
 
         public int Roll(int minInclusive, int maxInclusive) => _value;
+    }
+
+    private sealed class FailOnceInventoryDecorator : IInventoryService
+    {
+        private readonly IInventoryService _inner;
+        private bool _failed;
+
+        public FailOnceInventoryDecorator(IInventoryService inner)
+        {
+            _inner = inner;
+        }
+
+        public InventorySnapshot GetSnapshot(string characterId) =>
+            _inner.GetSnapshot(characterId);
+
+        public InventoryOutcome Apply(PlayerSession actor, InventoryMutation? mutation)
+        {
+            if (!_failed)
+            {
+                _failed = true;
+                return InventoryOutcome.Rejected(
+                    InventoryErrorCodes.SlotOccupied, retryable: true, "rewards");
+            }
+
+            return _inner.Apply(actor, mutation);
+        }
+    }
+
+    private static void RunBarrierParallel(int count, Action<int> body)
+    {
+        using var barrier = new Barrier(count);
+        var threads = new Thread[count];
+        for (var index = 0; index < count; index++)
+        {
+            var captured = index;
+            threads[index] = new Thread(() =>
+            {
+                barrier.SignalAndWait();
+                body(captured);
+            });
+            threads[index].Start();
+        }
+
+        foreach (var thread in threads)
+        {
+            thread.Join();
+        }
     }
 }
