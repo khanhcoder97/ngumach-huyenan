@@ -1,5 +1,20 @@
 # Phần việc Codex nhận — rà soát 2026-10-29
 
+## Cập nhật thực thi 2026-10-30
+
+Bảng bên dưới giữ lịch sử đợt audit ban đầu. Dùng trạng thái hiện hành này để tránh giao lại việc đã làm:
+
+| Miền | Bằng chứng hiện có | Còn phải làm |
+|---|---|---|
+| CX-03 thoại | #59 đã merge `fc8753b`; 230 dòng/76 quest có readthrough, 197 dòng còn lại đã line-edit; validator bảo toàn keys/graph/flags/rewards, không còn VI_BASELINE | Muse VO/video và runtime quest graph; chưa lồng tiếng hoặc chạy full campaign |
+| CX-04 audio | #55 đã merge; 195cue/541clip runtime, master và technical QA; #51 có semantic policy/player/builder và 5cue UI đã nối source | Nghe duyệt, engine import/device profiler; world/skill/music/ambience event adapter chưa nối |
+| CX-05 client | Draft #51 head5aefdc2 có core/HTTP checks CI 5/5, authoritative snapshot/commands/HUD/audio bridge | Unity source chưa compile/import trên Editor; chưa có engine/device evidence; giao thức v2 Qoder đang xây chưa được client hỗ trợ |
+| CX-01 review | Đã tái hiện PR61/62 ở exact heads, 1/10 acceptance đạt, 9 lỗi; `Implementation/Reports/Producer_Asset_Review_20261030.*` | OpenCode sửa trong ownership của họ; Codex review lại đầu mới trước merge. Stack Qoder53/54/57/60 có commit mới, không tái dùng kết luận review head cũ |
+| CX-02 design | Work order08 trả lời sáu câu hỏi QOD-16; DEC-022 chốt guard/counter/DR Phản Quang kèm machine baseline, timeline/damage oracle và validator | Qoder triển khai/tests, Codex review; coin band/boss geometry/gear còn tách blocker, không gọi mọi thứ đã khóa |
+| CX-06/07/08/09 UX, map, pacing, art | Direction/brief/camera/concept đã có; chưa thêm Unity/device/topology/playtest evidence trong đợt này | Vẫn mở. Không gắn REVIEWED cho placement hoặc tuyên bố TTK/FPS/RAM đạt từ headless tests |
+
+Codex làm ở worktree riêng; root đang do Qoder sửa và `D:/opc05b-wt` do OpenCode giữ. Gói này không sửa module/code của hai bên. Báo cáo producer acceptance không phải unit suite xanh hay bằng chứng asset đã chạy trong game.
+
 Baseline đọc source: `18caf223476308cbdabd97d9ee83c90944c87100`. GitHub được kiểm tra trong phiên này; agent có thể tiếp tục commit sau baseline. Đây là phân định và bằng chứng công việc, không là nghiệm thu game hoàn chỉnh.
 
 ## Kết luận
