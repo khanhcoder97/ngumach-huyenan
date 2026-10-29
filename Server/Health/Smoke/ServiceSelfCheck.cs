@@ -1295,6 +1295,8 @@ public static class ServiceSelfCheck
             packageRegistry.Update() == 0,
             packageEntity.State);
 
+        packageActorA.X = 36;
+        packageActorA.Y = 0;
         var packageReclaim = packageInteractions.Interact(
             packageActorA, "ENT_SELFCHECK_PKG1", new string('7', 32));
         Check(
