@@ -26,6 +26,8 @@ jobs:
         run: |
           python Implementation/Tools/build_world_records.py
           python Implementation/Tools/build_world_entities.py
+          python Implementation/Tools/build_combat_mob_stats.py
           git diff --exit-code -- \
             Implementation/Content/Runtime/world_records.json \
-            Implementation/Content/Runtime/world_entities_bm.json
+            Implementation/Content/Runtime/world_entities_bm.json \
+            Implementation/Content/Runtime/combat_mob_stats_v1.json

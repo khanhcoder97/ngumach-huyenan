@@ -56,18 +56,21 @@ public sealed class WorldEntityInstance
 
     public string State { get; private set; } = string.Empty;
     public long Revision { get; private set; }
+    public long LifeId { get; private set; }
     public DateTimeOffset? RemovedAtUtc { get; private set; }
 
     internal void MoveTo(double x, double y)
     {
         X = x;
         Y = y;
+        Revision++;
     }
 
     internal void Initialize()
     {
         State = WorldEntityStates.InitialFor(Kind);
         Revision = 1;
+        LifeId = 1;
     }
 
     internal bool Remove(DateTimeOffset now)
@@ -105,6 +108,7 @@ public sealed class WorldEntityInstance
             State = WorldEntityStates.InitialFor(Kind);
             RemovedAtUtc = null;
             Revision++;
+            LifeId++;
             return true;
         }
     }
