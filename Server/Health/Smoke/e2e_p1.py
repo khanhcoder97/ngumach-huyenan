@@ -5,7 +5,8 @@ Two profiles, matching the production gates:
 
   default — server started WITHOUT the P1 feature flags (production
             profile). Expected blocked output: the quest accept, interact
-            and turn-in endpoints are not mapped and return HTTP 404,
+            and turn-in POST handlers are not mapped, so the requests
+            match the GET read routes instead and return HTTP 405,
             while sessions, movement and read endpoints keep working.
 
   dev     — server started WITH P1__QuestAccept__Enabled=true,
@@ -36,6 +37,8 @@ STEP_SECONDS = 0.3
 WALL_X_MIN = 45.0
 WALL_X_MAX = 46.0
 TURN_IN_NPC_X = 64.0
+RESPAWN_RETRY_ATTEMPTS = 60
+RESPAWN_RETRY_INTERVAL_SECONDS = 0.5
 PACKAGES = {
     "ENT_MAN_BM_OBJ_BM_PACKAGE_01": 36.0,
     "ENT_MAN_BM_OBJ_BM_PACKAGE_02": 44.0,
@@ -72,12 +75,30 @@ def walk_east(session_id, character_id, start_sequence, stop_before_x):
 
 def collect_package(session_id, character_id, sequence, target_id, request_id,
                     idempotency_key, expected_counter, expected_state,
-                    expected_revision):
-    status, _, body = smoke_p1.call(
-        "POST", "/p1/world/interact",
-        smoke_p1.interact_envelope(target_id, character_id=character_id,
-                                   request_id=request_id, idempotency_key=idempotency_key),
-        {"X-Session-ID": session_id})
+                    expected_revision, allow_respawn_wait=False):
+    # Shared INTERACTABLEs despawn for everyone (canonical manifest rule):
+    # a second character collecting the same package must wait out the
+    # server-side respawn window. Failed interacts have no side effects, so
+    # poll with fresh keys until the collect succeeds (bounded, condition-
+    # based; no blind sleeps).
+    attempts = RESPAWN_RETRY_ATTEMPTS if allow_respawn_wait else 1
+    status, body = 0, None
+    for attempt in range(attempts):
+        if attempt > 0:
+            time.sleep(RESPAWN_RETRY_INTERVAL_SECONDS)
+        status, _, body = smoke_p1.call(
+            "POST", "/p1/world/interact",
+            smoke_p1.interact_envelope(
+                target_id, character_id=character_id,
+                request_id=f"{request_id[:-2]}{attempt:02x}",
+                idempotency_key=f"{idempotency_key[:-2]}{attempt:02x}"),
+            {"X-Session-ID": session_id})
+        if status == 200:
+            break
+        error = (body or {}).get("error") or {}
+        smoke_p1.check(
+            status == 409 and error.get("code") == "target_not_available",
+            f"interact {target_id} returned {status}: {body}")
     smoke_p1.check(status == 200, f"interact {target_id} returned {status}: {body}")
     updates = ((body.get("result") or {}).get("questUpdates")) or [{}]
     update = updates[0]
@@ -90,7 +111,7 @@ def collect_package(session_id, character_id, sequence, target_id, request_id,
     return sequence
 
 
-def prepare_ready_actor(character_id):
+def prepare_ready_actor(character_id, allow_respawn_wait=False):
     """Create a session, walk to the quest NPC, accept P00-01 and collect
     the first two packages. Returns (session_id, next_sequence)."""
     sequence = 1
@@ -115,11 +136,13 @@ def prepare_ready_actor(character_id):
                    f"accept state {(body.get('result') or {}).get('state')}")
 
     collect_package(session, character_id, sequence, "ENT_MAN_BM_OBJ_BM_PACKAGE_01",
-                    "c" * 32, "d" * 32, 1, "ACTIVE", 3)
+                    "c" * 32, "d" * 32, 1, "ACTIVE", 3,
+                    allow_respawn_wait=allow_respawn_wait)
 
     sequence, _ = walk_east(session, character_id, sequence, 39.5)
     collect_package(session, character_id, sequence, "ENT_MAN_BM_OBJ_BM_PACKAGE_02",
-                    "e" * 32, "f" * 32, 2, "ACTIVE", 4)
+                    "e" * 32, "f" * 32, 2, "ACTIVE", 4,
+                    allow_respawn_wait=allow_respawn_wait)
 
     sequence, _ = walk_east(session, character_id, sequence, 43.5)
     return session, sequence
@@ -153,9 +176,12 @@ def default_profile():
             smoke_p1.turnin_envelope("P00-01", "NPC_LYAN",
                                      character_id="CHR_E2E_DEFAULT"),
             {"X-Session-ID": session_id})
+        # Gates OFF: the gated POST handler is not mapped, but the path still
+        # matches the GET read route (/p1/quests/{sessionId} or
+        # /p1/world/{sessionId}) so minimal APIs answer 405, not 404.
         smoke_p1.check(
-            status == 404,
-            f"{label} expected 404 (gate OFF), got {status}: {body}")
+            status == 405,
+            f"{label} expected 405 (gate OFF), got {status}: {body}")
 
     smoke_p1.check(
         smoke_p1.call("GET", f"/p1/quests/{session_id}")[0] == 200,
@@ -165,7 +191,7 @@ def default_profile():
         "inventory read must stay available with gates OFF")
 
     print("profile=default expected_blocked_output=OK "
-          "(quest accept/interact/turnin endpoints unmapped, HTTP 404)")
+          "(gated POST handlers unmapped, HTTP 405 via read-route match)")
 
 
 def dev_profile():
@@ -288,13 +314,17 @@ def dev_profile():
     smoke_p1.check((body.get("error") or {}).get("code") == "session_not_found",
                    f"unknown session error {(body.get('error') or {}).get('code')}")
 
-    # Parallel turn-ins with different keys must grant exactly once.
-    parallel_session, parallel_sequence = prepare_ready_actor("CHR_E2E_PARALLEL")
+    # Parallel turn-ins with different keys must grant exactly once. The
+    # packages are shared interactables, so the second character waits for
+    # the server-side respawn of each one before collecting.
+    parallel_session, parallel_sequence = prepare_ready_actor(
+        "CHR_E2E_PARALLEL", allow_respawn_wait=True)
     sequence, _ = walk_east(
         parallel_session, "CHR_E2E_PARALLEL", parallel_sequence, 47.5)
     collect_package(parallel_session, "CHR_E2E_PARALLEL", sequence,
                     "ENT_MAN_BM_OBJ_BM_PACKAGE_03",
-                    "25" * 16, "26" * 16, 3, "READY_TO_TURN_IN", 5)
+                    "25" * 16, "26" * 16, 3, "READY_TO_TURN_IN", 5,
+                    allow_respawn_wait=True)
     sequence, _ = walk_east(
         parallel_session, "CHR_E2E_PARALLEL", sequence, TURN_IN_NPC_X)
 

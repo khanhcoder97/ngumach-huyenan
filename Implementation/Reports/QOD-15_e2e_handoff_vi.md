@@ -30,7 +30,7 @@ Smoke HTTP đầy đủ (session/move/combat/quest/interact/gather/turn-in) ch�
 
 ## 2. Hai profile (chưa có topology REVIEWED)
 
-**Default (production gate OFF)** — server không set flag. Expected blocked output là chính assertion của profile: `POST /p1/quests/accept`, `POST /p1/world/interact`, `POST /p1/quests/turnin` không được map route → HTTP 404; session/move/read vẫn chạy bình thường. Không sửa `reviewState` hay tự bật gate để demo.
+**Default (production gate OFF)** — server không set flag. Expected blocked output là chính assertion của profile: `POST /p1/quests/accept`, `POST /p1/world/interact`, `POST /p1/quests/turnin` không được map handler; request rơi xuống template route GET read (`GET /p1/quests/{sessionId}`, `GET /p1/world/{sessionId}`) → HTTP 405 (minimal API trả 405 khi method khớp template nhưng không có handler, không phải 404); session/move/read vẫn chạy bình thường. Không sửa `reviewState` hay tự bật gate để demo.
 
 **Dev synthetic (3 flag ON)** — `P1__QuestAccept__Enabled`, `P1__Interact__Enabled`, `P1__QuestTurnIn__Enabled` = true. Golden loop:
 

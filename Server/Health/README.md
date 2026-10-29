@@ -224,7 +224,7 @@ Unknown session IDs return `404 session_not_found`. Reading quest state creates 
 
 ## Quest accept (feature-flagged)
 
-`POST /p1/quests/accept` is mapped only when `P1:QuestAccept:Enabled=true`; otherwise the route does not exist (`404`). It is **off by default** because the interaction line-of-sight guard has no walkability bundle yet — enabling it logs `DEV STUB: P1:QuestAccept is enabled...` at startup. Contract: `Implementation/Contracts/P1/QuestAcceptRequest.schema.json` + `QuestAcceptResponse.schema.json`; proposal and guard order in `Implementation/Work_Orders/Proposals/QOD-08_QuestAcceptRequest_vi.md`.
+`POST /p1/quests/accept` is mapped only when `P1:QuestAccept:Enabled=true`; otherwise the POST handler is not mapped and the request falls through to the `GET /p1/quests/{sessionId}` read route template, which answers `405`. It is **off by default** because the interaction line-of-sight guard has no walkability bundle yet — enabling it logs `DEV STUB: P1:QuestAccept is enabled...` at startup. Contract: `Implementation/Contracts/P1/QuestAcceptRequest.schema.json` + `QuestAcceptResponse.schema.json`; proposal and guard order in `Implementation/Work_Orders/Proposals/QOD-08_QuestAcceptRequest_vi.md`.
 
 ```bash
 curl -i -X POST http://localhost:5000/p1/quests/accept \
@@ -253,7 +253,7 @@ python Implementation/Tools/build_npc_anchors.py
 
 ## Interact (feature-flagged)
 
-`POST /p1/world/interact` is mapped only when `P1:Interact:Enabled=true`; otherwise the route does not exist (`404`). It is **off by default** because no reviewed walkability bundle exists yet — enabling it logs `DEV FIXTURE: P1:Interact is enabled...` at startup. Contract: `Implementation/Contracts/P1/InteractRequest.schema.json` + `InteractResponse.schema.json`; proposal and guard order in `Implementation/Work_Orders/Proposals/QOD-13_QuestProgressGathering_vi.md`.
+`POST /p1/world/interact` is mapped only when `P1:Interact:Enabled=true`; otherwise the POST handler is not mapped and the request falls through to the `GET /p1/world/{sessionId}` read route template, which answers `405`. It is **off by default** because no reviewed walkability bundle exists yet — enabling it logs `DEV FIXTURE: P1:Interact is enabled...` at startup. Contract: `Implementation/Contracts/P1/InteractRequest.schema.json` + `InteractResponse.schema.json`; proposal and guard order in `Implementation/Work_Orders/Proposals/QOD-13_QuestProgressGathering_vi.md`.
 
 ```bash
 curl -i -X POST http://localhost:5000/p1/world/interact \
@@ -373,7 +373,7 @@ State is in memory and there is no seed inventory; a new character starts with n
 
 ## Quest turn-in (feature-flagged)
 
-`POST /p1/quests/turnin` is mapped only when `P1:QuestTurnIn:Enabled=true`; otherwise the route does not exist (`404`). It is **off by default** because no walkability bundle is reviewed yet — enabling it logs `DEV STUB: P1:QuestTurnIn is enabled...` at startup. Contract: `Implementation/Contracts/P1/TurnInRequest.schema.json` + `TurnInResponse.schema.json`; proposal in `Implementation/Work_Orders/Proposals/QOD-14_TurnInReward_vi.md`.
+`POST /p1/quests/turnin` is mapped only when `P1:QuestTurnIn:Enabled=true`; otherwise the POST handler is not mapped and the request falls through to the `GET /p1/quests/{sessionId}` read route template, which answers `405`. It is **off by default** because no walkability bundle is reviewed yet — enabling it logs `DEV STUB: P1:QuestTurnIn is enabled...` at startup. Contract: `Implementation/Contracts/P1/TurnInRequest.schema.json` + `TurnInResponse.schema.json`; proposal in `Implementation/Work_Orders/Proposals/QOD-14_TurnInReward_vi.md`.
 
 ```bash
 curl -i -X POST http://localhost:5000/p1/quests/turnin \
