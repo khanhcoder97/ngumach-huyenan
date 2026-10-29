@@ -109,8 +109,7 @@ public static class GeometryMath
 
     public static bool SegmentIntersectsPolygon(
         IReadOnlyList<TopologyPoint> points,
-        double ax, double ay, double bx, double by)
-    {
+        double ax, double ay, double bx, double by)    {
         var count = points.Count;
         for (var i = 0; i < count; i++)
         {
@@ -123,6 +122,24 @@ public static class GeometryMath
         }
 
         return false;
+    }
+
+    public static double DistancePointToSegment(
+        double px, double py, double ax, double ay, double bx, double by)
+    {
+        var dx = bx - ax;
+        var dy = by - ay;
+        var lengthSquared = (dx * dx) + (dy * dy);
+        if (lengthSquared <= Epsilon)
+        {
+            return Math.Sqrt(((px - ax) * (px - ax)) + ((py - ay) * (py - ay)));
+        }
+
+        var t = Math.Clamp(
+            (((px - ax) * dx) + ((py - ay) * dy)) / lengthSquared, 0, 1);
+        var cx = ax + (dx * t);
+        var cy = ay + (dy * t);
+        return Math.Sqrt(((px - cx) * (px - cx)) + ((py - cy) * (py - cy)));
     }
 
     public static IReadOnlyList<double> SegmentBoundaryParameters(
@@ -200,6 +217,15 @@ public interface IWorldGeometryService
         double fromY,
         double toX,
         double toY);
+
+    LineOfSightResult CheckWalkSegment(
+        string mapId,
+        string floorId,
+        double fromX,
+        double fromY,
+        double toX,
+        double toY,
+        double footprintRadiusWu);
 }
 
 public sealed class WorldGeometryService : IWorldGeometryService
@@ -289,9 +315,72 @@ public sealed class WorldGeometryService : IWorldGeometryService
         return new LineOfSightResult(LineOfSightStatus.Allowed, null);
     }
 
-    private static bool IsWalkable(
-        MapTopologyBundle bundle, string floorId, double x, double y)
+    public LineOfSightResult CheckWalkSegment(
+        string mapId,
+        string floorId,
+        double fromX,
+        double fromY,
+        double toX,
+        double toY,
+        double footprintRadiusWu)
     {
+        if (!double.IsFinite(footprintRadiusWu) || footprintRadiusWu < 0)
+        {
+            return new LineOfSightResult(LineOfSightStatus.Blocked, "nonfinite_radius");
+        }
+
+        var line = CheckLineOfSight(mapId, floorId, fromX, fromY, toX, toY);
+        if (line.Status != LineOfSightStatus.Allowed)
+        {
+            return line;
+        }
+
+        if (footprintRadiusWu <= 0)
+        {
+            return line;
+        }
+
+        if (!_catalog.TryGet(mapId, out var bundle))
+        {
+            return line;
+        }
+
+        var deltaX = toX - fromX;
+        var deltaY = toY - fromY;
+        var length = Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
+        var steps = Math.Max(1, (int)Math.Ceiling(length / 0.25));
+        for (var step = 0; step <= steps; step++)
+        {
+            var t = (double)step / steps;
+            var x = fromX + (deltaX * t);
+            var y = fromY + (deltaY * t);
+            foreach (var polygon in bundle.BlockedPolygons)
+            {
+                if (!string.Equals(polygon.FloorId, floorId, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                for (var index = 0; index < polygon.Points.Count; index++)
+                {
+                    var a = polygon.Points[index];
+                    var b = polygon.Points[(index + 1) % polygon.Points.Count];
+                    var distance = GeometryMath.DistancePointToSegment(
+                        x, y, a.X, a.Y, b.X, b.Y);
+                    if (distance < footprintRadiusWu - 1e-9)
+                    {
+                        return new LineOfSightResult(
+                            LineOfSightStatus.Blocked, "footprint");
+                    }
+                }
+            }
+        }
+
+        return line;
+    }
+
+    private static bool IsWalkable(
+        MapTopologyBundle bundle, string floorId, double x, double y)    {
         var inWalkable = false;
         foreach (var polygon in bundle.WalkablePolygons)
         {

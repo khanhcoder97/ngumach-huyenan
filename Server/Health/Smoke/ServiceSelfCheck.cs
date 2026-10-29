@@ -378,6 +378,58 @@ public static class ServiceSelfCheck
             cornerLine.Status == LineOfSightStatus.Blocked,
             cornerLine.Reason);
 
+        var sweepClear = geometry.CheckWalkSegment(
+            options.DefaultMapId, "OVERWORLD", 35, 0, 38, 0, 0.6);
+        Check("sweep.clear", sweepClear.Status == LineOfSightStatus.Allowed, sweepClear.Reason);
+
+        var sweepWall = geometry.CheckWalkSegment(
+            options.DefaultMapId, "OVERWORLD", 46.5, 0, 42, 0, 0.6);
+        Check("sweep.wall", sweepWall.Status == LineOfSightStatus.Blocked, sweepWall.Reason);
+
+        var sweepBigStep = geometry.CheckWalkSegment(
+            options.DefaultMapId, "OVERWORLD", 35, 0, 50, 0, 0.6);
+        Check(
+            "sweep.big_step",
+            sweepBigStep.Status == LineOfSightStatus.Blocked,
+            sweepBigStep.Reason);
+
+        var sweepHole = geometry.CheckWalkSegment(
+            options.DefaultMapId, "OVERWORLD", 50, 3, 56, 3, 0.6);
+        Check("sweep.hole", sweepHole.Status == LineOfSightStatus.Blocked, sweepHole.Reason);
+
+        var sweepCorner = geometry.CheckWalkSegment(
+            options.DefaultMapId, "OVERWORLD", 50, 4, 58, 4, 0.6);
+        Check(
+            "sweep.corner_touch",
+            sweepCorner.Status == LineOfSightStatus.Blocked,
+            sweepCorner.Reason);
+
+        var sweepFloor = geometry.CheckWalkSegment(
+            options.DefaultMapId, "UNDERGROUND", 35, 0, 38, 0, 0.6);
+        Check("sweep.floor", sweepFloor.Status == LineOfSightStatus.Blocked, sweepFloor.Reason);
+
+        var sweepNonfiniteRadius = geometry.CheckWalkSegment(
+            options.DefaultMapId, "OVERWORLD", 35, 0, 38, 0, double.NaN);
+        Check(
+            "sweep.nonfinite_radius",
+            sweepNonfiniteRadius.Status == LineOfSightStatus.Blocked,
+            sweepNonfiniteRadius.Reason);
+
+        var sweepFootprint = geometry.CheckWalkSegment(
+            options.DefaultMapId, "OVERWORLD", 50, 4.5, 58, 4.5, 0.6);
+        Check(
+            "sweep.footprint_blocked",
+            sweepFootprint.Status == LineOfSightStatus.Blocked &&
+            sweepFootprint.Reason == "footprint",
+            sweepFootprint.Reason);
+
+        var sweepNarrow = geometry.CheckWalkSegment(
+            options.DefaultMapId, "OVERWORLD", 50, 4.5, 58, 4.5, 0.1);
+        Check(
+            "sweep.footprint_small_allowed",
+            sweepNarrow.Status == LineOfSightStatus.Allowed,
+            sweepNarrow.Reason);
+
         var floorLine = geometry.CheckLineOfSight(
             options.DefaultMapId, "UNDERGROUND", 35, 0, 42, 0);
         Check("los.floor", floorLine.Status == LineOfSightStatus.Blocked, floorLine.Reason);

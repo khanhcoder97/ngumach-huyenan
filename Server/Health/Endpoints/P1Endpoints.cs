@@ -150,6 +150,7 @@ public static class P1Endpoints
         HttpContext context,
         ISessionStore sessions,
         MapBoundsCatalog maps,
+        IWorldGeometryService geometry,
         ServerClock clock,
         IOptions<P1WorldOptions> optionsAccessor,
         ILoggerFactory loggerFactory)
@@ -258,14 +259,33 @@ public static class P1Endpoints
             var moveX = payload.MoveX.GetValueOrDefault();
             var moveY = payload.MoveY.GetValueOrDefault();
             var magnitude = Math.Sqrt((moveX * moveX) + (moveY * moveY));
+            var targetX = session.X;
+            var targetY = session.Y;
             if (magnitude > 0)
             {
-                session.X = Math.Clamp(
+                targetX = Math.Clamp(
                     session.X + (distance * (moveX / magnitude)), bounds.XMin, bounds.XMax);
-                session.Y = Math.Clamp(
+                targetY = Math.Clamp(
                     session.Y + (distance * (moveY / magnitude)), bounds.YMin, bounds.YMax);
             }
 
+            var sweep = geometry.CheckWalkSegment(
+                session.MapId,
+                "OVERWORLD",
+                session.X,
+                session.Y,
+                targetX,
+                targetY,
+                options.ActorFootprintRadiusWu);
+            if (sweep.IsBlocked)
+            {
+                return P1Results.Error(
+                    context, clock, requestId, StatusCodes.Status422UnprocessableEntity,
+                    P1ErrorCodes.MovementBlocked, ["payload"], session.Revision);
+            }
+
+            session.X = targetX;
+            session.Y = targetY;
             session.LastInputSequence = sequence;
             session.LastMoveAtUtc = now;
             session.Revision++;

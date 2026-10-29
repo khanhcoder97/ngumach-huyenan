@@ -280,6 +280,7 @@ Internal failure codes: `unknown_skill`, `skill_not_available`, `invalid_target`
 - Direction is normalized, so diagonal input does not grant extra speed.
 - Distance is `MoveSpeedWuPerSecond × elapsed server time`, with elapsed clamped to `MaxStepSeconds`. Client timestamps are validated for shape but never trusted for movement.
 - The result is clamped to the canonical map bounds. Repeated movement into an edge stops at the edge rather than erroring.
+- When a `REVIEWED` topology bundle exists for the map, the whole swept step is validated: the segment (with `ActorFootprintRadiusWu` clearance against blocked geometry) must stay inside walkable polygons and must not cross a blocked polygon. A blocked sweep returns `422 movement_blocked` without consuming the sequence, revision or position. Without a reviewed bundle the query reports `not_enforced` and movement keeps the P1 bounds-only behaviour (dev stub).
 - `inputSequence` must strictly increase. A stale or repeated sequence is rejected before any state changes.
 - `characterId` in the envelope must match the session.
 - `idempotencyKey` is validated but movement is not deduplicated in P1; the monotonic sequence is the replay guard. Economic actions will add idempotency records later.
@@ -320,6 +321,7 @@ State is in memory and there is no seed inventory; a new character starts with n
 | `P1World:MoveSpeedWuPerSecond` | `6.0` | **Provisional** slice value; not yet locked in production data |
 | `P1World:MaxStepSeconds` | `0.25` | Rejects long-frame jumps |
 | `P1World:MaxStepDistanceWu` | `1.5` | Safety bound; must be ≥ speed × max step |
+| `P1World:ActorFootprintRadiusWu` | `0.6` | DEC-016 hero footprint half-width; 0 disables swept clearance |
 | `P1World:StartingHp` / `MaxHp` | `100` / `100` | `WorldSnapshot.example.json` |
 | `P1World:StartingMp` / `MaxMp` | `50` / `50` | `WorldSnapshot.example.json` |
 | `P1World:StartingLevel` | `1` | Session level used by the quest level-band guard |
@@ -347,6 +349,7 @@ Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond
 | 413 | `invalid_payload` | Request body over 8 KB |
 | 422 | `invalid_map` | Session map is not in `map_bounds.json` |
 | 422 | `movement_too_far` | Defensive guard if a configured step exceeds `MaxStepDistanceWu` |
+| 422 | `movement_blocked` | Swept step crosses blocked geometry or leaves walkable area (only with a `REVIEWED` topology bundle) |
 | 400 | `unknown_skill`, `skill_not_available`, `invalid_target` | Combat skill or target input the server refuses |
 | 404 | `target_not_found` | Combat target is not registered in the authoritative world |
 | 409 | `cooldown_active`, `insufficient_resource`, `target_not_alive` | Combat gate rejected the cast; `stale_sequence` also applies |
@@ -389,7 +392,7 @@ Quest and inventory HTTP surfaces are read-only, teleport has no endpoint, and c
 dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
 ```
 
-The flag boots the DI container and canonical content, then runs 66 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency and line-of-sight geometry (clear, wall, hole, corner, floor, non-finite, outside, not-enforced), the NPC anchor registry, the Bến Mưa world-entity registry with despawn/respawn under a manual clock, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
+The flag boots the DI container and canonical content, then runs 75 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency, line-of-sight and swept-walk geometry (clear, wall, large step, hole, corner, floor, non-finite, outside, footprint, not-enforced), the NPC anchor registry, the Bến Mưa world-entity registry with despawn/respawn under a manual clock, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
 
 ## Manual verification
 

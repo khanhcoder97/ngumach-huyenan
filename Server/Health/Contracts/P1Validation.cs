@@ -28,6 +28,7 @@ public static class P1ErrorCodes
     public const string StaleSequence = "stale_sequence";
     public const string InvalidMap = "invalid_map";
     public const string MovementTooFar = "movement_too_far";
+    public const string MovementBlocked = "movement_blocked";
 }
 
 public static class P1Validation
