@@ -1,5 +1,7 @@
 # Biên tập thoại Chương I — dấu và người ký
 
+Trạng thái mới nhất: `Full_Dialogue_Editorial_Notes_vi.md` và `Dialogue_Readthrough_vi.md` — đã biên tập230/230lời. Số33/197 bên dưới là snapshot đợt Chương I, giữ để đối chiếu lịch sử.
+
 Codex line-edit18lời OFFER/CLUE/TURN_IN của C1-01..06 trong `Quest_Dialogue_Production_Data_vi.csv`. Status `VI_EDITED_C1` là bản biên tập ứng viên, chưa voice/owner sign-off/Unity subtitle approval. Kết hợp15lời P00 đã biên tập, hiện33/230lời có edit;197lời còn VI_BASELINE. Không đánh dấu cả campaign đã có thoại final.
 
 Nguồn: Quest Production Spec Chương I và `Narrative_Depth_and_Discovery_vi.md` §2–6. Giữ36main/40side quest, tên/ID canonical và timeline300năm/30năm. Không đổi NPC, node, choice, condition, event, flag, objective/count, reward hoặc unlock bằng cách sửa câu nói.

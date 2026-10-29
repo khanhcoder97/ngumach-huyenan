@@ -1,0 +1,26 @@
+name: dialogue-editorial-validation
+on:
+  pull_request:
+    paths:
+      - 'docs/production/Quest_Dialogue_Production_Data_vi.csv'
+      - 'docs/production/NPC_Actor_Production_Registry_vi.csv'
+      - 'docs/production/Dialogue_Readthrough_vi.md'
+      - 'Tools/NarrativeReview/**'
+      - 'Implementation/Reports/Dialogue_Editorial_Full_20261029.json'
+      - '.github/workflows/dialogue-editorial-validation.yml'
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  editorial-invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compare all dialogue logic and copy coverage with immutable Git baseline
+        run: python Tools/NarrativeReview/validate_full_editorial.py
