@@ -1,66 +1,41 @@
 # Bảng điều phối triển khai — Ngũ Mạch: Huyền Ấn
 
-**Trạng thái:** Tiền sản xuất; đã có scaffold/bootstrap và công cụ kiểm định nội dung, chưa có gameplay runtime hoặc asset pixel-art production.  
-**Nguồn chuẩn:** `Production_Index_vi.md`, GDD, Decision Register, AI Agent Implementation Plan, Technical Contracts, QA/Release Gates và các đặc tả domain. Khi khác nhau, ghi vấn đề để khóa qua Decision Register; không tự sửa thiết kế trong code.
+Cập nhật 2026-10-29. Đọc `Codex_Ownership_Audit_20261029_vi.md` và `Implementation/Work_Orders/04_CONTINUOUS_DELIVERY_20261029.md` trước các report cũ. Đây là board hiện hành; các audit có ngày trước là bằng chứng tại thời điểm đó.
 
-## 1. Phân vai
+## Phân vai hiện hành
 
-| Luồng | Người/agent phụ trách | Phạm vi | Bàn giao bắt buộc |
-|---|---|---|---|
-| Điều phối / sản xuất | Codex | Giữ nguồn chuẩn và phạm vi phase; lập dependency; theo dõi blockers; rà tích hợp; phụ trách art direction, asset, VFX, animation và nghiệm thu hình ảnh | Cập nhật board, quyết định cần khóa, asset manifest và trạng thái nghiệm thu |
-| Code | Codex (tiếp quản phần OpenCode còn dở theo yêu cầu chủ dự án) | Unity client, server C#, schema/API, content importer, gameplay và công cụ theo phase; không tự sửa ý nghĩa record/ID | File thay đổi, module/API/schema, cách chạy local, trạng thái build, dữ liệu đã kiểm tra, TODO/blocker |
-| Mỹ thuật / đồ họa | Codex + công cụ tạo asset khi khả dụng | Pixel concept, actor/environment sprite sheets, pixel UI, tilemaps, icon, animation frame table, VFX/weather, budget LowFX/mobile | Tệp nguồn + export, pixel size/atlas/frame table, ID tham chiếu, license/provenance, trạng thái placeholder hay final |
-| Chủ dự án | Người dùng | Khóa quyết định sản phẩm có ảnh hưởng lớn; cung cấp quyền/cấu hình công cụ khi cần | Phê duyệt các mục đang ghi `BLOCKED_DESIGN_APPROVAL` hoặc quyết định sản phẩm |
+| Luồng | Chủ thực hiện | Đầu ra / ranh giới |
+|---|---|---|
+| Authoritative server | Qoder, issue #41 | QOD-11→15: world/movement/combat/quái/quest/reward/headless; không art hoặc asset validator |
+| Dây chuyền asset không Unity | OpenCode, issue #40 | OPC-06→10: schema/PNG/meta/preview/pack/CI; không gameplay client/server |
+| Art/source/video | Muse, #1/#29/#39 | nhân vật, map, UI art, VFX, animation, cinema; Unity demo/builder trên máy của Muse |
+| Client gameplay integration | Codex | code transport/state/UI presentation/camera flow, không ghi đè art/Animator/builder Muse; compile/playback phải có môi trường Unity |
+| Thiết kế/biên tập/QA tích hợp | Codex | nguồn chuẩn, thoại, audio direction, UX, review PR/art, quyết định liên ngành và evidence gates |
+| Quyết định phát hành | Chủ dự án | thị trường, budget/hosting/CCU, vận hành, monetization, clearance/đối tác; không ghi giả owner sign-off |
 
-## 2. Thứ tự triển khai
+Quyền sửa chi tiết theo work order04 và audit ownership; ba agent không bị giao lại nhiệm vụ nhỏ sau mỗi PR. Agent mở PR rồi tiếp mốc độc lập/stacked hoặc tests, giữ review gate và báo blocker cụ thể.
 
-### P0 — Nền dự án (đang thực hiện; chưa qua exit gate)
+## Bằng chứng hiện có và giới hạn
 
-**Đã bàn giao từ OpenCode:** Unity 6.3 LTS / C# / URP scaffold; title bootstrap; health endpoint correlation ID; 7 definition schemas/examples; manifest/reference validator; 8 P1 transport contracts/examples; README. Codex giữ module boundaries và tiếp tục P0/P1 theo gate, không đổi canonical IDs.
+- Đã có server session/move/world, quest accept có flag, topology/LOS/swept geometry, world entity registry và combat target binding. Baseline đọc đợt này `18caf22` (PR #47); code và PR sau đó phải xem head mới nhất, không dùng board làm chứng nhận test tự động.
+- Đã có asset validator và Muse walk delivery; vẫn cần review metadata/visual/Unity evidence. PR #22 có full-animation proposal không có nghĩa128clip đã đạt nghiệm thu.
+- Có concept nhân vật/environment/HUD, Thăng Long macro và5board30skill. Đây là references/design handoff, không phải runtime assets hoàn chỉnh.
+- 76 quest có narrative beats;20cinema/63shot có prompt. Video và quest executable không tự tồn tại vì có prompt/ID.
+- 349placements/46map chờ mức review khác nhau; không có bằng chứng đủ toàn bộ topology/collision/route. Thăng Long2048×1536WU là target design-only.
+- PC local không chạy Unity Editor; không gọi static source review là client build PASS. Server CI build/smoke không là mobile or full-game acceptance.
 
-**Codex:** bảo toàn bộ tài liệu nguồn; quản lý asset IDs và P1 queue; khóa visual direction/production settings; chuẩn bị brief cho Bến Mưa. Unity Editor và .NET hiện chưa được phát hiện trong PATH nên nghiệm thu mở project/build cần thực hiện khi runtime có sẵn.
+## Hàng đợi Codex
 
-**Exit gate:** máy mới mở project theo README; title hiển thị online/offline từ health endpoint; 7 schema example hợp lệ; importer xác nhận đủ 349 record, ID/reference resolve và map bounds; không chứa endpoint/KPAH cũ.
+1. Chốt source/semantic P1 và sửa thoại mở đầu; xem `P1_Design_Resolution_20261029_vi.md`, `Opening_Dialogue_Editorial_Notes_vi.md`.
+2. Review PR #31/#43 và các PR Qoder đang chờ theo head mới; merge/sửa theo diff và bằng chứng, không theo tên workflow xanh đơn thuần.
+3. Audio cue catalogue, biên tập tiếp các chương, UX/localization/font/accessibility review; những phần này chưa có agent sản xuất riêng.
+4. Client session/state/transport adapter → HUD/quest/inventory actions → binding animation/VFX → camera profile/reconnect presentation; mỗi bước có review và integration request nếu liên quan Muse/Qoder.
+5. Nghiệm thu Bến Mưa trên Unity/device khi có build, đo pacing/TTK/UX; chưa chuyển sản xuất đại trà46map khi slice chưa qua.
 
-**Trạng thái hiện tại:** scaffold nền đã có: `Implementation/Tools/validate_content.py`, `Server/Health` (ASP.NET Core `/health` với correlation ID), Unity client skeleton, 7 schema/example definition, 8 P1 transport contracts và README. Các report đã lưu cho thấy manifest 349 hàng, ID/reference, map bounds, schema/example và P1 contracts từng đạt `PASSED`. Codex đã thêm cấu hình Pixel Perfect Camera URP, import preset cho pixel sprites, config URL health, menu tạo URP 2D/startup scene và scene hiệu chuẩn tilemap/placeholder sprite. Các thay đổi mới chưa được Unity import/compile; scene/asset sẽ sinh khi chạy menu trong Unity. Dùng Pixel Perfect Camera tích hợp URP 17.3, không cài package Built-in RP riêng. `TOOL-ROD-01` đã có trong Item_Master. Đã đồng bộ turn-in P00-01 sang `NPC_TA_VAN_KHANH` theo Quest Production Spec, GDD và spawn registry; báo cáo validator có sẵn là trước thay đổi này, cần chạy lại khi tiếp tục kiểm định. Môi trường hiện không có Unity Editor hoặc .NET CLI nên không xác nhận Unity import/build server. Codex tiếp quản toàn bộ phần code còn dở theo yêu cầu chủ dự án.
+## Chuẩn và gate
 
-### P1 — Vertical slice Bến Mưa
+Top-down XY; actor48×64/8hướng/20PPU; tile16×16; Point/no mipmap. Combat640×360logical, HUB_WIDE960×540logical theo DEC-021; HUD giữ size,6ô kỹ năng vòng cung quanh nút đánh. Không đổi speed/range/hitbox theo sprite frame.
 
-**Codex:** tiếp tục triển khai di chuyển/combat authoritative, một nhân vật Minh Kiếm với 3 kỹ năng; một mob, một elite, boss Mãng Cốt; quest chain và trạng thái lưu; túi/trang bị/vật phẩm tối thiểu, teleport; UI responsive; data-driven hooks. Chốt API/event trước khi nối asset; animation không quyết định gameplay.
+Exit slice: tạo nhân vật → P00-01..05 (talk/explore/collect/combat/escort/boss) → thưởng không nhân đôi → cổng Thanh Lạc; client đọc authoritative state, không mất tiến trình khi reconnect, telegraph rõ ở LowFX, UI dùng được16:9/20:9. In-memory P1 không đạt durable reconnect chỉ bằng retry test; persistence phải được xây và kiểm riêng trước khi ký gate đó.
 
-**Codex (art):** theo `Art_Production_Queue_P1_vi.md`: pixel hero Minh Kiếm; NPC Bến Mưa; mob/elite/Mãng Cốt; environment tile kit/props; mưa; telegraph/VFX của 3 skill + boss; pixel HUD skin và item icons. Asset production phải khớp ID, sprite-set/frame table, atlas, FX budget, LowFX/mobile và các điều kiện đọc telegraph trong Art Bible.
-
-**Trạng thái P1.1:** 8 JSON contract transport-independent tại `Implementation/Contracts/P1/` (envelope, move intent, combat input, world snapshot, combat event, quest state, inventory snapshot, teleport request) kèm example và validator. Report `Implementation/Reports/P1_contract_validation.json` đã đạt `PASSED`; ID skill/map/quest/item/currency/entity/class đều resolve. Chưa implement server/client runtime; chờ hoàn thành P0 và môi trường .NET/Unity để compile.
-
-**Exit gate:** hoàn thành chuỗi từ tạo nhân vật đến cổng Thanh Lạc trên PC/mobile; quest state không mất; reward không nhân đôi; telegraph rõ khi LowFX; UI không che tương tác ở 16:9 và 20:9; toàn bộ ID resolve.
-
-**Blocker thiết kế:** hồ sơ Mãng Cốt đang mô tả hai đòn; điều kiện P1 yêu cầu ba. Đòn quét đuôi tầm thấp chỉ là đề xuất trong art queue, chưa được khóa; chưa làm animation/VFX cuối cho đòn thứ ba trước khi quyết định.
-
-### P2–P6 — Mở rộng
-
-Codex chỉ chuyển phase sau khi gate phase trước được nghiệm thu. Mở rộng lần lượt 5 môn phái/tiến trình; dungeon/raid/economy; guild/party/chat; PvP/season/live ops; bảo mật, moderation, load/release gates. Pixel art mở rộng theo content đã khóa, giữ tỷ lệ tái sử dụng tile/actor sprite set và ngân sách thiết bị.
-
-## 3. Quy ước giao việc và tích hợp
-
-- Mỗi ticket code gắn phase, file nguồn, ID chịu trách nhiệm, tiêu chí nghiệm thu và giới hạn “không tự suy diễn”. OpenCode đọc đặc tả domain tương ứng trước khi sửa module.
-- ID trong CSV/manifest là canonical. Display name và thoại đi qua localization keys; code không tạo ID dựa trên tên hiển thị.
-- Server quyết định sát thương, loot, tiền, quest completion và item state. Animation/VFX chỉ trình bày event; không quyết định hit hoặc reward.
-- Mọi asset production có `asset_id`, entity/map/skill tham chiếu, kích thước/clip, export format, budget, license/provenance, trạng thái và điều kiện duyệt. Placeholder phải được đánh dấu, không được giao nhầm thành final.
-- Thay đổi API/schema hoặc cân bằng liên module cần cập nhật contract/version và semantic diff trước khi tích hợp.
-- Bàn giao ghi rõ đã compile/import hay chưa; không dùng “đã làm xong” nếu chỉ mới có mockup/placeholder.
-
-## 4. Trạng thái đồ họa hiện tại
-
-- Đã có Art Bible và queue 21 hạng mục cho P1 Bến Mưa; queue là kế hoạch sản xuất, không phải asset đã tạo.
-- Ngày 2026-10-26 chủ dự án đổi toàn bộ hướng đồ họa sang pixel art. Chuẩn hiện hành: `Pixel_Art_Production_Standard_vi.md`; GDD, Art Bible, queue, combat, HUD, UI/UX và modal specs đã được chuyển sang logical 640×360, 20 PPU, integer scale và frame-based sprite art.
-- Hai concept SVG Minh Kiếm v1/v2 đã chuyển khỏi `Client/Assets` vào `docs/production/Art_Concepts_History/`; chúng là lịch sử vector, không phải pixel art/runtime. Sprite concept pixel mới cần được tạo theo ảnh tham chiếu trước khi `ART-P1-002` qua `CONCEPT_APPROVED`.
-- Chưa có sprite sheet, tilemap, VFX hoặc animation pixel-art production. Image generation tích hợp không có trong phiên này; CLI fallback cần được chủ dự án chọn rõ và máy có `OPENAI_API_KEY`. Pixel Perfect Camera URP và sprite import defaults đã được thêm ở scaffold, nhưng còn chờ Unity import/compile và project render configuration để xác nhận end-to-end.
-- Ưu tiên asset: pixel concept sheet → actor spritesheets → Bến Mưa tilemap/weather → mob/boss sheets → skill VFX → pixel UI/icons; mọi gói theo ID, palette, pixel size, provenance và nghiệm thu riêng.
-
-## 5. Việc tiếp theo
-
-1. Mở Unity và chạy `Tools/Ngũ Mạch/Initialize Pixel Art Project`, rồi `Create Pixel Art Smoke Scene`; xác nhận camera/import pipeline và cấu hình render URP thực tế.
-2. Chạy content/contract validators sau khi thay đổi P00-01; cập nhật report theo dữ liệu hiện hành.
-3. Bắt đầu P1 server-authoritative world/combat/persistence từ contract hiện có, sau khi P0 compile được.
-4. Thiết kế và đặc tả đòn thứ ba của Mãng Cốt trước animation/VFX final; chọn phương án ít ảnh hưởng combat đã khóa, ghi decision nếu đổi phạm vi.
-5. Tạo và duyệt pixel concept pack đầu tiên khi công cụ ảnh khả dụng; sau đó xuất sprite sheets/tilemap theo chuẩn mới và cập nhật queue.
+P2–P6 vẫn theo `Production_QA_Release_Gates_vi.md`. Audio, reviewed topology, client runtime, durable save/auth, activity systems và device QA còn thiếu; không gọi game hoàn chỉnh từ số trang đặc tả.

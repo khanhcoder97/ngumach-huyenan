@@ -1,6 +1,8 @@
 # BỘ TÀI LIỆU SẢN XUẤT
 ## Ngũ Mạch: Huyền Ấn — Production Index v1.2
 
+> Điều phối hiện hành: `Development_Execution_Board_vi.md` và `Codex_Ownership_Audit_20261029_vi.md`. Các bảng catalogue bên dưới mô tả baseline, không thay quyết định mới: Thăng Long v2 là2048×1536WU/12phường design-only (runtime cũ chưa migrate); Map Atlas cũ có9layout nhưng registry có46mapID; `completion_v1` và source map P1 nêu số liệu đã thiết kế nhưng chưa export. Không dùng số trang/record để kết luận game đã chạy đủ.
+
 ### 1. Mục đích
 
 Bộ tài liệu chuyển ý tưởng MMORPG 2D nhìn từ trên thành đặc tả có thể chia việc cho đội gameplay, narrative, UI/UX, 2D art, level design, backend và QA. Tên Ngũ Mạch: Huyền Ấn hiện là tên làm việc, chưa tra cứu hoặc đăng ký thương hiệu.
@@ -180,3 +182,10 @@ Capital_Scale_and_Simple_Pixel_v2_vi.md quy định extent12phường/chunk/migr
 - Skill_VFX_Cards_v1_vi.md:30thẻ skill riêng, prep/release/fade/attach/shape/icon/sound/LowFX.
 - Art_Concept_References/skill_vfx_v1/:5board PNG thực, prompts và reference manifest SHA256; không phải runtime atlas.
 - ../../Implementation/Content/DesignBaselines/skill_vfx_art_v1.json: art handoff design-only, không thay30SkillDefinitions runtime.
+
+### Ownership, phân xử P1 và biên tập mở đầu (2026-10-29)
+
+- `Codex_Ownership_Audit_20261029_vi.md`:12hạng mục còn trống, ranh giới Codex/baagent, ưu tiên và bằng chứng chưa có.
+- `P1_Design_Resolution_20261029_vi.md`:source map numeric, ví dụ kiểm công thức, rangeMK03 và semantic cast/VFX; không tự kích hoạt runtime.
+- `Opening_Dialogue_Editorial_Notes_vi.md`:15dòng mở đầu đã line-edit, giữ graph/guards/keys và reveal gates,215dòng còn baseline.
+- `Reviews/Opening_Editorial_Check_20261029.json`:bằng chứng diff230hàng/15text-status edits/không đổi field logic; chưa là Unity subtitle/voice QA.

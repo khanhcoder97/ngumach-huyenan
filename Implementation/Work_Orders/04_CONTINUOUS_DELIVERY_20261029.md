@@ -28,6 +28,10 @@ Yêu cầu chủ dự án: giao tác vụ lớn, không kết thúc công việc
 - Muse: phạm vi art/source/Unity builder đã giao, cộng cinema sidecar theo #29. Không sửa authoritative gameplay hoặc schema thay OpenCode. Báo yêu cầu metadata qua issue.
 - Codex duy trì các work order điều phối và tài liệu thiết kế. Các bảng ownership cũ được hiểu cùng phần mở rộng này, không dùng bảng cũ để dừng các việc đã giao mới.
 
+### Phần Codex nhận sau rà soát ownership
+
+Theo `docs/production/Codex_Ownership_Audit_20261029_vi.md`, Codex nhận client gameplay integration (transport/session/snapshot/UI controllers/camera flow), biên tập thoại, audio direction và QA/review tích hợp. Không ghi đè art/Animator/manifest/builder Muse hoặc lấy lại module server/tooling đã giao. Trước sửa scene/builder của Muse phải chia file và integration request rõ. Thiếu Unity local thì source chưa được gọi là compile/playback PASS; dùng build evidence trên máy phù hợp khi có. Các câu hỏi cast/VFX và nguồn numeric P1 đọc `P1_Design_Resolution_20261029_vi.md`; Qoder vẫn thực hiện migration/implementation qua PR riêng.
+
 ## Chuẩn chung hiện hành
 
 Top-down XY, foot pivot, actor 48×64 native, 20 PPU, tile 16×16, Point/no mipmaps. Combat camera 640×360 logical; HUB_WIDE 960×540 logical theo `Hub_Wide_Camera_Profile_vi.md`, không thu nhỏ nút cảm ứng. Thăng Long 2048×1536 WU là quy hoạch design-only; không tự thay bounds runtime trước migration. Sáu ô kỹ năng bố trí vòng cung quanh nút đánh.
