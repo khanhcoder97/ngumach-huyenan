@@ -194,123 +194,7 @@ public static class ServiceSelfCheck
             idemConflict.Failure?.Code == CombatErrorCodes.IdempotencyConflict,
             idemConflict.Failure?.Code);
 
-        WorldEntityInstance MakeFixtureMob(string entityId, double x, double y)
-        {
-            var mob = new WorldEntityInstance
-            {
-                EntityId = entityId,
-                RecordId = "MAN-TEST-" + entityId,
-                Kind = WorldEntityKinds.Mob,
-                TemplateIds = new[] { "MOB_CARPLING" },
-                MapId = options.DefaultMapId,
-                FloorId = "OVERWORLD",
-                X = x,
-                Y = y,
-                Quantity = 1,
-                RespawnSeconds = 18
-            };
-            mob.Initialize();
-            return mob;
-        }
-
-        var mobClock = new ManualServerClock(
-            new DateTimeOffset(2026, 10, 29, 1, 0, 0, TimeSpan.Zero));
-        var mobOptions = new MobBehaviorOptions
-        {
-            AggroRadiusWu = 6,
-            LeashRadiusWu = 12,
-            AttackRangeWu = 1.2,
-            AttackCooldownSeconds = 2,
-            MoveSpeedWuPerSecond = 2
-        };
-        var mobRegistry = new WorldEntityRegistry(
-            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_MOB", 43, 0)]),
-            mobClock);
-        var mobAi = new MobLifecycleService(mobRegistry, geometry, mobOptions, mobClock);
-        var prey = NewPlayer("CHR_SELFCHECK_PREY");
-        prey.X = 44;
-        prey.Y = 0;
-
-        mobAi.Tick([prey]);
-        Check(
-            "mob.aggro",
-            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Aggro,
-            mobAi.GetState("ENT_SELFCHECK_MOB"));
-
-        mobClock.Advance(TimeSpan.FromSeconds(0.5));
-        var attackTick = mobAi.Tick([prey]);
-        var attackEvents = attackTick.Count(
-            lifecycle => lifecycle.FromState == MobBehaviorStates.Attack &&
-                         lifecycle.ToState == MobBehaviorStates.Attack);
-        Check(
-            "mob.attack",
-            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Attack &&
-            attackEvents == 1,
-            mobAi.GetState("ENT_SELFCHECK_MOB"));
-
-        mobClock.Advance(TimeSpan.FromSeconds(0.5));
-        var cooldownTick = mobAi.Tick([prey]);
-        Check(
-            "mob.attack_cooldown",
-            cooldownTick.All(lifecycle =>
-                lifecycle.FromState != MobBehaviorStates.Attack ||
-                lifecycle.ToState != MobBehaviorStates.Attack),
-            "attack fired during cooldown");
-
-        var wallClock = new ManualServerClock(
-            new DateTimeOffset(2026, 10, 29, 2, 0, 0, TimeSpan.Zero));
-        var wallRegistry = new WorldEntityRegistry(
-            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_WALL_MOB", 43, 0)]),
-            wallClock);
-        var wallAi = new MobLifecycleService(wallRegistry, geometry, mobOptions, wallClock);
-        var blockedPrey = NewPlayer("CHR_SELFCHECK_BLOCKED_PREY");
-        blockedPrey.X = 47.5;
-        blockedPrey.Y = 0;
-        wallAi.Tick([blockedPrey]);
-        Check(
-            "mob.los_blocks_aggro",
-            wallAi.GetState("ENT_SELFCHECK_WALL_MOB") == MobBehaviorStates.Idle,
-            wallAi.GetState("ENT_SELFCHECK_WALL_MOB"));
-
-        var leashOptions = new MobBehaviorOptions
-        {
-            AggroRadiusWu = 20,
-            LeashRadiusWu = 12,
-            AttackRangeWu = 1.2,
-            AttackCooldownSeconds = 2,
-            MoveSpeedWuPerSecond = 2
-        };
-        var leashClock = new ManualServerClock(
-            new DateTimeOffset(2026, 10, 29, 3, 0, 0, TimeSpan.Zero));
-        var leashRegistry = new WorldEntityRegistry(
-            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_LEASH_MOB", 40, 0)]),
-            leashClock);
-        var leashAi = new MobLifecycleService(
-            leashRegistry, geometry, leashOptions, leashClock);
-        var farPrey = NewPlayer("CHR_SELFCHECK_FAR_PREY");
-        farPrey.X = 55;
-        farPrey.Y = 0;
-        leashAi.Tick([farPrey]);
-        Check(
-            "mob.leash_return",
-            leashAi.GetState("ENT_SELFCHECK_LEASH_MOB") == MobBehaviorStates.Return,
-            leashAi.GetState("ENT_SELFCHECK_LEASH_MOB"));
-
-        var floorPrey = NewPlayer("CHR_SELFCHECK_FLOOR_PREY");
-        floorPrey.X = 44;
-        floorPrey.Y = 0;
-        floorPrey.FloorId = "UNDERGROUND";
-        var floorClock = new ManualServerClock(
-            new DateTimeOffset(2026, 10, 29, 4, 0, 0, TimeSpan.Zero));
-        var floorRegistry = new WorldEntityRegistry(
-            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_FLOOR_MOB", 43, 0)]),
-            floorClock);
-        var floorAi = new MobLifecycleService(floorRegistry, geometry, mobOptions, floorClock);
-        floorAi.Tick([floorPrey]);
-        Check(
-            "mob.floor_ignored",
-            floorAi.GetState("ENT_SELFCHECK_FLOOR_MOB") == MobBehaviorStates.Idle,
-            floorAi.GetState("ENT_SELFCHECK_FLOOR_MOB"));
+        
 
         var noMpCast = combat.Resolve(
             NewPlayer("CHR_SELFCHECK_MP", mp: 0),
@@ -655,6 +539,124 @@ public static class ServiceSelfCheck
             "los.not_enforced_without_reviewed_bundle",
             notEnforced.Status == LineOfSightStatus.NotEnforced,
             notEnforced.Reason?.ToString());
+
+        WorldEntityInstance MakeFixtureMob(string entityId, double x, double y)
+        {
+            var mob = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = "MAN-TEST-" + entityId,
+                Kind = WorldEntityKinds.Mob,
+                TemplateIds = new[] { "MOB_CARPLING" },
+                MapId = options.DefaultMapId,
+                FloorId = "OVERWORLD",
+                X = x,
+                Y = y,
+                Quantity = 1,
+                RespawnSeconds = 18
+            };
+            mob.Initialize();
+            return mob;
+        }
+
+        var mobClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 29, 1, 0, 0, TimeSpan.Zero));
+        var mobOptions = new MobBehaviorOptions
+        {
+            AggroRadiusWu = 6,
+            LeashRadiusWu = 12,
+            AttackRangeWu = 1.2,
+            AttackCooldownSeconds = 2,
+            MoveSpeedWuPerSecond = 2
+        };
+        var mobRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_MOB", 43, 0)]),
+            mobClock);
+        var mobAi = new MobLifecycleService(mobRegistry, geometry, mobOptions, mobClock);
+        var prey = NewPlayer("CHR_SELFCHECK_PREY");
+        prey.X = 44;
+        prey.Y = 0;
+
+        mobAi.Tick([prey]);
+        Check(
+            "mob.aggro",
+            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Aggro,
+            mobAi.GetState("ENT_SELFCHECK_MOB"));
+
+        mobClock.Advance(TimeSpan.FromSeconds(0.5));
+        var attackTick = mobAi.Tick([prey]);
+        var attackEvents = attackTick.Count(
+            lifecycle => lifecycle.FromState == MobBehaviorStates.Attack &&
+                         lifecycle.ToState == MobBehaviorStates.Attack);
+        Check(
+            "mob.attack",
+            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Attack &&
+            attackEvents == 1,
+            mobAi.GetState("ENT_SELFCHECK_MOB"));
+
+        mobClock.Advance(TimeSpan.FromSeconds(0.5));
+        var cooldownTick = mobAi.Tick([prey]);
+        Check(
+            "mob.attack_cooldown",
+            cooldownTick.All(lifecycle =>
+                lifecycle.FromState != MobBehaviorStates.Attack ||
+                lifecycle.ToState != MobBehaviorStates.Attack),
+            "attack fired during cooldown");
+
+        var wallClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 29, 2, 0, 0, TimeSpan.Zero));
+        var wallRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_WALL_MOB", 43, 0)]),
+            wallClock);
+        var wallAi = new MobLifecycleService(wallRegistry, geometry, mobOptions, wallClock);
+        var blockedPrey = NewPlayer("CHR_SELFCHECK_BLOCKED_PREY");
+        blockedPrey.X = 47.5;
+        blockedPrey.Y = 0;
+        wallAi.Tick([blockedPrey]);
+        Check(
+            "mob.los_blocks_aggro",
+            wallAi.GetState("ENT_SELFCHECK_WALL_MOB") == MobBehaviorStates.Idle,
+            wallAi.GetState("ENT_SELFCHECK_WALL_MOB"));
+
+        var leashOptions = new MobBehaviorOptions
+        {
+            AggroRadiusWu = 20,
+            LeashRadiusWu = 12,
+            AttackRangeWu = 1.2,
+            AttackCooldownSeconds = 2,
+            MoveSpeedWuPerSecond = 2
+        };
+        var leashClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 29, 3, 0, 0, TimeSpan.Zero));
+        var leashRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_LEASH_MOB", 40, 0)]),
+            leashClock);
+        var leashAi = new MobLifecycleService(
+            leashRegistry, geometry, leashOptions, leashClock);
+        var farPrey = NewPlayer("CHR_SELFCHECK_FAR_PREY");
+        farPrey.X = 55;
+        farPrey.Y = 0;
+        leashAi.Tick([farPrey]);
+        Check(
+            "mob.leash_return",
+            leashAi.GetState("ENT_SELFCHECK_LEASH_MOB") == MobBehaviorStates.Return,
+            leashAi.GetState("ENT_SELFCHECK_LEASH_MOB"));
+
+        var floorPrey = NewPlayer("CHR_SELFCHECK_FLOOR_PREY");
+        floorPrey.X = 44;
+        floorPrey.Y = 0;
+        floorPrey.FloorId = "UNDERGROUND";
+        var floorClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 29, 4, 0, 0, TimeSpan.Zero));
+        var floorRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_FLOOR_MOB", 43, 0)]),
+            floorClock);
+        var floorAi = new MobLifecycleService(floorRegistry, geometry, mobOptions, floorClock);
+        floorAi.Tick([floorPrey]);
+        Check(
+            "mob.floor_ignored",
+            floorAi.GetState("ENT_SELFCHECK_FLOOR_MOB") == MobBehaviorStates.Idle,
+            floorAi.GetState("ENT_SELFCHECK_FLOOR_MOB"));
 
         var losAccept = new InMemoryQuestAcceptService(
             questCatalog, quests, npcAnchors, geometry,
