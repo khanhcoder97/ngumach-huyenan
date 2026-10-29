@@ -37,6 +37,23 @@ public static class WorldEntityStates
     };
 }
 
+// Production_Rules_Complete_v1_vi.md §5: the P00-01 packages count at most
+// once per character and never remove the world item for other characters.
+// Generic shared INTERACTABLEs keep the shared rule.
+public static class WorldEntityClaimPolicies
+{
+    public const string Shared = "SHARED";
+    public const string PerCharacter = "PER_CHARACTER";
+
+    public static bool IsValid(string? value) => value is Shared or PerCharacter;
+
+    public static string DefaultFor(string kind) => kind switch
+    {
+        WorldEntityKinds.GatherNode => PerCharacter,
+        _ => Shared
+    };
+}
+
 public sealed record WorldEntityTemplate(string TemplateId, string Kind);
 
 public sealed class WorldEntityInstance
@@ -53,6 +70,8 @@ public sealed class WorldEntityInstance
     public required double Y { get; set; }
     public required int Quantity { get; init; }
     public required int RespawnSeconds { get; init; }
+
+    public string ClaimPolicy { get; init; } = WorldEntityClaimPolicies.Shared;
 
     public string State { get; private set; } = string.Empty;
     public long Revision { get; private set; }
@@ -314,6 +333,27 @@ public static class WorldEntityLoader
                     $"{path}: {source.EntityId} respawnSeconds must be >= 0.");
             }
 
+            if (source.ClaimPolicy is not null &&
+                source.Kind is not (WorldEntityKinds.Interactable or WorldEntityKinds.GatherNode))
+            {
+                throw new InvalidOperationException(
+                    $"{path}: {source.EntityId} kind '{source.Kind}' cannot be claimable.");
+            }
+
+            var claimPolicy = source.ClaimPolicy ?? WorldEntityClaimPolicies.DefaultFor(source.Kind!);
+            if (!WorldEntityClaimPolicies.IsValid(claimPolicy))
+            {
+                throw new InvalidOperationException(
+                    $"{path}: {source.EntityId} has invalid claimPolicy '{source.ClaimPolicy}'.");
+            }
+
+            if (string.Equals(source.Kind, WorldEntityKinds.GatherNode, StringComparison.Ordinal) &&
+                !string.Equals(claimPolicy, WorldEntityClaimPolicies.PerCharacter, StringComparison.Ordinal))
+            {
+                throw new InvalidOperationException(
+                    $"{path}: {source.EntityId} gather nodes are per-character claims.");
+            }
+
             var entity = new WorldEntityInstance
             {
                 EntityId = source.EntityId,
@@ -325,7 +365,8 @@ public static class WorldEntityLoader
                 X = x,
                 Y = y,
                 Quantity = quantity,
-                RespawnSeconds = respawn
+                RespawnSeconds = respawn,
+                ClaimPolicy = claimPolicy
             };
             entity.Initialize();
             entities.Add(entity);
@@ -360,6 +401,7 @@ public static class WorldEntityLoader
         public double? YWu { get; init; }
         public int? Quantity { get; init; }
         public int? RespawnSeconds { get; init; }
+        public string? ClaimPolicy { get; init; }
     }
 }
 

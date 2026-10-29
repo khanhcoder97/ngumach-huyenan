@@ -30,6 +30,21 @@ KIND_BY_RECORD_TYPE = {
     "INTERACTABLE": "INTERACTABLE",
 }
 
+# Production_Rules_Complete_v1_vi.md §5: each P00-01 package counts at most
+# once per character and never removes the world item for other characters.
+# Generic shared INTERACTABLEs keep the shared rule; gather nodes are
+# per-character by the manifest shard rule.
+CLAIM_POLICY_SHARED = "SHARED"
+CLAIM_POLICY_PER_CHARACTER = "PER_CHARACTER"
+CLAIM_POLICY_BY_KIND = {
+    "GATHER_NODE": CLAIM_POLICY_PER_CHARACTER,
+    "INTERACTABLE": CLAIM_POLICY_SHARED,
+}
+PACKAGE_CLAIM_SOURCE = (
+    "Production_Rules_Complete_v1_vi.md §5: mỗi ID tính tối đa 1/character, "
+    "không trừ item world cho người khác"
+)
+
 # Quest objects defined by the map atlas, not present as manifest rows.
 # respawnSeconds 20 is a labelled DEV FIXTURE: the quest spec only says the
 # packages respawn ("kiện respawn") without a canonical number.
@@ -41,7 +56,11 @@ ATLAS_SUPPLEMENTS = [
         "xWu": 36.0,
         "yWu": 0.0,
         "respawnSeconds": 20,
-        "condition": "P00-01; DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)",
+        "claimPolicy": CLAIM_POLICY_PER_CHARACTER,
+        "condition": (
+            "P00-01; per-character claim (Production_Rules §5); "
+            "DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
+        ),
     },
     {
         "recordId": "MAN-BM-OBJ_BM_PACKAGE_02",
@@ -50,7 +69,11 @@ ATLAS_SUPPLEMENTS = [
         "xWu": 44.0,
         "yWu": 0.0,
         "respawnSeconds": 20,
-        "condition": "P00-01; DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)",
+        "claimPolicy": CLAIM_POLICY_PER_CHARACTER,
+        "condition": (
+            "P00-01; per-character claim (Production_Rules §5); "
+            "DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
+        ),
     },
     {
         "recordId": "MAN-BM-OBJ_BM_PACKAGE_03",
@@ -59,7 +82,11 @@ ATLAS_SUPPLEMENTS = [
         "xWu": 52.0,
         "yWu": 0.0,
         "respawnSeconds": 20,
-        "condition": "P00-01; DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)",
+        "claimPolicy": CLAIM_POLICY_PER_CHARACTER,
+        "condition": (
+            "P00-01; per-character claim (Production_Rules §5); "
+            "DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
+        ),
     },
 ]
 
@@ -143,21 +170,23 @@ def main():
         for template_id in template_ids:
             templates.setdefault(template_id, kind)
 
-        entities.append(
-            {
-                "entityId": entity_id_for(record_id),
-                "recordId": record_id,
-                "kind": kind,
-                "templateIds": template_ids,
-                "mapId": MAP_ID,
-                "floorId": FLOOR_ID,
-                "xWu": x_wu,
-                "yWu": y_wu,
-                "quantity": quantity,
-                "respawnSeconds": respawn_seconds,
-                "condition": (row.get("condition") or "").strip(),
-            }
-        )
+        entity = {
+            "entityId": entity_id_for(record_id),
+            "recordId": record_id,
+            "kind": kind,
+            "templateIds": template_ids,
+            "mapId": MAP_ID,
+            "floorId": FLOOR_ID,
+            "xWu": x_wu,
+            "yWu": y_wu,
+            "quantity": quantity,
+            "respawnSeconds": respawn_seconds,
+            "condition": (row.get("condition") or "").strip(),
+        }
+        claim_policy = CLAIM_POLICY_BY_KIND.get(kind)
+        if claim_policy is not None:
+            entity["claimPolicy"] = claim_policy
+        entities.append(entity)
 
     for supplement in ATLAS_SUPPLEMENTS:
         record_id = supplement["recordId"]
@@ -173,6 +202,8 @@ def main():
                 "yWu": supplement["yWu"],
                 "quantity": 1,
                 "respawnSeconds": supplement["respawnSeconds"],
+                "claimPolicy": supplement["claimPolicy"],
+                "claimPolicySource": PACKAGE_CLAIM_SOURCE,
                 "condition": supplement["condition"],
             }
         )
