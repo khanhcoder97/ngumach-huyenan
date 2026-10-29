@@ -1230,7 +1230,7 @@ public static class ServiceSelfCheck
         // Failure after the reservation: the claim is released by token, the
         // node stays claimable and the retry grants exactly once.
         var failInventory = new InMemoryInventoryService(new InMemoryInventoryStateStore());
-        var failOnceInventory = new FailOnceInventoryDecorator(failInventory);
+        var raceFailOnceInventory = new FailOnceInventoryDecorator(failInventory);
         var failInteractions = new InMemoryInteractionService(
             new WorldEntityRegistry(
                 new WorldEntityCatalog(
@@ -1239,7 +1239,7 @@ public static class ServiceSelfCheck
                 interactClock),
             worldRecords,
             interactQuests,
-            failOnceInventory,
+            raceFailOnceInventory,
             services.GetRequiredService<IWorldGeometryService>(),
             interactClock,
             fixedRoller,
@@ -1773,10 +1773,10 @@ public static class ServiceSelfCheck
         // validation caps currency deltas at 10^12, so the overflow boundary
         // can only be reached by writing the stored balance itself.
         var overflowStateStore = services.GetRequiredService<IInventoryStateStore>();
-        var overflowState = overflowStateStore.GetOrAdd(overflowActor.CharacterId);
-        lock (overflowState.SyncRoot)
+        var overflowBalanceState = overflowStateStore.GetOrAdd(overflowActor.CharacterId);
+        lock (overflowBalanceState.SyncRoot)
         {
-            overflowState.Currencies["COIN"] = long.MaxValue - 10;
+            overflowBalanceState.Currencies["COIN"] = long.MaxValue - 10;
         }
 
         var seedOverflow = inventory.GetSnapshot(overflowActor.CharacterId);
