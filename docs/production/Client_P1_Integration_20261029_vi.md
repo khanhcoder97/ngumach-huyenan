@@ -15,7 +15,7 @@
 1. Kéo main/branch đã review và LFS. Mở `Client` bằng Editor version trong ProjectVersion.txt; resolve package Json.NET chính thức. Không import DLL NuGet thủ công.
 2. Chạy server localhost theo README của Server/Health. Giữ flag quest OFF để kiểm default; bật dev flag riêng chỉ theo hướng dẫn server, không sửa reviewed topology để giả production gate.
 3. Chỉnh config origin API nếu server ở máy khác; trên Android127.0.0.1 là điện thoại, không phải PC. Hosting/auth/Android cleartext/network-security policy chưa được gói này thiết lập.
-4. Play và chọn vào online. Kiểm HP/MP/XY bằng world endpoint; thử chặn mạng rồi đồng bộ; nhận nhiệm vụ khi endpoint OFF phải báo chưa mở. Với dev profile được bật, tới gần Ly An rồi thử nhận, không gọi từ xa thành success.
+4. Play và chọn vào online. Kiểm HP/MP/XY bằng world endpoint; thử chặn mạng rồi đồng bộ; nhận nhiệm vụ khi endpoint OFF phải báo chưa mở (404 hoặc405 do route GET /quests/{sessionId} chồng đoạn “accept”). Với dev profile được bật, tới gần Ly An rồi thử nhận, không gọi từ xa thành success.
 5. Gửi log exact SHA/Editor/package resolution, video di chuyển/thoát/nhập lại và screenshot720p/1080p/20:9. Không nâng trạng thái engine-imported trước bằng chứng.
 
 ## Giới hạn tích hợp thật

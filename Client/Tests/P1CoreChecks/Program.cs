@@ -96,6 +96,8 @@ internal static class Program
             var t = new Script(); var c = await Connected(t);
             t.Add(new P1HttpReply { StatusCode = 404, Body = "" });
             Check((await c.AcceptQuestAsync("P00-01", "NPC_LYAN", None)).Code == "feature_unavailable" && c.Quests.Length == 0 && !c.HasPendingMutation, "flag off not accepted");
+            t.Add(new P1HttpReply { StatusCode = 405, Body = "" });
+            Check((await c.AcceptQuestAsync("P00-01", "NPC_LYAN", None)).Code == "feature_unavailable" && !c.HasPendingMutation && c.State == P1ConnectionState.Ready, "GET route overlap405 is definite rejection");
             t.Add(Reply(Quest(2, "ACTIVE"), 409, "invalid_transition"));
             Check(!(await c.AcceptQuestAsync("P00-01", "NPC_LYAN", None)).Success && c.Quests[0].state == "ACTIVE", "error binds authoritative quest state");
             t.Add(Reply(new[] { Quest(1) })); await c.ReadQuestsAsync(None);
@@ -184,7 +186,7 @@ internal static class Program
             Check((await c.ReadQuestsAsync(None)).Success && c.Quests.Any(q => q.questId == "P00-01"), "HTTP quest read");
             Check((await c.ReadInventoryAsync(None)).Success && c.Inventory.items.Length == 0, "HTTP inventory read");
             var result = await c.AcceptQuestAsync("P00-01", "NPC_LYAN", None);
-            Check(!result.Success && result.Code == "feature_unavailable", "HTTP default quest feature off");
+            Check(!result.Success && result.Code == "feature_unavailable", "HTTP default quest feature off: " + result.Code);
             int mp = c.World.self.mp;
             Check((await c.CastAsync("SK-MK-01", null, 1, 0, None)).Success && c.World.self.mp == mp - 12, "HTTP cast then authoritative MP readback");
             Check(c.LastCombatEvent.eventType == "combat.effect" && c.LastCombatEvent.payload.damage == null, "HTTP no fabricated damage");
