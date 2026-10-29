@@ -30,6 +30,8 @@ jobs:
           P1__QuestAccept__Enabled: "true"
           P1__Interact__Enabled: "true"
           P1__QuestTurnIn__Enabled: "true"
+          P1__CombatV2__Enabled: "true"
+          P1__CombatDamage__Enabled: "true"
         run: |
           dotnet bin/Release/net10.0/Health.dll --urls http://127.0.0.1:5080 > "$GITHUB_WORKSPACE/server-smoke.log" 2>&1 &
           echo $! > "$GITHUB_WORKSPACE/server-smoke.pid"

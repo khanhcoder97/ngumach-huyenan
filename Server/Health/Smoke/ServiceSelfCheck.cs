@@ -869,6 +869,147 @@ public static class ServiceSelfCheck
             aoiRegistry.Count == 8 && aoiPageB.Count == 5,
             $"candidates={aoiRegistry.Count} visible={aoiPageB.Count}");
 
+        // QOD-16 ph2 v2 combat accept path: cast id, cost/cooldown state and
+        // only the events that already occurred (no future impacts).
+        var combatV2Store = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 64,
+            MaxPageSize = 64
+        });
+        var combatV2 = new InMemoryCombatV2Service(
+            combatSkills, combatV2Store, new ServerClock());
+        var combatV2Actor = NewPlayer("CHR_SELFCHECK_COMBAT_V2");
+        var combatV2Session = combatV2Actor.SessionId;
+        var basicIntent = new CombatV2Intent(
+            CombatV2Actions.BasicAttack, null, null, 1, 1, 0, null);
+        var basicCast = combatV2.Resolve(
+            combatV2Actor, combatV2Session, basicIntent, new string('a', 32));
+        var basicStored = combatV2Store.Read(combatV2Session, 0, 0);
+        Check(
+            "combatv2.basic_accept",
+            basicCast.Accepted &&
+            basicCast.Result is
+            {
+                ActionKind: CombatV2Actions.BasicAttack,
+                Mp: 50,
+                MpCost: 0,
+                NextInputSequence: 1
+            } basicResult &&
+            basicResult.CastId.Length == 32 &&
+            basicResult.Events.SingleOrDefault() is
+            {
+                Type: CombatEventTypesV2.CastStart,
+                Cursor: 1
+            } basicStart &&
+            basicStart.CastId == basicResult.CastId &&
+            basicStored.Events.Single().Cursor == 1 &&
+            basicStored.NextCursor == 1,
+            basicCast.Failure?.Code);
+
+        var basicReplay = combatV2.Resolve(
+            combatV2Actor, combatV2Session, basicIntent, new string('a', 32));
+        Check(
+            "combatv2.replay_same_cast",
+            basicReplay.Accepted &&
+            ReferenceEquals(basicReplay.Result, basicCast.Result) &&
+            combatV2Store.Read(combatV2Session, 0, 0).NextCursor == 1,
+            basicReplay.Failure?.Code);
+
+        var basicConflict = combatV2.Resolve(
+            combatV2Actor, combatV2Session, basicIntent with { AimX = -1 }, new string('a', 32));
+        Check(
+            "combatv2.replay_conflict",
+            basicConflict.Failure?.Code == CombatErrorCodes.IdempotencyConflict,
+            basicConflict.Failure?.Code);
+
+        var skillIntent = new CombatV2Intent(
+            CombatV2Actions.Skill, "SK-MK-01", null, 2, 1, 0, null);
+        var skillCast = combatV2.Resolve(
+            combatV2Actor, combatV2Session, skillIntent, new string('b', 32));
+        Check(
+            "combatv2.skill_accept",
+            skillCast.Accepted &&
+            skillCast.Result is
+            {
+                SkillId: "SK-MK-01",
+                Mp: 38,
+                MpCost: 12,
+                NextInputSequence: 2
+            } skillResult &&
+            skillResult.Events.SingleOrDefault() is { Type: CombatEventTypesV2.CastStart, Cursor: 2 },
+            skillCast.Failure?.Code);
+
+        var skillAgain = combatV2.Resolve(
+            combatV2Actor, combatV2Session,
+            skillIntent with { InputSequence = 3 }, new string('c', 32));
+        Check(
+            "combatv2.skill_cooldown",
+            skillAgain.Failure is { Code: CombatErrorCodes.CooldownActive, Retryable: true },
+            skillAgain.Failure?.Code);
+
+        var staleV2Cast = combatV2.Resolve(
+            combatV2Actor, combatV2Session,
+            basicIntent with { InputSequence = 2 }, new string('d', 32));
+        Check(
+            "combatv2.stale_sequence",
+            staleV2Cast.Failure?.Code == P1ErrorCodes.StaleSequence,
+            staleV2Cast.Failure?.Code);
+
+        var poorActor = NewPlayer("CHR_SELFCHECK_COMBAT_V2_POOR", mp: 0);
+        var poorCast = combatV2.Resolve(
+            poorActor, poorActor.SessionId,
+            new CombatV2Intent(CombatV2Actions.Skill, "SK-MK-01", null, 1, 1, 0, null),
+            new string('e', 32));
+        Check(
+            "combatv2.insufficient_mp",
+            poorCast.Failure?.Code == CombatErrorCodes.InsufficientResource,
+            poorCast.Failure?.Code);
+
+        var otherClassActor = NewPlayer("CHR_SELFCHECK_COMBAT_V2_CLASS", "CLASS_OTHER");
+        var otherClassCast = combatV2.Resolve(
+            otherClassActor, otherClassActor.SessionId,
+            new CombatV2Intent(CombatV2Actions.BasicAttack, null, null, 1, 1, 0, null),
+            new string('f', 32));
+        Check(
+            "combatv2.class_gate",
+            otherClassCast.Failure?.Code == CombatErrorCodes.SkillNotAvailable,
+            otherClassCast.Failure?.Code);
+
+        var badAction = combatV2.Resolve(
+            combatV2Actor, combatV2Session,
+            basicIntent with { InputSequence = 9, ActionKind = "HEAVY" }, new string('1', 32));
+        var basicWithSkill = combatV2.Resolve(
+            combatV2Actor, combatV2Session,
+            basicIntent with { InputSequence = 9, SkillId = "SK-MK-01" }, new string('2', 32));
+        var badAim = combatV2.Resolve(
+            combatV2Actor, combatV2Session,
+            basicIntent with { InputSequence = 9, AimX = 2 }, new string('3', 32));
+        Check(
+            "combatv2.invalid_payload",
+            badAction.Failure?.Code == P1ErrorCodes.InvalidPayload &&
+            basicWithSkill.Failure?.Code == P1ErrorCodes.InvalidPayload &&
+            badAim.Failure?.Code == P1ErrorCodes.InvalidPayload,
+            $"{badAction.Failure?.Code}/{basicWithSkill.Failure?.Code}/{badAim.Failure?.Code}");
+
+        combatSkills.TryGet("SK-MK-01", out var onlySkill);
+        var narrowV2 = new InMemoryCombatV2Service(
+            new CombatSkillCatalog(
+                new Dictionary<string, CombatSkillDefinition>(StringComparer.Ordinal)
+                {
+                    ["SK-MK-01"] = onlySkill!
+                }),
+            new CombatEventStore(new CombatEventStreamOptions()),
+            new ServerClock());
+        var narrowActor = NewPlayer("CHR_SELFCHECK_COMBAT_V2_NARROW");
+        var unknownSkill = narrowV2.Resolve(
+            narrowActor, narrowActor.SessionId,
+            new CombatV2Intent(CombatV2Actions.Skill, "SK-MK-02", null, 1, 1, 0, null),
+            new string('4', 32));
+        Check(
+            "combatv2.unknown_skill",
+            unknownSkill.Failure?.Code == CombatErrorCodes.UnknownSkill,
+            unknownSkill.Failure?.Code);
+
         Check(
             "damage.oracle_raw",
             Near(DamageFormula.RawDamage(20, 0, 1.5, 1, 0), 30),

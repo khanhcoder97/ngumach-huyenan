@@ -107,6 +107,29 @@ def turnin_envelope(quest_id, npc_id, character_id=CHARACTER_ID,
     }
 
 
+def combat_v2_envelope(action_kind, sequence, skill_id=None, target_id=None,
+                      character_id=CHARACTER_ID, request_id="4" * 32,
+                      idempotency_key="5" * 32):
+    payload = {
+        "actionKind": action_kind,
+        "inputSequence": sequence,
+        "aimX": 1,
+        "aimY": 0,
+    }
+    if skill_id is not None:
+        payload["skillId"] = skill_id
+    if target_id is not None:
+        payload["targetId"] = target_id
+    return {
+        "schemaVersion": 2,
+        "requestId": request_id,
+        "idempotencyKey": idempotency_key,
+        "sentAtUtc": sent_at_utc(),
+        "characterId": character_id,
+        "payload": payload,
+    }
+
+
 def expect_correlation(headers, expected):
     check(headers.get("X-Correlation-ID") == expected,
           f"expected correlation {expected}, got {headers.get('X-Correlation-ID')}")
@@ -864,6 +887,186 @@ def main():
     check(inv["items"][0].get("templateId") == "EQ-MK-CHEST-T1-R-COMMON",
           f"inv item template {inv['items'][0].get('templateId')}")
     expect_correlation(headers, "smoke-turnin-inventory")
+
+    # -- v2 opt-in surface (P1__CombatV2__Enabled=true) -------------------
+    v2_character = "CHR_SMOKE_V2_01"
+    status, _, body = call("POST", "/p1/sessions", {"characterId": v2_character})
+    check(status == 201, f"v2 session returned {status}: {body}")
+    v2_session = body.get("sessionId")
+
+    status, headers, body = call(
+        "GET", f"/p1/v2/world/{v2_session}",
+        headers={"X-Correlation-ID": "smoke-v2-world"})
+    check(status == 200, f"v2 world returned {status}: {body}")
+    world = body.get("result") or {}
+    check(world.get("schemaVersion") == 2, f"v2 world schema {world.get('schemaVersion')}")
+    check(world.get("mapId") == "MAP_BEN_MUA", f"v2 world map {world.get('mapId')}")
+    check(world.get("mapInstanceId") == "MAP_BEN_MUA#1",
+          f"v2 map instance {world.get('mapInstanceId')}")
+    check(world.get("floorId") == "OVERWORLD", f"v2 floor {world.get('floorId')}")
+    check(world.get("phase") == "OPEN_WORLD", f"v2 phase {world.get('phase')}")
+    check((world.get("audience") or {}).get("aoiEnterWu") == 40, "v2 AOI enter")
+    check((world.get("audience") or {}).get("aoiLeaveWu") == 48, "v2 AOI leave")
+    check((world.get("self") or {}).get("characterId") == v2_character, "v2 self character")
+    world_entities = world.get("entities") or []
+    check(len(world_entities) > 0, "v2 world has no entities at spawn")
+    by_id = {entity.get("entityId"): entity for entity in world_entities}
+    npc = by_id.get("ENT_MAN_BM_NPC_LYAN")
+    check(npc is not None, "v2 NPC missing at spawn")
+    check(npc.get("healthState") == "INVULNERABLE", f"v2 NPC health {npc.get('healthState')}")
+    check(npc.get("targetable") is False, "v2 NPC must not be targetable")
+    check(npc.get("hp") == 0 and npc.get("maxHp") == 0, "v2 NPC hp must be 0")
+    node = by_id.get("ENT_MAN_BM_NODE_BM_ORE_01")
+    check(node is not None and node.get("availability") == "AVAILABLE",
+          f"v2 node availability {node and node.get('availability')}")
+    for entity in world_entities:
+        for key in ("entityId", "kind", "mapInstanceId", "floorId", "phase", "state",
+                    "healthState", "targetable", "revision", "lifeId"):
+            check(key in entity, f"v2 entity missing {key}: {entity}")
+    expect_correlation(headers, "smoke-v2-world")
+
+    v2_sequence = 1
+    walker_x = ((world.get("self") or {}).get("x"))
+    while walker_x < 45:
+        v2_sequence += 1
+        time.sleep(0.3)
+        status, _, body = call(
+            "POST", "/p1/move",
+            move_envelope(v2_sequence, 1, 0, character_id=v2_character),
+            {"X-Session-ID": v2_session})
+        check(status == 200, f"v2 walk {v2_sequence} returned {status}: {body}")
+        walker_x = ((body.get("result") or {}).get("self") or {}).get("x", walker_x)
+
+    status, headers, body = call(
+        "GET", f"/p1/v2/world/{v2_session}",
+        headers={"X-Correlation-ID": "smoke-v2-world-mob"})
+    check(status == 200, f"v2 world 2 returned {status}: {body}")
+    mob = next(
+        (entity for entity in (body.get("result") or {}).get("entities") or []
+         if entity.get("entityId") == "ENT_MAN_BM_SPAWN_BM_01"), None)
+    check(mob is not None, "v2 mob missing inside AOI")
+    check(mob.get("kind") == "MOB", f"v2 mob kind {mob.get('kind')}")
+    check(mob.get("hp") == 192 and mob.get("maxHp") == 192, f"v2 mob hp {mob.get('hp')}")
+    check(mob.get("healthState") == "ALIVE", f"v2 mob health {mob.get('healthState')}")
+    check(mob.get("targetable") is True, "v2 alive mob must be targetable")
+    expect_correlation(headers, "smoke-v2-world-mob")
+
+    v2_sequence += 1
+    basic_key = "42" * 16
+    status, headers, body = call(
+        "POST", "/p1/v2/combat",
+        combat_v2_envelope("BASIC_ATTACK", v2_sequence,
+                           character_id=v2_character, idempotency_key=basic_key),
+        {"X-Session-ID": v2_session, "X-Correlation-ID": "smoke-v2-basic"})
+    check(status == 200, f"v2 basic returned {status}: {body}")
+    basic = body.get("result") or {}
+    check(isinstance(basic.get("castId"), str) and len(basic["castId"]) == 32,
+          f"v2 basic castId {basic.get('castId')}")
+    check(basic.get("actionKind") == "BASIC_ATTACK", "v2 basic action")
+    check(basic.get("mp") == 50 and basic.get("mpCost") == 0, "v2 basic cost")
+    basic_events = basic.get("events") or []
+    check(len(basic_events) == 1 and basic_events[0].get("type") == "CAST_START",
+          f"v2 basic events {basic_events}")
+    check(basic_events[0].get("cursor") == 1, "v2 basic cursor")
+    expect_correlation(headers, "smoke-v2-basic")
+
+    status, headers, body = call(
+        "POST", "/p1/v2/combat",
+        combat_v2_envelope("BASIC_ATTACK", v2_sequence,
+                           character_id=v2_character, idempotency_key=basic_key),
+        {"X-Session-ID": v2_session, "X-Correlation-ID": "smoke-v2-basic-replay"})
+    check(status == 200, f"v2 replay returned {status}: {body}")
+    replay_result = body.get("result") or {}
+    check(replay_result.get("castId") == basic["castId"], "v2 replay castId")
+    check((replay_result.get("events") or [{}])[0].get("cursor") == 1, "v2 replay cursor")
+    expect_correlation(headers, "smoke-v2-basic-replay")
+
+    status, headers, body = call(
+        "POST", "/p1/v2/combat",
+        combat_v2_envelope("BASIC_ATTACK", v2_sequence, target_id="ENT_MAN_BM_SPAWN_BM_01",
+                           character_id=v2_character, idempotency_key=basic_key),
+        {"X-Session-ID": v2_session, "X-Correlation-ID": "smoke-v2-conflict"})
+    check(status == 409, f"v2 conflict returned {status}: {body}")
+    check((body.get("error") or {}).get("code") == "idempotency_conflict",
+          f"v2 conflict error {(body.get('error') or {}).get('code')}")
+    expect_correlation(headers, "smoke-v2-conflict")
+
+    v2_sequence += 1
+    status, headers, body = call(
+        "POST", "/p1/v2/combat",
+        combat_v2_envelope("SKILL", v2_sequence, skill_id="SK-MK-01",
+                           character_id=v2_character, idempotency_key="43" * 16),
+        {"X-Session-ID": v2_session, "X-Correlation-ID": "smoke-v2-skill"})
+    check(status == 200, f"v2 skill returned {status}: {body}")
+    skill_result = body.get("result") or {}
+    check(skill_result.get("mp") == 38, f"v2 skill mp {skill_result.get('mp')}")
+    check((skill_result.get("events") or [{}])[0].get("cursor") == 2, "v2 skill cursor")
+    expect_correlation(headers, "smoke-v2-skill")
+
+    v2_sequence += 1
+    status, headers, body = call(
+        "POST", "/p1/v2/combat",
+        combat_v2_envelope("SKILL", v2_sequence, skill_id="SK-MK-01",
+                           character_id=v2_character, idempotency_key="44" * 16),
+        {"X-Session-ID": v2_session, "X-Correlation-ID": "smoke-v2-cooldown"})
+    check(status == 409, f"v2 cooldown returned {status}: {body}")
+    check((body.get("error") or {}).get("code") == "cooldown_active",
+          f"v2 cooldown error {(body.get('error') or {}).get('code')}")
+    expect_correlation(headers, "smoke-v2-cooldown")
+
+    status, headers, body = call(
+        "POST", "/p1/v2/combat",
+        combat_v2_envelope("BASIC_ATTACK", v2_sequence - 1,
+                           character_id=v2_character, idempotency_key="45" * 16),
+        {"X-Session-ID": v2_session, "X-Correlation-ID": "smoke-v2-stale"})
+    check(status == 409, f"v2 stale returned {status}: {body}")
+    check((body.get("error") or {}).get("code") == "stale_sequence",
+          f"v2 stale error {(body.get('error') or {}).get('code')}")
+    expect_correlation(headers, "smoke-v2-stale")
+
+    status, headers, body = call(
+        "GET", f"/p1/v2/events/{v2_session}?cursor=0",
+        headers={"X-Correlation-ID": "smoke-v2-events"})
+    check(status == 200, f"v2 events returned {status}: {body}")
+    page = body.get("result") or {}
+    check(page.get("schemaVersion") == 2 and page.get("sessionId") == v2_session,
+          "v2 events envelope")
+    check(page.get("nextCursor") == 2, f"v2 events next {page.get('nextCursor')}")
+    check(page.get("resyncRequired") is False, "v2 events resync flag")
+    page_events = page.get("events") or []
+    check([event.get("cursor") for event in page_events] == [1, 2],
+          f"v2 events cursors {[event.get('cursor') for event in page_events]}")
+    check(all(event.get("type") == "CAST_START" for event in page_events),
+          "v2 events types")
+    expect_correlation(headers, "smoke-v2-events")
+
+    status, headers, body = call(
+        "GET", f"/p1/v2/events/{v2_session}?cursor=1",
+        headers={"X-Correlation-ID": "smoke-v2-events-since"})
+    check(status == 200, f"v2 events since returned {status}: {body}")
+    since_events = (body.get("result") or {}).get("events") or []
+    check([event.get("cursor") for event in since_events] == [2],
+          f"v2 events since {since_events}")
+    expect_correlation(headers, "smoke-v2-events-since")
+
+    status, headers, body = call(
+        "GET", f"/p1/v2/events/{v2_session}?cursor=99",
+        headers={"X-Correlation-ID": "smoke-v2-events-resync"})
+    check(status == 200, f"v2 events resync returned {status}: {body}")
+    resync = body.get("result") or {}
+    check(resync.get("resyncRequired") is True, "v2 resync flag missing")
+    check(resync.get("resyncReason") == "CURSOR_TOO_OLD",
+          f"v2 resync reason {resync.get('resyncReason')}")
+    check((resync.get("events") or []) == [], "v2 resync must not return events")
+    expect_correlation(headers, "smoke-v2-events-resync")
+
+    status, headers, body = call(
+        "GET", f"/p1/v2/events/{v2_session}?cursor=-1",
+        headers={"X-Correlation-ID": "smoke-v2-events-bad-cursor"})
+    check(status == 400, f"v2 bad cursor returned {status}: {body}")
+    check((body.get("error") or {}).get("code") == "invalid_payload",
+          f"v2 bad cursor error {(body.get('error') or {}).get('code')}")
+    expect_correlation(headers, "smoke-v2-events-bad-cursor")
 
     print(f"PASS: {CHECKS} smoke checks against {BASE_URL}")
 

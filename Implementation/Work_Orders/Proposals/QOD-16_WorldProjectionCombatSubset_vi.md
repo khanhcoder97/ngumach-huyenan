@@ -153,6 +153,14 @@ Theo Q6: snapshot v2 chỉ gửi entity sau filter audience; internal candidate 
 - **Policy từng kind:** NPC `INVULNERABLE`/`targetable:false`/hp0; boss blocked `BLOCKED` (không hiển thị `DEAD`) và không targetable; MOB hp theo `REFERENCE_L5` (elite suffix áp multiplier), `ALIVE`/`DEAD` từ registry+brain, targetable khi còn sống; GATHER_NODE/INTERACTABLE chỉ lộ `availability` theo người gọi (`AVAILABLE`/`COOLDOWN`, claim window per-character; shared interactable theo state chung), không lộ quest flag/inventory/claim người khác.
 - **Không thuộc phạm vi:** endpoint snapshot v2 (đi cùng QOD-17), culling theo tầm nhìn/che khuất, multi-instance/phase thật, reconcile audio/VFX (silent), persistence.
 
-### 9.5 Triển khai tiếp
+### 9.5 Endpoint wiring — v2 opt-in (world, combat, events)
+
+- Gate `P1:CombatV2:Enabled` (OFF mặc định); khi bật map `GET /p1/v2/world/{sessionId}`, `POST /p1/v2/combat`, `GET /p1/v2/events/{sessionId}?cursor&max`. Khi tắt route không tồn tại; v1 giữ nguyên. Bật log `DEV STUB`.
+- **World:** `WorldSnapshotV2` từ session + `WorldAoiProjectionService` (audience 40/48, entity read model đúng policy Q6); revision/serverTick theo session và clock 20 Hz.
+- **Combat:** envelope v2 (`schemaVersion: 2`, requestId/idempotencyKey hex32, characterId khớp session qua `X-Session-ID`); payload `BASIC_ATTACK|SKILL` + aim; **accept-only**: guard class/sequence/cooldown/MP + idempotency, trả castId/cost-CD/events đã xảy ra (`CAST_START`), **không** trả impact tương lai và chưa gây damage (QOD-17). BASIC_ATTACK chỉ Minh Kiếm, 0 MP, cooldown recovery 0.25s (Rules §2); skill dùng CD/MP từ `SkillDefinition`.
+- **Events:** page `{nextCursor, resyncRequired, resyncReason?, events}` từ `CombatEventStore`; cursor lỗi → 400; cursor cũ/buffer overflow → resync không kèm event (client reconcile snapshot, silent).
+- **Bằng chứng:** self-check 10 test combat v2; smoke HTTP (server-smoke gate ON) kiểm world/AOI/NPC/mob hp192, basic accept + replay + conflict, skill MP38, cooldown/stale, events 1..2, cursor=1, resync `CURSOR_TOO_OLD`, cursor âm 400. Chưa có impact/damage/kill; không đổi v1.
+
+### 9.6 Triển khai tiếp
 
 Event store (bounded buffer, cursor, resync) + AOI projection có hysteresis + endpoint v2 opt-in (`P1:CombatV2:Enabled` OFF mặc định; dev profile bật) + e2e dev mở rộng; sau đó QOD-17 tick combat (basic + MK03 damage, guard/counter state machine theo DEC-022, mob telegraph/death/respawn, kill credit theo entityLifeId/deathEventId).
