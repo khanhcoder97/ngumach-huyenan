@@ -275,6 +275,20 @@ class MigrationTests(unittest.TestCase):
         self.assertEqual(6, asset["animations"][0]["framesPerDirection"])
         self.assertNotIn("frames", asset["animations"][0])
 
+    def test_column_start_one_is_blocked_for_full_row_animation(self):
+        # Regression: a single animation covering the whole row cannot start
+        # at a nonzero columnStart; migrate_manifest must reject it.
+        source = load_real_manifest()
+        source["assets"][0]["animations"][0]["columnStart"] = 1
+        before = copy.deepcopy(source)
+        migrated, problems, changed = migration.migrate_manifest(source)
+        self.assertTrue(problems, migrated)
+        self.assertIn("columnStart 1", "\n".join(problems))
+        # Migration is read-only: source is not mutated to "fix" the blocker.
+        self.assertEqual(before, source)
+        # changed=True means migration was attempted but blocked; CLI exits 1.
+        self.assertTrue(changed)
+
     def test_migration_does_not_mutate_source(self):
         source = load_real_manifest()
         before = copy.deepcopy(source)

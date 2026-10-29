@@ -138,10 +138,20 @@ def _migrate_sprite_sheet(asset, label):
         raise MigrationBlocked(
             f"{label}: columnStart must be an integer >= 0, found {start!r}"
         )
-    columns = width // frames
-    if start + frames > columns:
+    frame_width = width // frames
+    total_columns = width // frame_width  # == frames when start == 0
+    if start > 0:
+        # A single animation covering the whole row cannot start at a nonzero
+        # column; we cannot infer the true column count without explicit
+        # frameSize/columnStart metadata.
         raise MigrationBlocked(
-            f"{label}: columnStart {start} + {frames} frames exceeds the {columns} "
+            f"{label}: columnStart {start} is not supported for a single "
+            "animation covering the whole sheet; specify explicit columnStart "
+            "and frameSize metadata instead"
+        )
+    if start + frames > total_columns:
+        raise MigrationBlocked(
+            f"{label}: columnStart {start} + {frames} frames exceeds the {total_columns} "
             "frame columns in the sheet"
         )
     if start == 0:
