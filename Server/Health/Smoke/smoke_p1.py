@@ -237,15 +237,27 @@ def main():
 
     status, headers, body = call(
         "POST", "/p1/combat", combat_envelope(3, "SK-MK-01"),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-combat-replay"})
+    check(status == 200, f"combat replay returned {status}: {body}")
+    replayed_event = body.get("result") or {}
+    check(replayed_event.get("eventId") == event.get("eventId"),
+          f"replay event {replayed_event.get('eventId')} != {event.get('eventId')}")
+    check(body.get("revision") == 4, f"replay revision {body.get('revision')}")
+    expect_correlation(headers, "smoke-combat-replay")
+
+    status, headers, body = call(
+        "POST", "/p1/combat",
+        combat_envelope(3, "SK-MK-01", idempotency_key="6" * 32),
         {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-combat-stale"})
-    check(status == 409, f"replayed combat returned {status}: {body}")
+    check(status == 409, f"stale combat returned {status}: {body}")
     error = body.get("error") or {}
     check(error.get("code") == "stale_sequence", f"unexpected error {error.get('code')}")
     check(error.get("retryable") is False, "stale_sequence must not be retryable")
     expect_correlation(headers, "smoke-combat-stale")
 
     status, headers, body = call(
-        "POST", "/p1/combat", combat_envelope(4, "SK-MK-01"),
+        "POST", "/p1/combat",
+        combat_envelope(4, "SK-MK-01", idempotency_key="5" * 32),
         {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-combat-cooldown"})
     check(status == 409, f"cooldown combat returned {status}: {body}")
     error = body.get("error") or {}
@@ -282,7 +294,8 @@ def main():
     expect_correlation(headers, "smoke-combat-bad-skill")
 
     status, headers, body = call(
-        "POST", "/p1/combat", combat_envelope(4, "SK-MK-02"),
+        "POST", "/p1/combat",
+        combat_envelope(4, "SK-MK-02", idempotency_key="7" * 32),
         {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-combat-no-target"})
     check(status == 400, f"missing target returned {status}: {body}")
     error = body.get("error") or {}
@@ -293,7 +306,8 @@ def main():
 
     status, headers, body = call(
         "POST", "/p1/combat",
-        combat_envelope(4, "SK-MK-03", target_id="TGT_SMOKE_UNKNOWN"),
+        combat_envelope(4, "SK-MK-03", target_id="TGT_SMOKE_UNKNOWN",
+                        idempotency_key="8" * 32),
         {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-combat-unknown-target"})
     check(status == 404, f"unknown target returned {status}: {body}")
     error = body.get("error") or {}
