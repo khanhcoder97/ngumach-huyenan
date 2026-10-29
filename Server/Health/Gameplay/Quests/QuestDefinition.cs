@@ -35,6 +35,13 @@ public static class QuestObjectiveTypes
     public static bool IsKnown(string? value) => value is not null && Known.Contains(value);
 }
 
+public sealed record QuestRewardCurrency(string CurrencyId, long Amount);
+
+public sealed record QuestRewards(
+    IReadOnlyList<QuestRewardCurrency> Currency,
+    IReadOnlyList<string> ItemIds,
+    string XpRule);
+
 public sealed record QuestDefinition(
     string QuestId,
     string QuestType,
@@ -43,7 +50,10 @@ public sealed record QuestDefinition(
     int MaxLevel,
     IReadOnlyList<string> PrerequisiteQuestIds,
     IReadOnlyList<QuestObjectiveDefinition> Objectives,
-    string InitialStepId);
+    string InitialStepId,
+    string TurnInNpcId,
+    QuestRewards Rewards,
+    IReadOnlyList<string> Unlocks);
 
 public sealed record QuestObjectiveDefinition(
     string ObjectiveId,

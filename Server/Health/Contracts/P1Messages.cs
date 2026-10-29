@@ -77,6 +77,22 @@ public sealed class InteractIntent
     public string? TargetId { get; init; }
 }
 
+public sealed class TurnInEnvelope
+{
+    public int? SchemaVersion { get; init; }
+    public string? RequestId { get; init; }
+    public string? IdempotencyKey { get; init; }
+    public string? SentAtUtc { get; init; }
+    public string? CharacterId { get; init; }
+    public TurnInIntent? Payload { get; init; }
+}
+
+public sealed class TurnInIntent
+{
+    public string? QuestId { get; init; }
+    public string? NpcId { get; init; }
+}
+
 public sealed class P1InteractResponse
 {
     public int SchemaVersion { get; init; } = 1;
@@ -227,4 +243,51 @@ public sealed class P1QuestAcceptResponse
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public P1Error? Error { get; init; }
+}
+
+public sealed class P1TurnInResponse
+{
+    public int SchemaVersion { get; init; } = 1;
+    public required string RequestId { get; init; }
+    public required string SessionId { get; init; }
+    public required string ServerTimeUtc { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public TurnInResult? Result { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public P1Error? Error { get; init; }
+}
+
+public sealed class TurnInResult
+{
+    public required QuestState QuestState { get; init; }
+    public required TurnInRewards Rewards { get; init; }
+    public required IReadOnlyList<string> Unlocks { get; init; }
+}
+
+public sealed class TurnInRewards
+{
+    public required IReadOnlyList<TurnInCurrencyReward> Currency { get; init; }
+    public required IReadOnlyList<TurnInItemReward> Items { get; init; }
+    public required TurnInXpReward Xp { get; init; }
+}
+
+public sealed class TurnInCurrencyReward
+{
+    public required string CurrencyId { get; init; }
+    public required long Amount { get; init; }
+}
+
+public sealed class TurnInItemReward
+{
+    public required string TemplateId { get; init; }
+    public int Stack { get; init; }
+    public required string Location { get; init; }
+}
+
+public sealed class TurnInXpReward
+{
+    public required string XpRule { get; init; }
+    public bool Applied { get; init; }
 }

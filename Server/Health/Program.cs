@@ -82,6 +82,12 @@ builder.Services.AddSingleton(serviceProvider =>
     return NpcAnchorLoader.Load(path);
 });
 builder.Services.AddSingleton<IQuestAcceptService, InMemoryQuestAcceptService>();
+builder.Services.Configure<QuestTurnInOptions>(
+    builder.Configuration.GetSection(QuestTurnInOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
+builder.Services.AddSingleton<RewardLedgerStore>();
+builder.Services.AddSingleton<IQuestTurnInService, InMemoryQuestTurnInService>();
 builder.Services.AddSingleton(serviceProvider =>
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
@@ -170,6 +176,12 @@ foreach (var questId in quests.QuestIds)
         throw new InvalidOperationException(
             $"Quest '{questId}' start NPC '{questDefinition.StartNpcId}' has no anchor.");
     }
+
+    if (!npcAnchors.HasAnchorFor(questDefinition.TurnInNpcId))
+    {
+        throw new InvalidOperationException(
+            $"Quest '{questId}' turn-in NPC '{questDefinition.TurnInNpcId}' has no anchor.");
+    }
 }
 
 var worldRecords = app.Services.GetRequiredService<WorldRecordCatalog>();
@@ -195,6 +207,15 @@ if (questAcceptOptions.Enabled)
     app.Logger.LogWarning(
         "DEV STUB: P1:QuestAccept is enabled. Interaction line-of-sight is not " +
         "enforced because no walkability bundle exists.");
+}
+
+var questTurnInOptions = app.Services.GetRequiredService<QuestTurnInOptions>();
+QuestTurnInOptionsValidator.Validate(questTurnInOptions);
+if (questTurnInOptions.Enabled)
+{
+    app.Logger.LogWarning(
+        "DEV STUB: P1:QuestTurnIn is enabled. Reward ledger is in-memory " +
+        "and XP applied=false; no reviewed walkability bundle exists.");
 }
 
 if (selfCheck)

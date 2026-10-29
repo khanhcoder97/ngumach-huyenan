@@ -1,6 +1,6 @@
 # Ngu Mach Huyen An — Health Server
 
-Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritative movement slice, the QOD-03 combat, quest, inventory and teleport service skeletons, and the QOD-13 quest-progress/interact slice.
+Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritative movement slice, the QOD-03 combat, quest, inventory and teleport service skeletons, the QOD-13 quest-progress/interact slice, and the QOD-14 turn-in/reward slice.
 
 ## Endpoints
 
@@ -15,6 +15,7 @@ Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritati
 | GET | `/p1/inventory/{sessionId}` | Read the authoritative `InventorySnapshot` for the session character |
 | POST | `/p1/quests/accept` | Accept an `AVAILABLE` quest for the session in `X-Session-ID` (feature-flagged, off by default) |
 | POST | `/p1/world/interact` | Claim an `INTERACTABLE` or gather from a `GATHER_NODE` world entity (feature-flagged, off by default) |
+| POST | `/p1/quests/turnin` | Turn in a `READY_TO_TURN_IN` quest and receive atomic rewards (feature-flagged, off by default) |
 
 Every response, including errors, carries `X-Correlation-ID`. A safe incoming value (1–64 characters of ASCII letters, digits, `-`, `_`, `.`) is echoed; otherwise a new GUID is generated.
 
@@ -370,6 +371,59 @@ State is in memory and there is no seed inventory; a new character starts with n
 - On success the session map, position and revision are updated under the session lock, and `LastMoveAtUtc` is reset so elapsed time before the teleport cannot be spent as movement.
 - Teleport does not revive, heal or reset the movement sequence; respawn and death behavior stay in separate services.
 
+## Quest turn-in (feature-flagged)
+
+`POST /p1/quests/turnin` is mapped only when `P1:QuestTurnIn:Enabled=true`; otherwise the route does not exist (`404`). It is **off by default** because no walkability bundle is reviewed yet — enabling it logs `DEV STUB: P1:QuestTurnIn is enabled...` at startup. Contract: `Implementation/Contracts/P1/TurnInRequest.schema.json` + `TurnInResponse.schema.json`; proposal in `Implementation/Work_Orders/Proposals/QOD-14_TurnInReward_vi.md`.
+
+```bash
+curl -i -X POST http://localhost:5000/p1/quests/turnin \
+  -H "Content-Type: application/json" \
+  -H "X-Session-ID: 8a7b6c5d4e3f4a2b1c0d9e8f7a6b5c4d" \
+  -H "X-Correlation-ID: demo-turnin" \
+  -d '{
+    "schemaVersion": 1,
+    "requestId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "idempotencyKey": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "sentAtUtc": "2026-10-29T00:05:00Z",
+    "characterId": "CHR_MINH_KIEM_01",
+    "payload": {"questId":"P00-01","npcId":"NPC_TA_VAN_KHANH"}
+  }'
+```
+
+```json
+{
+  "schemaVersion": 1,
+  "requestId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "sessionId": "8a7b6c5d4e3f4a2b1c0d9e8f7a6b5c4d",
+  "serverTimeUtc": "2026-10-29T00:05:00Z",
+  "result": {
+    "questState": {
+      "questId": "P00-01",
+      "state": "COMPLETED",
+      "stepId": "STEP_P00_01_PACKAGES",
+      "objectiveCounters": {"OBJ_P00_01_PACKAGES": 3},
+      "revision": 7
+    },
+    "rewards": {
+      "currency": [{"currencyId": "COIN", "amount": 20}],
+      "items": [{"templateId": "EQ-MK-CHEST-T1-R-COMMON", "stack": 1, "location": "BAG"}],
+      "xp": {"xpRule": "LEVEL_BAND_BASE", "applied": false}
+    },
+    "unlocks": ["P00-02"]
+  }
+}
+```
+
+Service `IQuestTurnInService` orchestrates an atomic transaction under the session lock:
+
+1. **Idempotency** — `(characterId, idempotencyKey)` scoped like accept. Replay returns the first outcome; a different payload under the same key returns `409 idempotency_conflict`.
+2. **Validate** — catalog → `npcId == turnInNpcId` → same map/floor → distance ≤ 5 WU → LOS (not enforced without REVIEWED topology) → state `READY_TO_TURN_IN`.
+3. **Grant** — `IInventoryService.Apply` with canonical `rewards.currency` and `rewards.itemIds` (stack 1, `BAG`). All-or-nothing; failure aborts with no partial reward.
+4. **Flip** — `IQuestService.TurnIn` transitions to `COMPLETED` (+1 revision).
+5. **Ledger** — `RewardLedgerStore` records `(characterId, questId)` for reward-once audit.
+
+Rewards use canonical data from the `QuestDefinition.rewards` block. XP is echoed with `applied: false` (no XP system yet). `unlocks` lists quest IDs enabled by the completion; their state refreshes lazily. The ledger is in-memory (lost on restart) and labelled as a dev fixture.
+
 ## Configuration (`appsettings.json`)
 
 | Key | Value | Source |
@@ -388,6 +442,8 @@ State is in memory and there is no seed inventory; a new character starts with n
 | `P1:Interact:Enabled` | `false` | Maps `/p1/world/interact`; dev fixture until walkability exists |
 | `P1:Interact:MaxInteractionDistanceWu` | `5` | DEC-016 interaction distance for interactables and gather nodes |
 | `P1:Interact:AssumedProfessionLevel` | `1` | **DEV FIXTURE** stand-in for the character's gather profession level |
+| `P1:QuestTurnIn:Enabled` | `false` | Maps `/p1/quests/turnin`; dev stub until walkability exists |
+| `P1:QuestTurnIn:MaxInteractionDistanceWu` | `5` | DEC-016 NPC interaction distance for turn-in |
 | `P1:MobBehavior:Enabled` | `false` | Enables the labelled mob-behaviour fixture on the 20 Hz world tick |
 | `P1:MobBehavior:AggroRadiusWu` / `LeashRadiusWu` | `6` / `12` | **DEV FIXTURE**, not canonical balance |
 | `P1:MobBehavior:AttackRangeWu` / `AttackCooldownSeconds` | `1.2` / `2` | **DEV FIXTURE** |
@@ -436,7 +492,7 @@ All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and
 
 ## Runtime smoke test
 
-The `server-smoke` GitHub Actions workflow builds the server, starts it on `127.0.0.1:5080` with `P1__QuestAccept__Enabled=true` and `P1__Interact__Enabled=true`, and runs `Server/Health/Smoke/smoke_p1.py`. The script uses only the Python standard library and verifies:
+The `server-smoke` GitHub Actions workflow builds the server, starts it on `127.0.0.1:5080` with `P1__QuestAccept__Enabled=true`, `P1__Interact__Enabled=true` and `P1__QuestTurnIn__Enabled=true`, and runs `Server/Health/Smoke/smoke_p1.py`. The script uses only the Python standard library and verifies:
 
 - `/health` returns `200` and echoes `X-Correlation-ID`.
 - Session creation returns `201`, a `Location` header, the canonical spawn and `revision=1`.
@@ -446,6 +502,7 @@ The `server-smoke` GitHub Actions workflow builds the server, starts it on `127.
 - A later move with sequence `2` succeeds, proving rejected requests did not consume the sequence.
 - The full `P00-01` collect flow: walk to each Atlas package and claim it via `/p1/world/interact`, watching the quest reach `ACTIVE` (counter 1) → `ACTIVE` (counter 2) → `READY_TO_TURN_IN` (counter 3), with idempotent replays, `idempotency_conflict`, depleted retries (`409 target_not_available`) and out-of-range rejection (`422`) covered along the way.
 - A second character gathers from `ENT_MAN_BM_NODE_BM_ORE_01`, verifying the `gather` outcome, the yield grant in `/p1/inventory` (correct item, stack and `BAG` location), replay without double-collection, and the per-character cooldown.
+- The full `P00-01` turn-in flow: walk to `NPC_TA_VAN_KHANH` at x=64, turn in with `questId=P00-01` and `npcId=NPC_TA_VAN_KHANH`, verify `COMPLETED` quest state, 20 COIN + 1 chest item in inventory, `applied: false` XP, `P00-02` unlock, idempotent replay, and `409 invalid_transition` on a second turn-in attempt with a new key.
 
 Run the same flow locally:
 
@@ -465,7 +522,7 @@ Quest and inventory HTTP surfaces are read-only, teleport has no endpoint, and c
 dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
 ```
 
-The flag boots the DI container and canonical content, then runs 128 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), world-target resolution and floor checks, the full `P00-01` quest flow through `COMPLETED` driven by server-verified events, quest accept guards, idempotency, line-of-sight and swept-walk geometry (clear, wall, large step, hole, corner, floor, non-finite, outside, footprint, not-enforced), the NPC anchor registry, the world record catalog (352 records, `TryResolveTarget` by record ID and by entity ID per map), the Bến Mưa world-entity registry with despawn/respawn under a manual clock, interact claims (collect, depleted, idempotent replay/conflict, out-of-range, LOS-blocked, respawn and distinct-record dedupe), per-character package ownership (`PER_CHARACTER` claims: two characters collect all three packages under a barrier with no global respawn, world state stays `AVAILABLE`, per-character claim window and respawn), objective-scoped progress dedupe (two objectives sharing one record, duplicate events, sequential-step guard, KILL event scope) and gather claims (yield grant, per-character cooldown and respawn, profession gate), barrier-coordinated interact/gather races (same key replays one result, two keys grant once, per-character shards stay independent, shared interactable despawn grants once, claim released by token when the grant fails so a retry grants exactly once), inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
+The flag boots the DI container and canonical content, then runs 168 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), world-target resolution and floor checks, the full `P00-01` quest flow through `COMPLETED` driven by server-verified events, quest accept guards, idempotency, line-of-sight and swept-walk geometry (clear, wall, large step, hole, corner, floor, non-finite, outside, footprint, not-enforced), the NPC anchor registry, the world record catalog (352 records, `TryResolveTarget` by record ID and by entity ID per map), the Bến Mưa world-entity registry with despawn/respawn under a manual clock, interact claims (collect, depleted, idempotent replay/conflict, out-of-range, LOS-blocked, respawn and distinct-record dedupe), per-character package ownership (`PER_CHARACTER` claims: two characters collect all three packages under a barrier with no global respawn, world state stays `AVAILABLE`, per-character claim window and respawn), objective-scoped progress dedupe (two objectives sharing one record, duplicate events, sequential-step guard, KILL event scope) and gather claims (yield grant, per-character cooldown and respawn, profession gate), barrier-coordinated interact/gather races (same key replays one result, two keys grant once, per-character shards stay independent, shared interactable despawn grants once, claim released by token when the grant fails so a retry grants exactly once), turn-in atomic reward (npc-mismatch, wrong-floor, out-of-range, success + inventory verification, replay same key, same-key-different-npc conflict, invalid-transition after completed, double-reward guard, idempotency, ledger recording, grant/flip/ledger failure injection with full rollback, currency overflow with no partial commit, and barrier-coordinated parallel turn-ins granting exactly once with same-key replays), inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
 
 ## Manual verification
 
@@ -508,7 +565,7 @@ The flag boots the DI container and canonical content, then runs 128 assertions 
 - Mob behaviour (`MobLifecycleService`) exists as a tickable state machine (IDLE/AGGRO/CHASE/ATTACK/RETURN/DEAD) with LOS, leash and attack-cooldown gates, driven by the 20 Hz `WorldTickBackgroundService` when `P1:MobBehavior:Enabled=true` (off by default) — there is no damage or loot yet, and every radius/speed is a labelled DEV fixture. Teleport has no endpoint.
 - The Bến Mưa world-entity registry (`world_entities_bm.json`: 27 canonical placements, 22 templates) is loaded with despawn/respawn state; interact uses it for shared `INTERACTABLE` claims and per-character (`claimPolicy: PER_CHARACTER`) package claims, and combat resolves alive mobs/bosses by instance ID. The 352-entry world record catalog (`world_records.json`) maps entities to `recordId`s for interact claims and quest progress.
 - Combat has no damage, hit chance, telegraphs, death or loot: `combat.effect` only records an accepted cast and its cooldown.
-- Quest state is in memory; accept and interact are feature-flagged off by default. Progress advances only from server-verified events (`RecordVerifiedEvent`); `P00-01` reaches `READY_TO_TURN_IN` by collecting the three Atlas packages. Line-of-sight runs only for `REVIEWED` topology bundles; the shipped bundle is synthetic, so it is `not_enforced` until Muse delivers the Bến Mưa layout. Turn-in, rewards, party progress and multi-step graphs are not implemented.
+- Quest state is in memory; accept, interact and turn-in are feature-flagged off by default. Progress advances only from server-verified events (`RecordVerifiedEvent`); `P00-01` reaches `READY_TO_TURN_IN` by collecting the three Atlas packages. `P1:QuestTurnIn:Enabled` gates the turn-in endpoint; rewards use canonical `rewards` data from the QuestDefinition, XP is echoed with `applied: false` (no XP system), and the reward ledger is in-memory only (lost on restart). Line-of-sight runs only for `REVIEWED` topology bundles; the shipped bundle is synthetic, so it is `not_enforced` until Muse delivers the Bến Mưa layout.
 - Interact gather yields (item IDs, quantity ranges, respawn seconds, profession levels) are DEV fixtures from the supplement records, not canonical economy data; the profession gate uses a configured `AssumedProfessionLevel` until character progression exists.
 - Inventory is read-only over HTTP and starts empty: no item catalog, stack-limit enforcement, durability rules, seeded starting items or mutation endpoint.
 - Teleport uses map bounds only; there is no walkability, portal, cooldown or respawn logic.
