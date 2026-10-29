@@ -216,7 +216,7 @@ public sealed class InMemoryQuestService : IQuestService
             // Quest definitions reference canonical entity_id values; the event
             // carries the recordId, so resolve and compare the entityId.
             if (_records.TryGet(recordId, out var record) &&
-                string.Equals(record.EntityId, targetId, StringComparison.Ordinal))
+                record.EntityIds.Contains(targetId, StringComparer.Ordinal))
             {
                 return true;
             }

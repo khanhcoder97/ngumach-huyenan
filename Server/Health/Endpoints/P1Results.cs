@@ -120,7 +120,7 @@ internal static class P1Results
         HttpContext context,
         ServerClock clock,
         string requestId,
-        string sessionId,
+        string? sessionId,
         int statusCode,
         string code,
         IReadOnlyList<string>? fieldErrors,

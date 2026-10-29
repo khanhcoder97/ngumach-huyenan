@@ -16,7 +16,7 @@ public sealed record WorldRecord(
     string MapId,
     string RecordType,
     string DesignState,
-    string EntityId,
+    IReadOnlyList<string> EntityIds,
     double X,
     double Y,
     int RespawnSeconds,
@@ -33,10 +33,14 @@ public sealed class WorldRecordCatalog
     {
         _records = records.ToDictionary(record => record.RecordId, record => record);
         _byEntityId = records
-            .GroupBy(record => record.EntityId, StringComparer.Ordinal)
+            .SelectMany(record => record.EntityIds.Select(id => (id, record)))
+            .GroupBy(pair => pair.id, StringComparer.Ordinal)
             .ToDictionary(
                 group => group.Key,
-                group => (IReadOnlyList<WorldRecord>)group.ToArray(),
+                group => (IReadOnlyList<WorldRecord>)group
+                    .Select(pair => pair.record)
+                    .Distinct()
+                    .ToArray(),
                 StringComparer.Ordinal);
     }
 
@@ -195,8 +199,8 @@ public static class WorldRecordLoader
                     $"{path}: {source.RecordId} mapId '{source.MapId}' has no registry bounds.");
             }
 
-            if (source.X is not { } x || !double.IsFinite(x) ||
-                source.Y is not { } y || !double.IsFinite(y))
+            if (source.XWu is not { } x || !double.IsFinite(x) ||
+                source.YWu is not { } y || !double.IsFinite(y))
             {
                 throw new InvalidOperationException(
                     $"{path}: {source.RecordId} position is invalid or not finite.");
@@ -208,10 +212,20 @@ public static class WorldRecordLoader
                     $"{path}: {source.RecordId} respawnSeconds must be >= 0.");
             }
 
-            if (source.EntityId is null || !EntityIdPattern.IsMatch(source.EntityId))
+            var entityIds = new List<string>();
+            foreach (var token in (source.EntityId ?? string.Empty).Split('|'))
             {
-                throw new InvalidOperationException(
-                    $"{path}: {source.RecordId} has invalid entityId '{source.EntityId}'.");
+                var trimmed = token.Trim();
+                if (trimmed.Length == 0 || !EntityIdPattern.IsMatch(trimmed))
+                {
+                    throw new InvalidOperationException(
+                        $"{path}: {source.RecordId} has invalid entityId '{source.EntityId}'.");
+                }
+
+                if (!entityIds.Contains(trimmed, StringComparer.Ordinal))
+                {
+                    entityIds.Add(trimmed);
+                }
             }
 
             WorldGatherRecord? gather = null;
@@ -244,7 +258,7 @@ public static class WorldRecordLoader
                 source.MapId,
                 source.RecordType!,
                 source.DesignState ?? string.Empty,
-                source.EntityId,
+                entityIds,
                 x,
                 y,
                 respawn,

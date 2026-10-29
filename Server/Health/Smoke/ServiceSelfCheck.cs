@@ -812,12 +812,12 @@ public static class ServiceSelfCheck
             badTargetShape.Failure?.Code == P1ErrorCodes.InvalidPayload,
             badTargetShape.Failure?.Code);
 
-        var missingTarget = interactions.Interact(
+        var missingInteractTarget = interactions.Interact(
             interactActor, "ENT_SELFCHECK_MISSING", new string('1', 31) + "a");
         Check(
             "interact.target_not_found",
-            missingTarget.Failure?.Code == InteractionErrorCodes.TargetNotFound,
-            missingTarget.Failure?.Code);
+            missingInteractTarget.Failure?.Code == InteractionErrorCodes.TargetNotFound,
+            missingInteractTarget.Failure?.Code);
 
         var npcTarget = interactions.Interact(
             interactActor, "ENT_SELFCHECK_NPC", new string('1', 31) + "b");
