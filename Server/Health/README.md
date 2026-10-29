@@ -224,7 +224,7 @@ Unknown session IDs return `404 session_not_found`. Reading quest state creates 
 
 ## Quest accept (feature-flagged)
 
-`POST /p1/quests/accept` is mapped only when `P1:QuestAccept:Enabled=true`; otherwise the route does not exist (`404`). It is **off by default** because the interaction line-of-sight guard has no walkability bundle yet — enabling it logs `DEV STUB: P1:QuestAccept is enabled...` at startup. Contract: `Implementation/Contracts/P1/QuestAcceptRequest.schema.json` + `QuestAcceptResponse.schema.json`; proposal and guard order in `Implementation/Work_Orders/Proposals/QOD-08_QuestAcceptRequest_vi.md`.
+`POST /p1/quests/accept` is mapped only when `P1:QuestAccept:Enabled=true`; otherwise the POST handler is not mapped and the request falls through to the `GET /p1/quests/{sessionId}` read route template, which answers `405`. It is **off by default** because the interaction line-of-sight guard has no walkability bundle yet — enabling it logs `DEV STUB: P1:QuestAccept is enabled...` at startup. Contract: `Implementation/Contracts/P1/QuestAcceptRequest.schema.json` + `QuestAcceptResponse.schema.json`; proposal and guard order in `Implementation/Work_Orders/Proposals/QOD-08_QuestAcceptRequest_vi.md`.
 
 ```bash
 curl -i -X POST http://localhost:5000/p1/quests/accept \
@@ -253,7 +253,7 @@ python Implementation/Tools/build_npc_anchors.py
 
 ## Interact (feature-flagged)
 
-`POST /p1/world/interact` is mapped only when `P1:Interact:Enabled=true`; otherwise the route does not exist (`404`). It is **off by default** because no reviewed walkability bundle exists yet — enabling it logs `DEV FIXTURE: P1:Interact is enabled...` at startup. Contract: `Implementation/Contracts/P1/InteractRequest.schema.json` + `InteractResponse.schema.json`; proposal and guard order in `Implementation/Work_Orders/Proposals/QOD-13_QuestProgressGathering_vi.md`.
+`POST /p1/world/interact` is mapped only when `P1:Interact:Enabled=true`; otherwise the POST handler is not mapped and the request falls through to the `GET /p1/world/{sessionId}` read route template, which answers `405`. It is **off by default** because no reviewed walkability bundle exists yet — enabling it logs `DEV FIXTURE: P1:Interact is enabled...` at startup. Contract: `Implementation/Contracts/P1/InteractRequest.schema.json` + `InteractResponse.schema.json`; proposal and guard order in `Implementation/Work_Orders/Proposals/QOD-13_QuestProgressGathering_vi.md`.
 
 ```bash
 curl -i -X POST http://localhost:5000/p1/world/interact \
@@ -373,7 +373,7 @@ State is in memory and there is no seed inventory; a new character starts with n
 
 ## Quest turn-in (feature-flagged)
 
-`POST /p1/quests/turnin` is mapped only when `P1:QuestTurnIn:Enabled=true`; otherwise the route does not exist (`404`). It is **off by default** because no walkability bundle is reviewed yet — enabling it logs `DEV STUB: P1:QuestTurnIn is enabled...` at startup. Contract: `Implementation/Contracts/P1/TurnInRequest.schema.json` + `TurnInResponse.schema.json`; proposal in `Implementation/Work_Orders/Proposals/QOD-14_TurnInReward_vi.md`.
+`POST /p1/quests/turnin` is mapped only when `P1:QuestTurnIn:Enabled=true`; otherwise the POST handler is not mapped and the request falls through to the `GET /p1/quests/{sessionId}` read route template, which answers `405`. It is **off by default** because no walkability bundle is reviewed yet — enabling it logs `DEV STUB: P1:QuestTurnIn is enabled...` at startup. Contract: `Implementation/Contracts/P1/TurnInRequest.schema.json` + `TurnInResponse.schema.json`; proposal in `Implementation/Work_Orders/Proposals/QOD-14_TurnInReward_vi.md`.
 
 ```bash
 curl -i -X POST http://localhost:5000/p1/quests/turnin \
@@ -558,6 +558,20 @@ The flag boots the DI container and canonical content, then runs 168 assertions 
 | 26 | Gather `ENT_MAN_BM_NODE_BM_ORE_01` within 5 WU | `200`, `outcome: gathered`, `yield` granted in `/p1/inventory` |
 | 27 | Any request | Response always has `X-Correlation-ID` |
 
+## Headless E2E scenario (QOD-15)
+
+One command builds the server, starts it and drives the whole gameplay loop:
+
+```bash
+bash Server/Health/Smoke/run_e2e_p1.sh default   # production gates OFF: expects blocked output
+bash Server/Health/Smoke/run_e2e_p1.sh dev       # dev synthetic scenario: full golden loop
+```
+
+- `default` starts the server without the P1 feature flags and asserts the expected blocked output: session/movement/read endpoints work, while `/p1/quests/accept`, `/p1/world/interact` and `/p1/quests/turnin` return `404` because the routes are not mapped.
+- `dev` starts the server with `P1__QuestAccept__Enabled`, `P1__Interact__Enabled` and `P1__QuestTurnIn__Enabled` set to `true` and runs the golden loop in one session: create session → valid move → wall-crossing attempt → accept `P00-01` → collect the three Atlas packages (`ACTIVE` → `READY_TO_TURN_IN`) → turn-in at `NPC_TA_VAN_KHANH` (`COMPLETED`, COIN 20 + chest, XP `applied: false`, unlock `P00-02`) → replay same key returns the stored result → a new key returns `409 invalid_transition` → inventory/quest readback shows exactly one reward → two parallel turn-ins with different keys yield exactly one winner → two fresh characters claim the same package concurrently (`concurrent_package_claim=OK`, no respawn wait) → wrong character/unknown session guards.
+
+The Bến Mưa topology fixture is `SYNTHETIC_TEST_ONLY`, so wall enforcement is `not_enforced` on the dev server: the wall-crossing move succeeds and the scenario records `wall_enforcement=not_enforced`. When a `REVIEWED` bundle lands, the same move must return `422 movement_blocked`; the scenario accepts exactly those two outcomes and fails on anything else. The wall/sweep logic itself is verified deterministically by the self-check's reviewed synthetic bundle. `server-e2e` runs both profiles in CI.
+
 ## Current limits
 
 - Sessions are in memory and lost on restart; there is no database, authentication or real-time transport.
@@ -565,7 +579,7 @@ The flag boots the DI container and canonical content, then runs 168 assertions 
 - Mob behaviour (`MobLifecycleService`) exists as a tickable state machine (IDLE/AGGRO/CHASE/ATTACK/RETURN/DEAD) with LOS, leash and attack-cooldown gates, driven by the 20 Hz `WorldTickBackgroundService` when `P1:MobBehavior:Enabled=true` (off by default) — there is no damage or loot yet, and every radius/speed is a labelled DEV fixture. Teleport has no endpoint.
 - The Bến Mưa world-entity registry (`world_entities_bm.json`: 27 canonical placements, 22 templates) is loaded with despawn/respawn state; interact uses it for shared `INTERACTABLE` claims and per-character (`claimPolicy: PER_CHARACTER`) package claims, and combat resolves alive mobs/bosses by instance ID. The 352-entry world record catalog (`world_records.json`) maps entities to `recordId`s for interact claims and quest progress.
 - Combat has no damage, hit chance, telegraphs, death or loot: `combat.effect` only records an accepted cast and its cooldown.
-- Quest state is in memory; accept, interact and turn-in are feature-flagged off by default. Progress advances only from server-verified events (`RecordVerifiedEvent`); `P00-01` reaches `READY_TO_TURN_IN` by collecting the three Atlas packages. `P1:QuestTurnIn:Enabled` gates the turn-in endpoint; rewards use canonical `rewards` data from the QuestDefinition, XP is echoed with `applied: false` (no XP system), and the reward ledger is in-memory only (lost on restart). Line-of-sight runs only for `REVIEWED` topology bundles; the shipped bundle is synthetic, so it is `not_enforced` until Muse delivers the Bến Mưa layout.
+- Quest state is in memory; accept, interact and turn-in are feature-flagged off by default. Progress advances only from server-verified events (`RecordVerifiedEvent`); `P00-01` reaches `READY_TO_TURN_IN` by collecting the three Atlas packages. `P1:QuestTurnIn:Enabled` gates the turn-in endpoint; rewards use canonical `rewards` data from the QuestDefinition, XP is echoed with `applied: false` (no XP system), and the reward ledger is in-memory only (lost on restart). Turn-in commits grant → quest flip → ledger under the actor lock and re-checks state inside the lock, so parallel turn-ins grant exactly once (one winner, the other `invalid_transition`; same-key contention never double-grants). Line-of-sight runs only for `REVIEWED` topology bundles; the shipped bundle is synthetic, so it is `not_enforced` until Muse delivers the Bến Mưa layout.
 - Interact gather yields (item IDs, quantity ranges, respawn seconds, profession levels) are DEV fixtures from the supplement records, not canonical economy data; the profession gate uses a configured `AssumedProfessionLevel` until character progression exists.
 - Inventory is read-only over HTTP and starts empty: no item catalog, stack-limit enforcement, durability rules, seeded starting items or mutation endpoint.
 - Teleport uses map bounds only; there is no walkability, portal, cooldown or respawn logic.
