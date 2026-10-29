@@ -253,8 +253,8 @@ public static class GuardPrecisionLoader
             oracle.RawDamage, mitigation, 1, 1,
             DamageFormula.DamageReductionMultiplier(GuardTimeline.DamageReductionCap));
         var counterRaw = oracle.CounterAttack * oracle.CounterPveCoefficient;
-        var counter = DamageFormula.FinalDamage(counterRaw, mitigation, 1, 1, 1);
-        var counterCrit = DamageFormula.FinalDamage(
+        var counterDamage = DamageFormula.FinalDamage(counterRaw, mitigation, 1, 1, 1);
+        var counterCritDamage = DamageFormula.FinalDamage(
             counterRaw, mitigation, 1, DamageFormula.CritMultiplier, 1);
         if (outside != oracle.OutsideFinalDamage ||
             guarded != oracle.GuardFinalDamage ||
@@ -264,13 +264,13 @@ public static class GuardPrecisionLoader
                 oracle.GuardAndOtherReductionAtCap,
                 GuardTimeline.CombineReduction(
                     guard.DamageReduction, whiff.DamageReduction)) ||
-            counter != oracle.CounterNonCritFinalDamage ||
-            counterCrit != oracle.CounterCritFinalDamage)
+            counterDamage != oracle.CounterNonCritFinalDamage ||
+            counterCritDamage != oracle.CounterCritFinalDamage)
         {
             throw new InvalidOperationException(
                 $"{path}: oracle arithmetic does not reproduce DEC-022 " +
                 $"(27/8/21/5, counter 32/49); got {outside}/{guarded}/{whiffed}/{capped}, " +
-                $"counter {counter}/{counterCrit}.");
+                $"counter {counterDamage}/{counterCritDamage}.");
         }
 
         return new GuardPrecisionBundle(

@@ -343,6 +343,7 @@ public static class ServiceSelfCheck
             $"{carplingL6.Hp}/{carplingL6.Attack}/{carplingL6.Defense}");
 
         // DEC-022 guard precision: versioned bundle + pure timeline/oracle.
+        var guardMitigation = DamageFormula.MitigationMultiplier(10);
         var guardPrecision = enabledCombat.GuardPrecision;
         combatSkills.TryGet("SK-MK-01", out var guardSkill);
         Check(
@@ -421,14 +422,14 @@ public static class ServiceSelfCheck
         Check(
             "guard.oracle_reduction",
             DamageFormula.FinalDamage(
-                30, oracleMitigation, 1, 1,
+                30, guardMitigation, 1, 1,
                 DamageFormula.DamageReductionMultiplier(0.7)) == 8 &&
             DamageFormula.FinalDamage(
-                30, oracleMitigation, 1, 1,
+                30, guardMitigation, 1, 1,
                 DamageFormula.DamageReductionMultiplier(0.2)) == 21 &&
-            DamageFormula.FinalDamage(30, oracleMitigation, 1, 1, 1) == 27 &&
+            DamageFormula.FinalDamage(30, guardMitigation, 1, 1, 1) == 27 &&
             DamageFormula.FinalDamage(
-                30, oracleMitigation, 1, 1,
+                30, guardMitigation, 1, 1,
                 DamageFormula.DamageReductionMultiplier(0.8)) == 5 &&
             guardPrecision.Oracle is
             {
@@ -444,9 +445,9 @@ public static class ServiceSelfCheck
             "guard.counter_oracle",
             guardSkill is not null &&
             Near(guardPrecision.Oracle.CounterPveCoefficient, guardSkill.Coefficients.Pve) &&
-            DamageFormula.FinalDamage(counterRaw, oracleMitigation, 1, 1, 1) == 32 &&
+            DamageFormula.FinalDamage(counterRaw, guardMitigation, 1, 1, 1) == 32 &&
             DamageFormula.FinalDamage(
-                counterRaw, oracleMitigation, 1, DamageFormula.CritMultiplier, 1) == 49 &&
+                counterRaw, guardMitigation, 1, DamageFormula.CritMultiplier, 1) == 49 &&
             guardPrecision.Oracle is
             {
                 CounterNonCritFinalDamage: 32,
