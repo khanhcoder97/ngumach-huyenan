@@ -1335,8 +1335,8 @@ public static class ServiceSelfCheck
 
         var syntheticDefinitions = new Dictionary<string, QuestDefinition>(StringComparer.Ordinal)
         {
-            ["QOD_TEST_DEDUPE"] = MakeSyntheticQuest(
-                "QOD_TEST_DEDUPE",
+            ["TEST-DEDUPE-01"] = MakeSyntheticQuest(
+                "TEST-DEDUPE-01",
                 new QuestObjectiveDefinition(
                     "OBJ_TEST_SHARE_A", QuestObjectiveTypes.Collect,
                     ["MAN-BM-OBJ_BM_PACKAGE_01"], 1, options.DefaultMapId),
@@ -1344,16 +1344,16 @@ public static class ServiceSelfCheck
                     "OBJ_TEST_SHARE_B", QuestObjectiveTypes.Collect,
                     ["MAN-BM-OBJ_BM_PACKAGE_01", "MAN-BM-OBJ_BM_PACKAGE_02"], 2,
                     options.DefaultMapId)),
-            ["QOD_TEST_SEQUENTIAL"] = MakeSyntheticQuest(
-                "QOD_TEST_SEQUENTIAL",
+            ["TEST-SEQ-01"] = MakeSyntheticQuest(
+                "TEST-SEQ-01",
                 new QuestObjectiveDefinition(
                     "OBJ_TEST_SEQ_A", QuestObjectiveTypes.Collect,
                     ["MAN-BM-OBJ_BM_PACKAGE_01"], 1, options.DefaultMapId),
                 new QuestObjectiveDefinition(
                     "OBJ_TEST_SEQ_B", QuestObjectiveTypes.Collect,
                     ["MAN-BM-OBJ_BM_PACKAGE_03"], 1, options.DefaultMapId)),
-            ["QOD_TEST_KILL"] = MakeSyntheticQuest(
-                "QOD_TEST_KILL",
+            ["TEST-KILL-01"] = MakeSyntheticQuest(
+                "TEST-KILL-01",
                 new QuestObjectiveDefinition(
                     "OBJ_TEST_KILL_A", QuestObjectiveTypes.Kill,
                     ["MAN-BM-SPAWN_BM_01"], 2, options.DefaultMapId),
@@ -1368,13 +1368,13 @@ public static class ServiceSelfCheck
             interactClock);
         var dedupeScopeActor = NewPlayer("CHR_SELFCHECK_DEDUPE_SCOPE");
 
-        syntheticQuests.Accept(dedupeScopeActor, "QOD_TEST_DEDUPE");
+        syntheticQuests.Accept(dedupeScopeActor, "TEST-DEDUPE-01");
         syntheticQuests.RecordVerifiedEvent(
             dedupeScopeActor, new string('a', 32),
             QuestProgressEventTypes.InteractClaim, "MAN-BM-OBJ_BM_PACKAGE_01",
             options.DefaultMapId);
         var sharedRecordState = syntheticQuests.GetState(
-            dedupeScopeActor.CharacterId, "QOD_TEST_DEDUPE").State;
+            dedupeScopeActor.CharacterId, "TEST-DEDUPE-01").State;
         Check(
             "quest.dedupe_two_objectives_share_record",
             sharedRecordState is { State: QuestStates.Active } &&
@@ -1389,7 +1389,7 @@ public static class ServiceSelfCheck
             QuestProgressEventTypes.InteractClaim, "MAN-BM-OBJ_BM_PACKAGE_01",
             options.DefaultMapId);
         var duplicateState = syntheticQuests.GetState(
-            dedupeScopeActor.CharacterId, "QOD_TEST_DEDUPE").State;
+            dedupeScopeActor.CharacterId, "TEST-DEDUPE-01").State;
         Check(
             "quest.dedupe_duplicate_event",
             duplicateEvent.Count == 0 &&
@@ -1402,20 +1402,20 @@ public static class ServiceSelfCheck
             QuestProgressEventTypes.InteractClaim, "MAN-BM-OBJ_BM_PACKAGE_02",
             options.DefaultMapId);
         var secondRecordState = syntheticQuests.GetState(
-            dedupeScopeActor.CharacterId, "QOD_TEST_DEDUPE").State;
+            dedupeScopeActor.CharacterId, "TEST-DEDUPE-01").State;
         Check(
             "quest.dedupe_second_record",
             secondRecordState is { State: QuestStates.ReadyToTurnIn } &&
             secondRecordState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_B") == 2,
             secondRecordState?.State);
 
-        syntheticQuests.Accept(dedupeScopeActor, "QOD_TEST_SEQUENTIAL");
+        syntheticQuests.Accept(dedupeScopeActor, "TEST-SEQ-01");
         syntheticQuests.RecordVerifiedEvent(
             dedupeScopeActor, new string('d', 32),
             QuestProgressEventTypes.InteractClaim, "MAN-BM-OBJ_BM_PACKAGE_01",
             options.DefaultMapId);
         var sequentialState = syntheticQuests.GetState(
-            dedupeScopeActor.CharacterId, "QOD_TEST_SEQUENTIAL").State;
+            dedupeScopeActor.CharacterId, "TEST-SEQ-01").State;
         Check(
             "quest.dedupe_sequential_step_guard",
             sequentialState is { State: QuestStates.Active } &&
@@ -1424,12 +1424,12 @@ public static class ServiceSelfCheck
             $"{sequentialState?.State} " +
             $"b={sequentialState?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SEQ_B")}");
 
-        syntheticQuests.Accept(dedupeScopeActor, "QOD_TEST_KILL");
+        syntheticQuests.Accept(dedupeScopeActor, "TEST-KILL-01");
         syntheticQuests.RecordVerifiedEvent(
             dedupeScopeActor, new string('e', 32),
             QuestProgressEventTypes.Kill, "MAN-BM-SPAWN_BM_01", options.DefaultMapId);
         var killFirst = syntheticQuests.GetState(
-            dedupeScopeActor.CharacterId, "QOD_TEST_KILL").State;
+            dedupeScopeActor.CharacterId, "TEST-KILL-01").State;
         var killReplay = syntheticQuests.RecordVerifiedEvent(
             dedupeScopeActor, new string('e', 32),
             QuestProgressEventTypes.Kill, "MAN-BM-SPAWN_BM_01", options.DefaultMapId);
@@ -1437,7 +1437,7 @@ public static class ServiceSelfCheck
             dedupeScopeActor, new string('f', 32),
             QuestProgressEventTypes.Kill, "MAN-BM-SPAWN_BM_01", options.DefaultMapId);
         var killSecond = syntheticQuests.GetState(
-            dedupeScopeActor.CharacterId, "QOD_TEST_KILL").State;
+            dedupeScopeActor.CharacterId, "TEST-KILL-01").State;
         Check(
             "quest.dedupe_kill_event_scope",
             killFirst.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_A") == 1 &&

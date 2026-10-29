@@ -362,7 +362,7 @@ def dev_profile():
         smoke_p1.check(
             status == 201, f"concurrent session {suffix} returned {status}: {body}")
         session_id = body.get("sessionId")
-        sequence, _ = walk_east(session_id, character_id, 0, 36.0)
+        sequence, _ = walk_east(session_id, character_id, 0, 37.5)
         status, _, body = smoke_p1.call(
             "POST", "/p1/quests/accept",
             smoke_p1.quest_accept_envelope(
