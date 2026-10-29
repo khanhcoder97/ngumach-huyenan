@@ -34,6 +34,8 @@ Ngày 2026-10-28, chủ dự án xác nhận game di chuyển nhìn từ trên. 
 
 ## 4. Combat và đơn vị
 
+> Source update2026-10-29: DEC-017 và `completion_v1` bổ sung Kiếm Trận4,4WU, bađòn Mãng Cốt và công thức stat. Xem `P1_Design_Resolution_20261029_vi.md`: các câu “chưa có/chưa chốt” bên dưới là blocker tại thời điểm DEC-016; hiện phần đó thiếu runtime export/migration, không còn thiếu toàn bộ thiết kế. Các trường chưa đủ precision và topology reviewed vẫn là blocker thật.
+
 - Tất cả range/radius/distance trên wire là WU; mô tả bằng mét nhân 2 đúng một lần khi export. SK-MK-01 2,2m => 4,4 WU; SK-MK-02 5,5m => 11 WU. JSON cũ 2,2/5,5 gắn `rangeWu` là lỗi export cần PR migration, không chỉnh lén client.
 - SELF chỉ xác định actor nhận trạng thái, không có nghĩa phản công gây damage vào bản thân. CONE/DASH tính từ facing/aim XY, góc giữa vector hướng và vector đến target; range/line-of-sight cùng floor. Kiếm Trận chưa có range chính xác nên damage rollout giữ blocked cho tới khi config được chốt.
 - Né theo vector input, nếu đứng yên dùng facing; sweep tránh xuyên tường, không tự đẩy đến vị trí bên kia. Telegraph circle/cone/line chiếu mặt đất, giữ đúng kích thước server, không co theo độ dài frame ảnh.

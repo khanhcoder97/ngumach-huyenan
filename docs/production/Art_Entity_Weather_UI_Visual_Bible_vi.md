@@ -14,7 +14,7 @@
 - Actor thường dùng sprite sheet 512²–1024² chia page theo state; boss 1024²–2048²/page theo phase/layer. Không ép mọi frame thành cùng ô nếu trim metadata/pivot vẫn chính xác.
 - Quái thường 512²; elite 512²–1024²; boss/environment 1024²–2048²/page. Lossless, no mipmap, point filter, không nén mất dữ liệu; giữ PPU 20.
 - Icon item 32²–64²; skill/UI 32²–48²; portrait 64²–96² source pixel. Chỉ tăng khi detail gameplay cần và phải chỉ rõ scale nguyên tại 640×360.
-- Gameplay side-view có trái/phải; menu/preview thêm front/back/side khi cần. Không làm full 8-way nếu gameplay không dùng.
+- Gameplay top-down XY dùng8hướng N/NE/E/SE/S/SW/W/NW theo DEC-015/016; sheet actor48×64native, pivot chân. Menu/model sheet front/back/side chỉ là tham chiếu tạo hình, không thay8hướng runtime.
 - Outline actor 1–2 source px; team/target outline là pixel overlay có shape rõ, không shader làm mềm.
 - Tạo test sáng/tối và color-blind/pattern cho item/quái; màu luôn đi cùng shape/icon.
 - VFX pixel sprite trên lớp actor; weather/parallax có pattern riêng; telegraph boss luôn nằm trên actor/weather và dùng silhouette/shape tương phản.
@@ -146,7 +146,7 @@ Thông số dưới đây là actor bounds WU; HP được định nghĩa theo t
 | Boss | Silhouette/body segment | Đòn bắt buộc và tín hiệu | Palette/VFX pixel đặc trưng |
 |---|---|---|---|
 | BOSS_FLAME_SENTINEL — Tượng Hành Hỏa | tượng hộ vệ đồng/đá 8 WU; lõi lò tam giác, hai vai bất đối xứng | 3 pha: quét ngang báo 0,8s; gọi 3 cột lửa có vòng đất báo 1s; vent làm lộ lõi 4s sau khi dập cọc | đồng hun/đá đen, lửa cam; cột lửa không che chân và lối thoát |
-| BOSS_MANG_COT — Mãng Cốt | thân rắn xương dài 15 WU; đầu có sừng gãy, cổ nhiều đốt | quét thân cone 0,8s; lặn vũng 1,2s rồi trồi; vòng bọt là điểm trồi | xương trắng ngà, rêu lam; nước bắn thấp, không che chân |
+| BOSS_MANG_COT — Mãng Cốt | thân rắn xương dài 15 WU; đầu có sừng gãy, cổ nhiều đốt | theo DEC-017/Rules §4: quét cone120°/8WU báo0,9s; lặn-trồi radius4WU báo1,2s; vòng bọt riêng annulus3..7WU báo1s | xương trắng ngà, rêu lam; nước bắn thấp, không che chân; vòng bọt không chỉ là VFX điểm trồi |
 | BOSS_ANCIENT_TREE — Cổ Thụ Trăm Mắt | cây 28 WU cao, thân lệch, 12 cụm mắt nhưng tối đa 5 sáng cùng lúc | rễ đuổi 1s; 3 rễ sáng cần chạm theo A-B-C; nấm độc có đường thoát | gỗ đen xanh, mắt xanh rêu; lá rơi theo vùng |
 | BOSS_FURNACE — Lò Trời | golem lò 12 WU, ống khói, lõi tròn | ba van giảm nạp; pha 1 giáp, pha 2 tắt van, pha 3 ba lane lửa | cam đồng/đen; heat haze không làm méo telegraph |
 | BOSS_TONG_BANH — Tống Bành | actor người 5,8 WU trong giáp tháo rời có 2 ụ phụ | giáp trước/sau; hai bẫy giáp đánh dấu; đòn lao ngang báo cờ kéo | thép xám xanh, bụi nặng khi bước, không có máu |

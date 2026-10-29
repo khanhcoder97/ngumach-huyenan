@@ -1,0 +1,139 @@
+{
+  "status": "PASS_DATA_DIFF_NOT_ENGINE_QA",
+  "baseCommit": "18caf223476308cbdabd97d9ee83c90944c87100",
+  "path": "docs/production/Quest_Dialogue_Production_Data_vi.csv",
+  "rowsBefore": 230,
+  "rowsAfter": 230,
+  "baseSha256": "a5c8017edec32b4e70a5da4f87128a0405a9837d58120a19839b52f675e88ed4",
+  "editedSha256": "f808e886ceaed6fbc964980eefb5b20b4f71a37dfc31c5b6aaf11dc79e8a70fd",
+  "changedRows": [
+    {
+      "textKey": "DLG_P00_01_OFFER_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 144
+    },
+    {
+      "textKey": "DLG_P00_01_CLUE_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 150
+    },
+    {
+      "textKey": "DLG_P00_01_TURN_IN_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 124
+    },
+    {
+      "textKey": "DLG_P00_02_OFFER_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 158
+    },
+    {
+      "textKey": "DLG_P00_02_CLUE_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 147
+    },
+    {
+      "textKey": "DLG_P00_02_TURN_IN_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 152
+    },
+    {
+      "textKey": "DLG_P00_03_OFFER_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 150
+    },
+    {
+      "textKey": "DLG_P00_03_CLUE_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 148
+    },
+    {
+      "textKey": "DLG_P00_03_TURN_IN_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 137
+    },
+    {
+      "textKey": "DLG_P00_04_OFFER_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 154
+    },
+    {
+      "textKey": "DLG_P00_04_CLUE_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 150
+    },
+    {
+      "textKey": "DLG_P00_04_TURN_IN_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 131
+    },
+    {
+      "textKey": "DLG_P00_05_OFFER_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 156
+    },
+    {
+      "textKey": "DLG_P00_05_CLUE_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 157
+    },
+    {
+      "textKey": "DLG_P00_05_TURN_IN_TEXT",
+      "fields": [
+        "text_vi",
+        "localization_status"
+      ],
+      "characters": 185
+    }
+  ],
+  "logicFieldsChanged": 0,
+  "otherRowsChanged": 0,
+  "remainingBaselineRows": 215,
+  "limits": [
+    "No Unity text rendering verification",
+    "No voice clips produced",
+    "No graph or reward implementation changed"
+  ]
+}
