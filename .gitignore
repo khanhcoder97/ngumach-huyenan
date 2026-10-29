@@ -35,3 +35,4 @@ __pycache__/
 
 # Keep the server project file; Unity-generated client projects stay ignored
 !Server/Health/Health.csproj
+!Client/Tests/P1CoreChecks/P1CoreChecks.csproj

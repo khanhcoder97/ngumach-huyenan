@@ -1,0 +1,45 @@
+name: client-core-validation
+on:
+  pull_request:
+    paths: ['Client/Assets/Scripts/Online/**', 'Client/Tests/P1CoreChecks/**', 'Server/**', 'Implementation/Contracts/**', '.github/workflows/client-core-validation.yml']
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  client-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Compile the exact engine-independent client sources and run fault scenarios
+        run: dotnet run --project Client/Tests/P1CoreChecks/P1CoreChecks.csproj --configuration Release
+      - name: Build server
+        run: dotnet build Server/Health/Health.csproj --configuration Release
+      - name: Start default server with quest feature OFF
+        working-directory: Server/Health
+        env:
+          P1__QuestAccept__Enabled: 'false'
+        run: |
+          dotnet bin/Release/net10.0/Health.dll --urls http://127.0.0.1:5082 > "$GITHUB_WORKSPACE/client-server.log" 2>&1 &
+          echo $! > "$GITHUB_WORKSPACE/client-server.pid"
+          for attempt in $(seq 1 40); do
+            if curl --silent --fail http://127.0.0.1:5082/health > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat "$GITHUB_WORKSPACE/client-server.log"
+          exit 1
+      - name: Exercise real HTTP from the same client core against default server
+        run: dotnet run --no-build --project Client/Tests/P1CoreChecks/P1CoreChecks.csproj --configuration Release -- --http http://127.0.0.1:5082
+      - name: Stop server
+        if: always()
+        run: |
+          if [ -f client-server.pid ]; then kill "$(cat client-server.pid)" 2>/dev/null || true; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: client-server-log
+          path: client-server.log
