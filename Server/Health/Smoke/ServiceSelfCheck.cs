@@ -160,6 +160,40 @@ public static class ServiceSelfCheck
             floorCast.Failure?.Code == CombatErrorCodes.TargetNotFound,
             floorCast.Failure?.Code);
 
+        var idemActor = NewPlayer("CHR_SELFCHECK_COMBAT_IDEM");
+        var idemCommand = new CombatCommand
+        {
+            AimX = 0,
+            AimY = 0,
+            InputSequence = 1,
+            SkillId = "SK-MK-01"
+        };
+        var idemFirst = combat.Resolve(idemActor, idemCommand, new string('a', 32));
+        var idemReplay = combat.Resolve(idemActor, idemCommand, new string('a', 32));
+        Check(
+            "combat.idempotency_replay",
+            idemFirst.Accepted &&
+            idemReplay.Accepted &&
+            ReferenceEquals(idemFirst.Event, idemReplay.Event) &&
+            idemActor.Mp == 38 &&
+            idemActor.Revision == 2,
+            $"mp={idemActor.Mp} revision={idemActor.Revision}");
+
+        var idemConflict = combat.Resolve(
+            idemActor,
+            new CombatCommand
+            {
+                AimX = 0,
+                AimY = 0,
+                InputSequence = 2,
+                SkillId = "SK-MK-01"
+            },
+            new string('a', 32));
+        Check(
+            "combat.idempotency_conflict",
+            idemConflict.Failure?.Code == CombatErrorCodes.IdempotencyConflict,
+            idemConflict.Failure?.Code);
+
         var noMpCast = combat.Resolve(
             NewPlayer("CHR_SELFCHECK_MP", mp: 0),
             new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-01" });

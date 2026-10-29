@@ -383,7 +383,7 @@ public static class P1Endpoints
             AimX = payload.AimX,
             AimY = payload.AimY,
             ClientTimeUtc = payload.ClientTimeUtc
-        });
+        }, envelope.IdempotencyKey);
 
         var logger = loggerFactory.CreateLogger("P1.Combat");
         if (outcome.Accepted && outcome.Event is { } combatEvent)
@@ -418,6 +418,7 @@ public static class P1Endpoints
         CombatErrorCodes.TargetNotFound => StatusCodes.Status404NotFound,
         CombatErrorCodes.OutOfRange => StatusCodes.Status422UnprocessableEntity,
         CombatErrorCodes.UnsupportedResource => StatusCodes.Status422UnprocessableEntity,
+        CombatErrorCodes.IdempotencyConflict => StatusCodes.Status409Conflict,
         _ => StatusCodes.Status400BadRequest
     };
 
