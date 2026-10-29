@@ -670,6 +670,205 @@ public static class ServiceSelfCheck
             parallelEventPage.NextCursor == 100,
             $"count={parallelEventPage.Events.Count} next={parallelEventPage.NextCursor}");
 
+        // QOD-16 ph2 audience policy: AOI 40 WU enter / 48 WU leave hysteresis,
+        // same instance/floor/phase, per-caller availability, NPC/boss policy.
+        var aoiClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 30, 3, 0, 0, TimeSpan.Zero));
+        WorldEntityInstance MakeAoiEntity(
+            string entityId,
+            string kind,
+            string templateId,
+            double x,
+            string floorId = "OVERWORLD",
+            string claimPolicy = WorldEntityClaimPolicies.Shared,
+            int respawnSeconds = 0)
+        {
+            var entity = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = "MAN-TEST-" + entityId,
+                Kind = kind,
+                TemplateIds = new[] { templateId },
+                MapId = options.DefaultMapId,
+                FloorId = floorId,
+                X = x,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = respawnSeconds,
+                ClaimPolicy = claimPolicy
+            };
+            entity.Initialize();
+            return entity;
+        }
+
+        var aoiRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_EDGE40", WorldEntityKinds.Mob, "MOB_CARPLING", 40),
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_EDGE41", WorldEntityKinds.Mob, "MOB_CARPLING", 41),
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_HYST45", WorldEntityKinds.Mob, "MOB_CARPLING", 45),
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_FLOOR", WorldEntityKinds.Mob, "MOB_CARPLING", 1,
+                        "UNDERGROUND"),
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_NPC", WorldEntityKinds.Npc, "NPC_LYAN", 2),
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_BOSS", WorldEntityKinds.Boss, "BOSS_MANG_COT", 3),
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_NODE", WorldEntityKinds.GatherNode,
+                        "NODE_BM_ORE_01", 4,
+                        claimPolicy: WorldEntityClaimPolicies.PerCharacter,
+                        respawnSeconds: 20),
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_SHARED", WorldEntityKinds.Interactable,
+                        "OBJ_BM_PACKAGE_01", 5, respawnSeconds: 20)
+                ]),
+            aoiClock);
+        var aoiMobOptions = new MobBehaviorOptions
+        {
+            AggroRadiusWu = 6,
+            LeashRadiusWu = 12,
+            AttackRangeWu = 1.2,
+            AttackCooldownSeconds = 2,
+            MoveSpeedWuPerSecond = 2
+        };
+        var aoiMobs = new MobLifecycleService(
+            aoiRegistry,
+            services.GetRequiredService<IWorldGeometryService>(),
+            aoiMobOptions,
+            aoiClock);
+        var aoiClaims = new GatherClaimStore(aoiClock);
+        aoiClaims.TryClaim(
+            "CHR_SELFCHECK_AOI_A", "ENT_SELFCHECK_AOI_NODE", 20, out _, out _);
+        var aoiProjection = new WorldAoiProjectionService(
+            aoiRegistry, aoiMobs, enabledCombat, aoiClaims);
+
+        var aoiViewerA = NewPlayer("CHR_SELFCHECK_AOI_A");
+        aoiViewerA.X = 0;
+        aoiViewerA.Y = 0;
+        var aoiIdsA = aoiProjection.Project(aoiViewerA)
+            .Select(entity => entity.EntityId)
+            .ToHashSet(StringComparer.Ordinal);
+        Check(
+            "aoi.enter_radius",
+            aoiIdsA.Contains("ENT_SELFCHECK_AOI_EDGE40") &&
+            !aoiIdsA.Contains("ENT_SELFCHECK_AOI_EDGE41") &&
+            !aoiIdsA.Contains("ENT_SELFCHECK_AOI_HYST45") &&
+            aoiIdsA.Contains("ENT_SELFCHECK_AOI_NPC") &&
+            aoiIdsA.Contains("ENT_SELFCHECK_AOI_BOSS") &&
+            aoiIdsA.Contains("ENT_SELFCHECK_AOI_NODE") &&
+            aoiIdsA.Contains("ENT_SELFCHECK_AOI_SHARED"),
+            $"visible={aoiIdsA.Count}");
+
+        Check(
+            "aoi.floor_filter",
+            !aoiIdsA.Contains("ENT_SELFCHECK_AOI_FLOOR"));
+
+        aoiViewerA.X = 5;
+        var aoiIdsNear = aoiProjection.Project(aoiViewerA)
+            .Select(entity => entity.EntityId)
+            .ToHashSet(StringComparer.Ordinal);
+        Check(
+            "aoi.hysteresis_enter",
+            aoiIdsNear.Contains("ENT_SELFCHECK_AOI_HYST45") &&
+            aoiIdsNear.Contains("ENT_SELFCHECK_AOI_EDGE41"),
+            $"visible={aoiIdsNear.Count}");
+
+        aoiViewerA.X = 0;
+        var aoiIdsBack = aoiProjection.Project(aoiViewerA)
+            .Select(entity => entity.EntityId)
+            .ToHashSet(StringComparer.Ordinal);
+        Check(
+            "aoi.hysteresis_keep",
+            aoiIdsBack.Contains("ENT_SELFCHECK_AOI_HYST45") &&
+            aoiIdsBack.Contains("ENT_SELFCHECK_AOI_EDGE41"),
+            $"visible={aoiIdsBack.Count}");
+
+        aoiViewerA.X = -4;
+        var aoiIdsFar = aoiProjection.Project(aoiViewerA)
+            .Select(entity => entity.EntityId)
+            .ToHashSet(StringComparer.Ordinal);
+        Check(
+            "aoi.hysteresis_leave",
+            !aoiIdsFar.Contains("ENT_SELFCHECK_AOI_HYST45") &&
+            aoiIdsFar.Contains("ENT_SELFCHECK_AOI_EDGE41") &&
+            aoiIdsFar.Contains("ENT_SELFCHECK_AOI_EDGE40"),
+            $"visible={aoiIdsFar.Count}");
+
+        aoiProjection.RemoveSession("CHR_SELFCHECK_AOI_A");
+        var aoiFreshA = NewPlayer("CHR_SELFCHECK_AOI_A");
+        aoiFreshA.X = 0;
+        aoiFreshA.Y = 0;
+        var aoiFreshPage = aoiProjection.Project(aoiFreshA);
+        var aoiFreshIds = aoiFreshPage
+            .Select(entity => entity.EntityId)
+            .ToHashSet(StringComparer.Ordinal);
+        Check(
+            "aoi.session_reset",
+            !aoiFreshIds.Contains("ENT_SELFCHECK_AOI_HYST45") &&
+            aoiFreshIds.Contains("ENT_SELFCHECK_AOI_EDGE40"));
+
+        var aoiViewerB = NewPlayer("CHR_SELFCHECK_AOI_B");
+        aoiViewerB.X = 0;
+        aoiViewerB.Y = 0;
+        var aoiPageB = aoiProjection.Project(aoiViewerB);
+        var aoiById = aoiPageB.ToDictionary(
+            entity => entity.EntityId, StringComparer.Ordinal);
+        Check(
+            "aoi.npc_policy",
+            aoiById["ENT_SELFCHECK_AOI_NPC"] is
+            {
+                Kind: WorldEntityKinds.Npc,
+                State: WorldEntityStates.Active,
+                HealthState: WorldHealthStates.Invulnerable,
+                Targetable: false,
+                Hp: 0,
+                MaxHp: 0,
+                LifeId: 1,
+                Revision: 1
+            });
+        Check(
+            "aoi.boss_blocked_policy",
+            aoiById["ENT_SELFCHECK_AOI_BOSS"] is
+            {
+                Kind: WorldEntityKinds.Boss,
+                HealthState: WorldHealthStates.Blocked,
+                Targetable: false,
+                Hp: 0,
+                MaxHp: 0
+            });
+        Check(
+            "aoi.mob_reference_stats",
+            aoiById["ENT_SELFCHECK_AOI_EDGE40"] is
+            {
+                Kind: WorldEntityKinds.Mob,
+                State: MobBehaviorStates.Idle,
+                HealthState: WorldHealthStates.Alive,
+                Targetable: true,
+                Hp: 192,
+                MaxHp: 192,
+                MapInstanceId: "MAP_BEN_MUA#1",
+                Phase: "OPEN_WORLD",
+                LifeId: 1
+            });
+        Check(
+            "aoi.availability_per_character",
+            aoiById["ENT_SELFCHECK_AOI_NODE"].Availability == WorldAvailability.Available &&
+            aoiById["ENT_SELFCHECK_AOI_SHARED"].Availability == WorldAvailability.Available);
+        Check(
+            "aoi.availability_claimed_cooldown",
+            aoiFreshPage
+                .First(entity => entity.EntityId == "ENT_SELFCHECK_AOI_NODE")
+                .Availability == WorldAvailability.Cooldown);
+        Check(
+            "aoi.internal_candidates_not_wire",
+            aoiRegistry.Count == 8 && aoiPageB.Count == 5,
+            $"candidates={aoiRegistry.Count} visible={aoiPageB.Count}");
+
         Check(
             "damage.oracle_raw",
             Near(DamageFormula.RawDamage(20, 0, 1.5, 1, 0), 30),

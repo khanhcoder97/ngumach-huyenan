@@ -130,6 +130,7 @@ builder.Services.AddSingleton(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<CombatEventStreamOptions>>().Value);
 builder.Services.AddSingleton<CombatEventStore>();
 builder.Services.AddSingleton<WorldEntityProjectionService>();
+builder.Services.AddSingleton<WorldAoiProjectionService>();
 builder.Services.AddHostedService<WorldTickBackgroundService>();
 
 var app = builder.Build();

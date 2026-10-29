@@ -57,6 +57,19 @@ public sealed class GatherClaimStore
         return true;
     }
 
+    // Read-only availability probe for the audience projection: true when the
+    // character has no active claim window on the entity. Mutates nothing.
+    public bool IsAvailable(string characterId, string entityId, int respawnSeconds)
+    {
+        if (!_claims.TryGetValue((characterId, entityId), out var stored))
+        {
+            return true;
+        }
+
+        return respawnSeconds > 0 &&
+               _clock.UtcNow >= stored.ClaimedAt.AddSeconds(respawnSeconds);
+    }
+
     // Undo a claim made by TryClaim; used when a later step of the interaction
     // (e.g. the inventory grant) fails so the failed request does not consume
     // the node's availability window. Compare-and-remove by reservation token:

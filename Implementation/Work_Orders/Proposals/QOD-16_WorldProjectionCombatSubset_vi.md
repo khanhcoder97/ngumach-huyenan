@@ -144,6 +144,15 @@ Theo Q3: response command chỉ trả event **đã xảy ra**; impact tương la
 - **Concurrency:** lock theo stream khi append/đọc — cursor không trùng, đọc không thấy event chen giữa; self-check barrier 4 thread × 25 append → 100 cursor 1..100 liên tục.
 - **Không thuộc phạm vi:** endpoint `/p1/v2/events` (chờ QOD-17 tick engine), replay audio/VFX (reconcile silent), persistence (PostgreSQL proposal QOD-20).
 
-### 9.4 Triển khai tiếp
+### 9.4 AOI projection — thiết kế audience v2
+
+Theo Q6: snapshot v2 chỉ gửi entity sau filter audience; internal candidate vẫn đủ map (fixture 27), client không nhận 27.
+
+- **Phạm vi:** cùng `mapInstanceId` (`MAP_X#1`, DEV placeholder tới khi có multi-instance), `floorId`, `phase` (`OPEN_WORLD` DEV placeholder tới encounter phase của QOD-19) — kiểm trước AOI.
+- **AOI + hysteresis:** enter ≤ 40 WU, leave ≤ 48 WU (8 WU, nguồn Online_Persistence_Release_Complete §2); session giữ tập visible của lần đọc trước nên entity đã thấy chỉ rơi khi vượt 48, entity mới cần ≤ 40. `RemoveSession` quên hysteresis để reconnect vào lại theo bán kính 40.
+- **Policy từng kind:** NPC `INVULNERABLE`/`targetable:false`/hp0; boss blocked `BLOCKED` (không hiển thị `DEAD`) và không targetable; MOB hp theo `REFERENCE_L5` (elite suffix áp multiplier), `ALIVE`/`DEAD` từ registry+brain, targetable khi còn sống; GATHER_NODE/INTERACTABLE chỉ lộ `availability` theo người gọi (`AVAILABLE`/`COOLDOWN`, claim window per-character; shared interactable theo state chung), không lộ quest flag/inventory/claim người khác.
+- **Không thuộc phạm vi:** endpoint snapshot v2 (đi cùng QOD-17), culling theo tầm nhìn/che khuất, multi-instance/phase thật, reconcile audio/VFX (silent), persistence.
+
+### 9.5 Triển khai tiếp
 
 Event store (bounded buffer, cursor, resync) + AOI projection có hysteresis + endpoint v2 opt-in (`P1:CombatV2:Enabled` OFF mặc định; dev profile bật) + e2e dev mở rộng; sau đó QOD-17 tick combat (basic + MK03 damage, guard/counter state machine theo DEC-022, mob telegraph/death/respawn, kill credit theo entityLifeId/deathEventId).
