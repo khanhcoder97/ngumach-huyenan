@@ -947,13 +947,13 @@ public static class ServiceSelfCheck
             skillAgain.Failure is { Code: CombatErrorCodes.CooldownActive, Retryable: true },
             skillAgain.Failure?.Code);
 
-        var staleCast = combatV2.Resolve(
+        var staleV2Cast = combatV2.Resolve(
             combatV2Actor, combatV2Session,
             basicIntent with { InputSequence = 2 }, new string('d', 32));
         Check(
             "combatv2.stale_sequence",
-            staleCast.Failure?.Code == P1ErrorCodes.StaleSequence,
-            staleCast.Failure?.Code);
+            staleV2Cast.Failure?.Code == P1ErrorCodes.StaleSequence,
+            staleV2Cast.Failure?.Code);
 
         var poorActor = NewPlayer("CHR_SELFCHECK_COMBAT_V2_POOR", mp: 0);
         var poorCast = combatV2.Resolve(
