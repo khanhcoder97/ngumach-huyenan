@@ -3,12 +3,12 @@ using Server.Health.Contracts;
 
 namespace Server.Health.Gameplay.Quests;
 
-public sealed class RewardLedgerStore
+public class RewardLedgerStore
 {
     private readonly ConcurrentDictionary<(string CharacterId, string QuestId), RewardLedgerEntry>
         _ledger = new();
 
-    public bool TryRecord(string characterId, string questId, TurnInResult result)
+    public virtual bool TryRecord(string characterId, string questId, TurnInResult result)
     {
         var entry = new RewardLedgerEntry(result);
         return _ledger.TryAdd((characterId, questId), entry);

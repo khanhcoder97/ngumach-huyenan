@@ -8,7 +8,7 @@ namespace Server.Health.Gameplay.Interactions;
 // other characters can still claim the same node.
 public sealed class GatherClaimStore
 {
-    private readonly ConcurrentDictionary<(string CharacterId, string EntityId), DateTimeOffset>
+    private readonly ConcurrentDictionary<(string CharacterId, string EntityId), GatherClaim>
         _claims = new();
 
     private readonly IServerClock _clock;
@@ -18,40 +18,61 @@ public sealed class GatherClaimStore
         _clock = clock;
     }
 
+    // Atomic check-and-set: two parallel claims for the same key cannot both
+    // observe an expired window and both win. Each winning claim is tagged with
+    // a reservation token so a later rollback only releases its own reservation.
     public bool TryClaim(
         string characterId,
         string entityId,
         int respawnSeconds,
-        out DateTimeOffset respawnAtUtc)
+        out DateTimeOffset respawnAtUtc,
+        out string token)
     {
         var key = (characterId, entityId);
         var now = _clock.UtcNow;
+        token = Guid.NewGuid().ToString("N");
+        var candidate = new GatherClaim(now, token);
 
-        if (respawnSeconds <= 0)
-        {
-            respawnAtUtc = DateTimeOffset.MinValue;
-            return _claims.TryAdd(key, now);
-        }
+        var current = _claims.AddOrUpdate(
+            key,
+            addValue: candidate,
+            updateValueFactory: (_, existing) =>
+                respawnSeconds > 0 && now >= existing.ClaimedAt.AddSeconds(respawnSeconds)
+                    ? candidate
+                    : existing);
 
-        if (_claims.TryGetValue(key, out var claimedAt) &&
-            now < claimedAt.AddSeconds(respawnSeconds))
+        if (!ReferenceEquals(current, candidate))
         {
-            respawnAtUtc = claimedAt.AddSeconds(respawnSeconds);
+            token = current.Token;
+            respawnAtUtc = respawnSeconds > 0
+                ? current.ClaimedAt.AddSeconds(respawnSeconds)
+                : DateTimeOffset.MinValue;
             return false;
         }
 
-        _claims[key] = now;
-        respawnAtUtc = now.AddSeconds(respawnSeconds);
+        respawnAtUtc = respawnSeconds > 0
+            ? now.AddSeconds(respawnSeconds)
+            : DateTimeOffset.MinValue;
         return true;
     }
 
     // Undo a claim made by TryClaim; used when a later step of the interaction
     // (e.g. the inventory grant) fails so the failed request does not consume
-    // the node's availability window.
-    public void Release(string characterId, string entityId)
+    // the node's availability window. Compare-and-remove by reservation token:
+    // a failed request can never delete another request's claim.
+    public void Release(string characterId, string entityId, string token)
     {
-        _claims.TryRemove((characterId, entityId), out _);
+        var key = (characterId, entityId);
+        if (!_claims.TryGetValue(key, out var stored) ||
+            !string.Equals(stored.Token, token, StringComparison.Ordinal))
+        {
+            return;
+        }
+
+        _claims.TryRemove(new KeyValuePair<(string, string), GatherClaim>(key, stored));
     }
+
+    private sealed record GatherClaim(DateTimeOffset ClaimedAt, string Token);
 }
 
 public interface IYieldRoller
