@@ -1608,14 +1608,22 @@ public static class ServiceSelfCheck
         overflowActor.X = turnInAnchor.X;
         overflowActor.Y = turnInAnchor.Y;
 
-        var seedOverflow = inventory.Apply(overflowActor, new InventoryMutation
+        // Seed the near-max balance directly in the state store: mutation
+        // validation caps currency deltas at 10^12, so the overflow boundary
+        // can only be reached by writing the stored balance itself.
+        var overflowStateStore = services.GetRequiredService<IInventoryStateStore>();
+        var overflowState = overflowStateStore.GetOrAdd(overflowActor.CharacterId);
+        lock (overflowState.SyncRoot)
         {
-            CurrencyDeltas = [new CurrencyDelta { CurrencyId = "COIN", Amount = long.MaxValue - 10 }]
-        });
+            overflowState.Currencies["COIN"] = long.MaxValue - 10;
+        }
+
+        var seedOverflow = inventory.GetSnapshot(overflowActor.CharacterId);
         Check(
             "turnin.overflow_seed",
-            seedOverflow.IsSuccess,
-            seedOverflow.ErrorCode);
+            seedOverflow.Currencies.Count == 1 &&
+            seedOverflow.Currencies[0].Amount == long.MaxValue - 10,
+            seedOverflow.Currencies.Count.ToString());
 
         var overflowTurnIn = questTurnIn.TurnIn(
             overflowActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
