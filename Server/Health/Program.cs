@@ -121,6 +121,8 @@ builder.Services.AddSingleton<GatherClaimStore>();
 builder.Services.AddSingleton<IInteractionService, InMemoryInteractionService>();
 builder.Services.Configure<P1CombatDamageOptions>(
     builder.Configuration.GetSection(P1CombatDamageOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<P1CombatDamageOptions>>().Value);
 builder.Services.AddSingleton<CombatDamageFeature>();
 builder.Services.AddSingleton<WorldEntityProjectionService>();
 builder.Services.AddHostedService<WorldTickBackgroundService>();
