@@ -6,4 +6,6 @@
 
 CI `client-core-validation` chạy cả fault suite và HTTP với server build thật; không cần cài Unity trên máy người dùng. CI này **không compile Unity-specific transport/UI/presenter** và không chứng minh Android/IL2CPP, font/UI/safe area, input hoặc animation playback. Chỉ máy Unity mới kiểm phần đó.
 
+`--http-dev http://127.0.0.1:5083` kiểm profile gắn nhãn DEV STUB với quest flag ON: nhận từ xa bị chặn, đi bằng move intent tới gần anchor Ly An thật, nhận và replay cùng key chỉ một lần, readback ACTIVE và inventory/MP không tự thay đổi. Không teleport hoặc client tự hoàn thành quest. Scenario này chưa phải bằng chứng topology reviewed/persistence/production quest gate.
+
 Json.NET test dùng13.0.2; Unity dùng package chính thức `com.unity.nuget.newtonsoft-json`3.2.2 (changelog ghi DLL13.0.2 từ3.1). Nguồn: https://docs.unity3d.com/Packages/com.unity.nuget.newtonsoft-json@3.2/manual/index.html và changelog cùng package. Không thêm DLL NuGet trực tiếp vào Assets để tránh duplicate assembly. Package resolution/lock do Unity thực hiện; không ghi giả packages-lock chưa resolve.
