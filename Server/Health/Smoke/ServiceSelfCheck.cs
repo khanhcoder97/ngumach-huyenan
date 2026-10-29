@@ -342,6 +342,154 @@ public static class ServiceSelfCheck
             Near(carplingL6.Defense, 4.76),
             $"{carplingL6.Hp}/{carplingL6.Attack}/{carplingL6.Defense}");
 
+        // DEC-022 guard precision: versioned bundle + pure timeline/oracle.
+        var guardPrecision = enabledCombat.GuardPrecision;
+        combatSkills.TryGet("SK-MK-01", out var guardSkill);
+        Check(
+            "guard.precision_bundle",
+            guardPrecision is
+            {
+                SchemaVersion: 1,
+                BundleId: "DESIGN_P1_GUARD_PRECISION_V1",
+                DecisionId: "DEC-022",
+                Activation: "DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION",
+                TickHz: 20
+            } &&
+            guardPrecision.Guard is
+            {
+                DurationTicks: 8,
+                AngleDegrees: 120,
+                RangeWu: 4.4,
+                DamageReduction: 0.7,
+                MaxConfirmations: 1,
+                SwordIntentGain: 2,
+                SwordIntentCap: 5
+            },
+            $"{guardPrecision.DecisionId} tickHz={guardPrecision.TickHz}");
+
+        var gateBlockedGuard = false;
+        try
+        {
+            _ = combatDamage.GuardPrecision;
+        }
+        catch (InvalidOperationException)
+        {
+            gateBlockedGuard = true;
+        }
+
+        Check("guard.gate_blocks_load", gateBlockedGuard);
+
+        Check(
+            "guard.window_boundary",
+            GuardTimeline.IsGuardActive(100, 8, 100) &&
+            GuardTimeline.IsGuardActive(100, 8, 107) &&
+            !GuardTimeline.IsGuardActive(100, 8, 108) &&
+            GuardTimeline.GuardEndExclusiveTick(100, 8) ==
+            guardPrecision.Oracle.GuardEndExclusiveTick);
+
+        Check(
+            "guard.whiff_window",
+            GuardTimeline.WhiffStartTick(100, 8) == 108 &&
+            GuardTimeline.WhiffEndExclusiveTick(100, 8, 20) == 128 &&
+            !GuardTimeline.IsWhiffActive(100, 8, 20, 107) &&
+            GuardTimeline.IsWhiffActive(100, 8, 20, 108) &&
+            GuardTimeline.IsWhiffActive(100, 8, 20, 127) &&
+            !GuardTimeline.IsWhiffActive(100, 8, 20, 128) &&
+            guardPrecision.Oracle.WhiffEndExclusiveTick == 128);
+
+        var edgeX = 4.4 * Math.Cos(Math.PI / 3);
+        var edgeY = 4.4 * Math.Sin(Math.PI / 3);
+        var wideX = 4.4 * Math.Cos(61 * Math.PI / 180);
+        var wideY = 4.4 * Math.Sin(61 * Math.PI / 180);
+        Check(
+            "guard.cone_boundary",
+            GuardTimeline.InFront(0, 0, 1, 0, edgeX, edgeY, 4.4, 120) &&
+            GuardTimeline.InFront(0, 0, 1, 0, 4.4, 0, 4.4, 120) &&
+            !GuardTimeline.InFront(0, 0, 1, 0, 4.41, 0, 4.4, 120) &&
+            !GuardTimeline.InFront(0, 0, 1, 0, wideX, wideY, 4.4, 120) &&
+            !GuardTimeline.InFront(0, 0, 1, 0, -1, 0, 4.4, 120) &&
+            GuardTimeline.InFront(5, 5, 1, 0, 5, 5, 4.4, 120) &&
+            !GuardTimeline.InFront(0, 0, 0, 0, 1, 0, 4.4, 120));
+
+        Check(
+            "guard.dr_bucket_cap",
+            Near(GuardTimeline.CombineReduction(0.7), 0.7) &&
+            Near(GuardTimeline.CombineReduction(0.7, 0.2), 0.8) &&
+            Near(GuardTimeline.CombineReduction(0.2, 0.2), 0.4) &&
+            Near(guardPrecision.Oracle.GuardAndOtherReductionAtCap, 0.8));
+
+        Check(
+            "guard.oracle_reduction",
+            DamageFormula.FinalDamage(
+                30, oracleMitigation, 1, 1,
+                DamageFormula.DamageReductionMultiplier(0.7)) == 8 &&
+            DamageFormula.FinalDamage(
+                30, oracleMitigation, 1, 1,
+                DamageFormula.DamageReductionMultiplier(0.2)) == 21 &&
+            DamageFormula.FinalDamage(30, oracleMitigation, 1, 1, 1) == 27 &&
+            DamageFormula.FinalDamage(
+                30, oracleMitigation, 1, 1,
+                DamageFormula.DamageReductionMultiplier(0.8)) == 5 &&
+            guardPrecision.Oracle is
+            {
+                GuardFinalDamage: 8,
+                WhiffFinalDamage: 21,
+                OutsideFinalDamage: 27,
+                CappedFinalDamage: 5
+            });
+
+        var guardSkillPve = guardSkill?.Coefficients.Pve ?? 0;
+        var counterRaw = guardPrecision.Oracle.CounterAttack * guardSkillPve;
+        Check(
+            "guard.counter_oracle",
+            guardSkill is not null &&
+            Near(guardPrecision.Oracle.CounterPveCoefficient, guardSkill.Coefficients.Pve) &&
+            DamageFormula.FinalDamage(counterRaw, oracleMitigation, 1, 1, 1) == 32 &&
+            DamageFormula.FinalDamage(
+                counterRaw, oracleMitigation, 1, DamageFormula.CritMultiplier, 1) == 49 &&
+            guardPrecision.Oracle is
+            {
+                CounterNonCritFinalDamage: 32,
+                CounterCritFinalDamage: 49
+            },
+            $"{counterRaw}");
+
+        Check(
+            "guard.skill_timing_matches",
+            guardSkill is not null &&
+            Near(
+                guardSkill.TelegraphSeconds,
+                guardPrecision.Guard.DurationTicks / (double)guardPrecision.TickHz) &&
+            Near(guardSkill.RangeWu!.Value, guardPrecision.Guard.RangeWu) &&
+            Near(guardSkill.AngleDegrees!.Value, guardPrecision.Guard.AngleDegrees));
+
+        var impactA = new ImpactOrderKey(
+            10, 5, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 0, "ENT_A");
+        var impactB = new ImpactOrderKey(
+            10, 5, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 0, "ENT_B");
+        var impactC = new ImpactOrderKey(
+            10, 5, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 1, "ENT_A");
+        var impactD = new ImpactOrderKey(
+            10, 6, "00000000000000000000000000000000", 0, "ENT_A");
+        var impactE = new ImpactOrderKey(
+            11, 3, "00000000000000000000000000000000", 0, "ENT_A");
+        Check(
+            "guard.ordering_deterministic",
+            GuardTimeline.CompareImpacts(impactA, impactB) < 0 &&
+            GuardTimeline.CompareImpacts(impactB, impactC) < 0 &&
+            GuardTimeline.CompareImpacts(impactC, impactD) < 0 &&
+            GuardTimeline.CompareImpacts(impactD, impactE) < 0 &&
+            GuardTimeline.CompareImpacts(impactE, impactA) > 0);
+
+        Check(
+            "guard.confirmation_keys",
+            guardPrecision.Ordering.ConfirmationUniqueKey.SequenceEqual(
+                new[] { "guardCastId" }, StringComparer.Ordinal) &&
+            guardPrecision.Ordering.CounterUniqueKey.SequenceEqual(
+                new[] { "guardCastId", "confirmationEventId" }, StringComparer.Ordinal) &&
+            guardPrecision.Counter is { DelayTicks: 1, MaxTargets: 1 } &&
+            guardPrecision.Whiff is { DurationTicks: 20, DamageReduction: 0.2 });
+
         Check(
             "damage.oracle_raw",
             Near(DamageFormula.RawDamage(20, 0, 1.5, 1, 0), 30),
