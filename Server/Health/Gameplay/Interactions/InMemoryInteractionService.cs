@@ -153,6 +153,15 @@ public sealed class InMemoryInteractionService : IInteractionService
                     "payload.targetId");
             }
 
+            // Claim before granting: a cooldown rejection must not grant items.
+            if (!_claims.TryClaim(
+                    actor.CharacterId, entity.EntityId, entity.RespawnSeconds,
+                    out var respawnAt))
+            {
+                return InteractionOutcome.Rejected(
+                    InteractionErrorCodes.TargetNotAvailable, retryable: false, "payload.targetId");
+            }
+
             var quantity = _rolls.Roll(record.Gather.YieldMin, record.Gather.YieldMax);
             var granted = _inventory.Apply(actor, new InventoryMutation
             {
@@ -168,16 +177,9 @@ public sealed class InMemoryInteractionService : IInteractionService
             });
             if (!granted.IsSuccess)
             {
+                _claims.Release(actor.CharacterId, entity.EntityId);
                 throw new InvalidOperationException(
                     $"Gather grant failed for '{entity.EntityId}': {granted.ErrorCode}");
-            }
-
-            if (!_claims.TryClaim(
-                    actor.CharacterId, entity.EntityId, entity.RespawnSeconds,
-                    out var respawnAt))
-            {
-                return InteractionOutcome.Rejected(
-                    InteractionErrorCodes.TargetNotAvailable, retryable: false, "payload.targetId");
             }
 
             if (entity.RespawnSeconds > 0)

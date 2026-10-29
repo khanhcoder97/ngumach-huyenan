@@ -44,6 +44,14 @@ public sealed class GatherClaimStore
         respawnAtUtc = now.AddSeconds(respawnSeconds);
         return true;
     }
+
+    // Undo a claim made by TryClaim; used when a later step of the interaction
+    // (e.g. the inventory grant) fails so the failed request does not consume
+    // the node's availability window.
+    public void Release(string characterId, string entityId)
+    {
+        _claims.TryRemove((characterId, entityId), out _);
+    }
 }
 
 public interface IYieldRoller
