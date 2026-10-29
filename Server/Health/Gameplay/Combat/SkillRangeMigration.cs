@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Server.Health.Contracts;
 
 namespace Server.Health.Gameplay.Combat;
 
