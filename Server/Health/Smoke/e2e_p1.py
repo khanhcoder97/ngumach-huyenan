@@ -380,7 +380,8 @@ def dev_profile():
             "POST", "/p1/world/interact",
             smoke_p1.interact_envelope(
                 "ENT_MAN_BM_OBJ_BM_PACKAGE_01", character_id=character_id,
-                request_id=f"{7 + slot}" * 32, idempotency_key=f"{9 + slot}" * 32),
+                request_id=("7" if slot == 0 else "8") * 32,
+                idempotency_key=("9" if slot == 0 else "a") * 32),
             {"X-Session-ID": session_id})
         concurrent_outcomes[slot] = (status, body)
 
