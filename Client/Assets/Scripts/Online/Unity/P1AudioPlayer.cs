@@ -11,7 +11,6 @@ namespace NguMach.Client.P1
         private readonly Dictionary<long, Playback> playing = new Dictionary<long, Playback>();
         private readonly Dictionary<string, P1AudioCueAsset> cache = new Dictionary<string, P1AudioCueAsset>();
         private P1AudioPolicy policy;
-        private AudioListener ownedListener;
         private string scope, session, map;
         private double listenerX, listenerY;
         public P1AudioSettings Settings { get; private set; } = new P1AudioSettings();
@@ -28,8 +27,6 @@ namespace NguMach.Client.P1
             try { policy = new P1AudioPolicy(P1AudioCatalog.Parse(text.text), Settings); }
             catch (Exception e) when (e is JsonException || e is ArgumentException)
             { Debug.LogError("P1 audio catalog rejected: " + e.Message); }
-            if (Ready && FindFirstObjectByType<AudioListener>() == null && Camera.main != null)
-                ownedListener = Camera.main.gameObject.AddComponent<AudioListener>();
         }
         public void ObserveWorld(string sessionId, P1World world)
         {
@@ -124,7 +121,6 @@ namespace NguMach.Client.P1
             Stop(new List<long>(playing.Keys));
             if (policy != null) policy.SetScope(null);
             cache.Clear();
-            if (ownedListener != null) Destroy(ownedListener);
         }
     }
 }

@@ -6,6 +6,8 @@ namespace NguMach.Client.P1
 {
     [Serializable] public sealed class P1AudioCatalog
     {
+        internal static readonly JsonSerializerSettings JsonSettings = new JsonSerializerSettings
+        { TypeNameHandling = TypeNameHandling.None, MetadataPropertyHandling = MetadataPropertyHandling.Ignore, MaxDepth = 48, CheckAdditionalContent = true };
         public int schemaVersion;
         public string packId;
         public Dictionary<string, int> voiceCaps;
@@ -13,7 +15,8 @@ namespace NguMach.Client.P1
         public P1AudioCue[] cues;
         public static P1AudioCatalog Parse(string json)
         {
-            var c = JsonConvert.DeserializeObject<P1AudioCatalog>(json);
+            if (json == null || json.Length > 8 * 1024 * 1024) throw new ArgumentException("Invalid audio catalog size");
+            var c = JsonConvert.DeserializeObject<P1AudioCatalog>(json, JsonSettings);
             if (c == null || c.schemaVersion != 1 || c.packId != "NGM_ORIGINAL_AUDIO_V1" || c.cues == null || c.voiceCaps == null || c.warningDucking == null)
                 throw new ArgumentException("Invalid audio catalog");
             var keys = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -82,7 +85,8 @@ namespace NguMach.Client.P1
         {
             try
             {
-                var saved = JsonConvert.DeserializeObject<P1AudioSettings>(json);
+                if (json == null || json.Length > 65536) return new P1AudioSettings();
+                var saved = JsonConvert.DeserializeObject<P1AudioSettings>(json, P1AudioCatalog.JsonSettings);
                 if (saved == null) return new P1AudioSettings();
                 foreach (var bus in new[] { "Master", "Music", "Ambience", "SFX", "UI" }) saved.SetGain(bus, saved.GetGain(bus));
                 return saved;

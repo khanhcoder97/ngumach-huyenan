@@ -50,6 +50,8 @@ public sealed class TitleBootstrap : MonoBehaviour
 
         if (gameCamera.GetComponent<PixelArtCameraBootstrap>() == null)
             gameCamera.gameObject.AddComponent<PixelArtCameraBootstrap>();
+        if (FindFirstObjectByType<AudioListener>() == null)
+            gameCamera.gameObject.AddComponent<AudioListener>();
     }
 
     private void LoadClientConfig()
