@@ -134,7 +134,13 @@ public sealed class InMemoryCombatService : ICombatService
     {
         if (string.Equals(skill.TargetingType, CombatTargetingTypes.Self, StringComparison.Ordinal))
         {
-            target = new CombatTarget(actor.CharacterId, actor.MapId, actor.X, actor.Y, actor.Hp);
+            target = new CombatTarget(
+                actor.CharacterId,
+                actor.MapId,
+                actor.FloorId,
+                actor.X,
+                actor.Y,
+                Alive: actor.Hp > 0);
             failure = null;
             return true;
         }
@@ -161,7 +167,8 @@ public sealed class InMemoryCombatService : ICombatService
             return false;
         }
 
-        if (!string.Equals(target.MapId, actor.MapId, StringComparison.Ordinal))
+        if (!string.Equals(target.MapId, actor.MapId, StringComparison.Ordinal) ||
+            !string.Equals(target.FloorId, actor.FloorId, StringComparison.Ordinal))
         {
             target = null;
             failure = CombatOutcome.Rejected(

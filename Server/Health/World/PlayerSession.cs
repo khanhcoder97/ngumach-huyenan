@@ -33,6 +33,7 @@ public sealed class PlayerSession
     public string SessionId { get; }
     public string CharacterId { get; }
     public string ClassId { get; }
+    public string FloorId { get; set; } = "OVERWORLD";
     public int Level { get; set; } = 1;
     public string MapId { get; set; }
     public DateTimeOffset CreatedAtUtc { get; }

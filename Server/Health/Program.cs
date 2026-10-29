@@ -40,8 +40,11 @@ builder.Services.AddSingleton<ICombatSkillCatalog>(serviceProvider =>
     return CombatSkillCatalogLoader.Load(directory);
 });
 builder.Services.AddSingleton<InMemoryCombatTargetProvider>();
-builder.Services.AddSingleton<ICombatTargetProvider>(
-    serviceProvider => serviceProvider.GetRequiredService<InMemoryCombatTargetProvider>());
+builder.Services.AddSingleton<WorldEntityTargetProvider>();
+builder.Services.AddSingleton<ICombatTargetProvider>(serviceProvider =>
+    new CompositeCombatTargetProvider(
+        serviceProvider.GetRequiredService<WorldEntityTargetProvider>(),
+        serviceProvider.GetRequiredService<InMemoryCombatTargetProvider>()));
 builder.Services.AddSingleton<ICombatService, InMemoryCombatService>();
 builder.Services.AddSingleton<IQuestCatalog>(serviceProvider =>
 {
