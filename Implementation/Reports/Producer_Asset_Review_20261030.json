@@ -1,0 +1,96 @@
+{
+  "kind": "PRODUCER_ACCEPTANCE_REPRODUCTION",
+  "date": "2026-10-30",
+  "scope": "Synthetic Python/HTTP probes; no browser or Unity evidence",
+  "cases": [
+    {
+      "case": "valid_png",
+      "revision": "cf59102fc0600d05266bdf4b44e15a9825c5d711",
+      "expected": "accepted",
+      "actual": "accepted",
+      "passed": true
+    },
+    {
+      "case": "idat_crc_corrupted",
+      "revision": "cf59102fc0600d05266bdf4b44e15a9825c5d711",
+      "expected": "rejected",
+      "actual": "accepted",
+      "passed": false
+    },
+    {
+      "case": "missing_idat_iend",
+      "revision": "cf59102fc0600d05266bdf4b44e15a9825c5d711",
+      "expected": "rejected",
+      "actual": "accepted",
+      "passed": false
+    },
+    {
+      "case": "truncated_idat",
+      "revision": "cf59102fc0600d05266bdf4b44e15a9825c5d711",
+      "expected": "rejected",
+      "actual": "accepted",
+      "passed": false
+    },
+    {
+      "case": "missing_import_fields",
+      "revision": "cf59102fc0600d05266bdf4b44e15a9825c5d711",
+      "expected": "error or explicit unsupported",
+      "actual": {
+        "errors": [],
+        "warnings": []
+      },
+      "passed": false
+    },
+    {
+      "case": "multiline_unity_sprite_rect",
+      "revision": "cf59102fc0600d05266bdf4b44e15a9825c5d711",
+      "expected": "one parsed rect or explicit unsupported",
+      "actual": {
+        "parsed": 0,
+        "errors": [],
+        "warnings": []
+      },
+      "passed": false
+    },
+    {
+      "case": "cli_root_override",
+      "revision": "cf59102fc0600d05266bdf4b44e15a9825c5d711",
+      "expected": "valid external root does not crash",
+      "actual": {
+        "exit": 1,
+        "traceback": true
+      },
+      "passed": false
+    },
+    {
+      "case": "preview_browser_encoded_path",
+      "revision": "2613f1be188b305f41ab58e4eb4240ca646db0e5",
+      "expected": "both image URLs return 200",
+      "actual": {
+        "literal": 200,
+        "browser_encoded": 404
+      },
+      "passed": false
+    },
+    {
+      "case": "preview_real_manifest_asset_id",
+      "revision": "2613f1be188b305f41ab58e4eb4240ca646db0e5",
+      "expected": "layout found by canonical assetId",
+      "actual": {
+        "http": 404
+      },
+      "passed": false
+    },
+    {
+      "case": "preview_root_confinement",
+      "revision": "2613f1be188b305f41ab58e4eb4240ca646db0e5",
+      "expected": "outside configured root is not served",
+      "actual": {
+        "http": 200
+      },
+      "passed": false
+    }
+  ],
+  "passed": 1,
+  "failed": 9
+}

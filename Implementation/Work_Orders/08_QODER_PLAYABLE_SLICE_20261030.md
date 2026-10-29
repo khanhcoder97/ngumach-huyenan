@@ -49,6 +49,8 @@ EXP **đã có nguồn**, không tiếp tục ghi toàn bộ XP chưa được t
 
 ### Q5 — Phản Quang
 
+**Cập nhật owner DEC-022:** precision đã được chốt tại `docs/production/P1_Guard_Precision_20261030_vi.md` và `Implementation/Content/DesignBaselines/p1_guard_precision_v1.json`. Dùng quyết định mới để triển khai versioned guard/counter/status cùng ma trận tests; không cần hỏi lại hướng/thời lượng DR. Đoạn dưới ghi blocker ở thời điểm giao ban đầu, không còn là yêu cầu phải chờ proposal thiết kế trước khi làm domain.
+
 Tách proposal con với case/hit ordering cho guard0,4s, hướng, một counter/cửa, +2KiếmÝ, source chết cùng tick và câu giảm sát thương hụt20% còn thiếu hướng/thời lượng. Không tự điền DR/duration. Phần counter/DR chưa được duyệt phải ghi unsupported; cast accepted hiện có không chứng minh phòng thủ đã có tác dụng. Basic/MK03/mob pipeline và quest tests tiếp tục độc lập. Chỉ emit COUNTER_CONFIRMED sau khi mechanics được duyệt và code thật.
 
 ### Q6 — entity và visibility

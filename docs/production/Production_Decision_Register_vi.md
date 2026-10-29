@@ -58,3 +58,7 @@ Chủ dự án yêu cầu Thăng Long có quy mô kinh thành lớn và pixel ga
 ## DEC-021 — Tăng tầm nhìn hub (2026-10-29)
 
 Chủ dự án yêu cầu tầm nhìn bao quát hơn trong hub. HUB_WIDE target48×27WU với world render960×540,20PPU; STANDARD32×18WU cho combat/competitive. Mở rộng1,5lần mỗi chiều,2,25lần diện tích. HUD giữ size/safe area độc lập;6skill arc DEC019 không đổi. Tài liệu Hub_Wide_Camera_Profile_vi.md quy định device fallback/integer viewport/streaming và nghiệm thu; C# map flow chưa tích hợp thì không tuyên bố camera đã chạy runtime.
+
+## DEC-022 — Precision Phản Quang P1 (2026-10-30)
+
+Codex chốt phần thiết kế còn thiếu theo yêu cầu chủ dự án hoàn thiện và tiếp tục phát triển: `P1_Guard_Precision_20261030_vi.md` và `p1_guard_precision_v1.json` khóa cửa8tick, cone120°/4,4WU, DR70% direct-front, một confirmation/+2KiếmÝ, counter tick kế tiếp và xử lý sống/chết/replay. Đỡ hụt tự nhiên có DR20% trong20tick sau guard, không thưởng buff khi cancel. Phân biệt confirmation với counter impact; CAST_END không kết thúc mọi status. Đây là tuning baseline mới, thay trạng thái chưa chốt DR/counter trong P1 Design Resolution và work order08 §Q5, không tự bật runtime hoặc chứng minh balance. Qoder làm schema/loader/implementation/tests có version/gate; client chỉ nối event đã review. Boss geometry, coin band, gear/topology và Unity/device vẫn cần bằng chứng riêng.
