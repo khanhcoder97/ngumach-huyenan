@@ -1,4 +1,5 @@
 using Server.Health.Contracts;
+using Server.Health.World;
 
 namespace Server.Health.Gameplay.Quests;
 
