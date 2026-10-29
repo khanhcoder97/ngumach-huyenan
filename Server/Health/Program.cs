@@ -124,6 +124,11 @@ builder.Services.Configure<P1CombatDamageOptions>(
 builder.Services.AddSingleton(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<P1CombatDamageOptions>>().Value);
 builder.Services.AddSingleton<CombatDamageFeature>();
+builder.Services.Configure<CombatEventStreamOptions>(
+    builder.Configuration.GetSection(CombatEventStreamOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<CombatEventStreamOptions>>().Value);
+builder.Services.AddSingleton<CombatEventStore>();
 builder.Services.AddSingleton<WorldEntityProjectionService>();
 builder.Services.AddHostedService<WorldTickBackgroundService>();
 
@@ -167,6 +172,13 @@ if (combatDamage.Enabled)
         "bundle (DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION); the QOD-16 proposal " +
         "is not approved yet, so no damage is applied.");
 }
+
+var combatEventStreamOptions = app.Services.GetRequiredService<CombatEventStreamOptions>();
+CombatEventStreamOptionsValidator.Validate(combatEventStreamOptions);
+app.Logger.LogInformation(
+    "Combat event stream: {Capacity} events per session, page {PageSize}.",
+    combatEventStreamOptions.CapacityPerSession,
+    combatEventStreamOptions.MaxPageSize);
 
 var worldEntities = app.Services.GetRequiredService<WorldEntityRegistry>();
 app.Logger.LogInformation(

@@ -132,6 +132,18 @@ Owner/Codex chốt precision còn thiếu của SK-MK-01 tại `docs/production/
 - **Oracle khóa:** raw30/armor10 → thường 27, guard70% 8, whiff20% 21, DR cap80% 5; counter 20×1,8 → 32, crit 49.
 - **Đã thêm trong nhánh này:** `GuardPrecisionLoader` (đọc/gate/validate bundle, fail-fast cả oracle arithmetic), `GuardTimeline` (window/whiff/cone/DR bucket/ordering thuần), `CombatDamageFeature.GuardPrecision` (cùng gate `P1:CombatDamage`, OFF mặc định), self-check 11 test mới, enum `COUNTER_CONFIRMED` trong 2 schema v2. **Chưa** có state machine/HTTP runtime — thuộc QOD-17; gate chỉ bật sau khi có test state machine/concurrency/HTTP và exact SHA.
 
-### 9.3 Triển khai tiếp
+### 9.3 Event store v2 — thiết kế reliable event read
+
+Theo Q3: response command chỉ trả event **đã xảy ra**; impact tương lai append ở tick thật. Store nội bộ (chưa nối HTTP):
+
+- **Cursor:** mỗi session một stream, cursor bắt đầu 1 và tăng đơn điệu theo thứ tự append; event lưu kèm cursor. `nextCursor` = cursor cuối đã cấp (0 nếu chưa có). Client đọc `?cursor=n` nhận các event `> n` theo thứ tự, tối đa `MaxPageSize`.
+- **Bounded buffer:** `P1:CombatEventStream { CapacityPerSession = 512, MaxPageSize = 200 }` — DEV budget, validate `1 ≤ MaxPageSize ≤ CapacityPerSession`. Vượt capacity thì evict cũ nhất và **báo resync thay vì drop im lặng**.
+- **Resync:** `afterCursor < oldest-1` → `BUFFER_OVERFLOW`; `afterCursor > lastCursor` (client cũ hoặc stream đã reset sau reconnect) → `CURSOR_TOO_OLD`; cả hai trả `events: []`, `nextCursor = lastCursor`, client reconcile snapshot rồi đọc tiếp. `RemoveSession` giải phóng buffer và reset cursor cho lifetime mới.
+- **Idempotent append:** cùng `eventId` append lại là no-op trả bản đã lưu (replay command không tạo event mới); idempotency command-level vẫn là guard chính.
+- **Typed invariants:** `eventId`/`castId` hex32, `actorId` CHR_*, `mapInstanceId` `MAP_X#n`; `IMPACT` cần target/lifeId/hitIndex + `hit:true`, `MISS` + `hit:false`, `DEATH` cần target/lifeId, `COUNTER_CONFIRMED` không mang `result`; result damage không âm và `absorbed + hpDamage ≤ amount`.
+- **Concurrency:** lock theo stream khi append/đọc — cursor không trùng, đọc không thấy event chen giữa; self-check barrier 4 thread × 25 append → 100 cursor 1..100 liên tục.
+- **Không thuộc phạm vi:** endpoint `/p1/v2/events` (chờ QOD-17 tick engine), replay audio/VFX (reconcile silent), persistence (PostgreSQL proposal QOD-20).
+
+### 9.4 Triển khai tiếp
 
 Event store (bounded buffer, cursor, resync) + AOI projection có hysteresis + endpoint v2 opt-in (`P1:CombatV2:Enabled` OFF mặc định; dev profile bật) + e2e dev mở rộng; sau đó QOD-17 tick combat (basic + MK03 damage, guard/counter state machine theo DEC-022, mob telegraph/death/respawn, kill credit theo entityLifeId/deathEventId).
