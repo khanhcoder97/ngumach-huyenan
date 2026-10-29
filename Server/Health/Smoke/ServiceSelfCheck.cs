@@ -1050,20 +1050,20 @@ public static class ServiceSelfCheck
         // Progress dedupe scope: unique(actor, quest, objective, event-or-record)
         // — state is per character + quest, so the objective scope keeps two
         // valid objectives that reference the same record independent.
-        static QuestDefinition MakeSyntheticQuest(
+        if (!questCatalog.TryGet("P00-01", out var dedupeBaseQuest))
+        {
+            throw new InvalidOperationException("P00-01 must exist for the dedupe self-check.");
+        }
+
+        QuestDefinition MakeSyntheticQuest(
             string questId, params QuestObjectiveDefinition[] objectives) =>
-            new(
-                questId,
-                QuestTypes.Side,
-                "NPC_LYAN",
-                1,
-                10,
-                [],
-                objectives,
-                QuestStepIds.FromObjectiveId(objectives[0].ObjectiveId),
-                "NPC_TA_VAN_KHANH",
-                new QuestRewards([], [], "LEVEL_BAND_BASE"),
-                []);
+            dedupeBaseQuest with
+            {
+                QuestId = questId,
+                Objectives = objectives,
+                InitialStepId = QuestStepIds.FromObjectiveId(objectives[0].ObjectiveId),
+                PrerequisiteQuestIds = []
+            };
 
         var syntheticDefinitions = new Dictionary<string, QuestDefinition>(StringComparer.Ordinal)
         {
