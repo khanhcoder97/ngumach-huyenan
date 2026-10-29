@@ -71,3 +71,11 @@ Xem proposal `Implementation/Work_Orders/Proposals/QOD-12_CombatCastEvent_vi.md`
 - Replay cùng key + cùng payload trả lại đúng outcome đã lưu **trước** stale-sequence guard (không trừ MP/cooldown/revision lần hai); cùng key khác payload → `409 idempotency_conflict`.
 - Chỉ accepted outcome được lưu; cast bị từ chối không tạo entry và không phát impact giả.
 - Test mới: replay giữ nguyên MP 38/revision 2 và cùng event; conflict khi đổi `inputSequence` với cùng key. Tổng self-check 82.
+
+
+## 10. QOD-12d — mob lifecycle (implemented, fixture)
+
+- `MobLifecycleService` (Gameplay/Combat): tick-driven states `IDLE → AGGRO → CHASE → ATTACK → RETURN → DEAD`; target phải còn sống, cùng map/floor, trong `AggroRadiusWu`, LOS không bị chặn; chase dừng ở `LeashRadiusWu` tính từ home của target; attack chỉ ghi lifecycle event theo `AttackCooldownSeconds`, **không damage**.
+- Mọi bán kính/tốc độ nằm trong `P1:MobBehavior` và là **DEV FIXTURE có nhãn** (6/12/1,2/2s/2 WU/s), mặc định `Enabled=false`; không ghi vào content canonical, không có tick loop nền.
+- Test self-check: aggro, attack + attack event, cooldown chặn event thứ hai, LOS tường chặn aggro, leash → RETURN, khác floor bị bỏ qua. Tổng 88 assertion.
+- Chưa có: patrol path dữ liệu thật, respawn AI tick nền, damage/HP, loot; các phần này vẫn cần numeric canonical hoặc fixture versioned riêng.
