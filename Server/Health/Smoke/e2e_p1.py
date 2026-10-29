@@ -367,7 +367,7 @@ def dev_profile():
             "POST", "/p1/quests/accept",
             smoke_p1.quest_accept_envelope(
                 "P00-01", "NPC_LYAN", character_id=character_id,
-                request_id=f"{5 + index}" * 16, idempotency_key=f"{3 + index}" * 16),
+                request_id=f"{5 + index}" * 32, idempotency_key=f"{3 + index}" * 32),
             {"X-Session-ID": session_id})
         smoke_p1.check(
             status == 200, f"concurrent accept {suffix} returned {status}: {body}")
@@ -380,7 +380,7 @@ def dev_profile():
             "POST", "/p1/world/interact",
             smoke_p1.interact_envelope(
                 "ENT_MAN_BM_OBJ_BM_PACKAGE_01", character_id=character_id,
-                request_id=f"{7 + slot}" * 16, idempotency_key=f"{9 + slot}" * 16),
+                request_id=f"{7 + slot}" * 32, idempotency_key=f"{9 + slot}" * 32),
             {"X-Session-ID": session_id})
         concurrent_outcomes[slot] = (status, body)
 
