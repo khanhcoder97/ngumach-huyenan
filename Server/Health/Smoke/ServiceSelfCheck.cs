@@ -629,12 +629,12 @@ public static class ServiceSelfCheck
         var leashClock = new ManualServerClock(
             new DateTimeOffset(2026, 10, 29, 3, 0, 0, TimeSpan.Zero));
         var leashRegistry = new WorldEntityRegistry(
-            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_LEASH_MOB", 40, 0)]),
+            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_LEASH_MOB", 32, 0)]),
             leashClock);
         var leashAi = new MobLifecycleService(
             leashRegistry, geometry, leashOptions, leashClock);
         var farPrey = NewPlayer("CHR_SELFCHECK_FAR_PREY");
-        farPrey.X = 55;
+        farPrey.X = 44.5;
         farPrey.Y = 0;
         leashAi.Tick([farPrey]);
         Check(
