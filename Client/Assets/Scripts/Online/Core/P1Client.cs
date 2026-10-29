@@ -23,6 +23,9 @@ namespace NguMach.Client.P1
         private readonly HashSet<string> seenEvents = new HashSet<string>(StringComparer.Ordinal);
         private readonly Queue<string> seenEventOrder = new Queue<string>();
         private readonly Dictionary<string, string> cooldowns = new Dictionary<string, string>();
+        private readonly Queue<P1AudioNotice> audioNotices = new Queue<P1AudioNotice>();
+        public P1AudioNotice[] DrainAudioNotices()
+        { var result = audioNotices.ToArray(); audioNotices.Clear(); return result; }
 
         public P1ConnectionState State { get; private set; } = P1ConnectionState.Disconnected;
         public string SessionId { get; private set; }
@@ -58,6 +61,7 @@ namespace NguMach.Client.P1
                 sequence = 0; pending = null; Quests = new P1Quest[0]; Inventory = null;
                 LastCombatEvent = null; seenEvents.Clear(); seenEventOrder.Clear();
                 cooldowns.Clear();
+                audioNotices.Clear();
                 return Ready();
             }
             finally { lane.Release(); }
@@ -222,6 +226,12 @@ namespace NguMach.Client.P1
                 if (r.result != null && r.result.questId != P1Wire.Decode<P1Envelope<P1QuestAccept>>(pending.Body).payload.questId) return Uncertain(reply.CorrelationId);
                 if (r.result != null && ValidQuest(r.result)) ApplyQuest(r.result); // Reject can carry authoritative current state.
                 if (Good(reply, r) && !ValidQuest(r.result)) return Uncertain(reply.CorrelationId);
+                if (Good(reply, r))
+                {
+                    var accepted = P1Wire.Decode<P1Envelope<P1QuestAccept>>(pending.Body);
+                    if (audioNotices.Count >= 64) audioNotices.Dequeue();
+                    audioNotices.Enqueue(new P1AudioNotice(accepted.idempotencyKey, "SFX/QUEST/accepted", "QUEST_ACCEPT_COMMITTED"));
+                }
                 pending = null; State = P1ConnectionState.Ready;
                 return Good(reply, r) ? Ready() : Fail(Error(reply, r), reply.CorrelationId);
             }
@@ -289,7 +299,7 @@ namespace NguMach.Client.P1
         private P1Result Fail(string error, string correlation = null)
         { LastError = error; LastCorrelationId = correlation; return P1Result.Fail(error, correlation); }
         private void ClearSession(P1ConnectionState state)
-        { SessionId = null; World = null; Quests = new P1Quest[0]; Inventory = null; pending = null; LastCombatEvent = null; cooldowns.Clear(); State = state; }
+        { SessionId = null; World = null; Quests = new P1Quest[0]; Inventory = null; pending = null; LastCombatEvent = null; cooldowns.Clear(); audioNotices.Clear(); State = state; }
         private P1Result Expire() { ClearSession(P1ConnectionState.Expired); return Fail("session_not_found"); }
     }
 }

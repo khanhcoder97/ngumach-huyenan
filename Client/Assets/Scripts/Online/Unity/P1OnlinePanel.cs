@@ -14,10 +14,11 @@ namespace NguMach.Client.P1
     {
         private UIDocument document;
         private P1Client client;
+        private P1AudioPlayer audioPlayer;
         private CancellationTokenSource life;
         private Action returnToTitle;
         private Label status, vitals, location, message, detailText, targetText;
-        private VisualElement details, safeRoot, wheel;
+        private VisualElement details, safeRoot, wheel, audioPanel;
         private Button accept, retry, sync, leave, attack;
         private readonly Button[] skills = new Button[6];
         private Vector2 touchMove, keyboardMove;
@@ -43,6 +44,7 @@ namespace NguMach.Client.P1
             try
             {
                 client = new P1Client(new P1UnityTransport(serverOrigin, timeoutSeconds));
+                audioPlayer = gameObject.AddComponent<P1AudioPlayer>(); audioPlayer.Initialize();
                 Build();
                 _ = StartOnline();
             }
@@ -74,7 +76,7 @@ namespace NguMach.Client.P1
                 {
                     if (!actionBusy && client.SessionId != null)
                     {
-                        Vector2 movement = details.style.display.value == DisplayStyle.Flex ? Vector2.zero : touchHeld ? touchMove : keyboardMove;
+                        Vector2 movement = details.style.display.value == DisplayStyle.Flex || audioPanel.style.display.value == DisplayStyle.Flex ? Vector2.zero : touchHeld ? touchMove : keyboardMove;
                         if (client.State == P1ConnectionState.Ready && movement.sqrMagnitude > 0.001f)
                         {
                             Show(await client.MoveAsync(movement.x, movement.y, life.Token));
@@ -105,10 +107,13 @@ namespace NguMach.Client.P1
             if (client == null || closing) return;
             keyboardMove = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
             if (presenter != null && !touchHeld && keyboardMove.sqrMagnitude < 0.001f) presenter.SetIdle();
-            if (Input.GetKeyDown(KeyCode.Alpha1)) Cast(0);
-            if (Input.GetKeyDown(KeyCode.Alpha2)) Cast(1);
-            if (Input.GetKeyDown(KeyCode.Alpha3)) Cast(2);
-            if (Input.GetKeyDown(KeyCode.F)) AcceptQuest();
+            if (audioPanel.style.display.value != DisplayStyle.Flex)
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha1)) Cast(0);
+                if (Input.GetKeyDown(KeyCode.Alpha2)) Cast(1);
+                if (Input.GetKeyDown(KeyCode.Alpha3)) Cast(2);
+                if (Input.GetKeyDown(KeyCode.F)) AcceptQuest();
+            }
             RenderCooldowns();
         }
         private void OnApplicationFocus(bool focused) { if (!focused) { keyboardMove = touchMove = Vector2.zero; touchHeld = false; } }
@@ -116,7 +121,7 @@ namespace NguMach.Client.P1
         {
             if (actionBusy || closing) return;
             actionBusy = true; touchHeld = false; touchMove = keyboardMove = Vector2.zero; Render();
-            try { Show(await action()); if (!closing) ApplyWorld(); }
+            try { Show(await action(), true); if (!closing) ApplyWorld(); }
             catch (OperationCanceledException) { }
             catch (Exception e) { Debug.LogException(e); if (!closing) message.text = P1Copy.Get("error.unexpected"); }
             finally { actionBusy = false; if (!closing) Render(); }
@@ -131,13 +136,17 @@ namespace NguMach.Client.P1
             if (slot >= 3 || !skills[slot].enabledSelf) return;
             var aim = presenter == null ? Vector2.down : presenter.Facing;
             string target = slot == 0 ? null : selectedTarget;
+            audioPlayer.LocalUi("SFX/UI/confirm");
             RunAction(() => client.CastAsync("SK-MK-0" + (slot + 1), target, aim.x, aim.y, life.Token));
         }
-        private void Show(P1Result result)
+        private void Show(P1Result result, bool userAction = false)
         {
             if (closing || message == null) return;
+            audioPlayer.ObserveWorld(client.SessionId, client.World);
+            foreach (var notice in client.DrainAudioNotices()) audioPlayer.ConfirmedNotice(notice);
             if (!result.Success)
             {
+                if (userAction) audioPlayer.LocalUi("SFX/UI/error");
                 string copy = P1Copy.Get("error." + result.Code);
                 message.text = copy.StartsWith("error.", StringComparison.Ordinal) ? P1Copy.Get("error.generic") : copy;
                 message.tooltip = result.Code + (result.CorrelationId == null ? "" : " · " + result.CorrelationId);
@@ -182,17 +191,30 @@ namespace NguMach.Client.P1
             status = Text("connection.Connecting"); vitals = new Label(); location = new Label();
             statusPanel.Add(status); statusPanel.Add(vitals); statusPanel.Add(location); safeRoot.Add(statusPanel);
             var toolbar = new VisualElement(); toolbar.style.flexDirection = FlexDirection.Row; toolbar.style.flexWrap = Wrap.Wrap;
-            toolbar.Add(ActionButton("ui.journal", () => ToggleDetails("quests")));
-            toolbar.Add(ActionButton("ui.bag", () => ToggleDetails("inventory")));
+            toolbar.Add(ActionButton("ui.journal", () => ToggleDetails("quests"), null));
+            toolbar.Add(ActionButton("ui.bag", () => ToggleDetails("inventory"), null));
+            toolbar.Add(ActionButton("ui.audio", ToggleAudio, null));
             sync = ActionButton("ui.sync", () => RunAction(async () => { var r = await client.ReadWorldAsync(life.Token); if (!r.Success) return r;
                 r = await client.ReadQuestsAsync(life.Token); return r.Success ? await client.ReadInventoryAsync(life.Token) : r; })); toolbar.Add(sync);
             retry = ActionButton("ui.retry", () => RunAction(() => client.RetryPendingAsync(life.Token))); toolbar.Add(retry);
-            leave = ActionButton("ui.leave", Close); toolbar.Add(leave); statusPanel.Add(toolbar);
+            leave = ActionButton("ui.leave", Close, null); toolbar.Add(leave); statusPanel.Add(toolbar);
             message = new Label(P1Copy.Get("ui.prototype")) { enableRichText = false }; message.style.whiteSpace = WhiteSpace.Normal; statusPanel.Add(message);
             details = Panel(); details.style.left = 10; details.style.top = 180; details.style.width = 300; details.style.display = DisplayStyle.None;
             var scroll = new ScrollView(); detailText = new Label { enableRichText = false }; detailText.style.whiteSpace = WhiteSpace.Normal; scroll.Add(detailText); details.Add(scroll);
             accept = ActionButton("quest.accept", AcceptQuest); details.Add(accept); safeRoot.Add(details);
-            layoutChanged = evt => { details.style.maxHeight = Mathf.Max(60, evt.newRect.height - 200); UpdateSafeArea(); };
+            audioPanel = Panel(); audioPanel.style.left = 10; audioPanel.style.top = 180; audioPanel.style.width = 300; audioPanel.style.display = DisplayStyle.None;
+            var audioScroll = new ScrollView();
+            audioScroll.Add(Text(audioPlayer.Ready ? "audio.ready" : "audio.unavailable"));
+            var mute = new Toggle(P1Copy.Get("audio.mute")); mute.SetValueWithoutNotify(audioPlayer.Settings.muted);
+            mute.style.minHeight = 48; mute.RegisterValueChangedCallback(ev => audioPlayer.Settings.muted = ev.newValue); audioScroll.Add(mute);
+            foreach (string bus in new[] { "Master", "Music", "Ambience", "SFX", "UI" })
+            {
+                string selectedBus = bus;
+                var slider = new Slider(P1Copy.Get("audio.bus." + bus), 0, 100); slider.value = (float)(audioPlayer.Settings.GetGain(bus) * 100);
+                slider.style.minHeight = 48; slider.RegisterValueChangedCallback(ev => audioPlayer.Settings.SetGain(selectedBus, ev.newValue / 100.0)); audioScroll.Add(slider);
+            }
+            audioScroll.Add(ActionButton("audio.close", ToggleAudio, null)); audioPanel.Add(audioScroll); safeRoot.Add(audioPanel);
+            layoutChanged = evt => { details.style.maxHeight = audioPanel.style.maxHeight = Mathf.Max(60, evt.newRect.height - 200); UpdateSafeArea(); };
             root.RegisterCallback(layoutChanged);
             var movement = Panel(); movement.style.left = 10; movement.style.bottom = 10; movement.style.width = 168; movement.style.height = 168;
             var axes = new[] { new Vector2(-1,1), Vector2.up, new Vector2(1,1), Vector2.left, Vector2.zero, Vector2.right, new Vector2(-1,-1), Vector2.down, new Vector2(1,-1) };
@@ -237,7 +259,8 @@ namespace NguMach.Client.P1
             return p;
         }
         private static Label Text(string key) { return new Label(P1Copy.Get(key)) { enableRichText = false }; }
-        private static Button ActionButton(string key, Action action) { var b = new Button(action) { text = P1Copy.Get(key) }; b.style.minHeight = 48; return b; }
+        private Button ActionButton(string key, Action action, string cue = "SFX/UI/confirm")
+        { var b = new Button(() => { if (cue != null) audioPlayer.LocalUi(cue); action(); }) { text = P1Copy.Get(key) }; b.style.minHeight = 48; return b; }
         private static void Circle(Button b, float x, float y, float size)
         {
             b.style.position = Position.Absolute; b.style.left = Mathf.Round(x - size/2); b.style.top = Mathf.Round(y - size/2);
@@ -245,7 +268,18 @@ namespace NguMach.Client.P1
             b.style.borderTopLeftRadius = size/2; b.style.borderTopRightRadius = size/2; b.style.borderBottomLeftRadius = size/2; b.style.borderBottomRightRadius = size/2;
         }
         private void ToggleDetails(string mode)
-        { details.style.display = details.style.display.value == DisplayStyle.Flex && detailMode == mode ? DisplayStyle.None : DisplayStyle.Flex; detailMode = mode; touchHeld = false; Render(); }
+        {
+            bool open = !(details.style.display.value == DisplayStyle.Flex && detailMode == mode);
+            details.style.display = open ? DisplayStyle.Flex : DisplayStyle.None; audioPanel.style.display = DisplayStyle.None;
+            audioPlayer.LocalUi(open ? "SFX/UI/panel_open" : "SFX/UI/panel_close"); audioPlayer.SaveSettings();
+            detailMode = mode; touchHeld = false; Render();
+        }
+        private void ToggleAudio()
+        {
+            bool open = audioPanel.style.display.value != DisplayStyle.Flex;
+            audioPanel.style.display = open ? DisplayStyle.Flex : DisplayStyle.None; details.style.display = DisplayStyle.None;
+            audioPlayer.LocalUi(open ? "SFX/UI/panel_open" : "SFX/UI/panel_close"); audioPlayer.SaveSettings(); touchHeld = false;
+        }
         private void Render()
         {
             if (closing || client == null || status == null) return;
@@ -308,6 +342,7 @@ namespace NguMach.Client.P1
         {
             if (closing) return;
             closing = true; if (life != null) life.Cancel();
+            if (audioPlayer != null) { audioPlayer.enabled = false; Destroy(audioPlayer); }
             if (presenter != null) { presenter.Release(); Destroy(presenter); }
             if (proxy != null) Destroy(proxy); if (proxySprite != null) Destroy(proxySprite); if (proxyTexture != null) Destroy(proxyTexture);
             if (cameraTransform != null) cameraTransform.position = originalCameraPosition;
@@ -317,6 +352,7 @@ namespace NguMach.Client.P1
         private void OnDestroy()
         {
             closing = true;
+            if (audioPlayer != null) { audioPlayer.enabled = false; Destroy(audioPlayer); }
             if (document != null && layoutChanged != null) document.rootVisualElement.UnregisterCallback(layoutChanged);
             if (life != null) { life.Cancel(); life.Dispose(); }
             if (presenter != null) Destroy(presenter);

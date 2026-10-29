@@ -168,6 +168,25 @@ internal static class Program
             waiting.SetResult(Reply(World(2, 19))); await first; await second;
             Check(c.World.revision == 3 && P1Wire.Decode<P1Envelope<P1Move>>(t.Requests.Last().Body).payload.inputSequence == 2, "serialized shared sequence");
         }
+        {
+            var t = new Script(); var c = await Connected(t);
+            t.Add(Reply(new[] { Quest(2, "ACTIVE") })); await c.ReadQuestsAsync(None);
+            Check(c.DrainAudioNotices().Length == 0, "initial/reconnect quest readback stays silent");
+            t.Add(new P1HttpReply { StatusCode = 0 });
+            await c.AcceptQuestAsync("P00-01", "NPC_LYAN", None);
+            Check(c.DrainAudioNotices().Length == 0, "ambiguous accept does not emit success sound");
+            t.Add(Reply(Quest(2, "ACTIVE"))); await c.RetryPendingAsync(None);
+            var notices = c.DrainAudioNotices();
+            Check(notices.Length == 1 && notices[0].cueKey == "SFX/QUEST/accepted", "confirmed retry emits one quest acceptance");
+            Check(c.DrainAudioNotices().Length == 0, "notice drains once");
+            await c.RetryPendingAsync(None); Check(c.DrainAudioNotices().Length == 0, "no pending command cannot replay sound");
+            t.Add(CastReply()); t.Add(Reply(World(2)));
+            await c.CastAsync("SK-MK-01", null, 0, -1, None);
+            Check(c.DrainAudioNotices().Length == 0, "combat.effect is not counter audio");
+            t.Add(Reply(Quest(2, "ACTIVE"), 409, "invalid_transition"));
+            await c.AcceptQuestAsync("P00-01", "NPC_LYAN", None);
+            Check(c.DrainAudioNotices().Length == 0, "rejected accept with active-state readback stays silent");
+        }
         Console.WriteLine("PASS P1 core assertions: " + assertions);
     }
 
@@ -244,7 +263,7 @@ internal static class Program
         {
             if (args.Length == 2 && args[0] == "--http") await HttpChecks(args[1]);
             else if (args.Length == 2 && args[0] == "--http-dev") await HttpDevQuestChecks(args[1]);
-            else await RunCases();
+            else { await RunCases(); AudioChecks.Run(); }
             return 0;
         }
         catch (Exception e) { Console.Error.WriteLine(e); return 1; }
