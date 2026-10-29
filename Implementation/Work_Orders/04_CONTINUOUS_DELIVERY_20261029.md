@@ -1,5 +1,7 @@
 # Chương trình phát triển liên tục — 2026-10-29
 
+Cập nhật thứ tự và các gói lớn sau kiểm tiến độ: đọc `07_NEXT_LARGE_MILESTONES_20261029.md` cùng work order này. Review transaction Qoder, migration OpenCode và gate art/Unity Muse vẫn có hiệu lực; chưa có evidence thì chưa được gọi là hoàn tất.
+
 Yêu cầu chủ dự án: giao tác vụ lớn, không kết thúc công việc sau một nhiệm vụ nhỏ. Văn bản này bổ sung và ưu tiên hơn backlog P1 cũ trong work order 00–03; không chứng nhận game đã hoàn thiện.
 
 ## Trách nhiệm và đích bàn giao
