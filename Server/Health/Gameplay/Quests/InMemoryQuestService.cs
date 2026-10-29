@@ -232,8 +232,12 @@ public sealed class InMemoryQuestService : IQuestService
         objective.Type switch
         {
             // Kill counts repeat kills of the same record; dedupe by event instead.
-            QuestObjectiveTypes.Kill => string.Concat("E:", eventId),
-            _ => string.Concat("R:", recordId)
+            QuestObjectiveTypes.Kill =>
+                string.Concat("E:", objective.ObjectiveId, ":", eventId),
+            // Production Rules §5: unique(actor, quest, objective, record).
+            // State is already per character + quest; the objective scope keeps
+            // two valid objectives that reference the same record independent.
+            _ => string.Concat("R:", objective.ObjectiveId, ":", recordId)
         };
 
     public QuestOutcome TurnIn(PlayerSession actor, string questId)
