@@ -3,6 +3,8 @@
 
 > Điều phối hiện hành: `Development_Execution_Board_vi.md` và `Codex_Ownership_Audit_20261029_vi.md`. Các bảng catalogue bên dưới mô tả baseline, không thay quyết định mới: Thăng Long v2 là2048×1536WU/12phường design-only (runtime cũ chưa migrate); Map Atlas cũ có9layout nhưng registry có46mapID; `completion_v1` và source map P1 nêu số liệu đã thiết kế nhưng chưa export. Không dùng số trang/record để kết luận game đã chạy đủ.
 
+> Audit mới nhất: [Production_Content_Audit_20261030_vi.md](Production_Content_Audit_20261030_vi.md). Precision bổ sung: [Runtime_State_and_Catalog_Precision_vi.md](Runtime_State_and_Catalog_Precision_vi.md), DEC-023. Đã có bản chơi browser Bến Mưa cục bộ,230lời đã biên tập và gói âm thanh195cue/541clip ứng viên; chưa đồng nghĩa đã qua P1 online hoặc phát hành. Audit cũ, bảng điều phối và các mục mở đầu/audio bên dưới có nội dung lịch sử cần đọc cùng nguồn mới.
+
 ### 1. Mục đích
 
 Bộ tài liệu chuyển ý tưởng MMORPG 2D nhìn từ trên thành đặc tả có thể chia việc cho đội gameplay, narrative, UI/UX, 2D art, level design, backend và QA. Tên Ngũ Mạch: Huyền Ấn hiện là tên làm việc, chưa tra cứu hoặc đăng ký thương hiệu.
@@ -21,8 +23,8 @@ Bộ tài liệu chuyển ý tưởng MMORPG 2D nhìn từ trên thành đặc t
 | Gameplay_HUD_Overlay_Spec_vi.md | HUD gameplay chi tiết: status bars, minimap, quest tracker, joystick, skill arc, responsive states, data contract và DOM layer | gameplay UI/client |
 | Settings_Overlay_Spec_vi.md | modal cài đặt: responsive grid, input/graphics/audio/HUD, tài khoản, preview/rollback, accessibility và HTML structure | UI/client/account |
 | Forge_Crafting_Overlay_Spec_vi.md | modal lò rèn: catalog/recipe, cường hóa +0…+15, khảm, tinh luyện, sửa chữa, phân giải, nguyên liệu và giao dịch | item UX/gameplay/client/backend |
-| Compendium_Encyclopedia_Overlay_Spec_vi.md | Bách khoa Lạc Châu: catalog 2.532 record dự kiến, search/filter, khám phá/spoiler, inspector, nguồn sở hữu, điều hướng và sync | UI/content/client/backend |
-| Thang_Long_Thanh_Capital_Map_Spec_vi.md | thủ phủ 900×96 WU, 9 khu phố, 17 NPC dịch vụ, portal route, story C1-06, giải PvP Long Môn | level design/world/economy/PvP/UI |
+| Compendium_Encyclopedia_Overlay_Spec_vi.md | Bách khoa Lạc Châu: catalog 2.533 record dự kiến, search/filter, khám phá/spoiler, inspector, nguồn sở hữu, điều hướng và sync | UI/content/client/backend |
+| Thang_Long_Thanh_Capital_Map_Spec_vi.md | layout cũ 900×96 WU; target v2 2048×1536WU/12phường design-only, NPC dịch vụ, portal route, story C1-06, giải PvP Long Môn | level design/world/economy/PvP/UI |
 | Appearance_Buff_NPC_Service_Overlay_Spec_vi.md | phòng thay đồ 2D, ngoại trang, chỉnh diện mạo, buff/auto-use, lệnh boss giới hạn và mạng dịch vụ NPC | UI/item/content/client/backend |
 | Character_Equipment_Inventory_Spec_vi.md | class/character, stat, gear slots, quality, item schema, inventory/craft | gameplay/economy |
 | Map_Production_Atlas_vi.md | 9 map, tọa độ blockout, props, NPC, spawn groups, portals, respawn | level design/world art |
@@ -52,8 +54,8 @@ Bộ tài liệu chuyển ý tưởng MMORPG 2D nhìn từ trên thành đặc t
 | Pixel_Art_Production_Standard_vi.md | chuẩn pixel art toàn dự án: logical canvas, PPU, camera/import, spritesheets, VFX/UI và acceptance | art pipeline/client integration |
 | MMORPG_Functional_Spec_vi.md | ma trận chức năng account, world, combat, quest, economy, social, PvP, safety/ops | gameplay/backend/product |
 | Item_Catalog_and_Set_Bible_vi.md | rarity, stat pools, 35 bộ giáp, dòng ẩn, công thức scaling và quy tắc item | item design/balance |
-| Item_Master_Catalog_vi.csv | 555 item template rows, trong đó 420 gear base templates và 135 item cố định | data import |
-| Item_Rarity_Variant_Catalog_vi.csv | 2.235 dòng, trong đó 2.100 gear rarity variants có ID riêng | data import/content QA |
+| Item_Master_Catalog_vi.csv | 556 item template rows, trong đó 420 gear base templates và 136 item cố định | data import |
+| Item_Rarity_Variant_Catalog_vi.csv | 2.236 dòng, trong đó 2.100 gear rarity variants có ID riêng | data import/content QA |
 | AI_Agent_Implementation_Plan_vi.md | milestones, module boundaries, handoff prompt, integration gates | engineering |
 | Development_Execution_Board_vi.md | phân vai Codex/OpenCode, thứ tự P0–P6, phụ thuộc art/code, trạng thái và blockers | production/engineering/art |
 
@@ -187,11 +189,11 @@ Capital_Scale_and_Simple_Pixel_v2_vi.md quy định extent12phường/chunk/migr
 
 - `Codex_Ownership_Audit_20261029_vi.md`:12hạng mục còn trống, ranh giới Codex/baagent, ưu tiên và bằng chứng chưa có.
 - `P1_Design_Resolution_20261029_vi.md`:source map numeric, ví dụ kiểm công thức, rangeMK03 và semantic cast/VFX; không tự kích hoạt runtime.
-- `Opening_Dialogue_Editorial_Notes_vi.md`:15dòng mở đầu đã line-edit, giữ graph/guards/keys và reveal gates,215dòng còn baseline.
+- `Opening_Dialogue_Editorial_Notes_vi.md`:15dòng mở đầu đã line-edit, giữ graph/guards/keys và reveal gates,trạng thái lịch sử của đợt đầu; hiện230/230dòng đã line-edit theo Full_Dialogue_Editorial_Notes_vi.md.
 - `Reviews/Opening_Editorial_Check_20261029.json`:bằng chứng diff230hàng/15text-status edits/không đổi field logic; chưa là Unity subtitle/voice QA.
 
 ### Âm thanh gameplay v1 — 2026-10-29
 
 - `Audio_Production_Direction_v1_vi.md`:bản sắc5phái, cảnh báo3đòn Mãng Cốt, mixer/voice budget, semantic trigger, dedupe/loop/cancel, khả năng nghe và handoff.
-- `../../Implementation/Content/DesignBaselines/audio_cues_v1.json`:63cue thiết kế (30skill/33shared), tất cả clip MISSING; không tự vào runtime hoặc manifest sprite.
+- `../../Implementation/Content/DesignBaselines/audio_cues_v1.json`:63cue thiết kế gốc (30skill/33shared), trạng thái MISSING ở baseline lưu lịch sử; sản phẩm ứng viên hiện tại là195cue/541clip trong game_audio_v1.json, xem Audio_Pack_V1_Delivery_vi.md. Không lấy trạng thái kế hoạch làm tình trạng gói âm thanh thật.
 - `../../Tools/ProductionReview/validate_audio_baseline.py`:kiểm cueKey/reference/budget/status, không nghiệm thu clip/nhạc/license/engine.

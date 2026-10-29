@@ -140,7 +140,7 @@ HP/MP potion dùng `POTION_RECOVERY` shared cooldown 8s theo catalog. Cleanse/Re
 
 Quick strip có 4 ô, đồng bộ HUD và panel này; kéo card vào ô hoặc chọn `Ghim nhanh`. Auto-use là opt-in theo group/item, trạng thái mặc định Off, có threshold và context:
 
-- HP/MP potion (tùy chọn riêng): auto ở ≤35% HP hoặc ≤20% MP, ưu tiên potion phù hợp band/cấp có sẵn; dùng theo cooldown server. Thông báo toast nhỏ và nút Undo 2s nếu server chưa commit.
+- HP/MP potion (tùy chọn riêng): auto ở ≤35% HP hoặc ≤20% MP, ưu tiên potion phù hợp band/cấp có sẵn; dùng theo cooldown server. Toast có `Tắt tự dùng` cho lần kế tiếp; không trì hoãn potion hoặc hứa Undo sau commit. Request chưa rõ kết quả phải query receipt, không hoàn HP/item bằng client (DEC-023).
 - Buff food: auto refresh khi còn ≤60s, ngoài combat mặc định. Có toggle `Cho phép trong dungeon`, mặc định Off; luôn Off trong PvP và raid boss. Không tự thay buff cùng group đang mạnh hơn.
 - Không auto dùng POT-REVIVE, POT-CLEAN, SCROLL-WAY, KIT-REPAIR, PET-FEED, dye, ticket, vật phẩm quest hoặc item có confirm/destructive effect.
 - Nếu stack =0, item bị thay trong quick slot, nhân vật downed, khóa PvP, thiếu cooldown hoặc server offline: tự tắt lần auto đó, hiện lý do và không spin loop.

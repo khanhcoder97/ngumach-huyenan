@@ -3,7 +3,7 @@
 
 ### 1. Phạm vi catalog
 
-File Item_Master_Catalog_vi.csv là danh mục master để import vào spreadsheet/database. Bản này có 555 template: 420 template trang bị nền (5 môn phái × 7 dải cấp × 12 slot) cùng 135 template tiêu hao, ngọc, nguyên liệu, quest, vé hoạt động, công cụ nghề, thú/cưỡi, recipe và mỹ phẩm. Item_Rarity_Variant_Catalog_vi.csv bung 5 phẩm chất thành 2.100 biến thể gear có ID và chỉ số nền đã scale riêng, cộng 135 item fixed; tổng 2.235 dòng. Affix roll, socket roll, upgrade và durability vẫn là thuộc tính instance theo schema. Bảy vật liệu node và ba công cụ nghề được tra vị trí trong `World_Spawn_Gathering_Manifest_vi.csv`.
+File Item_Master_Catalog_vi.csv là danh mục master để import vào spreadsheet/database. Bản này có 556 template: 420 template trang bị nền (5 môn phái × 7 dải cấp × 12 slot) cùng 136 template tiêu hao, ngọc, nguyên liệu, quest, vé hoạt động, công cụ nghề, thú/cưỡi, recipe và mỹ phẩm. Item_Rarity_Variant_Catalog_vi.csv bung 5 phẩm chất thành 2.100 biến thể gear có ID và chỉ số nền đã scale riêng, cộng 136 item fixed; tổng 2.236 dòng. Affix roll, socket roll, upgrade và durability vẫn là thuộc tính instance theo schema. Bảy vật liệu node và bốn công cụ nghề được tra vị trí trong `World_Spawn_Gathering_Manifest_vi.csv`.
 
 Các item names, chỉ số, hiệu ứng và nguồn rơi ở đây là đề xuất mới cho game Ngũ Mạch: Huyền Ấn. KPAH JAR không cung cấp catalog server hoàn chỉnh để xác minh từng tên, stat hay drop table.
 
