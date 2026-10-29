@@ -1,5 +1,7 @@
 # Client online P1 — đợt triển khai đầu của Codex
 
+Đợt audio tiếp theo: xem [Client_Audio_Integration_P1_vi.md](Client_Audio_Integration_P1_vi.md). Đã viết mixer/policy/Unity bridge và mapping UI/accept; chưa có Unity compile/playback evidence, PR vẫn draft.
+
 ## Phần đã viết
 
 - Nút vào bản online từ title; config `apiBaseUrl`/timeout, HTTP transport UnityWebRequest, không follow redirect mang session header.

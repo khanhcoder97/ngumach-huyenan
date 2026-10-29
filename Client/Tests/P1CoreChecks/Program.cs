@@ -187,6 +187,17 @@ internal static class Program
             await c.AcceptQuestAsync("P00-01", "NPC_LYAN", None);
             Check(c.DrainAudioNotices().Length == 0, "rejected accept with active-state readback stays silent");
         }
+        {
+            var t = new Script(); var c = await Connected(t);
+            t.Add(Reply(Quest(2, "ACTIVE"))); await c.AcceptQuestAsync("P00-01", "NPC_LYAN", None);
+            t.Add(Reply<P1World>(null, 404, "session_not_found")); await c.ReadWorldAsync(None);
+            Check(c.DrainAudioNotices().Length == 0, "expired session clears undrained old-session notice");
+        }
+        {
+            var t = new Script(); var c = await Connected(t);
+            t.Add(Reply(Quest(3, "COMPLETED"))); await c.AcceptQuestAsync("P00-01", "NPC_LYAN", None);
+            Check(c.DrainAudioNotices().Length == 0, "unrelated returned quest state does not imply fresh acceptance sound");
+        }
         Console.WriteLine("PASS P1 core assertions: " + assertions);
     }
 
