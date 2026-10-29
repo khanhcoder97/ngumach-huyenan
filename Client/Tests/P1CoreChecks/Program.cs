@@ -174,10 +174,12 @@ internal static class Program
     private sealed class HttpTransport : IP1Transport, IDisposable
     {
         private readonly HttpClient http;
+        public readonly List<P1Request> Requests = new List<P1Request>();
         public HttpTransport(string url)
         { http = new HttpClient(new HttpClientHandler { AllowAutoRedirect = false }) { BaseAddress = new Uri(url), Timeout = TimeSpan.FromSeconds(5) }; }
         public async Task<P1HttpReply> SendAsync(P1Request request, CancellationToken ct)
         {
+            Requests.Add(request);
             using (var msg = new HttpRequestMessage(new HttpMethod(request.Method), request.Path))
             {
                 msg.Headers.Add("X-Correlation-ID", request.CorrelationId);
@@ -209,9 +211,42 @@ internal static class Program
         }
         Console.WriteLine("PASS P1 client HTTP assertions: " + assertions);
     }
+    private static async Task HttpDevQuestChecks(string url)
+    {
+        // Labelled DEV STUB profile, not reviewed topology or a production quest gate.
+        using (var http = new HttpTransport(url))
+        {
+            var c = new P1Client(http);
+            Check((await c.ConnectAsync(None)).Success, "DEV HTTP session");
+            var far = await c.AcceptQuestAsync("P00-01", "NPC_LYAN", None);
+            Check(!far.Success && far.Code == "out_of_range", "DEV HTTP proximity rejects remote accept");
+            // Current canonical dev NPC anchor: x42,y0. Do not teleport a client to it.
+            for (int i = 0; i < 30 && c.World.self.x < 38; i++)
+            {
+                await Task.Delay(230);
+                Check((await c.MoveAsync(1, 0, None)).Success, "DEV HTTP move to NPC");
+            }
+            Check(Math.Abs(c.World.self.x - 42) <= 5, "DEV HTTP reached real interaction radius");
+            long worldRevision = c.World.revision; int mp = c.World.self.mp;
+            Check((await c.AcceptQuestAsync("P00-01", "NPC_LYAN", None)).Success, "DEV HTTP accepted near Ly An");
+            var accepted = http.Requests.Last();
+            var replay = await http.SendAsync(accepted, None);
+            Check(replay.StatusCode == 200 && P1Wire.Decode<P1Response<P1Quest>>(replay.Body).result.revision == 2, "DEV HTTP exact request replay is one quest transition");
+            Check((await c.ReadQuestsAsync(None)).Success && c.Quests.First(q => q.questId == "P00-01").state == "ACTIVE", "DEV HTTP ACTIVE readback");
+            await c.ReadWorldAsync(None); await c.ReadInventoryAsync(None);
+            Check(c.World.revision == worldRevision && c.World.self.mp == mp && c.Inventory.items.Length == 0, "DEV accept/replay did not create MP cost or inventory reward");
+        }
+        Console.WriteLine("PASS DEV-STUB P1 client quest HTTP assertions: " + assertions);
+    }
     public static async Task<int> Main(string[] args)
     {
-        try { if (args.Length == 2 && args[0] == "--http") await HttpChecks(args[1]); else await RunCases(); return 0; }
+        try
+        {
+            if (args.Length == 2 && args[0] == "--http") await HttpChecks(args[1]);
+            else if (args.Length == 2 && args[0] == "--http-dev") await HttpDevQuestChecks(args[1]);
+            else await RunCases();
+            return 0;
+        }
         catch (Exception e) { Console.Error.WriteLine(e); return 1; }
     }
 }

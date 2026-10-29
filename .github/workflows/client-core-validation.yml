@@ -34,12 +34,30 @@ jobs:
           exit 1
       - name: Exercise real HTTP from the same client core against default server
         run: dotnet run --no-build --project Client/Tests/P1CoreChecks/P1CoreChecks.csproj --configuration Release -- --http http://127.0.0.1:5082
+      - name: Start labelled DEV STUB profile with proximity-gated quest accept
+        working-directory: Server/Health
+        env:
+          P1__QuestAccept__Enabled: 'true'
+        run: |
+          dotnet bin/Release/net10.0/Health.dll --urls http://127.0.0.1:5083 > "$GITHUB_WORKSPACE/client-dev-server.log" 2>&1 &
+          echo $! > "$GITHUB_WORKSPACE/client-dev-server.pid"
+          for attempt in $(seq 1 40); do
+            if curl --silent --fail http://127.0.0.1:5083/health > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat "$GITHUB_WORKSPACE/client-dev-server.log"
+          exit 1
+      - name: Verify real near/far quest accept, replay and no rewards in DEV STUB (not production geometry)
+        run: dotnet run --no-build --project Client/Tests/P1CoreChecks/P1CoreChecks.csproj --configuration Release -- --http-dev http://127.0.0.1:5083
       - name: Stop server
         if: always()
         run: |
           if [ -f client-server.pid ]; then kill "$(cat client-server.pid)" 2>/dev/null || true; fi
+          if [ -f client-dev-server.pid ]; then kill "$(cat client-dev-server.pid)" 2>/dev/null || true; fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: client-server-log
-          path: client-server.log
+          path: |
+            client-server.log
+            client-dev-server.log
