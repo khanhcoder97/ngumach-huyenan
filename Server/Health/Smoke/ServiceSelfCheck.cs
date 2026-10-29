@@ -521,7 +521,7 @@ public static class ServiceSelfCheck
         {
             appendedEvents.Add(eventStore.Append(
                 eventSession,
-                MakeOutcomeEvent(index.ToString("x32"), "c" * 32, 100 + index)));
+                MakeOutcomeEvent(index.ToString("x32"), new string('c', 32), 100 + index)));
         }
 
         var firstEventPage = eventStore.Read(eventSession, 0, 0);
@@ -549,7 +549,7 @@ public static class ServiceSelfCheck
             !upToDatePage.ResyncRequired);
 
         var replayedEvent = eventStore.Append(
-            eventSession, MakeOutcomeEvent(1.ToString("x32"), "c" * 32, 105));
+            eventSession, MakeOutcomeEvent(1.ToString("x32"), new string('c', 32), 105));
         Check(
             "eventstore.replay_idempotent",
             replayedEvent.Cursor == 1 &&
@@ -563,7 +563,7 @@ public static class ServiceSelfCheck
         {
             eventStore.Append(
                 eventSession,
-                MakeOutcomeEvent("f" * 32, "c" * 32, 106) with
+                MakeOutcomeEvent(new string('f', 32), new string('c', 32), 106) with
                 {
                     Type = CombatEventTypesV2.CounterConfirmed
                 });
@@ -579,7 +579,7 @@ public static class ServiceSelfCheck
         {
             eventStore.Append(
                 eventSession,
-                MakeOutcomeEvent(index.ToString("x32"), "c" * 32, 100 + index));
+                MakeOutcomeEvent(index.ToString("x32"), new string('c', 32), 100 + index));
         }
 
         var overflowPage = eventStore.Read(eventSession, 0, 0);
@@ -614,7 +614,7 @@ public static class ServiceSelfCheck
 
         var otherEventSession = "e2e11111111111111111111111111111";
         var otherEvent = eventStore.Append(
-            otherEventSession, MakeOutcomeEvent("a" * 32, "c" * 32, 200));
+            otherEventSession, MakeOutcomeEvent(new string('a', 32), new string('c', 32), 200));
         Check(
             "eventstore.session_isolation",
             otherEvent.Cursor == 1 &&
@@ -622,7 +622,7 @@ public static class ServiceSelfCheck
 
         eventStore.RemoveSession(otherEventSession);
         var freshLifetimeEvent = eventStore.Append(
-            otherEventSession, MakeOutcomeEvent("b" * 32, "c" * 32, 210));
+            otherEventSession, MakeOutcomeEvent(new string('b', 32), new string('c', 32), 210));
         Check(
             "eventstore.session_lifetime_reset",
             freshLifetimeEvent.Cursor == 1 &&
@@ -657,7 +657,7 @@ public static class ServiceSelfCheck
                 var ordinal = (slot * 25) + index + 1;
                 parallelEventStore.Append(
                     parallelEventSession,
-                    MakeOutcomeEvent(ordinal.ToString("x32"), "d" * 32, 300 + ordinal));
+                    MakeOutcomeEvent(ordinal.ToString("x32"), new string('d', 32), 300 + ordinal));
             }
         });
         var parallelEventPage = parallelEventStore.Read(parallelEventSession, 0, 0);
