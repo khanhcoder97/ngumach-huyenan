@@ -77,6 +77,8 @@ Accepted → start/windup → hit window/impacts → recover/end/cancel. Basic v
 
 Mob ordinary có telegraph/attack/recovery, HP/death/life/respawn; clear-group respawn theo manifest, RETURN không phát death/loot. Hai actor tấn công đồng thời chỉ một death event/life, credit theo policy DEV đã nêu; không double-KILL. Hit/miss/immune/shield/crit values tách rõ, không cộng base crit hai lần nếu profile đã có0,0525. Oracle27/40 giữ đúng. RNG deterministic replay và audit, không dùng RNG âm thanh.
 
+Spawn runtime phải mở đủ thành phần và số lượng từng nhóm theo manifest, có member ID ổn định, group ID và generation/life riêng. Projection 27 candidate của pha1 là fixture kiểm thử, chưa chứng minh đã sinh đủ mọi cá thể của tất cả nhóm. Kiểm một nhóm hỗn hợp, quái chết một phần rồi clear nhóm, và respawn đồng bộ đúng policy; không thay quantity của manifest bằng một entity đại diện nếu entity đó còn được target như một cá thể.
+
 ### QOD-18 — quest graph, inventory và XP đầu game
 
 Compiler/export/runtime records P00-01..05 từ Quest Spec, manifest và narrative đã biên tập. Có TALK/INTERACT/explore/KILL/COLLECT/ESCORT/DEFEND theo từng objective/checkpoint thật. Đầu tiên chạy P00-01..03; tiếp hộ tống P00-04 và để P00-05 chờ boss QOD-19 nếu chưa đủ. Không báo quest chơi được từ một unlock ID chưa có definition.
