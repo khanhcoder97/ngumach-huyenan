@@ -26,7 +26,6 @@ public static class ServiceSelfCheck
         var teleport = services.GetRequiredService<ITeleportService>();
         var questAccept = services.GetRequiredService<IQuestAcceptService>();
         var npcAnchors = services.GetRequiredService<NpcAnchorCatalog>();
-        var geometry = services.GetRequiredService<IWorldGeometryService>();
         var questTurnIn = services.GetRequiredService<IQuestTurnInService>();
         var rewardLedger = services.GetRequiredService<RewardLedgerStore>();
 
@@ -1232,7 +1231,6 @@ public static class ServiceSelfCheck
         var turnInQuestId = "P00-01";
 
         // set up objectives complete → READY_TO_TURN_IN
-        var turnInState = quests.GetState(turnInActor.CharacterId, turnInQuestId);
         var turnInAccept = quests.Accept(turnInActor, turnInQuestId);
         Check(
             "turnin.accept_setup",
@@ -1260,22 +1258,22 @@ public static class ServiceSelfCheck
         turnInActor.Y = turnInAnchor.Y;
 
         // NPC mismatch
-        var wrongNpc = questTurnIn.TurnIn(
+        var turnInWrongNpc = questTurnIn.TurnIn(
             turnInActor, turnInQuestId, "NPC_LYAN", Guid.NewGuid().ToString("N"));
         Check(
             "turnin.npc_mismatch",
-            !wrongNpc.Accepted &&
-            string.Equals(wrongNpc.Failure!.Code, QuestTurnInErrorCodes.NpcMismatch, StringComparison.Ordinal),
-            wrongNpc.Failure?.Code);
+            !turnInWrongNpc.Accepted &&
+            string.Equals(turnInWrongNpc.Failure!.Code, QuestTurnInErrorCodes.NpcMismatch, StringComparison.Ordinal),
+            turnInWrongNpc.Failure?.Code);
 
         // unknown quest
-        var unknownQuest = questTurnIn.TurnIn(
+        var turnInUnknownQuest = questTurnIn.TurnIn(
             turnInActor, "QQ-99", "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
         Check(
             "turnin.quest_not_found",
-            !unknownQuest.Accepted &&
-            string.Equals(unknownQuest.Failure!.Code, QuestErrorCodes.QuestNotFound, StringComparison.Ordinal),
-            unknownQuest.Failure?.Code);
+            !turnInUnknownQuest.Accepted &&
+            string.Equals(turnInUnknownQuest.Failure!.Code, QuestErrorCodes.QuestNotFound, StringComparison.Ordinal),
+            turnInUnknownQuest.Failure?.Code);
 
         // out of range
         turnInActor.X = 0;
@@ -1350,27 +1348,27 @@ public static class ServiceSelfCheck
         // re-submit same key for a different quest (idempotencyConflict)
         // Actually idempotencyConflict is when same key but different payload, but since
         // invalid_transition fails before idempotency recording, we test with a fresh actor.
-        var idemActor = NewPlayer("CHR_SELFCHECK_IDEM");
-        quests.Accept(idemActor, "P00-01");
+        var turnInIdemActor = NewPlayer("CHR_SELFCHECK_IDEM");
+        quests.Accept(turnInIdemActor, "P00-01");
         // progress to READY_TO_TURN_IN
         foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
         {
             quests.RecordVerifiedEvent(
-                idemActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
+                turnInIdemActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
                 targetId, "MAP_BEN_MUA");
         }
-        idemActor.X = turnInAnchor.X;
-        idemActor.Y = turnInAnchor.Y;
+        turnInIdemActor.X = turnInAnchor.X;
+        turnInIdemActor.Y = turnInAnchor.Y;
 
         var conflictKey2 = Guid.NewGuid().ToString("N");
-        var firstCall = questTurnIn.TurnIn(idemActor, turnInQuestId, "NPC_TA_VAN_KHANH", conflictKey2);
+        var firstCall = questTurnIn.TurnIn(turnInIdemActor, turnInQuestId, "NPC_TA_VAN_KHANH", conflictKey2);
         Check(
             "turnin.idempotency_setup",
             firstCall.Accepted,
             firstCall.Failure?.Code);
 
         // Data integrity: reward-once via ledger
-        var ledgerResult = rewardLedger.Find(idemActor.CharacterId, turnInQuestId);
+        var ledgerResult = rewardLedger.Find(turnInIdemActor.CharacterId, turnInQuestId);
         Check(
             "turnin.reward_ledger_recorded",
             ledgerResult is not null &&

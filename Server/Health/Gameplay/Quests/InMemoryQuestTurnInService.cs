@@ -162,7 +162,12 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
             }
 
             var rewardSnapshot = BuildRewards(definition, mutation);
-            result = new TurnInResult(flipped.State, rewardSnapshot, definition.Unlocks);
+            result = new TurnInResult
+            {
+                QuestState = flipped.State,
+                Rewards = rewardSnapshot,
+                Unlocks = definition.Unlocks,
+            };
 
             _ledger.TryRecord(actor.CharacterId, questId, result);
         }
@@ -176,21 +181,23 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
         InventoryMutation mutation)
     {
         var currency = mutation.CurrencyDeltas?
-            .Select(d => new TurnInCurrencyReward(d.CurrencyId, d.Amount))
+            .Select(d => new TurnInCurrencyReward { CurrencyId = d.CurrencyId, Amount = d.Amount })
             .ToList()
             ?? new List<TurnInCurrencyReward>();
 
         var items = mutation.AddItems?
-            .Select(i => new TurnInItemReward(i.TemplateId, i.Stack, i.Location))
+            .Select(i => new TurnInItemReward { TemplateId = i.TemplateId, Stack = i.Stack, Location = i.Location })
             .ToList()
             ?? new List<TurnInItemReward>();
 
-        var xp = new TurnInXpReward(definition.Rewards.XpRule, false);
+        var xp = new TurnInXpReward { XpRule = definition.Rewards.XpRule, Applied = false };
 
-        return new TurnInRewards(
-            currency.AsReadOnly(),
-            items.AsReadOnly(),
-            xp);
+        return new TurnInRewards
+        {
+            Currency = currency.AsReadOnly(),
+            Items = items.AsReadOnly(),
+            Xp = xp,
+        };
     }
 
     private static string Hash(string questId, string npcId) =>
