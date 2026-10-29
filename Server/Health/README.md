@@ -335,6 +335,7 @@ Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond
 | `Content:SkillsPath` | Optional absolute/relative override for the `SkillDefinition` directory |
 | `Content:NpcAnchorsPath` | Optional absolute/relative override for `Implementation/Content/Runtime/npc_anchors.json` |
 | `Content:TopologyPath` | Optional absolute/relative override for the `MapTopology` bundle directory |
+| `Content:WorldEntitiesPath` | Optional absolute/relative override for `Implementation/Content/Runtime/world_entities_bm.json` |
 
 ## Errors
 
@@ -388,7 +389,7 @@ Quest and inventory HTTP surfaces are read-only, teleport has no endpoint, and c
 dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
 ```
 
-The flag boots the DI container and canonical content, then runs 57 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency and line-of-sight geometry (clear, wall, hole, corner, floor, non-finite, outside, not-enforced), the NPC anchor registry, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
+The flag boots the DI container and canonical content, then runs 66 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency and line-of-sight geometry (clear, wall, hole, corner, floor, non-finite, outside, not-enforced), the NPC anchor registry, the Bến Mưa world-entity registry with despawn/respawn under a manual clock, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
 
 ## Manual verification
 
@@ -425,6 +426,7 @@ The flag boots the DI container and canonical content, then runs 57 assertions c
 
 - Sessions are in memory and lost on restart; there is no database, authentication or real-time transport.
 - `entities` is always empty; the combat target registry starts empty, so only the self-targeting `SK-MK-01` can be cast over HTTP. Teleport has no endpoint.
+- The Bến Mưa world-entity registry (`world_entities_bm.json`: 24 canonical placements, 19 templates) is loaded with despawn/respawn state, but no endpoint, combat target or HP/stat wiring uses it yet.
 - Combat has no damage, hit chance, telegraphs, death or loot: `combat.effect` only records an accepted cast and its cooldown.
 - Quest state is in memory; accept exists but is feature-flagged off by default. Line-of-sight runs only for `REVIEWED` topology bundles; the shipped bundle is synthetic, so it is `not_enforced` until Muse delivers the Bến Mưa layout. Turn-in, rewards, party progress and multi-step graphs are not implemented.
 - Inventory is read-only over HTTP and starts empty: no item catalog, stack-limit enforcement, durability rules, seeded starting items or mutation endpoint.

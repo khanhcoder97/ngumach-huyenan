@@ -1,0 +1,448 @@
+{
+  "schemaVersion": 1,
+  "mapId": "MAP_BEN_MUA",
+  "sourceRef": "docs/production/World_Spawn_Gathering_Manifest_vi.csv",
+  "hpRule": "No HP/stat values: canonical numeric stats are not locked yet",
+  "templates": [
+    {
+      "templateId": "BOSS_MANG_COT",
+      "kind": "BOSS"
+    },
+    {
+      "templateId": "FISHING_SPOT_CA_LINH",
+      "kind": "INTERACTABLE"
+    },
+    {
+      "templateId": "MOB_CARPLING",
+      "kind": "MOB"
+    },
+    {
+      "templateId": "MOB_SHORE_STALKER",
+      "kind": "MOB"
+    },
+    {
+      "templateId": "MOB_SHORE_STALKER_ELITE",
+      "kind": "MOB"
+    },
+    {
+      "templateId": "MOB_WATERROOT",
+      "kind": "MOB"
+    },
+    {
+      "templateId": "NODE_BM_HERB_01",
+      "kind": "GATHER_NODE"
+    },
+    {
+      "templateId": "NODE_BM_HERB_02",
+      "kind": "GATHER_NODE"
+    },
+    {
+      "templateId": "NODE_BM_ORE_01",
+      "kind": "GATHER_NODE"
+    },
+    {
+      "templateId": "NODE_BM_ORE_02",
+      "kind": "GATHER_NODE"
+    },
+    {
+      "templateId": "NODE_BM_WOOD_01",
+      "kind": "GATHER_NODE"
+    },
+    {
+      "templateId": "NPC_BM_RESCUE_01",
+      "kind": "NPC"
+    },
+    {
+      "templateId": "NPC_BM_RESCUE_02",
+      "kind": "NPC"
+    },
+    {
+      "templateId": "NPC_BOAT_KEEPER",
+      "kind": "NPC"
+    },
+    {
+      "templateId": "NPC_CLASS_TRIAL",
+      "kind": "NPC"
+    },
+    {
+      "templateId": "NPC_FISHER_01",
+      "kind": "NPC"
+    },
+    {
+      "templateId": "NPC_LYAN",
+      "kind": "NPC"
+    },
+    {
+      "templateId": "NPC_MEDIC_BEN",
+      "kind": "NPC"
+    },
+    {
+      "templateId": "NPC_TA_VAN_KHANH",
+      "kind": "NPC"
+    }
+  ],
+  "entities": [
+    {
+      "entityId": "ENT_MAN_BM_EVENT_BOSS_BM_MANG_COT",
+      "recordId": "MAN-BM-EVENT_BOSS_BM_MANG_COT",
+      "kind": "BOSS",
+      "templateIds": [
+        "BOSS_MANG_COT"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 178.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 14400,
+      "condition": "World-boss event 4 giờ; quest version riêng; contribution reward"
+    },
+    {
+      "entityId": "ENT_MAN_BM_FISHING_LINH",
+      "recordId": "MAN-BM-FISHING-LINH",
+      "kind": "INTERACTABLE",
+      "templateIds": [
+        "FISHING_SPOT_CA_LINH"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 132.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 30,
+      "condition": "Level 1+; rainy; safe-zone access; no combat"
+    },
+    {
+      "entityId": "ENT_MAN_BM_NODE_BM_HERB_01",
+      "recordId": "MAN-BM-NODE_BM_HERB_01",
+      "kind": "GATHER_NODE",
+      "templateIds": [
+        "NODE_BM_HERB_01"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 76.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 60,
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+    },
+    {
+      "entityId": "ENT_MAN_BM_NODE_BM_HERB_02",
+      "recordId": "MAN-BM-NODE_BM_HERB_02",
+      "kind": "GATHER_NODE",
+      "templateIds": [
+        "NODE_BM_HERB_02"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 132.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 120,
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+    },
+    {
+      "entityId": "ENT_MAN_BM_NODE_BM_ORE_01",
+      "recordId": "MAN-BM-NODE_BM_ORE_01",
+      "kind": "GATHER_NODE",
+      "templateIds": [
+        "NODE_BM_ORE_01"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 21.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 60,
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+    },
+    {
+      "entityId": "ENT_MAN_BM_NODE_BM_ORE_02",
+      "recordId": "MAN-BM-NODE_BM_ORE_02",
+      "kind": "GATHER_NODE",
+      "templateIds": [
+        "NODE_BM_ORE_02"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 88.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 120,
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+    },
+    {
+      "entityId": "ENT_MAN_BM_NODE_BM_WOOD_01",
+      "recordId": "MAN-BM-NODE_BM_WOOD_01",
+      "kind": "GATHER_NODE",
+      "templateIds": [
+        "NODE_BM_WOOD_01"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 94.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 60,
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+    },
+    {
+      "entityId": "ENT_MAN_BM_NPC_BM_RESCUE_01",
+      "recordId": "MAN-BM-NPC_BM_RESCUE_01",
+      "kind": "NPC",
+      "templateIds": [
+        "NPC_BM_RESCUE_01"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 135.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "condition": "P00-04; tương tác giải cứu"
+    },
+    {
+      "entityId": "ENT_MAN_BM_NPC_BM_RESCUE_02",
+      "recordId": "MAN-BM-NPC_BM_RESCUE_02",
+      "kind": "NPC",
+      "templateIds": [
+        "NPC_BM_RESCUE_02"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 148.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "condition": "P00-04; tương tác giải cứu"
+    },
+    {
+      "entityId": "ENT_MAN_BM_NPC_BOAT_KEEPER",
+      "recordId": "MAN-BM-NPC_BOAT_KEEPER",
+      "kind": "NPC",
+      "templateIds": [
+        "NPC_BOAT_KEEPER"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 343.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "condition": "Mở tuyến thuyền sau P00-05"
+    },
+    {
+      "entityId": "ENT_MAN_BM_NPC_CLASS_TRIAL",
+      "recordId": "MAN-BM-NPC_CLASS_TRIAL",
+      "kind": "NPC",
+      "templateIds": [
+        "NPC_CLASS_TRIAL"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 188.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "condition": "Hiện sau khi hoàn tất P00-05"
+    },
+    {
+      "entityId": "ENT_MAN_BM_NPC_FISHER_01",
+      "recordId": "MAN-BM-NPC_FISHER_01",
+      "kind": "NPC",
+      "templateIds": [
+        "NPC_FISHER_01"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 112.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "condition": "Luôn hiện; mở câu cá phụ"
+    },
+    {
+      "entityId": "ENT_MAN_BM_NPC_LYAN",
+      "recordId": "MAN-BM-NPC_LYAN",
+      "kind": "NPC",
+      "templateIds": [
+        "NPC_LYAN"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 42.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "condition": "P00-01/P00-03/P00-04; ở trạng thái hộ tống dùng cùng actor"
+    },
+    {
+      "entityId": "ENT_MAN_BM_NPC_MEDIC_BEN",
+      "recordId": "MAN-BM-NPC_MEDIC_BEN",
+      "kind": "NPC",
+      "templateIds": [
+        "NPC_MEDIC_BEN"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 30.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "condition": "Mở shop sau P00-02"
+    },
+    {
+      "entityId": "ENT_MAN_BM_NPC_TA_VAN_KHANH",
+      "recordId": "MAN-BM-NPC_TA_VAN_KHANH",
+      "kind": "NPC",
+      "templateIds": [
+        "NPC_TA_VAN_KHANH"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 64.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "condition": "P00-01 đến P00-05 theo quest state"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_01",
+      "recordId": "MAN-BM-SPAWN_BM_01",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_CARPLING"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 84.0,
+      "yWu": 0.0,
+      "quantity": 3,
+      "respawnSeconds": 18,
+      "condition": "Map mở; không đè quest escort"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_02",
+      "recordId": "MAN-BM-SPAWN_BM_02",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_CARPLING"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 116.0,
+      "yWu": 0.0,
+      "quantity": 4,
+      "respawnSeconds": 20,
+      "condition": "Map mở; tắt khi escort đi qua"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_03",
+      "recordId": "MAN-BM-SPAWN_BM_03",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_WATERROOT"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 143.0,
+      "yWu": 0.0,
+      "quantity": 3,
+      "respawnSeconds": 24,
+      "condition": "Map mở; rễ tương tác xen kẽ"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_04",
+      "recordId": "MAN-BM-SPAWN_BM_04",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_CARPLING",
+        "MOB_WATERROOT"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 160.0,
+      "yWu": 0.0,
+      "quantity": 3,
+      "respawnSeconds": 24,
+      "condition": "Tắt khi P00-05 boss trigger"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_05_QUEST",
+      "recordId": "MAN-BM-SPAWN_BM_05_QUEST",
+      "kind": "BOSS",
+      "templateIds": [
+        "BOSS_MANG_COT"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 178.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "condition": "P00-05; quest instance solo scale 1–3; boss ring Ø22"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_06",
+      "recordId": "MAN-BM-SPAWN_BM_06",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_SHORE_STALKER"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 270.0,
+      "yWu": 0.0,
+      "quantity": 3,
+      "respawnSeconds": 24,
+      "condition": "Mở sau P00-05"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_07",
+      "recordId": "MAN-BM-SPAWN_BM_07",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_SHORE_STALKER_ELITE",
+        "MOB_SHORE_STALKER"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 303.0,
+      "yWu": 0.0,
+      "quantity": 3,
+      "respawnSeconds": 90,
+      "condition": "Nhánh phụ; elite variant"
+    },
+    {
+      "entityId": "ENT_MAN_BM_WAVE_BM_ESCORT_A",
+      "recordId": "MAN-BM-WAVE_BM_ESCORT_A",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_CARPLING"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 80.0,
+      "yWu": 0.0,
+      "quantity": 3,
+      "respawnSeconds": 30,
+      "condition": "P00-04; khi Ly An qua x=80"
+    },
+    {
+      "entityId": "ENT_MAN_BM_WAVE_BM_ESCORT_B",
+      "recordId": "MAN-BM-WAVE_BM_ESCORT_B",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_WATERROOT"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 120.0,
+      "yWu": 0.0,
+      "quantity": 3,
+      "respawnSeconds": 30,
+      "condition": "P00-04; khi Ly An qua x=120"
+    }
+  ]
+}
