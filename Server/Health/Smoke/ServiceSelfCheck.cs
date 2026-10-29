@@ -1,3 +1,4 @@
+using System.Threading;
 using Microsoft.Extensions.Options;
 using Server.Health.Contracts;
 using Server.Health.Gameplay.Combat;
@@ -1275,6 +1276,17 @@ public static class ServiceSelfCheck
             string.Equals(turnInUnknownQuest.Failure!.Code, QuestErrorCodes.QuestNotFound, StringComparison.Ordinal),
             turnInUnknownQuest.Failure?.Code);
 
+        // wrong floor: actor on a different floor than the NPC anchor
+        turnInActor.FloorId = "MAP_BEN_MUA_F1";
+        var wrongFloor = questTurnIn.TurnIn(
+            turnInActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.wrong_floor",
+            !wrongFloor.Accepted &&
+            string.Equals(wrongFloor.Failure!.Code, QuestTurnInErrorCodes.OutOfRange, StringComparison.Ordinal),
+            wrongFloor.Failure?.Code);
+        turnInActor.FloorId = "OVERWORLD";
+
         // out of range
         turnInActor.X = 0;
         turnInActor.Y = 0;
@@ -1342,12 +1354,18 @@ public static class ServiceSelfCheck
             unchangedInv.Items.Count == 1,
             $"currencies={unchangedInv.Currencies.Count} items={unchangedInv.Items.Count}");
 
-        // idempotency conflict: same key, different payload
-        var conflictKey = Guid.NewGuid().ToString("N");
-        questTurnIn.TurnIn(turnInActor, turnInQuestId, "NPC_TA_VAN_KHANH", conflictKey); // already tried & failed
-        // re-submit same key for a different quest (idempotencyConflict)
-        // Actually idempotencyConflict is when same key but different payload, but since
-        // invalid_transition fails before idempotency recording, we test with a fresh actor.
+        // idempotency conflict: same key, different payload (different npcId)
+        var wrongNpcReplay = questTurnIn.TurnIn(
+            turnInActor, turnInQuestId, "NPC_LYAN", turnInKey);
+        Check(
+            "turnin.same_key_different_npc_conflict",
+            !wrongNpcReplay.Accepted &&
+            string.Equals(
+                wrongNpcReplay.Failure!.Code,
+                QuestTurnInErrorCodes.IdempotencyConflict,
+                StringComparison.Ordinal),
+            wrongNpcReplay.Failure?.Code);
+
         var turnInIdemActor = NewPlayer("CHR_SELFCHECK_IDEM");
         quests.Accept(turnInIdemActor, "P00-01");
         // progress to READY_TO_TURN_IN
@@ -1442,6 +1460,187 @@ public static class ServiceSelfCheck
             inventoryAfterRetry.Items.Count == 1,
             $"items={inventoryAfterRetry.Items.Count} currencies={inventoryAfterRetry.Currencies.Count}");
 
+        // ─── failure injection: quest flip failure must roll back the grant ───
+
+        var failOnceQuests = new FailOnceQuestDecorator(quests);
+        var flipFailLedger = new RewardLedgerStore();
+        var flipFailTurnIn = new InMemoryQuestTurnInService(
+            questCatalog,
+            failOnceQuests,
+            inventory,
+            npcAnchors,
+            services.GetRequiredService<IWorldGeometryService>(),
+            flipFailLedger,
+            services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
+
+        var flipFailActor = NewPlayer("CHR_SELFCHECK_FLIPFAIL");
+        quests.Accept(flipFailActor, turnInQuestId);
+        foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
+        {
+            quests.RecordVerifiedEvent(
+                flipFailActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
+                targetId, "MAP_BEN_MUA");
+        }
+        flipFailActor.X = turnInAnchor.X;
+        flipFailActor.Y = turnInAnchor.Y;
+
+        var flipFailed = flipFailTurnIn.TurnIn(
+            flipFailActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.flip_failure_rejected",
+            !flipFailed.Accepted &&
+            string.Equals(flipFailed.Failure!.Code, QuestErrorCodes.InvalidTransition, StringComparison.Ordinal),
+            flipFailed.Failure?.Code);
+
+        var flipStateAfter = quests.GetState(flipFailActor.CharacterId, turnInQuestId);
+        Check(
+            "turnin.flip_failure_state_kept",
+            flipStateAfter.Accepted &&
+            string.Equals(flipStateAfter.State!.State, QuestStates.ReadyToTurnIn, StringComparison.Ordinal),
+            flipStateAfter.State?.State);
+
+        var flipInventoryAfter = inventory.GetSnapshot(flipFailActor.CharacterId);
+        Check(
+            "turnin.flip_failure_grant_rolled_back",
+            flipInventoryAfter.Items.Count == 0 && flipInventoryAfter.Currencies.Count == 0,
+            $"items={flipInventoryAfter.Items.Count} currencies={flipInventoryAfter.Currencies.Count}");
+
+        Check(
+            "turnin.flip_failure_ledger_empty",
+            flipFailLedger.Find(flipFailActor.CharacterId, turnInQuestId) is null,
+            "ledger entry must not exist after failed flip");
+
+        var flipRetried = flipFailTurnIn.TurnIn(
+            flipFailActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.flip_failure_retry_succeeds",
+            flipRetried.Accepted &&
+            string.Equals(flipRetried.Result!.QuestState.State, QuestStates.Completed, StringComparison.Ordinal),
+            flipRetried.Failure?.Code);
+
+        var flipInventoryRetry = inventory.GetSnapshot(flipFailActor.CharacterId);
+        Check(
+            "turnin.flip_failure_single_reward",
+            flipInventoryRetry.Currencies.Count == 1 &&
+            flipInventoryRetry.Currencies[0].Amount == 20 &&
+            flipInventoryRetry.Items.Count == 1,
+            $"items={flipInventoryRetry.Items.Count} currencies={flipInventoryRetry.Currencies.Count}");
+
+        // ─── failure injection: ledger failure must roll back grant and flip ───
+
+        var failOnceLedgerStore = new FailOnceLedgerStore();
+        var ledgerFailTurnIn = new InMemoryQuestTurnInService(
+            questCatalog,
+            quests,
+            inventory,
+            npcAnchors,
+            services.GetRequiredService<IWorldGeometryService>(),
+            failOnceLedgerStore,
+            services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
+
+        var ledgerFailActor = NewPlayer("CHR_SELFCHECK_LEDGERFAIL");
+        quests.Accept(ledgerFailActor, turnInQuestId);
+        foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
+        {
+            quests.RecordVerifiedEvent(
+                ledgerFailActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
+                targetId, "MAP_BEN_MUA");
+        }
+        ledgerFailActor.X = turnInAnchor.X;
+        ledgerFailActor.Y = turnInAnchor.Y;
+
+        var ledgerFailed = ledgerFailTurnIn.TurnIn(
+            ledgerFailActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.ledger_failure_rejected",
+            !ledgerFailed.Accepted &&
+            string.Equals(
+                ledgerFailed.Failure!.Code,
+                QuestTurnInErrorCodes.IdempotencyConflict,
+                StringComparison.Ordinal) &&
+            ledgerFailed.Failure.Retryable,
+            ledgerFailed.Failure?.Code);
+
+        var ledgerStateAfter = quests.GetState(ledgerFailActor.CharacterId, turnInQuestId);
+        Check(
+            "turnin.ledger_failure_state_kept",
+            ledgerStateAfter.Accepted &&
+            string.Equals(ledgerStateAfter.State!.State, QuestStates.ReadyToTurnIn, StringComparison.Ordinal),
+            ledgerStateAfter.State?.State);
+
+        var ledgerInventoryAfter = inventory.GetSnapshot(ledgerFailActor.CharacterId);
+        Check(
+            "turnin.ledger_failure_grant_rolled_back",
+            ledgerInventoryAfter.Items.Count == 0 && ledgerInventoryAfter.Currencies.Count == 0,
+            $"items={ledgerInventoryAfter.Items.Count} currencies={ledgerInventoryAfter.Currencies.Count}");
+
+        Check(
+            "turnin.ledger_failure_ledger_empty",
+            failOnceLedgerStore.Find(ledgerFailActor.CharacterId, turnInQuestId) is null,
+            "ledger entry must not exist after failed record");
+
+        var ledgerRetried = ledgerFailTurnIn.TurnIn(
+            ledgerFailActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.ledger_failure_retry_succeeds",
+            ledgerRetried.Accepted &&
+            string.Equals(ledgerRetried.Result!.QuestState.State, QuestStates.Completed, StringComparison.Ordinal),
+            ledgerRetried.Failure?.Code);
+
+        var ledgerInventoryRetry = inventory.GetSnapshot(ledgerFailActor.CharacterId);
+        Check(
+            "turnin.ledger_failure_single_reward",
+            ledgerInventoryRetry.Currencies.Count == 1 &&
+            ledgerInventoryRetry.Currencies[0].Amount == 20 &&
+            ledgerInventoryRetry.Items.Count == 1,
+            $"items={ledgerInventoryRetry.Items.Count} currencies={ledgerInventoryRetry.Currencies.Count}");
+
+        // ─── overflow: balance near long.MaxValue rejects without partial commit ───
+
+        var overflowActor = NewPlayer("CHR_SELFCHECK_OVERFLOW");
+        quests.Accept(overflowActor, turnInQuestId);
+        foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
+        {
+            quests.RecordVerifiedEvent(
+                overflowActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
+                targetId, "MAP_BEN_MUA");
+        }
+        overflowActor.X = turnInAnchor.X;
+        overflowActor.Y = turnInAnchor.Y;
+
+        var seedOverflow = inventory.Apply(overflowActor, new InventoryMutation
+        {
+            CurrencyDeltas = [new CurrencyDelta { CurrencyId = "COIN", Amount = long.MaxValue - 10 }]
+        });
+        Check(
+            "turnin.overflow_seed",
+            seedOverflow.IsSuccess,
+            seedOverflow.ErrorCode);
+
+        var overflowTurnIn = questTurnIn.TurnIn(
+            overflowActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.overflow_rejected_no_partial",
+            !overflowTurnIn.Accepted &&
+            string.Equals(overflowTurnIn.Failure!.Code, P1ErrorCodes.InvalidPayload, StringComparison.Ordinal) &&
+            overflowTurnIn.Failure.FieldErrors.Contains("currencyDeltas", StringComparer.Ordinal),
+            overflowTurnIn.Failure?.Code);
+
+        var overflowState = quests.GetState(overflowActor.CharacterId, turnInQuestId);
+        Check(
+            "turnin.overflow_state_kept",
+            overflowState.Accepted &&
+            string.Equals(overflowState.State!.State, QuestStates.ReadyToTurnIn, StringComparison.Ordinal),
+            overflowState.State?.State);
+
+        var overflowInventory = inventory.GetSnapshot(overflowActor.CharacterId);
+        Check(
+            "turnin.overflow_inventory_unchanged",
+            overflowInventory.Currencies.Count == 1 &&
+            overflowInventory.Currencies[0].Amount == long.MaxValue - 10 &&
+            overflowInventory.Items.Count == 0,
+            $"items={overflowInventory.Items.Count} currencies={overflowInventory.Currencies.Count}");
+
         // ─── concurrency: parallel turn-ins must grant exactly once ───
 
         var parallelActor = NewPlayer("CHR_SELFCHECK_PARALLEL");
@@ -1456,7 +1655,7 @@ public static class ServiceSelfCheck
         parallelActor.Y = turnInAnchor.Y;
 
         var parallelOutcomes = new TurnInOutcome[2];
-        Parallel.For(0, 2, index =>
+        RunBarrierParallel(2, index =>
         {
             parallelOutcomes[index] = questTurnIn.TurnIn(
                 parallelActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
@@ -1495,7 +1694,7 @@ public static class ServiceSelfCheck
 
         var sameKey = Guid.NewGuid().ToString("N");
         var sameKeyOutcomes = new TurnInOutcome[2];
-        Parallel.For(0, 2, index =>
+        RunBarrierParallel(2, index =>
         {
             sameKeyOutcomes[index] = questTurnIn.TurnIn(
                 replayActor, turnInQuestId, "NPC_TA_VAN_KHANH", sameKey);
@@ -1507,15 +1706,9 @@ public static class ServiceSelfCheck
             .Select(outcome => outcome.Result!.QuestState.Revision)
             .Distinct()
             .Count();
-        var sameKeyRejectionsValid = sameKeyOutcomes
-            .Where(outcome => !outcome.Accepted)
-            .All(outcome =>
-                string.Equals(outcome.Failure?.Code, QuestErrorCodes.InvalidTransition, StringComparison.Ordinal));
         Check(
             "turnin.parallel_same_key_contention",
-            sameKeyAccepted is >= 1 and <= 2 &&
-            sameKeyRevisions == 1 &&
-            sameKeyRejectionsValid,
+            sameKeyAccepted == 2 && sameKeyRevisions == 1,
             $"accepted={sameKeyAccepted} distinctRevisions={sameKeyRevisions} " +
             $"codes={string.Join(",", sameKeyOutcomes.Select(o => o.Failure?.Code ?? "ok"))}");
 
@@ -1646,6 +1839,89 @@ public static class ServiceSelfCheck
             }
 
             return _inner.Apply(actor, mutation);
+        }
+    }
+
+    private sealed class FailOnceQuestDecorator : IQuestService
+    {
+        private readonly IQuestService _inner;
+        private bool _failed;
+
+        public FailOnceQuestDecorator(IQuestService inner)
+        {
+            _inner = inner;
+        }
+
+        public QuestOutcome GetState(string characterId, string questId) =>
+            _inner.GetState(characterId, questId);
+
+        public IReadOnlyList<QuestState> GetStates(string characterId) =>
+            _inner.GetStates(characterId);
+
+        public QuestOutcome Accept(PlayerSession actor, string questId) =>
+            _inner.Accept(actor, questId);
+
+        public IReadOnlyList<QuestState> RecordVerifiedEvent(
+            PlayerSession actor,
+            string eventId,
+            string eventType,
+            string recordId,
+            string mapId) =>
+            _inner.RecordVerifiedEvent(actor, eventId, eventType, recordId, mapId);
+
+        public QuestOutcome TurnIn(PlayerSession actor, string questId)
+        {
+            if (!_failed)
+            {
+                _failed = true;
+                return QuestOutcome.Rejected(
+                    QuestErrorCodes.InvalidTransition, retryable: false, "state");
+            }
+
+            return _inner.TurnIn(actor, questId);
+        }
+
+        public QuestOutcome RevertTurnIn(PlayerSession actor, string questId) =>
+            _inner.RevertTurnIn(actor, questId);
+
+        public QuestOutcome Fail(PlayerSession actor, string questId) =>
+            _inner.Fail(actor, questId);
+    }
+
+    private sealed class FailOnceLedgerStore : RewardLedgerStore
+    {
+        private bool _failed;
+
+        public override bool TryRecord(string characterId, string questId, TurnInResult result)
+        {
+            if (!_failed)
+            {
+                _failed = true;
+                return false;
+            }
+
+            return base.TryRecord(characterId, questId, result);
+        }
+    }
+
+    private static void RunBarrierParallel(int count, Action<int> body)
+    {
+        using var barrier = new Barrier(count);
+        var threads = new Thread[count];
+        for (var index = 0; index < count; index++)
+        {
+            var captured = index;
+            threads[index] = new Thread(() =>
+            {
+                barrier.SignalAndWait();
+                body(captured);
+            });
+            threads[index].Start();
+        }
+
+        foreach (var thread in threads)
+        {
+            thread.Join();
         }
     }
 }

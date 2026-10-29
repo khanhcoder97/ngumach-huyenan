@@ -23,5 +23,10 @@ public interface IQuestService
 
     QuestOutcome TurnIn(PlayerSession actor, string questId);
 
+    // Internal rollback primitive for the turn-in orchestrator: COMPLETED →
+    // READY_TO_TURN_IN, revision restored. Only valid as the compensating step
+    // of a turn-in transaction that already holds the actor lock.
+    QuestOutcome RevertTurnIn(PlayerSession actor, string questId);
+
     QuestOutcome Fail(PlayerSession actor, string questId);
 }

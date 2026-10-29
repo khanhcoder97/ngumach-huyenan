@@ -272,6 +272,42 @@ public sealed class InMemoryQuestService : IQuestService
         }
     }
 
+    public QuestOutcome RevertTurnIn(PlayerSession actor, string questId)
+    {
+        ArgumentNullException.ThrowIfNull(actor);
+
+        if (!P1Validation.IsCharacterId(actor.CharacterId))
+        {
+            return QuestOutcome.Rejected(
+                P1ErrorCodes.InvalidPayload, retryable: false, "characterId");
+        }
+
+        if (!TryGetDefinition(questId, out var definition, out var definitionFailure))
+        {
+            return definitionFailure!;
+        }
+
+        var state = _states.Find(actor.CharacterId, definition.QuestId);
+        if (state is null)
+        {
+            return QuestOutcome.Rejected(
+                QuestErrorCodes.QuestNotFound, retryable: false, "questId");
+        }
+
+        lock (state.SyncRoot)
+        {
+            if (!string.Equals(state.State, QuestStates.Completed, StringComparison.Ordinal))
+            {
+                return QuestOutcome.InvalidTransition(state.ToContract());
+            }
+
+            state.State = QuestStates.ReadyToTurnIn;
+            state.Revision--;
+            state.UpdatedAtUtc = _clock.UtcNow;
+            return QuestOutcome.Success(state.ToContract());
+        }
+    }
+
     public QuestOutcome Fail(PlayerSession actor, string questId)
     {
         ArgumentNullException.ThrowIfNull(actor);
