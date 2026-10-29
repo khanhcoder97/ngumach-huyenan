@@ -1,0 +1,21 @@
+<linker>
+  <!-- Json.NET reflection DTOs must survive IL2CPP stripping; playback still needs device QA. -->
+  <assembly fullname="Assembly-CSharp">
+    <type fullname="NguMach.Client.P1.P1Response`1" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1Envelope`1" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1Error" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1World" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1Self" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1Entity" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1Quest" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1Inventory" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1Item" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1Currency" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1CombatEvent" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1CombatPayload" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1Move" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1Cast" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1QuestAccept" preserve="all" />
+    <type fullname="NguMach.Client.P1.P1SessionRequest" preserve="all" />
+  </assembly>
+</linker>
