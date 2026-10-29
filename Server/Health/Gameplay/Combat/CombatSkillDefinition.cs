@@ -7,6 +7,24 @@ public static class CombatTargetingTypes
     public const string Cone = "CONE";
 }
 
+public sealed record SkillCoefficients(double Pve, double Boss, double Pvp)
+{
+    public double For(string mode) => mode switch
+    {
+        CombatSkillModes.Pve => Pve,
+        CombatSkillModes.Boss => Boss,
+        CombatSkillModes.Pvp => Pvp,
+        _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, "Unknown skill mode.")
+    };
+}
+
+public static class CombatSkillModes
+{
+    public const string Pve = "PVE";
+    public const string Boss = "BOSS";
+    public const string Pvp = "PVP";
+}
+
 public sealed record CombatSkillDefinition(
     string SkillId,
     string ClassId,
@@ -15,4 +33,8 @@ public sealed record CombatSkillDefinition(
     int ResourceCost,
     string TargetingType,
     double? RangeWu,
-    int MaxTargets);
+    double? AngleDegrees,
+    int MaxTargets,
+    SkillCoefficients Coefficients,
+    double TelegraphSeconds,
+    string VfxKey);

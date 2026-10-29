@@ -208,6 +208,272 @@ public static class ServiceSelfCheck
             noMpCast.Failure?.Code == CombatErrorCodes.InsufficientResource,
             noMpCast.Failure?.Code);
 
+        // ─── QOD-16: combat subset domain + entity read-model projection ───
+
+        var configuration = services.GetRequiredService<IConfiguration>();
+        var hostEnvironment = services.GetRequiredService<IHostEnvironment>();
+        bool Near(double actual, double expected) => Math.Abs(actual - expected) < 1e-9;
+
+        var combatDamage = services.GetRequiredService<CombatDamageFeature>();
+        Check(
+            "combat.damage_gate_off_by_default",
+            !combatDamage.Enabled,
+            $"enabled={combatDamage.Enabled}");
+        var gateBlockedLoad = false;
+        try
+        {
+            _ = combatDamage.MobStats;
+        }
+        catch (InvalidOperationException)
+        {
+            gateBlockedLoad = true;
+        }
+
+        Check("combat.damage_gate_blocks_load", gateBlockedLoad);
+
+        var enabledCombat = new CombatDamageFeature(
+            new P1CombatDamageOptions { Enabled = true },
+            configuration,
+            hostEnvironment);
+
+        combatSkills.TryGet("SK-MK-01", out var mk01);
+        combatSkills.TryGet("SK-MK-02", out var mk02);
+        combatSkills.TryGet("SK-MK-03", out var mk03);
+        Check(
+            "combat.skill_coefficients",
+            mk01 is
+            {
+                TargetingType: CombatTargetingTypes.Self,
+                RangeWu: 4.4,
+                AngleDegrees: 120,
+                MaxTargets: 1,
+                TelegraphSeconds: 0.4,
+                VfxKey: "VFX/Skill/SK-MK-01"
+            } &&
+            mk01.Coefficients is { Pve: 1.8, Boss: 1.8, Pvp: 0.65 } &&
+            mk02 is
+            {
+                TargetingType: CombatTargetingTypes.Dash,
+                RangeWu: 11,
+                AngleDegrees: null,
+                MaxTargets: 1,
+                TelegraphSeconds: 0.15,
+                VfxKey: "VFX/Skill/SK-MK-02"
+            } &&
+            mk02.Coefficients is { Pve: 1.5, Boss: 1.5, Pvp: 0.65 } &&
+            mk03 is
+            {
+                TargetingType: CombatTargetingTypes.Cone,
+                RangeWu: null,
+                AngleDegrees: 100,
+                MaxTargets: 5,
+                TelegraphSeconds: 0.1,
+                VfxKey: "VFX/Skill/SK-MK-03"
+            } &&
+            mk03.Coefficients is { Pve: 1.9, Boss: 1.9, Pvp: 0.65 },
+            $"{mk01?.SkillId}/{mk02?.SkillId}/{mk03?.SkillId}");
+
+        var rangeMigration = enabledCombat.RangeMigration;
+        Check(
+            "combat.skill_range_migration",
+            Near(rangeMigration.RangeWuBySkillId["SK-MK-01"], 4.4) &&
+            Near(rangeMigration.RangeWuBySkillId["SK-MK-02"], 11.0) &&
+            Near(rangeMigration.RangeWuBySkillId["SK-MK-03"], 4.4),
+            string.Join(
+                ",",
+                rangeMigration.RangeWuBySkillId
+                    .OrderBy(pair => pair.Key, StringComparer.Ordinal)
+                    .Select(pair => $"{pair.Key}={pair.Value}")));
+
+        var mobStats = enabledCombat.MobStats;
+        Check(
+            "combat.mob_stats_bundle",
+            mobStats is
+            {
+                SchemaVersion: 1,
+                BundleId: "COMBAT_MOB_STATS_V1",
+                Activation: CombatMobStatLoader.DesignOnlyActivation,
+                ReferenceLevel: 5,
+                LevelPolicy: "REFERENCE_L5"
+            } &&
+            mobStats.Archetypes.Count == 3 &&
+            mobStats.Bosses.Count == 1,
+            $"bundle={mobStats.BundleId} archetypes={mobStats.Archetypes.Count}");
+
+        Check(
+            "combat.mob_stats_elite_multipliers",
+            mobStats.Elite is { Hp: 6.0, Attack: 1.6, Defense: 1.8 },
+            $"{mobStats.Elite.Hp}/{mobStats.Elite.Attack}/{mobStats.Elite.Defense}");
+
+        var carpling = mobStats.Archetypes.First(stats => stats.MobId == "MOB_CARPLING");
+        Check(
+            "combat.mob_stats_carpling_l5",
+            carpling.ReferenceLevel5 is { Hp: 192, Attack: 15, Defense: 4.2 },
+            $"{carpling.ReferenceLevel5.Hp}/{carpling.ReferenceLevel5.Attack}/{carpling.ReferenceLevel5.Defense}");
+
+        var shoreStalker = mobStats.Archetypes.First(stats => stats.MobId == "MOB_SHORE_STALKER");
+        Check(
+            "combat.mob_stats_shore_stalker_l5",
+            shoreStalker.ReferenceLevel5 is { Hp: 216, Attack: 23, Defense: 4.8 },
+            $"{shoreStalker.ReferenceLevel5.Hp}/{shoreStalker.ReferenceLevel5.Attack}/{shoreStalker.ReferenceLevel5.Defense}");
+
+        var mangCot = mobStats.Bosses.Single();
+        Check(
+            "combat.mob_stats_boss_blocked",
+            mangCot is
+            {
+                BossId: "BOSS_MANG_COT",
+                HpMultiplier: 35,
+                AttackMultiplier: 2.0,
+                PartyHpMultiplierPerAdditionalPlayer: 0.65,
+                ReferenceLevel: 10,
+                Activation: "BOSSDATA_BLOCKED"
+            } &&
+            mangCot.ReferenceStats is { Hp: 12600, Attack: 60, Defense: 10 } &&
+            mangCot.Attacks.Count == 3 &&
+            mangCot.BlockedReason.Length > 0,
+            $"activation={mangCot.Activation} attacks={mangCot.Attacks.Count}");
+
+        var carplingL6 = CombatMobStatLoader.EffectiveAt(mobStats, "MOB_CARPLING", 6);
+        Check(
+            "combat.mob_stats_level_formula",
+            carplingL6.Hp == 211 &&
+            Near(carplingL6.Attack, 16.5) &&
+            Near(carplingL6.Defense, 4.76),
+            $"{carplingL6.Hp}/{carplingL6.Attack}/{carplingL6.Defense}");
+
+        Check(
+            "damage.oracle_raw",
+            Near(DamageFormula.RawDamage(20, 0, 1.5, 1, 0), 30),
+            $"{DamageFormula.RawDamage(20, 0, 1.5, 1, 0)}");
+
+        var oracleMitigation = DamageFormula.MitigationMultiplier(10);
+        Check(
+            "damage.oracle_noncrit",
+            DamageFormula.FinalDamage(30, oracleMitigation, 1, 1, 1) == 27,
+            $"{DamageFormula.FinalDamage(30, oracleMitigation, 1, 1, 1)}");
+        Check(
+            "damage.oracle_crit",
+            DamageFormula.FinalDamage(30, oracleMitigation, 1, DamageFormula.CritMultiplier, 1) == 40,
+            $"{DamageFormula.FinalDamage(30, oracleMitigation, 1, DamageFormula.CritMultiplier, 1)}");
+        Check("damage.armor_zero", Near(DamageFormula.MitigationMultiplier(0), 1));
+        Check(
+            "damage.reduction_cap",
+            Near(DamageFormula.DamageReductionMultiplier(0.9), 0.2),
+            $"{DamageFormula.DamageReductionMultiplier(0.9)}");
+        Check(
+            "damage.resist_pve_cap",
+            Near(DamageFormula.ElementMultiplier(0.7, pvp: false), 0.5) &&
+            Near(DamageFormula.ElementMultiplier(0.7, pvp: true), 0.7),
+            $"{DamageFormula.ElementMultiplier(0.7, pvp: false)}/{DamageFormula.ElementMultiplier(0.7, pvp: true)}");
+        Check(
+            "damage.final_min_one",
+            DamageFormula.FinalDamage(0.001, 1, 1, 1, 1) == 1);
+        Check(
+            "damage.hit_clamp",
+            Near(DamageFormula.HitProbability(1, 0), 0.98) &&
+            Near(DamageFormula.HitProbability(0, 1), 0.05),
+            $"{DamageFormula.HitProbability(1, 0)}/{DamageFormula.HitProbability(0, 1)}");
+        Check(
+            "damage.attribute_derived",
+            Near(DamageFormula.AttributeCritChance(5, 0, 1), 0.0525) &&
+            Near(DamageFormula.AttributeAccuracy(5, 0), 0.0025) &&
+            Near(DamageFormula.AttributeDodge(5, 0, 1), 0.0015));
+
+        var rngSameSeed = CombatRng.Uniform01("CAST_1", "TGT_1", 0);
+        var rngRepeat = CombatRng.Uniform01("CAST_1", "TGT_1", 0);
+        var rngNextHit = CombatRng.Uniform01("CAST_1", "TGT_1", 1);
+        Check(
+            "damage.rng_deterministic",
+            rngSameSeed == rngRepeat &&
+            rngNextHit != rngSameSeed &&
+            rngSameSeed is >= 0 and < 1,
+            $"hit0={rngSameSeed} hit1={rngNextHit}");
+
+        var registry = services.GetRequiredService<WorldEntityRegistry>();
+        var projection = services.GetRequiredService<WorldEntityProjectionService>();
+        var projectedGateOff = projection.Project();
+        Check(
+            "projection.all_entities",
+            projectedGateOff.Count == registry.Count && registry.Count == 27,
+            $"projected={projectedGateOff.Count} registry={registry.Count}");
+
+        var mobGateOff = projectedGateOff.First(entity => entity.EntityId == "ENT_MAN_BM_SPAWN_BM_01");
+        Check(
+            "projection.mob_zero_when_gate_off",
+            mobGateOff is { Kind: WorldEntityKinds.Mob, Hp: 0, MaxHp: 0, LifeId: 1 },
+            $"hp={mobGateOff.Hp}");
+
+        var enabledProjection = new WorldEntityProjectionService(
+            registry,
+            services.GetRequiredService<MobLifecycleService>(),
+            enabledCombat);
+        var projected = enabledProjection.Project();
+
+        var npcLyan = projected.First(entity => entity.EntityId == "ENT_MAN_BM_NPC_LYAN");
+        Check(
+            "projection.npc_invulnerable",
+            npcLyan is
+            {
+                Kind: WorldEntityKinds.Npc,
+                Hp: 0,
+                MaxHp: 0,
+                LifeId: 1,
+                Revision: 1,
+                State: WorldEntityStates.Active
+            },
+            $"hp={npcLyan.Hp} state={npcLyan.State}");
+
+        var spawn01 = projected.First(entity => entity.EntityId == "ENT_MAN_BM_SPAWN_BM_01");
+        Check(
+            "projection.mob_reference_stats",
+            spawn01 is
+            {
+                Kind: WorldEntityKinds.Mob,
+                Hp: 192,
+                MaxHp: 192,
+                LifeId: 1,
+                State: MobBehaviorStates.Idle
+            },
+            $"hp={spawn01.Hp} state={spawn01.State}");
+
+        var spawn07 = projected.First(entity => entity.EntityId == "ENT_MAN_BM_SPAWN_BM_07");
+        Check(
+            "projection.elite_stats",
+            spawn07 is { Kind: WorldEntityKinds.Mob, Hp: 1296, MaxHp: 1296 },
+            $"hp={spawn07.Hp}");
+
+        var bossSpawn = projected.First(entity => entity.EntityId == "ENT_MAN_BM_SPAWN_BM_05_QUEST");
+        Check(
+            "projection.boss_zero_blocked",
+            bossSpawn is { Kind: WorldEntityKinds.Boss, Hp: 0, MaxHp: 0 },
+            $"hp={bossSpawn.Hp}");
+
+        var lifeIdClock = new ManualServerClock(DateTimeOffset.UtcNow);
+        var lifeIdRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [MakeFixtureNode("ENT_SELFCHECK_LIFEID_NODE", "MAN-BM-NODE_BM_ORE_01", 21, 60)]),
+            lifeIdClock);
+        var lifeIdProjection = new WorldEntityProjectionService(
+            lifeIdRegistry,
+            services.GetRequiredService<MobLifecycleService>(),
+            enabledCombat);
+        lifeIdRegistry.Despawn("ENT_SELFCHECK_LIFEID_NODE");
+        lifeIdClock.Advance(TimeSpan.FromSeconds(60));
+        lifeIdRegistry.Update();
+        var lifeIdProjected = lifeIdProjection.Project().Single();
+        Check(
+            "projection.life_id_bump",
+            lifeIdProjected is
+            {
+                State: WorldEntityStates.Available,
+                Revision: 3,
+                LifeId: 2,
+                Hp: 0
+            },
+            $"state={lifeIdProjected.State} revision={lifeIdProjected.Revision} lifeId={lifeIdProjected.LifeId}");
+
         Check("quest.catalog", questCatalog.Count == 1, $"count={questCatalog.Count}");
         Check(
             "quest.catalog_ids",

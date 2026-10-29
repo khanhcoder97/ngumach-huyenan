@@ -119,6 +119,12 @@ builder.Services.AddSingleton(serviceProvider =>
 builder.Services.AddSingleton<IYieldRoller, SystemYieldRoller>();
 builder.Services.AddSingleton<GatherClaimStore>();
 builder.Services.AddSingleton<IInteractionService, InMemoryInteractionService>();
+builder.Services.Configure<P1CombatDamageOptions>(
+    builder.Configuration.GetSection(P1CombatDamageOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<P1CombatDamageOptions>>().Value);
+builder.Services.AddSingleton<CombatDamageFeature>();
+builder.Services.AddSingleton<WorldEntityProjectionService>();
 builder.Services.AddHostedService<WorldTickBackgroundService>();
 
 var app = builder.Build();
@@ -151,6 +157,15 @@ if (mobBehavior.Enabled)
     app.Logger.LogWarning(
         "DEV FIXTURE: P1:MobBehavior is enabled with labelled fixture radii; " +
         "no damage or canonical mob stats are applied.");
+}
+
+var combatDamage = app.Services.GetRequiredService<CombatDamageFeature>();
+if (combatDamage.Enabled)
+{
+    app.Logger.LogWarning(
+        "DEV STUB: P1:CombatDamage is enabled with the REFERENCE_L5 mob stat " +
+        "bundle (DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION); the QOD-16 proposal " +
+        "is not approved yet, so no damage is applied.");
 }
 
 var worldEntities = app.Services.GetRequiredService<WorldEntityRegistry>();
