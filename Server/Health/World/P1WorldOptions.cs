@@ -15,6 +15,9 @@ public sealed class P1WorldOptions
     public int StartingMp { get; set; } = 50;
     public int StartingMaxMp { get; set; } = 50;
     public int StartingLevel { get; set; } = 1;
+
+    // DEC-016 hero footprint 1.2x0.6 WU: half-width used as the swept radius.
+    public double ActorFootprintRadiusWu { get; set; } = 0.6;
 }
 
 public static class P1WorldOptionsValidator
@@ -55,6 +58,13 @@ public static class P1WorldOptionsValidator
         if (!double.IsFinite(options.MaxStepDistanceWu) || options.MaxStepDistanceWu <= 0)
         {
             throw new InvalidOperationException("P1World:MaxStepDistanceWu must be greater than zero.");
+        }
+
+        if (!double.IsFinite(options.ActorFootprintRadiusWu) ||
+            options.ActorFootprintRadiusWu < 0)
+        {
+            throw new InvalidOperationException(
+                "P1World:ActorFootprintRadiusWu must be zero or greater.");
         }
 
         if (options.MoveSpeedWuPerSecond * options.MaxStepSeconds > options.MaxStepDistanceWu + 1e-9)

@@ -64,10 +64,17 @@ Không đổi response/request nào trong PR này.
 - Despawn/respawn đã có; thêm test session hết hạn dọn entity/cooldown (QOD-12 lifecycle).
 - Tick driver 20 Hz với clock thủ công, không sleep.
 
-## 7. Checklist gói QOD-11→15
+## 7. QOD-11b — swept movement (PR tiếp theo)
+
+- `WorldGeometryService.CheckWalkSegment(map, floor, from, to, footprintRadiusWu)`: centerline phải walkable, không cắt blocked, và mọi điểm lấy mẫu ≤0,25 WU phải cách mép blocked ≥ radius; trả `Allowed`/`Blocked`/`NotEnforced`.
+- `MoveAsync` tính vị trí đích rồi kiểm sweep **trước khi** ghi state; `Blocked` → `422 movement_blocked` (code mới, không đổi shape request/response), không tiêu sequence/revision/position. Không có bundle `REVIEWED` → `NotEnforced`, giữ hành vi P1 và log dev stub.
+- Footprint là tham số explicit `P1World:ActorFootprintRadiusWu` (0,6 WU = nửa bề rộng hero DEC-016), không inset map bằng số đoán; radius 0 tắt clearance.
+- Test: 9 assertion mới trong self-check (clear, wall, big step, hole, corner, floor, non-finite radius, footprint 0,6 chặn / 0,1 cho qua), tổng 75. Nhánh reject của endpoint không chạy được trên HTTP smoke vì CI chỉ có bundle synthetic; geometry + guard đã test in-process, wiring được review qua PR.
+
+## 8. Checklist gói QOD-11→15
 
 - [x] QOD-11a: inventory/contract delta + world entity registry + clock injectable.
-- [ ] QOD-11b: swept movement theo topology + footprint + tests.
+- [x] QOD-11b: swept movement theo topology + footprint + tests (PR tiếp theo).
 - [ ] QOD-12: combat/mob lifecycle + cast event proposal.
 - [ ] QOD-13: quest/exploration/gathering.
 - [ ] QOD-14: turn-in/reward atomic.
