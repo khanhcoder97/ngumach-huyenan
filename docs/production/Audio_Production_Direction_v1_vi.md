@@ -1,5 +1,7 @@
 # Âm thanh Ngũ Mạch — thiết kế và danh mục sản xuất v1
 
+**Cập nhật bàn giao 2026-10-29:** đã tạo bộ ứng viên audio thật tại `Client/Assets/AudioManifests/game_audio_v1.json`; xem [Audio_Pack_V1_Delivery_vi.md](Audio_Pack_V1_Delivery_vi.md). Nội dung dưới mô tả snapshot thiết kế ban đầu; baseline 63 cue MISSING vẫn giữ nguyên lịch sử. Chưa nghiệm thu nghe/Unity/runtime/voice.
+
 Codex phụ trách sound direction/cue mapping và review tích hợp. Gói này là thiết kế có dữ liệu, **chưa có clip nhạc/SFX/voice được tạo hoặc nhập Unity**. Muse vẫn phụ trách stems/subtitle/video theo cinema pack; không giao Muse tự sáng tác toàn bộ audio gameplay ngoài hàng đợi đã nhận.
 
 Catalogue: `Implementation/Content/DesignBaselines/audio_cues_v1.json`. 30cue kỹ năng dùng đúng soundKey đã giao trong skill_vfx_art_v1;33cue dùng chung cho combat/UI/world/boss/ambience/music. Mọi clip/source/license còn `null`, assetState MISSING. Không đưa catalogue này vào runtime loader hoặc manifest ảnh của Muse.

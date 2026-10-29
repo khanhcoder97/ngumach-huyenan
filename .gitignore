@@ -31,6 +31,7 @@ Art_Source/Exports/
 # Python cache
 __pycache__/
 *.py[cod]
+.venv-audio/
 
 # Keep the server project file; Unity-generated client projects stay ignored
 !Server/Health/Health.csproj

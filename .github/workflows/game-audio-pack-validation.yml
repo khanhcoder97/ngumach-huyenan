@@ -1,0 +1,41 @@
+name: game-audio-pack-validation
+on:
+  pull_request:
+    paths:
+      - 'Tools/AudioProduction/**'
+      - 'Art_Source/Audio/**'
+      - 'Client/Assets/Audio/**'
+      - 'Client/Assets/AudioManifests/**'
+      - 'Implementation/Content/DesignBaselines/audio_cues_v1.json'
+      - 'Implementation/Content/DesignBaselines/skill_vfx_art_v1.json'
+      - 'Implementation/Content/map_bounds.json'
+      - 'Implementation/Content/Narrative/Cinema_Production_Pack_v1.json'
+      - 'docs/production/World_Spawn_Gathering_Manifest_vi.csv'
+      - 'docs/production/Art_Entity_Weather_UI_Visual_Bible_vi.md'
+      - 'docs/production/NPC_Actor_Production_Registry_vi.csv'
+      - 'docs/production/Pet_Mount_Production_Data_vi.csv'
+      - '.github/workflows/game-audio-pack-validation.yml'
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  decode-and-provenance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r Tools/AudioProduction/requirements.txt
+      - name: Test invalid/corrupt audio, source line endings and bounded OGG codec
+        run: python -m unittest discover -s Tools/AudioProduction -p 'test_*.py' -v
+      - name: Decode every delivered clip and verify binary/source provenance
+        run: python Tools/AudioProduction/validate_pack.py --report Implementation/Reports/Audio_Pack_V1_Technical_QA.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: audio-pack-technical-qa
+          path: Implementation/Reports/Audio_Pack_V1_Technical_QA.json
