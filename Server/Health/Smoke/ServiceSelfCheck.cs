@@ -1375,6 +1375,158 @@ public static class ServiceSelfCheck
             string.Equals(ledgerResult.QuestState.State, QuestStates.Completed, StringComparison.Ordinal),
             ledgerResult?.QuestState.State);
 
+        // ─── failure injection: reward transaction must not partially commit ───
+
+        var failOnceInventory = new FailOnceInventoryDecorator(inventory);
+        var failOnceLedger = new RewardLedgerStore();
+        var failOnceTurnIn = new InMemoryQuestTurnInService(
+            questCatalog,
+            quests,
+            failOnceInventory,
+            npcAnchors,
+            services.GetRequiredService<IWorldGeometryService>(),
+            failOnceLedger,
+            services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
+
+        var failActor = NewPlayer("CHR_SELFCHECK_FAILONCE");
+        quests.Accept(failActor, turnInQuestId);
+        foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
+        {
+            quests.RecordVerifiedEvent(
+                failActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
+                targetId, "MAP_BEN_MUA");
+        }
+        failActor.X = turnInAnchor.X;
+        failActor.Y = turnInAnchor.Y;
+
+        var failedTurnIn = failOnceTurnIn.TurnIn(
+            failActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.failure_injection_rejected",
+            !failedTurnIn.Accepted &&
+            string.Equals(failedTurnIn.Failure!.Code, InventoryErrorCodes.SlotOccupied, StringComparison.Ordinal) &&
+            failedTurnIn.Failure.Retryable,
+            failedTurnIn.Failure?.Code);
+
+        var stateAfterFail = quests.GetState(failActor.CharacterId, turnInQuestId);
+        Check(
+            "turnin.failure_injection_state_kept",
+            stateAfterFail.Accepted &&
+            string.Equals(stateAfterFail.State!.State, QuestStates.ReadyToTurnIn, StringComparison.Ordinal),
+            stateAfterFail.State?.State);
+
+        var inventoryAfterFail = inventory.GetSnapshot(failActor.CharacterId);
+        Check(
+            "turnin.failure_injection_no_partial_reward",
+            inventoryAfterFail.Items.Count == 0 && inventoryAfterFail.Currencies.Count == 0,
+            $"items={inventoryAfterFail.Items.Count} currencies={inventoryAfterFail.Currencies.Count}");
+
+        Check(
+            "turnin.failure_injection_ledger_empty",
+            failOnceLedger.Find(failActor.CharacterId, turnInQuestId) is null,
+            "ledger entry must not exist after failed grant");
+
+        var retriedTurnIn = failOnceTurnIn.TurnIn(
+            failActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.failure_injection_retry_succeeds",
+            retriedTurnIn.Accepted &&
+            string.Equals(retriedTurnIn.Result!.QuestState.State, QuestStates.Completed, StringComparison.Ordinal),
+            retriedTurnIn.Failure?.Code);
+
+        var inventoryAfterRetry = inventory.GetSnapshot(failActor.CharacterId);
+        Check(
+            "turnin.failure_injection_single_reward",
+            inventoryAfterRetry.Currencies.Count == 1 &&
+            inventoryAfterRetry.Currencies[0].Amount == 20 &&
+            inventoryAfterRetry.Items.Count == 1,
+            $"items={inventoryAfterRetry.Items.Count} currencies={inventoryAfterRetry.Currencies.Count}");
+
+        // ─── concurrency: parallel turn-ins must grant exactly once ───
+
+        var parallelActor = NewPlayer("CHR_SELFCHECK_PARALLEL");
+        quests.Accept(parallelActor, turnInQuestId);
+        foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
+        {
+            quests.RecordVerifiedEvent(
+                parallelActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
+                targetId, "MAP_BEN_MUA");
+        }
+        parallelActor.X = turnInAnchor.X;
+        parallelActor.Y = turnInAnchor.Y;
+
+        var parallelOutcomes = new TurnInOutcome[2];
+        Parallel.For(0, 2, index =>
+        {
+            parallelOutcomes[index] = questTurnIn.TurnIn(
+                parallelActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        });
+
+        var parallelAccepted = parallelOutcomes.Count(outcome => outcome.Accepted);
+        var parallelInvalid = parallelOutcomes.Count(outcome =>
+            !outcome.Accepted &&
+            string.Equals(outcome.Failure?.Code, QuestErrorCodes.InvalidTransition, StringComparison.Ordinal));
+        Check(
+            "turnin.parallel_exactly_one_win",
+            parallelAccepted == 1 && parallelInvalid == 1,
+            $"accepted={parallelAccepted} invalid={parallelInvalid} " +
+            $"codes={string.Join(",", parallelOutcomes.Select(o => o.Failure?.Code ?? "ok"))}");
+
+        var parallelInventory = inventory.GetSnapshot(parallelActor.CharacterId);
+        Check(
+            "turnin.parallel_single_reward",
+            parallelInventory.Currencies.Count == 1 &&
+            parallelInventory.Currencies[0].Amount == 20 &&
+            parallelInventory.Items.Count == 1,
+            $"items={parallelInventory.Items.Count} currencies={parallelInventory.Currencies.Count}");
+
+        // same key in parallel: contention must never double-grant; both threads
+        // either replay the stored result or one gets invalid_transition.
+        var replayActor = NewPlayer("CHR_SELFCHECK_PARALLEL_REPLAY");
+        quests.Accept(replayActor, turnInQuestId);
+        foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
+        {
+            quests.RecordVerifiedEvent(
+                replayActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
+                targetId, "MAP_BEN_MUA");
+        }
+        replayActor.X = turnInAnchor.X;
+        replayActor.Y = turnInAnchor.Y;
+
+        var sameKey = Guid.NewGuid().ToString("N");
+        var sameKeyOutcomes = new TurnInOutcome[2];
+        Parallel.For(0, 2, index =>
+        {
+            sameKeyOutcomes[index] = questTurnIn.TurnIn(
+                replayActor, turnInQuestId, "NPC_TA_VAN_KHANH", sameKey);
+        });
+
+        var sameKeyAccepted = sameKeyOutcomes.Count(outcome => outcome.Accepted);
+        var sameKeyRevisions = sameKeyOutcomes
+            .Where(outcome => outcome.Accepted)
+            .Select(outcome => outcome.Result!.QuestState.Revision)
+            .Distinct()
+            .Count();
+        var sameKeyRejectionsValid = sameKeyOutcomes
+            .Where(outcome => !outcome.Accepted)
+            .All(outcome =>
+                string.Equals(outcome.Failure?.Code, QuestErrorCodes.InvalidTransition, StringComparison.Ordinal));
+        Check(
+            "turnin.parallel_same_key_contention",
+            sameKeyAccepted is >= 1 and <= 2 &&
+            sameKeyRevisions == 1 &&
+            sameKeyRejectionsValid,
+            $"accepted={sameKeyAccepted} distinctRevisions={sameKeyRevisions} " +
+            $"codes={string.Join(",", sameKeyOutcomes.Select(o => o.Failure?.Code ?? "ok"))}");
+
+        var sameKeyInventory = inventory.GetSnapshot(replayActor.CharacterId);
+        Check(
+            "turnin.parallel_same_key_single_reward",
+            sameKeyInventory.Currencies.Count == 1 &&
+            sameKeyInventory.Currencies[0].Amount == 20 &&
+            sameKeyInventory.Items.Count == 1,
+            $"items={sameKeyInventory.Items.Count} currencies={sameKeyInventory.Currencies.Count}");
+
         var teleportActor = NewPlayer("CHR_SELFCHECK_TELEPORT");
         var badMapShape = teleport.Teleport(
             teleportActor,
@@ -1469,5 +1621,31 @@ public static class ServiceSelfCheck
         }
 
         public int Roll(int minInclusive, int maxInclusive) => _value;
+    }
+
+    private sealed class FailOnceInventoryDecorator : IInventoryService
+    {
+        private readonly IInventoryService _inner;
+        private bool _failed;
+
+        public FailOnceInventoryDecorator(IInventoryService inner)
+        {
+            _inner = inner;
+        }
+
+        public InventorySnapshot GetSnapshot(string characterId) =>
+            _inner.GetSnapshot(characterId);
+
+        public InventoryOutcome Apply(PlayerSession actor, InventoryMutation? mutation)
+        {
+            if (!_failed)
+            {
+                _failed = true;
+                return InventoryOutcome.Rejected(
+                    InventoryErrorCodes.SlotOccupied, retryable: true, "rewards");
+            }
+
+            return _inner.Apply(actor, mutation);
+        }
     }
 }

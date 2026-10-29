@@ -120,10 +120,30 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
                 "state");
         }
 
-        // Atomic transaction: grant → flip → ledger, under actor lock.
+        // Atomic transaction: grant → flip → ledger, under actor lock. The state
+        // check above is a fast path only; the authoritative re-check inside the
+        // lock prevents a parallel turn-in from granting twice.
         TurnInResult result;
         lock (actor.SyncRoot)
         {
+            var authoritative = _quests.GetState(actor.CharacterId, questId);
+            if (!authoritative.Accepted || authoritative.State is null)
+            {
+                return TurnInOutcome.Rejected(
+                    QuestErrorCodes.QuestNotFound,
+                    retryable: false,
+                    "payload.questId");
+            }
+
+            if (!string.Equals(
+                    authoritative.State.State, QuestStates.ReadyToTurnIn, StringComparison.Ordinal))
+            {
+                return TurnInOutcome.Rejected(
+                    QuestErrorCodes.InvalidTransition,
+                    retryable: false,
+                    "state");
+            }
+
             var currencyDeltas = definition.Rewards.Currency
                 .Select(c => new CurrencyDelta { CurrencyId = c.CurrencyId, Amount = c.Amount })
                 .ToList();
