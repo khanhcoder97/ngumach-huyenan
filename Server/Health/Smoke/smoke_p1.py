@@ -521,7 +521,10 @@ def main():
           f"interact kind {interact_result.get('kind')}")
     check(interact_result.get("outcome") == "collected",
           f"interact outcome {interact_result.get('outcome')}")
-    check(interact_result.get("targetState") == "DEPLETED",
+    # P00-01 packages are per-character claims (Production Rules §5): the
+    # world state stays AVAILABLE for other characters, only this character's
+    # claim window is consumed.
+    check(interact_result.get("targetState") == "AVAILABLE",
           f"interact targetState {interact_result.get('targetState')}")
     check(interact_result.get("yield") is None,
           f"package must not yield {interact_result.get('yield')}")
