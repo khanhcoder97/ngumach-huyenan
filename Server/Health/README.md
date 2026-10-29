@@ -258,6 +258,7 @@ python Implementation/Tools/build_npc_anchors.py
 - `InMemoryCombatService.Resolve(PlayerSession, CombatCommand)` validates the command, then applies gates in order: skill/class, per-actor `inputSequence`, target existence/map/alive/range, cooldown, and MP cost. Accepted casts decrement MP, advance `LastInputSequence` and `Revision`, and return a schema-shaped `combat.effect` `CombatEvent`. `LastInputSequence` is shared with movement, so clients must keep one monotonic input sequence per actor.
 - Client `aimX`/`aimY` and `clientTimeUtc` are validated but not trusted. Damage and hit resolution are intentionally not implemented because no canonical damage formula or character stats exist yet; the returned event carries no `damage` or `hit`.
 - `combat.effect` is returned to the caller, not broadcast; transport and persistence arrive with the real-time layer.
+- `idempotencyKey` is scoped to the character: replaying an accepted cast with the same key and payload returns the stored outcome before the stale-sequence guard; the same key with a different payload returns `409 idempotency_conflict`.
 
 Internal failure codes: `unknown_skill`, `skill_not_available`, `invalid_target`, `target_not_found`, `target_not_alive`, `out_of_range`, `cooldown_active`, `insufficient_resource`, `unsupported_resource`, plus the shared `invalid_payload` and `stale_sequence`.
 
@@ -359,7 +360,7 @@ Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond
 | 422 | `out_of_range` | Quest accept: different map/floor, or farther than 5 WU |
 | 422 | `prerequisite_not_met` | Quest accept: prerequisites incomplete or level outside the band |
 | 409 | `invalid_transition` | Quest accept: state is not `AVAILABLE` |
-| 409 | `idempotency_conflict` | Quest accept: same `idempotencyKey` with a different payload |
+| 409 | `idempotency_conflict` | Quest accept or combat cast: same `idempotencyKey` with a different payload |
 
 All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and `correlationId`. Quest, inventory and teleport service codes listed above are domain results; they have no HTTP mapping yet.
 
@@ -392,7 +393,7 @@ Quest and inventory HTTP surfaces are read-only, teleport has no endpoint, and c
 dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
 ```
 
-The flag boots the DI container and canonical content, then runs 80 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), world-target resolution and floor checks, the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency, line-of-sight and swept-walk geometry (clear, wall, large step, hole, corner, floor, non-finite, outside, footprint, not-enforced), the NPC anchor registry, the Bến Mưa world-entity registry with despawn/respawn under a manual clock, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
+The flag boots the DI container and canonical content, then runs 82 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), world-target resolution and floor checks, the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency, line-of-sight and swept-walk geometry (clear, wall, large step, hole, corner, floor, non-finite, outside, footprint, not-enforced), the NPC anchor registry, the Bến Mưa world-entity registry with despawn/respawn under a manual clock, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
 
 ## Manual verification
 

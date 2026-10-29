@@ -1,4 +1,7 @@
 using System.Collections.Concurrent;
+using System.Globalization;
+using System.Security.Cryptography;
+using System.Text;
 using Server.Health.Contracts;
 using Server.Health.World;
 
@@ -11,6 +14,8 @@ public sealed class InMemoryCombatService : ICombatService
     private readonly ServerClock _clock;
     private readonly ConcurrentDictionary<string, DateTimeOffset> _cooldowns =
         new(StringComparer.Ordinal);
+    private readonly ConcurrentDictionary<(string CharacterId, string Key), IdempotencyEntry>
+        _idempotency = new();
 
     public InMemoryCombatService(
         ICombatSkillCatalog skills,
@@ -22,10 +27,25 @@ public sealed class InMemoryCombatService : ICombatService
         _clock = clock;
     }
 
-    public CombatOutcome Resolve(PlayerSession actor, CombatCommand command)
+    public CombatOutcome Resolve(
+        PlayerSession actor, CombatCommand command, string? idempotencyKey = null)
     {
         ArgumentNullException.ThrowIfNull(actor);
         ArgumentNullException.ThrowIfNull(command);
+
+        var requestHash = idempotencyKey is null ? null : Hash(command);
+        var idempotencyEntryKey = (actor.CharacterId, idempotencyKey ?? string.Empty);
+        if (requestHash is not null &&
+            _idempotency.TryGetValue(idempotencyEntryKey, out var prior))
+        {
+            if (!string.Equals(prior.RequestHash, requestHash, StringComparison.Ordinal))
+            {
+                return CombatOutcome.Rejected(
+                    CombatErrorCodes.IdempotencyConflict, retryable: false, "idempotencyKey");
+            }
+
+            return prior.Outcome;
+        }
 
         var fieldErrors = Validate(command);
         if (fieldErrors.Count > 0)
@@ -121,7 +141,13 @@ public sealed class InMemoryCombatService : ICombatService
                 }
             };
 
-            return CombatOutcome.Success(combatEvent);
+            var outcome = CombatOutcome.Success(combatEvent);
+            if (requestHash is not null)
+            {
+                _idempotency[idempotencyEntryKey] = new IdempotencyEntry(requestHash, outcome);
+            }
+
+            return outcome;
         }
     }
 
@@ -233,4 +259,19 @@ public sealed class InMemoryCombatService : ICombatService
 
     private static string CooldownKey(string characterId, string skillId) =>
         string.Concat(characterId, "|", skillId);
+
+    private static string Hash(CombatCommand command)
+    {
+        var payload = string.Join(
+            '|',
+            command.SkillId,
+            command.TargetId,
+            command.AimX?.ToString("R", CultureInfo.InvariantCulture),
+            command.AimY?.ToString("R", CultureInfo.InvariantCulture),
+            command.ClientTimeUtc,
+            command.InputSequence?.ToString(CultureInfo.InvariantCulture));
+        return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(payload)));
+    }
+
+    private sealed record IdempotencyEntry(string RequestHash, CombatOutcome Outcome);
 }

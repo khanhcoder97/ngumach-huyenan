@@ -35,4 +35,5 @@ public static class CombatErrorCodes
     public const string CooldownActive = "cooldown_active";
     public const string InsufficientResource = "insufficient_resource";
     public const string UnsupportedResource = "unsupported_resource";
+    public const string IdempotencyConflict = "idempotency_conflict";
 }

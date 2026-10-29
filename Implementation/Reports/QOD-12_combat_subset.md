@@ -64,3 +64,10 @@ Xem proposal `Implementation/Work_Orders/Proposals/QOD-12_CombatCastEvent_vi.md`
 - DI: `ICombatTargetProvider` là composite (world registry + in-memory test registry), nên self-check/dev vẫn upsert target giả được.
 - Test mới: resolve mob 84,0; NPC bị từ chối; `SK-MK-02` ngoài 11 WU → `out_of_range`; `SK-MK-03` (chưa có range) resolve target thật và trừ MP 22; target khác floor → `target_not_found`. Tổng self-check 80.
 - Vẫn **không** có damage/HP: mob chết/aggro/leash/respawn AI là phần tiếp theo của QOD-12b, dùng config fixture có nhãn.
+
+## 9. QOD-12c — idempotency cast (đã implement)
+
+- `ICombatService.Resolve` nhận `idempotencyKey`; store theo `(characterId, key)` giữ request hash + `CombatOutcome`.
+- Replay cùng key + cùng payload trả lại đúng outcome đã lưu **trước** stale-sequence guard (không trừ MP/cooldown/revision lần hai); cùng key khác payload → `409 idempotency_conflict`.
+- Chỉ accepted outcome được lưu; cast bị từ chối không tạo entry và không phát impact giả.
+- Test mới: replay giữ nguyên MP 38/revision 2 và cùng event; conflict khi đổi `inputSequence` với cùng key. Tổng self-check 82.
