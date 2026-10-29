@@ -389,7 +389,7 @@ Quest and inventory HTTP surfaces are read-only, teleport has no endpoint, and c
 dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
 ```
 
-The flag boots the DI container and canonical content, then runs 64 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency and line-of-sight geometry (clear, wall, hole, corner, floor, non-finite, outside, not-enforced), the NPC anchor registry, the Bến Mưa world-entity registry with despawn/respawn under a manual clock, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
+The flag boots the DI container and canonical content, then runs 66 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency and line-of-sight geometry (clear, wall, hole, corner, floor, non-finite, outside, not-enforced), the NPC anchor registry, the Bến Mưa world-entity registry with despawn/respawn under a manual clock, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
 
 ## Manual verification
 
