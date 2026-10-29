@@ -67,7 +67,7 @@ class FixtureTests(unittest.TestCase):
 
     def test_png_generated(self):
         """Verify synthetic fixture was created."""
-        png = Path("Client/Assets/Art/Fixtures/synthetics/actor_8dir_test.png")
+        png = Path("Tools/AssetPreview/fixtures/actor_8dir_test.png")
         
         if png.exists():
             data = png.read_bytes()
@@ -80,7 +80,7 @@ class FixtureTests(unittest.TestCase):
 
     def test_meta_generated(self):
         """Verify Unity .meta file created."""
-        meta = Path("Client/Assets/Art/Fixtures/synthetics/actor_8dir_test.png.meta")
+        meta = Path("Tools/AssetPreview/fixtures/actor_8dir_test.png.meta")
         
         if meta.exists():
             content = meta.read_text(encoding='utf-8-sig')

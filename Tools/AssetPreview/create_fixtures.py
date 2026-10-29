@@ -109,7 +109,7 @@ TextureImporter:
 
 
 def main():
-    base = Path("Client/Assets/Art/Fixtures/synthetics")
+    base = Path("Tools/AssetPreview/fixtures")
     base.mkdir(parents=True, exist_ok=True)
     
     print("="*60)
