@@ -491,6 +491,185 @@ public static class ServiceSelfCheck
             guardPrecision.Counter is { DelayTicks: 1, MaxTargets: 1 } &&
             guardPrecision.Whiff is { DurationTicks: 20, DamageReduction: 0.2 });
 
+        // QOD-16 ph2 reliable event read: monotonic cursor, bounded buffer,
+        // explicit resync and replay-safe appends.
+        var eventStore = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 4,
+            MaxPageSize = 2
+        });
+        var eventSession = "e2e00000000000000000000000000000";
+        CombatEventV2 MakeOutcomeEvent(string eventId, string castId, long tick) =>
+            new(
+                eventId,
+                CombatEventTypesV2.Impact,
+                castId,
+                "CHR_SELFCHECK_EVENTS",
+                "ENT_MAN_BM_SPAWN_BM_01",
+                1,
+                0,
+                "MAP_BEN_MUA#1",
+                "OVERWORLD",
+                1,
+                2,
+                tick,
+                new DateTimeOffset(2026, 10, 30, 2, 0, 0, TimeSpan.Zero),
+                new CombatEventResultV2(true, false, false, 27, 0, 27));
+
+        var appendedEvents = new List<CombatEventV2>();
+        for (var index = 1; index <= 3; index++)
+        {
+            appendedEvents.Add(eventStore.Append(
+                eventSession,
+                MakeOutcomeEvent(index.ToString("x32"), new string('c', 32), 100 + index)));
+        }
+
+        var firstEventPage = eventStore.Read(eventSession, 0, 0);
+        Check(
+            "eventstore.append_monotonic",
+            appendedEvents.Select(item => item.Cursor).SequenceEqual(new long[] { 1, 2, 3 }) &&
+            firstEventPage.Events.Select(item => item.Cursor).SequenceEqual(new long[] { 1, 2 }) &&
+            firstEventPage.NextCursor == 2 &&
+            !firstEventPage.ResyncRequired,
+            $"cursors={string.Join(",", appendedEvents.Select(item => item.Cursor))} " +
+            $"page={firstEventPage.Events.Count}");
+
+        var sinceFirstEvent = eventStore.Read(eventSession, 1, 10);
+        Check(
+            "eventstore.read_since_cursor",
+            sinceFirstEvent.Events.Select(item => item.Cursor).SequenceEqual(new long[] { 2, 3 }) &&
+            sinceFirstEvent.NextCursor == 3,
+            $"next={sinceFirstEvent.NextCursor}");
+
+        var upToDatePage = eventStore.Read(eventSession, 3, 0);
+        Check(
+            "eventstore.read_up_to_date",
+            upToDatePage.Events.Count == 0 &&
+            upToDatePage.NextCursor == 3 &&
+            !upToDatePage.ResyncRequired);
+
+        var replayedEvent = eventStore.Append(
+            eventSession, MakeOutcomeEvent(1.ToString("x32"), new string('c', 32), 105));
+        Check(
+            "eventstore.replay_idempotent",
+            replayedEvent.Cursor == 1 &&
+            eventStore.Read(eventSession, 2, 0).Events.Select(item => item.Cursor)
+                .SequenceEqual(new long[] { 3 }) &&
+            eventStore.Read(eventSession, 0, 0).NextCursor == 2,
+            $"replayCursor={replayedEvent.Cursor}");
+
+        var invalidEventRejected = false;
+        try
+        {
+            eventStore.Append(
+                eventSession,
+                MakeOutcomeEvent(new string('f', 32), new string('c', 32), 106) with
+                {
+                    Type = CombatEventTypesV2.CounterConfirmed
+                });
+        }
+        catch (InvalidOperationException)
+        {
+            invalidEventRejected = true;
+        }
+
+        Check("eventstore.invalid_event_shape", invalidEventRejected);
+
+        for (var index = 4; index <= 6; index++)
+        {
+            eventStore.Append(
+                eventSession,
+                MakeOutcomeEvent(index.ToString("x32"), new string('c', 32), 100 + index));
+        }
+
+        var overflowPage = eventStore.Read(eventSession, 0, 0);
+        Check(
+            "eventstore.buffer_overflow",
+            overflowPage.ResyncRequired &&
+            overflowPage.ResyncReason == CombatEventResyncReasons.BufferOverflow &&
+            overflowPage.Events.Count == 0 &&
+            overflowPage.NextCursor == 6,
+            $"{overflowPage.ResyncReason} next={overflowPage.NextCursor}");
+
+        var retainedPage = eventStore.Read(eventSession, 2, 0);
+        Check(
+            "eventstore.retained_window_read",
+            !retainedPage.ResyncRequired &&
+            retainedPage.Events.Select(item => item.Cursor).SequenceEqual(new long[] { 3, 4 }) &&
+            retainedPage.NextCursor == 4,
+            $"next={retainedPage.NextCursor}");
+
+        var aheadPage = eventStore.Read(eventSession, 99, 0);
+        Check(
+            "eventstore.cursor_too_old",
+            aheadPage.ResyncRequired &&
+            aheadPage.ResyncReason == CombatEventResyncReasons.CursorTooOld &&
+            aheadPage.Events.Count == 0 &&
+            aheadPage.NextCursor == 6);
+
+        Check(
+            "eventstore.page_limit",
+            eventStore.Read(eventSession, 2, 100).Events.Count == 2 &&
+            eventStore.Read(eventSession, 4, 1).Events.Count == 1);
+
+        var otherEventSession = "e2e11111111111111111111111111111";
+        var otherEvent = eventStore.Append(
+            otherEventSession, MakeOutcomeEvent(new string('a', 32), new string('c', 32), 200));
+        Check(
+            "eventstore.session_isolation",
+            otherEvent.Cursor == 1 &&
+            eventStore.Read(otherEventSession, 0, 0).Events.Single().Cursor == 1);
+
+        eventStore.RemoveSession(otherEventSession);
+        var freshLifetimeEvent = eventStore.Append(
+            otherEventSession, MakeOutcomeEvent(new string('b', 32), new string('c', 32), 210));
+        Check(
+            "eventstore.session_lifetime_reset",
+            freshLifetimeEvent.Cursor == 1 &&
+            eventStore.Read(otherEventSession, 0, 0).NextCursor == 1);
+
+        var invalidOptionsRejected = false;
+        try
+        {
+            _ = new CombatEventStore(new CombatEventStreamOptions
+            {
+                CapacityPerSession = 4,
+                MaxPageSize = 5
+            });
+        }
+        catch (InvalidOperationException)
+        {
+            invalidOptionsRejected = true;
+        }
+
+        Check("eventstore.options_validated", invalidOptionsRejected);
+
+        var parallelEventStore = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 128,
+            MaxPageSize = 128
+        });
+        var parallelEventSession = "e2e22222222222222222222222222222";
+        RunBarrierParallel(4, slot =>
+        {
+            for (var index = 0; index < 25; index++)
+            {
+                var ordinal = (slot * 25) + index + 1;
+                parallelEventStore.Append(
+                    parallelEventSession,
+                    MakeOutcomeEvent(ordinal.ToString("x32"), new string('d', 32), 300 + ordinal));
+            }
+        });
+        var parallelEventPage = parallelEventStore.Read(parallelEventSession, 0, 0);
+        Check(
+            "eventstore.parallel_append_monotonic",
+            parallelEventPage.Events.Count == 100 &&
+            parallelEventPage.Events.Select(item => item.Cursor).Distinct().Count() == 100 &&
+            parallelEventPage.Events.Select(item => item.Cursor).SequenceEqual(
+                Enumerable.Range(1, 100).Select(value => (long)value)) &&
+            parallelEventPage.NextCursor == 100,
+            $"count={parallelEventPage.Events.Count} next={parallelEventPage.NextCursor}");
+
         Check(
             "damage.oracle_raw",
             Near(DamageFormula.RawDamage(20, 0, 1.5, 1, 0), 30),
