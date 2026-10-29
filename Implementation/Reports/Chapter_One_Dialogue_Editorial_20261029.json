@@ -1,0 +1,46 @@
+{
+  "state": "EDITORIAL_CANDIDATE_NOT_VOICE_OR_RUNTIME_APPROVAL",
+  "baseCommit": "d34fd46bbe2f0c38c83dbe30d1aa787b781c9356",
+  "totalRows": 230,
+  "changedRows": 18,
+  "editedRowsTotal": 33,
+  "baselineRowsRemaining": 197,
+  "changedFields": [
+    "text_vi",
+    "localization_status"
+  ],
+  "logicFieldsUnchanged": true,
+  "changedNodeIds": [
+    "DLG_C1_01_OFFER",
+    "DLG_C1_01_CLUE",
+    "DLG_C1_01_TURN_IN",
+    "DLG_C1_02_OFFER",
+    "DLG_C1_02_CLUE",
+    "DLG_C1_02_TURN_IN",
+    "DLG_C1_03_OFFER",
+    "DLG_C1_03_CLUE",
+    "DLG_C1_03_TURN_IN",
+    "DLG_C1_04_OFFER",
+    "DLG_C1_04_CLUE",
+    "DLG_C1_04_TURN_IN",
+    "DLG_C1_05_OFFER",
+    "DLG_C1_05_CLUE",
+    "DLG_C1_05_TURN_IN",
+    "DLG_C1_06_OFFER",
+    "DLG_C1_06_CLUE",
+    "DLG_C1_06_TURN_IN"
+  ],
+  "sourceRefs": [
+    "docs/production/Narrative_Depth_and_Discovery_vi.md#3",
+    "docs/production/Narrative_Depth_and_Discovery_vi.md#4",
+    "docs/production/Narrative_Depth_and_Discovery_vi.md#6",
+    "docs/production/Quest_and_Narrative_Production_Spec_vi.md#Chương-I"
+  ],
+  "csvSha256Utf8Lf": "cdb1551922e036d9eb9ae9926f41f4e3b77953834029c1398408f4eb7df8a979",
+  "exclusions": [
+    "Voice recording",
+    "Unity subtitle/font metrics",
+    "Runtime quest/reveal guard implementation",
+    "Owner final sign-off"
+  ]
+}

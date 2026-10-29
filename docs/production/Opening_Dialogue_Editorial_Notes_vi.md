@@ -1,5 +1,7 @@
 # Biên tập thoại mở đầu — P00-01 đến P00-05
 
+Cập nhật đợt Chương I: xem `Chapter_One_Dialogue_Editorial_Notes_vi.md`. Đã biên tập thêm18lời C1-01..06, tổng33/230lời;197lời còn baseline. Số15/215 bên dưới ghi phạm vi snapshot đợt P00 ban đầu, không phải trạng thái hiện hành của cả CSV.
+
 Codex biên tập15dòng trong `Quest_Dialogue_Production_Data_vi.csv`: OFFER/CLUE/TURN_IN của5quest đầu. Giữ nguyên quest ID, node ID, speaker, condition, text key, next node, event và flag. Trạng thái copy `VI_EDITED_P1`; chưa voice-recorded, chưa UI/owner sign-off. 215dòng còn lại trong tổng230 vẫn chờ line-edit, không đổi thành approved hàng loạt.
 
 ## Giọng nói và thông tin
