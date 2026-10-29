@@ -49,6 +49,22 @@ internal static class Program
     private static async Task RunCases()
     {
         {
+            var previous = System.Globalization.CultureInfo.CurrentCulture;
+            try
+            {
+                System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo("th-TH");
+                var t = new Script(); t.Add(Reply(World(), 201));
+                var c = new P1Client(t, () => new DateTimeOffset(2026, 10, 29, 0, 0, 0, TimeSpan.Zero));
+                await c.ConnectAsync(None);
+                t.Steps.Enqueue((r, ct) => {
+                    Check(P1Wire.Decode<P1Envelope<P1Move>>(r.Body).sentAtUtc == "2026-10-29T00:00:00Z", "wire UTC must not use the device's Thai calendar");
+                    return Task.FromResult(Reply(World(2, 19)));
+                });
+                Check((await c.MoveAsync(1, 0, None)).Success, "non-Gregorian device locale supported");
+            }
+            finally { System.Globalization.CultureInfo.CurrentCulture = previous; }
+        }
+        {
             var t = new Script(); var c = await Connected(t);
             t.Steps.Enqueue((r, ct) => {
                 var env = P1Wire.Decode<P1Envelope<P1Move>>(r.Body);
