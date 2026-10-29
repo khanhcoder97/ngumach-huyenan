@@ -133,13 +133,36 @@ public sealed class InMemoryInteractionService : IInteractionService
 
             if (entity.Kind == WorldEntityKinds.Interactable)
             {
-                if (!_entities.Despawn(entity.EntityId))
+                if (string.Equals(
+                        entity.ClaimPolicy,
+                        WorldEntityClaimPolicies.PerCharacter,
+                        StringComparison.Ordinal))
+                {
+                    // Production_Rules §5: the P00-01 packages count at most
+                    // once per character and never remove the world item for
+                    // other characters — claim per character and leave the
+                    // shared registry state AVAILABLE.
+                    if (!_claims.TryClaim(
+                            actor.CharacterId, entity.EntityId, entity.RespawnSeconds,
+                            out var perCharacterRespawnAt, out _))
+                    {
+                        return InteractionOutcome.Rejected(
+                            InteractionErrorCodes.TargetNotAvailable,
+                            retryable: false,
+                            "payload.targetId");
+                    }
+
+                    if (entity.RespawnSeconds > 0)
+                    {
+                        respawnAtUtc = P1Time.ToUtcString(perCharacterRespawnAt);
+                    }
+                }
+                else if (!_entities.Despawn(entity.EntityId))
                 {
                     return InteractionOutcome.Rejected(
                         InteractionErrorCodes.TargetNotAvailable, retryable: false, "payload.targetId");
                 }
-
-                if (entity.RespawnSeconds > 0)
+                else if (entity.RespawnSeconds > 0)
                 {
                     respawnAtUtc = P1Time.ToUtcString(claimedAt.AddSeconds(entity.RespawnSeconds));
                 }

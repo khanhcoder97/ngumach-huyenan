@@ -990,7 +990,8 @@ public static class ServiceSelfCheck
             string entityId,
             string recordId,
             double x,
-            int respawnSeconds)
+            int respawnSeconds,
+            string claimPolicy = WorldEntityClaimPolicies.Shared)
         {
             var interactable = new WorldEntityInstance
             {
@@ -1003,7 +1004,8 @@ public static class ServiceSelfCheck
                 X = x,
                 Y = 0,
                 Quantity = 1,
-                RespawnSeconds = respawnSeconds
+                RespawnSeconds = respawnSeconds,
+                ClaimPolicy = claimPolicy
             };
             interactable.Initialize();
             return interactable;
@@ -1207,6 +1209,246 @@ public static class ServiceSelfCheck
             dedupeState is { State: QuestStates.Active } &&
             dedupeState.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 1,
             $"{dedupe2.Failure?.Code} updates={dedupe2.Result?.QuestUpdates.Count}");
+
+        // Production Rules §5: P00-01 packages are per-character claims — two
+        // characters collect all three at the same time without waiting for a
+        // global respawn, and the shared registry state never leaves AVAILABLE.
+        var packageClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 29, 6, 0, 0, TimeSpan.Zero));
+        var packageRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [
+                    MakeFixtureInteractable(
+                        "ENT_SELFCHECK_PKG1", "MAN-BM-OBJ_BM_PACKAGE_01", 36, 20,
+                        WorldEntityClaimPolicies.PerCharacter),
+                    MakeFixtureInteractable(
+                        "ENT_SELFCHECK_PKG2", "MAN-BM-OBJ_BM_PACKAGE_02", 44, 20,
+                        WorldEntityClaimPolicies.PerCharacter),
+                    MakeFixtureInteractable(
+                        "ENT_SELFCHECK_PKG3", "MAN-BM-OBJ_BM_PACKAGE_03", 52, 20,
+                        WorldEntityClaimPolicies.PerCharacter)
+                ]),
+            packageClock);
+        var packageQuests = new InMemoryQuestService(
+            questCatalog, new InMemoryQuestStateStore(), worldRecords, packageClock);
+        var packageInteractions = new InMemoryInteractionService(
+            packageRegistry,
+            worldRecords,
+            packageQuests,
+            new InMemoryInventoryService(new InMemoryInventoryStateStore()),
+            services.GetRequiredService<IWorldGeometryService>(),
+            packageClock,
+            fixedRoller,
+            new GatherClaimStore(packageClock),
+            interactOptions);
+
+        var packageActorA = NewPlayer("CHR_SELFCHECK_PACKAGE_A");
+        var packageActorB = NewPlayer("CHR_SELFCHECK_PACKAGE_B");
+        packageQuests.Accept(packageActorA, "P00-01");
+        packageQuests.Accept(packageActorB, "P00-01");
+
+        var packageTargets = new[]
+        {
+            ("ENT_SELFCHECK_PKG1", 36.0),
+            ("ENT_SELFCHECK_PKG2", 44.0),
+            ("ENT_SELFCHECK_PKG3", 52.0)
+        };
+        var packageOutcomes = new InteractionOutcome?[packageTargets.Length, 2];
+        using (var packageBarrier = new Barrier(2))
+        {
+            RunBarrierParallel(2, index =>
+            {
+                var session = index == 0 ? packageActorA : packageActorB;
+                var keyStem = index == 0 ? 'a' : 'b';
+                for (var step = 0; step < packageTargets.Length; step++)
+                {
+                    session.X = packageTargets[step].Item2;
+                    session.Y = 0;
+                    packageBarrier.SignalAndWait();
+                    packageOutcomes[step, index] = packageInteractions.Interact(
+                        session,
+                        packageTargets[step].Item1,
+                        $"{keyStem}{step}{new string('0', 30)}");
+                }
+            });
+        }
+
+        var packageAccepted = packageOutcomes
+            .Cast<InteractionOutcome?>()
+            .Count(outcome => outcome is { Accepted: true });
+        var packageStateA = packageQuests.GetState(packageActorA.CharacterId, "P00-01").State;
+        var packageStateB = packageQuests.GetState(packageActorB.CharacterId, "P00-01").State;
+        Check(
+            "interact.package_per_character_parallel",
+            packageAccepted == 6 &&
+            packageStateA is { State: QuestStates.ReadyToTurnIn } &&
+            packageStateB is { State: QuestStates.ReadyToTurnIn } &&
+            packageStateA.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 3 &&
+            packageStateB.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 3,
+            $"accepted={packageAccepted}/6 a={packageStateA?.State} b={packageStateB?.State}");
+
+        packageRegistry.TryGet("ENT_SELFCHECK_PKG1", out var packageEntity);
+        Check(
+            "interact.package_state_stays_available",
+            packageEntity.State == WorldEntityStates.Available &&
+            packageRegistry.Update() == 0,
+            packageEntity.State);
+
+        var packageReclaim = packageInteractions.Interact(
+            packageActorA, "ENT_SELFCHECK_PKG1", new string('7', 32));
+        Check(
+            "interact.package_per_character_window",
+            packageReclaim.Failure?.Code == InteractionErrorCodes.TargetNotAvailable,
+            packageReclaim.Failure?.Code);
+
+        packageClock.Advance(TimeSpan.FromSeconds(20));
+        var packageReclaimAfterWindow = packageInteractions.Interact(
+            packageActorA, "ENT_SELFCHECK_PKG1", new string('8', 32));
+        Check(
+            "interact.package_per_character_respawn",
+            packageReclaimAfterWindow.Accepted &&
+            packageReclaimAfterWindow.Result!.QuestUpdates.Count == 0 &&
+            packageQuests.GetState(packageActorA.CharacterId, "P00-01").State is
+            {
+                State: QuestStates.ReadyToTurnIn
+            },
+            packageReclaimAfterWindow.Failure?.Code);
+
+        // Progress dedupe scope: unique(actor, quest, objective, event-or-record)
+        // — state is per character + quest, so the objective scope keeps two
+        // valid objectives that reference the same record independent.
+        static QuestDefinition MakeSyntheticQuest(
+            string questId, params QuestObjectiveDefinition[] objectives) =>
+            new(
+                questId,
+                QuestTypes.Side,
+                "NPC_LYAN",
+                1,
+                10,
+                [],
+                objectives,
+                QuestStepIds.FromObjectiveId(objectives[0].ObjectiveId),
+                "NPC_TA_VAN_KHANH",
+                new QuestRewards([], [], "LEVEL_BAND_BASE"),
+                []);
+
+        var syntheticDefinitions = new Dictionary<string, QuestDefinition>(StringComparer.Ordinal)
+        {
+            ["QOD_TEST_DEDUPE"] = MakeSyntheticQuest(
+                "QOD_TEST_DEDUPE",
+                new QuestObjectiveDefinition(
+                    "OBJ_TEST_SHARE_A", QuestObjectiveTypes.Collect,
+                    ["MAN-BM-OBJ_BM_PACKAGE_01"], 1, options.DefaultMapId),
+                new QuestObjectiveDefinition(
+                    "OBJ_TEST_SHARE_B", QuestObjectiveTypes.Collect,
+                    ["MAN-BM-OBJ_BM_PACKAGE_01", "MAN-BM-OBJ_BM_PACKAGE_02"], 2,
+                    options.DefaultMapId)),
+            ["QOD_TEST_SEQUENTIAL"] = MakeSyntheticQuest(
+                "QOD_TEST_SEQUENTIAL",
+                new QuestObjectiveDefinition(
+                    "OBJ_TEST_SEQ_A", QuestObjectiveTypes.Collect,
+                    ["MAN-BM-OBJ_BM_PACKAGE_01"], 1, options.DefaultMapId),
+                new QuestObjectiveDefinition(
+                    "OBJ_TEST_SEQ_B", QuestObjectiveTypes.Collect,
+                    ["MAN-BM-OBJ_BM_PACKAGE_03"], 1, options.DefaultMapId)),
+            ["QOD_TEST_KILL"] = MakeSyntheticQuest(
+                "QOD_TEST_KILL",
+                new QuestObjectiveDefinition(
+                    "OBJ_TEST_KILL_A", QuestObjectiveTypes.Kill,
+                    ["MAN-BM-SPAWN_BM_01"], 2, options.DefaultMapId),
+                new QuestObjectiveDefinition(
+                    "OBJ_TEST_KILL_B", QuestObjectiveTypes.Kill,
+                    ["MAN-BM-SPAWN_BM_01"], 2, options.DefaultMapId))
+        };
+        var syntheticQuests = new InMemoryQuestService(
+            new QuestCatalog(syntheticDefinitions),
+            new InMemoryQuestStateStore(),
+            worldRecords,
+            interactClock);
+        var dedupeScopeActor = NewPlayer("CHR_SELFCHECK_DEDUPE_SCOPE");
+
+        syntheticQuests.Accept(dedupeScopeActor, "QOD_TEST_DEDUPE");
+        syntheticQuests.RecordVerifiedEvent(
+            dedupeScopeActor, new string('a', 32),
+            QuestProgressEventTypes.InteractClaim, "MAN-BM-OBJ_BM_PACKAGE_01",
+            options.DefaultMapId);
+        var sharedRecordState = syntheticQuests.GetState(
+            dedupeScopeActor.CharacterId, "QOD_TEST_DEDUPE").State;
+        Check(
+            "quest.dedupe_two_objectives_share_record",
+            sharedRecordState is { State: QuestStates.Active } &&
+            sharedRecordState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_A") == 1 &&
+            sharedRecordState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_B") == 1,
+            $"{sharedRecordState?.State} " +
+            $"a={sharedRecordState?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_A")} " +
+            $"b={sharedRecordState?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_B")}");
+
+        var duplicateEvent = syntheticQuests.RecordVerifiedEvent(
+            dedupeScopeActor, new string('b', 32),
+            QuestProgressEventTypes.InteractClaim, "MAN-BM-OBJ_BM_PACKAGE_01",
+            options.DefaultMapId);
+        var duplicateState = syntheticQuests.GetState(
+            dedupeScopeActor.CharacterId, "QOD_TEST_DEDUPE").State;
+        Check(
+            "quest.dedupe_duplicate_event",
+            duplicateEvent.Count == 0 &&
+            duplicateState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_A") == 1 &&
+            duplicateState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_B") == 1,
+            $"updates={duplicateEvent.Count}");
+
+        syntheticQuests.RecordVerifiedEvent(
+            dedupeScopeActor, new string('c', 32),
+            QuestProgressEventTypes.InteractClaim, "MAN-BM-OBJ_BM_PACKAGE_02",
+            options.DefaultMapId);
+        var secondRecordState = syntheticQuests.GetState(
+            dedupeScopeActor.CharacterId, "QOD_TEST_DEDUPE").State;
+        Check(
+            "quest.dedupe_second_record",
+            secondRecordState is { State: QuestStates.ReadyToTurnIn } &&
+            secondRecordState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_B") == 2,
+            secondRecordState?.State);
+
+        syntheticQuests.Accept(dedupeScopeActor, "QOD_TEST_SEQUENTIAL");
+        syntheticQuests.RecordVerifiedEvent(
+            dedupeScopeActor, new string('d', 32),
+            QuestProgressEventTypes.InteractClaim, "MAN-BM-OBJ_BM_PACKAGE_01",
+            options.DefaultMapId);
+        var sequentialState = syntheticQuests.GetState(
+            dedupeScopeActor.CharacterId, "QOD_TEST_SEQUENTIAL").State;
+        Check(
+            "quest.dedupe_sequential_step_guard",
+            sequentialState is { State: QuestStates.Active } &&
+            sequentialState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SEQ_A") == 1 &&
+            sequentialState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SEQ_B") == 0,
+            $"{sequentialState?.State} " +
+            $"b={sequentialState?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SEQ_B")}");
+
+        syntheticQuests.Accept(dedupeScopeActor, "QOD_TEST_KILL");
+        syntheticQuests.RecordVerifiedEvent(
+            dedupeScopeActor, new string('e', 32),
+            QuestProgressEventTypes.Kill, "MAN-BM-SPAWN_BM_01", options.DefaultMapId);
+        var killFirst = syntheticQuests.GetState(
+            dedupeScopeActor.CharacterId, "QOD_TEST_KILL").State;
+        var killReplay = syntheticQuests.RecordVerifiedEvent(
+            dedupeScopeActor, new string('e', 32),
+            QuestProgressEventTypes.Kill, "MAN-BM-SPAWN_BM_01", options.DefaultMapId);
+        syntheticQuests.RecordVerifiedEvent(
+            dedupeScopeActor, new string('f', 32),
+            QuestProgressEventTypes.Kill, "MAN-BM-SPAWN_BM_01", options.DefaultMapId);
+        var killSecond = syntheticQuests.GetState(
+            dedupeScopeActor.CharacterId, "QOD_TEST_KILL").State;
+        Check(
+            "quest.dedupe_kill_event_scope",
+            killFirst.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_A") == 1 &&
+            killFirst.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_B") == 1 &&
+            killReplay.Count == 0 &&
+            killSecond is { State: QuestStates.ReadyToTurnIn } &&
+            killSecond.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_A") == 2 &&
+            killSecond.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_B") == 2,
+            $"{killSecond?.State} " +
+            $"a={killSecond?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_A")} " +
+            $"b={killSecond?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_B")}");
 
         var losInteractions = new InMemoryInteractionService(
             new WorldEntityRegistry(

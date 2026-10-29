@@ -122,7 +122,8 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 30,
-      "condition": "Level 1+; rainy; safe-zone access; no combat"
+      "condition": "Level 1+; rainy; safe-zone access; no combat",
+      "claimPolicy": "SHARED"
     },
     {
       "entityId": "ENT_MAN_BM_NODE_BM_HERB_01",
@@ -137,7 +138,8 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 60,
-      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề",
+      "claimPolicy": "PER_CHARACTER"
     },
     {
       "entityId": "ENT_MAN_BM_NODE_BM_HERB_02",
@@ -152,7 +154,8 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 120,
-      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề",
+      "claimPolicy": "PER_CHARACTER"
     },
     {
       "entityId": "ENT_MAN_BM_NODE_BM_ORE_01",
@@ -167,7 +170,8 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 60,
-      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề",
+      "claimPolicy": "PER_CHARACTER"
     },
     {
       "entityId": "ENT_MAN_BM_NODE_BM_ORE_02",
@@ -182,7 +186,8 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 120,
-      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề",
+      "claimPolicy": "PER_CHARACTER"
     },
     {
       "entityId": "ENT_MAN_BM_NODE_BM_WOOD_01",
@@ -197,7 +202,8 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 60,
-      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề",
+      "claimPolicy": "PER_CHARACTER"
     },
     {
       "entityId": "ENT_MAN_BM_NPC_BM_RESCUE_01",
@@ -469,7 +475,9 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 20,
-      "condition": "P00-01; DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
+      "claimPolicy": "PER_CHARACTER",
+      "claimPolicySource": "Production_Rules_Complete_v1_vi.md §5: mỗi ID tính tối đa 1/character, không trừ item world cho người khác",
+      "condition": "P00-01; per-character claim (Production_Rules §5); DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
     },
     {
       "entityId": "ENT_MAN_BM_OBJ_BM_PACKAGE_02",
@@ -484,7 +492,9 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 20,
-      "condition": "P00-01; DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
+      "claimPolicy": "PER_CHARACTER",
+      "claimPolicySource": "Production_Rules_Complete_v1_vi.md §5: mỗi ID tính tối đa 1/character, không trừ item world cho người khác",
+      "condition": "P00-01; per-character claim (Production_Rules §5); DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
     },
     {
       "entityId": "ENT_MAN_BM_OBJ_BM_PACKAGE_03",
@@ -499,7 +509,9 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 20,
-      "condition": "P00-01; DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
+      "claimPolicy": "PER_CHARACTER",
+      "claimPolicySource": "Production_Rules_Complete_v1_vi.md §5: mỗi ID tính tối đa 1/character, không trừ item world cho người khác",
+      "condition": "P00-01; per-character claim (Production_Rules §5); DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
     }
   ]
 }

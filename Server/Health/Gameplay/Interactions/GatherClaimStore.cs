@@ -3,9 +3,10 @@ using Server.Health.World;
 
 namespace Server.Health.Gameplay.Interactions;
 
-// Per-character gather claims. Canonical manifest rule: "Node riêng theo shard;
-// hồi riêng theo người chơi" — each character has its own availability window,
-// other characters can still claim the same node.
+// Per-character claims: gather nodes (manifest shard rule "Node riêng theo
+// shard; hồi riêng theo người chơi") and per-character interactables
+// (Production Rules §5 P00-01 packages). Each character has its own
+// availability window; other characters can still claim the same entity.
 public sealed class GatherClaimStore
 {
     private readonly ConcurrentDictionary<(string CharacterId, string EntityId), GatherClaim>

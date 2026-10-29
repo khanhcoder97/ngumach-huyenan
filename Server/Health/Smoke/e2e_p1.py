@@ -37,8 +37,6 @@ STEP_SECONDS = 0.3
 WALL_X_MIN = 45.0
 WALL_X_MAX = 46.0
 TURN_IN_NPC_X = 64.0
-RESPAWN_RETRY_ATTEMPTS = 60
-RESPAWN_RETRY_INTERVAL_SECONDS = 0.5
 PACKAGES = {
     "ENT_MAN_BM_OBJ_BM_PACKAGE_01": 36.0,
     "ENT_MAN_BM_OBJ_BM_PACKAGE_02": 44.0,
@@ -75,32 +73,22 @@ def walk_east(session_id, character_id, start_sequence, stop_before_x):
 
 def collect_package(session_id, character_id, sequence, target_id, request_id,
                     idempotency_key, expected_counter, expected_state,
-                    expected_revision, allow_respawn_wait=False):
-    # Shared INTERACTABLEs despawn for everyone (canonical manifest rule):
-    # a second character collecting the same package must wait out the
-    # server-side respawn window. Failed interacts have no side effects, so
-    # poll with fresh keys until the collect succeeds (bounded, condition-
-    # based; no blind sleeps).
-    attempts = RESPAWN_RETRY_ATTEMPTS if allow_respawn_wait else 1
-    status, body = 0, None
-    for attempt in range(attempts):
-        if attempt > 0:
-            time.sleep(RESPAWN_RETRY_INTERVAL_SECONDS)
-        status, _, body = smoke_p1.call(
-            "POST", "/p1/world/interact",
-            smoke_p1.interact_envelope(
-                target_id, character_id=character_id,
-                request_id=f"{request_id[:-2]}{attempt:02x}",
-                idempotency_key=f"{idempotency_key[:-2]}{attempt:02x}"),
-            {"X-Session-ID": session_id})
-        if status == 200:
-            break
-        error = (body or {}).get("error") or {}
-        smoke_p1.check(
-            status == 409 and error.get("code") == "target_not_available",
-            f"interact {target_id} returned {status}: {body}")
+                    expected_revision):
+    # P00-01 packages are per-character claims (Production Rules §5): the first
+    # character's claim never removes the world item for anyone else, so no
+    # respawn wait or retry loop is needed.
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/world/interact",
+        smoke_p1.interact_envelope(
+            target_id, character_id=character_id,
+            request_id=request_id,
+            idempotency_key=idempotency_key),
+        {"X-Session-ID": session_id})
     smoke_p1.check(status == 200, f"interact {target_id} returned {status}: {body}")
-    updates = ((body.get("result") or {}).get("questUpdates")) or [{}]
+    check = body.get("result") or {}
+    smoke_p1.check(check.get("targetState") == "AVAILABLE",
+                   f"{target_id} targetState {check.get('targetState')}")
+    updates = (check.get("questUpdates")) or [{}]
     update = updates[0]
     smoke_p1.check(update.get("state") == expected_state,
                    f"{target_id} state {update.get('state')} != {expected_state}")
@@ -111,7 +99,7 @@ def collect_package(session_id, character_id, sequence, target_id, request_id,
     return sequence
 
 
-def prepare_ready_actor(character_id, allow_respawn_wait=False):
+def prepare_ready_actor(character_id):
     """Create a session, walk to the quest NPC, accept P00-01 and collect
     the first two packages. Returns (session_id, next_sequence)."""
     sequence = 1
@@ -136,13 +124,11 @@ def prepare_ready_actor(character_id, allow_respawn_wait=False):
                    f"accept state {(body.get('result') or {}).get('state')}")
 
     collect_package(session, character_id, sequence, "ENT_MAN_BM_OBJ_BM_PACKAGE_01",
-                    "c" * 32, "d" * 32, 1, "ACTIVE", 3,
-                    allow_respawn_wait=allow_respawn_wait)
+                    "c" * 32, "d" * 32, 1, "ACTIVE", 3)
 
     sequence, _ = walk_east(session, character_id, sequence, 39.5)
     collect_package(session, character_id, sequence, "ENT_MAN_BM_OBJ_BM_PACKAGE_02",
-                    "e" * 32, "f" * 32, 2, "ACTIVE", 4,
-                    allow_respawn_wait=allow_respawn_wait)
+                    "e" * 32, "f" * 32, 2, "ACTIVE", 4)
 
     sequence, _ = walk_east(session, character_id, sequence, 43.5)
     return session, sequence
@@ -314,17 +300,15 @@ def dev_profile():
     smoke_p1.check((body.get("error") or {}).get("code") == "session_not_found",
                    f"unknown session error {(body.get('error') or {}).get('code')}")
 
-    # Parallel turn-ins with different keys must grant exactly once. The
-    # packages are shared interactables, so the second character waits for
-    # the server-side respawn of each one before collecting.
-    parallel_session, parallel_sequence = prepare_ready_actor(
-        "CHR_E2E_PARALLEL", allow_respawn_wait=True)
+    # Parallel turn-ins with different keys must grant exactly once. Packages
+    # are per-character claims, so the second character collects them with no
+    # respawn wait.
+    parallel_session, parallel_sequence = prepare_ready_actor("CHR_E2E_PARALLEL")
     sequence, _ = walk_east(
         parallel_session, "CHR_E2E_PARALLEL", parallel_sequence, 47.5)
     collect_package(parallel_session, "CHR_E2E_PARALLEL", sequence,
                     "ENT_MAN_BM_OBJ_BM_PACKAGE_03",
-                    "25" * 16, "26" * 16, 3, "READY_TO_TURN_IN", 5,
-                    allow_respawn_wait=True)
+                    "25" * 16, "26" * 16, 3, "READY_TO_TURN_IN", 5)
     sequence, _ = walk_east(
         parallel_session, "CHR_E2E_PARALLEL", sequence, TURN_IN_NPC_X)
 
@@ -367,8 +351,63 @@ def dev_profile():
         len(parallel_inventory.get("items") or []) == 1,
         f"parallel inventory {parallel_inventory}")
 
+    # Two characters claim the same P00-01 package at the same time:
+    # per-character claims (Production Rules §5) mean neither waits for the
+    # other's window, and the world state stays AVAILABLE for both.
+    concurrent_actors = []
+    for index, suffix in enumerate(("A", "B")):
+        character_id = f"CHR_E2E_CONCURRENT_{suffix}"
+        status, _, body = smoke_p1.call(
+            "POST", "/p1/sessions", {"characterId": character_id})
+        smoke_p1.check(
+            status == 201, f"concurrent session {suffix} returned {status}: {body}")
+        session_id = body.get("sessionId")
+        sequence, _ = walk_east(session_id, character_id, 0, 36.0)
+        status, _, body = smoke_p1.call(
+            "POST", "/p1/quests/accept",
+            smoke_p1.quest_accept_envelope(
+                "P00-01", "NPC_LYAN", character_id=character_id,
+                request_id=f"{5 + index}" * 16, idempotency_key=f"{3 + index}" * 16),
+            {"X-Session-ID": session_id})
+        smoke_p1.check(
+            status == 200, f"concurrent accept {suffix} returned {status}: {body}")
+        concurrent_actors.append((index, session_id, character_id))
+
+    concurrent_outcomes = {}
+
+    def collect_worker(slot, session_id, character_id):
+        status, _, body = smoke_p1.call(
+            "POST", "/p1/world/interact",
+            smoke_p1.interact_envelope(
+                "ENT_MAN_BM_OBJ_BM_PACKAGE_01", character_id=character_id,
+                request_id=f"{7 + slot}" * 16, idempotency_key=f"{9 + slot}" * 16),
+            {"X-Session-ID": session_id})
+        concurrent_outcomes[slot] = (status, body)
+
+    workers = [
+        threading.Thread(target=collect_worker, args=actor)
+        for actor in concurrent_actors
+    ]
+    for worker in workers:
+        worker.start()
+    for worker in workers:
+        worker.join()
+
+    for slot in (0, 1):
+        status, body = concurrent_outcomes[slot]
+        smoke_p1.check(
+            status == 200, f"concurrent collect {slot} returned {status}: {body}")
+        result = body.get("result") or {}
+        smoke_p1.check(
+            result.get("targetState") == "AVAILABLE",
+            f"concurrent collect targetState {result.get('targetState')}")
+        update = ((result.get("questUpdates")) or [{}])[0]
+        smoke_p1.check(
+            update.get("objectiveCounters") == {"OBJ_P00_01_PACKAGES": 1},
+            f"concurrent collect counters {update.get('objectiveCounters')}")
+
     print(f"profile=dev wall_enforcement={wall_state} "
-          "golden_loop=OK parallel_reward_once=OK")
+          "golden_loop=OK parallel_reward_once=OK concurrent_package_claim=OK")
 
 
 def main():

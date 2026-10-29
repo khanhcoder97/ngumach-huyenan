@@ -131,12 +131,15 @@ Code mới chỉ nằm trong `InteractionErrorCodes` (server) + enum `error.code
 
 | Loại target | Claim | Respawn |
 |---|---|---|
-| `INTERACTABLE` (kiện quest) | registry **chung**: `Despawn` → `DEPLETED` (hiện trong `GET /p1/world`), revision entity tăng | `respawnSeconds` (fixture 20s, xem mục 7) qua tick host; respawn thật khi hết giờ |
+| `INTERACTABLE` policy `SHARED` | registry **chung**: `Despawn` → `DEPLETED` (hiện trong `GET /p1/world`), revision entity tăng | `respawnSeconds` qua tick host; respawn thật khi hết giờ |
+| `INTERACTABLE` policy `PER_CHARACTER` (3 kiện P00-01) | **shard riêng từng character** theo `Production_Rules_Complete_v1_vi.md` §5 ("mỗi ID tính tối đa 1/character", "không trừ item world cho người khác"): claim store `(characterId, entityId)`; registry chung **giữ `AVAILABLE`**, character khác claim ngay được, không chờ respawn toàn cục | cùng `respawnSeconds` của entity nhưng tính riêng từng người chơi, lazy theo `UtcNow`; 20s là DEV fixture |
 | `GATHER_NODE` | **shard riêng từng character** (canonical "Hồi riêng theo người chơi", "Node riêng theo shard"): claim store `(characterId, entityId)` ghi `claimedAtUtc`; character khác vẫn claim được | cùng `respawnSeconds` của entity nhưng tính riêng từng người chơi, lazy theo `UtcNow` (không cần tick) |
 
+- Policy ghi trong data: `world_entities_bm.json` mỗi entity claimable có `claimPolicy` (`SHARED`/`PER_CHARACTER`) do `build_world_entities.py` sinh; loader `WorldEntityLoader` validate (gather node luôn `PER_CHARACTER`, kind không claimable không được khai policy).
 - Claim chỉ xảy ra khi toàn bộ guard pass; request fail **không** tiêu claim (giống "rejection không tiêu sequence" của move/combat).
-- Disconnect/cancel: không có endpoint hủy; claim là atomic tại thời điểm request thành công, nên không thể tạo vật phẩm hai lần — replay idempotency trả kết quả cũ, request mới khi node đã bị claim → `target_not_available`.
+- Disconnect/cancel: không có endpoint hủy; claim là atomic tại thời điểm request thành công, nên không thể tạo vật phẩm hai lần — replay idempotency trả kết quả cũ, request mới khi claim đã bị tiêu → `target_not_available`.
 - Vật phẩm quest (kiện) **không** ghi vào inventory — tiến độ nằm trong `objectiveCounters` (tương đương quest pouch ở P1; hạn chế được ghi rõ).
+- Dedupe tiến độ theo `Production_Rules` §5: `COLLECT event unique(actor, quest, objective, packageId)` — state đã per character+quest, key contribution thêm `objectiveId` (`R:{objectiveId}:{recordId}`, KILL `E:{objectiveId}:{eventId}`) để hai objective hợp lệ cùng record không nuốt tiến triển của nhau.
 
 ## 6. Content mới
 
@@ -154,7 +157,7 @@ Riêng node nghề, generator chép thêm cột `gatherProfession, gatherItemId,
 
 ### 6.2 `world_entities_bm.json` +27 entity
 
-`build_world_entities.py` nhận danh sách supplement Atlas-sourced (3 kiện: kind `INTERACTABLE`, templateIds `OBJ_BM_PACKAGE_0X`, floor OVERWORLD, quantity 1, `respawnSeconds` fixture 20). File sinh lại: 24 → **27 entity** (self-check `world.registry` cập nhật). Package không nằm trong manifest CSV nên không phát sinh template giả trong CSV.
+`build_world_entities.py` nhận danh sách supplement Atlas-sourced (3 kiện: kind `INTERACTABLE`, templateIds `OBJ_BM_PACKAGE_0X`, floor OVERWORLD, quantity 1, `respawnSeconds` fixture 20, `claimPolicy` `PER_CHARACTER` + `claimPolicySource` Production Rules §5). File sinh lại: 24 → **27 entity** (self-check `world.registry` cập nhật). Package không nằm trong manifest CSV nên không phát sinh template giả trong CSV.
 
 ## 7. Fixture/dev có nhãn
 
