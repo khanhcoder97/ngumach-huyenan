@@ -1,0 +1,153 @@
+﻿fileFormatVersion: 2
+guid: 00000000000000000000000000000000
+TextureImporter:
+  spritePixelsToUnits: 20
+  spriteMode: 2
+  enableMipMap: 0
+  filterMode: 0
+  spriteSheet:
+    sprites:
+    - serializedVersion: 2
+      name: actor_8dir_test_d0_f0
+      rect: {x: 0, y: 0, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d0_f1
+      rect: {x: 48, y: 0, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d0_f2
+      rect: {x: 96, y: 0, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d0_f3
+      rect: {x: 144, y: 0, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d0_f4
+      rect: {x: 192, y: 0, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d0_f5
+      rect: {x: 240, y: 0, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d1_f0
+      rect: {x: 0, y: 64, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d1_f1
+      rect: {x: 48, y: 64, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d1_f2
+      rect: {x: 96, y: 64, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d1_f3
+      rect: {x: 144, y: 64, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d1_f4
+      rect: {x: 192, y: 64, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d1_f5
+      rect: {x: 240, y: 64, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d2_f0
+      rect: {x: 0, y: 128, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d2_f1
+      rect: {x: 48, y: 128, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d2_f2
+      rect: {x: 96, y: 128, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d2_f3
+      rect: {x: 144, y: 128, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d2_f4
+      rect: {x: 192, y: 128, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d2_f5
+      rect: {x: 240, y: 128, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d3_f0
+      rect: {x: 0, y: 192, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d3_f1
+      rect: {x: 48, y: 192, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d3_f2
+      rect: {x: 96, y: 192, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d3_f3
+      rect: {x: 144, y: 192, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d3_f4
+      rect: {x: 192, y: 192, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d3_f5
+      rect: {x: 240, y: 192, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d4_f0
+      rect: {x: 0, y: 256, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d4_f1
+      rect: {x: 48, y: 256, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d4_f2
+      rect: {x: 96, y: 256, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d4_f3
+      rect: {x: 144, y: 256, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d4_f4
+      rect: {x: 192, y: 256, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d4_f5
+      rect: {x: 240, y: 256, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d5_f0
+      rect: {x: 0, y: 320, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d5_f1
+      rect: {x: 48, y: 320, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d5_f2
+      rect: {x: 96, y: 320, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d5_f3
+      rect: {x: 144, y: 320, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d5_f4
+      rect: {x: 192, y: 320, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
+    - serializedVersion: 2
+      name: actor_8dir_test_d5_f5
+      rect: {x: 240, y: 320, width: 48, height: 64}
+      pivot: {x: 0.5, y: 0}
