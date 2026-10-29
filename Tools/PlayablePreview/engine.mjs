@@ -23,7 +23,7 @@ export const xpNext=l=>Math.ceil(100+50*l+25*l*l);
 
 export class Game {
   constructor(save=null){
-    this.tick=0;this.events=[];this.effects=[];this.jobs=[];this.randomState=0x7ab1cde;
+    this.tick=0;this.events=[];this.effects=[];this.jobs=[];this.randomState=0x7ab1cde;this.targetId=null;
     this.player={x:18,y:0,face:{x:1,y:0},hp:198,maxHp:198,mp:102,maxMp:102,level:1,xp:0,coin:0,potions:6,intent:0,attack:20,armor:10,anim:'idle',animTick:0};
     this.quest=0;this.active=false;this.completed=[];this.flags={packages:[],ripples:[],rescues:[],herbs:[],fish:0,roots:0,wave:false,escortStage:0,escortCheckpoint:64,boss:false,seal:false};
     this.cooldowns={};this.epoch=1;this.lastCombat=-1000;this.combo=0;this.comboEnd=0;this.guard=null;this.whiffEnd=0;this.dash=null;this.avoidStart=0;this.avoidEnd=0;
@@ -48,6 +48,12 @@ export class Game {
     if(this.quest===3||this.quest===4)return false;
     if(m.type==='root')return this.quest>=2;if(m.type==='stalker')return this.quest>=5;return this.quest>=1;}
   hostile(){return [...this.mobs.filter(m=>m.hp>0&&this.mobEnabled(m)),...(this.boss.active&&this.boss.hp>0?[this.boss]:[])];}
+  target(){return this.hostile().find(m=>m.id===this.targetId&&distance(m,this.player)<=40)||null;}
+  selectTarget(id){const target=this.hostile().find(m=>m.id===id&&distance(m,this.player)<=40);if(!target)return false;
+    this.targetId=id;const d=distance(target,this.player);if(d>.01)this.player.face={x:(target.x-this.player.x)/d,y:(target.y-this.player.y)/d};return true;}
+  clearTarget(){this.targetId=null;}
+  cycleTarget(){const list=this.hostile().filter(m=>distance(m,this.player)<=40).sort((a,b)=>distance(a,this.player)-distance(b,this.player)||a.id.localeCompare(b.id));
+    if(!list.length){this.clearTarget();return null;}const i=list.findIndex(m=>m.id===this.targetId);this.selectTarget(list[(i+1)%list.length].id);return this.target();}
   cooldown(action){return Math.max(0,((this.cooldowns[action]||0)-this.tick)/20);}
   animate(name,ticks=9){this.player.anim=name;this.player.animTick=this.tick;this.player.animUntil=this.tick+ticks;}
   move(dx,dy,distanceWu){const n=Math.hypot(dx,dy);if(!n)return;
@@ -56,7 +62,7 @@ export class Game {
       if(walkable(x,this.player.y))this.player.x=x;if(walkable(this.player.x,y))this.player.y=y;}
     this.player.face={x:dx/n,y:dy/n};
   }
-  faceTarget(){const nearest=this.hostile().sort((a,b)=>distance(a,this.player)-distance(b,this.player))[0];
+  faceTarget(){const nearest=this.target()||this.hostile().sort((a,b)=>distance(a,this.player)-distance(b,this.player))[0];
     if(nearest&&distance(nearest,this.player)<=5){const d=distance(nearest,this.player);if(d>.01)this.player.face={x:(nearest.x-this.player.x)/d,y:(nearest.y-this.player.y)/d};}}
   action(action){
     if(action==='respawn'){if(this.player.hp<=0)this.respawn();return true;}
@@ -89,7 +95,7 @@ export class Game {
       this.dash={face:{...p.face},remaining:4,hit:action==='dash'};this.animate(action==='dash'?'skill2':'dodge',10);this.emit('dash');
     }return true;
   }
-  scheduleHit(delay,coefficient,range,angle,cap,type){this.jobs.push({at:this.tick+delay,epoch:this.epoch,coefficient,range,angle,cap,type,origin:{x:this.player.x,y:this.player.y},face:{...this.player.face}});}
+  scheduleHit(delay,coefficient,range,angle,cap,type){this.jobs.push({at:this.tick+delay,epoch:this.epoch,coefficient,range,angle,cap,type,preferredTarget:cap===1?this.targetId:null,origin:{x:this.player.x,y:this.player.y},face:{...this.player.face}});}
   deal(target,coefficient,attack=this.player.attack,type='hit'){
     if(target.hp<=0)return;
     if(this.rand()>.9025){this.emit('number',{x:target.x,y:target.y,text:'Trượt',kind:'miss'});return;}
@@ -97,7 +103,7 @@ export class Game {
     target.hp=Math.max(0,target.hp-damage);target.hurtUntil=this.tick+3;this.lastCombat=this.tick;
     this.effects.push({type,x:target.x,y:target.y,tick:this.tick,end:this.tick+8,face:{...this.player.face}});
     this.emit('number',{x:target.x,y:target.y,text:String(damage),kind:crit?'crit':'damage'});this.emit('hit');
-    if(target.hp===0){this.emit('kill',{target:target.id});
+    if(target.hp===0){if(this.targetId===target.id)this.clearTarget();this.emit('kill',{target:target.id});
       if(target===this.boss){this.flags.boss=true;this.boss.active=false;this.warnings=[];this.addXp(120);this.emit('bossDefeated');}
       else{
         if(this.active&&this.quest===1&&target.type==='fish')this.flags.fish=Math.min(4,this.flags.fish+1);
@@ -117,7 +123,7 @@ export class Game {
     }
     const final=Math.max(1,Math.floor(damage*100/(100+p.armor)*(1-reduction)));p.hp=Math.max(0,p.hp-final);this.lastCombat=this.tick;
     this.emit('number',{x:p.x,y:p.y,text:'−'+final,kind:'hurt'});this.emit('hurt');
-    if(p.hp<=0){this.guard=null;this.whiffEnd=0;p.intent=0;this.epoch++;this.jobs=[];this.dash=null;this.animate('death',40);this.emit('death');return;}
+    if(p.hp<=0){this.guard=null;this.whiffEnd=0;p.intent=0;this.epoch++;this.jobs=[];this.dash=null;this.clearTarget();this.animate('death',40);this.emit('death');return;}
     if(eligible){this.guard.confirmed=true;p.intent=Math.min(5,p.intent+2);
       this.jobs.push({at:this.tick+1,epoch:this.epoch,type:'counter',targetId:source.id,attack:this.guard.attack,face:{...this.guard.face}});
       this.emit('parry');this.effects.push({type:'parry',x:p.x,y:p.y,tick:this.tick,end:this.tick+10});
@@ -199,7 +205,8 @@ export class Game {
     for(const j of due){if(j.epoch!==this.epoch||p.hp<=0)continue;
       if(j.type==='counter'){const target=this.hostile().find(m=>m.id===j.targetId);if(target&&insideCone(p,j.face,target,4.4,120))this.deal(target,1.8,j.attack,'parry');continue;}
       this.effects.push({type:j.type,x:j.origin.x,y:j.origin.y,face:j.face,tick:this.tick,end:this.tick+6});
-      this.hostile().filter(m=>insideCone(j.origin,j.face,m,j.range,j.angle)).sort((a,b)=>distance(j.origin,a)-distance(j.origin,b)).slice(0,j.cap).forEach(m=>this.deal(m,j.coefficient));
+      this.hostile().filter(m=>insideCone(j.origin,j.face,m,j.range,j.angle)).sort((a,b)=>
+        Number(b.id===j.preferredTarget)-Number(a.id===j.preferredTarget)||distance(j.origin,a)-distance(j.origin,b)).slice(0,j.cap).forEach(m=>this.deal(m,j.coefficient));
     }
     for(const m of this.mobs){
       if(m.hp<=0){if(m.respawnAt&&this.tick>=m.respawnAt){m.hp=m.maxHp;m.x=m.home.x;m.y=m.home.y;m.state='idle';m.respawnAt=0;m.life++;}continue;}
@@ -213,9 +220,9 @@ export class Game {
       if(d<=7){this.lastCombat=this.tick;if(d>2){m.x+=(p.x-m.x)/d*.13;m.y+=(p.y-m.y)/d*.13;m.state='chase';}else{m.state='windup';m.ready=this.tick+13;}}
       else m.state='idle';
     }
-    if(this.quest===2&&this.active&&this.flags.rescues.length===2&&!this.flags.wave&&!this.warnings.some(w=>w.kind==='lesson')&&this.tick>=(this.lessonRetry||0)){
+    if(this.quest===2&&this.active&&this.flags.rescues.length===2&&!this.flags.wave&&distance(p,{x:148,y:0})<14&&!this.warnings.some(w=>w.kind==='lesson')&&this.tick>=(this.lessonRetry||0)){
       this.warnings.push({kind:'lesson',shape:'circle',x:p.x,y:p.y,r:4,start:this.tick,at:this.tick+26,end:this.tick+32});this.emit('warning',{text:'Sóng trào! Rời vòng đỏ hoặc nhấn Shift để né.'});}
-    this.stepEscort();this.stepBoss();
+    this.stepEscort();this.stepBoss();if(this.targetId&&!this.target())this.clearTarget();
     for(const w of this.warnings){if(!w.resolved&&this.tick>=w.at){w.resolved=true;
       const hit=w.shape==='cone'?insideCone(w,w.face,p,w.r,120):w.shape==='annulus'?distance(w,p)>=3&&distance(w,p)<=7:distance(w,p)<=w.r;
       const avoided=this.tick>=this.avoidStart&&this.tick<this.avoidEnd;
@@ -239,7 +246,7 @@ export class Game {
     if(this.quest!==4||!this.active||this.flags.boss)return;
     if(!b.active&&distance(b,p)<13){b.active=true;b.ready=this.tick+35;this.emit('bossStart');}
     if(!b.active)return;
-    if(distance(b,p)>22){if(b.idleSince===null)b.idleSince=this.tick;if(this.tick-b.idleSince>=200){b.hp=b.maxHp;b.active=false;b.phase=1;b.cooldowns={};this.warnings=[];this.emit('notice',{text:'Mãng Cốt đã lặn trở lại. Encounter được đặt lại.'});}return;}b.idleSince=null;
+    if(distance(b,p)>22){if(b.idleSince===null)b.idleSince=this.tick;if(this.tick-b.idleSince>=200){b.hp=b.maxHp;b.active=false;b.phase=1;b.cooldowns={};this.warnings=[];this.clearTarget();this.emit('bossReset');this.emit('notice',{text:'Mãng Cốt đã lặn trở lại. Encounter được đặt lại.'});}return;}b.idleSince=null;
     b.phase=b.hp<=b.maxHp*.3?3:b.hp<=b.maxHp*.6?2:1;
     if(this.tick<b.ready||this.warnings.some(w=>w.kind==='boss'&&w.end>this.tick))return;
     let kind=['C','B','A'].find(k=>(b.cooldowns[k]||0)<=this.tick);if(!kind)return;
@@ -250,12 +257,12 @@ export class Game {
     w.end=w.at+6;this.warnings.push(w);b.cooldowns[kind]=this.tick+{A:80,B:180,C:240}[kind];b.ready=w.at+Math.ceil((kind==='A'?16:20)*(b.phase>=2?.8:1));
     this.emit('bossWarning',{attack:kind,text:{A:'Quét thân — tránh vùng quạt!',B:'Lặn trồi — rời điểm nước xoáy!',C:'Vòng bọt — vào tâm hoặc ra ngoài vòng!'}[kind]});
   }
-  respawn(){const p=this.player;p.x=24;p.y=0;p.hp=p.maxHp;p.mp=p.maxMp;p.intent=0;this.guard=null;this.whiffEnd=0;this.warnings=[];this.jobs=[];this.dash=null;this.epoch++;
+  respawn(){const p=this.player;p.x=24;p.y=0;p.hp=p.maxHp;p.mp=p.maxMp;p.intent=0;this.guard=null;this.whiffEnd=0;this.warnings=[];this.jobs=[];this.dash=null;this.clearTarget();this.avoidStart=this.avoidEnd=0;this.epoch++;
     this.boss.active=false;this.boss.hp=this.boss.maxHp;this.boss.phase=1;this.boss.cooldowns={};this.boss.idleSince=null;
     if(this.quest===3){this.mobs=this.mobs.filter(m=>!m.wave);this.escort.x=this.flags.escortCheckpoint;this.escort.y=1;this.flags.escortStage=this.flags.escortCheckpoint>=120?4:this.flags.escortCheckpoint>=80?2:0;}
     this.lastCombat=this.tick-200;this.animate('idle');this.emit('respawn');
   }
-  travelHome(){if(this.quest<2||this.player.hp<=0)return false;this.player.x=24;this.player.y=0;this.guard=null;this.whiffEnd=0;this.player.intent=0;this.epoch++;this.jobs=[];this.warnings=[];return true;}
+  travelHome(){if(this.quest<2||this.player.hp<=0)return false;this.player.x=24;this.player.y=0;this.guard=null;this.whiffEnd=0;this.player.intent=0;this.epoch++;this.jobs=[];this.warnings=[];this.dash=null;this.avoidStart=this.avoidEnd=0;this.clearTarget();return true;}
   save(){return {version:1,quest:this.quest,active:this.active,questXp:this.questXp,completed:this.completed,flags:this.flags,player:{...this.player},escort:{...this.escort}};}
   restore(s){if(!s||s.version!==1||!Number.isInteger(s.quest)||s.quest<0||s.quest>5||!Array.isArray(s.completed)||s.completed.length!==s.quest)return false;
     if(!s.completed.every((q,i)=>q===i)||typeof s.active!=='boolean'||!s.player||!s.flags)return false;

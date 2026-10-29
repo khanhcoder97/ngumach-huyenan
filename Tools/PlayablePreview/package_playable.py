@@ -12,7 +12,7 @@ ROOT = HERE.parents[1]
 
 def package(output):
     files = [ROOT / "CHOI_THU.cmd"]
-    files.extend(HERE / name for name in ("index.html", "style.css", "game.mjs", "engine.mjs", "renderer.mjs", "server.py", "content.json", "README_vi.md"))
+    files.extend(HERE / name for name in ("index.html", "style.css", "game.mjs", "engine.mjs", "renderer.mjs", "save-store.mjs", "server.py", "content.json", "README_vi.md"))
     files.extend(sorted((HERE / "assets").glob("*.png")))
     script = (HERE / "game.mjs").read_text(encoding="utf-8")
     clips = set(re.findall(r"sound\.play\('(sfx/[^']+\.(?:wav|ogg))'", script))

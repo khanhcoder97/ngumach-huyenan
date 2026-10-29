@@ -37,6 +37,9 @@ export class Renderer{
     for(const x of [6870,7050]){rect(c,x,267,28,146,'#4c6661');rect(c,x-4,264,36,9,'#9ca487');rect(c,x+4,280,18,119,'#7d8d78');}rect(c,6860,253,228,15,'#3a6355');rect(c,6884,236,180,18,'#507760');rect(c,6935,267,75,25,'#314f49');
   }
   point(x,y){return {x:Math.round(this.canvas.width/2+(x-this.camera.x)*PPU),y:Math.round(this.canvas.height/2-(y-this.camera.y)*PPU)};}
+  pickTarget(game,x,y){return game.hostile().filter(m=>{
+    const s=this.point(m.x,m.y),boss=m.type==='boss';return distance(m,game.player)<=40&&Math.abs(x-s.x)<(boss?55:23)&&y>s.y-(boss?150:45)&&y<s.y+12;
+  }).sort((a,b)=>{const sa=this.point(a.x,a.y),sb=this.point(b.x,b.y);return Math.hypot(x-sa.x,y-sa.y)-Math.hypot(x-sb.x,y-sb.y);})[0]||null;}
   label(text,x,y,color='#e9e8ce',size=11){const c=this.c;c.font=`600 ${size}px Segoe UI, sans-serif`;c.textAlign='center';c.lineWidth=3;c.strokeStyle='#102225';c.strokeText(text,x,y);c.fillStyle=color;c.fillText(text,x,y);}
   number(e,tick){this.numbers.push({...e,end:tick+25});}
   draw(game,time,title=false){const c=this.c,p=game.player,w=this.canvas.width,h=this.canvas.height;
@@ -59,6 +62,7 @@ export class Renderer{
     drawable.push({y:p.y,draw:()=>this.hero(game,time,title)});drawable.sort((a,b)=>b.y-a.y);for(const d of drawable)d.draw();
     if(game.quest===4&&game.flags.boss&&!game.flags.seal){const s=this.point(178,0);pixelCircle(c,s.x,s.y-12,8,'#c6e8ce');rect(c,s.x-4,s.y-18,8,14,'#e5d99b');this.marker(s.x,s.y-34,'◆',time);}
     if(game.quest>=2){const s=this.point(150,3);rock(c,s.x,s.y,1.2);rect(c,s.x-3,s.y-20,6,10,'#a9c6ad');this.label('Bia bến gỗ',s.x,s.y-28,'#cfdfc0',10);}
+    const locked=game.target();if(locked){const s=this.point(locked.x,locked.y);c.strokeStyle='#f4d48c';c.lineWidth=2;c.setLineDash([5,3]);c.beginPath();c.ellipse(s.x,s.y,22,10,0,0,Math.PI*2);c.stroke();c.setLineDash([]);this.label('▼',s.x,s.y-55,'#f4d48c',14);}
     for(const warning of game.warnings)this.warning(warning,game);
     for(const e of game.effects)this.effect(e,game);
     if(game.guard||game.tick<game.whiffEnd){const s=this.point(p.x,p.y);c.strokeStyle=game.guard?'#f0dc8c':'#99bdad';c.globalAlpha=game.guard?.9:.45;c.lineWidth=3;c.beginPath();c.arc(s.x,s.y,30,-Math.PI,0);c.stroke();c.globalAlpha=1;}

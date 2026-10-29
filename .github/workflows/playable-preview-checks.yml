@@ -21,5 +21,7 @@ jobs:
           python-version: '3.12'
       - name: Run complete local opening campaign and regression checks
         run: node Tools/PlayablePreview/tests/engine_checks.mjs
+      - name: Check targeting and save failure/recovery cases
+        run: node Tools/PlayablePreview/tests/playability_checks.mjs
       - name: Check HTTP assets and root confinement
         run: python -m unittest discover -s Tools/PlayablePreview/tests -p 'test_*.py' -v

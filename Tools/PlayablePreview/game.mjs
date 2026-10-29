@@ -1,9 +1,12 @@
 import {Game,QUESTS,xpNext,distance} from './engine.mjs';
 import {Renderer} from './renderer.mjs';
+import {SaveStore,decodeSave,exportSave} from './save-store.mjs';
 const $=id=>document.getElementById(id), QA=new URLSearchParams(location.search).has('qa');
 const SAVE=QA?'ngumach.benmua.qa.v1':'ngumach.benmua.local.v1', OPTIONS=QA?'ngumach.benmua.qa.options.v1':'ngumach.benmua.options.v1';
 let content,game,renderer,started=false,modal=false,opener=null,accumulator=0,previous=0,lastSave=0,lastHud=0,frameCount=0,fps=0,fpsAt=0;
-let touch={x:0,y:0},stickPointer=null,needsRelease=true,held=new Set(),uiStamp='',saveWarning=false,walkGoal=null;
+let touch={x:0,y:0},stickPointer=null,attackPointer=null,needsRelease=true,held=new Set(),uiStamp='',saveWarning=false,walkGoal=null,saveSuspended=false;
+let browserStorage;try{browserStorage=localStorage;}catch{browserStorage={getItem(){throw new Error('storage unavailable');},setItem(){throw new Error('storage unavailable');}};}
+const saveStore=new SaveStore(browserStorage,SAVE);
 const options={volume:.35,music:true,rain:true,reduced:false};
 try{const stored=JSON.parse(localStorage.getItem(OPTIONS)||'null');if(stored){if(Number.isFinite(stored.volume))options.volume=Math.max(0,Math.min(1,stored.volume));for(const k of ['music','rain','reduced'])if(typeof stored[k]==='boolean')options[k]=stored[k];}}catch{}
 
@@ -23,8 +26,8 @@ class Sound{
 }
 const sound=new Sound();
 function notice(text){const node=document.createElement('div');node.textContent=text;$('toasts').append(node);setTimeout(()=>node.remove(),3300);}
-function resetControls(){held.clear();touch={x:0,y:0};walkGoal=null;needsRelease=true;$('stick').style.transform='';if(stickPointer!==null){try{$('joystick').releasePointerCapture(stickPointer);}catch{}stickPointer=null;}}
-function save(){if(!started||!game)return;try{localStorage.setItem(SAVE,JSON.stringify(game.save()));}catch{if(!saveWarning){notice('Trình duyệt không cho tự lưu. Hãy giữ tab để tiếp tục hành trình.');saveWarning=true;}}}
+function resetControls(){held.clear();touch={x:0,y:0};walkGoal=null;needsRelease=true;$('stick').style.transform='';if(stickPointer!==null){try{$('joystick').releasePointerCapture(stickPointer);}catch{}stickPointer=null;}if(attackPointer!==null){try{$('attack').releasePointerCapture(attackPointer);}catch{}attackPointer=null;}}
+function save(){if(!started||!game||saveSuspended)return;try{saveStore.write(game);}catch{if(!saveWarning){notice('Chưa tự lưu được. Vào Cài đặt → Bản lưu để tải tiến độ thành file.');saveWarning=true;}}}
 function text(tag,text,cls){const node=document.createElement(tag);node.textContent=text;if(cls)node.className=cls;return node;}
 function openModal(title,body,actions=[],kicker='HÀNH TRÌNH BẾN MƯA'){
   if(!modal)opener=document.activeElement;modal=true;resetControls();$('modal-title').textContent=title;$('modal-kicker').textContent=kicker;
@@ -32,7 +35,7 @@ function openModal(title,body,actions=[],kicker='HÀNH TRÌNH BẾN MƯA'){
   $('modal-actions').replaceChildren();for(const [label,callback,primary]of actions){const b=text('button',label,primary?'primary':'');b.addEventListener('click',callback);$('modal-actions').append(b);}
   $('modal-backdrop').classList.remove('hidden');$('close-modal').focus();sound.play('sfx/ui/panel_open_v01.wav',.5);
 }
-function closeModal(){if(game?.player.hp<=0)return;modal=false;$('modal-backdrop').classList.add('hidden');resetControls();opener?.focus?.();sound.play('sfx/ui/panel_close_v01.wav',.5);}
+function closeModal(force=false){if(started&&game?.player.hp<=0&&force!==true)return;modal=false;$('modal-backdrop').classList.add('hidden');resetControls();opener?.focus?.();sound.play('sfx/ui/panel_close_v01.wav',.5);}
 function dialogue(q,type){return content.dialogue.find(d=>d.quest_id==='P00-0'+(q+1)&&d.node_type===type)?.text_vi||'Có những lời phải tới đúng người trước đã.';}
 function interact(){if(!started||modal||game.player.hp<=0)return;const target=game.nearest();if(!target){notice('Hãy tới gần NPC hoặc vật thể có dấu sáng rồi nhấn E.');return;}
   const result=game.interact(target.id);if(!result)return;
@@ -70,8 +73,18 @@ function settings(){const b=document.createDocumentFragment();
   const volume=text('label','','setting');volume.append(text('span','Âm lượng'));const slider=document.createElement('input');slider.type='range';slider.min='0';slider.max='100';slider.value=String(options.volume*100);slider.setAttribute('aria-label','Âm lượng');slider.oninput=()=>{options.volume=Number(slider.value)/100;sound.apply();storeOptions();};volume.append(slider);b.append(volume);
   for(const [key,label]of [['music','Nhạc nền'],['rain','Mưa và âm thanh mưa'],['reduced','Giảm hiệu ứng phụ']]){const row=text('label','','setting');row.append(text('span',label));const toggle=document.createElement('input');toggle.type='checkbox';toggle.checked=options[key];toggle.onchange=()=>{options[key]=toggle.checked;renderer.rain=options.rain;renderer.reduced=options.reduced;sound.apply();storeOptions();};row.append(toggle);b.append(row);}
   b.append(text('p','Chơi thử một người; khi mở bảng hoặc rời tab, hành trình tạm dừng. Tiến độ chỉ lưu trong trình duyệt trên máy này.'));
-  openModal('Cài đặt',b,[['Chơi lại từ đầu',()=>openModal('Bắt đầu hành trình mới?','Tiến độ chơi thử Bến Mưa hiện tại trên trình duyệt này sẽ được thay bằng hành trình mới.',[['Giữ hành trình',settings],['Bắt đầu lại',()=>{game=new Game();closeModal();uiStamp='';save();sound.track(false);notice('Một lá thư lại chờ bên bến.');},true]])],['Tiếp tục hành trình',closeModal,true]],'NGŨ MẠCH · HUYỀN ẤN');
+  openModal('Cài đặt',b,[['Bản lưu',saveManager],['Chơi lại từ đầu',()=>openModal('Bắt đầu hành trình mới?','Tiến độ chơi thử Bến Mưa hiện tại trên trình duyệt này sẽ được thay bằng hành trình mới.',[['Giữ hành trình',settings],['Bắt đầu lại',()=>{game=new Game();saveSuspended=false;closeModal();uiStamp='';save();sound.track(false);notice('Một lá thư lại chờ bên bến.');},true]])],['Tiếp tục hành trình',closeModal,true]],'NGŨ MẠCH · HUYỀN ẤN');
 }
+function saveManager(){const body=document.createDocumentFragment();body.append(text('p','Xuất tiến độ thành file để giữ lại hoặc chuyển sang trình duyệt khác. File chỉ chứa nhân vật của bản chơi thử cục bộ. Nhập bản lưu cần xác nhận trước khi thay tiến độ đang chơi.'));
+  if(saveSuspended)body.append(text('p','Bản lưu cũ không đọc được. Tự lưu đang tạm khóa để giữ nguyên dữ liệu cũ; hãy nhập bản dự phòng hoặc chọn chơi lại có xác nhận.'));
+  openModal('Bản lưu hành trình',body,[['Xuất bản lưu',()=>{const url=URL.createObjectURL(new Blob([exportSave(game)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='NguMach_BenMua_save.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}],['Nhập từ file',()=>$('save-file').click()],['Lần lưu trước',()=>{try{confirmImport(saveStore.recovery(),'lần lưu tự động trước');}catch(e){saveError(e.message);}}],['Đóng',closeModal,true]],'LƯU CỤC BỘ · KHÔNG GỬI LÊN SERVER');
+}
+function saveError(message){openModal('Chưa thể dùng bản lưu',message,[['Quay lại',saveManager,true]],'TIẾN ĐỘ HIỆN TẠI ĐƯỢC GIỮ NGUYÊN');}
+function confirmImport(candidate,source){const p=candidate.player;openModal('Thay tiến độ hiện tại?',`Bản ${source}: cấp ${p.level}, hoàn thành ${candidate.quest}/5 nhiệm vụ. Tiến độ đang chơi sẽ được thay khi bạn xác nhận; bản hợp lệ trước đó được giữ ở lần lưu trước.`,[['Giữ hành trình',saveManager],['Dùng bản lưu này',()=>{
+    try{saveStore.write(candidate);}catch{saveError('Chưa ghi được bản lưu. Tiến độ đang chơi vẫn được giữ nguyên.');return;}
+    game=candidate;saveSuspended=false;uiStamp='';renderer.numbers=[];renderer.camera={x:game.player.x,y:game.player.y};closeModal(true);sound.track(false);$('start').textContent='Tiếp tục hành trình';notice('Đã khôi phục hành trình.');
+    if(started&&game.player.hp<=0)openModal('Trở về dưới mưa','Bản lưu đang ở trạng thái gục ngã. Trở về Bến Gỗ để tiếp tục.',[['Hồi sinh',()=>{game.action('respawn');closeModal();save();},true]]);
+  },true]],'XÁC NHẬN BẢN LƯU');}
 function storeOptions(){try{localStorage.setItem(OPTIONS,JSON.stringify(options));}catch{}}
 function processEvents(){for(const e of game.drain()){
   if(e.type==='number'){renderer.number(e,game.tick);continue;}
@@ -89,6 +102,7 @@ function processEvents(){for(const e of game.drain()){
   if(e.type==='level')notice('Cấp '+e.level+' · Một bước trưởng thành');
   if(e.type==='bossStart'){sound.track(true);notice('Mãng Cốt trồi lên từ đáy đầm!');}
   if(e.type==='bossDefeated'){sound.track(false);notice('Mãng Cốt đã được giải thoát. Một mảnh ấn lộ dưới nước.');}
+  if(e.type==='bossReset')sound.track(false);
   if(e.type==='death'){sound.play('sfx/combat/death_v01.wav',.6);save();openModal('Mưa chưa dứt','Ngươi gục xuống giữa làn mưa. Những gì đã tìm thấy vẫn còn. Hãy trở về Bến Gỗ, lấy lại hơi thở rồi tiếp tục.',[['Hồi sinh ở Bến Gỗ',()=>{game.action('respawn');closeModal();sound.track(false);save();},true]],'HÀNH TRÌNH CHƯA KẾT THÚC');}
   if(['progress','accepted','reward','level','respawn'].includes(e.type))save();
 }}
@@ -99,6 +113,7 @@ function updateHud(){const p=game.player;$('hp').textContent=`${Math.ceil(p.hp)}
   $('coordinates').textContent=`${p.x.toFixed(1)}, ${p.y.toFixed(1)}`;$('telemetry').textContent=`${fps} FPS · E tương tác · J nhật ký · Esc cài đặt`;
   document.querySelectorAll('[data-action]').forEach(b=>{const action=b.dataset.action,seconds=game.cooldown(action),em=b.querySelector('em');em.style.display=seconds>0?'grid':'none';em.textContent=String(Math.ceil(seconds));b.disabled=p.hp<=0||modal;if(action==='potion')b.querySelector('span').textContent='Thuốc ×'+p.potions;});
   $('attack').disabled=p.hp<=0||modal;$('boss-hud').classList.toggle('hidden',!game.boss.active);$('boss-fill').style.width=game.boss.hp/game.boss.maxHp*100+'%';$('boss-phase').textContent='PHA '+game.boss.phase+' · '+Math.ceil(game.boss.hp)+' / '+game.boss.maxHp;
+  const target=game.target();$('target-panel').classList.toggle('hidden',!target);if(target){$('target-name').textContent=target.name;$('target-hp').textContent=`${Math.ceil(target.hp)} / ${target.maxHp}`;$('target-fill').style.width=target.hp/target.maxHp*100+'%';$('target-range').textContent=(distance(p,target)<=4?'Trong tầm đánh':'Ngoài tầm đánh')+' · '+(distance(p,target)*.5).toFixed(1)+'m';}
 }
 function doAction(action){if(!started||modal||needsRelease||document.hidden)return;game.action(action);processEvents();}
 function keyAction(code){return ({Space:'attack',Digit1:'guard',Digit2:'dash',Digit3:'cleave',KeyQ:'potion',ShiftLeft:'dodge',ShiftRight:'dodge'})[code];}
@@ -112,6 +127,7 @@ window.addEventListener('keydown',e=>{
   held.add(e.code);if(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))walkGoal=null;if(e.repeat)return;
   if(e.code==='KeyE'){if(!needsRelease)interact();return;}
   if(e.code==='KeyB'){bag();return;}if(e.code==='KeyJ'){journal();return;}
+  if(e.code==='KeyT'){cycleTarget();return;}
   const action=keyAction(e.code);if(action)doAction(action);
 });
 window.addEventListener('keyup',e=>{held.delete(e.code);if(held.size===0&&stickPointer===null)needsRelease=false;});
@@ -120,6 +136,12 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){resetContr
 window.addEventListener('beforeunload',save);window.addEventListener('resize',()=>renderer?.resize());
 $('journal-btn').onclick=journal;$('bag-btn').onclick=bag;$('settings-btn').onclick=settings;$('close-modal').onclick=closeModal;
 $('sound-btn').onclick=()=>{sound.enabled=!sound.enabled;sound.apply();};$('interact-btn').onclick=interact;$('attack').onclick=()=>doAction('attack');
+$('target-btn').onclick=cycleTarget;$('clear-target').onclick=()=>game.clearTarget();$('save-manager-title').onclick=saveManager;
+$('save-file').onchange=async event=>{const file=event.target.files[0];event.target.value='';if(!file)return;try{if(file.size>64000)throw new Error('File bản lưu lớn hơn64KB.');const candidate=decodeSave(await file.text());confirmImport(candidate,'từ file');}catch(error){saveError(error.message);}};
+function cycleTarget(){if(modal||!started||game.player.hp<=0)return;walkGoal=null;const target=game.cycleTarget();notice(target?'Khóa mục tiêu: '+target.name:'Không có mục tiêu hợp lệ ở gần.');}
+const attackButton=$('attack');
+attackButton.onpointerdown=e=>{if(modal||!started||game.player.hp<=0)return;e.preventDefault();needsRelease=false;attackPointer=e.pointerId;attackButton.setPointerCapture(e.pointerId);doAction('attack');};
+attackButton.onpointerup=attackButton.onpointercancel=attackButton.onlostpointercapture=e=>{if(attackPointer===e.pointerId)attackPointer=null;};
 document.querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>doAction(b.dataset.action));
 $('track-btn').onclick=()=>{if(modal||!started)return;const goal=game.goal();if(goal){walkGoal={x:goal.x,y:goal.y,stop:2.3};renderer.tracking=true;needsRelease=false;notice('Đang tới '+(goal.name||'mục tiêu')+'. WASD hoặc nhấp đất để đổi hướng.');}};
 const joystick=$('joystick');
@@ -129,14 +151,16 @@ joystick.onpointerdown=e=>{if(modal||!started)return;if(needsRelease&&held.size=
 joystick.onpointermove=e=>{if(stickPointer===e.pointerId)updateStick(e);};
 joystick.onpointerup=joystick.onpointercancel=joystick.onlostpointercapture=e=>{if(stickPointer===e.pointerId){stickPointer=null;touch={x:0,y:0};$('stick').style.transform='';}};
 document.addEventListener('pointerup',()=>{if(held.size===0&&stickPointer===null)needsRelease=false;});
-$('world').onpointerdown=e=>{if(modal||!started)return;const r=$('world').getBoundingClientRect(),dx=e.clientX-r.left-$('world').width/2,dy=-(e.clientY-r.top-$('world').height/2),n=Math.hypot(dx,dy);if(n>1)game.player.face={x:dx/n,y:dy/n};walkGoal={x:renderer.camera.x+dx/20,y:Math.max(-11,Math.min(9,renderer.camera.y+dy/20)),stop:.3};needsRelease=false;};
+$('world').onpointerdown=e=>{if(modal||!started)return;const r=$('world').getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,target=renderer.pickTarget(game,x,y);if(target&&game.selectTarget(target.id)){walkGoal=null;notice('Khóa mục tiêu: '+target.name);return;}const dx=x-$('world').width/2,dy=-(y-$('world').height/2),n=Math.hypot(dx,dy);if(n>1)game.player.face={x:dx/n,y:dy/n};walkGoal={x:renderer.camera.x+dx/20,y:Math.max(-11,Math.min(9,renderer.camera.y+dy/20)),stop:.3};needsRelease=false;};
 
 function frame(now){const dt=Math.min(.15,(now-(previous||now))/1000);previous=now;frameCount++;if(now-fpsAt>1000){fps=frameCount;frameCount=0;fpsAt=now;}
   if(renderer&&game){if(started&&!modal&&!document.hidden){accumulator+=dt;
       let x=needsRelease?0:(held.has('KeyD')||held.has('ArrowRight')?1:0)-(held.has('KeyA')||held.has('ArrowLeft')?1:0)+touch.x;
       let y=needsRelease?0:(held.has('KeyW')||held.has('ArrowUp')?1:0)-(held.has('KeyS')||held.has('ArrowDown')?1:0)+touch.y;
       if(walkGoal&&!needsRelease){if(distance(game.player,walkGoal)<=walkGoal.stop)walkGoal=null;else{x=walkGoal.x-game.player.x;y=walkGoal.y-game.player.y;}}
-      while(accumulator>=.05){game.step({x,y});if(held.has('Space'))doAction('attack');processEvents();accumulator-=.05;if(modal){accumulator=0;break;}}
+      const holdingAttack=held.has('Space')||attackPointer!==null,target=game.target();
+      if(holdingAttack&&!needsRelease&&target&&!walkGoal&&x===0&&y===0&&distance(game.player,target)>3.3&&distance(game.player,target)<=15){x=target.x-game.player.x;y=target.y-game.player.y;}
+      while(accumulator>=.05){game.step({x,y});if(holdingAttack&&(!game.target()||distance(game.player,game.target())<=4))doAction('attack');processEvents();accumulator-=.05;if(modal){accumulator=0;break;}}
       if(now-lastSave>5000){save();lastSave=now;}
     }else accumulator=0;
     renderer.draw(game,now,!started);if(started&&now-lastHud>=100){updateHud();lastHud=now;}
@@ -146,9 +170,12 @@ async function boot(){try{
     if(QA)document.querySelector('.local-label').textContent='PHIÊN KIỂM THỬ · LƯU RIÊNG';
     const response=await fetch('content.json');if(!response.ok)throw new Error('content');content=await response.json();
     const images={};await Promise.all(Object.entries(content.sprites).map(async([name,spec])=>{images[name]=await new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('sprite '+name));img.src=spec.url;});}));
-    game=new Game();let resumed=false;try{const raw=localStorage.getItem(SAVE);if(raw&&raw.length<50000)resumed=game.restore(JSON.parse(raw));}catch{}
+    const loaded=saveStore.load();game=loaded.game;const resumed=['primary','previous'].includes(loaded.source);saveSuspended=loaded.source==='invalid';
+    if(loaded.source==='previous')$('load-error').textContent='Đã phục hồi từ lần lưu trước do bản gần nhất không đọc được.';
+    if(saveSuspended)$('load-error').textContent='Bản lưu cũ chưa đọc được; tự lưu tạm khóa để giữ dữ liệu. Có thể nhập bản dự phòng qua nút Bản lưu.';
+    if(loaded.source==='unavailable')$('load-error').textContent='Trình duyệt đang chặn lưu. Có thể chơi và xuất bản lưu thành file trước khi đóng.';
     renderer=new Renderer($('world'),$('mini'),content,images);renderer.rain=options.rain;renderer.reduced=options.reduced;
-    $('start').disabled=false;$('start').textContent=resumed?'Tiếp tục hành trình':'Bước xuống bến';
+    $('start').disabled=false;$('save-manager-title').disabled=false;$('start').textContent=resumed?'Tiếp tục hành trình':'Bước xuống bến';
     $('start').onclick=()=>{started=true;$('title').classList.add('hidden');$('hud').classList.remove('hidden');resetControls();renderer.camera.x=game.player.x;renderer.camera.y=game.player.y;sound.track(game.boss.active);$('area-title').textContent='BẾN MƯA';setTimeout(()=>$('area-title').style.opacity=0,3200);notice('Nhấp đất hoặc WASD để đi · Tới mục tiêu ở bảng nhiệm vụ · E nói chuyện.');
       if(game.player.hp<=0)openModal('Trở về dưới mưa','Hành trình vẫn còn đợi ở Bến Gỗ.',[['Hồi sinh',()=>{game.action('respawn');closeModal();},true]]);
     };

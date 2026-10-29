@@ -2,6 +2,14 @@
 
 Mục tiêu: có một hành trình để chơi ngay trên máy yếu khi Unity/.NET chưa sẵn sàng. Đây là nhánh playtest **một người, Canvas/JavaScript + Python**, không thay engine Unity của dự án hoặc giao thức/server Qoder. Không có tài khoản online, multiplayer, giao dịch hay đồng bộ thưởng vào server thật.
 
+## Bản nâng cấp chơi thuận hơn — v1.1
+
+- Nhấp quái hoặc nhấn **T/nút◎** để khóa/chuyển mục tiêu. Có vòng chân, tên, HP và khoảng cách; nút× bỏ khóa. Không chọn NPC, boss chưa active, quái chết hoặc ngoài vùng40WU. Target được xóa khi chết/đổi scope và không ghi vào save.
+- Giữ **Space hoặc nút Tấn công** để đánh liên tục. Khi đã khóa mục tiêu trong15WU và không điều khiển hướng tay, nhân vật tiến tới tầm đánh. Nhả nút để dừng tự áp sát; WASD/cần ảo ưu tiên điều khiển của người chơi. Target lock không mở rộng hitbox/range hoặc làm đòn trúng xuyên khoảng cách.
+- **Bản lưu** có ở title và Cài đặt: xuất JSON, nhập JSON≤64KB có bước xác nhận, hoặc dùng lần lưu trước. Save v1 cũ vẫn đọc được. File không đúng loại/version/field bị từ chối trước khi thay game; lỗi ghi giữ tiến độ đã commit. Nếu bản chính hỏng, thử bản dự phòng; nếu cả hai không đọc được thì tạm khóa autosave, giữ dữ liệu cũ để người chơi chọn cách xử lý. Trình duyệt chặn storage vẫn chơi được và có thể xuất tiến độ ra file.
+- Nhạc boss trở lại Bến Mưa khi reset; teleport/hồi sinh xóa dash/avoid/target còn treo. Sóng hướng dẫn chỉ xuất hiện quanh đầm, không ở điểm hồi sinh.
+- Bản này vẫn local single-player. Import/recovery không chuyển currency/quest lên production server, không thay scope Qoder hoặc artwork Muse.
+
 ## Chơi ngay
 
 Giải nén toàn bộ gói nếu dùng ZIP, rồi nhấp đúp `CHOI_THU.cmd` ở thư mục gốc. Máy cần Python3.10+; không cần Unity, .NET hoặc npm. Cửa sổ server cần tiếp tục chạy trong lúc chơi.
@@ -43,6 +51,7 @@ Phản Quang dùng precision DEC-022 cho cửa8tick, một counter tick kế ti�
 
 ```powershell
 node Tools/PlayablePreview/tests/engine_checks.mjs
+node Tools/PlayablePreview/tests/playability_checks.mjs
 python -m unittest discover -s Tools/PlayablePreview/tests -p "test_*.py" -v
 ```
 
