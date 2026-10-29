@@ -74,6 +74,8 @@ Manifest ghi "100% Đồng theo band; 12% rơi 1 vật liệu trong pool" nhưng
 
 ## 5. Wire delta (chỉ áp dụng sau khi proposal được duyệt)
 
+> **Cập nhật 2026-10-30:** owner đã duyệt hướng v2 tách biệt tại work order 08 §2 (Q3) — phần dưới giữ làm bối cảnh, thiết kế đã duyệt nằm ở §9.
+
 1. **`WorldSnapshot.schema.json` v2:** entity thêm `revision` (≥1), `floorId`, `lifeId`; enum `kind`/`state` mở rộng theo chính sách visibility (Q6).
 2. **Damage evidence:** design resolution cấm dùng `combat.effect` làm bằng chứng damage. Đề xuất **`CombatCastEvent.schema.json` v2**: `CAST_IMPACT` thêm `hitIndex`, `amount`, `absorbed`, `hpDamage`, `hit`/`miss`, `targetRevision`, `sourceRevision` (revision ghi rõ chủ aggregate — design resolution §3). Transport: mở trong response `/p1/combat` (field `hits[]` mới, legacy `combat.effect` giữ nguyên) — Q3 hỏi owner chọn phương án.
 3. `CombatEvent`/`CombatInput`/`Envelope` không đổi; `CombatEventPayload.Damage/Hit` (đang optional, chưa dùng) **không** được điền như bằng chứng damage.
@@ -90,9 +92,34 @@ Status/buff/shield registry (Rules §3), Phản Quang counter, boss encounter (t
 
 ## 8. Câu hỏi gửi owner
 
+> **Đã được owner trả lời 2026-10-30** — xem §9. Giữ nguyên câu hỏi để tra cứu.
+
 1. **Mob level theo spawn:** dùng bảng REFERENCE_L5 của design resolution làm baseline prototype, hay owner có nguồn level/spawn khác?
 2. **Đánh thường:** đưa basic attack 3×100% vào subset (cần cho vòng săn quái) hay giữ skills-only?
 3. **Transport damage:** mở `hits[]` trong response `/p1/combat` (đề xuất) hay chỉ qua snapshot entity hp polling, hay mở transport `CombatCastEvent` riêng?
 4. **Loot:** nguồn quy tắc "Đồng theo band" và roll 12% material (seed/rounding) lấy từ đâu, hay để QOD-C/D?
 5. **Phản Quang:** case counter/DR còn thiếu — chờ owner quyết định hay Qoder soạn proposal con riêng?
 6. **Snapshot visibility:** entities gồm cả GATHER_NODE/INTERACTABLE (27 instance đầy đủ) hay chỉ MOB/BOSS/NPC?
+
+## 9. Pha 2 — quyết định owner (2026-10-30) và thiết kế v2 đã duyệt
+
+Owner trả lời 6 câu hỏi tại `08_QODER_PLAYABLE_SLICE_20261030.md` §2. Tóm tắt quyết định và thay đổi so với đề xuất đầu:
+
+- **Q1:** REFERENCE_L5 chỉ là DEV fixture cho 3 archetype hiện có; không gán cấp 5 cho mọi spawn/46 map. HP sau multiplier không nguyên → ghi unresolved quantization hoặc proposal riêng trước khi rollout ngoài fixture; ATK/DEF giữ thập phân, floor một lần ở Final. Migration actor stats/HP/MP là milestone riêng. Không gọi fixture HP100/MP50 + công thức tham chiếu là cân bằng đã duyệt.
+- **Q2:** Có basic attack trong subset Minh Kiếm: mỗi nhát 100% attack, range 4 WU/quạt 90°/cap 1, windup 0.15s/hit 0.10s/recovery 0.25s, combo timeout 1.5s sau recovery, ceil theo tick 20 Hz. Một lệnh = một nhát; `BASIC_ATTACK` tách khỏi active skill trong DTO, không tạo `SK-MK-07` giả.
+- **Q3:** Typed combat events có version + snapshot reconciliation, namespace v2 opt-in: `/p1/v2/world/{sessionId}`, `/p1/v2/combat`, endpoint đọc event có cursor. Không chèn `hits[]` vào v1 (`additionalProperties=false`); response chỉ trả event **đã xảy ra**; impact chạy ở tick thật; cursor monotonic, gap/overflow báo resync; replay không tạo cast/event/death mới.
+- **Q4:** Loot: một roll 12% (`group_chance_bps=1200`) mỗi group rồi SELECT_ONE theo weight từ `Loot_Recipe_Reward_Production_Data_vi.csv`; coin band chưa có giá trị executable → mob-loot grant OFF, chỉ làm exporter/RNG/eligibility/ledger tests + proposal phần thiếu. XP đã có nguồn (`level_progression_v1.json` + Production Rules §1; oracle L1: 175/43/96/21; mob L5 = 20 trước modifier), triển khai phải transaction reward/level/ledger, chỉ `applied=true` khi commit thật.
+- **Q5:** Phản Quang tách proposal con (guard 0.4s, hướng, một counter/cửa, +2 Kiếm Ý, source chết cùng tick, câu DR hụt 20% còn thiếu); counter/DR giữ `unsupported`, chỉ emit `COUNTER_CONFIRMED` sau khi duyệt. Basic/MK03/mob pipeline và quest tests chạy độc lập.
+- **Q6:** Snapshot v2 gồm MOB/BOSS/NPC/GATHER_NODE/INTERACTABLE **sau audience filter**: AOI PvE enter 40 WU, leave 48 WU (hysteresis 8, nguồn Online_Persistence_Release_Complete §2), cùng instance/map/floor/phase trước AOI; boss blocked có `healthState: BLOCKED` + `targetable: false` (không hiển thị như đã chết); NPC `INVULNERABLE`; availability node theo người gọi, không lộ quest flag/inventory/claim của người khác; v1 không đổi.
+
+### 9.1 Contracts v2 (đã thêm)
+
+- `WorldSnapshotV2.schema.json` + example: `schemaVersion: 2`, `mapInstanceId` (`MAP_X#n`), `floorId`, `phase` (DEV `OPEN_WORLD` cho tới encounter phase của QOD-19), `audience {aoiEnterWu: 40, aoiLeaveWu: 48}`, entity read model đầy đủ (kind/state/healthState/targetable/availability/revision/lifeId/hp/maxHp).
+- `CombatInputV2.schema.json` + example: `actionKind` `BASIC_ATTACK | SKILL`; `skillId` chỉ cho SKILL; `targetId` tuỳ chọn (auto-select trong cone theo design).
+- `CombatEventV2.schema.json` + example: `CAST_START | IMPACT | MISS | CANCEL | END | DEATH` với `castId`/`targetId`/`targetLifeId`/`hitIndex`/`mapInstanceId`/`floorId`/`sourceRevision`/`targetRevision`/`cursor`/`result{hit,crit,immune,amount,absorbed,hpDamage}`.
+- `CombatEventPageV2.schema.json` + example: `nextCursor`, `resyncRequired` + `resyncReason` (`CURSOR_TOO_OLD | BUFFER_OVERFLOW`), cursor tăng nghiêm ngặt.
+- `validate_contracts.py` mở rộng: `entityId` dạng `ENT_...` resolve theo runtime bundle (27 instance) thay vì cột template manifest; semantic checks cho 4 schema mới (AOI constants, NPC/boss policy, actionKind↔skillId, IMPACT/MISS/DEATH fields, cursor/resync). v1 giữ nguyên.
+
+### 9.2 Triển khai tiếp
+
+Event store (bounded buffer, cursor, resync) + AOI projection có hysteresis + endpoint v2 opt-in (`P1:CombatV2:Enabled` OFF mặc định; dev profile bật) + e2e dev mở rộng; sau đó QOD-17 tick combat (basic + MK03 damage, mob telegraph/death/respawn, kill credit theo entityLifeId/deathEventId).
