@@ -397,6 +397,35 @@ def check_combat_event_v2(example, label, errors):
         )
 
 
+def check_combat_result_v2(example, label, errors):
+    if not isinstance(example, dict):
+        return
+    action_kind = example.get("actionKind")
+    skill_id = example.get("skillId")
+    if action_kind == "SKILL" and not isinstance(skill_id, str):
+        errors.append(f"{label}.skillId: SKILL requires a skillId")
+    if action_kind == "BASIC_ATTACK" and skill_id is not None:
+        errors.append(f"{label}.skillId: BASIC_ATTACK must not carry a skillId")
+    cast_id = example.get("castId")
+    events = example.get("events")
+    if not isinstance(events, list) or not events:
+        errors.append(f"{label}.events: accepted casts return at least CAST_START")
+        return
+    cursors = []
+    for index, event in enumerate(events):
+        if not isinstance(event, dict):
+            continue
+        cursors.append(event.get("cursor"))
+        if event.get("castId") != cast_id:
+            errors.append(f"{label}.events[{index}].castId must equal the cast id")
+    if any(not isinstance(cursor, int) for cursor in cursors):
+        errors.append(f"{label}.events: every event requires an integer cursor")
+    elif cursors != sorted(set(cursors)):
+        errors.append(f"{label}.events: cursors must be strictly increasing")
+    if events and isinstance(events[0], dict) and events[0].get("type") != "CAST_START":
+        errors.append(f"{label}.events[0].type: accepted cast starts with CAST_START")
+
+
 def check_combat_event_page_v2(example, label, errors):
     if not isinstance(example, dict):
         return
@@ -430,6 +459,8 @@ def check_example_semantics(name, example, map_config, errors):
         check_combat_event_v2(example, label, errors)
     elif name == "CombatEventPageV2":
         check_combat_event_page_v2(example, label, errors)
+    elif name == "CombatResultV2":
+        check_combat_result_v2(example, label, errors)
     elif name == "CombatEvent":
         check_combat_event(example, label, errors)
     elif name == "QuestState":
