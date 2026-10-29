@@ -212,8 +212,10 @@ namespace NguMach.Client.P1
             {
                 var r = Parse<P1Quest>(reply);
                 if (IsExpired(r)) return Expire();
-                // Default flag-off endpoint returns an empty 404: this is not session expiry.
-                if (reply.StatusCode == 404 && r == null) { pending = null; State = P1ConnectionState.Ready; return Fail("feature_unavailable"); }
+                // A flag-off POST can be 405 because GET /quests/{sessionId} matches "accept".
+                // Both missing-route variants are definite rejections, not an ambiguous commit.
+                if ((reply.StatusCode == 404 || reply.StatusCode == 405) && r == null)
+                { pending = null; State = P1ConnectionState.Ready; return Fail("feature_unavailable"); }
                 if (Ambiguous(reply, r)) return Uncertain(reply.CorrelationId);
                 if ((r.sessionId != null && r.sessionId != SessionId) || (r.result != null && r.sessionId != SessionId)) return Uncertain(reply.CorrelationId);
                 if (r.result != null && r.result.questId != P1Wire.Decode<P1Envelope<P1QuestAccept>>(pending.Body).payload.questId) return Uncertain(reply.CorrelationId);
