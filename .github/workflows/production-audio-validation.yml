@@ -1,0 +1,22 @@
+name: production-audio-validation
+on:
+  pull_request:
+    paths:
+      - 'Implementation/Content/DesignBaselines/audio_cues_v1.json'
+      - 'Implementation/Content/DesignBaselines/skill_vfx_art_v1.json'
+      - 'Tools/ProductionReview/**'
+      - '.github/workflows/production-audio-validation.yml'
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  design-references:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check cue references and explicit missing-asset status (no audio quality approval)
+        run: python Tools/ProductionReview/validate_audio_baseline.py
