@@ -328,6 +328,10 @@ State is in memory and there is no seed inventory; a new character starts with n
 | `P1World:StartingLevel` | `1` | Session level used by the quest level-band guard |
 | `P1:QuestAccept:Enabled` | `false` | Maps `/p1/quests/accept`; dev stub until walkability exists |
 | `P1:QuestAccept:MaxInteractionDistanceWu` | `5` | DEC-016 NPC interaction distance |
+| `P1:MobBehavior:Enabled` | `false` | Enables the labelled mob-behaviour fixture (no tick loop yet) |
+| `P1:MobBehavior:AggroRadiusWu` / `LeashRadiusWu` | `6` / `12` | **DEV FIXTURE**, not canonical balance |
+| `P1:MobBehavior:AttackRangeWu` / `AttackCooldownSeconds` | `1.2` / `2` | **DEV FIXTURE** |
+| `P1:MobBehavior:MoveSpeedWuPerSecond` | `2` | **DEV FIXTURE** |
 
 Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond=8` or `P1__QuestAccept__Enabled=true`.
 
@@ -393,7 +397,7 @@ Quest and inventory HTTP surfaces are read-only, teleport has no endpoint, and c
 dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
 ```
 
-The flag boots the DI container and canonical content, then runs 82 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), world-target resolution and floor checks, the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency, line-of-sight and swept-walk geometry (clear, wall, large step, hole, corner, floor, non-finite, outside, footprint, not-enforced), the NPC anchor registry, the Bến Mưa world-entity registry with despawn/respawn under a manual clock, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
+The flag boots the DI container and canonical content, then runs 88 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), world-target resolution and floor checks, the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency, line-of-sight and swept-walk geometry (clear, wall, large step, hole, corner, floor, non-finite, outside, footprint, not-enforced), the NPC anchor registry, the Bến Mưa world-entity registry with despawn/respawn under a manual clock, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
 
 ## Manual verification
 
@@ -429,7 +433,8 @@ The flag boots the DI container and canonical content, then runs 82 assertions c
 ## Current limits
 
 - Sessions are in memory and lost on restart; there is no database, authentication or real-time transport.
-- `entities` is always empty in snapshots; combat can target alive world mobs/bosses by instance ID, but there is still no damage, death, loot or mob AI. Teleport has no endpoint.
+- `entities` is always empty in snapshots; combat can target alive world mobs/bosses by instance ID, but there is still no damage, death or loot.
+- Mob behaviour (`MobLifecycleService`) exists as a tickable state machine (IDLE/AGGRO/CHASE/ATTACK/RETURN/DEAD) with LOS, leash and attack-cooldown gates, but it is driven only by tests — there is no background tick loop, damage or loot yet, and every radius/speed is a labelled DEV fixture. Teleport has no endpoint.
 - The Bến Mưa world-entity registry (`world_entities_bm.json`: 24 canonical placements, 19 templates) is loaded with despawn/respawn state, but no endpoint, combat target or HP/stat wiring uses it yet.
 - Combat has no damage, hit chance, telegraphs, death or loot: `combat.effect` only records an accepted cast and its cooldown.
 - Quest state is in memory; accept exists but is feature-flagged off by default. Line-of-sight runs only for `REVIEWED` topology bundles; the shipped bundle is synthetic, so it is `not_enforced` until Muse delivers the Bến Mưa layout. Turn-in, rewards, party progress and multi-step graphs are not implemented.

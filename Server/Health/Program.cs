@@ -46,6 +46,11 @@ builder.Services.AddSingleton<ICombatTargetProvider>(serviceProvider =>
         serviceProvider.GetRequiredService<WorldEntityTargetProvider>(),
         serviceProvider.GetRequiredService<InMemoryCombatTargetProvider>()));
 builder.Services.AddSingleton<ICombatService, InMemoryCombatService>();
+builder.Services.Configure<MobBehaviorOptions>(
+    builder.Configuration.GetSection(MobBehaviorOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<MobBehaviorOptions>>().Value);
+builder.Services.AddSingleton<MobLifecycleService>();
 builder.Services.AddSingleton<IQuestCatalog>(serviceProvider =>
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
@@ -115,6 +120,15 @@ app.Logger.LogInformation(
     "Loaded topology bundles: {BundleCount} (reviewed {ReviewedCount}).",
     topology.Count,
     topology.ReviewedCount);
+
+var mobBehavior = app.Services.GetRequiredService<MobBehaviorOptions>();
+MobBehaviorOptionsValidator.Validate(mobBehavior);
+if (mobBehavior.Enabled)
+{
+    app.Logger.LogWarning(
+        "DEV FIXTURE: P1:MobBehavior is enabled with labelled fixture radii; " +
+        "no damage or canonical mob stats are applied.");
+}
 
 var worldEntities = app.Services.GetRequiredService<WorldEntityRegistry>();
 app.Logger.LogInformation(

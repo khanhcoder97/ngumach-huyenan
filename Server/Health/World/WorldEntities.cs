@@ -49,14 +49,20 @@ public sealed class WorldEntityInstance
     public required IReadOnlyList<string> TemplateIds { get; init; }
     public required string MapId { get; init; }
     public required string FloorId { get; init; }
-    public required double X { get; init; }
-    public required double Y { get; init; }
+    public required double X { get; set; }
+    public required double Y { get; set; }
     public required int Quantity { get; init; }
     public required int RespawnSeconds { get; init; }
 
     public string State { get; private set; } = string.Empty;
     public long Revision { get; private set; }
     public DateTimeOffset? RemovedAtUtc { get; private set; }
+
+    internal void MoveTo(double x, double y)
+    {
+        X = x;
+        Y = y;
+    }
 
     internal void Initialize()
     {
