@@ -34,6 +34,7 @@ namespace NguMach.Client.P1
         private string selectedTarget;
         private string detailMode = "quests";
         private float pollAt, listsAt;
+        private EventCallback<GeometryChangedEvent> layoutChanged;
 
         public void Open(UIDocument ui, string serverOrigin, int timeoutSeconds, Action onClose)
         {
@@ -191,7 +192,8 @@ namespace NguMach.Client.P1
             details = Panel(); details.style.left = 10; details.style.top = 180; details.style.width = 300; details.style.display = DisplayStyle.None;
             var scroll = new ScrollView(); detailText = new Label { enableRichText = false }; detailText.style.whiteSpace = WhiteSpace.Normal; scroll.Add(detailText); details.Add(scroll);
             accept = ActionButton("quest.accept", AcceptQuest); details.Add(accept); safeRoot.Add(details);
-            root.RegisterCallback<GeometryChangedEvent>(evt => { details.style.maxHeight = Mathf.Max(60, evt.newRect.height - 200); UpdateSafeArea(); });
+            layoutChanged = evt => { details.style.maxHeight = Mathf.Max(60, evt.newRect.height - 200); UpdateSafeArea(); };
+            root.RegisterCallback(layoutChanged);
             var movement = Panel(); movement.style.left = 10; movement.style.bottom = 10; movement.style.width = 168; movement.style.height = 168;
             var axes = new[] { new Vector2(-1,1), Vector2.up, new Vector2(1,1), Vector2.left, Vector2.zero, Vector2.right, new Vector2(-1,-1), Vector2.down, new Vector2(1,-1) };
             var names = new[] { "NW", "N", "NE", "W", "·", "E", "SW", "S", "SE" };
@@ -266,7 +268,7 @@ namespace NguMach.Client.P1
             {
                 foreach (var q in client.Quests)
                 {
-                    text.AppendLine(q.questId == "P00-01" ? P1Copy.Get("quest.title") : q.questId);
+                    text.AppendLine(q.questId == "P00-01" ? P1Copy.Get("quest.title") : P1Copy.Get("quest.unknown"));
                     text.AppendLine(P1Copy.Get("quest.state." + q.state));
                     foreach (var count in q.objectiveCounters) text.AppendLine(P1Copy.Get("quest.count", count.Value));
                     if (q.questId == "P00-01" && q.state == "AVAILABLE") available = true;
@@ -276,8 +278,12 @@ namespace NguMach.Client.P1
             else if (client.Inventory == null) text.Append(P1Copy.Get("bag.unloaded"));
             else
             {
-                foreach (var i in client.Inventory.items) text.AppendLine(i.templateId + " ×" + i.stack); // Template localization mapping arrives with content bundle.
-                foreach (var c in client.Inventory.currencies) text.AppendLine((c.currencyId == "COIN" ? P1Copy.Get("bag.coin") : c.currencyId) + ": " + c.amount);
+                foreach (var i in client.Inventory.items)
+                {
+                    string key = "item." + i.templateId; string name = P1Copy.Get(key);
+                    text.AppendLine((name == key ? P1Copy.Get("bag.unknownItem") : name) + " ×" + i.stack);
+                }
+                foreach (var c in client.Inventory.currencies) text.AppendLine((c.currencyId == "COIN" ? P1Copy.Get("bag.coin") : P1Copy.Get("bag.otherCurrency")) + ": " + c.amount);
                 if (client.Inventory.items.Length == 0) text.AppendLine(P1Copy.Get("bag.empty"));
             }
             detailText.text = text.ToString(); accept.style.display = detailMode == "quests" ? DisplayStyle.Flex : DisplayStyle.None; accept.SetEnabled(ready && available);
@@ -305,8 +311,16 @@ namespace NguMach.Client.P1
             if (presenter != null) { presenter.Release(); Destroy(presenter); }
             if (proxy != null) Destroy(proxy); if (proxySprite != null) Destroy(proxySprite); if (proxyTexture != null) Destroy(proxyTexture);
             if (cameraTransform != null) cameraTransform.position = originalCameraPosition;
+            if (layoutChanged != null) { document.rootVisualElement.UnregisterCallback(layoutChanged); layoutChanged = null; }
             document.rootVisualElement.Clear(); returnToTitle?.Invoke(); Destroy(this);
         }
-        private void OnDestroy() { closing = true; if (life != null) { life.Cancel(); life.Dispose(); } if (presenter != null) Destroy(presenter); }
+        private void OnDestroy()
+        {
+            closing = true;
+            if (document != null && layoutChanged != null) document.rootVisualElement.UnregisterCallback(layoutChanged);
+            if (life != null) { life.Cancel(); life.Dispose(); }
+            if (presenter != null) Destroy(presenter);
+            if (proxy != null) Destroy(proxy); if (proxySprite != null) Destroy(proxySprite); if (proxyTexture != null) Destroy(proxyTexture);
+        }
     }
 }

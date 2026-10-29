@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -229,7 +230,7 @@ namespace NguMach.Client.P1
         {
             var id = Id();
             var body = new P1Envelope<T> { requestId = id, idempotencyKey = Id(),
-                sentAtUtc = utcNow().UtcDateTime.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'"), characterId = World.self.characterId, payload = payload };
+                sentAtUtc = utcNow().UtcDateTime.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture), characterId = World.self.characterId, payload = payload };
             return new P1Request("POST", path, P1Wire.Encode(body), SessionId, id);
         }
         private P1Request Get(string path) { return new P1Request("GET", path, null, SessionId, Id()); }
