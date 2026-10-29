@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Options;
 using Server.Health.Contracts;
 using Server.Health.Gameplay.Combat;
+using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
 using Server.Health.Gameplay.Quests;
 using Server.Health.Gameplay.Teleport;
@@ -223,28 +224,44 @@ public static class ServiceSelfCheck
             questAccepted.Accepted && questAccepted.State?.State == QuestStates.Active,
             questAccepted.State?.State);
 
-        var badObjective = quests.RecordObjective(
-            questActor, "P00-01", "OBJ_SELFCHECK_UNKNOWN", 1);
-        Check(
-            "quest.unknown_objective",
-            badObjective.Failure?.Code == QuestErrorCodes.UnknownObjective,
-            badObjective.Failure?.Code);
+        var eventP1 = new string('a', 32);
+        var eventP2 = new string('b', 32);
+        var eventP3 = new string('c', 32);
 
-        var questProgressed = quests.RecordObjective(
-            questActor, "P00-01", "OBJ_P00_01_PACKAGES", 3);
+        var progress1 = quests.RecordVerifiedEvent(
+            questActor, eventP1, QuestProgressEventTypes.InteractClaim,
+            "MAN-BM-OBJ_BM_PACKAGE_01", options.DefaultMapId);
+        var progress2 = quests.RecordVerifiedEvent(
+            questActor, eventP2, QuestProgressEventTypes.InteractClaim,
+            "MAN-BM-OBJ_BM_PACKAGE_02", options.DefaultMapId);
+        var progress3 = quests.RecordVerifiedEvent(
+            questActor, eventP3, QuestProgressEventTypes.InteractClaim,
+            "MAN-BM-OBJ_BM_PACKAGE_03", options.DefaultMapId);
         Check(
             "quest.ready_to_turn_in",
-            questProgressed.State?.State == QuestStates.ReadyToTurnIn &&
-            questProgressed.State.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 3,
-            questProgressed.State?.State);
+            progress1.SingleOrDefault() is { State: QuestStates.Active, Revision: 3 } p1 &&
+            p1.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 1 &&
+            progress2.SingleOrDefault() is { State: QuestStates.Active, Revision: 4 } &&
+            progress3.SingleOrDefault() is { State: QuestStates.ReadyToTurnIn, Revision: 5 } p3 &&
+            p3.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 3,
+            progress3.SingleOrDefault()?.State);
 
-        var overProgress = quests.RecordObjective(
-            questActor, "P00-01", "OBJ_P00_01_PACKAGES", 10);
-        var overCount = overProgress.State?.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES");
+        var duplicateProgress = quests.RecordVerifiedEvent(
+            questActor, new string('d', 32), QuestProgressEventTypes.InteractClaim,
+            "MAN-BM-OBJ_BM_PACKAGE_01", options.DefaultMapId);
         Check(
-            "quest.progress_clamped",
-            overCount == 3,
-            overCount?.ToString());
+            "quest.distinct_record_dedupe",
+            duplicateProgress.Count == 0,
+            duplicateProgress.Count.ToString());
+
+        var inactiveActor = NewPlayer("CHR_SELFCHECK_QUEST_IDLE");
+        var inactiveProgress = quests.RecordVerifiedEvent(
+            inactiveActor, new string('e', 32), QuestProgressEventTypes.InteractClaim,
+            "MAN-BM-OBJ_BM_PACKAGE_01", options.DefaultMapId);
+        Check(
+            "quest.progress_ignored_when_inactive",
+            inactiveProgress.Count == 0,
+            inactiveProgress.Count.ToString());
 
         var questCompleted = quests.TurnIn(questActor, "P00-01");
         Check(
@@ -273,7 +290,7 @@ public static class ServiceSelfCheck
             $"count={npcAnchors.Count}");
 
         var worldEntities = services.GetRequiredService<WorldEntityRegistry>();
-        Check("world.registry", worldEntities.Count == 24, $"count={worldEntities.Count}");
+        Check("world.registry", worldEntities.Count == 27, $"count={worldEntities.Count}");
 
         var npcEntity = worldEntities.TryGet("ENT_MAN_BM_NPC_LYAN", out var foundNpc)
             ? foundNpc
@@ -689,6 +706,406 @@ public static class ServiceSelfCheck
             clearAccept.Accepted && clearAccept.State?.State == QuestStates.Active,
             clearAccept.Failure?.Code);
 
+        var worldRecords = services.GetRequiredService<WorldRecordCatalog>();
+        Check("world.records", worldRecords.Count == 352, $"count={worldRecords.Count}");
+        Check(
+            "world.records_resolve_target",
+            worldRecords.TryResolveTarget("OBJ_BM_PACKAGE_01", options.DefaultMapId, out var packageRecord) &&
+            packageRecord.RecordId == "MAN-BM-OBJ_BM_PACKAGE_01" &&
+            packageRecord.RecordType == WorldEntityKinds.Interactable &&
+            worldRecords.TryResolveTarget(
+                "MAN-BM-OBJ_BM_PACKAGE_02", options.DefaultMapId, out _),
+            packageRecord?.RecordId);
+
+        WorldEntityInstance MakeFixtureInteractable(
+            string entityId,
+            string recordId,
+            double x,
+            int respawnSeconds)
+        {
+            var interactable = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = recordId,
+                Kind = WorldEntityKinds.Interactable,
+                TemplateIds = new[] { "OBJ_BM_PACKAGE_01" },
+                MapId = options.DefaultMapId,
+                FloorId = "OVERWORLD",
+                X = x,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = respawnSeconds
+            };
+            interactable.Initialize();
+            return interactable;
+        }
+
+        WorldEntityInstance MakeFixtureNpc(string entityId)
+        {
+            var npc = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = "MAN-BM-NPC_LYAN",
+                Kind = WorldEntityKinds.Npc,
+                TemplateIds = new[] { "NPC_LYAN" },
+                MapId = options.DefaultMapId,
+                FloorId = "OVERWORLD",
+                X = 42,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = 0
+            };
+            npc.Initialize();
+            return npc;
+        }
+
+        var interactClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 29, 5, 0, 0, TimeSpan.Zero));
+        var interactRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [
+                    MakeFixtureInteractable(
+                        "ENT_SELFCHECK_PKG_1", "MAN-BM-OBJ_BM_PACKAGE_01", 36, 20),
+                    MakeFixtureInteractable(
+                        "ENT_SELFCHECK_PKG_2", "MAN-BM-OBJ_BM_PACKAGE_02", 44, 20),
+                    MakeFixtureInteractable(
+                        "ENT_SELFCHECK_PKG_3", "MAN-BM-OBJ_BM_PACKAGE_03", 52, 20),
+                    MakeFixtureNpc("ENT_SELFCHECK_NPC")
+                ]),
+            interactClock);
+        var interactStates = new InMemoryQuestStateStore();
+        var interactQuests = new InMemoryQuestService(
+            questCatalog, interactStates, worldRecords, interactClock);
+        var interactInventory = new InMemoryInventoryService(new InMemoryInventoryStateStore());
+        var fixedRoller = new FixedYieldRoller(2);
+        var interactOptions = new InteractionOptions
+        {
+            Enabled = true,
+            MaxInteractionDistanceWu = 5,
+            AssumedProfessionLevel = 1
+        };
+        var interactions = new InMemoryInteractionService(
+            interactRegistry,
+            worldRecords,
+            interactQuests,
+            interactInventory,
+            services.GetRequiredService<IWorldGeometryService>(),
+            interactClock,
+            fixedRoller,
+            new GatherClaimStore(interactClock),
+            interactOptions);
+
+        var interactActor = NewPlayer("CHR_SELFCHECK_INTERACT");
+        interactActor.X = 36;
+        interactActor.Y = 0;
+        var interactAccepted = interactQuests.Accept(interactActor, "P00-01");
+        Check(
+            "interact.quest_accepted",
+            interactAccepted.Accepted && interactAccepted.State?.State == QuestStates.Active,
+            interactAccepted.Failure?.Code);
+
+        var badTargetShape = interactions.Interact(
+            interactActor, "not-an-entity", new string('0', 32));
+        Check(
+            "interact.invalid_payload",
+            badTargetShape.Failure?.Code == P1ErrorCodes.InvalidPayload,
+            badTargetShape.Failure?.Code);
+
+        var missingTarget = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_MISSING", new string('1', 31) + "a");
+        Check(
+            "interact.target_not_found",
+            missingTarget.Failure?.Code == InteractionErrorCodes.TargetNotFound,
+            missingTarget.Failure?.Code);
+
+        var npcTarget = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_NPC", new string('1', 31) + "b");
+        Check(
+            "interact.invalid_target",
+            npcTarget.Failure?.Code == InteractionErrorCodes.InvalidTarget,
+            npcTarget.Failure?.Code);
+
+        var collect1 = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_PKG_1", new string('1', 31) + "c");
+        Check(
+            "interact.collect_package",
+            collect1.Accepted &&
+            collect1.Result is
+            {
+                Kind: WorldEntityKinds.Interactable,
+                Outcome: "collected",
+                TargetState: WorldEntityStates.Depleted,
+                RecordId: "MAN-BM-OBJ_BM_PACKAGE_01",
+                Yield: null,
+                RespawnAtUtc: not null
+            } &&
+            collect1.Result.QuestUpdates.SingleOrDefault() is
+            {
+                State: QuestStates.Active,
+                Revision: 3
+            } collect1Quest &&
+            collect1Quest.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 1,
+            collect1.Failure?.Code ?? collect1.Result?.TargetState);
+
+        var collect1Replay = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_PKG_1", new string('1', 31) + "c");
+        Check(
+            "interact.idempotency_replay",
+            collect1Replay.Accepted && ReferenceEquals(collect1Replay.Result, collect1.Result),
+            collect1Replay.Failure?.Code);
+
+        var collectConflict = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_PKG_2", new string('1', 31) + "c");
+        Check(
+            "interact.idempotency_conflict",
+            collectConflict.Failure?.Code == InteractionErrorCodes.IdempotencyConflict,
+            collectConflict.Failure?.Code);
+
+        var collectDepleted = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_PKG_1", new string('1', 31) + "d");
+        Check(
+            "interact.target_depleted",
+            collectDepleted.Failure?.Code == InteractionErrorCodes.TargetNotAvailable,
+            collectDepleted.Failure?.Code);
+
+        var farInteractor = NewPlayer("CHR_SELFCHECK_INTERACT_FAR");
+        var farCollect = interactions.Interact(
+            farInteractor, "ENT_SELFCHECK_PKG_3", new string('1', 31) + "e");
+        Check(
+            "interact.out_of_range",
+            farCollect.Failure is
+            {
+                Code: InteractionErrorCodes.OutOfRange,
+                Retryable: true
+            },
+            farCollect.Failure?.Code);
+
+        interactActor.X = 44;
+        var collect2 = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_PKG_2", new string('2', 31) + "a");
+        Check(
+            "interact.collect_second",
+            collect2.Accepted &&
+            collect2.Result!.QuestUpdates.SingleOrDefault() is
+            {
+                State: QuestStates.Active,
+                Revision: 4
+            },
+            collect2.Failure?.Code);
+
+        interactActor.X = 52;
+        var collect3 = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_PKG_3", new string('3', 31) + "a");
+        Check(
+            "interact.ready_to_turn_in",
+            collect3.Accepted &&
+            collect3.Result!.QuestUpdates.SingleOrDefault() is
+            {
+                State: QuestStates.ReadyToTurnIn,
+                Revision: 5
+            } collect3Quest &&
+            collect3Quest.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 3,
+            collect3.Failure?.Code ?? collect3.Result?.QuestUpdates.SingleOrDefault()?.State);
+
+        var interactTurnIn = interactQuests.TurnIn(interactActor, "P00-01");
+        Check(
+            "interact.turn_in_completed",
+            interactTurnIn.Accepted &&
+            interactTurnIn.State is { State: QuestStates.Completed, Revision: 6 },
+            interactTurnIn.Failure?.Code ?? interactTurnIn.State?.State);
+
+        interactClock.Advance(TimeSpan.FromSeconds(20));
+        var sharedRespawn = interactRegistry.Update();
+        Check("interact.respawn_shared", sharedRespawn == 3, $"respawned={sharedRespawn}");
+
+        var dedupeActor = NewPlayer("CHR_SELFCHECK_DEDUPE");
+        dedupeActor.X = 36;
+        dedupeActor.Y = 0;
+        interactQuests.Accept(dedupeActor, "P00-01");
+        var dedupe1 = interactions.Interact(
+            dedupeActor, "ENT_SELFCHECK_PKG_1", new string('4', 31) + "a");
+        interactClock.Advance(TimeSpan.FromSeconds(20));
+        interactRegistry.Update();
+        var dedupe2 = interactions.Interact(
+            dedupeActor, "ENT_SELFCHECK_PKG_1", new string('5', 31) + "a");
+        var dedupeState = interactQuests.GetState(dedupeActor.CharacterId, "P00-01").State;
+        Check(
+            "interact.distinct_record_dedupe",
+            dedupe1.Accepted &&
+            dedupe2.Accepted &&
+            dedupe2.Result!.QuestUpdates.Count == 0 &&
+            dedupeState is { State: QuestStates.Active } &&
+            dedupeState.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 1,
+            $"{dedupe2.Failure?.Code} updates={dedupe2.Result?.QuestUpdates.Count}");
+
+        var losInteractions = new InMemoryInteractionService(
+            new WorldEntityRegistry(
+                new WorldEntityCatalog(
+                    [],
+                    [
+                        MakeFixtureInteractable(
+                            "ENT_SELFCHECK_LOS_BLOCKED", "MAN-BM-OBJ_BM_PACKAGE_01", 46.5, 60),
+                        MakeFixtureInteractable(
+                            "ENT_SELFCHECK_LOS_CLEAR", "MAN-BM-OBJ_BM_PACKAGE_01", 40, 60)
+                    ]),
+                interactClock),
+            worldRecords,
+            interactQuests,
+            interactInventory,
+            geometry,
+            interactClock,
+            fixedRoller,
+            new GatherClaimStore(interactClock),
+            interactOptions);
+
+        var losBlockedActor = NewPlayer("CHR_SELFCHECK_INTERACT_LOS");
+        losBlockedActor.X = 44;
+        losBlockedActor.Y = 0;
+        var losBlocked = losInteractions.Interact(
+            losBlockedActor, "ENT_SELFCHECK_LOS_BLOCKED", new string('6', 31) + "a");
+        Check(
+            "interact.los_blocked",
+            losBlocked.Failure is
+            {
+                Code: InteractionErrorCodes.OutOfRange,
+                Retryable: true
+            },
+            losBlocked.Failure?.Code);
+
+        losBlockedActor.X = 36;
+        var losClear = losInteractions.Interact(
+            losBlockedActor, "ENT_SELFCHECK_LOS_CLEAR", new string('7', 31) + "a");
+        Check(
+            "interact.los_allowed",
+            losClear.Accepted &&
+            losClear.Result is { Outcome: "collected", TargetState: WorldEntityStates.Depleted },
+            losClear.Failure?.Code);
+
+        WorldEntityInstance MakeFixtureNode(
+            string entityId,
+            string recordId,
+            double x,
+            int respawnSeconds)
+        {
+            var node = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = recordId,
+                Kind = WorldEntityKinds.GatherNode,
+                TemplateIds = new[] { "NODE_BM_ORE_01" },
+                MapId = options.DefaultMapId,
+                FloorId = "OVERWORLD",
+                X = x,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = respawnSeconds
+            };
+            node.Initialize();
+            return node;
+        }
+
+        var gatherInteractions = new InMemoryInteractionService(
+            new WorldEntityRegistry(
+                new WorldEntityCatalog(
+                    [],
+                    [
+                        MakeFixtureNode("ENT_SELFCHECK_NODE_ORE", "MAN-BM-NODE_BM_ORE_01", 21, 60),
+                        MakeFixtureNode("ENT_SELFCHECK_NODE_T2", "MAN-BM-NODE_BM_HERB_02", 132, 120)
+                    ]),
+                interactClock),
+            worldRecords,
+            interactQuests,
+            interactInventory,
+            services.GetRequiredService<IWorldGeometryService>(),
+            interactClock,
+            fixedRoller,
+            new GatherClaimStore(interactClock),
+            interactOptions);
+
+        var gatherer1 = NewPlayer("CHR_SELFCHECK_GATHER_1");
+        gatherer1.X = 21;
+        gatherer1.Y = 0;
+        var gather1 = gatherInteractions.Interact(
+            gatherer1, "ENT_SELFCHECK_NODE_ORE", new string('8', 31) + "a");
+        Check(
+            "interact.gather_claim",
+            gather1.Accepted &&
+            gather1.Result is
+            {
+                Kind: WorldEntityKinds.GatherNode,
+                Outcome: "gathered",
+                TargetState: WorldEntityStates.Available,
+                RecordId: "MAN-BM-NODE_BM_ORE_01",
+                RespawnAtUtc: not null
+            } &&
+            gather1.Result.Yield is { ItemId: "MAT-ORE-01", Quantity: 2 },
+            gather1.Failure?.Code ?? gather1.Result?.Outcome);
+
+        var gather1Inventory = interactInventory.GetSnapshot(gatherer1.CharacterId);
+        Check(
+            "interact.gather_inventory",
+            gather1Inventory.InventoryRevision == 1 &&
+            gather1Inventory.Items.Single() is
+            {
+                TemplateId: "MAT-ORE-01",
+                Stack: 2,
+                Location: InventoryLocations.Bag
+            },
+            $"revision={gather1Inventory.InventoryRevision} items={gather1Inventory.Items.Count}");
+
+        var gather1Replay = gatherInteractions.Interact(
+            gatherer1, "ENT_SELFCHECK_NODE_ORE", new string('8', 31) + "a");
+        Check(
+            "interact.gather_replay_no_double",
+            gather1Replay.Accepted && ReferenceEquals(gather1Replay.Result, gather1.Result) &&
+            interactInventory.GetSnapshot(gatherer1.CharacterId).Items.Count == 1,
+            gather1Replay.Failure?.Code);
+
+        var gather1Cooldown = gatherInteractions.Interact(
+            gatherer1, "ENT_SELFCHECK_NODE_ORE", new string('9', 31) + "a");
+        Check(
+            "interact.gather_shard_cooldown",
+            gather1Cooldown.Failure?.Code == InteractionErrorCodes.TargetNotAvailable &&
+            interactInventory.GetSnapshot(gatherer1.CharacterId).Items.Count == 1,
+            gather1Cooldown.Failure?.Code);
+
+        var gatherer2 = NewPlayer("CHR_SELFCHECK_GATHER_2");
+        gatherer2.X = 21;
+        gatherer2.Y = 0;
+        var gather2 = gatherInteractions.Interact(
+            gatherer2, "ENT_SELFCHECK_NODE_ORE", new string('a', 32));
+        Check(
+            "interact.gather_shard_other_character",
+            gather2.Accepted &&
+            interactInventory.GetSnapshot(gatherer2.CharacterId).Items.Count == 1 &&
+            interactInventory.GetSnapshot(gatherer1.CharacterId).Items.Count == 1,
+            gather2.Failure?.Code);
+
+        interactClock.Advance(TimeSpan.FromSeconds(60));
+        var gather1Again = gatherInteractions.Interact(
+            gatherer1, "ENT_SELFCHECK_NODE_ORE", new string('b', 32));
+        Check(
+            "interact.gather_respawn_per_character",
+            gather1Again.Accepted &&
+            interactInventory.GetSnapshot(gatherer1.CharacterId) is
+            {
+                InventoryRevision: 2,
+                Items: { Count: 2 }
+            },
+            $"{gather1Again.Failure?.Code} revision={interactInventory.GetSnapshot(gatherer1.CharacterId).InventoryRevision}");
+
+        var professionActor = NewPlayer("CHR_SELFCHECK_GATHER_GATE");
+        professionActor.X = 132;
+        professionActor.Y = 0;
+        var professionGate = gatherInteractions.Interact(
+            professionActor, "ENT_SELFCHECK_NODE_T2", new string('c', 32));
+        Check(
+            "interact.profession_gate",
+            professionGate.Failure?.Code == InteractionErrorCodes.ProfessionLevelInsufficient &&
+            interactInventory.GetSnapshot(professionActor.CharacterId).Items.Count == 0,
+            professionGate.Failure?.Code);
+
         var inventoryActor = NewPlayer("CHR_SELFCHECK_INVENTORY");
         var emptyInventory = inventory.GetSnapshot(inventoryActor.CharacterId);
         Check(
@@ -888,5 +1305,17 @@ public static class ServiceSelfCheck
             results.Count);
 
         return failures == 0 ? 0 : 1;
+    }
+
+    private sealed class FixedYieldRoller : IYieldRoller
+    {
+        private readonly int _value;
+
+        public FixedYieldRoller(int value)
+        {
+            _value = value;
+        }
+
+        public int Roll(int minInclusive, int maxInclusive) => _value;
     }
 }

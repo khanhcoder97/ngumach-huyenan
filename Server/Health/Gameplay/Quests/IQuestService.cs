@@ -11,11 +11,15 @@ public interface IQuestService
 
     QuestOutcome Accept(PlayerSession actor, string questId);
 
-    QuestOutcome RecordObjective(
+    // Server-owned progress: the caller has already verified the event (map, floor,
+    // range, LOS, claim). Each event may contribute at most once; returns the full
+    // QuestState of every quest whose revision changed.
+    IReadOnlyList<QuestState> RecordVerifiedEvent(
         PlayerSession actor,
-        string questId,
-        string objectiveId,
-        int amount);
+        string eventId,
+        string eventType,
+        string recordId,
+        string mapId);
 
     QuestOutcome TurnIn(PlayerSession actor, string questId);
 

@@ -79,6 +79,18 @@
     {
       "templateId": "NPC_TA_VAN_KHANH",
       "kind": "NPC"
+    },
+    {
+      "templateId": "OBJ_BM_PACKAGE_01",
+      "kind": "INTERACTABLE"
+    },
+    {
+      "templateId": "OBJ_BM_PACKAGE_02",
+      "kind": "INTERACTABLE"
+    },
+    {
+      "templateId": "OBJ_BM_PACKAGE_03",
+      "kind": "INTERACTABLE"
     }
   ],
   "entities": [
@@ -443,6 +455,51 @@
       "quantity": 3,
       "respawnSeconds": 30,
       "condition": "P00-04; khi Ly An qua x=120"
+    },
+    {
+      "entityId": "ENT_MAN_BM_OBJ_BM_PACKAGE_01",
+      "recordId": "MAN-BM-OBJ_BM_PACKAGE_01",
+      "kind": "INTERACTABLE",
+      "templateIds": [
+        "OBJ_BM_PACKAGE_01"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 36.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 20,
+      "condition": "P00-01; DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
+    },
+    {
+      "entityId": "ENT_MAN_BM_OBJ_BM_PACKAGE_02",
+      "recordId": "MAN-BM-OBJ_BM_PACKAGE_02",
+      "kind": "INTERACTABLE",
+      "templateIds": [
+        "OBJ_BM_PACKAGE_02"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 44.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 20,
+      "condition": "P00-01; DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
+    },
+    {
+      "entityId": "ENT_MAN_BM_OBJ_BM_PACKAGE_03",
+      "recordId": "MAN-BM-OBJ_BM_PACKAGE_03",
+      "kind": "INTERACTABLE",
+      "templateIds": [
+        "OBJ_BM_PACKAGE_03"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 52.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 20,
+      "condition": "P00-01; DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
     }
   ]
 }

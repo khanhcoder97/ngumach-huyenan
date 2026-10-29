@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
 using Server.Health.Endpoints;
 using Server.Health.Gameplay.Combat;
+using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
 using Server.Health.Gameplay.Quests;
 using Server.Health.Gameplay.Teleport;
@@ -60,6 +61,14 @@ builder.Services.AddSingleton<IQuestCatalog>(serviceProvider =>
     return QuestCatalogLoader.Load(directory);
 });
 builder.Services.AddSingleton<IQuestStateStore, InMemoryQuestStateStore>();
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    var path = WorldRecordLoader.DiscoverPath(configuration, environment.ContentRootPath);
+    return WorldRecordLoader.Load(
+        path, serviceProvider.GetRequiredService<MapBoundsCatalog>());
+});
 builder.Services.AddSingleton<IQuestService, InMemoryQuestService>();
 builder.Services.Configure<QuestAcceptOptions>(
     builder.Configuration.GetSection(QuestAcceptOptions.SectionName));
@@ -97,6 +106,14 @@ builder.Services.AddSingleton(serviceProvider => new WorldEntityRegistry(
 builder.Services.AddSingleton<IInventoryStateStore, InMemoryInventoryStateStore>();
 builder.Services.AddSingleton<IInventoryService, InMemoryInventoryService>();
 builder.Services.AddSingleton<ITeleportService, InMemoryTeleportService>();
+builder.Services.Configure<InteractionOptions>(
+    builder.Configuration.GetSection(InteractionOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<InteractionOptions>>().Value);
+builder.Services.AddSingleton<IYieldRoller, SystemYieldRoller>();
+builder.Services.AddSingleton<GatherClaimStore>();
+builder.Services.AddSingleton<IInteractionService, InMemoryInteractionService>();
+builder.Services.AddHostedService<WorldTickBackgroundService>();
 
 var app = builder.Build();
 
@@ -153,6 +170,22 @@ foreach (var questId in quests.QuestIds)
         throw new InvalidOperationException(
             $"Quest '{questId}' start NPC '{questDefinition.StartNpcId}' has no anchor.");
     }
+}
+
+var worldRecords = app.Services.GetRequiredService<WorldRecordCatalog>();
+app.Logger.LogInformation(
+    "Loaded world records: {RecordCount}.", worldRecords.Count);
+QuestCatalogValidator.Validate(quests, worldRecords, npcAnchors);
+InteractionContentValidator.Validate(worldEntities, worldRecords);
+
+var interactionOptions = app.Services.GetRequiredService<InteractionOptions>();
+InteractionOptionsValidator.Validate(interactionOptions);
+if (interactionOptions.Enabled)
+{
+    app.Logger.LogWarning(
+        "DEV FIXTURE: P1:Interact is enabled with AssumedProfessionLevel={Level} " +
+        "and respawn fixtures; no reviewed gathering topology bundle exists.",
+        interactionOptions.AssumedProfessionLevel);
 }
 
 var questAcceptOptions = app.Services.GetRequiredService<QuestAcceptOptions>();

@@ -22,3 +22,10 @@ jobs:
         run: python Implementation/Tools/validate_topology.py
       - name: Validate narrative and cinema handoff
         run: python Implementation/Tools/validate_narrative.py
+      - name: Rebuild world runtime content and verify no drift
+        run: |
+          python Implementation/Tools/build_world_records.py
+          python Implementation/Tools/build_world_entities.py
+          git diff --exit-code -- \
+            Implementation/Content/Runtime/world_records.json \
+            Implementation/Content/Runtime/world_entities_bm.json

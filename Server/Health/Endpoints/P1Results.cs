@@ -103,6 +103,45 @@ internal static class P1Results
             },
             statusCode: statusCode);
 
+    public static IResult InteractSuccess(
+        string requestId,
+        string sessionId,
+        ServerClock clock,
+        InteractResult result) =>
+        Results.Json(new P1InteractResponse
+        {
+            RequestId = requestId,
+            SessionId = sessionId,
+            ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+            Result = result
+        });
+
+    public static IResult InteractError(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        string sessionId,
+        int statusCode,
+        string code,
+        IReadOnlyList<string>? fieldErrors,
+        bool retryable) =>
+        Results.Json(
+            new P1InteractResponse
+            {
+                RequestId = requestId,
+                SessionId = sessionId,
+                ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+                Error = new P1Error
+                {
+                    Code = code,
+                    MessageKey = $"P1.ERROR.{code.ToUpperInvariant()}",
+                    Retryable = retryable,
+                    FieldErrors = fieldErrors ?? Array.Empty<string>(),
+                    CorrelationId = context.TraceIdentifier
+                }
+            },
+            statusCode: statusCode);
+
     public static IResult Error(
         HttpContext context,
         ServerClock clock,
