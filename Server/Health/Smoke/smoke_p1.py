@@ -51,7 +51,7 @@ def move_envelope(sequence, move_x, move_y, character_id=CHARACTER_ID, request_i
 
 
 def combat_envelope(sequence, skill_id, target_id=None, character_id=CHARACTER_ID,
-                    request_id="3" * 32):
+                    request_id="3" * 32, idempotency_key="4" * 32):
     payload = {
         "inputSequence": sequence,
         "skillId": skill_id,
@@ -64,7 +64,7 @@ def combat_envelope(sequence, skill_id, target_id=None, character_id=CHARACTER_I
     return {
         "schemaVersion": 1,
         "requestId": request_id,
-        "idempotencyKey": "4" * 32,
+        "idempotencyKey": idempotency_key,
         "sentAtUtc": sent_at_utc(),
         "characterId": character_id,
         "payload": payload,
