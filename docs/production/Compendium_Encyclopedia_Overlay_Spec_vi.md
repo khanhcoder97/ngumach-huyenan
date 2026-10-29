@@ -16,12 +16,12 @@ Bách khoa Lạc Châu là sổ tra cứu kiến thức trong game, mở đượ
 
 ### 2. Danh mục khởi điểm và cách tính counter
 
-Counter do content registry trả về theo phiên bản dữ liệu; không hardcode vào giao diện và không cộng chồng record lặp. Snapshot tiền sản xuất hiện tại dự kiến có **2.532 record duy nhất**:
+Counter do content registry trả về theo phiên bản dữ liệu; không hardcode vào giao diện và không cộng chồng record lặp. Snapshot tiền sản xuất hiện tại dự kiến có **2.533 record duy nhất**:
 
 | Danh mục sidebar | Số record khởi điểm | Phạm vi được đếm |
 |---|---:|---|
-| Tất cả | 2.532 | Tổng record duy nhất: item + quest + NPC + boss + bestiary + pet/mount/fish + active/passive skill + địa điểm/hoạt động |
-| Vật phẩm & nguyên liệu | 2.235 | 2.100 biến thể trang bị theo phẩm chất + 135 item cố định trong catalog |
+| Tất cả | 2.533 | Tổng record duy nhất: item + quest + NPC + boss + bestiary + pet/mount/fish + active/passive skill + địa điểm/hoạt động |
+| Vật phẩm & nguyên liệu | 2.236 | 2.100 biến thể trang bị theo phẩm chất + 136 item cố định trong catalog |
 | Nhiệm vụ & công việc | 76 | 36 nhiệm vụ chính + 40 nhiệm vụ phụ đã viết chi tiết; daily/weekly mới chỉ tính khi có record riêng |
 | NPC & dịch vụ | 83 | 83 actor canonical; map placements có thể lặp nhưng inspector gộp theo ID |
 | Trùm | 12 | 6 boss vùng/thế giới + 4 boss dungeon + 2 boss raid; bản quest/world dùng chung một hồ sơ boss canonical |
@@ -228,7 +228,7 @@ Lỗi: `ManifestUnavailable` giữ cache; `EntryRemoved` dùng tombstone nếu e
 ### 15. Acceptance criteria bàn giao
 
 - Mockup desktop 1920×1080, 1366×768; mobile ngang 1280×720 và mobile dọc; có Category/List/Details transitions.
-- Counter đúng manifest snapshot: 2.532 unique record khởi điểm, category con không cộng lặp; dữ liệu thêm mới cập nhật mà không đổi code UI.
+- Counter đúng manifest snapshot: 2.533 unique record khởi điểm, category con không cộng lặp; dữ liệu thêm mới cập nhật mà không đổi code UI.
 - Search `Co Thu`, `Cổ Thụ`, ID/item use, class/map/recipe đều ra đúng record; thứ tự relevance đúng và query được xóa bằng một thao tác.
 - Gear variant hiển thị đúng 5 phẩm chất game, 12 slot, set/affix/socket; không nhầm master template với item instance.
 - Quest/boss spoiler khóa theo discovery; search suggestion và related entries cũng không leak nội dung ẩn.

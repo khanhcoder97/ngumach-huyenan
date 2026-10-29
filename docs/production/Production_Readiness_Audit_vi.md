@@ -1,6 +1,8 @@
 # RÀ SOÁT MỨC SẴN SÀNG SẢN XUẤT
 ## Ngũ Mạch: Huyền Ấn — audit cập nhật 28-10-2026
 
+> Lịch sử baseline 28/10. Dùng [audit 30/10](Production_Content_Audit_20261030_vi.md) cho tình trạng hiện tại:230lời đã biên tập, gói âm thanh đã render, catalog đã đồng bộ và PR server đã tiến thêm. Các backlog/đếm NEW_PROPOSED bên dưới không thay inventory mới hoặc quyết định DEC-023.
+
 ### 1. Kết luận
 
 **Chưa đủ để AI triển khai và hoàn thiện toàn game chỉ từ gói hiện tại mà không có thêm dữ liệu/thiết kế.** Tài liệu bao phủ phạm vi rộng nhưng runtime definitions mới có 1 class, 3 skill, 1 quest, 1 item, 1 map, 1 spawn và 1 node. Các catalogue mô tả không thay schema/data executable.
