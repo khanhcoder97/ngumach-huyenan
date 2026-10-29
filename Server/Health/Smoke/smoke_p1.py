@@ -108,8 +108,8 @@ def turnin_envelope(quest_id, npc_id, character_id=CHARACTER_ID,
 
 
 def combat_v2_envelope(action_kind, sequence, skill_id=None, target_id=None,
-                      character_id=CHARACTER_ID, request_id="40" * 32,
-                      idempotency_key="41" * 32):
+                      character_id=CHARACTER_ID, request_id="4" * 32,
+                      idempotency_key="5" * 32):
     payload = {
         "actionKind": action_kind,
         "inputSequence": sequence,
