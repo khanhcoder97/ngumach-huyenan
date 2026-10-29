@@ -65,6 +65,7 @@
             "type": "string",
             "enum": [
               "CAST_START",
+              "COUNTER_CONFIRMED",
               "IMPACT",
               "MISS",
               "CANCEL",

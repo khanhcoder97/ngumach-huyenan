@@ -390,6 +390,11 @@ def check_combat_event_v2(example, label, errors):
             errors.append(f"{label}: DEATH requires targetId and targetLifeId")
     if event_type == "CAST_START" and result is not None:
         errors.append(f"{label}.result: CAST_START must not carry a damage result")
+    if event_type == "COUNTER_CONFIRMED" and result is not None:
+        errors.append(
+            f"{label}.result: COUNTER_CONFIRMED is a guard confirmation/reserve, "
+            "not counter damage"
+        )
 
 
 def check_combat_event_page_v2(example, label, errors):

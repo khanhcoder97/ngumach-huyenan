@@ -120,6 +120,18 @@ Owner trả lời 6 câu hỏi tại `08_QODER_PLAYABLE_SLICE_20261030.md` §2. 
 - `CombatEventPageV2.schema.json` + example: `nextCursor`, `resyncRequired` + `resyncReason` (`CURSOR_TOO_OLD | BUFFER_OVERFLOW`), cursor tăng nghiêm ngặt.
 - `validate_contracts.py` mở rộng: `entityId` dạng `ENT_...` resolve theo runtime bundle (27 instance) thay vì cột template manifest; semantic checks cho 4 schema mới (AOI constants, NPC/boss policy, actionKind↔skillId, IMPACT/MISS/DEATH fields, cursor/resync). v1 giữ nguyên.
 
-### 9.2 Triển khai tiếp
+### 9.2 DEC-022 — Phản Quang đã chốt (2026-10-30)
 
-Event store (bounded buffer, cursor, resync) + AOI projection có hysteresis + endpoint v2 opt-in (`P1:CombatV2:Enabled` OFF mặc định; dev profile bật) + e2e dev mở rộng; sau đó QOD-17 tick combat (basic + MK03 damage, mob telegraph/death/respawn, kill credit theo entityLifeId/deathEventId).
+Owner/Codex chốt precision còn thiếu của SK-MK-01 tại `docs/production/P1_Guard_Precision_20261030_vi.md` + bundle máy đọc `Implementation/Content/DesignBaselines/p1_guard_precision_v1.json` (`DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION`, DEC-022) — không cần hỏi lại hướng/thời lượng 20%. Phạm vi P1 PvE Minh Kiếm; không đổi wire v1.
+
+- **Guard:** cast accepted tại tick T → guard active `[T, T+8)`; hit T+7 đỡ được, T+8 không. 70% DR cho direct damage từ vùng trước; vùng gắn chân defender hiện tại + facing snapshot cast start, cone 120°/4.4 WU, mép inclusive, hai chân trùng tọa độ tính trong vùng. Một confirmation/guard (`guardCastId`), `+2` Kiếm Ý cap 5; hit sau vẫn DR nhưng không thêm resource/counter.
+- **Whiff:** hết tự nhiên `[T+8, T+28)` (20 tick), defender còn sống, chưa confirmation → DR 0,20 theo bucket thường; không áp khi chết/đổi map/session end/hard-control/dodge-cancel; cùng skill refresh không cộng dồn.
+- **Counter:** impact ở tick kế tiếp, target duy nhất = nguồn hit đã confirmation (không retarget), attack snapshot lúc guard accepted, coefficient theo `SkillDefinition` mode, roll hit/crit riêng, recheck sống/instance/floor/hostile/range/cone/LOS/invulnerability; `NO_COUNTER_TRIGGER` chặn vòng phản, không tốn thêm MP/CD/resource, không refund, không hard-control boss.
+- **Ordering:** impact sắp theo `(scheduledTick, castStartTick, castIdOrdinal, hitIndex, targetIdOrdinal)`; confirmation sau damage/survival trước impact kế; source chết trước lượt direct melee → cancel impact còn lại (P1 direct melee).
+- **Wire v2:** `COUNTER_CONFIRMED` là semantic "đỡ thành công + reserve đúng một counter", **không** phải counter damage (không mang `result`); counter impact/miss/cancel là IMPACT/MISS riêng. Reconcilation từ snapshot là silent, không replay audio/VFX. v1 không đổi.
+- **Oracle khóa:** raw30/armor10 → thường 27, guard70% 8, whiff20% 21, DR cap80% 5; counter 20×1,8 → 32, crit 49.
+- **Đã thêm trong nhánh này:** `GuardPrecisionLoader` (đọc/gate/validate bundle, fail-fast cả oracle arithmetic), `GuardTimeline` (window/whiff/cone/DR bucket/ordering thuần), `CombatDamageFeature.GuardPrecision` (cùng gate `P1:CombatDamage`, OFF mặc định), self-check 11 test mới, enum `COUNTER_CONFIRMED` trong 2 schema v2. **Chưa** có state machine/HTTP runtime — thuộc QOD-17; gate chỉ bật sau khi có test state machine/concurrency/HTTP và exact SHA.
+
+### 9.3 Triển khai tiếp
+
+Event store (bounded buffer, cursor, resync) + AOI projection có hysteresis + endpoint v2 opt-in (`P1:CombatV2:Enabled` OFF mặc định; dev profile bật) + e2e dev mở rộng; sau đó QOD-17 tick combat (basic + MK03 damage, guard/counter state machine theo DEC-022, mob telegraph/death/respawn, kill credit theo entityLifeId/deathEventId).
