@@ -8,3 +8,10 @@
 *.mp3 filter=lfs diff=lfs merge=lfs -text
 *.mp4 filter=lfs diff=lfs merge=lfs -text
 *.webm filter=lfs diff=lfs merge=lfs -text
+*.flac filter=lfs diff=lfs merge=lfs -text
+
+# Stable textual provenance for the authored audio generator and music scores.
+Tools/AudioProduction/*.py text eol=lf
+Tools/AudioProduction/requirements.txt text eol=lf
+Art_Source/Audio/*.json text eol=lf
+Art_Source/Audio/Scores/*.json text eol=lf

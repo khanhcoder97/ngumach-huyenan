@@ -1,0 +1,1777 @@
+{
+  "title": "Lâm Triều — Rừng nhớ tên",
+  "bpm": 72,
+  "root": 52,
+  "scale": [
+    0,
+    2,
+    3,
+    7,
+    9
+  ],
+  "motif": [
+    0,
+    1,
+    3,
+    2,
+    4,
+    1,
+    0,
+    2
+  ],
+  "mood": "forest",
+  "density": 0.64,
+  "bars": 16,
+  "beatsPerBar": 4,
+  "durationSamples": 2560000,
+  "sampleRate": 48000,
+  "events": [
+    {
+      "instrument": "bass",
+      "midi": 40,
+      "startBeat": 0,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 47,
+      "startBeat": 2,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 0.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 66,
+      "startBeat": 1.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 2.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 2.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 3.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 66,
+      "startBeat": 3.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 0,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 2,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 1.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 40,
+      "startBeat": 4,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 47,
+      "startBeat": 6,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 4.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 4.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 5.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 6.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 6.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 7.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 4,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 6,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 5.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 40,
+      "startBeat": 8,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 47,
+      "startBeat": 10,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 8.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 8.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 9.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 66,
+      "startBeat": 9.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 10.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 10.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 11.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 66,
+      "startBeat": 11.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "flute",
+      "midi": 73,
+      "startBeat": 8,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "flute",
+      "midi": 66,
+      "startBeat": 10,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 8,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 10,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 9.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 40,
+      "startBeat": 12,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 47,
+      "startBeat": 14,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 12.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 12.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 13.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 14.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 15.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "flute",
+      "midi": 64,
+      "startBeat": 12,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "flute",
+      "midi": 67,
+      "startBeat": 14,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 12,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 14,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 13.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 47,
+      "startBeat": 16,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 54,
+      "startBeat": 18,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 16.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 17.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 17.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 18.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 19.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 19.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "flute",
+      "midi": 78,
+      "startBeat": 16.5,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "flute",
+      "midi": 83,
+      "startBeat": 18.5,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 16,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 18,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 17.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 47,
+      "startBeat": 20,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 54,
+      "startBeat": 22,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 20.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 21.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 21.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 22.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 66,
+      "startBeat": 22.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 23.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "flute",
+      "midi": 79,
+      "startBeat": 20,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "flute",
+      "midi": 85,
+      "startBeat": 22,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 20,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 22,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 21.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 47,
+      "startBeat": 24,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 54,
+      "startBeat": 26,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 24.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 66,
+      "startBeat": 24.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 25.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 25.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 27.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 27.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "flute",
+      "midi": 78,
+      "startBeat": 24,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "flute",
+      "midi": 76,
+      "startBeat": 26,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 24,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 26,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 25.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 47,
+      "startBeat": 28,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 54,
+      "startBeat": 30,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 28.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 29.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 29.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 30.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 31.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "flute",
+      "midi": 79,
+      "startBeat": 28.5,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "flute",
+      "midi": 76,
+      "startBeat": 30.5,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 28,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 30,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 29.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 42,
+      "startBeat": 32,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 49,
+      "startBeat": 34,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 32.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 33.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "flute",
+      "midi": 76,
+      "startBeat": 32,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "flute",
+      "midi": 85,
+      "startBeat": 34,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 32,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 34,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 33.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 42,
+      "startBeat": 36,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 49,
+      "startBeat": 38,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 36.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 36.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 37.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 38.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 66,
+      "startBeat": 39.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 39.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "flute",
+      "midi": 78,
+      "startBeat": 36,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "flute",
+      "midi": 83,
+      "startBeat": 38,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 36,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 38,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 37.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 42,
+      "startBeat": 40,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 49,
+      "startBeat": 42,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 40.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 40.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 66,
+      "startBeat": 41.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 42.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 42.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "flute",
+      "midi": 79,
+      "startBeat": 40.5,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "flute",
+      "midi": 85,
+      "startBeat": 42.5,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 40,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 42,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 41.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 42,
+      "startBeat": 44,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 49,
+      "startBeat": 46,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 44.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 45.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 46.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 46.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 66,
+      "startBeat": 47.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 47.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "flute",
+      "midi": 79,
+      "startBeat": 44,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "flute",
+      "midi": 83,
+      "startBeat": 46,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 44,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 46,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 45.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 49,
+      "startBeat": 48,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 56,
+      "startBeat": 50,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 67,
+      "startBeat": 48.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 49.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 66,
+      "startBeat": 50.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 50.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 51.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "flute",
+      "midi": 67,
+      "startBeat": 48,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "flute",
+      "midi": 73,
+      "startBeat": 50,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 48,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 50,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 49.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 49,
+      "startBeat": 52,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 56,
+      "startBeat": 54,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 52.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 53.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 66,
+      "startBeat": 54.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 54.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 55.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 55.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "flute",
+      "midi": 66,
+      "startBeat": 52.5,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "flute",
+      "midi": 64,
+      "startBeat": 54.5,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 52,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 54,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 53.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 49,
+      "startBeat": 56,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 56,
+      "startBeat": 58,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 56.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 57.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 57.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 66,
+      "startBeat": 58.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 73,
+      "startBeat": 58.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 59.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "flute",
+      "midi": 67,
+      "startBeat": 56,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "flute",
+      "midi": 64,
+      "startBeat": 58,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 56,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 58,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 57.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "bass",
+      "midi": 49,
+      "startBeat": 60,
+      "durationBeats": 2.5,
+      "velocity": 0.24,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "bass",
+      "midi": 56,
+      "startBeat": 62,
+      "durationBeats": 1.6,
+      "velocity": 0.15,
+      "pan": 0,
+      "layer": "bass"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 64,
+      "startBeat": 61.0,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": 0.35,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "pluck",
+      "midi": 71,
+      "startBeat": 63.5,
+      "durationBeats": 0.9,
+      "velocity": 0.13,
+      "pan": -0.4,
+      "layer": "plucked"
+    },
+    {
+      "instrument": "flute",
+      "midi": 66,
+      "startBeat": 60,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "flute",
+      "midi": 71,
+      "startBeat": 62,
+      "durationBeats": 1.6,
+      "velocity": 0.16,
+      "pan": 0.15,
+      "layer": "melody"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 60,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "drum",
+      "midi": 48,
+      "startBeat": 62,
+      "durationBeats": 0.55,
+      "velocity": 0.075,
+      "pan": 0,
+      "layer": "percussion"
+    },
+    {
+      "instrument": "woodblock",
+      "midi": 76,
+      "startBeat": 61.5,
+      "durationBeats": 0.2,
+      "velocity": 0.07,
+      "pan": -0.25,
+      "layer": "percussion"
+    }
+  ],
+  "authorship": "Original motif, score and DSP; no third-party sample or existing tune loaded"
+}

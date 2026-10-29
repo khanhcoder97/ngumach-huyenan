@@ -1,0 +1,27 @@
+{
+  "status": "PASS_TECHNICAL_AUDIO_NOT_LISTENING_OR_ENGINE_APPROVAL",
+  "cues": 195,
+  "runtimeClips": 541,
+  "coreCueCoverage": 63,
+  "musicLoops": 9,
+  "ambienceLoops": 13,
+  "bindings": {
+    "skills": 30,
+    "monsters": 30,
+    "bosses": 12,
+    "maps": 46,
+    "npcs": 83,
+    "companions": 10,
+    "cinema": 20
+  },
+  "maxDecodedPeak": 0.5,
+  "maxDcOffset": 3.662046639617517e-05,
+  "maxLoopBoundaryRatio": 1.24219,
+  "manifestSha256": "f5cbfde531b25811b8c77cc4c7665dee0cbf44b97d1433ab842c6d7fd6309cc3",
+  "issues": [],
+  "exclusions": [
+    "Subjective listening review",
+    "Actual Unity import/playback/mixer/device QA",
+    "Spoken NPC dialogue and picture-locked cinema edit"
+  ]
+}
