@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Ngũ Mạch: Huyền Ấn · Bến Mưa</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="game" aria-label="Ngũ Mạch: Huyền Ấn — bản chơi thử Bến Mưa">
+    <canvas id="world" aria-label="Bản đồ Bến Mưa, điều khiển bằng WASD hoặc phím mũi tên"></canvas>
+    <div id="hud" class="hidden">
+      <section class="status panel"><div class="identity"><span class="portrait">✦</span><div><strong>Lữ Khách</strong><small>MINH KIẾM · <span id="level">Cấp 1</span></small></div><span id="coin">0 ◈</span></div><div class="bar hp"><i id="hp-fill"></i><span id="hp"></span></div><div class="bar mp"><i id="mp-fill"></i><span id="mp"></span></div><div class="status-foot"><span id="intent">◇ ◇ ◇ ◇ ◇</span><span id="xp"></span></div></section>
+      <nav class="toolbar"><button id="journal-btn" title="Nhật ký [J]">☷ <span>Nhật ký</span></button><button id="bag-btn" title="Túi đồ [B]">▣ <span>Túi đồ</span></button><button id="settings-btn" title="Cài đặt [Esc]">⚙</button><button id="sound-btn" title="Bật/tắt âm thanh">♫</button></nav>
+      <section class="quest panel"><small id="quest-chapter">MỞ ĐẦU · NƯỚC KHÔNG SOI BÓNG</small><h2 id="quest-name"></h2><div id="objectives"></div><button id="track-btn">◇ Tới mục tiêu</button></section>
+      <section class="minimap panel"><canvas id="mini" width="168" height="80"></canvas><strong>BẾN MƯA</strong><small id="coordinates"></small></section>
+      <div class="local-label">CHƠI THỬ CỤC BỘ · TỰ LƯU</div>
+      <div id="interact-wrap"><span id="interact-hint"></span><button id="interact-btn">E <span>Tương tác</span></button></div>
+      <div id="joystick" aria-label="Cần di chuyển"><div id="stick"></div></div>
+      <div class="skill-hub"><button id="attack" title="Đánh thường [Space]" aria-label="Đánh thường"><b>⚔</b><span>TẤN CÔNG</span><small>SPACE</small></button><button class="skill s1" data-action="guard" title="Phản Quang [1]"><b>◇</b><span>Phản Quang</span><small>1</small><em></em></button><button class="skill s2" data-action="dash" title="Tầm Long [2]"><b>➶</b><span>Tầm Long</span><small>2</small><em></em></button><button class="skill s3" data-action="cleave" title="Kiếm Trận [3]"><b>≋</b><span>Kiếm Trận</span><small>3</small><em></em></button><button class="skill s4" data-action="potion" title="Dùng thuốc [Q]"><b>✚</b><span>Thuốc</span><small>Q</small><em></em></button><button class="skill s5" data-action="dodge" title="Né [Shift]"><b>»</b><span>Né tránh</span><small>⇧</small><em></em></button></div>
+      <div id="boss-hud" class="hidden"><small>LINH THÚ BỊ NGHỊCH MẠCH XÂM THỰC</small><strong>MÃNG CỐT</strong><div class="bar hp"><i id="boss-fill"></i></div><span id="boss-phase"></span></div>
+      <div id="toasts" role="status" aria-live="polite"></div><div id="area-title"></div><div id="telemetry"></div>
+    </div>
+    <section id="title" class="screen">
+      <div class="title-art"><span class="eyebrow">MỘT HÀNH TRÌNH QUA NĂM MIỀN MẠCH</span><h1>NGŨ MẠCH<span>HUYỀN ẤN</span></h1><div class="title-rule"></div><h2>Nước không soi bóng</h2><p>Mưa qua Bến Mưa. Một lá thư chưa mở.<br>Một tiếng chuông chỉ nghe thấy dưới mặt nước.<br>Và một người lữ khách chưa biết mình đang được gọi tên.</p><button id="start" class="gold" disabled>Đang chuẩn bị hành trang…</button><span id="load-error" role="alert"></span><small>WASD di chuyển · E tương tác · Space tấn công<br>1–3 kỹ năng · Q thuốc · Shift né · B túi đồ · J nhật ký</small><small class="build-note">Bản chơi thử một người · Tiến độ lưu trong trình duyệt này</small></div>
+    </section>
+    <div id="modal-backdrop" class="hidden"><section id="modal" class="panel" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button id="close-modal" aria-label="Đóng [Esc]">×</button><small id="modal-kicker"></small><h2 id="modal-title"></h2><div id="modal-content"></div><div id="modal-actions"></div></section></div>
+  </main><script type="module" src="game.mjs"></script>
+</body></html>

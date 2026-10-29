@@ -1,0 +1,25 @@
+name: playable-preview-checks
+on:
+  pull_request:
+    paths: ['Tools/PlayablePreview/**', 'CHOI_THU.cmd', '.github/workflows/playable-preview-checks.yml']
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  local-playable:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch only the candidate hero sheets used by this playtest
+        run: git lfs pull --include='Tools/PlayablePreview/assets/*.png' --exclude=''
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run complete local opening campaign and regression checks
+        run: node Tools/PlayablePreview/tests/engine_checks.mjs
+      - name: Check HTTP assets and root confinement
+        run: python -m unittest discover -s Tools/PlayablePreview/tests -p 'test_*.py' -v

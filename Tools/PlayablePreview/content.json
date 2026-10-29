@@ -1,0 +1,277 @@
+{
+  "version": "ben-mua-local-v1",
+  "mode": "LOCAL_SINGLE_PLAYER_PLAYTEST",
+  "artStatus": "Hero: Muse candidate; terrain/mobs: original procedural blockout",
+  "directions": [
+    "N",
+    "NE",
+    "E",
+    "SE",
+    "S",
+    "SW",
+    "W",
+    "NW"
+  ],
+  "sprites": {
+    "idle": {
+      "url": "assets/idle.png",
+      "columns": 4,
+      "rows": 8,
+      "cellWidth": 48,
+      "cellHeight": 64,
+      "fps": 12,
+      "source": "Client/Assets/Art/Characters/MinhKiem/minh_kiem_idle.png",
+      "sourceCommit": "497702ec0e7d3f9167466007b90877e901a4c95c",
+      "sha256": "2d208d08d8d894832acf776bbd96f3236f54820396fbee98cba2e438b1556100",
+      "approval": "MUSE_CANDIDATE_LOCAL_PLAYTEST_ONLY"
+    },
+    "walk": {
+      "url": "assets/walk.png",
+      "columns": 6,
+      "rows": 8,
+      "cellWidth": 48,
+      "cellHeight": 64,
+      "fps": 8,
+      "source": "Client/Assets/Art/Characters/MinhKiem/minh_kiem_walk.png",
+      "sourceCommit": "497702ec0e7d3f9167466007b90877e901a4c95c",
+      "sha256": "bbec07fba1e9c598fc4cfdb1bf2e225cd4dc7038f55911b5de948b30d9b0582d",
+      "approval": "MUSE_CANDIDATE_LOCAL_PLAYTEST_ONLY"
+    },
+    "attack1": {
+      "url": "assets/attack1.png",
+      "columns": 5,
+      "rows": 8,
+      "cellWidth": 48,
+      "cellHeight": 64,
+      "fps": 12,
+      "source": "Client/Assets/Art/Characters/MinhKiem/minh_kiem_attack1.png",
+      "sourceCommit": "497702ec0e7d3f9167466007b90877e901a4c95c",
+      "sha256": "c14511af96ffce11470092c878fe1364bed8897257a654e2efe919b6a8c7db0d",
+      "approval": "MUSE_CANDIDATE_LOCAL_PLAYTEST_ONLY"
+    },
+    "attack2": {
+      "url": "assets/attack2.png",
+      "columns": 5,
+      "rows": 8,
+      "cellWidth": 48,
+      "cellHeight": 64,
+      "fps": 12,
+      "source": "Client/Assets/Art/Characters/MinhKiem/minh_kiem_attack2.png",
+      "sourceCommit": "497702ec0e7d3f9167466007b90877e901a4c95c",
+      "sha256": "e84af2e0035924718d16c031c44b350960f4dcb6542b3e55f2aa62a790cf7ca7",
+      "approval": "MUSE_CANDIDATE_LOCAL_PLAYTEST_ONLY"
+    },
+    "attack3": {
+      "url": "assets/attack3.png",
+      "columns": 5,
+      "rows": 8,
+      "cellWidth": 48,
+      "cellHeight": 64,
+      "fps": 12,
+      "source": "Client/Assets/Art/Characters/MinhKiem/minh_kiem_attack3.png",
+      "sourceCommit": "497702ec0e7d3f9167466007b90877e901a4c95c",
+      "sha256": "9fb65eb55dd6a29b5f4310c50307f3a881ab7e9c5b9f09ee4cefc30f1b44a282",
+      "approval": "MUSE_CANDIDATE_LOCAL_PLAYTEST_ONLY"
+    },
+    "skill1": {
+      "url": "assets/skill1.png",
+      "columns": 6,
+      "rows": 8,
+      "cellWidth": 48,
+      "cellHeight": 64,
+      "fps": 12,
+      "source": "Client/Assets/Art/Characters/MinhKiem/minh_kiem_skill1.png",
+      "sourceCommit": "497702ec0e7d3f9167466007b90877e901a4c95c",
+      "sha256": "a9640fabc6b13e3e0c0d50f96f39fedcec14f201b14e4c4387f9bec6395b17a5",
+      "approval": "MUSE_CANDIDATE_LOCAL_PLAYTEST_ONLY"
+    },
+    "skill2": {
+      "url": "assets/skill2.png",
+      "columns": 6,
+      "rows": 8,
+      "cellWidth": 48,
+      "cellHeight": 64,
+      "fps": 12,
+      "source": "Client/Assets/Art/Characters/MinhKiem/minh_kiem_skill2.png",
+      "sourceCommit": "497702ec0e7d3f9167466007b90877e901a4c95c",
+      "sha256": "cb6ab1e8e43217cb61ca0a42e8c12f9a3acdd4eee21b902998e498388df5c8ee",
+      "approval": "MUSE_CANDIDATE_LOCAL_PLAYTEST_ONLY"
+    },
+    "skill3": {
+      "url": "assets/skill3.png",
+      "columns": 6,
+      "rows": 8,
+      "cellWidth": 48,
+      "cellHeight": 64,
+      "fps": 12,
+      "source": "Client/Assets/Art/Characters/MinhKiem/minh_kiem_skill3.png",
+      "sourceCommit": "497702ec0e7d3f9167466007b90877e901a4c95c",
+      "sha256": "23254f7247a25dc71f2ca900225c0af83c5d35a3219ee21efd6364e4ef062312",
+      "approval": "MUSE_CANDIDATE_LOCAL_PLAYTEST_ONLY"
+    },
+    "dodge": {
+      "url": "assets/dodge.png",
+      "columns": 4,
+      "rows": 8,
+      "cellWidth": 48,
+      "cellHeight": 64,
+      "fps": 12,
+      "source": "Client/Assets/Art/Characters/MinhKiem/minh_kiem_dodge.png",
+      "sourceCommit": "497702ec0e7d3f9167466007b90877e901a4c95c",
+      "sha256": "48b432c565126966b9e42c7360d8dfe6a7b6415ba758778207e0fda1c5016613",
+      "approval": "MUSE_CANDIDATE_LOCAL_PLAYTEST_ONLY"
+    },
+    "hurt": {
+      "url": "assets/hurt.png",
+      "columns": 2,
+      "rows": 8,
+      "cellWidth": 48,
+      "cellHeight": 64,
+      "fps": 12,
+      "source": "Client/Assets/Art/Characters/MinhKiem/minh_kiem_hurt.png",
+      "sourceCommit": "497702ec0e7d3f9167466007b90877e901a4c95c",
+      "sha256": "f26549356e9aaf41c1e4b829d1ed0ddf23f1c2046ac86defdf24fd102ea84b8a",
+      "approval": "MUSE_CANDIDATE_LOCAL_PLAYTEST_ONLY"
+    },
+    "death": {
+      "url": "assets/death.png",
+      "columns": 4,
+      "rows": 8,
+      "cellWidth": 48,
+      "cellHeight": 64,
+      "fps": 12,
+      "source": "Client/Assets/Art/Characters/MinhKiem/minh_kiem_death.png",
+      "sourceCommit": "497702ec0e7d3f9167466007b90877e901a4c95c",
+      "sha256": "c08f696c391f8b902d25fb4ce963577a504143a40797875c29935932505a7f85",
+      "approval": "MUSE_CANDIDATE_LOCAL_PLAYTEST_ONLY"
+    }
+  },
+  "dialogue": [
+    {
+      "quest_id": "P00-01",
+      "quest_title_vi": "Thư qua bến",
+      "node_type": "OFFER",
+      "speaker_id": "NPC_LYAN",
+      "text_key": "DLG_P00_01_OFFER_TEXT",
+      "text_vi": "Giữ giúp tôi đầu dây này! Ba kiện hàng vừa trôi dạt quanh bến. Đưa chúng cùng lá thư còn niêm sáp này tới Tạ Vân Khanh. Người nhận vẫn đang đợi."
+    },
+    {
+      "quest_id": "P00-01",
+      "quest_title_vi": "Thư qua bến",
+      "node_type": "CLUE",
+      "speaker_id": "NPC_LYAN",
+      "text_key": "DLG_P00_01_CLUE_TEXT",
+      "text_vi": "Kiện buộc nút đôi, kiện quấn vải và kiện có dấu mực — đừng bỏ sót cái nào. Còn lá thư, xin giữ nguyên niêm. Có những lời phải tới đúng người trước đã."
+    },
+    {
+      "quest_id": "P00-01",
+      "quest_title_vi": "Thư qua bến",
+      "node_type": "TURN_IN",
+      "speaker_id": "NPC_TA_VAN_KHANH",
+      "text_key": "DLG_P00_01_TURN_IN_TEXT",
+      "text_vi": "Ba kiện đều còn. Tốt. Niêm sáp này có năm vạch... ta đã thấy một dấu gần như thế. Cứ để thư ở đây; ta sẽ kiểm tra người gửi."
+    },
+    {
+      "quest_id": "P00-02",
+      "quest_title_vi": "Chuông không người",
+      "node_type": "OFFER",
+      "speaker_id": "NPC_TA_VAN_KHANH",
+      "text_key": "DLG_P00_02_OFFER_TEXT",
+      "text_vi": "Trên bờ không ai nghe chuông, nhưng mặt nước cứ rung đúng một nhịp. Hãy kiểm tra ba chỗ nước gợn và hạ bốn Cá Linh quanh đó, rồi quay lại nói điều ngươi thấy."
+    },
+    {
+      "quest_id": "P00-02",
+      "quest_title_vi": "Chuông không người",
+      "node_type": "CLUE",
+      "speaker_id": "NPC_TA_VAN_KHANH",
+      "text_key": "DLG_P00_02_CLUE_TEXT",
+      "text_vi": "Đừng chỉ chờ tiếng chuông. Nhìn những vòng nước: chúng co vào tâm thay vì tản ra. So cả ba chỗ rồi hãy kết luận; một dấu lạ chưa đủ làm bằng chứng."
+    },
+    {
+      "quest_id": "P00-02",
+      "quest_title_vi": "Chuông không người",
+      "node_type": "TURN_IN",
+      "speaker_id": "NPC_TA_VAN_KHANH",
+      "text_key": "DLG_P00_02_TURN_IN_TEXT",
+      "text_vi": "Cả ba nơi cùng một nhịp, mà trên bờ vẫn im. Vậy thứ rung không nằm trong không khí. Ta chưa biết ai đánh chuông — cũng chưa chắc đó là một chiếc chuông."
+    },
+    {
+      "quest_id": "P00-03",
+      "quest_title_vi": "Dưới mặt đầm",
+      "node_type": "OFFER",
+      "speaker_id": "NPC_LYAN",
+      "text_key": "DLG_P00_03_OFFER_TEXT",
+      "text_vi": "Hai người còn kẹt dưới đầm! Phá ba đám Rễ Nước trước, rồi tới giúp từng người. Khi mặt nước dồn lại thành sóng, tránh ra chỗ trống; đừng cố đứng chịu."
+    },
+    {
+      "quest_id": "P00-03",
+      "quest_title_vi": "Dưới mặt đầm",
+      "node_type": "CLUE",
+      "speaker_id": "NPC_LYAN",
+      "text_key": "DLG_P00_03_CLUE_TEXT",
+      "text_vi": "Một người bảo đã thấy bóng ai giống bạn dưới nước. Người kia lại nhớ một khuôn mặt khác. Cứ đưa họ lên bờ đã; lúc sợ hãi, ký ức không chịu đứng yên."
+    },
+    {
+      "quest_id": "P00-03",
+      "quest_title_vi": "Dưới mặt đầm",
+      "node_type": "TURN_IN",
+      "speaker_id": "NPC_LYAN",
+      "text_key": "DLG_P00_03_TURN_IN_TEXT",
+      "text_vi": "Cả hai đã lên bờ. Tôi hỏi lại, họ vẫn kể khác nhau. Có lẽ nên giữ cả hai lời kể... ít nhất đừng bắt một người nhận rằng mình đã nhìn sai."
+    },
+    {
+      "quest_id": "P00-04",
+      "quest_title_vi": "Người giữ bờ",
+      "node_type": "OFFER",
+      "speaker_id": "NPC_TA_VAN_KHANH",
+      "text_key": "DLG_P00_04_OFFER_TEXT",
+      "text_vi": "Ly An sẽ men bờ tới Đầm Chuông. Đi cùng cô ấy, giữ hai chặng nghỉ và đẩy lùi hai đợt quái, mỗi đợt ba con. Nếu phải lui, tập hợp lại ở chặng vừa giữ được."
+    },
+    {
+      "quest_id": "P00-04",
+      "quest_title_vi": "Người giữ bờ",
+      "node_type": "CLUE",
+      "speaker_id": "NPC_TA_VAN_KHANH",
+      "text_key": "DLG_P00_04_CLUE_TEXT",
+      "text_vi": "Đừng thúc Ly An đi tiếp khi đường còn quái. Nếu niêm sáp rạn thêm, đừng chạm vào nó. Hãy để cô ấy mang thư qua bờ; ta muốn biết ở đâu dấu sáp còn yên."
+    },
+    {
+      "quest_id": "P00-04",
+      "quest_title_vi": "Người giữ bờ",
+      "node_type": "TURN_IN",
+      "speaker_id": "NPC_TA_VAN_KHANH",
+      "text_key": "DLG_P00_04_TURN_IN_TEXT",
+      "text_vi": "Ly An đã qua, thư cũng còn đây. Vết rạn dừng ngay mép dấu thứ năm. Ta biết ngươi muốn hỏi gì... hãy cho ta nhìn lại nó một lần nữa."
+    },
+    {
+      "quest_id": "P00-05",
+      "quest_title_vi": "Mảnh ấn đầu tiên",
+      "node_type": "OFFER",
+      "speaker_id": "NPC_TA_VAN_KHANH",
+      "text_key": "DLG_P00_05_OFFER_TEXT",
+      "text_vi": "Mãng Cốt đang quẫy ở Đầm Chuông. Vào vòng đầm, vượt qua nó rồi kiểm tra mảnh lộ dưới nước. Khi trở về, gặp quan sát viên để xác nhận môn phái ngươi đã chọn."
+    },
+    {
+      "quest_id": "P00-05",
+      "quest_title_vi": "Mảnh ấn đầu tiên",
+      "node_type": "CLUE",
+      "speaker_id": "NPC_TA_VAN_KHANH",
+      "text_key": "DLG_P00_05_CLUE_TEXT",
+      "text_vi": "Đừng nhìn những vệt sáng trên thân nó mà quên mặt nước dưới chân. Khi đầm yên, hãy tự kiểm tra vật vừa lộ ra. Ta không muốn đặt tên cho điều ngươi chưa thấy."
+    },
+    {
+      "quest_id": "P00-05",
+      "quest_title_vi": "Mảnh ấn đầu tiên",
+      "node_type": "TURN_IN",
+      "speaker_id": "NPC_TA_VAN_KHANH",
+      "text_key": "DLG_P00_05_TURN_IN_TEXT",
+      "text_vi": "“Huyền Ấn”... ngươi cũng đọc được hai chữ ấy. Ta còn một chuyện chưa thể kể vội. Khi việc ở bến đã khép lại, hãy tới Thanh Lạc. Mang theo điều đã thấy, cả những điều ta chưa giải thích."
+    }
+  ],
+  "sources": [
+    "docs/production/Quest_and_Narrative_Production_Spec_vi.md",
+    "docs/production/Map_Production_Atlas_vi.md",
+    "docs/production/P1_Guard_Precision_20261030_vi.md"
+  ],
+  "tuningNote": "Local ordinary mobs use a chosen level1 onboarding profile; boss HP640/ATK20/DEF6, potion/weapon and compact playable topology are fixtures, not production balance or reviewed topology."
+}
