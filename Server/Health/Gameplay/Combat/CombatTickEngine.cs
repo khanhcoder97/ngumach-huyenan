@@ -142,7 +142,8 @@ public sealed class CombatTickEngine
     }
 
     // Schedules an accepted cast. Returns false when the same castId is
-    // already scheduled (idempotent replay must never double-resolve).
+    // already active. Cached command replays must not call this method; the
+    // endpoint enforces that through CombatV2Outcome.Replayed.
     public bool Schedule(
         PlayerSession actor,
         string sessionId,
@@ -286,6 +287,22 @@ public sealed class CombatTickEngine
                 var finished = new List<string>();
                 foreach (var cast in _casts.Values)
                 {
+                    // A cast whose actor died or left the map/floor is cancelled
+                    // once and resolves no damage or kill credit (#76 QREV-03).
+                    if (cast.Actor.Hp <= 0 || cast.Actor.MapId != cast.MapId ||
+                        cast.Actor.FloorId != cast.FloorId)
+                    {
+                        _guards.Close(cast.Actor.CharacterId, GuardWindowEndReasons.DefenderDown);
+                        emitted.Add(AppendEvent(cast, tick, CombatEventTypesV2.Cancel,
+                            targetId: null, targetLifeId: null, hitIndex: null, targetRevision: null, result: null));
+                        emitted.Add(AppendEnd(cast, tick));
+                        finished.Add(cast.CastId);
+                        continue;
+                    }
+
+                    while (cast.NextHitIndex < cast.HitTicks.Length &&
+                           cast.StartTick + cast.HitTicks[cast.NextHitIndex] <= tick)
+                    {
                     while (cast.NextHitIndex < cast.HitTicks.Length &&
                            cast.StartTick + cast.HitTicks[cast.NextHitIndex] <= tick)
                     {

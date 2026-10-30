@@ -1003,7 +1003,8 @@ def main():
     check(status == 200, f"v2 skill returned {status}: {body}")
     skill_result = body.get("result") or {}
     check(skill_result.get("mp") == 38, f"v2 skill mp {skill_result.get('mp')}")
-    check((skill_result.get("events") or [{}])[0].get("cursor") == 2, "v2 skill cursor")
+    skill_start_cursor = (skill_result.get("events") or [{}])[0].get("cursor")
+    check(isinstance(skill_start_cursor, int) and skill_start_cursor > basic_events[0]["cursor"], "v2 skill cursor after basic")
     expect_correlation(headers, "smoke-v2-skill")
 
     v2_sequence += 1
@@ -1034,13 +1035,15 @@ def main():
     page = body.get("result") or {}
     check(page.get("schemaVersion") == 2 and page.get("sessionId") == v2_session,
           "v2 events envelope")
-    check(page.get("nextCursor") == 2, f"v2 events next {page.get('nextCursor')}")
+    check(page.get("nextCursor", 0) >= skill_start_cursor, f"v2 events next {page.get('nextCursor')}")
     check(page.get("resyncRequired") is False, "v2 events resync flag")
     page_events = page.get("events") or []
-    check([event.get("cursor") for event in page_events] == [1, 2],
-          f"v2 events cursors {[event.get('cursor') for event in page_events]}")
-    check(all(event.get("type") == "CAST_START" for event in page_events),
-          "v2 events types")
+    cursors = [event.get("cursor") for event in page_events]
+    check(cursors == sorted(set(cursors)) and cursors[-1] == page.get("nextCursor"),
+          f"v2 events cursors {cursors}")
+    starts = [event for event in page_events if event.get("type") == "CAST_START"]
+    check(len(starts) == 2 and {event.get("castId") for event in starts} == {basic["castId"], skill_result["castId"]},
+          "v2 command starts present once; real tick END may interleave")
     expect_correlation(headers, "smoke-v2-events")
 
     status, headers, body = call(
@@ -1048,7 +1051,8 @@ def main():
         headers={"X-Correlation-ID": "smoke-v2-events-since"})
     check(status == 200, f"v2 events since returned {status}: {body}")
     since_events = (body.get("result") or {}).get("events") or []
-    check([event.get("cursor") for event in since_events] == [2],
+    check(all(event.get("cursor", 0) > 1 for event in since_events) and
+          any(event.get("castId") == skill_result["castId"] and event.get("type") == "CAST_START" for event in since_events),
           f"v2 events since {since_events}")
     expect_correlation(headers, "smoke-v2-events-since")
 
@@ -1070,6 +1074,37 @@ def main():
     check((body.get("error") or {}).get("code") == "invalid_payload",
           f"v2 bad cursor error {(body.get('error') or {}).get('code')}")
     expect_correlation(headers, "smoke-v2-events-bad-cursor")
+
+    # Regression: a receipt replay after END must not reschedule a completed cast.
+    # Use a fresh isolated actor at spawn, outside damage range of any mob.
+    status, _, spawned = call("POST", "/p1/sessions", {"classId": "CLASS_MINH_KIEM"})
+    check(status == 201, "late replay create actor")
+    late_session = spawned["sessionId"]
+    late_character = spawned["result"]["self"]["characterId"]
+    late_headers = {"X-Session-ID": late_session}
+    late_command = combat_v2_envelope("BASIC_ATTACK", 1, character_id=late_character,
+                                      request_id="6" * 32, idempotency_key="7" * 32)
+    status, _, accepted = call("POST", "/p1/v2/combat", late_command, late_headers)
+    check(status == 200, "late replay initial accept")
+    late_cast = accepted["result"]["castId"]
+    deadline = time.monotonic() + 3
+    finished_page = {}
+    while time.monotonic() < deadline:
+        status, _, ended = call("GET", f"/p1/v2/events/{late_session}?cursor=0", headers=late_headers)
+        check(status == 200, "late replay read before END")
+        finished_page = ended.get("result") or {}
+        if any(e.get("type") == "END" for e in finished_page.get("events", [])):
+            break
+        time.sleep(0.05)
+    check(sum(e.get("type") == "END" for e in finished_page.get("events", [])) == 1,
+          "original cast completed exactly once")
+    status, _, repeated = call("POST", "/p1/v2/combat", late_command, late_headers)
+    check(status == 200 and repeated["result"]["castId"] == late_cast,
+          "late replay returns original cast receipt")
+    time.sleep(0.4)
+    status, _, after_replay = call("GET", f"/p1/v2/events/{late_session}?cursor={finished_page['nextCursor']}", headers=late_headers)
+    check(status == 200 and not after_replay["result"]["events"],
+          "late replay emitted no new END, impact or other lifecycle event")
 
     print(f"PASS: {CHECKS} smoke checks against {BASE_URL}")
 

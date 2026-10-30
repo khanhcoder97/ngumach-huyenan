@@ -31,6 +31,7 @@ public static class CombatErrorCodes
     public const string InvalidTarget = "invalid_target";
     public const string TargetNotFound = "target_not_found";
     public const string TargetNotAlive = "target_not_alive";
+    public const string ActorNotAlive = "actor_not_alive";
     public const string OutOfRange = "out_of_range";
     public const string CooldownActive = "cooldown_active";
     public const string InsufficientResource = "insufficient_resource";

@@ -50,6 +50,9 @@ public sealed record CombatV2Outcome(CombatV2Result? Result, CombatFailure? Fail
 {
     public bool Accepted => Failure is null;
 
+    // Internal scheduling policy, deliberately absent from the wire DTO.
+    public bool Replayed { get; init; }
+
     public static CombatV2Outcome Success(CombatV2Result result) => new(result, null);
 
     public static CombatV2Outcome Rejected(
@@ -87,7 +90,16 @@ public sealed class InMemoryCombatV2Service
     {
         ArgumentNullException.ThrowIfNull(actor);
         ArgumentNullException.ThrowIfNull(intent);
+        lock (actor.SyncRoot)
+        {
+            return ResolveLocked(actor, sessionId, intent, idempotencyKey);
+        }
+    }
 
+    // Dedupe/hash decision, guards, costs and cached receipt share the actor lock.
+    private CombatV2Outcome ResolveLocked(
+        PlayerSession actor, string sessionId, CombatV2Intent intent, string? idempotencyKey)
+    {
         var requestHash = idempotencyKey is null ? null : Hash(intent);
         var entryKey = (actor.CharacterId, idempotencyKey ?? string.Empty);
         if (requestHash is not null && _idempotency.TryGetValue(entryKey, out var prior))
@@ -98,7 +110,7 @@ public sealed class InMemoryCombatV2Service
                     CombatErrorCodes.IdempotencyConflict, retryable: false, "idempotencyKey");
             }
 
-            return prior.Outcome;
+            return prior.Outcome with { Replayed = true };
         }
 
         var fieldErrors = Validate(intent);
@@ -134,83 +146,84 @@ public sealed class InMemoryCombatV2Service
                 CombatErrorCodes.SkillNotAvailable, retryable: false, "skillId");
         }
 
-        lock (actor.SyncRoot)
+        if (actor.Hp <= 0)
         {
-            if (intent.InputSequence <= actor.LastInputSequence)
-            {
-                return CombatV2Outcome.Rejected(
-                    P1ErrorCodes.StaleSequence, retryable: false, "inputSequence");
-            }
-
-            var now = _clock.UtcNow;
-            var actionKey = isBasic ? CombatV2Actions.BasicAttack : skill!.SkillId;
-            if (_cooldowns.TryGetValue((actor.CharacterId, actionKey), out var cooldownEndsAt) &&
-                now < cooldownEndsAt)
-            {
-                return CombatV2Outcome.Rejected(
-                    CombatErrorCodes.CooldownActive, retryable: true, actionKey);
-            }
-
-            var mpCost = skill?.ResourceCost ?? 0;
-            if (mpCost > 0)
-            {
-                if (!string.Equals(skill!.Resource, "MP", StringComparison.OrdinalIgnoreCase))
-                {
-                    return CombatV2Outcome.Rejected(
-                        CombatErrorCodes.UnsupportedResource, retryable: false, "skillId");
-                }
-
-                if (actor.Mp < mpCost)
-                {
-                    return CombatV2Outcome.Rejected(
-                        CombatErrorCodes.InsufficientResource, retryable: false, "skillId");
-                }
-            }
-
-            actor.Mp -= mpCost;
-            var cooldownEnd = now.AddSeconds(
-                isBasic ? BasicAttackCooldownSeconds : skill!.CooldownSeconds);
-            _cooldowns[(actor.CharacterId, actionKey)] = cooldownEnd;
-            actor.LastInputSequence = intent.InputSequence;
-            actor.Revision++;
-
-            var castId = Guid.NewGuid().ToString("N");
-            var castStart = _events.Append(
-                sessionId,
-                new CombatEventV2(
-                    Guid.NewGuid().ToString("N"),
-                    CombatEventTypesV2.CastStart,
-                    castId,
-                    actor.CharacterId,
-                    null,
-                    null,
-                    null,
-                    actor.MapId + WorldAudience.MapInstanceSuffix,
-                    actor.FloorId,
-                    actor.Revision,
-                    null,
-                    _clock.Tick,
-                    now,
-                    null));
-
-            var result = new CombatV2Result(
-                castId,
-                intent.ActionKind,
-                skill?.SkillId,
-                actor.Mp,
-                mpCost,
-                P1Time.ToUtcString(cooldownEnd),
-                actor.LastInputSequence,
-                [castStart]);
-
-            var outcome = CombatV2Outcome.Success(result);
-            if (requestHash is not null)
-            {
-                _idempotency[entryKey] = new IdempotencyEntry(requestHash, outcome);
-            }
-
-            return outcome;
+            return CombatV2Outcome.Rejected(CombatErrorCodes.ActorNotAlive, retryable: false, "characterId");
         }
+        if (intent.InputSequence <= actor.LastInputSequence)
+        {
+            return CombatV2Outcome.Rejected(
+                P1ErrorCodes.StaleSequence, retryable: false, "inputSequence");
+        }
+
+        var now = _clock.UtcNow;
+        var actionKey = isBasic ? CombatV2Actions.BasicAttack : skill!.SkillId;
+        if (_cooldowns.TryGetValue((actor.CharacterId, actionKey), out var cooldownEndsAt) &&
+            now < cooldownEndsAt)
+        {
+            return CombatV2Outcome.Rejected(
+                CombatErrorCodes.CooldownActive, retryable: true, actionKey);
+        }
+
+        var mpCost = skill?.ResourceCost ?? 0;
+        if (mpCost > 0)
+        {
+            if (!string.Equals(skill!.Resource, "MP", StringComparison.OrdinalIgnoreCase))
+            {
+                return CombatV2Outcome.Rejected(
+                    CombatErrorCodes.UnsupportedResource, retryable: false, "skillId");
+            }
+
+            if (actor.Mp < mpCost)
+            {
+                return CombatV2Outcome.Rejected(
+                    CombatErrorCodes.InsufficientResource, retryable: false, "skillId");
+            }
+        }
+
+        actor.Mp -= mpCost;
+        var cooldownEnd = now.AddSeconds(
+            isBasic ? BasicAttackCooldownSeconds : skill!.CooldownSeconds);
+        _cooldowns[(actor.CharacterId, actionKey)] = cooldownEnd;
+        actor.LastInputSequence = intent.InputSequence;
+        actor.Revision++;
+
+        var castId = Guid.NewGuid().ToString("N");
+        var castStart = _events.Append(
+            sessionId,
+            new CombatEventV2(
+                Guid.NewGuid().ToString("N"),
+                CombatEventTypesV2.CastStart,
+                castId,
+                actor.CharacterId,
+                null,
+                null,
+                null,
+                actor.MapId + WorldAudience.MapInstanceSuffix,
+                actor.FloorId,
+                actor.Revision,
+                null,
+                _clock.Tick,
+                now,
+                null));
+
+        var result = new CombatV2Result(
+            castId,
+            intent.ActionKind,
+            skill?.SkillId,
+            actor.Mp,
+            mpCost,
+            P1Time.ToUtcString(cooldownEnd),
+            actor.LastInputSequence,
+            [castStart]);
+
+        var outcome = CombatV2Outcome.Success(result);
+        if (requestHash is not null)
+        {
+            _idempotency[entryKey] = new IdempotencyEntry(requestHash, outcome);
+        }
+
+        return outcome;
     }
 
     private static List<string> Validate(CombatV2Intent intent)

@@ -42,6 +42,7 @@
       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
     },
     "nextInputSequence": {
+      "description": "Legacy v2 name: last accepted input sequence, not sequence plus one. The next command uses a strictly greater sequence.",
       "type": "integer",
       "minimum": 1
     },

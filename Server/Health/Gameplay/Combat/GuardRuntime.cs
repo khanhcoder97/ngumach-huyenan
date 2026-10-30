@@ -110,6 +110,28 @@ public sealed class GuardWindowStore
         _windows[window.Defender.CharacterId] = window;
         return window;
     }
+
+    // Death or a map change closes the window: it stops paying reduction,
+    // never grants the whiff reward, and leaves a reserved counter to be
+    // cancelled exactly once on its own tick. DEC-022 §3 zeroes the resource
+    // only on death; a map change keeps what the character already earned.
+    public void Close(string characterId, string reason)
+    {
+        if (!_windows.TryGetValue(characterId, out var window))
+        {
+            return;
+        }
+
+        lock (window.Defender.SyncRoot)
+        {
+            window.EndReason = reason;
+            window.WhiffGranted = false;
+            if (reason == GuardWindowEndReasons.DefenderDown)
+            {
+                window.Defender.SwordIntent = 0;
+            }
+        }
+    }
 }
 
 // Incoming-damage side of DEC-022: how much of a mob swing the guard eats, and
