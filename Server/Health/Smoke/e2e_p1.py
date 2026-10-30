@@ -22,10 +22,10 @@ Two profiles, matching the production gates:
             P1__MobBehavior__Enabled, plus larger starting HP/MP so one actor
             can live through every phase). Quest gates stay OFF: this is a
             separate fixture, not the dev scenario with more flags. Drives a
-            live 20 Hz fight over HTTP with conditional waits: walk the
-            north lane so nothing aggros -> descend into the group's radius ->
-            read TELEGRAPH -> step out of attack range and prove the committed
-            impact whiffs -> stand still and take the whole CARPLING hit ->
+            live 20 Hz fight over HTTP with conditional waits: walk the road
+            past one mob group -> read TELEGRAPH -> step out of attack range
+            and prove the committed impact whiffs -> stand still and take the
+            whole CARPLING hit ->
             guard the next front hit and read COUNTER_CONFIRMED plus the
             counter's own resolution against the mob's snapshot hp -> stay
             until HP reaches 0, then prove the server does not paper over
@@ -438,7 +438,6 @@ MOB_GROUP = (
     "ENT_MAN_BM_SPAWN_BM_01_M3",
 )
 APPROACH_X = 87.0
-APPROACH_Y = 7.5
 ESCAPE_X = 91.5
 CARPLING_DAMAGE = 10
 CARPLING_MAX_HP = 192
@@ -526,34 +525,25 @@ def mob_combat_profile():
     smoke_p1.check(full_hp > 200, f"mob profile did not start with endurance HP: {full_hp}")
 
     sequence = 1
-    sequence, x, y = walk_to(session, character_id, sequence, APPROACH_X, APPROACH_Y)
-    smoke_p1.check(abs(x - APPROACH_X) < 1e-6 and abs(y - APPROACH_Y) < 1e-6,
+    # Walk the road east past the group's spawn at x=84 and stop four WU beyond
+    # it. The actor moves 6 WU/s while a CARPLING walks 2 WU/s, so passing
+    # x=78..90 engages the group without ever being caught mid-walk.
+    sequence, x, y = walk_to(session, character_id, sequence, APPROACH_X, 0.0)
+    smoke_p1.check(abs(x - APPROACH_X) < 1e-6 and abs(y) < 1e-6,
                    f"approach stopped at {x},{y}")
-    _, _, entities, _ = v2_snapshot(session)
-    nearby_aggro = [entry for entry in entities.values()
-                    if entry.get("kind") == "MOB" and entry.get("state") in AGGRO_STATES]
-    smoke_p1.check(not nearby_aggro,
-                   f"a mob engaged from the {APPROACH_Y} WU lane: {nearby_aggro}")
+    _, self_state, entities, _ = v2_snapshot(session)
+    engaged_now = sorted(entry.get("entityId") for entry in entities.values()
+                         if entry.get("kind") == "MOB" and entry.get("state") in AGGRO_STATES)
+    smoke_p1.check(bool(engaged_now) and set(engaged_now) <= set(MOB_GROUP),
+                   f"the road engaged something outside the SPAWN_BM_01 group: {engaged_now}")
+    smoke_p1.check(self_state.get("hp") == full_hp,
+                   f"the engaged group caught the actor mid-walk: {self_state.get('hp')}")
 
     def telegraphed_mob():
         _, _, entities, _ = v2_snapshot(session)
         return next((entry for entry in entities.values()
                      if entry.get("kind") == "MOB" and entry.get("state") == "TELEGRAPH"),
                     None)
-
-    def engaged_group():
-        _, _, entities, _ = v2_snapshot(session)
-        return next((entities.get(entity_id) for entity_id in MOB_GROUP
-                     if entities.get(entity_id) is not None
-                     and entities.get(entity_id).get("state") in AGGRO_STATES), None)
-
-    # Descend into the group's 6 WU aggro radius. The escort group standing at
-    # x=80 stays 7 WU from the actor, outside its own radius, so exactly one
-    # group of three CARPLING is engaged.
-    sequence, x, y = walk_to(session, character_id, sequence, APPROACH_X, 0.0)
-    engaged = wait_for(10, engaged_group)
-    smoke_p1.check(engaged is not None,
-                   "no mob of the group engaged after entering the aggro radius")
 
     telegraph = wait_for(15, telegraphed_mob)
     smoke_p1.check(telegraph is not None, "the engaged mob never opened a TELEGRAPH")
