@@ -1253,6 +1253,116 @@ public static class ServiceSelfCheck
             killStateAfterRespawn.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL") == 1,
             $"life={tickRespawnedMob.LifeId} hp={deathStore.TryGet("ENT_SELFCHECK_TICK_MOB", 2)?.Hp}");
 
+        // QOD-17 loot: versioned CSV export, one roll per group then weighted
+        // SELECT_ONE, deterministic server RNG and dry-run receipts (grant OFF
+        // until the mob coin band source exists).
+        var lootRecipes = enabledCombat.LootRecipes;
+        Check(
+            "loot.bundle",
+            lootRecipes is
+            {
+                SchemaVersion: 1,
+                BundleId: "LOOT_RECIPE_V1",
+                GrantEnabled: false,
+                GrantBlockedReason: "COIN_BAND_MISSING"
+            } &&
+            lootRecipes.Sources.Count == 57 &&
+            lootRecipes.MobTemplateToSource.Count == 5 &&
+            lootRecipes.MobTemplateToSource["MOB_CARPLING"] == "LT_MOB_CARPLING",
+            $"sources={lootRecipes.Sources.Count} mapping={lootRecipes.MobTemplateToSource.Count}");
+
+        var lootGateBlocked = false;
+        try
+        {
+            _ = combatDamage.LootRecipes;
+        }
+        catch (InvalidOperationException)
+        {
+            lootGateBlocked = true;
+        }
+
+        Check("loot.gate_blocks_load", lootGateBlocked);
+
+        var carplingGroup = lootRecipes.Sources["LT_MOB_CARPLING"].Groups.Single();
+        Check(
+            "loot.carpling_source",
+            carplingGroup is
+            {
+                GroupId: "MATERIAL_POOL",
+                Mode: LootGroupModes.SelectOne,
+                ChanceBps: 1200
+            } &&
+            carplingGroup.Entries.Count == 5 &&
+            carplingGroup.Entries.All(entry =>
+                entry.QuantityMin == 1 && entry.QuantityMax == 1 && entry.Weight == 1),
+            $"{carplingGroup.Entries.Count} entries");
+
+        var passLootroller = new LootRoller(lootRecipes, new FixedLootRolls(0.0));
+        var firstLootReceipt = passLootroller.Roll("MOB_CARPLING", new string('a', 32));
+        Check(
+            "loot.select_one_first",
+            firstLootReceipt is
+            {
+                Granted: false,
+                BlockedReason: "COIN_BAND_MISSING",
+                SourceId: "LT_MOB_CARPLING"
+            } &&
+            firstLootReceipt.Groups.Single() is { Passed: true, Quantity: 1 } firstLootGroup &&
+            firstLootGroup.EntryId == carplingGroup.Entries[0].EntryId,
+            firstLootReceipt.Groups.SingleOrDefault()?.EntryId);
+
+        var lootMissReceipt = new LootRoller(lootRecipes, new FixedLootRolls(0.5))
+            .Roll("MOB_CARPLING", "kill-miss");
+        Check(
+            "loot.chance_miss",
+            lootMissReceipt.Groups.Single() is
+            {
+                Passed: false,
+                EntryId: null,
+                ItemId: null,
+                Quantity: 0
+            });
+
+        var lastLootReceipt = new LootRoller(
+                lootRecipes, new ChanceThenSelectionRolls(chance: 0.0, selection: 0.999))
+            .Roll("MOB_CARPLING", "kill-last");
+        Check(
+            "loot.select_one_weighted_last",
+            lastLootReceipt.Groups.Single() is { Passed: true } lastLootGroup &&
+            lastLootGroup.EntryId == carplingGroup.Entries[^1].EntryId,
+            lastLootReceipt.Groups.SingleOrDefault()?.EntryId);
+
+        var realLootRoller = new LootRoller(lootRecipes, new LootRngRollSource());
+        var realLootA = realLootRoller.Roll("MOB_CARPLING", "kill-deterministic");
+        var realLootB = realLootRoller.Roll("MOB_CARPLING", "kill-deterministic");
+        Check(
+            "loot.roll_deterministic",
+            realLootA.Groups.Single().ChanceRoll == realLootB.Groups.Single().ChanceRoll &&
+            realLootA.Groups.Single().EntryId == realLootB.Groups.Single().EntryId &&
+            realLootA.Groups.Single().Quantity == realLootB.Groups.Single().Quantity &&
+            realLootA.Groups.Single().ChanceRoll is >= 0 and < 1);
+
+        var lootLedger = new LootReceiptLedger();
+        var recordedReceipt = lootLedger.Record(realLootA);
+        var recordedAgainReceipt = lootLedger.Record(realLootB);
+        Check(
+            "loot.ledger_stable",
+            ReferenceEquals(recordedReceipt, recordedAgainReceipt) &&
+            lootLedger.TryGet("kill-deterministic", "LT_MOB_CARPLING", out var storedReceipt) &&
+            ReferenceEquals(storedReceipt, recordedReceipt) &&
+            lootLedger.Count == 1);
+
+        var unknownLootReceipt = passLootroller.Roll("MOB_UNKNOWN", "kill-unknown");
+        Check(
+            "loot.unsupported_source",
+            unknownLootReceipt is { SourceId: null, BlockedReason: "NO_SOURCE", Granted: false } &&
+            unknownLootReceipt.Groups.Count == 0);
+
+        Check(
+            "loot.grant_off",
+            firstLootReceipt.Granted == false &&
+            firstLootReceipt.BlockedReason == LootRecipeLoader.CoinBandBlockedReason);
+
         Check(
             "damage.oracle_raw",
             Near(DamageFormula.RawDamage(20, 0, 1.5, 1, 0), 30),
@@ -3492,6 +3602,33 @@ public static class ServiceSelfCheck
 
             return base.TryRecord(characterId, questId, result);
         }
+    }
+
+    private sealed class ChanceThenSelectionRolls : ILootRollSource
+    {
+        private readonly double _chance;
+        private readonly double _selection;
+
+        public ChanceThenSelectionRolls(double chance, double selection)
+        {
+            _chance = chance;
+            _selection = selection;
+        }
+
+        public double Uniform01(string seed) =>
+            seed.Contains("|chance", StringComparison.Ordinal) ? _chance : _selection;
+    }
+
+    private sealed class FixedLootRolls : ILootRollSource
+    {
+        private readonly double _value;
+
+        public FixedLootRolls(double value)
+        {
+            _value = value;
+        }
+
+        public double Uniform01(string seed) => _value;
     }
 
     private sealed class FixedCombatRolls : ICombatRollSource

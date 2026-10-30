@@ -168,6 +168,13 @@ Theo Q6: snapshot v2 chỉ gửi entity sau filter audience; internal candidate 
 - Mob HP theo `lifeId` (`MobCombatStateStore`); chết ×1/life, `DEATH` event, kill credit = nguồn HPDamage kết liễu (DEV policy) gửi KILL quest event keyed deathEventId; respawn bump lifeId + HP mới; impact recheck alive/target.
 - **Chưa làm (increment kế):** mob AI telegraph/attack/recovery damage, guard/whiff/counter DEC-022 runtime, spawn group expansion theo manifest (nhiều member/group ID/generation, clear-group respawn), loot/XP.
 
-### 9.7 Triển khai tiếp
+### 9.7 Loot system (QOD-17, dry-run)
+
+- Exporter deterministic từ `Loot_Recipe_Reward_Production_Data_vi.csv` (LOOT_ENTRY) → `Implementation/Content/Runtime/loot_recipe_v1.json`: 57 source / 184 entry, `grantEnabled=false`, `grantBlockedReason=COIN_BAND_MISSING` (CSV chỉ có currency cho PvP/dungeon/raid/tower/guild, **không có band Đồng cho mob**), CI drift-check.
+- Luật roll đúng Q4: **một roll 12% mỗi group** (`group_chance_bps=1200`), sau đó `SELECT_ONE` theo weight; RNG server versioned `loot-rng-v1`; cùng `killKey` cho cùng receipt; `LootReceiptLedger` dedupe retry; quantity trong `[min,max]` (P1 hiện 1..1).
+- Mapping P1 có provenance: `MOB_CARPLING`→`LT_MOB_CARPLING`, `MOB_WATERROOT`→`LT_MOB_WATERROOT`, `MOB_SHORE_STALKER`→`LT_MOB_SHORE_STALKER`, elite→`LT_MOB_SHORE_STALKER_ELITE`, `BOSS_MANG_COT`→`LT_BOSS_MANG_COT_QUEST` (QUEST placement, boss vẫn BOSSDATA_BLOCKED).
+- **Grant OFF:** receipt chỉ dry-run, không chạm inventory/currency; kill progress độc lập. Mở grant cần reward bundle đầy đủ + review (proposal riêng khi coin band có nguồn).
+
+### 9.8 Triển khai tiếp
 
 Event store (bounded buffer, cursor, resync) + AOI projection có hysteresis + endpoint v2 opt-in (`P1:CombatV2:Enabled` OFF mặc định; dev profile bật) + e2e dev mở rộng; sau đó QOD-17 tick combat (basic + MK03 damage, guard/counter state machine theo DEC-022, mob telegraph/death/respawn, kill credit theo entityLifeId/deathEventId).
