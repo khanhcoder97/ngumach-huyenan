@@ -1363,6 +1363,86 @@ public static class ServiceSelfCheck
             firstLootReceipt.Granted == false &&
             firstLootReceipt.BlockedReason == LootRecipeLoader.CoinBandBlockedReason);
 
+        // QOD-17 manifest spawn groups: members respawn only after the whole
+        // group is cleared; partial deaths keep the group down.
+        var groupClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 30, 5, 0, 0, TimeSpan.Zero));
+        WorldEntityInstance MakeGroupMember(string entityId, int memberIndex)
+        {
+            var member = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = "MAN-TEST-GROUP",
+                Kind = WorldEntityKinds.Mob,
+                TemplateIds = new[] { "MOB_CARPLING" },
+                MapId = options.DefaultMapId,
+                FloorId = "OVERWORLD",
+                X = 3,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = 0,
+                GroupId = "MAN-TEST-GROUP",
+                MemberIndex = memberIndex,
+                GroupRespawnSeconds = 10
+            };
+            member.Initialize();
+            return member;
+        }
+
+        var groupRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [
+                    MakeGroupMember("ENT_SELFCHECK_GROUP_1", 1),
+                    MakeGroupMember("ENT_SELFCHECK_GROUP_2", 2)
+                ]),
+            groupClock);
+        var groupService = new MobSpawnGroupService(groupRegistry, groupClock);
+        groupRegistry.Despawn("ENT_SELFCHECK_GROUP_1");
+        var individualGroupRespawn = groupRegistry.Update();
+        groupClock.Advance(TimeSpan.FromSeconds(10));
+        var partialGroupTick = groupService.Tick();
+        groupRegistry.TryGet("ENT_SELFCHECK_GROUP_1", out var partialGroupMember);
+        Check(
+            "spawn.partial_group_no_respawn",
+            individualGroupRespawn == 0 &&
+            partialGroupTick == 0 &&
+            partialGroupMember.State == WorldEntityStates.Dead,
+            $"individual={individualGroupRespawn} group={partialGroupTick} " +
+            $"state={partialGroupMember.State}");
+
+        groupRegistry.Despawn("ENT_SELFCHECK_GROUP_2");
+        groupClock.Advance(TimeSpan.FromSeconds(9));
+        var earlyGroupTick = groupService.Tick();
+        groupClock.Advance(TimeSpan.FromSeconds(10));
+        var clearedGroupTick = groupService.Tick();
+        groupRegistry.TryGet("ENT_SELFCHECK_GROUP_1", out var respawnedGroupMember1);
+        groupRegistry.TryGet("ENT_SELFCHECK_GROUP_2", out var respawnedGroupMember2);
+        Check(
+            "spawn.clear_group_respawn",
+            earlyGroupTick == 0 &&
+            clearedGroupTick == 2 &&
+            respawnedGroupMember1.State == WorldEntityStates.Alive &&
+            respawnedGroupMember2.State == WorldEntityStates.Alive &&
+            respawnedGroupMember1.LifeId == 2 &&
+            respawnedGroupMember2.LifeId == 2,
+            $"early={earlyGroupTick} cleared={clearedGroupTick} " +
+            $"life={respawnedGroupMember1.LifeId}/{respawnedGroupMember2.LifeId}");
+
+        var registryGroups = new MobSpawnGroupService(
+            registry, services.GetRequiredService<IServerClock>());
+        registry.TryGet("ENT_MAN_BM_SPAWN_BM_04_M2", out var mixedGroupMember);
+        Check(
+            "spawn.real_bundle_composition",
+            registry.Count == 44 &&
+            registryGroups.GroupCount == 8 &&
+            registryGroups.MemberCount("MAN-BM-SPAWN_BM_01") == 3 &&
+            registryGroups.MemberCount("MAN-BM-SPAWN_BM_02") == 4 &&
+            mixedGroupMember is { GroupId: "MAN-BM-SPAWN_BM_04" } &&
+            mixedGroupMember.TemplateIds.Single() == "MOB_WATERROOT",
+            $"groups={registryGroups.GroupCount} " +
+            $"mixed={mixedGroupMember?.TemplateIds.FirstOrDefault()}");
+
         Check(
             "damage.oracle_raw",
             Near(DamageFormula.RawDamage(20, 0, 1.5, 1, 0), 30),
@@ -1416,7 +1496,7 @@ public static class ServiceSelfCheck
         var projectedGateOff = projection.Project();
         Check(
             "projection.all_entities",
-            projectedGateOff.Count == registry.Count && registry.Count == 27,
+            projectedGateOff.Count == registry.Count && registry.Count == 44,
             $"projected={projectedGateOff.Count} registry={registry.Count}");
 
         var mobGateOff = projectedGateOff.First(entity => entity.EntityId == "ENT_MAN_BM_SPAWN_BM_01");

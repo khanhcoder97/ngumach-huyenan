@@ -166,7 +166,8 @@ Theo Q6: snapshot v2 chỉ gửi entity sau filter audience; internal candidate 
 - Accepted cast → schedule trên 20 Hz (`WorldTickBackgroundService`), impact ở tick thật: basic windup 0.15s (tick+3), coefficient 1.0, range4/quạt90°/1 target; MK03 3 nhát tick+2/+5/+8, hệ số 0.45/0.55/0.90, cone4.4×100°, cap5; MK02 không damage; MK01 giữ guard window (counter runtime increment sau).
 - Damage: baseline completion_v1 nhãn DEV (attack20/armor10/acc0.0025/crit0.0525) + defense mob REFERENCE_L5 qua `DamageFormula`; oracle basic 19 (CARPLING), MK03 8/10/17; RNG có kênh `hit`/`crit` riêng để không dùng chung một uniform; replay schedule theo castId không resolve hai lần.
 - Mob HP theo `lifeId` (`MobCombatStateStore`); chết ×1/life, `DEATH` event, kill credit = nguồn HPDamage kết liễu (DEV policy) gửi KILL quest event keyed deathEventId; respawn bump lifeId + HP mới; impact recheck alive/target.
-- **Chưa làm (increment kế):** mob AI telegraph/attack/recovery damage, guard/whiff/counter DEC-022 runtime, spawn group expansion theo manifest (nhiều member/group ID/generation, clear-group respawn), loot/XP.
+- **Spawn groups:** `build_world_entities.py` mở đủ thành phần manifest — 8 nhóm/25 mob member (member 1 giữ entityId cũ, member sau `_M2..`), `groupId`/`memberIndex`/`groupRespawnSeconds`, composition round-robin là DEV fixture có nhãn; `MobSpawnGroupService` chỉ respawn cả nhóm sau khi clear (partial death giữ nguyên), mỗi member bump lifeId; bundle 44 entity/22 template, world record vẫn 352 (record theo manifest row).
+- **Chưa làm (increment kế):** mob AI telegraph/attack/recovery damage, guard/whiff/counter DEC-022 runtime, XP.
 
 ### 9.7 Loot system (QOD-17, dry-run)
 

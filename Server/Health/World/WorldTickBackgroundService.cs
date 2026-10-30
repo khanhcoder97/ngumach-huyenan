@@ -16,6 +16,7 @@ public sealed class WorldTickBackgroundService : BackgroundService
     private readonly MobBehaviorOptions _mobOptions;
     private readonly ISessionStore _sessions;
     private readonly CombatTickEngine _combat;
+    private readonly MobSpawnGroupService _groups;
     private readonly ServerClock _clock;
     private readonly ILogger<WorldTickBackgroundService> _logger;
 
@@ -25,6 +26,7 @@ public sealed class WorldTickBackgroundService : BackgroundService
         IOptions<MobBehaviorOptions> mobOptions,
         ISessionStore sessions,
         CombatTickEngine combat,
+        MobSpawnGroupService groups,
         ServerClock clock,
         ILogger<WorldTickBackgroundService> logger)
     {
@@ -33,6 +35,7 @@ public sealed class WorldTickBackgroundService : BackgroundService
         _mobOptions = mobOptions.Value;
         _sessions = sessions;
         _combat = combat;
+        _groups = groups;
         _clock = clock;
         _logger = logger;
     }
@@ -44,6 +47,7 @@ public sealed class WorldTickBackgroundService : BackgroundService
         {
             _entities.Update();
             _combat.Tick(_clock.Tick);
+            _groups.Tick();
 
             if (_mobOptions.Enabled)
             {

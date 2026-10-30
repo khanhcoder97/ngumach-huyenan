@@ -138,6 +138,7 @@ builder.Services.AddSingleton<MobCombatStateStore>();
 builder.Services.AddSingleton<ICombatRollSource, CombatRngRollSource>();
 builder.Services.AddSingleton<CombatTickEngine>();
 builder.Services.AddSingleton<LootReceiptLedger>();
+builder.Services.AddSingleton<MobSpawnGroupService>();
 builder.Services.AddSingleton<WorldEntityProjectionService>();
 builder.Services.AddSingleton<WorldAoiProjectionService>();
 builder.Services.AddHostedService<WorldTickBackgroundService>();
