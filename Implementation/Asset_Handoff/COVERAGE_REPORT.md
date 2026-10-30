@@ -8,8 +8,8 @@
 > python Implementation/Asset_Handoff/coverage_audit.py --check
 > ```
 
-- **Source commit:** `0576b86c577f11ef3a4aab8b9809bb6332256450` — last commit touching the evidence files (not the report commit).
-- **Evidence digest:** `f11743ed7188977a1343b2e5f2c686a7c49aa8cab07192dae5269a573a52000b` over 38 files (SHA256 per file in §8).
+- **Source commit:** `6d815c308978d3bbf74035193e26ca48f71caf14` — last commit touching the evidence files (not the report commit).
+- **Evidence digest:** `f9eb10a1a7a7c38223e19358f7ea92c3d8e5943538e3666a915d02946fac44f6` over 38 files (SHA256 per file in §8).
 - **Phạm vi:** chỉ đọc nguồn; không sửa schema, manifest, asset, `.meta`, server hay gameplay numeric.
 
 ## 1. Kết luận
@@ -17,7 +17,7 @@
 1. **Asset Minh Kiếm:** manifest và PNG IHDR khớp `288×512`; 6 frame/hướng × 8 hướng, cell `48×64`. `.meta` tĩnh đã đọc bằng Python: 48 sprite, PPU 20, pivot bottom-center.
 2. **Lỗi import tĩnh:** `META_FILTER_MODE` = 1 (Bilinear), cần 0 (Point) → thuộc phạm vi Muse, không sửa trong PR này.
 3. **Engine playback:** **chưa nghiệm thu**. Không có Unity trong môi trường này; báo cáo chỉ xác nhận metadata tĩnh và header PNG.
-4. **Độ phủ definition:** 9 ví dụ canonical (+1 fixture synthetic tách riêng). 1/5 class, 3/30 skill, 1/76 quest, 1/2235 item, 1/46 map, 1/349 spawn, 1/35 node.
+4. **Độ phủ definition:** 9 ví dụ canonical (+1 fixture synthetic tách riêng). 1/5 class, 3/30 skill, 1/76 quest, 1/2236 item, 1/46 map, 1/349 spawn, 1/35 node.
 
 ## 2. Số đo nguồn (đo từ file, không suy đoán)
 
@@ -28,7 +28,7 @@
 | Quest ID | 76 | `docs/production/Quest_Dialogue_Production_Data_vi.csv` (230 dòng dialogue) |
 | Placement | 349 | `docs/production/World_Spawn_Gathering_Manifest_vi.csv` (349 record_id riêng) |
 | Active skill ID | 30 | `docs/production/Combat_Skills_VFX_Animation_Spec_vi.md` (5 lớp × 6) |
-| Item master / rarity variant | 556 / 2235 | `Item_Master_Catalog_vi.csv` / `Item_Rarity_Variant_Catalog_vi.csv` |
+| Item master / rarity variant | 556 / 2236 | `Item_Master_Catalog_vi.csv` / `Item_Rarity_Variant_Catalog_vi.csv` |
 | Definition example canonical | 9 | `Implementation/Content/Examples` |
 | Fixture synthetic | 1 | `Implementation/Content/Examples/MapTopology` |
 | Schema file | 8 | `Implementation/Content/Schemas` |
@@ -112,7 +112,7 @@
 | Skill (`skillId`) | 30 | 3 | 3 | 27 | unverified |
 | Quest (`questId`) | 76 | 1 | 1 | 75 | unverified |
 | Item master (`itemId`) | 556 | 0 | 0 | 556 | unverified |
-| Item rarity variant (`itemId`) | 2235 | 1 | 1 | 2234 | unverified |
+| Item rarity variant (`itemId`) | 2236 | 1 | 1 | 2235 | unverified |
 | Map (`mapId`) | 46 | 1 | 1 | 45 | unverified |
 | Spawn placement (`recordId`) | 349 | 1 | 1 | 348 | unverified |
 | Gathering node (`recordId`) | 35 | 1 | 1 | 34 | unverified |
@@ -133,7 +133,7 @@
 
 **quest — 75 absent:** `C1-01`, `C1-02`, `C1-03`, `C1-04`, `C1-05`, `C1-06`, `C2-01`, `C2-02`, `C2-03`, `C2-04`, `C2-05`, `C3-01`, `C3-02`, `C3-03`, `C3-04`, `C3-05`, `C4-01`, `C4-02`, `C4-03`, `C4-04`, `C4-05`, `C5-01`, `C5-02`, `C5-03`, `C5-04`, `C5-05`, `C6-01`, `C6-02`, `C6-03`, `C6-04`, `C6-05`, `P00-02`, `P00-03`, `P00-04`, `P00-05`, `SQ-BM-01`, `SQ-BM-02`, `SQ-BM-03`, `SQ-BM-04`, `SQ-BM-05`, `SQ-BU-01`, `SQ-BU-02`, `SQ-BU-03`, `SQ-BU-04`, `SQ-BU-05`, `SQ-DM-01`, `SQ-DM-02`, `SQ-DM-03`, `SQ-DM-04`, `SQ-DM-05`, `SQ-LT-01`, `SQ-LT-02`, `SQ-LT-03`, `SQ-LT-04`, `SQ-LT-05`, `SQ-SH-01`, `SQ-SH-02`, `SQ-SH-03`, `SQ-SH-04`, `SQ-SH-05`, `SQ-TL-01`, `SQ-TL-02`, `SQ-TL-03`, `SQ-TL-04`, `SQ-TL-05`, `SQ-TS-01`, `SQ-TS-02`, `SQ-TS-03`, `SQ-TS-04`, `SQ-TS-05`, `SQ-VN-01`, `SQ-VN-02`, `SQ-VN-03`, `SQ-VN-04`, `SQ-VN-05`
 
-**item — 556 master + 2234 variant absent** (danh sách đầy đủ trong `coverage_report.json`).
+**item — 556 master + 2235 variant absent** (danh sách đầy đủ trong `coverage_report.json`).
 
 **spawn — 348 absent** (danh sách đầy đủ trong `coverage_report.json`).
 
@@ -180,7 +180,7 @@ File text được hash ở dạng **LF chuẩn hoá** để Windows và Linux c
 | `Client/Assets/Art/Characters/MinhKiem/minh_kiem_walk.png.meta` | 24969 | `6e330253f69ca7faacbd7ff4b16e6b3a3bd87e53ef65dc2bd1ed2a67baf9574a` |
 | `Client/Assets/Art/Previews/minh_kiem_walk_preview_x4.png` | 259371 | `a94be2844bd9f057a4557ccdf10c74f9e9fc7197ed4bc36c11d8eaaf6a027128` |
 | `Client/Assets/ArtManifests/muse_delivery_manifest.json` | 530 | `02f1517f1dfef94afae5827fe0af1e8c251c406a407790255258541618bb5508` |
-| `Implementation/Asset_Handoff/asset_delivery_manifest.schema.json` | 1672 | `ae9fa6333f19ac0b643a9469c7001d3d3c0641f5f12403491ea08837e09c7e91` |
+| `Implementation/Asset_Handoff/asset_delivery_manifest.schema.json` | 1709 | `60176b2069c1fa7f47c61e0e3195d387a7c0e734b9db743898020e61b3c6be2d` |
 | `Implementation/Content/Examples/ClassDefinition/CLASS_MINH_KIEM.json` | 350 | `4ccf673b833afcd0e911c29b2a40af432c401fe979906b698d0de6a511e8aabd` |
 | `Implementation/Content/Examples/GatheringNodeDefinition/MAN-BM-NODE_BM_ORE_01.json` | 478 | `74858bec57eb3224154af7432bdb14a1b66c87cfb303b8a9682c5aa74759e738` |
 | `Implementation/Content/Examples/ItemDefinition/EQ-MK-WEAPON-T1-R-COMMON.json` | 432 | `ce579ce5455f117514b786a66d2d9e5ea4a779c435838514d354c1e7d70774aa` |
@@ -204,15 +204,15 @@ File text được hash ở dạng **LF chuẩn hoá** để Windows và Linux c
 | `docs/production/Currency_Production_Data_vi.csv` | 4268 | `d99f6fff5c435526a1cc30e8675dc4aa34dadec7f553ff2b85184713ecfad7dc` |
 | `docs/production/Elite_Variant_Data_vi.csv` | 3412 | `adceffb77ddfdb7d5198436e8fff1bd7a834001b1c3e61abd43ade6f670c52c4` |
 | `docs/production/Item_Master_Catalog_vi.csv` | 316960 | `77e1405963fab1e915c56a8b738e347bd60809c6cf1fb78bee5831202e67065c` |
-| `docs/production/Item_Rarity_Variant_Catalog_vi.csv` | 1170197 | `3577a02a29fd85412b498f386ca6f818dfcc36228501e6c4c8b0999620a53c3f` |
+| `docs/production/Item_Rarity_Variant_Catalog_vi.csv` | 1170572 | `7979ba05bd06403b02190d7f51698891549d886ef27957f9d5e079070627b27c` |
 | `docs/production/Life_Sim_Content_Data_vi.csv` | 3995 | `9dd37e9264602662a0a5b142a38092df481b7683f562d607414aeaf02605d65f` |
 | `docs/production/Loot_Recipe_Reward_Production_Data_vi.csv` | 64990 | `431df808d6a2ce627de5b97d81d749ef5c62065f0609bb85a8c3db417d650d4b` |
 | `docs/production/NPC_Actor_Production_Registry_vi.csv` | 32835 | `d9743b8148620e00dd0762eca2bfd1b733b7a8808583725a381262fd004cd52a` |
 | `docs/production/Online_Persistence_Release_Complete_vi.md` | 9433 | `14ec979208e5d563882ab184115f34683791973180888d6b6c089c6b81855f2e` |
 | `docs/production/Pet_Mount_Production_Data_vi.csv` | 5100 | `383a40438f741931a26a5e3e19fa6d2b5527ffaa6c69bb45875ef162e6bf2d73` |
 | `docs/production/Pixel_Art_Production_Standard_vi.md` | 10186 | `52bfc0a84a504d3d47bd34beb8f8d3c3c0ce5d1a3fd201d013a1f35ed6535c83` |
-| `docs/production/Quest_Dialogue_Production_Data_vi.csv` | 109074 | `a5c8017edec32b4e70a5da4f87128a0405a9837d58120a19839b52f675e88ed4` |
+| `docs/production/Quest_Dialogue_Production_Data_vi.csv` | 118934 | `241593fe9ba87ad0441a4292b602602729d6a14493c07869cb0bba0e1c9c2fab` |
 | `docs/production/Weekly_Boss_Rotation_Data_vi.csv` | 3201 | `940214ce7a34978487403520c50ffef825da7da94210eeb3b1841d46f4e372e2` |
 | `docs/production/World_Spawn_Gathering_Manifest_vi.csv` | 198229 | `7fe2d4d5229e2fb7a93eb8c0fd452b741cb5f050c49a9c72bee30f8eff06c457` |
 
-**Evidence digest:** `f11743ed7188977a1343b2e5f2c686a7c49aa8cab07192dae5269a573a52000b`
+**Evidence digest:** `f9eb10a1a7a7c38223e19358f7ea92c3d8e5943538e3666a915d02946fac44f6`

@@ -383,7 +383,7 @@
       },
       {
         "name": "Item_Rarity_Variant_Catalog_vi.csv",
-        "rows": 2235
+        "rows": 2236
       },
       {
         "name": "Life_Sim_Content_Data_vi.csv",
@@ -416,9 +416,9 @@
     ],
     "items": {
       "masterCount": 556,
-      "masterOnly": 421,
+      "masterOnly": 420,
       "unionCount": 2656,
-      "variantCount": 2235
+      "variantCount": 2236
     },
     "maps": {
       "count": 46,
@@ -4372,9 +4372,9 @@
       "sha256": "02f1517f1dfef94afae5827fe0af1e8c251c406a407790255258541618bb5508"
     },
     {
-      "bytes": 1672,
+      "bytes": 1709,
       "path": "Implementation/Asset_Handoff/asset_delivery_manifest.schema.json",
-      "sha256": "ae9fa6333f19ac0b643a9469c7001d3d3c0641f5f12403491ea08837e09c7e91"
+      "sha256": "60176b2069c1fa7f47c61e0e3195d387a7c0e734b9db743898020e61b3c6be2d"
     },
     {
       "bytes": 350,
@@ -4492,9 +4492,9 @@
       "sha256": "77e1405963fab1e915c56a8b738e347bd60809c6cf1fb78bee5831202e67065c"
     },
     {
-      "bytes": 1170197,
+      "bytes": 1170572,
       "path": "docs/production/Item_Rarity_Variant_Catalog_vi.csv",
-      "sha256": "3577a02a29fd85412b498f386ca6f818dfcc36228501e6c4c8b0999620a53c3f"
+      "sha256": "7979ba05bd06403b02190d7f51698891549d886ef27957f9d5e079070627b27c"
     },
     {
       "bytes": 3995,
@@ -4527,9 +4527,9 @@
       "sha256": "52bfc0a84a504d3d47bd34beb8f8d3c3c0ce5d1a3fd201d013a1f35ed6535c83"
     },
     {
-      "bytes": 109074,
+      "bytes": 118934,
       "path": "docs/production/Quest_Dialogue_Production_Data_vi.csv",
-      "sha256": "a5c8017edec32b4e70a5da4f87128a0405a9837d58120a19839b52f675e88ed4"
+      "sha256": "241593fe9ba87ad0441a4292b602602729d6a14493c07869cb0bba0e1c9c2fab"
     },
     {
       "bytes": 3201,
@@ -4594,8 +4594,8 @@
     "sourceLicense": "original"
   },
   "repo": {
-    "evidenceDigest": "f11743ed7188977a1343b2e5f2c686a7c49aa8cab07192dae5269a573a52000b",
-    "sourceCommit": "0576b86c577f11ef3a4aab8b9809bb6332256450",
+    "evidenceDigest": "f9eb10a1a7a7c38223e19358f7ea92c3d8e5943538e3666a915d02946fac44f6",
+    "sourceCommit": "6d815c308978d3bbf74035193e26ca48f71caf14",
     "sourceCommitMeaning": "last commit touching the evidence files (not the report commit)"
   },
   "reportSchema": "opc05b.coverage_report/1",
