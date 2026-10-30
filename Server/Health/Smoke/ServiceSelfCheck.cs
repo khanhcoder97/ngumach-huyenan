@@ -1896,6 +1896,32 @@ public static class ServiceSelfCheck
             !unresolved && unresolvedRule == "LEVEL_BAND_BASE" && xpActor.TotalXp == 400,
             $"level={xpActor.Level} cap={cappedActor.Level} rule={unresolvedRule}");
 
+        // Q-E: a death grants at most once, a roll-only bundle grants nothing,
+        // and a new life of the same entity is a new death.
+        var grantService = new LootGrantService(
+            services.GetRequiredService<IInventoryService>(), new LootGrantLedger());
+        var grantActor = NewPlayer("CHR_SELFCHECK_LOOT");
+        var rollOnly = grantService.Grant(
+            grantActor, new string('d', 32), 1, grantEnabled: false,
+            "COIN_BAND_MISSING", [new LootGrantItem("POT-HP-01", 1)]);
+        var grantedDeath = new string('e', 32);
+        var grantedOnce = grantService.Grant(
+            grantActor, grantedDeath, 1, grantEnabled: true, null,
+            [new LootGrantItem("POT-HP-01", 2)]);
+        var grantedReplay = grantService.Grant(
+            grantActor, grantedDeath, 1, grantEnabled: true, null,
+            [new LootGrantItem("POT-HP-01", 2)]);
+        var secondLife = grantService.Grant(
+            grantActor, grantedDeath, 2, grantEnabled: true, null,
+            [new LootGrantItem("POT-HP-01", 1)]);
+        Check(
+            "loot.grant_once_per_death_and_off_by_source",
+            !rollOnly.Granted && rollOnly.BlockedReason == "COIN_BAND_MISSING" &&
+            grantedOnce is { Granted: true, Replayed: false } &&
+            grantedReplay is { Granted: true, Replayed: true } &&
+            secondLife is { Granted: true, Replayed: false, LifeId: 2 },
+            $"{rollOnly.BlockedReason}/{grantedReplay.Replayed}/{secondLife.LifeId}");
+
         Check(
             "npc.registry",
             npcAnchors.Count > 0 &&

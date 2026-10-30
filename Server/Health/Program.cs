@@ -168,6 +168,8 @@ builder.Services.AddSingleton(serviceProvider =>
 builder.Services.AddSingleton<DeathReturnService>();
 builder.Services.AddSingleton<CombatTickEngine>();
 builder.Services.AddSingleton<LootReceiptLedger>();
+builder.Services.AddSingleton<LootGrantLedger>();
+builder.Services.AddSingleton<LootGrantService>();
 builder.Services.AddSingleton<MobSpawnGroupService>();
 builder.Services.AddSingleton<WorldEntityProjectionService>();
 builder.Services.AddSingleton<WorldAoiProjectionService>();
