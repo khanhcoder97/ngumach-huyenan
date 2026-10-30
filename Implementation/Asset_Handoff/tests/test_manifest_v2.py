@@ -387,6 +387,22 @@ class MigrationTests(unittest.TestCase):
             self.assertEqual(1, result.returncode)
             self.assertIn("must not overwrite", result.stderr)
 
+    def test_blocked_migration_does_not_create_output(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = load_real_manifest()
+            source["assets"][0]["animations"][0]["columnStart"] = 1
+            manifest = root / "manifest.json"
+            manifest.write_text(json.dumps(source), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(MIGRATOR), "--root", str(root),
+                 "--manifest", "manifest.json", "--output", "out/manifest_v2.json"],
+                capture_output=True, text=True,
+            )
+            self.assertEqual(1, result.returncode)
+            self.assertIn("columnStart 1", result.stderr)
+            self.assertFalse((root / "out" / "manifest_v2.json").exists())
+
     def test_output_writes_new_file(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

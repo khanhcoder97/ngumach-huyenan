@@ -38,6 +38,7 @@ import sys
 from pathlib import Path
 
 import manifest_geometry
+import validate_asset_delivery
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MANIFEST = "Client/Assets/ArtManifests/muse_delivery_manifest.json"
@@ -239,6 +240,24 @@ def migrate_manifest(manifest):
     return migrated, problems, True
 
 
+def validate_migrated_manifest(migrated, root):
+    """Validate the proposed document with the same v2 rules used by CI.
+
+    Migration must never report success or write a file when the resulting
+    document would fail the v2 schema/geometry validator. This is a structural
+    check only; the caller has already checked the source manifest separately.
+    """
+    schema_path = Path(__file__).with_name("asset_delivery_manifest.v2.schema.json")
+    try:
+        schema = validate_asset_delivery.load_json(schema_path)
+    except validate_asset_delivery.EnvironmentProblem as exc:
+        return [f"cannot load v2 schema: {exc}"]
+    errors, _warnings = validate_asset_delivery.validate_manifest(
+        migrated, schema, root, check_files=False
+    )
+    return errors
+
+
 def unified_diff(before, after):
     before_text = json.dumps(before, ensure_ascii=False, indent=2) + "\n"
     after_text = json.dumps(after, ensure_ascii=False, indent=2) + "\n"
@@ -286,6 +305,14 @@ def main(argv=None):
             print(f"  {problem}", file=sys.stderr)
         print("No file was written. Resolve the blockers or author v2 fields manually.", file=sys.stderr)
         return 1
+    if migrated is not None:
+        output_problems = validate_migrated_manifest(migrated, root)
+        if output_problems:
+            print("MIGRATION BLOCKED: proposed v2 output failed validation:", file=sys.stderr)
+            for problem in output_problems:
+                print(f"  {problem}", file=sys.stderr)
+            print("No file was written. Fix the source or author the v2 fields explicitly.", file=sys.stderr)
+            return 1
     if not changed:
         if not args.quiet:
             print(f"already v2: {source}")
