@@ -1,0 +1,46 @@
+name: asset-preview-validation
+
+# OPC-08: preview helper tests + a real headless-browser smoke check.
+# No Unity, no .NET and no third-party Python packages are installed.
+
+on:
+  pull_request:
+    paths:
+      - "Tools/AssetPreview/**"
+      - ".github/workflows/asset-preview-validation.yml"
+  push:
+    branches: [main]
+    paths:
+      - "Tools/AssetPreview/**"
+      - ".github/workflows/asset-preview-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout with Git LFS content
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Preview unit and HTTP tests
+        run: python -m unittest discover -s Tools/AssetPreview/tests -v
+
+      - name: Headless browser smoke (6 columns x 8 rows)
+        run: >-
+          python Tools/AssetPreview/browser_smoke.py
+          --screenshot preview-evidence.png
+
+      - name: Upload preview screenshot evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: asset-preview-evidence
+          path: preview-evidence.png
+          if-no-files-found: error

@@ -1,0 +1,59 @@
+{
+  "artifacts": [
+    {
+      "bundleDigest": "sha256:8a60ee0de7631e9cebc203e7a8c42a4edfc517f4f727d1bd44d653b76f47802a",
+      "path": "Implementation/Content/BuildCandidates/BEN_MUA/candidates.json",
+      "sha256": "bdef672a29b5c491757379112603d66d19b80ca52d537e3f9dc6306c4bc218d6"
+    },
+    {
+      "bundleDigest": "sha256:3f9179cf282d6aac55adbc16017946ec5bf3dfafc3a22c95a8235b94387da020",
+      "path": "Implementation/Content/BuildCandidates/BEN_MUA/muse_map_candidate.json",
+      "sha256": "e6c198d4ccd632fcff6102181dfc41192fefa1eaff8de2fb3df147d3b1db206a"
+    }
+  ],
+  "branch": "codex/content-muse-candidates-20261031",
+  "contentSummary": {
+    "blocked": 17,
+    "candidateCount": 21,
+    "readyForReview": 4,
+    "unresolvedFields": 56
+  },
+  "date": "2026-10-31",
+  "integrationCommit": "8b6ff83fc94c02fb44ff450336e855380a5dcb81",
+  "integrationPullRequest": 92,
+  "mapFixture": {
+    "actorCount": 1,
+    "canonicalPlacementCount": 349,
+    "dimensionsWu": [
+      3.2,
+      2.4
+    ],
+    "findings": 25,
+    "isProductionMap": false,
+    "mapPlacementCount": 24,
+    "synthetic": true
+  },
+  "owner": "CODEX",
+  "replacesOwner": "OPENCODE",
+  "runtimeActivationAllowed": false,
+  "scope": [
+    "OPC-11 candidate compiler",
+    "OPC-12 Muse map sidecar",
+    "one-command validation and CI"
+  ],
+  "validation": {
+    "browserMuseActual": "PASS",
+    "browserSynthetic": "PASS",
+    "compilerTests": 26,
+    "contentValidation": "PASS",
+    "contractValidation": "PASS",
+    "logicalChecks": 35,
+    "mapAdapterTests": 18,
+    "nativeDevice": "UNVERIFIED",
+    "platform": "Windows",
+    "platformSkippedCases": 3,
+    "python": "3.14.6",
+    "unitTestCases": 252,
+    "unity": "UNVERIFIED"
+  }
+}

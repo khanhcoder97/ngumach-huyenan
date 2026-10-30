@@ -1,0 +1,37 @@
+{
+  "manifestVersion": 1,
+  "assetPackId": "preview_fixture",
+  "assetPackVersion": "v0.1.0",
+  "owner": "OpenCode",
+  "sourceLicense": "original",
+  "assets": [
+    {
+      "assetId": "FIX_ACTOR_8DIR_TEST",
+      "path": "Tools/AssetPreview/fixtures/actor_8dir_test.png",
+      "kind": "sprite_sheet",
+      "status": "draft",
+      "pixelWidth": 288,
+      "pixelHeight": 512,
+      "pixelsPerUnit": 20,
+      "pivot": "bottom_center",
+      "directions": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "animations": [
+        {
+          "name": "walk",
+          "framesPerDirection": 6,
+          "fps": 8,
+          "loop": true
+        }
+      ]
+    }
+  ]
+}

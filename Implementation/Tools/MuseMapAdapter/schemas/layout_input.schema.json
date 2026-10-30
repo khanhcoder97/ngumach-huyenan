@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Muse layout sidecar input (review-only)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "mapId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "layoutVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "tilePixels": {
+      "type": "integer",
+      "const": 16
+    },
+    "pixelsPerUnit": {
+      "type": "integer",
+      "const": 20
+    },
+    "originWu": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ]
+    },
+    "rowAxis": {
+      "enum": [
+        "+Y",
+        "-Y"
+      ]
+    },
+    "tilesets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "image": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sourceRef": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "image",
+          "sourceRef"
+        ]
+      },
+      "maxItems": 1000000
+    },
+    "layers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role": {
+            "enum": [
+              "GROUND",
+              "DECORATION",
+              "COLLISION_CANDIDATE"
+            ]
+          },
+          "tilesetId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4096
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4096
+          },
+          "tiles": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "maxItems": 1000000
+          }
+        },
+        "required": [
+          "id",
+          "role",
+          "tilesetId",
+          "width",
+          "height",
+          "tiles"
+        ]
+      },
+      "maxItems": 1000000
+    },
+    "props": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tilesetId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tileId": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "column": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "row": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "id",
+          "tilesetId",
+          "tileId",
+          "column",
+          "row"
+        ]
+      },
+      "maxItems": 1000000
+    },
+    "placementOverrides": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "originalRecordId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "xWu": {
+            "type": "number"
+          },
+          "yWu": {
+            "type": "number"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "originalRecordId",
+          "xWu",
+          "yWu",
+          "reason"
+        ]
+      },
+      "maxItems": 1000000
+    },
+    "actorAssets": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "maxItems": 1000000
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "mapId",
+    "layoutVersion",
+    "synthetic",
+    "tilePixels",
+    "pixelsPerUnit",
+    "originWu",
+    "rowAxis",
+    "tilesets",
+    "layers",
+    "props",
+    "placementOverrides",
+    "actorAssets"
+  ]
+}

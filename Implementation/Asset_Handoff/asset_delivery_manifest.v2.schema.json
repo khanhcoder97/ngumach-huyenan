@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asset_delivery_manifest.v2.schema.json",
+  "title": "Ngũ Mạch Huyền Ấn Asset Delivery Manifest v2 (draft)",
+  "description": "Draft v2 contract for OPC-06. Structure is enforced here; layout/version semantics are enforced by validate_asset_delivery.py because the shared minimal schema validator does not implement if/then. Legacy manifests without manifestVersion remain v1.",
+  "type": "object",
+  "required": ["manifestVersion", "assetPackId", "assetPackVersion", "owner", "sourceLicense", "assets"],
+  "properties": {
+    "manifestVersion": {"const": 2},
+    "assetPackId": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+    "assetPackVersion": {"type": "string", "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "owner": {"const": "Muse"},
+    "sourceLicense": {"const": "original"},
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["assetId", "path", "kind", "status", "pixelWidth", "pixelHeight", "pixelsPerUnit", "previewPath"],
+        "properties": {
+          "assetId": {"type": "string", "pattern": "^[A-Z0-9_]+$"},
+          "path": {"type": "string", "pattern": "^Client/Assets/"},
+          "kind": {"enum": ["sprite", "sprite_sheet", "tileset", "tilemap", "ui_texture", "vfx_sheet", "animation", "icon"]},
+          "status": {"enum": ["draft", "approved", "deprecated"]},
+          "pixelWidth": {"type": "integer", "minimum": 1},
+          "pixelHeight": {"type": "integer", "minimum": 1},
+          "pixelsPerUnit": {"const": 20},
+          "pivot": {"type": "string"},
+          "tileSize": {"type": "string"},
+          "isDirectional": {"type": "boolean"},
+          "layout": {"enum": ["direction_rows", "strip"]},
+          "frameSize": {
+            "type": "object",
+            "required": ["width", "height"],
+            "properties": {
+              "width": {"type": "integer", "minimum": 1},
+              "height": {"type": "integer", "minimum": 1}
+            },
+            "additionalProperties": false
+          },
+          "directions": {"type": "array", "items": {"enum": ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]}},
+          "animations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "fps"],
+              "properties": {
+                "name": {"type": "string", "minLength": 1},
+                "fps": {"type": "number", "minimum": 0.001, "maximum": 60},
+                "loop": {"type": "boolean"},
+                "framesPerDirection": {"type": "integer", "minimum": 1},
+                "frames": {"type": "integer", "minimum": 1},
+                "frameCount": {"type": "integer", "minimum": 1},
+                "frameStart": {"type": "integer", "minimum": 0},
+                "columnStart": {"type": "integer", "minimum": 0}
+              },
+              "additionalProperties": false
+            }
+          },
+          "previewPath": {"type": "string"},
+          "replacesAssetId": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

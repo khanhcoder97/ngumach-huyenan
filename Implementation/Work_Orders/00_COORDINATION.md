@@ -1,5 +1,11 @@
 # Phân công ba agent — Ngũ Mạch: Huyền Ấn
 
+## Owner hiện hành sau bàn giao OpenCode — 2026-10-31
+
+Theo yêu cầu chủ dự án, **Codex nhận toàn bộ OPC-05b/06…12**: coverage, manifest/migration, PNG/meta, preview, pack/CI, compiler dữ liệu ứng viên và adapter map Muse. OpenCode giữ các checkout/WIP cũ để đối chiếu, không sửa/push tiếp các nhánh đã bàn giao. Chi tiết tại `15_CODEX_OPENCODE_TAKEOVER_20261031.md`; các phân công OpenCode bên dưới là lịch sử và không còn là lệnh giao mới.
+
+Qoder local tiếp gameplay/Health tại #41/#87; QODER Remote giữ Persistence tại #79; Antigravity giữ PlayerUI tại #85/#89; Muse giữ art/map/sprite/VFX/cinema và native engine evidence tại #1/#29/#39. Codex tiếp tục quản lý/review/client core/audio và phần tooling mới nhận. Không dùng checkout của nhau, không tự thay canonical IDs/349XY hoặc bật runtime từ candidate.
+
 ## Mở rộng đội ngũ trên máy khác — 2026-10-30
 
 Theo yêu cầu chủ dự án, thêm **Antigravity** và **QODER Remote**. Đọc `09_REMOTE_AGENT_COORDINATION_20261030.md`: đây là cập nhật owner hiện hành cho hai gói mới, không hủy các công việc đang chạy. Antigravity nhận client UI tại `10_ANTIGRAVITY_PLAYER_UI_EPIC_20261030.md`; QODER Remote nhận durable state tại `11_QODER_REMOTE_DURABLE_STATE_EPIC_20261030.md`. Qoder local tiếp tục combat/quest/loot/spawn và tích hợp gameplay; phần triển khai storage mới được tách cho QODER Remote. OpenCode vẫn làm tooling, Muse vẫn làm art. Các phần cũ bên dưới là baseline lịch sử.

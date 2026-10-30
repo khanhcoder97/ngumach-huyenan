@@ -1,8 +1,16 @@
-# Asset handoff validation (OPC-05)
+# Asset handoff validation (OPC-05, OPC-06 draft)
 
 `validate_asset_delivery.py` kiểm tra bundle pixel art mà Muse bàn giao, chỉ bằng Python
 standard library. Không cần Unity, .NET hay package bên thứ ba; chạy được trên máy local
 và trong GitHub Actions (`.github/workflows/asset-handoff-validation.yml`).
+
+Từ OPC-06, validator đọc được hai phiên bản manifest:
+
+| `manifestVersion` | Phiên bản | Schema |
+|---|---|---|
+| vắng mặt hoặc `1` | legacy v1 (manifest Muse hiện tại) | `asset_delivery_manifest.schema.json` |
+| `2` | v2 draft, có frame geometry | `asset_delivery_manifest.v2.schema.json` |
+| khác | unsupported, exit 1 | — |
 
 ## Chạy local
 
@@ -28,6 +36,62 @@ python -m unittest discover -s Implementation/Asset_Handoff/tests -v
 ```
 
 Tuỳ chọn: `--root PATH`, `--manifest PATH`, `--schema PATH`, `--report FILE`, `-q`.
+Nếu không truyền `--schema`, validator tự chọn schema v1/v2 theo `manifestVersion`.
+
+### Manifest v2 draft (OPC-06)
+
+```powershell
+# Fixture actor 8 hướng (288×512, 6 frame/hướng, frame 48×64)
+python Implementation/Asset_Handoff/validate_asset_delivery.py `
+  --manifest Implementation/Asset_Handoff/fixtures/manifest_v2/valid_actor_8dir.json `
+  --skip-file-checks
+
+# Migration dry-run: in diff, không sửa manifest nguồn
+python Implementation/Asset_Handoff/migrate_manifest_v2.py
+
+# Chỉ kiểm tra migration có khả thi (CI)
+python Implementation/Asset_Handoff/migrate_manifest_v2.py --quiet
+
+# Ghi proposal ra file mới sau review (không bao giờ ghi đè nguồn)
+python Implementation/Asset_Handoff/migrate_manifest_v2.py --output out/muse_delivery_manifest.v2.json
+```
+
+Quy tắc layout v2:
+
+- `direction_rows`: `pixelHeight = frameSize.height × directionCount`;
+  `pixelWidth = frameSize.width × framesPerDirection` (clip đầu); nhiều clip phải khai
+  báo `columnStart` và không overlap. Đúng 8 hướng theo thứ tự
+  `N, NE, E, SE, S, SW, W, NW`.
+- `strip`: một hàng, `pixelHeight = frameSize.height`, animation dùng
+  `frames`/`frameCount` + `frameStart` tùy chọn, không overlap.
+- Layout khác trả unsupported; validator không suy frame rect từ số frame.
+
+Chi tiết và câu hỏi review: `OPC-06_manifest_v2_proposal.md`. Manifest Muse vẫn là v1;
+PR tooling này không rewrite manifest của Muse.
+
+## Coverage audit (OPC-05b)
+
+`coverage_audit.py` sinh báo cáo coverage từ nguồn thật (catalogue CSV, definition
+examples, delivery manifest, PNG header và `.meta`), chỉ dùng standard library:
+
+```powershell
+python Implementation/Asset_Handoff/coverage_audit.py
+python Implementation/Asset_Handoff/coverage_audit.py --check
+```
+
+Kết quả ghi vào `COVERAGE_REPORT.md` và `coverage_report.json` (cùng thư mục). Script:
+
+* đếm ID thật từ `docs/production/*.csv` và parse 30 active skill ID từ combat spec;
+* phân loại 9 definition example canonical và tách fixture `MapTopology` synthetic;
+* suy ra frame size từ manifest (`pixelWidth / frames`, `pixelHeight / directions`) và đối
+  chiếu với cell 48×64 đã khóa;
+* đọc `.meta` tĩnh để kiểm PPU, filter, mipmap, compression, pivot, tên/rect lưới sprite —
+  **không cần Unity**;
+* ghi SHA256 từng file evidence và `sourceCommit` của lần thay đổi nguồn gần nhất. File text
+  được hash ở dạng LF chuẩn hoá để Windows/Linux cho cùng report; PNG giữ byte gốc.
+
+`--check` trả exit code 1 khi report đã commit không còn khớp nguồn. Engine playback vẫn là
+**unverified**; audit chỉ xác nhận metadata tĩnh và header PNG.
 
 ## Input tối thiểu
 
@@ -88,16 +152,64 @@ FAIL: 2 problem(s) in Client/Assets/ArtManifests/muse_delivery_manifest.json
    `kind = sprite_sheet` phải có đúng 8 hướng theo thứ tự `N, NE, E, SE, S, SW, W, NW`.
 5. Mỗi animation cần `name`, frame count (`framesPerDirection`, hoặc `frames`/`frameCount`)
    và `fps` trong khoảng `0 < fps <= 60`. Không yêu cầu mọi animation cùng số frame.
-6. Khi truyền `--changed-files`: mọi PNG art bị chạm tới phải xuất hiện trong manifest.
+6. Với manifest v2: kiểm tra `frameSize`, `layout`, `isDirectional`, grid/hướng và clip
+   range như mô tả ở trên; sai grid hoặc clip vượt biên là lỗi, không chỉ warning. Với
+   manifest legacy v1: `frames x directions` không chia hết sheet vẫn chỉ là WARN để giữ
+   tương thích.
+7. Khi truyền `--changed-files`: mọi PNG art bị chạm tới phải xuất hiện trong manifest.
 
 ## Giới hạn
 
-* Chỉ đọc header PNG, không giải mã pixel nên không phát hiện ảnh hỏng ở giữa file, không
-  kiểm tra palette, alpha hay số màu.
-* Không kiểm chứng Unity import (PPU thật, Point filter, mipmap, pivot trong `.meta`) vì
-  chưa có máy chạy Unity; engine import được ghi nhận là **unverified**.
-* Schema giao nhận chưa có `frameWidth`/`frameHeight`, nên validator chỉ cảnh báo (WARN) khi
-  `frames x directions` không chia hết kích thước sheet, không coi đó là lỗi. Đã mở integration
-  issue đề nghị bổ sung metadata frame size vào schema.
+* `validate_asset_delivery.py` chỉ đọc header PNG, không giải mã pixel nên không phát hiện ảnh
+  hỏng ở giữa file, không kiểm tra palette, alpha hay số màu. Dùng `validate_import.py` (OPC-07)
+  cho lớp kiểm tra đầy đủ hơn.
+* Các công cụ coverage/import kiểm tĩnh PPU, Point filter, mipmap, pivot và rect trong
+  `.meta`; Unity engine import/playback và pixel snap vẫn **unverified**.
+* Schema giao nhận v1 chưa có `frameWidth`/`frameHeight`, nên với manifest legacy
+  validator chỉ cảnh báo (WARN) khi `frames x directions` không chia hết kích thước sheet.
+  Manifest v2 (OPC-06 draft) đã có `frameSize`/`layout`/`isDirectional` và kiểm tra grid,
+  hướng, clip range ở mức lỗi. Proposal và câu hỏi review nằm trong
+  `OPC-06_manifest_v2_proposal.md`.
+* Chỉ layout `direction_rows` và `strip` được hỗ trợ trong v2 draft; layout khác trả
+  unsupported, không đoán frame rect.
 * `tileSize`, `pivot` chỉ là chuỗi tự do theo schema hiện tại; validator chưa đối chiếu với
   kích thước tile thực tế.
+
+## OPC-07 — kiểm tra cấu trúc PNG, alpha thực và `.meta`
+
+`validate_import.py` bổ sung lớp kiểm tra trước khi Unity import. Công cụ chỉ dùng thư viện
+chuẩn, không sửa manifest/art và không tuyên bố Unity import đã PASS.
+
+```bash
+# Chạy trên manifest thật, giới hạn mọi đường dẫn trong repo root
+python Implementation/Asset_Handoff/validate_import.py `
+  --manifest Client/Assets/ArtManifests/muse_delivery_manifest.json
+
+# Chạy trên một root khác (fixture/temp checkout) và ghi report trong root đó
+python Implementation/Asset_Handoff/validate_import.py `
+  --root D:/fixtures/opc07 --manifest manifest.json --report reports/import.txt
+```
+
+Kiểm tra gồm:
+
+* Đọc toàn bộ chunk PNG, xác minh CRC trên `type + payload`, thứ tự IHDR/PLTE/tRNS/IDAT/IEND,
+  không chấp nhận file truncate, IDAT không liên tục, IEND thiếu, byte thừa sau IEND hoặc chunk
+  critical lạ.
+* Inflate IDAT có giới hạn 256 MB, xác minh zlib stream kết thúc đúng, kích thước scanline khớp
+  IHDR và mọi filter byte thuộc `0..4`.
+* Giải mã pixel thật để đếm pixel trong suốt (kể cả `tRNS` cho RGB/grayscale/indexed). Một ảnh
+  RGBA nhưng mọi pixel opaque sẽ được báo là **không có bằng chứng alpha**, không chỉ dựa vào
+  colour type.
+* Đọc `.meta` Unity dạng text: `guid`, `TextureImporter`, `spritePixelsToUnits` (giữ nguyên số
+  thập phân), `filterMode`, `enableMipMap`, `textureCompression`, pivot và danh sách sprite.
+  Rect inline `{x, y, width, height}` và rect nhiều dòng đều được parse; rect được kiểm tra biên
+  theo kích thước PNG thật.
+* Báo lỗi trùng `guid` giữa các asset, trùng tên sprite, trùng `spriteID`, pivot ngoài `[0..1]`,
+  `spriteMode: 2` nhưng không có sprite, và field bắt buộc bị thiếu.
+* `--root` được truyền xuyên suốt; path tuyệt đối, `..`, symlink/reparse thoát root đều bị từ
+  chối với finding có cấu trúc thay vì traceback.
+
+Giới hạn: công cụ chỉ kiểm tra **static import metadata**, không chạy Unity. Kết quả PASS ở đây
+không phải bằng chứng Unity compile/playback. Asset Muse hiện tại vẫn báo `filterMode=1`
+(Bilinear) như một finding thật; không sửa art/manifest để làm validator xanh.
+

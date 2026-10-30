@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/schemas/content-pipeline/objective_map.schema.json",
+  "title": "Quest event and objective mapping proposal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["questId", "mapId", "floorId", "mappings"],
+  "properties": {
+    "questId": {
+      "type": "string",
+      "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{2}$"
+    },
+    "mapId": {
+      "type": "string",
+      "pattern": "^MAP_[A-Z0-9_]+$"
+    },
+    "floorId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mappings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["objectiveId", "eventType", "count"],
+        "properties": {
+          "objectiveId": {
+            "type": "string",
+            "pattern": "^OBJ_[A-Z0-9_]+$"
+          },
+          "eventType": {
+            "type": "string",
+            "enum": ["COLLECT", "KILL", "INTERACT", "ESCORT", "BOSS", "TALK"]
+          },
+          "sourceIds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9_]+$"
+            }
+          },
+          "positions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["xWu", "yWu"],
+              "properties": {
+                "sourceId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "xWu": {"type": "number"},
+                "yWu": {"type": "number"}
+              }
+            }
+          },
+          "spawnRecordIds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^MAN-[A-Z0-9_-]+$"
+            }
+          },
+          "respawnSeconds": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "rangeWu": {
+            "type": "number",
+            "minimum": 0
+          },
+          "checkpoints": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["triggerXWu", "rangeWu"],
+              "properties": {
+                "triggerXWu": {"type": "number"},
+                "rangeWu": {"type": "number", "minimum": 0}
+              }
+            }
+          },
+          "sharePolicy": {
+            "type": "string",
+            "enum": ["PER_CHARACTER_ONCE"]
+          },
+          "availability": {
+            "type": "string",
+            "minLength": 1
+          },
+          "arenaRingDiameterWu": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  }
+}

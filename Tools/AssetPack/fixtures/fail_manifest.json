@@ -1,0 +1,38 @@
+{
+  "assetPackId": "PK_FAIL_DEMO",
+  "assetPackVersion": "v0.1.0",
+  "owner": "Muse",
+  "sourceLicense": "original",
+  "assets": [
+    {
+      "assetId": "CHR_MISSING_FILE",
+      "path": "Client/Assets/Art/Characters/MinhKiem/nonexistent.png",
+      "kind": "sprite_sheet",
+      "status": "approved",
+      "pixelWidth": 48,
+      "pixelHeight": 64,
+      "pixelsPerUnit": 20,
+      "previewPath": "Client/Assets/Art/Previews/x.png"
+    },
+    {
+      "assetId": "CHR_DEPRECATED",
+      "path": "Client/Assets/Art/Characters/MinhKiem/old_walk.png",
+      "kind": "sprite_sheet",
+      "status": "deprecated",
+      "pixelWidth": 48,
+      "pixelHeight": 64,
+      "pixelsPerUnit": 20,
+      "previewPath": "Client/Assets/Art/Previews/x.png"
+    },
+    {
+      "assetId": "BAD_lowercase_id",
+      "path": "Client/Assets/Art/Characters/MinhKiem/bad.png",
+      "kind": "sprite_sheet",
+      "status": "approved",
+      "pixelWidth": 48,
+      "pixelHeight": 64,
+      "pixelsPerUnit": 20,
+      "previewPath": "Client/Assets/Art/Previews/x.png"
+    }
+  ]
+}
