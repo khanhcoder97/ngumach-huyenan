@@ -17,14 +17,28 @@ Two profiles, matching the production gates:
             same key -> new key rejected -> inventory/quest readback ->
             parallel turn-ins grant exactly once.
 
+  mob-combat — server started with the combat gates only
+            (P1__CombatV2__Enabled, P1__CombatDamage__Enabled,
+            P1__MobBehavior__Enabled, plus larger starting HP/MP so one actor
+            can live through every phase). Quest gates stay OFF: this is a
+            separate fixture, not the dev scenario with more flags. Drives a
+            live 20 Hz fight over HTTP with conditional waits: walk the
+            north lane so nothing aggros -> descend into the group's radius ->
+            read TELEGRAPH -> step out of attack range and prove the committed
+            impact whiffs -> stand still and take the whole CARPLING hit ->
+            guard the next front hit and read COUNTER_CONFIRMED plus the
+            counter's own resolution against the mob's snapshot hp -> stay
+            until HP reaches 0, then prove the server does not paper over
+            death (no auto-heal, fresh cast refused, aggro dropped).
+
 The Bến Mưa topology fixture is SYNTHETIC_TEST_ONLY, so wall
 enforcement is NotEnforced on the server: the wall-crossing move
-succeeds and this script records "wall_enforcement=not_enforced". If a
+succeeds and the dev profile records "wall_enforcement=not_enforced". If a
 REVIEWED bundle is ever loaded, the same move must return 422
 movement_blocked; the script accepts exactly those two outcomes and
 fails on anything else.
 
-Usage: e2e_p1.py <base_url> <default|dev>
+Usage: e2e_p1.py <base_url> <default|dev|mob-combat>
 """
 
 import sys
@@ -411,17 +425,328 @@ def dev_profile():
           "golden_loop=OK parallel_reward_once=OK concurrent_package_claim=OK")
 
 
+# Q-B4: live mob combat driven over HTTP in its own profile. The constants below
+# are the shipped DEV fixture values, written out so the scenario says what it
+# waits for instead of guessing: aggro 6 WU, mob attack range 1,2 WU, telegraph
+# 0,45 s, attack cooldown 2 s, mob speed 2 WU/s at 20 Hz, and CARPLING
+# REFERENCE_L5 (attack 15, "Đòn thường" BITE coefficient 0,8) against the
+# completion_v1 armor 10 baseline, which Production_Rules §2 floors to 10.
+
+MOB_GROUP = (
+    "ENT_MAN_BM_SPAWN_BM_01",
+    "ENT_MAN_BM_SPAWN_BM_01_M2",
+    "ENT_MAN_BM_SPAWN_BM_01_M3",
+)
+APPROACH_X = 87.0
+APPROACH_Y = 7.5
+ESCAPE_X = 91.5
+CARPLING_DAMAGE = 10
+CARPLING_MAX_HP = 192
+AGGRO_STATES = ("AGGRO", "CHASE", "TELEGRAPH", "ATTACK", "RECOVER")
+
+
+def v2_snapshot(session_id):
+    """One authoritative v2 read: (status, self, entities by id, server tick)."""
+    status, _, body = smoke_p1.call(
+        "GET", f"/p1/v2/world/{session_id}", None, {"X-Session-ID": session_id})
+    result = body.get("result") or {}
+    entities = {entry.get("entityId"): entry for entry in result.get("entities") or []}
+    return status, (result.get("self") or {}), entities, result.get("serverTick", 0)
+
+
+def v2_events(session_id, cursor):
+    """Read the session stream from cursor. Returns (status, events, nextCursor)."""
+    status, _, body = smoke_p1.call(
+        "GET", f"/p1/v2/events/{session_id}?cursor={cursor}", None,
+        {"X-Session-ID": session_id})
+    page = body.get("result") or {}
+    return status, (page.get("events") or []), page.get("nextCursor", cursor)
+
+
+def wait_for(deadline_seconds, probe):
+    """Conditional wait: the first truthy probe result, or None after the
+    deadline. It records no check per iteration on purpose — the caller asserts
+    once on the outcome, so the reported check total cannot drift with timing."""
+    deadline = time.monotonic() + deadline_seconds
+    while True:
+        outcome = probe()
+        if outcome:
+            return outcome
+        if time.monotonic() >= deadline:
+            return None
+        time.sleep(0.05)
+
+
+def walk_to(session_id, character_id, sequence, target_x, target_y):
+    """Walk 1,5-WU steps to a grid-aligned target, one axis at a time (the
+    server clamps every step to MaxStepDistanceWu). Returns (sequence, x, y)."""
+    _, self_state, _, _ = v2_snapshot(session_id)
+    x = self_state.get("x", 0.0)
+    y = self_state.get("y", 0.0)
+    for axis, target in (("x", target_x), ("y", target_y)):
+        for _ in range(200):
+            current = x if axis == "x" else y
+            delta = target - current
+            if abs(delta) < 1e-6:
+                break
+            direction = 1 if delta > 0 else -1
+            sequence += 1
+            time.sleep(STEP_SECONDS)
+            status, _, body = smoke_p1.call(
+                "POST", "/p1/move",
+                smoke_p1.move_envelope(
+                    sequence, direction if axis == "x" else 0,
+                    0 if axis == "x" else direction,
+                    character_id=character_id),
+                {"X-Session-ID": session_id})
+            smoke_p1.check(status == 200, f"walk {axis} step {sequence} {status}: {body}")
+            moved = ((body.get("result") or {}).get("self") or {})
+            x = moved.get("x", x)
+            y = moved.get("y", y)
+        else:
+            fail(f"walk along {axis} never reached {target} (stopped at {current})")
+    return sequence, x, y
+
+
+def mob_combat_profile():
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/sessions", {"classId": "CLASS_MINH_KIEM"})
+    smoke_p1.check(status == 201, f"mob session create returned {status}: {body}")
+    created = body.get("result") or {}
+    session = body.get("sessionId")
+    character_id = (created.get("self") or {}).get("characterId")
+    smoke_p1.check(isinstance(character_id, str) and character_id.startswith("CHR_"),
+                   f"mob profile characterId {character_id}")
+    start_self = created.get("self") or {}
+    full_hp = start_self.get("hp", 0)
+    # The profile is allowed to give this actor endurance HP/MP so one run can
+    # walk, escape, take hits, guard several times and then actually die. Those
+    # are pool sizes, not balance: every per-hit number below still comes from
+    # the shipped formula.
+    smoke_p1.check(full_hp > 200, f"mob profile did not start with endurance HP: {full_hp}")
+
+    sequence = 1
+    sequence, x, y = walk_to(session, character_id, sequence, APPROACH_X, APPROACH_Y)
+    smoke_p1.check(abs(x - APPROACH_X) < 1e-6 and abs(y - APPROACH_Y) < 1e-6,
+                   f"approach stopped at {x},{y}")
+    _, _, entities, _ = v2_snapshot(session)
+    nearby_aggro = [entry for entry in entities.values()
+                    if entry.get("kind") == "MOB" and entry.get("state") in AGGRO_STATES]
+    smoke_p1.check(not nearby_aggro,
+                   f"a mob engaged from the {APPROACH_Y} WU lane: {nearby_aggro}")
+
+    def telegraphed_mob():
+        _, _, entities, _ = v2_snapshot(session)
+        return next((entry for entry in entities.values()
+                     if entry.get("kind") == "MOB" and entry.get("state") == "TELEGRAPH"),
+                    None)
+
+    def engaged_group():
+        _, _, entities, _ = v2_snapshot(session)
+        return next((entities.get(entity_id) for entity_id in MOB_GROUP
+                     if entities.get(entity_id) is not None
+                     and entities.get(entity_id).get("state") in AGGRO_STATES), None)
+
+    # Descend into the group's 6 WU aggro radius. The escort group standing at
+    # x=80 stays 7 WU from the actor, outside its own radius, so exactly one
+    # group of three CARPLING is engaged.
+    sequence, x, y = walk_to(session, character_id, sequence, APPROACH_X, 0.0)
+    engaged = wait_for(10, engaged_group)
+    smoke_p1.check(engaged is not None,
+                   "no mob of the group engaged after entering the aggro radius")
+
+    telegraph = wait_for(15, telegraphed_mob)
+    smoke_p1.check(telegraph is not None, "the engaged mob never opened a TELEGRAPH")
+
+    # Step out of the 1,2 WU attack range before the committed impact frame.
+    # Three steps: the mob walks 2 WU/s, so 4,5 WU of separation buys the whole
+    # read window plus the next telegraph's approach.
+    for _ in range(3):
+        sequence += 1
+        time.sleep(STEP_SECONDS)
+        status, _, body = smoke_p1.call(
+            "POST", "/p1/move",
+            smoke_p1.move_envelope(sequence, 1, 0, character_id=character_id),
+            {"X-Session-ID": session})
+        smoke_p1.check(status == 200, f"escape step {sequence} {status}: {body}")
+    _, self_state, _, _ = v2_snapshot(session)
+    smoke_p1.check(abs(self_state.get("x", 0) - ESCAPE_X) < 1e-6,
+                   f"escape stopped at {self_state.get('x')}")
+    time.sleep(0.7)
+    _, self_state, _, _ = v2_snapshot(session)
+    smoke_p1.check(self_state.get("hp") == full_hp,
+                   f"the committed telegraph still landed after stepping out of range: "
+                   f"{full_hp} -> {self_state.get('hp')}")
+
+    # Stand still: the range recheck at the impact tick gates the damage, it does
+    # not cancel the fight, so the next committed impact must actually hit.
+    def hp_dropped():
+        _, self_state, _, _ = v2_snapshot(session)
+        hp = self_state.get("hp", full_hp)
+        return self_state if hp < full_hp else None
+
+    hurt = wait_for(25, hp_dropped)
+    smoke_p1.check(hurt is not None, "standing in range produced no mob damage")
+    drop = full_hp - hurt.get("hp")
+    smoke_p1.check(drop % CARPLING_DAMAGE == 0,
+                   f"mob damage {drop} is not a whole number of CARPLING hits "
+                   f"({CARPLING_DAMAGE})")
+
+    # DEC-022 over HTTP: a guard cast facing the attacker must confirm on the
+    # front hit and reserve a counter. The window is 8 ticks, so the cast has to
+    # be issued inside the read window; retry until one confirms.
+    events = []
+    event_cursor = 0
+
+    def drain_events():
+        nonlocal event_cursor
+        status, page, next_cursor = v2_events(session, event_cursor)
+        if status == 200:
+            events.extend(page)
+            event_cursor = max(next_cursor, event_cursor)
+
+    def find_event(event_type, cast_id=None, target_id=None):
+        return next((event for event in events
+                     if event.get("type") == event_type
+                     and (cast_id is None or event.get("castId") == cast_id)
+                     and (target_id is None or event.get("targetId") == target_id)), None)
+
+    guard_cast = None
+    guard_casts = 0
+    confirmation = None
+    for attempt in range(8):
+        _, alive_check, _, _ = v2_snapshot(session)
+        if alive_check.get("hp", 0) <= 0:
+            break
+        telegraph = wait_for(15, telegraphed_mob)
+        if telegraph is None:
+            continue
+        sequence += 1
+        cast_key = f"{0xc0 + attempt:032x}"
+        cast_request = f"{0xd0 + attempt:032x}"
+        status, _, body = smoke_p1.call(
+            "POST", "/p1/v2/combat",
+            smoke_p1.combat_v2_envelope(
+                "SKILL", sequence, skill_id="SK-MK-01", character_id=character_id,
+                request_id=cast_request, idempotency_key=cast_key, aim_x=-1),
+            {"X-Session-ID": session})
+        smoke_p1.check(
+            status in (200, 409),
+            f"guard cast {attempt} returned an unexpected {status}: {body}")
+        result = body.get("result") or {}
+        if status != 200 or not result.get("castId"):
+            # A refused cast (cooldown, resource) is a normal retry signal here;
+            # the leg asserts that at least one guard actually opened.
+            continue
+        guard_casts += 1
+        guard_cast = result.get("castId")
+
+        def confirmed(cid=guard_cast):
+            drain_events()
+            return find_event("COUNTER_CONFIRMED", cast_id=cid)
+
+        confirmation = wait_for(1.0, confirmed)
+        if confirmation:
+            break
+
+    _, hp_at_guard, _, _ = v2_snapshot(session)
+    smoke_p1.check(guard_casts > 0, "every guard cast was refused")
+    smoke_p1.check(confirmation is not None,
+                   f"no COUNTER_CONFIRMED appeared for any of the {guard_casts} guard "
+                   f"casts (hp now {hp_at_guard.get('hp')})")
+    counter_source = confirmation.get("targetId")
+    smoke_p1.check(counter_source in MOB_GROUP,
+                   f"confirmation targeted something outside the engaged group: "
+                   f"{counter_source}")
+
+    def resolved_counter(cid=guard_cast):
+        drain_events()
+        return find_event("IMPACT", cast_id=cid) or find_event("MISS", cast_id=cid)
+
+    counter = wait_for(2.0, resolved_counter)
+    smoke_p1.check(counter is not None, "the reserved counter never resolved")
+    smoke_p1.check(counter.get("targetId") == counter_source,
+                   f"counter retargeted: {counter.get('targetId')} != {counter_source}")
+
+    def mob_in_snapshot(entity_id):
+        _, _, entities, _ = v2_snapshot(session)
+        return entities.get(entity_id)
+
+    if counter.get("type") == "IMPACT":
+        hp_damage = (counter.get("result") or {}).get("hpDamage", 0)
+        mob = wait_for(3, lambda: mob_in_snapshot(counter_source))
+        smoke_p1.check(hp_damage > 0 and mob is not None and
+                       mob.get("maxHp") == CARPLING_MAX_HP and
+                       mob.get("hp") == CARPLING_MAX_HP - hp_damage,
+                       f"counter damage {hp_damage} does not match the snapshot hp "
+                       f"{None if mob is None else mob.get('hp')}")
+        print(f"profile=mob-combat counter_hit={hp_damage} on {counter_source}")
+    else:
+        print(f"profile=mob-combat counter_missed_on={counter_source}")
+
+    # Death: standing next to the group must finish the actor, and the server
+    # must not paper over it — no auto-heal, no new casts, aggro drops.
+    def hp_zero():
+        _, self_state, _, _ = v2_snapshot(session)
+        return self_state if self_state.get("hp", 1) == 0 else None
+
+    downed = wait_for(90, hp_zero)
+    smoke_p1.check(downed is not None, "standing in range never led to death")
+    _, self_state, _, _ = v2_snapshot(session)
+    smoke_p1.check(self_state.get("hp") == 0, f"downed actor hp {self_state.get('hp')}")
+
+    sequence += 1
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/v2/combat",
+        smoke_p1.combat_v2_envelope(
+            "BASIC_ATTACK", sequence, character_id=character_id,
+            request_id="e" * 32, idempotency_key="f" * 32),
+        {"X-Session-ID": session})
+    smoke_p1.check(status == 409 and
+                   (body.get("error") or {}).get("code") == "actor_not_alive",
+                   f"downed actor cast returned {status}: {body}")
+
+    time.sleep(3)
+    _, self_state, _, _ = v2_snapshot(session)
+    smoke_p1.check(self_state.get("hp") == 0,
+                   f"HP came back on its own: {self_state.get('hp')}")
+
+    def group_disengaged():
+        _, _, entities, _ = v2_snapshot(session)
+        live = [entities.get(entity_id) for entity_id in MOB_GROUP
+                if entities.get(entity_id) is not None]
+        return live if live and all(entry.get("state") in ("RETURN", "IDLE")
+                                    for entry in live) else None
+
+    disengaged = wait_for(30, group_disengaged)
+    smoke_p1.check(disengaged is not None,
+                   "mobs still chasing a downed actor never dropped the target")
+
+    _, _, final_entities, final_tick = v2_snapshot(session)
+    smoke_p1.check(final_tick > 0 and
+                   any(entry.get("kind") == "MOB" for entry in final_entities.values()),
+                   f"v2 snapshot stopped serving after death: tick {final_tick}")
+
+    states = sorted({entry.get("state") for entry in (final_entities.values())
+                     if entry.get("entityId") in MOB_GROUP})
+    print(f"profile=mob-combat telegraph=OK escape_whiff=OK mob_damage={drop} "
+          f"guard_confirm=OK counter={counter.get('type')} death_stays_down=OK "
+          f"mob_states={','.join(states)}")
+
+
 def main():
     if len(sys.argv) < 3:
-        fail("usage: e2e_p1.py <base_url> <default|dev>")
+        fail("usage: e2e_p1.py <base_url> <default|dev|mob-combat>")
     smoke_p1.BASE_URL = sys.argv[1].rstrip("/")
     mode = sys.argv[2]
     if mode == "default":
         default_profile()
     elif mode == "dev":
         dev_profile()
+    elif mode == "mob-combat":
+        mob_combat_profile()
     else:
-        fail(f"unknown mode '{mode}' (expected default|dev)")
+        fail(f"unknown mode '{mode}' (expected default|dev|mob-combat)")
 
     print(f"PASS: e2e_p1 ({mode}) {smoke_p1.CHECKS} checks against {smoke_p1.BASE_URL}")
 

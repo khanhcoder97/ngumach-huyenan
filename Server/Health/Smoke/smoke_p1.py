@@ -109,12 +109,12 @@ def turnin_envelope(quest_id, npc_id, character_id=CHARACTER_ID,
 
 def combat_v2_envelope(action_kind, sequence, skill_id=None, target_id=None,
                       character_id=CHARACTER_ID, request_id="4" * 32,
-                      idempotency_key="5" * 32):
+                      idempotency_key="5" * 32, aim_x=1, aim_y=0):
     payload = {
         "actionKind": action_kind,
         "inputSequence": sequence,
-        "aimX": 1,
-        "aimY": 0,
+        "aimX": aim_x,
+        "aimY": aim_y,
     }
     if skill_id is not None:
         payload["skillId"] = skill_id

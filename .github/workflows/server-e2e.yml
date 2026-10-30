@@ -36,3 +36,17 @@ jobs:
           python-version: "3.12"
       - name: Run dev synthetic E2E scenario
         run: bash Server/Health/Smoke/run_e2e_p1.sh dev
+
+  e2e-mob-combat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run live mob-combat E2E scenario
+        run: bash Server/Health/Smoke/run_e2e_p1.sh mob-combat
