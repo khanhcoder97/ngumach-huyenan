@@ -34,3 +34,6 @@ __pycache__/
 
 # Keep the server project file; Unity-generated client projects stay ignored
 !Server/Health/Health.csproj
+
+# Standalone .NET server outputs are build artifacts, not source.
+Server/**/bin/
