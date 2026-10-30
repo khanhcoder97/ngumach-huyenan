@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using Server.Health.Contracts;
 using Server.Health.World;
 
 namespace Server.Health.Gameplay.Quests;
