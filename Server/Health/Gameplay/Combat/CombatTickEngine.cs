@@ -344,6 +344,23 @@ public sealed class CombatTickEngine
                 }
             }
 
+            // A window is spatial: it belongs to the map/floor it was opened on.
+            // The impact path closes a stale window lazily, but an actor who
+            // changed instance with no incoming hit would otherwise keep one open
+            // forever, so the tick sweeps it. A reserved counter still cancels on
+            // its own tick (as WINDOW_CLOSED_...) rather than being re-timed here.
+            foreach (var window in _guards.OpenWindows())
+            {
+                var defender = window.Defender;
+                if (string.Equals(defender.MapId, window.MapId, StringComparison.Ordinal) &&
+                    string.Equals(defender.FloorId, window.FloorId, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                _guards.Close(defender.CharacterId, GuardWindowEndReasons.MapOrFloorChange);
+            }
+
             // A reserved counter resolves on its own tick even when no player
             // cast is in flight (DEC-022 §3: counter at the tick after the
             // confirmation, never inside the hit stack that produced it).
@@ -353,6 +370,51 @@ public sealed class CombatTickEngine
             {
                 window.CounterResolved = true;
                 emitted.AddRange(ResolveCounter(window, tick));
+            }
+        }
+
+        return emitted;
+    }
+
+    // Q-B3 lifecycle cleanup: returning from a downed state ends the previous
+    // life's fight. Every cast still in flight for that actor emits CANCEL then
+    // END exactly once and resolves no damage and no kill credit, and a counter
+    // reserved for a later tick is cancelled now instead of swinging at a source
+    // the actor can no longer see. The events go through the same store the
+    // client already polls, so a cancellation is never a silent drop.
+    public IReadOnlyList<CombatEventV2> CancelPendingFor(string characterId)
+    {
+        ArgumentNullException.ThrowIfNull(characterId);
+
+        var emitted = new List<CombatEventV2>();
+        lock (_sync)
+        {
+            var tick = _clock.Tick;
+            var abandoned = new List<string>();
+            foreach (var cast in _casts.Values)
+            {
+                if (!string.Equals(cast.ActorId, characterId, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                emitted.Add(AppendEvent(cast, tick, CombatEventTypesV2.Cancel,
+                    targetId: null, targetLifeId: null, hitIndex: null, targetRevision: null, result: null));
+                emitted.Add(AppendEnd(cast, tick));
+                abandoned.Add(cast.CastId);
+            }
+
+            foreach (var castId in abandoned)
+            {
+                _casts.Remove(castId);
+            }
+
+            if (_guards.FindAny(characterId) is { } window &&
+                !window.CounterResolved && window.CounterSourceEntityId is { } sourceId)
+            {
+                window.CounterResolved = true;
+                emitted.Add(CancelCounter(
+                    window, tick, sourceId, window.CounterSourceLifeId ?? 0, "RETURNED_TO_ANCHOR"));
             }
         }
 

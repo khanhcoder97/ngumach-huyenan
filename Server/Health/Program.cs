@@ -143,6 +143,11 @@ builder.Services.AddSingleton<GuardWindowStore>();
 builder.Services.AddSingleton<GuardDefenseService>();
 builder.Services.AddSingleton<DashMovementService>();
 builder.Services.AddSingleton<CombatStatusProjection>();
+builder.Services.Configure<DeathReturnOptions>(
+    builder.Configuration.GetSection(DeathReturnOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<DeathReturnOptions>>().Value);
+builder.Services.AddSingleton<DeathReturnService>();
 builder.Services.AddSingleton<CombatTickEngine>();
 builder.Services.AddSingleton<LootReceiptLedger>();
 builder.Services.AddSingleton<MobSpawnGroupService>();
@@ -199,6 +204,19 @@ if (combatV2.Enabled)
     app.Logger.LogWarning(
         "DEV STUB: P1:CombatV2 is enabled — /p1/v2/world, /p1/v2/combat and " +
         "/p1/v2/events use the QOD-17 tick engine for the supported DEV subset.");
+}
+
+var deathReturn = app.Services.GetRequiredService<DeathReturnOptions>();
+DeathReturnOptionsValidator.Validate(deathReturn, worldOptions);
+if (deathReturn.Enabled)
+{
+    app.Logger.LogWarning(
+        "DEV FIXTURE: P1:DeathReturn is enabled. The anchor is P1World SpawnX/SpawnY " +
+        "clamped to the actor's map bounds, not a reviewed safe anchor, and " +
+        "RestoreHpFixture {RestoreHp} is a configured starting HP, not a produced " +
+        "restore rule; no penalty is applied because no source defines one. Nothing " +
+        "reaches it over HTTP until the QOD-18 DeathReturn contract is approved.",
+        deathReturn.RestoreHpFixture);
 }
 
 var combatEventStreamOptions = app.Services.GetRequiredService<CombatEventStreamOptions>();

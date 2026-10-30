@@ -3081,6 +3081,205 @@ public static class ServiceSelfCheck
             downStatus is { GuardPhase: GuardPhases.None, SwordIntent: 0, CounterReserved: false },
             $"{whiffStatus.GuardPhase}/{expiredStatus.GuardPhase}/{downStatus.GuardPhase}");
 
+        // Q-B3: return from a downed state. Server-owned anchor only, one apply
+        // per idempotency key, and the previous life's cast, guard window and
+        // reserved counter all cleaned up as events rather than silently dropped.
+        var returnSessions = new InMemorySessionStore();
+        var returnWindows = new GuardWindowStore();
+        var returnEvents = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var returnStates = new MobCombatStateStore();
+        var returnEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, returnEvents, returnStates,
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            returnWindows, geometry, NewDashes(geometry), new ServerClock());
+        var returnAttacks = new MobAttackService(
+            guardRegistry, enabledCombat, mobOptions,
+            new GuardDefenseService(returnWindows, enabledCombat, returnEvents));
+        DeathReturnService NewDeathReturn(int restoreHp) => new(
+            returnSessions, maps, options,
+            new DeathReturnOptions { Enabled = true, RestoreHpFixture = restoreHp },
+            returnWindows, returnEngine);
+        var deathReturnService = NewDeathReturn(0);
+        var downHero = NewGuardHero("RETURN");
+        returnSessions.Add(downHero);
+        var downCastId = new string('9', 31) + "a";
+        returnEngine.Schedule(
+            downHero, downHero.SessionId, downCastId, CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 0);
+        returnAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB2", downHero)], [downHero], tick: 1);
+        var revisionBeforeReturn = downHero.Revision;
+        var intentBeforeReturn = downHero.SwordIntent;
+        downHero.Hp = 0;
+        // The registered service is the one the composition root builds with the
+        // shipped appsettings, so this also proves the gate defaults OFF on boot.
+        var wiredDeathReturn = services.GetRequiredService<DeathReturnService>();
+        var disabledReturn = wiredDeathReturn
+            .ReturnToAnchor(downHero.SessionId, new string('9', 31) + "0");
+        var aliveKey = new string('9', 31) + "b";
+        downHero.Hp = 100;
+        var aliveReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, aliveKey);
+        var badKeyReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, "not-a-key");
+        downHero.Hp = 0;
+        Check(
+            "death_return.gate_off_and_refuses_alive_and_bad_key",
+            wiredDeathReturn.Enabled == false &&
+            services.GetRequiredService<DeathReturnOptions>() is { Enabled: false } &&
+            disabledReturn.ErrorCode == DeathReturnErrorCodes.Disabled &&
+            aliveReturn.ErrorCode == DeathReturnErrorCodes.NotDowned &&
+            badKeyReturn.ErrorCode == DeathReturnErrorCodes.InvalidKey &&
+            downHero.X == 40 && downHero.Y == 0 &&
+            downHero.Revision == revisionBeforeReturn &&
+            disabledReturn.CancelledEventCount == 0 && aliveReturn.CancelledEventCount == 0,
+            $"{disabledReturn.ErrorCode}/{aliveReturn.ErrorCode}/{badKeyReturn.ErrorCode}");
+
+        var unknownMapHero = NewGuardHero("RETURN_NOMAP");
+        unknownMapHero.MapId = "MAP_NOT_IN_BOUNDS";
+        unknownMapHero.Hp = 0;
+        returnSessions.Add(unknownMapHero);
+        var unknownSessionReturn = deathReturnService
+            .ReturnToAnchor("SES_DOES_NOT_EXIST", new string('9', 31) + "c");
+        var unknownMapReturn = deathReturnService
+            .ReturnToAnchor(unknownMapHero.SessionId, new string('9', 31) + "d");
+        Check(
+            "death_return.unknown_session_and_map_do_not_move_anyone",
+            unknownSessionReturn.ErrorCode == DeathReturnErrorCodes.UnknownSession &&
+            unknownMapReturn.ErrorCode == DeathReturnErrorCodes.UnknownMap &&
+            unknownMapHero.X == 40 && unknownMapHero.Y == 0 &&
+            returnEngine.ScheduledCastCount == 1,
+            $"{unknownSessionReturn.ErrorCode}/{unknownMapReturn.ErrorCode}");
+
+        var deathKey = new string('9', 32);
+        var firstReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, deathKey);
+        var afterReturnEvents = returnEvents.Read(downHero.SessionId, 0, 256).Events;
+        var counterWindow = returnWindows.FindAny(downHero.CharacterId);
+        var lateTickEvents = returnEngine.Tick(2);
+        Check(
+            "death_return.clears_cast_window_and_counter_once",
+            firstReturn is { Applied: true, Replayed: false, ErrorCode: null, Hp: 0 } &&
+            firstReturn.CancelledEventCount == 3 &&
+            firstReturn.SessionId == downHero.SessionId &&
+            firstReturn.Revision == revisionBeforeReturn + 1 &&
+            firstReturn.X == options.SpawnX && firstReturn.Y == options.SpawnY &&
+            downHero.X == options.SpawnX && downHero.Y == options.SpawnY &&
+            returnEngine.ScheduledCastCount == 0 &&
+            returnWindows.Find(downHero.CharacterId) is null &&
+            downHero.SwordIntent == 0 &&
+            intentBeforeReturn == 2 &&
+            counterWindow is { CounterResolved: true, CounterOutcome: "RETURNED_TO_ANCHOR" } &&
+            afterReturnEvents.Count(stored => stored.Type == CombatEventTypesV2.Cancel) == 2 &&
+            afterReturnEvents.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
+            lateTickEvents.Count == 0,
+            $"{firstReturn.ErrorCode}/{firstReturn.CancelledEventCount}/{lateTickEvents.Count}");
+
+        var replayReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, deathKey);
+        var otherHero = NewGuardHero("RETURN_OTHER");
+        otherHero.Hp = 0;
+        returnSessions.Add(otherHero);
+        var stolenKeyReturn = deathReturnService.ReturnToAnchor(otherHero.SessionId, deathKey);
+        var eventsAfterReplay = returnEvents.Read(downHero.SessionId, 0, 256).Events.Count;
+        Check(
+            "death_return_replays_the_recorded_answer",
+            replayReturn is { Applied: true, Replayed: true } &&
+            replayReturn.Revision == firstReturn.Revision &&
+            replayReturn.X == firstReturn.X && replayReturn.Y == firstReturn.Y &&
+            downHero.Revision == firstReturn.Revision &&
+            downHero.X == options.SpawnX &&
+            stolenKeyReturn.ErrorCode == DeathReturnErrorCodes.KeyConflict &&
+            stolenKeyReturn.Applied == false &&
+            otherHero.X == 40 && otherHero.Y == 0 &&
+            returnEvents.Read(downHero.SessionId, 0, 256).Events.Count == eventsAfterReplay,
+            $"{replayReturn.Replayed}/{stolenKeyReturn.ErrorCode}");
+
+        // Two clients racing one key must produce one return, not two moves and
+        // two revision bumps.
+        var racedHero = NewGuardHero("RETURN_RACE");
+        racedHero.Hp = 0;
+        returnSessions.Add(racedHero);
+        var racedService = NewDeathReturn(options.StartingMaxHp);
+        var racedResults = new System.Collections.Concurrent.ConcurrentBag<DeathReturnResult>();
+        RunBarrierParallel(4, _ => racedResults.Add(
+            racedService.ReturnToAnchor(racedHero.SessionId, new string('9', 31) + "e")));
+        var racedApplied = racedResults.Count(result => result.Applied && !result.Replayed);
+        var racedReplayed = racedResults.Count(result => result.Replayed);
+        Check(
+            "death_return.one_key_applies_once_under_contention",
+            racedApplied == 1 && racedReplayed == 3 &&
+            racedHero.X == options.SpawnX && racedHero.Revision == 2 &&
+            racedResults.All(result => result.Revision == racedHero.Revision),
+            $"applied={racedApplied} replayed={racedReplayed} x={racedHero.X}");
+
+        // A configured restore value is the only thing that refills HP, and a
+        // returned actor is no longer downed: a second key cannot farm returns.
+        racedHero.Hp = 0;
+        racedHero.X = 40;
+        var refilledReturn = racedService.ReturnToAnchor(
+            racedHero.SessionId, new string('9', 31) + "0");
+        var secondKeyReturn = racedService.ReturnToAnchor(
+            racedHero.SessionId, new string('9', 31) + "f");
+        Check(
+            "death_return.restores_only_the_configured_fixture_value",
+            refilledReturn is { Applied: true } &&
+            refilledReturn.Hp == options.StartingMaxHp &&
+            racedHero.Hp == options.StartingMaxHp &&
+            refilledReturn.Revision == 3 &&
+            secondKeyReturn.ErrorCode == DeathReturnErrorCodes.NotDowned &&
+            racedHero.X == options.SpawnX,
+            $"{refilledReturn.Hp}/{secondKeyReturn.ErrorCode}");
+
+        var ledgerService = NewDeathReturn(0);
+        for (var ledgerIndex = 0; ledgerIndex < 300; ledgerIndex++)
+        {
+            var ledgerHero = NewPlayer("CHR_SELFCHECK_RETURN_" + ledgerIndex, hp: 0);
+            returnSessions.Add(ledgerHero);
+            ledgerService.ReturnToAnchor(
+                ledgerHero.SessionId, ledgerIndex.ToString("x32"));
+        }
+
+        Check(
+            "death_return_ledger_is_bounded",
+            ledgerService.LedgerCount == DeathReturnService.LedgerCapacity,
+            $"count={ledgerService.LedgerCount}");
+
+        // The non-death half of the same rule: a window belongs to the instance it
+        // opened on, so an actor who changes map with no hit and no cast in
+        // flight must not keep one open — the read model would report GUARD/WHIFF
+        // forever and the whiff reward would survive an instance change.
+        var sweepHero = NewGuardHero("SWEEP");
+        returnSessions.Add(sweepHero);
+        var sweepWindows = new GuardWindowStore();
+        var sweepEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, returnEvents, returnStates,
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            sweepWindows, geometry, NewDashes(geometry), new ServerClock());
+        sweepEngine.Schedule(
+            sweepHero, sweepHero.SessionId, new string('8', 31) + "f",
+            CombatV2Actions.Skill, "SK-MK-01", 1, 0, startTick: 0);
+        var sweepCastEvents = sweepEngine.Tick(12);
+        sweepHero.MapId = "MAP_KHO_CUA_LUYEN";
+        var sweepMapEvents = sweepEngine.Tick(13);
+        var sweepProjection = new CombatStatusProjection(
+            sweepWindows, statusCommands, statusDashes);
+        Check(
+            "guard.window_closes_on_map_change_without_a_hit",
+            sweepCastEvents.Any(stored => stored.Type == CombatEventTypesV2.End) &&
+            sweepEngine.ScheduledCastCount == 0 &&
+            sweepWindows.Find(sweepHero.CharacterId) is null &&
+            sweepWindows.FindAny(sweepHero.CharacterId) is
+            {
+                EndReason: GuardWindowEndReasons.MapOrFloorChange,
+                WhiffGranted: false
+            } &&
+            sweepMapEvents.Count == 0 &&
+            sweepProjection.Project(sweepHero, tick: 13, nowUtc: guardClock.UtcNow).GuardPhase
+                == GuardPhases.None,
+            $"{sweepWindows.FindAny(sweepHero.CharacterId)?.EndReason}/" +
+            $"{sweepProjection.Project(sweepHero, tick: 13, nowUtc: guardClock.UtcNow).GuardPhase}");
+
         var losAccept = new InMemoryQuestAcceptService(
             questCatalog, quests, npcAnchors, geometry,
             services.GetRequiredService<QuestAcceptOptions>());
