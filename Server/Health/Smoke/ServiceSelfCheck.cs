@@ -2315,11 +2315,11 @@ public static class ServiceSelfCheck
         var guardEngine = new CombatTickEngine(
             guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
-            guardWindows, geometry, guardClock);
+            guardWindows, geometry, new ServerClock());
         var guardMissEngine = new CombatTickEngine(
             guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
             tickQuests, new FixedCombatRolls(hit: false, crit: false),
-            guardWindows, geometry, guardClock);
+            guardWindows, geometry, new ServerClock());
 
         MobLifecycleEvent GuardImpact(string entityId, PlayerSession victim) =>
             new(entityId, MobBehaviorStates.Telegraph, MobBehaviorStates.Attack,
@@ -2538,9 +2538,14 @@ public static class ServiceSelfCheck
             refreshWindow is not null &&
             refreshWindow.GuardCastId == refreshCastId &&
             refreshWindow.CastStartTick == 51 &&
-            guardDefense.EvaluateIncoming(hero6.CharacterId, 55, 41, 0).DamageReduction == 0.7 &&
-            guardWindows.All().Count(state => state.Defender.CharacterId == hero6.CharacterId) == 1,
-            refreshWindow?.GuardCastId ?? "none");
+            guardDefense.EvaluateIncoming(hero6.CharacterId, 55, 41, 0).DamageReduction == 0.7);
+        var refreshResolutions = guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB", hero6)], [hero6], tick: 55);
+        Check(
+            "guard.refresh_confirmation_belongs_to_new_window",
+            refreshResolutions.Single() is { Damage: 3 } &&
+            refreshResolutions.Single().Confirmation?.GuardCastId == refreshCastId,
+            refreshResolutions.Single().Confirmation?.GuardCastId ?? "none");
 
         var hero8 = NewGuardHero("LETHAL");
         var lethalMobId = "ENT_SELFCHECK_GUARD_MOB3";
@@ -2567,7 +2572,7 @@ public static class ServiceSelfCheck
             guardRegistry, combatDamage, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
-            gateOffWindows, geometry, guardClock);
+            gateOffWindows, geometry, new ServerClock());
         gateOffEngine.Schedule(
             hero7, hero7.SessionId, new string('9', 32), CombatV2Actions.Skill, "SK-MK-01",
             1, 0, startTick: 70);

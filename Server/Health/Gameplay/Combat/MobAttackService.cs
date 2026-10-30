@@ -143,6 +143,16 @@ public sealed class MobAttackService
         var guard = _guards.EvaluateIncoming(
             target.CharacterId, tick, entity.X, entity.Y);
 
+        // Rules §2 step 4-5: mitigation is the player's armor, then the shared
+        // DR bucket (guard 0.70 / whiff 0.20), then one final floor.
+        var damage = (int)DamageFormula.FinalDamage(
+            raw,
+            DamageFormula.MitigationMultiplier(CombatActorBaseline.Armor),
+            1,
+            1,
+            DamageFormula.DamageReductionMultiplier(
+                GuardTimeline.CombineReduction(guard.DamageReduction)));
+
         int hpBefore;
         int hpAfter;
         lock (target.SyncRoot)
@@ -165,16 +175,6 @@ public sealed class MobAttackService
                 return Blocked(
                     entityId, targetCharacterId, MobAttackBlockedReasons.OutOfRangeAtImpact);
             }
-
-            // Rules §2 step 4-5: mitigation is the player's armor, then the
-            // shared DR bucket (guard 0.70 / whiff 0.20), then one final floor.
-            var reduction = GuardTimeline.CombineReduction(guard.DamageReduction);
-            var damage = (int)DamageFormula.FinalDamage(
-                raw,
-                DamageFormula.MitigationMultiplier(CombatActorBaseline.Armor),
-                1,
-                1,
-                DamageFormula.DamageReductionMultiplier(reduction));
 
             hpBefore = target.Hp;
             hpAfter = Math.Max(0, hpBefore - damage);

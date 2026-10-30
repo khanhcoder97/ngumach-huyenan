@@ -87,9 +87,6 @@ public sealed class GuardWindowStore
             ? window
             : null;
 
-    public GuardWindowState? FindAny(string characterId) =>
-        _windows.TryGetValue(characterId, out var window) ? window : null;
-
     // A reserved counter always gets resolved on its tick — even when the
     // window has since closed (defender down, map change) — so the client sees
     // one CANCEL instead of a silently dropped outcome.
@@ -113,8 +110,6 @@ public sealed class GuardWindowStore
         _windows[window.Defender.CharacterId] = window;
         return window;
     }
-
-    public bool Remove(string characterId) => _windows.TryRemove(characterId, out _);
 }
 
 // Incoming-damage side of DEC-022: how much of a mob swing the guard eats, and
@@ -261,7 +256,7 @@ public sealed class GuardDefenseService
                     null,
                     tick,
                     atUtc,
-                    result: null));
+                    Result: null));
 
             window.ConfirmationEventId = confirmation.EventId;
             return new GuardConfirmation(
