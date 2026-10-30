@@ -21,6 +21,8 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 });
 builder.Services.Configure<P1WorldOptions>(
     builder.Configuration.GetSection(P1WorldOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<P1WorldOptions>>().Value);
 builder.Services.AddSingleton<ServerClock>();
 builder.Services.AddSingleton<IServerClock>(
     serviceProvider => serviceProvider.GetRequiredService<ServerClock>());
@@ -139,6 +141,7 @@ builder.Services.AddSingleton<MobCombatStateStore>();
 builder.Services.AddSingleton<ICombatRollSource, CombatRngRollSource>();
 builder.Services.AddSingleton<GuardWindowStore>();
 builder.Services.AddSingleton<GuardDefenseService>();
+builder.Services.AddSingleton<DashMovementService>();
 builder.Services.AddSingleton<CombatTickEngine>();
 builder.Services.AddSingleton<LootReceiptLedger>();
 builder.Services.AddSingleton<MobSpawnGroupService>();

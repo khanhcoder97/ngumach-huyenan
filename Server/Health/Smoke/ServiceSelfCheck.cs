@@ -213,6 +213,8 @@ public static class ServiceSelfCheck
         var configuration = services.GetRequiredService<IConfiguration>();
         var hostEnvironment = services.GetRequiredService<IHostEnvironment>();
         bool Near(double actual, double expected) => Math.Abs(actual - expected) < 1e-9;
+        DashMovementService NewDashes(IWorldGeometryService service) =>
+            new(service, options, maps);
 
         var combatDamage = services.GetRequiredService<CombatDamageFeature>();
         Check(
@@ -1097,6 +1099,7 @@ public static class ServiceSelfCheck
             new FixedCombatRolls(hit: true, crit: false),
             tickGuardWindows,
             tickGeometry,
+            NewDashes(tickGeometry),
             new ServerClock());
 
         var basicTickCastId = new string('a', 32);
@@ -1166,7 +1169,7 @@ public static class ServiceSelfCheck
             var cancelEngine = new CombatTickEngine(cancelRegistry, enabledCombat, combatSkills,
                 new CombatEventStore(new CombatEventStreamOptions()), cancelHp, tickQuests,
                 new FixedCombatRolls(hit: true, crit: false),
-                new GuardWindowStore(), tickGeometry, new ServerClock());
+                new GuardWindowStore(), tickGeometry, NewDashes(tickGeometry), new ServerClock());
             cancelEngine.Schedule(cancelledSource, cancelledSource.SessionId, Guid.NewGuid().ToString("N"),
                 CombatV2Actions.BasicAttack, null, 1, 0, 100);
             if (cancelReason == "DEAD") cancelledSource.Hp = 0;
@@ -1189,7 +1192,7 @@ public static class ServiceSelfCheck
             missRegistry, enabledCombat, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), missStore,
             tickQuests, new FixedCombatRolls(hit: false, crit: false),
-            tickGuardWindows, tickGeometry, new ServerClock());
+            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock());
         missEngine.Schedule(
             tickQuestActor, "e2e33333333333333333333333333333",
             new string('c', 32), CombatV2Actions.BasicAttack, null, 1, 0, 300);
@@ -1209,7 +1212,7 @@ public static class ServiceSelfCheck
             rangeRegistry, enabledCombat, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
-            tickGuardWindows, tickGeometry, new ServerClock());
+            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock());
         rangeEngine.Schedule(
             tickQuestActor, "e2e44444444444444444444444444444",
             new string('d', 32), CombatV2Actions.BasicAttack, null, 1, 0, 400);
@@ -1226,7 +1229,7 @@ public static class ServiceSelfCheck
             behindRegistry, enabledCombat, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
-            tickGuardWindows, tickGeometry, new ServerClock());
+            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock());
         behindEngine.Schedule(
             tickQuestActor, "e2e55555555555555555555555555555",
             new string('e', 32), CombatV2Actions.BasicAttack, null, 1, 0, 500);
@@ -1249,7 +1252,7 @@ public static class ServiceSelfCheck
             deathRegistry, enabledCombat, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), deathStore,
             deathQuests, new FixedCombatRolls(hit: true, crit: false),
-            tickGuardWindows, tickGeometry, new ServerClock());
+            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock());
 
         var deathCount = 0;
         for (var castIndex = 0; castIndex < 6; castIndex++)
@@ -2352,11 +2355,11 @@ public static class ServiceSelfCheck
         var guardEngine = new CombatTickEngine(
             guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
-            guardWindows, geometry, new ServerClock());
+            guardWindows, geometry, NewDashes(geometry), new ServerClock());
         var guardMissEngine = new CombatTickEngine(
             guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
             tickQuests, new FixedCombatRolls(hit: false, crit: false),
-            guardWindows, geometry, new ServerClock());
+            guardWindows, geometry, NewDashes(geometry), new ServerClock());
 
         MobLifecycleEvent GuardImpact(string entityId, PlayerSession victim) =>
             new(entityId, MobBehaviorStates.Telegraph, MobBehaviorStates.Attack,
@@ -2621,7 +2624,7 @@ public static class ServiceSelfCheck
             guardRegistry, combatDamage, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
-            gateOffWindows, geometry, new ServerClock());
+            gateOffWindows, geometry, NewDashes(geometry), new ServerClock());
         gateOffEngine.Schedule(
             hero7, hero7.SessionId, new string('9', 32), CombatV2Actions.Skill, "SK-MK-01",
             1, 0, startTick: 70);
@@ -2706,7 +2709,7 @@ public static class ServiceSelfCheck
         var lateEngine = new CombatTickEngine(
             lateRegistry, enabledCombat, combatSkills, lateEvents, lateStates,
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
-            lateWindows, geometry, new ServerClock());
+            lateWindows, geometry, NewDashes(geometry), new ServerClock());
         var lateHeroA = NewGuardHero("LATE_A");
         var lateHeroB = NewGuardHero("LATE_B");
         lateEngine.Schedule(
@@ -2767,7 +2770,7 @@ public static class ServiceSelfCheck
             }),
             new MobCombatStateStore(), tickQuests,
             new FixedCombatRolls(hit: true, crit: false),
-            new GuardWindowStore(), geometry, new ServerClock());
+            new GuardWindowStore(), geometry, NewDashes(geometry), new ServerClock());
         var losCaster = NewPlayer("CHR_SELFCHECK_LOS_CASTER");
         losCaster.X = 43.5;
         losCaster.Y = 0;
@@ -2811,7 +2814,7 @@ public static class ServiceSelfCheck
         var raceEngine = new CombatTickEngine(
             raceRegistry, enabledCombat, combatSkills, raceEvents, new MobCombatStateStore(),
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
-            raceWindows, geometry, new ServerClock());
+            raceWindows, geometry, NewDashes(geometry), new ServerClock());
         var raceAttacks = new MobAttackService(
             raceRegistry, enabledCombat, mobOptions,
             new GuardDefenseService(raceWindows, enabledCombat, raceEvents));
@@ -2861,6 +2864,125 @@ public static class ServiceSelfCheck
             raceHero.SwordIntent == Math.Min(5, 2 * raceConfirmed.Length) &&
             raceHero.Hp == 100 - raceList.Sum(resolution => resolution.Damage),
             $"confirmed={raceConfirmed.Length} events={raceConfirmationEvents} intent={raceHero.SwordIntent}");
+
+        // Q-B: SK-MK-02 Tầm Long is swept movement, not a claim of a completed
+        // dash. On the unreviewed production bundle the sweep is NotEnforced, so
+        // the dash runs its canonical 11 WU (= 5,5 m) and that is reported as
+        // Complete, never as proof that walls work.
+        var dashHero = NewPlayer("CHR_SELFCHECK_DASH_OPEN");
+        dashHero.X = 33;
+        dashHero.Y = 0;
+        var dashEngine = new CombatTickEngine(
+            new WorldEntityRegistry(new WorldEntityCatalog([], []), lateClock),
+            enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions { CapacityPerSession = 256, MaxPageSize = 256 }),
+            new MobCombatStateStore(), tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(), tickGeometry, NewDashes(tickGeometry), new ServerClock());
+        var openDashCast = new string('1', 32);
+        dashEngine.Schedule(
+            dashHero, dashHero.SessionId, openDashCast, CombatV2Actions.Skill, "SK-MK-02",
+            1, 0, startTick: 0);
+        dashEngine.Tick(6);
+        var openDashPosition = dashHero.X;
+        var openDashEvents = dashEngine.Tick(7);
+        var openDash = dashEngine.DashLedger.Find(openDashCast);
+        Check(
+            "dash.unenforced_geometry_runs_full_range",
+            openDashPosition == 33 &&
+            openDash is { AchievedWu: 11, StopReason: DashStopReasons.Complete, AppliedTick: 7 } &&
+            dashHero.X == 44 && dashHero.Y == 0 &&
+            !openDashEvents.Any(stored =>
+                stored.Type is CombatEventTypesV2.Impact or CombatEventTypesV2.Miss),
+            openDash?.StopReason ?? "no resolution");
+        Check(
+            "dash_resolves_after_prep_and_ends_next_tick",
+            openDashEvents.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
+            openDashEvents.Single(stored => stored.Type == CombatEventTypesV2.End).ServerTick == 7,
+            string.Join(",", openDashEvents.Select(stored => $"{stored.Type}@{stored.ServerTick}")));
+
+        // On the reviewed synthetic bundle the same dash stops in front of the
+        // 45–46 wall instead of teleporting the actor through it.
+        var wallDashHero = NewPlayer("CHR_SELFCHECK_DASH_WALL");
+        wallDashHero.X = 43.5;
+        wallDashHero.Y = 0;
+        var wallDashEngine = new CombatTickEngine(
+            new WorldEntityRegistry(new WorldEntityCatalog([], []), lateClock),
+            enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions { CapacityPerSession = 256, MaxPageSize = 256 }),
+            new MobCombatStateStore(), tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(), geometry, NewDashes(geometry), new ServerClock());
+        var wallDashCast = new string('2', 32);
+        wallDashEngine.Schedule(
+            wallDashHero, wallDashHero.SessionId, wallDashCast, CombatV2Actions.Skill,
+            "SK-MK-02", 1, 0, startTick: 0);
+        wallDashEngine.Tick(7);
+        var wallDash = wallDashEngine.DashLedger.Find(wallDashCast);
+        Check(
+            "dash_stops_short_of_reviewed_wall",
+            wallDash is not null &&
+            wallDash.StopReason == DashStopReasons.BlockedByGeometry &&
+            wallDash.AchievedWu > 0.2 && wallDash.AchievedWu < 1.1 &&
+            wallDashHero.X < 44.5 && wallDashHero.X > 43.5 && wallDashHero.Y == 0 &&
+            wallDash.RequestedWu == 11,
+            wallDash is null ? "no resolution" : $"{wallDash.AchievedWu}/{wallDash.StopReason}");
+        var revisionBeforeSecond = wallDashHero.Revision;
+        var secondDashCast = new string('3', 32);
+        wallDashEngine.Schedule(
+            wallDashHero, wallDashHero.SessionId, secondDashCast, CombatV2Actions.Skill,
+            "SK-MK-02", 1, 0, startTick: 20);
+        wallDashEngine.Tick(27);
+        var secondDash = wallDashEngine.DashLedger.Find(secondDashCast);
+        Check(
+            "dash_blocked_at_start_reports_no_travel",
+            secondDash is not null &&
+            secondDash.AchievedWu < 0.05 &&
+            secondDash.StopReason is DashStopReasons.ZeroDistance or DashStopReasons.BlockedByGeometry &&
+            wallDashHero.X == wallDash.X &&
+            wallDashHero.Revision == revisionBeforeSecond,
+            secondDash is null ? "no resolution" : $"{secondDash.AchievedWu}/{secondDash.StopReason}");
+
+        // A dash that is scheduled and then invalidated moves nobody and is
+        // cancelled once; the committed MP/cooldown are never refunded.
+        var deadDashHero = NewPlayer("CHR_SELFCHECK_DASH_DEAD");
+        deadDashHero.X = 33;
+        deadDashHero.Y = 0;
+        var deadDashEngine = new CombatTickEngine(
+            new WorldEntityRegistry(new WorldEntityCatalog([], []), lateClock),
+            enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions { CapacityPerSession = 256, MaxPageSize = 256 }),
+            new MobCombatStateStore(), tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(), tickGeometry, NewDashes(tickGeometry), new ServerClock());
+        var deadDashCast = new string('4', 32);
+        deadDashEngine.Schedule(
+            deadDashHero, deadDashHero.SessionId, deadDashCast, CombatV2Actions.Skill,
+            "SK-MK-02", 1, 0, startTick: 0);
+        var mpBeforeDeath = deadDashHero.Mp;
+        deadDashHero.Hp = 0;
+        var deadDashEvents = deadDashEngine.Tick(7);
+        Check(
+            "dash_cancelled_when_actor_down_before_movement",
+            deadDashHero.X == 33 &&
+            deadDashEngine.DashLedger.Find(deadDashCast) is null &&
+            deadDashHero.Mp == mpBeforeDeath &&
+            deadDashEvents.Count(stored => stored.Type == CombatEventTypesV2.Cancel) == 1 &&
+            deadDashEvents.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
+            !deadDashEvents.Any(stored => stored.Type == CombatEventTypesV2.Impact),
+            string.Join(",", deadDashEvents.Select(stored => stored.Type)));
+
+        var dashLedger = new DashLedger();
+        for (var ledgerIndex = 0; ledgerIndex < 600; ledgerIndex++)
+        {
+            dashLedger.Record(new DashResolution(
+                ledgerIndex.ToString("x32"), "CHR_LEDGER", ledgerIndex, 11, 11, 0, 0,
+                DashStopReasons.Complete, 1));
+        }
+
+        Check(
+            "dash_ledger_is_bounded",
+            dashLedger.Count == DashLedger.Capacity &&
+            dashLedger.Find("0") is null &&
+            dashLedger.Find(new string('1', 31) + "5") is not null,
+            $"count={dashLedger.Count}");
 
         var losAccept = new InMemoryQuestAcceptService(
             questCatalog, quests, npcAnchors, geometry,

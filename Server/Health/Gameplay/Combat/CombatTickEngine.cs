@@ -86,12 +86,19 @@ public sealed class CombatTickEngine
     public const int BasicAttackRangeWu = 4;
     public const int BasicAttackAngleDegrees = 90;
     public const string SkMk01 = "SK-MK-01";
+    public const string SkMk02 = "SK-MK-02";
     public const string SkMk03 = "SK-MK-03";
 
     private static readonly int[] BasicHitTicks = [3];
     private static readonly double[] BasicCoefficients = [1.0];
     private static readonly int[] Mk03HitTicks = [2, 5, 8];
     private static readonly double[] Mk03Coefficients = [0.45, 0.55, 0.90];
+
+    // Art Brief P1: SK-MK-02 is prep 0,15s (3 ticks) then a 0,20s dash (4
+    // ticks), so the sweep resolves on tick +7. The dash carries no damage and
+    // therefore no coefficient.
+    private static readonly int[] Mk02MoveTicks = [7];
+    private static readonly double[] NoCoefficients = [];
 
     private readonly WorldEntityRegistry _entities;
     private readonly CombatDamageFeature _combat;
@@ -102,6 +109,7 @@ public sealed class CombatTickEngine
     private readonly ICombatRollSource _rolls;
     private readonly GuardWindowStore _guards;
     private readonly IWorldGeometryService _geometry;
+    private readonly DashMovementService _dashes;
     private readonly ServerClock _clock;
     private readonly object _sync = new();
     private readonly Dictionary<string, ScheduledCast> _casts = new(StringComparer.Ordinal);
@@ -116,6 +124,7 @@ public sealed class CombatTickEngine
         ICombatRollSource rolls,
         GuardWindowStore guards,
         IWorldGeometryService geometry,
+        DashMovementService dashes,
         ServerClock clock)
     {
         _entities = entities;
@@ -127,8 +136,13 @@ public sealed class CombatTickEngine
         _rolls = rolls;
         _guards = guards;
         _geometry = geometry;
+        _dashes = dashes;
         _clock = clock;
     }
+
+    // Where each accepted dash actually landed and why it stopped; internal
+    // audit until a contract version carries it to clients.
+    public DashLedger DashLedger => _dashes.Ledger;
 
     public int ScheduledCastCount
     {
@@ -185,10 +199,11 @@ public sealed class CombatTickEngine
                     angleDegrees = skill.AngleDegrees ?? 100;
                     maxTargets = skill.MaxTargets;
                     break;
-                case "SK-MK-02":
-                    // Dash movement carries no damage in the supported subset.
-                    hitTicks = [];
-                    coefficients = [];
+                case SkMk02:
+                    // Dash movement: the single scheduled tick is where the
+                    // swept move resolves, and it carries no damage.
+                    hitTicks = Mk02MoveTicks;
+                    coefficients = NoCoefficients;
                     rangeWu = skill.RangeWu ?? 11;
                     angleDegrees = skill.AngleDegrees ?? 0;
                     break;
@@ -228,7 +243,8 @@ public sealed class CombatTickEngine
                     rangeWu,
                     angleDegrees,
                     maxTargets,
-                    skill?.SkillId);
+                    skill?.SkillId,
+                    skill?.SkillId == SkMk02);
             }
         }
 
@@ -544,6 +560,16 @@ public sealed class CombatTickEngine
     private IEnumerable<CombatEventV2> ResolveHit(
         ScheduledCast cast, int hitIndex, long impactTick)
     {
+        if (cast.IsMovement)
+        {
+            // A dash is movement, not an impact: it emits no combat event and
+            // its outcome (where the actor landed and why it stopped) lives in
+            // the dash ledger until a contract version carries it.
+            _dashes.Apply(
+                cast.Actor, cast.CastId, cast.FacingX, cast.FacingY, cast.RangeWu, impactTick);
+            yield break;
+        }
+
         var targets = SelectTargets(cast);
         if (targets.Count == 0)
         {
@@ -768,7 +794,8 @@ public sealed class CombatTickEngine
             double rangeWu,
             double angleDegrees,
             int maxTargets,
-            string? skillId)
+            string? skillId,
+            bool isMovement)
         {
             CastId = castId;
             SessionId = sessionId;
@@ -788,6 +815,7 @@ public sealed class CombatTickEngine
             AngleDegrees = angleDegrees;
             MaxTargets = maxTargets;
             SkillId = skillId;
+            IsMovement = isMovement;
         }
 
         public string CastId { get; }
@@ -808,6 +836,7 @@ public sealed class CombatTickEngine
         public double AngleDegrees { get; }
         public int MaxTargets { get; }
         public string? SkillId { get; }
+        public bool IsMovement { get; }
         public int NextHitIndex { get; set; }
 
         public long EndTick() => HitTicks.Length > 0

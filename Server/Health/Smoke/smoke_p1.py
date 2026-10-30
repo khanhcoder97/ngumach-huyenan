@@ -1106,6 +1106,41 @@ def main():
     check(status == 200 and not after_replay["result"]["events"],
           "late replay emitted no new END, impact or other lifecycle event")
 
+    # SK-MK-02 dash resolves on the real tick: the actor must actually move the
+    # canonical 11 WU on this unreviewed map, and the committed MP is not
+    # refunded by the movement. Fresh session so earlier cursor assertions hold.
+    status, _, dash_created = call("POST", "/p1/sessions", {"classId": "CLASS_MINH_KIEM"})
+    check(status == 201, "dash session created")
+    dash_session = dash_created["sessionId"]
+    dash_character = dash_created["result"]["self"]["characterId"]
+    dash_headers = {"X-Session-ID": dash_session}
+    dash_start_x = dash_created["result"]["self"]["x"]
+    dash_revision = dash_created["result"]["self"]["revision"]
+    dash_command = combat_v2_envelope("SKILL", 1, skill_id="SK-MK-02",
+                                      character_id=dash_character,
+                                      request_id="8" * 32, idempotency_key="9" * 32)
+    status, _, dash_accept = call("POST", "/p1/v2/combat", dash_command, dash_headers)
+    check(status == 200, f"dash accepted returned {status}: {dash_accept}")
+    check((dash_accept.get("result") or {}).get("mp") == 34,
+          f"dash mp {(dash_accept.get('result') or {}).get('mp')}")
+    dash_deadline = time.monotonic() + 3
+    dash_moved = False
+    dash_self = {}
+    while time.monotonic() < dash_deadline:
+        status, _, dash_world = call("GET", f"/p1/v2/world/{dash_session}", headers=dash_headers)
+        check(status == 200, f"dash world read returned {status}")
+        dash_self = (dash_world.get("result") or {}).get("self") or {}
+        if dash_self.get("x") != dash_start_x:
+            dash_moved = True
+            break
+        time.sleep(0.05)
+    check(dash_moved and dash_self.get("x") == dash_start_x + 11,
+          f"dash moved {dash_start_x} -> {dash_self.get('x')} (expected {dash_start_x + 11})")
+    check(dash_self.get("mp") == 34 and dash_self.get("hp") == 100,
+          f"dash kept cost/hp mp={dash_self.get('mp')} hp={dash_self.get('hp')}")
+    check(dash_self.get("revision", dash_revision) > dash_revision,
+          f"dash revision {dash_revision} -> {dash_self.get('revision')}")
+
     print(f"PASS: {CHECKS} smoke checks against {BASE_URL}")
 
 
