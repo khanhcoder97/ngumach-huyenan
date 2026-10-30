@@ -915,6 +915,17 @@ public static class ServiceSelfCheck
             combatV2Store.Read(combatV2Session, 0, 0).NextCursor == 1,
             basicReplay.Failure?.Code);
 
+        Check("combatv2.replay_marker", !basicCast.Replayed && basicReplay.Replayed,
+            "Cached accepted receipt cannot be scheduled as a new cast.");
+        CombatCommandRaceChecks.Run(combatSkills, id => NewPlayer(id), Check);
+        var deadV2Actor = NewPlayer("CHR_V2_DEAD", hp: 0);
+        var deadV2Cast = combatV2.Resolve(deadV2Actor, deadV2Actor.SessionId,
+            new CombatV2Intent(CombatV2Actions.Skill, "SK-MK-01", null, 1, 1, 0, null), new string('9', 32));
+        Check("combatv2.dead_actor_no_cost", deadV2Cast.Failure?.Code == CombatErrorCodes.ActorNotAlive &&
+            deadV2Actor.Mp == 50 && deadV2Actor.LastInputSequence == 0 && deadV2Actor.Revision == 1 &&
+            combatV2Store.Read(deadV2Actor.SessionId, 0, 100).Events.Count == 0,
+            "Dead sources cannot start fresh casts or spend resources.");
+
         var basicConflict = combatV2.Resolve(
             combatV2Actor, combatV2Session, basicIntent with { AimX = -1 }, new string('a', 32));
         Check(
@@ -1144,6 +1155,31 @@ public static class ServiceSelfCheck
             mk03Hit3.HitIndex == 2 && mk03Hit3.Result?.Amount == 17 &&
             (tickStateStore.TryGet("ENT_SELFCHECK_TICK_MOB", 1)?.Hp ?? 0) == 138,
             $"{mk03Hit1.Result?.Amount}/{mk03Hit2.Result?.Amount}/{mk03Hit3.Result?.Amount}");
+
+        foreach (var cancelReason in new[] { "DEAD", "MAP", "FLOOR" })
+        {
+            var cancelledSource = NewPlayer("CHR_CANCEL_" + cancelReason);
+            cancelledSource.X = 0; cancelledSource.Y = 0;
+            var cancelRegistry = new WorldEntityRegistry(
+                new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_CANCEL_MOB", 3)]), tickClock);
+            var cancelHp = new MobCombatStateStore();
+            var cancelEngine = new CombatTickEngine(cancelRegistry, enabledCombat, combatSkills,
+                new CombatEventStore(new CombatEventStreamOptions()), cancelHp, tickQuests,
+                new FixedCombatRolls(hit: true, crit: false),
+                new GuardWindowStore(), tickGeometry, new ServerClock());
+            cancelEngine.Schedule(cancelledSource, cancelledSource.SessionId, Guid.NewGuid().ToString("N"),
+                CombatV2Actions.BasicAttack, null, 1, 0, 100);
+            if (cancelReason == "DEAD") cancelledSource.Hp = 0;
+            else if (cancelReason == "MAP") cancelledSource.MapId = "MAP_THANH_LAC";
+            else cancelledSource.FloorId = "OTHER_FLOOR";
+            var cancelledEvents = cancelEngine.Tick(103);
+            Check("tick.cancel_source_" + cancelReason.ToLowerInvariant(),
+                cancelledEvents.Count(e => e.Type == CombatEventTypesV2.Cancel) == 1 &&
+                cancelledEvents.Count(e => e.Type == CombatEventTypesV2.End) == 1 &&
+                !cancelledEvents.Any(e => e.Type is CombatEventTypesV2.Impact or CombatEventTypesV2.Death) &&
+                cancelHp.TryGet("ENT_SELFCHECK_CANCEL_MOB", 1) is null && cancelEngine.ScheduledCastCount == 0,
+                "Source invalidated before impact; no damage or reward.");
+        }
 
         var missRegistry = new WorldEntityRegistry(
             new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_TICK_MOB", 3)]),
@@ -2134,36 +2170,37 @@ public static class ServiceSelfCheck
             runner.Hp == 100,
             whiffImpact.Count == 1 ? whiffImpact[0].BlockedReason : "no resolution");
 
-        var cancelClock = new ManualServerClock(
+        var telegraphCancelClock = new ManualServerClock(
             new DateTimeOffset(2026, 10, 29, 6, 0, 0, TimeSpan.Zero));
-        var cancelRegistry = new WorldEntityRegistry(
+        var telegraphCancelRegistry = new WorldEntityRegistry(
             new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_CANCEL_MOB", 43, 0)]),
-            cancelClock);
-        var cancelAi = new MobLifecycleService(cancelRegistry, geometry, mobOptions, cancelClock);
-        var cancelAttacks = NewMobAttacks(cancelRegistry, enabledCombat);
+            telegraphCancelClock);
+        var telegraphCancelAi = new MobLifecycleService(
+            telegraphCancelRegistry, geometry, mobOptions, telegraphCancelClock);
+        var telegraphCancelAttacks = NewMobAttacks(telegraphCancelRegistry, enabledCombat);
         var bait = NewPlayer("CHR_SELFCHECK_BAIT");
         bait.X = 44;
         bait.Y = 0;
-        cancelAi.Tick([bait]);
-        cancelClock.Advance(TimeSpan.FromSeconds(0.05));
-        cancelAi.Tick([bait]);
+        telegraphCancelAi.Tick([bait]);
+        telegraphCancelClock.Advance(TimeSpan.FromSeconds(0.05));
+        telegraphCancelAi.Tick([bait]);
         // Past the impact deadline, but with no target: the pending impact is
         // cancelled, so the mob never swings.
-        cancelClock.Advance(TimeSpan.FromSeconds(0.60));
-        var cancelTick = cancelAi.Tick([]);
-        cancelClock.Advance(TimeSpan.FromSeconds(1));
-        var afterCancelTick = cancelAi.Tick([]);
+        telegraphCancelClock.Advance(TimeSpan.FromSeconds(0.60));
+        var telegraphCancelTick = telegraphCancelAi.Tick([]);
+        telegraphCancelClock.Advance(TimeSpan.FromSeconds(1));
+        var afterTelegraphCancelTick = telegraphCancelAi.Tick([]);
         Check(
             "mob.telegraph_cancel_on_lost_target",
-            cancelAi.GetState("ENT_SELFCHECK_CANCEL_MOB") == MobBehaviorStates.Idle &&
-            cancelTick.Any(lifecycle =>
+            telegraphCancelAi.GetState("ENT_SELFCHECK_CANCEL_MOB") == MobBehaviorStates.Idle &&
+            telegraphCancelTick.Any(lifecycle =>
                 lifecycle.FromState == MobBehaviorStates.Telegraph &&
                 lifecycle.ToState == MobBehaviorStates.Return) &&
-            ImpactCount(cancelTick) == 0 &&
-            ImpactCount(afterCancelTick) == 0 &&
-            cancelAttacks.ApplyImpacts(afterCancelTick, [], cancelClock.Tick).Count == 0 &&
+            ImpactCount(telegraphCancelTick) == 0 &&
+            ImpactCount(afterTelegraphCancelTick) == 0 &&
+            telegraphCancelAttacks.ApplyImpacts(afterTelegraphCancelTick, [], telegraphCancelClock.Tick).Count == 0 &&
             bait.Hp == 100,
-            cancelAi.GetState("ENT_SELFCHECK_CANCEL_MOB"));
+            telegraphCancelAi.GetState("ENT_SELFCHECK_CANCEL_MOB"));
 
         var gateOffAttacks = NewMobAttacks(mobRegistry, combatDamage);
         var gateOffImpact = gateOffAttacks.ApplyImpacts(
@@ -2512,6 +2549,7 @@ public static class ServiceSelfCheck
             1, 0, startTick: 20);
         var lethalResolutions = guardAttacks.ApplyImpacts(
             [GuardImpact("ENT_SELFCHECK_GUARD_MOB", hero4)], [hero4], tick: 21);
+        var downTick = guardEngine.Tick(22);
         Check(
             "guard.defender_death_clears_resource_no_confirmation",
             hero4.Hp == 0 &&
@@ -2520,9 +2558,20 @@ public static class ServiceSelfCheck
             lethalResolutions.Single().Confirmation is null &&
             guardWindows.Find(hero4.CharacterId) is null &&
             CountEvent(hero4.SessionId, CombatEventTypesV2.CounterConfirmed) == 0 &&
-            !guardEngine.Tick(22).Any(stored =>
-                stored.Type is CombatEventTypesV2.Cancel or CombatEventTypesV2.Impact),
+            lethalResolutions.Single().GuardWindowCastId == new string('c', 32) &&
+            lethalResolutions.Single().DamageReduction == 0.7,
             $"hp={hero4.Hp} intent={hero4.SwordIntent}");
+        // A down defender's own cast is cancelled once, and nothing of it lands.
+        Check(
+            "guard.down_defender_cast_cancels_once",
+            downTick.Count(stored => stored.Type == CombatEventTypesV2.Cancel) == 1 &&
+            downTick.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
+            !downTick.Any(stored =>
+                stored.Type is CombatEventTypesV2.Impact or CombatEventTypesV2.Death) &&
+            !guardEngine.Tick(23).Any(stored =>
+                stored.Type is CombatEventTypesV2.Cancel or CombatEventTypesV2.Impact) &&
+            guardWindows.Find(hero4.CharacterId) is null,
+            string.Join(",", downTick.Select(stored => stored.Type)));
 
         var hero6 = NewGuardHero("REFRESH");
         guardEngine.Schedule(
@@ -2630,6 +2679,188 @@ public static class ServiceSelfCheck
             guardWindows.Find(hero10.CharacterId) is { CounterOutcome: "LOS_BLOCKED" } &&
             guardStates.TryGet("ENT_SELFCHECK_GUARD_MOB3", coveringMob.LifeId)?.Hp == blockedHpBefore,
             guardWindows.Find(hero10.CharacterId)?.CounterOutcome ?? "none");
+
+        // QREV-02: a coalesced timer callback can skip the tick a reserved
+        // counter was due on. Overdue work must stay eligible, resolve exactly
+        // once in deadline order, and be stamped with the tick that actually
+        // processed it instead of a backdated one.
+        var lateClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 30, 2, 0, 0, TimeSpan.Zero));
+        var lateRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([],
+            [
+                MakeFixtureMob("ENT_SELFCHECK_LATE_MOB_A", 41, 0),
+                MakeFixtureMob("ENT_SELFCHECK_LATE_MOB_B", 41, 0.4)
+            ]),
+            lateClock);
+        var lateWindows = new GuardWindowStore();
+        var lateEvents = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var lateDefense = new GuardDefenseService(lateWindows, enabledCombat, lateEvents);
+        var lateAttacks = new MobAttackService(
+            lateRegistry, enabledCombat, mobOptions, lateDefense);
+        var lateStates = new MobCombatStateStore();
+        var lateEngine = new CombatTickEngine(
+            lateRegistry, enabledCombat, combatSkills, lateEvents, lateStates,
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            lateWindows, geometry, new ServerClock());
+        var lateHeroA = NewGuardHero("LATE_A");
+        var lateHeroB = NewGuardHero("LATE_B");
+        lateEngine.Schedule(
+            lateHeroA, lateHeroA.SessionId, new string('6', 32), CombatV2Actions.Skill,
+            "SK-MK-01", 1, 0, startTick: 0);
+        lateEngine.Schedule(
+            lateHeroB, lateHeroB.SessionId, new string('7', 32), CombatV2Actions.Skill,
+            "SK-MK-01", 1, 0, startTick: 0);
+        MobLifecycleEvent LateImpact(string entityId, PlayerSession victim) =>
+            new(entityId, MobBehaviorStates.Telegraph, MobBehaviorStates.Attack,
+                lateClock.UtcNow, victim.CharacterId);
+        lateAttacks.ApplyImpacts(
+            [LateImpact("ENT_SELFCHECK_LATE_MOB_A", lateHeroA)], [lateHeroA], tick: 1);
+        lateAttacks.ApplyImpacts(
+            [LateImpact("ENT_SELFCHECK_LATE_MOB_B", lateHeroB)], [lateHeroB], tick: 2);
+        var overdueQueue = lateWindows.PendingCounters(4);
+        Check(
+            "tick.counter_overdue_stays_eligible_in_deadline_order",
+            overdueQueue.Count == 2 &&
+            overdueQueue[0].CounterTick == 2 &&
+            overdueQueue[1].CounterTick == 3 &&
+            overdueQueue.All(state => !state.CounterResolved),
+            $"pending={overdueQueue.Count}");
+
+        var catchUpEvents = lateEngine.Tick(10);
+        var catchUpImpacts = catchUpEvents
+            .Where(stored => stored.Type == CombatEventTypesV2.Impact)
+            .ToArray();
+        var catchUpAgain = lateEngine.Tick(10);
+        Check(
+            "tick.counter_catchup_resolves_once_at_processed_tick",
+            catchUpImpacts.Length == 2 &&
+            catchUpImpacts[0].ActorId == lateHeroA.CharacterId &&
+            catchUpImpacts[1].ActorId == lateHeroB.CharacterId &&
+            catchUpImpacts.All(stored => stored.ServerTick == 10) &&
+            !catchUpAgain.Any(stored => stored.Type == CombatEventTypesV2.Impact) &&
+            lateWindows.PendingCounters(10).Count == 0 &&
+            lateStates.TryGet("ENT_SELFCHECK_LATE_MOB_A", 1)?.Hp == 158 &&
+            lateStates.TryGet("ENT_SELFCHECK_LATE_MOB_B", 1)?.Hp == 158,
+            string.Join(",", catchUpImpacts.Select(stored => stored.ActorId)));
+
+        // QREV-04: basic and MK03 impacts re-run line of sight at the impact
+        // tick, on the reviewed synthetic bundle only. Production topology stays
+        // SYNTHETIC_TEST_ONLY and answers NotEnforced, which is not a wall test.
+        var losRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([],
+            [
+                MakeFixtureMob("ENT_SELFCHECK_WALL_MOB_EAST", 46.5, 0),
+                MakeFixtureMob("ENT_SELFCHECK_WALL_MOB_WEST", 42.5, 0)
+            ]),
+            lateClock);
+        var losEngine = new CombatTickEngine(
+            losRegistry, enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions
+            {
+                CapacityPerSession = 256,
+                MaxPageSize = 256
+            }),
+            new MobCombatStateStore(), tickQuests,
+            new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(), geometry, new ServerClock());
+        var losCaster = NewPlayer("CHR_SELFCHECK_LOS_CASTER");
+        losCaster.X = 43.5;
+        losCaster.Y = 0;
+        losEngine.Schedule(
+            losCaster, losCaster.SessionId, new string('8', 32),
+            CombatV2Actions.BasicAttack, null, 1, 0, startTick: 0);
+        losEngine.Schedule(
+            losCaster, losCaster.SessionId, new string('a', 32),
+            CombatV2Actions.BasicAttack, null, -1, 0, startTick: 0);
+        var losTickEvents = losEngine.Tick(3);
+        var losImpacts = losTickEvents
+            .Where(stored => stored.Type == CombatEventTypesV2.Impact)
+            .ToArray();
+        Check(
+            "tick.impact_blocked_by_cover_on_reviewed_bundle",
+            losImpacts.Length == 1 &&
+            losImpacts[0].TargetId == "ENT_SELFCHECK_WALL_MOB_WEST" &&
+            losImpacts[0].Result is { Amount: 19, HpDamage: 19 } &&
+            losEngine.Tick(4).Any(stored => stored.Type == CombatEventTypesV2.End),
+            string.Join(",", losImpacts.Select(stored => stored.TargetId)));
+
+        var shippedLos = services.GetRequiredService<IWorldGeometryService>()
+            .CheckLineOfSight(options.DefaultMapId, "OVERWORLD", 43.5, 0, 46.5, 0);
+        Check(
+            "tick.impact_not_blocked_when_geometry_unreviewed",
+            shippedLos.Status == LineOfSightStatus.NotEnforced,
+            shippedLos.Status.ToString());
+
+        // QREV-05: refreshes and impacts race on the same defender. One impact is
+        // one critical section, so the window that paid the reduction is always
+        // the window that owns the confirmation, and no window pays twice.
+        var raceRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_RACE_MOB", 41, 0)]),
+            lateClock);
+        var raceWindows = new GuardWindowStore();
+        var raceEvents = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 512,
+            MaxPageSize = 512
+        });
+        var raceEngine = new CombatTickEngine(
+            raceRegistry, enabledCombat, combatSkills, raceEvents, new MobCombatStateStore(),
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            raceWindows, geometry, new ServerClock());
+        var raceAttacks = new MobAttackService(
+            raceRegistry, enabledCombat, mobOptions,
+            new GuardDefenseService(raceWindows, enabledCombat, raceEvents));
+        var raceHero = NewGuardHero("RACE");
+        var raceResolutions = new System.Collections.Concurrent.ConcurrentBag<MobAttackResolution>();
+        RunBarrierParallel(8, index =>
+        {
+            if (index % 2 == 0)
+            {
+                raceEngine.Schedule(
+                    raceHero, raceHero.SessionId, index.ToString("x32"),
+                    CombatV2Actions.Skill, "SK-MK-01", 1, 0, startTick: 0);
+                return;
+            }
+
+            raceResolutions.Add(raceAttacks.ApplyImpacts(
+                [new MobLifecycleEvent(
+                    "ENT_SELFCHECK_RACE_MOB",
+                    MobBehaviorStates.Telegraph,
+                    MobBehaviorStates.Attack,
+                    lateClock.UtcNow,
+                    raceHero.CharacterId)],
+                [raceHero],
+                tick: 1).Single());
+        });
+
+        var raceList = raceResolutions.ToArray();
+        var raceConfirmed = raceList
+            .Select(resolution => resolution.Confirmation?.GuardCastId)
+            .Where(castId => castId is not null)
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+        var raceConfirmationEvents = raceEvents
+            .Read(raceHero.SessionId, 0, 512).Events
+            .Count(stored => stored.Type == CombatEventTypesV2.CounterConfirmed);
+        Check(
+            "guard.impact_never_mixes_two_windows",
+            raceList.Length == 4 &&
+            raceList.All(resolution => resolution.Applied) &&
+            raceList.All(resolution =>
+                resolution.DamageReduction is 0 or 0.7 &&
+                resolution.Damage == (resolution.DamageReduction > 0 ? 3 : 10)) &&
+            raceList.All(resolution =>
+                resolution.Confirmation is null ||
+                resolution.Confirmation.GuardCastId == resolution.GuardWindowCastId) &&
+            raceConfirmed.Length == raceConfirmationEvents &&
+            raceHero.SwordIntent == Math.Min(5, 2 * raceConfirmed.Length) &&
+            raceHero.Hp == 100 - raceList.Sum(resolution => resolution.Damage),
+            $"confirmed={raceConfirmed.Length} events={raceConfirmationEvents} intent={raceHero.SwordIntent}");
 
         var losAccept = new InMemoryQuestAcceptService(
             questCatalog, quests, npcAnchors, geometry,

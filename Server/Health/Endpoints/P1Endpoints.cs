@@ -441,6 +441,7 @@ public static class P1Endpoints
         P1ErrorCodes.StaleSequence => StatusCodes.Status409Conflict,
         CombatErrorCodes.CooldownActive => StatusCodes.Status409Conflict,
         CombatErrorCodes.TargetNotAlive => StatusCodes.Status409Conflict,
+        CombatErrorCodes.ActorNotAlive => StatusCodes.Status409Conflict,
         CombatErrorCodes.InsufficientResource => StatusCodes.Status409Conflict,
         CombatErrorCodes.TargetNotFound => StatusCodes.Status404NotFound,
         CombatErrorCodes.OutOfRange => StatusCodes.Status422UnprocessableEntity,
@@ -614,17 +615,20 @@ public static class P1Endpoints
         var logger = loggerFactory.CreateLogger("P1.CombatV2");
         if (outcome.Accepted && outcome.Result is { } result)
         {
-            // Impacts resolve on the real tick; scheduling is idempotent by
-            // castId so a replay never resolves twice.
-            engine.Schedule(
-                session,
-                session.SessionId,
-                result.CastId,
-                result.ActionKind,
-                result.SkillId,
-                payload.AimX!.Value,
-                payload.AimY!.Value,
-                clock.Tick);
+            // Cached receipts remain replays even after the scheduler removed
+            // the completed cast. Never schedule a second effect for that receipt.
+            if (!outcome.Replayed)
+            {
+                engine.Schedule(
+                    session,
+                    session.SessionId,
+                    result.CastId,
+                    result.ActionKind,
+                    result.SkillId,
+                    payload.AimX!.Value,
+                    payload.AimY!.Value,
+                    clock.Tick);
+            }
 
             logger.LogDebug(
                 "Accepted {ActionKind} cast {CastId} sequence {Sequence} for {SessionId}",
