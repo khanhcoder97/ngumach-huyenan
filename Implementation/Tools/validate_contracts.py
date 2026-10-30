@@ -27,6 +27,20 @@ EXIT_OK = 0
 EXIT_VALIDATION = 1
 EXIT_ENVIRONMENT = 2
 
+# Art Bible §6 bestiary state machine for hostile actors; everything else in
+# the snapshot is a world object with an availability lifecycle instead.
+MOB_LIFECYCLE_STATES = {
+    "IDLE",
+    "AGGRO",
+    "CHASE",
+    "TELEGRAPH",
+    "ATTACK",
+    "RECOVER",
+    "RETURN",
+    "DEAD",
+}
+OBJECT_STATES = {"ACTIVE", "AVAILABLE", "DEPLETED"}
+
 ID_FIELDS = {
     "skillId": "skill",
     "mapId": "map",
@@ -340,6 +354,26 @@ def check_world_snapshot_v2(example, label, errors):
         kind = entity.get("kind")
         health_state = entity.get("healthState")
         targetable = entity.get("targetable")
+        state = entity.get("state")
+        if kind in ("MOB", "BOSS"):
+            if state not in MOB_LIFECYCLE_STATES:
+                errors.append(
+                    f"{label}.entities[{index}].state: '{state}' is not a mob "
+                    f"lifecycle state"
+                )
+            if health_state == "ALIVE" and targetable is not True:
+                errors.append(
+                    f"{label}.entities[{index}]: an alive mob must be targetable"
+                )
+            if health_state == "DEAD" and targetable is not False:
+                errors.append(
+                    f"{label}.entities[{index}]: a dead mob must not be targetable"
+                )
+        elif state not in OBJECT_STATES:
+            errors.append(
+                f"{label}.entities[{index}].state: '{state}' belongs to the mob "
+                f"lifecycle, not to a {kind}"
+            )
         if kind == "NPC" and (health_state != "INVULNERABLE" or targetable is not False):
             errors.append(
                 f"{label}.entities[{index}]: NPC must be INVULNERABLE and not targetable"

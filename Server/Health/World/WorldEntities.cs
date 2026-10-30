@@ -73,6 +73,13 @@ public sealed class WorldEntityInstance
 
     public string ClaimPolicy { get; init; } = WorldEntityClaimPolicies.Shared;
 
+    // QOD-17 manifest groups: member index is 1-based and stable; group
+    // respawn is coordinated by MobSpawnGroupService (members never respawn
+    // individually, so RespawnSeconds stays 0 for grouped mobs).
+    public string? GroupId { get; init; }
+    public int MemberIndex { get; init; }
+    public int GroupRespawnSeconds { get; init; }
+
     public string State { get; private set; } = string.Empty;
     public long Revision { get; private set; }
     public long LifeId { get; private set; }
@@ -107,6 +114,17 @@ public sealed class WorldEntityInstance
             RemovedAtUtc = now;
             Revision++;
             return true;
+        }
+    }
+
+    internal void ForceRespawn()
+    {
+        lock (_syncRoot)
+        {
+            State = WorldEntityStates.InitialFor(Kind);
+            RemovedAtUtc = null;
+            Revision++;
+            LifeId++;
         }
     }
 
@@ -344,6 +362,33 @@ public static class WorldEntityLoader
                     $"{path}: {source.EntityId} kind '{source.Kind}' cannot be claimable.");
             }
 
+            if (source.GroupId is not null)
+            {
+                if (!string.Equals(source.Kind, WorldEntityKinds.Mob, StringComparison.Ordinal))
+                {
+                    throw new InvalidOperationException(
+                        $"{path}: {source.EntityId} groups are only supported for MOB entities.");
+                }
+
+                if (source.MemberIndex is not { } memberIndex || memberIndex < 1)
+                {
+                    throw new InvalidOperationException(
+                        $"{path}: {source.EntityId} memberIndex must be at least 1.");
+                }
+
+                if (source.GroupRespawnSeconds is not { } groupRespawn || groupRespawn < 0)
+                {
+                    throw new InvalidOperationException(
+                        $"{path}: {source.EntityId} groupRespawnSeconds is required.");
+                }
+
+                if (source.RespawnSeconds is not null and not 0)
+                {
+                    throw new InvalidOperationException(
+                        $"{path}: {source.EntityId} grouped mobs must not respawn individually.");
+                }
+            }
+
             var claimPolicy = source.ClaimPolicy ?? WorldEntityClaimPolicies.DefaultFor(source.Kind!);
             if (!WorldEntityClaimPolicies.IsValid(claimPolicy))
             {
@@ -370,7 +415,10 @@ public static class WorldEntityLoader
                 Y = y,
                 Quantity = quantity,
                 RespawnSeconds = respawn,
-                ClaimPolicy = claimPolicy
+                ClaimPolicy = claimPolicy,
+                GroupId = source.GroupId,
+                MemberIndex = source.MemberIndex ?? 0,
+                GroupRespawnSeconds = source.GroupRespawnSeconds ?? 0
             };
             entity.Initialize();
             entities.Add(entity);
@@ -406,6 +454,9 @@ public static class WorldEntityLoader
         public int? Quantity { get; init; }
         public int? RespawnSeconds { get; init; }
         public string? ClaimPolicy { get; init; }
+        public string? GroupId { get; init; }
+        public int? MemberIndex { get; init; }
+        public int? GroupRespawnSeconds { get; init; }
     }
 }
 

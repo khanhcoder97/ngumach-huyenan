@@ -170,6 +170,41 @@ def main():
         for template_id in template_ids:
             templates.setdefault(template_id, kind)
 
+        condition = (row.get("condition") or "").strip()
+        if kind == "MOB" and quantity > 1:
+            # QOD-17: open the manifest group composition instead of one
+            # representative entity. Member 1 keeps the historic entity id;
+            # later members get a stable _M suffix. Per-member templates are a
+            # labelled DEV fixture (round robin) because the manifest only
+            # declares the group's template set, not a per-member split.
+            base_entity_id = entity_id_for(record_id)
+            for index in range(quantity):
+                template_id = template_ids[index % len(template_ids)]
+                member_entity_id = (
+                    base_entity_id if index == 0 else f"{base_entity_id}_M{index + 1}"
+                )
+                entities.append(
+                    {
+                        "entityId": member_entity_id,
+                        "recordId": record_id,
+                        "kind": kind,
+                        "templateIds": [template_id],
+                        "mapId": MAP_ID,
+                        "floorId": FLOOR_ID,
+                        "xWu": x_wu,
+                        "yWu": y_wu,
+                        "quantity": 1,
+                        "respawnSeconds": 0,
+                        "groupId": record_id,
+                        "memberIndex": index + 1,
+                        "groupQuantity": quantity,
+                        "groupRespawnSeconds": respawn_seconds,
+                        "composition": "ROUND_ROBIN_DEV_FIXTURE",
+                        "condition": condition,
+                    }
+                )
+            continue
+
         entity = {
             "entityId": entity_id_for(record_id),
             "recordId": record_id,
@@ -181,7 +216,7 @@ def main():
             "yWu": y_wu,
             "quantity": quantity,
             "respawnSeconds": respawn_seconds,
-            "condition": (row.get("condition") or "").strip(),
+            "condition": condition,
         }
         claim_policy = CLAIM_POLICY_BY_KIND.get(kind)
         if claim_policy is not None:

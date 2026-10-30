@@ -949,6 +949,9 @@ def main():
     check(mob.get("hp") == 192 and mob.get("maxHp") == 192, f"v2 mob hp {mob.get('hp')}")
     check(mob.get("healthState") == "ALIVE", f"v2 mob health {mob.get('healthState')}")
     check(mob.get("targetable") is True, "v2 alive mob must be targetable")
+    # P1:MobBehavior stays off in smoke, so the AI lifecycle field is present
+    # and parked at IDLE; TELEGRAPH/RECOVER are exercised by the self-check.
+    check(mob.get("state") == "IDLE", f"v2 mob state {mob.get('state')}")
     expect_correlation(headers, "smoke-v2-world-mob")
 
     v2_sequence += 1
