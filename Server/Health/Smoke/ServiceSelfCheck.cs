@@ -1827,6 +1827,51 @@ public static class ServiceSelfCheck
                 FixtureQuest("Q01-01", [], [], activation: QuestActivations.Blocked)),
             "blocked quest without a named gap accepted");
 
+        // Q-C2: a narrative node is only visible when the character's own quest
+        // state matches its condition, and entering it is the only thing that can
+        // set a flag or progress a talk objective. Only a text key leaves the
+        // server; the server never composes prose.
+        var narrative = services.GetRequiredService<NarrativeService>();
+        var narrativeCatalog = services.GetRequiredService<NarrativeNodeCatalog>();
+        var narrativeActor = NewPlayer("CHR_SELFCHECK_NARRATIVE");
+        var narrativeOffer = narrative.Offer(narrativeActor, "P00-01");
+        var clueBeforeActive = narrative.Enter(
+            narrativeActor, "P00-01", "NPC_LYAN", "DLG_P00_01_CLUE");
+        var wrongSpeaker = narrative.Enter(
+            narrativeActor, "P00-01", "NPC_TA_VAN_KHANH", "DLG_P00_01_OFFER");
+        var enteredOffer = narrative.Enter(
+            narrativeActor, "P00-01", "NPC_LYAN", "DLG_P00_01_OFFER");
+        Check(
+            "narrative.reveal_gate_follows_quest_state",
+            narrative.PartyPolicy == PartyPolicies.SoloOnly &&
+            narrativeOffer is { Entered: true, Node.NodeId: "DLG_P00_01_OFFER" } &&
+            narrativeOffer.Node.TextKey == "DLG_P00_01_OFFER_TEXT" &&
+            clueBeforeActive.ErrorCode == NarrativeErrorCodes.NotRevealed &&
+            wrongSpeaker.ErrorCode == NarrativeErrorCodes.WrongSpeaker &&
+            enteredOffer is { Entered: true, NextNodeId: "DLG_P00_01_CLUE" },
+            $"{narrativeOffer.Node?.NodeId}/{clueBeforeActive.ErrorCode}/{enteredOffer.NextNodeId}");
+
+        Check(
+            "narrative.catalog_choices_and_flags",
+            narrativeCatalog.Count == 229 &&
+            narrativeCatalog.Flags.SetEquals(new[] { "C3_05_COUNCIL_ONLY", "C3_05_PUBLISHED" }) &&
+            narrativeCatalog.TryGet("DLG_C3_05_CHOICE", out var choiceNode) &&
+            choiceNode.Choices.Count == 2 &&
+            choiceNode.Choices.Select(choice => choice.Flag).SequenceEqual(
+                new[] { "C3_05_PUBLISHED", "C3_05_COUNCIL_ONLY" }, StringComparer.Ordinal),
+            $"nodes={narrativeCatalog.Count}");
+
+        var flagStore = new NarrativeFlagStore();
+        for (var flagIndex = 0; flagIndex < NarrativeFlagStore.Capacity + 4; flagIndex++)
+        {
+            flagStore.Set("CHR_SELFCHECK_FLAGS", $"FLAG_{flagIndex}");
+        }
+
+        Check(
+            "narrative.flags_are_bounded",
+            flagStore.For("CHR_SELFCHECK_FLAGS").Count == NarrativeFlagStore.Capacity,
+            $"flags={flagStore.For("CHR_SELFCHECK_FLAGS").Count}");
+
         Check(
             "npc.registry",
             npcAnchors.Count > 0 &&

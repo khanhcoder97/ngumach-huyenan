@@ -330,6 +330,20 @@ Ngoài ra mỗi quest 03/04/05 thiếu **NPC nhận báo cáo** (nguồn chỉ g
 
 **Ghi nhận cho content owner (không tự sửa):** (1) manifest Bến Mưa có **hai** record boss cùng toạ độ (178,0) — `MAN-BM-EVENT_BOSS_BM_MANG_COT` (`ACTIVITY_BOSS`) và `MAN-BM-SPAWN_BM_05_QUEST` (`ATLAS_BOSS`) — cùng trỏ `BOSS_MANG_COT`; quest chọn record ACTIVITY_BOSS, nhưng nếu cả hai được spawn cùng lúc thì đó là trùng lặp cần chốt. (2) Mọi gap ở trên là điều kiện **mở khóa** P00-02..05; danh sách nằm ngay trong file runtime nên không ai phải đoán lại.
 
-### 9.17 Triển khai tiếp
+### 9.17 Q-C2: narrative nodes, reveal gate, flags — domain-only, chưa có route
+
+Nguồn: `docs/production/Quest_Dialogue_Production_Data_vi.csv` (230 dòng → **229 node**; hai dòng của `DLG_C3_05_CHOICE` là hai lựa chọn của cùng một node). `build_narrative_nodes.py` xuất `narrative_nodes_v1.json` (questId/graphId/nodeId/order/type/speaker/condition/textKey/nextNode/onEnterEvent/setFlag/choices) và CI rebuild + `git diff --exit-code` như 4 bundle khác, nên sửa CSV mà quên runtime record là đỏ ngay.
+
+**Reveal gate** là server-side: node chỉ tồn tại với nhân vật khi `conditionKey` khớp state quest của **chính** nhân vật (`QUEST_AVAILABLE`/`QUEST_ACTIVE`/`QUEST_READY_TO_TURN_IN`). `NarrativeService.Offer` chọn node theo state; `Enter` từ chối `narrative_not_revealed` nếu lệch, `narrative_wrong_speaker` nếu sai NPC, `narrative_unknown_node` nếu node không thuộc quest. Text **không** rời server dưới dạng prose — chỉ `textKey`.
+
+**Flag**: vocabulary đóng lấy từ bundle (hiện `C3_05_PUBLISHED`, `C3_05_COUNCIL_ONLY`); mỗi lần vào node set tối đa một flag, lưu per character trong store bounded 128 (FIFO). Node `CHOICE` bắt buộc trả về một option của chính nó, và option quyết định flag — không đoán.
+
+**Talk → objective**: node có `onEnterEvent: OBJECTIVE_PROGRESS` ghi một verified event `TALK` (eventId = SHA-256 của `nodeId|characterId`, nên replay cùng node không cộng hai lần) để objective `TALK` tiến từ hội thoại, không cần endpoint riêng.
+
+**Party**: `PartyPolicies.SoloOnly` — P1 chưa có party runtime nên tiến độ được dán nhãn solo, không ngụ ý chia credit.
+
+**Đề xuất contract (chờ duyệt, chưa áp dụng):** `POST /p1/narrative/enter` với `{requestId, idempotencyKey, questId, npcId, nodeId, choiceId?}` → `{ nodeId, textKey, nextNodeId?, choices[], appliedFlag?, progressedQuestIds[], partyPolicy: "SOLO_ONLY" }`, error enum đóng (`narrative_unknown_node|narrative_not_revealed|narrative_wrong_speaker|narrative_choice_required|narrative_unknown_choice`), cộng `GET /p1/narrative/flags/{sessionId}` để client biết đã set gì. Không có route nào được map hôm nay.
+
+### 9.18 Triển khai tiếp
 
 Q-C objective graph P00-01..05 (runtime records từ source, loader/adapter/validator phía Qoder, không compiler cạnh tranh), Q-D XP/level + stat transaction một khối, Q-E loot grant + equipment cho cơ chế đã có data, Q-F Mãng Cốt encounter proposal + state machine, Q-G E2E nhiều client + handoff + proposal PostgreSQL (`Server/Persistence*` thuộc Remote #79).

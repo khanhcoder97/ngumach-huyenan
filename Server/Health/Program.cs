@@ -68,6 +68,15 @@ builder.Services.AddSingleton(serviceProvider =>
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    var path = NarrativeNodeCatalog.Discover(configuration, environment.ContentRootPath);
+    return NarrativeNodeCatalog.Load(path);
+});
+builder.Services.AddSingleton<NarrativeFlagStore>();
+builder.Services.AddSingleton<NarrativeService>();
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
     var path = WorldRecordLoader.DiscoverPath(configuration, environment.ContentRootPath);
     return WorldRecordLoader.Load(
         path, serviceProvider.GetRequiredService<MapBoundsCatalog>());
@@ -168,6 +177,12 @@ app.Logger.LogInformation("Loaded {SkillCount} combat skills.", combatSkills.Cou
 
 var quests = app.Services.GetRequiredService<IQuestCatalog>();
 app.Logger.LogInformation("Loaded quest definitions: {QuestCount}.", quests.Count);
+
+var narrativeNodes = app.Services.GetRequiredService<NarrativeNodeCatalog>();
+app.Logger.LogInformation(
+    "Loaded narrative nodes: {NodeCount} (flags {FlagCount}).",
+    narrativeNodes.Count,
+    narrativeNodes.Flags.Count);
 
 var npcAnchors = app.Services.GetRequiredService<NpcAnchorCatalog>();
 NpcAnchorValidator.Validate(npcAnchors, mapBounds);
