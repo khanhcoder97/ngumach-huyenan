@@ -305,9 +305,6 @@ public sealed class CombatTickEngine
                     while (cast.NextHitIndex < cast.HitTicks.Length &&
                            cast.StartTick + cast.HitTicks[cast.NextHitIndex] <= tick)
                     {
-                    while (cast.NextHitIndex < cast.HitTicks.Length &&
-                           cast.StartTick + cast.HitTicks[cast.NextHitIndex] <= tick)
-                    {
                         var hitIndex = cast.NextHitIndex;
                         var impactTick = cast.StartTick + cast.HitTicks[hitIndex];
                         cast.NextHitIndex++;
