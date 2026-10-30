@@ -1,72 +1,122 @@
 # OPC-08 Asset Preview Tool
 
-Static HTML/CSS/JS preview server (Python stdlib only, no Unity required).
+Local, read-only sprite preview server (Python stdlib only, no Unity required).
 
-## Quick Start
+## Quick start
 
-1. **Create fixtures** (if needed):
-   ```bash
-   python Tools/AssetPreview/create_fixtures.py
-   ```
+```bash
+# 1. Regenerate the deterministic 288x512 / 6-column x 8-row fixture
+python Tools/AssetPreview/create_fixtures.py
 
-2. **Start preview server**:
-   ```bash
-   python Tools/AssetPreview/server.py --root . --port 8080
-   ```
+# 2. Start the preview server confined to the repository root
+python Tools/AssetPreview/server.py --root .
 
-3. **Open browser**: http://localhost:8080
+# 3. Open http://127.0.0.1:8080
+```
 
-4. **Load sprite**: `Client/Assets/Art/Fixtures/synthetics/actor_8dir_test.png`
+The default manifest is `Client/Assets/ArtManifests/muse_delivery_manifest.json`.
+Use `--manifest Tools/AssetPreview/fixtures/preview_manifest.json` for the
+synthetic fixture.
 
-5. **Fetch layout**: Use asset ID from manifest (e.g., `FIX_ACTOR_8DIR_TEST`)
+## URL parameters
+
+The UI also accepts a reproducible deep link:
+
+```
+http://127.0.0.1:8080/?assetId=CHR_MINH_KIEM_WALK\
+&path=Client/Assets/Art/Characters/MinhKiem/minh_kiem_walk.png\
+&direction=SW&play=1
+```
+
+* `assetId` loads `/api/layout/<assetId>` and then the manifest image.
+* `path` loads a sheet directly when no `assetId` is supplied.
+* `direction` must be one of `N, NE, E, SE, S, SW, W, NW`.
+* `play=1` starts the selected animation after a supported layout loads.
 
 ## Features
 
 ### Server (`server.py`)
-- Binds to localhost only (path traversal protected)
-- API endpoints:
-  - `GET /` → preview UI
-  - `GET /api/sprites/<path>` → serve PNG images
-  - `GET /api/layout/<asset_id>` → calculate grid layout from v2 manifest schema
-- Standard library only: `http.server`, `socketserver`, `json`, `pathlib`, `urllib`
-- No external dependencies
+
+* Binds to the requested host (default `127.0.0.1`) and confines every path to
+  `--root`; there is no working-directory fallback.
+* Percent-decodes each API path exactly once, rejects NUL, absolute/drive/UNC
+  paths and `..`/symlink escapes, and serves only PNG/JPEG/GIF/WebP.
+* No wildcard CORS header.
+* Endpoints:
+  * `GET /` → preview UI
+  * `GET /styles.css`, `GET /app.js` → static UI files
+  * `GET /api/sprites/<encoded path>` → image bytes
+  * `GET /api/layout/<assetId>` → truthful layout JSON
+
+### Layout semantics
+
+* Legacy v1 manifests (no `manifestVersion`) derive frame width from
+  `pixelWidth / framesPerDirection` and frame height from
+  `pixelHeight / directionCount`.
+* Real Muse asset `CHR_MINH_KIEM_WALK` therefore reports
+  **6 columns × 8 rows**, `48×64` per frame, `288×512` total.
+* v2 manifests must declare `frameSize`; a missing/inconsistent field returns
+  `supported: false` with explicit `unsupportedReasons`. The server never
+  invents an 8×6 or 6×8 grid.
+* `columnStart`/`columnEnd` animation ranges are honoured by the selection
+  rectangle, frame preview and playback.
+* Lookup prefers the canonical `assetId`; the legacy `id` field still works but
+  emits a warning.
 
 ### UI (`index.html`, `styles.css`, `app.js`)
-- Canvas-based sprite sheet viewer
-- Nearest-neighbor zoom (1x–8x)
-- Grid overlay toggle
-- Directional navigation buttons (N, NE, E, SE, S, SW, W, NW)
-- Animation playback timeline
-- VFX frame-by-frame inspection
 
-## File Structure
+* Fixed **720×560** canvas viewport with nearest-neighbour rendering.
+* Grid overlay, zoom, direction rows and per-frame preview.
+* Animation list and real interval playback (`fps`, `columnStart`).
+* Avoids stale state: manually loading a new sheet clears the previous layout,
+  animations and direction selection.
+* Publishes machine-readable state on `<body>` for browser smoke checks:
+  `data-layout-supported`, `data-layout-cols`, `data-layout-rows`,
+  `data-frame-width`, `data-frame-height`, `data-current-direction`,
+  `data-current-frame`, `data-animation`.
+
+## Verification
+
+```bash
+# Unit + HTTP integration tests
+python -m unittest discover -s Tools/AssetPreview/tests -v
+
+# Real headless browser check (DOM state + screenshot evidence)
+python Tools/AssetPreview/browser_smoke.py \
+  --manifest Client/Assets/ArtManifests/muse_delivery_manifest.json \
+  --asset-id CHR_MINH_KIEM_WALK \
+  --path Client/Assets/Art/Characters/MinhKiem/minh_kiem_walk.png \
+  --direction SW \
+  --screenshot preview-evidence.png
+```
+
+The browser check verifies six columns, eight rows, `48×64` frames, the selected
+direction and `walk` playback, then saves a screenshot. It is a UI smoke test,
+**not** Unity import or runtime playback proof.
+
+## File structure
 
 ```
 Tools/AssetPreview/
-├── server.py          # HTTP server with API
-├── index.html         # Preview UI template
-├── styles.css         # Dark theme styling
-├── app.js             # Plain JS logic (no frameworks)
-├── create_fixtures.py # Generate synthetic PNGs for testing
-└── README.md          # This file
+├── server.py              # HTTP server + layout logic
+├── index.html             # Preview UI
+├── styles.css             # Dark theme
+├── app.js                 # Plain JS (no frameworks)
+├── create_fixtures.py     # Deterministic 6x8 fixture generator
+├── browser_smoke.py       # Optional headless Chrome/Edge evidence
+├── fixtures/              # Generated PNG/.meta/manifest
+├── tests/                 # unittest + HTTP integration tests
+└── README.md
 ```
 
-## Testing Checklist
+## Limits
 
-- [x] Server starts on localhost:8080
-- [x] Serve static files without CORS errors
-- [x] `/api/sprites/` proxies image requests
-- [x] `/api/layout/` returns calculated geometry
-- [x] Path traversal blocked (../ rejected)
-- [x] Fixtures created: `actor_8dir_test.png` (48×64 × 48 sprites)
-- [x] Unity `.meta` format validated
-- [x] Zoom and grid rendering functional
-
-## Review Questions
-
-1. Should support URL-based sprites (serve from remote origin)?
-2. Add metadata validation warnings in UI?
-3. Support multiple viewports for overlap checking?
+* The preview is a static/visual tool; it does not prove Unity compile,
+  animation import or in-game playback.
+* Layout support covers `direction_rows` and `strip` sheets. Other layouts are
+  reported unsupported rather than guessed.
+* JPEG/GIF/WebP are served read-only but layout maths assumes atlas geometry
+  declared by the manifest.
 
 ---
 

@@ -1,153 +1,553 @@
-﻿fileFormatVersion: 2
-guid: 00000000000000000000000000000000
+fileFormatVersion: 2
+guid: a1b2c3d4e5f60718293a4b5c6d7e8f90
 TextureImporter:
-  spritePixelsToUnits: 20
+  internalIDToNameTable: []
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
   spriteMode: 2
-  enableMipMap: 0
-  filterMode: 0
+  spritePivot: {x: 0.5, y: 0}
+  spritePixelsToUnits: 20
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
   spriteSheet:
+    serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: actor_8dir_test_d0_f0
-      rect: {x: 0, y: 0, width: 48, height: 64}
+      name: actor_8dir_test_N_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 448
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 00000000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d0_f1
-      rect: {x: 48, y: 0, width: 48, height: 64}
+      name: actor_8dir_test_N_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 448
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 00010000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d0_f2
-      rect: {x: 96, y: 0, width: 48, height: 64}
+      name: actor_8dir_test_N_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 448
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 00020000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d0_f3
-      rect: {x: 144, y: 0, width: 48, height: 64}
+      name: actor_8dir_test_N_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 448
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 00030000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d0_f4
-      rect: {x: 192, y: 0, width: 48, height: 64}
+      name: actor_8dir_test_N_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 448
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 00040000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d0_f5
-      rect: {x: 240, y: 0, width: 48, height: 64}
+      name: actor_8dir_test_N_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 448
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 00050000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d1_f0
-      rect: {x: 0, y: 64, width: 48, height: 64}
+      name: actor_8dir_test_NE_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 01000000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d1_f1
-      rect: {x: 48, y: 64, width: 48, height: 64}
+      name: actor_8dir_test_NE_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 384
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 01010000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d1_f2
-      rect: {x: 96, y: 64, width: 48, height: 64}
+      name: actor_8dir_test_NE_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 384
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 01020000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d1_f3
-      rect: {x: 144, y: 64, width: 48, height: 64}
+      name: actor_8dir_test_NE_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 384
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 01030000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d1_f4
-      rect: {x: 192, y: 64, width: 48, height: 64}
+      name: actor_8dir_test_NE_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 384
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 01040000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d1_f5
-      rect: {x: 240, y: 64, width: 48, height: 64}
+      name: actor_8dir_test_NE_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 384
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 01050000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d2_f0
-      rect: {x: 0, y: 128, width: 48, height: 64}
+      name: actor_8dir_test_E_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 02000000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d2_f1
-      rect: {x: 48, y: 128, width: 48, height: 64}
+      name: actor_8dir_test_E_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 320
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 02010000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d2_f2
-      rect: {x: 96, y: 128, width: 48, height: 64}
+      name: actor_8dir_test_E_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 320
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 02020000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d2_f3
-      rect: {x: 144, y: 128, width: 48, height: 64}
+      name: actor_8dir_test_E_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 320
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 02030000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d2_f4
-      rect: {x: 192, y: 128, width: 48, height: 64}
+      name: actor_8dir_test_E_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 320
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 02040000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d2_f5
-      rect: {x: 240, y: 128, width: 48, height: 64}
+      name: actor_8dir_test_E_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 320
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 02050000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d3_f0
-      rect: {x: 0, y: 192, width: 48, height: 64}
+      name: actor_8dir_test_SE_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 03000000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d3_f1
-      rect: {x: 48, y: 192, width: 48, height: 64}
+      name: actor_8dir_test_SE_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 03010000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d3_f2
-      rect: {x: 96, y: 192, width: 48, height: 64}
+      name: actor_8dir_test_SE_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 03020000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d3_f3
-      rect: {x: 144, y: 192, width: 48, height: 64}
+      name: actor_8dir_test_SE_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 256
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 03030000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d3_f4
-      rect: {x: 192, y: 192, width: 48, height: 64}
+      name: actor_8dir_test_SE_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 256
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 03040000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d3_f5
-      rect: {x: 240, y: 192, width: 48, height: 64}
+      name: actor_8dir_test_SE_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 256
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 03050000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d4_f0
-      rect: {x: 0, y: 256, width: 48, height: 64}
+      name: actor_8dir_test_S_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 04000000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d4_f1
-      rect: {x: 48, y: 256, width: 48, height: 64}
+      name: actor_8dir_test_S_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 04010000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d4_f2
-      rect: {x: 96, y: 256, width: 48, height: 64}
+      name: actor_8dir_test_S_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 04020000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d4_f3
-      rect: {x: 144, y: 256, width: 48, height: 64}
+      name: actor_8dir_test_S_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 192
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 04030000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d4_f4
-      rect: {x: 192, y: 256, width: 48, height: 64}
+      name: actor_8dir_test_S_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 04040000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d4_f5
-      rect: {x: 240, y: 256, width: 48, height: 64}
+      name: actor_8dir_test_S_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 192
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 04050000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d5_f0
-      rect: {x: 0, y: 320, width: 48, height: 64}
+      name: actor_8dir_test_SW_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 05000000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d5_f1
-      rect: {x: 48, y: 320, width: 48, height: 64}
+      name: actor_8dir_test_SW_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 05010000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d5_f2
-      rect: {x: 96, y: 320, width: 48, height: 64}
+      name: actor_8dir_test_SW_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 05020000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d5_f3
-      rect: {x: 144, y: 320, width: 48, height: 64}
+      name: actor_8dir_test_SW_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 128
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 05030000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d5_f4
-      rect: {x: 192, y: 320, width: 48, height: 64}
+      name: actor_8dir_test_SW_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 128
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 05040000000000000000000000000000
     - serializedVersion: 2
-      name: actor_8dir_test_d5_f5
-      rect: {x: 240, y: 320, width: 48, height: 64}
+      name: actor_8dir_test_SW_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 128
+        width: 48
+        height: 64
+      alignment: 9
       pivot: {x: 0.5, y: 0}
+      spriteID: 05050000000000000000000000000000
+    - serializedVersion: 2
+      name: actor_8dir_test_W_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 48
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      spriteID: 06000000000000000000000000000000
+    - serializedVersion: 2
+      name: actor_8dir_test_W_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 48
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      spriteID: 06010000000000000000000000000000
+    - serializedVersion: 2
+      name: actor_8dir_test_W_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 48
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      spriteID: 06020000000000000000000000000000
+    - serializedVersion: 2
+      name: actor_8dir_test_W_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 64
+        width: 48
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      spriteID: 06030000000000000000000000000000
+    - serializedVersion: 2
+      name: actor_8dir_test_W_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 48
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      spriteID: 06040000000000000000000000000000
+    - serializedVersion: 2
+      name: actor_8dir_test_W_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 64
+        width: 48
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      spriteID: 06050000000000000000000000000000
+    - serializedVersion: 2
+      name: actor_8dir_test_NW_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 48
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      spriteID: 07000000000000000000000000000000
+    - serializedVersion: 2
+      name: actor_8dir_test_NW_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 48
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      spriteID: 07010000000000000000000000000000
+    - serializedVersion: 2
+      name: actor_8dir_test_NW_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 48
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      spriteID: 07020000000000000000000000000000
+    - serializedVersion: 2
+      name: actor_8dir_test_NW_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 48
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      spriteID: 07030000000000000000000000000000
+    - serializedVersion: 2
+      name: actor_8dir_test_NW_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 48
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      spriteID: 07040000000000000000000000000000
+    - serializedVersion: 2
+      name: actor_8dir_test_NW_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 48
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      spriteID: 07050000000000000000000000000000

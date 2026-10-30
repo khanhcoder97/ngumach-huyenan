@@ -10,7 +10,7 @@
     <div class="container">
         <header>
             <h1>🎮 Sprite Sheet Preview Tool</h1>
-            <p class="subtitle">OPC-08: Static asset preview server (Python stdlib)</p>
+            <p class="subtitle">OPC-08: local, root-confined preview (Python stdlib, no Unity required)</p>
         </header>
 
         <section class="controls">
@@ -31,8 +31,8 @@
             <div class="control-group">
                 <label for="zoomLevel">Zoom:</label>
                 <select id="zoomLevel">
-                    <option value="1">1x</option>
-                    <option value="2" selected>2x</option>
+                    <option value="1" selected>1x (fit)</option>
+                    <option value="2">2x</option>
                     <option value="3">3x</option>
                     <option value="4">4x</option>
                     <option value="6">6x</option>
@@ -49,13 +49,12 @@
 
         <main class="preview-area">
             <div id="sheetContainer" class="sheet-container">
-                <canvas id="spriteCanvas"></canvas>
-                <div id="gridOverlay" class="grid-overlay"></div>
+                <canvas id="spriteCanvas" width="720" height="560"></canvas>
             </div>
         </main>
 
         <aside class="sidebar">
-            <section class="directions" id="directionsPanel" class="hidden">
+            <section class="directions hidden" id="directionsPanel">
                 <h3>Directions:</h3>
                 <div class="direction-buttons">
                     <button data-dir="NW" class="dir-btn">↖ NW</button>
@@ -87,7 +86,7 @@
     </div>
 
     <footer>
-        <p>OPC-08 Implementation | No Unity required | Localhost only | Path traversal protected</p>
+        <p>OPC-08 Implementation | No Unity required | Localhost only | Single URL decode | Root-confined images</p>
     </footer>
 
     <script src="/app.js"></script>
