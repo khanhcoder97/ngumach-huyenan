@@ -22,9 +22,10 @@ Two profiles, matching the production gates:
             P1__MobBehavior__Enabled, plus larger starting HP/MP so one actor
             can live through every phase). Quest gates stay OFF: this is a
             separate fixture, not the dev scenario with more flags. Drives a
-            live 20 Hz fight over HTTP with conditional waits: walk the road
-            past one mob group -> read TELEGRAPH -> step out of attack range
-            and prove the committed impact whiffs -> stand still and take the
+            live 20 Hz fight over HTTP with conditional waits: walk the
+            y=7,5 corridor (outside every group's aggro radius) -> drop onto
+            the road beside one group -> read TELEGRAPH -> step out of attack
+            range and prove the committed impact whiffs -> stand still and take the
             whole CARPLING hit ->
             guard the next front hit and read COUNTER_CONFIRMED plus the
             counter's own resolution against the mob's snapshot hp -> stay
@@ -438,6 +439,7 @@ MOB_GROUP = (
     "ENT_MAN_BM_SPAWN_BM_01_M3",
 )
 APPROACH_X = 87.0
+APPROACH_Y = 7.5
 ESCAPE_X = 91.5
 CARPLING_DAMAGE = 10
 CARPLING_MAX_HP = 192
@@ -476,13 +478,18 @@ def wait_for(deadline_seconds, probe):
         time.sleep(0.05)
 
 
-def walk_to(session_id, character_id, sequence, target_x, target_y):
+def walk_to(session_id, character_id, sequence, target_x, target_y,
+            axes=("y", "x")):
     """Walk 1,5-WU steps to a grid-aligned target, one axis at a time (the
-    server clamps every step to MaxStepDistanceWu). Returns (sequence, x, y)."""
+    server clamps every step to MaxStepDistanceWu). The axis order matters: the
+    scenario needs to clear the mob line in y before closing in x, because
+    every group stands on y=0 and aggro is a radius, not a lane.
+    Returns (sequence, x, y)."""
     _, self_state, _, _ = v2_snapshot(session_id)
     x = self_state.get("x", 0.0)
     y = self_state.get("y", 0.0)
-    for axis, target in (("x", target_x), ("y", target_y)):
+    for axis in axes:
+        target = target_x if axis == "x" else target_y
         for _ in range(200):
             current = x if axis == "x" else y
             delta = target - current
@@ -525,25 +532,47 @@ def mob_combat_profile():
     smoke_p1.check(full_hp > 200, f"mob profile did not start with endurance HP: {full_hp}")
 
     sequence = 1
-    # Walk the road east past the group's spawn at x=84 and stop four WU beyond
-    # it. The actor moves 6 WU/s while a CARPLING walks 2 WU/s, so passing
-    # x=78..90 engages the group without ever being caught mid-walk.
-    sequence, x, y = walk_to(session, character_id, sequence, APPROACH_X, 0.0)
-    smoke_p1.check(abs(x - APPROACH_X) < 1e-6 and abs(y) < 1e-6,
+    # Lane first, then the road: every group on this map stands on y=0, so a
+    # corridor at y=7,5 (above the 6 WU aggro radius) is outside all of them
+    # regardless of x. Approaching along the road itself does not work — the
+    # first CI run of this profile proved that by engaging two groups at once
+    # while passing x=80 and x=84.
+    sequence, x, y = walk_to(session, character_id, sequence, APPROACH_X, APPROACH_Y)
+    smoke_p1.check(abs(x - APPROACH_X) < 1e-6 and abs(y - APPROACH_Y) < 1e-6,
                    f"approach stopped at {x},{y}")
     _, self_state, entities, _ = v2_snapshot(session)
-    engaged_now = sorted(entry.get("entityId") for entry in entities.values()
-                         if entry.get("kind") == "MOB" and entry.get("state") in AGGRO_STATES)
-    smoke_p1.check(bool(engaged_now) and set(engaged_now) <= set(MOB_GROUP),
-                   f"the road engaged something outside the SPAWN_BM_01 group: {engaged_now}")
+    lane_engaged = sorted(entry.get("entityId") for entry in entities.values()
+                          if entry.get("kind") == "MOB" and entry.get("state") in AGGRO_STATES)
+    smoke_p1.check(not lane_engaged,
+                   f"something engaged from the {APPROACH_Y} WU lane: {lane_engaged}")
     smoke_p1.check(self_state.get("hp") == full_hp,
-                   f"the engaged group caught the actor mid-walk: {self_state.get('hp')}")
+                   f"the lane was not safe: hp {self_state.get('hp')} of {full_hp}")
 
     def telegraphed_mob():
         _, _, entities, _ = v2_snapshot(session)
         return next((entry for entry in entities.values()
                      if entry.get("kind") == "MOB" and entry.get("state") == "TELEGRAPH"),
                     None)
+
+    def engaged_mobs():
+        _, _, entities, _ = v2_snapshot(session)
+        return sorted(entry.get("entityId") for entry in entities.values()
+                      if entry.get("kind") == "MOB" and entry.get("state") in AGGRO_STATES)
+
+    def group_engaged():
+        engaged = engaged_mobs()
+        return engaged if engaged and set(engaged) <= set(MOB_GROUP) else None
+
+    # Drop onto the road beside the target group. The escort group four WU back
+    # stays out: at x=87 it is 7 WU away, past its own radius.
+    sequence, x, y = walk_to(session, character_id, sequence, APPROACH_X, 0.0)
+    engaged = wait_for(10, group_engaged)
+    smoke_p1.check(engaged is not None,
+                   f"descending onto the road did not engage exactly the target group: "
+                   f"{engaged_mobs()}")
+    _, landed, _, _ = v2_snapshot(session)
+    smoke_p1.check(landed.get("hp") == full_hp,
+                   f"mob damage landed during the descent: {landed.get('hp')}")
 
     telegraph = wait_for(15, telegraphed_mob)
     smoke_p1.check(telegraph is not None, "the engaged mob never opened a TELEGRAPH")
