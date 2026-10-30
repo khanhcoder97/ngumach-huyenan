@@ -34,6 +34,7 @@ import argparse
 import http.server
 import json
 import os
+import re
 import sys
 import urllib.parse
 from pathlib import Path
@@ -331,7 +332,17 @@ def _decode_component(value: str) -> str:
 def resolve_under_root(root: Path, value: str) -> Path:
     if not isinstance(value, str) or not value.strip():
         raise ValueError("path must be a non-empty relative path")
-    candidate = Path(value.replace("\\", "/"))
+    raw = value.replace("\\", "/")
+    # Reject Windows drive/UNC and POSIX absolute forms explicitly. Path()
+    # classifies "C:/..." as relative on POSIX, so the old check was
+    # platform-dependent and let the same URL behave differently on CI.
+    if (
+        raw.startswith("/")
+        or raw.startswith("//")
+        or re.match(r"^[A-Za-z]:", raw)
+    ):
+        raise ValueError("absolute, drive and UNC paths are not allowed")
+    candidate = Path(raw)
     if candidate.is_absolute() or candidate.drive or candidate.root:
         raise ValueError("absolute, drive and UNC paths are not allowed")
     resolved = (root / candidate).resolve()
