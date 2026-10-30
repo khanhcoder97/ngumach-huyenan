@@ -8,7 +8,8 @@ public sealed class P1CombatDamageOptions
 }
 
 // Lazy gate for the QOD-16 combat subset. The mob stat bundle, the SK-MK-03
-// range migration and the DEC-022 guard precision bundle are only read when
+// range migration, the DEC-022 guard precision bundle and the QOD-17 loot
+// recipe bundle are only read when
 // P1:CombatDamage:Enabled=true (OFF by default); enabling it logs a DEV STUB
 // warning like the other feature gates. Self-check loads the bundles directly.
 public sealed class CombatDamageFeature
@@ -16,6 +17,7 @@ public sealed class CombatDamageFeature
     private readonly Lazy<MobStatBundle> _mobStats;
     private readonly Lazy<SkillRangeMigration> _rangeMigration;
     private readonly Lazy<GuardPrecisionBundle> _guardPrecision;
+    private readonly Lazy<LootRecipeBundle> _lootRecipes;
 
     public CombatDamageFeature(
         P1CombatDamageOptions options,
@@ -44,6 +46,13 @@ public sealed class CombatDamageFeature
                 configuration, environment.ContentRootPath);
             return GuardPrecisionLoader.Load(path);
         });
+        _lootRecipes = new Lazy<LootRecipeBundle>(() =>
+        {
+            EnsureEnabled();
+            var path = LootRecipeLoader.DiscoverPath(
+                configuration, environment.ContentRootPath);
+            return LootRecipeLoader.Load(path);
+        });
     }
 
     public bool Enabled { get; }
@@ -53,6 +62,8 @@ public sealed class CombatDamageFeature
     public SkillRangeMigration RangeMigration => _rangeMigration.Value;
 
     public GuardPrecisionBundle GuardPrecision => _guardPrecision.Value;
+
+    public LootRecipeBundle LootRecipes => _lootRecipes.Value;
 
     private void EnsureEnabled()
     {
