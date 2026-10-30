@@ -181,13 +181,13 @@ public sealed class MobLifecycleService
                 Transition(entity, brain, MobBehaviorStates.Chase, now, target.EntityId, events);
             }
 
-            if (distanceToTarget <= _options.AttackRangeWu)
-            {
-                TickAttackCycle(entity, brain, target, now, events);
-                continue;
-            }
+            // The cycle runs whatever the current gap is: a telegraph that is
+            // already committed must still resolve its impact frame, otherwise
+            // a player who steps out of range freezes the mob mid-swing.
+            TickAttackCycle(entity, brain, target, now, distanceToTarget, events);
 
-            if (string.Equals(brain.State, MobBehaviorStates.Chase, StringComparison.Ordinal))
+            if (distanceToTarget > _options.AttackRangeWu &&
+                string.Equals(brain.State, MobBehaviorStates.Chase, StringComparison.Ordinal))
             {
                 MoveToward(entity, target.X, target.Y, deltaSeconds, brain);
             }
@@ -204,12 +204,18 @@ public sealed class MobLifecycleService
         MobBrain brain,
         CombatTarget target,
         DateTimeOffset now,
+        double distanceToTarget,
         List<MobLifecycleEvent> events)
     {
         switch (brain.State)
         {
             case MobBehaviorStates.Chase:
             {
+                if (distanceToTarget > _options.AttackRangeWu)
+                {
+                    return;
+                }
+
                 if (brain.NextAttackAtUtc is { } ready && now < ready)
                 {
                     return;

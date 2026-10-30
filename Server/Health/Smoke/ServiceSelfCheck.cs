@@ -2109,8 +2109,10 @@ public static class ServiceSelfCheck
         runner.X = 44;
         runner.Y = 0;
         whiffAi.Tick([runner]);
-        runner.X = 44.6;
         whiffAi.Tick([runner]);
+        // The telegraph only opens while the target is in range; the player
+        // escapes during the read window, and the mob holds its ground.
+        runner.X = 44.6;
         whiffClock.Advance(TimeSpan.FromSeconds(0.60));
         var whiffTick = whiffAi.Tick([runner]);
         var whiffImpact = whiffAttacks.ApplyImpacts(whiffTick, [runner]);
@@ -2118,7 +2120,8 @@ public static class ServiceSelfCheck
             "mob.impact_whiffs_out_of_range",
             ImpactCount(whiffTick) == 1 &&
             whiffImpact.Count == 1 &&
-            whiffImpact[0] is { Applied: false, BlockedReason: nameof(MobAttackBlockedReasons.OutOfRangeAtImpact) } &&
+            !whiffImpact[0].Applied &&
+            whiffImpact[0].BlockedReason == MobAttackBlockedReasons.OutOfRangeAtImpact &&
             runner.Hp == 100,
             whiffImpact.Count == 1 ? whiffImpact[0].BlockedReason : "no resolution");
 
@@ -2159,7 +2162,8 @@ public static class ServiceSelfCheck
         Check(
             "mob.damage_gate_off",
             gateOffImpact.Count == 1 &&
-            gateOffImpact[0] is { Applied: false, BlockedReason: nameof(MobAttackBlockedReasons.GateOff) } &&
+            !gateOffImpact[0].Applied &&
+            gateOffImpact[0].BlockedReason == MobAttackBlockedReasons.GateOff &&
             prey.Hp == 80,
             gateOffImpact.Count == 1 ? gateOffImpact[0].BlockedReason : "no resolution");
 
@@ -2199,12 +2203,13 @@ public static class ServiceSelfCheck
                 resolution.EntityId == "ENT_SELFCHECK_STALKER_ELITE") is
                 { Damage: 33, AttackId: "POUNCE" },
             $"hp={elitePrey.Hp}");
+        var unknownResolution = oracleImpacts.Single(resolution =>
+            resolution.EntityId == "ENT_SELFCHECK_MOSS_BEAST");
         Check(
             "mob.damage_unknown_template",
             unknownPrey.Hp == 100 &&
-            oracleImpacts.Single(resolution =>
-                resolution.EntityId == "ENT_SELFCHECK_MOSS_BEAST")
-                is { Applied: false, BlockedReason: nameof(MobAttackBlockedReasons.UnknownTemplate) },
+            !unknownResolution.Applied &&
+            unknownResolution.BlockedReason == MobAttackBlockedReasons.UnknownTemplate,
             $"hp={unknownPrey.Hp}");
 
         var downedPrey = NewPlayer("CHR_SELFCHECK_DOWNED_PREY", hp: 0);
@@ -2213,12 +2218,13 @@ public static class ServiceSelfCheck
         var downedTick = mobAi.Tick([downedPrey]);
         var downedImpact = mobAttacks.ApplyImpacts(
             [Impact("ENT_SELFCHECK_MOB", downedPrey.CharacterId)], [downedPrey]);
+        var downedResolution = downedImpact.Single();
         Check(
             "mob.downed_target_untouched",
             ImpactCount(downedTick) == 0 &&
-            downedImpact.Single()
-                is { Applied: false, BlockedReason: nameof(MobAttackBlockedReasons.TargetDown) },
-            downedImpact.Single().BlockedReason);
+            !downedResolution.Applied &&
+            downedResolution.BlockedReason == MobAttackBlockedReasons.TargetDown,
+            downedResolution.BlockedReason);
 
         var wallClock = new ManualServerClock(
             new DateTimeOffset(2026, 10, 29, 2, 0, 0, TimeSpan.Zero));
