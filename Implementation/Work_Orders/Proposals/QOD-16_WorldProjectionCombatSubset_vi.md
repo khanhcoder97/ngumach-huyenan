@@ -304,6 +304,8 @@ Work order 13 Q-B: "Mob telegraph metadata/read projection phải có enough tim
 ```
 Quy tắc: enum `state` đóng như hiện tại; thêm field mới vào `telegraph` = bump `schemaVersion` của block chứ không của snapshot; `null` là "server không biết", client **không** được tự điền số; capability `mob-telegraph-v1` trong `/p1/sessions` để client biết có được đọc hay không. Nếu owner duyệt: schema + example + `validate_contracts.py` (optional, integer ≥ 0, null được phép) + README + assert trong `e2e-mob-combat`. Chưa duyệt thì read model này phục vụ test/probe nội bộ, đúng like Q-B2.
 
+**Đo được ở CI head `03fecc2`:** self-check **338 PASS / 0 FAIL** (6 case `telegraph.*` mới), HTTP smoke **453 checks**, `e2e-mob-combat` **85 checks** — lần thứ ba liên tiếp cùng số (mob_damage=30, counter_hit=34), e2e default 9 / dev 176, hai probe của report vẫn PASS. Q-B đóng ở đây (B1 dash, B2 status, B3 death-return + cleanup, B4 profile mob combat live, B5 telegraph read model); phần wire của B2/B5 chờ owner duyệt contract.
+
 ### 9.16 Triển khai tiếp
 
 Q-C objective graph P00-01..05 (runtime records từ source, loader/adapter/validator phía Qoder, không compiler cạnh tranh), Q-D XP/level + stat transaction một khối, Q-E loot grant + equipment cho cơ chế đã có data, Q-F Mãng Cốt encounter proposal + state machine, Q-G E2E nhiều client + handoff + proposal PostgreSQL (`Server/Persistence*` thuộc Remote #79).
