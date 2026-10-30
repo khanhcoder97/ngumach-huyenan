@@ -1115,7 +1115,7 @@ def main():
     dash_character = dash_created["result"]["self"]["characterId"]
     dash_headers = {"X-Session-ID": dash_session}
     dash_start_x = dash_created["result"]["self"]["x"]
-    dash_revision = dash_created["result"]["self"]["revision"]
+    dash_revision = dash_created["revision"]
     dash_command = combat_v2_envelope("SKILL", 1, skill_id="SK-MK-02",
                                       character_id=dash_character,
                                       request_id="8" * 32, idempotency_key="9" * 32)
@@ -1126,10 +1126,12 @@ def main():
     dash_deadline = time.monotonic() + 3
     dash_moved = False
     dash_self = {}
+    dash_page = {}
     while time.monotonic() < dash_deadline:
         status, _, dash_world = call("GET", f"/p1/v2/world/{dash_session}", headers=dash_headers)
         check(status == 200, f"dash world read returned {status}")
-        dash_self = (dash_world.get("result") or {}).get("self") or {}
+        dash_page = dash_world.get("result") or {}
+        dash_self = dash_page.get("self") or {}
         if dash_self.get("x") != dash_start_x:
             dash_moved = True
             break
@@ -1138,8 +1140,8 @@ def main():
           f"dash moved {dash_start_x} -> {dash_self.get('x')} (expected {dash_start_x + 11})")
     check(dash_self.get("mp") == 34 and dash_self.get("hp") == 100,
           f"dash kept cost/hp mp={dash_self.get('mp')} hp={dash_self.get('hp')}")
-    check(dash_self.get("revision", dash_revision) > dash_revision,
-          f"dash revision {dash_revision} -> {dash_self.get('revision')}")
+    check(dash_world.get("revision", dash_revision) > dash_revision,
+          f"dash revision {dash_revision} -> {dash_world.get('revision')}")
 
     print(f"PASS: {CHECKS} smoke checks against {BASE_URL}")
 
