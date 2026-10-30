@@ -1013,6 +1013,7 @@ public static class ServiceSelfCheck
         // QOD-17 tick engine: impacts resolve on the real tick with the
         // labelled baseline actor stats, life-scoped mob HP, death and kill
         // credit keyed by the death event.
+        var tickRecords = services.GetRequiredService<WorldRecordCatalog>();
         var tickClock = new ManualServerClock(
             new DateTimeOffset(2026, 10, 30, 4, 0, 0, TimeSpan.Zero));
         WorldEntityInstance MakeTickMob(string entityId, double x)
@@ -1061,7 +1062,7 @@ public static class ServiceSelfCheck
         tickQuestActor.X = 0;
         tickQuestActor.Y = 0;
         var tickQuests = new InMemoryQuestService(
-            TickCatalog(), new InMemoryQuestStateStore(), worldRecords, tickClock);
+            TickCatalog(), new InMemoryQuestStateStore(), tickRecords, tickClock);
         tickQuests.Accept(tickQuestActor, "TEST-TICK-01");
 
         var tickRegistry = new WorldEntityRegistry(
@@ -1199,7 +1200,7 @@ public static class ServiceSelfCheck
         deathActor.X = 0;
         deathActor.Y = 0;
         var deathQuests = new InMemoryQuestService(
-            TickCatalog(), new InMemoryQuestStateStore(), worldRecords, tickClock);
+            TickCatalog(), new InMemoryQuestStateStore(), tickRecords, tickClock);
         deathQuests.Accept(deathActor, "TEST-TICK-01");
         var deathEngine = new CombatTickEngine(
             deathRegistry, enabledCombat, combatSkills,
@@ -1220,21 +1221,21 @@ public static class ServiceSelfCheck
             }
         }
 
-        deathRegistry.TryGet("ENT_SELFCHECK_TICK_MOB", out var deadMob);
+        deathRegistry.TryGet("ENT_SELFCHECK_TICK_MOB", out var deadTickMob);
         var killState = deathQuests.GetState(deathActor.CharacterId, "TEST-TICK-01").State;
         Check(
             "tick.death_once_and_credit",
             deathCount == 1 &&
-            deadMob.State == WorldEntityStates.Dead &&
-            deadMob.LifeId == 1 &&
+            deadTickMob.State == WorldEntityStates.Dead &&
+            deadTickMob.LifeId == 1 &&
             killState is { State: QuestStates.Active } &&
             killState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL") == 1,
-            $"deaths={deathCount} state={deadMob.State} " +
+            $"deaths={deathCount} state={deadTickMob.State} " +
             $"kills={killState?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL")}");
 
         tickClock.Advance(TimeSpan.FromSeconds(18));
-        var respawned = deathRegistry.Update();
-        deathRegistry.TryGet("ENT_SELFCHECK_TICK_MOB", out var respawnedMob);
+        var tickRespawnCount = deathRegistry.Update();
+        deathRegistry.TryGet("ENT_SELFCHECK_TICK_MOB", out var tickRespawnedMob);
         deathEngine.Schedule(
             deathActor, deathActor.SessionId, new string('f', 32),
             CombatV2Actions.BasicAttack, null, 1, 0, 2000);
@@ -1244,13 +1245,13 @@ public static class ServiceSelfCheck
             .GetState(deathActor.CharacterId, "TEST-TICK-01").State;
         Check(
             "tick.respawn_new_life",
-            respawned == 1 &&
-            respawnedMob.LifeId == 2 &&
-            respawnedMob.State == WorldEntityStates.Alive &&
+            tickRespawnCount == 1 &&
+            tickRespawnedMob.LifeId == 2 &&
+            tickRespawnedMob.State == WorldEntityStates.Alive &&
             respawnImpact is { TargetLifeId: 2, HitIndex: 0 } &&
             (deathStore.TryGet("ENT_SELFCHECK_TICK_MOB", 2)?.Hp ?? 0) == 173 &&
             killStateAfterRespawn.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL") == 1,
-            $"life={respawnedMob.LifeId} hp={deathStore.TryGet("ENT_SELFCHECK_TICK_MOB", 2)?.Hp}");
+            $"life={tickRespawnedMob.LifeId} hp={deathStore.TryGet("ENT_SELFCHECK_TICK_MOB", 2)?.Hp}");
 
         Check(
             "damage.oracle_raw",
