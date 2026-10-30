@@ -1323,7 +1323,8 @@ public static class ServiceSelfCheck
                 Quantity: 0
             });
 
-        var lastLootReceipt = new LootRoller(lootRecipes, new FixedLootRolls(0.999))
+        var lastLootReceipt = new LootRoller(
+                lootRecipes, new ChanceThenSelectionRolls(chance: 0.0, selection: 0.999))
             .Roll("MOB_CARPLING", "kill-last");
         Check(
             "loot.select_one_weighted_last",
@@ -3601,6 +3602,21 @@ public static class ServiceSelfCheck
 
             return base.TryRecord(characterId, questId, result);
         }
+    }
+
+    private sealed class ChanceThenSelectionRolls : ILootRollSource
+    {
+        private readonly double _chance;
+        private readonly double _selection;
+
+        public ChanceThenSelectionRolls(double chance, double selection)
+        {
+            _chance = chance;
+            _selection = selection;
+        }
+
+        public double Uniform01(string seed) =>
+            seed.Contains("|chance", StringComparison.Ordinal) ? _chance : _selection;
     }
 
     private sealed class FixedLootRolls : ILootRollSource
