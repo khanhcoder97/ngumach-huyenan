@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Muse map candidate envelope (never runtime activated)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "mapId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "layoutVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "const": "CANDIDATE_REQUIRES_REVIEW"
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "runtimeActivationAllowed": {
+      "type": "boolean",
+      "const": false
+    },
+    "navigationReview": {
+      "const": "TOPDOWN_REVIEW_REQUIRED"
+    },
+    "tilePixels": {
+      "type": "integer",
+      "const": 16
+    },
+    "pixelsPerUnit": {
+      "type": "integer",
+      "const": 20
+    },
+    "worldCellSizeWu": {
+      "type": "number",
+      "const": 0.8
+    },
+    "originWu": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ]
+    },
+    "rowAxis": {
+      "enum": [
+        "+Y",
+        "-Y"
+      ]
+    },
+    "layoutDigest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "canonicalPlacementCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "mapPlacementCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "tilesets": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "maxItems": 1000000
+    },
+    "layers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role": {
+            "enum": [
+              "GROUND",
+              "DECORATION",
+              "COLLISION_CANDIDATE"
+            ]
+          },
+          "tilesetId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4096
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4096
+          },
+          "tiles": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "maxItems": 1000000
+          }
+        },
+        "required": [
+          "id",
+          "role",
+          "tilesetId",
+          "width",
+          "height",
+          "tiles"
+        ]
+      },
+      "maxItems": 1000000
+    },
+    "props": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "maxItems": 1000000
+    },
+    "placements": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "maxItems": 1000000
+    },
+    "actors": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "maxItems": 1000000
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "maxItems": 1000000
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "maxItems": 1000000
+    },
+    "bundleDigest": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "mapId",
+    "layoutVersion",
+    "status",
+    "synthetic",
+    "runtimeActivationAllowed",
+    "navigationReview",
+    "tilePixels",
+    "pixelsPerUnit",
+    "worldCellSizeWu",
+    "originWu",
+    "rowAxis",
+    "layoutDigest",
+    "canonicalPlacementCount",
+    "mapPlacementCount",
+    "tilesets",
+    "layers",
+    "props",
+    "placements",
+    "actors",
+    "sources",
+    "findings",
+    "bundleDigest"
+  ]
+}

@@ -1,0 +1,292 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/schemas/content-pipeline/candidate_bundle.schema.json",
+  "title": "B\u1ebfn M\u01b0a candidate bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "bundleFormat",
+    "bundleId",
+    "targetMapId",
+    "status",
+    "activation",
+    "summary",
+    "sources",
+    "candidates",
+    "bundleDigest"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "bundleFormat": {
+      "type": "integer",
+      "const": 1
+    },
+    "bundleId": {
+      "type": "string",
+      "pattern": "^BEN_MUA_[A-Z0-9_]+$"
+    },
+    "targetMapId": {
+      "type": "string",
+      "pattern": "^MAP_[A-Z0-9_]+$"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "READY_FOR_REVIEW",
+        "BLOCKED_UNRESOLVED"
+      ]
+    },
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eligible",
+        "reason",
+        "blockedByUnresolved",
+        "requiresReview",
+        "runtimeActivationAllowed"
+      ],
+      "properties": {
+        "eligible": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "blockedByUnresolved": {
+          "type": "boolean"
+        },
+        "requiresReview": {
+          "type": "boolean",
+          "const": true
+        },
+        "runtimeActivationAllowed": {
+          "type": "boolean",
+          "const": false
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidateCount",
+        "readyCount",
+        "blockedCount",
+        "unresolvedCount"
+      ],
+      "properties": {
+        "candidateCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "readyCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blockedCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unresolvedCount": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sourceId",
+          "path",
+          "version",
+          "sha256",
+          "normalization"
+        ],
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]+$"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "normalization": {
+            "type": "string",
+            "const": "UTF8_NO_BOM_LF"
+          }
+        }
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "candidateId",
+          "kind",
+          "targetId",
+          "targetSchema",
+          "status",
+          "definition",
+          "fieldProvenance",
+          "unresolved",
+          "candidateDigest"
+        ],
+        "properties": {
+          "candidateId": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_-]+$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "QUEST",
+              "OBJECTIVE_MAP",
+              "ACTOR_PROFILE",
+              "MOB_PROFILE",
+              "BOSS_REFERENCE",
+              "ITEM_REFERENCE"
+            ]
+          },
+          "targetId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "targetSchema": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "READY_FOR_REVIEW",
+              "BLOCKED_UNRESOLVED"
+            ]
+          },
+          "definition": {
+            "type": "object"
+          },
+          "fieldProvenance": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "sourceId",
+                "sourceRef",
+                "sourceVersion",
+                "units",
+                "transform"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "pattern": "^/"
+                },
+                "sourceId": {
+                  "type": "string",
+                  "pattern": "^[A-Z][A-Z0-9_]+$"
+                },
+                "sourceRef": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sourceVersion": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "units": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "transform": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "unresolved": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "reason",
+                "blocking",
+                "valueState",
+                "sourceId",
+                "sourceRef",
+                "sourceVersion"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "pattern": "^/"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "blocking": {
+                  "type": "boolean"
+                },
+                "valueState": {
+                  "type": "string",
+                  "enum": [
+                    "MISSING",
+                    "PRESENT_UNRESOLVED"
+                  ]
+                },
+                "sourceId": {
+                  "type": "string",
+                  "pattern": "^[A-Z][A-Z0-9_]+$"
+                },
+                "sourceRef": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sourceVersion": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "candidateDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "bundleDigest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}

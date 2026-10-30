@@ -15,3 +15,10 @@ Tools/AudioProduction/*.py text eol=lf
 Tools/AudioProduction/requirements.txt text eol=lf
 Art_Source/Audio/*.json text eol=lf
 Art_Source/Audio/Scores/*.json text eol=lf
+
+# Review-only candidate artifacts are byte deterministic on Windows and Linux.
+Implementation/Content/BuildCandidates/**/*.json text eol=lf
+Implementation/Tools/ContentPipeline/*.json text eol=lf
+Implementation/Tools/ContentPipeline/schemas/*.json text eol=lf
+Implementation/Tools/MuseMapAdapter/fixtures/*.json text eol=lf
+Implementation/Tools/MuseMapAdapter/schemas/*.json text eol=lf

@@ -168,3 +168,15 @@ animation starting at column 0. This is static tooling validation only — **no
 Unity import, animation or in-game playback claim** is made.
 
 Refs #40, OPC-09/OPC-10. Not self-merging.
+# Codex tiếp nhận và mở rộng OPC-11/12
+
+Toàn bộ tooling OpenCode nay do Codex phụ trách (work order15). Chạy cả asset pipeline,
+candidate compiler/map adapter và real-browser checks bằng:
+
+```sh
+python Tools/AssetPack/run_all_checks.py --include-candidates --include-browser
+```
+
+Không dùng flags sẽ chỉ chạy phạm vi OPC-05..10 và ghi rõ những lớp chưa được yêu cầu.
+Candidate JSON có thể structurally valid nhưng còn BLOCKED_UNRESOLVED; runtime activation
+luôn OFF. Xem README trong `Implementation/Tools/ContentPipeline` và `MuseMapAdapter`.

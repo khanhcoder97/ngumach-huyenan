@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "mapId": "MAP_BEN_MUA",
+  "layoutVersion": "SYNTHETIC_ADAPTER_TEST_V1",
+  "synthetic": true,
+  "tilePixels": 16,
+  "pixelsPerUnit": 20,
+  "originWu": {
+    "x": 0,
+    "y": 0
+  },
+  "rowAxis": "+Y",
+  "tilesets": [
+    {
+      "id": "TS_SYNTHETIC",
+      "image": "Implementation/Tools/MuseMapAdapter/fixtures/synthetic_tiles.png",
+      "sourceRef": "Original programmatic test fixture; not Muse production artwork"
+    }
+  ],
+  "layers": [
+    {
+      "id": "GROUND_TEST",
+      "role": "GROUND",
+      "tilesetId": "TS_SYNTHETIC",
+      "width": 4,
+      "height": 3,
+      "tiles": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "DECOR_TEST",
+      "role": "DECORATION",
+      "tilesetId": "TS_SYNTHETIC",
+      "width": 4,
+      "height": 3,
+      "tiles": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "props": [
+    {
+      "id": "PROP_TEST",
+      "tilesetId": "TS_SYNTHETIC",
+      "tileId": 2,
+      "column": 1,
+      "row": 1
+    }
+  ],
+  "placementOverrides": [],
+  "actorAssets": [
+    "CHR_MINH_KIEM_WALK"
+  ]
+}

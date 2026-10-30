@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/schemas/content-pipeline/boss_reference.schema.json",
+  "title": "Boss reference proposal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "bossId",
+    "referenceLevel",
+    "levelBand",
+    "spawnRecordIds",
+    "baseHp",
+    "hpFactor",
+    "hpSolo",
+    "hpParty2",
+    "partyScalingFormula",
+    "partySizeRange",
+    "attackMultiplier",
+    "attacks",
+    "attackPriority",
+    "telegraphOverlap",
+    "phases",
+    "arena",
+    "lootTableIds"
+  ],
+  "properties": {
+    "bossId": {
+      "type": "string",
+      "pattern": "^BOSS_[A-Z0-9_]+$"
+    },
+    "referenceLevel": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "levelBand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "properties": {
+        "min": {"type": "integer", "minimum": 1, "maximum": 100},
+        "max": {"type": "integer", "minimum": 1, "maximum": 100}
+      }
+    },
+    "spawnRecordIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^MAN-[A-Z0-9_-]+$"
+      }
+    },
+    "baseHp": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "hpFactor": {
+      "type": "number",
+      "minimum": 0
+    },
+    "hpSolo": {
+      "type": "number",
+      "minimum": 0
+    },
+    "hpParty2": {
+      "type": "number",
+      "minimum": 0
+    },
+    "partyScalingFormula": {
+      "type": "string",
+      "minLength": 1
+    },
+    "partySizeRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "properties": {
+        "min": {"type": "integer", "minimum": 1, "maximum": 5},
+        "max": {"type": "integer", "minimum": 1, "maximum": 5}
+      }
+    },
+    "attackMultiplier": {
+      "type": "number",
+      "minimum": 0
+    },
+    "attacks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "attackId",
+          "shape",
+          "telegraphSeconds",
+          "damageMultiplier",
+          "recoverySeconds",
+          "cooldownSeconds"
+        ],
+        "properties": {
+          "attackId": {
+            "type": "string",
+            "pattern": "^ATK_[A-Z0-9_]+$"
+          },
+          "shape": {
+            "type": "string",
+            "enum": ["CONE", "CIRCLE", "ANNULUS"]
+          },
+          "coneAngleDegrees": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 360
+          },
+          "rangeWu": {
+            "type": "number",
+            "minimum": 0
+          },
+          "radiusWu": {
+            "type": "number",
+            "minimum": 0
+          },
+          "innerRadiusWu": {
+            "type": "number",
+            "minimum": 0
+          },
+          "outerRadiusWu": {
+            "type": "number",
+            "minimum": 0
+          },
+          "telegraphSeconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "damageMultiplier": {
+            "type": "number",
+            "minimum": 0
+          },
+          "recoverySeconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "cooldownSeconds": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "attackPriority": {
+      "type": "string",
+      "minLength": 1
+    },
+    "telegraphOverlap": {
+      "type": "boolean"
+    },
+    "phases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["phase", "hpThresholdFraction"],
+        "properties": {
+          "phase": {"type": "integer", "minimum": 1},
+          "hpThresholdFraction": {"type": "number", "minimum": 0, "maximum": 1},
+          "recoveryMultiplier": {"type": "number", "minimum": 0},
+          "safePadCount": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "arena": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ringDiameterWu", "anchor"],
+      "properties": {
+        "ringDiameterWu": {"type": "number", "minimum": 0},
+        "anchor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["xWu", "yWu"],
+          "properties": {
+            "xWu": {"type": "number"},
+            "yWu": {"type": "number"}
+          }
+        }
+      }
+    },
+    "lootTableIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^LT_[A-Z0-9_]+$"
+      }
+    }
+  }
+}

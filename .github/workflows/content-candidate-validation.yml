@@ -1,0 +1,49 @@
+name: content-candidate-validation
+on:
+  pull_request:
+    paths:
+      - 'Implementation/Tools/ContentPipeline/**'
+      - 'Implementation/Tools/MuseMapAdapter/**'
+      - 'Implementation/Content/**'
+      - 'docs/production/**'
+      - 'Tools/AssetPack/**'
+      - 'Tools/AssetPreview/**'
+      - 'Client/Assets/ArtManifests/**'
+      - 'Client/Assets/Art/**'
+      - '.github/workflows/content-candidate-validation.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'Implementation/Tools/ContentPipeline/**'
+      - 'Implementation/Tools/MuseMapAdapter/**'
+      - 'Implementation/Content/**'
+      - 'docs/production/**'
+      - 'Tools/AssetPack/**'
+      - 'Tools/AssetPreview/**'
+      - 'Client/Assets/ArtManifests/**'
+      - 'Client/Assets/Art/**'
+      - '.github/workflows/content-candidate-validation.yml'
+permissions:
+  contents: read
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Asset, candidate, map and real-browser checks
+        run: python Tools/AssetPack/run_all_checks.py --include-candidates --include-browser --evidence-dir pipeline-evidence
+      - name: Check canonical content contracts
+        run: python Implementation/Tools/validate_content.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: content-candidate-pipeline
+          path: pipeline-evidence/
+          if-no-files-found: error
