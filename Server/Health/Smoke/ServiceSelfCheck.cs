@@ -915,6 +915,17 @@ public static class ServiceSelfCheck
             combatV2Store.Read(combatV2Session, 0, 0).NextCursor == 1,
             basicReplay.Failure?.Code);
 
+        Check("combatv2.replay_marker", !basicCast.Replayed && basicReplay.Replayed,
+            "Cached accepted receipt cannot be scheduled as a new cast.");
+        CombatCommandRaceChecks.Run(combatSkills, id => NewPlayer(id), Check);
+        var deadV2Actor = NewPlayer("CHR_V2_DEAD", hp: 0);
+        var deadV2Cast = combatV2.Resolve(deadV2Actor, deadV2Actor.SessionId,
+            new CombatV2Intent(CombatV2Actions.Skill, "SK-MK-01", null, 1, 1, 0, null), new string('9', 32));
+        Check("combatv2.dead_actor_no_cost", deadV2Cast.Failure?.Code == CombatErrorCodes.ActorNotAlive &&
+            deadV2Actor.Mp == 50 && deadV2Actor.LastInputSequence == 0 && deadV2Actor.Revision == 1 &&
+            combatV2Store.Read(deadV2Actor.SessionId, 0, 100).Events.Count == 0,
+            "Dead sources cannot start fresh casts or spend resources.");
+
         var basicConflict = combatV2.Resolve(
             combatV2Actor, combatV2Session, basicIntent with { AimX = -1 }, new string('a', 32));
         Check(
@@ -1140,6 +1151,30 @@ public static class ServiceSelfCheck
             mk03Hit3.HitIndex == 2 && mk03Hit3.Result?.Amount == 17 &&
             (tickStateStore.TryGet("ENT_SELFCHECK_TICK_MOB", 1)?.Hp ?? 0) == 138,
             $"{mk03Hit1.Result?.Amount}/{mk03Hit2.Result?.Amount}/{mk03Hit3.Result?.Amount}");
+
+        foreach (var cancelReason in new[] { "DEAD", "MAP", "FLOOR" })
+        {
+            var cancelledSource = NewPlayer("CHR_CANCEL_" + cancelReason);
+            cancelledSource.X = 0; cancelledSource.Y = 0;
+            var cancelRegistry = new WorldEntityRegistry(
+                new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_CANCEL_MOB", 3)]), tickClock);
+            var cancelHp = new MobCombatStateStore();
+            var cancelEngine = new CombatTickEngine(cancelRegistry, enabledCombat, combatSkills,
+                new CombatEventStore(new CombatEventStreamOptions()), cancelHp, tickQuests,
+                new FixedCombatRolls(hit: true, crit: false), new ServerClock());
+            cancelEngine.Schedule(cancelledSource, cancelledSource.SessionId, Guid.NewGuid().ToString("N"),
+                CombatV2Actions.BasicAttack, null, 1, 0, 100);
+            if (cancelReason == "DEAD") cancelledSource.Hp = 0;
+            else if (cancelReason == "MAP") cancelledSource.MapId = "MAP_THANH_LAC";
+            else cancelledSource.FloorId = "OTHER_FLOOR";
+            var cancelledEvents = cancelEngine.Tick(103);
+            Check("tick.cancel_source_" + cancelReason.ToLowerInvariant(),
+                cancelledEvents.Count(e => e.Type == CombatEventTypesV2.Cancel) == 1 &&
+                cancelledEvents.Count(e => e.Type == CombatEventTypesV2.End) == 1 &&
+                !cancelledEvents.Any(e => e.Type is CombatEventTypesV2.Impact or CombatEventTypesV2.Death) &&
+                cancelHp.TryGet("ENT_SELFCHECK_CANCEL_MOB", 1) is null && cancelEngine.ScheduledCastCount == 0,
+                "Source invalidated before impact; no damage or reward.");
+        }
 
         var missRegistry = new WorldEntityRegistry(
             new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_TICK_MOB", 3)]),

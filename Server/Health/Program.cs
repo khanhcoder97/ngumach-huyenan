@@ -178,8 +178,8 @@ if (combatDamage.Enabled)
 {
     app.Logger.LogWarning(
         "DEV STUB: P1:CombatDamage is enabled with the REFERENCE_L5 mob stat " +
-        "bundle (DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION); the QOD-16 proposal " +
-        "is not approved yet, so no damage is applied.");
+        "bundle (DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION); tick damage is a DEV " +
+        "subset, not reviewed production balance.");
 }
 
 var combatV2 = app.Services.GetRequiredService<P1CombatV2Options>();
@@ -187,8 +187,7 @@ if (combatV2.Enabled)
 {
     app.Logger.LogWarning(
         "DEV STUB: P1:CombatV2 is enabled — /p1/v2/world, /p1/v2/combat and " +
-        "/p1/v2/events are accept-only prototypes; impacts resolve on the " +
-        "QOD-17 tick engine.");
+        "/p1/v2/events use the QOD-17 tick engine for the supported DEV subset.");
 }
 
 var combatEventStreamOptions = app.Services.GetRequiredService<CombatEventStreamOptions>();
