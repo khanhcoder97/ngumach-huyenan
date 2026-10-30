@@ -512,7 +512,7 @@ All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and
 
 ## Runtime smoke test
 
-The `server-smoke` GitHub Actions workflow builds the server, starts it on `127.0.0.1:5080` with `P1__QuestAccept__Enabled=true`, `P1__Interact__Enabled=true` and `P1__QuestTurnIn__Enabled=true`, and runs `Server/Health/Smoke/smoke_p1.py`. The script uses only the Python standard library and verifies:
+The `server-smoke` GitHub Actions workflow builds the server, starts it on `127.0.0.1:5080` with `P1__QuestAccept__Enabled=true`, `P1__Interact__Enabled=true` and `P1__QuestTurnIn__Enabled=true`, and runs `Server/Health/Smoke/smoke_p1.py`. On branches that carry the review tooling, the same job then runs `Tools/ProducerReview/review_qoder_replay.py` and `review_qoder_guard_queue.py` unmodified against the built binary, so the two negative probes from `Qoder_Progress_Review_20261030` must stay green in CI; their JSON evidence is uploaded as the `qoder-review-probes` artifact and never written into the repository. The script uses only the Python standard library and verifies:
 
 - `/health` returns `200` and echoes `X-Correlation-ID`.
 - Session creation returns `201`, a `Location` header, the canonical spawn and `revision=1`.
