@@ -1,0 +1,694 @@
+info: Health[0]
+      Loaded map bounds for 46 maps.
+info: Health[0]
+      Loaded 3 combat skills.
+info: Health[0]
+      Loaded quest definitions: 1.
+info: Health[0]
+      Loaded NPC anchors: 104.
+info: Health[0]
+      Loaded topology bundles: 1 (reviewed 0).
+info: Health[0]
+      Combat event stream: 512 events per session, page 200.
+info: Health[0]
+      Loaded world entities: 44 (mobs 25, bosses 2, nodes 9, npcs 8).
+info: Health[0]
+      Loaded world records: 352.
+info: Health[0]
+      PASS combat.catalog
+info: Health[0]
+      PASS combat.invalid_skill_input
+info: Health[0]
+      PASS combat.class_gate
+info: Health[0]
+      PASS combat.stale_sequence
+info: Health[0]
+      PASS combat.self_cast
+info: Health[0]
+      PASS combat.cooldown
+info: Health[0]
+      PASS combat.target_not_found
+info: Health[0]
+      PASS combat.out_of_range
+info: Health[0]
+      PASS combat.world_target
+info: Health[0]
+      PASS combat.world_target_npc_rejected
+info: Health[0]
+      PASS combat.world_target_out_of_range
+info: Health[0]
+      PASS combat.world_target_resolves
+info: Health[0]
+      PASS combat.floor_mismatch
+info: Health[0]
+      PASS combat.idempotency_replay
+info: Health[0]
+      PASS combat.idempotency_conflict
+info: Health[0]
+      PASS combat.insufficient_resource
+info: Health[0]
+      PASS combat.damage_gate_off_by_default
+info: Health[0]
+      PASS combat.damage_gate_blocks_load
+info: Health[0]
+      PASS combat.skill_coefficients
+info: Health[0]
+      PASS combat.skill_range_migration
+info: Health[0]
+      PASS combat.mob_stats_bundle
+info: Health[0]
+      PASS combat.mob_stats_elite_multipliers
+info: Health[0]
+      PASS combat.mob_stats_carpling_l5
+info: Health[0]
+      PASS combat.mob_stats_shore_stalker_l5
+info: Health[0]
+      PASS combat.mob_stats_boss_blocked
+info: Health[0]
+      PASS combat.mob_stats_level_formula
+info: Health[0]
+      PASS guard.precision_bundle
+info: Health[0]
+      PASS guard.gate_blocks_load
+info: Health[0]
+      PASS guard.window_boundary
+info: Health[0]
+      PASS guard.whiff_window
+info: Health[0]
+      PASS guard.cone_boundary
+info: Health[0]
+      PASS guard.dr_bucket_cap
+info: Health[0]
+      PASS guard.oracle_reduction
+info: Health[0]
+      PASS guard.counter_oracle
+info: Health[0]
+      PASS guard.skill_timing_matches
+info: Health[0]
+      PASS guard.ordering_deterministic
+info: Health[0]
+      PASS guard.confirmation_keys
+info: Health[0]
+      PASS eventstore.append_monotonic
+info: Health[0]
+      PASS eventstore.read_since_cursor
+info: Health[0]
+      PASS eventstore.read_up_to_date
+info: Health[0]
+      PASS eventstore.replay_idempotent
+info: Health[0]
+      PASS eventstore.invalid_event_shape
+info: Health[0]
+      PASS eventstore.buffer_overflow
+info: Health[0]
+      PASS eventstore.retained_window_read
+info: Health[0]
+      PASS eventstore.cursor_too_old
+info: Health[0]
+      PASS eventstore.page_limit
+info: Health[0]
+      PASS eventstore.session_isolation
+info: Health[0]
+      PASS eventstore.session_lifetime_reset
+info: Health[0]
+      PASS eventstore.options_validated
+info: Health[0]
+      PASS eventstore.parallel_append_monotonic
+info: Health[0]
+      PASS aoi.enter_radius
+info: Health[0]
+      PASS aoi.floor_filter
+info: Health[0]
+      PASS aoi.hysteresis_enter
+info: Health[0]
+      PASS aoi.hysteresis_keep
+info: Health[0]
+      PASS aoi.hysteresis_leave
+info: Health[0]
+      PASS aoi.session_reset
+info: Health[0]
+      PASS aoi.npc_policy
+info: Health[0]
+      PASS aoi.boss_blocked_policy
+info: Health[0]
+      PASS aoi.mob_reference_stats
+info: Health[0]
+      PASS aoi.availability_per_character
+info: Health[0]
+      PASS aoi.availability_claimed_cooldown
+info: Health[0]
+      PASS aoi.internal_candidates_not_wire
+info: Health[0]
+      PASS combatv2.basic_accept
+info: Health[0]
+      PASS combatv2.replay_same_cast
+info: Health[0]
+      PASS combatv2.replay_marker
+info: Health[0]
+      PASS combatv2.concurrent_replay
+info: Health[0]
+      PASS combatv2.concurrent_conflict
+info: Health[0]
+      PASS combatv2.dead_actor_no_cost
+info: Health[0]
+      PASS combatv2.replay_conflict
+info: Health[0]
+      PASS combatv2.skill_accept
+info: Health[0]
+      PASS combatv2.skill_cooldown
+info: Health[0]
+      PASS combatv2.stale_sequence
+info: Health[0]
+      PASS combatv2.insufficient_mp
+info: Health[0]
+      PASS combatv2.class_gate
+info: Health[0]
+      PASS combatv2.invalid_payload
+info: Health[0]
+      PASS combatv2.unknown_skill
+info: Health[0]
+      PASS tick.schedule
+info: Health[0]
+      PASS tick.windup_no_impact
+info: Health[0]
+      PASS tick.basic_impact
+info: Health[0]
+      PASS tick.end_event
+info: Health[0]
+      PASS tick.mk03_multi_hit
+info: Health[0]
+      PASS tick.cancel_source_dead
+info: Health[0]
+      PASS tick.cancel_source_map
+info: Health[0]
+      PASS tick.cancel_source_floor
+info: Health[0]
+      PASS tick.miss
+info: Health[0]
+      PASS tick.out_of_range
+info: Health[0]
+      PASS tick.behind_no_impact
+info: Health[0]
+      PASS tick.death_once_and_credit
+info: Health[0]
+      PASS tick.respawn_new_life
+info: Health[0]
+      PASS loot.bundle
+info: Health[0]
+      PASS loot.gate_blocks_load
+info: Health[0]
+      PASS loot.carpling_source
+info: Health[0]
+      PASS loot.select_one_first
+info: Health[0]
+      PASS loot.chance_miss
+info: Health[0]
+      PASS loot.select_one_weighted_last
+info: Health[0]
+      PASS loot.roll_deterministic
+info: Health[0]
+      PASS loot.ledger_stable
+info: Health[0]
+      PASS loot.unsupported_source
+info: Health[0]
+      PASS loot.grant_off
+info: Health[0]
+      PASS spawn.partial_group_no_respawn
+info: Health[0]
+      PASS spawn.clear_group_respawn
+info: Health[0]
+      PASS spawn.real_bundle_composition
+info: Health[0]
+      PASS damage.oracle_raw
+info: Health[0]
+      PASS damage.oracle_noncrit
+info: Health[0]
+      PASS damage.oracle_crit
+info: Health[0]
+      PASS damage.armor_zero
+info: Health[0]
+      PASS damage.reduction_cap
+info: Health[0]
+      PASS damage.resist_pve_cap
+info: Health[0]
+      PASS damage.final_min_one
+info: Health[0]
+      PASS damage.hit_clamp
+info: Health[0]
+      PASS damage.attribute_derived
+info: Health[0]
+      PASS damage.rng_deterministic
+info: Health[0]
+      PASS projection.all_entities
+info: Health[0]
+      PASS projection.mob_zero_when_gate_off
+info: Health[0]
+      PASS projection.npc_invulnerable
+info: Health[0]
+      PASS projection.mob_reference_stats
+info: Health[0]
+      PASS projection.elite_stats
+info: Health[0]
+      PASS projection.boss_zero_blocked
+info: Health[0]
+      PASS projection.life_id_bump
+info: Health[0]
+      PASS quest.catalog
+info: Health[0]
+      PASS quest.catalog_ids
+info: Health[0]
+      PASS quest.initial_available
+info: Health[0]
+      PASS quest.accept
+info: Health[0]
+      PASS quest.ready_to_turn_in
+info: Health[0]
+      PASS quest.distinct_record_dedupe
+info: Health[0]
+      PASS quest.progress_ignored_when_inactive
+info: Health[0]
+      PASS quest.completed
+info: Health[0]
+      PASS quest.invalid_transition
+info: Health[0]
+      PASS quest.unknown_quest
+info: Health[0]
+      PASS npc.registry
+info: Health[0]
+      PASS world.registry
+info: Health[0]
+      PASS world.npc_entity
+info: Health[0]
+      PASS world.mob_entity
+info: Health[0]
+      PASS world.despawn_unknown
+info: Health[0]
+      PASS world.despawn_mob
+info: Health[0]
+      PASS world.group_cleared
+info: Health[0]
+      PASS world.respawn_wait
+info: Health[0]
+      PASS world.respawn
+info: Health[0]
+      PASS world.despawn_npc_rejected
+info: Health[0]
+      PASS world.node_lifecycle
+info: Health[0]
+      PASS quest.start_npc
+info: Health[0]
+      PASS quest_accept.success
+info: Health[0]
+      PASS quest_accept.replay
+info: Health[0]
+      PASS quest_accept.idempotency_conflict
+info: Health[0]
+      PASS quest_accept.invalid_transition
+info: Health[0]
+      PASS quest_accept.out_of_range
+info: Health[0]
+      PASS quest_accept.npc_mismatch
+info: Health[0]
+      PASS quest_accept.level_band
+info: Health[0]
+      PASS quest_accept.unknown_quest
+info: Health[0]
+      PASS los.clear
+info: Health[0]
+      PASS los.wall
+info: Health[0]
+      PASS los.endpoint_in_wall
+info: Health[0]
+      PASS los.hole
+info: Health[0]
+      PASS los.corner_touch
+info: Health[0]
+      PASS sweep.clear
+info: Health[0]
+      PASS sweep.wall
+info: Health[0]
+      PASS sweep.big_step
+info: Health[0]
+      PASS sweep.hole
+info: Health[0]
+      PASS sweep.corner_touch
+info: Health[0]
+      PASS sweep.floor
+info: Health[0]
+      PASS sweep.nonfinite_radius
+info: Health[0]
+      PASS sweep.footprint_blocked
+info: Health[0]
+      PASS sweep.footprint_small_allowed
+info: Health[0]
+      PASS los.floor
+info: Health[0]
+      PASS los.nonfinite
+info: Health[0]
+      PASS los.outside_walkable
+info: Health[0]
+      PASS los.not_enforced_without_reviewed_bundle
+info: Health[0]
+      PASS mob.aggro
+info: Health[0]
+      PASS mob.telegraph_opens
+info: Health[0]
+      PASS mob.telegraph_holds
+info: Health[0]
+      PASS mob.attack
+info: Health[0]
+      PASS mob.damage_lands
+info: Health[0]
+      PASS mob.damage_revision_bumps
+info: Health[0]
+      PASS mob.recovery_holds
+info: Health[0]
+      PASS mob.recovery_ends_to_chase
+info: Health[0]
+      PASS mob.attack_cooldown
+info: Health[0]
+      PASS mob.telegraph_repeats_after_cooldown
+info: Health[0]
+      PASS mob.damage_second_impact
+info: Health[0]
+      PASS mob.impact_whiffs_out_of_range
+info: Health[0]
+      PASS mob.telegraph_cancel_on_lost_target
+info: Health[0]
+      PASS mob.damage_gate_off
+info: Health[0]
+      PASS mob.damage_waterroot_basic_move
+info: Health[0]
+      PASS mob.damage_elite_scaling
+info: Health[0]
+      PASS mob.damage_unknown_template
+info: Health[0]
+      PASS mob.downed_target_untouched
+info: Health[0]
+      PASS mob.los_blocks_aggro
+info: Health[0]
+      PASS mob.leash_return
+info: Health[0]
+      PASS mob.floor_ignored
+info: Health[0]
+      PASS telegraph.idle_has_nothing_to_read
+info: Health[0]
+      PASS telegraph.reading_carries_target_timing_and_reach
+info: Health[0]
+      PASS telegraph.countdown_moves_with_the_server_clock
+info: Health[0]
+      PASS telegraph.stays_committed_when_the_target_leaves_range
+info: Health[0]
+      PASS telegraph_after_impact_reads_recovery_and_cooldown
+info: Health[0]
+      PASS telegraph_lost_target_reports_no_committed_frame
+info: Health[0]
+      PASS guard.window_opens_on_accept
+info: Health[0]
+      PASS guard.front_hit_inside_window
+info: Health[0]
+      PASS guard.back_hit_gets_no_reduction
+info: Health[0]
+      PASS guard.range_edge_is_inclusive
+info: Health[0]
+      PASS guard.angle_edge_is_inclusive
+info: Health[0]
+      PASS guard.window_end_is_exclusive_whiff_starts
+info: Health[0]
+      PASS guard.cast_end_keeps_whiff
+info: Health[0]
+      PASS guard.whiff_expires_full_damage
+info: Health[0]
+      PASS guard.two_hits_one_confirmation_one_counter
+info: Health[0]
+      PASS guard.counter_reserved_for_next_tick
+info: Health[0]
+      PASS guard.counter_impact_next_tick
+info: Health[0]
+      PASS guard.counter_pays_no_extra_resource_and_resolves_once
+info: Health[0]
+      PASS guard.counter_cancelled_keeps_cost_no_retarget
+info: Health[0]
+      PASS guard.counter_miss_no_refund_no_damage
+info: Health[0]
+      PASS guard.defender_death_clears_resource_no_confirmation
+info: Health[0]
+      PASS guard.down_defender_cast_cancels_once
+info: Health[0]
+      PASS guard.refresh_replaces_window_without_stacking
+info: Health[0]
+      PASS guard.refresh_confirmation_belongs_to_new_window
+info: Health[0]
+      PASS guard.counter_lethal_hit_death_once
+info: Health[0]
+      PASS guard.gate_off_never_opens_window
+info: Health[0]
+      PASS guard.counter_source_death_after_confirm_cancels
+info: Health[0]
+      PASS guard.counter_los_block_cancels
+info: Health[0]
+      PASS tick.counter_overdue_stays_eligible_in_deadline_order
+info: Health[0]
+      PASS tick.counter_catchup_resolves_once_at_processed_tick
+info: Health[0]
+      PASS tick.impact_blocked_by_cover_on_reviewed_bundle
+info: Health[0]
+      PASS tick.impact_not_blocked_when_geometry_unreviewed
+info: Health[0]
+      PASS guard.impact_never_mixes_two_windows
+info: Health[0]
+      PASS dash.unenforced_geometry_runs_full_range
+info: Health[0]
+      PASS dash_ends_the_tick_after_it_moved
+info: Health[0]
+      PASS dash_stops_short_of_reviewed_wall
+info: Health[0]
+      PASS dash_blocked_at_start_reports_no_travel
+info: Health[0]
+      PASS dash_cancelled_when_actor_down_before_movement
+info: Health[0]
+      PASS dash_ledger_is_bounded
+info: Health[0]
+      PASS status.guard_phase_counter_and_cooldown
+info: Health[0]
+      PASS status_reports_resolved_counter_and_keeps_cooldown
+info: Health[0]
+      PASS status_carries_last_dash_outcome_without_events
+info: Health[0]
+      PASS status_tracks_whiff_expiry_and_closed_window
+info: Health[0]
+      PASS death_return.gate_off_and_refuses_alive_and_bad_key
+info: Health[0]
+      PASS death_return.unknown_session_and_map_do_not_move_anyone
+info: Health[0]
+      PASS death_return.clears_cast_window_and_counter_once
+info: Health[0]
+      PASS death_return_replays_the_recorded_answer
+info: Health[0]
+      PASS death_return.one_key_applies_once_under_contention
+info: Health[0]
+      PASS death_return.restores_only_the_configured_fixture_value
+info: Health[0]
+      PASS death_return_ledger_is_bounded
+info: Health[0]
+      PASS guard.window_closes_on_map_change_without_a_hit
+info: Health[0]
+      PASS quest_accept.los_blocked
+info: Health[0]
+      PASS quest_accept.los_blocked_state
+info: Health[0]
+      PASS quest_accept.los_allowed
+info: Health[0]
+      PASS world.records
+info: Health[0]
+      PASS world.records_resolve_target
+info: Health[0]
+      PASS interact.quest_accepted
+info: Health[0]
+      PASS interact.invalid_payload
+info: Health[0]
+      PASS interact.target_not_found
+info: Health[0]
+      PASS interact.invalid_target
+info: Health[0]
+      PASS interact.collect_package
+info: Health[0]
+      PASS interact.idempotency_replay
+info: Health[0]
+      PASS interact.idempotency_conflict
+info: Health[0]
+      PASS interact.target_depleted
+info: Health[0]
+      PASS interact.out_of_range
+info: Health[0]
+      PASS interact.collect_second
+info: Health[0]
+      PASS interact.ready_to_turn_in
+info: Health[0]
+      PASS interact.turn_in_completed
+info: Health[0]
+      PASS interact.respawn_shared
+info: Health[0]
+      PASS interact.distinct_record_dedupe
+info: Health[0]
+      PASS interact.package_per_character_parallel
+info: Health[0]
+      PASS interact.package_state_stays_available
+info: Health[0]
+      PASS interact.package_per_character_window
+info: Health[0]
+      PASS interact.package_per_character_respawn
+info: Health[0]
+      PASS quest.dedupe_two_objectives_share_record
+info: Health[0]
+      PASS quest.dedupe_duplicate_event
+info: Health[0]
+      PASS quest.dedupe_second_record
+info: Health[0]
+      PASS quest.dedupe_sequential_step_guard
+info: Health[0]
+      PASS quest.dedupe_kill_event_scope
+info: Health[0]
+      PASS interact.los_blocked
+info: Health[0]
+      PASS interact.los_allowed
+info: Health[0]
+      PASS interact.gather_claim
+info: Health[0]
+      PASS interact.gather_inventory
+info: Health[0]
+      PASS interact.gather_replay_no_double
+info: Health[0]
+      PASS interact.gather_shard_cooldown
+info: Health[0]
+      PASS interact.gather_shard_other_character
+info: Health[0]
+      PASS interact.gather_respawn_per_character
+info: Health[0]
+      PASS interact.profession_gate
+info: Health[0]
+      PASS interact.parallel_same_key_single_result
+info: Health[0]
+      PASS interact.parallel_two_keys_single_grant
+info: Health[0]
+      PASS interact.parallel_two_characters_independent
+info: Health[0]
+      PASS interact.parallel_shared_interactable_single_claim
+info: Health[0]
+      PASS interact.fail_after_reserve_rejected
+info: Health[0]
+      PASS interact.fail_after_reserve_retry_grants_once
+info: Health[0]
+      PASS inventory.empty
+info: Health[0]
+      PASS inventory.grant
+info: Health[0]
+      PASS inventory.equip
+info: Health[0]
+      PASS inventory.slot_occupied
+info: Health[0]
+      PASS inventory.item_not_found
+info: Health[0]
+      PASS inventory.insufficient_currency
+info: Health[0]
+      PASS inventory.revision_conflict
+info: Health[0]
+      PASS inventory.rejections_do_not_mutate
+info: Health[0]
+      PASS inventory.remove
+info: Health[0]
+      PASS turnin.accept_setup
+info: Health[0]
+      PASS turnin.ready_state
+info: Health[0]
+      PASS turnin.npc_mismatch
+info: Health[0]
+      PASS turnin.quest_not_found
+info: Health[0]
+      PASS turnin.wrong_floor
+info: Health[0]
+      PASS turnin.out_of_range
+info: Health[0]
+      PASS turnin.success
+info: Health[0]
+      PASS turnin.inventory_granted
+info: Health[0]
+      PASS turnin.replay_same_key
+info: Health[0]
+      PASS turnin.invalid_transition_after_completed
+info: Health[0]
+      PASS turnin.inventory_no_double_reward
+info: Health[0]
+      PASS turnin.same_key_different_npc_conflict
+info: Health[0]
+      PASS turnin.idempotency_setup
+info: Health[0]
+      PASS turnin.reward_ledger_recorded
+info: Health[0]
+      PASS turnin.failure_injection_rejected
+info: Health[0]
+      PASS turnin.failure_injection_state_kept
+info: Health[0]
+      PASS turnin.failure_injection_no_partial_reward
+info: Health[0]
+      PASS turnin.failure_injection_ledger_empty
+info: Health[0]
+      PASS turnin.failure_injection_retry_succeeds
+info: Health[0]
+      PASS turnin.failure_injection_single_reward
+info: Health[0]
+      PASS turnin.flip_failure_rejected
+info: Health[0]
+      PASS turnin.flip_failure_state_kept
+info: Health[0]
+      PASS turnin.flip_failure_grant_rolled_back
+info: Health[0]
+      PASS turnin.flip_failure_ledger_empty
+info: Health[0]
+      PASS turnin.flip_failure_retry_succeeds
+info: Health[0]
+      PASS turnin.flip_failure_single_reward
+info: Health[0]
+      PASS turnin.ledger_failure_rejected
+info: Health[0]
+      PASS turnin.ledger_failure_state_kept
+info: Health[0]
+      PASS turnin.ledger_failure_grant_rolled_back
+info: Health[0]
+      PASS turnin.ledger_failure_ledger_empty
+info: Health[0]
+      PASS turnin.ledger_failure_retry_succeeds
+info: Health[0]
+      PASS turnin.ledger_failure_single_reward
+info: Health[0]
+      PASS turnin.overflow_seed
+info: Health[0]
+      PASS turnin.overflow_rejected_no_partial
+info: Health[0]
+      PASS turnin.overflow_state_kept
+info: Health[0]
+      PASS turnin.overflow_inventory_unchanged
+info: Health[0]
+      PASS turnin.parallel_exactly_one_win
+info: Health[0]
+      PASS turnin.parallel_single_reward
+info: Health[0]
+      PASS turnin.parallel_same_key_contention
+info: Health[0]
+      PASS turnin.parallel_same_key_single_reward
+info: Health[0]
+      PASS teleport.invalid_map_payload
+info: Health[0]
+      PASS teleport.unknown_map
+info: Health[0]
+      PASS teleport.out_of_bounds
+info: Health[0]
+      PASS teleport.invalid_reason
+info: Health[0]
+      PASS teleport.death_return_requires_death
+info: Health[0]
+      PASS teleport.success
+info: Health[0]
+      PASS teleport.death_return
+info: Health[0]
+      Service self-check: 338 passed, 0 failed, 338 total.

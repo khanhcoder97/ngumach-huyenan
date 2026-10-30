@@ -1,0 +1,3 @@
+profile=mob-combat counter=IMPACT counter_damage=34 on ENT_MAN_BM_SPAWN_BM_01
+profile=mob-combat telegraph=OK escape_whiff=OK mob_damage=10 guard_confirm=OK counter=IMPACT death_stays_down=OK mob_states=RETURN
+PASS: e2e_p1 (mob-combat) 85 checks against http://127.0.0.1:57489

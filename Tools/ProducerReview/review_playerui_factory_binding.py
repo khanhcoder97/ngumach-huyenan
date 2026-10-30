@@ -37,6 +37,7 @@ def main():
       public class Transform {public void SetParent(Transform p,bool b){}}
       public class GameObject {public Transform transform=new Transform();public GameObject(string n){}
         public T GetComponent<T>() where T:Component => default(T);
+        public T GetComponentInChildren<T>() where T:Component => default(T);
         public T AddComponent<T>() where T:Component,new()=>new T();}
     }
     namespace UnityEngine.UIElements {public class UIDocument:UnityEngine.MonoBehaviour {}}

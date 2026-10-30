@@ -1,0 +1,21 @@
+{
+  "reviewedHead": "609a316a7c6e09f9265d39d6cffe97defa35dbc1",
+  "serverBinarySha256": "822b0fee5e1fb51cc404b8f78e260550a5a68a94f90c4878e5f116f8f4442979",
+  "scope": "Private synthetic DEV HTTP; completed BASIC_ATTACK replay, not HP damage or Unity",
+  "mobBehaviorEnabled": false,
+  "replayHttpStatus": 200,
+  "sameCastId": true,
+  "eventsBefore": [
+    {
+      "type": "CAST_START",
+      "cursor": 1
+    },
+    {
+      "type": "END",
+      "cursor": 2
+    }
+  ],
+  "eventsAfterReplay": [],
+  "status": "PASS",
+  "ownServerStopped": true
+}
