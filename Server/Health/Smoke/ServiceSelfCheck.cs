@@ -1725,16 +1725,16 @@ public static class ServiceSelfCheck
 
         // The actor completed P00-01 just above, so the prerequisite is met —
         // and P00-02 still must not open.
-        var blockedState = quests.GetState(questActor.CharacterId, "P00-02");
-        var blockedAccept = questAccept.Accept(
+        var chainLockedState = quests.GetState(questActor.CharacterId, "P00-02");
+        var chainAccept = questAccept.Accept(
             questActor, "P00-02", "NPC_TA_VAN_KHANH", new string('c', 32));
         Check(
             "quest.blocked_never_available_and_reports_gap",
-            blockedState.State?.State == QuestStates.Locked &&
-            blockedAccept.Failure?.Code == QuestAcceptErrorCodes.PrerequisiteNotMet &&
-            (blockedAccept.Failure.FieldErrors.Contains(
+            chainLockedState.State?.State == QuestStates.Locked &&
+            chainAccept.Failure?.Code == QuestAcceptErrorCodes.PrerequisiteNotMet &&
+            (chainAccept.Failure.FieldErrors.Contains(
                 "activation.blocked.P00_02_RIPPLES", StringComparer.Ordinal)),
-            $"{blockedState.State?.State}/{string.Join(",", blockedAccept.Failure?.FieldErrors ?? [])}");
+            $"{chainLockedState.State?.State}/{string.Join(",", chainAccept.Failure?.FieldErrors ?? [])}");
 
         QuestDefinition FixtureQuest(
             string questId,
