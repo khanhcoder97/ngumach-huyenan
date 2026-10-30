@@ -1089,13 +1089,17 @@ def main():
     late_cast = accepted["result"]["castId"]
     deadline = time.monotonic() + 3
     finished_page = {}
+    late_read_status = 0
     while time.monotonic() < deadline:
-        status, _, ended = call("GET", f"/p1/v2/events/{late_session}?cursor=0", headers=late_headers)
-        check(status == 200, "late replay read before END")
+        late_read_status, _, ended = call("GET", f"/p1/v2/events/{late_session}?cursor=0", headers=late_headers)
         finished_page = ended.get("result") or {}
         if any(e.get("type") == "END" for e in finished_page.get("events", [])):
             break
         time.sleep(0.05)
+    # The status assertion lives outside the poll: a check inside a bounded wait
+    # runs a different number of times per run, so the reported total would stop
+    # meaning "these checks all ran".
+    check(late_read_status == 200, "late replay read before END")
     check(sum(e.get("type") == "END" for e in finished_page.get("events", [])) == 1,
           "original cast completed exactly once")
     status, _, repeated = call("POST", "/p1/v2/combat", late_command, late_headers)
@@ -1127,15 +1131,16 @@ def main():
     dash_moved = False
     dash_self = {}
     dash_page = {}
+    dash_read_status = 0
     while time.monotonic() < dash_deadline:
-        status, _, dash_world = call("GET", f"/p1/v2/world/{dash_session}", headers=dash_headers)
-        check(status == 200, f"dash world read returned {status}")
+        dash_read_status, _, dash_world = call("GET", f"/p1/v2/world/{dash_session}", headers=dash_headers)
         dash_page = dash_world.get("result") or {}
         dash_self = dash_page.get("self") or {}
         if dash_self.get("x") != dash_start_x:
             dash_moved = True
             break
         time.sleep(0.05)
+    check(dash_read_status == 200, f"dash world read returned {dash_read_status}")
     check(dash_moved and dash_self.get("x") == dash_start_x + 11,
           f"dash moved {dash_start_x} -> {dash_self.get('x')} (expected {dash_start_x + 11})")
     check(dash_self.get("mp") == 34 and dash_self.get("hp") == 100,
