@@ -4,7 +4,7 @@
   "runtimeActivationAllowed": false,
   "owner": "MUSE",
   "source": "Implementation/Content/Narrative/Cinema_Production_Pack_v1.json",
-  "commonPrompt": "Original Vietnamese-inspired fantasy pixel art, logical 640x360, clean pixel clusters, locked top-down or restrained fixed cinematic camera. Use approved Muse character/model sheets and existing Ben Mua set. No baked text/subtitles, no default player face/gender/class, no extra magic faction symbols, no smooth tween morphing, no lore narration. Deliver storyboard/keyframe first; preserve existing duration and shot IDs. Sound/voice/subtitles are separate candidate edit tracks.",
+  "commonPrompt": "Original Vietnamese-inspired fantasy pixel art, logical 640x360, clean pixel clusters, locked top-down or restrained fixed cinematic camera. Use approved Muse character/model sheets and existing scene-specific set: Ben Mua for CIN_001..004, Thang Long for CIN_006. No baked text/subtitles, no default player face/gender/class, no extra magic faction symbols, no smooth tween morphing, no lore narration. Deliver storyboard/keyframe first; preserve existing duration and shot IDs. Sound/voice/subtitles are separate candidate edit tracks.",
   "scenes": [
     {
       "sceneId": "CIN_001",
@@ -155,6 +155,38 @@
           "durationSeconds": 6,
           "prompt": "Return to gameplay framing and approved telegraph readability. Keep player arrival area open; ready-check remains a server event outside the video.",
           "performanceAndSound": "Ngắt thoại trước combat; skip/fallback vẫn đưa tới cùng ready-check, không tự bắt đầu trận."
+        }
+      ]
+    },
+    {
+      "sceneId": "CIN_006",
+      "questId": "C1-06",
+      "durationSeconds": 18,
+      "triggerDescription": "Sau ledger/forge/archive clues, trước report",
+      "shots": [
+        {
+          "shotId": "CIN_006_S01",
+          "inSeconds": 0,
+          "outSeconds": 6,
+          "durationSeconds": 6,
+          "prompt": "Recall the already-visited market stall under amber awnings. Locked medium shot. Sam Chu Quy lays three folded trade slips beside the wooden scale; his thumb holds down one curled margin. The queue and a cart continue at an ordinary pace behind him. He is busy, not caught or accused. Match approved Sam turnaround and Thang Long palette; never invent a new final costume.",
+          "performanceAndSound": "0–6s: tiếng cân và bánh xe; giữ một nhịp chờ cân đứng. Không sting bắt tội, không thoại thêm, không viết chữ lên giấy bằng model. Đây là recap sau ba clue, không di chuyển NPC từ Sa Hỏa live."
+        },
+        {
+          "shotId": "CIN_006_S02",
+          "inSeconds": 6,
+          "outSeconds": 12,
+          "durationSeconds": 6,
+          "prompt": "Locked detail recall: a brass stamp and the comparison paper lie adjacent, never overlap as a perfect match. One dragged groove contrasts with two flat shallow dents. A tiny green resin fibre is caught in the rough paper; a gloved hand stops before brushing it away. Use a designed magnified insert and supply a text equivalent outside the video. Do not make resin glow or animate it as sentient.",
+          "performanceAndSound": "6–12s: tiếng lò ở xa nhỏ hơn tiếng giấy. Dùng overlay chữ/icon do UI biên tập riêng, không yêu cầu người chơi phân biệt pixel xanh để giải đố. Chỉ dựng sau xác nhận đối chiếu."
+        },
+        {
+          "shotId": "CIN_006_S03",
+          "inSeconds": 12,
+          "outSeconds": 18,
+          "durationSeconds": 6,
+          "prompt": "Locked medium return to Ha Mac beneath the market awning. He aligns three copies, leaves an empty gap for the unknown processing stage, then lays a clean sheet over a name area and offers a duplicate. A borrowed stool waits beside him. He has found a route, not a culprit. Background commerce continues; do not show prison, enemy silhouettes, flashback city or any villain reveal.",
+          "performanceAndSound": "12–18s: một câu Hạ Mặc từ pack gốc nếu dựng voice; bản thảo text dùng “Tới đây ta theo được. Chỗ trống này giữ nguyên.” là alternate, không phát cả hai chồng nhau. Khóa một take sau review. Kết shot trả quyền báo cáo, không grant quest/reward."
         }
       ]
     }

@@ -51,16 +51,19 @@ Cô kéo thử quai túi, lần đầu được một nút chắc.
 + [Cô có quay lại xem không?]
     Ly An: Có. Dây neo chưa đứt. Chỉ là tôi chưa nói được với bà ấy.
     Cô nhìn ngược về bến một lần, rồi đứng lên.
-    -> p04_wave_two
+    -> p04_resume
 + [Tôi cũng không nhìn rõ ngoài đó.]
     Ly An: Vậy lát nữa đứng ở bờ cao thử xem. Đừng xuống nữa.
-    {held_letter:
-        Cô nhận lại túi từ tay bạn bằng cả hai tay, đeo lên vai rồi chừa một khoảng cho bạn đi qua.
-    }
-    -> p04_wave_two
+    -> p04_resume
 + [Đi tiếp thôi.]
     Ly An gật, nhặt cuộn dây. Có một vòng cô để tuột xuống cỏ, phải cúi lấy thêm lần nữa.
-    -> p04_wave_two
+    -> p04_resume
+
+=== p04_resume ===
+{held_letter:
+    Ly An luồn tay dưới đáy túi, đợi bạn buông rồi mới nhấc lên vai. Cô kéo nắp xuống, để mặt có niêm nằm phẳng trong vải.
+}
+-> p04_wave_two
 
 === p04_wave_two ===
 # scene:BM04_SECOND_HOLD
@@ -75,11 +78,12 @@ TRACKER · Giữ chặng thứ hai trước khi tới Đầm Chuông. Bản đ�
 # kind:SCENE
 # guard:SERVER_P00_04_CHECKPOINT_120_CONFIRMED
 Ly An mở nắp túi để kiểm tra lại vải dầu. Cô nghiêng lá thư về phía có ánh sáng. Giữa năm vạch, một khe nhỏ trắng ra. Cô chạm nhẹ quanh mép, tránh đúng chỗ vừa rạn.
-Ly An: Bạn có làm rơi túi lúc tôi buộc dây không?
 {held_letter:
-    Bạn có thể nhắc lại việc mình đã giữ túi. Cô nhìn bạn rồi nhìn vết rạn, bàn tay thôi tìm chỗ móp trên bì thư.
+    Ly An: Lúc giữ túi, bạn có thấy nó chạm xuống đâu không?
+    Cô nhìn từ mặt bì thư sang hai bàn tay bạn, rồi ngừng tìm chỗ móp. Cả hai đã giữ nó trên đầu gối suốt lúc buộc dây.
 - else:
-    Cô tự lật góc túi, tìm chỗ va đập. Trên lớp vải dầu không có vết rách.
+    Ly An: Tôi có va túi vào đâu nhỉ?
+    Cô lật góc túi, vuốt dọc chỗ vừa tì lên đầu gối. Trên lớp vải dầu không có vết rách.
 }
 + [Vết rạn vừa mở thêm.]
     Cả hai chờ. Một hạt sáp rời khỏi mép niêm, lăn trên ngón tay cô rồi dính lại ở đường chỉ áo.

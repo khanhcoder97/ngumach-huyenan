@@ -28,6 +28,16 @@ Bản thảo đầy đủ ghi hành động, đoạn thoại, các lựa chọn 
 
 Chi tiết nên quay lại với nghĩa khác. Ở tuyến mẫu: đầu dây để giữ kiện hàng, dây giữ người trong đầm, dây túi được buộc lại lúc nghỉ. Không cần nhân vật gọi ba việc đó thành biểu tượng. Một chi tiết chỉ quay lại nếu nó có việc để làm trong cảnh mới.
 
+## Giọng ở Thăng Long: Con dấu qua phố
+
+**Hạ Mặc:** hỏi phạm vi điều có thể khẳng định, thích giữ nguyên dòng sửa hơn là nói về công lý. Đôi khi vụng với sinh hoạt quanh mình: đứng nhầm vũng nước, mượn ghế rồi nhớ trả. Khi người chơi buộc tội sớm, ông yêu cầu chỉ đúng dòng chứng cứ; không chế giễu hoặc trừ điểm đạo đức. Ông cũng có nghi vấn nên giữ bản nháp có câu sai của mình/người báo, không tự đứng ngoài mọi thiên kiến. Chưa mang bài học xin phép kể ký ức của C5 về giảng ở C1.
+
+**Sầm Chủ Quỹ:** nói bằng chuyện cân hàng, ứng tiền, người nhận và người đi cùng xe. Có thể đùa trong lúc đĩa cân chưa đứng, nhưng dừng đùa khi nói phần nước bị từ chối thanh toán. Tự chi tiền không chứng minh vô tội; kinh doanh giấy cũng không chứng minh phạm tội. Để ông mở cả dòng bất lợi mà vẫn giữ sổ gốc và đòi khoản nợ, không biến thành người tốt hy sinh mọi lợi ích.
+
+**Thợ phụ Bách Công:** giữ trình tự làm nghề, đưa đồ nóng vào khay rồi mới đáp. Chỉ khẳng định được vết kéo/vết ép, không nhận diện mọi loại nhựa. Câu từ ngắn, đôi lúc cộc vì công việc chưa xong; không cùng giọng lý luận của Hạ Mặc.
+
+**Quan thư lầu:** nhắc cách xem và giữ bản lưu, sửa câu hỏi sai cột thay vì nói hộ động cơ người ký. Không mặc định cứ sửa ngày là gian lận. Có người đang đợi nên đối thoại không kéo thành bài giảng về sử thành.
+
 ## Tiếng Việt và cách đọc
 
 Dùng tiếng Việt đương đại tiết chế trong bối cảnh fantasy Việt, có từ nghề/chất liệu đúng hoàn cảnh. Không tự pha cổ ngữ ở mọi câu hoặc dùng thành ngữ như dấu hiệu nhân vật có chiều sâu. Câu ngắn khi khẩn cấp; câu dài hơn khi người nói trì hoãn hoặc tìm cách nói. Không mặc định câu ngắn là tốt hơn. Hạn chế lời dẫn giải hộ cảm xúc, các cặp câu phủ định rồi khẳng định trang trí, hoặc đoạn cuối giải thích bài học vừa diễn.

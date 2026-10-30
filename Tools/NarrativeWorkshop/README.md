@@ -1,6 +1,6 @@
 # Phòng biên kịch Ngũ Mạch: Huyền Ấn
 
-Bộ viết, sửa và chơi thử cốt truyện tiếng Việt, không cần Unity. Gói đầu tiên là tuyến Bến Mưa P00-01–P00-05: **18 cảnh truyện và 8 checkpoint mô phỏng**, lựa chọn phản hồi có hội tụ; không thay số objective/thưởng hoặc 349 placements. Đây là authoring candidate, chưa là dialogue runtime.
+Bộ viết, sửa và chơi thử cốt truyện tiếng Việt, không cần Unity. Tuyến Bến Mưa P00-01–P00-05 và điều tra Thăng Long C1-06: **28 cảnh truyện và10checkpoint mô phỏng**, lựa chọn phản hồi có hội tụ; không thay số objective/thưởng hoặc placements. Đây là authoring candidate, chưa là dialogue runtime. Chương I còn C1-01..05 cần viết sâu, không được coi đã hoàn tất từ bản đọc C1-06.
 
 ## Đọc ngay và sửa bản thảo
 
@@ -15,7 +15,7 @@ python server.py --port 8126
 
 Mở http://127.0.0.1:8126. Có chọn tuyến, đọc nhánh, đọc lại, hiện/ẩn ghi chú biên kịch và tải feedback gắn source digest. Mọi trạng thái trong trang chỉ là bản đọc cá nhân, không gọi server game. Reader dùng `inkjs@2.4.0` pinned bởi package-lock, không CDN hoặc model/API trả phí. Node 24/Python 3.12+ đủ; không tải Unity/audio/art LFS để viết.
 
-Nguồn duy nhất của lời mới là `docs/narrative/workshop/ink/*.ink`. Sau sửa, chạy `npm run build`, đọc lại nhánh đã đổi và `npm run check`. Ba output generated: compiled JSON, scene_manifest.json và `docs/narrative/workshop/BEN_MUA_SCREENPLAY_vi.md`. Không sửa các file generated bằng tay. `check` phát hiện output/source/canon drift, chạy thực Ink branches, kiểm replay, reveal gate và cinema timing; không chấm điểm văn hay.
+Nguồn duy nhất của lời mới là `docs/narrative/workshop/ink/*.ink`. Sau sửa, chạy `npm run build`, đọc lại nhánh đã đổi và `npm run check`. Bốn output generated: compiled JSON, scene_manifest.json và hai screenplay `BEN_MUA_SCREENPLAY_vi.md`/`THANG_LONG_C1_06_SCREENPLAY_vi.md`. Không sửa các file generated bằng tay. `check` phát hiện output/source/canon drift, chạy thực Ink branches, kiểm replay, reveal gate, thứ tự evidence/reset Thăng Long và cinema timing; không chấm điểm văn hay.
 
 ## Inky và compiler portable
 

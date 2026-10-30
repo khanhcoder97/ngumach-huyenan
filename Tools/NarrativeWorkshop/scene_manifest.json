@@ -4,11 +4,11 @@
   "runtimeActivationAllowed": false,
   "authority": "LOCAL_READING_ROOM_ONLY",
   "compiler": "inkjs@2.4.0",
-  "sourceDigest": "f63eb99c588703b1d15caab69f5f5401b24e5a1eeb9cbfb456d2242bed950691",
+  "sourceDigest": "3b3e04a6a5c4bf093804c6a3e228faaee2531ce4a07eff29525562faf3b86658",
   "sources": [
     {
       "path": "docs/narrative/workshop/ink/main.ink",
-      "sha256": "d87cf26da3ab4a583acbcd23dce876cda12675d958a364f9809c4de3373c22d4"
+      "sha256": "46ace961e64792f874f71a05135c74b8fd0ea2f5e7b186bc8a96214ee3956b2f"
     },
     {
       "path": "docs/narrative/workshop/ink/p00_01.ink",
@@ -24,11 +24,15 @@
     },
     {
       "path": "docs/narrative/workshop/ink/p00_04.ink",
-      "sha256": "dfdc9451c4592d285d6b53eb6fb74f18956a65e8f273cdd8a8bb37db3243c300"
+      "sha256": "c6dc78c1fe7769499f17bcb887c64b781cbac1c1eab8802618dc68b79e327a5e"
     },
     {
       "path": "docs/narrative/workshop/ink/p00_05.ink",
-      "sha256": "bb419841e7771aa3bee267b171b22d2c954c89544c532e4f78e59f4e9914e103"
+      "sha256": "291383d5e73aad1a9239845ad2b35ee35d5ec66e5f74a1f8fe23b0bce6dcf968"
+    },
+    {
+      "path": "docs/narrative/workshop/ink/c1_06.ink",
+      "sha256": "a05470864d040ac9455a93a61420074fe457375fce1bc01aac32321d7ddc5aa5"
     }
   ],
   "canonicalSources": [
@@ -62,7 +66,7 @@
       "guard": null,
       "cinemaId": null,
       "sourcePath": "docs/narrative/workshop/ink/main.ink",
-      "sourceLine": 14
+      "sourceLine": 18
     },
     {
       "id": "BM01_ROPE",
@@ -232,7 +236,7 @@
       "guard": "SERVER_P00_04_CHECKPOINT_120_WAVE_2_CLEAR",
       "cinemaId": null,
       "sourcePath": "docs/narrative/workshop/ink/p00_04.ink",
-      "sourceLine": 65
+      "sourceLine": 68
     },
     {
       "id": "BM04_CRACK",
@@ -242,7 +246,7 @@
       "guard": "SERVER_P00_04_CHECKPOINT_120_CONFIRMED",
       "cinemaId": null,
       "sourcePath": "docs/narrative/workshop/ink/p00_04.ink",
-      "sourceLine": 73
+      "sourceLine": 76
     },
     {
       "id": "BM05_BEFORE",
@@ -302,7 +306,7 @@
       "guard": null,
       "cinemaId": null,
       "sourcePath": "docs/narrative/workshop/ink/p00_05.ink",
-      "sourceLine": 76
+      "sourceLine": 79
     },
     {
       "id": "BM05_CLASS_CONFIRM",
@@ -312,7 +316,7 @@
       "guard": "SERVER_P00_05_CLASS_CONFIRM_AVAILABLE",
       "cinemaId": null,
       "sourcePath": "docs/narrative/workshop/ink/p00_05.ink",
-      "sourceLine": 84
+      "sourceLine": 87
     },
     {
       "id": "BM05_END",
@@ -322,7 +326,127 @@
       "guard": null,
       "cinemaId": null,
       "sourcePath": "docs/narrative/workshop/ink/p00_05.ink",
-      "sourceLine": 93
+      "sourceLine": 96
+    },
+    {
+      "id": "TL06_ARRIVAL",
+      "knot": "tl_arrival",
+      "questId": "C1-06",
+      "kind": "SCENE",
+      "guard": "SERVER_C1_05_COMMITTED_AND_C1_06_AVAILABLE",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/c1_06.ink",
+      "sourceLine": 2
+    },
+    {
+      "id": "TL06_PAUSE",
+      "knot": "tl_pause",
+      "questId": "C1-06",
+      "kind": "SCENE",
+      "guard": null,
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/c1_06.ink",
+      "sourceLine": 27
+    },
+    {
+      "id": "TL06_BRIEF",
+      "knot": "tl_brief",
+      "questId": "C1-06",
+      "kind": "SCENE",
+      "guard": null,
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/c1_06.ink",
+      "sourceLine": 34
+    },
+    {
+      "id": "TL06_ROUTE",
+      "knot": "tl_route",
+      "questId": "C1-06",
+      "kind": "CHECKPOINT",
+      "guard": "SERVER_C1_06_ACTIVE",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/c1_06.ink",
+      "sourceLine": 41
+    },
+    {
+      "id": "TL06_LEDGER",
+      "knot": "tl_ledger",
+      "questId": "C1-06",
+      "kind": "SCENE",
+      "guard": "SERVER_C1_06_LEDGER_INTERACT_AVAILABLE",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/c1_06.ink",
+      "sourceLine": 54
+    },
+    {
+      "id": "TL06_FORGE",
+      "knot": "tl_forge",
+      "questId": "C1-06",
+      "kind": "SCENE",
+      "guard": "SERVER_C1_06_FORGE_INTERACT_AVAILABLE",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/c1_06.ink",
+      "sourceLine": 98
+    },
+    {
+      "id": "TL06_ARCHIVE",
+      "knot": "tl_archive",
+      "questId": "C1-06",
+      "kind": "SCENE",
+      "guard": "SERVER_C1_06_ARCHIVE_INTERACT_AVAILABLE",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/c1_06.ink",
+      "sourceLine": 125
+    },
+    {
+      "id": "TL06_COMPARE",
+      "knot": "tl_compare",
+      "questId": "C1-06",
+      "kind": "SCENE",
+      "guard": "SERVER_C1_06_LEDGER_FORGE_ARCHIVE_CONFIRMED",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/c1_06.ink",
+      "sourceLine": 151
+    },
+    {
+      "id": "TL06_COMPARED",
+      "knot": "tl_compared",
+      "questId": "C1-06",
+      "kind": "SCENE",
+      "guard": "SERVER_C1_06_COMPARISON_CONFIRMED_BEFORE_REPORT",
+      "cinemaId": "CIN_006",
+      "sourcePath": "docs/narrative/workshop/ink/c1_06.ink",
+      "sourceLine": 163
+    },
+    {
+      "id": "TL06_REPORT",
+      "knot": "tl_report",
+      "questId": "C1-06",
+      "kind": "SCENE",
+      "guard": "SERVER_C1_06_READY_TO_TURN_IN",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/c1_06.ink",
+      "sourceLine": 175
+    },
+    {
+      "id": "TL06_COMMIT",
+      "knot": "tl_receipt",
+      "questId": "C1-06",
+      "kind": "CHECKPOINT",
+      "guard": "SERVER_C1_06_TURN_IN_COMMITTED",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/c1_06.ink",
+      "sourceLine": 223
+    },
+    {
+      "id": "TL06_END",
+      "knot": "tl_end",
+      "questId": "C1-06",
+      "kind": "SCENE",
+      "guard": "SERVER_C1_06_TURN_IN_COMMITTED",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/c1_06.ink",
+      "sourceLine": 231
     }
   ],
   "warnings": []

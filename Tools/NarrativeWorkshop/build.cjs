@@ -7,7 +7,8 @@ const pinnedVersion=require('./package.json').dependencies.inkjs;
 const installedVersion=JSON.parse(fs.readFileSync(path.join(__dirname,'node_modules/inkjs/package.json'),'utf8')).version;
 if(installedVersion!==pinnedVersion)throw Error('Run npm ci: installed inkjs differs from pin');
 const sourceDir = path.join(root, 'docs/narrative/workshop/ink');
-const names = ['main.ink','p00_01.ink','p00_02.ink','p00_03.ink','p00_04.ink','p00_05.ink'];
+const names = ['main.ink','p00_01.ink','p00_02.ink','p00_03.ink','p00_04.ink','p00_05.ink','c1_06.ink'];
+const questForFile = file => file==='main.ink'?null:(file.startsWith('p00_')?'P00-'+file.slice(4,6):'C1-06');
 const normalize = s => s.replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n');
 const hash = s => crypto.createHash('sha256').update(s).digest('hex');
 const sources = Object.fromEntries(names.map(n=>[n,normalize(fs.readFileSync(path.join(sourceDir,n),'utf8'))]));
@@ -27,7 +28,7 @@ for(const [file,text] of Object.entries(sources)) {
     const begin=blocks[i].index+blocks[i][0].length;
     const body=text.slice(begin,i+1<blocks.length?blocks[i+1].index:text.length);
     const tags=Object.fromEntries([...body.matchAll(/^# ([a-z]+):([^\n]+)$/gm)].map(m=>[m[1],m[2].trim()]));
-    if(tags.scene) scenes.push({id:tags.scene,knot:blocks[i][1],questId:file==='main.ink'?null:'P00-'+file.slice(4,6),kind:tags.kind||'SCENE',guard:tags.guard||null,cinemaId:tags.cinema||null,sourcePath:'docs/narrative/workshop/ink/'+file,sourceLine:text.slice(0,blocks[i].index).split('\n').length});
+    if(tags.scene) scenes.push({id:tags.scene,knot:blocks[i][1],questId:questForFile(file),kind:tags.kind||'SCENE',guard:tags.guard||null,cinemaId:tags.cinema||null,sourcePath:'docs/narrative/workshop/ink/'+file,sourceLine:text.slice(0,blocks[i].index).split('\n').length});
   }
 }
 if(new Set(scenes.map(s=>s.id)).size!==scenes.length) throw Error('Duplicate scene ID');
@@ -41,9 +42,12 @@ for(const [name,data] of Object.entries(outputs)) {
  if(process.argv.includes('--check')) {if(!fs.existsSync(file)||normalize(fs.readFileSync(file,'utf8'))!==data) throw Error(name+' is stale; npm run build then review');}
  else fs.writeFileSync(file,data);
 }
-{
- let md='# Bến Mưa — kịch bản đầy đủ, bản biên tập 2026-10-31\n\nBản thảo để đọc và biên tập; giữ mọi nhánh, gồm lựa chọn khác nhau nên đây không phải một lượt chơi tuyến tính. Mở reading room để đọc theo nhánh. Runtime activation OFF; không thay CSV/quest graph hoặc cinema source.\n\n';
- for(const [file,text] of Object.entries(sources)) if(file!=='main.ink') {
+for(const [title,output,files] of [
+ ['Bến Mưa','BEN_MUA_SCREENPLAY_vi.md',names.filter(n=>n.startsWith('p00_'))],
+ ['Thăng Long — Con dấu qua phố','THANG_LONG_C1_06_SCREENPLAY_vi.md',['c1_06.ink']]
+]) {
+ let md='# '+title+' — kịch bản đầy đủ, bản biên tập 2026-10-31\n\nBản thảo để đọc và biên tập; giữ mọi nhánh, gồm lựa chọn khác nhau nên đây không phải một lượt chơi tuyến tính. Mở reading room để đọc theo nhánh. Runtime activation OFF; không thay CSV/quest graph hoặc cinema source.\n\n';
+ for(const [file,text] of Object.entries(sources)) if(files.includes(file)) {
    md+='## '+file.replace('.ink','').replace('_','-').toUpperCase()+'\n\n';
    for(const line of text.split('\n')) {
     if(line.startsWith('//')||line.startsWith('~'))continue;
@@ -55,7 +59,7 @@ for(const [name,data] of Object.entries(outputs)) {
    }
  }
  md=md.trimEnd()+'\n';
- const manuscript=path.join(root,'docs/narrative/workshop/BEN_MUA_SCREENPLAY_vi.md');
+ const manuscript=path.join(root,'docs/narrative/workshop',output);
  if(process.argv.includes('--check')) {if(normalize(fs.readFileSync(manuscript,'utf8'))!==md) throw Error('Generated manuscript is stale');}
  else fs.writeFileSync(manuscript,md);
 }

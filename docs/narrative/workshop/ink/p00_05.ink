@@ -60,9 +60,12 @@ Tạ Vân Khanh nhìn lá thư trước, rồi mới nhìn mảnh ấn.
 Tạ Vân Khanh: Rồi.
 Ly An chờ ông nói tiếp. Một giọt nước rơi từ góc bì thư lên vạt áo cô.
 + [Ở đâu?]
-    Tạ Vân Khanh: Ta cần đối lại vài thứ trước khi kể với hai người.
-    Ly An: Thư của cháu vẫn ở đây.
-    Ông gật, không đưa tay lấy nó.
+    Tạ Vân Khanh: Trong một bản chép. Nó không có hình phần bị gãy này.
+    Ly An: Vậy đem bản chép ra đối được không?
+    Tạ Vân Khanh: Được. Ta phải tìm lại nó.
+    Ly An kéo nắp túi lên, chừa mặt niêm ở ngoài tầm bàn tay ông.
+    Ly An: Bác tìm xong thì gọi cả cháu.
+    Tạ Vân Khanh: Cả hai người.
     -> p05_after
 + [Lá thư có liên quan đến nó không?]
     Tạ Vân Khanh: Bạn cũng thấy sáp rạn cùng lúc. Đừng thử ép chúng lại.
@@ -76,7 +79,7 @@ Ly An chờ ông nói tiếp. Một giọt nước rơi từ góc bì thư lên 
 === p05_after ===
 # scene:BM05_RETURN
 # kind:SCENE
-Ly An nhặt đầu dây đã tuột khỏi túi. Lần này cô đưa nó cho bạn giữ mà không dặn tránh mặt niêm. Cô buộc lại nút, đẩy túi ra sau vai cho khỏi vướng lối.
+Ly An đẩy túi ra sau vai cho khỏi vướng lối. Cô đứng lên đầu cọc bị gãy thấp, nghiêng người nhìn qua đám lau.
 Ly An: Về báo bà chèo đò nhé. Nhìn từ đây còn thấy dây neo.
 Ngoài bến, một cánh cửa kho mở rộng hơn. Người đứng trong cửa kéo kiện hàng đầu tiên vào chỗ khô. Phía Thanh Lạc, đường bờ vẫn còn một đoạn chìm dưới nước; chưa ai bước lên đó.
 -> p05_class
@@ -93,7 +96,7 @@ BẢN ĐỌC · Không giả tên lớp hoặc thông số nhân vật. Chuyển
 === p05_end ===
 # scene:BM05_END
 # kind:SCENE
-Ở chỗ nước vừa rút, một đầu dây neo mắc dưới ván. Ly An cúi gỡ nó, gọi người chèo đò ngoài bến. Lần đầu tiên từ lúc gặp, cô gọi đủ lớn để người ở bên kia nghe được.
+Người chèo đò đứng ở đầu bến, vẫn vịn cọc bằng bàn tay còn hằn vết rễ. Ly An gọi bà, chỉ ra sợi neo đang căng. Bà lần theo hướng tay cô, thử kéo; ngoài lau, mạn đò nhúc nhích một chút.
 KẾT TUYẾN BẢN ĐỌC · Người viết thư, lý do Tạ nhận ra niêm và sự khác nhau trong hai lời kể vẫn chưa có lời giải. Bản đọc dừng ở đây; không tự mở Chương I hoặc phát cinema trong game.
 + [Đọc lại từ đầu] -> p01_rope
 + [Về bàn đọc] -> reading_room
