@@ -47,10 +47,17 @@ namespace NguMach.Client.P1
             HideAllPanels();
         }
 
+        /// <summary>Close topmost open modal panel.</summary>
+        public void CloseTop()
+        {
+            _router?.CloseTop();
+        }
+
         /// <summary>Open the PlayerUI. Call once per session.</summary>
         public void Open(IP1UIAdapter adapter, UIDocument doc)
         {
             if (_adapter != null) { Debug.LogError("[PlayerUIRoot] Open called twice; call Close first."); return; }
+            _closing = false;
             _adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));
             _doc = doc ?? throw new ArgumentNullException(nameof(doc));
             _life = new CancellationTokenSource();
@@ -74,13 +81,20 @@ namespace NguMach.Client.P1
         {
             if (_closing) return;
             _closing = true;
-            _life?.Cancel();
-            _life?.Dispose();
-            _life = null;
-            if (_router != null) { _router.OnPanelChanged -= HandlePanelChanged; _router.CloseAll(); _router = null; }
-            HideAllPanels();
-            _adapter = null;
-            _doc = null;
+            try
+            {
+                _life?.Cancel();
+                _life?.Dispose();
+                _life = null;
+                if (_router != null) { _router.OnPanelChanged -= HandlePanelChanged; _router.CloseAll(); _router = null; }
+                HideAllPanels();
+                _adapter = null;
+                _doc = null;
+            }
+            finally
+            {
+                _closing = false;
+            }
         }
 
         public void OpenPanel(PlayerPanel panel)
@@ -125,6 +139,15 @@ namespace NguMach.Client.P1
             var cs = _adapter.ConnectionState;
             if (cs == UIConnectionState.Expired || cs == UIConnectionState.Disconnected)
             { Close(); return; }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (_router != null && _router.IsAnyOpen)
+                {
+                    _router.CloseTop();
+                }
+            }
+
             if (buttonBar != null) buttonBar.RefreshVisibility(cs);
         }
 

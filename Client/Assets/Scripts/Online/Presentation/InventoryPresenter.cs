@@ -37,30 +37,48 @@ namespace NguMach.Client.Presentation
             _state = _state.WithLoading();
             NotifyChanged();
 
-            var result = await _adapter.ReadInventoryAsync(ct);
-            if (!result.Success)
+            try
             {
-                _state = _state.WithError(result.Code, result.CorrelationId);
+                var result = await _adapter.ReadInventoryAsync(ct);
+                if (!result.Success)
+                {
+                    _state = _state.WithError(result.Code, result.CorrelationId);
+                    NotifyChanged();
+                    return _state;
+                }
+
+                var inv = _adapter.Inventory;
+                if (inv == null)
+                {
+                    _state = _state.WithError("empty_response");
+                    NotifyChanged();
+                    return _state;
+                }
+
+                // Guard: only apply if newer revision.
+                if (_state.Value != null && inv.inventoryRevision < _state.Value.InventoryRevision)
+                {
+                    _state = _state.WithValue(_state.Value); // restore Loaded phase with current value
+                    NotifyChanged();
+                    return _state; // stale response, keep current
+                }
+
+                _state = _state.WithValue(BuildViewState(inv, _state.Value));
                 NotifyChanged();
                 return _state;
             }
-
-            var inv = _adapter.Inventory;
-            if (inv == null)
+            catch (OperationCanceledException)
             {
-                _state = _state.WithError("empty_response");
+                _state = _state.Value != null ? _state.WithValue(_state.Value) : AsyncState<InventoryViewState>.Idle;
                 NotifyChanged();
-                return _state;
+                throw;
             }
-
-            // Guard: only apply if newer revision (P1Client already filters, but be defensive).
-            if (_state.IsLoaded && _state.Value != null &&
-                inv.inventoryRevision < _state.Value.InventoryRevision)
-                return _state; // stale response, keep current
-
-            _state = _state.WithValue(BuildViewState(inv, _state.Value));
-            NotifyChanged();
-            return _state;
+            catch (Exception ex)
+            {
+                _state = _state.WithError(ex.Message);
+                NotifyChanged();
+                throw;
+            }
         }
 
         public void SetPage(int page)
@@ -97,42 +115,79 @@ namespace NguMach.Client.Presentation
             var slots = new Dictionary<int, ItemSlotView>();
             var seenInstances = new HashSet<string>(StringComparer.Ordinal);
             var seenSlotIndices = new HashSet<int>();
+            var unassignedBagItems = new List<P1Item>();
 
-            foreach (var item in inv.items)
+            var items = inv.items ?? Array.Empty<P1Item>();
+            foreach (var item in items)
             {
                 if (item == null) { warnings.Add("null_item_entry"); continue; }
                 if (string.IsNullOrEmpty(item.instanceId)) { warnings.Add("missing_instance_id"); continue; }
                 if (!seenInstances.Add(item.instanceId)) { warnings.Add("duplicate_instance_id:" + item.instanceId); continue; }
 
-                // Determine slot index from item.slot field.
-                // slot field may be null (BAG items use linear assignment by server order),
-                // or a string "0".."99".
-                int slotIndex = -1;
-                if (!string.IsNullOrEmpty(item.slot))
+                // Separate EQUIPPED / BANK from BAG
+                if (string.Equals(item.location, "EQUIPPED", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (!int.TryParse(item.slot, out slotIndex) || slotIndex < 0 || slotIndex >= InventoryViewState.TotalSlots)
-                    {
-                        warnings.Add("out_of_range_slot:" + item.slot + ":" + item.instanceId);
-                        slotIndex = -1;
-                    }
+                    // Equipment does not occupy standard bag slots; valid equipment slot names (e.g. MAIN_HAND)
+                    // must not trigger out_of_range_slot warnings.
+                    continue;
+                }
+                if (string.Equals(item.location, "BANK", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
                 }
 
-                if (slotIndex >= 0)
+                // Item belongs to BAG (or default location)
+                if (!string.IsNullOrEmpty(item.slot))
                 {
-                    if (!seenSlotIndices.Add(slotIndex))
+                    if (int.TryParse(item.slot, out int slotIndex))
                     {
-                        warnings.Add("duplicate_slot_index:" + slotIndex + ":" + item.instanceId);
-                        continue; // Do not overwrite existing slot; report warning.
+                        if (slotIndex >= 0 && slotIndex < InventoryViewState.TotalSlots)
+                        {
+                            if (!seenSlotIndices.Add(slotIndex))
+                            {
+                                warnings.Add("duplicate_slot_index:" + slotIndex + ":" + item.instanceId);
+                            }
+                            else
+                            {
+                                slots[slotIndex] = new ItemSlotView(item, displayName: null, rarityKey: null);
+                            }
+                        }
+                        else
+                        {
+                            warnings.Add("out_of_range_slot:" + item.slot + ":" + item.instanceId);
+                        }
                     }
-                    // Display name and rarity come from catalog; we pass null here (UNRESOLVED).
-                    // A catalog resolver layer should call BuildViewState with resolved names.
-                    slots[slotIndex] = new ItemSlotView(item, displayName: null, rarityKey: null);
+                    else
+                    {
+                        // Non-numeric slot in BAG (e.g. named slot), treat as unassigned bag item
+                        unassignedBagItems.Add(item);
+                    }
                 }
-                // Items with unknown slot (no slot field) are still tracked via instance ID for diagnostics.
-                // They will appear as warnings. A future catalog/slot-map update should resolve this.
-                else if (item.location == "BAG")
+                else
                 {
-                    warnings.Add("bag_item_no_slot:" + item.instanceId);
+                    // Omitted slot in BAG: valid per contract, assign to next free linear slot
+                    unassignedBagItems.Add(item);
+                }
+            }
+
+            // Pass 2: Assign linear free slots to unassigned BAG items
+            int freeSearchIndex = 0;
+            foreach (var item in unassignedBagItems)
+            {
+                while (freeSearchIndex < InventoryViewState.TotalSlots && seenSlotIndices.Contains(freeSearchIndex))
+                {
+                    freeSearchIndex++;
+                }
+
+                if (freeSearchIndex < InventoryViewState.TotalSlots)
+                {
+                    seenSlotIndices.Add(freeSearchIndex);
+                    slots[freeSearchIndex] = new ItemSlotView(item, displayName: null, rarityKey: null);
+                    freeSearchIndex++;
+                }
+                else
+                {
+                    warnings.Add("inventory_full_overflow:" + item.instanceId);
                 }
             }
 
@@ -142,8 +197,11 @@ namespace NguMach.Client.Presentation
                 selectedId = null;
 
             var currencies = new List<CurrencyView>();
-            foreach (var c in inv.currencies)
-                if (c != null) currencies.Add(new CurrencyView(c));
+            if (inv.currencies != null)
+            {
+                foreach (var c in inv.currencies)
+                    if (c != null) currencies.Add(new CurrencyView(c));
+            }
 
             return new InventoryViewState(
                 inv.inventoryRevision,

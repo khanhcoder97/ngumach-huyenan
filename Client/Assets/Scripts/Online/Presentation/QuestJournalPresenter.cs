@@ -31,17 +31,32 @@ namespace NguMach.Client.Presentation
             _state = _state.WithLoading();
             NotifyChanged();
 
-            var result = await _adapter.ReadQuestsAsync(ct);
-            if (!result.Success)
+            try
             {
-                _state = _state.WithError(result.Code, result.CorrelationId);
+                var result = await _adapter.ReadQuestsAsync(ct);
+                if (!result.Success)
+                {
+                    _state = _state.WithError(result.Code, result.CorrelationId);
+                    NotifyChanged();
+                    return _state;
+                }
+
+                _state = _state.WithValue(BuildViewState(_adapter.Quests, _state.Value));
                 NotifyChanged();
                 return _state;
             }
-
-            _state = _state.WithValue(BuildViewState(_adapter.Quests, _state.Value));
-            NotifyChanged();
-            return _state;
+            catch (OperationCanceledException)
+            {
+                _state = _state.Value != null ? _state.WithValue(_state.Value) : AsyncState<QuestJournalViewState>.Idle;
+                NotifyChanged();
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _state = _state.WithError(ex.Message);
+                NotifyChanged();
+                throw;
+            }
         }
 
         public void SetSelection(string questId)

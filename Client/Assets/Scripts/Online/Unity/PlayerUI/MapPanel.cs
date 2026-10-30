@@ -133,6 +133,9 @@ namespace NguMach.Client.P1
                 float wx = (float)(m.X - playerX) * zoom * 4f + cx;
                 float wy = -(float)(m.Y - playerY) * zoom * 4f + cy; // Y flipped for screen
 
+                // Bounds clipping within map display container
+                if (wx < 0 || wx > MapDisplaySize || wy < 0 || wy > MapDisplaySize) continue;
+
                 Color color;
                 switch (m.Kind)
                 {
@@ -205,6 +208,14 @@ namespace NguMach.Client.P1
         {
             if (_adapter.HasPendingMutation || _adapter.ConnectionState == UIConnectionState.UncertainMutation) return;
             _presenter?.SetZoom(value);
+        }
+
+        private void Update()
+        {
+            if (_visible && _presenter != null)
+            {
+                _presenter.Refresh();
+            }
         }
 
         private void OnDestroy()

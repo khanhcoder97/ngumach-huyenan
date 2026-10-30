@@ -49,6 +49,13 @@ namespace NguMach.Client.P1
             playerUIRoot.CloseAll();
         }
 
+        /// <summary>Close topmost player panel.</summary>
+        public void CloseTopPanel()
+        {
+            if (playerUIRoot == null) return;
+            playerUIRoot.CloseTop();
+        }
+
         /// <summary>True if any player panel is open (used by P1OnlinePanel.ModalOpen).</summary>
         public bool IsAnyPanelOpen => playerUIRoot != null && playerUIRoot.IsAnyOpen;
 

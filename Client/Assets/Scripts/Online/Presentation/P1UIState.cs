@@ -221,14 +221,35 @@ namespace NguMach.Client.Presentation
         public bool IsAvailable => UnavailableReason == null;
     }
 
+    public enum DialogueActionType { Interact, AcceptQuest, TurnInQuest, Close }
+
     public sealed class DialogueChoice
     {
         public int Index { get; }
         public string Label { get; }
         public bool Enabled { get; }
         public string DisabledReason { get; }
-        public DialogueChoice(int index, string label, bool enabled = true, string disabledReason = null)
-        { Index = index; Label = label; Enabled = enabled; DisabledReason = disabledReason; }
+        public DialogueActionType ActionType { get; }
+        public string QuestId { get; }
+        public string NpcId { get; }
+
+        public DialogueChoice(
+            int index,
+            string label,
+            bool enabled = true,
+            string disabledReason = null,
+            DialogueActionType actionType = DialogueActionType.Interact,
+            string questId = null,
+            string npcId = null)
+        {
+            Index = index;
+            Label = label;
+            Enabled = enabled;
+            DisabledReason = disabledReason;
+            ActionType = actionType;
+            QuestId = questId;
+            NpcId = npcId;
+        }
     }
 
     // ── Settings view state ──────────────────────────────────────────────────

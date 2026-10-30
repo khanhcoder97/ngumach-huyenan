@@ -23,7 +23,12 @@ namespace PlayerUIChecks
         public bool HasPendingMutation { get; set; }
         public string LastErrorCode { get; set; }
         public string LastCorrelationId { get; set; }
-        public P1Self Self { get; set; }
+        private P1Self _self;
+        public P1Self Self
+        {
+            get => _self ?? World?.self ?? WorldV2?.self;
+            set => _self = value;
+        }
         public P1World World { get; set; }
         public P1WorldV2 WorldV2 { get; set; }
         public P1Quest[] Quests { get; set; } = Array.Empty<P1Quest>();

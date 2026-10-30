@@ -1,9 +1,9 @@
-// SettingsPanel — hiển thị SettingsViewState từ SettingsPresenter.
-// Slider: UiScale (0.5-2.0), MasterVolume (0-1), TextSize (0.75-1.5).
-// Toggle: ReducedMotion, ReducedFlash, ShowInputHints.
-// Nút Reset Default. Áp dụng chỉ qua SettingsPresenter setter.
+// SettingsPanel — MonoBehaviour điều khiển panel Cài đặt.
+// Tỷ lệ giao diện, âm lượng chính, cỡ chữ, reduced motion, reduced flash, input hints.
+// Phù hợp DEC-019 (Settings: versioned local PlayerPrefs).
 // Owner: Antigravity Remote — Issue #80.
 
+using System;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -14,19 +14,17 @@ namespace NguMach.Client.P1
     [DisallowMultipleComponent]
     public sealed class SettingsPanel : MonoBehaviour
     {
-        // ── Inspector ────────────────────────────────────────────────────────
         [SerializeField] private bool usePlayerPrefsStore = true;
 
-        // ── State ────────────────────────────────────────────────────────────
         private IP1UIAdapter _adapter;
         private PanelRouter _router;
         private CancellationToken _ct;
         private SettingsPresenter _presenter;
+
+        private VisualElement _root;
         private bool _visible;
         private bool _suppressCallbacks;
 
-        // ── UIElements refs ──────────────────────────────────────────────────
-        private VisualElement _root;
         private Slider _uiScaleSlider;
         private Slider _masterVolumeSlider;
         private Slider _textSizeSlider;
@@ -37,24 +35,23 @@ namespace NguMach.Client.P1
 
         // ── Init ─────────────────────────────────────────────────────────────
 
-        public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct)
+        public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct, ISettingsStore store = null)
         {
             _adapter = adapter;
             _router = router;
             _ct = ct;
 
-            ISettingsStore store = usePlayerPrefsStore
-                ? (ISettingsStore)FindFirstObjectByType<PlayerPrefsSettingsStore>()
-                : null;
-            if (store == null)
+            if (store == null && usePlayerPrefsStore)
             {
-                // Fallback: use PlayerPrefsSettingsStore if available, else log error and skip.
-                var storeGo = FindFirstObjectByType<PlayerPrefsSettingsStore>();
-                if (storeGo != null) store = storeGo;
-                else { Debug.LogError("[SettingsPanel] No ISettingsStore found. Attach PlayerPrefsSettingsStore to scene."); return; }
+                store = FindFirstObjectByType<PlayerPrefsSettingsStore>();
+                if (store == null)
+                {
+                    var go = new GameObject("PlayerPrefsSettingsStore");
+                    store = go.AddComponent<PlayerPrefsSettingsStore>();
+                }
             }
 
-            _presenter = new SettingsPresenter(store);
+            _presenter = new SettingsPresenter(store ?? new MemorySettingsStore());
             _presenter.OnChanged += Render;
             BuildUI();
             Hide();
@@ -79,8 +76,8 @@ namespace NguMach.Client.P1
         {
             _root = MakePanel();
             _root.style.position = Position.Absolute;
-            _root.style.left = 60; _root.style.top = 60;
-            _root.style.width = 340;
+            _root.style.left = 80; _root.style.top = 40;
+            _root.style.width = 380; _root.style.maxHeight = 440;
 
             // Header
             var header = new VisualElement { style = { flexDirection = FlexDirection.Row, justifyContent = Justify.SpaceBetween } };
@@ -97,23 +94,44 @@ namespace NguMach.Client.P1
 
             // Sliders
             _uiScaleSlider = MakeSlider("Tỷ lệ giao diện", 0.5f, 2.0f);
-            _uiScaleSlider.RegisterValueChangedCallback(ev => { if (!_suppressCallbacks) _presenter?.SetUiScale(ev.newValue); });
+            _uiScaleSlider.RegisterValueChangedCallback(ev =>
+            {
+                if (!_suppressCallbacks)
+                {
+                    _presenter?.SetUiScale(ev.newValue);
+                    ApplySettings(_presenter?.Current);
+                }
+            });
             scroll.Add(_uiScaleSlider);
 
             _masterVolumeSlider = MakeSlider("Âm lượng chính", 0f, 1f);
-            _masterVolumeSlider.RegisterValueChangedCallback(ev => { if (!_suppressCallbacks) _presenter?.SetMasterVolume(ev.newValue); });
+            _masterVolumeSlider.RegisterValueChangedCallback(ev =>
+            {
+                if (!_suppressCallbacks)
+                {
+                    _presenter?.SetMasterVolume(ev.newValue);
+                    ApplySettings(_presenter?.Current);
+                }
+            });
             scroll.Add(_masterVolumeSlider);
 
             _textSizeSlider = MakeSlider("Cỡ chữ", 0.75f, 1.5f);
-            _textSizeSlider.RegisterValueChangedCallback(ev => { if (!_suppressCallbacks) _presenter?.SetTextSize(ev.newValue); });
+            _textSizeSlider.RegisterValueChangedCallback(ev =>
+            {
+                if (!_suppressCallbacks)
+                {
+                    _presenter?.SetTextSize(ev.newValue);
+                    ApplySettings(_presenter?.Current);
+                }
+            });
             scroll.Add(_textSizeSlider);
 
             // Toggles
-            _reducedMotionToggle = MakeToggle("Giảm chuyển động");
+            _reducedMotionToggle = MakeToggle("Giảm chuyển động (Lưu cục bộ - preview)");
             _reducedMotionToggle.RegisterValueChangedCallback(ev => { if (!_suppressCallbacks) _presenter?.SetReducedMotion(ev.newValue); });
             scroll.Add(_reducedMotionToggle);
 
-            _reducedFlashToggle = MakeToggle("Giảm hiệu ứng nhấp nháy");
+            _reducedFlashToggle = MakeToggle("Giảm hiệu ứng nhấp nháy (Lưu cục bộ - preview)");
             _reducedFlashToggle.RegisterValueChangedCallback(ev => { if (!_suppressCallbacks) _presenter?.SetReducedFlash(ev.newValue); });
             scroll.Add(_reducedFlashToggle);
 
@@ -122,7 +140,7 @@ namespace NguMach.Client.P1
             scroll.Add(_showInputHintsToggle);
 
             // Reset button
-            var resetBtn = new Button(() => _presenter?.Reset()) { text = "Khôi phục mặc định" };
+            var resetBtn = new Button(() => { _presenter?.Reset(); ApplySettings(_presenter?.Current); }) { text = "Khôi phục mặc định" };
             resetBtn.style.minHeight = 42; resetBtn.style.marginTop = 8;
             scroll.Add(resetBtn);
 
@@ -141,12 +159,9 @@ namespace NguMach.Client.P1
 
         private void Render()
         {
-            if (!_visible || _root == null || _presenter == null) return;
+            if (!_visible || _presenter == null) return;
 
             var cs = _adapter.ConnectionState;
-            if (cs == UIConnectionState.Expired || cs == UIConnectionState.Disconnected)
-            { Hide(); return; }
-
             bool uncertain = cs == UIConnectionState.UncertainMutation || _adapter.HasPendingMutation;
 
             if (uncertain)
@@ -178,6 +193,20 @@ namespace NguMach.Client.P1
             _reducedMotionToggle.SetEnabled(!uncertain);
             _reducedFlashToggle.SetEnabled(!uncertain);
             _showInputHintsToggle.SetEnabled(!uncertain);
+
+            ApplySettings(s);
+        }
+
+        private void ApplySettings(SettingsViewState s)
+        {
+            if (s == null) return;
+            // Apply volume via Unity AudioListener
+            AudioListener.volume = s.MasterVolume;
+            // Apply UI scale to root transform
+            if (_root != null)
+            {
+                _root.transform.scale = new Vector3(s.UiScale, s.UiScale, 1f);
+            }
         }
 
         private void OnDestroy()
@@ -207,6 +236,13 @@ namespace NguMach.Client.P1
             p.style.backgroundColor = new Color(0.07f, 0.10f, 0.12f, 0.92f);
             p.style.paddingLeft = p.style.paddingRight = p.style.paddingTop = p.style.paddingBottom = 8;
             return p;
+        }
+
+        private sealed class MemorySettingsStore : ISettingsStore
+        {
+            private SettingsViewState _state = SettingsViewState.Default;
+            public SettingsViewState Load() => _state;
+            public void Save(SettingsViewState s) => _state = s;
         }
     }
 }
