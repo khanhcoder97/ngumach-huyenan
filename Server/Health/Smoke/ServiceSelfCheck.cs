@@ -3156,7 +3156,7 @@ public static class ServiceSelfCheck
         var deathKey = new string('9', 32);
         var firstReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, deathKey);
         var afterReturnEvents = returnEvents.Read(downHero.SessionId, 0, 256).Events;
-        var counterWindow = returnWindows.FindAny(downHero.CharacterId);
+        var returnWindow = returnWindows.FindAny(downHero.CharacterId);
         var lateTickEvents = returnEngine.Tick(2);
         Check(
             "death_return.clears_cast_window_and_counter_once",
@@ -3170,7 +3170,7 @@ public static class ServiceSelfCheck
             returnWindows.Find(downHero.CharacterId) is null &&
             downHero.SwordIntent == 0 &&
             intentBeforeReturn == 2 &&
-            counterWindow is { CounterResolved: true, CounterOutcome: "RETURNED_TO_ANCHOR" } &&
+            returnWindow is { CounterResolved: true, CounterOutcome: "RETURNED_TO_ANCHOR" } &&
             afterReturnEvents.Count(stored => stored.Type == CombatEventTypesV2.Cancel) == 2 &&
             afterReturnEvents.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
             lateTickEvents.Count == 0,
