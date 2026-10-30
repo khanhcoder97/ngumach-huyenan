@@ -633,6 +633,7 @@ def mob_combat_profile():
     guard_cast = None
     guard_casts = 0
     confirmation = None
+    cast_outcomes = []
     for attempt in range(8):
         _, alive_check, _, _ = v2_snapshot(session)
         if alive_check.get("hp", 0) <= 0:
@@ -654,9 +655,10 @@ def mob_combat_profile():
                 "SKILL", sequence, skill_id="SK-MK-01", character_id=character_id,
                 request_id=cast_request, idempotency_key=cast_key, aim_x=-1),
             {"X-Session-ID": session})
-        smoke_p1.check(
-            status in (200, 409),
-            f"guard cast {attempt} returned an unexpected {status}: {body}")
+        # Recorded, not asserted here: the number of attempts depends on when a
+        # mob happens to swing, so a check inside this loop would make the
+        # profile's total move from run to run.
+        cast_outcomes.append((attempt, status, body))
         result = body.get("result") or {}
         if status != 200 or not result.get("castId"):
             # A refused cast (cooldown, resource) is a normal retry signal here;
@@ -674,6 +676,10 @@ def mob_combat_profile():
             break
 
     _, hp_at_guard, _, _ = v2_snapshot(session)
+    smoke_p1.check(
+        all(outcome[1] in (200, 409) for outcome in cast_outcomes),
+        f"guard casts returned unexpected statuses: "
+        f"{[outcome[1] for outcome in cast_outcomes]}")
     smoke_p1.check(guard_casts > 0, "every guard cast was refused")
     smoke_p1.check(confirmation is not None,
                    f"no COUNTER_CONFIRMED appeared for any of the {guard_casts} guard "
