@@ -183,6 +183,8 @@ namespace NguMach.Client.Presentation
         public IReadOnlyDictionary<string, int> Counters { get; }
         public string Title { get; }
         public string ObjectiveDescription { get; }
+        public string DisplayName => Title;
+        public string ObjectiveDesc => ObjectiveDescription;
 
         public QuestEntryView(P1Quest q, string title = null, string objectiveDesc = null)
         {
@@ -319,6 +321,7 @@ namespace NguMach.Client.Presentation
     public sealed class MapMarker
     {
         public string EntityId { get; }
+        public string Id => EntityId;
         public string Kind { get; }   // "NPC" | "QUEST" | "SPAWN" | "PLAYER"
         public double X { get; }
         public double Y { get; }
