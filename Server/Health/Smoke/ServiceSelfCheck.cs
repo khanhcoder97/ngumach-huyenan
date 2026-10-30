@@ -1661,7 +1661,7 @@ public static class ServiceSelfCheck
             $"count={npcAnchors.Count}");
 
         var worldEntities = services.GetRequiredService<WorldEntityRegistry>();
-        Check("world.registry", worldEntities.Count == 27, $"count={worldEntities.Count}");
+        Check("world.registry", worldEntities.Count == 44, $"count={worldEntities.Count}");
 
         var npcEntity = worldEntities.TryGet("ENT_MAN_BM_NPC_LYAN", out var foundNpc)
             ? foundNpc
@@ -1682,8 +1682,11 @@ public static class ServiceSelfCheck
             {
                 Kind: WorldEntityKinds.Mob,
                 State: WorldEntityStates.Alive,
-                Quantity: 3,
-                RespawnSeconds: 18
+                Quantity: 1,
+                RespawnSeconds: 0,
+                GroupId: "MAN-BM-SPAWN_BM_01",
+                MemberIndex: 1,
+                GroupRespawnSeconds: 18
             } &&
             mobEntity.X == 84,
             mobEntity?.Kind);
@@ -1710,14 +1713,17 @@ public static class ServiceSelfCheck
             $"respawned={beforeRespawn}");
 
         manualClock.Advance(TimeSpan.FromSeconds(18));
-        var respawned = manualWorld.Update();
+        var individualMobRespawn = manualWorld.Update();
+        var groupRespawnService = new MobSpawnGroupService(manualWorld, manualClock);
+        var respawned = groupRespawnService.Tick();
         Check(
             "world.respawn",
+            individualMobRespawn == 0 &&
             respawned == 1 &&
             manualWorld.TryGet("ENT_MAN_BM_SPAWN_BM_01", out var revivedMob) &&
             revivedMob.State == WorldEntityStates.Alive &&
             revivedMob.Revision == 3,
-            $"respawned={respawned}");
+            $"individual={individualMobRespawn} group={respawned}");
 
         Check("world.despawn_npc_rejected", !manualWorld.Despawn("ENT_MAN_BM_NPC_LYAN"));
 
