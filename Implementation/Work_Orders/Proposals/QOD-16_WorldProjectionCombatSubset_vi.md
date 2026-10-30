@@ -306,6 +306,30 @@ Quy tắc: enum `state` đóng như hiện tại; thêm field mới vào `telegr
 
 **Đo được ở CI head `f3210a3`:** self-check **338 PASS / 0 FAIL** (6 case `telegraph.*` mới), HTTP smoke **453 checks**, `e2e-mob-combat` **85 checks** (`mob_damage=30`, `counter=IMPACT counter_damage=34`), e2e default 9 / dev 176, hai probe của report vẫn PASS. **Đính chính cho chính report của tôi:** run `0f0eea7` ra **84** chứ không phải 85 — không phải server đổi hành vi mà là check của tôi phụ thuộc nhánh (`maxHp-hp == hpDamage` chỉ chạy khi counter trúng) và loop retry guard ghi một check mỗi attempt. Cả hai đã sửa (`301dee6`, `f3210a3`): thu kết quả rồi assert một lần, và nhánh MISS giờ cũng assert (mob phải còn nguyên HP) thay vì không nói gì. Trước đó tôi viết "identical across three runs" — đúng cho 3 run được trích nhưng suy thành "total đã ổn định" là sai; bài học đã ghi: **không check nào trong loop có trip-count thay đổi, và không check nào được quyết định bởi dice roll.** Q-B đóng ở đây (B1 dash, B2 status, B3 death-return + cleanup, B4 profile mob combat live, B5 telegraph read model); phần wire của B2/B5 vẫn chờ owner duyệt contract.
 
-### 9.16 Triển khai tiếp
+### 9.16 Q-C1: quest graph P00-01..05 từ source, blocked-activation thay vì default 0
+
+**Nguồn dùng để dựng graph:** `docs/production/Quest_and_Narrative_Production_Spec_vi.md` §2 bảng "Mở đầu — Bến Mưa (cấp 1–10)" (từng dòng cho ra start NPC, các bước chính, thưởng, mở khóa; tiêu đề mục cho ra level band 1–10), `Item_Master_Catalog_vi.csv` cho id vật phẩm, `Quest_Dialogue_Production_Data_vi.csv` cho `quest_id`/`graph_id`, và `world_records.json` cho target id. `Narrative_Quest_Beats_v2.json` **không** dùng để dựng objective: chính file đó ghi `scope: PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE`, và work order cấm biến text/dialogue thành objective graph.
+
+**Đã thêm:** 4 runtime record `P00-02..05` + `activation`/`blockedSteps` cho cả 5. Bảng map, kèm phần nào là suy ra và phần nào là thiếu:
+
+| Quest | Nguồn (bước) | Objective runtime | Trạng thái |
+|---|---|---|---|
+| P00-02 | "hạ 4 Cá Linh" | `KILL` `MOB_CARPLING` ×4 | có target thật |
+| P00-02 | "kiểm 3 gợn nước" | — | **BLOCKED**: không có record interactable cho gợn nước |
+| P00-03 | "phá 3 Rễ Nước" | `KILL` `MOB_WATERROOT` ×3 | có target thật |
+| P00-03 | "tương tác 2 dân mắc kẹt", "né một đợt sóng" | — | **BLOCKED**: không có record dân; P1 không có wave/dodge |
+| P00-04 | "hạ 2 đợt 3 quái" | `KILL` `MOB_CARPLING` ×3 + `MOB_WATERROOT` ×3 | có target thật, nhưng đếm theo loài (targetIds pattern không mang được record id của group) → ghi thêm gap `waveAttribution` |
+| P00-04 | "hộ tống Ly An qua checkpoint x=80/120" | — | **BLOCKED**: P1 chưa có escort/checkpoint runtime (toạ độ đã có trong nguồn, cơ chế thì chưa) |
+| P00-05 | "hạ Mãng Cốt" | `BOSS` `BOSS_MANG_COT` ×1 | có target thật nhưng stat boss là `BOSSDATA_BLOCKED` → gap `bossStats` |
+| P00-05 | "tương tác mảnh ấn" | — | **BLOCKED**: không có record mảnh ấn |
+| P00-05 | "xác nhận môn phái ở NPC_CLASS_TRIAL" | `TALK` `NPC_CLASS_TRIAL` ×1 | có anchor thật |
+
+Ngoài ra mỗi quest 03/04/05 thiếu **NPC nhận báo cáo** (nguồn chỉ ghi NPC bắt đầu) → `turnInNpcId` để trống và được khai báo đúng là một blocked step; P00-05 thiếu id quest mở khóa (`C1-01` chưa có runtime record) → gap `unlockQuestIds`. Thưởng lấy từ nguồn: P00-02 `POT-HP-01` ("thuốc" = Dược Bến Mưa), P00-03 thêm `EQ-MK-BOOTS-T1-R-COMMON` ("giày", chỉ lớp MK có trong catalog P1), P00-04 thêm 30 Đồng, P00-05 `EQ-MK-WEAPON-T1-R-COMMON` (nguồn ghi `EQ-[CLASS]-WEAPON-T1-R-COMMON`; P1 chỉ ship lớp MK nên id được viết cho lớp đó và **ghi rõ** đây là giới hạn của slice, không phải bản dịch đầy đủ).
+
+**Luật đã khoá bằng code:** `activation` là **bắt buộc** trong file (không mặc định ACTIVE); BLOCKED phải có ≥1 blocked step, ACTIVE không được có; mỗi blocked step phải có `designStep` + `missingField` + `source` trỏ tới `.md`/`.csv`; `turnInNpcId` được phép null **chỉ khi** có blocked step tên đúng `turnInNpcId`. Runtime: quest BLOCKED luôn `LOCKED` kể cả khi prerequisite đã xong, và accept trả `prerequisite_not_met` + fieldErrors `activation.blocked.<DESIGN_STEP>` (tái dùng enum hiện có — **không đổi wire**; một code riêng `quest_blocked` là đề xuất contract cho lần version sau). Startup validator: prerequisite/unlock tồn tại, **hai chiều khớp nhau**, graph prerequisite **không cycle**, `KILL`/`BOSS`/`ESCORT` target resolve về record thật, `TALK` resolve về NPC anchor, và blocked step phải khai báo đủ. Content schema (`QuestDefinition.schema.json`) + `validate_content.py` được mở rộng tương ứng (chạy local: `OK: all content validation checks passed`, 5 QuestDefinition example).
+
+**Ghi nhận cho content owner (không tự sửa):** (1) manifest Bến Mưa có **hai** record boss cùng toạ độ (178,0) — `MAN-BM-EVENT_BOSS_BM_MANG_COT` (`ACTIVITY_BOSS`) và `MAN-BM-SPAWN_BM_05_QUEST` (`ATLAS_BOSS`) — cùng trỏ `BOSS_MANG_COT`; quest chọn record ACTIVITY_BOSS, nhưng nếu cả hai được spawn cùng lúc thì đó là trùng lặp cần chốt. (2) Mọi gap ở trên là điều kiện **mở khóa** P00-02..05; danh sách nằm ngay trong file runtime nên không ai phải đoán lại.
+
+### 9.17 Triển khai tiếp
 
 Q-C objective graph P00-01..05 (runtime records từ source, loader/adapter/validator phía Qoder, không compiler cạnh tranh), Q-D XP/level + stat transaction một khối, Q-E loot grant + equipment cho cơ chế đã có data, Q-F Mãng Cốt encounter proposal + state machine, Q-G E2E nhiều client + handoff + proposal PostgreSQL (`Server/Persistence*` thuộc Remote #79).

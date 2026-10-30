@@ -375,7 +375,13 @@ def main():
         headers={"X-Correlation-ID": "smoke-quests"})
     check(status == 200, f"quests returned {status}: {body}")
     quests = body.get("result") or []
-    check(len(quests) == 1, f"unexpected quest list {quests}")
+    # The opening chain is P00-01..05; only P00-01 is activatable in P1, the rest
+    # stay LOCKED because their source is still missing fields.
+    check([q.get("questId") for q in quests] ==
+          ["P00-01", "P00-02", "P00-03", "P00-04", "P00-05"],
+          f"unexpected quest list {[q.get('questId') for q in quests]}")
+    check(all(q.get("state") == "LOCKED" for q in quests[1:]),
+          f"blocked quests not locked {[(q.get('questId'), q.get('state')) for q in quests[1:]]}")
     quest = quests[0] if quests else {}
     check(quest.get("questId") == "P00-01", f"unexpected quest id {quest.get('questId')}")
     check(quest.get("state") == "AVAILABLE", f"unexpected quest state {quest.get('state')}")

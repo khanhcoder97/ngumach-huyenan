@@ -251,10 +251,13 @@ foreach (var questId in quests.QuestIds)
             $"Quest '{questId}' start NPC '{questDefinition.StartNpcId}' has no anchor.");
     }
 
-    if (!npcAnchors.HasAnchorFor(questDefinition.TurnInNpcId))
+    // A blocked quest may not know its turn-in NPC yet; the blocked step names
+    // that gap, so only a known NPC anchor is checked here.
+    if (questDefinition.TurnInNpcId is { } turnInNpcId &&
+        !npcAnchors.HasAnchorFor(turnInNpcId))
     {
         throw new InvalidOperationException(
-            $"Quest '{questId}' turn-in NPC '{questDefinition.TurnInNpcId}' has no anchor.");
+            $"Quest '{questId}' turn-in NPC '{turnInNpcId}' has no anchor.");
     }
 }
 

@@ -1623,10 +1623,12 @@ public static class ServiceSelfCheck
             },
             $"state={lifeIdProjected.State} revision={lifeIdProjected.Revision} lifeId={lifeIdProjected.LifeId}");
 
-        Check("quest.catalog", questCatalog.Count == 1, $"count={questCatalog.Count}");
+        Check("quest.catalog", questCatalog.Count == 5, $"count={questCatalog.Count}");
         Check(
             "quest.catalog_ids",
-            questCatalog.QuestIds.SequenceEqual(new[] { "P00-01" }, StringComparer.Ordinal),
+            questCatalog.QuestIds.SequenceEqual(
+                new[] { "P00-01", "P00-02", "P00-03", "P00-04", "P00-05" },
+                StringComparer.Ordinal),
             string.Join(",", questCatalog.QuestIds));
 
         var questActor = NewPlayer("CHR_SELFCHECK_QUEST");
@@ -1698,6 +1700,132 @@ public static class ServiceSelfCheck
             "quest.unknown_quest",
             unknownQuest.Failure?.Code == QuestErrorCodes.UnknownQuest,
             unknownQuest.Failure?.Code);
+
+        // Q-C: the opening chain exists as a graph, but four of its quests are
+        // blocked because the source does not define every field they need. A
+        // blocked quest keeps its place (prerequisite/unlock edges) and can never
+        // open; each gap names the field and the document that must fill it.
+        var blockedDefinitions = questCatalog.QuestIds
+            .Select(questId => questCatalog.TryGet(questId, out var definition) ? definition : null)
+            .Where(definition => definition is { IsBlocked: true })
+            .ToArray();
+        Check(
+            "quest.blocked_chain_named",
+            blockedDefinitions
+                .Select(definition => definition!.QuestId)
+                .SequenceEqual(
+                    new[] { "P00-02", "P00-03", "P00-04", "P00-05" }, StringComparer.Ordinal) &&
+            blockedDefinitions.All(definition =>
+                definition!.Blocked.Count > 0 &&
+                definition.Blocked.All(step =>
+                    step.MissingField.Length > 0 &&
+                    (step.Source.Contains(".md", StringComparison.OrdinalIgnoreCase) ||
+                     step.Source.Contains(".csv", StringComparison.OrdinalIgnoreCase)))),
+            string.Join(",", blockedDefinitions.Select(definition => definition!.QuestId)));
+
+        // The actor completed P00-01 just above, so the prerequisite is met —
+        // and P00-02 still must not open.
+        var blockedState = quests.GetState(questActor.CharacterId, "P00-02");
+        var blockedAccept = questAccept.Accept(
+            questActor, "P00-02", "NPC_TA_VAN_KHANH", new string('c', 32));
+        Check(
+            "quest.blocked_never_available_and_reports_gap",
+            blockedState.State?.State == QuestStates.Locked &&
+            blockedAccept.Failure?.Code == QuestAcceptErrorCodes.PrerequisiteNotMet &&
+            (blockedAccept.Failure.FieldErrors.Contains(
+                "activation.blocked.P00_02_RIPPLES", StringComparer.Ordinal)),
+            $"{blockedState.State?.State}/{string.Join(",", blockedAccept.Failure?.FieldErrors ?? [])}");
+
+        QuestDefinition FixtureQuest(
+            string questId,
+            string[] prerequisites,
+            string[] unlocks,
+            IReadOnlyList<QuestObjectiveDefinition>? objectives = null,
+            string activation = QuestActivations.Active,
+            IReadOnlyList<QuestBlockedStep>? blocked = null)
+        {
+            var objectiveId = "OBJ_" + questId.Replace("-", "_", StringComparison.Ordinal) + "_TALK";
+            return new QuestDefinition(
+                questId,
+                QuestTypes.Main,
+                "NPC_LYAN",
+                1,
+                10,
+                prerequisites,
+                objectives ?? [new QuestObjectiveDefinition(
+                    objectiveId, QuestObjectiveTypes.Talk, ["NPC_LYAN"], 1, options.DefaultMapId)],
+                QuestStepIds.FromObjectiveId(objectiveId),
+                "NPC_LYAN",
+                new QuestRewards([], [], "LEVEL_BAND_BASE"),
+                unlocks,
+                activation,
+                blocked);
+        }
+
+        bool ValidatorRejects(WorldRecordCatalog records, params QuestDefinition[] definitions)
+        {
+            var catalog = definitions.ToDictionary(
+                definition => definition.QuestId, StringComparer.Ordinal);
+            try
+            {
+                QuestCatalogValidator.Validate(new QuestCatalog(catalog), records, npcAnchors);
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+                return true;
+            }
+        }
+
+        var shippedRecords = services.GetRequiredService<WorldRecordCatalog>();
+        var shippedDefinitions = questCatalog.QuestIds
+            .Select(questId => questCatalog.TryGet(questId, out var definition) ? definition : null)
+            .Where(definition => definition is not null)
+            .Select(definition => definition!)
+            .ToArray();
+        Check(
+            "quest.validator_accepts_the_shipped_chain",
+            !ValidatorRejects(shippedRecords, shippedDefinitions),
+            "shipped catalog rejected");
+        Check(
+            "quest.validator_rejects_cycle",
+            ValidatorRejects(
+                shippedRecords,
+                FixtureQuest("Q01-01", ["Q01-02"], ["Q01-02"]),
+                FixtureQuest("Q01-02", ["Q01-01"], ["Q01-01"])),
+            "cycle accepted");
+        Check(
+            "quest.validator_rejects_dangling_prerequisite",
+            ValidatorRejects(shippedRecords, FixtureQuest("Q01-01", ["Q01-99"], [])),
+            "dangling prerequisite accepted");
+        Check(
+            "quest.validator_rejects_unlock_without_prerequisite",
+            ValidatorRejects(
+                shippedRecords,
+                FixtureQuest("Q01-01", [], ["Q01-02"]),
+                FixtureQuest("Q01-02", [], ["Q01-01"])),
+            "one-sided unlock accepted");
+        Check(
+            "quest.validator_rejects_dangling_kill_target",
+            ValidatorRejects(
+                shippedRecords,
+                FixtureQuest(
+                    "Q01-01",
+                    [],
+                    [],
+                    [new QuestObjectiveDefinition(
+                        "OBJ_Q01_01_KILL",
+                        QuestObjectiveTypes.Kill,
+                        ["MAN-BM-NO_SUCH_SPAWN"],
+                        1,
+                        options.DefaultMapId)])),
+            "dangling KILL target accepted");
+        Check(
+            "quest.validator_rejects_blocked_without_gap",
+            ValidatorRejects(
+                shippedRecords,
+                FixtureQuest("Q01-01", [], [], activation: QuestActivations.Blocked)),
+            "blocked quest without a named gap accepted");
 
         Check(
             "npc.registry",
