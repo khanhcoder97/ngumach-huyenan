@@ -277,6 +277,33 @@ Work order 13 yêu cầu "Nối MobBehavior+CombatDamage trong **test profile ri
 - **Số đo CI tại `9871318`:** job `e2e-mob-combat` pass trong 1m18s, **85 checks**, summary `telegraph=OK escape_whiff=OK mob_damage=30 guard_confirm=OK counter=IMPACT death_stays_down=OK mob_states=RETURN` và `counter_hit=34 on ENT_MAN_BM_SPAWN_BM_01`. `mob_damage=30` là ba đòn CARPLING thô (3 × 10 theo Production_Rules §2 với armor 10), 34 là đúng oracle counter DEC-022, và snapshot HP của mob khớp từng point với `result.hpDamage` của event — đó là hai đường đọc khác nhau trên cùng một server thật, không phải fixture.
 - **Chưa phủ (giữ ở self-check):** các interleave dưới 50 ms mà client không thể canh đúng nhịp — source chết giữa confirmation và counter tick, counter overdue sau callback bị nhảy, hai hit cùng tick chỉ một confirmation, guard refresh đua với impact. Boss (`BOSSDATA_BLOCKED`) và DoT/projectile/PvP vẫn `unsupported` vì không có content.
 
-### 9.15 Triển khai tiếp
+### 9.15 Q-B5: mob telegraph read model (timing/target/reach) — domain-only, chưa đụng wire
 
-Guard/whiff/counter DEC-022 runtime (mob impact đi qua guard window của player), QOD-18 quest chain P00-01..05 + XP transaction, QOD-19 Mãng Cốt encounter, QOD-20 E2E/handoff + proposal PostgreSQL.
+Work order 13 Q-B: "Mob telegraph metadata/read projection phải có enough timing/target/shape để client đọc đòn khi có contract". `state: TELEGRAPH` trong snapshot chỉ nói *loại* state, không phải read window — client không thể biết né lúc nào nếu phải tự đếm 0,45 s bằng đồng hồ máy mình.
+
+**Đã làm:** `MobLifecycleService.GetAttackWindow(entityId)` (read-only, không đụng AI) + `MobTelegraphProjection.Project(entities)` trả `MobTelegraphReading` cho **chỉ** entity đang engaged (IDLE bị loại để client không vẽ warning cả map):
+
+- `state`, `targetCharacterId` — đòn đang commit vào ai.
+- `impactInTicks` / `recoverInTicks` / `nextAttackInTicks` — đếm ngược theo **server tick 20 Hz**, cộng `impactAtUtc` tuyệt đối để client ghép với `serverTimeUtc` của snapshot; đơn vị tick là bắt buộc vì mọi timing khác của combat (guard window, counter, dash) cũng theo tick.
+- `rangeWu` = `P1:MobBehavior:AttackRangeWu`; **`angleDegrees` để `null` có chủ đích**: chưa có nguồn nào export shape per-move (width/length/arc) cho mob, và 120° của DEC-022 là cone của *người đỡ*, không phải của đòn mob → mượn nó là bịa số.
+- Số học timing dùng **integer ceiling trên tick 100 ns**, không phải `TotalSeconds`: 0,45 s nhân 20 ra 9,0000000000000002 nên `Math.Ceiling` float biến read window thành 10 tick — self-check case `telegraph.reading_carries_target_timing_and_reach` chốt đúng con số 9.
+- Hành vi đã khoá bằng test: `telegraph.idle_has_nothing_to_read`, `telegraph.countdown_moves_with_the_server_clock` (9 → 7 sau 0,1 s), `telegraph.stays_committed_when_the_target_leaves_range` (ra khỏi tầm *đánh* mà vẫn trong aggro → đòn đã commit vẫn còn, vì frame impact vẫn xảy ra và chỉ damage check mới biết nó whiff — Q-A fix được đọc được từ phía client), `telegraph_after_impact_reads_recovery_and_cooldown` (`impactInTicks` thành null, `recoverInTicks` 10, `nextAttackInTicks` 40), `telegraph_lost_target_reports_no_committed_frame` (mất target → `ResetAttackWindow` + RETURN, không còn frame nào).
+
+**Đề xuất contract (CHỜ duyệt — chưa áp dụng):** thêm block **optional** vào mỗi entity mob của `WorldSnapshotV2` (không đổi shape các field cũ, không đụng v1):
+```jsonc
+{ "entityId": "ENT_…", "kind": "MOB", "state": "TELEGRAPH", "hp": 192, …,
+  "telegraph": {                      // optional, chỉ có khi mob đang engaged
+    "schemaVersion": 1,
+    "targetCharacterId": "CHR_…",     // null nếu AI chưa chốt mục tiêu
+    "impactInTicks": 9,               // server tick 20 Hz, không dùng đồng hồ client
+    "recoverInTicks": null,
+    "nextAttackInTicks": 40,
+    "rangeWu": 1.2,
+    "angleDegrees": null              // null = chưa có source shape per-move
+  } }
+```
+Quy tắc: enum `state` đóng như hiện tại; thêm field mới vào `telegraph` = bump `schemaVersion` của block chứ không của snapshot; `null` là "server không biết", client **không** được tự điền số; capability `mob-telegraph-v1` trong `/p1/sessions` để client biết có được đọc hay không. Nếu owner duyệt: schema + example + `validate_contracts.py` (optional, integer ≥ 0, null được phép) + README + assert trong `e2e-mob-combat`. Chưa duyệt thì read model này phục vụ test/probe nội bộ, đúng like Q-B2.
+
+### 9.16 Triển khai tiếp
+
+Q-C objective graph P00-01..05 (runtime records từ source, loader/adapter/validator phía Qoder, không compiler cạnh tranh), Q-D XP/level + stat transaction một khối, Q-E loot grant + equipment cho cơ chế đã có data, Q-F Mãng Cốt encounter proposal + state machine, Q-G E2E nhiều client + handoff + proposal PostgreSQL (`Server/Persistence*` thuộc Remote #79).

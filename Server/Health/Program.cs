@@ -143,6 +143,7 @@ builder.Services.AddSingleton<GuardWindowStore>();
 builder.Services.AddSingleton<GuardDefenseService>();
 builder.Services.AddSingleton<DashMovementService>();
 builder.Services.AddSingleton<CombatStatusProjection>();
+builder.Services.AddSingleton<MobTelegraphProjection>();
 builder.Services.Configure<DeathReturnOptions>(
     builder.Configuration.GetSection(DeathReturnOptions.SectionName));
 builder.Services.AddSingleton(serviceProvider =>
