@@ -92,8 +92,9 @@ FAIL: 2 problem(s) in Client/Assets/ArtManifests/muse_delivery_manifest.json
 
 ## Giới hạn
 
-* Chỉ đọc header PNG, không giải mã pixel nên không phát hiện ảnh hỏng ở giữa file, không
-  kiểm tra palette, alpha hay số màu.
+* `validate_asset_delivery.py` chỉ đọc header PNG, không giải mã pixel nên không phát hiện ảnh
+  hỏng ở giữa file, không kiểm tra palette, alpha hay số màu. Dùng `validate_import.py` (OPC-07)
+  cho lớp kiểm tra đầy đủ hơn.
 * Không kiểm chứng Unity import (PPU thật, Point filter, mipmap, pivot trong `.meta`) vì
   chưa có máy chạy Unity; engine import được ghi nhận là **unverified**.
 * Schema giao nhận chưa có `frameWidth`/`frameHeight`, nên validator chỉ cảnh báo (WARN) khi
@@ -101,3 +102,42 @@ FAIL: 2 problem(s) in Client/Assets/ArtManifests/muse_delivery_manifest.json
   issue đề nghị bổ sung metadata frame size vào schema.
 * `tileSize`, `pivot` chỉ là chuỗi tự do theo schema hiện tại; validator chưa đối chiếu với
   kích thước tile thực tế.
+
+## OPC-07 — kiểm tra cấu trúc PNG, alpha thực và `.meta`
+
+`validate_import.py` bổ sung lớp kiểm tra trước khi Unity import. Công cụ chỉ dùng thư viện
+chuẩn, không sửa manifest/art và không tuyên bố Unity import đã PASS.
+
+```bash
+# Chạy trên manifest thật, giới hạn mọi đường dẫn trong repo root
+python Implementation/Asset_Handoff/validate_import.py `
+  --manifest Client/Assets/ArtManifests/muse_delivery_manifest.json
+
+# Chạy trên một root khác (fixture/temp checkout) và ghi report trong root đó
+python Implementation/Asset_Handoff/validate_import.py `
+  --root D:/fixtures/opc07 --manifest manifest.json --report reports/import.txt
+```
+
+Kiểm tra gồm:
+
+* Đọc toàn bộ chunk PNG, xác minh CRC trên `type + payload`, thứ tự IHDR/PLTE/tRNS/IDAT/IEND,
+  không chấp nhận file truncate, IDAT không liên tục, IEND thiếu, byte thừa sau IEND hoặc chunk
+  critical lạ.
+* Inflate IDAT có giới hạn 256 MB, xác minh zlib stream kết thúc đúng, kích thước scanline khớp
+  IHDR và mọi filter byte thuộc `0..4`.
+* Giải mã pixel thật để đếm pixel trong suốt (kể cả `tRNS` cho RGB/grayscale/indexed). Một ảnh
+  RGBA nhưng mọi pixel opaque sẽ được báo là **không có bằng chứng alpha**, không chỉ dựa vào
+  colour type.
+* Đọc `.meta` Unity dạng text: `guid`, `TextureImporter`, `spritePixelsToUnits` (giữ nguyên số
+  thập phân), `filterMode`, `enableMipMap`, `textureCompression`, pivot và danh sách sprite.
+  Rect inline `{x, y, width, height}` và rect nhiều dòng đều được parse; rect được kiểm tra biên
+  theo kích thước PNG thật.
+* Báo lỗi trùng `guid` giữa các asset, trùng tên sprite, trùng `spriteID`, pivot ngoài `[0..1]`,
+  `spriteMode: 2` nhưng không có sprite, và field bắt buộc bị thiếu.
+* `--root` được truyền xuyên suốt; path tuyệt đối, `..`, symlink/reparse thoát root đều bị từ
+  chối với finding có cấu trúc thay vì traceback.
+
+Giới hạn: công cụ chỉ kiểm tra **static import metadata**, không chạy Unity. Kết quả PASS ở đây
+không phải bằng chứng Unity compile/playback. Asset Muse hiện tại vẫn báo `filterMode=1`
+(Bilinear) như một finding thật; không sửa art/manifest để làm validator xanh.
+

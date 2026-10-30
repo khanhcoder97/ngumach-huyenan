@@ -51,6 +51,11 @@ jobs:
       - name: Validator unit tests
         run: python -m unittest discover -s Implementation/Asset_Handoff/tests -v
 
+      - name: OPC-07 command-level import checks
+        run: >-
+          python -m unittest discover -s Implementation/Asset_Handoff/tests
+          -p "test_opc07_import_validation.py" -v
+
       - name: Self check on the shipped example manifest
         run: >-
           python Implementation/Asset_Handoff/validate_asset_delivery.py
