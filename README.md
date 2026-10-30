@@ -1,5 +1,11 @@
 # NGUMACHHUYENAN - Original MMORPG Project
 
+## Bản Bến Mưa có thể chơi ngay trên máy yếu
+
+Nhấp đúp **CHOI_THU.cmd** hoặc chạy `python Tools/PlayablePreview/server.py --open`, rồi mở http://127.0.0.1:8090. Cần Python3.10+, không cần Unity/.NET/npm. Có sprite8hướng Minh Kiếm ứng viên Muse, bản đồ pixel blockout,5nhiệm vụ mở đầu, đánh quái/guard/dodge/skill, boss3đòn, nhạc/SFX, hành trang, hồi sinh và save trong trình duyệt.
+
+Đây là **bản chơi thử một người cục bộ**, dùng Canvas để kiểm gameplay ngay; dự án production vẫn dùng Unity và server Qoder. Map/quái procedural và một số số liệu là fixture có nhãn, không đồng nghĩa asset/topology/balance được duyệt hoặc MMO đã hoàn tất. Hướng dẫn/nguồn/giới hạn: [Bến Mưa playtest](Tools/PlayablePreview/README_vi.md).
+
 ## Project Overview
 
 A new original MMORPG project with design documents stored in `docs/production` as the source of truth.
@@ -71,7 +77,7 @@ The Unity client uses URP's built-in Pixel Perfect Camera (URP 17.3); do not add
 ## Status Notes
 
 - Server status is local development only
-- Game is not playable - requires external Unity/.NET environment
+- Unity MMO gameplay still requires engine/integration evidence; the standalone Bến Mưa local playtest above is playable without Unity/.NET.
 - Title start button stays disabled until P1; its server status display is informational
 - P0 content foundation is in place: seven definition schemas, examples, map bounds and cross-reference validation
 - `validate_content.py` passes with 349 manifest rows, resolved IDs/references and map bounds

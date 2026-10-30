@@ -1,0 +1,2098 @@
+{
+  "kind": "EDITORIAL_QA_BASELINE_NOT_RUNTIME",
+  "sourceCommit": "04d352be1324ce0f132f9e4edcde86c7b83ef4dc",
+  "fields": [
+    "quest_id",
+    "quest_title_vi",
+    "graph_id",
+    "node_id",
+    "node_order",
+    "node_type",
+    "speaker_id",
+    "condition_key",
+    "text_key",
+    "text_vi",
+    "choice_group_id",
+    "choice_id",
+    "choice_text_vi",
+    "next_node_id",
+    "on_enter_event",
+    "set_flag",
+    "localization_status",
+    "voice_asset_id",
+    "notes"
+  ],
+  "logicSha256": "51258253e3749d923c5f22d200d8c77bd3a85edffd3bc1fa13b0e6e1a7486cb2",
+  "rows": [
+    {
+      "key": [
+        "P00-01",
+        "DLG_P00_01_OFFER",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "440a62f70c988bbfeb3a4ddbd46a872cb79fd15a40b057abc13e1c5820850653"
+    },
+    {
+      "key": [
+        "P00-01",
+        "DLG_P00_01_CLUE",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "6fa06c879de9f4cf3cb9d505138dbe818bb073d5e4726c7d9c6e78f6a58b0c4f"
+    },
+    {
+      "key": [
+        "P00-01",
+        "DLG_P00_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "b05454a26719eb233676af809213afad986af0e79b933f4959db46e7baf71e0c"
+    },
+    {
+      "key": [
+        "P00-02",
+        "DLG_P00_02_OFFER",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "540d6d81561b8cd4e53b6dc760ca02bb6b8adf5a300af2357d82936a344896f3"
+    },
+    {
+      "key": [
+        "P00-02",
+        "DLG_P00_02_CLUE",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "b915a4b31d381e16dc0e455ae3bf5a0e67a17fee3badf4dab402e02ee7f52dc8"
+    },
+    {
+      "key": [
+        "P00-02",
+        "DLG_P00_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "bcb1166bf94a3cc87eba70f38f53349d0b7b39ed9ca151121e4956fa2ffcd53f"
+    },
+    {
+      "key": [
+        "P00-03",
+        "DLG_P00_03_OFFER",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "bc8dfb81ff9c8f565c49de9114a7f46626e31f1b788872d508ce412581fa5fc0"
+    },
+    {
+      "key": [
+        "P00-03",
+        "DLG_P00_03_CLUE",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "ad9b59f494b9baf1f5e8ff32bc3dee8d6f6d2fcc01e6b9e84bc95fbd3c4701ba"
+    },
+    {
+      "key": [
+        "P00-03",
+        "DLG_P00_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "4f397468e081802d94b72c207ec009db0bf6368c7fd21d6696e7177c0dc21b7d"
+    },
+    {
+      "key": [
+        "P00-04",
+        "DLG_P00_04_OFFER",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "2709e5cde50dc2d7e9b3c5df963487509986bacc5d64038a82c2ebd7115e4687"
+    },
+    {
+      "key": [
+        "P00-04",
+        "DLG_P00_04_CLUE",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "190cf49b21d2c76ff70d0d8dfa05ea008315fe55d0609ff5f237a324f5824d94"
+    },
+    {
+      "key": [
+        "P00-04",
+        "DLG_P00_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "468c674a2a1c9fa720fd44233e0dbf8431d70d9f4da45d92981bd7f6a73ee458"
+    },
+    {
+      "key": [
+        "P00-05",
+        "DLG_P00_05_OFFER",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "61e26358c608b8e8393f5b9c624d50e36be059be70015c3e4e6ea6833918145b"
+    },
+    {
+      "key": [
+        "P00-05",
+        "DLG_P00_05_CLUE",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "6b2e552beda666478c95fabbbe558d51f488bcde7e578fc71022b266dd18f3c3"
+    },
+    {
+      "key": [
+        "P00-05",
+        "DLG_P00_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_EDITED_P1",
+      "textSha256": "491615b8848293de450d0f639d6e83f9eda8479fe144e992949b3a8e61624d88"
+    },
+    {
+      "key": [
+        "C1-01",
+        "DLG_C1_01_OFFER",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "719e57cabe9409cdeb5948910aa5eaf688d03c36ad1a6d065b02aa194ad26c93"
+    },
+    {
+      "key": [
+        "C1-01",
+        "DLG_C1_01_CLUE",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "04eac8bb42dd44dcc1886888e75c4dceac6f5e2b49801a630e02c172d9098f3f"
+    },
+    {
+      "key": [
+        "C1-01",
+        "DLG_C1_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "6a323e9d6a5be7b68d8295e9a3a6aeef267a4eae48ac6e70725cb3d9ca5760d4"
+    },
+    {
+      "key": [
+        "C1-02",
+        "DLG_C1_02_OFFER",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "5190a14ae1074b260d1efc242f5d6dda64fe0381f9b4613e9820e248fd0da0f0"
+    },
+    {
+      "key": [
+        "C1-02",
+        "DLG_C1_02_CLUE",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "acbd3334c30d86b60e7ad503103f3ac78a30246c6cf918a61fd787c638476c87"
+    },
+    {
+      "key": [
+        "C1-02",
+        "DLG_C1_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "8e7dff11ac5bfd1477a7078f676907e1a56dfcb9d5c8cc9641cb256d792762df"
+    },
+    {
+      "key": [
+        "C1-03",
+        "DLG_C1_03_OFFER",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "a33fa179bf207a1b70c2d5ec88090e7513eda16762e218fe40a0acc2adbca512"
+    },
+    {
+      "key": [
+        "C1-03",
+        "DLG_C1_03_CLUE",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "10c7a8c6ceadb1bbf5133d4242b53ba907fa2ba19c422ac6969cfa01b07d441c"
+    },
+    {
+      "key": [
+        "C1-03",
+        "DLG_C1_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "88a9597d23248fb7cea6c82150f058d674e5fe3ec1aaf93fd3e24a3aa47ad850"
+    },
+    {
+      "key": [
+        "C1-04",
+        "DLG_C1_04_OFFER",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "1686ff6197361c8d7f2ec03c26f2e38372e5f694552dc4ecba38e9b001986166"
+    },
+    {
+      "key": [
+        "C1-04",
+        "DLG_C1_04_CLUE",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "906e32bf0069552c0c62d7c97f98133abb479cb334c75734fc8b9816aad6907c"
+    },
+    {
+      "key": [
+        "C1-04",
+        "DLG_C1_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "e0469dd362001f6107c758d2dc76fbcf3a4054647ed9ef964f7d84eda5975033"
+    },
+    {
+      "key": [
+        "C1-05",
+        "DLG_C1_05_OFFER",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "900f55581d4c8dd4ef1c228e5e0461450f50becb79e90c4a91442d49af39b11f"
+    },
+    {
+      "key": [
+        "C1-05",
+        "DLG_C1_05_CLUE",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "d35faa9c8590c30415e37536b194beb53606a1bd2b47c6e28764b8266f954134"
+    },
+    {
+      "key": [
+        "C1-05",
+        "DLG_C1_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "f925dee5915773540b39ac43d0f37dd19d9ab60c80907b084ae97cdeebb0f366"
+    },
+    {
+      "key": [
+        "C1-06",
+        "DLG_C1_06_OFFER",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "4fe9de4913d51960ae232b8e2271a54ee14a1551aa298fa9cc2818b9f3367f4f"
+    },
+    {
+      "key": [
+        "C1-06",
+        "DLG_C1_06_CLUE",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "c95e9cc411503d26beed2cda997b6c3cc36bac1f5129c9c2a9ef7e2f78d3a1b0"
+    },
+    {
+      "key": [
+        "C1-06",
+        "DLG_C1_06_TURN_IN",
+        ""
+      ],
+      "status": "VI_EDITED_C1",
+      "textSha256": "d87f330c590628151ebc5b7efc434d61803b50246447e8c734fd55cca428e6e1"
+    },
+    {
+      "key": [
+        "C2-01",
+        "DLG_C2_01_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "61d63378c5f4f62db9150686b0ac4f59e36f06f8b630f2b3f61ce74b6097acae"
+    },
+    {
+      "key": [
+        "C2-01",
+        "DLG_C2_01_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "5f90ec6bb5da362121e865ae0761457d16d655c98297014d54aa505ce90c0ff5"
+    },
+    {
+      "key": [
+        "C2-01",
+        "DLG_C2_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "918234f902f76b1f2048b26df889af3fd1b0471b834349fcf16c9cd735f6f7e5"
+    },
+    {
+      "key": [
+        "C2-02",
+        "DLG_C2_02_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "2afd7ed399c9c47e62e931adead438764e584872bc9958adc46ead4e43c087e7"
+    },
+    {
+      "key": [
+        "C2-02",
+        "DLG_C2_02_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "8822a5791f7e780cc2823acb4348cb488f48d4a45f4d70784df0e68434ea14fa"
+    },
+    {
+      "key": [
+        "C2-02",
+        "DLG_C2_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "afd390b2f9b3f4d34c49d27961cfabf849b235cfc42db567dd2f61436c1882bc"
+    },
+    {
+      "key": [
+        "C2-03",
+        "DLG_C2_03_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "c7aa64e5727c2896a7ccca7f77437b66c0cab599cae36eed3dfe02b3f432db47"
+    },
+    {
+      "key": [
+        "C2-03",
+        "DLG_C2_03_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "4730ec1c44556c6f92eb84aa938ed2466a90aaed1242063bae6bdf484010a21d"
+    },
+    {
+      "key": [
+        "C2-03",
+        "DLG_C2_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "48a2b347d1365dfdfb0ad29043ac014f9cd98238711950313e3cc5ae9a5ed96c"
+    },
+    {
+      "key": [
+        "C2-04",
+        "DLG_C2_04_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "f68268ab348407281195247c7f2b51de309aedf87a19d7fdc701f99fb348f9e0"
+    },
+    {
+      "key": [
+        "C2-04",
+        "DLG_C2_04_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "39ac50ac57245e12f3e28df3ad9e1130c7e53d99375e85029d54b360ac5d1fa9"
+    },
+    {
+      "key": [
+        "C2-04",
+        "DLG_C2_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "54bb5f0cd5bb5beabb014ac695b50391e8b9f3f723b6a6bddcf4803d62dad2a1"
+    },
+    {
+      "key": [
+        "C2-05",
+        "DLG_C2_05_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "2e7f1434231385e719073a5494c3405bb33aefbc1d0d81102c239a56aac91fa8"
+    },
+    {
+      "key": [
+        "C2-05",
+        "DLG_C2_05_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "ace7ae06696e38ed755a0d7b52d40be7d63881c4a377640da4d766143cb6443b"
+    },
+    {
+      "key": [
+        "C2-05",
+        "DLG_C2_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "738cdfcedcfa4ab4b46897a5ca28e7b5648fb4234b968f52f31dbdb256735e4b"
+    },
+    {
+      "key": [
+        "C3-01",
+        "DLG_C3_01_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "0fc3a3bf02f6d420776b643b8ef5f282a9c7bcf0e6162a0c016d5ad97d82fe97"
+    },
+    {
+      "key": [
+        "C3-01",
+        "DLG_C3_01_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "4223a9c168ae06d8489244ee2a784c3aa1a192f3491f0998a24050bd0ae05177"
+    },
+    {
+      "key": [
+        "C3-01",
+        "DLG_C3_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "fde2239bbf1b20960c1b1cad3f94d5b34ff64e3d53577ed8b3df0f8559a9b0a1"
+    },
+    {
+      "key": [
+        "C3-02",
+        "DLG_C3_02_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "a876025e71263c69680e0357985f9eb914dd6b042e4e7ab96c1de6b5956da7b3"
+    },
+    {
+      "key": [
+        "C3-02",
+        "DLG_C3_02_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "2d3fdc04c92f3d6ca29d7ee89db92886abdfb06b518cfd29d506e9663860f0ff"
+    },
+    {
+      "key": [
+        "C3-02",
+        "DLG_C3_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "75fb7105e42b45c2d0a4bb5a2ae66656750717ddc34321cc459efd16d927500f"
+    },
+    {
+      "key": [
+        "C3-03",
+        "DLG_C3_03_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "326b75cae1d85841098422612cc011ac1b390f2dee73458d0b3379715a3752d2"
+    },
+    {
+      "key": [
+        "C3-03",
+        "DLG_C3_03_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "6b80926936c5bc6bc467c63423f4245eeda7d1a34907390886c41888fbfb6dbe"
+    },
+    {
+      "key": [
+        "C3-03",
+        "DLG_C3_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "fbabf408e9fec72432697f0cb482d3af43de60fb0a9c849fb14af622e7644cac"
+    },
+    {
+      "key": [
+        "C3-04",
+        "DLG_C3_04_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "264647afc47bdc1f636d74b15fe9c9220946dcfa51afe81b92bb989a0668f8e8"
+    },
+    {
+      "key": [
+        "C3-04",
+        "DLG_C3_04_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "58810db2f993c9cb6f19e90d1cbed1ac36d4ed4770a6f7edb894217f83828bd6"
+    },
+    {
+      "key": [
+        "C3-04",
+        "DLG_C3_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "a2fd4f0e32739e9ef57a14d87eba303a82cb248d970d523871ee6f3dfd185c17"
+    },
+    {
+      "key": [
+        "C3-05",
+        "DLG_C3_05_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "dcc425aa17f8d7bb1cd2380cd54775c03825fe2e6e83e571aca0eecf34517f97"
+    },
+    {
+      "key": [
+        "C3-05",
+        "DLG_C3_05_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "08152357fcb967e1213482d8e3f7dac4a975fb3b37cb972195fecb77aba84b77"
+    },
+    {
+      "key": [
+        "C3-05",
+        "DLG_C3_05_CHOICE",
+        "PUBLISH"
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "a7b2836fec5eb2ecc3f1c41450508c52d4f5097c562508bc57871ea8b773ecf6"
+    },
+    {
+      "key": [
+        "C3-05",
+        "DLG_C3_05_CHOICE",
+        "COUNCIL"
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "a7b2836fec5eb2ecc3f1c41450508c52d4f5097c562508bc57871ea8b773ecf6"
+    },
+    {
+      "key": [
+        "C3-05",
+        "DLG_C3_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "e69e83a14b3975b5300976c6bb284edbb02277f8247a32880dbb1244ba7c37b7"
+    },
+    {
+      "key": [
+        "C4-01",
+        "DLG_C4_01_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "cfe271fef129b1fc8bd1c7949ee610bfa7c046903fae991b493b0a05cfba9474"
+    },
+    {
+      "key": [
+        "C4-01",
+        "DLG_C4_01_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "8ea43a2fce13cd4a3eca41d3b42305a85f056a43eea2c66e66c688708d79b4f7"
+    },
+    {
+      "key": [
+        "C4-01",
+        "DLG_C4_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "0440c5f5795b94e0c2a3ffdb4ba5cd38e239157579df648032e659fd7b2b4853"
+    },
+    {
+      "key": [
+        "C4-02",
+        "DLG_C4_02_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "4475fdeb62efd4273518d263f2a2b59ac19d560178bb58426b379325be677c0c"
+    },
+    {
+      "key": [
+        "C4-02",
+        "DLG_C4_02_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "588f1d1eb821c30d6146553c410d0979f4613fecd315515fab747aeaf1b8409f"
+    },
+    {
+      "key": [
+        "C4-02",
+        "DLG_C4_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "f18fde5809e75727344c0875c16910858e41a29c7b89425419414d9d87ae4d11"
+    },
+    {
+      "key": [
+        "C4-03",
+        "DLG_C4_03_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "37655294abb9cb6ba977b3fb5d80efd06a036ed7aa9c0463f9148201ab7b9009"
+    },
+    {
+      "key": [
+        "C4-03",
+        "DLG_C4_03_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "a22573406f379cc16b0165860b245a02b2d77b8ba722a33e8836a0cd63c5b47d"
+    },
+    {
+      "key": [
+        "C4-03",
+        "DLG_C4_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "8f826f68721df3118808d67fa7729aa089770b710299877134636986f67fff3f"
+    },
+    {
+      "key": [
+        "C4-04",
+        "DLG_C4_04_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "75c04562918a3ebf14f02c67ad8715c85e186acec83561c91636cdaeec6d3f73"
+    },
+    {
+      "key": [
+        "C4-04",
+        "DLG_C4_04_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "62573205e692a425d76e945fcfc0aa69d8b989fca104693320968bd6aa5f723a"
+    },
+    {
+      "key": [
+        "C4-04",
+        "DLG_C4_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "778e529332ec5bd8105f2d1015b9f257f5928e8507aaaa9b051ddf914fcad6d5"
+    },
+    {
+      "key": [
+        "C4-05",
+        "DLG_C4_05_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "17dbc80df91a030479204c4c65ce2b2a7ce218ce41c0982d2863750b8fca17a2"
+    },
+    {
+      "key": [
+        "C4-05",
+        "DLG_C4_05_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "0998ed6fc051699718e9f116360421dd8d39c508114f073be9e830a0f4c6af23"
+    },
+    {
+      "key": [
+        "C4-05",
+        "DLG_C4_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "d041536de49f6582a110b20976b49432668ef2691df4740f54df762418cd7aa7"
+    },
+    {
+      "key": [
+        "C5-01",
+        "DLG_C5_01_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "a9b56c18963d559b57de622387d0c78ac18395f246a9e82d4f79fb45a374b4d4"
+    },
+    {
+      "key": [
+        "C5-01",
+        "DLG_C5_01_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "41444569d4673fe295c294b56c6be8ff8c5f84a12ec83d2ea4219fb3f0c16dea"
+    },
+    {
+      "key": [
+        "C5-01",
+        "DLG_C5_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "7b1caf0553cab0a025794232afff19c34fc5fd9ec59f27729f039b1cc2e0e791"
+    },
+    {
+      "key": [
+        "C5-02",
+        "DLG_C5_02_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "b6797c185fe7eda3829c20910e2f42a72467327be035d17c25af587c55ce89df"
+    },
+    {
+      "key": [
+        "C5-02",
+        "DLG_C5_02_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "e06a9dab96cce29227d8801343e2fb1103d6dacba95d814565139d80a506f9a9"
+    },
+    {
+      "key": [
+        "C5-02",
+        "DLG_C5_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "526600e19f9bed8aa5da8e9b29cd827c239f2fbd39f346f5d01b0ac016a24c10"
+    },
+    {
+      "key": [
+        "C5-03",
+        "DLG_C5_03_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "bb12e08ae9f735b634d905c5f8af654cd4ba5614e8ee89115321b1960e61ba77"
+    },
+    {
+      "key": [
+        "C5-03",
+        "DLG_C5_03_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "e8036f04b2b5dce71fd9ec22cfea798483bc060f345a47543bdf8ed41475292d"
+    },
+    {
+      "key": [
+        "C5-03",
+        "DLG_C5_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "345740eac752d90540e48e87bf910652cfd32e45f3849fad1ec9cd838483ee8a"
+    },
+    {
+      "key": [
+        "C5-04",
+        "DLG_C5_04_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "0db604d282208ad1689456235c22bcca99053b92f42f4ea37b8173316cdf7ad5"
+    },
+    {
+      "key": [
+        "C5-04",
+        "DLG_C5_04_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "0fca14e40cb6d4d73d5a0837f1bb40157a9266e758c8f04cf7f7fc1ca8c38d79"
+    },
+    {
+      "key": [
+        "C5-04",
+        "DLG_C5_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "863cc7b30809f1fa68f8c4420fe5b308417792933d4ae836af0a7c9f6d0a090d"
+    },
+    {
+      "key": [
+        "C5-05",
+        "DLG_C5_05_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "dbef876cb540b554ad922146911aef50acc3a774ffb9bb201b309136f7dd4dbd"
+    },
+    {
+      "key": [
+        "C5-05",
+        "DLG_C5_05_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "2d55e285ec6de9c5dc2c5add1a16a640aaaca13fe931933a0a67bd0e06a4b174"
+    },
+    {
+      "key": [
+        "C5-05",
+        "DLG_C5_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "3e2b6ee15cfac7853512d51edf8bed94cd9ed215f24fcd68e08cf80daa16738a"
+    },
+    {
+      "key": [
+        "C6-01",
+        "DLG_C6_01_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "9b3bb0a3efdb876e826d65bf952a95019f9c7b91c54b122c1df1fd46618adde9"
+    },
+    {
+      "key": [
+        "C6-01",
+        "DLG_C6_01_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "926d77c687d57d75bc69e5c26388550c57935be8099783281522c4d6ed83bcfd"
+    },
+    {
+      "key": [
+        "C6-01",
+        "DLG_C6_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "efcd509ece52aaf19db325968c5dffbec404c2c0f124d1d4b729745a8405d37c"
+    },
+    {
+      "key": [
+        "C6-02",
+        "DLG_C6_02_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "3ee632c9901a1e2dbf6d5ecacdb310e82c2c23c5eac07d5c8ee23f866ee10916"
+    },
+    {
+      "key": [
+        "C6-02",
+        "DLG_C6_02_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "920352bb7cfeafd10b9fe5ea0610bf4290b7f9249d758f713bf60bcb04940238"
+    },
+    {
+      "key": [
+        "C6-02",
+        "DLG_C6_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "048d92bd4a4c70ddccaeb648b2476ae28838be505550b79e94433a1990d4b369"
+    },
+    {
+      "key": [
+        "C6-03",
+        "DLG_C6_03_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "92b4a2bccfd1d2dfbf642882a93cd0dc19e094b263ceb9fcebf1a25482fecd0c"
+    },
+    {
+      "key": [
+        "C6-03",
+        "DLG_C6_03_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "c0e31a8a228a6e0516e293b1420becc89e0713008e17e145ce14947c2b735834"
+    },
+    {
+      "key": [
+        "C6-03",
+        "DLG_C6_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "1e29e5875d56e6dd028e8f2cda9764197fa6560ad410d46ad2ac2adca569a53b"
+    },
+    {
+      "key": [
+        "C6-04",
+        "DLG_C6_04_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "92c77e29abc220b46b56ec320a00b3278843109722b24a2a5ff3a9fd7c0b6b5a"
+    },
+    {
+      "key": [
+        "C6-04",
+        "DLG_C6_04_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "bbaa09118a546a482647745b7cccb7ca439d4cf6c07556b507e78dbb80460f03"
+    },
+    {
+      "key": [
+        "C6-04",
+        "DLG_C6_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "a7c5ef36b6ea816a9244162332f7fecbac29710a0cd7e6f591e2a84c1798f6ee"
+    },
+    {
+      "key": [
+        "C6-05",
+        "DLG_C6_05_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "6bce882e321e647448278f6c1c344676739a59490860f9311823b2cd7a49afa2"
+    },
+    {
+      "key": [
+        "C6-05",
+        "DLG_C6_05_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "d9fa9dd95f875614e647162045f574982c5156af0e81dafed6245dfdaa14d370"
+    },
+    {
+      "key": [
+        "C6-05",
+        "DLG_C6_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "294fb71005151fd4625a50270b028b8a4dd72f04e9fa657a18bd488a13221196"
+    },
+    {
+      "key": [
+        "SQ-BM-01",
+        "DLG_SQ_BM_01_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "55081e81cd3fb408dc20b1e0e8cd0f142a5f3ba88ba021ce45857725b36eda9d"
+    },
+    {
+      "key": [
+        "SQ-BM-01",
+        "DLG_SQ_BM_01_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "e07638f67cb825933b635b61049c68b023be24a2bde5b7f0e03b317ec1a60604"
+    },
+    {
+      "key": [
+        "SQ-BM-01",
+        "DLG_SQ_BM_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "aeb7c8338b91c1479726eaeb94d430800dfc3169f4fb458fe63e0619653f81b5"
+    },
+    {
+      "key": [
+        "SQ-BM-02",
+        "DLG_SQ_BM_02_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "c02b32f24c2374dae478065dedfacc8390f1af7d3ff3d1c9674d7f0016483f9d"
+    },
+    {
+      "key": [
+        "SQ-BM-02",
+        "DLG_SQ_BM_02_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "29abe21c2c28aabb77e564a6ee3c89af7a8a60e98fc986377d93de6feea38bef"
+    },
+    {
+      "key": [
+        "SQ-BM-02",
+        "DLG_SQ_BM_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "acd9cfb6fa20f4e92de500dde2f1bd6d5af28fcb4e0296c9632b05c272f919ab"
+    },
+    {
+      "key": [
+        "SQ-BM-03",
+        "DLG_SQ_BM_03_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "4f7cd4f45e6471ac9e49833957dc10fdccffae4cf36fca3339fb8bed494dee86"
+    },
+    {
+      "key": [
+        "SQ-BM-03",
+        "DLG_SQ_BM_03_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "c947c0ad651ad619c9112cfcaa8cc46d5b73677bdc3871c2bd804db502b24c37"
+    },
+    {
+      "key": [
+        "SQ-BM-03",
+        "DLG_SQ_BM_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "d82117c320dca6ad18a4102189e9415eab855eb66929254458f79dda791e6b93"
+    },
+    {
+      "key": [
+        "SQ-BM-04",
+        "DLG_SQ_BM_04_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "6d65114ff896e01910c85c9ad479316990069145db3eb166b3a8e13df0f4413e"
+    },
+    {
+      "key": [
+        "SQ-BM-04",
+        "DLG_SQ_BM_04_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "6525ec40cb97da300da0c22de677de10ee7bf59c30631eaf07d749fe9e710295"
+    },
+    {
+      "key": [
+        "SQ-BM-04",
+        "DLG_SQ_BM_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "eda52e12a173a8404b39df49866756c83c6732d8df9e15f95a75fdcc06506078"
+    },
+    {
+      "key": [
+        "SQ-BM-05",
+        "DLG_SQ_BM_05_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "eb6bbbb2c7e26ee477658f16c8d5105c662611362db2e50bccd2176c117faaa1"
+    },
+    {
+      "key": [
+        "SQ-BM-05",
+        "DLG_SQ_BM_05_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "4708e7a2a49d93bb1d831b071efa8334bef76081a106bf00d96e7e10e8d0584d"
+    },
+    {
+      "key": [
+        "SQ-BM-05",
+        "DLG_SQ_BM_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "a18fc009e082d7b442159a38c1e7c8e222537827c89970f0c63b223c7984eae4"
+    },
+    {
+      "key": [
+        "SQ-TL-01",
+        "DLG_SQ_TL_01_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "3df5dd0531820a533f3ea37c37a12827d45011a311509b4601705afdca48cdf9"
+    },
+    {
+      "key": [
+        "SQ-TL-01",
+        "DLG_SQ_TL_01_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "ad702b59bb56af7566dcd440979cc9e4d053b987d0fb8d95163bfa56daf8a64f"
+    },
+    {
+      "key": [
+        "SQ-TL-01",
+        "DLG_SQ_TL_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "be26af3429ecf01cd61beeeaf579ce223abc8904e05c1a8e2c9b8e6a9b64eecb"
+    },
+    {
+      "key": [
+        "SQ-TL-02",
+        "DLG_SQ_TL_02_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "6fb3550c5359323a5d8a515f48491982e298d86f4ab271eb702e648b079cc5ae"
+    },
+    {
+      "key": [
+        "SQ-TL-02",
+        "DLG_SQ_TL_02_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "46d5dcb0fa7f4c7c9b971be8f703394179e3dea0a4410d5b6a78f8f44afc179f"
+    },
+    {
+      "key": [
+        "SQ-TL-02",
+        "DLG_SQ_TL_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "2acf4a1374caf83fdbe78108adfbd6eed1f5a03fdfe77451b5129459f3059733"
+    },
+    {
+      "key": [
+        "SQ-TL-03",
+        "DLG_SQ_TL_03_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "eae8c258629b38fa5a66de573c4c3c7cf63a5213d0aa5a3bf9a369b6905755ba"
+    },
+    {
+      "key": [
+        "SQ-TL-03",
+        "DLG_SQ_TL_03_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "a74cdea74011f534a4484f6398cefac278b3d69a7687352fb12e3db09b0edac1"
+    },
+    {
+      "key": [
+        "SQ-TL-03",
+        "DLG_SQ_TL_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "9cca19a42282def8d75a8b16827fb01898ea633aee912180774bf932b7b9e299"
+    },
+    {
+      "key": [
+        "SQ-TL-04",
+        "DLG_SQ_TL_04_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "d672f1ea77ba4bc5d8fc941d8c12ed8c1a16072ee79970904836ec636254400f"
+    },
+    {
+      "key": [
+        "SQ-TL-04",
+        "DLG_SQ_TL_04_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "a18fdc428784b6237d99a792a0af26b0b7ae4155d1e11759f85c2b9ead6bde6a"
+    },
+    {
+      "key": [
+        "SQ-TL-04",
+        "DLG_SQ_TL_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "91f60357fb8a903e930db1fa0240b58516bc9899bfc10673fb460885cb0799a1"
+    },
+    {
+      "key": [
+        "SQ-TL-05",
+        "DLG_SQ_TL_05_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "eaad251f6e3eaf7ccf313fb0e68a4b35f249337198c1f07558e5fd91b97fdf3d"
+    },
+    {
+      "key": [
+        "SQ-TL-05",
+        "DLG_SQ_TL_05_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "eafc2bdd3b176c6c56e23903622ec6d4db2560b596ee34ef6a51fbadd8266a70"
+    },
+    {
+      "key": [
+        "SQ-TL-05",
+        "DLG_SQ_TL_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "ea722d580965c62ecb12322113de6bafa92f4e156093d61bf78043252f4f256f"
+    },
+    {
+      "key": [
+        "SQ-LT-01",
+        "DLG_SQ_LT_01_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "5cbd72b2e89082a2d89ed0ecd665d751a08b1adeadfa7609b0c8c87853f14fa0"
+    },
+    {
+      "key": [
+        "SQ-LT-01",
+        "DLG_SQ_LT_01_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "6c69d7ff22f687d1348c766aee19f43bccf483f8f9fa9a5d66bbbdcc2556fb17"
+    },
+    {
+      "key": [
+        "SQ-LT-01",
+        "DLG_SQ_LT_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "4f8a61b630ec1ef77597e529b1ec26c8cbf4631dc5a57c9cbb1606931dc4a223"
+    },
+    {
+      "key": [
+        "SQ-LT-02",
+        "DLG_SQ_LT_02_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "5f7983bc11bb0280d1864939d3af5f08bc74c2b4d89eacdb9a920d1615446344"
+    },
+    {
+      "key": [
+        "SQ-LT-02",
+        "DLG_SQ_LT_02_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "e82368a219cd13f1166d2635f3dad756fb2627ca4fbbf4be530a65e8b49b1fef"
+    },
+    {
+      "key": [
+        "SQ-LT-02",
+        "DLG_SQ_LT_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "de94715634156d21f00273dcd52311b6b1aa8b7ecdb128f8c03929ab5a20e882"
+    },
+    {
+      "key": [
+        "SQ-LT-03",
+        "DLG_SQ_LT_03_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "f6b4446f974ec01172cf2983ee29e0bcae05e9fa68ab6cbc23e951a8da6f28ca"
+    },
+    {
+      "key": [
+        "SQ-LT-03",
+        "DLG_SQ_LT_03_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "14e4e5e652f62a1238eb3df9f6ae63dcac57d4c981f2978079a0d7d0a40e8e90"
+    },
+    {
+      "key": [
+        "SQ-LT-03",
+        "DLG_SQ_LT_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "c2896afb5e1575d900444009865e74b988b4369dd7f24f4402707a6e9e9e306f"
+    },
+    {
+      "key": [
+        "SQ-LT-04",
+        "DLG_SQ_LT_04_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "8a59a5134f12faa9f4bdf55b43aa4e57856c80b039ee35e83b78b1f7e5cb2c50"
+    },
+    {
+      "key": [
+        "SQ-LT-04",
+        "DLG_SQ_LT_04_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "6083618fa5e11f63285777c48b4c1424b103c1bb70a15c934d187c18850c14d0"
+    },
+    {
+      "key": [
+        "SQ-LT-04",
+        "DLG_SQ_LT_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "07f884bd61c63650299bc2dcf3f758a67b228b939e2745f7ed60031b0839399f"
+    },
+    {
+      "key": [
+        "SQ-LT-05",
+        "DLG_SQ_LT_05_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "5a2f9863b25a659554683d7ac87d68f531bb77ed1434e5883c6ccb56e5a2d496"
+    },
+    {
+      "key": [
+        "SQ-LT-05",
+        "DLG_SQ_LT_05_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "2e0a09a4f6430bcb1940e5e8a4d14c584628da4426fabc550df5146eaacaa2b2"
+    },
+    {
+      "key": [
+        "SQ-LT-05",
+        "DLG_SQ_LT_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "babe4298ca600770f22e4c8fab47c72d3a2f733db74af4e200565cf19f677ac8"
+    },
+    {
+      "key": [
+        "SQ-SH-01",
+        "DLG_SQ_SH_01_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "cd7a99e737651203831b169626e5307efc87e2ce450951b71896c5ed6b83c281"
+    },
+    {
+      "key": [
+        "SQ-SH-01",
+        "DLG_SQ_SH_01_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "b27ac29774c85cb520623cb257dc41b63de60d56a709107b2f439c7b48c6fd25"
+    },
+    {
+      "key": [
+        "SQ-SH-01",
+        "DLG_SQ_SH_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "44641b692f560ec10d15711d4ec5543bc773290a1661b140062e4cf93a35d545"
+    },
+    {
+      "key": [
+        "SQ-SH-02",
+        "DLG_SQ_SH_02_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "d7f8a9a400ecdf2a1644c9a51dff7921b56c069de60ce82d4373a1c6a9aa4b65"
+    },
+    {
+      "key": [
+        "SQ-SH-02",
+        "DLG_SQ_SH_02_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "b022aa85768fbbd39d3565700d4a12780a05e79f6d715008d8b816a563fa31a7"
+    },
+    {
+      "key": [
+        "SQ-SH-02",
+        "DLG_SQ_SH_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "82dd02fad83b9b21782151ea93b4c1a8d61feb930c8b704d31d548ccdf01ed0a"
+    },
+    {
+      "key": [
+        "SQ-SH-03",
+        "DLG_SQ_SH_03_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "251342421c650268061b2f18c5dec301cad36733be01ad754295100d1bde69db"
+    },
+    {
+      "key": [
+        "SQ-SH-03",
+        "DLG_SQ_SH_03_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "ee1cc584ea8f554f44b1fc117009c77a3363720f2e029cc7fcb84ef6ab6b2256"
+    },
+    {
+      "key": [
+        "SQ-SH-03",
+        "DLG_SQ_SH_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "792f79a426843203f4667dc48882a17a9cdfe5f43b5a45b13c667dbd24367b2e"
+    },
+    {
+      "key": [
+        "SQ-SH-04",
+        "DLG_SQ_SH_04_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "065887c06afda2359d58cd0bb7a20e2263c1ed1085dbd9f5478f8abf24745616"
+    },
+    {
+      "key": [
+        "SQ-SH-04",
+        "DLG_SQ_SH_04_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "861bfdd32c4ba759b171860b1f9c1ac0d834584d7a048b2e9749fefc323ebbd0"
+    },
+    {
+      "key": [
+        "SQ-SH-04",
+        "DLG_SQ_SH_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "c8feb9e4f76f855c60ab7ef03a306aca72b24db1762f5df5745711736f4abdfc"
+    },
+    {
+      "key": [
+        "SQ-SH-05",
+        "DLG_SQ_SH_05_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "e26d42e55af78ba99887216d7f52e679b7488bf8d99753b69a2d571156b009b7"
+    },
+    {
+      "key": [
+        "SQ-SH-05",
+        "DLG_SQ_SH_05_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "e41776e4fd83edc73a8bf42cd60cb29ff7d56e973f5cc61cdcd1fa322a871cda"
+    },
+    {
+      "key": [
+        "SQ-SH-05",
+        "DLG_SQ_SH_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "9e272dbf50aa9e420c93fdd1834cc8435449ffecc938c3ef67167e006da3630b"
+    },
+    {
+      "key": [
+        "SQ-TS-01",
+        "DLG_SQ_TS_01_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "cfb22c8622219fc8481436a9c940ad9bb19dd69b846257dfc99b18bdda21fd3b"
+    },
+    {
+      "key": [
+        "SQ-TS-01",
+        "DLG_SQ_TS_01_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "aa083200693c276c55b4a8c8b102fd7abce82fa44487d078843171260a2f8d50"
+    },
+    {
+      "key": [
+        "SQ-TS-01",
+        "DLG_SQ_TS_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "374f7f1a62f74d27ff8963fc490f806f2027fb4989c96b97087c8f9191638808"
+    },
+    {
+      "key": [
+        "SQ-TS-02",
+        "DLG_SQ_TS_02_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "b89b886f721de88799948f619eb3c7f83c411b455998f5b647058be3b3826a2a"
+    },
+    {
+      "key": [
+        "SQ-TS-02",
+        "DLG_SQ_TS_02_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "7924edbdf766a29291da0e98ff3015620722bdd5fd10981588b9da7b9fc2be11"
+    },
+    {
+      "key": [
+        "SQ-TS-02",
+        "DLG_SQ_TS_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "3e7d08b4333053ddc92cfc710b6f9199821a9122fbbfe14e3ca680785109862d"
+    },
+    {
+      "key": [
+        "SQ-TS-03",
+        "DLG_SQ_TS_03_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "01f9f2348c398e55a4cc95c981cdac9a3487642c9a4811bb4201cdc4fe0dd2b3"
+    },
+    {
+      "key": [
+        "SQ-TS-03",
+        "DLG_SQ_TS_03_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "ac28eec2ca76be5e17d878ff2330cd79b8c57bfcd6af846c10461a0c1519ad7b"
+    },
+    {
+      "key": [
+        "SQ-TS-03",
+        "DLG_SQ_TS_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "a6a7e3645fc0318d31da8addb00bc96acf8f4c99577e61c9e1afbba91df67e8d"
+    },
+    {
+      "key": [
+        "SQ-TS-04",
+        "DLG_SQ_TS_04_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "217ac388f5f65ce33e3dd19d8a5f8664bd2b5add260595e2b7ea36fe611550ba"
+    },
+    {
+      "key": [
+        "SQ-TS-04",
+        "DLG_SQ_TS_04_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "c3a709992f4ee3bd1cd8594c5d4ee475392ed70523bf328f92bbb287c62cf408"
+    },
+    {
+      "key": [
+        "SQ-TS-04",
+        "DLG_SQ_TS_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "328781b6cdf29d5e22fbaf13b3fd37368e2a3cce3421e2d556118bfdc70b0fb1"
+    },
+    {
+      "key": [
+        "SQ-TS-05",
+        "DLG_SQ_TS_05_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "93a4ac52ae95a0448a38ab88ad3d266a14706406c3ff0d4018c4dc8f6e592d5c"
+    },
+    {
+      "key": [
+        "SQ-TS-05",
+        "DLG_SQ_TS_05_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "a2d908f2c24ecb16fd8e7bc4e4d425ee9f018efecef98f0dfbc6bef91e625e94"
+    },
+    {
+      "key": [
+        "SQ-TS-05",
+        "DLG_SQ_TS_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "4cd772b1ec3fb942ec166f0e43118626f12c43b582936c24815a561e7ee1e21b"
+    },
+    {
+      "key": [
+        "SQ-BU-01",
+        "DLG_SQ_BU_01_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "049e2a42d3db132543ec78d8d230ce2fc4e7ba38e643081ebdd716e18b12d5e2"
+    },
+    {
+      "key": [
+        "SQ-BU-01",
+        "DLG_SQ_BU_01_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "c412a61c430a1b2f2f4b16d1333002b75f17085f829dd0fe4fd633768e7432c5"
+    },
+    {
+      "key": [
+        "SQ-BU-01",
+        "DLG_SQ_BU_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "d823cb1ff78e4e33e1c124175e5aa600aeef060121175a55e997f37fd4e60c89"
+    },
+    {
+      "key": [
+        "SQ-BU-02",
+        "DLG_SQ_BU_02_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "2804fa86f99a0247be5e2f0e9b498ed15614d8869e636093f57a689198d207bb"
+    },
+    {
+      "key": [
+        "SQ-BU-02",
+        "DLG_SQ_BU_02_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "889d18b6ee6a1091d0f419352be9a1a231fd659dab38033e1b6d67618a555dae"
+    },
+    {
+      "key": [
+        "SQ-BU-02",
+        "DLG_SQ_BU_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "3507f8e61502922d1997856edb548b0c6f1d9a2db278c8310e6e5feb63c4ccf8"
+    },
+    {
+      "key": [
+        "SQ-BU-03",
+        "DLG_SQ_BU_03_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "d35550229bd2854dd7bfa04c0df79ec17d66b9e77b7544199678cc8b7332f355"
+    },
+    {
+      "key": [
+        "SQ-BU-03",
+        "DLG_SQ_BU_03_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "772d52b81bee197a675473eb12fc2f8c960fdda1a3fd9dd27d93c211b6fe3c93"
+    },
+    {
+      "key": [
+        "SQ-BU-03",
+        "DLG_SQ_BU_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "32174eff0e89450938bb8b7f7927d8f763583488c404291dde3ab78e93f425f7"
+    },
+    {
+      "key": [
+        "SQ-BU-04",
+        "DLG_SQ_BU_04_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "e06c8402617019c36836ac08d5e46e77e5819e41207671652bd7dcadc91a5c90"
+    },
+    {
+      "key": [
+        "SQ-BU-04",
+        "DLG_SQ_BU_04_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "658ca383a292fa63cb557cc104d00f3db97a43ee8b120ba13d98432a61d8870b"
+    },
+    {
+      "key": [
+        "SQ-BU-04",
+        "DLG_SQ_BU_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "69fd87eaa09bf455b2f44557febe84dc04415c79b65a038643f62e9ebf6359fc"
+    },
+    {
+      "key": [
+        "SQ-BU-05",
+        "DLG_SQ_BU_05_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "364755ea7285c03c3b6b96ac0e22cdf716c0f290764f0fe05fbfbe5b8ad8ab48"
+    },
+    {
+      "key": [
+        "SQ-BU-05",
+        "DLG_SQ_BU_05_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "92231d8249b270417b333fcaf5730af30c56eb70411279d8bac878c831a8f806"
+    },
+    {
+      "key": [
+        "SQ-BU-05",
+        "DLG_SQ_BU_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "1489475912e73c1e0f8329669383b1f2828ecfd2b5e56b63941c29d76067e413"
+    },
+    {
+      "key": [
+        "SQ-VN-01",
+        "DLG_SQ_VN_01_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "816b3b1a6675058ad356ea7a046104a9ddc6a8e03272de0b043cb49354860b2f"
+    },
+    {
+      "key": [
+        "SQ-VN-01",
+        "DLG_SQ_VN_01_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "7dba3897153c51078b7e1cf79595a255f83eaddf77bd3a9b5c9ced1ca8e9ce12"
+    },
+    {
+      "key": [
+        "SQ-VN-01",
+        "DLG_SQ_VN_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "1f5cc0a6accf0f64cbaed3836e90af9fb645fc78d7ddf690866e3e09edb145a6"
+    },
+    {
+      "key": [
+        "SQ-VN-02",
+        "DLG_SQ_VN_02_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "4879d2aaf821ac131c8c471a8202b6c142ae8679e9dc769e49a7235205c9f907"
+    },
+    {
+      "key": [
+        "SQ-VN-02",
+        "DLG_SQ_VN_02_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "92c024faf621366b3f6f67ee91d71962a41744f144fa26511fb48fff81a9983a"
+    },
+    {
+      "key": [
+        "SQ-VN-02",
+        "DLG_SQ_VN_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "5aebea7fd00ced4cae4425a0cb105975a04c3a4ebd738f0bddf7f6578070004f"
+    },
+    {
+      "key": [
+        "SQ-VN-03",
+        "DLG_SQ_VN_03_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "d6f3b39cc3f8828edab08c324d1ffc6416a1932d9877cd70c6a3d447e6d2bea0"
+    },
+    {
+      "key": [
+        "SQ-VN-03",
+        "DLG_SQ_VN_03_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "dd6af38b0e4020ae4575d4d5a8446cca08eba37dfacccf6cb555f02149f476d1"
+    },
+    {
+      "key": [
+        "SQ-VN-03",
+        "DLG_SQ_VN_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "221ed4effd0ba5ba7d81686d0a6870e53d7f79aceb1441800ed465d8bd920993"
+    },
+    {
+      "key": [
+        "SQ-VN-04",
+        "DLG_SQ_VN_04_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "91e32127aefb31e280412d611e81b1742de2df16e689ad0f7f0fed12deae0a86"
+    },
+    {
+      "key": [
+        "SQ-VN-04",
+        "DLG_SQ_VN_04_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "fa8535b9bd1fba678e90ea90a7184d6655f57167d05944d3ec95d37ff851a75f"
+    },
+    {
+      "key": [
+        "SQ-VN-04",
+        "DLG_SQ_VN_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "b5c6af2c31e2ae1e837b7b708f4c73af90598c233ce90050b86ba71cf817ce47"
+    },
+    {
+      "key": [
+        "SQ-VN-05",
+        "DLG_SQ_VN_05_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "c7c8502e08383e0a131a76868564fa5a081cd4db657490de56e9aec8b28bb116"
+    },
+    {
+      "key": [
+        "SQ-VN-05",
+        "DLG_SQ_VN_05_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "e413b136af90a319dcbd8cb3db54c0c131740f86cecdb5013f353246ac62aa6b"
+    },
+    {
+      "key": [
+        "SQ-VN-05",
+        "DLG_SQ_VN_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "c652154eb556842acca6f0c87a33bb766ca719dc4cad4c64c06b564a1b0c7956"
+    },
+    {
+      "key": [
+        "SQ-DM-01",
+        "DLG_SQ_DM_01_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "df68ea566ef21a2152e255d1bdb1ff182a032c47df8c55acd1c48e6d20ff6f72"
+    },
+    {
+      "key": [
+        "SQ-DM-01",
+        "DLG_SQ_DM_01_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "9cc2910b4d6aa761a09b50a6718fbc9cd52bd2f434368d73a95a643bc4a6bbbc"
+    },
+    {
+      "key": [
+        "SQ-DM-01",
+        "DLG_SQ_DM_01_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "47fe00dbfffff37423d500ab9973f0a96d8142242de9240dde94f5b0c2ad09e1"
+    },
+    {
+      "key": [
+        "SQ-DM-02",
+        "DLG_SQ_DM_02_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "dab31d7b6780beda5323c37c750b78f15402452675412c565691e2a3971f4c40"
+    },
+    {
+      "key": [
+        "SQ-DM-02",
+        "DLG_SQ_DM_02_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "8c9f5dee0d62fb350b4cbb3a958fd2cff02815d7cd311e068302fecb82240cf5"
+    },
+    {
+      "key": [
+        "SQ-DM-02",
+        "DLG_SQ_DM_02_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "d392bd99f714fda123fd3b01ea11a5cb91a9f951486718cd1adc252988ee1c64"
+    },
+    {
+      "key": [
+        "SQ-DM-03",
+        "DLG_SQ_DM_03_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "6a2556988e7d733c242f753118c3cf6205a71a6e9d6cdc1c516b2bae5a5e8d87"
+    },
+    {
+      "key": [
+        "SQ-DM-03",
+        "DLG_SQ_DM_03_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "8a17d9138976d78dd4f6b3793580f887dc8db88785e3bee7ddbabe0cf9c72b24"
+    },
+    {
+      "key": [
+        "SQ-DM-03",
+        "DLG_SQ_DM_03_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "75fe3bb38fe9525bfff85970671497b3bfe1278b8c1bb211663cc1258f7b42e8"
+    },
+    {
+      "key": [
+        "SQ-DM-04",
+        "DLG_SQ_DM_04_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "c4051e756168dc54e236caa2515eb115df4957928f8b8bf7d50e3c4a8e2cf548"
+    },
+    {
+      "key": [
+        "SQ-DM-04",
+        "DLG_SQ_DM_04_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "0cc0f422ac105a93a447f7f8149e53b7bce43ecb7cd82d871e6a7b053aeb8f0d"
+    },
+    {
+      "key": [
+        "SQ-DM-04",
+        "DLG_SQ_DM_04_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "83ea77c1bb63cae7af017c07f55f92b63ca64969d6ef35ade98c4251cf6d3d41"
+    },
+    {
+      "key": [
+        "SQ-DM-05",
+        "DLG_SQ_DM_05_OFFER",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "5e9db5b995a0069f395a73a2ffb59a6b94a66c8e7788180cb77a981aa50cd3a3"
+    },
+    {
+      "key": [
+        "SQ-DM-05",
+        "DLG_SQ_DM_05_CLUE",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "5b49f97172727bdc573c99cdd7e4279b146bd9453696909146ef5683c0694c51"
+    },
+    {
+      "key": [
+        "SQ-DM-05",
+        "DLG_SQ_DM_05_TURN_IN",
+        ""
+      ],
+      "status": "VI_BASELINE",
+      "textSha256": "eb919ed64cf0febc317f292cdd68bb50c0038a6092d37fb9a09930032c2c8985"
+    }
+  ]
+}

@@ -46,6 +46,8 @@ Aggregate revision phải chỉ rõ thuộc actor hay target; không so một s�
 
 ## 4. Các nút còn phải chốt, không được báo đã gỡ hết
 
+Cập nhật 2026-10-30: Phản Quang đã có precision mới theo **DEC-022 / P1_Guard_Precision_20261030_vi.md**. Mục Phản Quang dưới đây là lịch sử blocker của 2026-10-29; các blocker khác vẫn giữ hiệu lực. Chốt thiết kế không đồng nghĩa implementation đã chạy.
+
 - Phản Quang: event counter có điều kiện, cửa0,4s, một thành công/cửa và +2KiếmÝ đã có; nghĩa/thời lượng “giảm sát thương hụt20%”, hướng áp DR và thứ tự counter khi source chết cùng tick còn thiếu precision. Chuẩn bị proposal kèm case trước rollout đầy đủ.
 - Attack/collision volumes của dash và multi-hit cần field riêng; range4,4/11 không thay tất cả hit shape.
 - Gear examples thiếu stat vector; không được lấy tên kiếm để suy attack. Boss/elite cần resolved stats và attack descriptors trước damage live.

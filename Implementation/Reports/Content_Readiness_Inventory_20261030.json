@@ -1,0 +1,618 @@
+{
+  "auditDate": "2026-10-30",
+  "sourceCommit": "abae06144a4c058e5b02600b9a9f87f5f7b4b3ea",
+  "scope": "Inventory and cross-source audit; not runtime, pixel review, or every-row semantic approval",
+  "productionMarkdownFiles": 58,
+  "productionMarkdownLines": 8242,
+  "csv": {
+    "Class_Passive_Production_Data_vi.csv": {
+      "rows": 40,
+      "columns": 18
+    },
+    "Currency_Production_Data_vi.csv": {
+      "rows": 16,
+      "columns": 11
+    },
+    "Elite_Variant_Data_vi.csv": {
+      "rows": 9,
+      "columns": 15
+    },
+    "Item_Master_Catalog_vi.csv": {
+      "rows": 556,
+      "columns": 30
+    },
+    "Item_Rarity_Variant_Catalog_vi.csv": {
+      "rows": 2235,
+      "columns": 30
+    },
+    "Life_Sim_Content_Data_vi.csv": {
+      "rows": 11,
+      "columns": 23
+    },
+    "Loot_Recipe_Reward_Production_Data_vi.csv": {
+      "rows": 221,
+      "columns": 22
+    },
+    "NPC_Actor_Production_Registry_vi.csv": {
+      "rows": 83,
+      "columns": 19
+    },
+    "Pet_Mount_Production_Data_vi.csv": {
+      "rows": 10,
+      "columns": 23
+    },
+    "Quest_Dialogue_Production_Data_vi.csv": {
+      "rows": 230,
+      "columns": 19
+    },
+    "Weekly_Boss_Rotation_Data_vi.csv": {
+      "rows": 6,
+      "columns": 19
+    },
+    "World_Spawn_Gathering_Manifest_vi.csv": {
+      "rows": 349,
+      "columns": 37
+    }
+  },
+  "definitionSchemas": 8,
+  "definitionExamples": {
+    "ClassDefinition": 1,
+    "GatheringNodeDefinition": 1,
+    "ItemDefinition": 1,
+    "MapDefinition": 1,
+    "MapTopology": 1,
+    "QuestDefinition": 1,
+    "SkillDefinition": 3,
+    "SpawnDefinition": 1
+  },
+  "world": {
+    "mapIds": 46,
+    "placements": 349,
+    "types": {
+      "NPC": 104,
+      "MOB_GROUP": 163,
+      "BOSS": 29,
+      "INTERACTABLE": 18,
+      "GATHER_NODE": 35
+    },
+    "designStates": {
+      "ATLAS_ANCHOR": 89,
+      "NEW_PROPOSED": 129,
+      "ATLAS_QUEST_ACTOR": 4,
+      "ATLAS_SPAWN": 26,
+      "ATLAS_QUEST_WAVE": 31,
+      "ATLAS_BOSS": 7,
+      "ACTIVITY_BOSS": 7,
+      "ATLAS_EVENT_POOL": 25,
+      "ACTIVITY_PLACEMENT": 31
+    },
+    "topDownReviewStates": {
+      "TOPDOWN_REVIEW_REQUIRED": 349
+    }
+  },
+  "cinema": {
+    "scenes": 20,
+    "shots": 63,
+    "videoEvidence": "NOT_ESTABLISHED_BY_INVENTORY"
+  },
+  "limitations": [
+    "Examples are not a runtime coverage count.",
+    "CSV design_state and migration reviewState are different dimensions.",
+    "Open PRs are not main implementation.",
+    "No aggregate completion percentage or release approval."
+  ],
+  "baselineFiles": [
+    {
+      "path": "docs/production/AI_Agent_Implementation_Plan_vi.md",
+      "bytes": 12394,
+      "sha256GitBlobBytes": "11f86efaf54f4c0b0996721e815c7c5f4bed0d89233dd025a175421ef13c3991",
+      "lines": 152
+    },
+    {
+      "path": "docs/production/Activities_Economy_PvP_Production_Spec_vi.md",
+      "bytes": 26585,
+      "sha256GitBlobBytes": "a9289ddcb0784b45efb5af265eda879ebc0b539cc32a29ed9b1774d32b078356",
+      "lines": 207
+    },
+    {
+      "path": "docs/production/Agent_Progress_Review_20261029_B_vi.md",
+      "bytes": 4810,
+      "sha256GitBlobBytes": "b3ca91e18c063c899c4933ea4bd5eecb2241efebc33af7f3897f67b37a37b374",
+      "lines": 37
+    },
+    {
+      "path": "docs/production/Appearance_Buff_NPC_Service_Overlay_Spec_vi.md",
+      "bytes": 26662,
+      "sha256GitBlobBytes": "c75e9d1ce77a9a218ee9b348c6919326fdf276c8256630ebd2e5ff31efa994f7",
+      "lines": 242
+    },
+    {
+      "path": "docs/production/Art_Brief_P1_Minh_Kiem_vi.md",
+      "bytes": 9688,
+      "sha256GitBlobBytes": "3faf68b7c5750593d03fd9dfdf6c321d512cfbb5512a0fb9d62103b36d1a7477",
+      "lines": 65
+    },
+    {
+      "path": "docs/production/Art_Completion_Plan_20261029_vi.md",
+      "bytes": 2278,
+      "sha256GitBlobBytes": "018cdb564916a897960db268a010deea61ab5be7db313915e9433494936c25ee",
+      "lines": 18
+    },
+    {
+      "path": "docs/production/Art_Concept_References/skill_vfx_v1/README_vi.md",
+      "bytes": 844,
+      "sha256GitBlobBytes": "3cab854647cff578569a78f44e5af36dc3d9934ebc9b328bd4f726efb7a347bb",
+      "lines": 9
+    },
+    {
+      "path": "docs/production/Art_Concept_References/v1/README_vi.md",
+      "bytes": 8477,
+      "sha256GitBlobBytes": "a94454ed8158d7f5e4873714d37f0abc74c5d8bfd9a329378b276e7fb42b9abf",
+      "lines": 62
+    },
+    {
+      "path": "docs/production/Art_Entity_Weather_UI_Visual_Bible_vi.md",
+      "bytes": 42253,
+      "sha256GitBlobBytes": "047904ef0d03773fe69bdf55b5b7e6de08516684e647e068cf4ba05021e9f754",
+      "lines": 298
+    },
+    {
+      "path": "docs/production/Art_Production_Queue_P1_vi.md",
+      "bytes": 10677,
+      "sha256GitBlobBytes": "5af2e2ad7789a207d56c152777a43758845af850611c8eb363725005a728c537",
+      "lines": 67
+    },
+    {
+      "path": "docs/production/Audio_Pack_V1_Delivery_vi.md",
+      "bytes": 8633,
+      "sha256GitBlobBytes": "94296b9cac1147640168239ff451e1a972da61f82b17299870b114910af9c228",
+      "lines": 63
+    },
+    {
+      "path": "docs/production/Audio_Production_Direction_v1_vi.md",
+      "bytes": 9548,
+      "sha256GitBlobBytes": "4a951462ef5151dc6fd7eed9b8352fdcba2e0523895da828f25de29ea1f76061",
+      "lines": 74
+    },
+    {
+      "path": "docs/production/Battleground_10v10_Production_Spec_vi.md",
+      "bytes": 8007,
+      "sha256GitBlobBytes": "be3310925d7f71cfe8663251a4683f09e4b5067ce9f5f4dcb926f8df7d19e179",
+      "lines": 70
+    },
+    {
+      "path": "docs/production/Ben_Mua_Muse_Map_Handoff_20261030_vi.md",
+      "bytes": 11064,
+      "sha256GitBlobBytes": "8baf25c46051cebe1cbd4154dea52859efc659696de668fb36ded813666e0243",
+      "lines": 74
+    },
+    {
+      "path": "docs/production/Capital_Scale_and_Simple_Pixel_v2_vi.md",
+      "bytes": 8331,
+      "sha256GitBlobBytes": "6a3c890d7507c08e80ec7489738c0900d6e8ab22f1eb44ec760deede2a2f375d",
+      "lines": 65
+    },
+    {
+      "path": "docs/production/Chapter_One_Dialogue_Editorial_Notes_vi.md",
+      "bytes": 6420,
+      "sha256GitBlobBytes": "a4de3afd036806ac3cc8a09e0cf26389e0a50553b695c809a77d6fa73a2c316b",
+      "lines": 41
+    },
+    {
+      "path": "docs/production/Character_Equipment_Inventory_Spec_vi.md",
+      "bytes": 16214,
+      "sha256GitBlobBytes": "82a02227421528ba2f4d67e35cf893fb79836b5369a54d345951e08dadcbeec1",
+      "lines": 161
+    },
+    {
+      "path": "docs/production/Cinema_Muse_Directors_Pack_vi.md",
+      "bytes": 12888,
+      "sha256GitBlobBytes": "023083d7f0ef4f4efdc666d4462558b12c482e53cdfc3c80ae66f045ed38c958",
+      "lines": 110
+    },
+    {
+      "path": "docs/production/Class_Passive_Production_Data_vi.csv",
+      "bytes": 14134,
+      "sha256GitBlobBytes": "ff7eb9a6050af44376219b9b96bc8f44434bc163b4b237e8bab04a743e2d91e8",
+      "lines": 41
+    },
+    {
+      "path": "docs/production/Codex_Ownership_Audit_20261029_vi.md",
+      "bytes": 9945,
+      "sha256GitBlobBytes": "3e73711dce51484c676c667b68f3e1315777035dc394dcef5080ad3830582eeb",
+      "lines": 56
+    },
+    {
+      "path": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md",
+      "bytes": 25133,
+      "sha256GitBlobBytes": "9c9e074f4383d1a86aa827238eb7dfff997f62242c51a9809a88917c3790763d",
+      "lines": 184
+    },
+    {
+      "path": "docs/production/Compendium_Encyclopedia_Overlay_Spec_vi.md",
+      "bytes": 24961,
+      "sha256GitBlobBytes": "885b27f2b5908469b60e2be523f3a03876d201d47195d7a927591b9d9607deb0",
+      "lines": 251
+    },
+    {
+      "path": "docs/production/Content_Bible_Ngu_Mach_Huyen_An_vi.md",
+      "bytes": 21922,
+      "sha256GitBlobBytes": "309296d5fef952223bdffbd5dc8ab695aba793903141cbf8306a4cb7d60bb401",
+      "lines": 288
+    },
+    {
+      "path": "docs/production/Content_Export_and_Asset_Completion_vi.md",
+      "bytes": 6983,
+      "sha256GitBlobBytes": "24a2600e6b8551e722af8aa8f55b05c392ed988864e9ec68e14643f4a38a7240",
+      "lines": 50
+    },
+    {
+      "path": "docs/production/Currency_Production_Data_vi.csv",
+      "bytes": 4268,
+      "sha256GitBlobBytes": "d99f6fff5c435526a1cc30e8675dc4aa34dadec7f553ff2b85184713ecfad7dc",
+      "lines": 17
+    },
+    {
+      "path": "docs/production/Development_Execution_Board_vi.md",
+      "bytes": 4534,
+      "sha256GitBlobBytes": "a30e61d0ee7f88f03eb784aa6e292d976102a2d079b125418d27d794fd47daf7",
+      "lines": 41
+    },
+    {
+      "path": "docs/production/Dialogue_Readthrough_vi.md",
+      "bytes": 84705,
+      "sha256GitBlobBytes": "ebf04d12eac90f6c9191f1865d90e692bbeb7d873c1d727430b4c44db1308425",
+      "lines": 1566
+    },
+    {
+      "path": "docs/production/Elite_Variant_Data_vi.csv",
+      "bytes": 3412,
+      "sha256GitBlobBytes": "adceffb77ddfdb7d5198436e8fff1bd7a834001b1c3e61abd43ade6f670c52c4",
+      "lines": 10
+    },
+    {
+      "path": "docs/production/Forge_Crafting_Overlay_Spec_vi.md",
+      "bytes": 20712,
+      "sha256GitBlobBytes": "3547e3c0e69c216932bfecdd4b627bba8d5c90b6f978aabff4e03ec7c445f75d",
+      "lines": 197
+    },
+    {
+      "path": "docs/production/Full_Dialogue_Editorial_Notes_vi.md",
+      "bytes": 9531,
+      "sha256GitBlobBytes": "0ce1c4baba3f23acb976944c6f1822fe3644fcb6647a994aa1789dfa2b3d46e3",
+      "lines": 66
+    },
+    {
+      "path": "docs/production/GDD_Ngu_Mach_Huyen_An_vi.md",
+      "bytes": 36058,
+      "sha256GitBlobBytes": "e1dff58026f9c97bb2115e3adb19e88bb6bc3fe632a3006c5078003033e2e0f4",
+      "lines": 369
+    },
+    {
+      "path": "docs/production/Gameplay_HUD_Overlay_Spec_vi.md",
+      "bytes": 23187,
+      "sha256GitBlobBytes": "1aa0660d32d366a049c36bfb555236e89e199cebd82c90c2dd2ceb984ae9e070",
+      "lines": 209
+    },
+    {
+      "path": "docs/production/Guild_Social_Spec_vi.md",
+      "bytes": 13824,
+      "sha256GitBlobBytes": "4580bac2fe2cf3fbb5e234084e16426c342affc8089dc3d01025671cee84c2ed",
+      "lines": 133
+    },
+    {
+      "path": "docs/production/HUD_Skill_Arc_Layout_vi.md",
+      "bytes": 4336,
+      "sha256GitBlobBytes": "74803ae70983226a800ab02903da6e73e803e12ea575567fc2c035a363d79e04",
+      "lines": 43
+    },
+    {
+      "path": "docs/production/Hub_Wide_Camera_Profile_vi.md",
+      "bytes": 4812,
+      "sha256GitBlobBytes": "08b5c2f8f73762bdaf1b4cd48d028a9ed1332029a3da50c2d4e5dacfefce0a47",
+      "lines": 42
+    },
+    {
+      "path": "docs/production/Item_Catalog_and_Set_Bible_vi.md",
+      "bytes": 11567,
+      "sha256GitBlobBytes": "89b824c21a8d8a782f8e6b29aa74c0ddcf74888833a859f62af40afebb8fe0a6",
+      "lines": 126
+    },
+    {
+      "path": "docs/production/Item_Master_Catalog_vi.csv",
+      "bytes": 316960,
+      "sha256GitBlobBytes": "77e1405963fab1e915c56a8b738e347bd60809c6cf1fb78bee5831202e67065c",
+      "lines": 557
+    },
+    {
+      "path": "docs/production/Item_Rarity_Variant_Catalog_vi.csv",
+      "bytes": 1170197,
+      "sha256GitBlobBytes": "3577a02a29fd85412b498f386ca6f818dfcc36228501e6c4c8b0999620a53c3f",
+      "lines": 2236
+    },
+    {
+      "path": "docs/production/Life_Sim_Content_Data_vi.csv",
+      "bytes": 3995,
+      "sha256GitBlobBytes": "9dd37e9264602662a0a5b142a38092df481b7683f562d607414aeaf02605d65f",
+      "lines": 12
+    },
+    {
+      "path": "docs/production/Life_Sim_Production_Spec_vi.md",
+      "bytes": 6193,
+      "sha256GitBlobBytes": "a10ecacf6fe258508270f64b6bbe3a136b9d06614ca7f50fa8ba5dc607966dc6",
+      "lines": 54
+    },
+    {
+      "path": "docs/production/Loot_Recipe_Reward_Production_Data_vi.csv",
+      "bytes": 64990,
+      "sha256GitBlobBytes": "431df808d6a2ce627de5b97d81d749ef5c62065f0609bb85a8c3db417d650d4b",
+      "lines": 222
+    },
+    {
+      "path": "docs/production/MMORPG_Functional_Spec_vi.md",
+      "bytes": 15434,
+      "sha256GitBlobBytes": "be5ce79577f2f22de9b8b2b669c61f6bd4049c9459abd6963b8116cf8c918d87",
+      "lines": 147
+    },
+    {
+      "path": "docs/production/Map_Production_Atlas_vi.md",
+      "bytes": 31382,
+      "sha256GitBlobBytes": "8b70734a35ba6781628608a3a208c7ff3102fc822faacb10cab1a945a86eab45",
+      "lines": 282
+    },
+    {
+      "path": "docs/production/NPC_Actor_Production_Registry_vi.csv",
+      "bytes": 32835,
+      "sha256GitBlobBytes": "d9743b8148620e00dd0762eca2bfd1b733b7a8808583725a381262fd004cd52a",
+      "lines": 84
+    },
+    {
+      "path": "docs/production/Narrative_Depth_and_Discovery_vi.md",
+      "bytes": 16773,
+      "sha256GitBlobBytes": "07cffe09b704596ee0c36f8b50a8901f16c344b52cb2298cba155077f84c2f94",
+      "lines": 89
+    },
+    {
+      "path": "docs/production/Online_Persistence_Release_Complete_vi.md",
+      "bytes": 9433,
+      "sha256GitBlobBytes": "14ec979208e5d563882ab184115f34683791973180888d6b6c089c6b81855f2e",
+      "lines": 68
+    },
+    {
+      "path": "docs/production/Opening_Dialogue_Editorial_Notes_vi.md",
+      "bytes": 3326,
+      "sha256GitBlobBytes": "fa90c7e9d0fca86b68ac71e5f15f2e72c9ded36dff1efdd7e1ade55dbbd9fbf4",
+      "lines": 25
+    },
+    {
+      "path": "docs/production/P1_Design_Resolution_20261029_vi.md",
+      "bytes": 7626,
+      "sha256GitBlobBytes": "4321a66d4cf1653f9e63bcf526e0e1e79bcfb058664e293207a27f62351db3f1",
+      "lines": 57
+    },
+    {
+      "path": "docs/production/P1_Guard_Precision_20261030_vi.md",
+      "bytes": 10724,
+      "sha256GitBlobBytes": "3f9a2fc61c5e910f1fb48896531732619f78ca740f2a27e9cba5e92262bd36fe",
+      "lines": 72
+    },
+    {
+      "path": "docs/production/Pet_Mount_Production_Data_vi.csv",
+      "bytes": 5100,
+      "sha256GitBlobBytes": "383a40438f741931a26a5e3e19fa6d2b5527ffaa6c69bb45875ef162e6bf2d73",
+      "lines": 11
+    },
+    {
+      "path": "docs/production/Pixel_Art_Production_Standard_vi.md",
+      "bytes": 10186,
+      "sha256GitBlobBytes": "52bfc0a84a504d3d47bd34beb8f8d3c3c0ce5d1a3fd201d013a1f35ed6535c83",
+      "lines": 75
+    },
+    {
+      "path": "docs/production/Production_Audit_20261028_vi.md",
+      "bytes": 6263,
+      "sha256GitBlobBytes": "f1578b379dbf6327264edf8ea54798e844632bc3c156e3932a21949efcfd6ad8",
+      "lines": 56
+    },
+    {
+      "path": "docs/production/Production_Completion_Addendum_vi.md",
+      "bytes": 8913,
+      "sha256GitBlobBytes": "19442cee9196fc359c749b8cd34518bb123bab1a35a6a1c191c0f4b6a6ab6d85",
+      "lines": 65
+    },
+    {
+      "path": "docs/production/Production_Decision_Register_vi.md",
+      "bytes": 11610,
+      "sha256GitBlobBytes": "a52db06350773a9d24eee761e9a10dec87bc07a6c832914b8b62ff47b41aa223",
+      "lines": 64
+    },
+    {
+      "path": "docs/production/Production_Index_vi.md",
+      "bytes": 20490,
+      "sha256GitBlobBytes": "ee71554ff90f2cc25f18d3688e44a0dbbc4991c550040d07ec2d85c341e3c56b",
+      "lines": 197
+    },
+    {
+      "path": "docs/production/Production_QA_Release_Gates_vi.md",
+      "bytes": 7689,
+      "sha256GitBlobBytes": "033ab098c801249a30e428ec265627c1283352c8268448abb162850102d99519",
+      "lines": 73
+    },
+    {
+      "path": "docs/production/Production_Readiness_Audit_vi.md",
+      "bytes": 6417,
+      "sha256GitBlobBytes": "7b39e91c08cc230e9d008d3445af99259e028c179d9a243e3862224505f13cd7",
+      "lines": 54
+    },
+    {
+      "path": "docs/production/Production_Rules_Complete_v1_vi.md",
+      "bytes": 16773,
+      "sha256GitBlobBytes": "c32a83c7ba1836e73c0a3ec36698856e0f0a218aa6c9bbe53a59cb817be04a98",
+      "lines": 102
+    },
+    {
+      "path": "docs/production/Production_Technical_Contracts_vi.md",
+      "bytes": 8101,
+      "sha256GitBlobBytes": "14e516883c05756109218863cf5a1a26c3c9796767da7e2917bb75342f5fc625",
+      "lines": 77
+    },
+    {
+      "path": "docs/production/Quest_Dialogue_Production_Data_vi.csv",
+      "bytes": 118934,
+      "sha256GitBlobBytes": "241593fe9ba87ad0441a4292b602602729d6a14493c07869cb0bba0e1c9c2fab",
+      "lines": 231
+    },
+    {
+      "path": "docs/production/Quest_and_Narrative_Production_Spec_vi.md",
+      "bytes": 18707,
+      "sha256GitBlobBytes": "fd2e8739aeb0490a19e480571f308e6bdbe5436b5f21072c378979e77983a8df",
+      "lines": 202
+    },
+    {
+      "path": "docs/production/Settings_Overlay_Spec_vi.md",
+      "bytes": 18605,
+      "sha256GitBlobBytes": "84031f80ae9cd665b6638054ce25219000df495f4f10d6e42fc9e1b96837c5e3",
+      "lines": 195
+    },
+    {
+      "path": "docs/production/Skill_VFX_Art_Direction_v1_vi.md",
+      "bytes": 10104,
+      "sha256GitBlobBytes": "723e4dd2b549f27b573ef6da99bce2e259b3477daf36e94dde1c8dbf72463099",
+      "lines": 81
+    },
+    {
+      "path": "docs/production/Skill_VFX_Cards_v1_vi.md",
+      "bytes": 21169,
+      "sha256GitBlobBytes": "e0437684aad3328410252003e8dcd9b93d89c8039bbec06183fc9245730d9ab5",
+      "lines": 302
+    },
+    {
+      "path": "docs/production/Thang_Long_Thanh_Capital_Map_Spec_vi.md",
+      "bytes": 24461,
+      "sha256GitBlobBytes": "51d2154f8b82b54e8a2825c074f9ecf5c2c928f7b004da85298281820b382797",
+      "lines": 173
+    },
+    {
+      "path": "docs/production/Top_Down_Gameplay_World_Spec_vi.md",
+      "bytes": 8753,
+      "sha256GitBlobBytes": "90355da6663b0bc77a7eb8af9e612ba035a027c3d893b21b298066da3b9de0de",
+      "lines": 50
+    },
+    {
+      "path": "docs/production/UI_UX_Spec_vi.md",
+      "bytes": 15982,
+      "sha256GitBlobBytes": "4dad4b7333cf92936296da7e64699b1d63568faa9941f98b089a4fcf68ae4f1b",
+      "lines": 117
+    },
+    {
+      "path": "docs/production/Weekly_Boss_Rotation_Data_vi.csv",
+      "bytes": 3201,
+      "sha256GitBlobBytes": "940214ce7a34978487403520c50ffef825da7da94210eeb3b1841d46f4e372e2",
+      "lines": 7
+    },
+    {
+      "path": "docs/production/World_Spawn_Gathering_Manifest_Spec_vi.md",
+      "bytes": 15425,
+      "sha256GitBlobBytes": "6033ca68d6ceac4b18ee6b4fce69f8c58ff077e6b73b6310310a169be2aff414",
+      "lines": 129
+    },
+    {
+      "path": "docs/production/World_Spawn_Gathering_Manifest_vi.csv",
+      "bytes": 198229,
+      "sha256GitBlobBytes": "7fe2d4d5229e2fb7a93eb8c0fd452b741cb5f050c49a9c72bee30f8eff06c457",
+      "lines": 350
+    }
+  ],
+  "corrections": {
+    "fixedItemMissingBefore": [
+      "TOOL-ROD-01"
+    ],
+    "masterRowsUnchanged": 556,
+    "rarityRowsBefore": 2235,
+    "rarityRowsAfter": 2236,
+    "allExistingRarityRowsUnchanged": true,
+    "fixedRowsEqualMasterAfter": true,
+    "fixedItemsAfter": 136,
+    "gearTemplatesUnchanged": 420,
+    "gearVariantsUnchanged": 2100,
+    "compendiumProjectedUniqueEntriesAfter": 2533,
+    "manifestSourceHashMatchesMigration": true,
+    "all349OriginalCoordinatesUnchanged": true
+  },
+  "checks": [
+    {
+      "command": "python Implementation/Tools/validate_content.py",
+      "result": "PASS",
+      "scope": "8 schemas/10 examples and source references, not complete runtime coverage"
+    },
+    {
+      "command": "python Implementation/Tools/validate_contracts.py",
+      "result": "PASS",
+      "scope": "11 schemas/11 examples on main baseline"
+    },
+    {
+      "command": "python Implementation/Tools/validate_narrative.py",
+      "result": "PASS",
+      "scope": "76 quest beats / 20 scenes / 63 shots / 378 seconds design"
+    },
+    {
+      "command": "python Tools/NarrativeReview/validate_full_editorial.py",
+      "result": "PASS",
+      "scope": "230 rows / immutable logic / copy invariants"
+    },
+    {
+      "command": "python Implementation/Tools/validate_guard_precision.py",
+      "result": "PASS",
+      "scope": "DEC-022 design oracle, not server implementation"
+    },
+    {
+      "command": "python Implementation/Tools/validate_skill_vfx_handoff.py",
+      "result": "PASS",
+      "scope": "30 art cards / five concepts, not runtime VFX"
+    },
+    {
+      "command": "python Tools/ProductionReview/validate_audio_baseline.py",
+      "result": "PASS",
+      "scope": "63 planned cues, not rendered audio QA"
+    },
+    {
+      "command": "node Tools/PlayablePreview/tests/engine_checks.mjs",
+      "result": "PASS",
+      "scope": "68 local engine assertions, not multiplayer"
+    },
+    {
+      "command": "python -m unittest discover -s Tools/PlayablePreview/tests -p 'test_*.py'",
+      "result": "PASS",
+      "scope": "4 local HTTP tests"
+    },
+    {
+      "command": "inline Python csv cross-catalog and migration checks",
+      "result": "PASS",
+      "scope": "unique IDs, all fixed rows exact, unchanged original variants, unchanged349XY"
+    },
+    {
+      "command": "python Tools/AudioProduction/validate_pack.py",
+      "result": "BLOCKED_LOCAL_DEPENDENCY",
+      "reason": "Python interpreter lacks soundfile; no decode rerun pass claimed. Previous technical QA is historical."
+    },
+    {
+      "command": "inline Python audio manifest file/byte/SHA256 check",
+      "result": "PASS",
+      "runtimeClips": 541,
+      "masters": 541,
+      "cueKeys": 195,
+      "issues": [],
+      "scope": "On-disk original candidate artifacts only; no decode, listening or engine proof"
+    },
+    {
+      "command": "python Implementation/Tools/validate_topology.py",
+      "result": "PASS",
+      "scope": "1 synthetic topology; 0 reviewed maps, not world navigation approval"
+    },
+    {
+      "command": "git diff --check",
+      "result": "PASS",
+      "scope": "patch formatting only"
+    }
+  ]
+}

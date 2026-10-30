@@ -91,14 +91,14 @@ Tên hiển thị, icon, mô tả và localization nằm ở bảng tĩnh theo i
 Túi nhân vật có 100 ô thường, chia 4 trang 25 ô; stack vật phẩm phổ thông tối đa 99, trang bị không stack. Túi nhiệm vụ là kho riêng 30 ô không chiếm túi thường. Kho cá nhân 120 ô ở hub, mở rộng theo tiến trình/Đồng tối đa 200 ô; có kho bang riêng theo Guild Social Spec. Mở rộng kho là tiện ích theo tiến trình; không tăng sức mạnh trực tiếp.
 
 **Grid và tương tác**
-- 6 cột ×5 hàng mỗi trang, icon 56–72dp tùy màn; nền phẩm chất theo shape/color/icon.
+- 5 cột ×5 hàng mỗi trang (25 ô, 4 trang =100 ô), khớp UI_UX và DEC-023; icon 56–72dp tùy màn, nền phẩm chất theo shape/color/icon. Responsive không tăng số slot server.
 - Chọn một lần để đọc chi tiết, nhấn lần hai hoặc nút menu để mở hành động; kéo-thả trên PC đổi vị trí/swap.
 - Nút so sánh chỉ hiện khi item phù hợp với slot đang trang bị. Tooltip so sánh dùng giá trị đã cộng set/socket/buff; đổi stat theo dấu và số, không chỉ màu.
 - Khóa/mở khóa bảo vệ trong túi là thao tác miễn phí, không tiêu vật phẩm. Đây là trạng thái riêng với `protectedFromSalvage`: dùng MAT-LOCK-01 sẽ tiêu một Phù Khóa để đặt chặn phân giải; bỏ chặn cần xác nhận riêng. Mọi phân giải/bán/bỏ vật phẩm hiếm yêu cầu xác nhận; Cổ/Di vật yêu cầu gõ tên món hoặc giữ nút 1s.
 - Filter category, class, slot, rarity, bound, lock, min level. Search theo tên và ID hiển thị, không tìm chuỗi kỹ thuật server.
 - Sort: loại, level, phẩm chất, mới nhận, số lượng, chỉ số công. Sort không chuyển vật phẩm giữa server slots, chỉ là view.
 
-**Túi đầy:** cảnh báo từ 80/100 ô, nhắc mạnh từ 90/100. Loot thường không nhặt khi đầy; quest key item đi vào kho nhiệm vụ nếu còn giới hạn riêng. Quest reward có thể chuyển mailbox trong 30 ngày; vật phẩm hết hạn ghi countdown. Không xóa tự động đồ Huyền/Cổ Vật. Nút dọn túi mở danh sách đề xuất nhưng không thực hiện giao dịch trước khi người chơi chọn.
+**Túi đầy:** cảnh báo từ 80/100 ô, nhắc mạnh từ 90/100. Loot thường không nhặt khi đầy; quest key item đi vào kho nhiệm vụ nếu template khai đúng loại và còn chỗ. Turn-in mặc định trả inventory_full, giữ READY_TO_TURN_IN, không tiêu quest item hoặc cấp một phần thưởng; không tự chuyển thưởng vào thư. Overflow mailbox chỉ dùng khi reward policy versioned khai rõ và có atomicity/dedupe theo Completion Addendum §2/DEC-023. Không xóa tự động đồ Huyền/Cổ Vật. Nút dọn túi mở danh sách đề xuất nhưng không thực hiện giao dịch trước khi người chơi chọn.
 
 ### 7. Chi tiết panel vật phẩm
 
