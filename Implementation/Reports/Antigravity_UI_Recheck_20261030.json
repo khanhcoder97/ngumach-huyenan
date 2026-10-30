@@ -1,0 +1,113 @@
+{
+  "reviewedHead": "18fc5b5e0a1790c9c9614f8ea683c68012a1ced9",
+  "scope": "Author tests plus follow-through probes; no source patch or native Unity/HTTP",
+  "sourceSha256": {
+    "Client/Assets/Scripts/Online/Core/P1Audio.cs": "6ea14ed1b6c37a7fd909d658dc16d39f6558cb8779a5b83685e1b47c1a19c941",
+    "Client/Assets/Scripts/Online/Core/P1AudioNotice.cs": "301b976aad2034374872743bf52d76481e7c5ae9366416b5fbf41600e2ddfc81",
+    "Client/Assets/Scripts/Online/Core/P1Client.cs": "48f39dcf78766068d138726984e186a92a24d72cd0d4074bb35a89e6b6a1c1fc",
+    "Client/Assets/Scripts/Online/Core/P1ClientV2.cs": "9c6f137e4e216a292e3003e25fc82759ff9665edb78d15d861bb49e91c156488",
+    "Client/Assets/Scripts/Online/Core/P1GameplayInputGate.cs": "486d61b9accc62d30560548eb1634f67c38cdeac0c483e707ec4a716eefa936f",
+    "Client/Assets/Scripts/Online/Core/P1Models.cs": "649a25f3ce920b0f164fc0f4d0ac46507337bcb171416e680f358eb5f32164e2",
+    "Client/Assets/Scripts/Online/Core/P1ModelsV2.cs": "590326762ad8f1d30aecabfc4a3610c00db1ff328a206b8b250e72b737efac3b",
+    "Client/Assets/Scripts/Online/Core/P1Wire.cs": "aaccc33f29d767b6b3b57399ea96addf692ffc2bf9c2cb9e5b3deaf9be532c87",
+    "Client/Assets/Scripts/Online/Presentation/InventoryPresenter.cs": "2a774eaf6dada5a8b258dd16ebc8750e9372746da5408cedd7d1886a7316a1cb",
+    "Client/Assets/Scripts/Online/Presentation/IP1UIAdapter.cs": "af5e36c63a4bdafe0853fab1d23fe33011d171c4c2f149ac54c1a298854d60aa",
+    "Client/Assets/Scripts/Online/Presentation/MapPresenter.cs": "2859c992a1323c8ddfc9b4b8a880cda29f55cd21e402150118ec90e99afbf1ca",
+    "Client/Assets/Scripts/Online/Presentation/NpcDialoguePresenter.cs": "9ceecb8985189cabf997b5e47c5301dda542bdc3c78f00474f5a918924b8bcd2",
+    "Client/Assets/Scripts/Online/Presentation/P1ClientAdapter.cs": "4a1f67c2e607ba528cb2038e57e2a543e0001c700fff46ebf30fd0a121e5f5db",
+    "Client/Assets/Scripts/Online/Presentation/P1UIState.cs": "8457772803952672dd82f175c7abfe05c8dfd6f9f456578d6710000a6cc236fc",
+    "Client/Assets/Scripts/Online/Presentation/PanelRouter.cs": "5392cbaff3eb2868cd5f80c04ae469d153c68033331ce999c5826f5263a656bd",
+    "Client/Assets/Scripts/Online/Presentation/QuestJournalPresenter.cs": "5ebfd2102edcfb3f0d1284a6b982f5af24ae5c98963f5647cd958b820263c337",
+    "Client/Assets/Scripts/Online/Presentation/SettingsPresenter.cs": "18c867a201b3e185241cdd769db384f29a846cf787950b82f9fb4d40f5e74d3d",
+    "Client/Tests/PlayerUIChecks/PlayerUIChecksTests.cs": "9b5eac77f1f06ba9d244b98a37683c042c96fee7e69d2a80369afb821f2df7a5",
+    "Client/Tests/PlayerUIChecks/PlayerUIChecksTests2.cs": "f63665092af6b0fc6865f61dafcaf27ac8fccb8077678e39690809500df92308"
+  },
+  "negativeChecksSha256": "f75fbe7e4a7453068c0a00b60100c7d64f6633c056819cbd7ecc97a39917051f",
+  "exitCode": 1,
+  "counters": {
+    "total": "44",
+    "executed": "44",
+    "passed": "41",
+    "failed": "3",
+    "error": "0",
+    "timeout": "0",
+    "aborted": "0",
+    "inconclusive": "0",
+    "passedButRunAborted": "0",
+    "notRunnable": "0",
+    "notExecuted": "0",
+    "disconnected": "0",
+    "warning": "0",
+    "completed": "0",
+    "inProgress": "0",
+    "pending": "0"
+  },
+  "failedTests": [
+    {
+      "name": "ProducerFollowthrough.DialogueIdentityAndLifetimeChecks.WorldEntityIdentityMustResolveQuestAction(entityId: \"ENT_MAN_BM_NPC_LYAN\", state: \"AVAILABLE\", action: AcceptQuest)",
+      "message": "Assert.Contains() Failure: Filter not matched in collection\r\nCollection: [DialogueChoice { ActionType = Close, DisabledReason = null, Enabled = True, Index = 0, Label = \"Tạm biệt\", ··· }]"
+    },
+    {
+      "name": "ProducerFollowthrough.DialogueIdentityAndLifetimeChecks.ClearedDialogueMustIgnoreLateCompletion",
+      "message": "Assert.Equal() Failure: Values differ\r\nExpected: Idle\r\nActual:   Loaded"
+    },
+    {
+      "name": "ProducerFollowthrough.DialogueIdentityAndLifetimeChecks.WorldEntityIdentityMustResolveQuestAction(entityId: \"ENT_MAN_BM_NPC_TA_VAN_KHANH\", state: \"READY_TO_TURN_IN\", action: TurnInQuest)",
+      "message": "Assert.Contains() Failure: Filter not matched in collection\r\nCollection: [DialogueChoice { ActionType = Close, DisabledReason = null, Enabled = True, Index = 0, Label = \"Tạm biệt\", ··· }]"
+    }
+  ],
+  "status": "FAIL",
+  "originalProject": {
+    "exitCode": 0,
+    "counters": {
+      "total": "39",
+      "executed": "39",
+      "passed": "39",
+      "failed": "0",
+      "error": "0",
+      "timeout": "0",
+      "aborted": "0",
+      "inconclusive": "0",
+      "passedButRunAborted": "0",
+      "notRunnable": "0",
+      "notExecuted": "0",
+      "disconnected": "0",
+      "warning": "0",
+      "completed": "0",
+      "inProgress": "0",
+      "pending": "0"
+    },
+    "producerLegacyChecksPassed": 4
+  },
+  "coreSuite": {
+    "exitCode": 0,
+    "core": 55,
+    "audio": 43,
+    "input": 15,
+    "v2": 46,
+    "total": 159,
+    "scope": "Managed checks; no new live HTTP or native Unity",
+    "initialSparseInputMissing": "Audio manifest absent from sparse checkout; included exact tracked manifest then rerun passed"
+  },
+  "syntax": {
+    "exitCode": 0,
+    "files": 37,
+    "profiles": 3,
+    "errors": 0,
+    "scope": "CSharp9 syntax only"
+  },
+  "nativeUnity": "UNVERIFIED",
+  "ag02Snapshot": {
+    "head": "b30b2f5efe3be553b3542c76882b1735a5ce5c9b",
+    "baseHead": "18fc5b5e0a1790c9c9614f8ea683c68012a1ced9",
+    "clientDiffFromBase": false,
+    "implementationBThroughFHandedOff": false
+  },
+  "decision": "FOLLOWTHROUGH_REQUIRED_KEEP_80_85_OPEN",
+  "unitySourceSha256": {
+    "Client/Assets/Scripts/Online/Unity/P1OnlinePanel.cs": "b9ea6ea500a24eed096e532f96dfebcac9aad75038fdc3a0ca57bd1f11b2c175",
+    "Client/Assets/Scripts/Online/Unity/PlayerUI/P1PlayerUIHook.cs": "9f4d87e7d1e092029d99364c44d84c3dc104091cca07af412cc24549b82849fc",
+    "Client/Assets/Scripts/Online/Unity/PlayerUI/PlayerUIRoot.cs": "693e4f9427e21272bd431bff009f9bd556d978c87a9ce29b50390a90538d418f",
+    "Client/Assets/Scripts/Online/Unity/PlayerUI/NpcDialoguePanel.cs": "160dc786ceec1415f95c2f1a949ea8f654815c9b72cef42a44dae1bd6f7675c2"
+  }
+}
