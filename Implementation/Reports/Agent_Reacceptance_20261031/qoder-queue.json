@@ -1,0 +1,13 @@
+{
+  "scope": "Actual GuardWindowStore queue, synthetic reservation, not full guard HTTP",
+  "dueTick": 102,
+  "exactDuePending": 1,
+  "nextObservedTick": 103,
+  "overduePending": 1,
+  "counterResolved": false,
+  "expected": "Unresolved overdue work must remain eligible for exactly one resolution",
+  "status": "PASS",
+  "reviewedHead": "609a316a7c6e09f9265d39d6cffe97defa35dbc1",
+  "serverBinarySha256": "822b0fee5e1fb51cc404b8f78e260550a5a68a94f90c4878e5f116f8f4442979",
+  "exitCode": 0
+}

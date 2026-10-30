@@ -1,0 +1,18 @@
+{
+  "reviewedHead": "a0bb0aba7953ae9181390d27e4c2386d20a453dd",
+  "scope": "NARROW_SOURCE_API_BINDING_WITH_SYNTHETIC_UNITY_STUBS_NOT_NATIVE",
+  "rootParameterCount": 7,
+  "storeNamespace": "NguMach.Client.Presentation",
+  "sourceSha256": {
+    "Client/Assets/Scripts/Online/Unity/PlayerUI/PlayerUIFactory.cs": "7b1865c093a050155e1260b201aa7e15cebfd4917c52e1bff269f1fab62b353f",
+    "Client/Assets/Scripts/Online/Unity/PlayerUI/PlayerUIRoot.cs": "55b383d06f7b7fcc93e3844402e946c289c0cad451e4205475c987be7376aeae",
+    "Client/Assets/Scripts/Online/Unity/PlayerUI/PlayerPrefsSettingsStore.cs": "62dbd1d2a528b64ce5f0ba26012f0fa6c2fcb4ca5b43bf21256f9c20cefa864b"
+  },
+  "exitCode": 1,
+  "diagnostics": [
+    "D:\\Project\\NGUMACHHUYENAN-ag02-review-20261031\\Client\\Assets\\Scripts\\Online\\Unity\\PlayerUI\\PlayerUIFactory.cs(33,35): error CS0246: The type or namespace name 'PlayerPrefsSettingsStore' could not be found (are you missing a using directive or an assembly reference?) [C:\\Users\\KHANH SAMA\\AppData\\Local\\Temp\\ngumach-factory-binding-v1m345og\\Binding.csproj]",
+    "D:\\Project\\NGUMACHHUYENAN-ag02-review-20261031\\Client\\Assets\\Scripts\\Online\\Unity\\PlayerUI\\PlayerUIFactory.cs(35,35): error CS0246: The type or namespace name 'PlayerPrefsSettingsStore' could not be found (are you missing a using directive or an assembly reference?) [C:\\Users\\KHANH SAMA\\AppData\\Local\\Temp\\ngumach-factory-binding-v1m345og\\Binding.csproj]",
+    "D:\\Project\\NGUMACHHUYENAN-ag02-review-20261031\\Client\\Assets\\Scripts\\Online\\Unity\\PlayerUI\\PlayerUIFactory.cs(38,18): error CS1501: No overload for method 'SetPanelReferences' takes 8 arguments [C:\\Users\\KHANH SAMA\\AppData\\Local\\Temp\\ngumach-factory-binding-v1m345og\\Binding.csproj]"
+  ],
+  "status": "FAIL_BINDING"
+}
