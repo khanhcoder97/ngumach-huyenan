@@ -115,7 +115,7 @@ namespace NguMach.Client.Presentation
                         desc = $"Thu thập gói hàng Bến Mưa ({count}/3).";
                         break;
                     case "READY_TO_TURN_IN":
-                        desc = "Đã thu thập đủ 3 gói hàng. Hãy nộp nhiệm vụ cho Tạ Văn Khanh.";
+                        desc = "Đã thu thập đủ 3 gói hàng. Hãy nộp nhiệm vụ cho Tạ Vân Khanh.";
                         break;
                     case "COMPLETED":
                         desc = "Đã hoàn thành nhiệm vụ.";
