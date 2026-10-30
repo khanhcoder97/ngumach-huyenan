@@ -702,17 +702,22 @@ def mob_combat_profile():
         _, _, entities, _ = v2_snapshot(session)
         return entities.get(entity_id)
 
-    if counter.get("type") == "IMPACT":
-        hp_damage = (counter.get("result") or {}).get("hpDamage", 0)
-        mob = wait_for(3, lambda: mob_in_snapshot(counter_source))
-        smoke_p1.check(hp_damage > 0 and mob is not None and
-                       mob.get("maxHp") == CARPLING_MAX_HP and
-                       mob.get("hp") == CARPLING_MAX_HP - hp_damage,
-                       f"counter damage {hp_damage} does not match the snapshot hp "
-                       f"{None if mob is None else mob.get('hp')}")
-        print(f"profile=mob-combat counter_hit={hp_damage} on {counter_source}")
-    else:
-        print(f"profile=mob-combat counter_missed_on={counter_source}")
+    counter_impact = counter.get("type") == "IMPACT"
+    counter_damage = (counter.get("result") or {}).get("hpDamage", 0) if counter_impact else 0
+    # One claim whichever way the roll fell, so the profile's total cannot move
+    # with it (a counter misses legitimately — it shares the DEC-022 hit channel
+    # the self-check pins). A hit must match the mob's snapshot HP; a miss must
+    # leave it untouched.
+    mob = (wait_for(3, lambda: mob_in_snapshot(counter_source)) if counter_impact
+           else mob_in_snapshot(counter_source))
+    smoke_p1.check(
+        mob is not None and mob.get("maxHp") == CARPLING_MAX_HP and
+        (mob.get("hp") == CARPLING_MAX_HP - counter_damage if counter_impact
+         else mob.get("hp") == CARPLING_MAX_HP),
+        f"counter {counter.get('type')} damage {counter_damage} vs snapshot hp "
+        f"{None if mob is None else mob.get('hp')}")
+    print(f"profile=mob-combat counter={counter.get('type')} "
+          f"counter_damage={counter_damage} on {counter_source}")
 
     # Death: standing next to the group must finish the actor, and the server
     # must not paper over it — no auto-heal, no new casts, aggro drops.
