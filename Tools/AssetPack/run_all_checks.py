@@ -208,6 +208,10 @@ def main(argv=None) -> int:
         default=None,
         help="directory for reports/bundles (default: fresh temporary directory)",
     )
+    parser.add_argument("--include-candidates", action="store_true",
+                        help="also run OPC-11/12 tests and verify committed content/map candidates")
+    parser.add_argument("--include-browser", action="store_true",
+                        help="require real Chrome/Edge playback for the fixture and delivered Muse actor")
     args = parser.parse_args(argv)
 
     if args.evidence_dir:
@@ -463,6 +467,33 @@ def main(argv=None) -> int:
 
     # 9: preview server smoke, in-process and on an ephemeral port.
     test_preview_server(runner)
+
+    if args.include_candidates:
+        for directory, label in [
+            ("Implementation/Tools/ContentPipeline/tests", "Candidate compiler tests"),
+            ("Implementation/Tools/MuseMapAdapter/tests", "Muse map adapter tests"),
+        ]:
+            runner.run([sys.executable, "-m", "unittest", "discover", "-s", directory, "-v"], label)
+        runner.run([sys.executable, "Implementation/Tools/ContentPipeline/cli.py", "check"],
+                   "Committed content candidates match reviewed sources and compiler")
+        runner.run([sys.executable, "Implementation/Tools/MuseMapAdapter/cli.py", "check", "--layout",
+                    "Implementation/Tools/MuseMapAdapter/fixtures/synthetic_layout.json"],
+                   "Committed synthetic map sidecar matches the adapter")
+        runner.run([sys.executable, "Implementation/Asset_Handoff/coverage_audit.py", "--check"],
+                   "Coverage report remains reproducible")
+    else:
+        print("OPC-11/12: NOT REQUESTED (use --include-candidates)")
+
+    if args.include_browser:
+        runner.run([sys.executable, "Tools/AssetPreview/browser_smoke.py", "--screenshot",
+                    str(evidence_dir / "fixture-browser.png")], "Real browser synthetic animation playback")
+        runner.run([sys.executable, "Tools/AssetPreview/browser_smoke.py", "--manifest", DELIVERED_MANIFEST,
+                    "--asset-id", EXPECTED_ASSET_ID, "--path",
+                    "Client/Assets/Art/Characters/MinhKiem/minh_kiem_walk.png", "--screenshot",
+                    str(evidence_dir / "muse-browser.png")], "Real browser delivered Muse animation playback")
+    else:
+        print("BROWSER: UNVERIFIED IN THIS RUN (use --include-browser)")
+    print("UNITY/NATIVE/DEVICE: UNVERIFIED; candidate runtime activation remains OFF")
 
     print("\n" + "=" * 70)
     if runner.failures:
