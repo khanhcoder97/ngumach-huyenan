@@ -816,11 +816,11 @@
       "choices": [
         {
           "choiceId": "PUBLISH",
-          "setFlag": "C3_05_PUBLISHED"
+          "flag": "C3_05_PUBLISHED"
         },
         {
           "choiceId": "COUNCIL",
-          "setFlag": "C3_05_COUNCIL_ONLY"
+          "flag": "C3_05_COUNCIL_ONLY"
         }
       ]
     },

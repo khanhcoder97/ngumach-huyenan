@@ -72,7 +72,7 @@ def build(rows):
             # flag its pick sets; the node itself must not also carry one.
             "setFlag": None if choice_id else row_flag,
             "choiceGroupId": (row.get("choice_group_id") or "").strip() or None,
-            "choices": [{"choiceId": choice_id, "setFlag": row_flag}] if choice_id else [],
+            "choices": [{"choiceId": choice_id, "flag": row_flag}] if choice_id else [],
         }
 
         if node_id not in nodes:
@@ -90,7 +90,7 @@ def build(rows):
             fail(f"{node_id}: duplicate row without a choice_id")
         if any(choice["choiceId"] == choice_id for choice in existing["choices"]):
             fail(f"{node_id}: duplicate choice_id {choice_id}")
-        existing["choices"].append({"choiceId": choice_id, "setFlag": row_flag})
+        existing["choices"].append({"choiceId": choice_id, "flag": row_flag})
 
     catalog = [nodes[node_id] for node_id in order]
     catalog.sort(key=lambda node: (node["questId"], node["order"], node["nodeId"]))
@@ -107,9 +107,9 @@ def build(rows):
         if node["setFlag"]:
             flags.add(node["setFlag"])
         for choice in node["choices"]:
-            if not choice["setFlag"]:
+            if not choice["flag"]:
                 fail(f"{node['nodeId']}: choice {choice['choiceId']} sets no flag")
-            flags.add(choice["setFlag"])
+            flags.add(choice["flag"])
 
     return {
         "schemaVersion": 1,
