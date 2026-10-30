@@ -15,6 +15,7 @@ public sealed class TitleBootstrap : MonoBehaviour
     private int healthPollIntervalSeconds = 10;
     private string apiBaseUrl = "http://127.0.0.1:5000";
     private int apiTimeoutSeconds = 5;
+    private bool onlineV2Enabled;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void CreateTitle()
@@ -76,6 +77,7 @@ public sealed class TitleBootstrap : MonoBehaviour
                 healthPollIntervalSeconds = config.healthPollIntervalSeconds;
             if (!string.IsNullOrWhiteSpace(config.apiBaseUrl)) apiBaseUrl = config.apiBaseUrl;
             else apiBaseUrl = new Uri(healthUrl).GetLeftPart(UriPartial.Authority);
+            onlineV2Enabled = config.onlineV2Enabled;
             if (config.apiTimeoutSeconds is >= 1 and <= 30) apiTimeoutSeconds = config.apiTimeoutSeconds;
         }
         catch (ArgumentException)
@@ -92,6 +94,7 @@ public sealed class TitleBootstrap : MonoBehaviour
         public int healthPollIntervalSeconds;
         public string apiBaseUrl;
         public int apiTimeoutSeconds;
+        public bool onlineV2Enabled;
     }
 
     private void BuildTitle()
@@ -130,7 +133,7 @@ public sealed class TitleBootstrap : MonoBehaviour
         {
             BuildTitle();
             StartCoroutine(PollHealth());
-        });
+        }, onlineV2Enabled);
     }
 
     private IEnumerator PollHealth()

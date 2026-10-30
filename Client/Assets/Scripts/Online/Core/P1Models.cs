@@ -45,6 +45,9 @@ namespace NguMach.Client.P1
         public string entityId, kind, state, telegraphId;
         public double x, y;
         public int hp, maxHp;
+        // Presentation projection from a validated v2 snapshot; null for v1.
+        public bool? targetable;
+        public string healthState, availability;
     }
     [Serializable] public sealed class P1Quest
     {

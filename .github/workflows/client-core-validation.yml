@@ -1,7 +1,7 @@
 name: client-core-validation
 on:
   pull_request:
-    paths: ['Client/Assets/Scripts/Online/**', 'Client/Tests/P1CoreChecks/**', 'Server/**', 'Implementation/Contracts/**', '.github/workflows/client-core-validation.yml']
+    paths: ['Client/Assets/Scripts/Online/**', 'Client/Tests/P1CoreChecks/**', 'Client/Tests/UnitySyntaxCheck/**', 'Client/Assets/Scripts/Bootstrap/**', 'Client/Assets/Resources/**', 'Server/**', 'Implementation/Contracts/**', '.github/workflows/client-core-validation.yml']
   push:
     branches: [main]
 permissions:
@@ -17,6 +17,8 @@ jobs:
           dotnet-version: '10.0.x'
       - name: Compile the exact engine-independent client sources and run fault scenarios
         run: dotnet run --project Client/Tests/P1CoreChecks/P1CoreChecks.csproj --configuration Release
+      - name: Parse Unity sources as CSharp9 (syntax only, not Editor compilation)
+        run: dotnet run --project Client/Tests/UnitySyntaxCheck/UnitySyntaxCheck.csproj --configuration Release
       - name: Build server
         run: dotnet build Server/Health/Health.csproj --configuration Release
       - name: Start default server with quest feature OFF
@@ -61,3 +63,69 @@ jobs:
           path: |
             client-server.log
             client-dev-server.log
+  client-v2-http:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      # Explicit, immutable integration dependency. This is not evidence that
+      # Qoder's unmerged stack or the full online slice is production-ready.
+      - uses: actions/checkout@v4
+        with:
+          repository: khanhcoder97/ngumach-huyenan
+          ref: 514c3f20c077175c7752706d845d11d78d464eda
+          path: .server-v2-review
+          sparse-checkout: |
+            Server
+            Implementation
+            docs/production
+      - name: Build exact client sources and pinned v2 server
+        run: |
+          dotnet build Client/Tests/P1CoreChecks/P1CoreChecks.csproj --configuration Release
+          dotnet build .server-v2-review/Server/Health/Health.csproj --configuration Release
+      - name: Default flags reject unsupported features without grants
+        working-directory: .server-v2-review/Server/Health
+        run: |
+          dotnet bin/Release/net10.0/Health.dll --urls http://127.0.0.1:15084 > "$GITHUB_WORKSPACE/client-v2-default.log" 2>&1 &
+          echo $! > "$GITHUB_WORKSPACE/client-v2-default.pid"
+          for attempt in $(seq 1 40); do
+            if curl --silent --fail http://127.0.0.1:15084/health > /dev/null; then break; fi
+            sleep 1
+          done
+          cd "$GITHUB_WORKSPACE"
+          dotnet run --no-build --project Client/Tests/P1CoreChecks/P1CoreChecks.csproj --configuration Release -- --http-v2-default http://127.0.0.1:15084
+          kill "$(cat client-v2-default.pid)"
+          rm -f client-v2-default.pid
+      - name: Two real HTTP clients collect independently and recover a lost reward response
+        working-directory: .server-v2-review/Server/Health
+        env:
+          P1__QuestAccept__Enabled: 'true'
+          P1__Interact__Enabled: 'true'
+          P1__QuestTurnIn__Enabled: 'true'
+          P1__CombatV2__Enabled: 'true'
+          P1__CombatDamage__Enabled: 'true'
+        run: |
+          dotnet bin/Release/net10.0/Health.dll --urls http://127.0.0.1:15085 > "$GITHUB_WORKSPACE/client-v2-dev.log" 2>&1 &
+          echo $! > "$GITHUB_WORKSPACE/client-v2-dev.pid"
+          for attempt in $(seq 1 40); do
+            if curl --silent --fail http://127.0.0.1:15085/health > /dev/null; then break; fi
+            sleep 1
+          done
+          cd "$GITHUB_WORKSPACE"
+          dotnet run --no-build --project Client/Tests/P1CoreChecks/P1CoreChecks.csproj --configuration Release -- --http-v2-tick http://127.0.0.1:15085
+      - name: Stop only this job's test servers
+        if: always()
+        run: |
+          for name in client-v2-default client-v2-dev; do
+            if [ -f "$name.pid" ]; then kill "$(cat "$name.pid")" 2>/dev/null || true; fi
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: client-v2-pinned-server-logs
+          path: |
+            client-v2-default.log
+            client-v2-dev.log

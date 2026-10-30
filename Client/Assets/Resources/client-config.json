@@ -3,5 +3,6 @@
   "healthTimeoutSeconds": 3,
   "healthPollIntervalSeconds": 10,
   "apiBaseUrl": "http://127.0.0.1:5000",
-  "apiTimeoutSeconds": 5
+  "apiTimeoutSeconds": 5,
+  "onlineV2Enabled": false
 }

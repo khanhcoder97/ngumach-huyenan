@@ -1,5 +1,7 @@
 # Client online P1 — đợt triển khai đầu của Codex
 
+> Cập nhật 30/10: [Client_V2_Quest_Combat_Integration_20261030_vi.md](Client_V2_Quest_Combat_Integration_20261030_vi.md) ghi phần v2/interact/turn-in/tick integration mới. Các giới hạn world rỗng và thiếu interact/turn-in bên dưới mô tả đợt v1 trước; Unity/device và P1 full-loop vẫn chưa được nghiệm thu.
+
 ## Cập nhật input 2026-10-30
 
 Client dùng chung `P1GameplayInputGate` để chặn movement và cast hotkey/click khi journal/bag/audio mở, khi slider/text đang nhập, hoặc app mất focus/pause. Khi đóng/trở lại phải có frame thả toàn bộ movement/1–3/F/touch/mouse trước khi điều khiển lại; một phím giữ xuyên modal không tự chạy nhân vật. Esc chỉ đóng panel đang mở, trả focus về nút đã mở; không tạo session mới, cancel pending command hoặc coi game server đã pause. Pending/retry lane và server authority giữ nguyên. Pointer input được kiểm lại tại callback, không chỉ đặt nút disabled trên một frame cũ.

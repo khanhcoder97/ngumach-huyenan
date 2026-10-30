@@ -40,3 +40,7 @@ Client/Assets/Resources/P1Audio.meta
 # Keep the server project file; Unity-generated client projects stay ignored
 !Server/Health/Health.csproj
 !Client/Tests/P1CoreChecks/P1CoreChecks.csproj
+
+# Outputs of the Codex-owned standalone client verification projects.
+Client/Tests/**/bin/
+!Client/Tests/UnitySyntaxCheck/UnitySyntaxCheck.csproj
