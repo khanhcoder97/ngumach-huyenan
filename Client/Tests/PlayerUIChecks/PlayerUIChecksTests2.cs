@@ -269,8 +269,8 @@ namespace PlayerUIChecks
     {
         private sealed class DummyTransport : IP1Transport
         {
-            public Task<P1Response> SendAsync(P1Request request, CancellationToken ct)
-                => Task.FromResult(new P1Response { StatusCode = 200, Body = "{}" });
+            public Task<P1HttpReply> SendAsync(P1Request request, CancellationToken cancellation)
+                => Task.FromResult(new P1HttpReply { StatusCode = 200, Body = "{}" });
         }
 
         [Fact]

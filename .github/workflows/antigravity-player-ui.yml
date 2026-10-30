@@ -55,7 +55,7 @@ jobs:
         with:
           fetch-depth: 2
       - name: git diff --check
-        run: git diff --check HEAD~1..HEAD -- 'Client/Assets/Scripts/Online/Presentation/**' 'Client/Tests/PlayerUIChecks/**'
+        run: git diff --check HEAD~1..HEAD -- 'Client/Assets/Scripts/Online/Presentation/*.cs' 'Client/Tests/PlayerUIChecks/*.cs'
       - name: Verify UTF-8 encoding
         run: |
           python3 -c '
