@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
 using Server.Health.Endpoints;
 using Server.Health.Gameplay.Combat;
+using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
 using Server.Health.Gameplay.Quests;
 using Server.Health.Gameplay.Teleport;
@@ -20,6 +21,8 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 });
 builder.Services.Configure<P1WorldOptions>(
     builder.Configuration.GetSection(P1WorldOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<P1WorldOptions>>().Value);
 builder.Services.AddSingleton<ServerClock>();
 builder.Services.AddSingleton<IServerClock>(
     serviceProvider => serviceProvider.GetRequiredService<ServerClock>());
@@ -51,6 +54,7 @@ builder.Services.Configure<MobBehaviorOptions>(
 builder.Services.AddSingleton(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<MobBehaviorOptions>>().Value);
 builder.Services.AddSingleton<MobLifecycleService>();
+builder.Services.AddSingleton<MobAttackService>();
 builder.Services.AddSingleton<IQuestCatalog>(serviceProvider =>
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
@@ -60,6 +64,23 @@ builder.Services.AddSingleton<IQuestCatalog>(serviceProvider =>
     return QuestCatalogLoader.Load(directory);
 });
 builder.Services.AddSingleton<IQuestStateStore, InMemoryQuestStateStore>();
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    var path = NarrativeNodeCatalog.Discover(configuration, environment.ContentRootPath);
+    return NarrativeNodeCatalog.Load(path);
+});
+builder.Services.AddSingleton<NarrativeFlagStore>();
+builder.Services.AddSingleton<NarrativeService>();
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    var path = WorldRecordLoader.DiscoverPath(configuration, environment.ContentRootPath);
+    return WorldRecordLoader.Load(
+        path, serviceProvider.GetRequiredService<MapBoundsCatalog>());
+});
 builder.Services.AddSingleton<IQuestService, InMemoryQuestService>();
 builder.Services.Configure<QuestAcceptOptions>(
     builder.Configuration.GetSection(QuestAcceptOptions.SectionName));
@@ -73,6 +94,12 @@ builder.Services.AddSingleton(serviceProvider =>
     return NpcAnchorLoader.Load(path);
 });
 builder.Services.AddSingleton<IQuestAcceptService, InMemoryQuestAcceptService>();
+builder.Services.Configure<QuestTurnInOptions>(
+    builder.Configuration.GetSection(QuestTurnInOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
+builder.Services.AddSingleton<RewardLedgerStore>();
+builder.Services.AddSingleton<IQuestTurnInService, InMemoryQuestTurnInService>();
 builder.Services.AddSingleton(serviceProvider =>
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
@@ -97,6 +124,46 @@ builder.Services.AddSingleton(serviceProvider => new WorldEntityRegistry(
 builder.Services.AddSingleton<IInventoryStateStore, InMemoryInventoryStateStore>();
 builder.Services.AddSingleton<IInventoryService, InMemoryInventoryService>();
 builder.Services.AddSingleton<ITeleportService, InMemoryTeleportService>();
+builder.Services.Configure<InteractionOptions>(
+    builder.Configuration.GetSection(InteractionOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<InteractionOptions>>().Value);
+builder.Services.AddSingleton<IYieldRoller, SystemYieldRoller>();
+builder.Services.AddSingleton<GatherClaimStore>();
+builder.Services.AddSingleton<IInteractionService, InMemoryInteractionService>();
+builder.Services.Configure<P1CombatDamageOptions>(
+    builder.Configuration.GetSection(P1CombatDamageOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<P1CombatDamageOptions>>().Value);
+builder.Services.AddSingleton<CombatDamageFeature>();
+builder.Services.Configure<CombatEventStreamOptions>(
+    builder.Configuration.GetSection(CombatEventStreamOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<CombatEventStreamOptions>>().Value);
+builder.Services.AddSingleton<CombatEventStore>();
+builder.Services.Configure<P1CombatV2Options>(
+    builder.Configuration.GetSection(P1CombatV2Options.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<P1CombatV2Options>>().Value);
+builder.Services.AddSingleton<InMemoryCombatV2Service>();
+builder.Services.AddSingleton<MobCombatStateStore>();
+builder.Services.AddSingleton<ICombatRollSource, CombatRngRollSource>();
+builder.Services.AddSingleton<GuardWindowStore>();
+builder.Services.AddSingleton<GuardDefenseService>();
+builder.Services.AddSingleton<DashMovementService>();
+builder.Services.AddSingleton<CombatStatusProjection>();
+builder.Services.AddSingleton<MobTelegraphProjection>();
+builder.Services.Configure<DeathReturnOptions>(
+    builder.Configuration.GetSection(DeathReturnOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<DeathReturnOptions>>().Value);
+builder.Services.AddSingleton<DeathReturnService>();
+builder.Services.AddSingleton<CombatTickEngine>();
+builder.Services.AddSingleton<LootReceiptLedger>();
+builder.Services.AddSingleton<MobSpawnGroupService>();
+builder.Services.AddSingleton<WorldEntityProjectionService>();
+builder.Services.AddSingleton<WorldAoiProjectionService>();
+builder.Services.AddHostedService<WorldTickBackgroundService>();
 
 var app = builder.Build();
 
@@ -110,6 +177,12 @@ app.Logger.LogInformation("Loaded {SkillCount} combat skills.", combatSkills.Cou
 
 var quests = app.Services.GetRequiredService<IQuestCatalog>();
 app.Logger.LogInformation("Loaded quest definitions: {QuestCount}.", quests.Count);
+
+var narrativeNodes = app.Services.GetRequiredService<NarrativeNodeCatalog>();
+app.Logger.LogInformation(
+    "Loaded narrative nodes: {NodeCount} (flags {FlagCount}).",
+    narrativeNodes.Count,
+    narrativeNodes.Flags.Count);
 
 var npcAnchors = app.Services.GetRequiredService<NpcAnchorCatalog>();
 NpcAnchorValidator.Validate(npcAnchors, mapBounds);
@@ -126,9 +199,48 @@ MobBehaviorOptionsValidator.Validate(mobBehavior);
 if (mobBehavior.Enabled)
 {
     app.Logger.LogWarning(
-        "DEV FIXTURE: P1:MobBehavior is enabled with labelled fixture radii; " +
-        "no damage or canonical mob stats are applied.");
+        "DEV FIXTURE: P1:MobBehavior is enabled with labelled fixture radii, " +
+        "telegraph and recovery durations; mob damage still requires " +
+        "P1:CombatDamage and uses REFERENCE_L5 stats, not balance.");
 }
+
+var combatDamage = app.Services.GetRequiredService<CombatDamageFeature>();
+if (combatDamage.Enabled)
+{
+    app.Logger.LogWarning(
+        "DEV STUB: P1:CombatDamage is enabled with the REFERENCE_L5 mob stat " +
+        "bundle (DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION); the QOD-16 proposal " +
+        "is not approved yet, so every damage number in flight is a DEV fixture, " +
+        "not reviewed production balance.");
+}
+
+var combatV2 = app.Services.GetRequiredService<P1CombatV2Options>();
+if (combatV2.Enabled)
+{
+    app.Logger.LogWarning(
+        "DEV STUB: P1:CombatV2 is enabled — /p1/v2/world, /p1/v2/combat and " +
+        "/p1/v2/events use the QOD-17 tick engine for the supported DEV subset.");
+}
+
+var deathReturn = app.Services.GetRequiredService<DeathReturnOptions>();
+DeathReturnOptionsValidator.Validate(deathReturn, worldOptions);
+if (deathReturn.Enabled)
+{
+    app.Logger.LogWarning(
+        "DEV FIXTURE: P1:DeathReturn is enabled. The anchor is P1World SpawnX/SpawnY " +
+        "clamped to the actor's map bounds, not a reviewed safe anchor, and " +
+        "RestoreHpFixture {RestoreHp} is a configured starting HP, not a produced " +
+        "restore rule; no penalty is applied because no source defines one. Nothing " +
+        "reaches it over HTTP until the QOD-18 DeathReturn contract is approved.",
+        deathReturn.RestoreHpFixture);
+}
+
+var combatEventStreamOptions = app.Services.GetRequiredService<CombatEventStreamOptions>();
+CombatEventStreamOptionsValidator.Validate(combatEventStreamOptions);
+app.Logger.LogInformation(
+    "Combat event stream: {Capacity} events per session, page {PageSize}.",
+    combatEventStreamOptions.CapacityPerSession,
+    combatEventStreamOptions.MaxPageSize);
 
 var worldEntities = app.Services.GetRequiredService<WorldEntityRegistry>();
 app.Logger.LogInformation(
@@ -153,6 +265,31 @@ foreach (var questId in quests.QuestIds)
         throw new InvalidOperationException(
             $"Quest '{questId}' start NPC '{questDefinition.StartNpcId}' has no anchor.");
     }
+
+    // A blocked quest may not know its turn-in NPC yet; the blocked step names
+    // that gap, so only a known NPC anchor is checked here.
+    if (questDefinition.TurnInNpcId is { } turnInNpcId &&
+        !npcAnchors.HasAnchorFor(turnInNpcId))
+    {
+        throw new InvalidOperationException(
+            $"Quest '{questId}' turn-in NPC '{turnInNpcId}' has no anchor.");
+    }
+}
+
+var worldRecords = app.Services.GetRequiredService<WorldRecordCatalog>();
+app.Logger.LogInformation(
+    "Loaded world records: {RecordCount}.", worldRecords.Count);
+QuestCatalogValidator.Validate(quests, worldRecords, npcAnchors);
+InteractionContentValidator.Validate(worldEntities, worldRecords);
+
+var interactionOptions = app.Services.GetRequiredService<InteractionOptions>();
+InteractionOptionsValidator.Validate(interactionOptions);
+if (interactionOptions.Enabled)
+{
+    app.Logger.LogWarning(
+        "DEV FIXTURE: P1:Interact is enabled with AssumedProfessionLevel={Level} " +
+        "and respawn fixtures; no reviewed gathering topology bundle exists.",
+        interactionOptions.AssumedProfessionLevel);
 }
 
 var questAcceptOptions = app.Services.GetRequiredService<QuestAcceptOptions>();
@@ -162,6 +299,15 @@ if (questAcceptOptions.Enabled)
     app.Logger.LogWarning(
         "DEV STUB: P1:QuestAccept is enabled. Interaction line-of-sight is not " +
         "enforced because no walkability bundle exists.");
+}
+
+var questTurnInOptions = app.Services.GetRequiredService<QuestTurnInOptions>();
+QuestTurnInOptionsValidator.Validate(questTurnInOptions);
+if (questTurnInOptions.Enabled)
+{
+    app.Logger.LogWarning(
+        "DEV STUB: P1:QuestTurnIn is enabled. Reward ledger is in-memory " +
+        "and XP applied=false; no reviewed walkability bundle exists.");
 }
 
 if (selfCheck)

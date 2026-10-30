@@ -7,6 +7,8 @@ public interface ISessionStore
     PlayerSession? Find(string sessionId);
 
     PlayerSession Add(PlayerSession session);
+
+    IReadOnlyList<PlayerSession> All();
 }
 
 public sealed class InMemorySessionStore : ISessionStore
@@ -27,4 +29,6 @@ public sealed class InMemorySessionStore : ISessionStore
 
         return session;
     }
+
+    public IReadOnlyList<PlayerSession> All() => _sessions.Values.ToArray();
 }

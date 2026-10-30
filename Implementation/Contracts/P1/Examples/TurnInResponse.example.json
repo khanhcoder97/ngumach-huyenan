@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "requestId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "sessionId": "0123456789abcdef0123456789abcdef",
+  "serverTimeUtc": "2026-10-29T00:05:00Z",
+  "result": {
+    "questState": {
+      "questId": "P00-01",
+      "state": "COMPLETED",
+      "stepId": "STEP_P00_01_PACKAGES",
+      "objectiveCounters": {
+        "OBJ_P00_01_PACKAGES": 3
+      },
+      "revision": 6
+    },
+    "rewards": {
+      "currency": [
+        {
+          "currencyId": "COIN",
+          "amount": 20
+        }
+      ],
+      "items": [
+        {
+          "templateId": "EQ-MK-CHEST-T1-R-COMMON",
+          "stack": 1,
+          "location": "BAG"
+        }
+      ],
+      "xp": {
+        "xpRule": "LEVEL_BAND_BASE",
+        "applied": false
+      }
+    },
+    "unlocks": [
+      "P00-02"
+    ]
+  }
+}

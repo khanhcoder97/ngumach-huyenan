@@ -79,6 +79,18 @@
     {
       "templateId": "NPC_TA_VAN_KHANH",
       "kind": "NPC"
+    },
+    {
+      "templateId": "OBJ_BM_PACKAGE_01",
+      "kind": "INTERACTABLE"
+    },
+    {
+      "templateId": "OBJ_BM_PACKAGE_02",
+      "kind": "INTERACTABLE"
+    },
+    {
+      "templateId": "OBJ_BM_PACKAGE_03",
+      "kind": "INTERACTABLE"
     }
   ],
   "entities": [
@@ -110,7 +122,8 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 30,
-      "condition": "Level 1+; rainy; safe-zone access; no combat"
+      "condition": "Level 1+; rainy; safe-zone access; no combat",
+      "claimPolicy": "SHARED"
     },
     {
       "entityId": "ENT_MAN_BM_NODE_BM_HERB_01",
@@ -125,7 +138,8 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 60,
-      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề",
+      "claimPolicy": "PER_CHARACTER"
     },
     {
       "entityId": "ENT_MAN_BM_NODE_BM_HERB_02",
@@ -140,7 +154,8 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 120,
-      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề",
+      "claimPolicy": "PER_CHARACTER"
     },
     {
       "entityId": "ENT_MAN_BM_NODE_BM_ORE_01",
@@ -155,7 +170,8 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 60,
-      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề",
+      "claimPolicy": "PER_CHARACTER"
     },
     {
       "entityId": "ENT_MAN_BM_NODE_BM_ORE_02",
@@ -170,7 +186,8 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 120,
-      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề",
+      "claimPolicy": "PER_CHARACTER"
     },
     {
       "entityId": "ENT_MAN_BM_NODE_BM_WOOD_01",
@@ -185,7 +202,8 @@
       "yWu": 0.0,
       "quantity": 1,
       "respawnSeconds": 60,
-      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề"
+      "condition": "Node riêng theo shard; hiện khi nhân vật đứng trong map và đủ nghề",
+      "claimPolicy": "PER_CHARACTER"
     },
     {
       "entityId": "ENT_MAN_BM_NPC_BM_RESCUE_01",
@@ -318,8 +336,53 @@
       "floorId": "OVERWORLD",
       "xWu": 84.0,
       "yWu": 0.0,
-      "quantity": 3,
-      "respawnSeconds": 18,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_01",
+      "memberIndex": 1,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 18,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "Map mở; không đè quest escort"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_01_M2",
+      "recordId": "MAN-BM-SPAWN_BM_01",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_CARPLING"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 84.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_01",
+      "memberIndex": 2,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 18,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "Map mở; không đè quest escort"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_01_M3",
+      "recordId": "MAN-BM-SPAWN_BM_01",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_CARPLING"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 84.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_01",
+      "memberIndex": 3,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 18,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
       "condition": "Map mở; không đè quest escort"
     },
     {
@@ -333,8 +396,73 @@
       "floorId": "OVERWORLD",
       "xWu": 116.0,
       "yWu": 0.0,
-      "quantity": 4,
-      "respawnSeconds": 20,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_02",
+      "memberIndex": 1,
+      "groupQuantity": 4,
+      "groupRespawnSeconds": 20,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "Map mở; tắt khi escort đi qua"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_02_M2",
+      "recordId": "MAN-BM-SPAWN_BM_02",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_CARPLING"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 116.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_02",
+      "memberIndex": 2,
+      "groupQuantity": 4,
+      "groupRespawnSeconds": 20,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "Map mở; tắt khi escort đi qua"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_02_M3",
+      "recordId": "MAN-BM-SPAWN_BM_02",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_CARPLING"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 116.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_02",
+      "memberIndex": 3,
+      "groupQuantity": 4,
+      "groupRespawnSeconds": 20,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "Map mở; tắt khi escort đi qua"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_02_M4",
+      "recordId": "MAN-BM-SPAWN_BM_02",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_CARPLING"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 116.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_02",
+      "memberIndex": 4,
+      "groupQuantity": 4,
+      "groupRespawnSeconds": 20,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
       "condition": "Map mở; tắt khi escort đi qua"
     },
     {
@@ -348,8 +476,53 @@
       "floorId": "OVERWORLD",
       "xWu": 143.0,
       "yWu": 0.0,
-      "quantity": 3,
-      "respawnSeconds": 24,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_03",
+      "memberIndex": 1,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 24,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "Map mở; rễ tương tác xen kẽ"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_03_M2",
+      "recordId": "MAN-BM-SPAWN_BM_03",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_WATERROOT"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 143.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_03",
+      "memberIndex": 2,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 24,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "Map mở; rễ tương tác xen kẽ"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_03_M3",
+      "recordId": "MAN-BM-SPAWN_BM_03",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_WATERROOT"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 143.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_03",
+      "memberIndex": 3,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 24,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
       "condition": "Map mở; rễ tương tác xen kẽ"
     },
     {
@@ -357,15 +530,59 @@
       "recordId": "MAN-BM-SPAWN_BM_04",
       "kind": "MOB",
       "templateIds": [
-        "MOB_CARPLING",
+        "MOB_CARPLING"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 160.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_04",
+      "memberIndex": 1,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 24,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "Tắt khi P00-05 boss trigger"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_04_M2",
+      "recordId": "MAN-BM-SPAWN_BM_04",
+      "kind": "MOB",
+      "templateIds": [
         "MOB_WATERROOT"
       ],
       "mapId": "MAP_BEN_MUA",
       "floorId": "OVERWORLD",
       "xWu": 160.0,
       "yWu": 0.0,
-      "quantity": 3,
-      "respawnSeconds": 24,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_04",
+      "memberIndex": 2,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 24,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "Tắt khi P00-05 boss trigger"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_04_M3",
+      "recordId": "MAN-BM-SPAWN_BM_04",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_CARPLING"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 160.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_04",
+      "memberIndex": 3,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 24,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
       "condition": "Tắt khi P00-05 boss trigger"
     },
     {
@@ -394,8 +611,53 @@
       "floorId": "OVERWORLD",
       "xWu": 270.0,
       "yWu": 0.0,
-      "quantity": 3,
-      "respawnSeconds": 24,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_06",
+      "memberIndex": 1,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 24,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "Mở sau P00-05"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_06_M2",
+      "recordId": "MAN-BM-SPAWN_BM_06",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_SHORE_STALKER"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 270.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_06",
+      "memberIndex": 2,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 24,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "Mở sau P00-05"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_06_M3",
+      "recordId": "MAN-BM-SPAWN_BM_06",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_SHORE_STALKER"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 270.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_06",
+      "memberIndex": 3,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 24,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
       "condition": "Mở sau P00-05"
     },
     {
@@ -403,15 +665,59 @@
       "recordId": "MAN-BM-SPAWN_BM_07",
       "kind": "MOB",
       "templateIds": [
-        "MOB_SHORE_STALKER_ELITE",
+        "MOB_SHORE_STALKER_ELITE"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 303.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_07",
+      "memberIndex": 1,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 90,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "Nhánh phụ; elite variant"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_07_M2",
+      "recordId": "MAN-BM-SPAWN_BM_07",
+      "kind": "MOB",
+      "templateIds": [
         "MOB_SHORE_STALKER"
       ],
       "mapId": "MAP_BEN_MUA",
       "floorId": "OVERWORLD",
       "xWu": 303.0,
       "yWu": 0.0,
-      "quantity": 3,
-      "respawnSeconds": 90,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_07",
+      "memberIndex": 2,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 90,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "Nhánh phụ; elite variant"
+    },
+    {
+      "entityId": "ENT_MAN_BM_SPAWN_BM_07_M3",
+      "recordId": "MAN-BM-SPAWN_BM_07",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_SHORE_STALKER_ELITE"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 303.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-SPAWN_BM_07",
+      "memberIndex": 3,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 90,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
       "condition": "Nhánh phụ; elite variant"
     },
     {
@@ -425,8 +731,53 @@
       "floorId": "OVERWORLD",
       "xWu": 80.0,
       "yWu": 0.0,
-      "quantity": 3,
-      "respawnSeconds": 30,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-WAVE_BM_ESCORT_A",
+      "memberIndex": 1,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 30,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "P00-04; khi Ly An qua x=80"
+    },
+    {
+      "entityId": "ENT_MAN_BM_WAVE_BM_ESCORT_A_M2",
+      "recordId": "MAN-BM-WAVE_BM_ESCORT_A",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_CARPLING"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 80.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-WAVE_BM_ESCORT_A",
+      "memberIndex": 2,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 30,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "P00-04; khi Ly An qua x=80"
+    },
+    {
+      "entityId": "ENT_MAN_BM_WAVE_BM_ESCORT_A_M3",
+      "recordId": "MAN-BM-WAVE_BM_ESCORT_A",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_CARPLING"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 80.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-WAVE_BM_ESCORT_A",
+      "memberIndex": 3,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 30,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
       "condition": "P00-04; khi Ly An qua x=80"
     },
     {
@@ -440,9 +791,105 @@
       "floorId": "OVERWORLD",
       "xWu": 120.0,
       "yWu": 0.0,
-      "quantity": 3,
-      "respawnSeconds": 30,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-WAVE_BM_ESCORT_B",
+      "memberIndex": 1,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 30,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
       "condition": "P00-04; khi Ly An qua x=120"
+    },
+    {
+      "entityId": "ENT_MAN_BM_WAVE_BM_ESCORT_B_M2",
+      "recordId": "MAN-BM-WAVE_BM_ESCORT_B",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_WATERROOT"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 120.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-WAVE_BM_ESCORT_B",
+      "memberIndex": 2,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 30,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "P00-04; khi Ly An qua x=120"
+    },
+    {
+      "entityId": "ENT_MAN_BM_WAVE_BM_ESCORT_B_M3",
+      "recordId": "MAN-BM-WAVE_BM_ESCORT_B",
+      "kind": "MOB",
+      "templateIds": [
+        "MOB_WATERROOT"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 120.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 0,
+      "groupId": "MAN-BM-WAVE_BM_ESCORT_B",
+      "memberIndex": 3,
+      "groupQuantity": 3,
+      "groupRespawnSeconds": 30,
+      "composition": "ROUND_ROBIN_DEV_FIXTURE",
+      "condition": "P00-04; khi Ly An qua x=120"
+    },
+    {
+      "entityId": "ENT_MAN_BM_OBJ_BM_PACKAGE_01",
+      "recordId": "MAN-BM-OBJ_BM_PACKAGE_01",
+      "kind": "INTERACTABLE",
+      "templateIds": [
+        "OBJ_BM_PACKAGE_01"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 36.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 20,
+      "claimPolicy": "PER_CHARACTER",
+      "claimPolicySource": "Production_Rules_Complete_v1_vi.md §5: mỗi ID tính tối đa 1/character, không trừ item world cho người khác",
+      "condition": "P00-01; per-character claim (Production_Rules §5); DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
+    },
+    {
+      "entityId": "ENT_MAN_BM_OBJ_BM_PACKAGE_02",
+      "recordId": "MAN-BM-OBJ_BM_PACKAGE_02",
+      "kind": "INTERACTABLE",
+      "templateIds": [
+        "OBJ_BM_PACKAGE_02"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 44.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 20,
+      "claimPolicy": "PER_CHARACTER",
+      "claimPolicySource": "Production_Rules_Complete_v1_vi.md §5: mỗi ID tính tối đa 1/character, không trừ item world cho người khác",
+      "condition": "P00-01; per-character claim (Production_Rules §5); DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
+    },
+    {
+      "entityId": "ENT_MAN_BM_OBJ_BM_PACKAGE_03",
+      "recordId": "MAN-BM-OBJ_BM_PACKAGE_03",
+      "kind": "INTERACTABLE",
+      "templateIds": [
+        "OBJ_BM_PACKAGE_03"
+      ],
+      "mapId": "MAP_BEN_MUA",
+      "floorId": "OVERWORLD",
+      "xWu": 52.0,
+      "yWu": 0.0,
+      "quantity": 1,
+      "respawnSeconds": 20,
+      "claimPolicy": "PER_CHARACTER",
+      "claimPolicySource": "Production_Rules_Complete_v1_vi.md §5: mỗi ID tính tối đa 1/character, không trừ item world cho người khác",
+      "condition": "P00-01; per-character claim (Production_Rules §5); DEV FIXTURE respawn 20s (atlas: 'kiện respawn' without a number)"
     }
   ]
 }
