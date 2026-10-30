@@ -44,3 +44,5 @@ Client/Assets/Resources/P1Audio.meta
 # Outputs of the Codex-owned standalone client verification projects.
 Client/Tests/**/bin/
 !Client/Tests/UnitySyntaxCheck/UnitySyntaxCheck.csproj
+
+!Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj

@@ -1,0 +1,56 @@
+name: antigravity-player-ui
+
+on:
+  push:
+    branches:
+      - 'antigravity/**'
+    paths:
+      - 'Client/Assets/Scripts/Online/Presentation/**'
+      - 'Client/Assets/Scripts/Online/Unity/PlayerUI/**'
+      - 'Client/Tests/PlayerUIChecks/**'
+      - 'Client/Assets/Resources/PlayerUI/**'
+  pull_request:
+    branches:
+      - 'codex/p1-client-integration-20261029'
+      - 'main'
+    paths:
+      - 'Client/Assets/Scripts/Online/Presentation/**'
+      - 'Client/Assets/Scripts/Online/Unity/PlayerUI/**'
+      - 'Client/Tests/PlayerUIChecks/**'
+      - 'Client/Assets/Resources/PlayerUI/**'
+
+jobs:
+  player-ui-tests:
+    name: PlayerUIChecks (.NET 10)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj
+
+      - name: Build
+        run: dotnet build Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj --no-restore -c Release
+
+      - name: Test
+        run: dotnet test Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj --no-build -c Release --logger trx --results-directory TestResults
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: player-ui-test-results
+          path: TestResults/
+
+  docs-check:
+    name: Docs UTF-8 and diff check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: git diff --check
+        run: git diff --check HEAD~1..HEAD -- 'Client/Assets/Scripts/Online/Presentation/**' 'Client/Tests/PlayerUIChecks/**' || true

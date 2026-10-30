@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <!-- Reference only the pure C# presentation layer and P1 core (no Unity). -->
+  <ItemGroup>
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1Models.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1ModelsV2.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1Wire.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\P1UIState.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\IP1UIAdapter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\PanelRouter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\InventoryPresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\QuestJournalPresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\SettingsPresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\MapPresenter.cs" />
+  </ItemGroup>
+</Project>
