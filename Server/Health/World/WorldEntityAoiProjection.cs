@@ -58,6 +58,7 @@ public sealed class WorldAoiProjectionService
     private readonly MobLifecycleService _mobs;
     private readonly CombatDamageFeature _combat;
     private readonly GatherClaimStore _claims;
+    private readonly MobCombatStateStore _states;
     private readonly ConcurrentDictionary<string, SessionVisibility> _visibility =
         new(StringComparer.Ordinal);
 
@@ -65,12 +66,14 @@ public sealed class WorldAoiProjectionService
         WorldEntityRegistry entities,
         MobLifecycleService mobs,
         CombatDamageFeature combat,
-        GatherClaimStore claims)
+        GatherClaimStore claims,
+        MobCombatStateStore states)
     {
         _entities = entities;
         _mobs = mobs;
         _combat = combat;
         _claims = claims;
+        _states = states;
     }
 
     public int SessionCount => _visibility.Count;
@@ -146,7 +149,8 @@ public sealed class WorldAoiProjectionService
                        string.Equals(state, MobBehaviorStates.Dead, StringComparison.Ordinal);
             healthState = dead ? WorldHealthStates.Dead : WorldHealthStates.Alive;
             targetable = !dead;
-            hp = dead ? 0 : stats?.Hp ?? 0;
+            var lifeState = _states.TryGet(entity.EntityId, entity.LifeId);
+            hp = dead ? 0 : lifeState?.Hp ?? stats?.Hp ?? 0;
             maxHp = stats?.Hp ?? 0;
         }
         else if (isBoss)

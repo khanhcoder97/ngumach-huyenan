@@ -161,6 +161,13 @@ Theo Q6: snapshot v2 chỉ gửi entity sau filter audience; internal candidate 
 - **Events:** page `{nextCursor, resyncRequired, resyncReason?, events}` từ `CombatEventStore`; cursor lỗi → 400; cursor cũ/buffer overflow → resync không kèm event (client reconcile snapshot, silent).
 - **Bằng chứng:** self-check 10 test combat v2; smoke HTTP (server-smoke gate ON) kiểm world/AOI/NPC/mob hp192, basic accept + replay + conflict, skill MP38, cooldown/stale, events 1..2, cursor=1, resync `CURSOR_TOO_OLD`, cursor âm 400. Chưa có impact/damage/kill; không đổi v1.
 
-### 9.6 Triển khai tiếp
+### 9.6 Tick engine lõi (QOD-17)
+
+- Accepted cast → schedule trên 20 Hz (`WorldTickBackgroundService`), impact ở tick thật: basic windup 0.15s (tick+3), coefficient 1.0, range4/quạt90°/1 target; MK03 3 nhát tick+2/+5/+8, hệ số 0.45/0.55/0.90, cone4.4×100°, cap5; MK02 không damage; MK01 giữ guard window (counter runtime increment sau).
+- Damage: baseline completion_v1 nhãn DEV (attack20/armor10/acc0.0025/crit0.0525) + defense mob REFERENCE_L5 qua `DamageFormula`; oracle basic 19 (CARPLING), MK03 8/10/17; RNG có kênh `hit`/`crit` riêng để không dùng chung một uniform; replay schedule theo castId không resolve hai lần.
+- Mob HP theo `lifeId` (`MobCombatStateStore`); chết ×1/life, `DEATH` event, kill credit = nguồn HPDamage kết liễu (DEV policy) gửi KILL quest event keyed deathEventId; respawn bump lifeId + HP mới; impact recheck alive/target.
+- **Chưa làm (increment kế):** mob AI telegraph/attack/recovery damage, guard/whiff/counter DEC-022 runtime, spawn group expansion theo manifest (nhiều member/group ID/generation, clear-group respawn), loot/XP.
+
+### 9.7 Triển khai tiếp
 
 Event store (bounded buffer, cursor, resync) + AOI projection có hysteresis + endpoint v2 opt-in (`P1:CombatV2:Enabled` OFF mặc định; dev profile bật) + e2e dev mở rộng; sau đó QOD-17 tick combat (basic + MK03 damage, guard/counter state machine theo DEC-022, mob telegraph/death/respawn, kill credit theo entityLifeId/deathEventId).
