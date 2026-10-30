@@ -27,6 +27,7 @@ namespace NguMach.Client.P1
             var settings = rootObj.AddComponent<SettingsPanel>();
             var map = rootObj.AddComponent<MapPanel>();
             var bar = rootObj.AddComponent<PlayerUIButtonBar>();
+            var cinema = rootObj.AddComponent<CinemaOverlay>();
 
             // Store for settings
             if (host.GetComponent<PlayerPrefsSettingsStore>() == null)
@@ -34,7 +35,7 @@ namespace NguMach.Client.P1
                 host.AddComponent<PlayerPrefsSettingsStore>();
             }
 
-            root.SetPanelReferences(inv, character, quest, npc, settings, map, bar);
+            root.SetPanelReferences(inv, character, quest, npc, settings, map, bar, cinema);
             return root;
         }
     }

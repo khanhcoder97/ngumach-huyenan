@@ -21,6 +21,7 @@ namespace NguMach.Client.P1
         [SerializeField] private SettingsPanel settingsPanel;
         [SerializeField] private MapPanel mapPanel;
         [SerializeField] private PlayerUIButtonBar buttonBar;
+        [SerializeField] private CinemaOverlay cinemaOverlay;
 
         // ── Runtime state ────────────────────────────────────────────────────
         private IP1UIAdapter _adapter;
@@ -93,6 +94,7 @@ namespace NguMach.Client.P1
             if (settingsPanel != null) settingsPanel.Initialize(_adapter, _router, _life.Token);
             if (mapPanel != null) mapPanel.Initialize(_adapter, _router, _life.Token);
             if (buttonBar != null) buttonBar.Initialize(_adapter, this, _doc);
+            if (cinemaOverlay != null) cinemaOverlay.Initialize(_doc);
 
             // All panels start hidden.
             HideAllPanels();
@@ -118,6 +120,8 @@ namespace NguMach.Client.P1
                 _closing = false;
             }
         }
+
+        public void PlayCinema(string sceneId) => cinemaOverlay?.PlayScene(sceneId);
 
         public void OpenPanel(PlayerPanel panel)
         {

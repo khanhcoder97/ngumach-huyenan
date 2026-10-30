@@ -202,8 +202,13 @@ namespace NguMach.Client.P1
             if (s == null) return;
             // Apply volume via Unity AudioListener
             AudioListener.volume = s.MasterVolume;
-            // Apply UI scale to root transform
-            if (_root != null)
+            // Apply UI scale to root visual element (scales entire UI per WO-14)
+            var doc = FindFirstObjectByType<UIDocument>();
+            if (doc != null && doc.rootVisualElement != null)
+            {
+                doc.rootVisualElement.transform.scale = new Vector3(s.UiScale, s.UiScale, 1f);
+            }
+            else if (_root != null)
             {
                 _root.transform.scale = new Vector3(s.UiScale, s.UiScale, 1f);
             }
