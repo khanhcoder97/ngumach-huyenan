@@ -1704,6 +1704,11 @@ public static class ServiceSelfCheck
                         deadMob.Revision == 2;
         Check("world.despawn_mob", despawned);
 
+        var groupMembersCleared =
+            manualWorld.Despawn("ENT_MAN_BM_SPAWN_BM_01_M2") &&
+            manualWorld.Despawn("ENT_MAN_BM_SPAWN_BM_01_M3");
+        Check("world.group_cleared", groupMembersCleared);
+
         var beforeRespawn = manualWorld.Update();
         Check(
             "world.respawn_wait",
@@ -1716,13 +1721,15 @@ public static class ServiceSelfCheck
         var individualMobRespawn = manualWorld.Update();
         var groupRespawnService = new MobSpawnGroupService(manualWorld, manualClock);
         var respawned = groupRespawnService.Tick();
+        manualWorld.TryGet("ENT_MAN_BM_SPAWN_BM_01_M2", out var revivedMember2);
         Check(
             "world.respawn",
             individualMobRespawn == 0 &&
-            respawned == 1 &&
+            respawned == 3 &&
             manualWorld.TryGet("ENT_MAN_BM_SPAWN_BM_01", out var revivedMob) &&
             revivedMob.State == WorldEntityStates.Alive &&
-            revivedMob.Revision == 3,
+            revivedMob.Revision == 3 &&
+            revivedMember2.LifeId == 2,
             $"individual={individualMobRespawn} group={respawned}");
 
         Check("world.despawn_npc_rejected", !manualWorld.Despawn("ENT_MAN_BM_NPC_LYAN"));
