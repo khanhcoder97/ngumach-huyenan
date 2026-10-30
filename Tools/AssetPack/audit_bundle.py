@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""OPC-09: Audit a Muse asset delivery bundle (standard library only).
+"""OPC-09: deterministic, read-only asset bundle audit (standard library only).
 
-Reads an asset delivery manifest and produces a deterministic audit report
-describing every declared asset: file presence, size, SHA-256 hash, declared
-license/version, dependency references, and a coverage verdict
-(present / absent / unknown / unverified).
+Reads an asset delivery manifest and produces a deterministic audit report:
+file presence, size, SHA-256, declared license/version, dependency references
+and a coverage verdict (present / absent / unknown / unverified).
 
-This tool is read-only: it never writes to the source art directory. The
-audit report and (optionally) a copied bundle are written to a fresh output
-directory so repeated runs with the same input are byte-identical.
+The tool never writes to the source art directory. Reports are byte-identical
+for identical inputs: there is no wall-clock timestamp and JSON keys are sorted.
+The ``bundleDigest`` uses the same canonical algorithm as the packed
+``bundle-manifest.json``, so audit and verify results are comparable.
 
 Usage (from the repository root):
     python Tools/AssetPack/audit_bundle.py \
@@ -22,44 +22,33 @@ Usage (from the repository root):
 Exit codes:
     0  audit completed (findings may still be present)
     1  environment / usage error
-    2  manifest validation failure (schema or missing required fields)
+    2  manifest validation failure (wrong shape or missing assets)
 
 Refs #40, OPC-09. Not self-merging.
 """
 
+from __future__ import annotations
+
 import argparse
-import hashlib
-import json
-import os
-import re
 import shutil
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
+
+import bundle_format as bf
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MANIFEST = "Client/Assets/ArtManifests/muse_delivery_manifest.json"
-DEFAULT_SCHEMA = "Implementation/Asset_Handoff/asset_delivery_manifest.schema.json"
 
-LFS_POINTER_PREFIX = b"version https://git-lfs.github.com/spec/v1"
-PATH_CHARS_RE = re.compile(r"^[A-Za-z0-9._~/-]+$")
-SNAKE_CASE_RE = re.compile(r"^[a-z0-9][a-z0-9_.~-]*$")
+# Compatibility aliases: earlier callers imported these from audit_bundle.
+LFS_POINTER_PREFIX = bf.LFS_POINTER_PREFIX
+PATH_CHARS_RE = bf.PATH_CHARS_RE
+ART_ROOTS = bf.ART_ROOTS
+inspect_repo_path = bf.inspect_repo_path
+resolve_inside_root = bf.resolve_inside_root
+under_art_root = bf.under_art_root
+sha256_of_file = bf.sha256_of_file
 
-# Roots where Muse delivers art, per Implementation/Asset_Handoff/GITHUB_COLLABORATION.md.
-ART_ROOTS = (
-    "Client/Assets/Art",
-    "Client/Assets/UI/Art",
-    "Client/Assets/Tilemaps",
-    "Client/Assets/VFX",
-    "Client/Assets/Animation",
-)
-
-# Coverage verdicts.
-#   present   - file exists on disk and hash was computed
-#   absent    - declared path does not exist on disk
-#   unknown   - manifest entry lacks enough information to locate/verify
-#   unverified - file exists but could not be hashed (e.g. LFS pointer not fetched)
 COVERAGE_PRESENT = "present"
 COVERAGE_ABSENT = "absent"
 COVERAGE_UNKNOWN = "unknown"
@@ -70,70 +59,15 @@ EXIT_ENVIRONMENT = 1
 EXIT_VALIDATION = 2
 
 
-class BundleAuditError(Exception):
+class BundleAuditError(bf.BundleFormatError):
     """Raised for environment or usage problems."""
 
 
 def load_json(path: Path):
-    """Read a JSON file, rejecting a Git LFS pointer with an explicit message."""
-    if not path.is_file():
-        raise BundleAuditError(f"file not found: {path}")
-    raw = path.read_bytes()
-    if raw.startswith(LFS_POINTER_PREFIX):
-        raise BundleAuditError(
-            f"{path}: Git LFS pointer instead of file content "
-            "(fetch the LFS objects, in CI use actions/checkout with lfs: true)"
-        )
     try:
-        text = raw.decode("utf-8")
-    except UnicodeDecodeError as exc:
-        raise BundleAuditError(f"{path}: not valid UTF-8 ({exc})") from exc
-    try:
-        return json.loads(text)
-    except ValueError as exc:
-        raise BundleAuditError(f"{path}: invalid JSON ({exc})") from exc
-
-
-def sha256_of_file(path: Path):
-    """Return the SHA-256 hex digest of a file, or None if unreadable."""
-    try:
-        digest = hashlib.sha256()
-        with path.open("rb") as handle:
-            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-                digest.update(chunk)
-        return digest.hexdigest()
-    except OSError:
-        return None
-
-
-def inspect_repo_path(value):
-    """Return (normalised repo-relative path, problem-message-or-None)."""
-    if not isinstance(value, str) or not value:
-        return None, "must be a non-empty string"
-    if "\\" in value:
-        return None, "must use forward slashes"
-    if value.startswith("/") or re.match(r"^[A-Za-z]:", value):
-        return None, "must be relative to the repository root, not absolute"
-    if not PATH_CHARS_RE.match(value):
-        return None, "must only use ASCII letters, digits, dot, dash, underscore and slash"
-    parts = value.split("/")
-    if any(part in ("", ".", "..") for part in parts):
-        return None, "must not contain '.', '..' or empty segments"
-    return "/".join(parts), None
-
-
-def resolve_inside_root(root: Path, rel: str):
-    """Join a repo-relative path and refuse to leave the repository."""
-    candidate = (root / rel).resolve()
-    try:
-        candidate.relative_to(root.resolve())
-    except ValueError:
-        return None
-    return candidate
-
-
-def under_art_root(rel: str) -> bool:
-    return any(rel == root or rel.startswith(root + "/") for root in ART_ROOTS)
+        return bf.load_json(path)
+    except bf.BundleFormatError as exc:
+        raise BundleAuditError(str(exc)) from exc
 
 
 def canonical_dependency_key(asset: dict) -> str:
@@ -144,11 +78,26 @@ def canonical_dependency_key(asset: dict) -> str:
     return f"{kind}:{asset_id}:{path}"
 
 
-def audit_asset(asset: dict, root: Path, manifest_rel: str):
-    """Audit a single asset entry and return a record dict."""
+def _declared_dependencies(asset: dict):
+    dependencies = []
+    raw = asset.get("dependencies")
+    if isinstance(raw, list):
+        for item in raw:
+            if isinstance(item, str) and item and item not in dependencies:
+                dependencies.append(item)
+    replaces = asset.get("replacesAssetId")
+    if isinstance(replaces, str) and replaces and replaces not in dependencies:
+        dependencies.append(replaces)
+    return dependencies
+
+
+def audit_asset(asset: dict, root: Path, manifest_rel: str,
+                manifest_defaults: dict | None = None):
+    """Audit a single asset entry and return a deterministic record dict."""
     label = asset.get("assetId") or "<unnamed>"
+    defaults = manifest_defaults or {}
     raw_path = asset.get("path")
-    rel, path_problem = inspect_repo_path(raw_path)
+    rel, path_problem = bf.inspect_repo_path(raw_path)
 
     record = {
         "assetId": label,
@@ -159,9 +108,9 @@ def audit_asset(asset: dict, root: Path, manifest_rel: str):
         "coverage": COVERAGE_UNKNOWN,
         "sizeBytes": None,
         "sha256": None,
-        "license": None,
-        "version": None,
-        "dependencies": [],
+        "license": asset.get("sourceLicense") or defaults.get("sourceLicense") or "original",
+        "version": asset.get("assetPackVersion") or defaults.get("assetPackVersion"),
+        "dependencies": _declared_dependencies(asset),
         "evidence": [],
         "findings": [],
     }
@@ -172,63 +121,86 @@ def audit_asset(asset: dict, root: Path, manifest_rel: str):
 
     record["resolvedPath"] = rel
 
-    # License / version metadata carried on the pack or per-asset.
-    record["license"] = asset.get("sourceLicense") or "original"
-    record["version"] = asset.get("assetPackVersion") or None
+    if not rel.startswith("Client/Assets/"):
+        record["findings"].append("path: must live under Client/Assets/")
+    target = bf.resolve_inside_root(root, rel)
+    if target is None:
+        record["findings"].append("path: escapes the repository root")
+        return record
+    if not bf.under_art_root(rel):
+        record["findings"].append(
+            "path: outside agreed art roots (" + ", ".join(bf.ART_ROOTS) + ")"
+        )
 
-    target = None
-    if rel is not None:
-        if not rel.startswith("Client/Assets/"):
-            record["findings"].append("path: must live under Client/Assets/")
-        target = resolve_inside_root(root, rel)
-        if target is None:
-            record["findings"].append("path: escapes the repository root")
-        elif not under_art_root(rel):
-            record["findings"].append(
-                "path: outside agreed art roots (" + ", ".join(ART_ROOTS) + ")"
-            )
+    if not target.is_file():
+        record["coverage"] = COVERAGE_ABSENT
+        record["findings"].append("declared file does not exist in the repository")
+        return record
 
-    if rel is not None and target is not None:
-        if not target.is_file():
-            record["coverage"] = COVERAGE_ABSENT
-            record["findings"].append("declared file does not exist in the repository")
-        elif rel.lower().endswith(".png"):
-            lfs_head = target.read_bytes()[: len(LFS_POINTER_PREFIX)]
-            if lfs_head == LFS_POINTER_PREFIX:
-                record["coverage"] = COVERAGE_UNVERIFIED
-                record["findings"].append(
-                    "file is a Git LFS pointer; LFS objects were not fetched"
-                )
-            else:
-                size = target.stat().st_size
-                digest = sha256_of_file(target)
-                record["sizeBytes"] = size
-                record["sha256"] = digest
-                record["coverage"] = COVERAGE_PRESENT
-                record["evidence"].append(f"sha256:{digest}")
-                record["evidence"].append(f"size:{size}")
-        else:
-            # Non-image asset: record presence only.
-            size = target.stat().st_size
-            digest = sha256_of_file(target)
-            record["sizeBytes"] = size
-            record["sha256"] = digest
-            record["coverage"] = COVERAGE_PRESENT
-            record["evidence"].append(f"sha256:{digest}")
-            record["evidence"].append(f"size:{size}")
+    try:
+        head = target.read_bytes()[: len(bf.LFS_POINTER_PREFIX)]
+    except OSError:
+        head = b""
+    if head == bf.LFS_POINTER_PREFIX:
+        record["coverage"] = COVERAGE_UNVERIFIED
+        record["findings"].append(
+            "file is a Git LFS pointer; LFS objects were not fetched"
+        )
+        return record
 
-    # Dependency references declared on the asset.
-    replaces = asset.get("replacesAssetId")
-    if isinstance(replaces, str) and replaces:
-        record["dependencies"].append(replaces)
+    size = target.stat().st_size
+    try:
+        digest = bf.sha256_of_file(target)
+    except OSError as exc:
+        record["coverage"] = COVERAGE_UNVERIFIED
+        record["findings"].append(f"file cannot be read: {exc}")
+        return record
 
+    record["sizeBytes"] = size
+    record["sha256"] = digest
+    record["coverage"] = COVERAGE_PRESENT
+    record["evidence"].append(f"sha256:{digest}")
+    record["evidence"].append(f"size:{size}")
     return record
 
 
 def audit_bundle(manifest: dict, root: Path, manifest_rel: str) -> dict:
-    """Audit every asset in the manifest and return a full report dict."""
-    assets = manifest.get("assets") or []
-    records = [audit_asset(a, root, manifest_rel) for a in assets]
+    """Audit every asset in the manifest and return a deterministic report."""
+    assets = bf.manifest_assets(manifest)
+    defaults = {
+        "assetPackVersion": manifest.get("assetPackVersion"),
+        "sourceLicense": manifest.get("sourceLicense"),
+    }
+    records = [audit_asset(a, root, manifest_rel, defaults) for a in assets]
+    records.sort(
+        key=lambda rec: (
+            rec["resolvedPath"] or rec["declaredPath"] or "",
+            rec["assetId"] or "",
+        )
+    )
+
+    id_counts = {}
+    path_counts = {}
+    for record in records:
+        if record["assetId"] and record["assetId"] != "<unnamed>":
+            id_counts[record["assetId"]] = id_counts.get(record["assetId"], 0) + 1
+        if record["resolvedPath"]:
+            path_counts[record["resolvedPath"]] = path_counts.get(
+                record["resolvedPath"], 0
+            ) + 1
+    duplicate_ids = sorted(k for k, count in id_counts.items() if count > 1)
+    duplicate_paths = sorted(k for k, count in path_counts.items() if count > 1)
+    for record in records:
+        if record["assetId"] in duplicate_ids:
+            record["findings"].append(
+                f"duplicate assetId {record['assetId']!r} appears "
+                f"{id_counts[record['assetId']]} times"
+            )
+        if record["resolvedPath"] in duplicate_paths:
+            record["findings"].append(
+                f"duplicate path {record['resolvedPath']!r} appears "
+                f"{path_counts[record['resolvedPath']]} times"
+            )
 
     summary = {
         "totalAssets": len(records),
@@ -236,24 +208,18 @@ def audit_bundle(manifest: dict, root: Path, manifest_rel: str) -> dict:
         "absent": sum(1 for r in records if r["coverage"] == COVERAGE_ABSENT),
         "unknown": sum(1 for r in records if r["coverage"] == COVERAGE_UNKNOWN),
         "unverified": sum(1 for r in records if r["coverage"] == COVERAGE_UNVERIFIED),
+        "duplicateAssetIds": len(duplicate_ids),
+        "duplicatePaths": len(duplicate_paths),
     }
 
-    # Overall bundle digest: hash of the sorted assetId -> sha256 mapping.
-    digest_pairs = sorted(
-        (r["assetId"], r["sha256"]) for r in records if r["sha256"]
-    )
-    bundle_digest = hashlib.sha256(
-        json.dumps(digest_pairs, separators=(",", ":")).encode("utf-8")
-    ).hexdigest()
-
-    report = {
-        "auditedAt": datetime.now(timezone.utc).isoformat(),
+    return {
+        "reportFormat": 1,
         "manifest": manifest_rel,
         "assetPackId": manifest.get("assetPackId"),
         "assetPackVersion": manifest.get("assetPackVersion"),
         "owner": manifest.get("owner"),
         "sourceLicense": manifest.get("sourceLicense"),
-        "bundleDigest": bundle_digest,
+        "bundleDigest": bf.compute_bundle_digest(records),
         "summary": summary,
         "coverage": {
             "present": COVERAGE_PRESENT,
@@ -261,29 +227,30 @@ def audit_bundle(manifest: dict, root: Path, manifest_rel: str) -> dict:
             "unknown": COVERAGE_UNKNOWN,
             "unverified": COVERAGE_UNVERIFIED,
         },
+        "duplicateAssetIds": duplicate_ids,
+        "duplicatePaths": duplicate_paths,
         "assets": records,
     }
-    return report
 
 
 def write_report(report: dict, output_dir: Path, copy_bundle: bool, root: Path):
-    """Write the audit JSON report to the output directory."""
+    """Write deterministic audit JSON/summary and optional bundle copy."""
     output_dir.mkdir(parents=True, exist_ok=True)
-
     report_path = output_dir / "bundle-audit-report.json"
-    report_path.write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
+    bf.write_json(report_path, report)
 
-    # Human readable summary.
     lines = [
         f"Bundle audit: {report['assetPackId']} @ {report['assetPackVersion']}",
         f"Manifest: {report['manifest']}",
-        f"Bundle digest (SHA-256 of asset hashes): {report['bundleDigest']}",
+        f"Bundle digest (SHA-256 of sorted asset records): {report['bundleDigest']}",
         "",
         "Coverage summary:",
         f"  present : {report['summary']['present']}",
         f"  absent  : {report['summary']['absent']}",
         f"  unknown : {report['summary']['unknown']}",
         f"  unverif.: {report['summary']['unverified']}",
+        f"  duplicate ids  : {report['summary']['duplicateAssetIds']}",
+        f"  duplicate paths: {report['summary']['duplicatePaths']}",
         f"  total   : {report['summary']['totalAssets']}",
         "",
         "Per-asset detail:",
@@ -294,7 +261,9 @@ def write_report(report: dict, output_dir: Path, copy_bundle: bool, root: Path):
             f"kind={rec['kind'] or '-':14s} path={rec['declaredPath'] or '-'}"
         )
         if rec["sha256"]:
-            lines.append(f"            sha256={rec['sha256']} size={rec['sizeBytes']}")
+            lines.append(
+                f"            sha256={rec['sha256']} size={rec['sizeBytes']}"
+            )
         for finding in rec["findings"]:
             lines.append(f"            FINDING: {finding}")
         for dep in rec["dependencies"]:
@@ -312,12 +281,11 @@ def write_report(report: dict, output_dir: Path, copy_bundle: bool, root: Path):
                 src = root / rec["resolvedPath"]
                 dst = bundle_dir / rec["resolvedPath"]
                 dst.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(src, dst)
-        # Copy the manifest itself into the bundle output.
+                shutil.copyfile(src, dst)
         manifest_src = root / report["manifest"]
         manifest_dst = bundle_dir / report["manifest"]
         manifest_dst.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(manifest_src, manifest_dst)
+        shutil.copyfile(manifest_src, manifest_dst)
 
     return report_path, summary_path
 
@@ -332,12 +300,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--manifest",
         default=DEFAULT_MANIFEST,
-        help="manifest path, relative to --root",
+        help="manifest path relative to --root (absolute paths inside --root are accepted)",
     )
     parser.add_argument(
         "--output",
         default="Tools/AssetPack/audit_out",
-        help="output directory for the audit report (fresh dir each run)",
+        help="output directory (relative paths are resolved under --root)",
     )
     parser.add_argument(
         "--copy-bundle",
@@ -349,15 +317,29 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv=None) -> int:
     args = build_parser().parse_args(argv)
-    root = Path(args.root).resolve()
-    manifest_rel = args.manifest.replace("\\", "/")
-    output_dir = Path(args.output)
+    root = Path(args.root).expanduser().resolve()
+    if not root.is_dir():
+        print(f"ENVIRONMENT ERROR: --root is not a directory: {root}", file=sys.stderr)
+        return EXIT_ENVIRONMENT
 
     try:
-        manifest = load_json(root / manifest_rel)
-    except BundleAuditError as exc:
+        manifest_path, manifest_rel = bf.resolve_input_path(
+            root, args.manifest, "manifest"
+        )
+    except bf.BundleFormatError as exc:
         print(f"ENVIRONMENT ERROR: {exc}", file=sys.stderr)
         return EXIT_ENVIRONMENT
+
+    output_dir = Path(args.output)
+    if not output_dir.is_absolute():
+        output_dir = (root / output_dir).resolve()
+
+    try:
+        manifest = load_json(manifest_path)
+        bf.manifest_assets(manifest)
+    except (BundleAuditError, bf.BundleFormatError) as exc:
+        print(f"MANIFEST ERROR: {exc}", file=sys.stderr)
+        return EXIT_VALIDATION
 
     report = audit_bundle(manifest, root, manifest_rel)
     report_path, summary_path = write_report(report, output_dir, args.copy_bundle, root)
@@ -371,7 +353,10 @@ def main(argv=None) -> int:
         f"present={report['summary']['present']} "
         f"absent={report['summary']['absent']} "
         f"unknown={report['summary']['unknown']} "
-        f"unverified={report['summary']['unverified']}"
+        f"unverified={report['summary']['unverified']} "
+        f"duplicate_ids={report['summary']['duplicateAssetIds']} "
+        f"duplicate_paths={report['summary']['duplicatePaths']} "
+        f"bundleDigest={report['bundleDigest']}"
     )
     return EXIT_OK
 
