@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "status": "STORYBOARD_EDIT_CANDIDATE",
+  "runtimeActivationAllowed": false,
+  "owner": "MUSE",
+  "source": "Implementation/Content/Narrative/Cinema_Production_Pack_v1.json",
+  "commonPrompt": "Original Vietnamese-inspired fantasy pixel art, logical 640x360, clean pixel clusters, locked top-down or restrained fixed cinematic camera. Use approved Muse character/model sheets and existing Ben Mua set. No baked text/subtitles, no default player face/gender/class, no extra magic faction symbols, no smooth tween morphing, no lore narration. Deliver storyboard/keyframe first; preserve existing duration and shot IDs. Sound/voice/subtitles are separate candidate edit tracks.",
+  "scenes": [
+    {
+      "sceneId": "CIN_001",
+      "questId": "P00-01",
+      "durationSeconds": 36,
+      "triggerDescription": "Trước accept lần đầu, nhân vật đã ở safe narrative layer",
+      "shots": [
+        {
+          "shotId": "CIN_001_S01",
+          "inSeconds": 0,
+          "outSeconds": 6,
+          "durationSeconds": 6,
+          "prompt": "Hold the wet landing wide enough to locate the warehouse and water edge. Ordinary rain; keep the anomaly barely legible in reflection, not a giant glowing portal.",
+          "performanceAndSound": "Nghe mưa và tiếng dây cọ; chưa đọc tên địa danh hoặc lịch sử."
+        },
+        {
+          "shotId": "CIN_001_S02",
+          "inSeconds": 6,
+          "outSeconds": 12,
+          "durationSeconds": 6,
+          "prompt": "A frayed rope slips against an existing pier post; parcel weight tilts it. Let the slip have a pause before the catch so the effort feels physical.",
+          "performanceAndSound": "Tiếng dây kéo và giỏ tre trượt; không nhạc báo nguy hiểm quá lớn."
+        },
+        {
+          "shotId": "CIN_001_S03",
+          "inSeconds": 12,
+          "outSeconds": 18,
+          "durationSeconds": 6,
+          "prompt": "Bell edge only in water reflection. Above-water space is visibly empty of a matching bell. One ripple breaks the contour.",
+          "performanceAndSound": "Một âm thiếu phần ngân; có bản mô tả hình tương đương."
+        },
+        {
+          "shotId": "CIN_001_S04",
+          "inSeconds": 18,
+          "outSeconds": 24,
+          "durationSeconds": 6,
+          "prompt": "Sealed envelope inside Ly An satchel, wax intact. Her damp sleeve briefly shades it while she reaches for rope; no intentional seal reveal to camera.",
+          "performanceAndSound": "Không giọng dẫn giải niêm năm vạch."
+        },
+        {
+          "shotId": "CIN_001_S05",
+          "inSeconds": 24,
+          "outSeconds": 30,
+          "durationSeconds": 6,
+          "prompt": "Ly An kneels under parcel weight and calls to an off-screen helper. Start with her eyes on the rope, not heroic eye contact. No lip-sync if the locked sprite does not support it.",
+          "performanceAndSound": "Ly An: Đầu kia! Giữ giúp tôi đầu kia! Đọc vội trong động tác, không giọng trailer."
+        },
+        {
+          "shotId": "CIN_001_S06",
+          "inSeconds": 30,
+          "outSeconds": 36,
+          "durationSeconds": 6,
+          "prompt": "Match the arrival-space composition. Parcel secure, Ly An turns toward the helper’s empty gameplay area. End still enough for game takeover.",
+          "performanceAndSound": "Để tiếng bến tiếp tục qua cut; không viết avatar mới trong frame."
+        }
+      ]
+    },
+    {
+      "sceneId": "CIN_002",
+      "questId": "P00-02",
+      "durationSeconds": 18,
+      "triggerDescription": "Sau khi đã quan sát đủ ba gợn nước",
+      "shots": [
+        {
+          "shotId": "CIN_002_S01",
+          "inSeconds": 0,
+          "outSeconds": 6,
+          "durationSeconds": 6,
+          "prompt": "Locked detail of existing ripple marker. Ordinary rain ripples spread until the anomalous band turns inward; a reed leaf passes outside the band.",
+          "performanceAndSound": "Tách tiếng mưa và một lớp ngân thấp. Không dùng pitch làm điều kiện giải đố."
+        },
+        {
+          "shotId": "CIN_002_S02",
+          "inSeconds": 6,
+          "outSeconds": 12,
+          "durationSeconds": 6,
+          "prompt": "Tilt only through a cut to the water reflection. A broken bell contour returns after the ripple while the pier rope stays still above.",
+          "performanceAndSound": "Mô tả text: vòng gợn co vào, bóng vành chuông không có vật tương ứng bên trên."
+        },
+        {
+          "shotId": "CIN_002_S03",
+          "inSeconds": 12,
+          "outSeconds": 18,
+          "durationSeconds": 6,
+          "prompt": "Return to a safe shore view with Ly An remaining at an existing approved anchor or kept off-screen. She calls the observer back; do not trigger another encounter.",
+          "performanceAndSound": "Ly An: Đừng đứng sát thêm. Có người vừa hụt chân ở đằng lau kia."
+        }
+      ]
+    },
+    {
+      "sceneId": "CIN_003",
+      "questId": "P00-03",
+      "durationSeconds": 18,
+      "triggerDescription": "Sau rescue objectives, ở khoảng nghỉ an toàn",
+      "shots": [
+        {
+          "shotId": "CIN_003_S01",
+          "inSeconds": 0,
+          "outSeconds": 6,
+          "durationSeconds": 6,
+          "prompt": "Rescued fisherman already safe, trying to free wet cloth from a bruised ankle. Frame hand, support point and line of sight rather than a portrait speech.",
+          "performanceAndSound": "Một hơi ho thật ngắn trước lời kể; không làm ông nói như tiên tri."
+        },
+        {
+          "shotId": "CIN_003_S02",
+          "inSeconds": 6,
+          "outSeconds": 12,
+          "durationSeconds": 6,
+          "prompt": "Boatwoman dries her wrists, points across water at a different angle. Establish that the two witnesses faced different directions; neither gets a villain close-up.",
+          "performanceAndSound": "Cho câu phản bác chạm câu người kia, phụ đề tách người nói rõ."
+        },
+        {
+          "shotId": "CIN_003_S03",
+          "inSeconds": 12,
+          "outSeconds": 18,
+          "durationSeconds": 6,
+          "prompt": "Ly An supports the coughing fisherman before a second argument can start. Hold the practical action; leave both remembered images unconfirmed.",
+          "performanceAndSound": "Kết bằng tiếng nước và động tác đứng dậy, không bằng bài học về ký ức."
+        }
+      ]
+    },
+    {
+      "sceneId": "CIN_004",
+      "questId": "P00-05",
+      "durationSeconds": 18,
+      "triggerDescription": "Private arena ready-check trước combat, chưa mở timer",
+      "shots": [
+        {
+          "shotId": "CIN_004_S01",
+          "inSeconds": 0,
+          "outSeconds": 6,
+          "durationSeconds": 6,
+          "prompt": "Mãng Cốt emerges inside the existing private-arena pre-combat staging, with the water pulling around the approved body silhouette. Do not change combat rig or add a root weak-point mechanic.",
+          "performanceAndSound": "Âm nước nâng và cọc rung; timeline combat chưa chạy."
+        },
+        {
+          "shotId": "CIN_004_S02",
+          "inSeconds": 6,
+          "outSeconds": 12,
+          "durationSeconds": 6,
+          "prompt": "Show strain through the approved motion/hold, not gore. Ly An checks the retreat route; Ta Van Khanh directs people away from the pier in safe-layer framing.",
+          "performanceAndSound": "Ly An hỏi về đường người ở bến; Tạ trả lời ngắn. Không gọi tên Huyền Ấn."
+        },
+        {
+          "shotId": "CIN_004_S03",
+          "inSeconds": 12,
+          "outSeconds": 18,
+          "durationSeconds": 6,
+          "prompt": "Return to gameplay framing and approved telegraph readability. Keep player arrival area open; ready-check remains a server event outside the video.",
+          "performanceAndSound": "Ngắt thoại trước combat; skip/fallback vẫn đưa tới cùng ready-check, không tự bắt đầu trận."
+        }
+      ]
+    }
+  ]
+}

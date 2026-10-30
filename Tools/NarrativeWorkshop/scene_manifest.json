@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 1,
+  "status": "AUTHORING_CANDIDATE",
+  "runtimeActivationAllowed": false,
+  "authority": "LOCAL_READING_ROOM_ONLY",
+  "compiler": "inkjs@2.4.0",
+  "sourceDigest": "f63eb99c588703b1d15caab69f5f5401b24e5a1eeb9cbfb456d2242bed950691",
+  "sources": [
+    {
+      "path": "docs/narrative/workshop/ink/main.ink",
+      "sha256": "d87cf26da3ab4a583acbcd23dce876cda12675d958a364f9809c4de3373c22d4"
+    },
+    {
+      "path": "docs/narrative/workshop/ink/p00_01.ink",
+      "sha256": "c842e82843f1748ff8a6cac34007ce1746e017ed9df4c71f7fb57505fa78881f"
+    },
+    {
+      "path": "docs/narrative/workshop/ink/p00_02.ink",
+      "sha256": "f3ddcf883c4f38a95b9be713b1b78147d1ce44033cde3a1c2b2587680b411d79"
+    },
+    {
+      "path": "docs/narrative/workshop/ink/p00_03.ink",
+      "sha256": "6721664b05b89e04157daf68fd03f1b22641d98a97a2ff50427629739d4fe399"
+    },
+    {
+      "path": "docs/narrative/workshop/ink/p00_04.ink",
+      "sha256": "dfdc9451c4592d285d6b53eb6fb74f18956a65e8f273cdd8a8bb37db3243c300"
+    },
+    {
+      "path": "docs/narrative/workshop/ink/p00_05.ink",
+      "sha256": "bb419841e7771aa3bee267b171b22d2c954c89544c532e4f78e59f4e9914e103"
+    }
+  ],
+  "canonicalSources": [
+    {
+      "path": "docs/production/Narrative_Depth_and_Discovery_vi.md",
+      "sha256": "07cffe09b704596ee0c36f8b50a8901f16c344b52cb2298cba155077f84c2f94"
+    },
+    {
+      "path": "docs/production/Quest_and_Narrative_Production_Spec_vi.md",
+      "sha256": "fd2e8739aeb0490a19e480571f308e6bdbe5436b5f21072c378979e77983a8df"
+    },
+    {
+      "path": "docs/production/Quest_Dialogue_Production_Data_vi.csv",
+      "sha256": "241593fe9ba87ad0441a4292b602602729d6a14493c07869cb0bba0e1c9c2fab"
+    },
+    {
+      "path": "docs/production/NPC_Actor_Production_Registry_vi.csv",
+      "sha256": "d9743b8148620e00dd0762eca2bfd1b733b7a8808583725a381262fd004cd52a"
+    },
+    {
+      "path": "Implementation/Content/Narrative/Cinema_Production_Pack_v1.json",
+      "sha256": "f7b3fd496bb18f23be1f68475d0f2434b8c2b4b2015330d92d4e88fc058717ec"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "READING_ROOM",
+      "knot": "reading_room",
+      "questId": null,
+      "kind": "AUTHORING_ONLY",
+      "guard": null,
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/main.ink",
+      "sourceLine": 14
+    },
+    {
+      "id": "BM01_ROPE",
+      "knot": "p01_rope",
+      "questId": "P00-01",
+      "kind": "SCENE",
+      "guard": null,
+      "cinemaId": "CIN_001",
+      "sourcePath": "docs/narrative/workshop/ink/p00_01.ink",
+      "sourceLine": 2
+    },
+    {
+      "id": "BM01_LETTER",
+      "knot": "p01_letter",
+      "questId": "P00-01",
+      "kind": "SCENE",
+      "guard": null,
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_01.ink",
+      "sourceLine": 36
+    },
+    {
+      "id": "BM01_PACKAGES",
+      "knot": "p01_accept",
+      "questId": "P00-01",
+      "kind": "CHECKPOINT",
+      "guard": "SERVER_P00_01_ACTIVE_AND_PACKAGES_3",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_01.ink",
+      "sourceLine": 54
+    },
+    {
+      "id": "BM01_RECEIPT",
+      "knot": "p01_khanh",
+      "questId": "P00-01",
+      "kind": "SCENE",
+      "guard": "SERVER_P00_01_READY_TO_TURN_IN",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_01.ink",
+      "sourceLine": 64
+    },
+    {
+      "id": "BM02_BANK",
+      "knot": "p02_bank",
+      "questId": "P00-02",
+      "kind": "SCENE",
+      "guard": null,
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_02.ink",
+      "sourceLine": 2
+    },
+    {
+      "id": "BM02_RIPPLES",
+      "knot": "p02_ripples",
+      "questId": "P00-02",
+      "kind": "CHECKPOINT",
+      "guard": "SERVER_P00_02_RIPPLES_3_AND_CARPLING_4",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_02.ink",
+      "sourceLine": 28
+    },
+    {
+      "id": "BM02_SOUND",
+      "knot": "p02_bell",
+      "questId": "P00-02",
+      "kind": "SCENE",
+      "guard": "SERVER_P00_02_RIPPLES_3",
+      "cinemaId": "CIN_002",
+      "sourcePath": "docs/narrative/workshop/ink/p00_02.ink",
+      "sourceLine": 47
+    },
+    {
+      "id": "BM02_REPORT",
+      "knot": "p02_report",
+      "questId": "P00-02",
+      "kind": "SCENE",
+      "guard": "SERVER_P00_02_READY_TO_TURN_IN",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_02.ink",
+      "sourceLine": 59
+    },
+    {
+      "id": "BM03_CALL",
+      "knot": "p03_call",
+      "questId": "P00-03",
+      "kind": "SCENE",
+      "guard": null,
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_03.ink",
+      "sourceLine": 2
+    },
+    {
+      "id": "BM03_ROOTS",
+      "knot": "p03_roots",
+      "questId": "P00-03",
+      "kind": "CHECKPOINT",
+      "guard": "SERVER_P00_03_ROOTS_3_RESCUES_2_DODGE_1",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_03.ink",
+      "sourceLine": 20
+    },
+    {
+      "id": "BM03_FIRST_WITNESS",
+      "knot": "p03_first",
+      "questId": "P00-03",
+      "kind": "SCENE",
+      "guard": "SERVER_P00_03_RESCUE_01_CONFIRMED",
+      "cinemaId": "CIN_003",
+      "sourcePath": "docs/narrative/workshop/ink/p00_03.ink",
+      "sourceLine": 29
+    },
+    {
+      "id": "BM03_SECOND_WITNESS",
+      "knot": "p03_second",
+      "questId": "P00-03",
+      "kind": "SCENE",
+      "guard": "SERVER_P00_03_RESCUE_02_CONFIRMED",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_03.ink",
+      "sourceLine": 54
+    },
+    {
+      "id": "BM03_SHORE",
+      "knot": "p03_after",
+      "questId": "P00-03",
+      "kind": "SCENE",
+      "guard": "SERVER_P00_03_READY_TO_TURN_IN",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_03.ink",
+      "sourceLine": 82
+    },
+    {
+      "id": "BM04_DEPART",
+      "knot": "p04_depart",
+      "questId": "P00-04",
+      "kind": "SCENE",
+      "guard": null,
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_04.ink",
+      "sourceLine": 2
+    },
+    {
+      "id": "BM04_FIRST_HOLD",
+      "knot": "p04_wave_one",
+      "questId": "P00-04",
+      "kind": "CHECKPOINT",
+      "guard": "SERVER_P00_04_CHECKPOINT_80_WAVE_1_CLEAR",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_04.ink",
+      "sourceLine": 20
+    },
+    {
+      "id": "BM04_KNOT",
+      "knot": "p04_knot",
+      "questId": "P00-04",
+      "kind": "SCENE",
+      "guard": null,
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_04.ink",
+      "sourceLine": 29
+    },
+    {
+      "id": "BM04_SECOND_HOLD",
+      "knot": "p04_wave_two",
+      "questId": "P00-04",
+      "kind": "CHECKPOINT",
+      "guard": "SERVER_P00_04_CHECKPOINT_120_WAVE_2_CLEAR",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_04.ink",
+      "sourceLine": 65
+    },
+    {
+      "id": "BM04_CRACK",
+      "knot": "p04_wax",
+      "questId": "P00-04",
+      "kind": "SCENE",
+      "guard": "SERVER_P00_04_CHECKPOINT_120_CONFIRMED",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_04.ink",
+      "sourceLine": 73
+    },
+    {
+      "id": "BM05_BEFORE",
+      "knot": "p05_before",
+      "questId": "P00-05",
+      "kind": "SCENE",
+      "guard": "SERVER_PRIVATE_ARENA_READY_NO_TIMER",
+      "cinemaId": "CIN_004",
+      "sourcePath": "docs/narrative/workshop/ink/p00_05.ink",
+      "sourceLine": 2
+    },
+    {
+      "id": "BM05_ENCOUNTER",
+      "knot": "p05_battle",
+      "questId": "P00-05",
+      "kind": "CHECKPOINT",
+      "guard": "SERVER_P00_05_BOSS_CLEAR",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_05.ink",
+      "sourceLine": 17
+    },
+    {
+      "id": "BM05_STILL",
+      "knot": "p05_still",
+      "questId": "P00-05",
+      "kind": "SCENE",
+      "guard": "SERVER_P00_05_BOSS_CLEAR",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_05.ink",
+      "sourceLine": 25
+    },
+    {
+      "id": "BM05_SEAL_INTERACTION",
+      "knot": "p05_seal_gate",
+      "questId": "P00-05",
+      "kind": "CHECKPOINT",
+      "guard": "SERVER_P00_05_SEAL_INTERACT_CONFIRMED",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_05.ink",
+      "sourceLine": 44
+    },
+    {
+      "id": "BM05_NAME",
+      "knot": "p05_name",
+      "questId": "P00-05",
+      "kind": "SCENE",
+      "guard": "SERVER_P00_05_SEAL_INTERACT_CONFIRMED",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_05.ink",
+      "sourceLine": 52
+    },
+    {
+      "id": "BM05_RETURN",
+      "knot": "p05_after",
+      "questId": "P00-05",
+      "kind": "SCENE",
+      "guard": null,
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_05.ink",
+      "sourceLine": 76
+    },
+    {
+      "id": "BM05_CLASS_CONFIRM",
+      "knot": "p05_class",
+      "questId": "P00-05",
+      "kind": "CHECKPOINT",
+      "guard": "SERVER_P00_05_CLASS_CONFIRM_AVAILABLE",
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_05.ink",
+      "sourceLine": 84
+    },
+    {
+      "id": "BM05_END",
+      "knot": "p05_end",
+      "questId": "P00-05",
+      "kind": "SCENE",
+      "guard": null,
+      "cinemaId": null,
+      "sourcePath": "docs/narrative/workshop/ink/p00_05.ink",
+      "sourceLine": 93
+    }
+  ],
+  "warnings": []
+}

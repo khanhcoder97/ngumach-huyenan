@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-31",
+  "branch": "codex/narrative-workshop-20261031",
+  "status": "AUTHORING_CANDIDATE",
+  "runtimeActivationAllowed": false,
+  "scope": {
+    "quests": [
+      "P00-01",
+      "P00-02",
+      "P00-03",
+      "P00-04",
+      "P00-05"
+    ],
+    "storyScenes": 18,
+    "simulatedCheckpoints": 8,
+    "readingRoomMenu": 1,
+    "cinemaScenes": 4,
+    "cinemaShots": 15
+  },
+  "skills": {
+    "community": [
+      "writing-principles",
+      "creative-writing-craft",
+      "story-review",
+      "dialogue"
+    ],
+    "project": "ngumach-narrative",
+    "validation": "5_PASS",
+    "availability": "NEXT_TURN"
+  },
+  "toolInstall": {
+    "ink": "1.2.1",
+    "inky": "0.15.2",
+    "releaseSha256Verified": true,
+    "inkyGui": "NOT_LAUNCHED",
+    "gameUnity": "UNVERIFIED"
+  },
+  "branchExecution": {
+    "status": "PASS_BRANCH_EXECUTION",
+    "sourceDigest": "f63eb99c588703b1d15caab69f5f5401b24e5a1eeb9cbfb456d2242bed950691",
+    "reachableScenes": 26,
+    "choiceEdges": 2280,
+    "uniqueDecisionStates": 947,
+    "explicitEnds": 28,
+    "repeatRead": "PASS",
+    "sealRevealGate": "PASS",
+    "runtimeActivationAllowed": false,
+    "nativeGame": "UNVERIFIED",
+    "literaryQuality": "EDITORIAL_JUDGMENT_NOT_SCORED"
+  },
+  "referenceCompiler": "Official inklecate1.2.1 compiled and equivalent branch assertions passed with inkjs runtime",
+  "browser": {
+    "status": "PASS_BROWSER",
+    "sourceDigest": "f63eb99c588703b1d15caab69f5f5401b24e5a1eeb9cbfb456d2242bed950691",
+    "load": "PASS",
+    "buttonAdvancesActualInkRuntime": "PASS",
+    "unknownAndTraversalRoutes404": "PASS",
+    "screenshot": "D:\\Project\\NGUMACHHUYENAN-tools\\narrative\\evidence\\ben-mua-reading-room-release.png",
+    "nativeGame": "UNVERIFIED"
+  },
+  "canonicalContentValidator": "PASS",
+  "p1ContractValidator": "PASS",
+  "editorialReview": "CODEX_SELF_REVISION_TWO_PASSES_NOT_INDEPENDENT_HUMAN_REVIEW",
+  "unchanged": [
+    "canonical dialogue CSV",
+    "quest definitions/IDs/counts/rewards",
+    "349world placements",
+    "canonical cinema pack and triggers",
+    "server/client runtime",
+    "Muse artwork/animations"
+  ],
+  "liveReader": "http://127.0.0.1:8126"
+}
