@@ -4,6 +4,7 @@
   "type": "object",
   "required": ["assetPackId", "assetPackVersion", "owner", "sourceLicense", "assets"],
   "properties": {
+    "manifestVersion": {"const": 1},
     "assetPackId": {"type": "string", "pattern": "^[a-z0-9_]+$"},
     "assetPackVersion": {"type": "string", "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$"},
     "owner": {"const": "Muse"},

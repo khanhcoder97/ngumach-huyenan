@@ -1,0 +1,20 @@
+{
+  "manifestVersion": 2,
+  "assetPackId": "p1_icon_fixture",
+  "assetPackVersion": "v0.1.0",
+  "owner": "Muse",
+  "sourceLicense": "original",
+  "assets": [
+    {
+      "assetId": "ICON_FIXTURE_SWORD",
+      "path": "Client/Assets/Art/Icons/fixture_sword.png",
+      "kind": "icon",
+      "status": "draft",
+      "pixelWidth": 32,
+      "pixelHeight": 32,
+      "pixelsPerUnit": 20,
+      "pivot": "center",
+      "previewPath": "Client/Assets/Art/Previews/fixture_sword_preview.png"
+    }
+  ]
+}

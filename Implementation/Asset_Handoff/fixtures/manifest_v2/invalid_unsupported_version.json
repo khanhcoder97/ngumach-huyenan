@@ -1,0 +1,27 @@
+{
+  "manifestVersion": 3,
+  "assetPackId": "p1_minh_kiem_walk",
+  "assetPackVersion": "v0.1.0",
+  "owner": "Muse",
+  "sourceLicense": "original",
+  "assets": [
+    {
+      "assetId": "CHR_MINH_KIEM_WALK",
+      "path": "Client/Assets/Art/Characters/MinhKiem/minh_kiem_walk.png",
+      "kind": "sprite_sheet",
+      "status": "draft",
+      "pixelWidth": 288,
+      "pixelHeight": 512,
+      "pixelsPerUnit": 20,
+      "pivot": "bottom_center",
+      "isDirectional": true,
+      "layout": "direction_rows",
+      "frameSize": {"width": 48, "height": 64},
+      "directions": ["N", "NE", "E", "SE", "S", "SW", "W", "NW"],
+      "animations": [
+        {"name": "walk", "framesPerDirection": 6, "fps": 8, "loop": true}
+      ],
+      "previewPath": "Client/Assets/Art/Previews/minh_kiem_walk_preview_x4.png"
+    }
+  ]
+}
