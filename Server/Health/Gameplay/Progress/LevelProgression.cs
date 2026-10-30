@@ -196,17 +196,17 @@ public sealed class ExperienceService
             actor.UnspentPoints = grant.Table.At(grant.LevelBefore).AllocatablePointsTotal;
         }
     }
+}
 
-    private sealed class FileShape
-    {
-        public List<LevelShape>? Levels { get; init; }
-    }
+internal sealed class FileShape
+{
+    public List<LevelShape>? Levels { get; init; }
+}
 
-    private sealed class LevelShape
-    {
-        public int Level { get; init; }
-        public long XpFromPreviousLevels { get; init; }
-        public int XpToNext { get; init; }
-        public int AllocatablePointsTotal { get; init; }
-    }
+internal sealed class LevelShape
+{
+    public int Level { get; init; }
+    public long XpFromPreviousLevels { get; init; }
+    public int XpToNext { get; init; }
+    public int AllocatablePointsTotal { get; init; }
 }

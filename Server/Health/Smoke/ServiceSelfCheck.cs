@@ -4707,6 +4707,7 @@ public static class ServiceSelfCheck
             npcAnchors,
             services.GetRequiredService<IWorldGeometryService>(),
             failOnceLedger,
+            services.GetRequiredService<ExperienceService>(),
             services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
 
         var failActor = NewPlayer("CHR_SELFCHECK_FAILONCE");
@@ -4774,6 +4775,7 @@ public static class ServiceSelfCheck
             npcAnchors,
             services.GetRequiredService<IWorldGeometryService>(),
             flipFailLedger,
+            services.GetRequiredService<ExperienceService>(),
             services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
 
         var flipFailActor = NewPlayer("CHR_SELFCHECK_FLIPFAIL");
@@ -4839,6 +4841,7 @@ public static class ServiceSelfCheck
             npcAnchors,
             services.GetRequiredService<IWorldGeometryService>(),
             failOnceLedgerStore,
+            services.GetRequiredService<ExperienceService>(),
             services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
 
         var ledgerFailActor = NewPlayer("CHR_SELFCHECK_LEDGERFAIL");
