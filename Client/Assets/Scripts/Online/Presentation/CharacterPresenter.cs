@@ -1,8 +1,9 @@
-// CharacterPresenter — Presentation controller for character sheet & equipment.
+// CharacterPresenter — Presentation controller for character sheet and 12 equipment slots.
+// Pure C#, no Unity dependency.
 // Rules:
-//   - Reads authoritative vitals from adapter.Self and equipped items from adapter.Inventory.
-//   - Never invents local stat changes or mutations.
-//   - Disables unsupported equip/unequip/salvage actions with explicit server endpoint reason.
+//   - Reads authoritative vitals from P1Self.
+//   - Strictly requires location == "EQUIPPED" for equipped items (DEC-021/023).
+//   - Disables actions when server endpoints are not available.
 // Owner: Antigravity Remote — Issue #85.
 
 using System;
@@ -29,7 +30,7 @@ namespace NguMach.Client.Presentation
 
         public void Refresh()
         {
-            int curGen = Interlocked.Increment(ref _generation);
+            int curGen = ++_generation;
             var self = _adapter.Self;
             if (self == null)
             {
@@ -45,8 +46,7 @@ namespace NguMach.Client.Presentation
                 foreach (var item in inv.items)
                 {
                     if (item == null) continue;
-                    bool isEquipped = string.Equals(item.location, "EQUIPPED", StringComparison.OrdinalIgnoreCase)
-                                   || (!string.IsNullOrEmpty(item.slot) && !int.TryParse(item.slot, out _));
+                    bool isEquipped = string.Equals(item.location, "EQUIPPED", StringComparison.OrdinalIgnoreCase);
 
                     if (isEquipped && !string.IsNullOrEmpty(item.slot))
                     {
@@ -68,24 +68,24 @@ namespace NguMach.Client.Presentation
 
         public void Clear()
         {
-            Interlocked.Increment(ref _generation);
+            ++_generation;
             _state = AsyncState<CharacterViewState>.Idle;
             OnChanged?.Invoke();
         }
 
-        public Task<P1Result> UnequipAsync(string slot, CancellationToken ct)
+        public Task<P1Result> EquipAsync(string instanceId, string targetSlot, CancellationToken ct)
         {
-            return Task.FromResult(P1Result.Fail("UNSUPPORTED_ENDPOINT", CharacterViewState.ActionDisabledReason));
+            return Task.FromResult(P1Result.Fail("UNSUPPORTED_ENDPOINT", "authoritative action unavailable in baseline"));
         }
 
-        public Task<P1Result> EquipAsync(string instanceId, string slot, CancellationToken ct)
+        public Task<P1Result> UnequipAsync(string slotKey, CancellationToken ct)
         {
-            return Task.FromResult(P1Result.Fail("UNSUPPORTED_ENDPOINT", CharacterViewState.ActionDisabledReason));
+            return Task.FromResult(P1Result.Fail("UNSUPPORTED_ENDPOINT", "authoritative action unavailable in baseline"));
         }
 
         public Task<P1Result> SalvageAsync(string instanceId, CancellationToken ct)
         {
-            return Task.FromResult(P1Result.Fail("UNSUPPORTED_ENDPOINT", CharacterViewState.ActionDisabledReason));
+            return Task.FromResult(P1Result.Fail("UNSUPPORTED_ENDPOINT", "authoritative action unavailable in baseline"));
         }
     }
 }

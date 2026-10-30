@@ -7,17 +7,21 @@ namespace NguMach.Client.P1.Editor
 {
     public static class PlayerUIBuilder
     {
+        [MenuItem("Tools/Ngu Mach/Setup PlayerUI in Scene")]
         [MenuItem("Ngu Mach/UI/Setup PlayerUI in Scene")]
         public static void SetupInScene()
         {
-            var host = GameObject.Find("PlayerUI_Host");
+            // Prefer existing P1OnlinePanel host if present
+            var onlinePanel = Object.FindFirstObjectByType<P1OnlinePanel>();
+            GameObject host = onlinePanel != null ? onlinePanel.gameObject : GameObject.Find("PlayerUI_Host");
+
             if (host == null)
             {
                 host = new GameObject("PlayerUI_Host");
                 Undo.RegisterCreatedObjectUndo(host, "Create PlayerUI_Host");
             }
 
-            var doc = host.GetComponent<UIDocument>();
+            var doc = host.GetComponent<UIDocument>() ?? Object.FindFirstObjectByType<UIDocument>();
             if (doc == null)
             {
                 doc = host.AddComponent<UIDocument>();
@@ -36,7 +40,7 @@ namespace NguMach.Client.P1.Editor
             }
 
             EditorUtility.SetDirty(host);
-            Debug.Log("[PlayerUIBuilder] PlayerUI successfully setup in scene with UIDocument and Hook.");
+            Debug.Log("[PlayerUIBuilder] PlayerUI successfully setup on host: " + host.name);
         }
     }
 }

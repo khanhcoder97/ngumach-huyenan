@@ -1,8 +1,8 @@
 // ItemMetadataResolver — Pure C# catalog metadata resolver for player items.
 // Rules:
-//   - Read-only presentation metadata sourced from Item_Master_Catalog_vi.csv.
+//   - Read-only presentation metadata sourced from Item_Master_Catalog_vi.csv and Item_Rarity_Variant_Catalog_vi.csv.
 //   - Never crashes on unknown template; returns valid fallback without raw "UNRESOLVED" text.
-//   - Client does not forge or calculate custom combat stats.
+//   - Unknown templates never inherit known slots or class IDs.
 // Owner: Antigravity Remote — Issue #85.
 
 using System;
@@ -50,6 +50,16 @@ namespace NguMach.Client.Presentation
         private static readonly Dictionary<string, ItemMetadata> Catalog =
             new Dictionary<string, ItemMetadata>(StringComparer.OrdinalIgnoreCase);
 
+        private static readonly Dictionary<string, (string prefix, string rarity)> RaritySuffixes =
+            new Dictionary<string, (string, string)>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["COMMON"]  = ("Thường ", "Thường"),
+                ["REFINED"] = ("Tinh ", "Tinh"),
+                ["SPIRIT"]  = ("Linh ", "Linh"),
+                ["ARCANE"]  = ("Huyền ", "Huyền"),
+                ["RELIC"]   = ("Cổ Vật ", "Cổ Vật")
+            };
+
         static ItemMetadataResolver()
         {
             // Minh Kiếm T1 Set & Equipment
@@ -66,13 +76,11 @@ namespace NguMach.Client.Presentation
             Reg("EQ-MK-CLOAK-T1", "Phi phong Mưa Khởi Minh Kiếm", "Trang bị / phụ kiện", "EQUIP_CLOAK", "CLASS_MINH_KIEM", "Thường", 1, "Phụ kiện Mưa Khởi Minh Kiếm");
             Reg("EQ-MK-SEAL-T1", "Ấn hộ mệnh Mưa Khởi Minh Kiếm", "Trang bị / phụ kiện", "EQUIP_SEAL", "CLASS_MINH_KIEM", "Thường", 1, "Phụ kiện Mưa Khởi Minh Kiếm");
 
-            // Canonical common variants
-            Reg("EQ-MK-CHEST-T1-R-COMMON", "Thường Áo Mưa Khởi Minh Kiếm", "Trang bị / giáp", "EQUIP_CHEST", "CLASS_MINH_KIEM", "Thường", 1, "Thường Áo Mưa Khởi, cấp 1");
-            Reg("EQ-MK-WEAPON-T1-R-COMMON", "Thường Kiếm Mưa Khởi Minh Kiếm", "Trang bị / vũ khí", "EQUIP_WEAPON", "CLASS_MINH_KIEM", "Thường", 1, "Thường Kiếm Mưa Khởi, cấp 1");
-            Reg("EQ-AD-WEAPON-T1-R-COMMON", "Thường Đao Mưa Khởi Ảnh Đao", "Trang bị / vũ khí", "EQUIP_WEAPON", "CLASS_ANH_DAO", "Thường", 1, "Thường Đao Mưa Khởi, cấp 1");
-            Reg("EQ-HB-WEAPON-T1-R-COMMON", "Thường Bút Mưa Khởi Huyền Bút", "Trang bị / vũ khí", "EQUIP_WEAPON", "CLASS_HUYEN_BUT", "Thường", 1, "Thường Bút Mưa Khởi, cấp 1");
-            Reg("EQ-TC-WEAPON-T1-R-COMMON", "Thường Chùy Mưa Khởi Thạch Chùy", "Trang bị / vũ khí", "EQUIP_WEAPON", "CLASS_THACH_CHUY", "Thường", 1, "Thường Chùy Mưa Khởi, cấp 1");
-            Reg("EQ-LC-WEAPON-T1-R-COMMON", "Thường Cung Mưa Khởi Linh Cung", "Trang bị / vũ khí", "EQUIP_WEAPON", "CLASS_LINH_CUNG", "Thường", 1, "Thường Cung Mưa Khởi, cấp 1");
+            // Weapons for other classes
+            Reg("EQ-AD-WEAPON-T1", "Đao Mưa Khởi Ảnh Đao", "Trang bị / vũ khí", "EQUIP_WEAPON", "CLASS_ANH_DAO", "Thường", 1, "Đao khởi đầu phái Ảnh Đao");
+            Reg("EQ-HB-WEAPON-T1", "Bút Mưa Khởi Huyền Bút", "Trang bị / vũ khí", "EQUIP_WEAPON", "CLASS_HUYEN_BUT", "Thường", 1, "Bút khởi đầu phái Huyền Bút");
+            Reg("EQ-TC-WEAPON-T1", "Chùy Mưa Khởi Thạch Chùy", "Trang bị / vũ khí", "EQUIP_WEAPON", "CLASS_THACH_CHUY", "Thường", 1, "Chùy khởi đầu phái Thạch Chùy");
+            Reg("EQ-LC-WEAPON-T1", "Cung Mưa Khởi Linh Cung", "Trang bị / vũ khí", "EQUIP_WEAPON", "CLASS_LINH_CUNG", "Thường", 1, "Cung khởi đầu phái Linh Cung");
 
             // Consumables & Materials
             Reg("POT-HP-01", "Dược Bến Mưa", "Dược phẩm", null, null, "Thường", 1, "Hồi 25% HP, hồi chiêu chia sẻ 8s");
@@ -101,14 +109,29 @@ namespace NguMach.Client.Presentation
             if (Catalog.TryGetValue(templateId, out var meta))
                 return meta;
 
-            // Prefix lookup fallback
-            foreach (var kvp in Catalog)
+            // Rarity variant lookup: <base-id>-R-<RARITY>
+            int rIdx = templateId.LastIndexOf("-R-", StringComparison.OrdinalIgnoreCase);
+            if (rIdx > 0)
             {
-                if (templateId.StartsWith(kvp.Key, StringComparison.OrdinalIgnoreCase))
-                    return new ItemMetadata(templateId, kvp.Value.DisplayName, kvp.Value.Category, kvp.Value.Slot, kvp.Value.ClassId, kvp.Value.Rarity, kvp.Value.RequiredLevel, kvp.Value.Description);
+                string baseId = templateId.Substring(0, rIdx);
+                string suffix = templateId.Substring(rIdx + 3);
+
+                if (RaritySuffixes.TryGetValue(suffix, out var rInfo) && Catalog.TryGetValue(baseId, out var baseMeta))
+                {
+                    return new ItemMetadata(
+                        templateId,
+                        rInfo.prefix + baseMeta.DisplayName,
+                        baseMeta.Category,
+                        baseMeta.Slot,
+                        baseMeta.ClassId,
+                        rInfo.rarity,
+                        baseMeta.RequiredLevel,
+                        baseMeta.Description,
+                        "docs/production/Item_Rarity_Variant_Catalog_vi.csv v1.0");
+                }
             }
 
-            // Clean fallback without UNRESOLVED
+            // Clean fallback without UNRESOLVED (null slot and classId for unknown templates)
             return new ItemMetadata(templateId, templateId, "Vật phẩm", null, null, "Thường", 1, "Chưa có mô tả chi tiết");
         }
     }

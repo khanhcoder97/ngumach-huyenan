@@ -30,12 +30,12 @@ namespace PlayerUIChecks
             // SYNTHETIC
             var adapter = new FakeAdapter
             {
-                Quests = new[] { MakeQuest("Q1", "AVAILABLE") }
+                Quests = new[] { MakeQuest("P00-01", "AVAILABLE") }
             };
             adapter.OnReadInventory = () => Task.FromResult(P1Result.Ok());
 
             var presenter = new NpcDialoguePresenter(adapter);
-            var state = await presenter.InteractAsync("NPC_TEST", CancellationToken.None);
+            var state = await presenter.InteractAsync("NPC_LYAN", CancellationToken.None);
 
             Assert.True(state.IsLoaded);
             Assert.Contains(state.Value.Choices, c => c.Label.Contains("Nhận nhiệm vụ") && c.Enabled);
@@ -46,7 +46,7 @@ namespace PlayerUIChecks
         {
             var adapter = new FakeAdapter { HasPendingMutation = true };
             var presenter = new NpcDialoguePresenter(adapter);
-            var state = await presenter.InteractAsync("NPC_TEST", CancellationToken.None);
+            var state = await presenter.InteractAsync("NPC_LYAN", CancellationToken.None);
 
             Assert.True(state.IsError);
             Assert.Equal("pending_mutation", state.ErrorCode);
@@ -57,7 +57,7 @@ namespace PlayerUIChecks
         {
             var adapter = new FakeAdapter { Quests = Array.Empty<P1Quest>() };
             var presenter = new NpcDialoguePresenter(adapter);
-            var state = await presenter.InteractAsync("NPC_TEST", CancellationToken.None);
+            var state = await presenter.InteractAsync("NPC_LYAN", CancellationToken.None);
 
             Assert.True(state.IsLoaded);
             Assert.Single(state.Value.Choices);
@@ -69,10 +69,10 @@ namespace PlayerUIChecks
         {
             var adapter = new FakeAdapter
             {
-                Quests = new[] { MakeQuest("Q1", "ACTIVE") }
+                Quests = new[] { MakeQuest("P00-01", "ACTIVE") }
             };
             var presenter = new NpcDialoguePresenter(adapter);
-            var state = await presenter.InteractAsync("NPC_TEST", CancellationToken.None);
+            var state = await presenter.InteractAsync("NPC_LYAN", CancellationToken.None);
 
             Assert.True(state.IsLoaded);
             Assert.Contains(state.Value.Choices, c => !c.Enabled && c.DisabledReason != null);

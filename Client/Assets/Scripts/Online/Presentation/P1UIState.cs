@@ -107,6 +107,16 @@ namespace NguMach.Client.Presentation
             {
                 int globalIdx = start + i;
                 Slots.TryGetValue(globalIdx, out var slot);
+                if (slot != null && !string.IsNullOrEmpty(FilterText))
+                {
+                    bool match = (slot.DisplayName != null && slot.DisplayName.IndexOf(FilterText, StringComparison.OrdinalIgnoreCase) >= 0)
+                              || (slot.TemplateId != null && slot.TemplateId.IndexOf(FilterText, StringComparison.OrdinalIgnoreCase) >= 0);
+                    if (!match)
+                    {
+                        yield return (i, null);
+                        continue;
+                    }
+                }
                 yield return (i, slot); // slot may be null = empty
             }
         }
@@ -153,25 +163,30 @@ namespace NguMach.Client.Presentation
         public IReadOnlyList<QuestEntryView> Active { get; }
         public IReadOnlyList<QuestEntryView> Completed { get; }
         public string SelectedQuestId { get; }
-        public bool HasPinnedTracker { get; }
+        public string PinnedQuestId { get; }
+        public bool HasPinnedTracker => !string.IsNullOrEmpty(PinnedQuestId);
 
         public QuestJournalViewState(
             IReadOnlyList<QuestEntryView> active,
             IReadOnlyList<QuestEntryView> completed,
             string selectedQuestId = null,
-            bool hasPinnedTracker = false)
+            bool hasPinnedTracker = false,
+            string pinnedQuestId = null)
         {
             Active = active ?? Array.Empty<QuestEntryView>();
             Completed = completed ?? Array.Empty<QuestEntryView>();
             SelectedQuestId = selectedQuestId;
-            HasPinnedTracker = hasPinnedTracker;
+            PinnedQuestId = pinnedQuestId ?? (hasPinnedTracker ? (selectedQuestId ?? "P00-01") : null);
         }
 
         public QuestJournalViewState WithSelection(string questId) =>
-            new QuestJournalViewState(Active, Completed, questId, HasPinnedTracker);
+            new QuestJournalViewState(Active, Completed, questId, HasPinnedTracker, PinnedQuestId);
 
         public QuestJournalViewState WithPinned(bool pinned) =>
-            new QuestJournalViewState(Active, Completed, SelectedQuestId, pinned);
+            new QuestJournalViewState(Active, Completed, SelectedQuestId, pinned, pinned ? (PinnedQuestId ?? SelectedQuestId ?? "P00-01") : null);
+
+        public QuestJournalViewState WithPinnedQuest(string pinnedQuestId) =>
+            new QuestJournalViewState(Active, Completed, SelectedQuestId, !string.IsNullOrEmpty(pinnedQuestId), pinnedQuestId);
     }
 
     public sealed class QuestEntryView

@@ -54,6 +54,7 @@ namespace NguMach.Client.P1
             _presenter = new SettingsPresenter(store ?? new MemorySettingsStore());
             _presenter.OnChanged += Render;
             BuildUI();
+            ApplySettings(_presenter.Current);
             Hide();
         }
 

@@ -56,7 +56,7 @@ namespace NguMach.Client.Presentation
         }
 
         public float ProgressNormalized => DurationSeconds > 0f ? Math.Min(1f, Math.Max(0f, ElapsedSeconds / DurationSeconds)) : 1f;
-        public bool IsPlaying => Phase == CinemaPlaybackPhase.Playing;
+        public bool IsPlaying => Phase == CinemaPlaybackPhase.Playing || Phase == CinemaPlaybackPhase.Fallback;
         public bool IsEnded => Phase == CinemaPlaybackPhase.Ended;
     }
 }

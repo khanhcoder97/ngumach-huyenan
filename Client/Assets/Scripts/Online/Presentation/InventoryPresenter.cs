@@ -41,6 +41,13 @@ namespace NguMach.Client.Presentation
             try
             {
                 var result = await _adapter.ReadInventoryAsync(ct);
+                if (ct.IsCancellationRequested)
+                {
+                    _state = _state.Value != null ? _state.WithValue(_state.Value) : AsyncState<InventoryViewState>.Idle;
+                    NotifyChanged();
+                    ct.ThrowIfCancellationRequested();
+                }
+
                 if (!result.Success)
                 {
                     _state = _state.WithError(result.Code, result.CorrelationId);

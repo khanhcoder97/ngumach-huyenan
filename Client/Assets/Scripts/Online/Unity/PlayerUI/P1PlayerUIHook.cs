@@ -52,6 +52,12 @@ namespace NguMach.Client.P1
             playerUIRoot.OpenPanel(panel);
         }
 
+        public void OpenWithNpc(string targetId)
+        {
+            if (playerUIRoot == null || _adapter == null || string.IsNullOrEmpty(targetId)) return;
+            playerUIRoot.OpenWithNpc(targetId);
+        }
+
         /// <summary>Close all player panels.</summary>
         public void CloseAllPanels()
         {

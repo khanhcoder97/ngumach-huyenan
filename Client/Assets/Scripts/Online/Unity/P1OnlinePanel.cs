@@ -181,7 +181,15 @@ namespace NguMach.Client.P1
         {
             RefreshInputSurface();
             if (!inputGate.AllowsGameplay || interact == null || !interact.enabledSelf || interactionTarget == null) return;
-            string id = interactionTarget; RunAction(() => client.InteractAsync(id, life.Token));
+            string id = interactionTarget;
+            if (playerUIHook != null)
+            {
+                playerUIHook.OpenWithNpc(id);
+            }
+            else
+            {
+                RunAction(() => client.InteractAsync(id, life.Token));
+            }
         }
         private void BasicAttack()
         {

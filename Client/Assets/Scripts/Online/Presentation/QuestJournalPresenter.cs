@@ -34,6 +34,13 @@ namespace NguMach.Client.Presentation
             try
             {
                 var result = await _adapter.ReadQuestsAsync(ct);
+                if (ct.IsCancellationRequested)
+                {
+                    _state = _state.Value != null ? _state.WithValue(_state.Value) : AsyncState<QuestJournalViewState>.Idle;
+                    NotifyChanged();
+                    ct.ThrowIfCancellationRequested();
+                }
+
                 if (!result.Success)
                 {
                     _state = _state.WithError(result.Code, result.CorrelationId);
@@ -62,16 +69,16 @@ namespace NguMach.Client.Presentation
         public void SetSelection(string questId)
         {
             if (!_state.IsLoaded || _state.Value == null) return;
-            _state = _state.WithValue(new QuestJournalViewState(
-                _state.Value.Active, _state.Value.Completed,
-                questId, _state.Value.HasPinnedTracker));
+            _state = _state.WithValue(_state.Value.WithSelection(questId));
             NotifyChanged();
         }
 
         public void TogglePin(string questId)
         {
-            if (!_state.IsLoaded || _state.Value == null) return;
-            _state = _state.WithValue(_state.Value.WithPinned(!_state.Value.HasPinnedTracker));
+            if (!_state.IsLoaded || _state.Value == null || string.IsNullOrEmpty(questId)) return;
+            string currentPinned = _state.Value.PinnedQuestId;
+            string nextPinned = string.Equals(currentPinned, questId, StringComparison.OrdinalIgnoreCase) ? null : questId;
+            _state = _state.WithValue(_state.Value.WithPinnedQuest(nextPinned));
             NotifyChanged();
         }
 
@@ -90,7 +97,8 @@ namespace NguMach.Client.Presentation
             }
 
             string selectedId = prev?.SelectedQuestId;
-            return new QuestJournalViewState(active, completed, selectedId, prev?.HasPinnedTracker ?? false);
+            string pinnedId = prev?.PinnedQuestId;
+            return new QuestJournalViewState(active, completed, selectedId, !string.IsNullOrEmpty(pinnedId), pinnedId);
         }
 
         private static (string title, string objectiveDesc) ResolveQuestCopy(P1Quest q)

@@ -7,6 +7,7 @@
 
 using UnityEngine;
 using UnityEngine.UIElements;
+using NguMach.Client.Presentation;
 
 namespace NguMach.Client.P1
 {
@@ -15,6 +16,9 @@ namespace NguMach.Client.P1
         public static PlayerUIRoot Create(GameObject host, UIDocument document)
         {
             if (host == null) throw new System.ArgumentNullException(nameof(host));
+
+            var existing = host.GetComponentInChildren<PlayerUIRoot>();
+            if (existing != null) return existing;
 
             var rootObj = new GameObject("PlayerUI_Root");
             rootObj.transform.SetParent(host.transform, false);

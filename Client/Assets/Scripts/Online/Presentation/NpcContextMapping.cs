@@ -39,7 +39,6 @@ namespace NguMach.Client.Presentation
             Register(new NpcContextInfo("ENT_MAN_BM_NPC_FISHER_01", "MAN-BM-NPC_FISHER_01", "NPC_FISHER_01", "Ngư Dân Bến Mưa"));
             Register(new NpcContextInfo("ENT_MAN_BM_NPC_BM_RESCUE_01", "MAN-BM-NPC_BM_RESCUE_01", "NPC_BM_RESCUE_01", "Dân Làng Bến Mưa 1"));
             Register(new NpcContextInfo("ENT_MAN_BM_NPC_BM_RESCUE_02", "MAN-BM-NPC_BM_RESCUE_02", "NPC_BM_RESCUE_02", "Dân Làng Bến Mưa 2"));
-            Register(new NpcContextInfo("ENT_MAN_BM_NPC_TEST", "MAN-BM-NPC_TEST", "NPC_TEST", "NPC Thử Nghiệm"));
         }
 
         private static void Register(NpcContextInfo info)
@@ -54,8 +53,8 @@ namespace NguMach.Client.Presentation
             if (string.IsNullOrEmpty(id)) return null;
             if (ByAnyId.TryGetValue(id, out var info)) return info;
 
-            // Fallback for unregistered IDs
-            return new NpcContextInfo(id, id, id, id + " (UNRESOLVED — catalog not yet connected)");
+            // Fallback for unregistered IDs: templateId is null to avoid forging canonical identity
+            return new NpcContextInfo(id, null, null, id + " (UNRESOLVED — catalog not yet connected)");
         }
     }
 
@@ -64,9 +63,7 @@ namespace NguMach.Client.Presentation
         private static readonly Dictionary<string, (string startNpc, string turnInNpc)> Quests =
             new Dictionary<string, (string, string)>(StringComparer.OrdinalIgnoreCase)
             {
-                ["P00-01"] = ("NPC_LYAN", "NPC_TA_VAN_KHANH"),
-                ["Q1"] = ("NPC_TEST", "NPC_TEST"),
-                ["QUEST_TEST"] = ("NPC_TEST", "NPC_TEST")
+                ["P00-01"] = ("NPC_LYAN", "NPC_TA_VAN_KHANH")
             };
 
         public static bool IsQuestStartNpc(string questId, string npcTemplateId)

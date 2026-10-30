@@ -32,7 +32,7 @@ namespace NguMach.Client.P1
 
         // ── Public API ───────────────────────────────────────────────────────
 
-        public bool IsAnyOpen => _router != null && _router.IsAnyOpen;
+        public bool IsAnyOpen => (_router != null && _router.IsAnyOpen) || (cinemaOverlay != null && cinemaOverlay.Presenter != null && cinemaOverlay.Presenter.State != null && cinemaOverlay.Presenter.State.IsPlaying);
         public PanelRouter Router => _router;
         public bool HandleEscapeInput { get; set; } = false; // AGR2-03: Single Escape owner
 
@@ -51,7 +51,8 @@ namespace NguMach.Client.P1
             NpcDialoguePanel npc,
             SettingsPanel settings,
             MapPanel map,
-            PlayerUIButtonBar bar)
+            PlayerUIButtonBar bar,
+            CinemaOverlay cinema)
         {
             inventoryPanel = inv;
             characterPanel = character;
@@ -60,6 +61,7 @@ namespace NguMach.Client.P1
             settingsPanel = settings;
             mapPanel = map;
             buttonBar = bar;
+            cinemaOverlay = cinema;
         }
 
         /// <summary>Close all panels (alias for hook compatibility).</summary>
@@ -122,6 +124,16 @@ namespace NguMach.Client.P1
         }
 
         public void PlayCinema(string sceneId) => cinemaOverlay?.PlayScene(sceneId);
+
+        public void OpenWithNpc(string targetId)
+        {
+            if (_adapter == null || _closing || string.IsNullOrEmpty(targetId)) return;
+            OpenPanel(PlayerPanel.NpcDialogue);
+            if (npcDialoguePanel != null)
+            {
+                _ = npcDialoguePanel.OpenWithNpcAsync(targetId);
+            }
+        }
 
         public void OpenPanel(PlayerPanel panel)
         {
