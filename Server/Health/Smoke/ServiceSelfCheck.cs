@@ -1943,14 +1943,15 @@ public static class ServiceSelfCheck
             notEnforced.Status == LineOfSightStatus.NotEnforced,
             notEnforced.Reason?.ToString());
 
-        WorldEntityInstance MakeFixtureMob(string entityId, double x, double y)
+        WorldEntityInstance MakeFixtureMob(
+            string entityId, double x, double y, string templateId = "MOB_CARPLING")
         {
             var mob = new WorldEntityInstance
             {
                 EntityId = entityId,
                 RecordId = "MAN-TEST-" + entityId,
                 Kind = WorldEntityKinds.Mob,
-                TemplateIds = new[] { "MOB_CARPLING" },
+                TemplateIds = new[] { templateId },
                 MapId = options.DefaultMapId,
                 FloorId = "OVERWORLD",
                 X = x,
@@ -1970,41 +1971,235 @@ public static class ServiceSelfCheck
             LeashRadiusWu = 12,
             AttackRangeWu = 1.2,
             AttackCooldownSeconds = 2,
-            MoveSpeedWuPerSecond = 2
+            MoveSpeedWuPerSecond = 2,
+            TelegraphSeconds = 0.45,
+            RecoverySeconds = 0.5
         };
+        MobAttackService NewMobAttacks(WorldEntityRegistry registry, CombatDamageFeature feature) =>
+            new(registry, feature, mobOptions);
+        MobLifecycleEvent Impact(string entityId, string targetCharacterId) =>
+            new(entityId, MobBehaviorStates.Telegraph, MobBehaviorStates.Attack,
+                mobClock.UtcNow, targetCharacterId);
+        int ImpactCount(IReadOnlyList<MobLifecycleEvent> lifecycleEvents) =>
+            lifecycleEvents.Count(lifecycle =>
+                lifecycle.ToState == MobBehaviorStates.Attack);
+
         var mobRegistry = new WorldEntityRegistry(
             new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_MOB", 43, 0)]),
             mobClock);
         var mobAi = new MobLifecycleService(mobRegistry, geometry, mobOptions, mobClock);
+        var mobAttacks = NewMobAttacks(mobRegistry, enabledCombat);
         var prey = NewPlayer("CHR_SELFCHECK_PREY");
         prey.X = 44;
         prey.Y = 0;
 
-        mobAi.Tick([prey]);
+        var aggroTick = mobAi.Tick([prey]);
         Check(
             "mob.aggro",
-            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Aggro,
+            aggroTick.Any(lifecycle =>
+                lifecycle.FromState == MobBehaviorStates.Idle &&
+                lifecycle.ToState == MobBehaviorStates.Aggro) &&
+            aggroTick.Any(lifecycle =>
+                lifecycle.FromState == MobBehaviorStates.Aggro &&
+                lifecycle.ToState == MobBehaviorStates.Chase),
+            string.Join(",", aggroTick.Select(lifecycle => lifecycle.ToState)));
+
+        Check(
+            "mob.telegraph_opens",
+            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Telegraph &&
+            aggroTick.Any(lifecycle =>
+                lifecycle.FromState == MobBehaviorStates.Chase &&
+                lifecycle.ToState == MobBehaviorStates.Telegraph) &&
+            ImpactCount(aggroTick) == 0,
             mobAi.GetState("ENT_SELFCHECK_MOB"));
 
-        mobClock.Advance(TimeSpan.FromSeconds(0.5));
+        mobClock.Advance(TimeSpan.FromSeconds(0.3));
+        var holdingTick = mobAi.Tick([prey]);
+        Check(
+            "mob.telegraph_holds",
+            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Telegraph &&
+            ImpactCount(holdingTick) == 0,
+            mobAi.GetState("ENT_SELFCHECK_MOB"));
+
+        mobClock.Advance(TimeSpan.FromSeconds(0.2));
         var attackTick = mobAi.Tick([prey]);
-        var attackEvents = attackTick.Count(
-            lifecycle => lifecycle.FromState == MobBehaviorStates.Attack &&
-                         lifecycle.ToState == MobBehaviorStates.Attack);
+        var impactOrder = attackTick
+            .Where(lifecycle => lifecycle.FromState == MobBehaviorStates.Telegraph ||
+                                lifecycle.ToState == MobBehaviorStates.Recover)
+            .Select(lifecycle => $"{lifecycle.FromState}>{lifecycle.ToState}")
+            .ToArray();
         Check(
             "mob.attack",
-            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Attack &&
-            attackEvents == 1,
-            mobAi.GetState("ENT_SELFCHECK_MOB"));
+            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Recover &&
+            impactOrder.SequenceEqual(
+                new[] { "TELEGRAPH>ATTACK", "ATTACK>RECOVER" }, StringComparer.Ordinal),
+            string.Join(",", impactOrder));
+
+        var firstImpact = mobAttacks.ApplyImpacts(attackTick, [prey]);
+        Check(
+            "mob.damage_lands",
+            firstImpact.Count == 1 &&
+            firstImpact[0] is { Applied: true, AttackId: "BITE", Damage: 10, HpBefore: 100, HpAfter: 90 } &&
+            prey.Hp == 90,
+            firstImpact.Count == 1 ? firstImpact[0].ToString() : "no resolution");
+
+        // Art Bible §12 CARPLING attack 15 x BITE 0,8 = 12 raw; Rules §2 floor
+        // (12 * 100 / (100 + armor 10)) = 10.
+        Check(
+            "mob.damage_revision_bumps",
+            prey.Revision == 2,
+            $"revision={prey.Revision}");
 
         mobClock.Advance(TimeSpan.FromSeconds(0.5));
+        var recoverTick = mobAi.Tick([prey]);
+        Check(
+            "mob.recovery_ends_to_chase",
+            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Chase &&
+            recoverTick.Any(lifecycle =>
+                lifecycle.FromState == MobBehaviorStates.Recover &&
+                lifecycle.ToState == MobBehaviorStates.Chase),
+            mobAi.GetState("ENT_SELFCHECK_MOB"));
+
         var cooldownTick = mobAi.Tick([prey]);
         Check(
             "mob.attack_cooldown",
-            cooldownTick.All(lifecycle =>
-                lifecycle.FromState != MobBehaviorStates.Attack ||
-                lifecycle.ToState != MobBehaviorStates.Attack),
-            "attack fired during cooldown");
+            ImpactCount(cooldownTick) == 0 &&
+            cooldownTick.All(lifecycle => lifecycle.ToState != MobBehaviorStates.Telegraph),
+            "impact fired during cooldown");
+
+        mobClock.Advance(TimeSpan.FromSeconds(1.5));
+        var readyTick = mobAi.Tick([prey]);
+        Check(
+            "mob.telegraph_repeats_after_cooldown",
+            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Telegraph &&
+            readyTick.Any(lifecycle =>
+                lifecycle.FromState == MobBehaviorStates.Chase &&
+                lifecycle.ToState == MobBehaviorStates.Telegraph),
+            mobAi.GetState("ENT_SELFCHECK_MOB"));
+
+        mobClock.Advance(TimeSpan.FromSeconds(0.5));
+        var secondAttackTick = mobAi.Tick([prey]);
+        var secondImpact = mobAttacks.ApplyImpacts(secondAttackTick, [prey]);
+        Check(
+            "mob.damage_second_impact",
+            secondImpact.Count == 1 && secondImpact[0].Damage == 10 && prey.Hp == 80,
+            $"hp={prey.Hp}");
+
+        var whiffClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 29, 5, 0, 0, TimeSpan.Zero));
+        var whiffRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_WHIFF_MOB", 43, 0)]),
+            whiffClock);
+        var whiffAi = new MobLifecycleService(whiffRegistry, geometry, mobOptions, whiffClock);
+        var whiffAttacks = NewMobAttacks(whiffRegistry, enabledCombat);
+        var runner = NewPlayer("CHR_SELFCHECK_RUNNER");
+        runner.X = 44;
+        runner.Y = 0;
+        whiffAi.Tick([runner]);
+        runner.X = 44.6;
+        whiffClock.Advance(TimeSpan.FromSeconds(0.5));
+        var whiffTick = whiffAi.Tick([runner]);
+        var whiffImpact = whiffAttacks.ApplyImpacts(whiffTick, [runner]);
+        Check(
+            "mob.impact_whiffs_out_of_range",
+            ImpactCount(whiffTick) == 1 &&
+            whiffImpact.Count == 1 &&
+            whiffImpact[0] is { Applied: false, BlockedReason: nameof(MobAttackBlockedReasons.OutOfRangeAtImpact) } &&
+            runner.Hp == 100,
+            whiffImpact.Count == 1 ? whiffImpact[0].BlockedReason : "no resolution");
+
+        var cancelClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 29, 6, 0, 0, TimeSpan.Zero));
+        var cancelRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_CANCEL_MOB", 43, 0)]),
+            cancelClock);
+        var cancelAi = new MobLifecycleService(cancelRegistry, geometry, mobOptions, cancelClock);
+        var cancelAttacks = NewMobAttacks(cancelRegistry, enabledCombat);
+        var bait = NewPlayer("CHR_SELFCHECK_BAIT");
+        bait.X = 44;
+        bait.Y = 0;
+        cancelAi.Tick([bait]);
+        cancelClock.Advance(TimeSpan.FromSeconds(0.1));
+        var cancelTick = cancelAi.Tick([]);
+        cancelClock.Advance(TimeSpan.FromSeconds(1));
+        var afterCancelTick = cancelAi.Tick([]);
+        Check(
+            "mob.telegraph_cancel_on_lost_target",
+            cancelAi.GetState("ENT_SELFCHECK_CANCEL_MOB") == MobBehaviorStates.Idle &&
+            cancelTick.Any(lifecycle =>
+                lifecycle.FromState == MobBehaviorStates.Telegraph &&
+                lifecycle.ToState == MobBehaviorStates.Return) &&
+            ImpactCount(afterCancelTick) == 0 &&
+            cancelAttacks.ApplyImpacts(afterCancelTick, []).Count == 0 &&
+            bait.Hp == 100,
+            cancelAi.GetState("ENT_SELFCHECK_CANCEL_MOB"));
+
+        var gateOffAttacks = NewMobAttacks(mobRegistry, combatDamage);
+        var gateOffImpact = gateOffAttacks.ApplyImpacts(
+            [Impact("ENT_SELFCHECK_MOB", prey.CharacterId)], [prey]);
+        Check(
+            "mob.damage_gate_off",
+            gateOffImpact.Count == 1 &&
+            gateOffImpact[0] is { Applied: false, BlockedReason: nameof(MobAttackBlockedReasons.GateOff) } &&
+            prey.Hp == 80,
+            gateOffImpact.Count == 1 ? gateOffImpact[0].BlockedReason : "no resolution");
+
+        var oracleRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([],
+            [
+                MakeFixtureMob("ENT_SELFCHECK_WATERROOT", 43, 0, "MOB_WATERROOT"),
+                MakeFixtureMob("ENT_SELFCHECK_STALKER_ELITE", 43, 0, "MOB_SHORE_STALKER_ELITE"),
+                MakeFixtureMob("ENT_SELFCHECK_MOSS_BEAST", 43, 0, "MOB_MOSS_BEAST")
+            ]),
+            mobClock);
+        var oracleAttacks = NewMobAttacks(oracleRegistry, enabledCombat);
+        var waterrootPrey = NewPlayer("CHR_SELFCHECK_WATERROOT_PREY");
+        waterrootPrey.X = 43.5;
+        var elitePrey = NewPlayer("CHR_SELFCHECK_ELITE_PREY");
+        elitePrey.X = 43.5;
+        var unknownPrey = NewPlayer("CHR_SELFCHECK_UNKNOWN_PREY");
+        unknownPrey.X = 43.5;
+        var oracleImpacts = oracleAttacks.ApplyImpacts(
+            [
+                Impact("ENT_SELFCHECK_WATERROOT", waterrootPrey.CharacterId),
+                Impact("ENT_SELFCHECK_STALKER_ELITE", elitePrey.CharacterId),
+                Impact("ENT_SELFCHECK_MOSS_BEAST", unknownPrey.CharacterId)
+            ],
+            [waterrootPrey, elitePrey, unknownPrey]);
+        Check(
+            "mob.damage_waterroot_basic_move",
+            waterrootPrey.Hp == 82 &&
+            oracleImpacts.Single(resolution =>
+                resolution.EntityId == "ENT_SELFCHECK_WATERROOT") is
+                { Damage: 18, AttackId: "VINE" },
+            $"hp={waterrootPrey.Hp}");
+        Check(
+            "mob.damage_elite_scaling",
+            elitePrey.Hp == 67 &&
+            oracleImpacts.Single(resolution =>
+                resolution.EntityId == "ENT_SELFCHECK_STALKER_ELITE") is
+                { Damage: 33, AttackId: "POUNCE" },
+            $"hp={elitePrey.Hp}");
+        Check(
+            "mob.damage_unknown_template",
+            unknownPrey.Hp == 100 &&
+            oracleImpacts.Single(resolution =>
+                resolution.EntityId == "ENT_SELFCHECK_MOSS_BEAST")
+                is { Applied: false, BlockedReason: nameof(MobAttackBlockedReasons.UnknownTemplate) },
+            $"hp={unknownPrey.Hp}");
+
+        var downedPrey = NewPlayer("CHR_SELFCHECK_DOWNED_PREY", hp: 0);
+        downedPrey.X = 44;
+        downedPrey.Y = 0;
+        var downedTick = mobAi.Tick([downedPrey]);
+        var downedImpact = mobAttacks.ApplyImpacts(
+            [Impact("ENT_SELFCHECK_MOB", downedPrey.CharacterId)], [downedPrey]);
+        Check(
+            "mob.downed_target_untouched",
+            ImpactCount(downedTick) == 0 &&
+            downedImpact.Single()
+                is { Applied: false, BlockedReason: nameof(MobAttackBlockedReasons.TargetDown) },
+            downedImpact.Single().BlockedReason);
 
         var wallClock = new ManualServerClock(
             new DateTimeOffset(2026, 10, 29, 2, 0, 0, TimeSpan.Zero));

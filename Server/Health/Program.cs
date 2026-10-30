@@ -52,6 +52,7 @@ builder.Services.Configure<MobBehaviorOptions>(
 builder.Services.AddSingleton(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<MobBehaviorOptions>>().Value);
 builder.Services.AddSingleton<MobLifecycleService>();
+builder.Services.AddSingleton<MobAttackService>();
 builder.Services.AddSingleton<IQuestCatalog>(serviceProvider =>
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
@@ -171,8 +172,9 @@ MobBehaviorOptionsValidator.Validate(mobBehavior);
 if (mobBehavior.Enabled)
 {
     app.Logger.LogWarning(
-        "DEV FIXTURE: P1:MobBehavior is enabled with labelled fixture radii; " +
-        "no damage or canonical mob stats are applied.");
+        "DEV FIXTURE: P1:MobBehavior is enabled with labelled fixture radii, " +
+        "telegraph and recovery durations; mob damage still requires " +
+        "P1:CombatDamage and uses REFERENCE_L5 stats, not balance.");
 }
 
 var combatDamage = app.Services.GetRequiredService<CombatDamageFeature>();
@@ -181,7 +183,7 @@ if (combatDamage.Enabled)
     app.Logger.LogWarning(
         "DEV STUB: P1:CombatDamage is enabled with the REFERENCE_L5 mob stat " +
         "bundle (DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION); the QOD-16 proposal " +
-        "is not approved yet, so no damage is applied.");
+        "is not approved yet, so every damage number in flight is a fixture.");
 }
 
 var combatV2 = app.Services.GetRequiredService<P1CombatV2Options>();

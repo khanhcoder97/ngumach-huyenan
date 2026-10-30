@@ -14,7 +14,7 @@
   "self": {
     "characterId": "CHR_MINH_KIEM_01",
     "classId": "CLASS_MINH_KIEM",
-    "x": 37.5,
+    "x": 46,
     "y": 0,
     "hp": 100,
     "maxHp": 100,
@@ -71,6 +71,22 @@
       "hp": 0,
       "maxHp": 0,
       "revision": 1,
+      "lifeId": 1
+    },
+    {
+      "entityId": "ENT_MAN_BM_WAVE_BM_ESCORT_A",
+      "kind": "MOB",
+      "mapInstanceId": "MAP_BEN_MUA#1",
+      "floorId": "OVERWORLD",
+      "phase": "OPEN_WORLD",
+      "x": 80,
+      "y": 0,
+      "state": "TELEGRAPH",
+      "healthState": "ALIVE",
+      "targetable": true,
+      "hp": 192,
+      "maxHp": 192,
+      "revision": 4,
       "lifeId": 1
     }
   ]
