@@ -1074,6 +1074,8 @@ public static class ServiceSelfCheck
             MaxPageSize = 256
         });
         var tickStateStore = new MobCombatStateStore();
+        var tickGuardWindows = new GuardWindowStore();
+        var tickGeometry = services.GetRequiredService<IWorldGeometryService>();
         var tickEngine = new CombatTickEngine(
             tickRegistry,
             enabledCombat,
@@ -1082,6 +1084,8 @@ public static class ServiceSelfCheck
             tickStateStore,
             tickQuests,
             new FixedCombatRolls(hit: true, crit: false),
+            tickGuardWindows,
+            tickGeometry,
             new ServerClock());
 
         var basicTickCastId = new string('a', 32);
@@ -1148,7 +1152,8 @@ public static class ServiceSelfCheck
         var missEngine = new CombatTickEngine(
             missRegistry, enabledCombat, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), missStore,
-            tickQuests, new FixedCombatRolls(hit: false, crit: false), new ServerClock());
+            tickQuests, new FixedCombatRolls(hit: false, crit: false),
+            tickGuardWindows, tickGeometry, new ServerClock());
         missEngine.Schedule(
             tickQuestActor, "e2e33333333333333333333333333333",
             new string('c', 32), CombatV2Actions.BasicAttack, null, 1, 0, 300);
@@ -1167,7 +1172,8 @@ public static class ServiceSelfCheck
         var rangeEngine = new CombatTickEngine(
             rangeRegistry, enabledCombat, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
-            tickQuests, new FixedCombatRolls(hit: true, crit: false), new ServerClock());
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            tickGuardWindows, tickGeometry, new ServerClock());
         rangeEngine.Schedule(
             tickQuestActor, "e2e44444444444444444444444444444",
             new string('d', 32), CombatV2Actions.BasicAttack, null, 1, 0, 400);
@@ -1183,7 +1189,8 @@ public static class ServiceSelfCheck
         var behindEngine = new CombatTickEngine(
             behindRegistry, enabledCombat, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
-            tickQuests, new FixedCombatRolls(hit: true, crit: false), new ServerClock());
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            tickGuardWindows, tickGeometry, new ServerClock());
         behindEngine.Schedule(
             tickQuestActor, "e2e55555555555555555555555555555",
             new string('e', 32), CombatV2Actions.BasicAttack, null, 1, 0, 500);
@@ -1205,7 +1212,8 @@ public static class ServiceSelfCheck
         var deathEngine = new CombatTickEngine(
             deathRegistry, enabledCombat, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), deathStore,
-            deathQuests, new FixedCombatRolls(hit: true, crit: false), new ServerClock());
+            deathQuests, new FixedCombatRolls(hit: true, crit: false),
+            tickGuardWindows, tickGeometry, new ServerClock());
 
         var deathCount = 0;
         for (var castIndex = 0; castIndex < 6; castIndex++)
@@ -1976,7 +1984,8 @@ public static class ServiceSelfCheck
             RecoverySeconds = 0.5
         };
         MobAttackService NewMobAttacks(WorldEntityRegistry registry, CombatDamageFeature feature) =>
-            new(registry, feature, mobOptions);
+            new(registry, feature, mobOptions, new GuardDefenseService(
+                new GuardWindowStore(), feature, new CombatEventStore(new CombatEventStreamOptions())));
         MobLifecycleEvent Impact(string entityId, string targetCharacterId) =>
             new(entityId, MobBehaviorStates.Telegraph, MobBehaviorStates.Attack,
                 mobClock.UtcNow, targetCharacterId);
@@ -2040,7 +2049,7 @@ public static class ServiceSelfCheck
                 new[] { "TELEGRAPH>ATTACK", "ATTACK>RECOVER" }, StringComparer.Ordinal),
             string.Join(",", impactOrder));
 
-        var firstImpact = mobAttacks.ApplyImpacts(attackTick, [prey]);
+        var firstImpact = mobAttacks.ApplyImpacts(attackTick, [prey], mobClock.Tick);
         Check(
             "mob.damage_lands",
             firstImpact.Count == 1 &&
@@ -2092,7 +2101,7 @@ public static class ServiceSelfCheck
 
         mobClock.Advance(TimeSpan.FromSeconds(0.60));
         var secondAttackTick = mobAi.Tick([prey]);
-        var secondImpact = mobAttacks.ApplyImpacts(secondAttackTick, [prey]);
+        var secondImpact = mobAttacks.ApplyImpacts(secondAttackTick, [prey], mobClock.Tick);
         Check(
             "mob.damage_second_impact",
             secondImpact.Count == 1 && secondImpact[0].Damage == 10 && prey.Hp == 80,
@@ -2115,7 +2124,7 @@ public static class ServiceSelfCheck
         runner.X = 44.6;
         whiffClock.Advance(TimeSpan.FromSeconds(0.60));
         var whiffTick = whiffAi.Tick([runner]);
-        var whiffImpact = whiffAttacks.ApplyImpacts(whiffTick, [runner]);
+        var whiffImpact = whiffAttacks.ApplyImpacts(whiffTick, [runner], whiffClock.Tick);
         Check(
             "mob.impact_whiffs_out_of_range",
             ImpactCount(whiffTick) == 1 &&
@@ -2152,13 +2161,13 @@ public static class ServiceSelfCheck
                 lifecycle.ToState == MobBehaviorStates.Return) &&
             ImpactCount(cancelTick) == 0 &&
             ImpactCount(afterCancelTick) == 0 &&
-            cancelAttacks.ApplyImpacts(afterCancelTick, []).Count == 0 &&
+            cancelAttacks.ApplyImpacts(afterCancelTick, [], cancelClock.Tick).Count == 0 &&
             bait.Hp == 100,
             cancelAi.GetState("ENT_SELFCHECK_CANCEL_MOB"));
 
         var gateOffAttacks = NewMobAttacks(mobRegistry, combatDamage);
         var gateOffImpact = gateOffAttacks.ApplyImpacts(
-            [Impact("ENT_SELFCHECK_MOB", prey.CharacterId)], [prey]);
+            [Impact("ENT_SELFCHECK_MOB", prey.CharacterId)], [prey], mobClock.Tick);
         Check(
             "mob.damage_gate_off",
             gateOffImpact.Count == 1 &&
@@ -2188,7 +2197,7 @@ public static class ServiceSelfCheck
                 Impact("ENT_SELFCHECK_STALKER_ELITE", elitePrey.CharacterId),
                 Impact("ENT_SELFCHECK_MOSS_BEAST", unknownPrey.CharacterId)
             ],
-            [waterrootPrey, elitePrey, unknownPrey]);
+            [waterrootPrey, elitePrey, unknownPrey], mobClock.Tick);
         Check(
             "mob.damage_waterroot_basic_move",
             waterrootPrey.Hp == 82 &&
@@ -2217,7 +2226,7 @@ public static class ServiceSelfCheck
         downedPrey.Y = 0;
         var downedTick = mobAi.Tick([downedPrey]);
         var downedImpact = mobAttacks.ApplyImpacts(
-            [Impact("ENT_SELFCHECK_MOB", downedPrey.CharacterId)], [downedPrey]);
+            [Impact("ENT_SELFCHECK_MOB", downedPrey.CharacterId)], [downedPrey], mobClock.Tick);
         var downedResolution = downedImpact.Single();
         Check(
             "mob.downed_target_untouched",
@@ -2280,6 +2289,295 @@ public static class ServiceSelfCheck
             "mob.floor_ignored",
             floorAi.GetState("ENT_SELFCHECK_FLOOR_MOB") == MobBehaviorStates.Idle,
             floorAi.GetState("ENT_SELFCHECK_FLOOR_MOB"));
+
+        // ─── DEC-022: guard window, whiff buff and counter runtime ───
+
+        var guardClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 30, 1, 0, 0, TimeSpan.Zero));
+        var guardRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([],
+            [
+                MakeFixtureMob("ENT_SELFCHECK_GUARD_MOB", 41, 0),
+                MakeFixtureMob("ENT_SELFCHECK_GUARD_MOB2", 40.9, 0.6),
+                MakeFixtureMob("ENT_SELFCHECK_GUARD_MOB3", 41.1, 0.2)
+            ]),
+            guardClock);
+        var guardWindows = new GuardWindowStore();
+        var guardEvents = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var guardDefense = new GuardDefenseService(guardWindows, enabledCombat, guardEvents);
+        var guardAttacks = new MobAttackService(
+            guardRegistry, enabledCombat, mobOptions, guardDefense);
+        var guardStates = new MobCombatStateStore();
+        var guardEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            guardWindows, geometry, guardClock);
+        var guardMissEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
+            tickQuests, new FixedCombatRolls(hit: false, crit: false),
+            guardWindows, geometry, guardClock);
+
+        MobLifecycleEvent GuardImpact(string entityId, PlayerSession victim) =>
+            new(entityId, MobBehaviorStates.Telegraph, MobBehaviorStates.Attack,
+                guardClock.UtcNow, victim.CharacterId);
+        int CountEvent(string sessionId, string type) => guardEvents
+            .Read(sessionId, 0, 256).Events
+            .Count(stored => stored.Type == type);
+        PlayerSession NewGuardHero(string suffix, int hp = 100)
+        {
+            var hero = NewPlayer("CHR_SELFCHECK_GUARD_" + suffix, hp: hp);
+            hero.X = 40;
+            hero.Y = 0;
+            return hero;
+        }
+
+        var hero1 = NewGuardHero("ONE");
+        var policyCastId = new string('f', 32);
+        guardEngine.Schedule(
+            hero1, hero1.SessionId, policyCastId, CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 0);
+        var policyWindow = guardWindows.Find(hero1.CharacterId);
+        Check(
+            "guard.window_opens_on_accept",
+            policyWindow is not null &&
+            policyWindow.GuardCastId == policyCastId &&
+            policyWindow is
+            {
+                CastStartTick: 0,
+                GuardEndExclusiveTick: 8,
+                WhiffEndExclusiveTick: 28,
+                CounterCoefficient: 1.8,
+                AttackSnapshot: 20
+            } &&
+            guardWindows.Count == 1,
+            policyWindow is null ? "no window" : $"{policyWindow.GuardEndExclusiveTick}");
+
+        Check(
+            "guard.front_hit_inside_window",
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 7, 41, 0)
+                is { Phase: GuardPhases.Guard, DamageReduction: 0.7, FrontHit: true, CounterEligible: true },
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 7, 41, 0).Phase);
+        Check(
+            "guard.back_hit_gets_no_reduction",
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 5, 39, 0)
+                is { Phase: GuardPhases.Guard, DamageReduction: 0, FrontHit: false, CounterEligible: false },
+            "behind hit reduced");
+        Check(
+            "guard.range_edge_is_inclusive",
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 5, 44.4, 0).FrontHit &&
+            !guardDefense.EvaluateIncoming(hero1.CharacterId, 5, 44.5, 0).FrontHit,
+            "4.4 WU edge");
+        Check(
+            "guard.angle_edge_is_inclusive",
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 5, 41, 1.7320508075688772).FrontHit &&
+            !guardDefense.EvaluateIncoming(hero1.CharacterId, 5, 41, 1.8).FrontHit,
+            "60 degree edge");
+        Check(
+            "guard.window_end_is_exclusive_whiff_starts",
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 8, 41, 0)
+                is { Phase: GuardPhases.Whiff, DamageReduction: 0.2, CounterEligible: false },
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 8, 41, 0).Phase);
+
+        // The guard cast itself has no impacts, so its END lands at start+2 while
+        // the whiff buff still has 20 ticks to live (DEC-022 §4).
+        var guardEndEvents = guardEngine.Tick(2);
+        var whiffResolutions = guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB2", hero1)], [hero1], 20);
+        Check(
+            "guard.cast_end_keeps_whiff",
+            guardEndEvents.Any(stored => stored.Type == CombatEventTypesV2.End) &&
+            whiffResolutions.Single() is { Applied: true, Damage: 8, GuardPhase: GuardPhases.Whiff } &&
+            hero1.Hp == 92 &&
+            hero1.SwordIntent == 0 &&
+            CountEvent(hero1.SessionId, CombatEventTypesV2.CounterConfirmed) == 0,
+            whiffResolutions.Single().Damage.ToString());
+
+        var expiredResolutions = guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB2", hero1)], [hero1], 30);
+        Check(
+            "guard.whiff_expires_full_damage",
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 28, 41, 0).Phase == GuardPhases.Expired &&
+            expiredResolutions.Single() is { Damage: 10, GuardPhase: GuardPhases.Expired } &&
+            hero1.Hp == 82,
+            expiredResolutions.Single().Damage.ToString());
+
+        var hero2 = NewGuardHero("TWO");
+        var counterCastId = new string('e', 32);
+        guardEngine.Schedule(
+            hero2, hero2.SessionId, counterCastId, CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 0);
+        var twoHits = guardAttacks.ApplyImpacts(
+            [
+                GuardImpact("ENT_SELFCHECK_GUARD_MOB", hero2),
+                GuardImpact("ENT_SELFCHECK_GUARD_MOB2", hero2)
+            ],
+            [hero2],
+            tick: 5);
+        var counterWindow = guardWindows.Find(hero2.CharacterId);
+        Check(
+            "guard.two_hits_one_confirmation_one_counter",
+            twoHits.Count == 2 &&
+            twoHits.All(resolution => resolution.Damage == 3) &&
+            hero2.Hp == 94 &&
+            counterWindow is { ConfirmationCount: 1 } &&
+            hero2.SwordIntent == 2 &&
+            twoHits[0].Confirmation is not null &&
+            twoHits[1].Confirmation is null &&
+            CountEvent(hero2.SessionId, CombatEventTypesV2.CounterConfirmed) == 1,
+            $"hp={hero2.Hp} intent={hero2.SwordIntent}");
+        Check(
+            "guard.counter_reserved_for_next_tick",
+            counterWindow is { CounterTick: 6, CounterResolved: false } &&
+            counterWindow.CounterSourceEntityId == "ENT_SELFCHECK_GUARD_MOB",
+            counterWindow?.CounterTick?.ToString() ?? "none");
+
+        var counterEvents = guardEngine.Tick(6);
+        var counterImpact = counterEvents.SingleOrDefault(
+            stored => stored.Type == CombatEventTypesV2.Impact);
+        Check(
+            "guard.counter_impact_next_tick",
+            counterImpact is { HitIndex: 0 } &&
+            counterImpact.CastId == counterCastId &&
+            counterImpact.Result is { Hit: true, Crit: false, Amount: 34, HpDamage: 34 } &&
+            counterWindow is { CounterOutcome: "DAMAGE" } &&
+            (guardStates.TryGet("ENT_SELFCHECK_GUARD_MOB", 1)?.Hp ?? 0) == 158 &&
+            counterEvents.Count(stored => stored.Type == CombatEventTypesV2.Impact) == 1 &&
+            counterImpact.TargetId == "ENT_SELFCHECK_GUARD_MOB",
+            counterImpact?.Result?.Amount.ToString() ?? "no impact");
+        Check(
+            "guard.counter_pays_no_extra_resource_and_resolves_once",
+            hero2.SwordIntent == 2 &&
+            !guardEngine.Tick(6).Any(stored => stored.Type == CombatEventTypesV2.Impact) &&
+            (guardStates.TryGet("ENT_SELFCHECK_GUARD_MOB", 1)?.Hp ?? 0) == 158,
+            "counter resolved twice");
+
+        var hero3 = NewGuardHero("THREE");
+        var cancelCastId = new string('d', 32);
+        guardEngine.Schedule(
+            hero3, hero3.SessionId, cancelCastId, CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 10);
+        guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB", hero3)], [hero3], tick: 11);
+        var cancelWindow = guardWindows.Find(hero3.CharacterId);
+        // The confirmed source steps out of the cone before the counter lands:
+        // the counter cancels, keeps the committed cost and never retargets.
+        guardRegistry.TryGet("ENT_SELFCHECK_GUARD_MOB", out var counterSource);
+        counterSource.MoveTo(60, 0);
+        var mpBeforeCancel = hero3.Mp;
+        var intentBeforeCancel = hero3.SwordIntent;
+        var cancelEvents = guardEngine.Tick(12);
+        counterSource.MoveTo(41, 0);
+        Check(
+            "guard.counter_cancelled_keeps_cost_no_retarget",
+            cancelWindow is
+            {
+                CounterTick: 12,
+                CounterResolved: true,
+                ConfirmationCount: 1,
+                CounterOutcome: "OUT_OF_RANGE_OR_CONE"
+            } &&
+            cancelEvents.Any(stored => stored.Type == CombatEventTypesV2.Cancel) &&
+            !cancelEvents.Any(stored => stored.Type == CombatEventTypesV2.Impact) &&
+            hero3.Mp == mpBeforeCancel &&
+            hero3.SwordIntent == intentBeforeCancel &&
+            guardStates.TryGet("ENT_SELFCHECK_GUARD_MOB", 1)?.Hp == 158,
+            cancelWindow?.CounterOutcome ?? "none");
+
+        var hero5 = NewGuardHero("MISS");
+        guardMissEngine.Schedule(
+            hero5, hero5.SessionId, new string('b', 32), CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 40);
+        guardMissEngine.Tick(41);
+        var missResolutions = guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB", hero5)], [hero5], tick: 41);
+        var missWindow = guardWindows.Find(hero5.CharacterId);
+        var mobHpBeforeMiss = guardStates.TryGet("ENT_SELFCHECK_GUARD_MOB", 1)?.Hp ?? 0;
+        var counterMissEvents = guardMissEngine.Tick(42);
+        Check(
+            "guard.counter_miss_no_refund_no_damage",
+            missResolutions.Single().Confirmation is not null &&
+            counterMissEvents.Any(stored => stored.Type == CombatEventTypesV2.Miss) &&
+            missWindow is { CounterOutcome: "MISS" } &&
+            (guardStates.TryGet("ENT_SELFCHECK_GUARD_MOB", 1)?.Hp ?? 0) == mobHpBeforeMiss &&
+            hero5.Mp == 50,
+            missWindow?.CounterOutcome ?? "none");
+
+        var hero4 = NewGuardHero("DOWN", hp: 3);
+        guardEngine.Schedule(
+            hero4, hero4.SessionId, new string('c', 32), CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 20);
+        var lethalResolutions = guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB", hero4)], [hero4], tick: 21);
+        Check(
+            "guard.defender_death_clears_resource_no_confirmation",
+            hero4.Hp == 0 &&
+            hero4.SwordIntent == 0 &&
+            lethalResolutions.Single().Damage == 3 &&
+            lethalResolutions.Single().Confirmation is null &&
+            guardWindows.Find(hero4.CharacterId) is null &&
+            CountEvent(hero4.SessionId, CombatEventTypesV2.CounterConfirmed) == 0 &&
+            !guardEngine.Tick(22).Any(stored =>
+                stored.Type is CombatEventTypesV2.Cancel or CombatEventTypesV2.Impact),
+            $"hp={hero4.Hp} intent={hero4.SwordIntent}");
+
+        var hero6 = NewGuardHero("REFRESH");
+        guardEngine.Schedule(
+            hero6, hero6.SessionId, new string('1', 32), CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 50);
+        var refreshCastId = new string('2', 32);
+        guardEngine.Schedule(
+            hero6, hero6.SessionId, refreshCastId, CombatV2Actions.Skill, "SK-MK-01",
+            2, 0, startTick: 51);
+        var refreshWindow = guardWindows.Find(hero6.CharacterId);
+        Check(
+            "guard.refresh_replaces_window_without_stacking",
+            refreshWindow is not null &&
+            refreshWindow.GuardCastId == refreshCastId &&
+            refreshWindow.CastStartTick == 51 &&
+            guardDefense.EvaluateIncoming(hero6.CharacterId, 55, 41, 0).DamageReduction == 0.7 &&
+            guardWindows.All().Count(state => state.Defender.CharacterId == hero6.CharacterId) == 1,
+            refreshWindow?.GuardCastId ?? "none");
+
+        var hero8 = NewGuardHero("LETHAL");
+        var lethalMobId = "ENT_SELFCHECK_GUARD_MOB3";
+        guardStates.ApplyDamage(lethalMobId, lifeId: 1, maxHp: 192, damage: 158, actorId: hero8.CharacterId);
+        guardEngine.Schedule(
+            hero8, hero8.SessionId, new string('3', 32), CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 60);
+        guardAttacks.ApplyImpacts(
+            [GuardImpact(lethalMobId, hero8)], [hero8], tick: 61);
+        var deathEvents = guardEngine.Tick(62);
+        Check(
+            "guard.counter_lethal_hit_death_once",
+            deathEvents.Count(stored => stored.Type == CombatEventTypesV2.Death) == 1 &&
+            guardRegistry.TryGet(lethalMobId, out var killedMob) &&
+            killedMob.State == WorldEntityStates.Dead &&
+            guardWindows.Find(hero8.CharacterId) is { ConfirmationCount: 1 },
+            string.Join(",", deathEvents.Select(stored => stored.Type)));
+
+        var hero7 = NewGuardHero("GATEOFF");
+        var gateOffWindows = new GuardWindowStore();
+        var gateOffDefense = new GuardDefenseService(
+            gateOffWindows, combatDamage, new CombatEventStore(new CombatEventStreamOptions()));
+        var gateOffEngine = new CombatTickEngine(
+            guardRegistry, combatDamage, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            gateOffWindows, geometry, guardClock);
+        gateOffEngine.Schedule(
+            hero7, hero7.SessionId, new string('9', 32), CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 70);
+        Check(
+            "guard.gate_off_never_opens_window",
+            gateOffWindows.Count == 0 &&
+            gateOffWindows.Find(hero7.CharacterId) is null &&
+            gateOffDefense.EvaluateIncoming(hero7.CharacterId, 71, 41, 0)
+                is { Phase: GuardPhases.None, DamageReduction: 0 },
+            $"windows={gateOffWindows.Count}");
 
         var losAccept = new InMemoryQuestAcceptService(
             questCatalog, quests, npcAnchors, geometry,

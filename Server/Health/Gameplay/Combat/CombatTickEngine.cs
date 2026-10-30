@@ -85,6 +85,7 @@ public sealed class CombatTickEngine
 {
     public const int BasicAttackRangeWu = 4;
     public const int BasicAttackAngleDegrees = 90;
+    public const string SkMk01 = "SK-MK-01";
     public const string SkMk03 = "SK-MK-03";
 
     private static readonly int[] BasicHitTicks = [3];
@@ -99,6 +100,8 @@ public sealed class CombatTickEngine
     private readonly MobCombatStateStore _states;
     private readonly IQuestService _quests;
     private readonly ICombatRollSource _rolls;
+    private readonly GuardWindowStore _guards;
+    private readonly IWorldGeometryService _geometry;
     private readonly ServerClock _clock;
     private readonly object _sync = new();
     private readonly Dictionary<string, ScheduledCast> _casts = new(StringComparer.Ordinal);
@@ -111,6 +114,8 @@ public sealed class CombatTickEngine
         MobCombatStateStore states,
         IQuestService quests,
         ICombatRollSource rolls,
+        GuardWindowStore guards,
+        IWorldGeometryService geometry,
         ServerClock clock)
     {
         _entities = entities;
@@ -120,6 +125,8 @@ public sealed class CombatTickEngine
         _states = states;
         _quests = quests;
         _rolls = rolls;
+        _guards = guards;
+        _geometry = geometry;
         _clock = clock;
     }
 
@@ -185,8 +192,8 @@ public sealed class CombatTickEngine
                     angleDegrees = skill.AngleDegrees ?? 0;
                     break;
                 default:
-                    // SK-MK-01 keeps its DEC-022 guard window; counter runtime
-                    // (with mob attacks) is a separate increment.
+                    // SK-MK-01 keeps its DEC-022 guard window; the window itself
+                    // opens below, the counter resolves on the tick engine.
                     hitTicks = [];
                     coefficients = [];
                     rangeWu = skill.RangeWu ?? 4.4;
@@ -222,8 +229,49 @@ public sealed class CombatTickEngine
                 angleDegrees,
                 maxTargets,
                 skill?.SkillId);
+
+            if (skill is { SkillId: SkMk01 })
+            {
+                OpenGuardWindow(actor, sessionId, castId, skill, facingX, facingY, startTick);
+            }
+
             return true;
         }
+    }
+
+    // DEC-022 §2: the window attaches to the cast tick with the accepted facing
+    // snapshot. A re-cast refreshes the single window instead of stacking a
+    // second reduction source (SKILL_REFRESH_NO_ADD).
+    private void OpenGuardWindow(
+        PlayerSession actor,
+        string sessionId,
+        string castId,
+        CombatSkillDefinition skill,
+        double facingX,
+        double facingY,
+        long startTick)
+    {
+        if (!_combat.Enabled)
+        {
+            return;
+        }
+
+        var bundle = _combat.GuardPrecision;
+        _guards.Open(new GuardWindowState
+        {
+            Defender = actor,
+            SessionId = sessionId,
+            GuardCastId = castId,
+            CastStartTick = startTick,
+            FacingX = facingX,
+            FacingY = facingY,
+            AttackSnapshot = CombatActorBaseline.Attack,
+            CounterCoefficient = skill.Coefficients.Pve,
+            MapId = actor.MapId,
+            FloorId = actor.FloorId,
+            GuardDurationTicks = bundle.Guard.DurationTicks,
+            WhiffDurationTicks = bundle.Whiff.DurationTicks
+        });
     }
 
     // Advances every scheduled cast up to (and including) the given tick and
@@ -233,37 +281,244 @@ public sealed class CombatTickEngine
         var emitted = new List<CombatEventV2>();
         lock (_sync)
         {
-            if (_casts.Count == 0)
+            if (_casts.Count > 0)
             {
-                return emitted;
-            }
-
-            var finished = new List<string>();
-            foreach (var cast in _casts.Values)
-            {
-                while (cast.NextHitIndex < cast.HitTicks.Length &&
-                       cast.StartTick + cast.HitTicks[cast.NextHitIndex] <= tick)
+                var finished = new List<string>();
+                foreach (var cast in _casts.Values)
                 {
-                    var hitIndex = cast.NextHitIndex;
-                    var impactTick = cast.StartTick + cast.HitTicks[hitIndex];
-                    cast.NextHitIndex++;
-                    emitted.AddRange(ResolveHit(cast, hitIndex, impactTick));
+                    while (cast.NextHitIndex < cast.HitTicks.Length &&
+                           cast.StartTick + cast.HitTicks[cast.NextHitIndex] <= tick)
+                    {
+                        var hitIndex = cast.NextHitIndex;
+                        var impactTick = cast.StartTick + cast.HitTicks[hitIndex];
+                        cast.NextHitIndex++;
+                        emitted.AddRange(ResolveHit(cast, hitIndex, impactTick));
+                    }
+
+                    if (cast.NextHitIndex >= cast.HitTicks.Length && tick >= cast.EndTick())
+                    {
+                        emitted.Add(AppendEnd(cast, tick));
+                        finished.Add(cast.CastId);
+                    }
                 }
 
-                if (cast.NextHitIndex >= cast.HitTicks.Length && tick >= cast.EndTick())
+                foreach (var castId in finished)
                 {
-                    emitted.Add(AppendEnd(cast, tick));
-                    finished.Add(cast.CastId);
+                    _casts.Remove(castId);
                 }
             }
 
-            foreach (var castId in finished)
+            // A reserved counter resolves on its own tick even when no player
+            // cast is in flight (DEC-022 §3: counter at the tick after the
+            // confirmation, never inside the hit stack that produced it).
+            foreach (var window in _guards.PendingCounters(tick)
+                         .OrderBy(state => state.Defender.CharacterId, StringComparer.Ordinal)
+                         .ToArray())
             {
-                _casts.Remove(castId);
+                window.CounterResolved = true;
+                emitted.AddRange(ResolveCounter(window, tick));
             }
         }
 
         return emitted;
+    }
+
+    // DEC-022 §3 counter resolution: one reserved swing at the confirmed source,
+    // with every recheck re-run at the counter tick. No retarget, no refund, no
+    // new confirmation and no recursive counter.
+    private IEnumerable<CombatEventV2> ResolveCounter(GuardWindowState window, long tick)
+    {
+        if (!_combat.Enabled)
+        {
+            yield break;
+        }
+
+        var defender = window.Defender;
+        var counter = _combat.GuardPrecision.Counter;
+        var sourceId = window.CounterSourceEntityId!;
+        var sourceLifeId = window.CounterSourceLifeId ?? 0;
+
+        if (defender.Hp <= 0)
+        {
+            yield return CancelCounter(window, tick, sourceId, sourceLifeId, "DEFENDER_DOWN");
+            yield break;
+        }
+
+        if (!window.IsOpen)
+        {
+            yield return CancelCounter(
+                window, tick, sourceId, sourceLifeId, "WINDOW_CLOSED_" + window.EndReason);
+            yield break;
+        }
+
+        if (!_entities.TryGet(sourceId, out var source) ||
+            !string.Equals(source.State, WorldEntityStates.Alive, StringComparison.Ordinal))
+        {
+            yield return CancelCounter(window, tick, sourceId, sourceLifeId, "SOURCE_NOT_ALIVE");
+            yield break;
+        }
+
+        if (source.LifeId != sourceLifeId)
+        {
+            yield return CancelCounter(window, tick, sourceId, sourceLifeId, "SOURCE_NEW_LIFE");
+            yield break;
+        }
+
+        if (!string.Equals(source.Kind, WorldEntityKinds.Mob, StringComparison.Ordinal))
+        {
+            yield return CancelCounter(window, tick, sourceId, source.LifeId, "SOURCE_NOT_HOSTILE");
+            yield break;
+        }
+
+        if (!string.Equals(source.MapId, defender.MapId, StringComparison.Ordinal) ||
+            !string.Equals(source.FloorId, defender.FloorId, StringComparison.Ordinal))
+        {
+            yield return CancelCounter(window, tick, sourceId, source.LifeId, "SOURCE_LEFT_INSTANCE");
+            yield break;
+        }
+
+        if (!GuardTimeline.InFront(
+                defender.X, defender.Y,
+                window.FacingX, window.FacingY,
+                source.X, source.Y,
+                counter.RangeWu, counter.AngleDegrees))
+        {
+            yield return CancelCounter(window, tick, sourceId, source.LifeId, "OUT_OF_RANGE_OR_CONE");
+            yield break;
+        }
+
+        if (_geometry.CheckLineOfSight(
+                defender.MapId, defender.FloorId,
+                defender.X, defender.Y, source.X, source.Y).IsBlocked)
+        {
+            yield return CancelCounter(window, tick, sourceId, source.LifeId, "LOS_BLOCKED");
+            yield break;
+        }
+
+        var stats = ResolveMobStats(source);
+        if (stats is not { Hp: > 0 })
+        {
+            yield return CancelCounter(window, tick, sourceId, source.LifeId, "SOURCE_INVULNERABLE");
+            yield break;
+        }
+
+        // Counter rolls use their own RNG channel so a guard never inherits the
+        // roll outcome of the hit that confirmed it (DEC-022 §3).
+        var counterSeed = window.GuardCastId + "|counter";
+        var hitProbability = DamageFormula.HitProbability(
+            CombatActorBaseline.Accuracy, CombatActorBaseline.Dodge);
+        if (!_rolls.Roll(counterSeed, source.EntityId, 0, CombatRollKind.Hit, hitProbability))
+        {
+            window.CounterOutcome = "MISS";
+            yield return AppendGuardEvent(
+                window, tick, CombatEventTypesV2.Miss, source,
+                new CombatEventResultV2(false, false, false, 0, 0, 0));
+            yield break;
+        }
+
+        var critProbability = DamageFormula.AttributeCritChance(luk: 5, gearCrit: 0, cap: 0.5);
+        var crit = _rolls.Roll(
+            counterSeed, source.EntityId, 0, CombatRollKind.Crit, critProbability);
+        var raw = DamageFormula.RawDamage(
+            window.AttackSnapshot, 0, window.CounterCoefficient, 1, 0);
+        var amount = (int)DamageFormula.FinalDamage(
+            raw,
+            DamageFormula.MitigationMultiplier(stats.Defense),
+            1,
+            crit ? DamageFormula.CritMultiplier : 1,
+            1);
+
+        var current = _states.Ensure(source.EntityId, source.LifeId, stats.Hp);
+        if (current.Hp <= 0)
+        {
+            yield return CancelCounter(
+                window, tick, sourceId, source.LifeId, "SOURCE_DEAD_THIS_TICK");
+            yield break;
+        }
+
+        var hpBefore = current.Hp;
+        var (remaining, died, _) = _states.ApplyDamage(
+            source.EntityId, source.LifeId, stats.Hp, amount, defender.CharacterId);
+        window.CounterOutcome = "DAMAGE";
+
+        yield return AppendGuardEvent(
+            window, tick, CombatEventTypesV2.Impact, source,
+            new CombatEventResultV2(true, crit, false, amount, 0, Math.Min(amount, hpBefore)));
+
+        if (!died)
+        {
+            yield break;
+        }
+
+        _entities.Despawn(source.EntityId);
+        var death = AppendGuardEvent(
+            window, tick, CombatEventTypesV2.Death, source, result: null);
+        yield return death;
+
+        _quests.RecordVerifiedEvent(
+            defender, death.EventId, QuestProgressEventTypes.Kill, source.RecordId, source.MapId);
+    }
+
+    private CombatEventV2 CancelCounter(
+        GuardWindowState window, long tick, string sourceId, long sourceLifeId, string reason)
+    {
+        window.CounterOutcome = reason;
+        var known = _entities.TryGet(sourceId, out var entity);
+        return AppendGuardEvent(
+            window,
+            tick,
+            CombatEventTypesV2.Cancel,
+            known ? entity.EntityId : sourceId,
+            known ? entity.LifeId : sourceLifeId,
+            hitIndex: null,
+            known ? entity.Revision : null,
+            result: null);
+    }
+
+    private CombatEventV2 AppendGuardEvent(
+        GuardWindowState window,
+        long tick,
+        string type,
+        WorldEntityInstance source,
+        CombatEventResultV2? result) =>
+        AppendGuardEvent(
+            window,
+            tick,
+            type,
+            source.EntityId,
+            source.LifeId,
+            type == CombatEventTypesV2.Impact || type == CombatEventTypesV2.Miss ? 0 : null,
+            source.Revision,
+            result);
+
+    private CombatEventV2 AppendGuardEvent(
+        GuardWindowState window,
+        long tick,
+        string type,
+        string targetId,
+        long targetLifeId,
+        int? hitIndex,
+        long? targetRevision,
+        CombatEventResultV2? result)
+    {
+        var defender = window.Defender;
+        return _events.Append(
+            window.SessionId,
+            new CombatEventV2(
+                Guid.NewGuid().ToString("N"),
+                type,
+                window.GuardCastId,
+                defender.CharacterId,
+                targetId,
+                targetLifeId,
+                hitIndex,
+                defender.MapId + WorldAudience.MapInstanceSuffix,
+                defender.FloorId,
+                defender.Revision,
+                targetRevision,
+                tick,
+                _clock.UtcNow,
+                result));
     }
 
     private IEnumerable<CombatEventV2> ResolveHit(
