@@ -294,7 +294,11 @@ public sealed class CombatTickEngine
                     if (cast.Actor.Hp <= 0 || cast.Actor.MapId != cast.MapId ||
                         cast.Actor.FloorId != cast.FloorId)
                     {
-                        _guards.Close(cast.Actor.CharacterId, GuardWindowEndReasons.DefenderDown);
+                        _guards.Close(
+                            cast.Actor.CharacterId,
+                            cast.Actor.Hp <= 0
+                                ? GuardWindowEndReasons.DefenderDown
+                                : GuardWindowEndReasons.MapOrFloorChange);
                         emitted.Add(AppendEvent(cast, tick, CombatEventTypesV2.Cancel,
                             targetId: null, targetLifeId: null, hitIndex: null, targetRevision: null, result: null));
                         emitted.Add(AppendEnd(cast, tick));

@@ -2549,6 +2549,7 @@ public static class ServiceSelfCheck
             1, 0, startTick: 20);
         var lethalResolutions = guardAttacks.ApplyImpacts(
             [GuardImpact("ENT_SELFCHECK_GUARD_MOB", hero4)], [hero4], tick: 21);
+        var downTick = guardEngine.Tick(22);
         Check(
             "guard.defender_death_clears_resource_no_confirmation",
             hero4.Hp == 0 &&
@@ -2557,9 +2558,20 @@ public static class ServiceSelfCheck
             lethalResolutions.Single().Confirmation is null &&
             guardWindows.Find(hero4.CharacterId) is null &&
             CountEvent(hero4.SessionId, CombatEventTypesV2.CounterConfirmed) == 0 &&
-            !guardEngine.Tick(22).Any(stored =>
-                stored.Type is CombatEventTypesV2.Cancel or CombatEventTypesV2.Impact),
+            lethalResolutions.Single().GuardWindowCastId == new string('c', 32) &&
+            lethalResolutions.Single().DamageReduction == 0.7,
             $"hp={hero4.Hp} intent={hero4.SwordIntent}");
+        // A down defender's own cast is cancelled once, and nothing of it lands.
+        Check(
+            "guard.down_defender_cast_cancels_once",
+            downTick.Count(stored => stored.Type == CombatEventTypesV2.Cancel) == 1 &&
+            downTick.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
+            !downTick.Any(stored =>
+                stored.Type is CombatEventTypesV2.Impact or CombatEventTypesV2.Death) &&
+            !guardEngine.Tick(23).Any(stored =>
+                stored.Type is CombatEventTypesV2.Cancel or CombatEventTypesV2.Impact) &&
+            guardWindows.Find(hero4.CharacterId) is null,
+            string.Join(",", downTick.Select(stored => stored.Type)));
 
         var hero6 = NewGuardHero("REFRESH");
         guardEngine.Schedule(
