@@ -1,0 +1,16 @@
+{
+    "name": "NguMach.Client.PlayerUI",
+    "rootNamespace": "NguMach.Client.P1",
+    "references": [
+        "NguMach.Client.Presentation"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
