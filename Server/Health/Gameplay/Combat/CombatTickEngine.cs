@@ -204,40 +204,42 @@ public sealed class CombatTickEngine
         }
 
         var (facingX, facingY) = Normalize(aimX, aimY);
+        bool opened;
         lock (_sync)
         {
-            if (_casts.ContainsKey(castId))
+            opened = !_casts.ContainsKey(castId);
+            if (opened)
             {
-                return false;
+                _casts[castId] = new ScheduledCast(
+                    castId,
+                    sessionId,
+                    actor,
+                    actor.CharacterId,
+                    actor.MapId,
+                    actor.FloorId,
+                    actor.X,
+                    actor.Y,
+                    facingX,
+                    facingY,
+                    actor.Revision,
+                    startTick,
+                    hitTicks,
+                    coefficients,
+                    rangeWu,
+                    angleDegrees,
+                    maxTargets,
+                    skill?.SkillId);
             }
-
-            _casts[castId] = new ScheduledCast(
-                castId,
-                sessionId,
-                actor,
-                actor.CharacterId,
-                actor.MapId,
-                actor.FloorId,
-                actor.X,
-                actor.Y,
-                facingX,
-                facingY,
-                actor.Revision,
-                startTick,
-                hitTicks,
-                coefficients,
-                rangeWu,
-                angleDegrees,
-                maxTargets,
-                skill?.SkillId);
-
-            if (skill is { SkillId: SkMk01 })
-            {
-                OpenGuardWindow(actor, sessionId, castId, skill, facingX, facingY, startTick);
-            }
-
-            return true;
         }
+
+        if (opened && skill is { SkillId: SkMk01 })
+        {
+            // Outside the cast lock: the window store takes the defender lock,
+            // and no path may hold both in the opposite order.
+            OpenGuardWindow(actor, sessionId, castId, skill, facingX, facingY, startTick);
+        }
+
+        return opened;
     }
 
     // DEC-022 §2: the window attaches to the cast tick with the accepted facing
@@ -645,6 +647,19 @@ public sealed class CombatTickEngine
                     cast.FacingX, cast.FacingY,
                     entity.X, entity.Y,
                     cast.RangeWu, cast.AngleDegrees))
+            {
+                continue;
+            }
+
+            // QREV-04: the cone alone lets a cast hit through cover. The impact
+            // re-runs line of sight from the accepted origin to the target's
+            // current foot, so a mob that walked behind a wall is not hit and
+            // nothing is credited. Enforcement still follows the topology
+            // review state: a synthetic bundle answers NotEnforced.
+            if (_geometry.CheckLineOfSight(
+                    cast.MapId, cast.FloorId,
+                    cast.OriginX, cast.OriginY,
+                    entity.X, entity.Y).IsBlocked)
             {
                 continue;
             }

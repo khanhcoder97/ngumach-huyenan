@@ -23,14 +23,18 @@ public static class GuardWindowEndReasons
     public const string None = "NONE";
     public const string DefenderDown = "DEFENDER_DOWN";
     public const string MapOrFloorChange = "MAP_OR_FLOOR_CHANGE";
+    public const string Refreshed = "REFRESHED";
 }
 
-// The incoming-damage policy the defender gets for one impact.
+// The incoming-damage policy the defender gets for one impact. WindowCastId is
+// the provenance token: the confirmation must land on the same window that paid
+// the reduction, never on a fresher guard opened in between (QREV-05).
 public sealed record GuardIncoming(
     string Phase,
     double DamageReduction,
     bool FrontHit,
-    bool CounterEligible);
+    bool CounterEligible,
+    string? WindowCastId);
 
 public sealed record GuardConfirmation(
     string GuardCastId,
@@ -87,27 +91,48 @@ public sealed class GuardWindowStore
             ? window
             : null;
 
-    // A reserved counter always gets resolved on its tick — even when the
-    // window has since closed (defender down, map change) — so the client sees
-    // one CANCEL instead of a silently dropped outcome.
+    // A skipped timer callback must not strand a reserved counter: work due at
+    // or before the processed tick stays eligible until it is resolved, and the
+    // engine resolves each one exactly once (it also covers a window that closed
+    // meanwhile, so the client sees one CANCEL instead of a silent drop). Overdue
+    // work is returned in deadline order so a catch-up cannot reorder two
+    // counters relative to the hits that produced them.
     public IReadOnlyList<GuardWindowState> PendingCounters(long tick)
     {
         var pending = new List<GuardWindowState>();
         foreach (var window in _windows.Values)
         {
-            if (!window.CounterResolved && window.CounterTick == tick &&
-                window.CounterSourceEntityId is not null)
+            if (!window.CounterResolved && window.CounterSourceEntityId is not null &&
+                window.CounterTick is { } due && due <= tick)
             {
                 pending.Add(window);
             }
         }
 
-        return pending;
+        return pending
+            .OrderBy(state => state.CounterTick!.Value)
+            .ThenBy(state => state.Defender.CharacterId, StringComparer.Ordinal)
+            .ToArray();
     }
 
+    // Opening a window replaces the previous one under the defender's lock, so a
+    // mob impact that already started cannot pair one window's damage reduction
+    // with the next window's confirmation. The replaced window closes without a
+    // whiff reward and its reserved counter cancels.
     public GuardWindowState Open(GuardWindowState window)
     {
-        _windows[window.Defender.CharacterId] = window;
+        lock (window.Defender.SyncRoot)
+        {
+            if (_windows.TryGetValue(window.Defender.CharacterId, out var previous) &&
+                !ReferenceEquals(previous, window))
+            {
+                previous.EndReason = GuardWindowEndReasons.Refreshed;
+                previous.WhiffGranted = false;
+            }
+
+            _windows[window.Defender.CharacterId] = window;
+        }
+
         return window;
     }
 
@@ -182,13 +207,16 @@ public sealed class GuardDefenseService
                 // Only direct damage from the front region gets the 70%; a hit
                 // from behind is plain damage and never confirms (DEC-022 §2).
                 return front
-                    ? new GuardIncoming(GuardPhases.Guard, guard.DamageReduction, FrontHit: true, true)
-                    : new GuardIncoming(GuardPhases.Guard, 0, FrontHit: false, CounterEligible: false);
+                    ? new GuardIncoming(
+                        GuardPhases.Guard, guard.DamageReduction, FrontHit: true, true, window.GuardCastId)
+                    : new GuardIncoming(
+                        GuardPhases.Guard, 0, FrontHit: false, CounterEligible: false, window.GuardCastId);
             }
 
             if (tick >= window.WhiffEndExclusiveTick)
             {
-                return new GuardIncoming(GuardPhases.Expired, 0, FrontHit: false, CounterEligible: false);
+                return new GuardIncoming(
+                    GuardPhases.Expired, 0, FrontHit: false, CounterEligible: false, window.GuardCastId);
             }
 
             if (!TryGrantWhiff(window, defender))
@@ -202,7 +230,8 @@ public sealed class GuardDefenseService
                 GuardPhases.Whiff,
                 _combat.GuardPrecision.Whiff.DamageReduction,
                 FrontHit: false,
-                CounterEligible: false);
+                CounterEligible: false,
+                window.GuardCastId);
         }
     }
 
@@ -210,13 +239,22 @@ public sealed class GuardDefenseService
     // hit means death cleanup, zero resource, no confirmation and no counter.
     public GuardConfirmation? CommitConfirmation(
         string? characterId,
+        string? windowCastId,
         WorldEntityInstance source,
         long tick,
         DateTimeOffset atUtc,
         bool defenderSurvived)
     {
-        if (characterId is null || !_combat.Enabled ||
+        if (characterId is null || windowCastId is null || !_combat.Enabled ||
             _windows.Find(characterId) is not { } window)
+        {
+            return null;
+        }
+
+        // A refresh between the reduction read and this call means the damage
+        // was paid by a window that no longer owns the character: no resource,
+        // no counter, no second confirmation.
+        if (!string.Equals(window.GuardCastId, windowCastId, StringComparison.Ordinal))
         {
             return null;
         }
@@ -326,5 +364,5 @@ public sealed class GuardDefenseService
     }
 
     private static GuardIncoming NoGuard =>
-        new(GuardPhases.None, 0, FrontHit: false, CounterEligible: false);
+        new(GuardPhases.None, 0, FrontHit: false, CounterEligible: false, WindowCastId: null);
 }

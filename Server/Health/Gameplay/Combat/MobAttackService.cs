@@ -29,6 +29,7 @@ public sealed record MobAttackResolution(
     string BlockedReason,
     string GuardPhase,
     double DamageReduction,
+    string? GuardWindowCastId,
     GuardConfirmation? Confirmation);
 
 public static class MobAttackBlockedReasons
@@ -140,21 +141,16 @@ public sealed class MobAttackService
 
         var raw = DamageFormula.RawDamage(
             attack.Stats.Attack, 0, attack.Move.AttackMultiplier, 1, 0);
-        var guard = _guards.EvaluateIncoming(
-            target.CharacterId, tick, entity.X, entity.Y);
-
-        // Rules §2 step 4-5: mitigation is the player's armor, then the shared
-        // DR bucket (guard 0.70 / whiff 0.20), then one final floor.
-        var damage = (int)DamageFormula.FinalDamage(
-            raw,
-            DamageFormula.MitigationMultiplier(CombatActorBaseline.Armor),
-            1,
-            1,
-            DamageFormula.DamageReductionMultiplier(
-                GuardTimeline.CombineReduction(guard.DamageReduction)));
 
         int hpBefore;
         int hpAfter;
+        int damage;
+        GuardIncoming guard;
+        GuardConfirmation? confirmation;
+        // QREV-05: one impact is one critical section. Evaluating the window,
+        // committing HP and committing the confirmation under the same defender
+        // lock means a refresh or a map change cannot pair this impact's damage
+        // reduction with a different window's confirmation or resource.
         lock (target.SyncRoot)
         {
             if (target.Hp <= 0)
@@ -176,18 +172,31 @@ public sealed class MobAttackService
                     entityId, targetCharacterId, MobAttackBlockedReasons.OutOfRangeAtImpact);
             }
 
+            guard = _guards.EvaluateIncoming(
+                target.CharacterId, tick, entity.X, entity.Y);
+
+            // Rules §2 step 4-5: mitigation is the player's armor, then the
+            // shared DR bucket (guard 0.70 / whiff 0.20), then one final floor.
+            damage = (int)DamageFormula.FinalDamage(
+                raw,
+                DamageFormula.MitigationMultiplier(CombatActorBaseline.Armor),
+                1,
+                1,
+                DamageFormula.DamageReductionMultiplier(
+                    GuardTimeline.CombineReduction(guard.DamageReduction)));
+
             hpBefore = target.Hp;
             hpAfter = Math.Max(0, hpBefore - damage);
             target.Hp = hpAfter;
             // HP is part of the session aggregate, so the revision the client
             // reconciles against has to move with it (design resolution §3).
             target.Revision++;
-        }
 
-        // Confirmation is decided after the damage and survival of this hit, and
-        // only for a front direct-melee hit that was not blocked.
-        var confirmation = _guards.CommitConfirmation(
-            target.CharacterId, entity, tick, atUtc, hpAfter > 0);
+            // DEC-022 §3: survival is decided from the damage just committed,
+            // and only a front direct-melee hit in an open guard window pays.
+            confirmation = _guards.CommitConfirmation(
+                target.CharacterId, guard.WindowCastId, entity, tick, atUtc, hpAfter > 0);
+        }
 
         return new MobAttackResolution(
             entityId,
@@ -200,6 +209,7 @@ public sealed class MobAttackService
             MobAttackBlockedReasons.None,
             guard.Phase,
             guard.DamageReduction,
+            guard.WindowCastId,
             confirmation);
     }
 
@@ -238,7 +248,7 @@ public sealed class MobAttackService
         string entityId, string targetCharacterId, string reason) =>
         new(entityId, targetCharacterId, AttackId: null, Damage: 0,
             HpBefore: 0, HpAfter: 0, Applied: false, reason,
-            GuardPhases.None, 0, Confirmation: null);
+            GuardPhases.None, 0, GuardWindowCastId: null, Confirmation: null);
 
     private static double Distance(double ax, double ay, double bx, double by) =>
         Math.Sqrt(((bx - ax) * (bx - ax)) + ((by - ay) * (by - ay)));
