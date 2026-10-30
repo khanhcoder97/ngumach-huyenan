@@ -69,6 +69,30 @@ Quy tắc layout v2:
 Chi tiết và câu hỏi review: `OPC-06_manifest_v2_proposal.md`. Manifest Muse vẫn là v1;
 PR tooling này không rewrite manifest của Muse.
 
+## Coverage audit (OPC-05b)
+
+`coverage_audit.py` sinh báo cáo coverage từ nguồn thật (catalogue CSV, definition
+examples, delivery manifest, PNG header và `.meta`), chỉ dùng standard library:
+
+```powershell
+python Implementation/Asset_Handoff/coverage_audit.py
+python Implementation/Asset_Handoff/coverage_audit.py --check
+```
+
+Kết quả ghi vào `COVERAGE_REPORT.md` và `coverage_report.json` (cùng thư mục). Script:
+
+* đếm ID thật từ `docs/production/*.csv` và parse 30 active skill ID từ combat spec;
+* phân loại 9 definition example canonical và tách fixture `MapTopology` synthetic;
+* suy ra frame size từ manifest (`pixelWidth / frames`, `pixelHeight / directions`) và đối
+  chiếu với cell 48×64 đã khóa;
+* đọc `.meta` tĩnh để kiểm PPU, filter, mipmap, compression, pivot, tên/rect lưới sprite —
+  **không cần Unity**;
+* ghi SHA256 từng file evidence và `sourceCommit` của lần thay đổi nguồn gần nhất. File text
+  được hash ở dạng LF chuẩn hoá để Windows/Linux cho cùng report; PNG giữ byte gốc.
+
+`--check` trả exit code 1 khi report đã commit không còn khớp nguồn. Engine playback vẫn là
+**unverified**; audit chỉ xác nhận metadata tĩnh và header PNG.
+
 ## Input tối thiểu
 
 Manifest phải khớp `asset_delivery_manifest.schema.json`. Một asset hợp lệ:
@@ -139,8 +163,8 @@ FAIL: 2 problem(s) in Client/Assets/ArtManifests/muse_delivery_manifest.json
 * `validate_asset_delivery.py` chỉ đọc header PNG, không giải mã pixel nên không phát hiện ảnh
   hỏng ở giữa file, không kiểm tra palette, alpha hay số màu. Dùng `validate_import.py` (OPC-07)
   cho lớp kiểm tra đầy đủ hơn.
-* Không kiểm chứng Unity import (PPU thật, Point filter, mipmap, pivot trong `.meta`) vì
-  chưa có máy chạy Unity; engine import được ghi nhận là **unverified**.
+* Các công cụ coverage/import kiểm tĩnh PPU, Point filter, mipmap, pivot và rect trong
+  `.meta`; Unity engine import/playback và pixel snap vẫn **unverified**.
 * Schema giao nhận v1 chưa có `frameWidth`/`frameHeight`, nên với manifest legacy
   validator chỉ cảnh báo (WARN) khi `frames x directions` không chia hết kích thước sheet.
   Manifest v2 (OPC-06 draft) đã có `frameSize`/`layout`/`isDirectional` và kiểm tra grid,

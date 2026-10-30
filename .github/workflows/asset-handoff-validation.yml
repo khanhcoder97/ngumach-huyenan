@@ -63,6 +63,8 @@ jobs:
         run: >-
           python -m unittest discover -s Implementation/Asset_Handoff/tests
           -p "test_opc07_import_validation.py" -v
+      - name: Coverage report is reproducible
+        run: python Implementation/Asset_Handoff/coverage_audit.py --check
 
       - name: Self check on the shipped example manifest
         run: >-
