@@ -527,6 +527,7 @@ public static class P1Endpoints
         HttpContext context,
         ISessionStore sessions,
         InMemoryCombatV2Service combat,
+        CombatTickEngine engine,
         ServerClock clock,
         ILoggerFactory loggerFactory)
     {
@@ -613,6 +614,18 @@ public static class P1Endpoints
         var logger = loggerFactory.CreateLogger("P1.CombatV2");
         if (outcome.Accepted && outcome.Result is { } result)
         {
+            // Impacts resolve on the real tick; scheduling is idempotent by
+            // castId so a replay never resolves twice.
+            engine.Schedule(
+                session,
+                session.SessionId,
+                result.CastId,
+                result.ActionKind,
+                result.SkillId,
+                payload.AimX!.Value,
+                payload.AimY!.Value,
+                clock.Tick);
+
             logger.LogDebug(
                 "Accepted {ActionKind} cast {CastId} sequence {Sequence} for {SessionId}",
                 result.ActionKind, result.CastId, result.NextInputSequence, session.SessionId);

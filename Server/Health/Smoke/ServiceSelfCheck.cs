@@ -745,7 +745,7 @@ public static class ServiceSelfCheck
         aoiClaims.TryClaim(
             "CHR_SELFCHECK_AOI_A", "ENT_SELFCHECK_AOI_NODE", 20, out _, out _);
         var aoiProjection = new WorldAoiProjectionService(
-            aoiRegistry, aoiMobs, enabledCombat, aoiClaims);
+            aoiRegistry, aoiMobs, enabledCombat, aoiClaims, new MobCombatStateStore());
 
         var aoiViewerA = NewPlayer("CHR_SELFCHECK_AOI_A");
         aoiViewerA.X = 0;
@@ -1009,6 +1009,249 @@ public static class ServiceSelfCheck
             "combatv2.unknown_skill",
             unknownSkill.Failure?.Code == CombatErrorCodes.UnknownSkill,
             unknownSkill.Failure?.Code);
+
+        // QOD-17 tick engine: impacts resolve on the real tick with the
+        // labelled baseline actor stats, life-scoped mob HP, death and kill
+        // credit keyed by the death event.
+        var tickRecords = services.GetRequiredService<WorldRecordCatalog>();
+        var tickClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 30, 4, 0, 0, TimeSpan.Zero));
+        WorldEntityInstance MakeTickMob(string entityId, double x)
+        {
+            var mob = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = "MAN-TEST-" + entityId,
+                Kind = WorldEntityKinds.Mob,
+                TemplateIds = new[] { "MOB_CARPLING" },
+                MapId = options.DefaultMapId,
+                FloorId = "OVERWORLD",
+                X = x,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = 18
+            };
+            mob.Initialize();
+            return mob;
+        }
+
+        if (!questCatalog.TryGet("P00-01", out var tickQuestBase))
+        {
+            throw new InvalidOperationException("P00-01 must exist for the tick self-check.");
+        }
+
+        var tickQuest = tickQuestBase with
+        {
+            QuestId = "TEST-TICK-01",
+            Objectives =
+            [
+                new QuestObjectiveDefinition(
+                    "OBJ_TEST_TICK_KILL", QuestObjectiveTypes.Kill,
+                    ["MAN-TEST-ENT_SELFCHECK_TICK_MOB"], 3, options.DefaultMapId)
+            ],
+            InitialStepId = "STEP_TEST_TICK_KILL",
+            PrerequisiteQuestIds = []
+        };
+        QuestCatalog TickCatalog() => new(
+            new Dictionary<string, QuestDefinition>(StringComparer.Ordinal)
+            {
+                ["TEST-TICK-01"] = tickQuest
+            });
+
+        var tickQuestActor = NewPlayer("CHR_SELFCHECK_TICK");
+        tickQuestActor.X = 0;
+        tickQuestActor.Y = 0;
+        var tickQuests = new InMemoryQuestService(
+            TickCatalog(), new InMemoryQuestStateStore(), tickRecords, tickClock);
+        tickQuests.Accept(tickQuestActor, "TEST-TICK-01");
+
+        var tickRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_TICK_MOB", 3)]),
+            tickClock);
+        var tickEventStore = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var tickStateStore = new MobCombatStateStore();
+        var tickEngine = new CombatTickEngine(
+            tickRegistry,
+            enabledCombat,
+            combatSkills,
+            tickEventStore,
+            tickStateStore,
+            tickQuests,
+            new FixedCombatRolls(hit: true, crit: false),
+            new ServerClock());
+
+        var basicTickCastId = new string('a', 32);
+        Check(
+            "tick.schedule",
+            tickEngine.Schedule(
+                tickQuestActor, tickQuestActor.SessionId, basicTickCastId,
+                CombatV2Actions.BasicAttack, null, 1, 0, 100) &&
+            !tickEngine.Schedule(
+                tickQuestActor, tickQuestActor.SessionId, basicTickCastId,
+                CombatV2Actions.BasicAttack, null, 1, 0, 100) &&
+            tickEngine.ScheduledCastCount == 1,
+            $"scheduled={tickEngine.ScheduledCastCount}");
+
+        tickEngine.Tick(102);
+        Check(
+            "tick.windup_no_impact",
+            (tickStateStore.TryGet("ENT_SELFCHECK_TICK_MOB", 1)?.Hp ?? 192) == 192);
+
+        var basicTickEvents = tickEngine.Tick(103);
+        var basicImpact = basicTickEvents.SingleOrDefault(
+            combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        Check(
+            "tick.basic_impact",
+            basicImpact is { HitIndex: 0, TargetLifeId: 1 } &&
+            basicImpact.Result is { Hit: true, Crit: false, Amount: 19, HpDamage: 19 } &&
+            (tickStateStore.TryGet("ENT_SELFCHECK_TICK_MOB", 1)?.Hp ?? 0) == 173,
+            $"{basicImpact?.Result?.Amount}");
+
+        tickEngine.Tick(104);
+        var tickedTypes = tickEventStore.Read(tickQuestActor.SessionId, 0, 0).Events
+            .Select(combatEvent => combatEvent.Type)
+            .ToArray();
+        Check(
+            "tick.end_event",
+            tickedTypes.SequenceEqual(
+                new[] { CombatEventTypesV2.Impact, CombatEventTypesV2.End },
+                StringComparer.Ordinal) &&
+            tickEngine.ScheduledCastCount == 0,
+            string.Join(",", tickedTypes));
+
+        tickEngine.Schedule(
+            tickQuestActor, tickQuestActor.SessionId, new string('b', 32),
+            CombatV2Actions.Skill, "SK-MK-03", 1, 0, 200);
+        var mk03Hit1 = tickEngine.Tick(202)
+            .Single(combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        var mk03Hit2 = tickEngine.Tick(205)
+            .Single(combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        var mk03Hit3 = tickEngine.Tick(208)
+            .Single(combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        tickEngine.Tick(209);
+        Check(
+            "tick.mk03_multi_hit",
+            mk03Hit1.HitIndex == 0 && mk03Hit1.Result?.Amount == 8 &&
+            mk03Hit2.HitIndex == 1 && mk03Hit2.Result?.Amount == 10 &&
+            mk03Hit3.HitIndex == 2 && mk03Hit3.Result?.Amount == 17 &&
+            (tickStateStore.TryGet("ENT_SELFCHECK_TICK_MOB", 1)?.Hp ?? 0) == 138,
+            $"{mk03Hit1.Result?.Amount}/{mk03Hit2.Result?.Amount}/{mk03Hit3.Result?.Amount}");
+
+        var missRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_TICK_MOB", 3)]),
+            tickClock);
+        var missStore = new MobCombatStateStore();
+        var missEngine = new CombatTickEngine(
+            missRegistry, enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions()), missStore,
+            tickQuests, new FixedCombatRolls(hit: false, crit: false), new ServerClock());
+        missEngine.Schedule(
+            tickQuestActor, "e2e33333333333333333333333333333",
+            new string('c', 32), CombatV2Actions.BasicAttack, null, 1, 0, 300);
+        var missEvents = missEngine.Tick(303);
+        Check(
+            "tick.miss",
+            missEvents.SingleOrDefault(
+                combatEvent => combatEvent.Type == CombatEventTypesV2.Miss)?.Result is
+            { Hit: false, Amount: 0, HpDamage: 0 } &&
+            (missStore.TryGet("ENT_SELFCHECK_TICK_MOB", 1)?.Hp ?? 192) == 192,
+            "miss roll");
+
+        var rangeRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_TICK_MOB", 5)]),
+            tickClock);
+        var rangeEngine = new CombatTickEngine(
+            rangeRegistry, enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
+            tickQuests, new FixedCombatRolls(hit: true, crit: false), new ServerClock());
+        rangeEngine.Schedule(
+            tickQuestActor, "e2e44444444444444444444444444444",
+            new string('d', 32), CombatV2Actions.BasicAttack, null, 1, 0, 400);
+        var rangeEvents = rangeEngine.Tick(403);
+        Check(
+            "tick.out_of_range",
+            rangeEvents.All(combatEvent => combatEvent.Type != CombatEventTypesV2.Impact),
+            string.Join(",", rangeEvents.Select(combatEvent => combatEvent.Type)));
+
+        var behindRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_TICK_MOB", -3)]),
+            tickClock);
+        var behindEngine = new CombatTickEngine(
+            behindRegistry, enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
+            tickQuests, new FixedCombatRolls(hit: true, crit: false), new ServerClock());
+        behindEngine.Schedule(
+            tickQuestActor, "e2e55555555555555555555555555555",
+            new string('e', 32), CombatV2Actions.BasicAttack, null, 1, 0, 500);
+        var behindEvents = behindEngine.Tick(503);
+        Check(
+            "tick.behind_no_impact",
+            behindEvents.All(combatEvent => combatEvent.Type != CombatEventTypesV2.Impact));
+
+        var deathRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_TICK_MOB", 3)]),
+            tickClock);
+        var deathStore = new MobCombatStateStore();
+        var deathActor = NewPlayer("CHR_SELFCHECK_TICK_KILL");
+        deathActor.X = 0;
+        deathActor.Y = 0;
+        var deathQuests = new InMemoryQuestService(
+            TickCatalog(), new InMemoryQuestStateStore(), tickRecords, tickClock);
+        deathQuests.Accept(deathActor, "TEST-TICK-01");
+        var deathEngine = new CombatTickEngine(
+            deathRegistry, enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions()), deathStore,
+            deathQuests, new FixedCombatRolls(hit: true, crit: false), new ServerClock());
+
+        var deathCount = 0;
+        for (var castIndex = 0; castIndex < 6; castIndex++)
+        {
+            var startTick = 1000 + (castIndex * 20);
+            deathEngine.Schedule(
+                deathActor, deathActor.SessionId, castIndex.ToString("x32"),
+                CombatV2Actions.Skill, "SK-MK-03", 1, 0, startTick);
+            for (var tick = startTick; tick <= startTick + 10; tick++)
+            {
+                deathCount += deathEngine.Tick(tick)
+                    .Count(combatEvent => combatEvent.Type == CombatEventTypesV2.Death);
+            }
+        }
+
+        deathRegistry.TryGet("ENT_SELFCHECK_TICK_MOB", out var deadTickMob);
+        var killState = deathQuests.GetState(deathActor.CharacterId, "TEST-TICK-01").State;
+        Check(
+            "tick.death_once_and_credit",
+            deathCount == 1 &&
+            deadTickMob.State == WorldEntityStates.Dead &&
+            deadTickMob.LifeId == 1 &&
+            killState is { State: QuestStates.Active } &&
+            killState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL") == 1,
+            $"deaths={deathCount} state={deadTickMob.State} " +
+            $"kills={killState?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL")}");
+
+        tickClock.Advance(TimeSpan.FromSeconds(18));
+        var tickRespawnCount = deathRegistry.Update();
+        deathRegistry.TryGet("ENT_SELFCHECK_TICK_MOB", out var tickRespawnedMob);
+        deathEngine.Schedule(
+            deathActor, deathActor.SessionId, new string('f', 32),
+            CombatV2Actions.BasicAttack, null, 1, 0, 2000);
+        var respawnImpact = deathEngine.Tick(2003)
+            .SingleOrDefault(combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        var killStateAfterRespawn = deathQuests
+            .GetState(deathActor.CharacterId, "TEST-TICK-01").State;
+        Check(
+            "tick.respawn_new_life",
+            tickRespawnCount == 1 &&
+            tickRespawnedMob.LifeId == 2 &&
+            tickRespawnedMob.State == WorldEntityStates.Alive &&
+            respawnImpact is { TargetLifeId: 2, HitIndex: 0 } &&
+            (deathStore.TryGet("ENT_SELFCHECK_TICK_MOB", 2)?.Hp ?? 0) == 173 &&
+            killStateAfterRespawn.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL") == 1,
+            $"life={tickRespawnedMob.LifeId} hp={deathStore.TryGet("ENT_SELFCHECK_TICK_MOB", 2)?.Hp}");
 
         Check(
             "damage.oracle_raw",
@@ -3249,6 +3492,22 @@ public static class ServiceSelfCheck
 
             return base.TryRecord(characterId, questId, result);
         }
+    }
+
+    private sealed class FixedCombatRolls : ICombatRollSource
+    {
+        private readonly bool _hit;
+        private readonly bool _crit;
+
+        public FixedCombatRolls(bool hit, bool crit)
+        {
+            _hit = hit;
+            _crit = crit;
+        }
+
+        public bool Roll(
+            string castId, string targetId, int hitIndex, CombatRollKind kind, double probability) =>
+            kind == CombatRollKind.Crit ? _crit : _hit;
     }
 
     private static void RunBarrierParallel(int count, Action<int> body)
