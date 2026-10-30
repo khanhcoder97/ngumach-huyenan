@@ -1429,12 +1429,13 @@ public static class ServiceSelfCheck
             $"early={earlyGroupTick} cleared={clearedGroupTick} " +
             $"life={respawnedGroupMember1.LifeId}/{respawnedGroupMember2.LifeId}");
 
+        var spawnRegistry = services.GetRequiredService<WorldEntityRegistry>();
         var registryGroups = new MobSpawnGroupService(
-            registry, services.GetRequiredService<IServerClock>());
-        registry.TryGet("ENT_MAN_BM_SPAWN_BM_04_M2", out var mixedGroupMember);
+            spawnRegistry, services.GetRequiredService<IServerClock>());
+        spawnRegistry.TryGet("ENT_MAN_BM_SPAWN_BM_04_M2", out var mixedGroupMember);
         Check(
             "spawn.real_bundle_composition",
-            registry.Count == 44 &&
+            spawnRegistry.Count == 44 &&
             registryGroups.GroupCount == 8 &&
             registryGroups.MemberCount("MAN-BM-SPAWN_BM_01") == 3 &&
             registryGroups.MemberCount("MAN-BM-SPAWN_BM_02") == 4 &&
