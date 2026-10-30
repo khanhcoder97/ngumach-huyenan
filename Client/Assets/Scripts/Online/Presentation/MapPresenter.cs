@@ -24,7 +24,7 @@ namespace NguMach.Client.Presentation
         /// <summary>Rebuild map state from current world snapshot. Call after world refresh.</summary>
         public void Refresh()
         {
-            var self = _adapter.Self;
+            var self = _adapter.Self ?? _adapter.World?.self ?? _adapter.WorldV2?.self;
             if (self == null) { _state = null; NotifyChanged(); return; }
 
             string mapId;

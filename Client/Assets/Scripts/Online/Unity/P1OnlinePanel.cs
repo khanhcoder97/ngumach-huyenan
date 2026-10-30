@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
+using NguMach.Client.Presentation;
 
 namespace NguMach.Client.P1
 {
@@ -15,6 +16,7 @@ namespace NguMach.Client.P1
         private UIDocument document;
         private P1Client client;
         private P1AudioPlayer audioPlayer;
+        private P1PlayerUIHook playerUIHook;
         private CancellationTokenSource life;
         private Action returnToTitle;
         private Label status, vitals, location, message, detailText, targetText, combatText;
@@ -50,6 +52,8 @@ namespace NguMach.Client.P1
                 client = new P1Client(new P1UnityTransport(serverOrigin, timeoutSeconds), useWorldV2: useWorldV2);
                 audioPlayer = gameObject.AddComponent<P1AudioPlayer>(); audioPlayer.Initialize();
                 Build();
+                playerUIHook = GetComponent<P1PlayerUIHook>();
+                if (playerUIHook != null) playerUIHook.Initialize(new P1ClientAdapter(client));
                 _ = StartOnline();
             }
             catch (Exception e) { Debug.LogError("P1 client initialization: " + e.Message); Close(); }
@@ -116,7 +120,8 @@ namespace NguMach.Client.P1
             if (!Application.isFocused || applicationPaused) { ClearHeldInput(); RenderCooldowns(); return; }
             if (Input.GetKeyDown(KeyCode.Escape) && ModalOpen)
             {
-                if (audioPanel.style.display.value == DisplayStyle.Flex) ToggleAudio();
+                if (playerUIHook != null && playerUIHook.IsAnyPanelOpen) playerUIHook.CloseTopPanel();
+                else if (audioPanel.style.display.value == DisplayStyle.Flex) ToggleAudio();
                 else ToggleDetails(detailMode);
                 ClearHeldInput(); RenderCooldowns(); return;
             }
@@ -141,7 +146,8 @@ namespace NguMach.Client.P1
             RenderCooldowns();
         }
         private bool ModalOpen { get { return details != null && details.style.display.value == DisplayStyle.Flex ||
-            audioPanel != null && audioPanel.style.display.value == DisplayStyle.Flex; } }
+            audioPanel != null && audioPanel.style.display.value == DisplayStyle.Flex ||
+            (playerUIHook != null && playerUIHook.IsAnyPanelOpen); } }
         private void ClearHeldInput() { keyboardMove = touchMove = Vector2.zero; touchHeld = false; }
         private void RefreshInputSurface()
         {
@@ -260,8 +266,8 @@ namespace NguMach.Client.P1
             status = Text("connection.Connecting"); vitals = new Label(); location = new Label();
             statusPanel.Add(status); statusPanel.Add(vitals); statusPanel.Add(location); safeRoot.Add(statusPanel);
             var toolbar = new VisualElement(); toolbar.style.flexDirection = FlexDirection.Row; toolbar.style.flexWrap = Wrap.Wrap;
-            journalButton = ActionButton("ui.journal", () => ToggleDetails("quests"), null); toolbar.Add(journalButton);
-            bagButton = ActionButton("ui.bag", () => ToggleDetails("inventory"), null); toolbar.Add(bagButton);
+            journalButton = ActionButton("ui.journal", () => { if (playerUIHook != null) playerUIHook.OpenPanel(PlayerPanel.QuestJournal); else ToggleDetails("quests"); }, null); toolbar.Add(journalButton);
+            bagButton = ActionButton("ui.bag", () => { if (playerUIHook != null) playerUIHook.OpenPanel(PlayerPanel.Inventory); else ToggleDetails("inventory"); }, null); toolbar.Add(bagButton);
             audioButton = ActionButton("ui.audio", ToggleAudio, null); toolbar.Add(audioButton);
             sync = ActionButton("ui.sync", () => RunAction(async () => { var r = await client.ReadWorldAsync(life.Token); if (!r.Success) return r;
                 r = await client.ReadQuestsAsync(life.Token); return r.Success ? await client.ReadInventoryAsync(life.Token) : r; })); toolbar.Add(sync);
@@ -441,7 +447,7 @@ namespace NguMach.Client.P1
         private void Close()
         {
             if (closing) return;
-            closing = true; if (life != null) life.Cancel();
+            closing = true; if (playerUIHook != null) playerUIHook.CloseAllPanels(); if (life != null) life.Cancel();
             if (audioPlayer != null) { audioPlayer.enabled = false; Destroy(audioPlayer); }
             if (presenter != null) { presenter.Release(); Destroy(presenter); }
             if (proxy != null) Destroy(proxy); if (proxySprite != null) Destroy(proxySprite); if (proxyTexture != null) Destroy(proxyTexture);

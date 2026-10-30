@@ -212,4 +212,88 @@ namespace PlayerUIChecks
             Assert.Equal("session_not_found", state.ErrorCode);
         }
     }
+
+    // ── Producer Regression Negative Checks (AGREV-04, 05, 06, 07) ───────────
+
+    public class ProducerNegativeChecks
+    {
+        // Synthetic fixtures matching optional-slot BAG wire shape; no balance values.
+        [Fact]
+        public async Task ValidBagItemWithoutSlotMustBeVisible()
+        {
+            var adapter = new FakeAdapter { Inventory = new P1Inventory {
+                inventoryRevision = 1,
+                items = new[] { new P1Item { instanceId = "ITM_REVIEW_A", templateId = "TOOL-ROD-01", location = "BAG", stack = 1, durability = 100, version = 1 } },
+                currencies = Array.Empty<P1Currency>() } };
+            var presenter = new InventoryPresenter(adapter);
+            await presenter.LoadAsync(CancellationToken.None);
+            Assert.Single(presenter.State.Value.Slots);
+        }
+
+        [Fact]
+        public async Task EquipmentMustNotOccupyBagCell()
+        {
+            var adapter = new FakeAdapter { Inventory = new P1Inventory {
+                inventoryRevision = 1,
+                items = new[] { new P1Item { instanceId = "ITM_REVIEW_E", templateId = "TOOL-ROD-01", location = "EQUIPPED", slot = "MAIN_HAND", stack = 1, durability = 100, version = 1 } },
+                currencies = Array.Empty<P1Currency>() } };
+            var presenter = new InventoryPresenter(adapter);
+            await presenter.LoadAsync(CancellationToken.None);
+            Assert.DoesNotContain(presenter.State.Value.DiagnosticWarnings, x => x.StartsWith("out_of_range_slot"));
+        }
+
+        [Fact]
+        public async Task CancelledReadMustNotLeaveLoadingForever()
+        {
+            var adapter = new FakeAdapter { OnReadInventory = () => Task.FromException<P1Result>(new OperationCanceledException()) };
+            var presenter = new InventoryPresenter(adapter);
+            try { await presenter.LoadAsync(CancellationToken.None); } catch (OperationCanceledException) { }
+            Assert.False(presenter.State.IsLoading);
+        }
+
+        [Fact]
+        public async Task QuestReadyMustNotOfferTurnInAtEveryNpc()
+        {
+            var adapter = new FakeAdapter { Quests = new[] { new P1Quest {
+                questId = "P00-01", state = "READY_TO_TURN_IN", stepId = "STEP_REVIEW",
+                objectiveCounters = new System.Collections.Generic.Dictionary<string, int>(), revision = 1 } } };
+            var presenter = new NpcDialoguePresenter(adapter);
+            await presenter.InteractAsync("NPC_UNRELATED_REVIEW", CancellationToken.None);
+            Assert.DoesNotContain(presenter.State.Value.Choices, c => c.Enabled && c.Label.StartsWith("[Nộp nhiệm vụ]"));
+        }
+    }
+
+    // ── Concrete P1ClientAdapter coverage (AGREV-01) ─────────────────────────
+
+    public class P1ClientAdapterTests
+    {
+        private sealed class DummyTransport : IP1Transport
+        {
+            public Task<P1HttpReply> SendAsync(P1Request request, CancellationToken cancellation)
+                => Task.FromResult(new P1HttpReply { StatusCode = 200, Body = "{}" });
+        }
+
+        [Fact]
+        public void Adapter_ThrowsOnNullClient()
+        {
+            Assert.Throws<ArgumentNullException>(() => new P1ClientAdapter(null));
+        }
+
+        [Fact]
+        public void Adapter_ExposesClientProperties()
+        {
+            var client = new P1Client(new DummyTransport());
+            var adapter = new P1ClientAdapter(client);
+
+            Assert.Equal(UIConnectionState.Disconnected, adapter.ConnectionState);
+            Assert.False(adapter.HasPendingMutation);
+            Assert.Null(adapter.LastErrorCode);
+            Assert.Null(adapter.LastCorrelationId);
+            Assert.Null(adapter.Self);
+            Assert.Null(adapter.World);
+            Assert.Null(adapter.WorldV2);
+            Assert.Empty(adapter.Quests);
+            Assert.Null(adapter.Inventory);
+        }
+    }
 }

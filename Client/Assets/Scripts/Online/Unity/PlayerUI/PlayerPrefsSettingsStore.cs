@@ -9,17 +9,18 @@ namespace NguMach.Client.Presentation
     /// <summary>
     /// Persists <see cref="SettingsViewState"/> via Unity PlayerPrefs.
     /// Schema version bump resets to default rather than loading corrupt keys.
+    /// Inherits from MonoBehaviour so it can be placed in scene and found via FindFirstObjectByType.
     /// </summary>
-    public sealed class PlayerPrefsSettingsStore : ISettingsStore
+    public class PlayerPrefsSettingsStore : MonoBehaviour, ISettingsStore
     {
-        private const string KeyVersion     = "ag_settings_version";
-        private const string KeyUiScale     = "ag_ui_scale";
-        private const string KeyVolume      = "ag_master_volume";
-        private const string KeyTextSize    = "ag_text_size";
+        private const string KeyVersion       = "ag_settings_version";
+        private const string KeyUiScale       = "ag_ui_scale";
+        private const string KeyVolume        = "ag_master_volume";
+        private const string KeyTextSize      = "ag_text_size";
         private const string KeyReducedMotion = "ag_reduced_motion";
         private const string KeyReducedFlash  = "ag_reduced_flash";
         private const string KeyInputHints    = "ag_input_hints";
-        private const int    CurrentVersion  = 1;
+        private const int    CurrentVersion   = 1;
 
         public SettingsViewState Load()
         {
@@ -36,13 +37,14 @@ namespace NguMach.Client.Presentation
 
         public void Save(SettingsViewState s)
         {
-            PlayerPrefs.SetInt(KeyVersion,      CurrentVersion);
-            PlayerPrefs.SetFloat(KeyUiScale,    s.UiScale);
-            PlayerPrefs.SetFloat(KeyVolume,     s.MasterVolume);
-            PlayerPrefs.SetFloat(KeyTextSize,   s.TextSize);
-            PlayerPrefs.SetInt(KeyReducedMotion, s.ReducedMotion  ? 1 : 0);
-            PlayerPrefs.SetInt(KeyReducedFlash,  s.ReducedFlash   ? 1 : 0);
-            PlayerPrefs.SetInt(KeyInputHints,    s.ShowInputHints ? 1 : 0);
+            if (s == null) return;
+            PlayerPrefs.SetInt(KeyVersion,        CurrentVersion);
+            PlayerPrefs.SetFloat(KeyUiScale,      s.UiScale);
+            PlayerPrefs.SetFloat(KeyVolume,       s.MasterVolume);
+            PlayerPrefs.SetFloat(KeyTextSize,     s.TextSize);
+            PlayerPrefs.SetInt(KeyReducedMotion,  s.ReducedMotion  ? 1 : 0);
+            PlayerPrefs.SetInt(KeyReducedFlash,   s.ReducedFlash   ? 1 : 0);
+            PlayerPrefs.SetInt(KeyInputHints,     s.ShowInputHints ? 1 : 0);
             PlayerPrefs.Save();
         }
     }
