@@ -17,10 +17,11 @@ namespace NguMach.Client.P1
         private P1AudioPlayer audioPlayer;
         private CancellationTokenSource life;
         private Action returnToTitle;
-        private Label status, vitals, location, message, detailText, targetText;
+        private Label status, vitals, location, message, detailText, targetText, combatText;
         private VisualElement details, safeRoot, wheel, audioPanel;
         private Button accept, retry, sync, leave, attack, journalButton, bagButton, audioButton;
         private Button detailOpener;
+        private Button interact, cycleTarget;
         private readonly P1GameplayInputGate inputGate = new P1GameplayInputGate();
         private readonly Button[] skills = new Button[6];
         private Vector2 touchMove, keyboardMove;
@@ -35,17 +36,18 @@ namespace NguMach.Client.P1
         private DateTimeOffset sampledServerTime;
         private float sampledAt;
         private string selectedTarget;
+        private string interactionTarget;
         private string detailMode = "quests";
         private float pollAt, listsAt;
         private EventCallback<GeometryChangedEvent> layoutChanged;
 
-        public void Open(UIDocument ui, string serverOrigin, int timeoutSeconds, Action onClose)
+        public void Open(UIDocument ui, string serverOrigin, int timeoutSeconds, Action onClose, bool useWorldV2 = false)
         {
             document = ui; returnToTitle = onClose;
             life = new CancellationTokenSource();
             try
             {
-                client = new P1Client(new P1UnityTransport(serverOrigin, timeoutSeconds));
+                client = new P1Client(new P1UnityTransport(serverOrigin, timeoutSeconds), useWorldV2: useWorldV2);
                 audioPlayer = gameObject.AddComponent<P1AudioPlayer>(); audioPlayer.Initialize();
                 Build();
                 _ = StartOnline();
@@ -97,6 +99,8 @@ namespace NguMach.Client.P1
                             Show(await client.ReadQuestsAsync(life.Token));
                             Show(await client.ReadInventoryAsync(life.Token));
                         }
+                        if (client.UseWorldV2 && client.WorldV2 != null && !actionBusy && client.SessionId != null)
+                            Show(await client.ReadEventsAsync(life.Token));
                         Render();
                     }
                     await Task.Delay(100, life.Token); // No queue of old movement input behind a slow request.
@@ -118,7 +122,8 @@ namespace NguMach.Client.P1
             }
             keyboardMove = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
             bool hotkeysReleased = !Input.GetKey(KeyCode.Alpha1) && !Input.GetKey(KeyCode.Alpha2) &&
-                !Input.GetKey(KeyCode.Alpha3) && !Input.GetKey(KeyCode.F);
+                !Input.GetKey(KeyCode.Alpha3) && !Input.GetKey(KeyCode.F) && !Input.GetKey(KeyCode.E) &&
+                !Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.Tab);
             // Intents were cleared on close/focus loss; physical held pointers still need release.
             bool pointersReleased = !touchHeld && Input.touchCount == 0 && !Input.GetMouseButton(0);
             inputGate.ObserveControls(keyboardMove.sqrMagnitude < 0.001f, hotkeysReleased, pointersReleased);
@@ -129,6 +134,9 @@ namespace NguMach.Client.P1
                 if (Input.GetKeyDown(KeyCode.Alpha2)) Cast(1);
                 if (Input.GetKeyDown(KeyCode.Alpha3)) Cast(2);
                 if (Input.GetKeyDown(KeyCode.F)) AcceptQuest();
+                if (Input.GetKeyDown(KeyCode.E)) Interact();
+                if (Input.GetKeyDown(KeyCode.Space)) BasicAttack();
+                if (Input.GetKeyDown(KeyCode.Tab)) CycleTarget();
             }
             RenderCooldowns();
         }
@@ -158,7 +166,36 @@ namespace NguMach.Client.P1
         private void AcceptQuest()
         {
             if (client.State != P1ConnectionState.Ready) return;
-            RunAction(() => client.AcceptQuestAsync("P00-01", "NPC_LYAN", life.Token));
+            var q = Array.Find(client.Quests, item => item.questId == "P00-01");
+            if (q == null) return;
+            if (q.state == "AVAILABLE") RunAction(() => client.AcceptQuestAsync("P00-01", "NPC_LYAN", life.Token));
+            else if (q.state == "READY_TO_TURN_IN") RunAction(() => client.TurnInQuestAsync("P00-01", "NPC_TA_VAN_KHANH", life.Token));
+        }
+        private void Interact()
+        {
+            RefreshInputSurface();
+            if (!inputGate.AllowsGameplay || interact == null || !interact.enabledSelf || interactionTarget == null) return;
+            string id = interactionTarget; RunAction(() => client.InteractAsync(id, life.Token));
+        }
+        private void BasicAttack()
+        {
+            RefreshInputSurface();
+            if (!inputGate.AllowsGameplay || attack == null || !attack.enabledSelf || selectedTarget == null) return;
+            var aim = presenter == null ? Vector2.down : presenter.Facing;
+            string target = selectedTarget; RunAction(() => client.BasicAttackAsync(target, aim.x, aim.y, life.Token));
+        }
+        private static bool Hostile(P1Entity entity)
+        { return (entity.kind == "MOB" || entity.kind == "BOSS") && (entity.targetable.HasValue
+            ? entity.targetable.Value && entity.healthState == "ALIVE"
+            : entity.hp > 0 && entity.state != "DEAD"); }
+        private void CycleTarget()
+        {
+            RefreshInputSurface(); if (!inputGate.AllowsGameplay || client.World == null) return;
+            var targets = Array.FindAll(client.World.entities, Hostile);
+            if (targets.Length == 0) { selectedTarget = null; return; }
+            Array.Sort(targets, (a, b) => string.CompareOrdinal(a.entityId, b.entityId));
+            int index = Array.FindIndex(targets, e => e.entityId == selectedTarget);
+            selectedTarget = targets[(index + 1) % targets.Length].entityId; Render();
         }
         private void Cast(int slot)
         {
@@ -174,6 +211,8 @@ namespace NguMach.Client.P1
             if (closing || message == null) return;
             audioPlayer.ObserveWorld(client.SessionId, client.World);
             foreach (var notice in client.DrainAudioNotices()) audioPlayer.ConfirmedNotice(notice);
+            foreach (var e in client.DrainPresentationEvents())
+                if (combatText != null) combatText.text = P1Copy.Get("combat." + e.type);
             if (!result.Success)
             {
                 if (userAction) audioPlayer.LocalUi("SFX/UI/error");
@@ -264,7 +303,7 @@ namespace NguMach.Client.P1
             wheel = new VisualElement { pickingMode = PickingMode.Ignore }; wheel.style.position = Position.Absolute; wheel.style.right = 10; wheel.style.bottom = 10;
             wheel.style.width = 320; wheel.style.height = 320;
             // Same angles as DEC-019. Larger orbit maintains separate >=54px hit targets.
-            attack = new Button { text = P1Copy.Get("skill.attack") }; Circle(attack, 230, 230, 92); attack.SetEnabled(false); attack.tooltip = P1Copy.Get("skill.basicMissing"); wheel.Add(attack);
+            attack = new Button(BasicAttack) { text = P1Copy.Get("skill.attack") }; Circle(attack, 230, 230, 92); attack.SetEnabled(false); attack.tooltip = P1Copy.Get("skill.basicMissing"); wheel.Add(attack);
             float[] angles = { 200, 174, 148, 122, 96, 70 };
             for (int i = 0; i < 6; i++)
             {
@@ -275,6 +314,10 @@ namespace NguMach.Client.P1
             }
             targetText = Text("target.none"); targetText.style.position = Position.Absolute; targetText.style.right = 10; targetText.style.bottom = 330;
             safeRoot.Add(targetText); safeRoot.Add(wheel); UpdateSafeArea();
+            var context = Panel(); context.style.right = 10; context.style.bottom = 360; context.style.width = 220;
+            cycleTarget = ActionButton("target.cycle", CycleTarget, null); context.Add(cycleTarget);
+            interact = ActionButton("world.interact", Interact, null); context.Add(interact);
+            combatText = new Label { enableRichText = false }; context.Add(combatText); safeRoot.Add(context);
         }
         private void UpdateSafeArea()
         {
@@ -328,12 +371,19 @@ namespace NguMach.Client.P1
             {
                 vitals.text = P1Copy.Get("hud.vitals", world.self.hp, world.self.maxHp, world.self.mp, world.self.maxMp);
                 location.text = P1Copy.Get("hud.position", world.self.x, world.self.y);
-                selectedTarget = null;
-                foreach (var e in world.entities) if (e.kind != "NPC" && e.state != "DEAD") { selectedTarget = e.entityId; break; }
-                targetText.text = selectedTarget == null ? P1Copy.Get("target.none") : P1Copy.Get("target.selected");
+                var target = Array.Find(world.entities, e => e.entityId == selectedTarget && Hostile(e));
+                if (target == null) { target = Array.Find(world.entities, Hostile); selectedTarget = target?.entityId; }
+                targetText.text = target == null ? P1Copy.Get("target.none") : P1Copy.Get("target.vitals", target.hp, target.maxHp);
+                interactionTarget = null; double nearest = 25; // <=5WU interaction range, server revalidates.
+                foreach (var e in world.entities)
+                {
+                    if ((e.kind != "INTERACTABLE" && e.kind != "GATHER_NODE") || e.availability != "AVAILABLE") continue;
+                    double distance = (e.x - world.self.x) * (e.x - world.self.x) + (e.y - world.self.y) * (e.y - world.self.y);
+                    if (distance <= nearest) { nearest = distance; interactionTarget = e.entityId; }
+                }
             }
-            else { vitals.text = P1Copy.Get("hud.unavailable"); location.text = ""; selectedTarget = null; targetText.text = P1Copy.Get("target.none"); }
-            var text = new StringBuilder(); bool available = false;
+            else { vitals.text = P1Copy.Get("hud.unavailable"); location.text = ""; selectedTarget = null; interactionTarget = null; targetText.text = P1Copy.Get("target.none"); }
+            var text = new StringBuilder(); bool available = false, turnIn = false;
             if (detailMode == "quests")
             {
                 foreach (var q in client.Quests)
@@ -342,6 +392,7 @@ namespace NguMach.Client.P1
                     text.AppendLine(P1Copy.Get("quest.state." + q.state));
                     foreach (var count in q.objectiveCounters) text.AppendLine(P1Copy.Get("quest.count", count.Value));
                     if (q.questId == "P00-01" && q.state == "AVAILABLE") available = true;
+                    if (q.questId == "P00-01" && q.state == "READY_TO_TURN_IN") turnIn = true;
                 }
                 if (client.Quests.Length == 0) text.Append(P1Copy.Get("quest.empty"));
             }
@@ -356,13 +407,24 @@ namespace NguMach.Client.P1
                 foreach (var c in client.Inventory.currencies) text.AppendLine((c.currencyId == "COIN" ? P1Copy.Get("bag.coin") : P1Copy.Get("bag.otherCurrency")) + ": " + c.amount);
                 if (client.Inventory.items.Length == 0) text.AppendLine(P1Copy.Get("bag.empty"));
             }
-            detailText.text = text.ToString(); accept.style.display = detailMode == "quests" ? DisplayStyle.Flex : DisplayStyle.None; accept.SetEnabled(ready && available);
-            for (int i = 0; i < 6; i++) skills[i].SetEnabled(ready && inputGate.AllowsGameplay && i < 3 && (i == 0 || selectedTarget != null));
+            if (client.LastTurnIn != null && !client.LastTurnIn.rewards.xp.applied) text.AppendLine(P1Copy.Get("quest.xpPending"));
+            detailText.text = text.ToString(); accept.style.display = detailMode == "quests" ? DisplayStyle.Flex : DisplayStyle.None;
+            accept.text = P1Copy.Get(turnIn ? "quest.turnIn" : "quest.accept"); accept.SetEnabled(ready && (available || turnIn));
+            interact.SetEnabled(ready && inputGate.AllowsGameplay && client.UseWorldV2 && interactionTarget != null);
+            cycleTarget.SetEnabled(inputGate.AllowsGameplay && client.UseWorldV2 && world != null);
+            for (int i = 0; i < 6; i++) skills[i].SetEnabled(ready && inputGate.AllowsGameplay && i < 3 &&
+                (!client.UseWorldV2 || i == 2) && (i == 0 || selectedTarget != null));
             RenderCooldowns();
         }
         private void RenderCooldowns()
         {
             if (client == null || skills[0] == null) return;
+            bool basicReady = client.UseWorldV2 && client.State == P1ConnectionState.Ready && client.World != null && client.World.self.hp > 0 && !actionBusy && inputGate.AllowsGameplay && selectedTarget != null;
+            string basicEnd;
+            if (client.CooldownEndsAtUtc.TryGetValue("BASIC_ATTACK", out basicEnd) && sampledServerTime != default(DateTimeOffset) &&
+                DateTimeOffset.TryParse(basicEnd, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var basicUntil))
+                basicReady &= (basicUntil - sampledServerTime).TotalSeconds - (Time.realtimeSinceStartup - sampledAt) <= 0;
+            attack.SetEnabled(basicReady); attack.tooltip = P1Copy.Get(client.UseWorldV2 ? "skill.attack" : "skill.basicMissing");
             for (int i = 0; i < 3; i++)
             {
                 string end; double seconds = 0;
@@ -370,8 +432,10 @@ namespace NguMach.Client.P1
                     DateTimeOffset.TryParse(end, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var until))
                     seconds = (until - sampledServerTime).TotalSeconds - (Time.realtimeSinceStartup - sampledAt);
                 skills[i].text = P1Copy.Get("skill." + (i+1)) + (seconds > 0 ? "\n" + Math.Ceiling(seconds) + "s" : "");
-                bool ready = client.State == P1ConnectionState.Ready && !actionBusy && inputGate.AllowsGameplay && (i == 0 || selectedTarget != null);
-                skills[i].SetEnabled(ready && seconds <= 0);
+                bool ready = client.State == P1ConnectionState.Ready && client.World != null && client.World.self.hp > 0 && !actionBusy && inputGate.AllowsGameplay && (i == 0 || selectedTarget != null);
+                bool mechanicsAvailable = !client.UseWorldV2 || i == 2; // Basic/MK03 are the reviewed tick subset; guard/dash mechanics follow.
+                skills[i].tooltip = P1Copy.Get(mechanicsAvailable ? "skill." + (i+1) : "skill.mechanicPending");
+                skills[i].SetEnabled(ready && mechanicsAvailable && seconds <= 0);
             }
         }
         private void Close()

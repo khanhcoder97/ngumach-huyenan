@@ -274,7 +274,10 @@ internal static class Program
         {
             if (args.Length == 2 && args[0] == "--http") await HttpChecks(args[1]);
             else if (args.Length == 2 && args[0] == "--http-dev") await HttpDevQuestChecks(args[1]);
-            else { await RunCases(); AudioChecks.Run(); InputGateChecks.Run(); }
+            else if (args.Length == 2 && args[0] == "--http-v2-default") await V2HttpChecks.Default(args[1]);
+            else if (args.Length == 2 && args[0] == "--http-v2-dev") await V2HttpChecks.Dev(args[1]);
+            else if (args.Length == 2 && args[0] == "--http-v2-tick") await V2HttpChecks.Dev(args[1], true);
+            else { await RunCases(); AudioChecks.Run(); InputGateChecks.Run(); await V2Checks.Run(); }
             return 0;
         }
         catch (Exception e) { Console.Error.WriteLine(e); return 1; }

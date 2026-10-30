@@ -12,7 +12,7 @@ namespace NguMach.Client.P1
     }
 
     // One lane for commands and reads. No prediction, fake grants or local cooldown commits.
-    public sealed class P1Client
+    public sealed partial class P1Client
     {
         private readonly IP1Transport transport;
         private readonly SemaphoreSlim lane = new SemaphoreSlim(1, 1);
@@ -20,6 +20,8 @@ namespace NguMach.Client.P1
         private int sequence;
         private P1Request pending;
         private bool pendingCombat;
+        private enum PendingKind { Legacy, Interact, TurnIn, CombatV2 }
+        private PendingKind pendingKind;
         private readonly HashSet<string> seenEvents = new HashSet<string>(StringComparer.Ordinal);
         private readonly Queue<string> seenEventOrder = new Queue<string>();
         private readonly Dictionary<string, string> cooldowns = new Dictionary<string, string>();
@@ -39,8 +41,9 @@ namespace NguMach.Client.P1
         public string LastCorrelationId { get; private set; }
         public bool HasPendingMutation { get { return pending != null; } }
         public IReadOnlyDictionary<string, string> CooldownEndsAtUtc { get { return cooldowns; } }
-        public P1Client(IP1Transport transport, Func<DateTimeOffset> clock = null)
-        { this.transport = transport ?? throw new ArgumentNullException(nameof(transport)); utcNow = clock ?? (() => DateTimeOffset.UtcNow); }
+        public bool UseWorldV2 { get; private set; }
+        public P1Client(IP1Transport transport, Func<DateTimeOffset> clock = null, bool useWorldV2 = false)
+        { this.transport = transport ?? throw new ArgumentNullException(nameof(transport)); utcNow = clock ?? (() => DateTimeOffset.UtcNow); UseWorldV2 = useWorldV2; }
 
         public async Task<P1Result> ConnectAsync(CancellationToken ct)
         {
@@ -64,7 +67,8 @@ namespace NguMach.Client.P1
                 LastCombatEvent = null; seenEvents.Clear(); seenEventOrder.Clear();
                 cooldowns.Clear();
                 ClearAudioNotices();
-                return Ready();
+                ResetV2();
+                return UseWorldV2 ? await ReadWorldV2(ct) : Ready();
             }
             finally { lane.Release(); }
         }
@@ -78,6 +82,7 @@ namespace NguMach.Client.P1
         private async Task<P1Result> ReadWorld(CancellationToken ct)
         {
             if (SessionId == null) return Fail("not_connected");
+            if (UseWorldV2) return await ReadWorldV2(ct);
             var reply = await Send(Get("/p1/world/" + SessionId), ct);
             var r = Parse<P1World>(reply);
             if (IsExpired(r)) return Expire();
@@ -146,8 +151,8 @@ namespace NguMach.Client.P1
                 }
                 if (r.sessionId != SessionId || !P1Wire.Valid(r.result, World.self.characterId))
                 { State = P1ConnectionState.NeedsResync; return Fail("invalid_response"); }
-                if (r.result.revision >= World.revision) World = r.result;
-                return Ready();
+                if (!UseWorldV2 && r.result.revision >= World.revision) World = r.result;
+                return UseWorldV2 ? await ReadWorldV2(ct) : Ready();
             }
             finally { lane.Release(); }
         }
@@ -161,12 +166,14 @@ namespace NguMach.Client.P1
                 if (string.IsNullOrWhiteSpace(quest) || string.IsNullOrWhiteSpace(npc)) return Fail("invalid_input");
                 pending = Command("/p1/quests/accept", new P1QuestAccept { questId = quest, npcId = npc });
                 pendingCombat = false;
+                pendingKind = PendingKind.Legacy;
                 return await SubmitPending(ct);
             }
             finally { lane.Release(); }
         }
         public async Task<P1Result> CastAsync(string skill, string target, double aimX, double aimY, CancellationToken ct)
         {
+            if (UseWorldV2) return await CombatV2Async("SKILL", skill, target, aimX, aimY, ct);
             await lane.WaitAsync(ct);
             try
             {
@@ -177,6 +184,7 @@ namespace NguMach.Client.P1
                 pending = Command("/p1/combat", new P1Cast { inputSequence = NextSequence(), skillId = skill,
                     targetId = target, aimX = aimX, aimY = aimY });
                 pendingCombat = true;
+                pendingKind = PendingKind.Legacy;
                 return await SubmitPending(ct);
             }
             finally { lane.Release(); }
@@ -193,6 +201,9 @@ namespace NguMach.Client.P1
             // Cancellation after send is also ambiguous; never leave new input enabled.
             State = P1ConnectionState.UncertainMutation;
             var reply = await Send(pending, ct);
+            if (pendingKind == PendingKind.Interact) return await ApplyInteraction(reply, ct);
+            if (pendingKind == PendingKind.TurnIn) return await ApplyTurnIn(reply, ct);
+            if (pendingKind == PendingKind.CombatV2) return await ApplyCombatV2(reply, ct);
             if (pendingCombat)
             {
                 var r = Parse<P1CombatEvent>(reply);
@@ -241,10 +252,10 @@ namespace NguMach.Client.P1
                 return Good(reply, r) ? Ready() : Fail(Error(reply, r), reply.CorrelationId);
             }
         }
-        private P1Request Command<T>(string path, T payload)
+        private P1Request Command<T>(string path, T payload, int schemaVersion = 1)
         {
             var id = Id();
-            var body = new P1Envelope<T> { requestId = id, idempotencyKey = Id(),
+            var body = new P1Envelope<T> { schemaVersion = schemaVersion, requestId = id, idempotencyKey = Id(),
                 sentAtUtc = utcNow().UtcDateTime.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture), characterId = World.self.characterId, payload = payload };
             return new P1Request("POST", path, P1Wire.Encode(body), SessionId, id);
         }
@@ -258,12 +269,12 @@ namespace NguMach.Client.P1
             catch (Exception e) when (e is System.IO.IOException || e is System.Net.Http.HttpRequestException)
             { return new P1HttpReply { StatusCode = 0, CorrelationId = request.CorrelationId }; }
         }
-        private static P1Response<T> Parse<T>(P1HttpReply reply)
+        private static P1Response<T> Parse<T>(P1HttpReply reply, int schemaVersion = 1)
         {
             try
             {
                 var r = P1Wire.Decode<P1Response<T>>(reply.Body);
-                return r != null && r.schemaVersion == 1 && P1Wire.Hex32(r.requestId) ? r : null;
+                return r != null && r.schemaVersion == schemaVersion && P1Wire.Hex32(r.requestId) ? r : null;
             }
             catch (Newtonsoft.Json.JsonException) { return null; }
         }
@@ -304,7 +315,7 @@ namespace NguMach.Client.P1
         private P1Result Fail(string error, string correlation = null)
         { LastError = error; LastCorrelationId = correlation; return P1Result.Fail(error, correlation); }
         private void ClearSession(P1ConnectionState state)
-        { SessionId = null; World = null; Quests = new P1Quest[0]; Inventory = null; pending = null; LastCombatEvent = null; cooldowns.Clear(); ClearAudioNotices(); State = state; }
+        { SessionId = null; World = null; Quests = new P1Quest[0]; Inventory = null; pending = null; LastCombatEvent = null; cooldowns.Clear(); ClearAudioNotices(); ResetV2(); State = state; }
         private P1Result Expire() { ClearSession(P1ConnectionState.Expired); return Fail("session_not_found"); }
     }
 }

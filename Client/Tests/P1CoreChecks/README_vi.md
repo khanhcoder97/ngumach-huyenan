@@ -1,5 +1,7 @@
 # Client P1 — kiểm tra không cần Unity
 
+Đợt30/10 có thêm v2/fault suite và HTTP integration; xem `docs/production/Client_V2_Quest_Combat_Integration_20261030_vi.md`. `--http-v2-default` kiểm feature-off; `--http-v2-dev` kiểm compatibility accept-only; `--http-v2-tick` kiểm basic/MK03/death và replay sau END với server fix tương ứng. Hai actor đều đi bằng move, nhặt/trả quest và retry grant thật. Không chứng nhận boss/durable save hoặc Unity.
+
 `dotnet run --project Client/Tests/P1CoreChecks/P1CoreChecks.csproj -c Release` compile **cùng các file Core** được Unity dùng, rồi chạy fault scenarios: mất phản hồi, retry giữ nguyên request/key, readback MP, session expiry, stale snapshot, sai session, thiếu field, dictionary quest, inventory revision, cancellation và command serialization.
 
 `dotnet run --project Client/Tests/P1CoreChecks/P1CoreChecks.csproj -c Release -- --http http://127.0.0.1:5000` cần server mặc định quest-accept OFF. Test tạo phiên riêng, move, đọc quest/inventory, nhận feature-off (404/405 tùy route matching) và cast Phản Quang rồi đọc lại MP. `combat.effect` không được đổi thành damage/counter animation giả.
