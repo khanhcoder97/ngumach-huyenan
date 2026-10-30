@@ -1998,22 +1998,27 @@ public static class ServiceSelfCheck
             "mob.aggro",
             aggroTick.Any(lifecycle =>
                 lifecycle.FromState == MobBehaviorStates.Idle &&
-                lifecycle.ToState == MobBehaviorStates.Aggro) &&
-            aggroTick.Any(lifecycle =>
-                lifecycle.FromState == MobBehaviorStates.Aggro &&
-                lifecycle.ToState == MobBehaviorStates.Chase),
+                lifecycle.ToState == MobBehaviorStates.Aggro),
             string.Join(",", aggroTick.Select(lifecycle => lifecycle.ToState)));
 
+        // One acquisition edge per tick: AGGRO on the first tick, then CHASE and
+        // the telegraph it walks into. Impact therefore lands 0.45s after the
+        // telegraph opens, never on the tick that opened it.
+        mobClock.Advance(TimeSpan.FromSeconds(0.05));
+        var openTick = mobAi.Tick([prey]);
         Check(
             "mob.telegraph_opens",
             mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Telegraph &&
-            aggroTick.Any(lifecycle =>
+            openTick.Any(lifecycle =>
+                lifecycle.FromState == MobBehaviorStates.Aggro &&
+                lifecycle.ToState == MobBehaviorStates.Chase) &&
+            openTick.Any(lifecycle =>
                 lifecycle.FromState == MobBehaviorStates.Chase &&
                 lifecycle.ToState == MobBehaviorStates.Telegraph) &&
-            ImpactCount(aggroTick) == 0,
+            ImpactCount(openTick) == 0,
             mobAi.GetState("ENT_SELFCHECK_MOB"));
 
-        mobClock.Advance(TimeSpan.FromSeconds(0.3));
+        mobClock.Advance(TimeSpan.FromSeconds(0.30));
         var holdingTick = mobAi.Tick([prey]);
         Check(
             "mob.telegraph_holds",
@@ -2021,7 +2026,7 @@ public static class ServiceSelfCheck
             ImpactCount(holdingTick) == 0,
             mobAi.GetState("ENT_SELFCHECK_MOB"));
 
-        mobClock.Advance(TimeSpan.FromSeconds(0.2));
+        mobClock.Advance(TimeSpan.FromSeconds(0.30));
         var attackTick = mobAi.Tick([prey]);
         var impactOrder = attackTick
             .Where(lifecycle => lifecycle.FromState == MobBehaviorStates.Telegraph ||
@@ -2050,7 +2055,15 @@ public static class ServiceSelfCheck
             prey.Revision == 2,
             $"revision={prey.Revision}");
 
-        mobClock.Advance(TimeSpan.FromSeconds(0.5));
+        mobClock.Advance(TimeSpan.FromSeconds(0.30));
+        var recoveryTick = mobAi.Tick([prey]);
+        Check(
+            "mob.recovery_holds",
+            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Recover &&
+            recoveryTick.All(lifecycle => lifecycle.ToState != MobBehaviorStates.Telegraph),
+            mobAi.GetState("ENT_SELFCHECK_MOB"));
+
+        mobClock.Advance(TimeSpan.FromSeconds(0.30));
         var recoverTick = mobAi.Tick([prey]);
         Check(
             "mob.recovery_ends_to_chase",
@@ -2067,7 +2080,7 @@ public static class ServiceSelfCheck
             cooldownTick.All(lifecycle => lifecycle.ToState != MobBehaviorStates.Telegraph),
             "impact fired during cooldown");
 
-        mobClock.Advance(TimeSpan.FromSeconds(1.5));
+        mobClock.Advance(TimeSpan.FromSeconds(1.50));
         var readyTick = mobAi.Tick([prey]);
         Check(
             "mob.telegraph_repeats_after_cooldown",
@@ -2077,7 +2090,7 @@ public static class ServiceSelfCheck
                 lifecycle.ToState == MobBehaviorStates.Telegraph),
             mobAi.GetState("ENT_SELFCHECK_MOB"));
 
-        mobClock.Advance(TimeSpan.FromSeconds(0.5));
+        mobClock.Advance(TimeSpan.FromSeconds(0.60));
         var secondAttackTick = mobAi.Tick([prey]);
         var secondImpact = mobAttacks.ApplyImpacts(secondAttackTick, [prey]);
         Check(
@@ -2097,7 +2110,8 @@ public static class ServiceSelfCheck
         runner.Y = 0;
         whiffAi.Tick([runner]);
         runner.X = 44.6;
-        whiffClock.Advance(TimeSpan.FromSeconds(0.5));
+        whiffAi.Tick([runner]);
+        whiffClock.Advance(TimeSpan.FromSeconds(0.60));
         var whiffTick = whiffAi.Tick([runner]);
         var whiffImpact = whiffAttacks.ApplyImpacts(whiffTick, [runner]);
         Check(
@@ -2119,7 +2133,11 @@ public static class ServiceSelfCheck
         bait.X = 44;
         bait.Y = 0;
         cancelAi.Tick([bait]);
-        cancelClock.Advance(TimeSpan.FromSeconds(0.1));
+        cancelClock.Advance(TimeSpan.FromSeconds(0.05));
+        cancelAi.Tick([bait]);
+        // Past the impact deadline, but with no target: the pending impact is
+        // cancelled, so the mob never swings.
+        cancelClock.Advance(TimeSpan.FromSeconds(0.60));
         var cancelTick = cancelAi.Tick([]);
         cancelClock.Advance(TimeSpan.FromSeconds(1));
         var afterCancelTick = cancelAi.Tick([]);
@@ -2129,6 +2147,7 @@ public static class ServiceSelfCheck
             cancelTick.Any(lifecycle =>
                 lifecycle.FromState == MobBehaviorStates.Telegraph &&
                 lifecycle.ToState == MobBehaviorStates.Return) &&
+            ImpactCount(cancelTick) == 0 &&
             ImpactCount(afterCancelTick) == 0 &&
             cancelAttacks.ApplyImpacts(afterCancelTick, []).Count == 0 &&
             bait.Hp == 100,
