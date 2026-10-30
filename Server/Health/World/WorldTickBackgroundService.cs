@@ -50,14 +50,20 @@ public sealed class WorldTickBackgroundService : BackgroundService
         using var timer = new PeriodicTimer(TickPeriod);
         while (await timer.WaitForNextTickAsync(stoppingToken))
         {
+            // Sample the authoritative tick once per iteration: combat casts,
+            // mob AI, mob impacts and the tick stamped into every event have to
+            // agree, otherwise a coalesced timer callback can resolve one part
+            // of the world a tick ahead of another.
+            var tick = _clock.Tick;
+
             _entities.Update();
-            _combat.Tick(_clock.Tick);
+            _combat.Tick(tick);
             _groups.Tick();
 
             if (_mobOptions.Enabled)
             {
                 var players = _sessions.All();
-                var impacts = _mobAttacks.ApplyImpacts(_mobs.Tick(players), players);
+                var impacts = _mobAttacks.ApplyImpacts(_mobs.Tick(players), players, tick);
                 foreach (var impact in impacts)
                 {
                     if (impact.BlockedReason != MobAttackBlockedReasons.None)
@@ -71,9 +77,13 @@ public sealed class WorldTickBackgroundService : BackgroundService
 
                     _logger.LogInformation(
                         "DEV FIXTURE mob impact {EntityId} attack {AttackId} on " +
-                        "{TargetCharacterId}: {Damage} ({HpBefore} -> {HpAfter})",
+                        "{TargetCharacterId}: {Damage} ({HpBefore} -> {HpAfter}), " +
+                        "guard phase {GuardPhase} (DR {DamageReduction}), " +
+                        "confirmation {ConfirmationEventId}",
                         impact.EntityId, impact.AttackId, impact.TargetCharacterId,
-                        impact.Damage, impact.HpBefore, impact.HpAfter);
+                        impact.Damage, impact.HpBefore, impact.HpAfter,
+                        impact.GuardPhase, impact.DamageReduction,
+                        impact.Confirmation?.ConfirmationEventId ?? "-");
                 }
             }
         }

@@ -14,6 +14,10 @@ namespace Server.Health.Gameplay.Combat;
 // mob impact never rolls: it connects unless the player is out of range. Mob
 // move *selection* (basic vs heavy) has no canonical rule either, so every mob
 // uses its basic move — both gaps are filed as cases in the QOD-16 proposal.
+//
+// DEC-022: a front hit during an open guard window is reduced by 0.70 (or 0.20
+// during the whiff buff) before the final floor, and the first valid front hit
+// commits the guard confirmation that reserves the counter.
 public sealed record MobAttackResolution(
     string EntityId,
     string TargetCharacterId,
@@ -22,7 +26,11 @@ public sealed record MobAttackResolution(
     int HpBefore,
     int HpAfter,
     bool Applied,
-    string BlockedReason);
+    string BlockedReason,
+    string GuardPhase,
+    double DamageReduction,
+    string? GuardWindowCastId,
+    GuardConfirmation? Confirmation);
 
 public static class MobAttackBlockedReasons
 {
@@ -42,28 +50,35 @@ public sealed class MobAttackService
     private readonly WorldEntityRegistry _entities;
     private readonly CombatDamageFeature _combat;
     private readonly MobBehaviorOptions _options;
+    private readonly GuardDefenseService _guards;
 
     public MobAttackService(
         WorldEntityRegistry entities,
         CombatDamageFeature combat,
-        MobBehaviorOptions options)
+        MobBehaviorOptions options,
+        GuardDefenseService guards)
     {
         _entities = entities;
         _combat = combat;
         _options = options;
+        _guards = guards;
     }
 
     // Resolves every impact frame emitted by one mob AI tick. Blocked impacts
     // still return a resolution so the self-check and the logs can tell "no
     // damage because the gate is off" apart from "no damage because the player
-    // outran the telegraph".
+    // outran the telegraph". Impacts on the same defender keep a deterministic
+    // order (source entity id) so replays resolve identically.
     public IReadOnlyList<MobAttackResolution> ApplyImpacts(
         IReadOnlyList<MobLifecycleEvent> lifecycleEvents,
-        IReadOnlyList<PlayerSession> players)
+        IReadOnlyList<PlayerSession> players,
+        long tick)
     {
         var impacts = lifecycleEvents
             .Where(lifecycle =>
                 string.Equals(lifecycle.ToState, MobBehaviorStates.Attack, StringComparison.Ordinal))
+            .OrderBy(lifecycle => lifecycle.EntityId, StringComparer.Ordinal)
+            .ThenBy(lifecycle => lifecycle.TargetCharacterId, StringComparer.Ordinal)
             .ToArray();
         if (impacts.Length == 0)
         {
@@ -86,7 +101,7 @@ public sealed class MobAttackService
 
             targets.TryGetValue(targetCharacterId, out var target);
             resolutions.Add(ResolveImpact(
-                impact.EntityId, targetCharacterId, target));
+                impact.EntityId, targetCharacterId, target, tick, impact.AtUtc));
         }
 
         return resolutions;
@@ -95,7 +110,9 @@ public sealed class MobAttackService
     private MobAttackResolution ResolveImpact(
         string entityId,
         string targetCharacterId,
-        PlayerSession? target)
+        PlayerSession? target,
+        long tick,
+        DateTimeOffset atUtc)
     {
         if (!_combat.Enabled)
         {
@@ -122,15 +139,18 @@ public sealed class MobAttackService
             return Blocked(entityId, targetCharacterId, MobAttackBlockedReasons.UnknownTemplate);
         }
 
-        // Rules §2 step 4: mitigation is the player's armor; no element, crit or
-        // damage-reduction bucket applies to a mob swing (none are exported).
         var raw = DamageFormula.RawDamage(
             attack.Stats.Attack, 0, attack.Move.AttackMultiplier, 1, 0);
-        var damage = (int)DamageFormula.FinalDamage(
-            raw, DamageFormula.MitigationMultiplier(CombatActorBaseline.Armor), 1, 1, 1);
 
         int hpBefore;
         int hpAfter;
+        int damage;
+        GuardIncoming guard;
+        GuardConfirmation? confirmation;
+        // QREV-05: one impact is one critical section. Evaluating the window,
+        // committing HP and committing the confirmation under the same defender
+        // lock means a refresh or a map change cannot pair this impact's damage
+        // reduction with a different window's confirmation or resource.
         lock (target.SyncRoot)
         {
             if (target.Hp <= 0)
@@ -152,12 +172,30 @@ public sealed class MobAttackService
                     entityId, targetCharacterId, MobAttackBlockedReasons.OutOfRangeAtImpact);
             }
 
+            guard = _guards.EvaluateIncoming(
+                target.CharacterId, tick, entity.X, entity.Y);
+
+            // Rules §2 step 4-5: mitigation is the player's armor, then the
+            // shared DR bucket (guard 0.70 / whiff 0.20), then one final floor.
+            damage = (int)DamageFormula.FinalDamage(
+                raw,
+                DamageFormula.MitigationMultiplier(CombatActorBaseline.Armor),
+                1,
+                1,
+                DamageFormula.DamageReductionMultiplier(
+                    GuardTimeline.CombineReduction(guard.DamageReduction)));
+
             hpBefore = target.Hp;
             hpAfter = Math.Max(0, hpBefore - damage);
             target.Hp = hpAfter;
             // HP is part of the session aggregate, so the revision the client
             // reconciles against has to move with it (design resolution §3).
             target.Revision++;
+
+            // DEC-022 §3: survival is decided from the damage just committed,
+            // and only a front direct-melee hit in an open guard window pays.
+            confirmation = _guards.CommitConfirmation(
+                target.CharacterId, guard.WindowCastId, entity, tick, atUtc, hpAfter > 0);
         }
 
         return new MobAttackResolution(
@@ -168,7 +206,11 @@ public sealed class MobAttackService
             hpBefore,
             hpAfter,
             Applied: true,
-            MobAttackBlockedReasons.None);
+            MobAttackBlockedReasons.None,
+            guard.Phase,
+            guard.DamageReduction,
+            guard.WindowCastId,
+            confirmation);
     }
 
     private MobAttack? ResolveAttack(WorldEntityInstance entity)
@@ -205,7 +247,8 @@ public sealed class MobAttackService
     private static MobAttackResolution Blocked(
         string entityId, string targetCharacterId, string reason) =>
         new(entityId, targetCharacterId, AttackId: null, Damage: 0,
-            HpBefore: 0, HpAfter: 0, Applied: false, reason);
+            HpBefore: 0, HpAfter: 0, Applied: false, reason,
+            GuardPhases.None, 0, GuardWindowCastId: null, Confirmation: null);
 
     private static double Distance(double ax, double ay, double bx, double by) =>
         Math.Sqrt(((bx - ax) * (bx - ax)) + ((by - ay) * (by - ay)));
