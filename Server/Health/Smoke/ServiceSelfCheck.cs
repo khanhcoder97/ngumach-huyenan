@@ -2894,11 +2894,13 @@ public static class ServiceSelfCheck
             !openDashEvents.Any(stored =>
                 stored.Type is CombatEventTypesV2.Impact or CombatEventTypesV2.Miss),
             openDash?.StopReason ?? "no resolution");
+        var openEndEvents = dashEngine.Tick(8);
         Check(
-            "dash_resolves_after_prep_and_ends_next_tick",
-            openDashEvents.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
-            openDashEvents.Single(stored => stored.Type == CombatEventTypesV2.End).ServerTick == 7,
-            string.Join(",", openDashEvents.Select(stored => $"{stored.Type}@{stored.ServerTick}")));
+            "dash_ends_the_tick_after_it_moved",
+            !openDashEvents.Any(stored => stored.Type == CombatEventTypesV2.End) &&
+            openEndEvents.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
+            openEndEvents.Single(stored => stored.Type == CombatEventTypesV2.End).ServerTick == 8,
+            string.Join(",", openEndEvents.Select(stored => $"{stored.Type}@{stored.ServerTick}")));
 
         // On the reviewed synthetic bundle the same dash stops in front of the
         // 45–46 wall instead of teleporting the actor through it.
@@ -2980,8 +2982,9 @@ public static class ServiceSelfCheck
         Check(
             "dash_ledger_is_bounded",
             dashLedger.Count == DashLedger.Capacity &&
-            dashLedger.Find("0") is null &&
-            dashLedger.Find(new string('1', 31) + "5") is not null,
+            dashLedger.Find(87.ToString("x32")) is null &&
+            dashLedger.Find(88.ToString("x32")) is not null &&
+            dashLedger.Find(599.ToString("x32")) is { AchievedWu: 11 },
             $"count={dashLedger.Count}");
 
         var losAccept = new InMemoryQuestAcceptService(
