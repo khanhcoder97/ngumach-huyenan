@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Preview (OPC-08)</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 Sprite Sheet Preview Tool</h1>
+            <p class="subtitle">OPC-08: local, root-confined preview (Python stdlib, no Unity required)</p>
+        </header>
+
+        <section class="controls">
+            <div class="control-group">
+                <label for="spritePath">Sprite Sheet Path:</label>
+                <input type="text" id="spritePath" placeholder="Client/Assets/Art/Characters/MinhKiem/minh_kiem_walk.png" 
+                       value="Client/Assets/Art/Characters/MinhKiem/minh_kiem_walk.png">
+                <button id="loadBtn" class="btn-primary">Load</button>
+            </div>
+
+            <div class="control-group">
+                <label for="assetId">Asset ID (from manifest):</label>
+                <input type="text" id="assetId" placeholder="CHR_MINH_KIEM_WALK" 
+                       value="CHR_MINH_KIEM_WALK">
+                <button id="layoutBtn" class="btn-secondary">Fetch Layout</button>
+            </div>
+
+            <div class="control-group">
+                <label for="zoomLevel">Zoom:</label>
+                <select id="zoomLevel">
+                    <option value="1" selected>1x (fit)</option>
+                    <option value="2">2x</option>
+                    <option value="3">3x</option>
+                    <option value="4">4x</option>
+                    <option value="6">6x</option>
+                    <option value="8">8x</option>
+                </select>
+                <button id="toggleGrid" class="toggle-btn active">Grid</button>
+            </div>
+        </section>
+
+        <section class="info-panel">
+            <div id="statusMessage" class="status">Ready to load assets</div>
+            <div id="layoutInfo" class="layout-info hidden"></div>
+        </section>
+
+        <main class="preview-area">
+            <div id="sheetContainer" class="sheet-container">
+                <canvas id="spriteCanvas" width="720" height="560"></canvas>
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <section class="directions hidden" id="directionsPanel">
+                <h3>Directions:</h3>
+                <div class="direction-buttons">
+                    <button data-dir="NW" class="dir-btn">↖ NW</button>
+                    <button data-dir="N" class="dir-btn">↑ N</button>
+                    <button data-dir="NE" class="dir-btn">↗ NE</button>
+                    <button data-dir="W" class="dir-btn">← W</button>
+                    <button data-dir="E" class="dir-btn">→ E</button>
+                    <button data-dir="SW" class="dir-btn">↙ SW</button>
+                    <button data-dir="S" class="dir-btn">↓ S</button>
+                    <button data-dir="SE" class="dir-btn">↘ SE</button>
+                </div>
+            </section>
+
+            <section class="animations">
+                <h3>Animations:</h3>
+                <div id="animList" class="anim-list">
+                    <p class="hint">Load a layout to see animations</p>
+                </div>
+                <button id="playBtn" class="btn-play" disabled>▶ Play Animation</button>
+            </section>
+
+            <section class="current-frame">
+                <h3>Current Frame:</h3>
+                <div id="framePreview" class="frame-preview">
+                    <p class="hint">No frame selected</p>
+                </div>
+            </section>
+        </aside>
+    </div>
+
+    <footer>
+        <p>OPC-08 Implementation | No Unity required | Localhost only | Single URL decode | Root-confined images</p>
+    </footer>
+
+    <script src="/app.js"></script>
+</body>
+</html>

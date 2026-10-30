@@ -1,5 +1,11 @@
 # Phân công ba agent — Ngũ Mạch: Huyền Ấn
 
+## Owner hiện hành sau bàn giao OpenCode — 2026-10-31
+
+Theo yêu cầu chủ dự án, **Codex nhận toàn bộ OPC-05b/06…12**: coverage, manifest/migration, PNG/meta, preview, pack/CI, compiler dữ liệu ứng viên và adapter map Muse. OpenCode giữ các checkout/WIP cũ để đối chiếu, không sửa/push tiếp các nhánh đã bàn giao. Chi tiết tại `15_CODEX_OPENCODE_TAKEOVER_20261031.md`; các phân công OpenCode bên dưới là lịch sử và không còn là lệnh giao mới.
+
+Qoder local tiếp gameplay/Health tại #41/#87; QODER Remote giữ Persistence tại #79; Antigravity giữ PlayerUI tại #85/#89; Muse giữ art/map/sprite/VFX/cinema và native engine evidence tại #1/#29/#39. Codex tiếp tục quản lý/review/client core/audio và phần tooling mới nhận. Không dùng checkout của nhau, không tự thay canonical IDs/349XY hoặc bật runtime từ candidate.
+
 ## Chương trình hiện hành từ 2026-10-29
 
 Đọc `04_CONTINUOUS_DELIVERY_20261029.md` trước các backlog P1 bên dưới. OpenCode nhận gói OPC-06→10 tại `05_OPENCODE_ASSET_PIPELINE_EPIC.md`; Qoder nhận QOD-11→15 tại `06_QODER_GAMEPLAY_LOOP_EPIC.md`. Được làm tiếp mốc độc lập sau mỗi PR, giữ review gate và worktree riêng. Muse tiếp tục hàng đợi art/map/UI/VFX/cinema theo #1/#29/#39. Quyền sửa mở rộng và các profile camera mới ghi tại work order 04; bảng cũ bên dưới chỉ là baseline ban đầu.
