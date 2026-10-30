@@ -1,7 +1,11 @@
 name: asset-handoff-validation
 
-# Runs only when art, the delivery manifest or the handoff tooling changes.
+# Runs when art, the delivery manifest or the handoff tooling changes.
 # No Unity, no .NET and no third-party Python packages are installed.
+#
+# The full OPC-05..10 pipeline (including pack -> verify -> unpack -> verify)
+# is executed by Tools/AssetPack/run_all_checks.py, so the same command can be
+# reproduced locally from a clean clone.
 
 on:
   pull_request:
@@ -13,6 +17,8 @@ on:
       - "Client/Assets/VFX/**"
       - "Client/Assets/Animation/**"
       - "Implementation/Asset_Handoff/**"
+      - "Tools/AssetPack/**"
+      - "Tools/AssetPreview/**"
       - ".github/workflows/asset-handoff-validation.yml"
   push:
     branches: [main]
@@ -24,6 +30,8 @@ on:
       - "Client/Assets/VFX/**"
       - "Client/Assets/Animation/**"
       - "Implementation/Asset_Handoff/**"
+      - "Tools/AssetPack/**"
+      - "Tools/AssetPreview/**"
       - ".github/workflows/asset-handoff-validation.yml"
 
 permissions:
@@ -48,15 +56,6 @@ jobs:
           git lfs version
           echo "tracked LFS files: $(git lfs ls-files | wc -l)"
 
-      - name: Validator unit tests
-        run: python -m unittest discover -s Implementation/Asset_Handoff/tests -v
-
-      - name: Self check on the shipped example manifest
-        run: >-
-          python Implementation/Asset_Handoff/validate_asset_delivery.py
-          --skip-file-checks
-          --manifest Implementation/Asset_Handoff/muse_delivery_manifest.example.json
-
       - name: Collect changed files
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
@@ -78,7 +77,23 @@ jobs:
           --allow-missing-manifest
           --report asset-handoff-report.txt
 
-      - name: Upload findings
+      - name: Full pipeline (tests, audit x2, pack x2, unpack/verify, gates, preview)
+        run: >-
+          python Tools/AssetPack/run_all_checks.py
+          --evidence-dir Tools/AssetPack/ci_evidence
+
+      - name: Confirm pack and unpack evidence exist
+        run: |
+          set -eu
+          test -f Tools/AssetPack/ci_evidence/bundle1/bundle-manifest.json
+          test -f Tools/AssetPack/ci_evidence/bundle2/bundle-manifest.json
+          test -f Tools/AssetPack/ci_evidence/unpacked/bundle-manifest.json
+          test -f Tools/AssetPack/ci_evidence/unpacked-verify.json
+          cmp Tools/AssetPack/ci_evidence/bundle1/bundle-manifest.json \
+              Tools/AssetPack/ci_evidence/unpacked/bundle-manifest.json
+          echo "pack -> unpack manifests are byte-identical"
+
+      - name: Upload findings and bundle evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -86,4 +101,5 @@ jobs:
           path: |
             asset-handoff-report.txt
             changed.txt
-          if-no-files-found: ignore
+            Tools/AssetPack/ci_evidence/**
+          if-no-files-found: warn

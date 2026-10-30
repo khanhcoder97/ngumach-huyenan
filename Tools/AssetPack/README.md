@@ -1,4 +1,4 @@
-# OPC-09 — Deterministic asset bundle audit, pack and verify
+# OPC-09/OPC-10 — Asset bundle audit, pack, verify and full pipeline checks
 
 Standard-library-only tooling for Muse asset deliveries. It never modifies the
 source art tree and never claims Unity runtime/playback verification.
@@ -11,8 +11,39 @@ source art tree and never claims Unity runtime/playback verification.
 | `pack_bundle.py` | Allowlist/dependency-gated deterministic pack (dry-run by default) |
 | `unpack_bundle.py` | Verify a packed bundle, then copy it to a fresh directory and verify the copies |
 | `bundle_format.py` | Shared path confinement, canonical JSON and digest implementation |
+| `run_all_checks.py` | One command for tests, deterministic audit/pack, pack→unpack verification and the preview smoke |
 
-## Quick start (from the repository root)
+## Clean clone → full verification
+
+```bash
+git clone https://github.com/khanhcoder97/ngumach-huyenan.git
+cd ngumach-huyenan
+git lfs pull
+
+python Tools/AssetPack/run_all_checks.py
+```
+
+`run_all_checks.py` performs, in order:
+
+1. OPC-05/06/07 validator unit tests (`Implementation/Asset_Handoff/tests`)
+2. OPC-08 preview unit/HTTP tests (`Tools/AssetPreview/tests`)
+3. OPC-09 audit/pack/unpack tests (`Tools/AssetPack/tests`)
+4. Structural validation of the shipped example manifest
+5. **Audit twice** and require byte-identical reports
+6. **Pack twice** and require byte-identical `bundle-manifest.json`
+7. **Verify → unpack → verify** and require the audit, pack, bundle and unpacked
+   digests to match, with byte-identical bundle/unpacked manifests
+8. Negative gates: an invalid fixture and a draft-without-`--allow-draft` pack
+   must exit `2` and create **no** `bundle-manifest.json`
+9. Preview smoke on an **ephemeral port** (no fixed port, no `sleep`): real
+   HTTP requests for the UI, an encoded sprite path and the truthful
+   `CHR_MINH_KIEM_WALK` 6×8 / 48×64 layout
+
+Pass `--evidence-dir Tools/AssetPack/ci_evidence` to keep reports and bundles
+for inspection/upload. Exit codes: `0` all checks passed, `1` a check failed,
+`2` environment/usage error.
+
+## Individual tools
 
 ```bash
 # 1. Audit the delivered manifest (deterministic output)
@@ -58,7 +89,8 @@ A bundle is written only when **all** checks pass:
 * every included path is on the allowlist, or the allowlist file is absent.
 
 Validation happens before any bundle file is written, so a failed pack leaves no
-partial bundle (only the deterministic pack report is written).
+partial bundle (only the deterministic pack report is written). The reproducible
+failure fixture is documented in `fixtures/README.md`.
 
 ## Determinism and digest
 
@@ -70,7 +102,7 @@ partial bundle (only the deterministic pack report is written).
 * Audit and pack use the same function (`bundle_format.compute_bundle_digest`),
   so the audit digest equals the pack digest for the same asset set.
 * Repeated runs on unchanged input produce byte-identical reports and
-  `bundle-manifest.json`.
+  `bundle-manifest.json`; `run_all_checks.py` asserts this on every run.
 
 ## Verification and unpacking
 
@@ -91,26 +123,48 @@ re-runs the same verification on the copies.
 Exit codes: `0` success, `1` environment/usage error, `2` audit manifest or
 bundle verification failure.
 
+## CI wiring
+
+`.github/workflows/asset-handoff-validation.yml` checks out with LFS, validates
+the delivered manifest against the changed files, then runs the same
+`run_all_checks.py --evidence-dir Tools/AssetPack/ci_evidence`. It explicitly
+asserts that both packed bundles, the unpacked bundle, the verify report and
+byte-identical bundle/unpacked manifests exist, and uploads the evidence
+artifact. A separate `asset-preview-validation.yml` runs the headless-browser
+screenshot smoke; the preview's own unit tests run here too.
+
+There is no fixed port and no arbitrary `sleep`: the preview server is started
+in-process on port `0`, its assigned port is used for the HTTP requests, and it
+is shut down in `finally`.
+
 ## Verification evidence
 
-```text
-python -m unittest discover -s Tools/AssetPack/tests -v
-Ran 37 tests in 3.044s
-OK (skipped=2: Windows symlink privileges)
-```
-
-Real delivered manifest:
+Local Windows run (Python 3.14.6):
 
 ```text
-audit:  bundleDigest=8998eb214a5fe778e56b6c7eb1f68251889b41e3023f2ff1cf53ad32c0a94051
-pack:   included=1 errors=0 draft=True bundleDigest=8998eb...a94051
-verify: assets=1 verified=1 digest=8998eb...a94051
-unpack: outputDigest=8998eb...a94051 outputOk=True
+python Tools/AssetPack/run_all_checks.py --evidence-dir %TEMP%\opc10-evidence-local
+Ran 63 tests ... OK            (OPC-05/06/07)
+Ran 29 tests ... OK (skipped=1) (OPC-08, Windows symlink privilege)
+Ran 37 tests ... OK (skipped=2) (OPC-09, Windows symlink privilege)
+ALL CHECKS PASSED (28 checks)
 ```
 
-Two independent audit runs produced the same SHA-256 for
-`bundle-audit-report.json` (`04900f5d...0b705c`). CI wiring lives in
-`.github/workflows/asset-handoff-validation.yml` (OPC-10); the complete
-clean-clone command is `python Tools/AssetPack/run_all_checks.py`.
+Real delivered manifest (`muse_delivery_manifest.json`):
 
-Refs #40, OPC-09. Not self-merging.
+```text
+audit report SHA-256: 04900f5d7eec2ac661423415128b016685cc9aace3a324671b0338f8010b705c
+audit bundleDigest:   8998eb214a5fe778e56b6c7eb1f68251889b41e3023f2ff1cf53ad32c0a94051
+pack bundleDigest:    8998eb214a5fe778e56b6c7eb1f68251889b41e3023f2ff1cf53ad32c0a94051
+unpack outputDigest:  8998eb214a5fe778e56b6c7eb1f68251889b41e3023f2ff1cf53ad32c0a94051
+bundle manifest SHA-256: 187e78b0f6e164754d8858024d250365038c4785b52fb565f1004c759e656ae8
+```
+
+Asset identity: `CHR_MINH_KIEM_WALK`, 185988 bytes, SHA-256
+`bbec07fba1e9c598fc4cfdb1bf2e225cd4dc7038f55911b5de948b30d9b0582d`.
+
+The preview smoke asserts `supported=true`, 6 columns × 8 rows, 48×64 frames,
+48 sprites, canonical directions with `SW` on row 5, and a 6-frame `walk`
+animation starting at column 0. This is static tooling validation only — **no
+Unity import, animation or in-game playback claim** is made.
+
+Refs #40, OPC-09/OPC-10. Not self-merging.
