@@ -1,5 +1,9 @@
 # Phân công ba agent — Ngũ Mạch: Huyền Ấn
 
+## Mở rộng đội ngũ trên máy khác — 2026-10-30
+
+Theo yêu cầu chủ dự án, thêm **Antigravity** và **QODER Remote**. Đọc `09_REMOTE_AGENT_COORDINATION_20261030.md`: đây là cập nhật owner hiện hành cho hai gói mới, không hủy các công việc đang chạy. Antigravity nhận client UI tại `10_ANTIGRAVITY_PLAYER_UI_EPIC_20261030.md`; QODER Remote nhận durable state tại `11_QODER_REMOTE_DURABLE_STATE_EPIC_20261030.md`. Qoder local tiếp tục combat/quest/loot/spawn và tích hợp gameplay; phần triển khai storage mới được tách cho QODER Remote. OpenCode vẫn làm tooling, Muse vẫn làm art. Các phần cũ bên dưới là baseline lịch sử.
+
 ## Chương trình hiện hành từ 2026-10-29
 
 Đọc `04_CONTINUOUS_DELIVERY_20261029.md` trước các backlog P1 bên dưới. OpenCode nhận gói OPC-06→10 tại `05_OPENCODE_ASSET_PIPELINE_EPIC.md`; Qoder nhận QOD-11→15 tại `06_QODER_GAMEPLAY_LOOP_EPIC.md`. Được làm tiếp mốc độc lập sau mỗi PR, giữ review gate và worktree riêng. Muse tiếp tục hàng đợi art/map/UI/VFX/cinema theo #1/#29/#39. Quyền sửa mở rộng và các profile camera mới ghi tại work order 04; bảng cũ bên dưới chỉ là baseline ban đầu.
