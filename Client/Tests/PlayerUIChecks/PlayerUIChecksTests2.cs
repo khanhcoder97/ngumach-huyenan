@@ -267,6 +267,12 @@ namespace PlayerUIChecks
 
     public class P1ClientAdapterTests
     {
+        private sealed class DummyTransport : IP1Transport
+        {
+            public Task<P1Response> SendAsync(P1Request request, CancellationToken ct)
+                => Task.FromResult(new P1Response { StatusCode = 200, Body = "{}" });
+        }
+
         [Fact]
         public void Adapter_ThrowsOnNullClient()
         {
@@ -276,7 +282,7 @@ namespace PlayerUIChecks
         [Fact]
         public void Adapter_ExposesClientProperties()
         {
-            var client = new P1Client("http://localhost:8080", "tok-test");
+            var client = new P1Client(new DummyTransport());
             var adapter = new P1ClientAdapter(client);
 
             Assert.Equal(UIConnectionState.Disconnected, adapter.ConnectionState);
