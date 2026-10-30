@@ -1165,7 +1165,8 @@ public static class ServiceSelfCheck
             var cancelHp = new MobCombatStateStore();
             var cancelEngine = new CombatTickEngine(cancelRegistry, enabledCombat, combatSkills,
                 new CombatEventStore(new CombatEventStreamOptions()), cancelHp, tickQuests,
-                new FixedCombatRolls(hit: true, crit: false), new ServerClock());
+                new FixedCombatRolls(hit: true, crit: false),
+                new GuardWindowStore(), tickGeometry, new ServerClock());
             cancelEngine.Schedule(cancelledSource, cancelledSource.SessionId, Guid.NewGuid().ToString("N"),
                 CombatV2Actions.BasicAttack, null, 1, 0, 100);
             if (cancelReason == "DEAD") cancelledSource.Hp = 0;
@@ -2169,36 +2170,37 @@ public static class ServiceSelfCheck
             runner.Hp == 100,
             whiffImpact.Count == 1 ? whiffImpact[0].BlockedReason : "no resolution");
 
-        var cancelClock = new ManualServerClock(
+        var telegraphCancelClock = new ManualServerClock(
             new DateTimeOffset(2026, 10, 29, 6, 0, 0, TimeSpan.Zero));
-        var cancelRegistry = new WorldEntityRegistry(
+        var telegraphCancelRegistry = new WorldEntityRegistry(
             new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_CANCEL_MOB", 43, 0)]),
-            cancelClock);
-        var cancelAi = new MobLifecycleService(cancelRegistry, geometry, mobOptions, cancelClock);
-        var cancelAttacks = NewMobAttacks(cancelRegistry, enabledCombat);
+            telegraphCancelClock);
+        var telegraphCancelAi = new MobLifecycleService(
+            telegraphCancelRegistry, geometry, mobOptions, telegraphCancelClock);
+        var telegraphCancelAttacks = NewMobAttacks(telegraphCancelRegistry, enabledCombat);
         var bait = NewPlayer("CHR_SELFCHECK_BAIT");
         bait.X = 44;
         bait.Y = 0;
-        cancelAi.Tick([bait]);
-        cancelClock.Advance(TimeSpan.FromSeconds(0.05));
-        cancelAi.Tick([bait]);
+        telegraphCancelAi.Tick([bait]);
+        telegraphCancelClock.Advance(TimeSpan.FromSeconds(0.05));
+        telegraphCancelAi.Tick([bait]);
         // Past the impact deadline, but with no target: the pending impact is
         // cancelled, so the mob never swings.
-        cancelClock.Advance(TimeSpan.FromSeconds(0.60));
-        var cancelTick = cancelAi.Tick([]);
-        cancelClock.Advance(TimeSpan.FromSeconds(1));
-        var afterCancelTick = cancelAi.Tick([]);
+        telegraphCancelClock.Advance(TimeSpan.FromSeconds(0.60));
+        var telegraphCancelTick = telegraphCancelAi.Tick([]);
+        telegraphCancelClock.Advance(TimeSpan.FromSeconds(1));
+        var afterTelegraphCancelTick = telegraphCancelAi.Tick([]);
         Check(
             "mob.telegraph_cancel_on_lost_target",
-            cancelAi.GetState("ENT_SELFCHECK_CANCEL_MOB") == MobBehaviorStates.Idle &&
-            cancelTick.Any(lifecycle =>
+            telegraphCancelAi.GetState("ENT_SELFCHECK_CANCEL_MOB") == MobBehaviorStates.Idle &&
+            telegraphCancelTick.Any(lifecycle =>
                 lifecycle.FromState == MobBehaviorStates.Telegraph &&
                 lifecycle.ToState == MobBehaviorStates.Return) &&
-            ImpactCount(cancelTick) == 0 &&
-            ImpactCount(afterCancelTick) == 0 &&
-            cancelAttacks.ApplyImpacts(afterCancelTick, [], cancelClock.Tick).Count == 0 &&
+            ImpactCount(telegraphCancelTick) == 0 &&
+            ImpactCount(afterTelegraphCancelTick) == 0 &&
+            telegraphCancelAttacks.ApplyImpacts(afterTelegraphCancelTick, [], telegraphCancelClock.Tick).Count == 0 &&
             bait.Hp == 100,
-            cancelAi.GetState("ENT_SELFCHECK_CANCEL_MOB"));
+            telegraphCancelAi.GetState("ENT_SELFCHECK_CANCEL_MOB"));
 
         var gateOffAttacks = NewMobAttacks(mobRegistry, combatDamage);
         var gateOffImpact = gateOffAttacks.ApplyImpacts(
@@ -2780,7 +2782,7 @@ public static class ServiceSelfCheck
         Check(
             "tick.impact_not_blocked_when_geometry_unreviewed",
             shippedLos.Status == LineOfSightStatus.NotEnforced,
-            shippedLos.Status);
+            shippedLos.Status.ToString());
 
         // QREV-05: refreshes and impacts race on the same defender. One impact is
         // one critical section, so the window that paid the reduction is always
