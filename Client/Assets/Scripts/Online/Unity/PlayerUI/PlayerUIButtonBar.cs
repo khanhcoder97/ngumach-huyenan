@@ -1,7 +1,7 @@
-// PlayerUIButtonBar — thanh nút mở panel (Inventory, QuestJournal, Settings, Map).
+// PlayerUIButtonBar — thanh nút mở panel (Character, Inventory, QuestJournal, Settings, Map).
 // Click gọi PlayerUIRoot.OpenPanel(PlayerPanel.X).
 // Hiện/ẩn dựa trên connection state.
-// Owner: Antigravity Remote — Issue #80.
+// Owner: Antigravity Remote — Issue #80, #85.
 
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -15,9 +15,11 @@ namespace NguMach.Client.P1
         // ── State ────────────────────────────────────────────────────────────
         private IP1UIAdapter _adapter;
         private PlayerUIRoot _root;
+        private UIDocument _doc;
 
         // ── UIElements refs ──────────────────────────────────────────────────
         private VisualElement _bar;
+        private Button _characterBtn;
         private Button _inventoryBtn;
         private Button _questBtn;
         private Button _settingsBtn;
@@ -25,10 +27,11 @@ namespace NguMach.Client.P1
 
         // ── Init ─────────────────────────────────────────────────────────────
 
-        public void Initialize(IP1UIAdapter adapter, PlayerUIRoot root)
+        public void Initialize(IP1UIAdapter adapter, PlayerUIRoot root, UIDocument doc = null)
         {
             _adapter = adapter;
             _root = root;
+            _doc = doc;
             BuildUI();
         }
 
@@ -44,11 +47,13 @@ namespace NguMach.Client.P1
             _bar.style.paddingLeft = _bar.style.paddingRight = 4;
             _bar.style.paddingTop = _bar.style.paddingBottom = 4;
 
+            _characterBtn = MakeButton("Nhân vật", () => _root.OpenPanel(PlayerPanel.Character));
             _inventoryBtn = MakeButton("Túi", () => _root.OpenPanel(PlayerPanel.Inventory));
             _questBtn     = MakeButton("Nhiệm vụ", () => _root.OpenPanel(PlayerPanel.QuestJournal));
             _settingsBtn  = MakeButton("Cài đặt", () => _root.OpenPanel(PlayerPanel.Settings));
             _mapBtn       = MakeButton("Bản đồ", () => _root.OpenPanel(PlayerPanel.Map));
 
+            _bar.Add(_characterBtn);
             _bar.Add(_inventoryBtn);
             _bar.Add(_questBtn);
             _bar.Add(_settingsBtn);
@@ -59,9 +64,9 @@ namespace NguMach.Client.P1
 
         private void AttachToDocument()
         {
-            var doc = FindFirstObjectByType<UIDocument>();
-            if (doc == null) { Debug.LogError("[PlayerUIButtonBar] No UIDocument found in scene."); return; }
-            doc.rootVisualElement.Add(_bar);
+            if (_doc == null) _doc = FindFirstObjectByType<UIDocument>();
+            if (_doc == null) { Debug.LogError("[PlayerUIButtonBar] No UIDocument found in scene."); return; }
+            _doc.rootVisualElement.Add(_bar);
         }
 
         // ── Visibility ───────────────────────────────────────────────────────
@@ -77,10 +82,21 @@ namespace NguMach.Client.P1
             _bar.style.display = connected ? DisplayStyle.Flex : DisplayStyle.None;
 
             bool canClick = cs == UIConnectionState.Ready || cs == UIConnectionState.NeedsResync;
+            _characterBtn?.SetEnabled(canClick);
             _inventoryBtn?.SetEnabled(canClick);
             _questBtn?.SetEnabled(canClick);
             _settingsBtn?.SetEnabled(canClick);
             _mapBtn?.SetEnabled(canClick);
+        }
+
+        // ── Teardown ─────────────────────────────────────────────────────────
+
+        private void OnDestroy()
+        {
+            if (_bar != null && _bar.parent != null)
+            {
+                _bar.parent.Remove(_bar);
+            }
         }
 
         // ── Helpers ──────────────────────────────────────────────────────────

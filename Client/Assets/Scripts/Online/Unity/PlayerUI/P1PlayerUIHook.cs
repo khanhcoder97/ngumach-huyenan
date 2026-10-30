@@ -2,7 +2,7 @@
 // This is a MINIMAL hook — only adds panel open/close to the existing HUD.
 // Does NOT rewrite HUD, combat, polling, audio, or input pump.
 // Review by Codex before connecting to engine.
-// Owner: Antigravity Remote — Issue #80.
+// Owner: Antigravity Remote — Issue #80, #85.
 
 using NguMach.Client.Presentation;
 using UnityEngine;
@@ -24,18 +24,28 @@ namespace NguMach.Client.P1
         private IP1UIAdapter _adapter;
 
         /// <summary>Call from P1OnlinePanel.Open after P1Client is ready.</summary>
-        public void Initialize(IP1UIAdapter adapter)
+        public void Initialize(IP1UIAdapter adapter, UIDocument injectedDoc = null)
         {
             _adapter = adapter;
+            var doc = injectedDoc ?? playerUIDocument;
+
             if (playerUIRoot == null)
             {
-                Debug.LogError("[P1PlayerUIHook] PlayerUIRoot not assigned. Assign via Inspector.");
-                return;
+                playerUIRoot = GetComponentInChildren<PlayerUIRoot>();
+                if (playerUIRoot == null)
+                {
+                    playerUIRoot = PlayerUIFactory.Create(gameObject, doc);
+                }
             }
-            playerUIRoot.Initialize(_adapter);
+
+            if (playerUIRoot != null)
+            {
+                playerUIRoot.HandleEscapeInput = false; // Single Escape owner: P1OnlinePanel dispatches Escape
+                playerUIRoot.Initialize(_adapter, doc);
+            }
         }
 
-        /// <summary>Open a specific player panel (inventory, map, etc.).</summary>
+        /// <summary>Open a specific player panel (inventory, map, character, etc.).</summary>
         public void OpenPanel(PlayerPanel panel)
         {
             if (playerUIRoot == null || _adapter == null) return;
@@ -56,9 +66,19 @@ namespace NguMach.Client.P1
             playerUIRoot.CloseTop();
         }
 
+        /// <summary>Dispose and release full UI lifetime on parent close / session tear down (AGR2-05).</summary>
+        public void Dispose()
+        {
+            if (playerUIRoot != null)
+            {
+                playerUIRoot.Close();
+            }
+            _adapter = null;
+        }
+
         /// <summary>True if any player panel is open (used by P1OnlinePanel.ModalOpen).</summary>
         public bool IsAnyPanelOpen => playerUIRoot != null && playerUIRoot.IsAnyOpen;
 
-        private void OnDestroy() => playerUIRoot?.CloseAll();
+        private void OnDestroy() => Dispose();
     }
 }

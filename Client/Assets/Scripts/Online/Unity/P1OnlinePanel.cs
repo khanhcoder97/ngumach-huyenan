@@ -53,7 +53,7 @@ namespace NguMach.Client.P1
                 audioPlayer = gameObject.AddComponent<P1AudioPlayer>(); audioPlayer.Initialize();
                 Build();
                 playerUIHook = GetComponent<P1PlayerUIHook>();
-                if (playerUIHook != null) playerUIHook.Initialize(new P1ClientAdapter(client));
+                if (playerUIHook != null) playerUIHook.Initialize(new P1ClientAdapter(client), document);
                 _ = StartOnline();
             }
             catch (Exception e) { Debug.LogError("P1 client initialization: " + e.Message); Close(); }
@@ -447,7 +447,7 @@ namespace NguMach.Client.P1
         private void Close()
         {
             if (closing) return;
-            closing = true; if (playerUIHook != null) playerUIHook.CloseAllPanels(); if (life != null) life.Cancel();
+            closing = true; if (playerUIHook != null) { playerUIHook.CloseAllPanels(); playerUIHook.Dispose(); } if (life != null) life.Cancel();
             if (audioPlayer != null) { audioPlayer.enabled = false; Destroy(audioPlayer); }
             if (presenter != null) { presenter.Release(); Destroy(presenter); }
             if (proxy != null) Destroy(proxy); if (proxySprite != null) Destroy(proxySprite); if (proxyTexture != null) Destroy(proxyTexture);

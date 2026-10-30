@@ -5,7 +5,8 @@
 //   - Duplicate-slot, out-of-range, unknown-template produce diagnosticWarnings, never silently drops items.
 //   - Search/filter is a view projection only — does NOT change slot indices.
 //   - Empty/loading/error states never imply items are gone.
-// Owner: Antigravity Remote — Issue #80.
+//   - Item display metadata resolved from ItemMetadataResolver.
+// Owner: Antigravity Remote — Issue #80, #85.
 
 using System;
 using System.Collections.Generic;
@@ -149,7 +150,8 @@ namespace NguMach.Client.Presentation
                             }
                             else
                             {
-                                slots[slotIndex] = new ItemSlotView(item, displayName: null, rarityKey: null);
+                                var meta = ItemMetadataResolver.Resolve(item.templateId);
+                                slots[slotIndex] = new ItemSlotView(item, meta.DisplayName, meta.Rarity);
                             }
                         }
                         else
@@ -182,7 +184,8 @@ namespace NguMach.Client.Presentation
                 if (freeSearchIndex < InventoryViewState.TotalSlots)
                 {
                     seenSlotIndices.Add(freeSearchIndex);
-                    slots[freeSearchIndex] = new ItemSlotView(item, displayName: null, rarityKey: null);
+                    var meta = ItemMetadataResolver.Resolve(item.templateId);
+                    slots[freeSearchIndex] = new ItemSlotView(item, meta.DisplayName, meta.Rarity);
                     freeSearchIndex++;
                 }
                 else

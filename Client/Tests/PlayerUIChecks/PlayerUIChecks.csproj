@@ -28,6 +28,10 @@
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\InventoryPresenter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\QuestJournalPresenter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\NpcDialoguePresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\NpcContextMapping.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\ItemMetadataResolver.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\CharacterViewState.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\CharacterPresenter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\SettingsPresenter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\MapPresenter.cs" />
   </ItemGroup>

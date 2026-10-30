@@ -4,7 +4,9 @@
 //   - Retry uncertain goes back to same pending command, never re-sends a different one.
 //   - Choosing an option never writes story flags or rewards locally.
 //   - UnavailableReason shown with correlationId when applicable.
-// Owner: Antigravity Remote — Issue #80.
+//   - Invalidate presentation generation on Clear/interact to drop late completions (AGR2-02).
+//   - Canonical NPC ID used for quest wire commands; entity ID preserved for interact (AGR2-01).
+// Owner: Antigravity Remote — Issue #80, #85.
 
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace NguMach.Client.Presentation
     {
         private readonly IP1UIAdapter _adapter;
         private AsyncState<NpcDialogueViewState> _state = AsyncState<NpcDialogueViewState>.Idle;
+        private int _generation;
 
         public AsyncState<NpcDialogueViewState> State => _state;
         public event Action OnChanged;
@@ -35,12 +38,15 @@ namespace NguMach.Client.Presentation
                 return _state;
             }
 
+            int curGen = Interlocked.Increment(ref _generation);
             _state = _state.WithLoading();
             NotifyChanged();
 
             try
             {
                 var result = await _adapter.InteractAsync(targetId, ct);
+                if (curGen != _generation) return _state;
+
                 if (!result.Success)
                 {
                     _state = _state.WithError(result.Code, result.CorrelationId);
@@ -48,28 +54,35 @@ namespace NguMach.Client.Presentation
                     return _state;
                 }
 
-                var choices = BuildChoicesFromQuestState(targetId);
+                var context = NpcContextMapping.Resolve(targetId);
+                string canonicalNpcId = context.TemplateId;
+                var choices = BuildChoicesFromQuestState(canonicalNpcId);
+
                 var view = new NpcDialogueViewState(
-                    npcId: targetId,
-                    recordId: targetId,
+                    npcId: canonicalNpcId,
+                    recordId: context.RecordId,
                     kind: "NPC",
-                    greetingText: targetId + " (UNRESOLVED — catalog not yet connected)",
+                    greetingText: context.DisplayName,
                     choices: choices,
                     unavailableReason: null,
-                    correlationId: null);
+                    correlationId: null,
+                    interactionTargetEntityId: context.EntityId);
 
+                if (curGen != _generation) return _state;
                 _state = _state.WithValue(view);
                 NotifyChanged();
                 return _state;
             }
             catch (OperationCanceledException)
             {
+                if (curGen != _generation) return _state;
                 _state = _state.Value != null ? _state.WithValue(_state.Value) : AsyncState<NpcDialogueViewState>.Idle;
                 NotifyChanged();
                 throw;
             }
             catch (Exception ex)
             {
+                if (curGen != _generation) return _state;
                 _state = _state.WithError(ex.Message);
                 NotifyChanged();
                 throw;
@@ -86,12 +99,18 @@ namespace NguMach.Client.Presentation
                 return _state;
             }
 
+            int curGen = Interlocked.Increment(ref _generation);
             _state = _state.WithLoading();
             NotifyChanged();
 
             try
             {
-                var result = await _adapter.AcceptQuestAsync(questId, npcId, ct);
+                var context = NpcContextMapping.Resolve(npcId);
+                string canonicalNpcId = context.TemplateId;
+
+                var result = await _adapter.AcceptQuestAsync(questId, canonicalNpcId, ct);
+                if (curGen != _generation) return _state;
+
                 if (!result.Success)
                 {
                     _state = _state.WithError(result.Code, result.CorrelationId);
@@ -99,22 +118,28 @@ namespace NguMach.Client.Presentation
                     return _state;
                 }
 
-                var choices = BuildChoicesFromQuestState(npcId);
+                var choices = BuildChoicesFromQuestState(canonicalNpcId);
                 var current = _state.Value;
                 _state = _state.WithValue(new NpcDialogueViewState(
-                    current?.NpcId ?? npcId, current?.RecordId ?? npcId, current?.Kind ?? "NPC",
-                    current?.GreetingText ?? npcId, choices));
+                    canonicalNpcId,
+                    current?.RecordId ?? context.RecordId,
+                    current?.Kind ?? "NPC",
+                    current?.GreetingText ?? context.DisplayName,
+                    choices,
+                    interactionTargetEntityId: current?.InteractionTargetEntityId ?? context.EntityId));
                 NotifyChanged();
                 return _state;
             }
             catch (OperationCanceledException)
             {
+                if (curGen != _generation) return _state;
                 _state = _state.Value != null ? _state.WithValue(_state.Value) : AsyncState<NpcDialogueViewState>.Idle;
                 NotifyChanged();
                 throw;
             }
             catch (Exception ex)
             {
+                if (curGen != _generation) return _state;
                 _state = _state.WithError(ex.Message);
                 NotifyChanged();
                 throw;
@@ -131,12 +156,18 @@ namespace NguMach.Client.Presentation
                 return _state;
             }
 
+            int curGen = Interlocked.Increment(ref _generation);
             _state = _state.WithLoading();
             NotifyChanged();
 
             try
             {
-                var result = await _adapter.TurnInQuestAsync(questId, npcId, ct);
+                var context = NpcContextMapping.Resolve(npcId);
+                string canonicalNpcId = context.TemplateId;
+
+                var result = await _adapter.TurnInQuestAsync(questId, canonicalNpcId, ct);
+                if (curGen != _generation) return _state;
+
                 if (!result.Success)
                 {
                     _state = _state.WithError(result.Code, result.CorrelationId);
@@ -144,22 +175,28 @@ namespace NguMach.Client.Presentation
                     return _state;
                 }
 
-                var choices = BuildChoicesFromQuestState(npcId);
+                var choices = BuildChoicesFromQuestState(canonicalNpcId);
                 var current = _state.Value;
                 _state = _state.WithValue(new NpcDialogueViewState(
-                    current?.NpcId ?? npcId, current?.RecordId ?? npcId, current?.Kind ?? "NPC",
-                    current?.GreetingText ?? npcId, choices));
+                    canonicalNpcId,
+                    current?.RecordId ?? context.RecordId,
+                    current?.Kind ?? "NPC",
+                    current?.GreetingText ?? context.DisplayName,
+                    choices,
+                    interactionTargetEntityId: current?.InteractionTargetEntityId ?? context.EntityId));
                 NotifyChanged();
                 return _state;
             }
             catch (OperationCanceledException)
             {
+                if (curGen != _generation) return _state;
                 _state = _state.Value != null ? _state.WithValue(_state.Value) : AsyncState<NpcDialogueViewState>.Idle;
                 NotifyChanged();
                 throw;
             }
             catch (Exception ex)
             {
+                if (curGen != _generation) return _state;
                 _state = _state.WithError(ex.Message);
                 NotifyChanged();
                 throw;
@@ -168,11 +205,12 @@ namespace NguMach.Client.Presentation
 
         public void Clear()
         {
+            Interlocked.Increment(ref _generation);
             _state = AsyncState<NpcDialogueViewState>.Idle;
             NotifyChanged();
         }
 
-        private List<DialogueChoice> BuildChoicesFromQuestState(string npcId)
+        private List<DialogueChoice> BuildChoicesFromQuestState(string npcTemplateId)
         {
             var choices = new List<DialogueChoice>();
             var quests = _adapter.Quests ?? Array.Empty<P1Quest>();
@@ -182,27 +220,27 @@ namespace NguMach.Client.Presentation
             {
                 if (q == null) continue;
 
-                if (IsQuestStartNpc(q.questId, npcId) && q.state == "AVAILABLE")
+                if (QuestNpcCatalog.IsQuestStartNpc(q.questId, npcTemplateId) && q.state == "AVAILABLE")
                 {
                     choices.Add(new DialogueChoice(
                         idx++,
-                        "[Nhận nhiệm vụ] " + q.questId + " (UNRESOLVED)",
+                        "[Nhận nhiệm vụ] " + q.questId,
                         enabled: true,
                         actionType: DialogueActionType.AcceptQuest,
                         questId: q.questId,
-                        npcId: npcId));
+                        npcId: npcTemplateId));
                 }
-                else if (IsQuestTurnInNpc(q.questId, npcId) && q.state == "READY_TO_TURN_IN")
+                else if (QuestNpcCatalog.IsQuestTurnInNpc(q.questId, npcTemplateId) && q.state == "READY_TO_TURN_IN")
                 {
                     choices.Add(new DialogueChoice(
                         idx++,
-                        "[Nộp nhiệm vụ] " + q.questId + " (UNRESOLVED)",
+                        "[Nộp nhiệm vụ] " + q.questId,
                         enabled: true,
                         actionType: DialogueActionType.TurnInQuest,
                         questId: q.questId,
-                        npcId: npcId));
+                        npcId: npcTemplateId));
                 }
-                else if (IsQuestStartNpc(q.questId, npcId) || IsQuestTurnInNpc(q.questId, npcId))
+                else if (QuestNpcCatalog.IsQuestStartNpc(q.questId, npcTemplateId) || QuestNpcCatalog.IsQuestTurnInNpc(q.questId, npcTemplateId))
                 {
                     if (q.state == "ACTIVE")
                     {
@@ -213,41 +251,13 @@ namespace NguMach.Client.Presentation
                             disabledReason: "Chưa hoàn thành mục tiêu",
                             actionType: DialogueActionType.Interact,
                             questId: q.questId,
-                            npcId: npcId));
+                            npcId: npcTemplateId));
                     }
                 }
             }
 
-            choices.Add(new DialogueChoice(idx, "Tạm biệt", enabled: true, actionType: DialogueActionType.Close, npcId: npcId));
+            choices.Add(new DialogueChoice(idx, "Tạm biệt", enabled: true, actionType: DialogueActionType.Close, npcId: npcTemplateId));
             return choices;
-        }
-
-        private static bool IsQuestStartNpc(string questId, string npcId)
-        {
-            if (string.IsNullOrEmpty(npcId)) return false;
-            if (questId == "P00-01")
-            {
-                return npcId.Equals("NPC_LYAN", StringComparison.OrdinalIgnoreCase) ||
-                       npcId.Equals("LY_AN", StringComparison.OrdinalIgnoreCase) ||
-                       npcId.Equals("LYAN", StringComparison.OrdinalIgnoreCase);
-            }
-            if (questId.StartsWith("Q", StringComparison.OrdinalIgnoreCase) && npcId.StartsWith("NPC_TEST", StringComparison.OrdinalIgnoreCase))
-                return true;
-            return false;
-        }
-
-        private static bool IsQuestTurnInNpc(string questId, string npcId)
-        {
-            if (string.IsNullOrEmpty(npcId)) return false;
-            if (questId == "P00-01")
-            {
-                return npcId.Equals("NPC_TA_VAN_KHANH", StringComparison.OrdinalIgnoreCase) ||
-                       npcId.Equals("TA_VAN_KHANH", StringComparison.OrdinalIgnoreCase) ||
-                       npcId.Equals("TAVANKHANH", StringComparison.OrdinalIgnoreCase);
-            }
-            if (questId.StartsWith("Q", StringComparison.OrdinalIgnoreCase) && npcId.StartsWith("NPC_TEST", StringComparison.OrdinalIgnoreCase))
-                return true;
-            return false;
         }
 
         private void NotifyChanged() => OnChanged?.Invoke();

@@ -166,30 +166,38 @@ namespace NguMach.Client.Presentation
             SelectedQuestId = selectedQuestId;
             HasPinnedTracker = hasPinnedTracker;
         }
+
+        public QuestJournalViewState WithSelection(string questId) =>
+            new QuestJournalViewState(Active, Completed, questId, HasPinnedTracker);
+
+        public QuestJournalViewState WithPinned(bool pinned) =>
+            new QuestJournalViewState(Active, Completed, SelectedQuestId, pinned);
     }
 
     public sealed class QuestEntryView
     {
         public string QuestId { get; }
-        public string State { get; }   // "ACTIVE" | "READY_TO_TURN_IN" | "COMPLETED" | ...
+        public string State { get; }    // "AVAILABLE" | "ACTIVE" | "READY_TO_TURN_IN" | "COMPLETED"
         public string StepId { get; }
-        public IReadOnlyDictionary<string, int> ObjectiveCounters { get; }
-        public long Revision { get; }
-        // Display fields from catalog; null = UNRESOLVED
-        public string DisplayName { get; }
-        public string StepDescription { get; }
+        public int Revision { get; }
+        public IReadOnlyDictionary<string, int> Counters { get; }
+        public string Title { get; }
+        public string ObjectiveDescription { get; }
 
-        public QuestEntryView(P1Quest q, string displayName = null, string stepDescription = null)
+        public QuestEntryView(P1Quest q, string title = null, string objectiveDesc = null)
         {
             if (q == null) throw new ArgumentNullException(nameof(q));
             QuestId = q.questId;
             State = q.state;
             StepId = q.stepId;
-            ObjectiveCounters = q.objectiveCounters;
             Revision = q.revision;
-            DisplayName = displayName ?? q.questId + " (UNRESOLVED)";
-            StepDescription = stepDescription;
+            Counters = q.objectiveCounters ?? new Dictionary<string, int>();
+            Title = title ?? q.questId + " (UNRESOLVED)";
+            ObjectiveDescription = objectiveDesc ?? q.stepId ?? "";
         }
+
+        public bool IsReadyToTurnIn => State == "READY_TO_TURN_IN";
+        public bool IsCompleted => State == "COMPLETED";
     }
 
     // ── NPC dialogue view state ──────────────────────────────────────────────
@@ -203,19 +211,24 @@ namespace NguMach.Client.Presentation
         public IReadOnlyList<DialogueChoice> Choices { get; }
         public string UnavailableReason { get; }  // null = available
         public string CorrelationId { get; }
+        public string InteractionTargetEntityId { get; }
+        public string NpcTemplateId => NpcId;
+        public string SourceRecordId => RecordId;
 
         public NpcDialogueViewState(
             string npcId, string recordId, string kind,
             string greetingText,
             IReadOnlyList<DialogueChoice> choices,
             string unavailableReason = null,
-            string correlationId = null)
+            string correlationId = null,
+            string interactionTargetEntityId = null)
         {
             NpcId = npcId; RecordId = recordId; Kind = kind;
             GreetingText = greetingText;
             Choices = choices ?? Array.Empty<DialogueChoice>();
             UnavailableReason = unavailableReason;
             CorrelationId = correlationId;
+            InteractionTargetEntityId = interactionTargetEntityId ?? npcId;
         }
 
         public bool IsAvailable => UnavailableReason == null;

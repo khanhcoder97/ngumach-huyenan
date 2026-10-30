@@ -1,6 +1,6 @@
 // PlayerUIRoot — MonoBehaviour gốc điều phối toàn bộ panel PlayerUI.
 // Inject IP1UIAdapter, dùng PanelRouter để routing, giữ CancellationTokenSource lifecycle.
-// Owner: Antigravity Remote — Issue #80.
+// Owner: Antigravity Remote — Issue #80, #85.
 
 using System;
 using System.Threading;
@@ -15,6 +15,7 @@ namespace NguMach.Client.P1
     {
         // ── Inspector ────────────────────────────────────────────────────────
         [SerializeField] private InventoryPanel inventoryPanel;
+        [SerializeField] private CharacterPanel characterPanel;
         [SerializeField] private QuestJournalPanel questJournalPanel;
         [SerializeField] private NpcDialoguePanel npcDialoguePanel;
         [SerializeField] private SettingsPanel settingsPanel;
@@ -31,13 +32,33 @@ namespace NguMach.Client.P1
         // ── Public API ───────────────────────────────────────────────────────
 
         public bool IsAnyOpen => _router != null && _router.IsAnyOpen;
+        public PanelRouter Router => _router;
+        public bool HandleEscapeInput { get; set; } = false; // AGR2-03: Single Escape owner
 
-        /// <summary>Called from P1PlayerUIHook after adapter is ready. Finds UIDocument in scene.</summary>
-        public void Initialize(IP1UIAdapter adapter)
+        /// <summary>Called from P1PlayerUIHook after adapter is ready. Finds UIDocument in scene if not provided.</summary>
+        public void Initialize(IP1UIAdapter adapter, UIDocument doc = null)
         {
-            var doc = FindFirstObjectByType<UIDocument>();
+            if (doc == null) doc = FindFirstObjectByType<UIDocument>();
             if (doc == null) { Debug.LogError("[PlayerUIRoot] No UIDocument found in scene."); return; }
             Open(adapter, doc);
+        }
+
+        public void SetPanelReferences(
+            InventoryPanel inv,
+            CharacterPanel character,
+            QuestJournalPanel quest,
+            NpcDialoguePanel npc,
+            SettingsPanel settings,
+            MapPanel map,
+            PlayerUIButtonBar bar)
+        {
+            inventoryPanel = inv;
+            characterPanel = character;
+            questJournalPanel = quest;
+            npcDialoguePanel = npc;
+            settingsPanel = settings;
+            mapPanel = map;
+            buttonBar = bar;
         }
 
         /// <summary>Close all panels (alias for hook compatibility).</summary>
@@ -66,11 +87,12 @@ namespace NguMach.Client.P1
 
             // Pass references to child panels.
             if (inventoryPanel != null) inventoryPanel.Initialize(_adapter, _router, _life.Token);
+            if (characterPanel != null) characterPanel.Initialize(_adapter, _router, _life.Token, _doc);
             if (questJournalPanel != null) questJournalPanel.Initialize(_adapter, _router, _life.Token);
             if (npcDialoguePanel != null) npcDialoguePanel.Initialize(_adapter, _router, _life.Token);
             if (settingsPanel != null) settingsPanel.Initialize(_adapter, _router, _life.Token);
             if (mapPanel != null) mapPanel.Initialize(_adapter, _router, _life.Token);
-            if (buttonBar != null) buttonBar.Initialize(_adapter, this);
+            if (buttonBar != null) buttonBar.Initialize(_adapter, this, _doc);
 
             // All panels start hidden.
             HideAllPanels();
@@ -114,6 +136,7 @@ namespace NguMach.Client.P1
             switch (next)
             {
                 case PlayerPanel.Inventory:     if (inventoryPanel != null) inventoryPanel.Show(); break;
+                case PlayerPanel.Character:     if (characterPanel != null) characterPanel.Show(); break;
                 case PlayerPanel.QuestJournal:  if (questJournalPanel != null) questJournalPanel.Show(); break;
                 case PlayerPanel.NpcDialogue:   if (npcDialoguePanel != null) npcDialoguePanel.Show(); break;
                 case PlayerPanel.Settings:      if (settingsPanel != null) settingsPanel.Show(); break;
@@ -125,6 +148,7 @@ namespace NguMach.Client.P1
         private void HideAllPanels()
         {
             if (inventoryPanel != null) inventoryPanel.Hide();
+            if (characterPanel != null) characterPanel.Hide();
             if (questJournalPanel != null) questJournalPanel.Hide();
             if (npcDialoguePanel != null) npcDialoguePanel.Hide();
             if (settingsPanel != null) settingsPanel.Hide();
@@ -140,7 +164,8 @@ namespace NguMach.Client.P1
             if (cs == UIConnectionState.Expired || cs == UIConnectionState.Disconnected)
             { Close(); return; }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            // Single Escape Owner: handled here only if standalone (not Hook-driven)
+            if (HandleEscapeInput && Input.GetKeyDown(KeyCode.Escape))
             {
                 if (_router != null && _router.IsAnyOpen)
                 {
@@ -148,7 +173,34 @@ namespace NguMach.Client.P1
                 }
             }
 
+            // Keyboard Shortcuts
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                TogglePanel(PlayerPanel.Character);
+            }
+            else if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.I))
+            {
+                TogglePanel(PlayerPanel.Inventory);
+            }
+            else if (Input.GetKeyDown(KeyCode.J))
+            {
+                TogglePanel(PlayerPanel.QuestJournal);
+            }
+            else if (Input.GetKeyDown(KeyCode.M))
+            {
+                TogglePanel(PlayerPanel.Map);
+            }
+
             if (buttonBar != null) buttonBar.RefreshVisibility(cs);
+        }
+
+        private void TogglePanel(PlayerPanel panel)
+        {
+            if (_router == null) return;
+            if (_router.Current == panel)
+                _router.CloseTop();
+            else
+                OpenPanel(panel);
         }
 
         private void OnDestroy() => Close();
