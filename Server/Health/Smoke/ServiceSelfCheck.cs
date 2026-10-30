@@ -2345,9 +2345,15 @@ public static class ServiceSelfCheck
         var readPrey = NewPlayer("CHR_SELFCHECK_READ_PREY");
         readPrey.X = 44;
         readPrey.Y = 0;
-        MobTelegraphReading? ReadTelegraph() =>
+        // Two different questions: "is there anything to read about this mob"
+        // and "is a swing committed right now". The acquisition states are
+        // readable too, so the helpers must not be conflated.
+        MobTelegraphReading? ReadEngaged() =>
             telegraphReads.Project(telegraphRegistry.All)
                 .FirstOrDefault(reading => reading.State != MobBehaviorStates.Idle);
+        MobTelegraphReading? ReadTelegraph() =>
+            telegraphReads.Project(telegraphRegistry.All)
+                .FirstOrDefault(reading => reading.State == MobBehaviorStates.Telegraph);
 
         Check(
             "telegraph.idle_has_nothing_to_read",
@@ -2385,8 +2391,10 @@ public static class ServiceSelfCheck
 
         // Out of *attack* range while still acquired does not un-commit the
         // swing: the impact frame still happens and only the damage check knows
-        // it will whiff, so the client has to keep drawing it.
-        readPrey.X = 45.2;
+        // it will whiff, so the client has to keep drawing it. 44,6 stays inside
+        // the open area — the reviewed fixture's wall starts at 45, and stepping
+        // the prey behind it would drop the target for line of sight instead.
+        readPrey.X = 44.6;
         telegraphClock.Advance(TimeSpan.FromSeconds(0.3));
         telegraphAi.Tick([readPrey]);
         var escaped = ReadTelegraph();
@@ -2399,7 +2407,7 @@ public static class ServiceSelfCheck
 
         telegraphClock.Advance(TimeSpan.FromSeconds(0.05));
         telegraphAi.Tick([readPrey]);
-        var recovered = ReadTelegraph();
+        var recovered = ReadEngaged();
         Check(
             "telegraph_after_impact_reads_recovery_and_cooldown",
             recovered?.State == MobBehaviorStates.Recover &&
@@ -2412,13 +2420,14 @@ public static class ServiceSelfCheck
         telegraphClock.Advance(TimeSpan.FromSeconds(0.55));
         telegraphAi.Tick([readPrey]);
         var dropped = telegraphReads.Project(telegraphRegistry.All);
+        var droppedReading = dropped.Count > 0 ? dropped[0] : null;
         Check(
             "telegraph_lost_target_reports_no_committed_frame",
             dropped.Count == 1 &&
-            dropped[0].ImpactInTicks is null &&
-            dropped[0].RecoverInTicks is null &&
-            dropped[0].TargetCharacterId is null,
-            $"{dropped[0].State}/{dropped[0].ImpactInTicks}");
+            droppedReading!.ImpactInTicks is null &&
+            droppedReading.RecoverInTicks is null &&
+            droppedReading.TargetCharacterId is null,
+            $"count={dropped.Count}/{droppedReading?.State}/{droppedReading?.ImpactInTicks}");
 
         // ─── DEC-022: guard window, whiff buff and counter runtime ───
 
