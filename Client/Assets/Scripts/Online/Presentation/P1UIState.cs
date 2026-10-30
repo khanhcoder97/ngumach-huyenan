@@ -179,7 +179,7 @@ namespace NguMach.Client.Presentation
         public string QuestId { get; }
         public string State { get; }    // "AVAILABLE" | "ACTIVE" | "READY_TO_TURN_IN" | "COMPLETED"
         public string StepId { get; }
-        public int Revision { get; }
+        public long Revision { get; }
         public IReadOnlyDictionary<string, int> Counters { get; }
         public string Title { get; }
         public string ObjectiveDescription { get; }

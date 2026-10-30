@@ -75,17 +75,17 @@ namespace NguMach.Client.Presentation
 
         public Task<P1Result> UnequipAsync(string slot, CancellationToken ct)
         {
-            return Task.FromResult(P1Result.Err("UNSUPPORTED_ENDPOINT", CharacterViewState.ActionDisabledReason));
+            return Task.FromResult(P1Result.Fail("UNSUPPORTED_ENDPOINT", CharacterViewState.ActionDisabledReason));
         }
 
         public Task<P1Result> EquipAsync(string instanceId, string slot, CancellationToken ct)
         {
-            return Task.FromResult(P1Result.Err("UNSUPPORTED_ENDPOINT", CharacterViewState.ActionDisabledReason));
+            return Task.FromResult(P1Result.Fail("UNSUPPORTED_ENDPOINT", CharacterViewState.ActionDisabledReason));
         }
 
         public Task<P1Result> SalvageAsync(string instanceId, CancellationToken ct)
         {
-            return Task.FromResult(P1Result.Err("UNSUPPORTED_ENDPOINT", CharacterViewState.ActionDisabledReason));
+            return Task.FromResult(P1Result.Fail("UNSUPPORTED_ENDPOINT", CharacterViewState.ActionDisabledReason));
         }
     }
 }
