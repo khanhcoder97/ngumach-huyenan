@@ -2584,6 +2584,53 @@ public static class ServiceSelfCheck
                 is { Phase: GuardPhases.None, DamageReduction: 0 },
             $"windows={gateOffWindows.Count}");
 
+        // DEC-022 §3: a source that dies after the confirmation keeps the
+        // confirmation and the resource, but the reserved counter cancels.
+        var hero9 = NewGuardHero("SOURCEDOWN");
+        guardEngine.Schedule(
+            hero9, hero9.SessionId, new string('4', 32), CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 80);
+        var sourceDownResolutions = guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB", hero9)], [hero9], tick: 81);
+        var sourceDownWindow = guardWindows.Find(hero9.CharacterId);
+        guardRegistry.Despawn("ENT_SELFCHECK_GUARD_MOB");
+        var sourceDownEvents = guardEngine.Tick(82);
+        Check(
+            "guard.counter_source_death_after_confirm_cancels",
+            sourceDownResolutions.Single().Confirmation is not null &&
+            sourceDownWindow is { ConfirmationCount: 1, CounterTick: 82, CounterResolved: true } &&
+            hero9.SwordIntent == 2 &&
+            sourceDownEvents.Any(stored => stored.Type == CombatEventTypesV2.Cancel) &&
+            !sourceDownEvents.Any(stored => stored.Type == CombatEventTypesV2.Impact) &&
+            sourceDownWindow.CounterOutcome is "SOURCE_NOT_ALIVE" or "SOURCE_NEW_LIFE",
+            sourceDownWindow?.CounterOutcome ?? "none");
+
+        // DEC-022 §3: the counter re-runs line of sight at its own tick; walking
+        // behind cover cancels it instead of hitting through the wall.
+        var hero10 = NewPlayer("CHR_SELFCHECK_GUARD_BLOCKED");
+        hero10.X = 43;
+        hero10.Y = 0;
+        guardEngine.Schedule(
+            hero10, hero10.SessionId, new string('5', 32), CombatV2Actions.Skill, "SK-MK-01",
+            -1, 0, startTick: 90);
+        guardRegistry.TryGet("ENT_SELFCHECK_GUARD_MOB3", out var coveringMob);
+        coveringMob.ForceRespawn();
+        coveringMob.MoveTo(42.5, 0);
+        var blockedHpBefore = guardStates.Ensure(
+            "ENT_SELFCHECK_GUARD_MOB3", coveringMob.LifeId, 192).Hp;
+        var blockedResolutions = guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB3", hero10)], [hero10], tick: 91);
+        hero10.X = 46.5;
+        var blockedEvents = guardEngine.Tick(92);
+        Check(
+            "guard.counter_los_block_cancels",
+            blockedResolutions.Single() is { Damage: 3, Confirmation: not null } &&
+            blockedEvents.Any(stored => stored.Type == CombatEventTypesV2.Cancel) &&
+            !blockedEvents.Any(stored => stored.Type == CombatEventTypesV2.Impact) &&
+            guardWindows.Find(hero10.CharacterId) is { CounterOutcome: "LOS_BLOCKED" } &&
+            guardStates.TryGet("ENT_SELFCHECK_GUARD_MOB3", coveringMob.LifeId)?.Hp == blockedHpBefore,
+            guardWindows.Find(hero10.CharacterId)?.CounterOutcome ?? "none");
+
         var losAccept = new InMemoryQuestAcceptService(
             questCatalog, quests, npcAnchors, geometry,
             services.GetRequiredService<QuestAcceptOptions>());
