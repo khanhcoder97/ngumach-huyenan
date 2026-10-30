@@ -1,0 +1,325 @@
+:root {
+    --primary: #4a90d9;
+    --secondary: #7c8fbf;
+    --background: #1e1e1e;
+    --surface: #2a2a2a;
+    --text: #e0e0e0;
+    --accent: #5bc0de;
+    --success: #63c74d;
+    --error: #da5d5d;
+    --warning: #fccb3e;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+.subtitle { color: var(--secondary); font-size: 0.9rem; }
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: var(--surface);
+    border-radius: 8px;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.control-group label { font-weight: 600; white-space: nowrap; }
+
+input[type="text"] {
+    padding: 0.5rem;
+    border: 1px solid var(--secondary);
+    background: var(--background);
+    color: var(--text);
+    border-radius: 4px;
+    width: 300px;
+}
+
+select {
+    padding: 0.5rem;
+    border: 1px solid var(--secondary);
+    background: var(--background);
+    color: var(--text);
+    border-radius: 4px;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #3a7bc8;
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: white;
+}
+
+.toggle-btn {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--secondary);
+}
+
+.toggle-btn.active {
+    background: var(--accent);
+    color: var(--background);
+    border-color: var(--accent);
+}
+
+/* Info Panel */
+.info-panel {
+    margin-bottom: 1rem;
+}
+
+#statusMessage {
+    padding: 0.75rem;
+    border-radius: 4px;
+    background: var(--surface);
+    border-left: 4px solid var(--accent);
+}
+
+.layout-info {
+    margin-top: 0.5rem;
+    padding: 1rem;
+    background: var(--surface);
+    border-radius: 4px;
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+.layout-info pre {
+    margin: 0.75rem 0 0;
+    max-height: 240px;
+    overflow: auto;
+    white-space: pre-wrap;
+    font-size: 0.8rem;
+}
+
+.layout-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.layout-badge.supported {
+    background: var(--success);
+    color: #102010;
+}
+
+.layout-badge.unsupported {
+    background: var(--error);
+    color: #fff;
+}
+
+.hidden { display: none !important; }
+
+/* Preview Area */
+.preview-area {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    min-height: 400px;
+}
+
+.sheet-container {
+    position: relative;
+    border: 2px solid var(--secondary);
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+#spriteCanvas {
+    display: block;
+    width: 100%;
+    max-width: 720px;
+    height: auto;
+    aspect-ratio: 720 / 560;
+    image-rendering: pixelated; /* nearest-neighbor zoom */
+    image-rendering: crisp-edges;
+}
+
+/* Sidebar */
+.sidebar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+aside section {
+    background: var(--surface);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+aside h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--accent);
+}
+
+.direction-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}
+
+.dir-btn {
+    background: var(--background);
+    color: var(--text);
+    border: 1px solid var(--secondary);
+    padding: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.dir-btn:hover {
+    background: var(--primary);
+}
+
+.anim-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.anim-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem;
+    margin: 0.25rem 0;
+    background: var(--background);
+    color: var(--text);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    font: inherit;
+}
+
+.anim-item:hover {
+    background: var(--secondary);
+}
+
+.anim-item.active {
+    border-color: var(--accent);
+    background: #26384a;
+}
+
+.btn-play {
+    width: 100%;
+    background: var(--success);
+    color: white;
+    font-size: 1rem;
+}
+
+.btn-play.playing {
+    background: var(--error);
+}
+
+.btn-play:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.frame-preview {
+    width: 176px;
+    height: 176px;
+    margin: 0 auto;
+    border: 2px solid var(--secondary);
+    background: repeating-conic-gradient(#333 0% 25%, #444 0% 50%) 50% / 32px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.frame-preview-canvas {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.hint {
+    text-align: center;
+    color: var(--secondary);
+    font-style: italic;
+    margin: 1rem;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--secondary);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--secondary);
+    margin-top: 2rem;
+}
+
+/* Loading overlay */
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loader {
+    border: 4px solid var(--surface);
+    border-top: 4px solid var(--accent);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
