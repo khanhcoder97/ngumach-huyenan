@@ -1,0 +1,125 @@
+{
+  "reviewedHead": "a0bb0aba7953ae9181390d27e4c2386d20a453dd",
+  "baseHead": "18fc5b5e0a1790c9c9614f8ea683c68012a1ced9",
+  "pullRequest": 89,
+  "status": "CHANGES_REQUIRED",
+  "date": "2026-10-31",
+  "originalTests": {
+    "passed": 71,
+    "failed": 0,
+    "skipped": 0,
+    "localRuntime": "net8 target with DOTNET_ROLL_FORWARD=Major on portable .NET10; first unconfigured launch aborted due missing .NET8"
+  },
+  "priorDiagnostic": {
+    "passed": 76,
+    "failed": 0,
+    "addedPriorTests": 5
+  },
+  "acceptanceDiagnostic": {
+    "passed": 73,
+    "failed": 11,
+    "total": 84,
+    "authorTests": 71,
+    "newProbeCases": 13
+  },
+  "factoryBinding": "FAIL_BINDING_NOT_NATIVE",
+  "syntax": {
+    "files": 47,
+    "profiles": 3,
+    "errors": 0,
+    "isNativeTypeCompile": false
+  },
+  "coreAssertions": 159,
+  "nativeUnity": "UNVERIFIED",
+  "liveHttpJourney": "UNVERIFIED",
+  "findings": [
+    {
+      "id": "AGR3-01",
+      "priority": "P1",
+      "title": "Factory không khớp API, bị bỏ ngoài test project",
+      "source": "Unity/PlayerUI/PlayerUIFactory.cs:33/35/38; PlayerUIRoot.cs:47",
+      "evidence": "Factory thiếu namespace NguMach.Client.Presentation cho PlayerPrefsSettingsStore, truyền8args trong khi SetPanelReferences có7. Probe compiler với signature trích từ source trả CS0246×2/CS1501. Đây là narrow API binding, không là native Unity compile.",
+      "requiredFix": "Sửa namespace/signature và gán cinemaOverlay thật; compile inventory gồm factory/root/editor, chạy native khi có môi trường."
+    },
+    {
+      "id": "AGR3-02",
+      "priority": "P1",
+      "title": "Builder/factory chưa nối đúng host và document",
+      "source": "Editor/PlayerUIBuilder.cs:13; P1OnlinePanel.cs:55; Unity/PlayerUI/PlayerUIRoot.cs:42",
+      "evidence": "Builder tạo PlayerUI_Host riêng; HUD chỉ GetComponent hook trên host của chính HUD. UIDocument mới chưa có PanelSettings/binding, factory bỏ document argument; nhiều panel FindFirstObjectByType thay injected doc. Menu thật Ngu Mach/UI/Setup khác README Tools/Ngu Mach.",
+      "requiredFix": "Một thao tác setup xác định host/doc/PanelSettings; inject document/store vào mọi panel, giữ idempotence, không tìm doc bất kỳ. Không sửa scene Muse."
+    },
+    {
+      "id": "AGR3-03",
+      "priority": "P1",
+      "title": "Selected-NPC journey chưa được gọi trong gameplay",
+      "source": "P1OnlinePanel.cs:180; Unity/PlayerUI/NpcDialoguePanel.cs:54",
+      "evidence": "HUD Interact gọi client trực tiếp, không gọi OpenWithNpcAsync; tìm reference chỉ có declaration. Root chỉ Show dialogue rỗng. Journey test dùng JourneyAdapter, tự thay Quests và gọi cinema.Play; chưa qua P1ClientAdapter/transport/receipt/inventory hay UI binding.",
+      "requiredFix": "Nối NPC entity selection→hook/root/dialogue→command qua cùng client, node vẫn route đúng; thêm scripted transport + actual wire assertions và baseline HTTP nếu có."
+    },
+    {
+      "id": "AGR3-04",
+      "priority": "P1",
+      "title": "Lifecycle chưa ngăn late reads hoặc dọn full UI",
+      "source": "Presentation/InventoryPresenter.cs:43; QuestJournalPresenter.cs:36; Unity/PlayerUI/PlayerUIRoot.cs:104",
+      "evidence": "Hai read presenter vẫn áp dụng success sau token lifetime đã cancel (2negative FAIL). Root.Close chỉ cancel/hide/null root fields; children giữ adapter/presenter/visual roots. Initialize lại BuildUI thêm roots/callbacks; hide NPC không Clear generation dù presenter.Clear đã sửa.",
+      "requiredFix": "Lifetime/generation đúng cho mọi presenter; teardown child subscriptions/visuals/adapter/cinema; rebind session/actor;200cycles với oracle root/callback/command counts, không xóa pending core."
+    },
+    {
+      "id": "AGR3-05",
+      "priority": "P1",
+      "title": "Item metadata prefix fallback làm sai phẩm chất và provenance",
+      "source": "Presentation/ItemMetadataResolver.cs:104",
+      "evidence": "4canonical variants REFINED/SPIRIT/ARCANE/RELIC thành base Kiếm/Thường; unknown lookalike ID thừa kế CLASS_MINH_KIEM/slot (5negative FAIL). Chỉ gắn sourceRef v1.0 không chứng minh hardcoded subset khớp rarity CSV.",
+      "requiredFix": "Exact lookup Master+Rarity theo ID/version/source hash, unknown truthful; không StartsWith để suy ra stats/class/rarity, không dựng compiler thứ hai."
+    },
+    {
+      "id": "AGR3-06",
+      "priority": "P1",
+      "title": "Character coi BAG/BANK là EQUIPPED",
+      "source": "Presentation/CharacterPresenter.cs:48",
+      "evidence": "OR non-numeric slot vượt location authoritative. BAG hoặc BANK với MAIN_HAND xuất hiện đang mặc (2negative FAIL); EQUIPPED control PASS.",
+      "requiredFix": "Chỉ location EQUIPPED được vào equipment; slot validation riêng; duplicate/unknown có diagnostics, không tự overwrite hoặc suy ra đồ đang mặc."
+    },
+    {
+      "id": "AGR3-07",
+      "priority": "P2",
+      "title": "NPC mapping giả identity và chứa test IDs production",
+      "source": "Presentation/NpcContextMapping.cs:42/57/68",
+      "evidence": "Unknown entity được gán record/template cùng input; registry còn Q1/QUEST_TEST/NPC_TEST mặc dù work order14 cấm.2negative FAIL. Mapping NPC canonical đã sửa và5prior regression PASS.",
+      "requiredFix": "Unknown trả unresolved context không giả canonical IDs; map/floor/version/source rõ. Test catalog inject fixture trong tests, không thêm test IDs vào catalog production hoặc làm yếu assertion."
+    },
+    {
+      "id": "AGR3-08",
+      "priority": "P2",
+      "title": "Túi đồ chưa đủ UX/diagnostics theo gói đã giao",
+      "source": "Presentation/InventoryPresenter.cs:149/159/193; Unity/PlayerUI/InventoryPanel.cs:174",
+      "evidence": "Duplicate/out-of-range/overflow chỉ còn warning string, mất ItemSlotView để xem; panel không render diagnostics tray. FilterText chưa lọc PageSlots/panel, không có tooltip đầy đủ hoặc selection keyboard như claim handoff.",
+      "requiredFix": "Giữ overflow/diagnostic item views, render tray, projection filter không reindex, keyboard/focus/tooltip/durability/location/version/source; selection instanceId qua refresh/page."
+    },
+    {
+      "id": "AGR3-09",
+      "priority": "P2",
+      "title": "Journal/map mới có phần cơ bản",
+      "source": "Presentation/QuestJournalPresenter.cs:71; Unity/PlayerUI/MapPanel.cs:133",
+      "evidence": "TogglePin bỏ qua questId, chỉ bool và panel chưa nối pin/ObjectiveDesc tracker. Map có live Refresh và dot clipping, nhưng dùng factor4px/WU tự đặt; chưa extent/version/pan/camera rectangle/waypoint reset.",
+      "requiredFix": "Pin đúng quest có tracker và reveal gates; map projection từ source extent/units/version, pan/zoom/clipping/viewport rectangle/local waypoint, reset map/floor/session."
+    },
+    {
+      "id": "AGR3-10",
+      "priority": "P1",
+      "title": "Cinema preview chưa có lifetime/modal/input binding đầy đủ",
+      "source": "Unity/PlayerUI/CinemaOverlay.cs:136/140; PlayerUIRoot.cs:35/124",
+      "evidence": "Known scene chỉ subtitle timer/placeholder; preview được ghi nhãn (đúng). Fallback hiện nhưng Update bỏ qua vì IsPlaying=false; Escape/Space poll riêng, cinema không nằm modal IsAnyOpen/input gate. Không có live story trigger hay media adapter; PlayCinema chưa có caller.",
+      "requiredFix": "Giữ harness preview explicit khi contract/media thiếu; state machine+fallback/skip/failed/dispose, unified input/neutral release, không pause world/reward/auto-trigger theo quest name; packet Muse refs/SRT/still có nguồn."
+    },
+    {
+      "id": "AGR3-11",
+      "priority": "P2",
+      "title": "Settings/accessibility chưa apply đầy đủ",
+      "source": "Unity/PlayerUI/SettingsPanel.cs:200",
+      "evidence": "UI scale có apply (ghi nhận); text size/input hints chưa có apply adapter; prefs chỉ apply trong Render visible, không từ startup. FindFirst doc có thể scale UI khác; chưa có safe area/large text/touch/focus evidence.",
+      "requiredFix": "Apply scoped prefs từ init/reload qua đúng doc/audio adapters; unsupported disable rõ; safe area16:9/20:9/text Việt/cỡ lớn, giữ telegraph và input bounds; native evidence riêng."
+    }
+  ]
+}

@@ -56,3 +56,8 @@ Repo được mở public ngày 2026-10-27. Theo mô hình đã chốt tại iss
 - Qoder đã hoàn tất P1 server, combat/quest/inventory/teleport service skeletons và runtime self-check; PR #5–#12 đã merge, CI trên `main` xanh. Việc tiếp theo là issue #13.
 - OpenCode cần triển khai asset handoff validator không cần Unity theo issue #2; client runtime được hoãn.
 - Muse cần bắt đầu asset pack đầu tiên theo issue #1.
+
+
+## Antigravity AG-02 acceptance — 2026-10-31
+
+Review exact head a0bb0ab (PR89):71author checks PASS nhưng84producer acceptance checks có11FAIL; factory binding3compiler diagnostics (synthetic API probe, không nativeUnity). Đọc `16_ANTIGRAVITY_AG02_ACCEPTANCE_COMPLETION_20261031.md` và `Antigravity_AG02_Review_20261031.md`. Antigravity tiếp toànR0→R6 trên nhánh/PR89 và issue85 hiện hành; không mởepic mới hoặc tựmerge/đóng. Codex giữreview/tooling; Qoder/Muse ownership khôngđổi.
