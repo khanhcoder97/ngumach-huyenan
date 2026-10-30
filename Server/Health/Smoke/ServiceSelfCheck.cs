@@ -4,6 +4,7 @@ using Server.Health.Contracts;
 using Server.Health.Gameplay.Combat;
 using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
+using Server.Health.Gameplay.Progress;
 using Server.Health.Gameplay.Quests;
 using Server.Health.Gameplay.Teleport;
 using Server.Health.World;
@@ -1871,6 +1872,29 @@ public static class ServiceSelfCheck
             "narrative.flags_are_bounded",
             flagStore.For("CHR_SELFCHECK_FLAGS").Count == NarrativeFlagStore.Capacity,
             $"flags={flagStore.For("CHR_SELFCHECK_FLAGS").Count}");
+
+        // Q-D: the level transaction is real (thresholds from the shipped 100-row
+        // table, multi-level, capped) while the quest XP amount has no source yet,
+        // so the shipped rule resolves nothing and the receipt stays applied:false.
+        var xpTable = services.GetRequiredService<LevelProgressionTable>();
+        var scriptedXp = new ExperienceService(xpTable, new FixedQuestXpRule(400));
+        var xpActor = NewPlayer("CHR_SELFCHECK_XP");
+        var xpApplied = scriptedXp.TryApply(xpActor, "TEST_RULE", out var xpGrant, out _);
+        var hugeXp = new ExperienceService(xpTable, new FixedQuestXpRule(50_000_000));
+        var cappedActor = NewPlayer("CHR_SELFCHECK_XP_CAP");
+        hugeXp.TryApply(cappedActor, "TEST_RULE", out _, out _);
+        var unresolved = new ExperienceService(xpTable, new UnresolvedQuestXpRules())
+            .TryApply(xpActor, "LEVEL_BAND_BASE", out _, out var unresolvedRule);
+        Check(
+            "xp.transaction_levels_and_caps",
+            xpApplied && xpTable.At(1).XpToNext == 175 &&
+            xpActor is { Level: 2, TotalXp: 400 } &&
+            xpActor.UnspentPoints == xpTable.At(2).AllocatablePointsTotal &&
+            xpGrant is { LevelsGained: 1 } &&
+            cappedActor.Level == xpTable.MaxLevel &&
+            cappedActor.UnspentPoints == xpTable.At(cappedActor.Level).AllocatablePointsTotal &&
+            !unresolved && unresolvedRule == "LEVEL_BAND_BASE" && xpActor.TotalXp == 400,
+            $"level={xpActor.Level} cap={cappedActor.Level} rule={unresolvedRule}");
 
         Check(
             "npc.registry",
@@ -5232,6 +5256,15 @@ public static class ServiceSelfCheck
         public bool Roll(
             string castId, string targetId, int hitIndex, CombatRollKind kind, double probability) =>
             kind == CombatRollKind.Crit ? _crit : _hit;
+    }
+
+    private sealed class FixedQuestXpRule : IQuestXpRule
+    {
+        private readonly long _amount;
+
+        public FixedQuestXpRule(long amount) => _amount = amount;
+
+        public long? Resolve(string ruleId) => _amount;
     }
 
     private static void RunBarrierParallel(int count, Action<int> body)

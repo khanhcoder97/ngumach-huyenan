@@ -4,6 +4,7 @@ using Server.Health.Endpoints;
 using Server.Health.Gameplay.Combat;
 using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
+using Server.Health.Gameplay.Progress;
 using Server.Health.Gameplay.Quests;
 using Server.Health.Gameplay.Teleport;
 using Server.Health.Smoke;
@@ -71,6 +72,13 @@ builder.Services.AddSingleton(serviceProvider =>
     var path = NarrativeNodeCatalog.Discover(configuration, environment.ContentRootPath);
     return NarrativeNodeCatalog.Load(path);
 });
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return LevelProgressionTable.Load(LevelProgressionTable.Discover(environment.ContentRootPath));
+});
+builder.Services.AddSingleton<IQuestXpRule, UnresolvedQuestXpRules>();
+builder.Services.AddSingleton<ExperienceService>();
 builder.Services.AddSingleton<NarrativeFlagStore>();
 builder.Services.AddSingleton<NarrativeService>();
 builder.Services.AddSingleton(serviceProvider =>
