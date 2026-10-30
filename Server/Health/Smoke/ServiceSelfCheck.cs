@@ -1717,13 +1717,15 @@ public static class ServiceSelfCheck
             waitingMob.State == WorldEntityStates.Dead,
             $"respawned={beforeRespawn}");
 
+        var groupRespawnService = new MobSpawnGroupService(manualWorld, manualClock);
+        var earlyGroupRespawn = groupRespawnService.Tick();
         manualClock.Advance(TimeSpan.FromSeconds(18));
         var individualMobRespawn = manualWorld.Update();
-        var groupRespawnService = new MobSpawnGroupService(manualWorld, manualClock);
         var respawned = groupRespawnService.Tick();
         manualWorld.TryGet("ENT_MAN_BM_SPAWN_BM_01_M2", out var revivedMember2);
         Check(
             "world.respawn",
+            earlyGroupRespawn == 0 &&
             individualMobRespawn == 0 &&
             respawned == 3 &&
             manualWorld.TryGet("ENT_MAN_BM_SPAWN_BM_01", out var revivedMob) &&
