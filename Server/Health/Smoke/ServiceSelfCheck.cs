@@ -3067,9 +3067,13 @@ public static class ServiceSelfCheck
             dashStatus.Hp == 97,
             dashStatus.LastDash?.StopReason ?? "no dash");
 
-        var whiffStatus = statusProjection.Project(hero1, tick: 20, nowUtc: guardClock.UtcNow);
-        var expiredStatus = statusProjection.Project(hero1, tick: 40, nowUtc: guardClock.UtcNow);
-        var downStatus = statusProjection.Project(hero4, tick: 21, nowUtc: guardClock.UtcNow);
+        // The earlier guard fixtures live in their own store, so the same
+        // projection is pointed at it to read whiff and closed-window states.
+        var guardStatus = new CombatStatusProjection(
+            guardWindows, statusCommands, statusDashes);
+        var whiffStatus = guardStatus.Project(hero1, tick: 20, nowUtc: guardClock.UtcNow);
+        var expiredStatus = guardStatus.Project(hero1, tick: 40, nowUtc: guardClock.UtcNow);
+        var downStatus = guardStatus.Project(hero4, tick: 21, nowUtc: guardClock.UtcNow);
         Check(
             "status_tracks_whiff_expiry_and_closed_window",
             whiffStatus.GuardPhase == GuardPhases.Whiff &&
