@@ -640,6 +640,11 @@ def mob_combat_profile():
         telegraph = wait_for(15, telegraphed_mob)
         if telegraph is None:
             continue
+        # The read window is 0,45 s = nine ticks and the guard covers the eight
+        # ticks after the cast, so the cast has to land a couple of ticks *into*
+        # the telegraph: casting the instant it is seen puts the impact on the
+        # window's exclusive end and the hit walks straight through unreduced.
+        time.sleep(0.15)
         sequence += 1
         cast_key = f"{0xc0 + attempt:032x}"
         cast_request = f"{0xd0 + attempt:032x}"
