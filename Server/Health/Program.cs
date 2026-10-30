@@ -142,6 +142,7 @@ builder.Services.AddSingleton<ICombatRollSource, CombatRngRollSource>();
 builder.Services.AddSingleton<GuardWindowStore>();
 builder.Services.AddSingleton<GuardDefenseService>();
 builder.Services.AddSingleton<DashMovementService>();
+builder.Services.AddSingleton<CombatStatusProjection>();
 builder.Services.AddSingleton<CombatTickEngine>();
 builder.Services.AddSingleton<LootReceiptLedger>();
 builder.Services.AddSingleton<MobSpawnGroupService>();

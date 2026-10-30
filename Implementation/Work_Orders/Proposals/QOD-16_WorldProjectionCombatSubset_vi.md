@@ -213,6 +213,37 @@ Report của Codex (branch `codex/qoder-review-next-epic-20261030`) xác nhận 
 - **Không refund:** MP/CD/sequence commit một lần tại accept; dashBlocked-at-start, actor chết trước tick (cancel `CANCEL`+`END` một lần, không di chuyển, không ledger entry), hay retry sau đó đều **không** hoàn cost (design resolution §3). Revision của actor chỉ đổi khi vị trí thực sự đổi.
 - **Bằng chứng:** self-check `dash.unenforced_geometry_runs_full_range` (11 WU, không event damage), `dash_resolves_after_prep_and_ends_next_tick` (END @7), `dash_stops_short_of_reviewed_wall` (bundle REVIEWED tổng hợp: dừng < 44.5, achieved 0,2–1,1, không xuyên tường), `dash_blocked_at_start_reports_no_travel` (không bump revision), `dash_cancelled_when_actor_down_before_movement`, `dash_ledger_is_bounded`; HTTP smoke mới: cast `SK-MK-02` rồi bounded wait (3 s) thấy `self.x` dịch đúng 11 WU, MP vẫn 34, HP 100, revision tăng → chứng minh "dash là movement" chứ không phải label của cast accepted. Production map vẫn `SYNTHETIC_TEST_ONLY` → full range ở đó là `NotEnforced`, **không** được đọc là "tường không hoạt động".
 
-### 9.12 Triển khai tiếp
+### 9.13 Q-B2: combat status read model + đề xuất contract (chưa đụng wire)
+
+Vấn đề: toàn bộ trạng thái chiến đấu (guard còn bao nhiêu tick, whiff đang bật, counter đã reserve hay chưa, cooldown còn lại, dash vừa đáp ở đâu) hiện chỉ suy ra được từ event stream **còn trong buffer** (512/session). Reconnect sau khi buffer rolling, hoặc client cursor trễ, không reconstruct được "tôi đang đỡ hay không" — vi phạm đúng điều design resolution §3.2 yêu cầu (snapshot reconcile, không bắt client đoán từ event cũ).
+
+**Đã làm (domain-only, không đổi contract):** `CombatStatusProjection.Project(session, tick, nowUtc)` trả `CombatStatusSnapshot`:
+- `Hp/MaxHp/Mp/MaxMp/SwordIntent/ActorRevision` của actor aggregate.
+- `GuardPhase ∈ NONE|GUARD|WHIFF|EXPIRED`, `GuardCastId`, `GuardEndExclusiveTick`, `WhiffEndExclusiveTick` — từ `GuardWindowStore` (window đã đóng → NONE, không suy ra từ event).
+- `CounterReserved`, `CounterTick`, `CounterOutcome`, `CounterSourceEntityId` — cho client biết còn phải chờ một counter hay đã resolve (presentation parry/hit/miss khác nhau).
+- `Cooldowns[] { actionKey, endsAtUtc, active }` — chỉ liệt kê action còn bị chặn, key là skillId hoặc `BASIC_ATTACK`.
+- `LastDash` — `DashResolution` gần nhất của chính nhân vật (tick, requested/achieved WU, toạ độ, stop reason), bounded 512 ledger.
+Bằng chứng self-check: `status.guard_phase_counter_and_cooldown` (GUARD + counter reserved + cooldown + MP 50→38 + Hp 97 vì DR 0,7), `status_reports_resolved_counter_and_keeps_cooldown`, `status_carries_last_dash_outcome_without_events`, `status_tracks_whiff_expiry_and_closed_window` (WHIFF→EXPIRED, window đóng vì chết → NONE/intent 0).
+
+**Đề xuất contract (CHỜ owner/Codex duyệt — chưa áp dụng):** thêm field **optional** vào `WorldSnapshotV2` để không phá client hiện tại:
+```jsonc
+"combat": {                       // optional object, chỉ có khi P1:CombatV2 ON
+  "schemaVersion": 1,             // version hoá riêng, không tăng schemaVersion snapshot
+  "revision": 12,                 // status aggregate revision = actor revision tại thời điểm sample
+  "serverTick": 4820,
+  "guard": { "phase": "GUARD", "castId": "<hex32>", "endsAtTick": 4827, "whiffEndsAtTick": 4847 },
+  "counter": { "reserved": true, "dueTick": 4828, "sourceEntityId": "ENT_…" },
+  "swordIntent": 2,
+  "cooldowns": [ { "actionKey": "SK-MK-01", "endsAtUtc": "…Z" } ],
+  "lastMovement": { "castId": "<hex32>", "achievedWu": 4.4, "requestedWu": 11,
+                    "stopReason": "BLOCKED_BY_GEOMETRY", "x": 44.4, "y": 0, "appliedTick": 4820 }
+}
+```
+Quy tắc: (1) `phase`/`stopReason` là enum đóng, thêm giá trị mới = bump `schemaVersion` của `combat`; (2) mọi tick là **server tick** 20 Hz, client chỉ được suy hết hạn bằng `serverTick` + delta đã đo, không dùng đồng hồ máy mình; (3) `counter` chỉ nói "đã reserve/đã resolve", không phải bằng chứng counter trúng damage (DEC-022 presentation rule); (4) field optional nghĩa là client cũ bỏ qua vẫn hợp lệ — không đổi shape response hiện có, không đụng v1; (5) capability: thêm `capabilities: ["combat-status-v1"]` trong `/p1/sessions` response (cũng optional) để client biết có được đọc hay không; (6) dash **không** có event riêng cho tới khi đồng ý `DASH_RESOLVED` trong `CombatEventV2` (hiện enum không có movement type) — `lastMovement` trong snapshot là đường đi được đề xuất trước.
+Nếu owner duyệt, PR contract sẽ gồm: schema + example + `validate_contracts.py` checks (optional field, enum đóng, revision/tick integer ≥ 0) + README mục v2 + smoke assert shape; nếu chưa duyệt, P1 vẫn chỉ có `self.x/y/hp/mp/swordIntent` + event cursor và read model này phục vụ test/probe nội bộ.
+
+**Chưa phủ (ghi rõ, không giả đã xong):** PvP counter thật (cần damage từ người chơi khác), DoT/projectile/elemental incoming (chưa có content), `WHIFF_GUARD` như status registry chính thức (Rules §3 status registry chưa có dữ liệu), và mob telegraph metadata qua wire (client hiện mới thấy `state: TELEGRAPH`, chưa có timing/shape — Q-B còn lại sẽ để xuất read model riêng).
+
+### 9.14 Triển khai tiếp
 
 Guard/whiff/counter DEC-022 runtime (mob impact đi qua guard window của player), QOD-18 quest chain P00-01..05 + XP transaction, QOD-19 Mãng Cốt encounter, QOD-20 E2E/handoff + proposal PostgreSQL.

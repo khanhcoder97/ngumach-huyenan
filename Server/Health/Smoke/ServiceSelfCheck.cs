@@ -2987,6 +2987,96 @@ public static class ServiceSelfCheck
             dashLedger.Find(599.ToString("x32")) is { AchievedWu: 11 },
             $"count={dashLedger.Count}");
 
+        // Q-B: status read model. A client that lost its event cursor (or
+        // reconnected after the buffer rolled over) still has to be able to ask
+        // what is active. Nothing here is on the wire yet.
+        var statusHero = NewGuardHero("STATUS");
+        var statusWindows = new GuardWindowStore();
+        var statusDashes = NewDashes(geometry);
+        var statusCommands = new InMemoryCombatV2Service(
+            combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions
+            {
+                CapacityPerSession = 256,
+                MaxPageSize = 256
+            }),
+            new ServerClock());
+        var statusEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            statusWindows, geometry, statusDashes, new ServerClock());
+        var statusProjection = new CombatStatusProjection(
+            statusWindows, statusCommands, statusDashes);
+        var statusAttacks = new MobAttackService(
+            guardRegistry, enabledCombat, mobOptions,
+            new GuardDefenseService(statusWindows, enabledCombat, guardEvents));
+        var statusAccept = statusCommands.Resolve(
+            statusHero, statusHero.SessionId,
+            new CombatV2Intent(CombatV2Actions.Skill, "SK-MK-01", null, 1, 1, 0, null),
+            new string('6', 32));
+        var statusCastId = new string('7', 32);
+        statusEngine.Schedule(
+            statusHero, statusHero.SessionId, statusCastId, CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 0);
+        statusEngine.Schedule(
+            statusHero, statusHero.SessionId, new string('8', 31) + "a",
+            CombatV2Actions.Skill, "SK-MK-02", 1, 0, startTick: 0);
+        statusAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB2", statusHero)], [statusHero], tick: 1);
+        var guardingStatus = statusProjection.Project(
+            statusHero, tick: 1, nowUtc: guardClock.UtcNow);
+        Check(
+            "status.guard_phase_counter_and_cooldown",
+            statusAccept.Accepted &&
+            guardingStatus is
+            {
+                GuardPhase: GuardPhases.Guard,
+                CounterReserved: true,
+                CounterTick: 2,
+                SwordIntent: 2,
+                Hp: 97,
+                Mp: 38,
+                LastDash: null
+            } &&
+            guardingStatus.GuardCastId == statusCastId &&
+            guardingStatus.GuardEndExclusiveTick == 8 &&
+            guardingStatus.WhiffEndExclusiveTick == 28 &&
+            guardingStatus.CounterSourceEntityId == "ENT_SELFCHECK_GUARD_MOB2" &&
+            guardingStatus.Cooldowns.Single(cooldown => cooldown.ActionKey == "SK-MK-01").Active &&
+            statusEngine.Tick(2).Any(stored => stored.Type == CombatEventTypesV2.Impact),
+            $"{guardingStatus.GuardPhase}/{guardingStatus.Cooldowns.Count}");
+
+        var resolvedStatus = statusProjection.Project(
+            statusHero, tick: 3, nowUtc: guardClock.UtcNow);
+        Check(
+            "status_reports_resolved_counter_and_keeps_cooldown",
+            resolvedStatus is { CounterReserved: false, CounterOutcome: "DAMAGE", Mp: 38 } &&
+            resolvedStatus.Cooldowns.Any(cooldown => cooldown.ActionKey == "SK-MK-01"),
+            resolvedStatus.CounterOutcome ?? "none");
+
+        // The dash of the same hero is visible without any event replay.
+        statusEngine.Tick(7);
+        var dashStatus = statusProjection.Project(
+            statusHero, tick: 8, nowUtc: guardClock.UtcNow);
+        Check(
+            "status_carries_last_dash_outcome_without_events",
+            dashStatus.LastDash is { StopReason: DashStopReasons.BlockedByGeometry } &&
+            dashStatus.LastDash.AchievedWu > 4.0 && dashStatus.LastDash.AchievedWu < 4.45 &&
+            dashStatus.LastDash.X < 44.5 &&
+            dashStatus.GuardPhase == GuardPhases.Expired &&
+            dashStatus.Hp == 97,
+            dashStatus.LastDash?.StopReason ?? "no dash");
+
+        var whiffStatus = statusProjection.Project(hero1, tick: 20, nowUtc: guardClock.UtcNow);
+        var expiredStatus = statusProjection.Project(hero1, tick: 40, nowUtc: guardClock.UtcNow);
+        var downStatus = statusProjection.Project(hero4, tick: 21, nowUtc: guardClock.UtcNow);
+        Check(
+            "status_tracks_whiff_expiry_and_closed_window",
+            whiffStatus.GuardPhase == GuardPhases.Whiff &&
+            expiredStatus.GuardPhase == GuardPhases.Expired &&
+            downStatus is { GuardPhase: GuardPhases.None, SwordIntent: 0, CounterReserved: false },
+            $"{whiffStatus.GuardPhase}/{expiredStatus.GuardPhase}/{downStatus.GuardPhase}");
+
         var losAccept = new InMemoryQuestAcceptService(
             questCatalog, quests, npcAnchors, geometry,
             services.GetRequiredService<QuestAcceptOptions>());

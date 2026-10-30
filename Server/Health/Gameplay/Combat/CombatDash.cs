@@ -70,6 +70,19 @@ public sealed class DashLedger
 
     public DashResolution? Find(string castId) =>
         _byCastId.TryGetValue(castId, out var resolution) ? resolution : null;
+
+    // Snapshot for the status read model; the ledger is already bounded, so this
+    // cannot grow with session count.
+    public IReadOnlyList<DashResolution> All()
+    {
+        lock (_sync)
+        {
+            return _order
+                .Select(castId => _byCastId.TryGetValue(castId, out var resolution) ? resolution : null)
+                .OfType<DashResolution>()
+                .ToArray();
+        }
+    }
 }
 
 public sealed class DashMovementService
