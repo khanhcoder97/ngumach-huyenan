@@ -344,6 +344,10 @@ Nguồn: `docs/production/Quest_Dialogue_Production_Data_vi.csv` (230 dòng → 
 
 **Đề xuất contract (chờ duyệt, chưa áp dụng):** `POST /p1/narrative/enter` với `{requestId, idempotencyKey, questId, npcId, nodeId, choiceId?}` → `{ nodeId, textKey, nextNodeId?, choices[], appliedFlag?, progressedQuestIds[], partyPolicy: "SOLO_ONLY" }`, error enum đóng (`narrative_unknown_node|narrative_not_revealed|narrative_wrong_speaker|narrative_choice_required|narrative_unknown_choice`), cộng `GET /p1/narrative/flags/{sessionId}` để client biết đã set gì. Không có route nào được map hôm nay.
 
-### 9.18 Triển khai tiếp
+### 9.18 Q-E bước 1: kiểm coin band trong nguồn loot — không có, grant vẫn OFF
+
+Quét `docs/production/Loot_Recipe_Reward_Production_Data_vi.csv` (221 dòng): `row_type` = `LOOT_ENTRY` 184, `RECIPE` 7, `REWARD` 3, `CURRENCY_REWARD` 27; **0 dòng `item_or_currency_id = COIN`**. `Currency_Production_Data_vi.csv` có `COIN` nhưng chỉ định nghĩa balance cap/nguồn/sink, không có band theo `source_id`. Vậy `COIN_BAND_MISSING` trong `loot_recipe_v1.json` là **đúng**, `grantEnabled` phải tiếp tục `false`, và builder không được nới điều kiện — thay đổi duy nhất là ghi lại bằng chứng này. Gear roll vector cũng chưa có bảng riêng (`Item_Rarity_Variant_Catalog` chỉ cho pool độ hiếm), nên ứng viên gear vẫn blocked với field riêng; fullbag policy không có trong `Currency_Production_Data` nên cũng là blocked case.
+
+### 9.19 Triển khai tiếp
 
 Q-C objective graph P00-01..05 (runtime records từ source, loader/adapter/validator phía Qoder, không compiler cạnh tranh), Q-D XP/level + stat transaction một khối, Q-E loot grant + equipment cho cơ chế đã có data, Q-F Mãng Cốt encounter proposal + state machine, Q-G E2E nhiều client + handoff + proposal PostgreSQL (`Server/Persistence*` thuộc Remote #79).
