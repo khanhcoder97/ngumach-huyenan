@@ -1,7 +1,7 @@
 // AG5 — MapPresenter: builds MapViewState from P1Client world snapshot.
 // Map zoom is UI-only, never modifies world camera (DEC-019 constraint).
 // Topology marked "candidate" until reviewed — never edits 349 coordinates.
-// Owner: Antigravity Remote — Issue #80.
+// Owner: Antigravity Remote — Issue #80, #85.
 
 using System;
 using System.Collections.Generic;
@@ -47,7 +47,7 @@ namespace NguMach.Client.Presentation
                 _state = null; NotifyChanged(); return;
             }
 
-            _state = new MapViewState(mapId, self.x, self.y, markers, _zoomLevel, topologyIsCandidate: true);
+            _state = new MapViewState(mapId, self.x, self.y, markers, _zoomLevel, topologyIsCandidate: true, MapBounds.ForMap(mapId));
             NotifyChanged();
         }
 
@@ -55,18 +55,19 @@ namespace NguMach.Client.Presentation
         {
             _zoomLevel = Math.Max(0.25f, Math.Min(4f, zoom));
             if (_state != null)
-                _state = new MapViewState(_state.MapId, _state.PlayerX, _state.PlayerY, _state.Markers, _zoomLevel, _state.TopologyIsCandidate);
+                _state = new MapViewState(_state.MapId, _state.PlayerX, _state.PlayerY, _state.Markers, _zoomLevel, _state.TopologyIsCandidate, _state.Bounds);
             NotifyChanged();
         }
 
         private static IReadOnlyList<MapMarker> BuildMarkersV1(P1World w)
         {
             var markers = new List<MapMarker>();
-            markers.Add(new MapMarker(w.self.characterId, "PLAYER", w.self.x, w.self.y, "You"));
+            markers.Add(new MapMarker(w.self.characterId, "PLAYER", w.self.x, w.self.y, "Bạn"));
             foreach (var e in w.entities ?? Array.Empty<P1Entity>())
             {
                 if (e == null || string.IsNullOrEmpty(e.entityId)) continue;
-                markers.Add(new MapMarker(e.entityId, e.kind ?? "UNKNOWN", e.x, e.y));
+                string label = ResolveMarkerLabel(e.entityId, e.kind);
+                markers.Add(new MapMarker(e.entityId, e.kind ?? "UNKNOWN", e.x, e.y, label));
             }
             return markers;
         }
@@ -74,13 +75,24 @@ namespace NguMach.Client.Presentation
         private static IReadOnlyList<MapMarker> BuildMarkersV2(P1WorldV2 w)
         {
             var markers = new List<MapMarker>();
-            markers.Add(new MapMarker(w.self.characterId, "PLAYER", w.self.x, w.self.y, "You"));
+            markers.Add(new MapMarker(w.self.characterId, "PLAYER", w.self.x, w.self.y, "Bạn"));
             foreach (var e in w.entities ?? Array.Empty<P1EntityV2>())
             {
                 if (e == null || string.IsNullOrEmpty(e.entityId)) continue;
-                markers.Add(new MapMarker(e.entityId, e.kind ?? "UNKNOWN", e.x, e.y));
+                string label = ResolveMarkerLabel(e.entityId, e.kind);
+                markers.Add(new MapMarker(e.entityId, e.kind ?? "UNKNOWN", e.x, e.y, label));
             }
             return markers;
+        }
+
+        private static string ResolveMarkerLabel(string entityId, string kind)
+        {
+            var npc = NpcContextMapping.Resolve(entityId);
+            if (npc != null && !npc.DisplayName.Contains("UNRESOLVED"))
+            {
+                return npc.DisplayName;
+            }
+            return null;
         }
 
         private void NotifyChanged() => OnChanged?.Invoke();

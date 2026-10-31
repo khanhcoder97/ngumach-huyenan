@@ -99,6 +99,9 @@ namespace NguMach.Client.Presentation
         public InventoryViewState WithFilter(string text) =>
             new InventoryViewState(InventoryRevision, Slots, Currencies, ActivePage, SelectedInstanceId, text, DiagnosticWarnings);
 
+        public ItemSlotView GetSlot(int slotIndex) =>
+            Slots != null && Slots.TryGetValue(slotIndex, out var s) ? s : null;
+
         /// <summary>Slots visible on current page (indices page*25 .. page*25+24).</summary>
         public IEnumerable<(int localIndex, ItemSlotView item)> PageSlots()
         {
@@ -107,6 +110,16 @@ namespace NguMach.Client.Presentation
             {
                 int globalIdx = start + i;
                 Slots.TryGetValue(globalIdx, out var slot);
+                if (slot != null && !string.IsNullOrEmpty(FilterText))
+                {
+                    bool match = (slot.DisplayName != null && slot.DisplayName.IndexOf(FilterText, StringComparison.OrdinalIgnoreCase) >= 0)
+                              || (slot.TemplateId != null && slot.TemplateId.IndexOf(FilterText, StringComparison.OrdinalIgnoreCase) >= 0);
+                    if (!match)
+                    {
+                        yield return (i, null);
+                        continue;
+                    }
+                }
                 yield return (i, slot); // slot may be null = empty
             }
         }
@@ -153,43 +166,70 @@ namespace NguMach.Client.Presentation
         public IReadOnlyList<QuestEntryView> Active { get; }
         public IReadOnlyList<QuestEntryView> Completed { get; }
         public string SelectedQuestId { get; }
-        public bool HasPinnedTracker { get; }
+        public string PinnedQuestId { get; }
+        public QuestEntryView PinnedQuest
+        {
+            get
+            {
+                if (Active == null || string.IsNullOrEmpty(PinnedQuestId)) return null;
+                for (int i = 0; i < Active.Count; i++)
+                {
+                    if (Active[i] != null && Active[i].QuestId == PinnedQuestId) return Active[i];
+                }
+                return null;
+            }
+        }
+        public bool HasPinnedTracker => !string.IsNullOrEmpty(PinnedQuestId);
 
         public QuestJournalViewState(
             IReadOnlyList<QuestEntryView> active,
             IReadOnlyList<QuestEntryView> completed,
             string selectedQuestId = null,
-            bool hasPinnedTracker = false)
+            bool hasPinnedTracker = false,
+            string pinnedQuestId = null)
         {
             Active = active ?? Array.Empty<QuestEntryView>();
             Completed = completed ?? Array.Empty<QuestEntryView>();
             SelectedQuestId = selectedQuestId;
-            HasPinnedTracker = hasPinnedTracker;
+            PinnedQuestId = pinnedQuestId ?? (hasPinnedTracker ? (selectedQuestId ?? "P00-01") : null);
         }
+
+        public QuestJournalViewState WithSelection(string questId) =>
+            new QuestJournalViewState(Active, Completed, questId, HasPinnedTracker, PinnedQuestId);
+
+        public QuestJournalViewState WithPinned(bool pinned) =>
+            new QuestJournalViewState(Active, Completed, SelectedQuestId, pinned, pinned ? (PinnedQuestId ?? SelectedQuestId ?? "P00-01") : null);
+
+        public QuestJournalViewState WithPinnedQuest(string pinnedQuestId) =>
+            new QuestJournalViewState(Active, Completed, SelectedQuestId, !string.IsNullOrEmpty(pinnedQuestId), pinnedQuestId);
     }
 
     public sealed class QuestEntryView
     {
         public string QuestId { get; }
-        public string State { get; }   // "ACTIVE" | "READY_TO_TURN_IN" | "COMPLETED" | ...
+        public string State { get; }    // "AVAILABLE" | "ACTIVE" | "READY_TO_TURN_IN" | "COMPLETED"
         public string StepId { get; }
-        public IReadOnlyDictionary<string, int> ObjectiveCounters { get; }
         public long Revision { get; }
-        // Display fields from catalog; null = UNRESOLVED
-        public string DisplayName { get; }
-        public string StepDescription { get; }
+        public IReadOnlyDictionary<string, int> Counters { get; }
+        public string Title { get; }
+        public string ObjectiveDescription { get; }
+        public string DisplayName => Title;
+        public string ObjectiveDesc => ObjectiveDescription;
 
-        public QuestEntryView(P1Quest q, string displayName = null, string stepDescription = null)
+        public QuestEntryView(P1Quest q, string title = null, string objectiveDesc = null)
         {
             if (q == null) throw new ArgumentNullException(nameof(q));
             QuestId = q.questId;
             State = q.state;
             StepId = q.stepId;
-            ObjectiveCounters = q.objectiveCounters;
             Revision = q.revision;
-            DisplayName = displayName ?? q.questId + " (UNRESOLVED)";
-            StepDescription = stepDescription;
+            Counters = q.objectiveCounters ?? new Dictionary<string, int>();
+            Title = title ?? q.questId + " (UNRESOLVED)";
+            ObjectiveDescription = objectiveDesc ?? q.stepId ?? "";
         }
+
+        public bool IsReadyToTurnIn => State == "READY_TO_TURN_IN";
+        public bool IsCompleted => State == "COMPLETED";
     }
 
     // ── NPC dialogue view state ──────────────────────────────────────────────
@@ -203,19 +243,24 @@ namespace NguMach.Client.Presentation
         public IReadOnlyList<DialogueChoice> Choices { get; }
         public string UnavailableReason { get; }  // null = available
         public string CorrelationId { get; }
+        public string InteractionTargetEntityId { get; }
+        public string NpcTemplateId => NpcId;
+        public string SourceRecordId => RecordId;
 
         public NpcDialogueViewState(
             string npcId, string recordId, string kind,
             string greetingText,
             IReadOnlyList<DialogueChoice> choices,
             string unavailableReason = null,
-            string correlationId = null)
+            string correlationId = null,
+            string interactionTargetEntityId = null)
         {
             NpcId = npcId; RecordId = recordId; Kind = kind;
             GreetingText = greetingText;
             Choices = choices ?? Array.Empty<DialogueChoice>();
             UnavailableReason = unavailableReason;
             CorrelationId = correlationId;
+            InteractionTargetEntityId = interactionTargetEntityId ?? npcId;
         }
 
         public bool IsAvailable => UnavailableReason == null;
@@ -278,7 +323,32 @@ namespace NguMach.Client.Presentation
         public static readonly SettingsViewState Default = new SettingsViewState();
     }
 
-    // ── Map view state ───────────────────────────────────────────────────────
+    // ── Map view state & bounds ──────────────────────────────────────────────
+
+    public sealed class MapBounds
+    {
+        public double XMin { get; }
+        public double XMax { get; }
+        public double YMin { get; }
+        public double YMax { get; }
+        public double Width => XMax - XMin;
+        public double Height => YMax - YMin;
+
+        public MapBounds(double xMin, double xMax, double yMin, double yMax)
+        {
+            XMin = xMin; XMax = xMax; YMin = yMin; YMax = yMax;
+        }
+
+        public static readonly MapBounds Default = new MapBounds(0, 360, -12, 72);
+        public static readonly MapBounds ThangLong = new MapBounds(0, 900, -12, 96);
+
+        public static MapBounds ForMap(string mapId)
+        {
+            if (string.Equals(mapId, "MAP_THANG_LONG", StringComparison.OrdinalIgnoreCase))
+                return ThangLong;
+            return Default;
+        }
+    }
 
     public sealed class MapViewState
     {
@@ -288,24 +358,28 @@ namespace NguMach.Client.Presentation
         public IReadOnlyList<MapMarker> Markers { get; }
         public float ZoomLevel { get; }       // UI zoom, independent of world camera
         public bool TopologyIsCandidate { get; } // true = not yet reviewed, show warning
+        public MapBounds Bounds { get; }
 
         public MapViewState(
             string mapId, double playerX, double playerY,
             IReadOnlyList<MapMarker> markers,
             float zoomLevel = 1f,
-            bool topologyIsCandidate = false)
+            bool topologyIsCandidate = false,
+            MapBounds bounds = null)
         {
             MapId = mapId;
             PlayerX = playerX; PlayerY = playerY;
             Markers = markers ?? Array.Empty<MapMarker>();
             ZoomLevel = Math.Max(0.25f, Math.Min(4f, zoomLevel));
             TopologyIsCandidate = topologyIsCandidate;
+            Bounds = bounds ?? MapBounds.ForMap(mapId);
         }
     }
 
     public sealed class MapMarker
     {
         public string EntityId { get; }
+        public string Id => EntityId;
         public string Kind { get; }   // "NPC" | "QUEST" | "SPAWN" | "PLAYER"
         public double X { get; }
         public double Y { get; }

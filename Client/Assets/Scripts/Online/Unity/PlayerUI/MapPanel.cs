@@ -23,6 +23,7 @@ namespace NguMach.Client.P1
         private CancellationToken _ct;
         private MapPresenter _presenter;
         private bool _visible;
+        private UIDocument _doc;
 
         // ── UIElements refs ──────────────────────────────────────────────────
         private VisualElement _root;
@@ -34,14 +35,17 @@ namespace NguMach.Client.P1
 
         // ── Init ─────────────────────────────────────────────────────────────
 
-        public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct)
+        public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct, UIDocument doc = null)
         {
+            if (_presenter != null) _presenter.OnChanged -= Render;
             _adapter = adapter;
             _router = router;
             _ct = ct;
+            _doc = doc ?? _doc;
             _presenter = new MapPresenter(adapter);
             _presenter.OnChanged += Render;
-            BuildUI();
+            if (_root == null) BuildUI();
+            else AttachToDocument(_doc);
             Hide();
         }
 
@@ -107,11 +111,15 @@ namespace NguMach.Client.P1
             AttachToDocument();
         }
 
-        private void AttachToDocument()
+        private void AttachToDocument(UIDocument doc = null)
         {
-            var doc = FindFirstObjectByType<UIDocument>();
-            if (doc == null) { Debug.LogError("[MapPanel] No UIDocument found in scene."); return; }
-            doc.rootVisualElement.Add(_root);
+            _doc = doc ?? _doc;
+            if (_doc == null || _root == null) return;
+            if (_root.parent != _doc.rootVisualElement)
+            {
+                _root.RemoveFromHierarchy();
+                _doc.rootVisualElement.Add(_root);
+            }
         }
 
         // ── IMGUI Draw ───────────────────────────────────────────────────────
@@ -127,11 +135,16 @@ namespace NguMach.Client.P1
             float playerX = (float)state.PlayerX;
             float playerY = (float)state.PlayerY;
 
+            var bounds = state.Bounds ?? MapBounds.ForMap(state.MapId);
+            // Projection scale derived from canonical map bounds (map_bounds.json), replacing arbitrary 4px/WU
+            float baseScale = (float)(MapDisplaySize / Math.Max(1.0, bounds.Width));
+            float scale = baseScale * zoom;
+
             // Draw markers
             foreach (var m in state.Markers)
             {
-                float wx = (float)(m.X - playerX) * zoom * 4f + cx;
-                float wy = -(float)(m.Y - playerY) * zoom * 4f + cy; // Y flipped for screen
+                float wx = (float)(m.X - playerX) * scale + cx;
+                float wy = -(float)(m.Y - playerY) * scale + cy; // Y flipped for screen
 
                 // Bounds clipping within map display container
                 if (wx < 0 || wx > MapDisplaySize || wy < 0 || wy > MapDisplaySize) continue;
@@ -222,6 +235,25 @@ namespace NguMach.Client.P1
         {
             if (_presenter != null) _presenter.OnChanged -= Render;
         }
+
+        public void Teardown()
+        {
+            Hide();
+            if (_presenter != null)
+            {
+                _presenter.OnChanged -= Render;
+                _presenter = null;
+            }
+            if (_root != null && _root.parent != null)
+            {
+                _root.RemoveFromHierarchy();
+            }
+            _adapter = null;
+            _router = null;
+            _doc = null;
+        }
+
+        private void OnDestroy() => Teardown();
 
         private static VisualElement MakePanel()
         {

@@ -22,6 +22,8 @@ namespace NguMach.Client.P1
 
         private VisualElement _root;
         private bool _visible;
+        private UIDocument _doc;
+        private Action _onPresenterChanged;
         private NpcDialogueViewState _current;
 
         private Label _npcNameLabel;
@@ -32,14 +34,21 @@ namespace NguMach.Client.P1
 
         // ── Init ─────────────────────────────────────────────────────────────
 
-        public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct, NpcDialoguePresenter presenter = null)
+        public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct, NpcDialoguePresenter presenter = null, UIDocument doc = null)
         {
+            if (_presenter != null && _onPresenterChanged != null)
+            {
+                _presenter.OnChanged -= _onPresenterChanged;
+            }
             _adapter = adapter;
             _router = router;
             _ct = ct;
+            _doc = doc ?? _doc;
             _presenter = presenter ?? new NpcDialoguePresenter(adapter);
-            _presenter.OnChanged += () => SetDialogue(_presenter.State.Value);
-            BuildUI();
+            _onPresenterChanged = () => SetDialogue(_presenter.State.Value);
+            _presenter.OnChanged += _onPresenterChanged;
+            if (_root == null) BuildUI();
+            else AttachToDocument(_doc);
             Hide();
         }
 
@@ -71,6 +80,7 @@ namespace NguMach.Client.P1
         {
             _visible = false;
             if (_root != null) _root.style.display = DisplayStyle.None;
+            _presenter?.Clear();
         }
 
         // ── UI Build ─────────────────────────────────────────────────────────
@@ -113,11 +123,15 @@ namespace NguMach.Client.P1
             AttachToDocument();
         }
 
-        private void AttachToDocument()
+        private void AttachToDocument(UIDocument doc = null)
         {
-            var doc = FindFirstObjectByType<UIDocument>();
-            if (doc == null) { Debug.LogError("[NpcDialoguePanel] No UIDocument found in scene."); return; }
-            doc.rootVisualElement.Add(_root);
+            _doc = doc ?? _doc;
+            if (_doc == null || _root == null) return;
+            if (_root.parent != _doc.rootVisualElement)
+            {
+                _root.RemoveFromHierarchy();
+                _doc.rootVisualElement.Add(_root);
+            }
         }
 
         // ── Render ───────────────────────────────────────────────────────────
@@ -225,6 +239,30 @@ namespace NguMach.Client.P1
         }
 
         // ── Helpers ──────────────────────────────────────────────────────────
+
+        public void Teardown()
+        {
+            Hide();
+            if (_presenter != null)
+            {
+                if (_onPresenterChanged != null)
+                {
+                    _presenter.OnChanged -= _onPresenterChanged;
+                }
+                _presenter.Clear();
+                _presenter = null;
+            }
+            if (_root != null && _root.parent != null)
+            {
+                _root.RemoveFromHierarchy();
+            }
+            _current = null;
+            _adapter = null;
+            _router = null;
+            _doc = null;
+        }
+
+        private void OnDestroy() => Teardown();
 
         private static VisualElement MakePanel()
         {

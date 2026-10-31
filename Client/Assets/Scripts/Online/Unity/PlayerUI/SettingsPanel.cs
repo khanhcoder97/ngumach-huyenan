@@ -24,6 +24,7 @@ namespace NguMach.Client.P1
         private VisualElement _root;
         private bool _visible;
         private bool _suppressCallbacks;
+        private UIDocument _doc;
 
         private Slider _uiScaleSlider;
         private Slider _masterVolumeSlider;
@@ -35,25 +36,30 @@ namespace NguMach.Client.P1
 
         // ── Init ─────────────────────────────────────────────────────────────
 
-        public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct, ISettingsStore store = null)
+        public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct, ISettingsStore store = null, UIDocument doc = null)
         {
+            if (_presenter != null) _presenter.OnChanged -= Render;
             _adapter = adapter;
             _router = router;
             _ct = ct;
+            _doc = doc ?? _doc;
 
             if (store == null && usePlayerPrefsStore)
             {
-                store = FindFirstObjectByType<PlayerPrefsSettingsStore>();
+                store = GetComponent<PlayerPrefsSettingsStore>() ?? GetComponentInParent<PlayerPrefsSettingsStore>();
                 if (store == null)
                 {
                     var go = new GameObject("PlayerPrefsSettingsStore");
+                    go.transform.SetParent(transform, false);
                     store = go.AddComponent<PlayerPrefsSettingsStore>();
                 }
             }
 
             _presenter = new SettingsPresenter(store ?? new MemorySettingsStore());
             _presenter.OnChanged += Render;
-            BuildUI();
+            if (_root == null) BuildUI();
+            else AttachToDocument(_doc);
+            ApplySettings(_presenter.Current);
             Hide();
         }
 
@@ -148,11 +154,15 @@ namespace NguMach.Client.P1
             AttachToDocument();
         }
 
-        private void AttachToDocument()
+        private void AttachToDocument(UIDocument doc = null)
         {
-            var doc = FindFirstObjectByType<UIDocument>();
-            if (doc == null) { Debug.LogError("[SettingsPanel] No UIDocument found in scene."); return; }
-            doc.rootVisualElement.Add(_root);
+            _doc = doc ?? _doc;
+            if (_doc == null || _root == null) return;
+            if (_root.parent != _doc.rootVisualElement)
+            {
+                _root.RemoveFromHierarchy();
+                _doc.rootVisualElement.Add(_root);
+            }
         }
 
         // ── Render ───────────────────────────────────────────────────────────
@@ -202,17 +212,35 @@ namespace NguMach.Client.P1
             if (s == null) return;
             // Apply volume via Unity AudioListener
             AudioListener.volume = s.MasterVolume;
-            // Apply UI scale to root transform
-            if (_root != null)
+            // Apply UI scale to root visual element (scales entire UI per WO-14)
+            if (_doc != null && _doc.rootVisualElement != null)
+            {
+                _doc.rootVisualElement.transform.scale = new Vector3(s.UiScale, s.UiScale, 1f);
+            }
+            else if (_root != null)
             {
                 _root.transform.scale = new Vector3(s.UiScale, s.UiScale, 1f);
             }
         }
 
-        private void OnDestroy()
+        public void Teardown()
         {
-            if (_presenter != null) _presenter.OnChanged -= Render;
+            Hide();
+            if (_presenter != null)
+            {
+                _presenter.OnChanged -= Render;
+                _presenter = null;
+            }
+            if (_root != null && _root.parent != null)
+            {
+                _root.RemoveFromHierarchy();
+            }
+            _adapter = null;
+            _router = null;
+            _doc = null;
         }
+
+        private void OnDestroy() => Teardown();
 
         // ── Helpers ──────────────────────────────────────────────────────────
 
