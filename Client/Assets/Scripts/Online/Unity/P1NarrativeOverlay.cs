@@ -38,7 +38,7 @@ namespace NguMach.Client.P1
             var scroll = new ScrollView(); scroll.style.flexGrow = 1; scroll.style.flexShrink = 1;
             body = new Label(); body.style.whiteSpace = WhiteSpace.Normal; body.style.fontSize = 18;
             body.style.color = new Color(.94f,.92f,.85f); scroll.Add(body); root.Add(scroll);
-            choices = new VisualElement(); root.Add(choices);
+            choices = new VisualElement(); scroll.Add(choices);
             status = new Label(); status.style.whiteSpace = WhiteSpace.Normal; root.Add(status);
             var row = new VisualElement(); row.style.flexDirection = FlexDirection.Row; row.style.flexWrap = Wrap.Wrap;
             previous = Add(row, "Trước", () => flow.Previous());
