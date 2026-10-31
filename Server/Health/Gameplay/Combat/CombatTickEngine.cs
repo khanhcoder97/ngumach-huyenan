@@ -111,6 +111,7 @@ public sealed class CombatTickEngine
     private readonly IWorldGeometryService _geometry;
     private readonly DashMovementService _dashes;
     private readonly ServerClock _clock;
+    private readonly LootGrantService? _lootGrants;
     private readonly object _sync = new();
     private readonly Dictionary<string, ScheduledCast> _casts = new(StringComparer.Ordinal);
 
@@ -125,7 +126,8 @@ public sealed class CombatTickEngine
         GuardWindowStore guards,
         IWorldGeometryService geometry,
         DashMovementService dashes,
-        ServerClock clock)
+        ServerClock clock,
+        LootGrantService? lootGrants = null)
     {
         _entities = entities;
         _combat = combat;
@@ -138,6 +140,7 @@ public sealed class CombatTickEngine
         _geometry = geometry;
         _dashes = dashes;
         _clock = clock;
+        _lootGrants = lootGrants;
     }
 
     // Where each accepted dash actually landed and why it stopped; internal
@@ -382,6 +385,20 @@ public sealed class CombatTickEngine
     // reserved for a later tick is cancelled now instead of swinging at a source
     // the actor can no longer see. The events go through the same store the
     // client already polls, so a cancellation is never a silent drop.
+    // Q-E: the kill path hands every death to the grant service exactly once.
+    // The shipped loot bundle is grant-off until the coin band exists, so the
+    // outcome records that reason instead of inventing an amount.
+    private void RecordLootOnDeath(PlayerSession killer, CombatEventV2 death, long lifeId)
+    {
+        _lootGrants?.Grant(
+            killer,
+            death.EventId,
+            lifeId,
+            grantEnabled: false,
+            blockedReason: LootGrantPolicies.SourceShortReason,
+            items: []);
+    }
+
     public IReadOnlyList<CombatEventV2> CancelPendingFor(string characterId)
     {
         ArgumentNullException.ThrowIfNull(characterId);
@@ -551,6 +568,7 @@ public sealed class CombatTickEngine
         _entities.Despawn(source.EntityId);
         var death = AppendGuardEvent(
             window, tick, CombatEventTypesV2.Death, source, result: null);
+        RecordLootOnDeath(window.Defender, death, source.LifeId);
         yield return death;
 
         _quests.RecordVerifiedEvent(
@@ -704,6 +722,7 @@ public sealed class CombatTickEngine
             var deathEvent = AppendEvent(
                 cast, impactTick + 1, CombatEventTypesV2.Death, target.EntityId, lifeId,
                 hitIndex: null, target.Revision, result: null);
+            RecordLootOnDeath(cast.Actor, deathEvent, lifeId);
             yield return deathEvent;
 
             // QOD-17 DEV kill-credit policy: the source that lands the killing

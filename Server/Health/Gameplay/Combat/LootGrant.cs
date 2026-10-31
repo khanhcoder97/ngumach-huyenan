@@ -162,6 +162,13 @@ public sealed class LootGrantService
     }
 }
 
+public static class LootGrantPolicies
+{
+    // The shipped bundle is grant-off because no document states the mob coin
+    // band; the reason is recorded on every death so the gap is visible.
+    public const string SourceShortReason = "COIN_BAND_MISSING";
+}
+
 public static class LootGrantErrorCodes
 {
     public const string NothingToGrant = "loot_nothing_to_grant";
