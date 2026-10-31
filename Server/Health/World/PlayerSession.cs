@@ -47,6 +47,11 @@ public sealed class PlayerSession
     public int MaxMp { get; set; }
     public int SwordIntent { get; set; }
     public long Revision { get; set; }
+
+    // Lifetime XP and the table's cumulative allocatable points; both are
+    // written only inside the reward transaction (Q-D).
+    public long TotalXp { get; set; }
+    public int UnspentPoints { get; set; }
     public int LastInputSequence { get; set; }
     public DateTimeOffset LastMoveAtUtc { get; set; }
 }

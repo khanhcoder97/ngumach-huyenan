@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "questId": "P00-03",
+  "titleKey": "QUEST.P00-03.TITLE",
+  "graphId": "GRAPH_P00_03",
+  "questType": "MAIN",
+  "activation": "BLOCKED",
+  "levelBand": {
+    "min": 1,
+    "max": 10
+  },
+  "startNpcId": "NPC_LYAN",
+  "prerequisiteQuestIds": [
+    "P00-02"
+  ],
+  "objectives": [
+    {
+      "objectiveId": "OBJ_P00_03_WATERROOT",
+      "type": "KILL",
+      "targetIds": [
+        "MOB_WATERROOT"
+      ],
+      "count": 3,
+      "mapId": "MAP_BEN_MUA"
+    }
+  ],
+  "blockedSteps": [
+    {
+      "designStep": "P00_03_TURN_IN_NPC",
+      "missingField": "turnInNpcId",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-03; BM npcs are NPC_LYAN/NPC_TA_VAN_KHANH/NPC_CLASS_TRIAL — none is the report hand-in"
+    },
+    {
+      "designStep": "P00_03_VILLAGERS",
+      "missingField": "objectiveTargets",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-03 (2 dân); no villager npc or interactable on MAP_BEN_MUA (checked MAN-BM-* and ENT_MAN_BM-*)"
+    },
+    {
+      "designStep": "P00_03_WAVE",
+      "missingField": "dodgeMechanic",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-03 (né một đợt sóng) — no wave/dodge system exists in P1"
+    }
+  ],
+  "rewards": {
+    "currency": [],
+    "itemIds": [
+      "EQ-MK-BOOTS-T1-R-COMMON",
+      "POT-HP-01"
+    ],
+    "xpRule": "LEVEL_BAND_BASE"
+  },
+  "unlocks": [
+    "P00-04"
+  ],
+  "sourceRef": "Quest_and_Narrative_Production_Spec_vi.md#P00-03"
+}

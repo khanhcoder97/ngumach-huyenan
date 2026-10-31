@@ -4,6 +4,7 @@ using Server.Health.Contracts;
 using Server.Health.Gameplay.Combat;
 using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
+using Server.Health.Gameplay.Progress;
 using Server.Health.Gameplay.Quests;
 using Server.Health.Gameplay.Teleport;
 using Server.Health.World;
@@ -213,6 +214,8 @@ public static class ServiceSelfCheck
         var configuration = services.GetRequiredService<IConfiguration>();
         var hostEnvironment = services.GetRequiredService<IHostEnvironment>();
         bool Near(double actual, double expected) => Math.Abs(actual - expected) < 1e-9;
+        DashMovementService NewDashes(IWorldGeometryService service) =>
+            new(service, options, maps);
 
         var combatDamage = services.GetRequiredService<CombatDamageFeature>();
         Check(
@@ -1097,6 +1100,7 @@ public static class ServiceSelfCheck
             new FixedCombatRolls(hit: true, crit: false),
             tickGuardWindows,
             tickGeometry,
+            NewDashes(tickGeometry),
             new ServerClock());
 
         var basicTickCastId = new string('a', 32);
@@ -1166,7 +1170,7 @@ public static class ServiceSelfCheck
             var cancelEngine = new CombatTickEngine(cancelRegistry, enabledCombat, combatSkills,
                 new CombatEventStore(new CombatEventStreamOptions()), cancelHp, tickQuests,
                 new FixedCombatRolls(hit: true, crit: false),
-                new GuardWindowStore(), tickGeometry, new ServerClock());
+                new GuardWindowStore(), tickGeometry, NewDashes(tickGeometry), new ServerClock());
             cancelEngine.Schedule(cancelledSource, cancelledSource.SessionId, Guid.NewGuid().ToString("N"),
                 CombatV2Actions.BasicAttack, null, 1, 0, 100);
             if (cancelReason == "DEAD") cancelledSource.Hp = 0;
@@ -1189,7 +1193,7 @@ public static class ServiceSelfCheck
             missRegistry, enabledCombat, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), missStore,
             tickQuests, new FixedCombatRolls(hit: false, crit: false),
-            tickGuardWindows, tickGeometry, new ServerClock());
+            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock());
         missEngine.Schedule(
             tickQuestActor, "e2e33333333333333333333333333333",
             new string('c', 32), CombatV2Actions.BasicAttack, null, 1, 0, 300);
@@ -1209,7 +1213,7 @@ public static class ServiceSelfCheck
             rangeRegistry, enabledCombat, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
-            tickGuardWindows, tickGeometry, new ServerClock());
+            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock());
         rangeEngine.Schedule(
             tickQuestActor, "e2e44444444444444444444444444444",
             new string('d', 32), CombatV2Actions.BasicAttack, null, 1, 0, 400);
@@ -1226,7 +1230,7 @@ public static class ServiceSelfCheck
             behindRegistry, enabledCombat, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
-            tickGuardWindows, tickGeometry, new ServerClock());
+            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock());
         behindEngine.Schedule(
             tickQuestActor, "e2e55555555555555555555555555555",
             new string('e', 32), CombatV2Actions.BasicAttack, null, 1, 0, 500);
@@ -1249,7 +1253,7 @@ public static class ServiceSelfCheck
             deathRegistry, enabledCombat, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), deathStore,
             deathQuests, new FixedCombatRolls(hit: true, crit: false),
-            tickGuardWindows, tickGeometry, new ServerClock());
+            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock());
 
         var deathCount = 0;
         for (var castIndex = 0; castIndex < 6; castIndex++)
@@ -1620,10 +1624,12 @@ public static class ServiceSelfCheck
             },
             $"state={lifeIdProjected.State} revision={lifeIdProjected.Revision} lifeId={lifeIdProjected.LifeId}");
 
-        Check("quest.catalog", questCatalog.Count == 1, $"count={questCatalog.Count}");
+        Check("quest.catalog", questCatalog.Count == 5, $"count={questCatalog.Count}");
         Check(
             "quest.catalog_ids",
-            questCatalog.QuestIds.SequenceEqual(new[] { "P00-01" }, StringComparer.Ordinal),
+            questCatalog.QuestIds.SequenceEqual(
+                new[] { "P00-01", "P00-02", "P00-03", "P00-04", "P00-05" },
+                StringComparer.Ordinal),
             string.Join(",", questCatalog.QuestIds));
 
         var questActor = NewPlayer("CHR_SELFCHECK_QUEST");
@@ -1695,6 +1701,226 @@ public static class ServiceSelfCheck
             "quest.unknown_quest",
             unknownQuest.Failure?.Code == QuestErrorCodes.UnknownQuest,
             unknownQuest.Failure?.Code);
+
+        // Q-C: the opening chain exists as a graph, but four of its quests are
+        // blocked because the source does not define every field they need. A
+        // blocked quest keeps its place (prerequisite/unlock edges) and can never
+        // open; each gap names the field and the document that must fill it.
+        var blockedDefinitions = questCatalog.QuestIds
+            .Select(questId => questCatalog.TryGet(questId, out var definition) ? definition : null)
+            .Where(definition => definition is { IsBlocked: true })
+            .ToArray();
+        Check(
+            "quest.blocked_chain_named",
+            blockedDefinitions
+                .Select(definition => definition!.QuestId)
+                .SequenceEqual(
+                    new[] { "P00-02", "P00-03", "P00-04", "P00-05" }, StringComparer.Ordinal) &&
+            blockedDefinitions.All(definition =>
+                definition!.Blocked.Count > 0 &&
+                definition.Blocked.All(step =>
+                    step.MissingField.Length > 0 &&
+                    (step.Source.Contains(".md", StringComparison.OrdinalIgnoreCase) ||
+                     step.Source.Contains(".csv", StringComparison.OrdinalIgnoreCase)))),
+            string.Join(",", blockedDefinitions.Select(definition => definition!.QuestId)));
+
+        // The actor completed P00-01 just above, so the prerequisite is met —
+        // and P00-02 still must not open.
+        var chainLockedState = quests.GetState(questActor.CharacterId, "P00-02");
+        var chainAccept = questAccept.Accept(
+            questActor, "P00-02", "NPC_TA_VAN_KHANH", new string('c', 32));
+        Check(
+            "quest.blocked_never_available_and_reports_gap",
+            chainLockedState.State?.State == QuestStates.Locked &&
+            chainAccept.Failure?.Code == QuestAcceptErrorCodes.PrerequisiteNotMet &&
+            (chainAccept.Failure.FieldErrors.Contains(
+                "activation.blocked.P00_02_RIPPLES", StringComparer.Ordinal)),
+            $"{chainLockedState.State?.State}/{string.Join(",", chainAccept.Failure?.FieldErrors ?? [])}");
+
+        QuestDefinition FixtureQuest(
+            string questId,
+            string[] prerequisites,
+            string[] unlocks,
+            IReadOnlyList<QuestObjectiveDefinition>? objectives = null,
+            string activation = QuestActivations.Active,
+            IReadOnlyList<QuestBlockedStep>? blocked = null)
+        {
+            var objectiveId = "OBJ_" + questId.Replace("-", "_", StringComparison.Ordinal) + "_TALK";
+            return new QuestDefinition(
+                questId,
+                QuestTypes.Main,
+                "NPC_LYAN",
+                1,
+                10,
+                prerequisites,
+                objectives ?? [new QuestObjectiveDefinition(
+                    objectiveId, QuestObjectiveTypes.Talk, ["NPC_LYAN"], 1, options.DefaultMapId)],
+                QuestStepIds.FromObjectiveId(objectiveId),
+                "NPC_LYAN",
+                new QuestRewards([], [], "LEVEL_BAND_BASE"),
+                unlocks,
+                activation,
+                blocked);
+        }
+
+        bool ValidatorRejects(WorldRecordCatalog records, params QuestDefinition[] definitions)
+        {
+            var catalog = definitions.ToDictionary(
+                definition => definition.QuestId, StringComparer.Ordinal);
+            try
+            {
+                QuestCatalogValidator.Validate(new QuestCatalog(catalog), records, npcAnchors);
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+                return true;
+            }
+        }
+
+        var shippedRecords = services.GetRequiredService<WorldRecordCatalog>();
+        var shippedDefinitions = questCatalog.QuestIds
+            .Select(questId => questCatalog.TryGet(questId, out var definition) ? definition : null)
+            .Where(definition => definition is not null)
+            .Select(definition => definition!)
+            .ToArray();
+        Check(
+            "quest.validator_accepts_the_shipped_chain",
+            !ValidatorRejects(shippedRecords, shippedDefinitions),
+            "shipped catalog rejected");
+        Check(
+            "quest.validator_rejects_cycle",
+            ValidatorRejects(
+                shippedRecords,
+                FixtureQuest("Q01-01", ["Q01-02"], ["Q01-02"]),
+                FixtureQuest("Q01-02", ["Q01-01"], ["Q01-01"])),
+            "cycle accepted");
+        Check(
+            "quest.validator_rejects_dangling_prerequisite",
+            ValidatorRejects(shippedRecords, FixtureQuest("Q01-01", ["Q01-99"], [])),
+            "dangling prerequisite accepted");
+        Check(
+            "quest.validator_rejects_unlock_without_prerequisite",
+            ValidatorRejects(
+                shippedRecords,
+                FixtureQuest("Q01-01", [], ["Q01-02"]),
+                FixtureQuest("Q01-02", [], ["Q01-01"])),
+            "one-sided unlock accepted");
+        Check(
+            "quest.validator_rejects_dangling_kill_target",
+            ValidatorRejects(
+                shippedRecords,
+                FixtureQuest(
+                    "Q01-01",
+                    [],
+                    [],
+                    [new QuestObjectiveDefinition(
+                        "OBJ_Q01_01_KILL",
+                        QuestObjectiveTypes.Kill,
+                        ["MAN-BM-NO_SUCH_SPAWN"],
+                        1,
+                        options.DefaultMapId)])),
+            "dangling KILL target accepted");
+        Check(
+            "quest.validator_rejects_blocked_without_gap",
+            ValidatorRejects(
+                shippedRecords,
+                FixtureQuest("Q01-01", [], [], activation: QuestActivations.Blocked)),
+            "blocked quest without a named gap accepted");
+
+        // Q-C2: a narrative node is only visible when the character's own quest
+        // state matches its condition, and entering it is the only thing that can
+        // set a flag or progress a talk objective. Only a text key leaves the
+        // server; the server never composes prose.
+        var narrative = services.GetRequiredService<NarrativeService>();
+        var narrativeCatalog = services.GetRequiredService<NarrativeNodeCatalog>();
+        var narrativeActor = NewPlayer("CHR_SELFCHECK_NARRATIVE");
+        var narrativeOffer = narrative.Offer(narrativeActor, "P00-01");
+        var clueBeforeActive = narrative.Enter(
+            narrativeActor, "P00-01", "NPC_LYAN", "DLG_P00_01_CLUE");
+        var wrongSpeaker = narrative.Enter(
+            narrativeActor, "P00-01", "NPC_TA_VAN_KHANH", "DLG_P00_01_OFFER");
+        var enteredOffer = narrative.Enter(
+            narrativeActor, "P00-01", "NPC_LYAN", "DLG_P00_01_OFFER");
+        Check(
+            "narrative.reveal_gate_follows_quest_state",
+            narrative.PartyPolicy == PartyPolicies.SoloOnly &&
+            narrativeOffer is { Entered: true, Node.NodeId: "DLG_P00_01_OFFER" } &&
+            narrativeOffer.Node.TextKey == "DLG_P00_01_OFFER_TEXT" &&
+            clueBeforeActive.ErrorCode == NarrativeErrorCodes.NotRevealed &&
+            wrongSpeaker.ErrorCode == NarrativeErrorCodes.WrongSpeaker &&
+            enteredOffer is { Entered: true, NextNodeId: "DLG_P00_01_CLUE" },
+            $"{narrativeOffer.Node?.NodeId}/{clueBeforeActive.ErrorCode}/{enteredOffer.NextNodeId}");
+
+        Check(
+            "narrative.catalog_choices_and_flags",
+            narrativeCatalog.Count == 229 &&
+            narrativeCatalog.Flags.SetEquals(new[] { "C3_05_COUNCIL_ONLY", "C3_05_PUBLISHED" }) &&
+            narrativeCatalog.TryGet("DLG_C3_05_CHOICE", out var choiceNode) &&
+            choiceNode.Choices.Count == 2 &&
+            choiceNode.Choices.Select(choice => choice.Flag).SequenceEqual(
+                new[] { "C3_05_PUBLISHED", "C3_05_COUNCIL_ONLY" }, StringComparer.Ordinal),
+            $"nodes={narrativeCatalog.Count}");
+
+        var flagStore = new NarrativeFlagStore();
+        for (var flagIndex = 0; flagIndex < NarrativeFlagStore.Capacity + 4; flagIndex++)
+        {
+            flagStore.Set("CHR_SELFCHECK_FLAGS", $"FLAG_{flagIndex}");
+        }
+
+        Check(
+            "narrative.flags_are_bounded",
+            flagStore.For("CHR_SELFCHECK_FLAGS").Count == NarrativeFlagStore.Capacity,
+            $"flags={flagStore.For("CHR_SELFCHECK_FLAGS").Count}");
+
+        // Q-D: the level transaction is real (thresholds from the shipped 100-row
+        // table, multi-level, capped) while the quest XP amount has no source yet,
+        // so the shipped rule resolves nothing and the receipt stays applied:false.
+        var xpTable = services.GetRequiredService<LevelProgressionTable>();
+        var scriptedXp = new ExperienceService(xpTable, new FixedQuestXpRule(400));
+        var xpActor = NewPlayer("CHR_SELFCHECK_XP");
+        var xpApplied = scriptedXp.TryApply(xpActor, "TEST_RULE", out var xpGrant, out _);
+        var hugeXp = new ExperienceService(xpTable, new FixedQuestXpRule(50_000_000));
+        var cappedActor = NewPlayer("CHR_SELFCHECK_XP_CAP");
+        hugeXp.TryApply(cappedActor, "TEST_RULE", out _, out _);
+        var unresolved = new ExperienceService(xpTable, new UnresolvedQuestXpRules())
+            .TryApply(xpActor, "LEVEL_BAND_BASE", out _, out var unresolvedRule);
+        Check(
+            "xp.transaction_levels_and_caps",
+            xpApplied && xpTable.At(1).XpToNext == 175 &&
+            xpActor is { Level: 2, TotalXp: 400 } &&
+            xpActor.UnspentPoints == xpTable.At(2).AllocatablePointsTotal &&
+            xpGrant is { LevelsGained: 1 } &&
+            cappedActor.Level == xpTable.MaxLevel &&
+            cappedActor.UnspentPoints == xpTable.At(cappedActor.Level).AllocatablePointsTotal &&
+            !unresolved && unresolvedRule == "LEVEL_BAND_BASE" && xpActor.TotalXp == 400,
+            $"level={xpActor.Level} cap={cappedActor.Level} rule={unresolvedRule}");
+
+        // Q-E: a death grants at most once, a roll-only bundle grants nothing,
+        // and a new life of the same entity is a new death.
+        var grantService = new LootGrantService(
+            services.GetRequiredService<IInventoryService>(), new LootGrantLedger());
+        var grantActor = NewPlayer("CHR_SELFCHECK_LOOT");
+        var rollOnly = grantService.Grant(
+            grantActor, new string('d', 32), 1, grantEnabled: false,
+            "COIN_BAND_MISSING", [new LootGrantItem("POT-HP-01", 1)]);
+        var grantedDeath = new string('e', 32);
+        var grantedOnce = grantService.Grant(
+            grantActor, grantedDeath, 1, grantEnabled: true, null,
+            [new LootGrantItem("POT-HP-01", 2)]);
+        var grantedReplay = grantService.Grant(
+            grantActor, grantedDeath, 1, grantEnabled: true, null,
+            [new LootGrantItem("POT-HP-01", 2)]);
+        var secondLife = grantService.Grant(
+            grantActor, grantedDeath, 2, grantEnabled: true, null,
+            [new LootGrantItem("POT-HP-01", 1)]);
+        Check(
+            "loot.grant_once_per_death_and_off_by_source",
+            !rollOnly.Granted && rollOnly.BlockedReason == "COIN_BAND_MISSING" &&
+            grantedOnce is { Granted: true, Replayed: false } &&
+            grantedReplay is { Granted: true, Replayed: true } &&
+            secondLife is { Granted: true, Replayed: false, LifeId: 2 },
+            $"{rollOnly.BlockedReason}/{grantedReplay.Replayed}/{secondLife.LifeId}");
 
         Check(
             "npc.registry",
@@ -2327,6 +2553,105 @@ public static class ServiceSelfCheck
             floorAi.GetState("ENT_SELFCHECK_FLOOR_MOB") == MobBehaviorStates.Idle,
             floorAi.GetState("ENT_SELFCHECK_FLOOR_MOB"));
 
+        // Q-B5: the telegraph read model. A client deciding "lean back or eat it"
+        // needs the committed frame, its target and its reach in ticks — the
+        // state name alone is not a read window.
+        var telegraphClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 30, 2, 0, 0, TimeSpan.Zero));
+        var telegraphRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_READ_MOB", 43, 0)]),
+            telegraphClock);
+        var telegraphAi = new MobLifecycleService(
+            telegraphRegistry, geometry, mobOptions, telegraphClock);
+        var telegraphReads = new MobTelegraphProjection(
+            telegraphAi, Options.Create(mobOptions), telegraphClock);
+        var readPrey = NewPlayer("CHR_SELFCHECK_READ_PREY");
+        readPrey.X = 44;
+        readPrey.Y = 0;
+        // Two different questions: "is there anything to read about this mob"
+        // and "is a swing committed right now". The acquisition states are
+        // readable too, so the helpers must not be conflated.
+        MobTelegraphReading? ReadEngaged() =>
+            telegraphReads.Project(telegraphRegistry.All)
+                .FirstOrDefault(reading => reading.State != MobBehaviorStates.Idle);
+        MobTelegraphReading? ReadTelegraph() =>
+            telegraphReads.Project(telegraphRegistry.All)
+                .FirstOrDefault(reading => reading.State == MobBehaviorStates.Telegraph);
+
+        Check(
+            "telegraph.idle_has_nothing_to_read",
+            telegraphReads.Project(telegraphRegistry.All).Count == 0,
+            string.Join(",", telegraphReads.Project(telegraphRegistry.All)
+                .Select(reading => reading.State)));
+
+        MobTelegraphReading? committed = null;
+        for (var step = 0; step < 12 && committed is null; step++)
+        {
+            telegraphAi.Tick([readPrey]);
+            committed = ReadTelegraph();
+            if (committed is null)
+            {
+                telegraphClock.Advance(TimeSpan.FromSeconds(0.05));
+            }
+        }
+
+        Check(
+            "telegraph.reading_carries_target_timing_and_reach",
+            committed is { State: MobBehaviorStates.Telegraph, ImpactInTicks: 9, RangeWu: 1.2 } &&
+            committed.AngleDegrees is null &&
+            committed.LifeId > 0 &&
+            committed.EntityId == "ENT_SELFCHECK_READ_MOB" &&
+            committed.TargetCharacterId == readPrey.CharacterId &&
+            committed.ImpactAtUtc == telegraphClock.UtcNow.AddSeconds(0.45),
+            committed is null ? "never telegraphed" : $"{committed.State}/{committed.ImpactInTicks}");
+
+        telegraphClock.Advance(TimeSpan.FromSeconds(0.1));
+        var counting = ReadTelegraph();
+        Check(
+            "telegraph.countdown_moves_with_the_server_clock",
+            counting?.ImpactInTicks == 7 && counting?.State == MobBehaviorStates.Telegraph,
+            $"{counting?.ImpactInTicks}");
+
+        // Out of *attack* range while still acquired does not un-commit the
+        // swing: the impact frame still happens and only the damage check knows
+        // it will whiff, so the client has to keep drawing it. 44,6 stays inside
+        // the open area — the reviewed fixture's wall starts at 45, and stepping
+        // the prey behind it would drop the target for line of sight instead.
+        readPrey.X = 44.6;
+        telegraphClock.Advance(TimeSpan.FromSeconds(0.3));
+        telegraphAi.Tick([readPrey]);
+        var escaped = ReadTelegraph();
+        Check(
+            "telegraph.stays_committed_when_the_target_leaves_range",
+            escaped?.State == MobBehaviorStates.Telegraph &&
+            escaped.ImpactInTicks == 1 &&
+            escaped.TargetCharacterId == readPrey.CharacterId,
+            $"{escaped?.State}/{escaped?.ImpactInTicks}");
+
+        telegraphClock.Advance(TimeSpan.FromSeconds(0.05));
+        telegraphAi.Tick([readPrey]);
+        var recovered = ReadEngaged();
+        Check(
+            "telegraph_after_impact_reads_recovery_and_cooldown",
+            recovered?.State == MobBehaviorStates.Recover &&
+            recovered.ImpactInTicks is null &&
+            recovered.RecoverInTicks == 10 &&
+            recovered.NextAttackInTicks == 40,
+            $"{recovered?.State}/{recovered?.RecoverInTicks}/{recovered?.NextAttackInTicks}");
+
+        readPrey.X = 300;
+        telegraphClock.Advance(TimeSpan.FromSeconds(0.55));
+        telegraphAi.Tick([readPrey]);
+        var dropped = telegraphReads.Project(telegraphRegistry.All);
+        var droppedReading = dropped.Count > 0 ? dropped[0] : null;
+        Check(
+            "telegraph_lost_target_reports_no_committed_frame",
+            dropped.Count == 1 &&
+            droppedReading!.ImpactInTicks is null &&
+            droppedReading.RecoverInTicks is null &&
+            droppedReading.TargetCharacterId is null,
+            $"count={dropped.Count}/{droppedReading?.State}/{droppedReading?.ImpactInTicks}");
+
         // ─── DEC-022: guard window, whiff buff and counter runtime ───
 
         var guardClock = new ManualServerClock(
@@ -2352,11 +2677,11 @@ public static class ServiceSelfCheck
         var guardEngine = new CombatTickEngine(
             guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
-            guardWindows, geometry, new ServerClock());
+            guardWindows, geometry, NewDashes(geometry), new ServerClock());
         var guardMissEngine = new CombatTickEngine(
             guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
             tickQuests, new FixedCombatRolls(hit: false, crit: false),
-            guardWindows, geometry, new ServerClock());
+            guardWindows, geometry, NewDashes(geometry), new ServerClock());
 
         MobLifecycleEvent GuardImpact(string entityId, PlayerSession victim) =>
             new(entityId, MobBehaviorStates.Telegraph, MobBehaviorStates.Attack,
@@ -2621,7 +2946,7 @@ public static class ServiceSelfCheck
             guardRegistry, combatDamage, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
-            gateOffWindows, geometry, new ServerClock());
+            gateOffWindows, geometry, NewDashes(geometry), new ServerClock());
         gateOffEngine.Schedule(
             hero7, hero7.SessionId, new string('9', 32), CombatV2Actions.Skill, "SK-MK-01",
             1, 0, startTick: 70);
@@ -2706,7 +3031,7 @@ public static class ServiceSelfCheck
         var lateEngine = new CombatTickEngine(
             lateRegistry, enabledCombat, combatSkills, lateEvents, lateStates,
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
-            lateWindows, geometry, new ServerClock());
+            lateWindows, geometry, NewDashes(geometry), new ServerClock());
         var lateHeroA = NewGuardHero("LATE_A");
         var lateHeroB = NewGuardHero("LATE_B");
         lateEngine.Schedule(
@@ -2767,7 +3092,7 @@ public static class ServiceSelfCheck
             }),
             new MobCombatStateStore(), tickQuests,
             new FixedCombatRolls(hit: true, crit: false),
-            new GuardWindowStore(), geometry, new ServerClock());
+            new GuardWindowStore(), geometry, NewDashes(geometry), new ServerClock());
         var losCaster = NewPlayer("CHR_SELFCHECK_LOS_CASTER");
         losCaster.X = 43.5;
         losCaster.Y = 0;
@@ -2811,7 +3136,7 @@ public static class ServiceSelfCheck
         var raceEngine = new CombatTickEngine(
             raceRegistry, enabledCombat, combatSkills, raceEvents, new MobCombatStateStore(),
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
-            raceWindows, geometry, new ServerClock());
+            raceWindows, geometry, NewDashes(geometry), new ServerClock());
         var raceAttacks = new MobAttackService(
             raceRegistry, enabledCombat, mobOptions,
             new GuardDefenseService(raceWindows, enabledCombat, raceEvents));
@@ -2861,6 +3186,421 @@ public static class ServiceSelfCheck
             raceHero.SwordIntent == Math.Min(5, 2 * raceConfirmed.Length) &&
             raceHero.Hp == 100 - raceList.Sum(resolution => resolution.Damage),
             $"confirmed={raceConfirmed.Length} events={raceConfirmationEvents} intent={raceHero.SwordIntent}");
+
+        // Q-B: SK-MK-02 Tầm Long is swept movement, not a claim of a completed
+        // dash. On the unreviewed production bundle the sweep is NotEnforced, so
+        // the dash runs its canonical 11 WU (= 5,5 m) and that is reported as
+        // Complete, never as proof that walls work.
+        var dashHero = NewPlayer("CHR_SELFCHECK_DASH_OPEN");
+        dashHero.X = 33;
+        dashHero.Y = 0;
+        var dashEngine = new CombatTickEngine(
+            new WorldEntityRegistry(new WorldEntityCatalog([], []), lateClock),
+            enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions { CapacityPerSession = 256, MaxPageSize = 256 }),
+            new MobCombatStateStore(), tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(), tickGeometry, NewDashes(tickGeometry), new ServerClock());
+        var openDashCast = new string('1', 32);
+        dashEngine.Schedule(
+            dashHero, dashHero.SessionId, openDashCast, CombatV2Actions.Skill, "SK-MK-02",
+            1, 0, startTick: 0);
+        dashEngine.Tick(6);
+        var openDashPosition = dashHero.X;
+        var openDashEvents = dashEngine.Tick(7);
+        var openDash = dashEngine.DashLedger.Find(openDashCast);
+        Check(
+            "dash.unenforced_geometry_runs_full_range",
+            openDashPosition == 33 &&
+            openDash is { AchievedWu: 11, StopReason: DashStopReasons.Complete, AppliedTick: 7 } &&
+            dashHero.X == 44 && dashHero.Y == 0 &&
+            !openDashEvents.Any(stored =>
+                stored.Type is CombatEventTypesV2.Impact or CombatEventTypesV2.Miss),
+            openDash?.StopReason ?? "no resolution");
+        var openEndEvents = dashEngine.Tick(8);
+        Check(
+            "dash_ends_the_tick_after_it_moved",
+            !openDashEvents.Any(stored => stored.Type == CombatEventTypesV2.End) &&
+            openEndEvents.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
+            openEndEvents.Single(stored => stored.Type == CombatEventTypesV2.End).ServerTick == 8,
+            string.Join(",", openEndEvents.Select(stored => $"{stored.Type}@{stored.ServerTick}")));
+
+        // On the reviewed synthetic bundle the same dash stops in front of the
+        // 45–46 wall instead of teleporting the actor through it.
+        var wallDashHero = NewPlayer("CHR_SELFCHECK_DASH_WALL");
+        wallDashHero.X = 43.5;
+        wallDashHero.Y = 0;
+        var wallDashEngine = new CombatTickEngine(
+            new WorldEntityRegistry(new WorldEntityCatalog([], []), lateClock),
+            enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions { CapacityPerSession = 256, MaxPageSize = 256 }),
+            new MobCombatStateStore(), tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(), geometry, NewDashes(geometry), new ServerClock());
+        var wallDashCast = new string('2', 32);
+        wallDashEngine.Schedule(
+            wallDashHero, wallDashHero.SessionId, wallDashCast, CombatV2Actions.Skill,
+            "SK-MK-02", 1, 0, startTick: 0);
+        wallDashEngine.Tick(7);
+        var wallDash = wallDashEngine.DashLedger.Find(wallDashCast);
+        Check(
+            "dash_stops_short_of_reviewed_wall",
+            wallDash is not null &&
+            wallDash.StopReason == DashStopReasons.BlockedByGeometry &&
+            wallDash.AchievedWu > 0.2 && wallDash.AchievedWu < 1.1 &&
+            wallDashHero.X < 44.5 && wallDashHero.X > 43.5 && wallDashHero.Y == 0 &&
+            wallDash.RequestedWu == 11,
+            wallDash is null ? "no resolution" : $"{wallDash.AchievedWu}/{wallDash.StopReason}");
+        var revisionBeforeSecond = wallDashHero.Revision;
+        var secondDashCast = new string('3', 32);
+        wallDashEngine.Schedule(
+            wallDashHero, wallDashHero.SessionId, secondDashCast, CombatV2Actions.Skill,
+            "SK-MK-02", 1, 0, startTick: 20);
+        wallDashEngine.Tick(27);
+        var secondDash = wallDashEngine.DashLedger.Find(secondDashCast);
+        Check(
+            "dash_blocked_at_start_reports_no_travel",
+            secondDash is not null &&
+            secondDash.AchievedWu < 0.05 &&
+            secondDash.StopReason is DashStopReasons.ZeroDistance or DashStopReasons.BlockedByGeometry &&
+            wallDashHero.X == wallDash.X &&
+            wallDashHero.Revision == revisionBeforeSecond,
+            secondDash is null ? "no resolution" : $"{secondDash.AchievedWu}/{secondDash.StopReason}");
+
+        // A dash that is scheduled and then invalidated moves nobody and is
+        // cancelled once; the committed MP/cooldown are never refunded.
+        var deadDashHero = NewPlayer("CHR_SELFCHECK_DASH_DEAD");
+        deadDashHero.X = 33;
+        deadDashHero.Y = 0;
+        var deadDashEngine = new CombatTickEngine(
+            new WorldEntityRegistry(new WorldEntityCatalog([], []), lateClock),
+            enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions { CapacityPerSession = 256, MaxPageSize = 256 }),
+            new MobCombatStateStore(), tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(), tickGeometry, NewDashes(tickGeometry), new ServerClock());
+        var deadDashCast = new string('4', 32);
+        deadDashEngine.Schedule(
+            deadDashHero, deadDashHero.SessionId, deadDashCast, CombatV2Actions.Skill,
+            "SK-MK-02", 1, 0, startTick: 0);
+        var mpBeforeDeath = deadDashHero.Mp;
+        deadDashHero.Hp = 0;
+        var deadDashEvents = deadDashEngine.Tick(7);
+        Check(
+            "dash_cancelled_when_actor_down_before_movement",
+            deadDashHero.X == 33 &&
+            deadDashEngine.DashLedger.Find(deadDashCast) is null &&
+            deadDashHero.Mp == mpBeforeDeath &&
+            deadDashEvents.Count(stored => stored.Type == CombatEventTypesV2.Cancel) == 1 &&
+            deadDashEvents.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
+            !deadDashEvents.Any(stored => stored.Type == CombatEventTypesV2.Impact),
+            string.Join(",", deadDashEvents.Select(stored => stored.Type)));
+
+        var dashLedger = new DashLedger();
+        for (var ledgerIndex = 0; ledgerIndex < 600; ledgerIndex++)
+        {
+            dashLedger.Record(new DashResolution(
+                ledgerIndex.ToString("x32"), "CHR_LEDGER", ledgerIndex, 11, 11, 0, 0,
+                DashStopReasons.Complete, 1));
+        }
+
+        Check(
+            "dash_ledger_is_bounded",
+            dashLedger.Count == DashLedger.Capacity &&
+            dashLedger.Find(87.ToString("x32")) is null &&
+            dashLedger.Find(88.ToString("x32")) is not null &&
+            dashLedger.Find(599.ToString("x32")) is { AchievedWu: 11 },
+            $"count={dashLedger.Count}");
+
+        // Q-B: status read model. A client that lost its event cursor (or
+        // reconnected after the buffer rolled over) still has to be able to ask
+        // what is active. Nothing here is on the wire yet.
+        var statusHero = NewGuardHero("STATUS");
+        var statusWindows = new GuardWindowStore();
+        var statusDashes = NewDashes(geometry);
+        var statusCommands = new InMemoryCombatV2Service(
+            combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions
+            {
+                CapacityPerSession = 256,
+                MaxPageSize = 256
+            }),
+            new ServerClock());
+        var statusEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            statusWindows, geometry, statusDashes, new ServerClock());
+        var statusProjection = new CombatStatusProjection(
+            statusWindows, statusCommands, statusDashes);
+        var statusAttacks = new MobAttackService(
+            guardRegistry, enabledCombat, mobOptions,
+            new GuardDefenseService(statusWindows, enabledCombat, guardEvents));
+        var statusAccept = statusCommands.Resolve(
+            statusHero, statusHero.SessionId,
+            new CombatV2Intent(CombatV2Actions.Skill, "SK-MK-01", null, 1, 1, 0, null),
+            new string('6', 32));
+        var statusCastId = new string('7', 32);
+        statusEngine.Schedule(
+            statusHero, statusHero.SessionId, statusCastId, CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 0);
+        statusEngine.Schedule(
+            statusHero, statusHero.SessionId, new string('8', 31) + "a",
+            CombatV2Actions.Skill, "SK-MK-02", 1, 0, startTick: 0);
+        statusAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB2", statusHero)], [statusHero], tick: 1);
+        var guardingStatus = statusProjection.Project(
+            statusHero, tick: 1, nowUtc: guardClock.UtcNow);
+        Check(
+            "status.guard_phase_counter_and_cooldown",
+            statusAccept.Accepted &&
+            guardingStatus is
+            {
+                GuardPhase: GuardPhases.Guard,
+                CounterReserved: true,
+                CounterTick: 2,
+                SwordIntent: 2,
+                Hp: 97,
+                Mp: 38,
+                LastDash: null
+            } &&
+            guardingStatus.GuardCastId == statusCastId &&
+            guardingStatus.GuardEndExclusiveTick == 8 &&
+            guardingStatus.WhiffEndExclusiveTick == 28 &&
+            guardingStatus.CounterSourceEntityId == "ENT_SELFCHECK_GUARD_MOB2" &&
+            guardingStatus.Cooldowns.Single(cooldown => cooldown.ActionKey == "SK-MK-01").Active &&
+            statusEngine.Tick(2).Any(stored => stored.Type == CombatEventTypesV2.Impact),
+            $"{guardingStatus.GuardPhase}/{guardingStatus.Cooldowns.Count}");
+
+        var resolvedStatus = statusProjection.Project(
+            statusHero, tick: 3, nowUtc: guardClock.UtcNow);
+        Check(
+            "status_reports_resolved_counter_and_keeps_cooldown",
+            resolvedStatus is { CounterReserved: false, CounterOutcome: "DAMAGE", Mp: 38 } &&
+            resolvedStatus.Cooldowns.Any(cooldown => cooldown.ActionKey == "SK-MK-01"),
+            resolvedStatus.CounterOutcome ?? "none");
+
+        // The dash of the same hero is visible without any event replay.
+        statusEngine.Tick(7);
+        var dashStatus = statusProjection.Project(
+            statusHero, tick: 8, nowUtc: guardClock.UtcNow);
+        Check(
+            "status_carries_last_dash_outcome_without_events",
+            dashStatus.LastDash is { StopReason: DashStopReasons.BlockedByGeometry } &&
+            dashStatus.LastDash.AchievedWu > 4.0 && dashStatus.LastDash.AchievedWu < 4.45 &&
+            dashStatus.LastDash.X < 44.5 &&
+            dashStatus.GuardPhase == GuardPhases.Expired &&
+            dashStatus.Hp == 97,
+            dashStatus.LastDash?.StopReason ?? "no dash");
+
+        // The earlier guard fixtures live in their own store, so the same
+        // projection is pointed at it to read whiff and closed-window states.
+        var guardStatus = new CombatStatusProjection(
+            guardWindows, statusCommands, statusDashes);
+        var whiffStatus = guardStatus.Project(hero1, tick: 20, nowUtc: guardClock.UtcNow);
+        var expiredStatus = guardStatus.Project(hero1, tick: 40, nowUtc: guardClock.UtcNow);
+        var downStatus = guardStatus.Project(hero4, tick: 21, nowUtc: guardClock.UtcNow);
+        Check(
+            "status_tracks_whiff_expiry_and_closed_window",
+            whiffStatus.GuardPhase == GuardPhases.Whiff &&
+            expiredStatus.GuardPhase == GuardPhases.Expired &&
+            downStatus is { GuardPhase: GuardPhases.None, SwordIntent: 0, CounterReserved: false },
+            $"{whiffStatus.GuardPhase}/{expiredStatus.GuardPhase}/{downStatus.GuardPhase}");
+
+        // Q-B3: return from a downed state. Server-owned anchor only, one apply
+        // per idempotency key, and the previous life's cast, guard window and
+        // reserved counter all cleaned up as events rather than silently dropped.
+        var returnSessions = new InMemorySessionStore();
+        var returnWindows = new GuardWindowStore();
+        var returnEvents = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var returnStates = new MobCombatStateStore();
+        var returnEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, returnEvents, returnStates,
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            returnWindows, geometry, NewDashes(geometry), new ServerClock());
+        var returnAttacks = new MobAttackService(
+            guardRegistry, enabledCombat, mobOptions,
+            new GuardDefenseService(returnWindows, enabledCombat, returnEvents));
+        DeathReturnService NewDeathReturn(int restoreHp) => new(
+            returnSessions, maps, options,
+            new DeathReturnOptions { Enabled = true, RestoreHpFixture = restoreHp },
+            returnWindows, returnEngine);
+        var deathReturnService = NewDeathReturn(0);
+        var downHero = NewGuardHero("RETURN");
+        returnSessions.Add(downHero);
+        var downCastId = new string('9', 31) + "a";
+        returnEngine.Schedule(
+            downHero, downHero.SessionId, downCastId, CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 0);
+        returnAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB2", downHero)], [downHero], tick: 1);
+        var revisionBeforeReturn = downHero.Revision;
+        var intentBeforeReturn = downHero.SwordIntent;
+        downHero.Hp = 0;
+        // The registered service is the one the composition root builds with the
+        // shipped appsettings, so this also proves the gate defaults OFF on boot.
+        var wiredDeathReturn = services.GetRequiredService<DeathReturnService>();
+        var disabledReturn = wiredDeathReturn
+            .ReturnToAnchor(downHero.SessionId, new string('9', 31) + "0");
+        var aliveKey = new string('9', 31) + "b";
+        downHero.Hp = 100;
+        var aliveReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, aliveKey);
+        var badKeyReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, "not-a-key");
+        downHero.Hp = 0;
+        Check(
+            "death_return.gate_off_and_refuses_alive_and_bad_key",
+            wiredDeathReturn.Enabled == false &&
+            services.GetRequiredService<DeathReturnOptions>() is { Enabled: false } &&
+            disabledReturn.ErrorCode == DeathReturnErrorCodes.Disabled &&
+            aliveReturn.ErrorCode == DeathReturnErrorCodes.NotDowned &&
+            badKeyReturn.ErrorCode == DeathReturnErrorCodes.InvalidKey &&
+            downHero.X == 40 && downHero.Y == 0 &&
+            downHero.Revision == revisionBeforeReturn &&
+            disabledReturn.CancelledEventCount == 0 && aliveReturn.CancelledEventCount == 0,
+            $"{disabledReturn.ErrorCode}/{aliveReturn.ErrorCode}/{badKeyReturn.ErrorCode}");
+
+        var unknownMapHero = NewGuardHero("RETURN_NOMAP");
+        unknownMapHero.MapId = "MAP_NOT_IN_BOUNDS";
+        unknownMapHero.Hp = 0;
+        returnSessions.Add(unknownMapHero);
+        var unknownSessionReturn = deathReturnService
+            .ReturnToAnchor("SES_DOES_NOT_EXIST", new string('9', 31) + "c");
+        var unknownMapReturn = deathReturnService
+            .ReturnToAnchor(unknownMapHero.SessionId, new string('9', 31) + "d");
+        Check(
+            "death_return.unknown_session_and_map_do_not_move_anyone",
+            unknownSessionReturn.ErrorCode == DeathReturnErrorCodes.UnknownSession &&
+            unknownMapReturn.ErrorCode == DeathReturnErrorCodes.UnknownMap &&
+            unknownMapHero.X == 40 && unknownMapHero.Y == 0 &&
+            returnEngine.ScheduledCastCount == 1,
+            $"{unknownSessionReturn.ErrorCode}/{unknownMapReturn.ErrorCode}");
+
+        var deathKey = new string('9', 32);
+        var firstReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, deathKey);
+        var afterReturnEvents = returnEvents.Read(downHero.SessionId, 0, 256).Events;
+        var returnWindow = returnWindows.FindAny(downHero.CharacterId);
+        var lateTickEvents = returnEngine.Tick(2);
+        Check(
+            "death_return.clears_cast_window_and_counter_once",
+            firstReturn is { Applied: true, Replayed: false, ErrorCode: null, Hp: 0 } &&
+            firstReturn.CancelledEventCount == 3 &&
+            firstReturn.SessionId == downHero.SessionId &&
+            firstReturn.Revision == revisionBeforeReturn + 1 &&
+            firstReturn.X == options.SpawnX && firstReturn.Y == options.SpawnY &&
+            downHero.X == options.SpawnX && downHero.Y == options.SpawnY &&
+            returnEngine.ScheduledCastCount == 0 &&
+            returnWindows.Find(downHero.CharacterId) is null &&
+            downHero.SwordIntent == 0 &&
+            intentBeforeReturn == 2 &&
+            returnWindow is { CounterResolved: true, CounterOutcome: "RETURNED_TO_ANCHOR" } &&
+            afterReturnEvents.Count(stored => stored.Type == CombatEventTypesV2.Cancel) == 2 &&
+            afterReturnEvents.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
+            lateTickEvents.Count == 0,
+            $"{firstReturn.ErrorCode}/{firstReturn.CancelledEventCount}/{lateTickEvents.Count}");
+
+        var replayReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, deathKey);
+        var otherHero = NewGuardHero("RETURN_OTHER");
+        otherHero.Hp = 0;
+        returnSessions.Add(otherHero);
+        var stolenKeyReturn = deathReturnService.ReturnToAnchor(otherHero.SessionId, deathKey);
+        var eventsAfterReplay = returnEvents.Read(downHero.SessionId, 0, 256).Events.Count;
+        Check(
+            "death_return_replays_the_recorded_answer",
+            replayReturn is { Applied: true, Replayed: true } &&
+            replayReturn.Revision == firstReturn.Revision &&
+            replayReturn.X == firstReturn.X && replayReturn.Y == firstReturn.Y &&
+            downHero.Revision == firstReturn.Revision &&
+            downHero.X == options.SpawnX &&
+            stolenKeyReturn.ErrorCode == DeathReturnErrorCodes.KeyConflict &&
+            stolenKeyReturn.Applied == false &&
+            otherHero.X == 40 && otherHero.Y == 0 &&
+            returnEvents.Read(downHero.SessionId, 0, 256).Events.Count == eventsAfterReplay,
+            $"{replayReturn.Replayed}/{stolenKeyReturn.ErrorCode}");
+
+        // Two clients racing one key must produce one return, not two moves and
+        // two revision bumps.
+        var racedHero = NewGuardHero("RETURN_RACE");
+        racedHero.Hp = 0;
+        returnSessions.Add(racedHero);
+        var racedService = NewDeathReturn(options.StartingMaxHp);
+        var racedResults = new System.Collections.Concurrent.ConcurrentBag<DeathReturnResult>();
+        RunBarrierParallel(4, _ => racedResults.Add(
+            racedService.ReturnToAnchor(racedHero.SessionId, new string('9', 31) + "e")));
+        var racedApplied = racedResults.Count(result => result.Applied && !result.Replayed);
+        var racedReplayed = racedResults.Count(result => result.Replayed);
+        Check(
+            "death_return.one_key_applies_once_under_contention",
+            racedApplied == 1 && racedReplayed == 3 &&
+            racedHero.X == options.SpawnX && racedHero.Revision == 2 &&
+            racedResults.All(result => result.Revision == racedHero.Revision),
+            $"applied={racedApplied} replayed={racedReplayed} x={racedHero.X}");
+
+        // A configured restore value is the only thing that refills HP, and a
+        // returned actor is no longer downed: a second key cannot farm returns.
+        racedHero.Hp = 0;
+        racedHero.X = 40;
+        var refilledReturn = racedService.ReturnToAnchor(
+            racedHero.SessionId, new string('9', 31) + "0");
+        var secondKeyReturn = racedService.ReturnToAnchor(
+            racedHero.SessionId, new string('9', 31) + "f");
+        Check(
+            "death_return.restores_only_the_configured_fixture_value",
+            refilledReturn is { Applied: true } &&
+            refilledReturn.Hp == options.StartingMaxHp &&
+            racedHero.Hp == options.StartingMaxHp &&
+            refilledReturn.Revision == 3 &&
+            secondKeyReturn.ErrorCode == DeathReturnErrorCodes.NotDowned &&
+            racedHero.X == options.SpawnX,
+            $"{refilledReturn.Hp}/{secondKeyReturn.ErrorCode}");
+
+        var ledgerService = NewDeathReturn(0);
+        for (var ledgerIndex = 0; ledgerIndex < 300; ledgerIndex++)
+        {
+            var ledgerHero = NewPlayer("CHR_SELFCHECK_RETURN_" + ledgerIndex, hp: 0);
+            returnSessions.Add(ledgerHero);
+            ledgerService.ReturnToAnchor(
+                ledgerHero.SessionId, ledgerIndex.ToString("x32"));
+        }
+
+        Check(
+            "death_return_ledger_is_bounded",
+            ledgerService.LedgerCount == DeathReturnService.LedgerCapacity,
+            $"count={ledgerService.LedgerCount}");
+
+        // The non-death half of the same rule: a window belongs to the instance it
+        // opened on, so an actor who changes map with no hit and no cast in
+        // flight must not keep one open — the read model would report GUARD/WHIFF
+        // forever and the whiff reward would survive an instance change.
+        var sweepHero = NewGuardHero("SWEEP");
+        returnSessions.Add(sweepHero);
+        var sweepWindows = new GuardWindowStore();
+        var sweepEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, returnEvents, returnStates,
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            sweepWindows, geometry, NewDashes(geometry), new ServerClock());
+        sweepEngine.Schedule(
+            sweepHero, sweepHero.SessionId, new string('8', 31) + "f",
+            CombatV2Actions.Skill, "SK-MK-01", 1, 0, startTick: 0);
+        var sweepCastEvents = sweepEngine.Tick(12);
+        sweepHero.MapId = "MAP_KHO_CUA_LUYEN";
+        var sweepMapEvents = sweepEngine.Tick(13);
+        var sweepProjection = new CombatStatusProjection(
+            sweepWindows, statusCommands, statusDashes);
+        Check(
+            "guard.window_closes_on_map_change_without_a_hit",
+            sweepCastEvents.Any(stored => stored.Type == CombatEventTypesV2.End) &&
+            sweepEngine.ScheduledCastCount == 0 &&
+            sweepWindows.Find(sweepHero.CharacterId) is null &&
+            sweepWindows.FindAny(sweepHero.CharacterId) is
+            {
+                EndReason: GuardWindowEndReasons.MapOrFloorChange,
+                WhiffGranted: false
+            } &&
+            sweepMapEvents.Count == 0 &&
+            sweepProjection.Project(sweepHero, tick: 13, nowUtc: guardClock.UtcNow).GuardPhase
+                == GuardPhases.None,
+            $"{sweepWindows.FindAny(sweepHero.CharacterId)?.EndReason}/" +
+            $"{sweepProjection.Project(sweepHero, tick: 13, nowUtc: guardClock.UtcNow).GuardPhase}");
 
         var losAccept = new InMemoryQuestAcceptService(
             questCatalog, quests, npcAnchors, geometry,
@@ -3993,6 +4733,7 @@ public static class ServiceSelfCheck
             npcAnchors,
             services.GetRequiredService<IWorldGeometryService>(),
             failOnceLedger,
+            services.GetRequiredService<ExperienceService>(),
             services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
 
         var failActor = NewPlayer("CHR_SELFCHECK_FAILONCE");
@@ -4060,6 +4801,7 @@ public static class ServiceSelfCheck
             npcAnchors,
             services.GetRequiredService<IWorldGeometryService>(),
             flipFailLedger,
+            services.GetRequiredService<ExperienceService>(),
             services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
 
         var flipFailActor = NewPlayer("CHR_SELFCHECK_FLIPFAIL");
@@ -4125,6 +4867,7 @@ public static class ServiceSelfCheck
             npcAnchors,
             services.GetRequiredService<IWorldGeometryService>(),
             failOnceLedgerStore,
+            services.GetRequiredService<ExperienceService>(),
             services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
 
         var ledgerFailActor = NewPlayer("CHR_SELFCHECK_LEDGERFAIL");
@@ -4542,6 +5285,15 @@ public static class ServiceSelfCheck
         public bool Roll(
             string castId, string targetId, int hitIndex, CombatRollKind kind, double probability) =>
             kind == CombatRollKind.Crit ? _crit : _hit;
+    }
+
+    private sealed class FixedQuestXpRule : IQuestXpRule
+    {
+        private readonly long _amount;
+
+        public FixedQuestXpRule(long amount) => _amount = amount;
+
+        public long? Resolve(string ruleId) => _amount;
     }
 
     private static void RunBarrierParallel(int count, Action<int> body)

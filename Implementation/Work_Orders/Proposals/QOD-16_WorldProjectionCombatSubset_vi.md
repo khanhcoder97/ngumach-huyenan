@@ -204,6 +204,150 @@ Report của Codex (branch `codex/qoder-review-next-epic-20261030`) xác nhận 
 - **QREV-05:** một impact giờ chạy trong **một** lock của defender: `EvaluateIncoming` → damage/floor → commit HP+revision → `CommitConfirmation`. `GuardIncoming` mang `WindowCastId` làm token; `CommitConfirmation` từ chối nếu window hiện tại khác token, và `Open` đóng window cũ bằng `REFRESHED` dưới cùng lock → không còn khả năng "DR của castA nhưng confirm cho castB". Barrier test 8 thread (4 refresh + 4 impact) bất biến: mỗi damage ∈ {3 khi DR 0.7, 10 khi không}, confirmation chỉ thuộc đúng window đã trả DR, `#confirmations == #COUNTER_CONFIRMED events`, `intent == min(5, 2×#confirmations)`, `hp == 100 − Σdamage`. Đây là proof **integrity** dưới race, không phải measurement của một race đã tái hiện.
 - Probe của report được giữ nguyên (`Tools/ProducerReview/**` thuộc Codex, report baseline không sửa); 2 probe đó phải PASS ở head mới và được dẫn chứng trong report bàn giao. Self-check 311 assertions; smoke/e2e số liệu lấy từ CI run ở checkpoint này.
 
-### 9.11 Triển khai tiếp
+### 9.11 Q-B1: SK-MK-02 là dash thật trên tick (QOD-18)
 
-Guard/whiff/counter DEC-022 runtime (mob impact đi qua guard window của player), QOD-18 quest chain P00-01..05 + XP transaction, QOD-19 Mãng Cốt encounter, QOD-20 E2E/handoff + proposal PostgreSQL.
+- **Timeline theo nguồn:** Art Brief P1 (`SK-MK-02 Tầm Long`: prep 0,15s → dash 0,20s → recovery 0,24s) ở 20 Hz cho tick resolve = **startTick + 7**; `SkillDefinition` canonical (CD 8s, 16 MP, rangeWu 11, targeting DASH, coefficient pve 1.5) là nguồn số, 1 WU = 0,5 m theo DEC-016 nên 11 WU chính là 5,5 m.
+- **Sweep:** đi từ **chân hiện tại** của actor theo facing đã snapshot lúc accept, bước dò 0,25 WU rồi nhị phân 12 lần để lấy xa nhất an toàn; dùng `CheckWalkSegment(..., footprintRadiusWu = P1World:ActorFootprintRadiusWu)` **giống hệt** `POST /p1/move` (P1 chưa có dash volume riêng — design resolution §4 nêu rõ "attack/collision volumes của dash cần field riêng", nên không tự đặt radius). Clamp theo map bounds. Không teleport ngược về snapshot origin nếu actor đã đi bộ trong lúc chờ tick.
+- **Không damage, không resource:** Content Bible §103 ghi "gây 150% lên mục tiêu đầu; +1 Kiếm Ý", nhưng (a) design resolution §4 nói hit shape của dash chưa có field, (b) Production_Rules §2 cần shape để resolve damage, (c) work order 08/13 chốt subset P1 là dash di chuyển. Vậy dash **không** gây damage và **không** cộng Kiếm Ý — hai chỗ này là **case mở** cho owner, không phải tính năng đã hủy.
+- **Stop reason / ledger:** `DashResolution(CastId, AppliedTick, RequestedWu, AchievedWu, X, Y, StopReason ∈ COMPLETE|BLOCKED_BY_GEOMETRY|ZERO_DISTANCE, ActorRevision)` vào `DashLedger` bounded 512 (FIFO). Không tự ý thêm field wire: `CombatEventV2` không có type movement, `WorldSnapshotV2.self` không có stop reason, schema đang `additionalProperties=false` và design resolution §3.2 cấm nhét field lạ — bằng chứng client dùng được hôm nay là `self.x/y` + `revision` (reconcile-by-snapshot) cho tới khi contract được duyệt.
+- **Không refund:** MP/CD/sequence commit một lần tại accept; dashBlocked-at-start, actor chết trước tick (cancel `CANCEL`+`END` một lần, không di chuyển, không ledger entry), hay retry sau đó đều **không** hoàn cost (design resolution §3). Revision của actor chỉ đổi khi vị trí thực sự đổi.
+- **Bằng chứng:** self-check `dash.unenforced_geometry_runs_full_range` (11 WU, không event damage), `dash_resolves_after_prep_and_ends_next_tick` (END @7), `dash_stops_short_of_reviewed_wall` (bundle REVIEWED tổng hợp: dừng < 44.5, achieved 0,2–1,1, không xuyên tường), `dash_blocked_at_start_reports_no_travel` (không bump revision), `dash_cancelled_when_actor_down_before_movement`, `dash_ledger_is_bounded`; HTTP smoke mới: cast `SK-MK-02` rồi bounded wait (3 s) thấy `self.x` dịch đúng 11 WU, MP vẫn 34, HP 100, revision tăng → chứng minh "dash là movement" chứ không phải label của cast accepted. Production map vẫn `SYNTHETIC_TEST_ONLY` → full range ở đó là `NotEnforced`, **không** được đọc là "tường không hoạt động".
+
+### 9.12 Q-B2: combat status read model + đề xuất contract (chưa đụng wire)
+
+Vấn đề: toàn bộ trạng thái chiến đấu (guard còn bao nhiêu tick, whiff đang bật, counter đã reserve hay chưa, cooldown còn lại, dash vừa đáp ở đâu) hiện chỉ suy ra được từ event stream **còn trong buffer** (512/session). Reconnect sau khi buffer rolling, hoặc client cursor trễ, không reconstruct được "tôi đang đỡ hay không" — vi phạm đúng điều design resolution §3.2 yêu cầu (snapshot reconcile, không bắt client đoán từ event cũ).
+
+**Đã làm (domain-only, không đổi contract):** `CombatStatusProjection.Project(session, tick, nowUtc)` trả `CombatStatusSnapshot`:
+- `Hp/MaxHp/Mp/MaxMp/SwordIntent/ActorRevision` của actor aggregate.
+- `GuardPhase ∈ NONE|GUARD|WHIFF|EXPIRED`, `GuardCastId`, `GuardEndExclusiveTick`, `WhiffEndExclusiveTick` — từ `GuardWindowStore` (window đã đóng → NONE, không suy ra từ event).
+- `CounterReserved`, `CounterTick`, `CounterOutcome`, `CounterSourceEntityId` — cho client biết còn phải chờ một counter hay đã resolve (presentation parry/hit/miss khác nhau).
+- `Cooldowns[] { actionKey, endsAtUtc, active }` — chỉ liệt kê action còn bị chặn, key là skillId hoặc `BASIC_ATTACK`.
+- `LastDash` — `DashResolution` gần nhất của chính nhân vật (tick, requested/achieved WU, toạ độ, stop reason), bounded 512 ledger.
+Bằng chứng self-check: `status.guard_phase_counter_and_cooldown` (GUARD + counter reserved + cooldown + MP 50→38 + Hp 97 vì DR 0,7), `status_reports_resolved_counter_and_keeps_cooldown`, `status_carries_last_dash_outcome_without_events`, `status_tracks_whiff_expiry_and_closed_window` (WHIFF→EXPIRED, window đóng vì chết → NONE/intent 0).
+
+**Đề xuất contract (CHỜ owner/Codex duyệt — chưa áp dụng):** thêm field **optional** vào `WorldSnapshotV2` để không phá client hiện tại:
+```jsonc
+"combat": {                       // optional object, chỉ có khi P1:CombatV2 ON
+  "schemaVersion": 1,             // version hoá riêng, không tăng schemaVersion snapshot
+  "revision": 12,                 // status aggregate revision = actor revision tại thời điểm sample
+  "serverTick": 4820,
+  "guard": { "phase": "GUARD", "castId": "<hex32>", "endsAtTick": 4827, "whiffEndsAtTick": 4847 },
+  "counter": { "reserved": true, "dueTick": 4828, "sourceEntityId": "ENT_…" },
+  "swordIntent": 2,
+  "cooldowns": [ { "actionKey": "SK-MK-01", "endsAtUtc": "…Z" } ],
+  "lastMovement": { "castId": "<hex32>", "achievedWu": 4.4, "requestedWu": 11,
+                    "stopReason": "BLOCKED_BY_GEOMETRY", "x": 44.4, "y": 0, "appliedTick": 4820 }
+}
+```
+Quy tắc: (1) `phase`/`stopReason` là enum đóng, thêm giá trị mới = bump `schemaVersion` của `combat`; (2) mọi tick là **server tick** 20 Hz, client chỉ được suy hết hạn bằng `serverTick` + delta đã đo, không dùng đồng hồ máy mình; (3) `counter` chỉ nói "đã reserve/đã resolve", không phải bằng chứng counter trúng damage (DEC-022 presentation rule); (4) field optional nghĩa là client cũ bỏ qua vẫn hợp lệ — không đổi shape response hiện có, không đụng v1; (5) capability: thêm `capabilities: ["combat-status-v1"]` trong `/p1/sessions` response (cũng optional) để client biết có được đọc hay không; (6) dash **không** có event riêng cho tới khi đồng ý `DASH_RESOLVED` trong `CombatEventV2` (hiện enum không có movement type) — `lastMovement` trong snapshot là đường đi được đề xuất trước.
+Nếu owner duyệt, PR contract sẽ gồm: schema + example + `validate_contracts.py` checks (optional field, enum đóng, revision/tick integer ≥ 0) + README mục v2 + smoke assert shape; nếu chưa duyệt, P1 vẫn chỉ có `self.x/y/hp/mp/swordIntent` + event cursor và read model này phục vụ test/probe nội bộ.
+
+**Chưa phủ (ghi rõ, không giả đã xong):** PvP counter thật (cần damage từ người chơi khác), DoT/projectile/elemental incoming (chưa có content), `WHIFF_GUARD` như status registry chính thức (Rules §3 status registry chưa có dữ liệu), và mob telegraph metadata qua wire (client hiện mới thấy `state: TELEGRAPH`, chưa có timing/shape — Q-B còn lại sẽ để xuất read model riêng).
+
+### 9.13 Q-B3: dọn state lúc chết + return về safe anchor (DEV fixture, gate OFF, chưa có endpoint)
+
+**Đã làm (domain-only):** `DeathReturnService.ReturnToAnchor(sessionId, idempotencyKey)` — server chỉ nhận "cho tôi về", **không nhận toạ độ**: mọi attempt truyền toạ độ client tự chọn đều không có đường vào, vì API không có tham số đó.
+- **Điều kiện áp dụng:** gate `P1:DeathReturn` ON + `idempotencyKey` hex32 + session tồn tại + `MapId` resolve được trong `map_bounds.json` + actor **đã down** (`Hp <= 0`). Sai một trong năm thứ → từ chối, không đổi state, không bump revision.
+- **Anchor:** `P1World:SpawnX/SpawnY` clamp vào bounds của **chính map actor đang đứng** — đây là toạ độ server-owned duy nhất P1 có hôm nay, nên là **DEV fixture có nhãn**, không phải "safe anchor đã duyệt". `map_bounds.json` là bounding box, không phải walkability: về vị trí spawn chưa bảo đảm ô đó `is_a_star_walkable` trên topology REVIEWED (bundle production vẫn `SYNTHETIC_TEST_ONLY`), và `CheckWalkSegment` của `POST /p1/move` không được dùng ở đây vì return không đi bộ theo đường thẳng.
+- **Dọn state (bounded, có event):** `GuardWindowStore.Close(DEFENDER_DOWN)` (window ngừng giảm damage, mất whiff, Kiếm Ý về 0 theo DEC-022 §3) + `CombatTickEngine.CancelPendingFor(characterId)` → mỗi cast đang bay emit `CANCEL` rồi `END` **đúng một lần**, không damage không kill credit; counter đã reserve mà chưa tới tick vẫn bị cancel (`CounterOutcome = RETURNED_TO_ANCHOR`) chứ không để nó swing vào nguồn mà actor không còn thấy. Aggro không cần ledger riêng: `FindTarget` chạy lại mỗi tick và bỏ qua player `Hp <= 0`, nên mob giữa telegraph tự `ResetAttackWindow()` khi mất target.
+- **Idempotency:** ledger bounded 256 theo **key**, lưu kết quả đã áp dụng; same key + same character → trả đúng kết quả cũ (`Replayed=true`, không move lần hai, không thêm event); same key nhưng **khác character** → `idempotency_key_conflict` (không cho key của client này kéo actor khác); **refusal không được ghi ledger** để retry bằng chính key đó vẫn hợp lệ sau khi actor thật sự down. Bốn thread cùng key → đúng một lần áp dụng (barrier test, không sleep chờ race).
+- **Cost/penalty: chưa áp dụng gì** — không có nguồn. `RestoreHpFixture` mặc định **0** nghĩa là return **không** tự hồi HP; chỉ khi operator cấu hình (validator chặn giá trị > `P1World:StartingMaxHp`) thì mới refill tới mức đó, và log startup in rõ "DEV FIXTURE".
+- **Bằng chứng self-check:** `death_return.gate_off_and_refuses_alive_and_bad_key` (cả gate ON qua DI thật), `death_return.unknown_session_and_map_do_not_move_anyone`, `death_return.clears_cast_window_and_counter_once` (3 event cancel, `ScheduledCastCount → 0`, window đóng, intent 0, tick sau đó emit 0 event), `death_return_replays_the_recorded_answer`, `death_return.one_key_applies_once_under_contention`, `death_return.restores_only_the_configured_fixture_value`, `death_return_ledger_is_bounded`.
+
+**Thiếu nguồn — cần owner/Codex chốt trước khi mở wire (case cụ thể, không tự đặt số):**
+1. **Safe anchor theo map/floor.** Canonical content chưa có trường "điểm hồi sinh an toàn" nào (`world_records.json`/`map_bounds.json` chỉ có spawn region + bounding box). Cần: một mục per `(mapId, floorId)` (tên propose `safe_anchor` với `x,y` + `requiresWalkable: true`) do content producer duyệt, kèm quyền kiểm tra walkability bằng topology REVIEWED. Nếu chủ trương là *không* dịch chuyển qua map thì nói rõ, vì P1 hiện không có teleport đã duyệt (`ITeleportService` vẫn skeleton).
+2. **HP/MP sau return.** Production_Rules §3 không có giá trị "hồi sinh được bao nhiêu HP"; Content Bible chỉ nói về potion/MP skill. Cần hoặc (a) `%` MaxHp theo quy tắc đã duyệt, (b) về ở 1 HP + người chơi tự hồi, hay (c) dùng `P1World:StartingHp` (fixture hiện tại). Chọn xong mới bỏ nhãn DEV.
+3. **Penalty.** Không có nguồn cho XP loss, độ bền trang bị, tiền, hay thời gian chịu phạt (decimation/death timer). Mọi con số hôm nay đều là bịa → server **không** áp penalty nào. Nếu cần penalty, cần field trong `Production_Rules` (tỉ lệ %, đơn vị, áp trước hay sau `applied:false` transaction của XP — Q-D) và cách hiển thị cho client.
+4. **Transition/lease.** "Về safe anchor" có phải một lần dịch chuyển tức thời (không LOS, không AOI enter/leave event) hay một quá trình có state `RETURNING` (khống chế input bao lâu)? P1 chưa có khái niệm transition; cần quyết định để biết `revision`/`WorldSnapshotV2` phải lộ gì giữa đường.
+5. **Session refs lúc logout.** `InMemorySessionStore` không có API remove và P1 **không có endpoint logout**, nên `CombatEventStore` (512 event/session) và `WorldEntityAoiProjection` (hysteresis per character) giữ state tới hết process. Đây là giới hạn đã ghi, không phải tính năng đã dọn: cần hoặc chính sách TTL (số phút do owner chốt) hoặc hợp đồng logout — và chỉ cleanup được khi session store có remove; persistence dài hạn thuộc QOD-20/Remote #79, không phải chỗ này.
+
+**Đề xuất endpoint (CHỜ duyệt contract — chưa đăng ký route):** `POST /p1/v2/death-return`, request `{ requestId, idempotencyKey, sessionId }` (envelope v1 hiện có, **không** field toạ độ), response `{ ok, data: { x, y, hp, revision, serverTick, cancelledEventIds[] }, error? }` với error code đóng `death_return_disabled | unknown_session | invalid_idempotency_key | unknown_map | not_downed | idempotency_key_conflict`. Kèm capability flag trong `/p1/sessions` (ví dụ `death-return-v1`) để client biết có đường nào. PR đồng ý contract sẽ gồm schema + example + `validate_contracts.py` (no additionalProperties, enum đóng) + README + smoke; bao giờ owner duyệt mới bật gate.
+
+**Trùng lặp cần owner xử lý một lần:** `ITeleportService` (skeleton từ QOD-06, **chưa map route nào**) đã có `TeleportReasons.DeathReturn` và check `actor.Hp <= 0`, nhưng shape của nó bắt client gửi `mapId/xWu/yWu` — đúng cái "revive tại toạ độ client tự chọn" mà work order 13 cấm, và nó đổi `MapId` tuỳ ý mà không đi qua map-travel policy. `DeathReturnService` là phần server-owned của cùng quy tắc. Xin chốt một trong hai: (a) route `death-return` mới và `ITeleportService` ở lại skeleton (teleport không có `DEATH_RETURN` reason, hoặc gate riêng), hay (b) giữ một đường teleport nhưng `DEATH_RETURN` không nhận toạ độ mà server tự resolve anchor. Hôm nay **không có route** cho cả hai nên chưa lộ rủi ro — ghi ở đây để không ai map nhầm cái skeleton.
+
+### 9.14 Q-B4: profile `mob-combat` — MobBehavior + CombatDamage nối nhau qua HTTP
+
+Work order 13 yêu cầu "Nối MobBehavior+CombatDamage trong **test profile riêng** và HTTP scenario conditional waits". Đã làm: job CI mới `e2e-mob-combat` chạy `bash Server/Health/Smoke/run_e2e_p1.sh mob-combat`, server bật **đúng ba gate** `P1:CombatV2`, `P1:CombatDamage`, `P1:MobBehavior` (quest gates OFF — đây là fixture tách biệt, không phải profile `dev` bật thêm flag), scenario trong `e2e_p1.py:mob_combat_profile()`:
+
+- **Tiếp cận bằng lane, không bằng đường:** mọi group trên map này đứng ở `y=0`, nên hành lang `y=7,5` nằm ngoài `AggroRadiusWu` 6 bất kể `x`. Scenario đi trục **y trước rồi x** (`walk_to(..., axes=("y","x"))`), assert lane không aggro ai và không mất HP, rồi mới hạ xuống `y=0` tại `x=87` — chỗ đó chỉ `ENT_MAN_BM_SPAWN_BM_01*` (3 CARPLING tại 84) vào aggro, group escort ở 80 cách 7 WU vẫn ngoài. Bài học từ chính 2 CI run đầu: đi dọc `y=0` thì **hai group cùng bu bám** (log: 6 mob CHASE), và nếu `walk_to` chạy trục x trước thì lane chẳng còn tác dụng. Đây là lý do giữ assertion "tập mob đang engaged ⊆ MOB_GROUP" thay vì tin vào bố cục.
+- **Đủ 4 chân của work order:** đọc `TELEGRAPH` → `POST /p1/move` bước ra ngoài `AttackRangeWu` 1,2 trước frame impact → HP **không đổi** (impact đã commit vẫn resolve, chỉ là `OutOfRangeAtImpact` — đúng fix "committed telegraph không được đóng băng khi target rời tầm"); đứng lại → damage vào đúng **bội số của 10** (attack 15 × BITE 0,8, mitigation 100/110, một floor cuối theo Production_Rules §2) → cast `SK-MK-01` hướng `-x` (mặt vào mob) cho tới khi `COUNTER_CONFIRMED` xuất hiện trong event stream → counter của chính guard đó resolve `IMPACT`/`MISS`, **không đổi target**, và `maxHp - hp` của mob trên snapshot **bằng đúng** `result.hpDamage` của event (bằng chứng read model và event stream cùng nói một số, qua HTTP thật, không phải fixture).
+- **Chết là chết:** đứng yên tới khi HP về 0, rồi assert server không che: cast mới bị `409 actor_not_alive`, HP vẫn 0 sau 3 s (không tự heal — đúng điều work order cấm "tự heal khi chỉ reconnect/equip"), và cả ba mob `RETURN`/`IDLE` (aggro tính lại mỗi tick và bỏ qua `Hp <= 0`) nên không có hit nào vào xác; snapshot vẫn serve và `serverTick` vẫn tăng.
+- **Conditional waits, không đoán race:** `wait_for(deadline, probe)` chỉ poll và **không ghi check mỗi vòng lặp**; assert diễn ra một lần sau loop → tổng số check của profile không đổi theo timing (đúng nguyên tắc đã rút ra ở Q-B3).
+- **Endurance fixture, ghi rõ:** profile đặt `P1World__StartingHp/StartingMaxHp=400`, `StartingMp/StartingMaxMp=200` *chỉ* để một actor sống sót qua toàn bộ các pha trong một run (MP không regen nên 8 attempt guard cần nhiều hơn 50 MP). Đây là kích thước pool, không phải cân bằng: mọi số damage vẫn do công thức và `P1:MobBehavior` đã ship quyết định. Scenario assert `hp_start > 200` để không ai đọc nhầm kết quả khi chạy với config khác.
+- **Số đo CI (head `9871318`, in lại at `f3210a3`):** job `e2e-mob-combat` pass ~1m20s, **85 checks**, summary `telegraph=OK escape_whiff=OK mob_damage=30 guard_confirm=OK counter=IMPACT death_stays_down=OK mob_states=RETURN` và `counter=IMPACT counter_damage=34 on ENT_MAN_BM_SPAWN_BM_01`. `mob_damage=30` là ba đòn CARPLING thô (3 × 10 theo Production_Rules §2 với armor 10), 34 là đúng oracle counter DEC-022, và snapshot HP của mob khớp từng point với `result.hpDamage` của event — đó là hai đường đọc khác nhau trên cùng một server thật, không phải fixture.
+- **Chưa phủ (giữ ở self-check):** các interleave dưới 50 ms mà client không thể canh đúng nhịp — source chết giữa confirmation và counter tick, counter overdue sau callback bị nhảy, hai hit cùng tick chỉ một confirmation, guard refresh đua với impact. Boss (`BOSSDATA_BLOCKED`) và DoT/projectile/PvP vẫn `unsupported` vì không có content.
+
+### 9.15 Q-B5: mob telegraph read model (timing/target/reach) — domain-only, chưa đụng wire
+
+Work order 13 Q-B: "Mob telegraph metadata/read projection phải có enough timing/target/shape để client đọc đòn khi có contract". `state: TELEGRAPH` trong snapshot chỉ nói *loại* state, không phải read window — client không thể biết né lúc nào nếu phải tự đếm 0,45 s bằng đồng hồ máy mình.
+
+**Đã làm:** `MobLifecycleService.GetAttackWindow(entityId)` (read-only, không đụng AI) + `MobTelegraphProjection.Project(entities)` trả `MobTelegraphReading` cho **chỉ** entity đang engaged (IDLE bị loại để client không vẽ warning cả map):
+
+- `state`, `targetCharacterId` — đòn đang commit vào ai.
+- `impactInTicks` / `recoverInTicks` / `nextAttackInTicks` — đếm ngược theo **server tick 20 Hz**, cộng `impactAtUtc` tuyệt đối để client ghép với `serverTimeUtc` của snapshot; đơn vị tick là bắt buộc vì mọi timing khác của combat (guard window, counter, dash) cũng theo tick.
+- `rangeWu` = `P1:MobBehavior:AttackRangeWu`; **`angleDegrees` để `null` có chủ đích**: chưa có nguồn nào export shape per-move (width/length/arc) cho mob, và 120° của DEC-022 là cone của *người đỡ*, không phải của đòn mob → mượn nó là bịa số.
+- Số học timing dùng **integer ceiling trên tick 100 ns**, không phải `TotalSeconds`: 0,45 s nhân 20 ra 9,0000000000000002 nên `Math.Ceiling` float biến read window thành 10 tick — self-check case `telegraph.reading_carries_target_timing_and_reach` chốt đúng con số 9.
+- Hành vi đã khoá bằng test: `telegraph.idle_has_nothing_to_read`, `telegraph.countdown_moves_with_the_server_clock` (9 → 7 sau 0,1 s), `telegraph.stays_committed_when_the_target_leaves_range` (ra khỏi tầm *đánh* mà vẫn trong aggro → đòn đã commit vẫn còn, vì frame impact vẫn xảy ra và chỉ damage check mới biết nó whiff — Q-A fix được đọc được từ phía client), `telegraph_after_impact_reads_recovery_and_cooldown` (`impactInTicks` thành null, `recoverInTicks` 10, `nextAttackInTicks` 40), `telegraph_lost_target_reports_no_committed_frame` (mất target → `ResetAttackWindow` + RETURN, không còn frame nào).
+
+**Đề xuất contract (CHỜ duyệt — chưa áp dụng):** thêm block **optional** vào mỗi entity mob của `WorldSnapshotV2` (không đổi shape các field cũ, không đụng v1):
+```jsonc
+{ "entityId": "ENT_…", "kind": "MOB", "state": "TELEGRAPH", "hp": 192, …,
+  "telegraph": {                      // optional, chỉ có khi mob đang engaged
+    "schemaVersion": 1,
+    "targetCharacterId": "CHR_…",     // null nếu AI chưa chốt mục tiêu
+    "impactInTicks": 9,               // server tick 20 Hz, không dùng đồng hồ client
+    "recoverInTicks": null,
+    "nextAttackInTicks": 40,
+    "rangeWu": 1.2,
+    "angleDegrees": null              // null = chưa có source shape per-move
+  } }
+```
+Quy tắc: enum `state` đóng như hiện tại; thêm field mới vào `telegraph` = bump `schemaVersion` của block chứ không của snapshot; `null` là "server không biết", client **không** được tự điền số; capability `mob-telegraph-v1` trong `/p1/sessions` để client biết có được đọc hay không. Nếu owner duyệt: schema + example + `validate_contracts.py` (optional, integer ≥ 0, null được phép) + README + assert trong `e2e-mob-combat`. Chưa duyệt thì read model này phục vụ test/probe nội bộ, đúng like Q-B2.
+
+**Đo được ở CI head `f3210a3`:** self-check **338 PASS / 0 FAIL** (6 case `telegraph.*` mới), HTTP smoke **453 checks**, `e2e-mob-combat` **85 checks** (`mob_damage=30`, `counter=IMPACT counter_damage=34`), e2e default 9 / dev 176, hai probe của report vẫn PASS. **Đính chính cho chính report của tôi:** run `0f0eea7` ra **84** chứ không phải 85 — không phải server đổi hành vi mà là check của tôi phụ thuộc nhánh (`maxHp-hp == hpDamage` chỉ chạy khi counter trúng) và loop retry guard ghi một check mỗi attempt. Cả hai đã sửa (`301dee6`, `f3210a3`): thu kết quả rồi assert một lần, và nhánh MISS giờ cũng assert (mob phải còn nguyên HP) thay vì không nói gì. Trước đó tôi viết "identical across three runs" — đúng cho 3 run được trích nhưng suy thành "total đã ổn định" là sai; bài học đã ghi: **không check nào trong loop có trip-count thay đổi, và không check nào được quyết định bởi dice roll.** Q-B đóng ở đây (B1 dash, B2 status, B3 death-return + cleanup, B4 profile mob combat live, B5 telegraph read model); phần wire của B2/B5 vẫn chờ owner duyệt contract.
+
+### 9.16 Q-C1: quest graph P00-01..05 từ source, blocked-activation thay vì default 0
+
+**Nguồn dùng để dựng graph:** `docs/production/Quest_and_Narrative_Production_Spec_vi.md` §2 bảng "Mở đầu — Bến Mưa (cấp 1–10)" (từng dòng cho ra start NPC, các bước chính, thưởng, mở khóa; tiêu đề mục cho ra level band 1–10), `Item_Master_Catalog_vi.csv` cho id vật phẩm, `Quest_Dialogue_Production_Data_vi.csv` cho `quest_id`/`graph_id`, và `world_records.json` cho target id. `Narrative_Quest_Beats_v2.json` **không** dùng để dựng objective: chính file đó ghi `scope: PRESENTATION_EXTENSION_NO_COUNT_OR_REWARD_CHANGE`, và work order cấm biến text/dialogue thành objective graph.
+
+**Đã thêm:** 4 runtime record `P00-02..05` + `activation`/`blockedSteps` cho cả 5. Bảng map, kèm phần nào là suy ra và phần nào là thiếu:
+
+| Quest | Nguồn (bước) | Objective runtime | Trạng thái |
+|---|---|---|---|
+| P00-02 | "hạ 4 Cá Linh" | `KILL` `MOB_CARPLING` ×4 | có target thật |
+| P00-02 | "kiểm 3 gợn nước" | — | **BLOCKED**: không có record interactable cho gợn nước |
+| P00-03 | "phá 3 Rễ Nước" | `KILL` `MOB_WATERROOT` ×3 | có target thật |
+| P00-03 | "tương tác 2 dân mắc kẹt", "né một đợt sóng" | — | **BLOCKED**: không có record dân; P1 không có wave/dodge |
+| P00-04 | "hạ 2 đợt 3 quái" | `KILL` `MOB_CARPLING` ×3 + `MOB_WATERROOT` ×3 | có target thật, nhưng đếm theo loài (targetIds pattern không mang được record id của group) → ghi thêm gap `waveAttribution` |
+| P00-04 | "hộ tống Ly An qua checkpoint x=80/120" | — | **BLOCKED**: P1 chưa có escort/checkpoint runtime (toạ độ đã có trong nguồn, cơ chế thì chưa) |
+| P00-05 | "hạ Mãng Cốt" | `BOSS` `BOSS_MANG_COT` ×1 | có target thật nhưng stat boss là `BOSSDATA_BLOCKED` → gap `bossStats` |
+| P00-05 | "tương tác mảnh ấn" | — | **BLOCKED**: không có record mảnh ấn |
+| P00-05 | "xác nhận môn phái ở NPC_CLASS_TRIAL" | `TALK` `NPC_CLASS_TRIAL` ×1 | có anchor thật |
+
+Ngoài ra mỗi quest 03/04/05 thiếu **NPC nhận báo cáo** (nguồn chỉ ghi NPC bắt đầu) → `turnInNpcId` để trống và được khai báo đúng là một blocked step; P00-05 thiếu id quest mở khóa (`C1-01` chưa có runtime record) → gap `unlockQuestIds`. Thưởng lấy từ nguồn: P00-02 `POT-HP-01` ("thuốc" = Dược Bến Mưa), P00-03 thêm `EQ-MK-BOOTS-T1-R-COMMON` ("giày", chỉ lớp MK có trong catalog P1), P00-04 thêm 30 Đồng, P00-05 `EQ-MK-WEAPON-T1-R-COMMON` (nguồn ghi `EQ-[CLASS]-WEAPON-T1-R-COMMON`; P1 chỉ ship lớp MK nên id được viết cho lớp đó và **ghi rõ** đây là giới hạn của slice, không phải bản dịch đầy đủ).
+
+**Luật đã khoá bằng code:** `activation` là **bắt buộc** trong file (không mặc định ACTIVE); BLOCKED phải có ≥1 blocked step, ACTIVE không được có; mỗi blocked step phải có `designStep` + `missingField` + `source` trỏ tới `.md`/`.csv`; `turnInNpcId` được phép null **chỉ khi** có blocked step tên đúng `turnInNpcId`. Runtime: quest BLOCKED luôn `LOCKED` kể cả khi prerequisite đã xong, và accept trả `prerequisite_not_met` + fieldErrors `activation.blocked.<DESIGN_STEP>` (tái dùng enum hiện có — **không đổi wire**; một code riêng `quest_blocked` là đề xuất contract cho lần version sau). Startup validator: prerequisite/unlock tồn tại, **hai chiều khớp nhau**, graph prerequisite **không cycle**, `KILL`/`BOSS`/`ESCORT` target resolve về record thật, `TALK` resolve về NPC anchor, và blocked step phải khai báo đủ. Content schema (`QuestDefinition.schema.json`) + `validate_content.py` được mở rộng tương ứng (chạy local: `OK: all content validation checks passed`, 5 QuestDefinition example).
+
+**Ghi nhận cho content owner (không tự sửa):** (1) manifest Bến Mưa có **hai** record boss cùng toạ độ (178,0) — `MAN-BM-EVENT_BOSS_BM_MANG_COT` (`ACTIVITY_BOSS`) và `MAN-BM-SPAWN_BM_05_QUEST` (`ATLAS_BOSS`) — cùng trỏ `BOSS_MANG_COT`; quest chọn record ACTIVITY_BOSS, nhưng nếu cả hai được spawn cùng lúc thì đó là trùng lặp cần chốt. (2) Mọi gap ở trên là điều kiện **mở khóa** P00-02..05; danh sách nằm ngay trong file runtime nên không ai phải đoán lại.
+
+### 9.17 Q-C2: narrative nodes, reveal gate, flags — domain-only, chưa có route
+
+Nguồn: `docs/production/Quest_Dialogue_Production_Data_vi.csv` (230 dòng → **229 node**; hai dòng của `DLG_C3_05_CHOICE` là hai lựa chọn của cùng một node). `build_narrative_nodes.py` xuất `narrative_nodes_v1.json` (questId/graphId/nodeId/order/type/speaker/condition/textKey/nextNode/onEnterEvent/setFlag/choices) và CI rebuild + `git diff --exit-code` như 4 bundle khác, nên sửa CSV mà quên runtime record là đỏ ngay.
+
+**Reveal gate** là server-side: node chỉ tồn tại với nhân vật khi `conditionKey` khớp state quest của **chính** nhân vật (`QUEST_AVAILABLE`/`QUEST_ACTIVE`/`QUEST_READY_TO_TURN_IN`). `NarrativeService.Offer` chọn node theo state; `Enter` từ chối `narrative_not_revealed` nếu lệch, `narrative_wrong_speaker` nếu sai NPC, `narrative_unknown_node` nếu node không thuộc quest. Text **không** rời server dưới dạng prose — chỉ `textKey`.
+
+**Flag**: vocabulary đóng lấy từ bundle (hiện `C3_05_PUBLISHED`, `C3_05_COUNCIL_ONLY`); mỗi lần vào node set tối đa một flag, lưu per character trong store bounded 128 (FIFO). Node `CHOICE` bắt buộc trả về một option của chính nó, và option quyết định flag — không đoán.
+
+**Talk → objective**: node có `onEnterEvent: OBJECTIVE_PROGRESS` ghi một verified event `TALK` (eventId = SHA-256 của `nodeId|characterId`, nên replay cùng node không cộng hai lần) để objective `TALK` tiến từ hội thoại, không cần endpoint riêng.
+
+**Party**: `PartyPolicies.SoloOnly` — P1 chưa có party runtime nên tiến độ được dán nhãn solo, không ngụ ý chia credit.
+
+**Đề xuất contract (chờ duyệt, chưa áp dụng):** `POST /p1/narrative/enter` với `{requestId, idempotencyKey, questId, npcId, nodeId, choiceId?}` → `{ nodeId, textKey, nextNodeId?, choices[], appliedFlag?, progressedQuestIds[], partyPolicy: "SOLO_ONLY" }`, error enum đóng (`narrative_unknown_node|narrative_not_revealed|narrative_wrong_speaker|narrative_choice_required|narrative_unknown_choice`), cộng `GET /p1/narrative/flags/{sessionId}` để client biết đã set gì. Không có route nào được map hôm nay.
+
+### 9.18 Q-E bước 1: kiểm coin band trong nguồn loot — không có, grant vẫn OFF
+
+Quét `docs/production/Loot_Recipe_Reward_Production_Data_vi.csv` (221 dòng): `row_type` = `LOOT_ENTRY` 184, `RECIPE` 7, `REWARD` 3, `CURRENCY_REWARD` 27; **0 dòng `item_or_currency_id = COIN`**. `Currency_Production_Data_vi.csv` có `COIN` nhưng chỉ định nghĩa balance cap/nguồn/sink, không có band theo `source_id`. Vậy `COIN_BAND_MISSING` trong `loot_recipe_v1.json` là **đúng**, `grantEnabled` phải tiếp tục `false`, và builder không được nới điều kiện — thay đổi duy nhất là ghi lại bằng chứng này. Gear roll vector cũng chưa có bảng riêng (`Item_Rarity_Variant_Catalog` chỉ cho pool độ hiếm), nên ứng viên gear vẫn blocked với field riêng; fullbag policy không có trong `Currency_Production_Data` nên cũng là blocked case.
+
+### 9.19 Triển khai tiếp
+
+Q-C objective graph P00-01..05 (runtime records từ source, loader/adapter/validator phía Qoder, không compiler cạnh tranh), Q-D XP/level + stat transaction một khối, Q-E loot grant + equipment cho cơ chế đã có data, Q-F Mãng Cốt encounter proposal + state machine, Q-G E2E nhiều client + handoff + proposal PostgreSQL (`Server/Persistence*` thuộc Remote #79).

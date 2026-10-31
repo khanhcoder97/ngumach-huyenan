@@ -4,6 +4,7 @@ using Server.Health.Endpoints;
 using Server.Health.Gameplay.Combat;
 using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
+using Server.Health.Gameplay.Progress;
 using Server.Health.Gameplay.Quests;
 using Server.Health.Gameplay.Teleport;
 using Server.Health.Smoke;
@@ -21,6 +22,8 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 });
 builder.Services.Configure<P1WorldOptions>(
     builder.Configuration.GetSection(P1WorldOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<P1WorldOptions>>().Value);
 builder.Services.AddSingleton<ServerClock>();
 builder.Services.AddSingleton<IServerClock>(
     serviceProvider => serviceProvider.GetRequiredService<ServerClock>());
@@ -62,6 +65,22 @@ builder.Services.AddSingleton<IQuestCatalog>(serviceProvider =>
     return QuestCatalogLoader.Load(directory);
 });
 builder.Services.AddSingleton<IQuestStateStore, InMemoryQuestStateStore>();
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    var path = NarrativeNodeCatalog.Discover(configuration, environment.ContentRootPath);
+    return NarrativeNodeCatalog.Load(path);
+});
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return LevelProgressionTable.Load(LevelProgressionTable.Discover(environment.ContentRootPath));
+});
+builder.Services.AddSingleton<IQuestXpRule, UnresolvedQuestXpRules>();
+builder.Services.AddSingleton<ExperienceService>();
+builder.Services.AddSingleton<NarrativeFlagStore>();
+builder.Services.AddSingleton<NarrativeService>();
 builder.Services.AddSingleton(serviceProvider =>
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
@@ -139,8 +158,18 @@ builder.Services.AddSingleton<MobCombatStateStore>();
 builder.Services.AddSingleton<ICombatRollSource, CombatRngRollSource>();
 builder.Services.AddSingleton<GuardWindowStore>();
 builder.Services.AddSingleton<GuardDefenseService>();
+builder.Services.AddSingleton<DashMovementService>();
+builder.Services.AddSingleton<CombatStatusProjection>();
+builder.Services.AddSingleton<MobTelegraphProjection>();
+builder.Services.Configure<DeathReturnOptions>(
+    builder.Configuration.GetSection(DeathReturnOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<DeathReturnOptions>>().Value);
+builder.Services.AddSingleton<DeathReturnService>();
 builder.Services.AddSingleton<CombatTickEngine>();
 builder.Services.AddSingleton<LootReceiptLedger>();
+builder.Services.AddSingleton<LootGrantLedger>();
+builder.Services.AddSingleton<LootGrantService>();
 builder.Services.AddSingleton<MobSpawnGroupService>();
 builder.Services.AddSingleton<WorldEntityProjectionService>();
 builder.Services.AddSingleton<WorldAoiProjectionService>();
@@ -158,6 +187,12 @@ app.Logger.LogInformation("Loaded {SkillCount} combat skills.", combatSkills.Cou
 
 var quests = app.Services.GetRequiredService<IQuestCatalog>();
 app.Logger.LogInformation("Loaded quest definitions: {QuestCount}.", quests.Count);
+
+var narrativeNodes = app.Services.GetRequiredService<NarrativeNodeCatalog>();
+app.Logger.LogInformation(
+    "Loaded narrative nodes: {NodeCount} (flags {FlagCount}).",
+    narrativeNodes.Count,
+    narrativeNodes.Flags.Count);
 
 var npcAnchors = app.Services.GetRequiredService<NpcAnchorCatalog>();
 NpcAnchorValidator.Validate(npcAnchors, mapBounds);
@@ -197,6 +232,19 @@ if (combatV2.Enabled)
         "/p1/v2/events use the QOD-17 tick engine for the supported DEV subset.");
 }
 
+var deathReturn = app.Services.GetRequiredService<DeathReturnOptions>();
+DeathReturnOptionsValidator.Validate(deathReturn, worldOptions);
+if (deathReturn.Enabled)
+{
+    app.Logger.LogWarning(
+        "DEV FIXTURE: P1:DeathReturn is enabled. The anchor is P1World SpawnX/SpawnY " +
+        "clamped to the actor's map bounds, not a reviewed safe anchor, and " +
+        "RestoreHpFixture {RestoreHp} is a configured starting HP, not a produced " +
+        "restore rule; no penalty is applied because no source defines one. Nothing " +
+        "reaches it over HTTP until the QOD-18 DeathReturn contract is approved.",
+        deathReturn.RestoreHpFixture);
+}
+
 var combatEventStreamOptions = app.Services.GetRequiredService<CombatEventStreamOptions>();
 CombatEventStreamOptionsValidator.Validate(combatEventStreamOptions);
 app.Logger.LogInformation(
@@ -228,10 +276,13 @@ foreach (var questId in quests.QuestIds)
             $"Quest '{questId}' start NPC '{questDefinition.StartNpcId}' has no anchor.");
     }
 
-    if (!npcAnchors.HasAnchorFor(questDefinition.TurnInNpcId))
+    // A blocked quest may not know its turn-in NPC yet; the blocked step names
+    // that gap, so only a known NPC anchor is checked here.
+    if (questDefinition.TurnInNpcId is { } turnInNpcId &&
+        !npcAnchors.HasAnchorFor(turnInNpcId))
     {
         throw new InvalidOperationException(
-            $"Quest '{questId}' turn-in NPC '{questDefinition.TurnInNpcId}' has no anchor.");
+            $"Quest '{questId}' turn-in NPC '{turnInNpcId}' has no anchor.");
     }
 }
 

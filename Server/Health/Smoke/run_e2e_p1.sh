@@ -4,6 +4,10 @@
 #
 #   ./Server/Health/Smoke/run_e2e_p1.sh default   # production gates OFF, expects blocked output
 #   ./Server/Health/Smoke/run_e2e_p1.sh dev       # dev synthetic scenario, full golden loop
+#   ./Server/Health/Smoke/run_e2e_p1.sh mob-combat # live mob combat: the combat
+#                                                  # gates only, quest gates stay
+#                                                  # OFF, plus endurance pools so
+#                                                  # one actor survives every phase
 #
 # Requires: dotnet SDK (10.x), python3, curl.
 
@@ -35,6 +39,18 @@ if [ "${PROFILE}" = "dev" ]; then
   P1__QuestAccept__Enabled=true \
   P1__Interact__Enabled=true \
   P1__QuestTurnIn__Enabled=true \
+    dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
+elif [ "${PROFILE}" = "mob-combat" ]; then
+  # Combat gates only. The starting pools are enlarged purely so one actor can
+  # walk, escape, take hits, guard and then die inside a single run; every
+  # per-hit number still comes from the shipped formula and fixture values.
+  P1__CombatV2__Enabled=true \
+  P1__CombatDamage__Enabled=true \
+  P1__MobBehavior__Enabled=true \
+  P1World__StartingHp=400 \
+  P1World__StartingMaxHp=400 \
+  P1World__StartingMp=200 \
+  P1World__StartingMaxMp=200 \
     dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
 else
   dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &

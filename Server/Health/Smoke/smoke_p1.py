@@ -109,12 +109,12 @@ def turnin_envelope(quest_id, npc_id, character_id=CHARACTER_ID,
 
 def combat_v2_envelope(action_kind, sequence, skill_id=None, target_id=None,
                       character_id=CHARACTER_ID, request_id="4" * 32,
-                      idempotency_key="5" * 32):
+                      idempotency_key="5" * 32, aim_x=1, aim_y=0):
     payload = {
         "actionKind": action_kind,
         "inputSequence": sequence,
-        "aimX": 1,
-        "aimY": 0,
+        "aimX": aim_x,
+        "aimY": aim_y,
     }
     if skill_id is not None:
         payload["skillId"] = skill_id
@@ -375,7 +375,13 @@ def main():
         headers={"X-Correlation-ID": "smoke-quests"})
     check(status == 200, f"quests returned {status}: {body}")
     quests = body.get("result") or []
-    check(len(quests) == 1, f"unexpected quest list {quests}")
+    # The opening chain is P00-01..05; only P00-01 is activatable in P1, the rest
+    # stay LOCKED because their source is still missing fields.
+    check([q.get("questId") for q in quests] ==
+          ["P00-01", "P00-02", "P00-03", "P00-04", "P00-05"],
+          f"unexpected quest list {[q.get('questId') for q in quests]}")
+    check(all(q.get("state") == "LOCKED" for q in quests[1:]),
+          f"blocked quests not locked {[(q.get('questId'), q.get('state')) for q in quests[1:]]}")
     quest = quests[0] if quests else {}
     check(quest.get("questId") == "P00-01", f"unexpected quest id {quest.get('questId')}")
     check(quest.get("state") == "AVAILABLE", f"unexpected quest state {quest.get('state')}")
@@ -1089,13 +1095,17 @@ def main():
     late_cast = accepted["result"]["castId"]
     deadline = time.monotonic() + 3
     finished_page = {}
+    late_read_status = 0
     while time.monotonic() < deadline:
-        status, _, ended = call("GET", f"/p1/v2/events/{late_session}?cursor=0", headers=late_headers)
-        check(status == 200, "late replay read before END")
+        late_read_status, _, ended = call("GET", f"/p1/v2/events/{late_session}?cursor=0", headers=late_headers)
         finished_page = ended.get("result") or {}
         if any(e.get("type") == "END" for e in finished_page.get("events", [])):
             break
         time.sleep(0.05)
+    # The status assertion lives outside the poll: a check inside a bounded wait
+    # runs a different number of times per run, so the reported total would stop
+    # meaning "these checks all ran".
+    check(late_read_status == 200, "late replay read before END")
     check(sum(e.get("type") == "END" for e in finished_page.get("events", [])) == 1,
           "original cast completed exactly once")
     status, _, repeated = call("POST", "/p1/v2/combat", late_command, late_headers)
@@ -1105,6 +1115,44 @@ def main():
     status, _, after_replay = call("GET", f"/p1/v2/events/{late_session}?cursor={finished_page['nextCursor']}", headers=late_headers)
     check(status == 200 and not after_replay["result"]["events"],
           "late replay emitted no new END, impact or other lifecycle event")
+
+    # SK-MK-02 dash resolves on the real tick: the actor must actually move the
+    # canonical 11 WU on this unreviewed map, and the committed MP is not
+    # refunded by the movement. Fresh session so earlier cursor assertions hold.
+    status, _, dash_created = call("POST", "/p1/sessions", {"classId": "CLASS_MINH_KIEM"})
+    check(status == 201, "dash session created")
+    dash_session = dash_created["sessionId"]
+    dash_character = dash_created["result"]["self"]["characterId"]
+    dash_headers = {"X-Session-ID": dash_session}
+    dash_start_x = dash_created["result"]["self"]["x"]
+    dash_revision = dash_created["revision"]
+    dash_command = combat_v2_envelope("SKILL", 1, skill_id="SK-MK-02",
+                                      character_id=dash_character,
+                                      request_id="8" * 32, idempotency_key="9" * 32)
+    status, _, dash_accept = call("POST", "/p1/v2/combat", dash_command, dash_headers)
+    check(status == 200, f"dash accepted returned {status}: {dash_accept}")
+    check((dash_accept.get("result") or {}).get("mp") == 34,
+          f"dash mp {(dash_accept.get('result') or {}).get('mp')}")
+    dash_deadline = time.monotonic() + 3
+    dash_moved = False
+    dash_self = {}
+    dash_page = {}
+    dash_read_status = 0
+    while time.monotonic() < dash_deadline:
+        dash_read_status, _, dash_world = call("GET", f"/p1/v2/world/{dash_session}", headers=dash_headers)
+        dash_page = dash_world.get("result") or {}
+        dash_self = dash_page.get("self") or {}
+        if dash_self.get("x") != dash_start_x:
+            dash_moved = True
+            break
+        time.sleep(0.05)
+    check(dash_read_status == 200, f"dash world read returned {dash_read_status}")
+    check(dash_moved and dash_self.get("x") == dash_start_x + 11,
+          f"dash moved {dash_start_x} -> {dash_self.get('x')} (expected {dash_start_x + 11})")
+    check(dash_self.get("mp") == 34 and dash_self.get("hp") == 100,
+          f"dash kept cost/hp mp={dash_self.get('mp')} hp={dash_self.get('hp')}")
+    check(dash_world.get("revision", dash_revision) > dash_revision,
+          f"dash revision {dash_revision} -> {dash_world.get('revision')}")
 
     print(f"PASS: {CHECKS} smoke checks against {BASE_URL}")
 
