@@ -37,22 +37,22 @@
     {
       "designStep": "P00_05_BOSS_DATA",
       "missingField": "bossStats",
-      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05 (hạ Mãng Cốt) — combat_mob_stats_v1.json marks BOSS_MANG_COT BOSSDATA_BLOCKED"
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05; MAN-BM-EVENT_BOSS_BM_MANG_COT and MAN-BM-SPAWN_BM_05_QUEST both point at BOSS_MANG_COT, marked BOSSDATA_BLOCKED"
     },
     {
       "designStep": "P00_05_FRAGMENT",
       "missingField": "objectiveTargets",
-      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05 (tương tác mảnh ấn) — World_Spawn_Gathering_Manifest_vi.csv has no fragment interactable record"
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05 (mảnh ấn); no fragment record on MAP_BEN_MUA (checked MAN-BM-* and ENT_MAN_BM-*)"
     },
     {
       "designStep": "P00_05_TURN_IN_NPC",
       "missingField": "turnInNpcId",
-      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05 — the start NPC is pinned to Đầm Chuông but the report hand-in is not named"
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05 (start NPC_TA_VAN_KHANH tại Đầm Chuông); BM npcs do not name the report hand-in"
     },
     {
       "designStep": "P00_05_CHAPTER_UNLOCK",
       "missingField": "unlockQuestIds",
-      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05 (mở Thanh Lạc/Chương I) — C1-01 has no runtime quest record yet"
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05 (mở Thanh Lạc/Chương I); C1-01 has text in the packet but no runtime quest record"
     }
   ],
   "rewards": {

@@ -37,17 +37,17 @@
     {
       "designStep": "P00_04_TURN_IN_NPC",
       "missingField": "turnInNpcId",
-      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-04 — the row names the start NPC but not who receives the report"
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-04; BM npcs are NPC_LYAN/NPC_TA_VAN_KHANH/NPC_CLASS_TRIAL — none is the report hand-in"
     },
     {
       "designStep": "P00_04_ESCORT",
       "missingField": "escortObjective",
-      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-04 (hộ tống Ly An qua checkpoint x=80/x=120) — no escort/checkpoint runtime exists in P1"
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-04 (checkpoint x=80/x=120); MAN-BM-WAVE_BM_ESCORT_A/B are wave spawns — no checkpoint record or escort runtime"
     },
     {
       "designStep": "P00_04_WAVE_ATTRIBUTION",
       "missingField": "waveAttribution",
-      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-04 (2 đợt 3 quái) — targetIds pattern cannot carry the group record id, so kills count by species until the escort runtime lands"
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-04 (2 đợt 3 quái); MAN-BM-WAVE_BM_ESCORT_A/B exist but targetIds cannot carry record ids, kills count by species"
     }
   ],
   "rewards": {

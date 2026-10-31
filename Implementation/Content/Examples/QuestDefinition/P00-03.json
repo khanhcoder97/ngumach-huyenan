@@ -28,12 +28,12 @@
     {
       "designStep": "P00_03_TURN_IN_NPC",
       "missingField": "turnInNpcId",
-      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-03 — the row names the start NPC but not who receives the report"
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-03; BM npcs are NPC_LYAN/NPC_TA_VAN_KHANH/NPC_CLASS_TRIAL — none is the report hand-in"
     },
     {
       "designStep": "P00_03_VILLAGERS",
       "missingField": "objectiveTargets",
-      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-03 (2 dân mắc kẹt) — World_Spawn_Gathering_Manifest_vi.csv has no villager interactable record"
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-03 (2 dân); no villager npc or interactable on MAP_BEN_MUA (checked MAN-BM-* and ENT_MAN_BM-*)"
     },
     {
       "designStep": "P00_03_WAVE",
