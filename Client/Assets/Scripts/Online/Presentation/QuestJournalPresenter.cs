@@ -93,7 +93,7 @@ namespace NguMach.Client.Presentation
                 var (title, desc) = ResolveQuestCopy(q);
                 var entry = new QuestEntryView(q, title, desc);
                 if (q.state == "COMPLETED") completed.Add(entry);
-                else active.Add(entry);
+                else if (q.state == "ACTIVE" || q.state == "READY_TO_TURN_IN") active.Add(entry);
             }
 
             string selectedId = prev?.SelectedQuestId;

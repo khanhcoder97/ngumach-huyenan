@@ -67,9 +67,9 @@ namespace PlayerUIChecks
             // 1. Session route
             transport.MapRoute("POST", "/p1/sessions", req =>
             {
-                string body = "{\"sessionId\":\"" + SessionHex + "\",\"result\":{" +
+                string body = "{\"schemaVersion\":1,\"requestId\":\"" + (req.CorrelationId ?? SessionHex) + "\",\"sessionId\":\"" + SessionHex + "\",\"serverTimeUtc\":\"2026-10-31T00:00:00Z\",\"result\":{" +
                     "\"mapId\":\"MAP_BEN_MUA\",\"revision\":1,\"serverTick\":100," +
-                    "\"self\":{\"characterId\":\"CHAR_MINH_KIEM\",\"classId\":\"CLASS_MINH_KIEM\",\"x\":10.0,\"y\":20.0,\"hp\":100,\"maxHp\":100,\"mp\":50,\"maxMp\":50}," +
+                    "\"self\":{\"characterId\":\"CHAR_MINH_KIEM\",\"classId\":\"CLASS_MINH_KIEM\",\"x\":10.0,\"y\":20.0,\"hp\":100,\"maxHp\":100,\"mp\":50,\"maxMp\":50,\"swordIntent\":0}," +
                     "\"entities\":[" +
                         "{\"entityId\":\"ENT_MAN_BM_NPC_LYAN\",\"kind\":\"NPC\",\"x\":15.0,\"y\":25.0}," +
                         "{\"entityId\":\"ENT_MAN_BM_NPC_TA_VAN_KHANH\",\"kind\":\"NPC\",\"x\":50.0,\"y\":50.0}" +
@@ -80,9 +80,9 @@ namespace PlayerUIChecks
             // 2. World route
             transport.MapRoute("GET", "/p1/world/" + SessionHex, req =>
             {
-                string body = "{\"sessionId\":\"" + SessionHex + "\",\"result\":{" +
+                string body = "{\"schemaVersion\":1,\"requestId\":\"" + (req.CorrelationId ?? SessionHex) + "\",\"sessionId\":\"" + SessionHex + "\",\"serverTimeUtc\":\"2026-10-31T00:00:00Z\",\"result\":{" +
                     "\"mapId\":\"MAP_BEN_MUA\",\"revision\":1,\"serverTick\":105," +
-                    "\"self\":{\"characterId\":\"CHAR_MINH_KIEM\",\"classId\":\"CLASS_MINH_KIEM\",\"x\":10.0,\"y\":20.0,\"hp\":100,\"maxHp\":100,\"mp\":50,\"maxMp\":50}," +
+                    "\"self\":{\"characterId\":\"CHAR_MINH_KIEM\",\"classId\":\"CLASS_MINH_KIEM\",\"x\":10.0,\"y\":20.0,\"hp\":100,\"maxHp\":100,\"mp\":50,\"maxMp\":50,\"swordIntent\":0}," +
                     "\"entities\":[" +
                         "{\"entityId\":\"ENT_MAN_BM_NPC_LYAN\",\"kind\":\"NPC\",\"x\":15.0,\"y\":25.0}," +
                         "{\"entityId\":\"ENT_MAN_BM_NPC_TA_VAN_KHANH\",\"kind\":\"NPC\",\"x\":50.0,\"y\":50.0}" +
@@ -93,35 +93,50 @@ namespace PlayerUIChecks
             // 3. Quests read route
             transport.MapRoute("GET", "/p1/quests/" + SessionHex, req =>
             {
-                string body = "{\"result\":[{" +
-                    "\"questId\":\"P00-01\",\"state\":\"" + questState + "\",\"stepId\":\"STEP_BEN_MUA\"," +
-                    "\"revision\":" + questRevision + "," +
-                    "\"objectiveCounters\":{\"OBJ_P00_01_PACKAGES\":" + packageCount + "}}]}";
+                string questsJson = "[{\"questId\":\"P00-01\",\"state\":\"" + questState + "\",\"stepId\":\"STEP_BEN_MUA\",\"revision\":" + questRevision + ",\"objectiveCounters\":{\"OBJ_P00_01_PACKAGES\":" + packageCount + "}}]";
+                string body = "{\"schemaVersion\":1,\"requestId\":\"" + (req.CorrelationId ?? SessionHex) + "\",\"sessionId\":\"" + SessionHex + "\",\"serverTimeUtc\":\"2026-10-31T00:00:00Z\",\"result\":" + questsJson + "}";
                 return ScriptedP1Transport.MakeReply(200, body, req.CorrelationId);
             });
 
-            // 4. Interact route
-            transport.MapRoute("POST", "/p1/interact", req =>
+            // 4. Interact route (interact with world entity)
+            transport.MapRoute("POST", "/p1/world/interact", req =>
             {
-                return ScriptedP1Transport.MakeReply(200, "{\"result\":{\"ok\":true}}", req.CorrelationId);
+                var env = P1Wire.Decode<P1Envelope<P1Interact>>(req.Body);
+                string targetId = env?.payload?.targetId ?? "ENT_MAN_BM_NPC_LYAN";
+                string body = "{\"schemaVersion\":1,\"requestId\":\"" + (req.CorrelationId ?? SessionHex) + "\",\"sessionId\":\"" + SessionHex + "\",\"serverTimeUtc\":\"2026-10-31T00:00:00Z\",\"result\":{" +
+                    "\"interactionId\":\"" + SessionHex + "\"," +
+                    "\"targetId\":\"" + targetId + "\"," +
+                    "\"recordId\":\"REC_INTERACT\"," +
+                    "\"kind\":\"INTERACTABLE\"," +
+                    "\"outcome\":\"collected\"," +
+                    "\"targetState\":\"AVAILABLE\"," +
+                    "\"claimedAtUtc\":\"2026-10-31T00:00:00Z\"," +
+                    "\"questUpdates\":[]}}";
+                return ScriptedP1Transport.MakeReply(200, body, req.CorrelationId);
             });
 
-            // 5. Accept quest route
-            transport.MapRoute("POST", "/p1/quests/" + SessionHex + "/accept", req =>
+            // 5. Accept quest route (/p1/quests/accept)
+            transport.MapRoute("POST", "/p1/quests/accept", req =>
             {
                 questState = "ACTIVE";
                 questRevision++;
-                return ScriptedP1Transport.MakeReply(200, "{\"result\":{\"receiptId\":\"RCPT_ACC_01\",\"questId\":\"P00-01\"}}", req.CorrelationId);
+                string body = "{\"schemaVersion\":1,\"requestId\":\"" + (req.CorrelationId ?? SessionHex) + "\",\"sessionId\":\"" + SessionHex + "\",\"serverTimeUtc\":\"2026-10-31T00:00:00Z\",\"result\":{" +
+                    "\"questId\":\"P00-01\",\"state\":\"ACTIVE\",\"stepId\":\"STEP_BEN_MUA\",\"revision\":" + questRevision + ",\"objectiveCounters\":{\"OBJ_P00_01_PACKAGES\":0}}}";
+                return ScriptedP1Transport.MakeReply(200, body, req.CorrelationId);
             });
 
-            // 6. Turn in quest route
-            transport.MapRoute("POST", "/p1/quests/" + SessionHex + "/turn-in", req =>
+            // 6. Turn in quest route (/p1/quests/turnin)
+            transport.MapRoute("POST", "/p1/quests/turnin", req =>
             {
                 questState = "COMPLETED";
                 questRevision++;
                 inventoryRevision++;
                 inventoryItems.Add("EQ-MK-WEAPON-T1-R-COMMON");
-                return ScriptedP1Transport.MakeReply(200, "{\"result\":{\"receiptId\":\"RCPT_TURNIN_01\",\"questId\":\"P00-01\"}}", req.CorrelationId);
+                string body = "{\"schemaVersion\":1,\"requestId\":\"" + (req.CorrelationId ?? SessionHex) + "\",\"sessionId\":\"" + SessionHex + "\",\"serverTimeUtc\":\"2026-10-31T00:00:00Z\",\"result\":{" +
+                    "\"questState\":{\"questId\":\"P00-01\",\"state\":\"COMPLETED\",\"stepId\":\"STEP_BEN_MUA\",\"revision\":" + questRevision + ",\"objectiveCounters\":{\"OBJ_P00_01_PACKAGES\":3}}," +
+                    "\"rewards\":{\"currency\":[{\"currencyId\":\"CUR_GOLD\",\"amount\":100}],\"items\":[{\"templateId\":\"EQ-MK-WEAPON-T1-R-COMMON\",\"location\":\"BAG\",\"stack\":1}],\"xp\":{\"xpRule\":\"XP_P00_01\",\"applied\":true}}," +
+                    "\"unlocks\":[]}}";
+                return ScriptedP1Transport.MakeReply(200, body, req.CorrelationId);
             });
 
             // 7. Inventory read route
@@ -133,7 +148,7 @@ namespace PlayerUIChecks
                     if (i > 0) itemsJson += ",";
                     itemsJson += "{\"instanceId\":\"INST_" + i + "\",\"templateId\":\"" + inventoryItems[i] + "\",\"location\":\"BAG\",\"slot\":\"" + i + "\",\"stack\":1}";
                 }
-                string body = "{\"result\":{\"inventoryRevision\":" + inventoryRevision + ",\"items\":[" + itemsJson + "],\"currencies\":[{\"currencyId\":\"CUR_GOLD\",\"amount\":100}]}}";
+                string body = "{\"schemaVersion\":1,\"requestId\":\"" + (req.CorrelationId ?? SessionHex) + "\",\"sessionId\":\"" + SessionHex + "\",\"serverTimeUtc\":\"2026-10-31T00:00:00Z\",\"result\":{\"inventoryRevision\":" + inventoryRevision + ",\"items\":[" + itemsJson + "],\"currencies\":[{\"currencyId\":\"CUR_GOLD\",\"amount\":100}]}}";
                 return ScriptedP1Transport.MakeReply(200, body, req.CorrelationId);
             });
 
@@ -335,10 +350,12 @@ namespace PlayerUIChecks
                     {
                         // Normal slot 0
                         new P1Item { instanceId = "ITEM_0", templateId = "EQ-MK-WEAPON-T1-R-COMMON", location = "BAG", slot = "0", stack = 1 },
-                        // Duplicate slot 0 (must produce warning and be relocated to free slot)
+                        // Duplicate slot 0 (produces warning, first wins per canonical spec)
                         new P1Item { instanceId = "ITEM_DUP", templateId = "EQ-MK-WEAPON-T1-R-REFINED", location = "BAG", slot = "0", stack = 1 },
-                        // Out of range slot 999 (must produce warning and be relocated to free slot)
+                        // Out of range slot 999 (produces warning, omitted from slots per canonical spec)
                         new P1Item { instanceId = "ITEM_OOR", templateId = "EQ-MK-WEAPON-T1-R-SPIRIT", location = "BAG", slot = "999", stack = 1 },
+                        // Unassigned slot (retained and allocated to next free slot 1)
+                        new P1Item { instanceId = "ITEM_UNASSIGNED", templateId = "EQ-MK-WEAPON-T1-R-REFINED", location = "BAG", slot = null, stack = 1 }
                     }
                 }
             };
@@ -351,24 +368,14 @@ namespace PlayerUIChecks
             Assert.Contains(state.DiagnosticWarnings, w => w.StartsWith("duplicate_slot_index:0:ITEM_DUP"));
             Assert.Contains(state.DiagnosticWarnings, w => w.StartsWith("out_of_range_slot:999:ITEM_OOR"));
 
-            // Crucial: 0 data loss! All 3 items must be present across slots
+            // Slot 0 has first item
             Assert.NotNull(state.GetSlot(0));
             Assert.Equal("ITEM_0", state.GetSlot(0).InstanceId);
 
-            // The duplicate and out-of-range items were safely re-allocated to free slots (e.g. slots 1 and 2)
-            bool foundDup = false;
-            bool foundOor = false;
-            for (int i = 1; i < InventoryViewState.TotalSlots; i++)
-            {
-                var slot = state.GetSlot(i);
-                if (slot != null)
-                {
-                    if (slot.InstanceId == "ITEM_DUP") foundDup = true;
-                    if (slot.InstanceId == "ITEM_OOR") foundOor = true;
-                }
-            }
-            Assert.True(foundDup, "Duplicate slot item was retained in a free slot");
-            Assert.True(foundOor, "Out of range item was retained in a free slot");
+            // Unassigned item is retained in free slot 1
+            Assert.NotNull(state.GetSlot(1));
+            Assert.Equal("ITEM_UNASSIGNED", state.GetSlot(1).InstanceId);
+            Assert.Equal(2, state.Slots.Count);
         }
 
         [Fact]
