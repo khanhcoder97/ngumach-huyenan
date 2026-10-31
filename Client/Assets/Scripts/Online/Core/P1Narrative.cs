@@ -119,7 +119,7 @@ namespace NguMach.Client.P1
                 Npc = catalog.Npc(target, mapId);
                 if (!VisibleNpc()) return false;
                 r = await client.ReadQuestsAsync(ct);
-                if (!Current(mine, ct) || !r.Success) return false;
+                if (!Current(mine, ct) || !r.Success || !VisibleNpc()) return false;
                 options = catalog.For(Npc.npcId, mapId, client.Quests);
                 if (options.Length == 0) return false;
                 IsOpen = true;
@@ -140,7 +140,8 @@ namespace NguMach.Client.P1
             if (mapInstance != null && (client.WorldV2?.mapInstanceId != mapInstance || client.WorldV2?.floorId != floor)) return false;
             var npc = Array.Find(w.entities, e => e != null && e.entityId == entityId && e.kind == "NPC");
             // 5WU is the P1 quest interaction radius. Server accept/turn-in rechecks authoritative proximity.
-            return npc != null && P1Wire.Finite(npc.x) && P1Wire.Finite(npc.y) &&
+            return npc != null && npc.state != "DEAD" && (npc.availability == null || npc.availability == "AVAILABLE") &&
+                P1Wire.Finite(npc.x) && P1Wire.Finite(npc.y) &&
                 Math.Pow(w.self.x - npc.x, 2) + Math.Pow(w.self.y - npc.y, 2) <= 25.000000001;
         }
         private bool ValidContext()
