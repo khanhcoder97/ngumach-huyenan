@@ -26,6 +26,7 @@ namespace NguMach.Client.P1
         // ── Runtime state ────────────────────────────────────────────────────
         private IP1UIAdapter _adapter;
         private UIDocument _doc;
+        private UIDocument _configuredDocument;
         private PanelRouter _router;
         private CancellationTokenSource _life;
         private bool _closing;
@@ -36,9 +37,18 @@ namespace NguMach.Client.P1
         public PanelRouter Router => _router;
         public bool HandleEscapeInput { get; set; } = false; // AGR2-03: Single Escape owner
 
-        /// <summary>Called from P1PlayerUIHook after adapter is ready. Finds UIDocument in scene if not provided.</summary>
+        public void BindDocument(UIDocument doc)
+        {
+            if (doc == null) throw new ArgumentNullException(nameof(doc));
+            if (_adapter != null && _doc != doc)
+                throw new InvalidOperationException("Close PlayerUI before changing its document.");
+            _configuredDocument = doc;
+        }
+
+        /// <summary>Uses the injected composition document, or a document on this host/parent.</summary>
         public void Initialize(IP1UIAdapter adapter, UIDocument doc = null)
         {
+            if (doc == null) doc = _configuredDocument;
             if (doc == null) doc = GetComponent<UIDocument>() ?? GetComponentInParent<UIDocument>();
             if (doc == null) { Debug.LogError("[PlayerUIRoot] No UIDocument found on host or parent."); return; }
             Open(adapter, doc);
@@ -103,17 +113,14 @@ namespace NguMach.Client.P1
                 questJournalPanel.Initialize(_adapter, _router, _life.Token, _doc);
                 if (questJournalPanel.Presenter != null && buttonBar != null)
                 {
-                    questJournalPanel.Presenter.OnChanged += () =>
-                    {
-                        var pinned = questJournalPanel.Presenter.State.Value?.PinnedQuest;
-                        buttonBar.SetPinnedQuest(pinned?.Title, pinned?.ObjectiveDesc);
-                    };
+                    questJournalPanel.Presenter.OnChanged += UpdatePinnedQuest;
                 }
             }
             if (npcDialoguePanel != null) npcDialoguePanel.Initialize(_adapter, _router, _life.Token, null, _doc);
             if (settingsPanel != null) settingsPanel.Initialize(_adapter, _router, _life.Token, store, _doc);
             if (mapPanel != null) mapPanel.Initialize(_adapter, _router, _life.Token, _doc);
             if (buttonBar != null) buttonBar.Initialize(_adapter, this, _doc);
+            UpdatePinnedQuest();
             if (cinemaOverlay != null) cinemaOverlay.Initialize(_doc);
 
             // All panels start hidden.
@@ -138,6 +145,8 @@ namespace NguMach.Client.P1
                 }
                 HideAllPanels();
 
+                if (questJournalPanel != null && questJournalPanel.Presenter != null)
+                    questJournalPanel.Presenter.OnChanged -= UpdatePinnedQuest;
                 inventoryPanel?.Teardown();
                 characterPanel?.Teardown();
                 questJournalPanel?.Teardown();
@@ -157,6 +166,12 @@ namespace NguMach.Client.P1
         }
 
         public void PlayCinema(string sceneId) => cinemaOverlay?.PlayScene(sceneId);
+
+        private void UpdatePinnedQuest()
+        {
+            var pinned = questJournalPanel?.Presenter?.State.Value?.PinnedQuest;
+            buttonBar?.SetPinnedQuest(pinned?.Title, pinned?.ObjectiveDesc);
+        }
 
         public void OpenWithNpc(string targetId)
         {

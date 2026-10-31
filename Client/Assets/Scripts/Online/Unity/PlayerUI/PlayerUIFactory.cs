@@ -22,9 +22,11 @@ namespace NguMach.Client.P1
             {
                 targetDoc = host.GetComponentInChildren<UIDocument>();
             }
+            if (targetDoc == null)
+                throw new System.ArgumentException("PlayerUI requires an injected or host UIDocument.", nameof(document));
 
             var existing = host.GetComponentInChildren<PlayerUIRoot>();
-            if (existing != null) return existing;
+            if (existing != null) { existing.BindDocument(targetDoc); return existing; }
 
             var rootObj = new GameObject("PlayerUI_Root");
             rootObj.transform.SetParent(host.transform, false);
@@ -46,6 +48,7 @@ namespace NguMach.Client.P1
             }
 
             root.SetPanelReferences(inv, character, quest, npc, settings, map, bar, cinema);
+            root.BindDocument(targetDoc);
             return root;
         }
     }
