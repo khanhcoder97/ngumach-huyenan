@@ -37,6 +37,23 @@ public static class WorldEntityStates
     };
 }
 
+// Production_Rules_Complete_v1_vi.md §5: the P00-01 packages count at most
+// once per character and never remove the world item for other characters.
+// Generic shared INTERACTABLEs keep the shared rule.
+public static class WorldEntityClaimPolicies
+{
+    public const string Shared = "SHARED";
+    public const string PerCharacter = "PER_CHARACTER";
+
+    public static bool IsValid(string? value) => value is Shared or PerCharacter;
+
+    public static string DefaultFor(string kind) => kind switch
+    {
+        WorldEntityKinds.GatherNode => PerCharacter,
+        _ => Shared
+    };
+}
+
 public sealed record WorldEntityTemplate(string TemplateId, string Kind);
 
 public sealed class WorldEntityInstance
@@ -54,20 +71,32 @@ public sealed class WorldEntityInstance
     public required int Quantity { get; init; }
     public required int RespawnSeconds { get; init; }
 
+    public string ClaimPolicy { get; init; } = WorldEntityClaimPolicies.Shared;
+
+    // QOD-17 manifest groups: member index is 1-based and stable; group
+    // respawn is coordinated by MobSpawnGroupService (members never respawn
+    // individually, so RespawnSeconds stays 0 for grouped mobs).
+    public string? GroupId { get; init; }
+    public int MemberIndex { get; init; }
+    public int GroupRespawnSeconds { get; init; }
+
     public string State { get; private set; } = string.Empty;
     public long Revision { get; private set; }
+    public long LifeId { get; private set; }
     public DateTimeOffset? RemovedAtUtc { get; private set; }
 
     internal void MoveTo(double x, double y)
     {
         X = x;
         Y = y;
+        Revision++;
     }
 
     internal void Initialize()
     {
         State = WorldEntityStates.InitialFor(Kind);
         Revision = 1;
+        LifeId = 1;
     }
 
     internal bool Remove(DateTimeOffset now)
@@ -88,6 +117,17 @@ public sealed class WorldEntityInstance
         }
     }
 
+    internal void ForceRespawn()
+    {
+        lock (_syncRoot)
+        {
+            State = WorldEntityStates.InitialFor(Kind);
+            RemovedAtUtc = null;
+            Revision++;
+            LifeId++;
+        }
+    }
+
     internal bool TryRespawn(DateTimeOffset now)
     {
         lock (_syncRoot)
@@ -105,6 +145,7 @@ public sealed class WorldEntityInstance
             State = WorldEntityStates.InitialFor(Kind);
             RemovedAtUtc = null;
             Revision++;
+            LifeId++;
             return true;
         }
     }
@@ -314,6 +355,54 @@ public static class WorldEntityLoader
                     $"{path}: {source.EntityId} respawnSeconds must be >= 0.");
             }
 
+            if (source.ClaimPolicy is not null &&
+                source.Kind is not (WorldEntityKinds.Interactable or WorldEntityKinds.GatherNode))
+            {
+                throw new InvalidOperationException(
+                    $"{path}: {source.EntityId} kind '{source.Kind}' cannot be claimable.");
+            }
+
+            if (source.GroupId is not null)
+            {
+                if (!string.Equals(source.Kind, WorldEntityKinds.Mob, StringComparison.Ordinal))
+                {
+                    throw new InvalidOperationException(
+                        $"{path}: {source.EntityId} groups are only supported for MOB entities.");
+                }
+
+                if (source.MemberIndex is not { } memberIndex || memberIndex < 1)
+                {
+                    throw new InvalidOperationException(
+                        $"{path}: {source.EntityId} memberIndex must be at least 1.");
+                }
+
+                if (source.GroupRespawnSeconds is not { } groupRespawn || groupRespawn < 0)
+                {
+                    throw new InvalidOperationException(
+                        $"{path}: {source.EntityId} groupRespawnSeconds is required.");
+                }
+
+                if (source.RespawnSeconds is not null and not 0)
+                {
+                    throw new InvalidOperationException(
+                        $"{path}: {source.EntityId} grouped mobs must not respawn individually.");
+                }
+            }
+
+            var claimPolicy = source.ClaimPolicy ?? WorldEntityClaimPolicies.DefaultFor(source.Kind!);
+            if (!WorldEntityClaimPolicies.IsValid(claimPolicy))
+            {
+                throw new InvalidOperationException(
+                    $"{path}: {source.EntityId} has invalid claimPolicy '{source.ClaimPolicy}'.");
+            }
+
+            if (string.Equals(source.Kind, WorldEntityKinds.GatherNode, StringComparison.Ordinal) &&
+                !string.Equals(claimPolicy, WorldEntityClaimPolicies.PerCharacter, StringComparison.Ordinal))
+            {
+                throw new InvalidOperationException(
+                    $"{path}: {source.EntityId} gather nodes are per-character claims.");
+            }
+
             var entity = new WorldEntityInstance
             {
                 EntityId = source.EntityId,
@@ -325,7 +414,11 @@ public static class WorldEntityLoader
                 X = x,
                 Y = y,
                 Quantity = quantity,
-                RespawnSeconds = respawn
+                RespawnSeconds = respawn,
+                ClaimPolicy = claimPolicy,
+                GroupId = source.GroupId,
+                MemberIndex = source.MemberIndex ?? 0,
+                GroupRespawnSeconds = source.GroupRespawnSeconds ?? 0
             };
             entity.Initialize();
             entities.Add(entity);
@@ -360,6 +453,10 @@ public static class WorldEntityLoader
         public double? YWu { get; init; }
         public int? Quantity { get; init; }
         public int? RespawnSeconds { get; init; }
+        public string? ClaimPolicy { get; init; }
+        public string? GroupId { get; init; }
+        public int? MemberIndex { get; init; }
+        public int? GroupRespawnSeconds { get; init; }
     }
 }
 

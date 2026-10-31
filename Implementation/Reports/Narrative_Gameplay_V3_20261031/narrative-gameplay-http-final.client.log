@@ -1,0 +1,24 @@
+PASS HTTP session
+PASS HTTP remote conversation refused
+PASS HTTP walk near 42
+PASS HTTP authored opening at actual NPC
+PASS HTTP narrative accept
+PASS HTTP walk near 36
+PASS HTTP collect existing parcel
+PASS HTTP walk near 44
+PASS HTTP collect existing parcel
+PASS HTTP walk near 52
+PASS HTTP collect existing parcel
+PASS HTTP walk near 64
+PASS HTTP READY scene
+PASS HTTP lost turn-in response stays uncertain
+PASS HTTP missing receipt cannot show after-commit prose
+PASS HTTP retry turn-in through narrative
+PASS HTTP turn-in retry preserves exact request body
+PASS HTTP receipt opens after-commit scene
+PASS HTTP inventory from real readback
+PASS HTTP lost receipt/replay grants exactly source 20 coin and one chest item
+PASS HTTP skip/close does not repeat reward
+PASS HTTP after-close readback keeps one grant
+PASS HTTP NPC route never misuses node interact
+PASS narrative HTTP assertions: 23

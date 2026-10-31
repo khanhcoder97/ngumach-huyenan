@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1Audio.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1AudioNotice.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1Client.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1ClientV2.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1GameplayInputGate.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1Models.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1ModelsV2.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1Wire.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\IP1UIAdapter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\P1ClientAdapter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\P1UIState.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\PanelRouter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\InventoryPresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\QuestJournalPresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\NpcDialoguePresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\NpcContextMapping.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\ItemMetadataResolver.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\CharacterViewState.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\CharacterPresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\CinemaViewState.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\CinemaPresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\SettingsPresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\MapPresenter.cs" />
+  </ItemGroup>
+</Project>

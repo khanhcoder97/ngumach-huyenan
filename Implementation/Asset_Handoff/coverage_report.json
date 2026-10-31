@@ -1015,6 +1015,34 @@
         "kind": "QuestDefinition"
       },
       {
+        "category": "quest",
+        "file": "Implementation/Content/Examples/QuestDefinition/P00-02.json",
+        "id": "P00-02",
+        "idKey": "questId",
+        "kind": "QuestDefinition"
+      },
+      {
+        "category": "quest",
+        "file": "Implementation/Content/Examples/QuestDefinition/P00-03.json",
+        "id": "P00-03",
+        "idKey": "questId",
+        "kind": "QuestDefinition"
+      },
+      {
+        "category": "quest",
+        "file": "Implementation/Content/Examples/QuestDefinition/P00-04.json",
+        "id": "P00-04",
+        "idKey": "questId",
+        "kind": "QuestDefinition"
+      },
+      {
+        "category": "quest",
+        "file": "Implementation/Content/Examples/QuestDefinition/P00-05.json",
+        "id": "P00-05",
+        "idKey": "questId",
+        "kind": "QuestDefinition"
+      },
+      {
         "category": "skill",
         "file": "Implementation/Content/Examples/SkillDefinition/SK-MK-01.json",
         "id": "SK-MK-01",
@@ -1043,7 +1071,7 @@
         "kind": "SpawnDefinition"
       }
     ],
-    "canonicalCount": 9,
+    "canonicalCount": 13,
     "coverage": {
       "class": {
         "absentCount": 4,
@@ -3830,7 +3858,7 @@
         ]
       },
       "quest": {
-        "absentCount": 75,
+        "absentCount": 71,
         "absentIds": [
           "C1-01",
           "C1-02",
@@ -3863,10 +3891,6 @@
           "C6-03",
           "C6-04",
           "C6-05",
-          "P00-02",
-          "P00-03",
-          "P00-04",
-          "P00-05",
           "SQ-BM-01",
           "SQ-BM-02",
           "SQ-BM-03",
@@ -3909,10 +3933,14 @@
           "SQ-VN-05"
         ],
         "catalogueCount": 76,
-        "exampleCount": 1,
-        "resolvedCount": 1,
+        "exampleCount": 5,
+        "resolvedCount": 5,
         "resolvedIds": [
-          "P00-01"
+          "P00-01",
+          "P00-02",
+          "P00-03",
+          "P00-04",
+          "P00-05"
         ]
       },
       "skill": {
@@ -4402,9 +4430,29 @@
       "sha256": "93b42365ba1a81442478be05167ada53c7cda5e3b79444ef2550504531b0a854"
     },
     {
-      "bytes": 796,
+      "bytes": 874,
       "path": "Implementation/Content/Examples/QuestDefinition/P00-01.json",
-      "sha256": "17f8f62fef04271a14d69682c6f45205720b7f1775bbff994fe9c30e2cc40da8"
+      "sha256": "b9547e99959b00bf7a4990ab1dc4daba888dddb3848931c3cfe438a322ff878c"
+    },
+    {
+      "bytes": 1025,
+      "path": "Implementation/Content/Examples/QuestDefinition/P00-02.json",
+      "sha256": "363b04d2a3312d9857aedf9078c452df2db00f4255c90ea8e8ff1ae921d2621b"
+    },
+    {
+      "bytes": 1462,
+      "path": "Implementation/Content/Examples/QuestDefinition/P00-03.json",
+      "sha256": "9cbadf19a8de4921db8c8b4b4c16f2b022182be637300e40e8c78aa069b5928f"
+    },
+    {
+      "bytes": 1755,
+      "path": "Implementation/Content/Examples/QuestDefinition/P00-04.json",
+      "sha256": "a71fa8084919f543f1f7454768bdd9e2da461d240a8dcc66bb299f90e3a84706"
+    },
+    {
+      "bytes": 1901,
+      "path": "Implementation/Content/Examples/QuestDefinition/P00-05.json",
+      "sha256": "5484f64de5f9baa07ffa4e95ee40fa77a78946af6ca34218e285249f3a812646"
     },
     {
       "bytes": 522,
@@ -4452,9 +4500,9 @@
       "sha256": "64dc86be7b34812805c81d8fff56a0bf4fb706795e1cfa9f0f9487f8b81313f9"
     },
     {
-      "bytes": 3829,
+      "bytes": 4882,
       "path": "Implementation/Content/Schemas/QuestDefinition.schema.json",
-      "sha256": "1cdb0a8282e98ff5f3c81dce10e785f83cdacb605dcb1dbff44e35b751e624d8"
+      "sha256": "84796504c9e14f5f3ce967070b9d38ee4dfd85bf2044200439740182ff7a8280"
     },
     {
       "bytes": 2486,
@@ -4594,8 +4642,8 @@
     "sourceLicense": "original"
   },
   "repo": {
-    "evidenceDigest": "f9eb10a1a7a7c38223e19358f7ea92c3d8e5943538e3666a915d02946fac44f6",
-    "sourceCommit": "6d815c308978d3bbf74035193e26ca48f71caf14",
+    "evidenceDigest": "cc1afb9ff86584f7c6d969b9d82410309685ae20bf2344d59b4e961993d59301",
+    "sourceCommit": "72f966c9feede2c21cd753349752c4d92b160100",
     "sourceCommitMeaning": "last commit touching the evidence files (not the report commit)"
   },
   "reportSchema": "opc05b.coverage_report/1",

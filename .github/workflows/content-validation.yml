@@ -22,3 +22,16 @@ jobs:
         run: python Implementation/Tools/validate_topology.py
       - name: Validate narrative and cinema handoff
         run: python Implementation/Tools/validate_narrative.py
+      - name: Rebuild world runtime content and verify no drift
+        run: |
+          python Implementation/Tools/build_world_records.py
+          python Implementation/Tools/build_world_entities.py
+          python Implementation/Tools/build_combat_mob_stats.py
+          python Implementation/Tools/build_loot_recipe.py
+          python Implementation/Tools/build_narrative_nodes.py
+          git diff --exit-code -- \
+            Implementation/Content/Runtime/world_records.json \
+            Implementation/Content/Runtime/world_entities_bm.json \
+            Implementation/Content/Runtime/combat_mob_stats_v1.json \
+            Implementation/Content/Runtime/loot_recipe_v1.json \
+            Implementation/Content/Runtime/narrative_nodes_v1.json

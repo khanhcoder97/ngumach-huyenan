@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 2,
+  "mapId": "MAP_BEN_MUA",
+  "mapInstanceId": "MAP_BEN_MUA#1",
+  "floorId": "OVERWORLD",
+  "phase": "OPEN_WORLD",
+  "serverTick": 1200,
+  "revision": 7,
+  "serverTimeUtc": "2026-10-30T02:00:00Z",
+  "audience": {
+    "aoiEnterWu": 40,
+    "aoiLeaveWu": 48
+  },
+  "self": {
+    "characterId": "CHR_MINH_KIEM_01",
+    "classId": "CLASS_MINH_KIEM",
+    "x": 46,
+    "y": 0,
+    "hp": 100,
+    "maxHp": 100,
+    "mp": 50,
+    "maxMp": 50,
+    "swordIntent": 0
+  },
+  "entities": [
+    {
+      "entityId": "ENT_MAN_BM_NODE_BM_ORE_01",
+      "kind": "GATHER_NODE",
+      "mapInstanceId": "MAP_BEN_MUA#1",
+      "floorId": "OVERWORLD",
+      "phase": "OPEN_WORLD",
+      "x": 21,
+      "y": 0,
+      "state": "AVAILABLE",
+      "healthState": "INVULNERABLE",
+      "targetable": false,
+      "availability": "AVAILABLE",
+      "hp": 0,
+      "maxHp": 0,
+      "revision": 1,
+      "lifeId": 1
+    },
+    {
+      "entityId": "ENT_MAN_BM_OBJ_BM_PACKAGE_01",
+      "kind": "INTERACTABLE",
+      "mapInstanceId": "MAP_BEN_MUA#1",
+      "floorId": "OVERWORLD",
+      "phase": "OPEN_WORLD",
+      "x": 36,
+      "y": 0,
+      "state": "AVAILABLE",
+      "healthState": "INVULNERABLE",
+      "targetable": false,
+      "availability": "AVAILABLE",
+      "hp": 0,
+      "maxHp": 0,
+      "revision": 1,
+      "lifeId": 1
+    },
+    {
+      "entityId": "ENT_MAN_BM_NPC_LYAN",
+      "kind": "NPC",
+      "mapInstanceId": "MAP_BEN_MUA#1",
+      "floorId": "OVERWORLD",
+      "phase": "OPEN_WORLD",
+      "x": 42,
+      "y": 0,
+      "state": "ACTIVE",
+      "healthState": "INVULNERABLE",
+      "targetable": false,
+      "hp": 0,
+      "maxHp": 0,
+      "revision": 1,
+      "lifeId": 1
+    },
+    {
+      "entityId": "ENT_MAN_BM_WAVE_BM_ESCORT_A",
+      "kind": "MOB",
+      "mapInstanceId": "MAP_BEN_MUA#1",
+      "floorId": "OVERWORLD",
+      "phase": "OPEN_WORLD",
+      "x": 80,
+      "y": 0,
+      "state": "TELEGRAPH",
+      "healthState": "ALIVE",
+      "targetable": true,
+      "hp": 192,
+      "maxHp": 192,
+      "revision": 4,
+      "lifeId": 1
+    }
+  ]
+}

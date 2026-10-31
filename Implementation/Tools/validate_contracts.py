@@ -27,6 +27,20 @@ EXIT_OK = 0
 EXIT_VALIDATION = 1
 EXIT_ENVIRONMENT = 2
 
+# Art Bible §6 bestiary state machine for hostile actors; everything else in
+# the snapshot is a world object with an availability lifecycle instead.
+MOB_LIFECYCLE_STATES = {
+    "IDLE",
+    "AGGRO",
+    "CHASE",
+    "TELEGRAPH",
+    "ATTACK",
+    "RECOVER",
+    "RETURN",
+    "DEAD",
+}
+OBJECT_STATES = {"ACTIVE", "AVAILABLE", "DEPLETED"}
+
 ID_FIELDS = {
     "skillId": "skill",
     "mapId": "map",
@@ -120,6 +134,22 @@ def load_definition_ids(content_dir, folder, id_field, errors):
     return values
 
 
+def load_runtime_entity_ids(content_dir, errors):
+    path = content_dir / "Runtime" / "world_entities_bm.json"
+    values = set()
+    if not path.is_file():
+        return values
+    data = read_json(path, errors)
+    if not isinstance(data, dict):
+        return values
+    for entity in data.get("entities", []):
+        if isinstance(entity, dict):
+            value = entity.get("entityId")
+            if isinstance(value, str) and value:
+                values.add(value)
+    return values
+
+
 def load_reference_sets(docs_dir, content_dir, errors):
     manifest_path = docs_dir / "World_Spawn_Gathering_Manifest_vi.csv"
     entity_ids = set()
@@ -154,6 +184,7 @@ def load_reference_sets(docs_dir, content_dir, errors):
             docs_dir / "Currency_Production_Data_vi.csv", "currency_id", errors
         ),
         "entity": entity_ids,
+        "entityInstance": load_runtime_entity_ids(content_dir, errors),
     }
 
 
@@ -162,7 +193,14 @@ def walk_references(value, references, label, errors):
         for key, child in value.items():
             if key in ID_FIELDS and isinstance(child, str):
                 kind = ID_FIELDS[key]
-                if child not in references[kind]:
+                if kind == "entity" and child.startswith("ENT_"):
+                    # Runtime instance IDs (ENT_...) resolve against the
+                    # world-entity bundle, not the manifest template column.
+                    if references["entityInstance"] and child not in references["entityInstance"]:
+                        errors.append(
+                            f"{label}.{key}: '{child}' does not resolve to a runtime entity instance"
+                        )
+                elif child not in references[kind]:
                     errors.append(
                         f"{label}.{key}: '{child}' does not resolve to a {kind} ID"
                     )
@@ -279,11 +317,184 @@ def check_inventory(example, label, errors):
             errors.append(f"{label}.items[{index}]: equipped item requires a slot")
 
 
+def check_world_snapshot_v2(example, label, errors):
+    if not isinstance(example, dict):
+        return
+    audience = example.get("audience")
+    if not isinstance(audience, dict) or (
+        audience.get("aoiEnterWu") != 40 or audience.get("aoiLeaveWu") != 48
+    ):
+        errors.append(f"{label}.audience: AOI must be enter 40 WU / leave 48 WU")
+    top_instance = example.get("mapInstanceId")
+    top_floor = example.get("floorId")
+    top_phase = example.get("phase")
+    seen = set()
+    entities = example.get("entities")
+    if not isinstance(entities, list):
+        return
+    for index, entity in enumerate(entities):
+        if not isinstance(entity, dict):
+            continue
+        entity_id = entity.get("entityId")
+        if isinstance(entity_id, str):
+            if entity_id in seen:
+                errors.append(f"{label}.entities[{index}]: duplicate entityId '{entity_id}'")
+            seen.add(entity_id)
+        for key, expected in (
+            ("mapInstanceId", top_instance),
+            ("floorId", top_floor),
+            ("phase", top_phase),
+        ):
+            if entity.get(key) != expected:
+                errors.append(
+                    f"{label}.entities[{index}].{key}: must equal the snapshot {key}"
+                )
+        if entity.get("hp", 0) > entity.get("maxHp", 0):
+            errors.append(f"{label}.entities[{index}]: hp exceeds maxHp")
+        kind = entity.get("kind")
+        health_state = entity.get("healthState")
+        targetable = entity.get("targetable")
+        state = entity.get("state")
+        if kind in ("MOB", "BOSS"):
+            if state not in MOB_LIFECYCLE_STATES:
+                errors.append(
+                    f"{label}.entities[{index}].state: '{state}' is not a mob "
+                    f"lifecycle state"
+                )
+            if health_state == "ALIVE" and targetable is not True:
+                errors.append(
+                    f"{label}.entities[{index}]: an alive mob must be targetable"
+                )
+            if health_state == "DEAD" and targetable is not False:
+                errors.append(
+                    f"{label}.entities[{index}]: a dead mob must not be targetable"
+                )
+        elif state not in OBJECT_STATES:
+            errors.append(
+                f"{label}.entities[{index}].state: '{state}' belongs to the mob "
+                f"lifecycle, not to a {kind}"
+            )
+        if kind == "NPC" and (health_state != "INVULNERABLE" or targetable is not False):
+            errors.append(
+                f"{label}.entities[{index}]: NPC must be INVULNERABLE and not targetable"
+            )
+        if kind == "BOSS" and health_state == "BLOCKED" and targetable is not False:
+            errors.append(
+                f"{label}.entities[{index}]: blocked boss must not be targetable"
+            )
+        if kind in ("GATHER_NODE", "INTERACTABLE") and "availability" not in entity:
+            errors.append(
+                f"{label}.entities[{index}]: claimable entity requires availability"
+            )
+
+
+def check_combat_input_v2(example, label, errors):
+    if not isinstance(example, dict):
+        return
+    action_kind = example.get("actionKind")
+    skill_id = example.get("skillId")
+    if action_kind == "SKILL" and not isinstance(skill_id, str):
+        errors.append(f"{label}.skillId: SKILL requires a skillId")
+    if action_kind == "BASIC_ATTACK" and skill_id is not None:
+        errors.append(f"{label}.skillId: BASIC_ATTACK must not carry a skillId")
+
+
+def check_combat_event_v2(example, label, errors):
+    if not isinstance(example, dict):
+        return
+    event_type = example.get("type")
+    result = example.get("result")
+    if event_type in ("IMPACT", "MISS"):
+        if not isinstance(example.get("targetId"), str) or not isinstance(
+            example.get("targetLifeId"), int
+        ):
+            errors.append(f"{label}: {event_type} requires targetId and targetLifeId")
+        if not isinstance(example.get("hitIndex"), int):
+            errors.append(f"{label}: {event_type} requires hitIndex")
+        if not isinstance(result, dict):
+            errors.append(f"{label}: {event_type} requires a result object")
+        elif event_type == "IMPACT" and result.get("hit") is not True:
+            errors.append(f"{label}.result.hit: IMPACT requires hit true")
+        elif event_type == "MISS" and result.get("hit") is not False:
+            errors.append(f"{label}.result.hit: MISS requires hit false")
+    if event_type == "DEATH":
+        if not isinstance(example.get("targetId"), str) or not isinstance(
+            example.get("targetLifeId"), int
+        ):
+            errors.append(f"{label}: DEATH requires targetId and targetLifeId")
+    if event_type == "CAST_START" and result is not None:
+        errors.append(f"{label}.result: CAST_START must not carry a damage result")
+    if event_type == "COUNTER_CONFIRMED" and result is not None:
+        errors.append(
+            f"{label}.result: COUNTER_CONFIRMED is a guard confirmation/reserve, "
+            "not counter damage"
+        )
+
+
+def check_combat_result_v2(example, label, errors):
+    if not isinstance(example, dict):
+        return
+    action_kind = example.get("actionKind")
+    skill_id = example.get("skillId")
+    if action_kind == "SKILL" and not isinstance(skill_id, str):
+        errors.append(f"{label}.skillId: SKILL requires a skillId")
+    if action_kind == "BASIC_ATTACK" and skill_id is not None:
+        errors.append(f"{label}.skillId: BASIC_ATTACK must not carry a skillId")
+    cast_id = example.get("castId")
+    events = example.get("events")
+    if not isinstance(events, list) or not events:
+        errors.append(f"{label}.events: accepted casts return at least CAST_START")
+        return
+    cursors = []
+    for index, event in enumerate(events):
+        if not isinstance(event, dict):
+            continue
+        cursors.append(event.get("cursor"))
+        if event.get("castId") != cast_id:
+            errors.append(f"{label}.events[{index}].castId must equal the cast id")
+    if any(not isinstance(cursor, int) for cursor in cursors):
+        errors.append(f"{label}.events: every event requires an integer cursor")
+    elif cursors != sorted(set(cursors)):
+        errors.append(f"{label}.events: cursors must be strictly increasing")
+    if events and isinstance(events[0], dict) and events[0].get("type") != "CAST_START":
+        errors.append(f"{label}.events[0].type: accepted cast starts with CAST_START")
+
+
+def check_combat_event_page_v2(example, label, errors):
+    if not isinstance(example, dict):
+        return
+    events = example.get("events")
+    if not isinstance(events, list):
+        return
+    cursors = [event.get("cursor") for event in events if isinstance(event, dict)]
+    if any(not isinstance(cursor, int) for cursor in cursors):
+        errors.append(f"{label}.events: every event requires an integer cursor")
+    elif cursors != sorted(set(cursors)):
+        errors.append(f"{label}.events: cursors must be strictly increasing")
+    next_cursor = example.get("nextCursor")
+    if isinstance(next_cursor, int) and cursors and max(cursors) > next_cursor:
+        errors.append(f"{label}.nextCursor: must be >= every event cursor")
+    if example.get("resyncRequired") is True and "resyncReason" not in example:
+        errors.append(f"{label}.resyncReason: required when resyncRequired is true")
+    if example.get("resyncRequired") is False and "resyncReason" in example:
+        errors.append(f"{label}.resyncReason: only allowed when resyncRequired is true")
+
+
 def check_example_semantics(name, example, map_config, errors):
     label = f"{name}{EXAMPLE_SUFFIX}"
     check_map_bounds(example, map_config, label, errors)
     if name == "WorldSnapshot":
         check_world_snapshot(example, label, errors)
+    elif name == "WorldSnapshotV2":
+        check_world_snapshot_v2(example, label, errors)
+    elif name == "CombatInputV2":
+        check_combat_input_v2(example, label, errors)
+    elif name == "CombatEventV2":
+        check_combat_event_v2(example, label, errors)
+    elif name == "CombatEventPageV2":
+        check_combat_event_page_v2(example, label, errors)
+    elif name == "CombatResultV2":
+        check_combat_result_v2(example, label, errors)
     elif name == "CombatEvent":
         check_combat_event(example, label, errors)
     elif name == "QuestState":

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "locale": "vi",
+  "entries": {
+    "DLG_P00_01_OFFER": {
+      "pages": [
+        "Nước mưa chảy qua các khe ván. Ly An ghì một sợi dây vào cọc, chặn kiện hàng vừa trượt tới mép bến.\n\nLy An: Khoan, giữ giúp tôi đầu kia!",
+        "Kiện hàng nằm yên. Qua khe vải hở là miệng một chiếc bát sứ bọc rơm. Ly An nhét lại lớp vải, thử nhấc kiện rồi mới thả tay.\n\nLy An: Còn nguyên. May thật.",
+        "Ly An lấy ra một lá thư bọc vải dầu. Trên niêm sáp có năm vạch chìm. Cô xoay mặt niêm lên trước khi đưa thư.\n\nLy An: Ba kiện bị nước đẩy dạt quanh đây. Ông Khanh trước kho đang nhận đồ thất lạc. Mang giúp tới đó, giữ nguyên niêm nhé.",
+        "Tìm ba kiện hàng quanh bến và giao thư còn niêm cho Tạ Vân Khanh trước kho.\n\nLy An: Kiện nào buộc dây đôi thì đỡ từ dưới, đừng nhấc bằng nút. Tôi xem còn ai dưới mép bến không."
+      ],
+      "replies": [
+        {"label": "Trong thư có gì?", "text": "Ly An: Tôi chưa mở.\n\nCô giữ góc vải thêm một nhịp rồi mới buông. Mặt niêm vẫn quay lên."},
+        {"label": "Cô không đi cùng sao?", "text": "Ly An: Tôi kiểm nốt phía dưới. Có người gọi bên đám lau từ nãy, nghe không rõ. Bạn tới kho trước đi."}
+      ]
+    },
+    "DLG_P00_01_CLUE": {
+      "pages": [
+        "Ly An nhìn khoảng trống giữa những kiện đã gom, dò theo sợi dây mắc dưới ván.\n\nLy An: Vẫn còn đồ dạt ra xa. Quanh bến có ba kiện cần mang về; ông Khanh nhận ở chỗ khô trước kho. Thư thì để riêng, đừng tì lên niêm.",
+        "Nhật ký ghi các kiện đã tìm được. Đóng hội thoại để tiếp tục tìm quanh bến rồi tới chỗ ông Khanh."
+      ]
+    },
+    "DLG_P00_01_TURN_IN": {
+      "pages": [
+        "Tạ Vân Khanh kê lại tấm ván dưới kiện bị lún. Ông chừa chỗ khô sát vách kho, đợi bạn đặt đồ xuống.\n\nTạ Vân Khanh: Có ai theo nhận hàng không?",
+        "Bạn đưa lá thư còn niêm. Ông xoay bì để đọc tên, rồi úp tay lên phần sáp. Ly An vừa tới dưới mái hiên.\n\nLy An: Thư vẫn nguyên chứ?\nTạ Vân Khanh: Còn nguyên.\nLy An: Cháu hỏi lúc bác nhận được.",
+        "Tạ Vân Khanh rút tay ra. Năm vạch sáp hiện lại dưới mái hiên.\n\nTạ Vân Khanh: Lúc ta nhận cũng vậy.\n\nÔng đặt thư sang chỗ khô hơn. Ly An kiểm ba nút dây, đếm bằng đầu ngón tay.",
+        "Tạ Vân Khanh: Để ta ghi nhận đồ đã về đủ. Bạn chờ một chút, ta còn muốn hỏi về mặt nước ngoài kia.\n\nChọn Giao nhận để hoàn tất. Phần thưởng hiển thị sau khi xác nhận thành công."
+      ],
+      "committedPages": [
+        "Tạ Vân Khanh ghi xong dòng nhận hàng, chừa ngòi bút trên đầu trang. Ngoài mái kho, tiếng giọt rơi từ hiên đã thưa dần.\n\nTạ Vân Khanh: Ban nãy ở bến, có nghe gì ngoài tiếng mưa không?",
+        "Ly An nhìn ra hàng cọc, nơi vòng sắt vẫn treo im.\n\nLy An: Tôi tưởng tiếng vòng sắt va cọc.\n\nÔng Khanh khép sổ nhưng giữ một ngón tay giữa hai trang. Việc ở bến vẫn chưa xong."
+      ],
+      "replies": [
+        {"label": "Tôi chỉ gặp Ly An.", "text": "Tạ Vân Khanh: Nó còn ngoài bến à?\n\nÔng nhìn qua vai bạn. Ly An đang tới, vạt áo ướt ôm sát đầu gối."},
+        {"label": "Cô ấy đang tìm xem còn ai dưới bến.", "text": "Tạ Vân Khanh: Ta đã dặn nó kiểm hàng trên bờ.\n\nÔng kéo một kiện khỏi lối đi, chừa khoảng trống rộng hơn trước cửa kho."}
+      ]
+    }
+  }
+}
