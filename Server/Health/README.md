@@ -1,6 +1,6 @@
 # Ngu Mach Huyen An — Health Server
 
-Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritative movement slice, and the QOD-03 combat, quest, inventory and teleport service skeletons.
+Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritative movement slice, the QOD-03 combat, quest, inventory and teleport service skeletons, and the QOD-13 quest-progress/interact slice.
 
 ## Endpoints
 
@@ -14,6 +14,7 @@ Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritati
 | GET | `/p1/quests/{sessionId}` | Read the authoritative quest states for the session character |
 | GET | `/p1/inventory/{sessionId}` | Read the authoritative `InventorySnapshot` for the session character |
 | POST | `/p1/quests/accept` | Accept an `AVAILABLE` quest for the session in `X-Session-ID` (feature-flagged, off by default) |
+| POST | `/p1/world/interact` | Claim an `INTERACTABLE` or gather from a `GATHER_NODE` world entity (feature-flagged, off by default) |
 
 Every response, including errors, carries `X-Correlation-ID`. A safe incoming value (1–64 characters of ASCII letters, digits, `-`, `_`, `.`) is echoed; otherwise a new GUID is generated.
 
@@ -25,7 +26,7 @@ dotnet run --project Server/Health/Health.csproj
 
 The service listens on `http://localhost:5000` unless `ASPNETCORE_URLS` or launch settings override it.
 
-The server loads `Implementation/Content/map_bounds.json` at startup by walking up from the working directory, content root and application base directory. Override with `Content__MapBoundsPath=/absolute/path/map_bounds.json` if needed. It likewise loads canonical `QuestDefinition` content from `Implementation/Content/Examples/QuestDefinition` (override with `Content__QuestsPath`) and canonical combat skills from `Implementation/Content/Examples/SkillDefinition` (override with `Content__SkillsPath`). Startup fails if the configured map is unknown, the spawn is outside bounds, the movement configuration is inconsistent, or a quest or skill definition is invalid.
+The server loads `Implementation/Content/map_bounds.json` at startup by walking up from the working directory, content root and application base directory. Override with `Content__MapBoundsPath=/absolute/path/map_bounds.json` if needed. It likewise loads canonical `QuestDefinition` content from `Implementation/Content/Examples/QuestDefinition` (override with `Content__QuestsPath`), canonical combat skills from `Implementation/Content/Examples/SkillDefinition` (override with `Content__SkillsPath`), and the built world record catalog from `Implementation/Content/Runtime/world_records.json` (override with `Content__WorldRecordsPath`). Startup fails if the configured map is unknown, the spawn is outside bounds, the movement configuration is inconsistent, a quest or skill definition is invalid, or a quest objective target has no matching world record/NPC anchor.
 
 ```bash
 dotnet build Server/Health/Health.csproj
@@ -249,6 +250,61 @@ NPC anchors come from `Implementation/Content/Runtime/npc_anchors.json`, generat
 python Implementation/Tools/build_npc_anchors.py
 ```
 
+## Interact (feature-flagged)
+
+`POST /p1/world/interact` is mapped only when `P1:Interact:Enabled=true`; otherwise the route does not exist (`404`). It is **off by default** because no reviewed walkability bundle exists yet — enabling it logs `DEV FIXTURE: P1:Interact is enabled...` at startup. Contract: `Implementation/Contracts/P1/InteractRequest.schema.json` + `InteractResponse.schema.json`; proposal and guard order in `Implementation/Work_Orders/Proposals/QOD-13_QuestProgressGathering_vi.md`.
+
+```bash
+curl -i -X POST http://localhost:5000/p1/world/interact \
+  -H "Content-Type: application/json" \
+  -H "X-Session-ID: <SESSION_ID>" \
+  -H "X-Correlation-ID: demo-interact" \
+  -d '{
+    "schemaVersion": 1,
+    "requestId": "66666666666666666666666666666666",
+    "idempotencyKey": "77777777777777777777777777777777",
+    "sentAtUtc": "2026-10-29T07:00:00Z",
+    "characterId": "CHR_MINH_KIEM_01",
+    "payload": { "targetId": "ENT_MAN_BM_OBJ_BM_PACKAGE_01" }
+  }'
+```
+
+A successful claim returns `200` with an `InteractResult`: `interactionId` (hex32), `targetId`, `recordId` (the world record the entity resolved to), `kind` (`INTERACTABLE` or `GATHER_NODE`), `outcome` (`collected` or `gathered`), `targetState` (`DEPLETED` for shared interactables, `AVAILABLE` for per-character claims — gather nodes and the P00-01 packages), `claimedAtUtc`, optional `respawnAtUtc`, optional `yield` (`itemId` + `quantity` for gather nodes) and `questUpdates` — the changed `QuestState` rows from the server-owned `RecordVerifiedEvent` call:
+
+```json
+{
+  "schemaVersion": 1,
+  "requestId": "66666666666666666666666666666666",
+  "sessionId": "<SESSION_ID>",
+  "serverTimeUtc": "2026-10-29T07:00:00Z",
+  "result": {
+    "interactionId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "targetId": "ENT_MAN_BM_OBJ_BM_PACKAGE_01",
+    "recordId": "MAN-BM-OBJ_BM_PACKAGE_01",
+    "kind": "INTERACTABLE",
+    "outcome": "collected",
+    "targetState": "AVAILABLE",
+    "claimedAtUtc": "2026-10-29T07:00:00Z",
+    "respawnAtUtc": "2026-10-29T07:00:20Z",
+    "questUpdates": [
+      {
+        "questId": "P00-01",
+        "state": "ACTIVE",
+        "stepId": "STEP_P00_01_PACKAGES",
+        "objectiveCounters": { "OBJ_P00_01_PACKAGES": 1 },
+        "revision": 3
+      }
+    ]
+  }
+}
+```
+
+Guards run in order: idempotency replay (`idempotencyKey` scoped to the character; same key + same payload returns the stored result, same key + different payload → `409 idempotency_conflict`) → target exists in the world entity registry → kind is `INTERACTABLE` or `GATHER_NODE` → same map/floor → foot distance ≤ `MaxInteractionDistanceWu` (5) → line of sight (only with a `REVIEWED` topology bundle; otherwise `not_enforced`) → profession gate (`AssumedProfessionLevel` vs the record's `professionLevelRequired`; a DEV-fixture stand-in until character professions exist) → claim (`SHARED` interactables despawn the shared registry entry; `PER_CHARACTER` interactables and gather nodes use a per-character claim window in `GatherClaimStore`) → yield roll and inventory grant for gather nodes → `RecordVerifiedEvent` for quest progress. Rejected claims change no state and grant no items.
+
+The `P00-01` packages (`ENT_MAN_BM_OBJ_BM_PACKAGE_01..03` at x=36/44/52) are the minimal acceptance slice: collecting all three flips the quest to `READY_TO_TURN_IN`. They carry `claimPolicy: PER_CHARACTER` in `world_entities_bm.json` (source: `Production_Rules_Complete_v1_vi.md` §5 — each package counts at most once per character and never removes the world item for other characters), so two characters can collect all three without waiting for a global respawn; the 20 s window is a **labelled DEV fixture**, not canonical balance. World records come from `Implementation/Content/Runtime/world_records.json` (352 records built by `python Implementation/Tools/build_world_records.py`); entity registries are rebuilt by `python Implementation/Tools/build_world_entities.py`, and CI verifies both files have no drift from their sources.
+
+Failure codes: `invalid_payload` (400), `session_not_found` (404), `target_not_found` (404, retryable), `invalid_target` (400), `out_of_range` (422, retryable), `target_not_available` (409), `profession_level_insufficient` (422), `idempotency_conflict` (409).
+
 ## Combat internals (QOD-03/QOD-06)
 
 `POST /p1/combat` exposes `ICombatService` for the self-targeting `SK-MK-01` path. The service stays the server-side seam for future `combat.input` work:
@@ -267,13 +323,14 @@ Internal failure codes: `unknown_skill`, `skill_not_available`, `invalid_target`
 `GET /p1/quests/{sessionId}` exposes the state list read-only. No accept/turn-in command is exposed yet; `IQuestService` remains the server-side seam for those:
 
 - `IQuestCatalog` loads canonical `QuestDefinition` files (currently `P00-01`) from `Implementation/Content/Examples/QuestDefinition`; unknown quest IDs are rejected.
-- `InMemoryQuestService` keeps per-character state behind `IQuestStateStore` and supports `GetState`, `GetStates`, `Accept`, `RecordObjective`, `TurnIn` and `Fail`.
+- `InMemoryQuestService` keeps per-character state behind `IQuestStateStore` and supports `GetState`, `GetStates`, `Accept`, `RecordVerifiedEvent`, `TurnIn` and `Fail`.
 - Allowed transitions: `LOCKED → AVAILABLE` when all prerequisites are `COMPLETED`, `AVAILABLE → ACTIVE` on accept, `ACTIVE → READY_TO_TURN_IN` when every canonical objective counter reaches its count, `READY_TO_TURN_IN → COMPLETED` on turn-in, and `ACTIVE`/`READY_TO_TURN_IN → FAILED` on failure.
 - Objective progress is clamped to the canonical objective count and updates `revision`; invalid transitions return the current snapshot with `invalid_transition`. State rows are created lazily on first query/accept, and prerequisite availability is refreshed lazily on read.
-- `RecordObjective` is an internal seam for server-side gameplay events (kill, collect, interact), not raw client input; a future endpoint must derive the amount from authoritative events.
+- `RecordVerifiedEvent(actor, eventId, eventType, recordId, mapId)` is the only progress path: server-verified gameplay events (interact/gather claims, talks, kills) advance objective counters. Each event contributes **once**: `COLLECT`/`INTERACT`/`TALK` objectives are keyed by distinct `recordId` (`R:{recordId}`), `KILL` objectives by event (`E:{eventId}`). No event can double-count the same record, and events on another map never contribute. It is an internal seam for server-side events, not raw client input.
+- Startup validation rejects quests whose `COLLECT`/`INTERACT` objective targets resolve to no world record on the objective's map, or whose `TALK` targets have no NPC anchor (`QuestCatalogValidator`); dangling IDs fail the boot instead of silently blocking progress.
 - Canonical `QuestDefinition` has no step graph, so the initial `stepId` is derived from the first objective (`OBJ_…` → `STEP_…`); `P00-01` yields `STEP_P00_01_PACKAGES`.
 - Rewards, XP, currency and items are not granted. Level-band eligibility is not enforced because `PlayerSession` has no level field yet.
-- Internal failure codes: `unknown_quest`, `quest_not_found`, `invalid_transition`, `unknown_objective`, `invalid_amount`, plus the shared `invalid_payload`.
+- Internal failure codes: `unknown_quest`, `quest_not_found`, `invalid_transition`, plus the shared `invalid_payload`.
 
 ## Movement rules
 
@@ -328,7 +385,10 @@ State is in memory and there is no seed inventory; a new character starts with n
 | `P1World:StartingLevel` | `1` | Session level used by the quest level-band guard |
 | `P1:QuestAccept:Enabled` | `false` | Maps `/p1/quests/accept`; dev stub until walkability exists |
 | `P1:QuestAccept:MaxInteractionDistanceWu` | `5` | DEC-016 NPC interaction distance |
-| `P1:MobBehavior:Enabled` | `false` | Enables the labelled mob-behaviour fixture (no tick loop yet) |
+| `P1:Interact:Enabled` | `false` | Maps `/p1/world/interact`; dev fixture until walkability exists |
+| `P1:Interact:MaxInteractionDistanceWu` | `5` | DEC-016 interaction distance for interactables and gather nodes |
+| `P1:Interact:AssumedProfessionLevel` | `1` | **DEV FIXTURE** stand-in for the character's gather profession level |
+| `P1:MobBehavior:Enabled` | `false` | Enables the labelled mob-behaviour fixture on the 20 Hz world tick |
 | `P1:MobBehavior:AggroRadiusWu` / `LeashRadiusWu` | `6` / `12` | **DEV FIXTURE**, not canonical balance |
 | `P1:MobBehavior:AttackRangeWu` / `AttackCooldownSeconds` | `1.2` / `2` | **DEV FIXTURE** |
 | `P1:MobBehavior:MoveSpeedWuPerSecond` | `2` | **DEV FIXTURE** |
@@ -343,6 +403,7 @@ Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond
 | `Content:NpcAnchorsPath` | Optional absolute/relative override for `Implementation/Content/Runtime/npc_anchors.json` |
 | `Content:TopologyPath` | Optional absolute/relative override for the `MapTopology` bundle directory |
 | `Content:WorldEntitiesPath` | Optional absolute/relative override for `Implementation/Content/Runtime/world_entities_bm.json` |
+| `Content:WorldRecordsPath` | Optional absolute/relative override for `Implementation/Content/Runtime/world_records.json` |
 
 ## Errors
 
@@ -364,13 +425,18 @@ Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond
 | 422 | `out_of_range` | Quest accept: different map/floor, or farther than 5 WU |
 | 422 | `prerequisite_not_met` | Quest accept: prerequisites incomplete or level outside the band |
 | 409 | `invalid_transition` | Quest accept: state is not `AVAILABLE` |
-| 409 | `idempotency_conflict` | Quest accept or combat cast: same `idempotencyKey` with a different payload |
+| 409 | `idempotency_conflict` | Quest accept, combat cast or interact: same `idempotencyKey` with a different payload |
+| 400 | `invalid_target` | Interact: target exists but is not an `INTERACTABLE` or `GATHER_NODE` |
+| 404 | `target_not_found` | Interact: target ID is not in the world entity registry |
+| 409 | `target_not_available` | Interact: target is depleted or on per-character gather cooldown |
+| 422 | `out_of_range` | Interact: different map/floor, farther than 5 WU, or line of sight blocked |
+| 422 | `profession_level_insufficient` | Interact: gather node requires a higher profession level |
 
-All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and `correlationId`. Quest, inventory and teleport service codes listed above are domain results; they have no HTTP mapping yet.
+All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and `correlationId`. Inventory and teleport service codes listed above are domain results; they have no HTTP mapping yet.
 
 ## Runtime smoke test
 
-The `server-smoke` GitHub Actions workflow builds the server, starts it on `127.0.0.1:5080`, and runs `Server/Health/Smoke/smoke_p1.py`. The script uses only the Python standard library and verifies:
+The `server-smoke` GitHub Actions workflow builds the server, starts it on `127.0.0.1:5080` with `P1__QuestAccept__Enabled=true` and `P1__Interact__Enabled=true`, and runs `Server/Health/Smoke/smoke_p1.py`. The script uses only the Python standard library and verifies:
 
 - `/health` returns `200` and echoes `X-Correlation-ID`.
 - Session creation returns `201`, a `Location` header, the canonical spawn and `revision=1`.
@@ -378,6 +444,8 @@ The `server-smoke` GitHub Actions workflow builds the server, starts it on `127.
 - Replaying that sequence returns `409 stale_sequence`; the snapshot position and revision do not change.
 - Wrong character, missing session header, unknown session and a 31-character `requestId` return the expected errors.
 - A later move with sequence `2` succeeds, proving rejected requests did not consume the sequence.
+- The full `P00-01` collect flow: walk to each Atlas package and claim it via `/p1/world/interact`, watching the quest reach `ACTIVE` (counter 1) → `ACTIVE` (counter 2) → `READY_TO_TURN_IN` (counter 3), with idempotent replays, `idempotency_conflict`, depleted retries (`409 target_not_available`) and out-of-range rejection (`422`) covered along the way.
+- A second character gathers from `ENT_MAN_BM_NODE_BM_ORE_01`, verifying the `gather` outcome, the yield grant in `/p1/inventory` (correct item, stack and `BAG` location), replay without double-collection, and the per-character cooldown.
 
 Run the same flow locally:
 
@@ -397,7 +465,7 @@ Quest and inventory HTTP surfaces are read-only, teleport has no endpoint, and c
 dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
 ```
 
-The flag boots the DI container and canonical content, then runs 88 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), world-target resolution and floor checks, the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency, line-of-sight and swept-walk geometry (clear, wall, large step, hole, corner, floor, non-finite, outside, footprint, not-enforced), the NPC anchor registry, the Bến Mưa world-entity registry with despawn/respawn under a manual clock, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
+The flag boots the DI container and canonical content, then runs 128 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), world-target resolution and floor checks, the full `P00-01` quest flow through `COMPLETED` driven by server-verified events, quest accept guards, idempotency, line-of-sight and swept-walk geometry (clear, wall, large step, hole, corner, floor, non-finite, outside, footprint, not-enforced), the NPC anchor registry, the world record catalog (352 records, `TryResolveTarget` by record ID and by entity ID per map), the Bến Mưa world-entity registry with despawn/respawn under a manual clock, interact claims (collect, depleted, idempotent replay/conflict, out-of-range, LOS-blocked, respawn and distinct-record dedupe), per-character package ownership (`PER_CHARACTER` claims: two characters collect all three packages under a barrier with no global respawn, world state stays `AVAILABLE`, per-character claim window and respawn), objective-scoped progress dedupe (two objectives sharing one record, duplicate events, sequential-step guard, KILL event scope) and gather claims (yield grant, per-character cooldown and respawn, profession gate), barrier-coordinated interact/gather races (same key replays one result, two keys grant once, per-character shards stay independent, shared interactable despawn grants once, claim released by token when the grant fails so a retry grants exactly once), inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
 
 ## Manual verification
 
@@ -428,16 +496,20 @@ The flag boots the DI container and canonical content, then runs 88 assertions c
 | 21 | Accept again with a new key | `409 invalid_transition`; state/revision unchanged |
 | 22 | Same key with `npcId = NPC_TA_VAN_KHANH` | `409 idempotency_conflict` |
 | 23 | Accept `P00-01` from a fresh session at spawn | `422 out_of_range`, `retryable: true` |
-| 24 | Any request | Response always has `X-Correlation-ID` |
+| 24 | With the quest `ACTIVE`, walk to `x >= 36` and claim `ENT_MAN_BM_OBJ_BM_PACKAGE_01` via `/p1/world/interact` | `200`, `outcome: collected`, `targetState: AVAILABLE`, counter `1` |
+| 25 | Repeat the same claim before respawn | `409 target_not_available` |
+| 26 | Gather `ENT_MAN_BM_NODE_BM_ORE_01` within 5 WU | `200`, `outcome: gathered`, `yield` granted in `/p1/inventory` |
+| 27 | Any request | Response always has `X-Correlation-ID` |
 
 ## Current limits
 
 - Sessions are in memory and lost on restart; there is no database, authentication or real-time transport.
 - `entities` is always empty in snapshots; combat can target alive world mobs/bosses by instance ID, but there is still no damage, death or loot.
-- Mob behaviour (`MobLifecycleService`) exists as a tickable state machine (IDLE/AGGRO/CHASE/ATTACK/RETURN/DEAD) with LOS, leash and attack-cooldown gates, but it is driven only by tests — there is no background tick loop, damage or loot yet, and every radius/speed is a labelled DEV fixture. Teleport has no endpoint.
-- The Bến Mưa world-entity registry (`world_entities_bm.json`: 24 canonical placements, 19 templates) is loaded with despawn/respawn state, but no endpoint, combat target or HP/stat wiring uses it yet.
+- Mob behaviour (`MobLifecycleService`) exists as a tickable state machine (IDLE/AGGRO/CHASE/ATTACK/RETURN/DEAD) with LOS, leash and attack-cooldown gates, driven by the 20 Hz `WorldTickBackgroundService` when `P1:MobBehavior:Enabled=true` (off by default) — there is no damage or loot yet, and every radius/speed is a labelled DEV fixture. Teleport has no endpoint.
+- The Bến Mưa world-entity registry (`world_entities_bm.json`: 27 canonical placements, 22 templates) is loaded with despawn/respawn state; interact uses it for shared `INTERACTABLE` claims and per-character (`claimPolicy: PER_CHARACTER`) package claims, and combat resolves alive mobs/bosses by instance ID. The 352-entry world record catalog (`world_records.json`) maps entities to `recordId`s for interact claims and quest progress.
 - Combat has no damage, hit chance, telegraphs, death or loot: `combat.effect` only records an accepted cast and its cooldown.
-- Quest state is in memory; accept exists but is feature-flagged off by default. Line-of-sight runs only for `REVIEWED` topology bundles; the shipped bundle is synthetic, so it is `not_enforced` until Muse delivers the Bến Mưa layout. Turn-in, rewards, party progress and multi-step graphs are not implemented.
+- Quest state is in memory; accept and interact are feature-flagged off by default. Progress advances only from server-verified events (`RecordVerifiedEvent`); `P00-01` reaches `READY_TO_TURN_IN` by collecting the three Atlas packages. Line-of-sight runs only for `REVIEWED` topology bundles; the shipped bundle is synthetic, so it is `not_enforced` until Muse delivers the Bến Mưa layout. Turn-in, rewards, party progress and multi-step graphs are not implemented.
+- Interact gather yields (item IDs, quantity ranges, respawn seconds, profession levels) are DEV fixtures from the supplement records, not canonical economy data; the profession gate uses a configured `AssumedProfessionLevel` until character progression exists.
 - Inventory is read-only over HTTP and starts empty: no item catalog, stack-limit enforcement, durability rules, seeded starting items or mutation endpoint.
 - Teleport uses map bounds only; there is no walkability, portal, cooldown or respawn logic.
 - Movement speed and starting HP/MP are slice defaults, not locked balance values.

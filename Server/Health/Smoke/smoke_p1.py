@@ -83,6 +83,18 @@ def quest_accept_envelope(quest_id, npc_id, character_id=CHARACTER_ID,
     }
 
 
+def interact_envelope(target_id, character_id=CHARACTER_ID, request_id="8" * 32,
+                      idempotency_key="7" * 32):
+    return {
+        "schemaVersion": 1,
+        "requestId": request_id,
+        "idempotencyKey": idempotency_key,
+        "sentAtUtc": sent_at_utc(),
+        "characterId": character_id,
+        "payload": {"targetId": target_id},
+    }
+
+
 def expect_correlation(headers, expected):
     check(headers.get("X-Correlation-ID") == expected,
           f"expected correlation {expected}, got {headers.get('X-Correlation-ID')}")
@@ -481,6 +493,281 @@ def main():
     check(error.get("code") == "out_of_range", f"unexpected error {error.get('code')}")
     check(error.get("retryable") is True, "out_of_range should be retryable")
     expect_correlation(headers, "smoke-quest-accept-far")
+
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_MAN_BM_OBJ_BM_PACKAGE_01", idempotency_key="a" * 32,
+                          request_id="b" * 32),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-interact-package-1"})
+    check(status == 200, f"interact returned {status}: {body}")
+    interact_result = body.get("result") or {}
+    check(interact_result.get("targetId") == "ENT_MAN_BM_OBJ_BM_PACKAGE_01",
+          f"interact target {interact_result.get('targetId')}")
+    check(interact_result.get("recordId") == "MAN-BM-OBJ_BM_PACKAGE_01",
+          f"interact record {interact_result.get('recordId')}")
+    check(interact_result.get("kind") == "INTERACTABLE",
+          f"interact kind {interact_result.get('kind')}")
+    check(interact_result.get("outcome") == "collected",
+          f"interact outcome {interact_result.get('outcome')}")
+    # P00-01 packages are per-character claims (Production Rules §5): the
+    # world state stays AVAILABLE for other characters, only this character's
+    # claim window is consumed.
+    check(interact_result.get("targetState") == "AVAILABLE",
+          f"interact targetState {interact_result.get('targetState')}")
+    check(interact_result.get("yield") is None,
+          f"package must not yield {interact_result.get('yield')}")
+    check((interact_result.get("respawnAtUtc") or "").endswith("Z"),
+          f"interact respawn {interact_result.get('respawnAtUtc')}")
+    interaction_id = interact_result.get("interactionId")
+    check(isinstance(interaction_id, str) and len(interaction_id) == 32,
+          f"unexpected interactionId {interaction_id}")
+    interact_updates = interact_result.get("questUpdates") or []
+    check(len(interact_updates) == 1, f"unexpected questUpdates {interact_updates}")
+    first_update = interact_updates[0] if interact_updates else {}
+    check(first_update.get("questId") == "P00-01",
+          f"unexpected updated quest {first_update.get('questId')}")
+    check(first_update.get("state") == "ACTIVE",
+          f"unexpected quest state {first_update.get('state')}")
+    check(first_update.get("revision") == 3,
+          f"quest revision {first_update.get('revision')}")
+    check(first_update.get("objectiveCounters") == {"OBJ_P00_01_PACKAGES": 1},
+          f"unexpected counters {first_update.get('objectiveCounters')}")
+    expect_correlation(headers, "smoke-interact-package-1")
+
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_MAN_BM_OBJ_BM_PACKAGE_01", idempotency_key="a" * 32,
+                          request_id="b" * 32),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-interact-replay"})
+    check(status == 200, f"interact replay returned {status}: {body}")
+    replayed_interact = body.get("result") or {}
+    check(replayed_interact.get("interactionId") == interaction_id,
+          f"replay interactionId {replayed_interact.get('interactionId')}")
+    check(((replayed_interact.get("questUpdates") or [{}])[0]).get("revision") == 3,
+          "replay must not advance quest progress")
+    expect_correlation(headers, "smoke-interact-replay")
+
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_MAN_BM_OBJ_BM_PACKAGE_02", idempotency_key="a" * 32,
+                          request_id="c" * 32),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-interact-conflict"})
+    check(status == 409, f"interact conflict returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "idempotency_conflict",
+          f"unexpected error {error.get('code')}")
+    expect_correlation(headers, "smoke-interact-conflict")
+
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_MAN_BM_OBJ_BM_PACKAGE_01", idempotency_key="d" * 32,
+                          request_id="e" * 32),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-interact-depleted"})
+    check(status == 409, f"depleted interact returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "target_not_available",
+          f"unexpected error {error.get('code')}")
+    check(error.get("retryable") is False, "target_not_available must not be retryable")
+    expect_correlation(headers, "smoke-interact-depleted")
+
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_MAN_BM_NPC_LYAN", idempotency_key="f" * 32,
+                          request_id="10" * 16),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-interact-npc"})
+    check(status == 400, f"npc interact returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "invalid_target", f"unexpected error {error.get('code')}")
+    expect_correlation(headers, "smoke-interact-npc")
+
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_SMOKE_MISSING", idempotency_key="11" * 16,
+                          request_id="12" * 16),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-interact-missing"})
+    check(status == 404, f"missing target returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "target_not_found", f"unexpected error {error.get('code')}")
+    expect_correlation(headers, "smoke-interact-missing")
+
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_MAN_BM_OBJ_BM_PACKAGE_03", character_id="CHR_SMOKE_FAR_01",
+                          idempotency_key="13" * 16, request_id="14" * 16),
+        {"X-Session-ID": far_session_id, "X-Correlation-ID": "smoke-interact-far"})
+    check(status == 422, f"far interact returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "out_of_range", f"unexpected error {error.get('code')}")
+    check(error.get("retryable") is True, "out_of_range should be retryable")
+    expect_correlation(headers, "smoke-interact-far")
+
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_MAN_BM_OBJ_BM_PACKAGE_02", character_id="CHR_OTHER_01",
+                          idempotency_key="15" * 16, request_id="16" * 16),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-interact-wrong-character"})
+    check(status == 400, f"wrong character interact returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "invalid_payload", f"unexpected error {error.get('code')}")
+    check("characterId" in (error.get("fieldErrors") or []),
+          f"characterId missing from {error.get('fieldErrors')}")
+    expect_correlation(headers, "smoke-interact-wrong-character")
+
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_MAN_BM_OBJ_BM_PACKAGE_02", idempotency_key="17" * 16,
+                          request_id="18" * 16),
+        {"X-Correlation-ID": "smoke-interact-no-session"})
+    check(status == 400, f"interact without session returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "invalid_payload", f"unexpected error {error.get('code')}")
+    check("X-Session-ID" in (error.get("fieldErrors") or []),
+          f"X-Session-ID missing from {error.get('fieldErrors')}")
+    expect_correlation(headers, "smoke-interact-no-session")
+
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_MAN_BM_OBJ_BM_PACKAGE_02", idempotency_key="19" * 16,
+                          request_id="20" * 16),
+        {"X-Session-ID": "z" * 32, "X-Correlation-ID": "smoke-interact-unknown-session"})
+    check(status == 404, f"interact unknown session returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "session_not_found", f"unexpected error {error.get('code')}")
+    expect_correlation(headers, "smoke-interact-unknown-session")
+
+    while walker_x < 39.5:
+        sequence += 1
+        time.sleep(0.3)
+        status, headers, body = call(
+            "POST", "/p1/move", move_envelope(sequence, 1, 0),
+            {"X-Session-ID": session_id, "X-Correlation-ID": f"smoke-walk-pkg2-{sequence}"})
+        check(status == 200, f"walk pkg2 move {sequence} returned {status}: {body}")
+        walker_x = ((body.get("result") or {}).get("self") or {}).get("x", walker_x)
+
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_MAN_BM_OBJ_BM_PACKAGE_02", idempotency_key="21" * 16,
+                          request_id="22" * 16),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-interact-package-2"})
+    check(status == 200, f"package 2 returned {status}: {body}")
+    second_update = (((body.get("result") or {}).get("questUpdates")) or [{}])[0]
+    check(second_update.get("state") == "ACTIVE",
+          f"package 2 quest state {second_update.get('state')}")
+    check(second_update.get("revision") == 4,
+          f"package 2 quest revision {second_update.get('revision')}")
+    check(second_update.get("objectiveCounters") == {"OBJ_P00_01_PACKAGES": 2},
+          f"package 2 counters {second_update.get('objectiveCounters')}")
+    expect_correlation(headers, "smoke-interact-package-2")
+
+    while walker_x < 47.5:
+        sequence += 1
+        time.sleep(0.3)
+        status, headers, body = call(
+            "POST", "/p1/move", move_envelope(sequence, 1, 0),
+            {"X-Session-ID": session_id, "X-Correlation-ID": f"smoke-walk-pkg3-{sequence}"})
+        check(status == 200, f"walk pkg3 move {sequence} returned {status}: {body}")
+        walker_x = ((body.get("result") or {}).get("self") or {}).get("x", walker_x)
+
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_MAN_BM_OBJ_BM_PACKAGE_03", idempotency_key="23" * 16,
+                          request_id="24" * 16),
+        {"X-Session-ID": session_id, "X-Correlation-ID": "smoke-interact-package-3"})
+    check(status == 200, f"package 3 returned {status}: {body}")
+    third_update = (((body.get("result") or {}).get("questUpdates")) or [{}])[0]
+    check(third_update.get("state") == "READY_TO_TURN_IN",
+          f"package 3 quest state {third_update.get('state')}")
+    check(third_update.get("revision") == 5,
+          f"package 3 quest revision {third_update.get('revision')}")
+    check(third_update.get("objectiveCounters") == {"OBJ_P00_01_PACKAGES": 3},
+          f"package 3 counters {third_update.get('objectiveCounters')}")
+    expect_correlation(headers, "smoke-interact-package-3")
+
+    status, headers, body = call(
+        "GET", f"/p1/quests/{session_id}",
+        headers={"X-Correlation-ID": "smoke-quests-ready"})
+    check(status == 200, f"quests after packages returned {status}: {body}")
+    ready_quest = (body.get("result") or [{}])[0]
+    check(ready_quest.get("state") == "READY_TO_TURN_IN",
+          f"read back state {ready_quest.get('state')}")
+    check(ready_quest.get("objectiveCounters") == {"OBJ_P00_01_PACKAGES": 3},
+          f"read back counters {ready_quest.get('objectiveCounters')}")
+    check(ready_quest.get("revision") == 5, f"read back revision {ready_quest.get('revision')}")
+    expect_correlation(headers, "smoke-quests-ready")
+
+    status, headers, body = call(
+        "POST", "/p1/sessions",
+        {"characterId": "CHR_SMOKE_GATHER_01"},
+        {"X-Correlation-ID": "smoke-gather-session"})
+    check(status == 201, f"gather session returned {status}: {body}")
+    gather_session_id = body.get("sessionId")
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_MAN_BM_NODE_BM_ORE_01", character_id="CHR_SMOKE_GATHER_01",
+                          idempotency_key="25" * 16, request_id="26" * 16),
+        {"X-Session-ID": gather_session_id, "X-Correlation-ID": "smoke-interact-gather"})
+    check(status == 200, f"gather returned {status}: {body}")
+    gather_result = body.get("result") or {}
+    check(gather_result.get("kind") == "GATHER_NODE",
+          f"gather kind {gather_result.get('kind')}")
+    check(gather_result.get("outcome") == "gathered",
+          f"gather outcome {gather_result.get('outcome')}")
+    check(gather_result.get("targetState") == "AVAILABLE",
+          f"gather targetState {gather_result.get('targetState')}")
+    check((gather_result.get("respawnAtUtc") or "").endswith("Z"),
+          f"gather respawn {gather_result.get('respawnAtUtc')}")
+    gather_yield = gather_result.get("yield") or {}
+    check(gather_yield.get("itemId") == "MAT-ORE-01",
+          f"gather item {gather_yield.get('itemId')}")
+    check(gather_yield.get("quantity") in (1, 2),
+          f"gather quantity {gather_yield.get('quantity')}")
+    expect_correlation(headers, "smoke-interact-gather")
+
+    status, headers, body = call(
+        "GET", f"/p1/inventory/{gather_session_id}",
+        headers={"X-Correlation-ID": "smoke-gather-inventory"})
+    check(status == 200, f"gather inventory returned {status}: {body}")
+    gather_snapshot = body.get("result") or {}
+    check(gather_snapshot.get("inventoryRevision") == 1,
+          f"gather inventory revision {gather_snapshot.get('inventoryRevision')}")
+    gather_items = gather_snapshot.get("items") or []
+    check(len(gather_items) == 1, f"gather items {gather_items}")
+    check(gather_items[0].get("templateId") == "MAT-ORE-01",
+          f"gather item template {gather_items[0].get('templateId')}")
+    check(gather_items[0].get("stack") == gather_yield.get("quantity"),
+          f"gather item stack {gather_items[0].get('stack')}")
+    check(gather_items[0].get("location") == "BAG",
+          f"gather item location {gather_items[0].get('location')}")
+    expect_correlation(headers, "smoke-gather-inventory")
+
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_MAN_BM_NODE_BM_ORE_01", character_id="CHR_SMOKE_GATHER_01",
+                          idempotency_key="25" * 16, request_id="26" * 16),
+        {"X-Session-ID": gather_session_id, "X-Correlation-ID": "smoke-interact-gather-replay"})
+    check(status == 200, f"gather replay returned {status}: {body}")
+    check(((body.get("result") or {}).get("interactionId"))
+          == gather_result.get("interactionId"), "gather replay changed interactionId")
+    expect_correlation(headers, "smoke-interact-gather-replay")
+
+    status, headers, body = call(
+        "POST", "/p1/world/interact",
+        interact_envelope("ENT_MAN_BM_NODE_BM_ORE_01", character_id="CHR_SMOKE_GATHER_01",
+                          idempotency_key="27" * 16, request_id="28" * 16),
+        {"X-Session-ID": gather_session_id, "X-Correlation-ID": "smoke-interact-gather-cooldown"})
+    check(status == 409, f"gather cooldown returned {status}: {body}")
+    error = body.get("error") or {}
+    check(error.get("code") == "target_not_available",
+          f"unexpected error {error.get('code')}")
+    expect_correlation(headers, "smoke-interact-gather-cooldown")
+
+    status, headers, body = call(
+        "GET", f"/p1/inventory/{gather_session_id}",
+        headers={"X-Correlation-ID": "smoke-gather-no-double"})
+    check(status == 200, f"gather inventory readback returned {status}: {body}")
+    check((body.get("result") or {}).get("inventoryRevision") == 1,
+          "rejected gather must not grant items twice")
+    expect_correlation(headers, "smoke-gather-no-double")
 
     print(f"PASS: {CHECKS} smoke checks against {BASE_URL}")
 

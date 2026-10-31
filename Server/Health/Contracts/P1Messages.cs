@@ -62,6 +62,63 @@ public sealed class QuestAcceptIntent
     public string? NpcId { get; init; }
 }
 
+public sealed class InteractEnvelope
+{
+    public int? SchemaVersion { get; init; }
+    public string? RequestId { get; init; }
+    public string? IdempotencyKey { get; init; }
+    public string? SentAtUtc { get; init; }
+    public string? CharacterId { get; init; }
+    public InteractIntent? Payload { get; init; }
+}
+
+public sealed class InteractIntent
+{
+    public string? TargetId { get; init; }
+}
+
+public sealed class P1InteractResponse
+{
+    public int SchemaVersion { get; init; } = 1;
+    public required string RequestId { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? SessionId { get; init; }
+
+    public required string ServerTimeUtc { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public InteractResult? Result { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public P1Error? Error { get; init; }
+}
+
+public sealed class InteractResult
+{
+    public required string InteractionId { get; init; }
+    public required string TargetId { get; init; }
+    public required string RecordId { get; init; }
+    public required string Kind { get; init; }
+    public required string Outcome { get; init; }
+    public required string TargetState { get; init; }
+    public required string ClaimedAtUtc { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? RespawnAtUtc { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public InteractYield? Yield { get; init; }
+
+    public required IReadOnlyList<QuestState> QuestUpdates { get; init; }
+}
+
+public sealed class InteractYield
+{
+    public required string ItemId { get; init; }
+    public required int Quantity { get; init; }
+}
+
 public sealed class WorldSnapshot
 {
     public required string MapId { get; init; }

@@ -57,6 +57,9 @@ public static class P1Validation
     private static readonly Regex NpcIdPattern =
         new(@"^NPC_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
 
+    private static readonly Regex EntityIdPattern =
+        new(@"^ENT_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
+
     public static bool IsHex32(string? value)
     {
         if (value is null || value.Length != 32)
@@ -94,6 +97,9 @@ public static class P1Validation
 
     public static bool IsNpcId(string? value) =>
         value is not null && NpcIdPattern.IsMatch(value);
+
+    public static bool IsEntityId(string? value) =>
+        value is not null && EntityIdPattern.IsMatch(value);
 
     public static bool TryParseUtc(string? value, out DateTimeOffset parsed)
     {
@@ -305,6 +311,54 @@ public static class P1Validation
         if (!IsNpcId(envelope.Payload.NpcId))
         {
             errors.Add("payload.npcId");
+        }
+
+        return errors;
+    }
+
+    public static List<string> ValidateInteractEnvelope(InteractEnvelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        if (envelope.SchemaVersion != 1)
+        {
+            errors.Add("schemaVersion");
+        }
+
+        if (!IsHex32(envelope.RequestId))
+        {
+            errors.Add("requestId");
+        }
+
+        if (!IsHex32(envelope.IdempotencyKey))
+        {
+            errors.Add("idempotencyKey");
+        }
+
+        if (!TryParseUtc(envelope.SentAtUtc, out _))
+        {
+            errors.Add("sentAtUtc");
+        }
+
+        if (!IsCharacterId(envelope.CharacterId))
+        {
+            errors.Add("characterId");
+        }
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+            return errors;
+        }
+
+        if (!IsEntityId(envelope.Payload.TargetId))
+        {
+            errors.Add("payload.targetId");
         }
 
         return errors;

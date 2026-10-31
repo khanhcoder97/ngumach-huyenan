@@ -3,6 +3,7 @@ using System.Text.Json;
 using Microsoft.Extensions.Options;
 using Server.Health.Contracts;
 using Server.Health.Gameplay.Combat;
+using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
 using Server.Health.Gameplay.Quests;
 using Server.Health.World;
@@ -29,6 +30,14 @@ public static class P1Endpoints
         if (questAccept.Enabled)
         {
             app.MapPost("/p1/quests/accept", QuestAcceptAsync);
+        }
+
+        var interact = app.ServiceProvider
+            .GetRequiredService<IOptions<InteractionOptions>>()
+            .Value;
+        if (interact.Enabled)
+        {
+            app.MapPost("/p1/world/interact", InteractAsync);
         }
 
         return app;
@@ -537,6 +546,124 @@ public static class P1Endpoints
         QuestAcceptErrorCodes.IdempotencyConflict => StatusCodes.Status409Conflict,
         QuestAcceptErrorCodes.RevisionConflict => StatusCodes.Status409Conflict,
         QuestErrorCodes.InvalidTransition => StatusCodes.Status409Conflict,
+        _ => StatusCodes.Status400BadRequest
+    };
+
+    private static async Task<IResult> InteractAsync(
+        HttpContext context,
+        ISessionStore sessions,
+        IInteractionService interactions,
+        ServerClock clock,
+        ILoggerFactory loggerFactory)
+    {
+        var requestId = NewRequestId();
+
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge)
+        {
+            return P1Results.InteractError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status413PayloadTooLarge, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        if (string.IsNullOrWhiteSpace(body) || !context.Request.HasJsonContentType())
+        {
+            return P1Results.InteractError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        InteractEnvelope? envelope;
+        try
+        {
+            envelope = JsonSerializer.Deserialize<InteractEnvelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.InteractError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        if (envelope?.RequestId is { } incomingRequestId &&
+            P1Validation.IsHex32(incomingRequestId))
+        {
+            requestId = incomingRequestId;
+        }
+
+        var fieldErrors = P1Validation.ValidateInteractEnvelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.InteractError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                fieldErrors, retryable: false);
+        }
+
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return P1Results.InteractError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        var session = sessions.Find(sessionId);
+        if (session is null)
+        {
+            return P1Results.InteractError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status404NotFound, P1ErrorCodes.SessionNotFound,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        if (!string.Equals(envelope!.CharacterId, session.CharacterId, StringComparison.Ordinal))
+        {
+            return P1Results.InteractError(
+                context, clock, requestId, session.SessionId,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["characterId"], retryable: false);
+        }
+
+        var payload = envelope.Payload!;
+        var outcome = interactions.Interact(
+            session, payload.TargetId!, envelope.IdempotencyKey!);
+
+        var logger = loggerFactory.CreateLogger("P1.Interact");
+        if (outcome.Accepted && outcome.Result is { } result)
+        {
+            logger.LogDebug(
+                "Accepted interaction {InteractionId} on {TargetId} for {SessionId}",
+                result.InteractionId, result.TargetId, session.SessionId);
+
+            return P1Results.InteractSuccess(
+                requestId, session.SessionId, clock, result);
+        }
+
+        var failure = outcome.Failure!;
+        logger.LogDebug(
+            "Rejected interaction on {TargetId} for {SessionId}: {Code}",
+            payload.TargetId, session.SessionId, failure.Code);
+
+        return P1Results.InteractError(
+            context, clock, requestId, session.SessionId,
+            InteractStatus(failure.Code), failure.Code,
+            failure.FieldErrors, failure.Retryable);
+    }
+
+    private static int InteractStatus(string code) => code switch
+    {
+        InteractionErrorCodes.TargetNotFound => StatusCodes.Status404NotFound,
+        InteractionErrorCodes.InvalidTarget => StatusCodes.Status400BadRequest,
+        InteractionErrorCodes.OutOfRange => StatusCodes.Status422UnprocessableEntity,
+        InteractionErrorCodes.TargetNotAvailable => StatusCodes.Status409Conflict,
+        InteractionErrorCodes.ProfessionLevelInsufficient =>
+            StatusCodes.Status422UnprocessableEntity,
+        InteractionErrorCodes.IdempotencyConflict => StatusCodes.Status409Conflict,
         _ => StatusCodes.Status400BadRequest
     };
 

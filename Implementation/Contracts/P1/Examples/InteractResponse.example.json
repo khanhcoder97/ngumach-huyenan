@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "requestId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "sessionId": "0123456789abcdef0123456789abcdef",
+  "serverTimeUtc": "2026-10-29T00:00:01Z",
+  "result": {
+    "interactionId": "cccccccccccccccccccccccccccccccc",
+    "targetId": "ENT_MAN_BM_OBJ_BM_PACKAGE_01",
+    "recordId": "MAN-BM-OBJ_BM_PACKAGE_01",
+    "kind": "INTERACTABLE",
+    "outcome": "collected",
+    "targetState": "DEPLETED",
+    "claimedAtUtc": "2026-10-29T00:00:01Z",
+    "respawnAtUtc": "2026-10-29T00:00:21Z",
+    "questUpdates": [
+      {
+        "questId": "P00-01",
+        "state": "ACTIVE",
+        "stepId": "STEP_P00_01_PACKAGES",
+        "objectiveCounters": {
+          "OBJ_P00_01_PACKAGES": 1
+        },
+        "revision": 3
+      }
+    ]
+  }
+}
