@@ -192,7 +192,7 @@ namespace PlayerUIChecks
             questState = "READY_TO_TURN_IN";
             questRevision++;
             await journalPresenter.LoadAsync(CancellationToken.None);
-            Assert.Equal("Báo cáo với Tạ Vân Khanh tại Bến Mưa.", journalPresenter.State.Value.Active[0].ObjectiveDesc);
+            Assert.Equal("Đã thu thập đủ 3 gói hàng. Hãy nộp nhiệm vụ cho Tạ Vân Khanh.", journalPresenter.State.Value.Active[0].ObjectiveDesc);
             Assert.True(journalPresenter.State.Value.Active[0].IsReadyToTurnIn);
 
             // Step 6: Interact with Ta Van Khanh
