@@ -40,13 +40,16 @@ namespace NguMach.Client.P1
 
         public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct, UIDocument doc = null)
         {
+            if (_presenter != null) _presenter.OnChanged -= Render;
             _adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));
             _router = router ?? throw new ArgumentNullException(nameof(router));
-            _doc = doc;
+            _doc = doc ?? _doc;
             _presenter = new CharacterPresenter(_adapter);
             _presenter.OnChanged += Render;
 
-            BuildUI();
+            if (_root == null) BuildUI();
+            else AttachToDocument(_doc);
+            Hide();
         }
 
         private void BuildUI()
@@ -205,11 +208,15 @@ namespace NguMach.Client.P1
             AttachToDocument();
         }
 
-        private void AttachToDocument()
+        private void AttachToDocument(UIDocument doc = null)
         {
-            if (_doc == null) _doc = FindFirstObjectByType<UIDocument>();
-            if (_doc == null) { Debug.LogError("[CharacterPanel] No UIDocument found in scene."); return; }
-            _doc.rootVisualElement.Add(_root);
+            _doc = doc ?? _doc;
+            if (_doc == null || _root == null) return;
+            if (_root.parent != _doc.rootVisualElement)
+            {
+                _root.RemoveFromHierarchy();
+                _doc.rootVisualElement.Add(_root);
+            }
         }
 
         public void Show()
@@ -328,17 +335,24 @@ namespace NguMach.Client.P1
             }
         }
 
-        private void OnDestroy()
+        public void Teardown()
         {
+            Hide();
             if (_presenter != null)
             {
                 _presenter.OnChanged -= Render;
                 _presenter.Clear();
+                _presenter = null;
             }
             if (_root != null && _root.parent != null)
             {
-                _root.parent.Remove(_root);
+                _root.RemoveFromHierarchy();
             }
+            _adapter = null;
+            _router = null;
+            _doc = null;
         }
+
+        private void OnDestroy() => Teardown();
     }
 }

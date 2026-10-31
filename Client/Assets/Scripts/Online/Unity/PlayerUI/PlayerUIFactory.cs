@@ -17,6 +17,12 @@ namespace NguMach.Client.P1
         {
             if (host == null) throw new System.ArgumentNullException(nameof(host));
 
+            var targetDoc = document != null ? document : host.GetComponent<UIDocument>();
+            if (targetDoc == null)
+            {
+                targetDoc = host.GetComponentInChildren<UIDocument>();
+            }
+
             var existing = host.GetComponentInChildren<PlayerUIRoot>();
             if (existing != null) return existing;
 

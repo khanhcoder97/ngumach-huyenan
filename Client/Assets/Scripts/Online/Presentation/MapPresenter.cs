@@ -47,7 +47,7 @@ namespace NguMach.Client.Presentation
                 _state = null; NotifyChanged(); return;
             }
 
-            _state = new MapViewState(mapId, self.x, self.y, markers, _zoomLevel, topologyIsCandidate: true);
+            _state = new MapViewState(mapId, self.x, self.y, markers, _zoomLevel, topologyIsCandidate: true, MapBounds.ForMap(mapId));
             NotifyChanged();
         }
 
@@ -55,7 +55,7 @@ namespace NguMach.Client.Presentation
         {
             _zoomLevel = Math.Max(0.25f, Math.Min(4f, zoom));
             if (_state != null)
-                _state = new MapViewState(_state.MapId, _state.PlayerX, _state.PlayerY, _state.Markers, _zoomLevel, _state.TopologyIsCandidate);
+                _state = new MapViewState(_state.MapId, _state.PlayerX, _state.PlayerY, _state.Markers, _zoomLevel, _state.TopologyIsCandidate, _state.Bounds);
             NotifyChanged();
         }
 

@@ -154,6 +154,7 @@ namespace NguMach.Client.Presentation
                             if (!seenSlotIndices.Add(slotIndex))
                             {
                                 warnings.Add("duplicate_slot_index:" + slotIndex + ":" + item.instanceId);
+                                unassignedBagItems.Add(item); // Retain item in free slot, do not drop
                             }
                             else
                             {
@@ -164,6 +165,7 @@ namespace NguMach.Client.Presentation
                         else
                         {
                             warnings.Add("out_of_range_slot:" + item.slot + ":" + item.instanceId);
+                            unassignedBagItems.Add(item); // Retain item in free slot, do not drop
                         }
                     }
                     else

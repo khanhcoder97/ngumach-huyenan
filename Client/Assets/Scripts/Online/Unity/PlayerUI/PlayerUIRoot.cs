@@ -39,8 +39,8 @@ namespace NguMach.Client.P1
         /// <summary>Called from P1PlayerUIHook after adapter is ready. Finds UIDocument in scene if not provided.</summary>
         public void Initialize(IP1UIAdapter adapter, UIDocument doc = null)
         {
-            if (doc == null) doc = FindFirstObjectByType<UIDocument>();
-            if (doc == null) { Debug.LogError("[PlayerUIRoot] No UIDocument found in scene."); return; }
+            if (doc == null) doc = GetComponent<UIDocument>() ?? GetComponentInParent<UIDocument>();
+            if (doc == null) { Debug.LogError("[PlayerUIRoot] No UIDocument found on host or parent."); return; }
             Open(adapter, doc);
         }
 
@@ -71,9 +71,14 @@ namespace NguMach.Client.P1
             HideAllPanels();
         }
 
-        /// <summary>Close topmost open modal panel.</summary>
+        /// <summary>Close topmost open modal panel or skip cinema overlay.</summary>
         public void CloseTop()
         {
+            if (cinemaOverlay != null && cinemaOverlay.Presenter != null && cinemaOverlay.Presenter.State != null && cinemaOverlay.Presenter.State.IsPlaying)
+            {
+                cinemaOverlay.Presenter.Skip();
+                return;
+            }
             _router?.CloseTop();
         }
 
@@ -88,13 +93,26 @@ namespace NguMach.Client.P1
             _router = new PanelRouter();
             _router.OnPanelChanged += HandlePanelChanged;
 
-            // Pass references to child panels.
-            if (inventoryPanel != null) inventoryPanel.Initialize(_adapter, _router, _life.Token);
+            var store = GetComponent<ISettingsStore>() ?? GetComponentInParent<ISettingsStore>();
+
+            // Pass references and injected document to child panels.
+            if (inventoryPanel != null) inventoryPanel.Initialize(_adapter, _router, _life.Token, _doc);
             if (characterPanel != null) characterPanel.Initialize(_adapter, _router, _life.Token, _doc);
-            if (questJournalPanel != null) questJournalPanel.Initialize(_adapter, _router, _life.Token);
-            if (npcDialoguePanel != null) npcDialoguePanel.Initialize(_adapter, _router, _life.Token);
-            if (settingsPanel != null) settingsPanel.Initialize(_adapter, _router, _life.Token);
-            if (mapPanel != null) mapPanel.Initialize(_adapter, _router, _life.Token);
+            if (questJournalPanel != null)
+            {
+                questJournalPanel.Initialize(_adapter, _router, _life.Token, _doc);
+                if (questJournalPanel.Presenter != null && buttonBar != null)
+                {
+                    questJournalPanel.Presenter.OnChanged += () =>
+                    {
+                        var pinned = questJournalPanel.Presenter.State.Value?.PinnedQuest;
+                        buttonBar.SetPinnedQuest(pinned?.Title, pinned?.ObjectiveDesc);
+                    };
+                }
+            }
+            if (npcDialoguePanel != null) npcDialoguePanel.Initialize(_adapter, _router, _life.Token, null, _doc);
+            if (settingsPanel != null) settingsPanel.Initialize(_adapter, _router, _life.Token, store, _doc);
+            if (mapPanel != null) mapPanel.Initialize(_adapter, _router, _life.Token, _doc);
             if (buttonBar != null) buttonBar.Initialize(_adapter, this, _doc);
             if (cinemaOverlay != null) cinemaOverlay.Initialize(_doc);
 
@@ -112,8 +130,23 @@ namespace NguMach.Client.P1
                 _life?.Cancel();
                 _life?.Dispose();
                 _life = null;
-                if (_router != null) { _router.OnPanelChanged -= HandlePanelChanged; _router.CloseAll(); _router = null; }
+                if (_router != null)
+                {
+                    _router.OnPanelChanged -= HandlePanelChanged;
+                    _router.CloseAll();
+                    _router = null;
+                }
                 HideAllPanels();
+
+                inventoryPanel?.Teardown();
+                characterPanel?.Teardown();
+                questJournalPanel?.Teardown();
+                npcDialoguePanel?.Teardown();
+                settingsPanel?.Teardown();
+                mapPanel?.Teardown();
+                buttonBar?.Teardown();
+                cinemaOverlay?.Teardown();
+
                 _adapter = null;
                 _doc = null;
             }
