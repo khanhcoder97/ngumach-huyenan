@@ -21,10 +21,29 @@ namespace NguMach.Client.P1.Editor
                 Undo.RegisterCreatedObjectUndo(host, "Create PlayerUI_Host");
             }
 
-            var doc = host.GetComponent<UIDocument>() ?? Object.FindFirstObjectByType<UIDocument>();
+            var doc = host.GetComponent<UIDocument>();
             if (doc == null)
             {
                 doc = host.AddComponent<UIDocument>();
+            }
+
+            // Assign PanelSettings if missing
+            if (doc.panelSettings == null)
+            {
+                var settings = Resources.Load<PanelSettings>("PlayerUI/DefaultPanelSettings");
+                if (settings == null)
+                {
+                    string[] guids = AssetDatabase.FindAssets("t:PanelSettings");
+                    if (guids.Length > 0)
+                    {
+                        string path = AssetDatabase.GUIDToAssetPath(guids[0]);
+                        settings = AssetDatabase.LoadAssetAtPath<PanelSettings>(path);
+                    }
+                }
+                if (settings != null)
+                {
+                    doc.panelSettings = settings;
+                }
             }
 
             var hook = host.GetComponent<P1PlayerUIHook>();

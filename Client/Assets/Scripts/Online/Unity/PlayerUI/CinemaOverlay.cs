@@ -29,10 +29,14 @@ namespace NguMach.Client.P1
 
         public void Initialize(UIDocument doc = null)
         {
-            _doc = doc;
-            _presenter = new CinemaPresenter();
-            _presenter.OnChanged += Render;
-            BuildUI();
+            _doc = doc ?? _doc;
+            if (_presenter == null)
+            {
+                _presenter = new CinemaPresenter();
+                _presenter.OnChanged += Render;
+            }
+            if (_root == null) BuildUI();
+            else AttachToDocument();
         }
 
         private void BuildUI()
@@ -120,9 +124,12 @@ namespace NguMach.Client.P1
 
         private void AttachToDocument()
         {
-            if (_doc == null) _doc = FindFirstObjectByType<UIDocument>();
-            if (_doc == null) { Debug.LogError("[CinemaOverlay] No UIDocument found in scene."); return; }
-            _doc.rootVisualElement.Add(_root);
+            if (_doc == null || _root == null) return;
+            if (_root.parent != _doc.rootVisualElement)
+            {
+                _root.RemoveFromHierarchy();
+                _doc.rootVisualElement.Add(_root);
+            }
         }
 
         public void PlayScene(string sceneId)

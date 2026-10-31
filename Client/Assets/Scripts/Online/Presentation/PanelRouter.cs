@@ -24,6 +24,11 @@ namespace NguMach.Client.Presentation
         /// <summary>Open a panel. If another is open it is pushed to modal stack (focus preserved).</summary>
         public void Open(PlayerPanel panel, UIConnectionState connectionState)
         {
+            if (connectionState == UIConnectionState.Disconnected || connectionState == UIConnectionState.Expired)
+            {
+                CloseAll();
+                return;
+            }
             if (panel == PlayerPanel.None) return;
             if (panel == _current) return;
             if (_current != PlayerPanel.None)

@@ -99,6 +99,9 @@ namespace NguMach.Client.Presentation
         public InventoryViewState WithFilter(string text) =>
             new InventoryViewState(InventoryRevision, Slots, Currencies, ActivePage, SelectedInstanceId, text, DiagnosticWarnings);
 
+        public ItemSlotView GetSlot(int slotIndex) =>
+            Slots != null && Slots.TryGetValue(slotIndex, out var s) ? s : null;
+
         /// <summary>Slots visible on current page (indices page*25 .. page*25+24).</summary>
         public IEnumerable<(int localIndex, ItemSlotView item)> PageSlots()
         {
@@ -164,6 +167,18 @@ namespace NguMach.Client.Presentation
         public IReadOnlyList<QuestEntryView> Completed { get; }
         public string SelectedQuestId { get; }
         public string PinnedQuestId { get; }
+        public QuestEntryView PinnedQuest
+        {
+            get
+            {
+                if (Active == null || string.IsNullOrEmpty(PinnedQuestId)) return null;
+                for (int i = 0; i < Active.Count; i++)
+                {
+                    if (Active[i] != null && Active[i].QuestId == PinnedQuestId) return Active[i];
+                }
+                return null;
+            }
+        }
         public bool HasPinnedTracker => !string.IsNullOrEmpty(PinnedQuestId);
 
         public QuestJournalViewState(
@@ -308,7 +323,32 @@ namespace NguMach.Client.Presentation
         public static readonly SettingsViewState Default = new SettingsViewState();
     }
 
-    // ── Map view state ───────────────────────────────────────────────────────
+    // ── Map view state & bounds ──────────────────────────────────────────────
+
+    public sealed class MapBounds
+    {
+        public double XMin { get; }
+        public double XMax { get; }
+        public double YMin { get; }
+        public double YMax { get; }
+        public double Width => XMax - XMin;
+        public double Height => YMax - YMin;
+
+        public MapBounds(double xMin, double xMax, double yMin, double yMax)
+        {
+            XMin = xMin; XMax = xMax; YMin = yMin; YMax = yMax;
+        }
+
+        public static readonly MapBounds Default = new MapBounds(0, 360, -12, 72);
+        public static readonly MapBounds ThangLong = new MapBounds(0, 900, -12, 96);
+
+        public static MapBounds ForMap(string mapId)
+        {
+            if (string.Equals(mapId, "MAP_THANG_LONG", StringComparison.OrdinalIgnoreCase))
+                return ThangLong;
+            return Default;
+        }
+    }
 
     public sealed class MapViewState
     {
@@ -318,18 +358,21 @@ namespace NguMach.Client.Presentation
         public IReadOnlyList<MapMarker> Markers { get; }
         public float ZoomLevel { get; }       // UI zoom, independent of world camera
         public bool TopologyIsCandidate { get; } // true = not yet reviewed, show warning
+        public MapBounds Bounds { get; }
 
         public MapViewState(
             string mapId, double playerX, double playerY,
             IReadOnlyList<MapMarker> markers,
             float zoomLevel = 1f,
-            bool topologyIsCandidate = false)
+            bool topologyIsCandidate = false,
+            MapBounds bounds = null)
         {
             MapId = mapId;
             PlayerX = playerX; PlayerY = playerY;
             Markers = markers ?? Array.Empty<MapMarker>();
             ZoomLevel = Math.Max(0.25f, Math.Min(4f, zoomLevel));
             TopologyIsCandidate = topologyIsCandidate;
+            Bounds = bounds ?? MapBounds.ForMap(mapId);
         }
     }
 

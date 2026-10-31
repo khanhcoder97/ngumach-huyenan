@@ -18,6 +18,7 @@ namespace NguMach.Client.P1
         private PanelRouter _router;
         private CancellationToken _ct;
         private InventoryPresenter _presenter;
+        private UIDocument _doc;
 
         private VisualElement _root;
         private VisualElement _grid;
@@ -29,14 +30,17 @@ namespace NguMach.Client.P1
 
         // ── Init ─────────────────────────────────────────────────────────────
 
-        public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct)
+        public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct, UIDocument doc = null)
         {
+            if (_presenter != null) _presenter.OnChanged -= Render;
             _adapter = adapter;
             _router = router;
             _ct = ct;
+            _doc = doc ?? _doc;
             _presenter = new InventoryPresenter(adapter);
             _presenter.OnChanged += Render;
-            BuildUI();
+            if (_root == null) BuildUI();
+            else AttachToDocument(_doc);
             Hide();
         }
 
@@ -114,11 +118,15 @@ namespace NguMach.Client.P1
             AttachToDocument();
         }
 
-        private void AttachToDocument()
+        private void AttachToDocument(UIDocument doc = null)
         {
-            var doc = FindFirstObjectByType<UIDocument>();
-            if (doc == null) { Debug.LogError("[InventoryPanel] No UIDocument found in scene."); return; }
-            doc.rootVisualElement.Add(_root);
+            _doc = doc ?? _doc;
+            if (_doc == null || _root == null) return;
+            if (_root.parent != _doc.rootVisualElement)
+            {
+                _root.RemoveFromHierarchy();
+                _doc.rootVisualElement.Add(_root);
+            }
         }
 
         // ── Render ───────────────────────────────────────────────────────────
@@ -233,10 +241,24 @@ namespace NguMach.Client.P1
             }
         }
 
-        private void OnDestroy()
+        public void Teardown()
         {
-            if (_presenter != null) _presenter.OnChanged -= Render;
+            Hide();
+            if (_presenter != null)
+            {
+                _presenter.OnChanged -= Render;
+                _presenter = null;
+            }
+            if (_root != null && _root.parent != null)
+            {
+                _root.RemoveFromHierarchy();
+            }
+            _adapter = null;
+            _router = null;
+            _doc = null;
         }
+
+        private void OnDestroy() => Teardown();
 
         // ── Helpers ──────────────────────────────────────────────────────────
 
