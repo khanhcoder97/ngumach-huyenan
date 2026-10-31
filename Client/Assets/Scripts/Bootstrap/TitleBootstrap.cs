@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
+using NguMach.Client.P1;
 
 public sealed class TitleBootstrap : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public sealed class TitleBootstrap : MonoBehaviour
     private string healthUrl = DefaultHealthUrl;
     private int healthTimeoutSeconds = 3;
     private int healthPollIntervalSeconds = 10;
+    private string apiBaseUrl = "http://127.0.0.1:5000";
+    private int apiTimeoutSeconds = 5;
+    private bool onlineV2Enabled;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void CreateTitle()
@@ -47,6 +51,8 @@ public sealed class TitleBootstrap : MonoBehaviour
 
         if (gameCamera.GetComponent<PixelArtCameraBootstrap>() == null)
             gameCamera.gameObject.AddComponent<PixelArtCameraBootstrap>();
+        if (FindFirstObjectByType<AudioListener>() == null)
+            gameCamera.gameObject.AddComponent<AudioListener>();
     }
 
     private void LoadClientConfig()
@@ -69,6 +75,10 @@ public sealed class TitleBootstrap : MonoBehaviour
                 healthTimeoutSeconds = config.healthTimeoutSeconds;
             if (config.healthPollIntervalSeconds is >= 2 and <= 120)
                 healthPollIntervalSeconds = config.healthPollIntervalSeconds;
+            if (!string.IsNullOrWhiteSpace(config.apiBaseUrl)) apiBaseUrl = config.apiBaseUrl;
+            else apiBaseUrl = new Uri(healthUrl).GetLeftPart(UriPartial.Authority);
+            onlineV2Enabled = config.onlineV2Enabled;
+            if (config.apiTimeoutSeconds is >= 1 and <= 30) apiTimeoutSeconds = config.apiTimeoutSeconds;
         }
         catch (ArgumentException)
         {
@@ -82,6 +92,9 @@ public sealed class TitleBootstrap : MonoBehaviour
         public string healthUrl;
         public int healthTimeoutSeconds;
         public int healthPollIntervalSeconds;
+        public string apiBaseUrl;
+        public int apiTimeoutSeconds;
+        public bool onlineV2Enabled;
     }
 
     private void BuildTitle()
@@ -106,10 +119,21 @@ public sealed class TitleBootstrap : MonoBehaviour
         statusLabel.style.marginTop = 18;
         root.Add(statusLabel);
 
-        var startButton = new Button { text = "Sắp ra mắt" };
-        startButton.SetEnabled(false);
+        var startButton = new Button(BeginOnline) { text = P1Copy.Get("title.start") };
         startButton.style.marginTop = 28;
         root.Add(startButton);
+    }
+
+    private void BeginOnline()
+    {
+        if (GetComponent<P1OnlinePanel>() != null) return;
+        StopAllCoroutines();
+        var panel = gameObject.AddComponent<P1OnlinePanel>();
+        panel.Open(document, apiBaseUrl, apiTimeoutSeconds, () =>
+        {
+            BuildTitle();
+            StartCoroutine(PollHealth());
+        }, onlineV2Enabled);
     }
 
     private IEnumerator PollHealth()
