@@ -38,3 +38,9 @@ Probe ban đầu tìm ra hai yêu cầu tích hợp: v1 snapshot không có NPC;
 Mở thêm reader8127 bị automatic review chặn với lý do `blocked by policy`; không khởi chạy hoặc kill service để vượt chặn. Reader8126 của người dùng giữ nguyên. Bản Markdown đầy đủ và source v3 vẫn được bàn giao trong repository. Browser smoke dùng process tạm của riêng nó và đã hoàn tất.
 
 Chưa có độc giả độc lập hoặc diễn viên duyệt văn. “Viết lại đủ nội dung” chỉ nói coverage của lượt prose v3, không chứng nhận mọi phân cảnh đã đạt chất lượng cuối cùng hoặc game hoàn chỉnh.
+
+## Sửa lệch giữa các nhánh khi chạy CI tích hợp
+
+CI headf881f65 đã qua narrative-client-HTTP và các kiểm tra client/server, nhưng pipeline nội dung báo transcription lock/coverage drift. Đã đọc diff hai nguồn thay đổi: QuestDefinition thêm activation bắt buộc và blockedSteps; exampleP00-01 chỉ thêm ACTIVE/formatting, toàn bộ targets/counts/rewards/unlocks giữ nguyên. Cập nhật hai hash sau đối chiếu, thêm bốn unresolved activation cho full-design candidates thay vì suy ACTIVE từ runtime subset. Gate ngoài tiếp tục OFF; snapshot21/4ready/17blocked/60unresolved. Candidate tests28PASS, gồm hai ca mới chống bỏ field/gate. Build/check generated candidates cùng coverage42evidencefiles được cập nhật, không sửa số liệu hoặc bật bốn quest blocked.
+
+Checkout sparse ban đầu có ba ảnh fixture/art dưới dạng LFS pointer; chỉ hydrate đúng những ảnh dùng để kiểm coverage/map/preview. Không thay asset hoặc ảnh bằng bản tự tạo để làm qua validator. Các lỗi local do pointer được phân biệt với drift thật trên GitHub (CI đã checkoutLFS). CI sau commit compatibility sẽ tái chạy toàn bộ pipeline; không lấy kết quả headf881 có một job đỏ để ghi tất cả PASS.

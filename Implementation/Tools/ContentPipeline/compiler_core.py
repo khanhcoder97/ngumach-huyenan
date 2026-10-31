@@ -757,6 +757,12 @@ def build_quest_candidates(ctx: Context) -> list[dict]:
             _unresolved(ctx, path, reason, state, source_id, fragment)
             for path, reason, state, source_id, fragment in spec["unresolved"]
         ]
+        # QOD-18 made activation mandatory. A full design candidate is not the
+        # partial server runtime projection: never infer ACTIVE from its graph.
+        unresolved.append(_unresolved(
+            ctx, "/activation",
+            "The runtime schema now requires ACTIVE/BLOCKED. This full design graph still needs a reviewed runtime migration and activation/gap policy; do not infer ACTIVE from a structurally valid candidate.",
+            "MISSING", "QUEST_SCHEMA", "/properties/activation"))
         for index, obj in enumerate(spec["objectives"]):
             for suffix, reason, source_id, fragment in obj.get("presentUnresolved", []):
                 unresolved.append(

@@ -1,0 +1,18 @@
+{
+  "reviewedRuntimeHead": "f2649f30b858ac1656f892500f0532d95c937668",
+  "sources": [
+    {
+      "sourceId": "QUEST_SCHEMA",
+      "path": "Implementation/Content/Schemas/QuestDefinition.schema.json",
+      "before": "sha256:1cdb0a8282e98ff5f3c81dce10e785f83cdacb605dcb1dbff44e35b751e624d8",
+      "after": "sha256:84796504c9e14f5f3ce967070b9d38ee4dfd85bf2044200439740182ff7a8280"
+    },
+    {
+      "sourceId": "QUEST_EXAMPLE_P00_01",
+      "path": "Implementation/Content/Examples/QuestDefinition/P00-01.json",
+      "before": "sha256:17f8f62fef04271a14d69682c6f45205720b7f1775bbff994fe9c30e2cc40da8",
+      "after": "sha256:b9547e99959b00bf7a4990ab1dc4daba888dddb3848931c3cfe438a322ff878c"
+    }
+  ],
+  "review": "P00-01 adds activation ACTIVE and formatting only; semantic objectives/count/map/rewards/unlocks unchanged. Schema adds required activation enum ACTIVE/BLOCKED, optional blockedSteps and permits unresolved turnInNpcId. No numeric/cost/target transcription changes. Four full-design candidates retain omitted activation with blocking provenance; runtime activation outer gate remains OFF."
+}

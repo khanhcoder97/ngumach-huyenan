@@ -37,6 +37,23 @@ class PipelineTests(unittest.TestCase):
             self.assertEqual({f'P00-0{i}' for i in range(1,6)},
                              {c['targetId'] for c in self.bundle['candidates'] if c['kind']==kind})
 
+    def test_activation_extension_never_enables_full_design_candidates(self):
+        self.assertFalse(self.bundle['activation']['runtimeActivationAllowed'])
+        for candidate in self.bundle['candidates']:
+            if candidate['kind'] != 'QUEST': continue
+            if candidate['targetId'] == 'P00-01':
+                self.assertEqual('ACTIVE',candidate['definition']['activation'])
+            else:
+                self.assertNotIn('activation',candidate['definition'])
+                self.assertTrue(any(u['path']=='/activation' and u['blocking'] for u in candidate['unresolved']))
+
+    def test_missing_activation_cannot_be_hidden_without_unresolved_evidence(self):
+        bundle=copy.deepcopy(self.bundle)
+        candidate=next(c for c in bundle['candidates'] if c['kind']=='QUEST' and c['targetId']=='P00-02')
+        candidate['unresolved']=[u for u in candidate['unresolved'] if u['path']!='/activation']
+        errors=validate_bundle(self.seal(bundle),self.ctx)
+        self.assertTrue(any('activation' in error for error in errors))
+
     def test_footwear_exists_and_is_not_reported_as_missing_catalog(self):
         item=next(c for c in self.bundle['candidates'] if c['candidateId']=='ITEM-REF-P00-03-SHOES')
         self.assertEqual(5,len(item['definition']['candidateItemIds']))

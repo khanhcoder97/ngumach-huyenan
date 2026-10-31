@@ -8,8 +8,8 @@
 > python Implementation/Asset_Handoff/coverage_audit.py --check
 > ```
 
-- **Source commit:** `6d815c308978d3bbf74035193e26ca48f71caf14` — last commit touching the evidence files (not the report commit).
-- **Evidence digest:** `f9eb10a1a7a7c38223e19358f7ea92c3d8e5943538e3666a915d02946fac44f6` over 38 files (SHA256 per file in §8).
+- **Source commit:** `72f966c9feede2c21cd753349752c4d92b160100` — last commit touching the evidence files (not the report commit).
+- **Evidence digest:** `cc1afb9ff86584f7c6d969b9d82410309685ae20bf2344d59b4e961993d59301` over 42 files (SHA256 per file in §8).
 - **Phạm vi:** chỉ đọc nguồn; không sửa schema, manifest, asset, `.meta`, server hay gameplay numeric.
 
 ## 1. Kết luận
@@ -17,7 +17,7 @@
 1. **Asset Minh Kiếm:** manifest và PNG IHDR khớp `288×512`; 6 frame/hướng × 8 hướng, cell `48×64`. `.meta` tĩnh đã đọc bằng Python: 48 sprite, PPU 20, pivot bottom-center.
 2. **Lỗi import tĩnh:** `META_FILTER_MODE` = 1 (Bilinear), cần 0 (Point) → thuộc phạm vi Muse, không sửa trong PR này.
 3. **Engine playback:** **chưa nghiệm thu**. Không có Unity trong môi trường này; báo cáo chỉ xác nhận metadata tĩnh và header PNG.
-4. **Độ phủ definition:** 9 ví dụ canonical (+1 fixture synthetic tách riêng). 1/5 class, 3/30 skill, 1/76 quest, 1/2236 item, 1/46 map, 1/349 spawn, 1/35 node.
+4. **Độ phủ definition:** 13 ví dụ canonical (+1 fixture synthetic tách riêng). 1/5 class, 3/30 skill, 5/76 quest, 1/2236 item, 1/46 map, 1/349 spawn, 1/35 node.
 
 ## 2. Số đo nguồn (đo từ file, không suy đoán)
 
@@ -29,7 +29,7 @@
 | Placement | 349 | `docs/production/World_Spawn_Gathering_Manifest_vi.csv` (349 record_id riêng) |
 | Active skill ID | 30 | `docs/production/Combat_Skills_VFX_Animation_Spec_vi.md` (5 lớp × 6) |
 | Item master / rarity variant | 556 / 2236 | `Item_Master_Catalog_vi.csv` / `Item_Rarity_Variant_Catalog_vi.csv` |
-| Definition example canonical | 9 | `Implementation/Content/Examples` |
+| Definition example canonical | 13 | `Implementation/Content/Examples` |
 | Fixture synthetic | 1 | `Implementation/Content/Examples/MapTopology` |
 | Schema file | 8 | `Implementation/Content/Schemas` |
 
@@ -110,14 +110,14 @@
 |---|---:|---:|---:|---:|---|
 | Class (`classId`) | 5 | 1 | 1 | 4 | unverified |
 | Skill (`skillId`) | 30 | 3 | 3 | 27 | unverified |
-| Quest (`questId`) | 76 | 1 | 1 | 75 | unverified |
+| Quest (`questId`) | 76 | 5 | 5 | 71 | unverified |
 | Item master (`itemId`) | 556 | 0 | 0 | 556 | unverified |
 | Item rarity variant (`itemId`) | 2236 | 1 | 1 | 2235 | unverified |
 | Map (`mapId`) | 46 | 1 | 1 | 45 | unverified |
 | Spawn placement (`recordId`) | 349 | 1 | 1 | 348 | unverified |
 | Gathering node (`recordId`) | 35 | 1 | 1 | 34 | unverified |
 
-**9 definition examples canonical** (1 class + 3 skill + 1 quest + 1 item + 1 map + 1 spawn + 1 gathering node). Fixture `Implementation/Content/Examples/MapTopology/SYNTHETIC_TEST_ROOM_MAP_BEN_MUA.json` (`reviewState=SYNTHETIC_TEST_ONLY`) **không** tính vào coverage.
+**13 definition examples canonical** (1 class + 3 skill + 1 quest + 1 item + 1 map + 1 spawn + 1 gathering node). Fixture `Implementation/Content/Examples/MapTopology/SYNTHETIC_TEST_ROOM_MAP_BEN_MUA.json` (`reviewState=SYNTHETIC_TEST_ONLY`) **không** tính vào coverage.
 
 - Item example `EQ-MK-WEAPON-T1-R-COMMON`: có trong rarity-variant catalogue: ✅; có trong item master: ❌.
 
@@ -131,7 +131,7 @@
 
 **map — 45 absent:** `MAP_BACH_UYEN`, `MAP_DAI_NGU_MACH`, `MAP_DG_01`, `MAP_DG_02`, `MAP_DG_03`, `MAP_DG_04`, `MAP_LAC_AN_TOWER_F01`, `MAP_LAC_AN_TOWER_F02`, `MAP_LAC_AN_TOWER_F03`, `MAP_LAC_AN_TOWER_F04`, `MAP_LAC_AN_TOWER_F05`, `MAP_LAC_AN_TOWER_F06`, `MAP_LAC_AN_TOWER_F07`, `MAP_LAC_AN_TOWER_F08`, `MAP_LAC_AN_TOWER_F09`, `MAP_LAC_AN_TOWER_F10`, `MAP_LAC_AN_TOWER_F11`, `MAP_LAC_AN_TOWER_F12`, `MAP_LAC_AN_TOWER_F13`, `MAP_LAC_AN_TOWER_F14`, `MAP_LAC_AN_TOWER_F15`, `MAP_LAC_AN_TOWER_F16`, `MAP_LAC_AN_TOWER_F17`, `MAP_LAC_AN_TOWER_F18`, `MAP_LAC_AN_TOWER_F19`, `MAP_LAC_AN_TOWER_F20`, `MAP_LAC_AN_TOWER_F21`, `MAP_LAC_AN_TOWER_F22`, `MAP_LAC_AN_TOWER_F23`, `MAP_LAC_AN_TOWER_F24`, `MAP_LAC_AN_TOWER_F25`, `MAP_LAC_AN_TOWER_F26`, `MAP_LAC_AN_TOWER_F27`, `MAP_LAC_AN_TOWER_F28`, `MAP_LAC_AN_TOWER_F29`, `MAP_LAC_AN_TOWER_F30`, `MAP_LAM_TRIEU`, `MAP_RD_01`, `MAP_RD_02`, `MAP_SA_HOA`, `MAP_THANG_LONG`, `MAP_THANH_LAC`, `MAP_TRAN_SON`, `MAP_TRAN_SON_SIEGE`, `MAP_VUC_NGHICH_MACH`
 
-**quest — 75 absent:** `C1-01`, `C1-02`, `C1-03`, `C1-04`, `C1-05`, `C1-06`, `C2-01`, `C2-02`, `C2-03`, `C2-04`, `C2-05`, `C3-01`, `C3-02`, `C3-03`, `C3-04`, `C3-05`, `C4-01`, `C4-02`, `C4-03`, `C4-04`, `C4-05`, `C5-01`, `C5-02`, `C5-03`, `C5-04`, `C5-05`, `C6-01`, `C6-02`, `C6-03`, `C6-04`, `C6-05`, `P00-02`, `P00-03`, `P00-04`, `P00-05`, `SQ-BM-01`, `SQ-BM-02`, `SQ-BM-03`, `SQ-BM-04`, `SQ-BM-05`, `SQ-BU-01`, `SQ-BU-02`, `SQ-BU-03`, `SQ-BU-04`, `SQ-BU-05`, `SQ-DM-01`, `SQ-DM-02`, `SQ-DM-03`, `SQ-DM-04`, `SQ-DM-05`, `SQ-LT-01`, `SQ-LT-02`, `SQ-LT-03`, `SQ-LT-04`, `SQ-LT-05`, `SQ-SH-01`, `SQ-SH-02`, `SQ-SH-03`, `SQ-SH-04`, `SQ-SH-05`, `SQ-TL-01`, `SQ-TL-02`, `SQ-TL-03`, `SQ-TL-04`, `SQ-TL-05`, `SQ-TS-01`, `SQ-TS-02`, `SQ-TS-03`, `SQ-TS-04`, `SQ-TS-05`, `SQ-VN-01`, `SQ-VN-02`, `SQ-VN-03`, `SQ-VN-04`, `SQ-VN-05`
+**quest — 71 absent:** `C1-01`, `C1-02`, `C1-03`, `C1-04`, `C1-05`, `C1-06`, `C2-01`, `C2-02`, `C2-03`, `C2-04`, `C2-05`, `C3-01`, `C3-02`, `C3-03`, `C3-04`, `C3-05`, `C4-01`, `C4-02`, `C4-03`, `C4-04`, `C4-05`, `C5-01`, `C5-02`, `C5-03`, `C5-04`, `C5-05`, `C6-01`, `C6-02`, `C6-03`, `C6-04`, `C6-05`, `SQ-BM-01`, `SQ-BM-02`, `SQ-BM-03`, `SQ-BM-04`, `SQ-BM-05`, `SQ-BU-01`, `SQ-BU-02`, `SQ-BU-03`, `SQ-BU-04`, `SQ-BU-05`, `SQ-DM-01`, `SQ-DM-02`, `SQ-DM-03`, `SQ-DM-04`, `SQ-DM-05`, `SQ-LT-01`, `SQ-LT-02`, `SQ-LT-03`, `SQ-LT-04`, `SQ-LT-05`, `SQ-SH-01`, `SQ-SH-02`, `SQ-SH-03`, `SQ-SH-04`, `SQ-SH-05`, `SQ-TL-01`, `SQ-TL-02`, `SQ-TL-03`, `SQ-TL-04`, `SQ-TL-05`, `SQ-TS-01`, `SQ-TS-02`, `SQ-TS-03`, `SQ-TS-04`, `SQ-TS-05`, `SQ-VN-01`, `SQ-VN-02`, `SQ-VN-03`, `SQ-VN-04`, `SQ-VN-05`
 
 **item — 556 master + 2235 variant absent** (danh sách đầy đủ trong `coverage_report.json`).
 
@@ -186,7 +186,11 @@ File text được hash ở dạng **LF chuẩn hoá** để Windows và Linux c
 | `Implementation/Content/Examples/ItemDefinition/EQ-MK-WEAPON-T1-R-COMMON.json` | 432 | `ce579ce5455f117514b786a66d2d9e5ea4a779c435838514d354c1e7d70774aa` |
 | `Implementation/Content/Examples/MapDefinition/MAP_BEN_MUA.json` | 380 | `058902045c7217f096e96dd079b01a56ff464e2a7eb2c7cf5c5b44a2cc20d84d` |
 | `Implementation/Content/Examples/MapTopology/SYNTHETIC_TEST_ROOM_MAP_BEN_MUA.json` | 1534 | `93b42365ba1a81442478be05167ada53c7cda5e3b79444ef2550504531b0a854` |
-| `Implementation/Content/Examples/QuestDefinition/P00-01.json` | 796 | `17f8f62fef04271a14d69682c6f45205720b7f1775bbff994fe9c30e2cc40da8` |
+| `Implementation/Content/Examples/QuestDefinition/P00-01.json` | 874 | `b9547e99959b00bf7a4990ab1dc4daba888dddb3848931c3cfe438a322ff878c` |
+| `Implementation/Content/Examples/QuestDefinition/P00-02.json` | 1025 | `363b04d2a3312d9857aedf9078c452df2db00f4255c90ea8e8ff1ae921d2621b` |
+| `Implementation/Content/Examples/QuestDefinition/P00-03.json` | 1462 | `9cbadf19a8de4921db8c8b4b4c16f2b022182be637300e40e8c78aa069b5928f` |
+| `Implementation/Content/Examples/QuestDefinition/P00-04.json` | 1755 | `a71fa8084919f543f1f7454768bdd9e2da461d240a8dcc66bb299f90e3a84706` |
+| `Implementation/Content/Examples/QuestDefinition/P00-05.json` | 1901 | `5484f64de5f9baa07ffa4e95ee40fa77a78946af6ca34218e285249f3a812646` |
 | `Implementation/Content/Examples/SkillDefinition/SK-MK-01.json` | 522 | `1e8ed5782af0f70a441ee8c804fa942fdb83d29b961d2757d39b845486ea2f56` |
 | `Implementation/Content/Examples/SkillDefinition/SK-MK-02.json` | 496 | `ac50bf48fb959d017fbc318c4a6d8d16f95ec6f8c2ce9e006b60a49f2bfcb7db` |
 | `Implementation/Content/Examples/SkillDefinition/SK-MK-03.json` | 502 | `b83d8238a1dfd0e4f9ba74ef0f9b2297136d3e87f6204638656e2b307c69a64a` |
@@ -196,7 +200,7 @@ File text được hash ở dạng **LF chuẩn hoá** để Windows và Linux c
 | `Implementation/Content/Schemas/ItemDefinition.schema.json` | 1740 | `9b2b678953f4f2deeed79fd5fe7f3e8baa30e5f6ceb6e848c758a887ab5999c5` |
 | `Implementation/Content/Schemas/MapDefinition.schema.json` | 1825 | `8ad694333bdf88e3a6fba44d5b668f4e82100fd0ed9b4d720817ba2e956aec2a` |
 | `Implementation/Content/Schemas/MapTopology.schema.json` | 3866 | `64dc86be7b34812805c81d8fff56a0bf4fb706795e1cfa9f0f9487f8b81313f9` |
-| `Implementation/Content/Schemas/QuestDefinition.schema.json` | 3829 | `1cdb0a8282e98ff5f3c81dce10e785f83cdacb605dcb1dbff44e35b751e624d8` |
+| `Implementation/Content/Schemas/QuestDefinition.schema.json` | 4882 | `84796504c9e14f5f3ce967070b9d38ee4dfd85bf2044200439740182ff7a8280` |
 | `Implementation/Content/Schemas/SkillDefinition.schema.json` | 2486 | `41828ae02441ac28a1d8c8593cc8c7544e392ec4a25765fb53cd3af4077e79b1` |
 | `Implementation/Content/Schemas/SpawnDefinition.schema.json` | 2767 | `5eb263a1e9d0b574eddfd3c6421df546d312d05625ee26ad36d59ea2c53801ea` |
 | `docs/production/Class_Passive_Production_Data_vi.csv` | 14134 | `ff7eb9a6050af44376219b9b96bc8f44434bc163b4b237e8bab04a743e2d91e8` |
@@ -215,4 +219,4 @@ File text được hash ở dạng **LF chuẩn hoá** để Windows và Linux c
 | `docs/production/Weekly_Boss_Rotation_Data_vi.csv` | 3201 | `940214ce7a34978487403520c50ffef825da7da94210eeb3b1841d46f4e372e2` |
 | `docs/production/World_Spawn_Gathering_Manifest_vi.csv` | 198229 | `7fe2d4d5229e2fb7a93eb8c0fd452b741cb5f050c49a9c72bee30f8eff06c457` |
 
-**Evidence digest:** `f9eb10a1a7a7c38223e19358f7ea92c3d8e5943538e3666a915d02946fac44f6`
+**Evidence digest:** `cc1afb9ff86584f7c6d969b9d82410309685ae20bf2344d59b4e961993d59301`
