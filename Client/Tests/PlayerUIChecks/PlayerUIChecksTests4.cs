@@ -24,6 +24,9 @@ namespace PlayerUIChecks
 
         public List<P1Request> DispatchedRequests { get; } = new List<P1Request>();
 
+        public static P1HttpReply MakeReply(int statusCode, string body, string correlationId) =>
+            new P1HttpReply { StatusCode = statusCode, Body = body, CorrelationId = correlationId };
+
         public void MapRoute(string method, string pathPrefix, Func<P1Request, P1HttpReply> handler)
         {
             _routes[method + " " + pathPrefix] = handler;
@@ -41,7 +44,7 @@ namespace PlayerUIChecks
                     return Task.FromResult(kv.Value(request));
                 }
             }
-            return Task.FromResult(new P1HttpReply(404, "{\"error\":{\"code\":\"not_found\"}}", request.CorrelationId));
+            return Task.FromResult(MakeReply(404, "{\"error\":{\"code\":\"not_found\"}}", request.CorrelationId));
         }
     }
 
@@ -71,7 +74,7 @@ namespace PlayerUIChecks
                         "{\"entityId\":\"ENT_MAN_BM_NPC_LYAN\",\"kind\":\"NPC\",\"x\":15.0,\"y\":25.0}," +
                         "{\"entityId\":\"ENT_MAN_BM_NPC_TA_VAN_KHANH\",\"kind\":\"NPC\",\"x\":50.0,\"y\":50.0}" +
                     "]}}";
-                return new P1HttpReply(201, body, req.CorrelationId);
+                return ScriptedP1Transport.MakeReply(201, body, req.CorrelationId);
             });
 
             // 2. World route
@@ -84,7 +87,7 @@ namespace PlayerUIChecks
                         "{\"entityId\":\"ENT_MAN_BM_NPC_LYAN\",\"kind\":\"NPC\",\"x\":15.0,\"y\":25.0}," +
                         "{\"entityId\":\"ENT_MAN_BM_NPC_TA_VAN_KHANH\",\"kind\":\"NPC\",\"x\":50.0,\"y\":50.0}" +
                     "]}}";
-                return new P1HttpReply(200, body, req.CorrelationId);
+                return ScriptedP1Transport.MakeReply(200, body, req.CorrelationId);
             });
 
             // 3. Quests read route
@@ -94,13 +97,13 @@ namespace PlayerUIChecks
                     "\"questId\":\"P00-01\",\"state\":\"" + questState + "\",\"stepId\":\"STEP_BEN_MUA\"," +
                     "\"revision\":" + questRevision + "," +
                     "\"objectiveCounters\":{\"OBJ_P00_01_PACKAGES\":" + packageCount + "}}]}";
-                return new P1HttpReply(200, body, req.CorrelationId);
+                return ScriptedP1Transport.MakeReply(200, body, req.CorrelationId);
             });
 
             // 4. Interact route
             transport.MapRoute("POST", "/p1/interact", req =>
             {
-                return new P1HttpReply(200, "{\"result\":{\"ok\":true}}", req.CorrelationId);
+                return ScriptedP1Transport.MakeReply(200, "{\"result\":{\"ok\":true}}", req.CorrelationId);
             });
 
             // 5. Accept quest route
@@ -108,7 +111,7 @@ namespace PlayerUIChecks
             {
                 questState = "ACTIVE";
                 questRevision++;
-                return new P1HttpReply(200, "{\"result\":{\"receiptId\":\"RCPT_ACC_01\",\"questId\":\"P00-01\"}}", req.CorrelationId);
+                return ScriptedP1Transport.MakeReply(200, "{\"result\":{\"receiptId\":\"RCPT_ACC_01\",\"questId\":\"P00-01\"}}", req.CorrelationId);
             });
 
             // 6. Turn in quest route
@@ -118,7 +121,7 @@ namespace PlayerUIChecks
                 questRevision++;
                 inventoryRevision++;
                 inventoryItems.Add("EQ-MK-WEAPON-T1-R-COMMON");
-                return new P1HttpReply(200, "{\"result\":{\"receiptId\":\"RCPT_TURNIN_01\",\"questId\":\"P00-01\"}}", req.CorrelationId);
+                return ScriptedP1Transport.MakeReply(200, "{\"result\":{\"receiptId\":\"RCPT_TURNIN_01\",\"questId\":\"P00-01\"}}", req.CorrelationId);
             });
 
             // 7. Inventory read route
@@ -131,7 +134,7 @@ namespace PlayerUIChecks
                     itemsJson += "{\"instanceId\":\"INST_" + i + "\",\"templateId\":\"" + inventoryItems[i] + "\",\"location\":\"BAG\",\"slot\":\"" + i + "\",\"stack\":1}";
                 }
                 string body = "{\"result\":{\"inventoryRevision\":" + inventoryRevision + ",\"items\":[" + itemsJson + "],\"currencies\":[{\"currencyId\":\"CUR_GOLD\",\"amount\":100}]}}";
-                return new P1HttpReply(200, body, req.CorrelationId);
+                return ScriptedP1Transport.MakeReply(200, body, req.CorrelationId);
             });
 
             // Start concrete client & adapter
@@ -405,7 +408,7 @@ namespace PlayerUIChecks
                 new[] { view },
                 Array.Empty<QuestEntryView>(),
                 selectedQuestId: null,
-                filterText: null,
+                hasPinnedTracker: true,
                 pinnedQuestId: "P00-01");
 
             Assert.Equal("P00-01", journalState.PinnedQuestId);

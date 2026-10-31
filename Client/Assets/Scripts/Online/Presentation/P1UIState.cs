@@ -99,6 +99,9 @@ namespace NguMach.Client.Presentation
         public InventoryViewState WithFilter(string text) =>
             new InventoryViewState(InventoryRevision, Slots, Currencies, ActivePage, SelectedInstanceId, text, DiagnosticWarnings);
 
+        public ItemSlotView GetSlot(int slotIndex) =>
+            Slots != null && Slots.TryGetValue(slotIndex, out var s) ? s : null;
+
         /// <summary>Slots visible on current page (indices page*25 .. page*25+24).</summary>
         public IEnumerable<(int localIndex, ItemSlotView item)> PageSlots()
         {
@@ -164,7 +167,18 @@ namespace NguMach.Client.Presentation
         public IReadOnlyList<QuestEntryView> Completed { get; }
         public string SelectedQuestId { get; }
         public string PinnedQuestId { get; }
-        public QuestEntryView PinnedQuest => Active != null ? Active.Find(q => q.QuestId == PinnedQuestId) : null;
+        public QuestEntryView PinnedQuest
+        {
+            get
+            {
+                if (Active == null || string.IsNullOrEmpty(PinnedQuestId)) return null;
+                for (int i = 0; i < Active.Count; i++)
+                {
+                    if (Active[i] != null && Active[i].QuestId == PinnedQuestId) return Active[i];
+                }
+                return null;
+            }
+        }
         public bool HasPinnedTracker => !string.IsNullOrEmpty(PinnedQuestId);
 
         public QuestJournalViewState(
