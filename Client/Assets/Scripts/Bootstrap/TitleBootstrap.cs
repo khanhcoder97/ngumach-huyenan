@@ -57,7 +57,7 @@ public sealed class TitleBootstrap : MonoBehaviour
 
     private void LoadClientConfig()
     {
-        var configAsset = Resources.Load<TextAsset>("client-config");
+        var configAsset = Resources.Load<TextAsset>("client-config.local") ?? Resources.Load<TextAsset>("client-config");
         if (configAsset == null || string.IsNullOrWhiteSpace(configAsset.text))
             return;
 

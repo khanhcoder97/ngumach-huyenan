@@ -17,6 +17,7 @@ namespace NguMach.Client.P1
         private P1Client client;
         private P1AudioPlayer audioPlayer;
         private P1PlayerUIHook playerUIHook;
+        private P1NarrativeOverlay narrative;
         private CancellationTokenSource life;
         private Action returnToTitle;
         private Label status, vitals, location, message, detailText, targetText, combatText;
@@ -52,6 +53,7 @@ namespace NguMach.Client.P1
                 client = new P1Client(new P1UnityTransport(serverOrigin, timeoutSeconds), useWorldV2: useWorldV2);
                 audioPlayer = gameObject.AddComponent<P1AudioPlayer>(); audioPlayer.Initialize();
                 Build();
+                narrative = new P1NarrativeOverlay(client, document);
                 playerUIHook = GetComponent<P1PlayerUIHook>();
                 if (playerUIHook != null) playerUIHook.Initialize(new P1ClientAdapter(client), document);
                 _ = StartOnline();
@@ -116,11 +118,13 @@ namespace NguMach.Client.P1
         private void Update()
         {
             if (client == null || closing) return;
+            narrative?.Refresh();
             RefreshInputSurface();
             if (!Application.isFocused || applicationPaused) { ClearHeldInput(); RenderCooldowns(); return; }
             if (Input.GetKeyDown(KeyCode.Escape) && ModalOpen)
             {
-                if (playerUIHook != null && playerUIHook.IsAnyPanelOpen) playerUIHook.CloseTopPanel();
+                if (narrative != null && narrative.IsOpen) narrative.Close();
+                else if (playerUIHook != null && playerUIHook.IsAnyPanelOpen) playerUIHook.CloseTopPanel();
                 else if (audioPanel.style.display.value == DisplayStyle.Flex) ToggleAudio();
                 else ToggleDetails(detailMode);
                 ClearHeldInput(); RenderCooldowns(); return;
@@ -146,6 +150,7 @@ namespace NguMach.Client.P1
             RenderCooldowns();
         }
         private bool ModalOpen { get { return details != null && details.style.display.value == DisplayStyle.Flex ||
+            (narrative != null && narrative.IsOpen) ||
             audioPanel != null && audioPanel.style.display.value == DisplayStyle.Flex ||
             (playerUIHook != null && playerUIHook.IsAnyPanelOpen); } }
         private void ClearHeldInput() { keyboardMove = touchMove = Vector2.zero; touchHeld = false; }
@@ -182,6 +187,11 @@ namespace NguMach.Client.P1
             RefreshInputSurface();
             if (!inputGate.AllowsGameplay || interact == null || !interact.enabledSelf || interactionTarget == null) return;
             string id = interactionTarget;
+            if (narrative != null && narrative.CanHandle(id))
+            {
+                _ = narrative.OpenAsync(id, life.Token);
+                return;
+            }
             if (playerUIHook != null)
             {
                 playerUIHook.OpenWithNpc(id);
@@ -456,6 +466,7 @@ namespace NguMach.Client.P1
         {
             if (closing) return;
             closing = true; if (playerUIHook != null) { playerUIHook.CloseAllPanels(); playerUIHook.Dispose(); } if (life != null) life.Cancel();
+            narrative?.Dispose(); narrative = null;
             if (audioPlayer != null) { audioPlayer.enabled = false; Destroy(audioPlayer); }
             if (presenter != null) { presenter.Release(); Destroy(presenter); }
             if (proxy != null) Destroy(proxy); if (proxySprite != null) Destroy(proxySprite); if (proxyTexture != null) Destroy(proxyTexture);
@@ -466,6 +477,7 @@ namespace NguMach.Client.P1
         private void OnDestroy()
         {
             closing = true;
+            narrative?.Dispose(); narrative = null;
             if (audioPlayer != null) { audioPlayer.enabled = false; Destroy(audioPlayer); }
             if (document != null && layoutChanged != null) document.rootVisualElement.UnregisterCallback(layoutChanged);
             if (life != null) { life.Cancel(); life.Dispose(); }

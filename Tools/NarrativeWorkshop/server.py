@@ -6,6 +6,7 @@ from urllib.parse import urlsplit
 
 ROOT=Path(__file__).resolve().parent
 ROUTES={'/':('index.html','text/html; charset=utf-8'),'/styles.css':('styles.css','text/css; charset=utf-8'),'/app.js':('app.js','application/javascript; charset=utf-8'),'/story.json':('ben_mua.preview.json','application/json; charset=utf-8'),'/manifest.json':('scene_manifest.json','application/json; charset=utf-8'),'/ink.js':('node_modules/inkjs/dist/ink.js','application/javascript; charset=utf-8')}
+ROUTES['/gameplay-catalog.json']=('../../Client/Assets/Resources/Narrative/dialogue_vi.json','application/json; charset=utf-8')
 class Handler(BaseHTTPRequestHandler):
  def do_GET(self):self.serve(False)
  def do_HEAD(self):self.serve(True)

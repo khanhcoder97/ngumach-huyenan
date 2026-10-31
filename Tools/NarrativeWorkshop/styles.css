@@ -2,3 +2,5 @@
 @media(min-width:851px){body{height:100vh;overflow:hidden}header{height:56px;align-items:center}.layout{height:calc(100vh - 56px);overflow:hidden}aside{min-height:0;overflow-y:auto}main{height:100%;overflow-y:auto;scroll-padding-top:70px}}
 
 @media(min-width:851px){main{padding-top:0}.chapter-label{top:0;padding-top:20px;padding-bottom:18px;margin-bottom:20px}}
+
+#v3quest{width:100%;max-width:100%;min-height:40px;margin:8px 0 18px;font:inherit;background:#faf7ee;color:#18343b;}
