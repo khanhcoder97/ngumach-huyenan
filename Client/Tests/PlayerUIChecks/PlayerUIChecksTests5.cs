@@ -617,4 +617,400 @@ namespace PlayerUIChecks
             return fields;
         }
     }
+
+    // ── OPC-13 Package C — map pan/zoom/clamp, HUD safe-area, settings reopen ──
+    // SYNTHETIC fixtures: pure-C# presenter/policy contracts. Native drag gesture,
+    // safe-area readings and UIDocument scale application are UNVERIFIED_NATIVE.
+
+    public class MapPanZoomTests
+    {
+        private sealed class MapSpyAdapter : IP1UIAdapter
+        {
+            public UIConnectionState ConnectionState { get; set; } = UIConnectionState.Ready;
+            public bool HasPendingMutation { get; set; }
+            public string LastErrorCode => null;
+            public string LastCorrelationId => null;
+            public P1Self Self { get; set; }
+            public P1World World { get; set; }
+            public P1WorldV2 WorldV2 { get; set; }
+            public P1Inventory Inventory { get; set; }
+            public P1Quest[] Quests { get; set; } = Array.Empty<P1Quest>();
+            public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> AcceptQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> InteractAsync(string target, CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> TurnInQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> RetryPendingAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
+        }
+
+        private static IP1UIAdapter V2Adapter(double x, double y, string mapId = "MAP_BEN_MUA") => new MapSpyAdapter
+        {
+            WorldV2 = new P1WorldV2
+            {
+                mapId = mapId,
+                self = new P1Self { characterId = "P1", classId = "CLASS_MINH_KIEM", x = x, y = y, hp = 100, maxHp = 100, mp = 50, maxMp = 50 },
+                entities = Array.Empty<P1EntityV2>()
+            }
+        };
+
+        [Fact]
+        public void Refresh_PrefersWorldV2_OverV1()
+        {
+            var adapter = new MapSpyAdapter
+            {
+                World = new P1World
+                {
+                    mapId = "MAP_V1_OLD",
+                    self = new P1Self { characterId = "P1", x = 1, y = 1 },
+                    entities = Array.Empty<P1Entity>()
+                },
+                WorldV2 = new P1WorldV2
+                {
+                    mapId = "MAP_BEN_MUA",
+                    self = new P1Self { characterId = "P1", x = 5, y = 5 },
+                    entities = Array.Empty<P1EntityV2>()
+                }
+            };
+            var presenter = new MapPresenter(adapter);
+            presenter.Refresh();
+
+            Assert.Equal("MAP_BEN_MUA", presenter.State.MapId); // v2 live snapshot wins
+            Assert.Equal(5, presenter.State.PlayerX);
+            Assert.True(presenter.State.TopologyIsCandidate); // never self-approve topology
+        }
+
+        [Fact]
+        public void Refresh_V1Only_FallsBackToV1Snapshot()
+        {
+            var adapter = new MapSpyAdapter
+            {
+                World = new P1World
+                {
+                    mapId = "MAP_BEN_MUA",
+                    self = new P1Self { characterId = "P1", x = 7, y = 8 },
+                    entities = new[] { new P1Entity { entityId = "ENT_MAN_BM_NPC_LYAN", kind = "NPC", x = 9, y = 9 } }
+                }
+            };
+            var presenter = new MapPresenter(adapter);
+            presenter.Refresh();
+
+            Assert.Equal("MAP_BEN_MUA", presenter.State.MapId);
+            Assert.Equal(2, presenter.State.Markers.Count); // self + entity marker
+        }
+
+        [Fact]
+        public void Bounds_FollowCanonicalMapBoundsJson()
+        {
+            var presenter = new MapPresenter(V2Adapter(10, 10, "MAP_BEN_MUA"));
+            presenter.Refresh();
+            Assert.Equal(360, presenter.State.Bounds.XMax); // default from map_bounds.json
+            Assert.Equal(-12, presenter.State.Bounds.YMin);
+
+            var thangLong = new MapPresenter(V2Adapter(10, 10, "MAP_THANG_LONG"));
+            thangLong.Refresh();
+            Assert.Equal(900, thangLong.State.Bounds.XMax); // override from map_bounds.json
+            Assert.Equal(96, thangLong.State.Bounds.YMax);
+        }
+
+        [Fact]
+        public void PanBy_ClampsViewWindowInsideMapBounds()
+        {
+            var presenter = new MapPresenter(V2Adapter(10, 20));
+            presenter.Refresh();
+            presenter.SetZoom(3f); // window 120x28 WU — smaller than the map on both axes
+
+            // Drag far east/south: view center clamps inside bounds, never past the edge.
+            presenter.PanBy(5000, -5000);
+            Assert.Equal(300, presenter.State.ViewCenterX, 3); // mid 180 + travel 120
+            Assert.Equal(2, presenter.State.ViewCenterY, 3);   // mid 30 − travel 28
+
+            // Drag far back west/north: clamped at the other edge.
+            presenter.PanBy(-99999, 99999);
+            Assert.Equal(60, presenter.State.ViewCenterX, 3);
+            Assert.Equal(58, presenter.State.ViewCenterY, 3);
+        }
+
+        [Fact]
+        public void Zoom_ClampedToSupportedRange_AndPanKeepsClamped()
+        {
+            var presenter = new MapPresenter(V2Adapter(10, 20));
+            presenter.Refresh();
+
+            presenter.SetZoom(10f);
+            Assert.Equal(4f, presenter.State.ZoomLevel);
+            presenter.SetZoom(0.01f);
+            Assert.Equal(0.25f, presenter.State.ZoomLevel);
+
+            // At 0.25 the window (1440x336 WU) exceeds the map per axis → both axes
+            // lock to the map center (whole-map view; panning is meaningless there).
+            presenter.PanBy(100, 100);
+            Assert.Equal(180, presenter.State.ViewCenterX, 3); // map horizontal center
+            Assert.Equal(30, presenter.State.ViewCenterY, 3); // map vertical center ((-12+72)/2)
+        }
+
+        [Fact]
+        public void CenterOnPlayer_DropsPan_KeepsZoom()
+        {
+            var presenter = new MapPresenter(V2Adapter(100, 40));
+            presenter.Refresh();      // zoom 1: window == map width → view centers on mid map
+            presenter.SetZoom(2f);    // zoom 2: travel 90/21 on x/y — center 100,40 kept
+
+            presenter.PanBy(100, -30); // x target 180+100=280 → clamped 270; y 30−30=0 → clamped 9
+            Assert.Equal(270, presenter.State.ViewCenterX, 3);
+            Assert.Equal(9, presenter.State.ViewCenterY, 3);
+
+            presenter.CenterOnPlayer(); // drops the accumulated view offset
+            Assert.Equal(100, presenter.State.ViewCenterX, 3);
+            Assert.Equal(40, presenter.State.ViewCenterY, 3);
+            Assert.Equal(2f, presenter.State.ZoomLevel);
+        }
+
+        [Fact]
+        public void Refresh_PreservesPanAndZoom_FollowsMovingPlayer()
+        {
+            var adapter = new MapSpyAdapter { WorldV2 = V2World(100, 40) };
+            var presenter = new MapPresenter(adapter);
+            presenter.Refresh();
+            presenter.SetZoom(2f);
+            presenter.PanBy(50, 0); // view center = player + 50/…
+
+            double centerAfterPan = presenter.State.ViewCenterX;
+
+            // Server snapshot advances player position; UI-local pan/zoom survive rebuild.
+            adapter.WorldV2 = V2World(110, 40);
+            presenter.Refresh();
+
+            Assert.Equal(2f, presenter.State.ZoomLevel);
+            Assert.Equal(presenter.State.PlayerX + (centerAfterPan - 100), presenter.State.ViewCenterX, 3);
+        }
+
+        [Fact]
+        public void Refresh_MapSwitch_ResetsStalePan()
+        {
+            var adapter = new MapSpyAdapter { WorldV2 = V2World(10, 20, "MAP_BEN_MUA") };
+            var presenter = new MapPresenter(adapter);
+            presenter.Refresh();
+            presenter.SetZoom(2f);
+            presenter.PanBy(600, 0); // clamped to the east edge of BEN_MUA
+            Assert.Equal(270, presenter.State.ViewCenterX, 3);
+
+            adapter.WorldV2 = V2World(10, 10, "MAP_THANG_LONG");
+            presenter.Refresh();
+
+            // Stale pan (600) was dropped on the switch; the remaining center position
+            // comes only from the fresh bounds clamp (zoom-2 window on a 900-wide map,
+            // horizontal travel ±225 — no player-anchored offset survives).
+            Assert.Equal(225, presenter.State.ViewCenterX, 3);
+            Assert.Equal(900, presenter.State.Bounds.XMax);
+        }
+
+        private static P1WorldV2 V2World(double x, double y, string mapId = "MAP_BEN_MUA") => new P1WorldV2
+        {
+            mapId = mapId,
+            self = new P1Self { characterId = "P1", classId = "CLASS_MINH_KIEM", x = x, y = y, hp = 100, maxHp = 100, mp = 50, maxMp = 50 },
+            entities = Array.Empty<P1EntityV2>()
+        };
+    }
+
+    public class HudSafeAreaPolicyTests
+    {
+        [Fact]
+        public void DesktopLandscape_NoInsets_FullHudWithTracker()
+        {
+            var d = HudSafeAreaPolicy.Decide(new HudViewport(1920, 1080, 0, 0, 0, 0), 5);
+            Assert.Equal(HudMode.Full, d.Mode);
+            Assert.Equal(1f, d.Scale);
+            Assert.False(d.TrackerHidden);
+        }
+
+        [Fact]
+        public void NotchedLandscapePhone_TrackerDropped_BarCompacted()
+        {
+            // iPhone-class landscape: 812x375 with 44px side notches and 24/20 bars.
+            var d = HudSafeAreaPolicy.Decide(new HudViewport(812, 375, 44, 24, 44, 20), 5);
+            Assert.Equal(HudMode.Compact, d.Mode); // usable 724w < bar 450 + tracker 310
+            Assert.True(d.TrackerHidden);
+            Assert.InRange(d.Scale, 0.6f, 0.85f);
+        }
+
+        [Fact]
+        public void PortraitMobile_HidesTracker_CompactScale()
+        {
+            var d = HudSafeAreaPolicy.Decide(new HudViewport(360, 640, 0, 0, 0, 0), 5);
+            Assert.Equal(HudMode.Compact, d.Mode);
+            Assert.True(d.TrackerHidden);
+            Assert.InRange(d.Scale, 0.6f, 0.85f);
+        }
+
+        [Fact]
+        public void TinyViewport_HudsHiddenAsControlledFallback()
+        {
+            var d = HudSafeAreaPolicy.Decide(new HudViewport(200, 160, 20, 100, 20, 10), 5);
+            Assert.Equal(HudMode.Hidden, d.Mode); // usable height 50 < 72 legibility floor
+            Assert.True(d.TrackerHidden);
+        }
+
+        [Fact]
+        public void HugeSideInsets_ShinkUsableSpaceToHidden()
+        {
+            var d = HudSafeAreaPolicy.Decide(new HudViewport(400, 700, 180, 0, 180, 0), 5);
+            Assert.Equal(HudMode.Hidden, d.Mode); // usable width 40 < 225 (barW*0.5)
+        }
+
+        [Fact]
+        public void TablewideViewport_FullHud()
+        {
+            var d = HudSafeAreaPolicy.Decide(new HudViewport(1280, 720, 0, 0, 0, 0), 5);
+            Assert.Equal(HudMode.Full, d.Mode);
+            Assert.False(d.TrackerHidden);
+        }
+    }
+
+    public class SettingsLifecycleTests
+    {
+        private sealed class TestSettingsStore : ISettingsStore
+        {
+            public SettingsViewState Saved;
+            public int SaveCount;
+            public SettingsViewState Load() => Saved;
+            public void Save(SettingsViewState settings) { Saved = settings; SaveCount++; }
+        }
+
+        [Fact]
+        public void Setters_PersistThroughStore()
+        {
+            var store = new TestSettingsStore();
+            var presenter = new SettingsPresenter(store);
+
+            presenter.SetUiScale(1.5f);
+            presenter.SetMasterVolume(0.3f);
+            presenter.SetTextSize(1.25f);
+            presenter.SetReducedMotion(true);
+            presenter.SetReducedFlash(true);
+            presenter.SetInputHints(false);
+
+            Assert.Equal(6, store.SaveCount); // every setter persisted
+            Assert.Same(store.Saved, presenter.Current);
+            Assert.Equal(1.5f, store.Saved.UiScale);
+            Assert.Equal(0.3f, store.Saved.MasterVolume);
+            Assert.Equal(1.25f, store.Saved.TextSize);
+            Assert.True(store.Saved.ReducedMotion);
+            Assert.True(store.Saved.ReducedFlash);
+            Assert.False(store.Saved.ShowInputHints);
+        }
+
+        [Fact]
+        public void Reopen_LoadsPersistedValues_FromSameStore()
+        {
+            var store = new TestSettingsStore();
+            var first = new SettingsPresenter(store);
+            first.SetUiScale(1.4f);
+            first.SetReducedMotion(true);
+
+            // Reopen (new over the same versioned store): settings must survive.
+            var reopened = new SettingsPresenter(store);
+            Assert.Equal(1.4f, reopened.Current.UiScale);
+            Assert.True(reopened.Current.ReducedMotion);
+            Assert.True(reopened.Current.ShowInputHints); // untouched default
+        }
+
+        [Fact]
+        public void Reset_RestoresDefault_AndPersists()
+        {
+            var store = new TestSettingsStore();
+            var presenter = new SettingsPresenter(store);
+            presenter.SetUiScale(2f);
+            presenter.SetReducedFlash(true);
+
+            presenter.Reset();
+
+            var d = SettingsViewState.Default;
+            Assert.Equal(d.UiScale, presenter.Current.UiScale);
+            Assert.Equal(d.MasterVolume, presenter.Current.MasterVolume);
+            Assert.Equal(d.TextSize, presenter.Current.TextSize);
+            Assert.False(presenter.Current.ReducedMotion);
+            Assert.False(presenter.Current.ReducedFlash);
+            Assert.True(presenter.Current.ShowInputHints);
+            Assert.Same(store.Saved, presenter.Current); // reset also persisted
+        }
+
+        [Fact]
+        public void Clamps_OutOfRangeValues()
+        {
+            var presenter = new SettingsPresenter(new TestSettingsStore());
+            presenter.SetUiScale(5f);   // → 2.0
+            Assert.Equal(2f, presenter.Current.UiScale);
+            presenter.SetUiScale(0.1f); // → 0.5
+            Assert.Equal(0.5f, presenter.Current.UiScale);
+            presenter.SetTextSize(9f);  // → 1.5
+            Assert.Equal(1.5f, presenter.Current.TextSize);
+            presenter.SetMasterVolume(-1f); // → 0
+            Assert.Equal(0f, presenter.Current.MasterVolume);
+        }
+    }
+
+    public class CinemaSafetyTests
+    {
+        [Fact]
+        public void Play_KnownScene_EntersPlayingState_PreviewLabeled()
+        {
+            var presenter = new CinemaPresenter();
+            presenter.Play("CIN_001");
+
+            Assert.Equal(CinemaPlaybackPhase.Playing, presenter.State.Phase);
+            Assert.True(presenter.State.IsPlaying);
+            Assert.True(presenter.State.CanSkip);
+            Assert.Equal("P00-01", presenter.State.QuestId);
+            Assert.True(presenter.State.IsPreviewHarness); // media contract still preview until Muse VM
+            Assert.NotNull(presenter.State.FallbackNote);  // honest preview labeling present
+        }
+
+        [Fact]
+        public void Play_MissingScene_FallsBackWithoutGrant()
+        {
+            var presenter = new CinemaPresenter();
+            presenter.Play("CIN_XXX_MISSING");
+
+            Assert.Equal(CinemaPlaybackPhase.Fallback, presenter.State.Phase);
+            Assert.Contains("Preview Harness", presenter.State.FallbackNote);
+            // Fallback carries no quest attachment — no story flags, no rewards.
+            Assert.Null(presenter.State.QuestId);
+        }
+
+        [Fact]
+        public void Skip_EndsPlayback_CannotGrantAnything()
+        {
+            var presenter = new CinemaPresenter();
+            presenter.Play("CIN_001");
+            presenter.Skip();
+
+            Assert.Equal(CinemaPlaybackPhase.Ended, presenter.State.Phase);
+            Assert.True(presenter.State.IsEnded);
+            Assert.False(presenter.State.CanSkip);
+            // The view state has no flag/counter/reward surface at all:
+            Assert.Equal("P00-01", presenter.State.QuestId); // identity preserved, nothing granted
+        }
+
+        [Fact]
+        public void TimeRanOut_AutoEndsAtDuration()
+        {
+            var presenter = new CinemaPresenter();
+            presenter.Play("CIN_001"); // 36s duration
+            presenter.Update(10f);
+            Assert.True(presenter.State.IsPlaying);
+
+            presenter.Update(30f); // crosses duration → timeout path
+            Assert.Equal(CinemaPlaybackPhase.Ended, presenter.State.Phase);
+        }
+
+        [Fact]
+        public void Close_ReturnsToIdle()
+        {
+            var presenter = new CinemaPresenter();
+            presenter.Play("CIN_001");
+            presenter.Close();
+            Assert.Equal(CinemaPlaybackPhase.Idle, presenter.State.Phase);
+            Assert.False(presenter.State.IsPlaying);
+        }
+    }
 }

@@ -111,11 +111,17 @@ namespace NguMach.Client.P1
             if (_trackerBox == null) return;
             if (string.IsNullOrEmpty(title))
             {
+                _trackerBoxVisibleByQuest = DisplayStyle.None;
                 _trackerBox.style.display = DisplayStyle.None;
             }
             else
             {
-                _trackerBox.style.display = DisplayStyle.Flex;
+                _trackerBoxVisibleByQuest = DisplayStyle.Flex;
+                // OPC-13 C: the safe-area policy may currently be hiding the tracker
+                // (Compact mode). Remember the quest-driven state so the policy can
+                // restore this exact visibility when viewport space returns.
+                if (!_hudDecisionInit || !_lastHudDecision.TrackerHidden)
+                    _trackerBox.style.display = DisplayStyle.Flex;
                 if (_trackerTitleLabel != null) _trackerTitleLabel.text = "★ " + title;
                 if (_trackerDescLabel != null) _trackerDescLabel.text = objectiveDesc ?? "";
             }
@@ -132,6 +138,7 @@ namespace NguMach.Client.P1
             _bar.style.display = connected ? DisplayStyle.Flex : DisplayStyle.None;
 
             bool canClick = cs == UIConnectionState.Ready || cs == UIConnectionState.NeedsResync;
+            ApplySafeAreaPolicy();
             _characterBtn?.SetEnabled(canClick);
             _inventoryBtn?.SetEnabled(canClick);
             _questBtn?.SetEnabled(canClick);
@@ -139,7 +146,52 @@ namespace NguMach.Client.P1
             _mapBtn?.SetEnabled(canClick);
         }
 
+        // ── OPC-13 C — safe-area overload (compact/hide, never spill over notch) ──
+
+        private HudDecision _lastHudDecision;
+        private bool _hudDecisionInit;
+
+        /// <summary>
+        /// OPC-13 C: evaluate the pure safe-area policy and apply its controlled
+        /// scale/hide tiers to this HUD. Degenerate inputs (zero-size screens in
+        /// editor/tool contexts) must degrade sanely instead of hiding the only
+        /// panel access on a playable viewport.
+        /// </summary>
+        internal void ApplySafeAreaPolicy()
+        {
+            if (_bar == null) return;
+
+            var vp = new HudViewport(
+                Screen.width, Screen.height,
+                Screen.safeArea.xMin, Screen.safeArea.yMin,
+                Screen.width - Screen.safeArea.xMax, Screen.height - Screen.safeArea.yMax);
+
+            var decision = HudSafeAreaPolicy.Decide(vp, 5); // 5 menu controls (Character/Túi/Nhiệm vụ/Cài đặt/Bản đồ)
+            if (_hudDecisionInit && decision.Equals(_lastHudDecision)) return;
+            _lastHudDecision = decision;
+            _hudDecisionInit = true;
+
+            // Tracker first: restore exactly its quest-driven state when Full mode returns.
+            if (_trackerBox != null)
+                _trackerBox.style.display = decision.TrackerHidden ? DisplayStyle.None : _trackerBoxVisibleByQuest;
+
+            if (decision.Mode == HudMode.Hidden)
+            {
+                _bar.style.display = DisplayStyle.None;
+            }
+            else
+            {
+                float s = Math.Clamp(decision.Scale, 0.6f, 1f);
+                _bar.style.scale = new Scale(new Vector2(s, s));
+            }
+        }
+
+        private DisplayStyle _trackerBoxVisibleByQuest = DisplayStyle.None;
+
         // ── Teardown ─────────────────────────────────────────────────────────
+
+        /// <summary>OPC-13 C: safe area/orientation can change mid-session; the policy no-ops when the decision is unchanged.</summary>
+        private void Update() => ApplySafeAreaPolicy();
 
         public void Teardown()
         {
