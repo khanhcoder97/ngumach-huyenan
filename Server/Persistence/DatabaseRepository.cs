@@ -26,6 +26,8 @@ namespace NguMach.Server.Persistence
         Task MarkOutboxProcessedAsync(string outboxId);
         Task<IReadOnlyList<OutboxEntry>> GetUnprocessedOutboxEntriesAsync();
         Task CleanupCommittedTransactionsOlderThan(DateTime threshold);
+        Task<bool> InsertLeaseAsync(string commandId, string playerId, string leaseToken, DateTime expiresAt);
+        Task<IReadOnlyList<LeaseInfo>> GetActiveLeasesAsync();
     }
 
     /// <summary>Represents a stored transaction from the database.</summary>
@@ -71,6 +73,17 @@ namespace NguMach.Server.Persistence
         public bool IsProcessed => ProcessedAt.HasValue;
     }
 
+    /// <summary>Database lease info with expiration tracking.</summary>
+    public sealed class LeaseInfo
+    {
+        public string CommandId { get; set; } = "";
+        public string PlayerId { get; set; } = "";
+        public string LeaseToken { get; set; } = "";
+        public DateTime ExpiresAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public bool IsActive => DateTime.UtcNow < ExpiresAt;
+    }
+
     // ── Implementation ───────────────────────────────────────────────────
 
     internal sealed class SqliteDatabaseRepository : IDatabaseRepository
@@ -82,9 +95,20 @@ namespace NguMach.Server.Persistence
         private const int CurrentSchemaVersion = 1;
         private static readonly string[] MigrationScripts =
         {
-            @"-- Schema v1: Transactions + Receipts + Ledger + Outbox
+            @"-- Schema v1: Transactions + Receipts + Ledger + Outbox + Leases
 CREATE TABLE IF NOT EXISTS schema_version (version INTEGER PRIMARY KEY);
 INSERT INTO schema_version VALUES (1);
+
+CREATE TABLE IF NOT EXISTS leases (
+    command_id TEXT NOT NULL,
+    player_id TEXT NOT NULL,
+    lease_token TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    expires_at DATETIME NOT NULL,
+    PRIMARY KEY (command_id),
+    FOREIGN KEY (command_id) REFERENCES transactions(command_id) ON DELETE CASCADE,
+    INDEX idx_leases_player_expires ON player_id(expires_at)
+);
 
 CREATE TABLE IF NOT EXISTS transactions (
     command_id TEXT PRIMARY KEY,
@@ -92,8 +116,8 @@ CREATE TABLE IF NOT EXISTS transactions (
     payload BLOB NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     committed_at DATETIME,
-    lease_token TEXT,
-    CHECK (command_id IS NOT NULL AND player_id IS NOT NULL)
+    version INTEGER DEFAULT 0,
+    CHECK (payload IS NOT NULL AND player_id IS NOT NULL)
 );
 
 CREATE TABLE IF NOT EXISTS receipts (
@@ -102,7 +126,7 @@ CREATE TABLE IF NOT EXISTS receipts (
     version INTEGER NOT NULL,
     result TEXT,
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CHECK (receipt_id IS NOT NULL AND command_id IS NOT NULL)
+    CHECK (receipt_id IS NOT NULL AND command_id IS NOT NULL AND version >= 0)
 );
 
 CREATE TABLE IF NOT EXISTS ledger (
@@ -111,7 +135,8 @@ CREATE TABLE IF NOT EXISTS ledger (
     amount REAL NOT NULL,
     metadata TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (transaction_id) REFERENCES transactions(command_id) ON DELETE CASCADE
+    FOREIGN KEY (transaction_id) REFERENCES transactions(command_id) ON DELETE CASCADE,
+    CHECK (amount IS NOT NULL)
 );
 
 CREATE TABLE IF NOT EXISTS outbox (
@@ -127,7 +152,8 @@ CREATE TABLE IF NOT EXISTS outbox (
 CREATE INDEX idx_transactions_player ON transactions(player_id);
 CREATE INDEX idx_receipts_command ON receipts(command_id);
 CREATE INDEX idx_ledger_transaction ON ledger(transaction_id);
-CREATE INDEX idx_outbox_unprocessed ON outbox(processed_at) WHERE processed_at IS NULL;"
+CREATE INDEX idx_outbox_unprocessed ON outbox(processed_at) WHERE processed_at IS NULL;
+CREATE INDEX idx_leases_player ON leases(player_id);"
         };
 
         public SqliteDatabaseRepository(string dbPath)
@@ -283,6 +309,25 @@ CREATE INDEX idx_outbox_unprocessed ON outbox(processed_at) WHERE processed_at I
             await using var conn = CreateConnection();
             await conn.OpenAsync();
             await conn.ExecuteAsync(sql, new { Threshold = threshold.ToString("ISO8601") });
+        }
+
+        public async Task<bool> InsertLeaseAsync(string commandId, string playerId, string leaseToken, DateTime expiresAt)
+        {
+            var sql = @"INSERT OR REPLACE INTO leases (command_id, player_id, lease_token, created_at, expires_at) 
+                        VALUES (@CommandId, @PlayerId, @LeaseToken, @CreatedAt, @ExpiresAt)";
+            await using var conn = CreateConnection();
+            await conn.OpenAsync();
+            await conn.ExecuteAsync(sql, new { CommandId = commandId, PlayerId = playerId, LeaseToken = leaseToken, CreatedAt = DateTime.UtcNow, ExpiresAt = expiresAt });
+            return true;
+        }
+
+        public async Task<IReadOnlyList<LeaseInfo>> GetActiveLeasesAsync()
+        {
+            var sql = "SELECT * FROM leases WHERE expires_at > @Now ORDER BY expires_at ASC";
+            await using var conn = CreateConnection();
+            await conn.OpenAsync();
+            var results = await conn.QueryAsync<LeaseInfo>(sql, new { Now = DateTime.UtcNow });
+            return results.ToList();
         }
     }
 }

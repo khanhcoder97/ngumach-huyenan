@@ -120,14 +120,27 @@ namespace ServerPersistenceTests.Integration
         private ICrashRecoveryManager? _recovery;
         private IDatabaseRepository? _repository;
 
+        private static string _uniqueId = Guid.NewGuid().ToString("N")[..8]; // Unique per test class
+        private string _testDir;
+
         public CrashRecoveryManagerTests()
         {
-            _dbPath = Path.Combine(Path.GetTempPath(), $"crm_{Guid.NewGuid():N}.sqlite");
+            _testDir = Path.Combine(Path.GetTempPath(), $"qr01_test_{_uniqueId}");
+            Directory.CreateDirectory(_testDir);
+            _dbPath = Path.Combine(_testDir, $"crp_{Guid.NewGuid():N}.sqlite");
+            
             var db = new SqliteDatabaseRepository(_dbPath);
             _ = db.InitializeAsync().GetAwaiter().GetResult();
             _repository = db;
             
             _recovery = new CrasRecoveryManagerImpl(db, _dbPath);
+        }
+
+        [Fact]
+        public async Task CheckpointWALAsync_PerformsCheckpoint()
+        {
+            var success = await _recovery!.CheckpointWALAsync();
+            Assert.True(success);
         }
 
         [Fact]
@@ -237,13 +250,23 @@ namespace ServerPersistenceTests.Integration
         public void Dispose()
         {
             _recovery?.Dispose();
-            if (File.Exists(_dbPath))
-                File.Delete(_dbPath);
             
-            // Cleanup temp files
-            var dir = Path.GetDirectoryName(_dbPath)!;
-            foreach (var f in Directory.GetFiles(dir, "*.sqlite*"))
-                try { File.Delete(f); } catch { /* Ignore */ }
+            // Cleanup only our test directory with specific files
+            if (!string.IsNullOrEmpty(_testDir) && Directory.Exists(_testDir))
+            {
+                try
+                {
+                    foreach (var file in Directory.GetFiles(_testDir, "*.sqlite*"))
+                    {
+                        File.Delete(file);
+                    }
+                    Directory.Delete(_testDir);
+                }
+                catch
+                {
+                    // Ignore cleanup errors - critical path completed
+                }
+            }
         }
     }
 
