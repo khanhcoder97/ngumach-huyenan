@@ -1079,4 +1079,206 @@ namespace PlayerUIChecks
         [Fact] public void Empty_Zero() { var d = HudOverflowPolicy.Decide(0, 400f); Assert.Equal(0, d.VisibleCount); Assert.False(d.HasOverflow); }
     }
 
+    // ── OPC-14 A — settings consumer binding ──
+    public class SettingsConsumerBinderTests
+    {
+        private sealed class TestSettingsStore : ISettingsStore
+        {
+            public SettingsViewState Saved;
+            public SettingsViewState Load() => Saved;
+            public void Save(SettingsViewState settings) { Saved = settings; }
+        }
+
+        private sealed class FakeConsumer : IUiAccessibilityConsumer
+        {
+            public int Calls;
+            public SettingsViewState Last;
+            public void ApplyAccessibility(SettingsViewState settings) { Calls++; Last = settings; }
+        }
+
+        [Fact]
+        public void Register_AppliesImmediately()
+        {
+            var store = new TestSettingsStore();
+            var presenter = new SettingsPresenter(store);
+            var binder = new SettingsConsumerBinder(presenter);
+            var c = new FakeConsumer();
+            binder.Register(c);
+            Assert.Equal(1, c.Calls); // initial apply on register (plus binder ctor notify already fired before register? ctor notifies before consumers)
+            Assert.Same(presenter.Current, c.Last);
+        }
+
+        [Fact]
+        public void Change_NotifiesAllConsumers()
+        {
+            var store = new TestSettingsStore();
+            var presenter = new SettingsPresenter(store);
+            var binder = new SettingsConsumerBinder(presenter);
+            var c1 = new FakeConsumer(); var c2 = new FakeConsumer();
+            binder.Register(c1); binder.Register(c2);
+            int before1 = c1.Calls, before2 = c2.Calls;
+            presenter.SetReducedMotion(true);
+            Assert.True(c1.Calls > before1);
+            Assert.True(c2.Calls > before2);
+            Assert.True(c1.Last.ReducedMotion);
+            Assert.True(c2.Last.ReducedMotion);
+        }
+
+        [Fact]
+        public void Unregister_StopsNotifications()
+        {
+            var store = new TestSettingsStore();
+            var presenter = new SettingsPresenter(store);
+            var binder = new SettingsConsumerBinder(presenter);
+            var c = new FakeConsumer();
+            binder.Register(c);
+            int before = c.Calls;
+            binder.Unregister(c);
+            presenter.SetReducedFlash(true);
+            Assert.Equal(before, c.Calls);
+        }
+
+        [Fact]
+        public void Rebind_PropagatesNewPresenterSettings()
+        {
+            var store1 = new TestSettingsStore();
+            var p1 = new SettingsPresenter(store1);
+            p1.SetReducedMotion(true);
+            var binder = new SettingsConsumerBinder(p1);
+            var c = new FakeConsumer();
+            binder.Register(c);
+
+            var store2 = new TestSettingsStore();
+            store2.Saved = new SettingsViewState(1f, 1f, 1f, false, false, true);
+            var p2 = new SettingsPresenter(store2);
+            binder.Rebind(p2);
+            Assert.False(c.Last.ReducedMotion); // from p2
+        }
+
+        [Fact]
+        public void BrokenConsumer_DoesNotBreakPump()
+        {
+            var store = new TestSettingsStore();
+            var presenter = new SettingsPresenter(store);
+            var binder = new SettingsConsumerBinder(presenter);
+            var broken = new ThrowingConsumer();
+            var ok = new FakeConsumer();
+            binder.Register(broken);
+            binder.Register(ok);
+            presenter.SetInputHints(false); // must not throw
+            Assert.True(ok.Calls > 0);
+        }
+
+        private sealed class ThrowingConsumer : IUiAccessibilityConsumer
+        {
+            public void ApplyAccessibility(SettingsViewState settings) { throw new InvalidOperationException("boom"); }
+        }
+    }
+
+    // ── OPC-14 B — catalog loader + resolver end-to-end ──
+    public class UiCatalogLoaderResolverTests
+    {
+        private static string CatalogPath => System.IO.Path.Combine(
+            System.AppDomain.CurrentDomain.BaseDirectory, "..", "..", "Assets", "Resources", "PlayerUI", "ui_item_catalog.json");
+
+        private static string LoadCatalogText()
+        {
+            // Try a few relative locations (test runner cwd varies).
+            var candidates = new[]
+            {
+                System.IO.Path.Combine("..", "..", "Assets", "Resources", "PlayerUI", "ui_item_catalog.json"),
+                System.IO.Path.Combine("Assets", "Resources", "PlayerUI", "ui_item_catalog.json"),
+                @"D:\Project\NGUMACHHUYENAN-opencode-player-ui-20261101\Client\Assets\Resources\PlayerUI\ui_item_catalog.json",
+            };
+            foreach (var c in candidates)
+                if (System.IO.File.Exists(c)) return System.IO.File.ReadAllText(c);
+            // fallback: search upward
+            var dir = new System.IO.DirectoryInfo(System.AppDomain.CurrentDomain.BaseDirectory);
+            while (dir != null)
+            {
+                var cand = System.IO.Path.Combine(dir.FullName, "Client", "Assets", "Resources", "PlayerUI", "ui_item_catalog.json");
+                if (System.IO.File.Exists(cand)) return System.IO.File.ReadAllText(cand);
+                dir = dir.Parent;
+            }
+            throw new System.IO.FileNotFoundException("ui_item_catalog.json not found");
+        }
+
+        [Fact]
+        public void Loader_ParsesGeneratedCatalog()
+        {
+            var ok = UiCatalogLoader.TryLoad(LoadCatalogText(), out var cat, out var err);
+            Assert.True(ok, err);
+            Assert.NotNull(cat);
+            Assert.Equal(2656, cat.Count);
+            Assert.Equal(cat.Count, cat.Entries.Count);
+        }
+
+        [Fact]
+        public void Loader_RejectsMalformed()
+        {
+            Assert.False(UiCatalogLoader.TryLoad("{not json", out _, out var e1));
+            Assert.False(UiCatalogLoader.TryLoad("", out _, out var e2));
+            Assert.False(UiCatalogLoader.TryLoad("{\"schemaVersion\":99,\"entries\":[]}", out _, out var e3));
+        }
+
+        [Fact]
+        public void Resolver_FullCatalogCoverage()
+        {
+            var ok = UiCatalogLoader.TryLoad(LoadCatalogText(), out var cat, out var err);
+            Assert.True(ok, err);
+            UiItemResolver.SetCatalog(cat);
+            // every entry resolves to a non-null metadata with display name
+            foreach (var e in cat.Entries)
+            {
+                var m = UiItemResolver.Resolve(e.ItemId);
+                Assert.NotNull(m);
+                Assert.False(string.IsNullOrEmpty(m.DisplayName));
+            }
+            UiItemResolver.SetCatalog(null);
+        }
+
+        [Fact]
+        public void Resolver_BaseAndVariant()
+        {
+            var ok = UiCatalogLoader.TryLoad(LoadCatalogText(), out var cat, out var err);
+            Assert.True(ok, err);
+            UiItemResolver.SetCatalog(cat);
+            // find a variant entry
+            var variant = cat.Entries.Find(e => e.ItemId != null && e.ItemId.Contains("-R-"));
+            Assert.NotNull(variant);
+            var m = UiItemResolver.Resolve(variant.ItemId);
+            Assert.NotNull(m);
+            Assert.False(string.IsNullOrEmpty(m.DisplayName));
+            // unknown template
+            var u = UiItemResolver.Resolve("ZZZ-DOES-NOT-EXIST");
+            Assert.NotNull(u);
+            Assert.Null(u.Slot);
+            Assert.Null(u.ClassId);
+            UiItemResolver.SetCatalog(null);
+        }
+
+        [Fact]
+        public void Resolver_MissingCatalog_FallsBackToEmbedded()
+        {
+            UiItemResolver.SetCatalog(null);
+            var m = UiItemResolver.Resolve("POT-HP-01");
+            Assert.NotNull(m);
+            Assert.Equal("Dược Bến Mưa", m.DisplayName);
+        }
+
+        [Fact]
+        public void Resolver_PreservesExtendedFields()
+        {
+            var ok = UiCatalogLoader.TryLoad(LoadCatalogText(), out var cat, out var err);
+            Assert.True(ok, err);
+            UiItemResolver.SetCatalog(cat);
+            // find an entry with set info
+            var withSet = cat.Entries.Find(e => !string.IsNullOrEmpty(e.SetId));
+            Assert.NotNull(withSet);
+            var m = UiItemResolver.Resolve(withSet.ItemId);
+            Assert.Equal(withSet.SetId, m.SetId);
+            UiItemResolver.SetCatalog(null);
+        }
+    }
+
 }

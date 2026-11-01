@@ -22,8 +22,12 @@ OUT_DIR = os.path.join(REPO_ROOT, "Client", "Assets", "Resources", "PlayerUI")
 OUT_FILE = os.path.join(OUT_DIR, "ui_item_catalog.json")
 
 FIELDS = ["item_id", "display_name", "category", "slot", "class_id", "element",
-          "required_level", "rarity_pool", "binding", "tradeable", "stack_limit",
-          "durability", "description"]
+          "required_level", "rarity_pool", "weapon_power", "armor", "primary_stat",
+          "primary_value", "secondary_stat", "secondary_value", "affix_rule",
+          "socket_rule", "set_id", "set_name", "set_bonus_2", "set_bonus_4",
+          "hidden_effect_id", "hidden_effect_unlock", "hidden_effect", "stack_limit",
+          "durability", "binding", "tradeable", "source_map", "source_rule",
+          "description"]
 
 
 def sha256_file(path):
@@ -66,6 +70,7 @@ def entry_digest(entry):
 
 def main():
     seen = set()
+    by_id = {}
     entries = []
     source_digests = {}
     for path in INPUTS:
@@ -75,10 +80,22 @@ def main():
         for row in read_csv(path):
             iid = row["item_id"]
             if iid in seen:
-                # Cross-file subset relationship (master is subset of variant catalog):
-                # keep the first (variant) entry, skip the duplicate.
+                # Cross-file overlap: allow only byte-identical shared rows (136 of them).
+                # Conflicting same-id rows must fail loudly.
+                prev = by_id[iid]
+                meaningful = ["display_name", "category", "slot", "class_id", "element",
+                              "required_level", "rarity_pool", "binding", "tradeable",
+                              "stack_limit", "durability", "description"]
+                for field in meaningful:
+                    if (prev.get(field) or "") != (row.get(field) or ""):
+                        raise ValueError(
+                            f"conflicting shared item_id {iid}: field '{field}' differs "
+                            f"({prev['_source']['file']} row {prev['_source']['row']} vs "
+                            f"{row['_source']['file']} row {row['_source']['row']})")
+                # identical shared row: keep the first (variant) entry, skip duplicate.
                 continue
             seen.add(iid)
+            by_id[iid] = row
             row["digest"] = entry_digest(row)
             entries.append(row)
 

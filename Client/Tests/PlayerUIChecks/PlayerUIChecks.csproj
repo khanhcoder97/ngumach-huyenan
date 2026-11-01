@@ -46,5 +46,8 @@
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\AccessibilityPolicy.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\FocusNavigationPolicy.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\HudOverflowPolicy.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\SettingsConsumerBinder.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\UiCatalogLoader.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\UiItemResolver.cs" />
   </ItemGroup>
 </Project>

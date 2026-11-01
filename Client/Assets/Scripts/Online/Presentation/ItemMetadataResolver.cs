@@ -17,31 +17,102 @@ namespace NguMach.Client.Presentation
         public string Category { get; }
         public string Slot { get; }
         public string ClassId { get; }
+        public string Element { get; }
         public string Rarity { get; }
+        public string RarityPool { get; }
         public int RequiredLevel { get; }
         public string Description { get; }
         public string SourceRef { get; }
 
+        // Canonical extended fields (display-only; null/empty when source lacks them).
+        public string WeaponPower { get; }
+        public string Armor { get; }
+        public string PrimaryStat { get; }
+        public string PrimaryValue { get; }
+        public string SecondaryStat { get; }
+        public string SecondaryValue { get; }
+        public string AffixRule { get; }
+        public string SocketRule { get; }
+        public string SetId { get; }
+        public string SetName { get; }
+        public string SetBonus2 { get; }
+        public string SetBonus4 { get; }
+        public string HiddenEffectId { get; }
+        public string HiddenEffectUnlock { get; }
+        public string HiddenEffect { get; }
+        public string StackLimit { get; }
+        public string Durability { get; }
+        public string Binding { get; }
+        public string Tradeable { get; }
+        public string SourceMap { get; }
+        public string SourceRule { get; }
+
         public ItemMetadata(
             string templateId,
             string displayName,
-            string category,
-            string slot,
-            string classId,
-            string rarity,
-            int requiredLevel,
-            string description,
-            string sourceRef = "docs/production/Item_Master_Catalog_vi.csv v1.0")
+            string category = null,
+            string slot = null,
+            string classId = null,
+            string element = null,
+            string rarity = null,
+            string rarityPool = null,
+            int requiredLevel = 1,
+            string description = null,
+            string sourceRef = "docs/production/Item_Master_Catalog_vi.csv v1.0",
+            string weaponPower = null,
+            string armor = null,
+            string primaryStat = null,
+            string primaryValue = null,
+            string secondaryStat = null,
+            string secondaryValue = null,
+            string affixRule = null,
+            string socketRule = null,
+            string setId = null,
+            string setName = null,
+            string setBonus2 = null,
+            string setBonus4 = null,
+            string hiddenEffectId = null,
+            string hiddenEffectUnlock = null,
+            string hiddenEffect = null,
+            string stackLimit = null,
+            string durability = null,
+            string binding = null,
+            string tradeable = null,
+            string sourceMap = null,
+            string sourceRule = null)
         {
             TemplateId = templateId ?? "";
-            DisplayName = displayName ?? templateId;
-            Category = category ?? "Vật phẩm";
+            DisplayName = string.IsNullOrEmpty(displayName) ? (templateId ?? "") : displayName;
+            Category = string.IsNullOrEmpty(category) ? "Vật phẩm" : category;
             Slot = slot;
             ClassId = classId;
-            Rarity = rarity ?? "Thường";
+            Element = element;
+            Rarity = string.IsNullOrEmpty(rarity) ? "Thường" : rarity;
+            RarityPool = rarityPool;
             RequiredLevel = requiredLevel;
             Description = description ?? "";
             SourceRef = sourceRef;
+            WeaponPower = weaponPower;
+            Armor = armor;
+            PrimaryStat = primaryStat;
+            PrimaryValue = primaryValue;
+            SecondaryStat = secondaryStat;
+            SecondaryValue = secondaryValue;
+            AffixRule = affixRule;
+            SocketRule = socketRule;
+            SetId = setId;
+            SetName = setName;
+            SetBonus2 = setBonus2;
+            SetBonus4 = setBonus4;
+            HiddenEffectId = hiddenEffectId;
+            HiddenEffectUnlock = hiddenEffectUnlock;
+            HiddenEffect = hiddenEffect;
+            StackLimit = stackLimit;
+            Durability = durability;
+            Binding = binding;
+            Tradeable = tradeable;
+            SourceMap = sourceMap;
+            SourceRule = sourceRule;
         }
     }
 
@@ -101,7 +172,7 @@ namespace NguMach.Client.Presentation
 
         private static void Reg(string templateId, string name, string category, string slot, string classId, string rarity, int level, string desc)
         {
-            var meta = new ItemMetadata(templateId, name, category, slot, classId, rarity, level, desc);
+            var meta = new ItemMetadata(templateId, name, category, slot, classId, null, rarity, null, level, desc);
             Catalog[templateId] = meta;
             Registered.Add(meta);
         }
@@ -112,7 +183,7 @@ namespace NguMach.Client.Presentation
         public static ItemMetadata Resolve(string templateId)
         {
             if (string.IsNullOrEmpty(templateId))
-                return new ItemMetadata("", "Không tên", "Vật phẩm", null, null, "Thường", 1, "");
+                return new ItemMetadata("", "Không tên", "Vật phẩm", null, null, null, "Thường", null, 1, "");
 
             if (Catalog.TryGetValue(templateId, out var meta))
                 return meta;
@@ -132,7 +203,9 @@ namespace NguMach.Client.Presentation
                         baseMeta.Category,
                         baseMeta.Slot,
                         baseMeta.ClassId,
+                        null,
                         rInfo.rarity,
+                        null,
                         baseMeta.RequiredLevel,
                         baseMeta.Description,
                         "docs/production/Item_Rarity_Variant_Catalog_vi.csv v1.0");
@@ -140,7 +213,7 @@ namespace NguMach.Client.Presentation
             }
 
             // Clean fallback without UNRESOLVED (null slot and classId for unknown templates)
-            return new ItemMetadata(templateId, templateId, "Vật phẩm", null, null, "Thường", 1, "Chưa có mô tả chi tiết");
+            return new ItemMetadata(templateId, templateId, "Vật phẩm", null, null, null, "Thường", null, 1, "Chưa có mô tả chi tiết");
         }
     }
 }
