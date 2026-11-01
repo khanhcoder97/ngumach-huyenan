@@ -1,5 +1,9 @@
 # Antigravity — AG-02: UI chơi được, hành trình và khám phá
 
+## Quyền sở hữu cập nhật ngày 01/11/2026
+
+Theo yêu cầu trực tiếp của chủ dự án, **thu hồi toàn bộ phạm vi triển khai/integrate của Antigravity**. Antigravity dừng code, commit, push, mở PR, merge và chỉnh tài liệu dự án; giữ nguyên WIP/nhánh/commit đã có để tra cứu, không reset/xóa/force-push. Các tác vụ AG-01/AG-02 còn lại chuyển sang **OpenCode local**, theo `20_OPENCODE_PLAYER_UI_TAKEOVER_20261101.md`. Lệnh này thay thế mọi phân công Antigravity ở phần lịch sử bên dưới. Code đã review/merge được giữ lại; chưa xác nhận native Unity hoàn tất. Muse giữ art và native Unity VM; Codex quản lý review/tích hợp. Vì các agent dùng chung tài khoản GitHub, đây là thu hồi quyền sở hữu công việc; không giả định đã chặn credential riêng ở cấp GitHub.
+
 Issue nhận việc mới: https://github.com/khanhcoder97/ngumach-huyenan/issues/85 . Giữ #80 mở cho AG-01 và sửa PR #83; milestone AG02 ghi `Refs #85`, không tự đóng hai epic bằng một PR scaffold.
 
 Ngày giao2026-10-30 theo yêu cầu chủ dự án tiếp tục sau commit AG-01. **Nhận trọn AG2-A→F; không dừng sau ACK, một file hoặc một PR.** Review exact head AG01 `6e8394dc540a18b8a87cce07c94e9c4e8dbde06c` ở `Implementation/Reports/Antigravity_UI_Review_20261030.md/.json`: CHANGES_REQUIRED, original build fail, diagnostic37tests29pass/8fail. Không coi AG-01 đã nghiệm thu.
