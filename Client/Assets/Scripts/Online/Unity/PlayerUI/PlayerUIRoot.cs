@@ -34,6 +34,14 @@ namespace NguMach.Client.P1
         // ── Public API ───────────────────────────────────────────────────────
 
         public bool IsAnyOpen => (_router != null && _router.IsAnyOpen) || (cinemaOverlay != null && cinemaOverlay.Presenter != null && cinemaOverlay.Presenter.State != null && cinemaOverlay.Presenter.State.IsPlaying);
+
+        /// <summary>True when any panel/modal of the router is open but no cinematic is playing (OPC-13 modal probe).</summary>
+        public bool HasAnyPanelOpen => _router != null && _router.IsAnyOpen;
+
+        /// <summary>True while the cinematic overlay is playing (single-owner probe).</summary>
+        public bool CinemaPlaying => cinemaOverlay != null && cinemaOverlay.Presenter != null && cinemaOverlay.Presenter.State != null &&
+            (cinemaOverlay.Presenter.State.Phase == CinemaPlaybackPhase.Playing || cinemaOverlay.Presenter.State.Phase == CinemaPlaybackPhase.Fallback);
+
         public PanelRouter Router => _router;
         public bool HandleEscapeInput { get; set; } = false; // AGR2-03: Single Escape owner
 
@@ -43,6 +51,12 @@ namespace NguMach.Client.P1
             if (_adapter != null && _doc != doc)
                 throw new InvalidOperationException("Close PlayerUI before changing its document.");
             _configuredDocument = doc;
+        }
+
+        /// <summary>True when a composition is live on the given document (idempotent rebind support, OPC-13 A).</summary>
+        public bool IsInitialized(UIDocument doc)
+        {
+            return _adapter != null && ReferenceEquals(_doc, doc);
         }
 
         /// <summary>Uses the injected composition document, or a document on this host/parent.</summary>
@@ -166,6 +180,9 @@ namespace NguMach.Client.P1
         }
 
         public void PlayCinema(string sceneId) => cinemaOverlay?.PlayScene(sceneId);
+
+        /// <summary>Skip the running cinematic — invoked by the modal orchestrator only (OPC-13).</summary>
+        public void SkipCinema() => cinemaOverlay?.HandleSkip();
 
         private void UpdatePinnedQuest()
         {

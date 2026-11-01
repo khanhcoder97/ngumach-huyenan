@@ -43,6 +43,7 @@ namespace NguMach.Client.P1
         private string detailMode = "quests";
         private float pollAt, listsAt;
         private EventCallback<GeometryChangedEvent> layoutChanged;
+        private readonly ModalOrchestrator modalOrchestration = new ModalOrchestrator();
 
         public void Open(UIDocument ui, string serverOrigin, int timeoutSeconds, Action onClose, bool useWorldV2 = false)
         {
@@ -56,10 +57,45 @@ namespace NguMach.Client.P1
                 narrative = new P1NarrativeOverlay(client, document);
                 playerUIHook = GetComponent<P1PlayerUIHook>();
                 if (playerUIHook != null) playerUIHook.Initialize(new P1ClientAdapter(client), document);
+                RegisterModalLayers();
                 _ = StartOnline();
             }
             catch (Exception e) { Debug.LogError("P1 client initialization: " + e.Message); Close(); }
         }
+        /// <summary>
+        /// OPC-13 A: single owner of Escape/Space across narrative, cinema,player panels and HUD modals.
+        /// Registration order = visual top-most first; one press runs exactly one behavior.
+        /// Overlays (CinemaOverlay) must not poll keys on their own.
+        /// </summary>
+        private void RegisterModalLayers()
+        {
+            modalOrchestration.Clear();
+            modalOrchestration.Register(
+                isOpen: () => narrative != null && narrative.IsOpen,
+                escape: () => { if (narrative != null && narrative.IsOpen) narrative.Close(); },
+                consumesSpace: false);
+            modalOrchestration.Register(
+                isOpen: () => playerUIHook != null && playerUIHook.CinemaPlaying,
+                escape: () => { if (playerUIHook != null) playerUIHook.SkipCinema(); },
+                consumesSpace: true,
+                space: () => { if (playerUIHook != null) playerUIHook.SkipCinema(); });
+            modalOrchestration.Register(
+                isOpen: () => playerUIHook != null && playerUIHook.HasAnyPanelOpen,
+                escape: () => { if (playerUIHook != null) playerUIHook.CloseTopPanel(); },
+                consumesSpace: false);
+            modalOrchestration.Register(
+                isOpen: IsAudioPanelOpen,
+                escape: () => { if (IsAudioPanelOpen()) ToggleAudio(); },
+                consumesSpace: false);
+            modalOrchestration.Register(
+                isOpen: IsDetailsPanelOpen,
+                escape: () => { if (IsDetailsPanelOpen()) ToggleDetails(detailMode); },
+                consumesSpace: false);
+        }
+
+        private bool IsAudioPanelOpen() => audioPanel != null && audioPanel.style.display.value == DisplayStyle.Flex;
+        private bool IsDetailsPanelOpen() => details != null && details.style.display.value == DisplayStyle.Flex;
+
         private async Task StartOnline()
         {
             actionBusy = true; Render();
@@ -121,13 +157,13 @@ namespace NguMach.Client.P1
             narrative?.Refresh();
             RefreshInputSurface();
             if (!Application.isFocused || applicationPaused) { ClearHeldInput(); RenderCooldowns(); return; }
-            if (Input.GetKeyDown(KeyCode.Escape) && ModalOpen)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (narrative != null && narrative.IsOpen) narrative.Close();
-                else if (playerUIHook != null && playerUIHook.IsAnyPanelOpen) playerUIHook.CloseTopPanel();
-                else if (audioPanel.style.display.value == DisplayStyle.Flex) ToggleAudio();
-                else ToggleDetails(detailMode);
-                ClearHeldInput(); RenderCooldowns(); return;
+                if (modalOrchestration.DispatchEscape() != ModalLayer.None)
+                {
+                    // One press = one top-most modal behavior; no fallback chains.
+                    ClearHeldInput(); RenderCooldowns(); return;
+                }
             }
             keyboardMove = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
             bool hotkeysReleased = !Input.GetKey(KeyCode.Alpha1) && !Input.GetKey(KeyCode.Alpha2) &&
@@ -137,6 +173,11 @@ namespace NguMach.Client.P1
             bool pointersReleased = !touchHeld && Input.touchCount == 0 && !Input.GetMouseButton(0);
             inputGate.ObserveControls(keyboardMove.sqrMagnitude < 0.001f, hotkeysReleased, pointersReleased);
             if (presenter != null && !touchHeld && keyboardMove.sqrMagnitude < 0.001f) presenter.SetIdle();
+            if (Input.GetKeyDown(KeyCode.Space) && modalOrchestration.DispatchSpace() != ModalLayer.None)
+            {
+                // A modal layer (cinema skip) consumed this Space press; gameplay never sees it.
+                ClearHeldInput(); RenderCooldowns(); return;
+            }
             if (inputGate.AllowsGameplay)
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1)) Cast(0);
