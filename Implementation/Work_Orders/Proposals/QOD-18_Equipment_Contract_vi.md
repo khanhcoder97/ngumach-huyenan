@@ -1,6 +1,6 @@
-# Packet hợp đồng Equip/Unequip (QOD-18 Q-E) — CHỜ DUYỆT, CHƯA ÁP DỤNG
+# Packet hợp đồng Equip/Unequip (QOD-18 Q-E) — REQUEST ĐÃ DUYỆT, HANDLER SAU GATE OFF
 
-Gửi Antigravity #85 (client) + Codex (review). Không có schema/route nào được thêm trong packet này.
+Gửi Antigravity #85 (client) + Codex (review). Hai request schema đã được duyệt và áp dụng (`EquipRequest`/`UnequipRequest`); endpoint handler đã viết nhưng `P1:Equipment:Enabled=false`. Xem §7 cho sai lệch slot set phát hiện khi implement.
 
 ## 1. Hiện trạng server (đã có, không phải đề xuất)
 
@@ -62,3 +62,28 @@ Quy tắc:
 4. **Đổi `maxHP/maxMP`:** giữ **current tuyệt đối rồi clamp** (đúng Q-D): `hp = min(hp, newMax)`, không tự heal, không hồi khi chỉ equip/unequip.
 
 Bốn câu trả lời này **chưa phải quyết định owner** — packet vẫn ở trạng thái chờ duyệt; khi được xác nhận, schema `EquipRequest/UnequipRequest` + example + `validate_contracts.py` + endpoint sẽ được viết trong một PR riêng (route mới, gate `P1:Equipment:Enabled` mặc định OFF).
+
+## 7. Đính chính khi implement: catalogue có 12 slot, không phải 5
+
+Câu trả lời §6.1 dựa trên một kiểm tra sai: `Item_Master_Catalog_vi.csv` **không** chỉ có 5 giá trị `slot` cho lớp MK. Đo lại trên hai catalogue nguồn:
+
+| Nguồn | Kết quả đo |
+|---|---|
+| `Item_Master_Catalog_vi.csv` | 12 nhãn trang bị/lớp: Nón, Áo, Quần, Găng, Giày, Kiếm, Dây chuyền, Nhẫn trái, Nhẫn phải, Ngọc bội, Phi phong, Ấn hộ mệnh |
+| `Item_Rarity_Variant_Catalog_vi.csv` | cùng 12 nhãn, 35 item mỗi nhãn cho lớp MK; đây là nơi chứa các id quest thực cấp (`EQ-MK-BOOTS-T1-R-COMMON`) |
+| `Character_Equipment_Inventory_Spec_vi.md` §3 | bảng **12 slot người chơi** với ID `EQUIP_HAT`, `EQUIP_CHEST`, `EQUIP_LEGS`, `EQUIP_WEAPON`, `EQUIP_GLOVES`, `EQUIP_BOOTS`, `EQUIP_NECK`, `EQUIP_RING_L`, `EQUIP_RING_R`, `EQUIP_PENDANT`, `EQUIP_CLOAK`, `EQUIP_SEAL` |
+
+Vì enum 5 token đã được owner duyệt và không thể tự mở rộng, handler v1 làm đúng phần biểu diễn được và **từ chối phần còn lại thay vì đoán slot**:
+
+| Nhãn catalogue | Token v1 | Ghi chú |
+|---|---|---|
+| Nón / Áo / Giày | `HAT` / `CHEST` / `BOOTS` | trực tiếp |
+| Kiếm (và Đao/Bút/Chùy/Cung ở lớp khác) | `WEAPON` | theo category `Trang bị / vũ khí`; class gate vẫn chặn lớp khác |
+| Dây chuyền, Nhẫn trái, Nhẫn phải, Ngọc bội, Phi phong, Ấn hộ mệnh | `ACCESSORY` | 6 slot nguồn gộp vào 1 token đã duyệt ⇒ chỉ đeo được 1 phụ kiện/lúc |
+| Quần / Găng | — | `not_equippable`; không có token trong enum đã duyệt |
+
+Loader **fail-fast** nếu gặp một nhãn trang bị khác không có token (trừ hai nhãn đã ghi ở trên), nên một slot mới trong nguồn không thể lọt qua im lặng.
+
+**Cần owner quyết định trước khi mở rộng:** có đổi `UnequipRequest.slot` (và `InventorySnapshot.slot`) sang đủ 12 token theo ID của spec (`HAT, CHEST, LEGS, GLOVES, BOOTS, WEAPON, NECK, RING_L, RING_R, PENDANT, CLOAK, SEAL`) hay không. Đây là thay đổi wire nên phải có packet/duyệt riêng; cho đến lúc đó Quần/Găng và phụ kiện thứ hai là unsupported có nguồn, không phải bug.
+
+Response đã chốt khi implement: `EquipmentResponse.schema.json` với `result` = `InventorySnapshot` (đúng như §2 mô tả "InventorySnapshot hiện có"); phía client tự lọc `location == "EQUIPPED"` thay vì thêm mảng `equipment[]` chưa có schema.

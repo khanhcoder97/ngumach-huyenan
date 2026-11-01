@@ -82,7 +82,8 @@ builder.Services.AddSingleton<ExperienceService>();
 builder.Services.AddSingleton(serviceProvider =>
 {
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
-    return ItemCatalog.Load(ItemCatalogDiscovery.Discover(environment.ContentRootPath));
+    return ItemCatalog.Load(
+        ItemCatalogDiscovery.DiscoverDirectory(environment.ContentRootPath));
 });
 builder.Services.AddSingleton<NarrativeFlagStore>();
 builder.Services.AddSingleton<NarrativeService>();
@@ -136,6 +137,11 @@ builder.Services.AddSingleton(serviceProvider => new WorldEntityRegistry(
     serviceProvider.GetRequiredService<IServerClock>()));
 builder.Services.AddSingleton<IInventoryStateStore, InMemoryInventoryStateStore>();
 builder.Services.AddSingleton<IInventoryService, InMemoryInventoryService>();
+builder.Services.Configure<EquipmentOptions>(
+    builder.Configuration.GetSection(EquipmentOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<EquipmentOptions>>().Value);
+builder.Services.AddSingleton<IEquipmentService, EquipmentService>();
 builder.Services.AddSingleton<ITeleportService, InMemoryTeleportService>();
 builder.Services.Configure<InteractionOptions>(
     builder.Configuration.GetSection(InteractionOptions.SectionName));
@@ -326,6 +332,16 @@ if (questTurnInOptions.Enabled)
     app.Logger.LogWarning(
         "DEV STUB: P1:QuestTurnIn is enabled. Reward ledger is in-memory " +
         "and XP applied=false; no reviewed walkability bundle exists.");
+}
+
+var equipmentOptions = app.Services.GetRequiredService<EquipmentOptions>();
+if (equipmentOptions.Enabled)
+{
+    app.Logger.LogWarning(
+        "DEV STUB: P1:Equipment is enabled. Equip/unequip move metadata only — " +
+        "no stats reach combat while DEC-023 is unresolved. The approved 5-slot " +
+        "wire enum folds the six accessory labels into ACCESSORY and refuses " +
+        "Quần/Găng (no wire token), so those items stay not_equippable.");
 }
 
 if (selfCheck)

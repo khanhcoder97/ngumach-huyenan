@@ -107,6 +107,33 @@ def turnin_envelope(quest_id, npc_id, character_id=CHARACTER_ID,
     }
 
 
+def equip_envelope(item_instance_id, expected_revision, character_id=CHARACTER_ID,
+                   request_id="32" * 16, idempotency_key="33" * 16):
+    return {
+        "schemaVersion": 1,
+        "requestId": request_id,
+        "idempotencyKey": idempotency_key,
+        "sentAtUtc": sent_at_utc(),
+        "characterId": character_id,
+        "payload": {
+            "itemInstanceId": item_instance_id,
+            "expectedRevision": expected_revision,
+        },
+    }
+
+
+def unequip_envelope(slot, expected_revision, character_id=CHARACTER_ID,
+                     request_id="34" * 16, idempotency_key="35" * 16):
+    return {
+        "schemaVersion": 1,
+        "requestId": request_id,
+        "idempotencyKey": idempotency_key,
+        "sentAtUtc": sent_at_utc(),
+        "characterId": character_id,
+        "payload": {"slot": slot, "expectedRevision": expected_revision},
+    }
+
+
 def combat_v2_envelope(action_kind, sequence, skill_id=None, target_id=None,
                       character_id=CHARACTER_ID, request_id="4" * 32,
                       idempotency_key="5" * 32, aim_x=1, aim_y=0):

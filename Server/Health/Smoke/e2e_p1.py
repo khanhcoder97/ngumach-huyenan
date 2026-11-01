@@ -171,6 +171,10 @@ def default_profile():
         ("/p1/quests/accept", "quest_accept"),
         ("/p1/world/interact", "interact"),
         ("/p1/quests/turnin", "quest_turnin"),
+        # The body is irrelevant while the gate is off: the POST falls through
+        # to the GET /p1/inventory/{sessionId} template and answers 405.
+        ("/p1/inventory/equip", "inventory_equip"),
+        ("/p1/inventory/unequip", "inventory_unequip"),
     ]:
         status, _, body = smoke_p1.call(
             "POST", path,
@@ -293,6 +297,58 @@ def dev_profile():
                    f"currency after turn-in {inventory.get('currencies')}")
     smoke_p1.check(len(inventory.get("items") or []) == 1,
                    f"items after turn-in {inventory.get('items')}")
+
+    # Equipment (dev profile enables P1:Equipment): the P00-01 chest is a real
+    # catalogue reward, so equip/unequip runs over the wire on it.
+    chest = (inventory.get("items") or [{}])[0]
+    revision = inventory.get("inventoryRevision")
+    smoke_p1.check(chest.get("location") == "BAG",
+                   f"reward location {chest.get('location')}")
+
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/inventory/equip",
+        smoke_p1.equip_envelope(chest.get("instanceId"), revision,
+                                character_id=character_id,
+                                request_id="32" * 16, idempotency_key="33" * 16),
+        {"X-Session-ID": session})
+    smoke_p1.check(status == 200, f"equip returned {status}: {body}")
+    equipped = body.get("result") or {}
+    equipped_item = next(
+        (item for item in equipped.get("items") or []
+         if item.get("instanceId") == chest.get("instanceId")), {})
+    smoke_p1.check(
+        equipped_item.get("location") == "EQUIPPED" and
+        equipped_item.get("slot") == "CHEST",
+        f"equipped item {equipped_item}")
+    smoke_p1.check(equipped.get("inventoryRevision") == revision + 1,
+                   f"equip revision {equipped.get('inventoryRevision')}")
+
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/inventory/equip",
+        smoke_p1.equip_envelope(chest.get("instanceId"), revision,
+                                character_id=character_id,
+                                request_id="36" * 16, idempotency_key="33" * 16),
+        {"X-Session-ID": session})
+    smoke_p1.check(status == 200, f"equip replay returned {status}: {body}")
+    smoke_p1.check((body.get("result") or {}).get("inventoryRevision") == revision + 1,
+                   "equip replay must not move the item again")
+
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/inventory/unequip",
+        smoke_p1.unequip_envelope("CHEST", revision + 1,
+                                  character_id=character_id,
+                                  request_id="37" * 16, idempotency_key="38" * 16),
+        {"X-Session-ID": session})
+    smoke_p1.check(status == 200, f"unequip returned {status}: {body}")
+    unequipped = body.get("result") or {}
+    unequipped_item = next(
+        (item for item in unequipped.get("items") or []
+         if item.get("instanceId") == chest.get("instanceId")), {})
+    smoke_p1.check(
+        unequipped_item.get("location") == "BAG" and "slot" not in unequipped_item,
+        f"unequipped item {unequipped_item}")
+    smoke_p1.check(unequipped.get("inventoryRevision") == revision + 2,
+                   f"unequip revision {unequipped.get('inventoryRevision')}")
 
     # Invalid ownership/session guards on the turn-in endpoint.
     status, _, body = smoke_p1.call(

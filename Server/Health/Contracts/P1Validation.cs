@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using Server.Health.Gameplay.Inventory;
 
 namespace Server.Health.Contracts;
 
@@ -373,30 +374,9 @@ public static class P1Validation
             return errors;
         }
 
-        if (envelope.SchemaVersion != 1)
-        {
-            errors.Add("schemaVersion");
-        }
-
-        if (!IsHex32(envelope.RequestId))
-        {
-            errors.Add("requestId");
-        }
-
-        if (!IsHex32(envelope.IdempotencyKey))
-        {
-            errors.Add("idempotencyKey");
-        }
-
-        if (!TryParseUtc(envelope.SentAtUtc, out _))
-        {
-            errors.Add("sentAtUtc");
-        }
-
-        if (!IsCharacterId(envelope.CharacterId))
-        {
-            errors.Add("characterId");
-        }
+        ValidateEnvelopeHeader(
+            errors, envelope.SchemaVersion, envelope.RequestId, envelope.IdempotencyKey,
+            envelope.SentAtUtc, envelope.CharacterId);
 
         if (envelope.Payload is null)
         {
@@ -415,5 +395,104 @@ public static class P1Validation
         }
 
         return errors;
+    }
+
+    public static List<string> ValidateEquipEnvelope(EquipEnvelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        ValidateEnvelopeHeader(
+            errors, envelope.SchemaVersion, envelope.RequestId, envelope.IdempotencyKey,
+            envelope.SentAtUtc, envelope.CharacterId);
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+            return errors;
+        }
+
+        var instanceId = envelope.Payload.ItemInstanceId;
+        if (instanceId is null || instanceId.Length is < 1 or > 64)
+        {
+            errors.Add("payload.itemInstanceId");
+        }
+
+        if (envelope.Payload.ExpectedRevision is null or < 1)
+        {
+            errors.Add("payload.expectedRevision");
+        }
+
+        return errors;
+    }
+
+    public static List<string> ValidateUnequipEnvelope(UnequipEnvelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        ValidateEnvelopeHeader(
+            errors, envelope.SchemaVersion, envelope.RequestId, envelope.IdempotencyKey,
+            envelope.SentAtUtc, envelope.CharacterId);
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+            return errors;
+        }
+
+        if (!EquipmentSlots.IsValid(envelope.Payload.Slot))
+        {
+            errors.Add("payload.slot");
+        }
+
+        if (envelope.Payload.ExpectedRevision is null or < 1)
+        {
+            errors.Add("payload.expectedRevision");
+        }
+
+        return errors;
+    }
+
+    private static void ValidateEnvelopeHeader(
+        List<string> errors,
+        int? schemaVersion,
+        string? requestId,
+        string? idempotencyKey,
+        string? sentAtUtc,
+        string? characterId)
+    {
+        if (schemaVersion != 1)
+        {
+            errors.Add("schemaVersion");
+        }
+
+        if (!IsHex32(requestId))
+        {
+            errors.Add("requestId");
+        }
+
+        if (!IsHex32(idempotencyKey))
+        {
+            errors.Add("idempotencyKey");
+        }
+
+        if (!TryParseUtc(sentAtUtc, out _))
+        {
+            errors.Add("sentAtUtc");
+        }
+
+        if (!IsCharacterId(characterId))
+        {
+            errors.Add("characterId");
+        }
     }
 }

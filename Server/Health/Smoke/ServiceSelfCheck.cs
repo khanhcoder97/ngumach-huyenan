@@ -1,4 +1,4 @@
-using System.Threading;
+﻿using System.Threading;
 using Microsoft.Extensions.Options;
 using Server.Health.Contracts;
 using Server.Health.Gameplay.Combat;
@@ -25,6 +25,8 @@ public static class ServiceSelfCheck
         var quests = services.GetRequiredService<IQuestService>();
         var questCatalog = services.GetRequiredService<IQuestCatalog>();
         var inventory = services.GetRequiredService<IInventoryService>();
+        var equipment = services.GetRequiredService<IEquipmentService>();
+        var itemCatalog = services.GetRequiredService<ItemCatalog>();
         var teleport = services.GetRequiredService<ITeleportService>();
         var questAccept = services.GetRequiredService<IQuestAcceptService>();
         var npcAnchors = services.GetRequiredService<NpcAnchorCatalog>();
@@ -4554,6 +4556,277 @@ public static class ServiceSelfCheck
             removed.Snapshot!.Items.Count == 1 &&
             removed.Snapshot.InventoryRevision == 3,
             removed.ErrorCode ?? $"revision={removed.Snapshot?.InventoryRevision}");
+
+        // ─── equipment (Q-E) ──────────────────────────────────
+
+        Check(
+            "equipment.catalog_variant_merged",
+            itemCatalog.Count > 556 &&
+            itemCatalog.TryGet("EQ-MK-BOOTS-T1-R-COMMON", out var bootsEntry) &&
+            bootsEntry is
+            {
+                SlotToken: EquipmentSlots.Boots,
+                ClassId: PlayerClassId,
+                RequiredLevel: 1
+            },
+            $"count={itemCatalog.Count}");
+
+        Check(
+            "equipment.slot_map",
+            ItemCatalog.SlotTokenFor(ItemCatalog.ArmorCategory, "Nón") == EquipmentSlots.Hat &&
+            ItemCatalog.SlotTokenFor(ItemCatalog.ArmorCategory, "Áo") == EquipmentSlots.Chest &&
+            ItemCatalog.SlotTokenFor(ItemCatalog.ArmorCategory, "Giày") == EquipmentSlots.Boots &&
+            ItemCatalog.SlotTokenFor(ItemCatalog.ArmorCategory, "Quần") is null &&
+            ItemCatalog.SlotTokenFor(ItemCatalog.ArmorCategory, "Găng") is null &&
+            ItemCatalog.SlotTokenFor(ItemCatalog.WeaponCategory, "Kiếm") == EquipmentSlots.Weapon &&
+            ItemCatalog.SlotTokenFor(ItemCatalog.AccessoryCategory, "Dây chuyền") ==
+                EquipmentSlots.Accessory &&
+            ItemCatalog.SlotTokenFor(ItemCatalog.AccessoryCategory, "Nhẫn trái") ==
+                EquipmentSlots.Accessory &&
+            ItemCatalog.SlotTokenFor("Tiêu hao", "Potion HP") is null,
+            "approved 5-token enum; Quần/Găng intentionally unmapped");
+
+        var equipmentActor = NewPlayer("CHR_SELFCHECK_EQUIPMENT");
+        var equipmentSeed = inventory.Apply(equipmentActor, new InventoryMutation
+        {
+            AddItems =
+            [
+                new ItemGrant
+                {
+                    TemplateId = "EQ-MK-BOOTS-T1-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag,
+                    Durability = 100
+                },
+                new ItemGrant
+                {
+                    TemplateId = "EQ-MK-BOOTS-T1-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag,
+                    Durability = 100
+                },
+                new ItemGrant
+                {
+                    TemplateId = "EQ-MK-WEAPON-T1-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag,
+                    Durability = 100
+                },
+                new ItemGrant
+                {
+                    TemplateId = "EQ-MK-HAT-T2-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag,
+                    Durability = 100
+                },
+                new ItemGrant
+                {
+                    TemplateId = "EQ-AD-HAT-T1-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag,
+                    Durability = 100
+                },
+                new ItemGrant
+                {
+                    TemplateId = "EQ-MK-LEGS-T1-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag,
+                    Durability = 100
+                },
+                new ItemGrant
+                {
+                    TemplateId = "POT-HP-01",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag
+                }
+            ]
+        });
+        Check(
+            "equipment.seed",
+            equipmentSeed.IsSuccess &&
+            equipmentSeed.Snapshot!.InventoryRevision == 1 &&
+            equipmentSeed.Snapshot.Items.Count == 7,
+            equipmentSeed.ErrorCode ?? $"revision={equipmentSeed.Snapshot?.InventoryRevision}");
+
+        var seedItems = equipmentSeed.Snapshot!.Items;
+        var bootsInstances = seedItems
+            .Where(item => item.TemplateId == "EQ-MK-BOOTS-T1-R-COMMON")
+            .Select(item => item.InstanceId)
+            .ToArray();
+        var weaponInstance = seedItems
+            .Single(item => item.TemplateId == "EQ-MK-WEAPON-T1-R-COMMON").InstanceId;
+        var hatInstance = seedItems
+            .Single(item => item.TemplateId == "EQ-MK-HAT-T2-R-COMMON").InstanceId;
+        var adversaryHatInstance = seedItems
+            .Single(item => item.TemplateId == "EQ-AD-HAT-T1-R-COMMON").InstanceId;
+        var legsInstance = seedItems
+            .Single(item => item.TemplateId == "EQ-MK-LEGS-T1-R-COMMON").InstanceId;
+        var potionInstance = seedItems
+            .Single(item => item.TemplateId == "POT-HP-01").InstanceId;
+
+        string NewKey() => Guid.NewGuid().ToString("N");
+
+        var equipKey = NewKey();
+        var equipBoots = equipment.Equip(equipmentActor, bootsInstances[0], 1, equipKey);
+        Check(
+            "equipment.equip_moves_bag_to_slot",
+            equipBoots.Accepted &&
+            equipBoots.Snapshot!.InventoryRevision == 2 &&
+            equipBoots.Snapshot.Items.Single(item => item.InstanceId == bootsInstances[0]) is
+            {
+                Location: InventoryLocations.Equipped,
+                Slot: EquipmentSlots.Boots,
+                Stack: 1
+            },
+            equipBoots.Failure?.Code ?? $"revision={equipBoots.Snapshot?.InventoryRevision}");
+
+        var equipReplay = equipment.Equip(equipmentActor, bootsInstances[0], 1, equipKey);
+        Check(
+            "equipment.replay_returns_recorded_snapshot",
+            equipReplay.Accepted &&
+            equipReplay.Snapshot!.InventoryRevision == 2 &&
+            inventory.GetSnapshot(equipmentActor.CharacterId).InventoryRevision == 2,
+            equipReplay.Failure?.Code ?? $"revision={equipReplay.Snapshot?.InventoryRevision}");
+
+        var equipKeyConflict = equipment.Equip(equipmentActor, bootsInstances[1], 1, equipKey);
+        Check(
+            "equipment.same_key_different_payload_conflicts",
+            equipKeyConflict.Failure is
+            {
+                Code: EquipmentErrorCodes.IdempotencyConflict,
+                Retryable: false
+            },
+            equipKeyConflict.Failure?.Code);
+
+        var slotOccupied = equipment.Equip(equipmentActor, bootsInstances[1], 2, NewKey());
+        Check(
+            "equipment.slot_occupied",
+            slotOccupied.Failure?.Code == EquipmentErrorCodes.SlotOccupied &&
+            slotOccupied.Snapshot?.InventoryRevision == 2 &&
+            inventory.GetSnapshot(equipmentActor.CharacterId).InventoryRevision == 2,
+            slotOccupied.Failure?.Code);
+
+        var equipWeapon = equipment.Equip(equipmentActor, weaponInstance, 2, NewKey());
+        Check(
+            "equipment.equip_weapon",
+            equipWeapon.Accepted &&
+            equipWeapon.Snapshot!.InventoryRevision == 3 &&
+            equipWeapon.Snapshot.Items.Single(item => item.InstanceId == weaponInstance) is
+            {
+                Location: InventoryLocations.Equipped,
+                Slot: EquipmentSlots.Weapon
+            },
+            equipWeapon.Failure?.Code ?? $"revision={equipWeapon.Snapshot?.InventoryRevision}");
+
+        var reEquip = equipment.Equip(equipmentActor, weaponInstance, 3, NewKey());
+        Check(
+            "equipment.wrong_location",
+            reEquip.Failure?.Code == EquipmentErrorCodes.WrongLocation,
+            reEquip.Failure?.Code);
+
+        var equipmentLevelGate = equipment.Equip(equipmentActor, hatInstance, 3, NewKey());
+        Check(
+            "equipment.level_required",
+            equipmentLevelGate.Failure?.Code == EquipmentErrorCodes.LevelRequired,
+            equipmentLevelGate.Failure?.Code);
+
+        var classGate = equipment.Equip(equipmentActor, adversaryHatInstance, 3, NewKey());
+        Check(
+            "equipment.class_restricted",
+            classGate.Failure?.Code == EquipmentErrorCodes.ClassRestricted,
+            classGate.Failure?.Code);
+
+        var legsGate = equipment.Equip(equipmentActor, legsInstance, 3, NewKey());
+        var potionGate = equipment.Equip(equipmentActor, potionInstance, 3, NewKey());
+        Check(
+            "equipment.not_equippable",
+            legsGate.Failure?.Code == EquipmentErrorCodes.NotEquippable &&
+            potionGate.Failure?.Code == EquipmentErrorCodes.NotEquippable,
+            $"{legsGate.Failure?.Code}/{potionGate.Failure?.Code}");
+
+        var emptySlot = equipment.Unequip(
+            equipmentActor, EquipmentSlots.Accessory, 3, NewKey());
+        Check(
+            "equipment.unequip_empty_slot",
+            emptySlot.Failure?.Code == EquipmentErrorCodes.ItemNotFound,
+            emptySlot.Failure?.Code);
+
+        var unequipBoots = equipment.Unequip(
+            equipmentActor, EquipmentSlots.Boots, 3, NewKey());
+        Check(
+            "equipment.unequip_moves_back_to_bag",
+            unequipBoots.Accepted &&
+            unequipBoots.Snapshot!.InventoryRevision == 4 &&
+            unequipBoots.Snapshot.Items.Single(item => item.InstanceId == bootsInstances[0]) is
+            {
+                Location: InventoryLocations.Bag,
+                Slot: null,
+                Stack: 1
+            },
+            unequipBoots.Failure?.Code ?? $"revision={unequipBoots.Snapshot?.InventoryRevision}");
+
+        var equipBootsAgain = equipment.Equip(
+            equipmentActor, bootsInstances[0], 4, NewKey());
+        Check(
+            "equipment.re_equip_after_unequip",
+            equipBootsAgain.Accepted &&
+            equipBootsAgain.Snapshot!.InventoryRevision == 5,
+            equipBootsAgain.Failure?.Code ??
+            $"revision={equipBootsAgain.Snapshot?.InventoryRevision}");
+
+        var staleEquip = equipment.Equip(equipmentActor, bootsInstances[1], 1, NewKey());
+        Check(
+            "equipment.revision_conflict",
+            staleEquip.Failure is { Code: EquipmentErrorCodes.RevisionConflict, Retryable: true } &&
+            staleEquip.Snapshot?.InventoryRevision == 5,
+            staleEquip.Failure?.Code ?? $"revision={staleEquip.Snapshot?.InventoryRevision}");
+
+        Check(
+            "equipment.rejections_do_not_mutate",
+            inventory.GetSnapshot(equipmentActor.CharacterId) is
+            {
+                InventoryRevision: 5,
+                Items: { Count: 7 }
+            },
+            inventory.GetSnapshot(equipmentActor.CharacterId).InventoryRevision.ToString());
+
+        var parallelKey = NewKey();
+        var parallelBarrier = new Barrier(4);
+        var equipmentParallelOutcomes = new EquipmentOutcome?[4];
+        var parallelThreads = new Thread[4];
+        for (var index = 0; index < parallelThreads.Length; index++)
+        {
+            var slot = index;
+            parallelThreads[slot] = new Thread(() =>
+            {
+                parallelBarrier.SignalAndWait();
+                equipmentParallelOutcomes[slot] = equipment.Unequip(
+                    equipmentActor, EquipmentSlots.Weapon, 5, parallelKey);
+            });
+            parallelThreads[slot].Start();
+        }
+
+        foreach (var parallelThread in parallelThreads)
+        {
+            parallelThread.Join();
+        }
+
+        Check(
+            "equipment.parallel_same_key_applies_once",
+            equipmentParallelOutcomes.All(outcome =>
+                outcome is { Accepted: true, Snapshot: { InventoryRevision: 6 } }) &&
+            inventory.GetSnapshot(equipmentActor.CharacterId) is
+            {
+                InventoryRevision: 6,
+                Items: { Count: 7 }
+            } &&
+            inventory.GetSnapshot(equipmentActor.CharacterId).Items.Count(item =>
+                item.Location == InventoryLocations.Equipped) == 1,
+            string.Join(
+                "|",
+                equipmentParallelOutcomes.Select(outcome =>
+                    outcome?.Failure?.Code ??
+                    $"{outcome?.Snapshot?.InventoryRevision}")));
 
         // ─── turn-in ───────────────────────────────────────────
 

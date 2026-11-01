@@ -501,6 +501,10 @@ def check_example_semantics(name, example, map_config, errors):
         check_quest_state(example, label, errors)
     elif name == "InventorySnapshot":
         check_inventory(example, label, errors)
+    elif name == "EquipmentResponse":
+        result = example.get("result")
+        if isinstance(result, dict):
+            check_inventory(result, f"{label}.result", errors)
 
 
 def write_report(
