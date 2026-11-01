@@ -59,13 +59,17 @@ namespace NguMach.Client.P1
             if (_visible) Render();
         }
 
-        /// <summary>Open dialogue with specific NPC.</summary>
+        /// <summary>
+        /// Open dialogue with a specific NPC — OPC-13 B: snapshot-only conversation view.
+        /// The NPC is never POSTed to the closed /p1/world/interact contract; canonical
+        /// accept/turn-in commands remain available as explicit choices.
+        /// </summary>
         public async Task OpenWithNpcAsync(string npcId)
         {
             Show();
             if (_presenter != null && !string.IsNullOrEmpty(npcId))
             {
-                await _presenter.InteractAsync(npcId, _ct);
+                await _presenter.OpenSnapshotAsync(npcId, _ct);
             }
         }
 
@@ -233,7 +237,13 @@ namespace NguMach.Client.P1
                     _router.CloseTop();
                     break;
                 default:
-                    await _presenter.InteractAsync(_current?.NpcId ?? "", _ct);
+                    // OPC-13 B: an enabled "Interact" stage choice on an NPC must never POST the
+                    // NPC to the closed interact contract — re-compose the read-only snapshot
+                    // instead (the stage note stays; server commands stay explicit).
+                    if (_current != null)
+                    {
+                        await _presenter.OpenSnapshotAsync(_current.InteractionTargetEntityId, _ct);
+                    }
                     break;
             }
         }

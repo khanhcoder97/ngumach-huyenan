@@ -6,6 +6,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using NguMach.Client.P1;
 using NguMach.Client.Presentation;
 using Xunit;
 
@@ -180,6 +183,187 @@ namespace PlayerUIChecks
             Assert.Throws<ArgumentException>(() => orchestrator.Register(() => false, () => { }, consumesSpace: true));
             Assert.Throws<ArgumentNullException>(() => orchestrator.Register(null, () => { }, false));
             Assert.Throws<ArgumentNullException>(() => orchestrator.Register(() => false, null, false));
+        }
+    }
+
+    // ── OPC-13 Package B — NPC dialogue snapshot-only route ───────────────────
+    // SYNTHETIC fixtures: the closed /p1/world/interact contract must never receive
+    // an NPC; dialogue composes from the world/quest snapshot; canonical accept/
+    // turn-in commands keep their NPC template IDs.
+
+    public class NpcSnapshotRouteTests
+    {
+        private sealed class SpyAdapter : IP1UIAdapter
+        {
+            public UIConnectionState ConnectionState { get; set; } = UIConnectionState.Ready;
+            public bool HasPendingMutation { get; set; }
+            public string LastErrorCode => null;
+            public string LastCorrelationId => null;
+            public P1Self Self => new P1Self { characterId = "CHAR_1", classId = "CLASS_MINH_KIEM", x = 1, y = 2, hp = 100, maxHp = 100, mp = 20, maxMp = 20 };
+            public bool UseV2 { get; set; } = true;
+
+            private P1Entity[] _entities;
+            private P1EntityV2[] _v2Entities;
+            private static P1EntityV2 ToV2(P1Entity e) => new P1EntityV2
+            {
+                entityId = e.entityId,
+                kind = e.kind,
+                state = "ALIVE",
+                mapInstanceId = "MI_1",
+                floorId = "F_1",
+                phase = "OPEN",
+                healthState = "OK",
+                targetable = true,
+                x = e.x,
+                y = e.y,
+                hp = 100,
+                maxHp = 100,
+                revision = 1,
+                lifeId = 1
+            };
+
+            /// <summary>SYNTHETIC world entity list; projects the same entity IDs into both the v1 and v2 views.</summary>
+            public P1Entity[] WorldEntities
+            {
+                get => _entities;
+                set
+                {
+                    _entities = value;
+                    _v2Entities = value == null ? null : Array.ConvertAll(value, ToV2);
+                }
+            }
+
+            public P1World World
+            {
+                get
+                {
+                    if (_entities == null || UseV2) return null;
+                    return new P1World { mapId = "MAP_BEN_MUA", entities = _entities };
+                }
+            }
+            public P1WorldV2 WorldV2
+            {
+                get
+                {
+                    if (_v2Entities == null || !UseV2) return null;
+                    return new P1WorldV2
+                    {
+                        mapId = "MAP_BEN_MUA",
+                        entities = _v2Entities
+                    };
+                }
+            }
+            public P1Quest[] Quests { get; set; } = Array.Empty<P1Quest>();
+            public P1Inventory Inventory { get; set; }
+
+            public int InteractCalls { get; private set; }
+            public int AcceptCalls { get; private set; }
+            public int TurnInCalls { get; private set; }
+            public string LastAcceptedNpcId { get; private set; }
+            public string LastTurnInNpcId { get; private set; }
+
+            public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> AcceptQuestAsync(string q, string n, CancellationToken ct)
+            { AcceptCalls++; LastAcceptedNpcId = n; return Task.FromResult(P1Result.Ok()); }
+            public Task<P1Result> InteractAsync(string t, CancellationToken ct)
+            { InteractCalls++; return Task.FromResult(P1Result.Ok()); }
+            public Task<P1Result> TurnInQuestAsync(string q, string n, CancellationToken ct)
+            { TurnInCalls++; LastTurnInNpcId = n; return Task.FromResult(P1Result.Ok()); }
+            public Task<P1Result> RetryPendingAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
+        }
+
+        private static P1Quest Quest(string state, int counters) => new P1Quest
+        {
+            questId = "P00-01",
+            state = state,
+            stepId = "STEP_BEN_MUA",
+            revision = 1,
+            objectiveCounters = new Dictionary<string, int> { ["OBJ_P00_01_PACKAGES"] = counters }
+        };
+
+        [Fact]
+        public async Task OpenSnapshot_RegisteredNpc_NoWirePost_BuildsChoices()
+        {
+            var adapter = new SpyAdapter
+            {
+                WorldEntities = new[] { new P1Entity { entityId = "ENT_MAN_BM_NPC_LYAN", kind = "NPC", x = 5, y = 5 } },
+                Quests = new[] { Quest("AVAILABLE", 0) }
+            };
+            var presenter = new NpcDialoguePresenter(adapter);
+
+            var state = await presenter.OpenSnapshotAsync("ENT_MAN_BM_NPC_LYAN", CancellationToken.None);
+
+            Assert.True(state.IsLoaded);
+            Assert.True(state.Value.IsAvailable);
+            Assert.Equal("NPC_LYAN", state.Value.NpcTemplateId);
+            Assert.Equal("ENT_MAN_BM_NPC_LYAN", state.Value.InteractionTargetEntityId);
+            Assert.Contains(state.Value.Choices, c => c.ActionType == DialogueActionType.AcceptQuest && c.Enabled);
+            Assert.Equal(0, adapter.InteractCalls); // ĐÓNG băng: NPC không đi qua world/interact.
+        }
+
+        [Fact]
+        public async Task OpenSnapshot_UnregisteredNpc_MarksUnresolved_NoForcedDialogue()
+        {
+            var adapter = new SpyAdapter();
+            var presenter = new NpcDialoguePresenter(adapter);
+
+            var state = await presenter.OpenSnapshotAsync("ENT_MAN_BM_NPC_UNKNOWN_X", CancellationToken.None);
+
+            Assert.True(state.IsLoaded);
+            Assert.False(state.Value.IsAvailable);
+            Assert.Contains("UNRESOLVED", state.Value.UnavailableReason);
+            Assert.Empty(state.Value.Choices);
+            Assert.Equal(0, adapter.InteractCalls);
+        }
+
+        [Fact]
+        public async Task OpenSnapshot_EntityMissingFromWorld_MarksUnavailable()
+        {
+            var adapter = new SpyAdapter
+            {
+                WorldEntities = new[] { new P1Entity { entityId = "ENT_OTHER", kind = "NPC", x = 1, y = 1 } },
+                Quests = new[] { Quest("AVAILABLE", 0) }
+            };
+            var presenter = new NpcDialoguePresenter(adapter);
+
+            var state = await presenter.OpenSnapshotAsync("ENT_MAN_BM_NPC_LYAN", CancellationToken.None);
+
+            Assert.True(state.IsLoaded);
+            Assert.False(state.Value.IsAvailable);
+            Assert.DoesNotContain(state.Value.Choices, c => c.Enabled && c.ActionType == DialogueActionType.AcceptQuest);
+            Assert.Equal(0, adapter.InteractCalls);
+        }
+
+        [Fact]
+        public async Task SnapshotChoices_KeepCanonicalWireCommands()
+        {
+            var adapter = new SpyAdapter { Quests = new[] { Quest("READY_TO_TURN_IN", 3) } };
+            var presenter = new NpcDialoguePresenter(adapter);
+
+            await presenter.OpenSnapshotAsync("ENT_MAN_BM_NPC_TA_VAN_KHANH", CancellationToken.None);
+            Assert.Contains(presenter.State.Value.Choices, c => c.ActionType == DialogueActionType.TurnInQuest && c.Enabled);
+
+            await presenter.TurnInQuestAsync("P00-01", "ENT_MAN_BM_NPC_TA_VAN_KHANH", CancellationToken.None);
+            Assert.Equal("NPC_TA_VAN_KHANH", adapter.LastTurnInNpcId); // canonical, không phải entity ID
+            Assert.Equal(0, adapter.InteractCalls);
+            Assert.Equal(1, adapter.TurnInCalls);
+        }
+
+        [Fact]
+        public async Task WireInteract_RemainsValidForNodes_RejectsNpcIds()
+        {
+            var adapter = new SpyAdapter
+            {
+                WorldEntities = new[] { new P1Entity { entityId = "ENT_MAN_BM_NODE_FLOWER", kind = "GATHER_NODE", x = 2, y = 2 } }
+            };
+            var presenter = new NpcDialoguePresenter(adapter);
+
+            await presenter.InteractAsync("ENT_MAN_BM_NODE_FLOWER", CancellationToken.None);
+            Assert.Equal(1, adapter.InteractCalls);
+
+            await Assert.ThrowsAsync<InvalidOperationException>(
+                () => presenter.InteractAsync("ENT_MAN_BM_NPC_LYAN", CancellationToken.None));
         }
     }
 }

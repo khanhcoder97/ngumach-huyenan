@@ -36,7 +36,7 @@ namespace PlayerUIChecks
             public string LastTurnedInQuestId { get; private set; }
             public string LastTurnedInNpcId { get; private set; }
 
-            public Func<string, Task<P1Result>> OnInteract;
+            public Func<string, Task<P1Result>> OnAccept;
 
             public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
@@ -45,13 +45,13 @@ namespace PlayerUIChecks
             {
                 LastAcceptedQuestId = q;
                 LastAcceptedNpcId = n;
-                return Task.FromResult(P1Result.Ok());
+                return OnAccept != null ? OnAccept(n) : Task.FromResult(P1Result.Ok());
             }
 
             public Task<P1Result> InteractAsync(string id, CancellationToken ct)
             {
                 LastInteractedTargetId = id;
-                return OnInteract != null ? OnInteract(id) : Task.FromResult(P1Result.Ok());
+                return Task.FromResult(P1Result.Ok());
             }
 
             public Task<P1Result> TurnInQuestAsync(string q, string n, CancellationToken ct)
@@ -85,7 +85,7 @@ namespace PlayerUIChecks
         public async Task TemplateIdentityControl(string id, string state, DialogueActionType action)
         {
             var presenter = new NpcDialoguePresenter(WithQuest(state));
-            await presenter.InteractAsync(id, CancellationToken.None);
+            await presenter.OpenSnapshotAsync(id, CancellationToken.None);
             Assert.Contains(presenter.State.Value.Choices, c => c.Enabled && c.ActionType == action);
         }
 
@@ -96,26 +96,41 @@ namespace PlayerUIChecks
         {
             var adapter = WithQuest(state);
             var presenter = new NpcDialoguePresenter(adapter);
-            await presenter.InteractAsync(entityId, CancellationToken.None);
+            await presenter.OpenSnapshotAsync(entityId, CancellationToken.None);
 
-            // Wire request preserved entity ID
-            Assert.Equal(entityId, adapter.LastInteractedTargetId);
+            // OPC-13 B: NPC dialogue must be snapshot-only — the NPC is NEVER POSTed to
+            // the closed /p1/world/interact contract.
+            Assert.Null(adapter.LastInteractedTargetId);
 
-            // Choices resolved canonical quest action
+            // Choices resolved canonical quest action from the quest snapshot.
             Assert.Contains(presenter.State.Value.Choices, c => c.Enabled && c.ActionType == action);
         }
 
         [Fact]
         public async Task ClearedDialogueMustIgnoreLateCompletion()
         {
+            // OPC-13 B: replayed via a pending wire command (accept) — dialogue open itself is
+            // snapshot-only now; the generation-discard guarantee is asserted the same way.
             var response = new TaskCompletionSource<P1Result>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var adapter = WithQuest("AVAILABLE");
-            adapter.OnInteract = _ => response.Task;
+            var adapter = new TestAdapter
+            {
+                Quests = new[]
+                {
+                    new P1Quest
+                    {
+                        questId = "P00-01",
+                        state = "AVAILABLE",
+                        stepId = "STEP_BEN_MUA",
+                        revision = 1,
+                        objectiveCounters = new Dictionary<string, int>()
+                    }
+                },
+                OnAccept = _ => response.Task
+            };
             var presenter = new NpcDialoguePresenter(adapter);
+            await presenter.OpenSnapshotAsync("NPC_LYAN", CancellationToken.None);
 
-            var request = presenter.InteractAsync("NPC_LYAN", CancellationToken.None);
-            Assert.True(presenter.State.IsLoading);
-
+            var request = presenter.AcceptQuestAsync("P00-01", "NPC_LYAN", CancellationToken.None);
             presenter.Clear();
             response.SetResult(P1Result.Ok());
             await request;
@@ -129,7 +144,7 @@ namespace PlayerUIChecks
         {
             var adapter = WithQuest("AVAILABLE");
             var presenter = new NpcDialoguePresenter(adapter);
-            await presenter.InteractAsync("ENT_MAN_BM_NPC_LYAN", CancellationToken.None);
+            await presenter.OpenSnapshotAsync("ENT_MAN_BM_NPC_LYAN", CancellationToken.None);
 
             await presenter.AcceptQuestAsync("P00-01", "ENT_MAN_BM_NPC_LYAN", CancellationToken.None);
 
@@ -143,7 +158,7 @@ namespace PlayerUIChecks
         {
             var adapter = WithQuest("READY_TO_TURN_IN");
             var presenter = new NpcDialoguePresenter(adapter);
-            await presenter.InteractAsync("ENT_MAN_BM_NPC_TA_VAN_KHANH", CancellationToken.None);
+            await presenter.OpenSnapshotAsync("ENT_MAN_BM_NPC_TA_VAN_KHANH", CancellationToken.None);
 
             await presenter.TurnInQuestAsync("P00-01", "ENT_MAN_BM_NPC_TA_VAN_KHANH", CancellationToken.None);
 
@@ -677,9 +692,9 @@ namespace PlayerUIChecks
             Assert.Equal("Lý An", map.State.Markers[1].Label);
             Assert.Equal("Tạ Vân Khanh", map.State.Markers[2].Label);
 
-            // 2. Interact with Ly An (world entity ID) -> AcceptQuest choice
-            await dialogue.InteractAsync("ENT_MAN_BM_NPC_LYAN", CancellationToken.None);
-            Assert.Equal("ENT_MAN_BM_NPC_LYAN", adapter.LastInteractedTargetId);
+            // 2. Interact with Ly An (world entity ID) — OPC-13 B: snapshot-only (no NPC POST)
+            await dialogue.OpenSnapshotAsync("ENT_MAN_BM_NPC_LYAN", CancellationToken.None);
+            Assert.Null(adapter.LastInteractedTargetId);
             Assert.Contains(dialogue.State.Value.Choices, c => c.ActionType == DialogueActionType.AcceptQuest);
 
             // 3. Accept quest -> wire sends canonical template ID NPC_LYAN
@@ -717,9 +732,9 @@ namespace PlayerUIChecks
             await journal.LoadAsync(CancellationToken.None);
             Assert.Contains("Tạ Vân Khanh", journal.State.Value.Active[0].ObjectiveDesc);
 
-            // 6. Interact with Ta Van Khanh -> TurnInQuest choice
-            await dialogue.InteractAsync("ENT_MAN_BM_NPC_TA_VAN_KHANH", CancellationToken.None);
-            Assert.Equal("ENT_MAN_BM_NPC_TA_VAN_KHANH", adapter.LastInteractedTargetId);
+            // 6. Interact with Ta Van Khanh — snapshot-only dialogue (no NPC POST)
+            await dialogue.OpenSnapshotAsync("ENT_MAN_BM_NPC_TA_VAN_KHANH", CancellationToken.None);
+            Assert.Null(adapter.LastInteractedTargetId);
             Assert.Contains(dialogue.State.Value.Choices, c => c.ActionType == DialogueActionType.TurnInQuest);
 
             // 7. Turn in quest -> wire sends canonical template ID NPC_TA_VAN_KHANH

@@ -228,19 +228,20 @@ namespace NguMach.Client.P1
             RefreshInputSurface();
             if (!inputGate.AllowsGameplay || interact == null || !interact.enabledSelf || interactionTarget == null) return;
             string id = interactionTarget;
-            if (narrative != null && narrative.CanHandle(id))
+            // OPC-13 B: NPC conversations route through the narrative provider (v3) or the
+            // read-only PlayerUI snapshot; gather nodes/parcels keep the closed interact contract.
+            bool isNpc = NpcContextMapping.Resolve(id)?.TemplateId != null;
+            if (isNpc && narrative != null && narrative.CanHandle(id))
             {
                 _ = narrative.OpenAsync(id, life.Token);
                 return;
             }
-            if (playerUIHook != null)
+            if (isNpc && playerUIHook != null)
             {
                 playerUIHook.OpenWithNpc(id);
+                return;
             }
-            else
-            {
-                RunAction(() => client.InteractAsync(id, life.Token));
-            }
+            RunAction(() => client.InteractAsync(id, life.Token));
         }
         private void BasicAttack()
         {
