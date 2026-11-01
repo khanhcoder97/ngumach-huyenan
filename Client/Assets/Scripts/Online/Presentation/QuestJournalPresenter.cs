@@ -82,6 +82,21 @@ namespace NguMach.Client.Presentation
             NotifyChanged();
         }
 
+        /// <summary>
+        /// OPC-13 B2: rebuild the journal/HUD tracker from the adapter's live quest snapshot
+        /// WITHOUT any wire call. Selection and pin are preserved via the previous view;
+        /// when the pinned quest left the active set (completed/invalidated between
+        /// snapshots) PinnedQuest becomes null so the HUD tracker hides instead of
+        /// rendering stale objectives. No-op until the journal view has been loaded once.
+        /// </summary>
+        public void RefreshFromSnapshot()
+        {
+            if (_state.Value == null) return; // tracker only once a journal view exists
+            var next = BuildViewState(_adapter.Quests, _state.Value);
+            _state = _state.WithValue(next);
+            NotifyChanged();
+        }
+
         private static QuestJournalViewState BuildViewState(P1Quest[] quests, QuestJournalViewState prev)
         {
             var active = new List<QuestEntryView>();

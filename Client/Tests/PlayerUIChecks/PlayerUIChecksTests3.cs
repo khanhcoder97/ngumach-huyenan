@@ -308,7 +308,7 @@ namespace PlayerUIChecks
         [InlineData("EQ-MK-HAT-T1", "Nón Mưa Khởi Minh Kiếm", "EQUIP_HAT", "Thường")]
         [InlineData("EQ-MK-WEAPON-T1", "Kiếm Mưa Khởi Minh Kiếm", "EQUIP_WEAPON", "Thường")]
         [InlineData("POT-HP-01", "Dược Bến Mưa", null, "Thường")]
-        [InlineData("GEM-KIM-01", "Ngọc Kim", null, "Thường")]
+        [InlineData("GEM-KIM-L1", "Ngọc Kim cấp 1", null, "Thường")]
         [InlineData("MAT-CORE-01", "Lõi Mạch", null, "Tinh")]
         public void Resolver_ResolvesCatalogMetadata(string templateId, string expectedName, string expectedSlot, string expectedRarity)
         {

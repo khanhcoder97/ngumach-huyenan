@@ -30,6 +30,7 @@
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\P1UIState.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\PanelRouter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\ModalOrchestration.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\ItemTooltipFormatter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\InventoryPresenter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\QuestJournalPresenter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\NpcDialoguePresenter.cs" />

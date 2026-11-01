@@ -82,24 +82,32 @@ namespace NguMach.Client.Presentation
             Reg("EQ-TC-WEAPON-T1", "Chùy Mưa Khởi Thạch Chùy", "Trang bị / vũ khí", "EQUIP_WEAPON", "CLASS_THACH_CHUY", "Thường", 1, "Chùy khởi đầu phái Thạch Chùy");
             Reg("EQ-LC-WEAPON-T1", "Cung Mưa Khởi Linh Cung", "Trang bị / vũ khí", "EQUIP_WEAPON", "CLASS_LINH_CUNG", "Thường", 1, "Cung khởi đầu phái Linh Cung");
 
-            // Consumables & Materials
-            Reg("POT-HP-01", "Dược Bến Mưa", "Dược phẩm", null, null, "Thường", 1, "Hồi 25% HP, hồi chiêu chia sẻ 8s");
-            Reg("GEM-KIM-01", "Ngọc Kim", "Ngọc", null, null, "Thường", 1, "+1% chính xác, 1 socket");
-            Reg("MAT-CORE-01", "Lõi Mạch", "Nguyên liệu", null, null, "Tinh", 1, "Vật liệu nâng cấp, khóa giao dịch");
+            // Consumables & Materials — ids and display names are the canonical rows
+            // from Item_Master_Catalog_vi.csv (parity-checked headless, OPC-13 B3).
+            Reg("POT-HP-01", "Dược Bến Mưa", "Tiêu hao", null, null, "Thường", 1, "Hồi 25% HP, hồi chiêu chia sẻ 8s");
+            Reg("GEM-KIM-L1", "Ngọc Kim cấp 1", "Ngọc", null, null, "Thường", 1, "Cấp 1; ghép 3 ngọc cùng cấp thành cấp sau; rút luôn trả viên.");
+            Reg("GEM-MOC-L1", "Ngọc Mộc cấp 1", "Ngọc", null, null, "Thường", 1, "Cấp 1; ghép 3 ngọc cùng cấp thành cấp sau; rút luôn trả viên.");
+            Reg("GEM-HOA-L1", "Ngọc Hỏa cấp 1", "Ngọc", null, null, "Thường", 1, "Cấp 1; ghép 3 ngọc cùng cấp thành cấp sau; rút luôn trả viên.");
+            Reg("MAT-CORE-01", "Lõi Mạch", "Nguyên liệu", null, null, "Tinh", 31, "Vật liệu nâng cấp, khóa giao dịch");
             Reg("MAT-RELIC-01", "Cổ Linh Phách", "Nguyên liệu", null, null, "Cổ Vật", 61, "Nguyên liệu tuần cho Ấn Hộ Mệnh T5");
-            Reg("MAT-GUARD-01", "Phù Bảo Hộ", "Phù chú", null, null, "Linh", 1, "Chất xúc tác +11..+15, khóa nhân vật");
-            Reg("MAT-LOCK-01", "Phù Khóa", "Phù chú", null, null, "Thường", 1, "Bảo vệ khỏi phân giải, tiêu hao");
+            Reg("MAT-GUARD-01", "Phù Bảo Hộ", "Phù chú", null, null, "Linh", 36, "Chất xúc tác +11..+15, khóa nhân vật");
+            Reg("MAT-LOCK-01", "Phù Khóa", "Tiêu hao", null, null, "Thường", 1, "Bảo vệ khỏi phân giải, tiêu hao");
 
-            // Quest package objectives
-            Reg("OBJ_BM_PACKAGE_01", "Gói Hàng Bến Mưa 1", "Nhiệm vụ", null, null, "Thường", 1, "Gói hàng thất lạc tại Bến Mưa");
-            Reg("OBJ_BM_PACKAGE_02", "Gói Hàng Bến Mưa 2", "Nhiệm vụ", null, null, "Thường", 1, "Gói hàng thất lạc tại Bến Mưa");
-            Reg("OBJ_BM_PACKAGE_03", "Gói Hàng Bến Mưa 3", "Nhiệm vụ", null, null, "Thường", 1, "Gói hàng thất lạc tại Bến Mưa");
+            // NOTE: OBJ_BM_PACKAGE_01..03 are world objective templateIds (quest
+            // interactables), intentionally NOT item-catalog rows ("Package không nằm trong
+            // manifest CSV nên không phát sinh template giả trong CSV"); they never resolve
+            // here so the catalog stays a pure item catalog (OPC-13 B3 parity guard).
         }
 
         private static void Reg(string templateId, string name, string category, string slot, string classId, string rarity, int level, string desc)
         {
-            Catalog[templateId] = new ItemMetadata(templateId, name, category, slot, classId, rarity, level, desc);
+            var meta = new ItemMetadata(templateId, name, category, slot, classId, rarity, level, desc);
+            Catalog[templateId] = meta;
+            Registered.Add(meta);
         }
+
+        /// <summary>Embedded catalog snapshot for parity checks against the canonical production CSVs.</summary>
+        public static readonly System.Collections.Generic.List<ItemMetadata> Registered = new System.Collections.Generic.List<ItemMetadata>();
 
         public static ItemMetadata Resolve(string templateId)
         {

@@ -366,4 +366,255 @@ namespace PlayerUIChecks
                 () => presenter.InteractAsync("ENT_MAN_BM_NPC_LYAN", CancellationToken.None));
         }
     }
+
+    // ── OPC-13 Package B2 — journal tracker pin/unpin + live objective wiring ──
+    // SYNTHETIC fixtures: pure-C# presenter contract — HUD Tracker update logic
+    // (signature detection) runs in PlayerUIRoot and is only syntax-verified.
+
+    public class QuestTrackerLiveWiringTests
+    {
+        private static P1Quest Quest(string state, long revision, int packages) => new P1Quest
+        {
+            questId = "P00-01",
+            state = state,
+            stepId = "STEP_BEN_MUA",
+            revision = revision,
+            objectiveCounters = new Dictionary<string, int> { ["OBJ_P00_01_PACKAGES"] = packages }
+        };
+
+        [Fact]
+        public async Task TogglePin_PinThenUnpin_Roundtrip()
+        {
+            var adapter = new FakeAdapter { Quests = new[] { Quest("ACTIVE", 1, 1) } };
+            var presenter = new QuestJournalPresenter(adapter);
+            await presenter.LoadAsync(CancellationToken.None);
+
+            presenter.TogglePin("P00-01");
+            Assert.True(presenter.State.Value.HasPinnedTracker);
+            Assert.Equal("P00-01", presenter.State.Value.PinnedQuestId);
+            Assert.NotNull(presenter.State.Value.PinnedQuest);
+
+            presenter.TogglePin("P00-01");
+            Assert.False(presenter.State.Value.HasPinnedTracker);
+            Assert.Null(presenter.State.Value.PinnedQuestId);
+        }
+
+        [Fact]
+        public async Task RefreshFromSnapshot_LiveObjective_RebuiltWithoutWire()
+        {
+            var adapter = new FakeAdapter { Quests = new[] { Quest("ACTIVE", 1, 0) } };
+            var presenter = new QuestJournalPresenter(adapter);
+            await presenter.LoadAsync(CancellationToken.None);
+            presenter.TogglePin("P00-01");
+
+            // Session advances the objective server-side; the client snapshot arrives via poll.
+            adapter.Quests = new[] { Quest("ACTIVE", 2, 2) };
+            var readCalls = 0;
+            adapter.OnReadQuests = () => { readCalls++; return Task.FromResult(P1Result.Ok()); };
+
+            presenter.RefreshFromSnapshot();
+
+            Assert.Equal(0, readCalls); // refresh is local-only: no wire round trip
+            var pinned = presenter.State.Value.PinnedQuest;
+            Assert.NotNull(pinned);
+            Assert.Contains("2/3", pinned.ObjectiveDesc);
+            Assert.Equal("P00-01", presenter.State.Value.PinnedQuestId); // pin survives refresh
+        }
+
+        [Fact]
+        public async Task RefreshFromSnapshot_PinCompletes_TrackerDropsStalePinnedQuest()
+        {
+            var adapter = new FakeAdapter { Quests = new[] { Quest("ACTIVE", 1, 3) } };
+            var presenter = new QuestJournalPresenter(adapter);
+            await presenter.LoadAsync(CancellationToken.None);
+            presenter.TogglePin("P00-01");
+            Assert.NotNull(presenter.State.Value.PinnedQuest);
+
+            // The pinned quest completes; server snapshot no longer lists it as active.
+            adapter.Quests = new[] { Quest("COMPLETED", 3, 3) };
+            presenter.RefreshFromSnapshot();
+
+            // Tracker must not render stale objectives for a finished quest; the pin id is
+            // retained so re-loading the journal still remembers the last tracked quest.
+            Assert.Null(presenter.State.Value.PinnedQuest);
+            Assert.Equal("P00-01", presenter.State.Value.PinnedQuestId);
+        }
+
+        [Fact]
+        public void RefreshFromSnapshot_BeforeAnyJournalLoad_IsNoop()
+        {
+            var adapter = new FakeAdapter { Quests = new[] { Quest("ACTIVE", 1, 1) } };
+            var presenter = new QuestJournalPresenter(adapter);
+
+            // No journal state yet — refresh must not force a phantom load.
+            presenter.RefreshFromSnapshot();
+            Assert.Equal(LoadPhase.Idle, presenter.State.Phase);
+            Assert.Null(presenter.State.Value);
+        }
+
+        [Fact]
+        public async Task TogglePin_AllowedWhilePendingMutation_LocalOnly()
+        {
+            var adapter = new FakeAdapter { Quests = new[] { Quest("ACTIVE", 1, 1) }, HasPendingMutation = true };
+            var presenter = new QuestJournalPresenter(adapter);
+            await presenter.LoadAsync(CancellationToken.None);
+
+            // Pin persists a pure local view toggle (no wire command), so a pending server
+            // mutation must not block or alter it.
+            presenter.TogglePin("P00-01");
+            Assert.True(presenter.State.Value.HasPinnedTracker);
+            Assert.Equal("P00-01", presenter.State.Value.PinnedQuestId);
+        }
+    }
+
+    // ── OPC-13 Package B3 — bag/character tooltip metadata via the real catalog ──
+
+    public class BagTooltipMetadataTests
+    {
+        private static ItemSlotView Slot(string templateId, int stack = 1, int durability = 100, int version = 1, string location = "BAG") =>
+            Slot(v => { v.templateId = templateId; v.stack = stack; v.durability = durability; v.version = version; v.location = location; });
+
+        private static ItemSlotView Slot(Action<P1Item> mut)
+        {
+            var item = new P1Item { instanceId = "iid_1", templateId = "X", stack = 1, location = "BAG", durability = 100, version = 1 };
+            mut(item);
+            return new ItemSlotView(item);
+        }
+
+        [Fact]
+        public void Format_KnownTemplate_ShowsCatalogMetadataAndProvenance()
+        {
+            var item = Slot(v => { v.templateId = "EQ-MK-WEAPON-T1"; v.stack = 2; v.durability = 77; });
+            var tooltip = ItemTooltipFormatter.Format(item, ItemMetadataResolver.Resolve("EQ-MK-WEAPON-T1"));
+
+            Assert.Contains("Kiếm Mưa Khởi Minh Kiếm", tooltip);
+            Assert.Contains("Phẩm chất: Thường", tooltip);
+            Assert.Contains("Loại: Trang bị / vũ khí", tooltip);
+            Assert.Contains("Cấp yêu cầu: 1", tooltip);
+            Assert.Contains("Số lượng: ×2", tooltip);
+            Assert.Contains("Độ bền: 77/100", tooltip);
+            Assert.Contains("Item_Master_Catalog_vi.csv", tooltip); // provenance line present
+        }
+
+        [Fact]
+        public void Format_RarityVariant_CarriesVariantRarityAndVariantProvenance()
+        {
+            var item = Slot(v => { v.templateId = "EQ-MK-WEAPON-T1-R-REFINED"; });
+            var meta = ItemMetadataResolver.Resolve("EQ-MK-WEAPON-T1-R-REFINED");
+
+            Assert.Equal("Tinh Kiếm Mưa Khởi Minh Kiếm", meta.DisplayName);
+            Assert.Equal("Tinh", meta.Rarity);
+
+            var tooltip = ItemTooltipFormatter.Format(item, meta);
+            Assert.Contains("Tinh Kiếm Mưa Khởi Minh Kiếm", tooltip);
+            Assert.Contains("Item_Rarity_Variant_Catalog_vi.csv", tooltip); // variant source recorded
+        }
+
+        [Fact]
+        public void Format_UnknownTemplate_CleanFallback_NoRawUnresolvedLeak()
+        {
+            var item = Slot(v => { v.templateId = "TPL_UNKNOWN_XYZ"; });
+            var meta = ItemMetadataResolver.Resolve("TPL_UNKNOWN_XYZ");
+
+            // Unknown templates never inherit a known slot or class.
+            Assert.Null(meta.Slot);
+            Assert.Null(meta.ClassId);
+            Assert.Equal("TPL_UNKNOWN_XYZ", meta.DisplayName);
+
+            var tooltip = ItemTooltipFormatter.Format(item, meta);
+            Assert.DoesNotContain("UNRESOLVED", tooltip);
+            Assert.Contains("TPL_UNKNOWN_XYZ", tooltip);
+        }
+
+        [Fact]
+        public void Format_NullSlotItem_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() => ItemTooltipFormatter.Format(null, ItemMetadataResolver.Resolve("EQ-MK-WEAPON-T1")));
+        }
+
+        [Fact]
+        public void SlotLabel_Stacking_SuffixOnlyWhenStacked()
+        {
+            var single = Slot(v => { v.templateId = "EQ-MK-WEAPON-T1"; });
+            var stacked = Slot(v => { v.templateId = "EQ-MK-WEAPON-T1"; v.stack = 12; });
+
+            Assert.Equal("Kiếm Mưa Khởi Minh Kiếm", ItemTooltipFormatter.SlotLabel(single, ItemMetadataResolver.Resolve("EQ-MK-WEAPON-T1")));
+            Assert.Equal("Kiếm Mưa Khởi Minh Kiếm ×12", ItemTooltipFormatter.SlotLabel(stacked, ItemMetadataResolver.Resolve("EQ-MK-WEAPON-T1")));
+        }
+    }
+
+    public class ItemCatalogParityTests
+    {
+        /// <summary>Locates the canonical production CSV by walking up from the test binary —
+        /// the only file source allowed here; the running game client keeps using the
+        /// embedded resolver snapshot (no runtime file IO in Unity).
+        /// </summary>
+        private static string FindCatalogCsv()
+        {
+            var dir = new System.IO.DirectoryInfo(AppContext.BaseDirectory);
+            for (int i = 0; i < 12 && dir != null; i++, dir = dir.Parent)
+            {
+                var candidate = System.IO.Path.Combine(dir.FullName, "docs", "production", "Item_Master_Catalog_vi.csv");
+                if (System.IO.File.Exists(candidate)) return candidate;
+            }
+            return null;
+        }
+
+        /// <summary>Parity check: the embedded resolver snapshot must never drift from the canonical production CSV.</summary>
+        [Fact]
+        public void EmbeddedCatalog_MatchesCanonicalMasterCsv()
+        {
+            string csvPath = FindCatalogCsv();
+            if (csvPath == null)
+            {
+                throw new InvalidOperationException("canonical Item_Master_Catalog_vi.csv not found from test base dir — environment SYNTHETIC check failed");
+            }
+
+            var rows = new Dictionary<string, (string name, string category, string level)>(StringComparer.OrdinalIgnoreCase);
+            foreach (var line in System.IO.File.ReadAllLines(csvPath))
+            {
+                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("\"item_id\"", StringComparison.OrdinalIgnoreCase)) continue;
+                var fields = ParseLineQuoted(line);
+                if (fields == null || fields.Count < 7) continue;
+                rows[fields[0]] = (fields[1], fields[2], fields[6].Trim());
+            }
+
+            Assert.True(rows.Count > 0, "master catalog CSV parsed empty");
+
+            // Every embedded resolver entry must exist in the canonical CSV with the same
+            // display name and required level — drift in either direction fails this check.
+            foreach (var meta in ItemMetadataResolver.Registered)
+            {
+                Assert.True(rows.TryGetValue(meta.TemplateId, out var row),
+                    $"embedded catalog entry {meta.TemplateId} is missing from Item_Master_Catalog_vi.csv");
+                Assert.Equal(row.name, meta.DisplayName);
+                Assert.Equal(row.level, meta.RequiredLevel.ToString());
+            }
+        }
+
+        private static List<string> ParseLineQuoted(string line)
+        {
+            var fields = new List<string>();
+            var f = new System.Text.StringBuilder();
+            bool inQuotes = false;
+            for (int i = 0; i < line.Length; i++)
+            {
+                char c = line[i];
+                if (inQuotes)
+                {
+                    if (c == '"')
+                    {
+                        if (i + 1 < line.Length && line[i + 1] == '"') { f.Append('"'); i++; }
+                        else inQuotes = false;
+                    }
+                    else f.Append(c);
+                }
+                else if (c == '"') inQuotes = true;
+                else if (c == ',') { fields.Add(f.ToString()); f.Clear(); }
+                else f.Append(c);
+            }
+            fields.Add(f.ToString());
+            return fields;
+        }
+    }
 }

@@ -210,7 +210,10 @@ namespace NguMach.Client.P1
 
             if (selectedItem != null)
             {
-                _detailLabel.text = "Đã chọn: " + selectedItem.DisplayName + " (Số lượng: " + selectedItem.Stack + ")";
+                // OPC-13 B3: bag detail is a full catalog-backed tooltip (rarity, category,
+                // level, durability, description, provenance) — not just a name echo.
+                var meta = ItemMetadataResolver.Resolve(selectedItem.TemplateId);
+                _detailLabel.text = ItemTooltipFormatter.Format(selectedItem, meta);
             }
             else
             {
