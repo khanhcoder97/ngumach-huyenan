@@ -41,6 +41,12 @@ if [ "${PROFILE}" = "dev" ]; then
   P1__QuestTurnIn__Enabled=true \
   P1__Equipment__Enabled=true \
     dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
+elif [ "${PROFILE}" = "two-client" ]; then
+  P1__QuestAccept__Enabled=true \
+  P1__Interact__Enabled=true \
+  P1__QuestTurnIn__Enabled=true \
+  P1__Equipment__Enabled=true \
+    dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
 elif [ "${PROFILE}" = "mob-combat" ]; then
   # Combat gates only. The starting pools are enlarged purely so one actor can
   # walk, escape, take hits, guard and then die inside a single run; every

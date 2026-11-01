@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Headless end-to-end scenario for the P1 gameplay loop (QOD-15).
 
-Two profiles, matching the production gates:
+Profiles, matching the production gates:
 
   default — server started WITHOUT the P1 feature flags (production
-            profile). Expected blocked output: the quest accept, interact
-            and turn-in POST handlers are not mapped, so the requests
-            match the GET read routes instead and return HTTP 405,
+            profile). Expected blocked output: the quest accept, interact,
+            turn-in and equipment POST handlers are not mapped, so the
+            requests match the GET read routes instead and return HTTP 405,
             while sessions, movement and read endpoints keep working.
 
   dev     — server started WITH P1__QuestAccept__Enabled=true,
@@ -32,6 +32,16 @@ Two profiles, matching the production gates:
             until HP reaches 0, then prove the server does not paper over
             death (no auto-heal, fresh cast refused, aggro dropped).
 
+  two-client — two real sessions with distinct characters and the quest,
+            interact, turn-in and equipment gates ON. Proves isolation rather
+            than inventing contention: both clients claim the same
+            PER_CHARACTER package (and the same gather node) with the same
+            idempotency keys and both succeed independently; A's turn-in and
+            equipment never move B's inventory; B can reuse A's turn-in key
+            because idempotency is character-scoped; P00-02 is then asserted
+            as BLOCKED with its activation.blocked field so the campaign stop
+            has a reason instead of a false PASS.
+
 The Bến Mưa topology fixture is SYNTHETIC_TEST_ONLY, so wall
 enforcement is NotEnforced on the server: the wall-crossing move
 succeeds and the dev profile records "wall_enforcement=not_enforced". If a
@@ -39,7 +49,7 @@ REVIEWED bundle is ever loaded, the same move must return 422
 movement_blocked; the script accepts exactly those two outcomes and
 fails on anything else.
 
-Usage: e2e_p1.py <base_url> <default|dev|mob-combat>
+Usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client>
 """
 
 import sys
@@ -825,6 +835,236 @@ def mob_combat_profile():
           f"mob_states={','.join(states)}")
 
 
+def two_client_profile():
+    """Q-G: two real sessions, two real characters, one shared server."""
+    character_a = "CHR_E2E_TWO_A"
+    character_b = "CHR_E2E_TWO_B"
+
+    # prepare_ready_actor uses fixed request/idempotency keys. Running it for a
+    # second character is itself a proof that idempotency is character-scoped:
+    # a global ledger would replay or conflict here.
+    session_a, sequence_a = prepare_ready_actor(character_a)
+    session_b, sequence_b = prepare_ready_actor(character_b)
+    smoke_p1.check(session_a != session_b, "the two clients share a session")
+
+    sequence_a, _ = walk_east(session_a, character_a, sequence_a, 47.5)
+    sequence_b, _ = walk_east(session_b, character_b, sequence_b, 47.5)
+
+    # The same package, the same keys, two clients, one barrier. The package is
+    # PER_CHARACTER, so both must succeed independently; this is isolation, not
+    # a claim that the shared world lets one client steal the other's claim.
+    package_barrier = threading.Barrier(2)
+    package_responses = [None, None]
+
+    def claim_package(index, session, character):
+        package_barrier.wait(timeout=10)
+        package_responses[index] = smoke_p1.call(
+            "POST", "/p1/world/interact",
+            smoke_p1.interact_envelope(
+                "ENT_MAN_BM_OBJ_BM_PACKAGE_03", character_id=character,
+                request_id="10" * 16, idempotency_key="11" * 16),
+            {"X-Session-ID": session})
+
+    package_threads = [
+        threading.Thread(target=claim_package, args=(0, session_a, character_a)),
+        threading.Thread(target=claim_package, args=(1, session_b, character_b)),
+    ]
+    for thread in package_threads:
+        thread.start()
+    for thread in package_threads:
+        thread.join()
+
+    for label, response in zip(("A", "B"), package_responses):
+        smoke_p1.check(response is not None, f"client {label} produced no claim response")
+        status, _, body = response
+        smoke_p1.check(status == 200, f"client {label} claim returned {status}: {body}")
+        result = body.get("result") or {}
+        smoke_p1.check(result.get("targetState") == "AVAILABLE",
+                       f"client {label} claim state {result.get('targetState')}")
+        update = (result.get("questUpdates") or [{}])[0]
+        smoke_p1.check(update.get("state") == "READY_TO_TURN_IN",
+                       f"client {label} quest state {update.get('state')}")
+        smoke_p1.check(
+            update.get("objectiveCounters") == {"OBJ_P00_01_PACKAGES": 3},
+            f"client {label} counters {update.get('objectiveCounters')}")
+
+    # A turns in first. Nothing of A's reward may appear on B, whose quest is
+    # still READY_TO_TURN_IN and whose inventory is still empty.
+    sequence_a, _ = walk_east(session_a, character_a, sequence_a, TURN_IN_NPC_X)
+    sequence_b, _ = walk_east(session_b, character_b, sequence_b, TURN_IN_NPC_X)
+
+    turn_key = "13" * 16
+    turn_request = "12" * 16
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/quests/turnin",
+        smoke_p1.turnin_envelope("P00-01", "NPC_TA_VAN_KHANH",
+                                 character_id=character_a,
+                                 request_id=turn_request, idempotency_key=turn_key),
+        {"X-Session-ID": session_a})
+    smoke_p1.check(status == 200, f"client A turn-in returned {status}: {body}")
+    smoke_p1.check(
+        ((body.get("result") or {}).get("questState") or {}).get("state") == "COMPLETED",
+        "client A turn-in did not complete")
+
+    status, _, body = smoke_p1.call("GET", f"/p1/quests/{session_b}")
+    smoke_p1.check(status == 200, f"client B quest read returned {status}: {body}")
+    b_quest = next((state for state in body.get("result") or []
+                    if state.get("questId") == "P00-01"), {})
+    smoke_p1.check(b_quest.get("state") == "READY_TO_TURN_IN",
+                   f"client B quest state changed to {b_quest.get('state')}")
+
+    status, _, body = smoke_p1.call("GET", f"/p1/inventory/{session_b}")
+    smoke_p1.check(status == 200, f"client B inventory read returned {status}: {body}")
+    b_before = body.get("result") or {}
+    smoke_p1.check(
+        b_before.get("inventoryRevision") == 0 and not b_before.get("items"),
+        f"client A's turn-in leaked into B: {b_before}")
+
+    # B reuses A's key. Turn-in idempotency is scoped to the character, so this
+    # is a fresh turn-in for B, not a replay of A's receipt.
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/quests/turnin",
+        smoke_p1.turnin_envelope("P00-01", "NPC_TA_VAN_KHANH",
+                                 character_id=character_b,
+                                 request_id=turn_request, idempotency_key=turn_key),
+        {"X-Session-ID": session_b})
+    smoke_p1.check(status == 200,
+                   f"client B turn-in with A's key returned {status}: {body}")
+    b_rewards = (body.get("result") or {}).get("rewards") or {}
+    smoke_p1.check(
+        (b_rewards.get("items") or [{}])[0].get("templateId") == "EQ-MK-CHEST-T1-R-COMMON",
+        f"client B reward {b_rewards.get('items')}")
+
+    status, _, body = smoke_p1.call("GET", f"/p1/inventory/{session_a}")
+    smoke_p1.check(status == 200, f"client A inventory read returned {status}: {body}")
+    a_inventory = body.get("result") or {}
+    smoke_p1.check(
+        a_inventory.get("inventoryRevision") == 1 and
+        len(a_inventory.get("items") or []) == 1,
+        f"client A inventory changed when B turned in: {a_inventory}")
+
+    a_chest = (a_inventory.get("items") or [{}])[0]
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/inventory/equip",
+        smoke_p1.equip_envelope(a_chest.get("instanceId"), 1,
+                                character_id=character_a,
+                                request_id="2d" * 16, idempotency_key="2e" * 16),
+        {"X-Session-ID": session_a})
+    smoke_p1.check(status == 200, f"client A equip returned {status}: {body}")
+    smoke_p1.check((body.get("result") or {}).get("inventoryRevision") == 2,
+                   "client A equip did not advance exactly one revision")
+
+    status, _, body = smoke_p1.call("GET", f"/p1/inventory/{session_b}")
+    smoke_p1.check(status == 200, f"client B inventory read returned {status}: {body}")
+    b_after_equip = body.get("result") or {}
+    smoke_p1.check(
+        b_after_equip.get("inventoryRevision") == 1 and
+        (b_after_equip.get("items") or [{}])[0].get("location") == "BAG",
+        f"client A's equip leaked into B: {b_after_equip}")
+
+    b_chest = (b_after_equip.get("items") or [{}])[0]
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/inventory/equip",
+        smoke_p1.equip_envelope(b_chest.get("instanceId"), 1,
+                                character_id=character_b,
+                                request_id="2f" * 16, idempotency_key="30" * 16),
+        {"X-Session-ID": session_b})
+    smoke_p1.check(status == 200, f"client B equip returned {status}: {body}")
+    smoke_p1.check((body.get("result") or {}).get("inventoryRevision") == 2,
+                   "client B equip did not advance exactly one revision")
+
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/inventory/unequip",
+        smoke_p1.unequip_envelope("CHEST", 2, character_id=character_a,
+                                  request_id="31" * 16, idempotency_key="32" * 16),
+        {"X-Session-ID": session_a})
+    smoke_p1.check(status == 200, f"client A unequip returned {status}: {body}")
+    smoke_p1.check((body.get("result") or {}).get("inventoryRevision") == 3,
+                   "client A unequip did not advance exactly one revision")
+
+    status, _, body = smoke_p1.call("GET", f"/p1/inventory/{session_b}")
+    smoke_p1.check(status == 200, f"client B inventory read returned {status}: {body}")
+    smoke_p1.check((body.get("result") or {}).get("inventoryRevision") == 2,
+                   "client A's unequip leaked into B")
+
+    # The campaign has to stop with a reason, not pass. A completed P00-01, so
+    # the next quest's prerequisite is met; the loader still keeps P00-02
+    # BLOCKED on its source gap.
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/quests/accept",
+        smoke_p1.quest_accept_envelope(
+            "P00-02", "NPC_TA_VAN_KHANH", character_id=character_a,
+            request_id="33" * 16, idempotency_key="34" * 16),
+        {"X-Session-ID": session_a})
+    smoke_p1.check(status == 422, f"blocked P00-02 accept returned {status}: {body}")
+    accept_error = body.get("error") or {}
+    smoke_p1.check(accept_error.get("code") == "prerequisite_not_met",
+                   f"blocked P00-02 error {accept_error.get('code')}")
+    blocked_fields = [field for field in accept_error.get("fieldErrors") or []
+                      if field.startswith("activation.blocked.")]
+    smoke_p1.check(bool(blocked_fields),
+                   f"blocked P00-02 fields {accept_error.get('fieldErrors')}")
+
+    # Gather nodes are PER_CHARACTER too: two fresh clients at spawn (x=18)
+    # harvest the same node at x=21 with one barrier and the same keys. Both
+    # succeed and each sees only its own instance.
+    node_clients = []
+    for character in ("CHR_E2E_NODE_A", "CHR_E2E_NODE_B"):
+        status, _, body = smoke_p1.call(
+            "POST", "/p1/sessions", {"characterId": character})
+        smoke_p1.check(status == 201, f"node session returned {status}: {body}")
+        node_clients.append((body.get("sessionId"), character))
+
+    node_barrier = threading.Barrier(2)
+    node_responses = [None, None]
+
+    def gather_node(index):
+        node_barrier.wait(timeout=10)
+        node_responses[index] = smoke_p1.call(
+            "POST", "/p1/world/interact",
+            smoke_p1.interact_envelope(
+                "ENT_MAN_BM_NODE_BM_ORE_01",
+                character_id=node_clients[index][1],
+                request_id="29" * 16, idempotency_key="2a" * 16),
+            {"X-Session-ID": node_clients[index][0]})
+
+    node_threads = [threading.Thread(target=gather_node, args=(index,))
+                    for index in range(2)]
+    for thread in node_threads:
+        thread.start()
+    for thread in node_threads:
+        thread.join()
+
+    node_instances = []
+    for label, response in zip(("A", "B"), node_responses):
+        smoke_p1.check(response is not None, f"node client {label} produced no response")
+        status, _, body = response
+        smoke_p1.check(status == 200, f"node client {label} gather returned {status}: {body}")
+        gather_result = body.get("result") or {}
+        smoke_p1.check(gather_result.get("outcome") == "gathered",
+                       f"node client {label} outcome {gather_result.get('outcome')}")
+        smoke_p1.check((gather_result.get("yield") or {}).get("itemId") == "MAT-ORE-01",
+                       f"node client {label} yield {gather_result.get('yield')}")
+
+    for session, character in node_clients:
+        status, _, body = smoke_p1.call("GET", f"/p1/inventory/{session}")
+        smoke_p1.check(status == 200, f"node inventory read returned {status}: {body}")
+        snapshot = body.get("result") or {}
+        items = snapshot.get("items") or []
+        smoke_p1.check(
+            snapshot.get("inventoryRevision") == 1 and len(items) == 1 and
+            items[0].get("templateId") == "MAT-ORE-01",
+            f"node inventory for {character}: {snapshot}")
+        node_instances.append(items[0].get("instanceId"))
+
+    smoke_p1.check(node_instances[0] != node_instances[1],
+                   f"the two node clients share an instance: {node_instances}")
+
+    print(f"profile=two-client isolation=OK reward=per_character "
+          f"equip=per_character node=per_character "
+          f"campaign=BLOCKED({blocked_fields[0].split('.')[-1]})")
+
+
 def main():
     if len(sys.argv) < 3:
         fail("usage: e2e_p1.py <base_url> <default|dev|mob-combat>")
@@ -836,8 +1076,10 @@ def main():
         dev_profile()
     elif mode == "mob-combat":
         mob_combat_profile()
+    elif mode == "two-client":
+        two_client_profile()
     else:
-        fail(f"unknown mode '{mode}' (expected default|dev|mob-combat)")
+        fail(f"unknown mode '{mode}' (expected default|dev|mob-combat|two-client)")
 
     print(f"PASS: e2e_p1 ({mode}) {smoke_p1.CHECKS} checks against {smoke_p1.BASE_URL}")
 
