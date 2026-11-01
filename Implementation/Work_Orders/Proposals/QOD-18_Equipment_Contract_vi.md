@@ -53,3 +53,12 @@ Quy tắc:
 2. Có cho auto-swap khi slot đang có item không, hay bắt buộc unequip trước (đề xuất của tôi: bắt buộc, đơn giản và không mất dữ liệu)?
 3. `expectedRevision` dùng revision inventory (đề xuất) hay revision session?
 4. Khi equip làm đổi `maxHP/maxMP` (nếu sau này stat áp), current HP giữ tuyệt đối rồi clamp — đúng ý Q-D chứ?
+
+## 6. Câu trả lời đề xuất cho §5 (Qoder) — cần owner xác nhận trước khi mở wire
+
+1. **Slot set của `CLASS_MINH_KIEM`:** `Nón, Áo, Giày, Vũ khí, Phụ kiện` — đúng 5 giá trị `slot` đang xuất hiện trong `Item_Master_Catalog_vi.csv` cho lớp MK; không thêm slot nào khác, danh sách này lấy từ cột `slot` chứ không tự đặt. Nếu catalog có slot thứ 6, loader phải fail-fast chứ không lặng lẽ chấp nhận.
+2. **Auto-swap:** **không** auto-swap. Equip khi slot đang có item → `409 slot_occupied` + snapshot; client gọi `unequip` trước. Lý do: turn-in đã chứng minh nguyên tắc “một thay đổi một transaction”, và auto-swap sẽ mất item nếu response rơi.
+3. **`expectedRevision`:** dùng **inventory aggregate revision** (cùng con số `GET /p1/inventory` trả), không dùng session revision — vì thao tác này chỉ mutate inventory; session revision tăng theo move/HP nên sẽ tạo 409 giả.
+4. **Đổi `maxHP/maxMP`:** giữ **current tuyệt đối rồi clamp** (đúng Q-D): `hp = min(hp, newMax)`, không tự heal, không hồi khi chỉ equip/unequip.
+
+Bốn câu trả lời này **chưa phải quyết định owner** — packet vẫn ở trạng thái chờ duyệt; khi được xác nhận, schema `EquipRequest/UnequipRequest` + example + `validate_contracts.py` + endpoint sẽ được viết trong một PR riêng (route mới, gate `P1:Equipment:Enabled` mặc định OFF).
