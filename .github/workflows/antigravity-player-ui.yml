@@ -12,18 +12,30 @@ on:
       - 'Client/Assets/Scripts/Online/Unity/PlayerUI/**'
       - 'Client/Tests/PlayerUIChecks/**'
       - 'Client/Tests/UnitySyntaxCheck/**'
+      - 'Client/Tests/PlayerUIAcceptance/**'
+      - 'Client/Assets/Tests/PlayerUI/**'
       - 'Client/Assets/Resources/PlayerUI/**'
+      - 'Tools/PlayerUIData/**'
+      - 'Client/Assets/**/*.asmdef'
+      - '.github/workflows/antigravity-player-ui.yml'
   pull_request:
     branches:
       - 'codex/p1-client-integration-20261029'
       - 'codex/story-gameplay-integration-20261031'
+      - 'opencode/opc-13-player-ui-takeover-20261101'
+      - 'opencode/opc-14-ui-runtime-hardening-20261101'
       - 'main'
     paths:
       - 'Client/Assets/Scripts/Online/Presentation/**'
       - 'Client/Assets/Scripts/Online/Unity/PlayerUI/**'
       - 'Client/Tests/PlayerUIChecks/**'
       - 'Client/Tests/UnitySyntaxCheck/**'
+      - 'Client/Tests/PlayerUIAcceptance/**'
+      - 'Client/Assets/Tests/PlayerUI/**'
       - 'Client/Assets/Resources/PlayerUI/**'
+      - 'Tools/PlayerUIData/**'
+      - 'Client/Assets/**/*.asmdef'
+      - '.github/workflows/antigravity-player-ui.yml'
 
 jobs:
   player-ui-tests:
@@ -46,10 +58,29 @@ jobs:
       - name: Test
         run: dotnet test Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj --no-build -c Release --logger trx --results-directory TestResults
 
+      # OPC-14 E: generated catalog must be in sync (deterministic) — fail on drift.
+      - name: Generated UI catalog --check
+        run: |
+          python Tools/PlayerUIData/generate_ui_catalog.py
+          git diff --exit-code -- Client/Assets/Resources/PlayerUI/ui_item_catalog.json
+
+      # OPC-14 E: build the HTTP acceptance harness (compile-only here; execution
+      # requires a private server — see step below).
+      - name: Build HTTP acceptance harness
+        run: dotnet build Client/Tests/PlayerUIAcceptance/PlayerUIAcceptance.csproj -c Release
+
       # OPC-13 D: keep the Unity-source syntax gate beside the headless UI suite
       # (syntax only — never claim this is a Unity/Editor compile).
       - name: Unity source syntax gate
         run: dotnet run --project Client/Tests/UnitySyntaxCheck/UnitySyntaxCheck.csproj --configuration Release
+
+      # OPC-14 C/E: real HTTP acceptance (optional, requires P1_BASE_URL).
+      # Missing/unreachable URL or zero assertions -> non-zero exit (CI rejects SKIP).
+      - name: HTTP acceptance (optional)
+        if: env.P1_BASE_URL != ''
+        env:
+          P1_BASE_URL: ${{ secrets.P1_BASE_URL }}
+        run: dotnet run --project Client/Tests/PlayerUIAcceptance/PlayerUIAcceptance.csproj -c Release --no-build
 
       - name: Upload test results
         if: always()
