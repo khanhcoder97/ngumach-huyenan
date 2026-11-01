@@ -36,13 +36,13 @@ namespace NguMach.Client.Presentation
             {
                 var w2 = _adapter.WorldV2;
                 var self2 = w2.self;
-                if (self2 == null) { _state = null; NotifyChanged(); return; }
+                if (self2 == null) { _panX = _panY = 0; _state = null; NotifyChanged(); return; }
                 var bounds2 = MapBounds.ForMap(w2.mapId);
-                if (_state != null && _state.Bounds != null &&
-                    (bounds2.XMin != _state.Bounds.XMin || bounds2.XMax != _state.Bounds.XMax
-                     || bounds2.YMin != _state.Bounds.YMin || bounds2.YMax != _state.Bounds.YMax))
+                if (_state != null && (_state.MapId != w2.mapId
+                    || bounds2.XMin != _state.Bounds?.XMin || bounds2.XMax != _state.Bounds?.XMax
+                    || bounds2.YMin != _state.Bounds?.YMin || bounds2.YMax != _state.Bounds?.YMax))
                 {
-                    _panX = _panY = 0; // OPC-13 C: map switch → drop the stale pan offset
+                    _panX = _panY = 0; // OPC-14 M0: map switch (incl. mapId change / same-bounds) → drop stale pan
                 }
                 ClampPan(self2.x, self2.y, bounds2);
                 _state = new MapViewState(w2.mapId, self2.x, self2.y, BuildMarkersV2(w2),
@@ -56,11 +56,11 @@ namespace NguMach.Client.Presentation
             {
                 var w = _adapter.World;
                 var self1 = w.self;
-                if (self1 == null) { _state = null; NotifyChanged(); return; }
+                if (self1 == null) { _panX = _panY = 0; _state = null; NotifyChanged(); return; }
                 var bounds1 = MapBounds.ForMap(w.mapId);
-                if (_state != null && _state.Bounds != null &&
-                    (bounds1.XMin != _state.Bounds.XMin || bounds1.XMax != _state.Bounds.XMax
-                     || bounds1.YMin != _state.Bounds.YMin || bounds1.YMax != _state.Bounds.YMax))
+                if (_state != null && (_state.MapId != w.mapId
+                    || bounds1.XMin != _state.Bounds?.XMin || bounds1.XMax != _state.Bounds?.XMax
+                    || bounds1.YMin != _state.Bounds?.YMin || bounds1.YMax != _state.Bounds?.YMax))
                 {
                     _panX = _panY = 0;
                 }
@@ -72,6 +72,7 @@ namespace NguMach.Client.Presentation
                 return;
             }
 
+            _panX = _panY = 0;
             _state = null;
             NotifyChanged();
         }
@@ -131,7 +132,7 @@ namespace NguMach.Client.Presentation
         {
             if (bounds == null) { _panX = _panY = 0; return; }
             double halfX = Math.Min(bounds.Width / (_zoomLevel * 2), bounds.Width * 0.5);
-            double halfY = Math.Min(bounds.Height / (_zoomLevel * 2), bounds.Height * 0.5);
+            double halfY = Math.Min(bounds.Width / (_zoomLevel * 2), bounds.Height * 0.5); // same square-canvas visible extent as X (280x280 projection)
             double midX = (bounds.XMin + bounds.XMax) * 0.5;
             double midY = (bounds.YMin + bounds.YMax) * 0.5;
 

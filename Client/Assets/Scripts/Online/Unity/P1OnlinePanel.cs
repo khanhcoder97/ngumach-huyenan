@@ -28,7 +28,7 @@ namespace NguMach.Client.P1
         private readonly P1GameplayInputGate inputGate = new P1GameplayInputGate();
         private readonly Button[] skills = new Button[6];
         private Vector2 touchMove, keyboardMove;
-        private bool touchHeld, actionBusy, closing, applicationPaused;
+        private bool touchHeld, actionBusy, closing, applicationPaused, _editing;
         private P1ActorPresenter presenter;
         private GameObject proxy;
         private Texture2D proxyTexture;
@@ -173,7 +173,7 @@ namespace NguMach.Client.P1
             bool pointersReleased = !touchHeld && Input.touchCount == 0 && !Input.GetMouseButton(0);
             inputGate.ObserveControls(keyboardMove.sqrMagnitude < 0.001f, hotkeysReleased, pointersReleased);
             if (presenter != null && !touchHeld && keyboardMove.sqrMagnitude < 0.001f) presenter.SetIdle();
-            if (Input.GetKeyDown(KeyCode.Space) && modalOrchestration.DispatchSpace() != ModalLayer.None)
+            if (!_editing && Input.GetKeyDown(KeyCode.Space) && modalOrchestration.DispatchSpace() != ModalLayer.None)
             {
                 // A modal layer (cinema skip) consumed this Space press; gameplay never sees it.
                 ClearHeldInput(); RenderCooldowns(); return;
@@ -199,6 +199,7 @@ namespace NguMach.Client.P1
         {
             var focused = document == null ? null : document.rootVisualElement.panel?.focusController?.focusedElement;
             bool editing = focused is TextField || focused is Slider || focused is SliderInt;
+            _editing = editing;
             inputGate.SetSurface(Application.isFocused, applicationPaused, ModalOpen, editing);
             if (!inputGate.AllowsGameplay) ClearHeldInput();
         }

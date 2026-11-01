@@ -81,19 +81,33 @@ namespace NguMach.Client.Presentation
         }
 
         /// <summary>
-        /// Run Space: the first open layer that declares a Space behavior runs it.
-        /// When no open layer consumes Space the caller falls through to gameplay (input gate still applies).
+        /// Run Space: the topmost open layer wins. If it declares a Space behavior,
+        /// that runs (consumed). If it is open but does NOT consume Space, it blocks
+        /// Space from reaching any lower layer (no fall-through to cinema/gameplay
+        /// behind a modal) and returns that layer as "blocked" (diagnostics/tests).
+        /// Only when no layer is open does Space fall through to gameplay (None).
         /// </summary>
-        /// <returns>The layer that consumed the press, or <see cref="ModalLayer.None"/> to fall through.</returns>
+        /// <returns>
+        /// The layer that consumed or blocked the press, or <see cref="ModalLayer.None"/>
+        /// when no modal is open (fall-through to gameplay).
+        /// </returns>
         public ModalLayer DispatchSpace()
         {
             for (int i = 0; i < _layers.Count; i++)
             {
                 var layer = _layers[i];
-                if (!layer.ConsumesSpace || !IsOpen(layer)) continue;
-                layer.Space();
-                return ToLayer(i);
+                if (!IsOpen(layer)) continue;
+                if (layer.ConsumesSpace)
+                {
+                    layer.Space();
+                    _lastConsumed = ToLayer(i);
+                    return _lastConsumed;
+                }
+                // Open but non-consuming: blocked. Do not run Space, do not fall through.
+                _lastConsumed = ToLayer(i);
+                return _lastConsumed;
             }
+            _lastConsumed = ModalLayer.None;
             return ModalLayer.None;
         }
 

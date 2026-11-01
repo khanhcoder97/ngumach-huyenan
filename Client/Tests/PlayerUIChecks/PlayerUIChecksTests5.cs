@@ -114,15 +114,46 @@ namespace PlayerUIChecks
             Assert.Equal(ModalLayer.None, orchestrator.DispatchSpace());
             Assert.Equal(0, cinema.SpaceCalls);
 
-            // Panel-only open must NOT consume Space (bag/journal scrolling uses other keys).
+            // Panel-only open: the topmost open layer (PlayerPanel) does not consume
+            // Space, so it BLOCKS Space from reaching any lower layer — no fall-through
+            // to gameplay/cinema behind it. (OPC-14 M0 / OPCREV-01: blocked ≠ consumed.)
             panels.Open = true;
-            Assert.Equal(ModalLayer.None, orchestrator.DispatchSpace());
+            Assert.Equal(ModalLayer.PlayerPanel, orchestrator.DispatchSpace());
             Assert.Equal(0, cinema.SpaceCalls);
 
             // Cinematic playing → one Space skips cinema.
             cinema.Open = true;
             Assert.Equal(ModalLayer.Cinema, orchestrator.DispatchSpace());
             Assert.Equal(1, cinema.SpaceCalls);
+        }
+
+        [Fact]
+        public void Space_TopmostOpenLayer_BlocksLowerConsumingLayer()
+        {
+            // OPC-14 M0 / OPCREV-01 regression: a topmost open layer that does NOT
+            // consume Space must block Space from reaching a consuming layer behind it
+            // (no fall-through, no skip of cinema behind a narrative modal).
+            var (orchestrator, narrative, cinema, panels, audio, details) = Build();
+            narrative.Open = true;
+            cinema.Open = true;
+
+            Assert.Equal(ModalLayer.Narrative, orchestrator.DispatchSpace());
+            Assert.Equal(0, cinema.SpaceCalls); // cinema behind a narrative modal must not skip
+            Assert.Equal(0, narrative.SpaceCalls); // narrative does not consume Space
+
+            // When the topmost layer is removed, Space reaches cinema.
+            narrative.Open = false;
+            Assert.Equal(ModalLayer.Cinema, orchestrator.DispatchSpace());
+            Assert.Equal(1, cinema.SpaceCalls);
+        }
+
+        [Fact]
+        public void Space_NoOpenLayer_FallsThroughToGameplay()
+        {
+            // OPC-14 M0: no modal open → None (fall-through to gameplay attack gate).
+            var (orchestrator, narrative, cinema, panels, audio, details) = Build();
+            Assert.Equal(ModalLayer.None, orchestrator.DispatchSpace());
+            Assert.Equal(0, cinema.SpaceCalls);
         }
 
         [Fact]
@@ -722,12 +753,12 @@ namespace PlayerUIChecks
             // Drag far east/south: view center clamps inside bounds, never past the edge.
             presenter.PanBy(5000, -5000);
             Assert.Equal(300, presenter.State.ViewCenterX, 3); // mid 180 + travel 120
-            Assert.Equal(2, presenter.State.ViewCenterY, 3);   // mid 30 − travel 28
+            Assert.Equal(30, presenter.State.ViewCenterY, 3);  // Y visible 120 > height 84 -> whole map visible -> lock center 30
 
             // Drag far back west/north: clamped at the other edge.
             presenter.PanBy(-99999, 99999);
             Assert.Equal(60, presenter.State.ViewCenterX, 3);
-            Assert.Equal(58, presenter.State.ViewCenterY, 3);
+            Assert.Equal(30, presenter.State.ViewCenterY, 3);
         }
 
         [Fact]
@@ -755,13 +786,13 @@ namespace PlayerUIChecks
             presenter.Refresh();      // zoom 1: window == map width → view centers on mid map
             presenter.SetZoom(2f);    // zoom 2: travel 90/21 on x/y — center 100,40 kept
 
-            presenter.PanBy(100, -30); // x target 180+100=280 → clamped 270; y 30−30=0 → clamped 9
+            presenter.PanBy(100, -30); // x target 180+100=280 -> clamped 270; Y visible 180 > height 84 -> lock center 30
             Assert.Equal(270, presenter.State.ViewCenterX, 3);
-            Assert.Equal(9, presenter.State.ViewCenterY, 3);
+            Assert.Equal(30, presenter.State.ViewCenterY, 3);
 
-            presenter.CenterOnPlayer(); // drops the accumulated view offset
+            presenter.CenterOnPlayer(); // drops the accumulated view offset (Y stays locked to map center 30 at zoom2)
             Assert.Equal(100, presenter.State.ViewCenterX, 3);
-            Assert.Equal(40, presenter.State.ViewCenterY, 3);
+            Assert.Equal(30, presenter.State.ViewCenterY, 3);
             Assert.Equal(2f, presenter.State.ZoomLevel);
         }
 
