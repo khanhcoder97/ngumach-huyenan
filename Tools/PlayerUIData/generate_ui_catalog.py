@@ -31,10 +31,12 @@ FIELDS = ["item_id", "display_name", "category", "slot", "class_id", "element",
 
 
 def sha256_file(path):
+    # Normalize line endings so the digest is stable across OS checkouts (CRLF vs LF).
     h = hashlib.sha256()
     with open(path, "rb") as f:
-        for chunk in iter(lambda: f.read(65536), b""):
-            h.update(chunk)
+        data = f.read()
+    data = data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    h.update(data)
     return h.hexdigest()
 
 
