@@ -43,5 +43,8 @@
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\SettingsPresenter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\MapPresenter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\HudSafeAreaPolicy.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\AccessibilityPolicy.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\FocusNavigationPolicy.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\HudOverflowPolicy.cs" />
   </ItemGroup>
 </Project>

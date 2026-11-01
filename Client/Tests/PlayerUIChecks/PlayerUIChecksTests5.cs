@@ -1044,4 +1044,39 @@ namespace PlayerUIChecks
             Assert.False(presenter.State.IsPlaying);
         }
     }
+    // ── OPC-14 M1 — accessibility / focus / overflow policies ──
+    public class AccessibilityPolicyTests
+    {
+        [Fact] public void ReducedMotion_DisablesMotion() { Assert.False(AccessibilityPolicy.MotionEnabled(true)); Assert.True(AccessibilityPolicy.MotionEnabled(false)); }
+        [Fact] public void ReducedFlash_DisablesFlash() { Assert.False(AccessibilityPolicy.FlashEnabled(true)); Assert.True(AccessibilityPolicy.FlashEnabled(false)); }
+        [Fact] public void ShowInputHints_ControlsHotkeyLabels() { Assert.False(AccessibilityPolicy.HotkeyLabelsVisible(false)); Assert.True(AccessibilityPolicy.HotkeyLabelsVisible(true)); }
+        [Fact] public void TextScale_ClampsToBand() { Assert.Equal(0.75f, AccessibilityPolicy.TextScale(0.1f)); Assert.Equal(1.5f, AccessibilityPolicy.TextScale(9f)); Assert.Equal(1.2f, AccessibilityPolicy.TextScale(1.2f)); }
+        [Fact] public void FitsVertically_RespectsScale() { Assert.True(AccessibilityPolicy.FitsVertically(10f, 20f, 1f)); Assert.False(AccessibilityPolicy.FitsVertically(10f, 9f, 1.5f)); }
+    }
+
+    public class FocusNavigationPolicyTests
+    {
+        private static readonly FocusElement[] E = new[]
+        {
+            new FocusElement("a", "global", 10),
+            new FocusElement("b", "modal", 20, true),
+            new FocusElement("c", "modal", 30),
+            new FocusElement("d", "global", 40),
+        };
+
+        [Fact] public void Tab_TrapsInsideModal() { Assert.Equal("c", FocusNavigationPolicy.Next("b", E, "modal")); Assert.Equal("b", FocusNavigationPolicy.Previous("c", E, "modal")); }
+        [Fact] public void Tab_WrapsWithinModal() { Assert.Equal("b", FocusNavigationPolicy.Next("c", E, "modal")); }
+        [Fact] public void Restore_PrefersRemembered_OrFirstGlobal() { Assert.Equal("a", FocusNavigationPolicy.Restore("zzz", E)); Assert.Equal("d", FocusNavigationPolicy.Restore("d", E)); }
+        [Fact] public void IsEditorFocused_DetectsEditor() { Assert.True(FocusNavigationPolicy.IsEditorFocused(E, "b")); Assert.False(FocusNavigationPolicy.IsEditorFocused(E, "a")); }
+        [Fact] public void EmptyScope_ReturnsNull() { Assert.Null(FocusNavigationPolicy.Next("a", E, "nope")); }
+    }
+
+    public class HudOverflowPolicyTests
+    {
+        [Fact] public void AllFit_NoOverflow() { var d = HudOverflowPolicy.Decide(3, 400f); Assert.Equal(3, d.VisibleCount); Assert.False(d.HasOverflow); }
+        [Fact] public void Tight_FitsSubset_WithOverflow() { var d = HudOverflowPolicy.Decide(5, 120f); Assert.True(d.HasOverflow); Assert.True(d.VisibleCount < 5); }
+        [Fact] public void NoSpace_KeepsOverflowButton() { var d = HudOverflowPolicy.Decide(5, 10f); Assert.Equal(0, d.VisibleCount); Assert.True(d.HasOverflow); }
+        [Fact] public void Empty_Zero() { var d = HudOverflowPolicy.Decide(0, 400f); Assert.Equal(0, d.VisibleCount); Assert.False(d.HasOverflow); }
+    }
+
 }
