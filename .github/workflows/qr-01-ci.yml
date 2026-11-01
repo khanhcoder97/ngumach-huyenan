@@ -1,0 +1,144 @@
+name: QR-01 Server Persistence CI
+
+on:
+  push:
+    branches: [ main, qoder-remote/qr-01-server-persistence-rework-* ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * *' # Daily build at 2 AM UTC
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  NUGET_PACKAGES_PATH: ${{ github.workspace }}/nuget/packages
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          
+      - name: Restore dependencies
+        run: dotnet restore Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj
+        
+      - name: Build Server.Persistence
+        run: dotnet build Server/Persistence --configuration Release --verbosity minimal
+        
+      - name: Run Unit Tests
+        run: |
+          dotnet test Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj \
+            --filter "Category=QR-01" \
+            --configuration Release \
+            --logger "trx;LogFileName=test-results.trx" \
+            --coverage:"coverage.cobertura.xml"
+        env:
+          QODER_DB_PATH: /tmp/test_${{ github.sha }}.sqlite
+          
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qr-01-test-results-${{ github.run_number }}
+          path: |
+            **/*.trx
+            **/coverage*.xml
+            **/TestResults/
+            
+      - name: Upload Code Coverage
+        uses: codecov/codecov-action@v4
+        with:
+          files: coverage.cobertura.xml
+          flags: unit-tests
+          name: codecov-qr-01
+          
+  integration:
+    needs: [test]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          
+      - name: Integration Tests
+        run: |
+          export QODER_DB_PATH=/tmp/integration_${{ github.sha }}.sqlite
+          dotnet test Server.Tests/Server.Tests.csproj \
+            --filter "IntegrationTests" \
+            --verbosity normal
+            
+      - name: Clean up test database
+        run: rm -f $QODER_DB_PATH* || true
+        
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Security Scan
+        uses: azure/codeql-analysis@v1
+        with:
+          language: csharp
+          
+      - name: Dependency Check
+        run: |
+          dotnet list Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj reference packages > package-reference.txt
+          echo "Total NuGet packages used: $(wc -l < package-reference.txt)"
+          
+  deploy-preview:
+    needs: [test, integration]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/qoder-remote/qr-01-server-persistence-rework-20261031' && github.event_name == 'push'
+    
+    steps:
+      - name: Prepare environment
+        run: |
+          mkdir -p deployment
+          echo "Preparing QR-01 preview deployment..."
+          
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: qr-01-build-artifacts
+          path: |
+            Server/**/*.dll
+            Server/**/*.pdb
+          retention-days: 7
+
+  notify-summary:
+    needs: [test, integration, deploy-preview]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Generate Summary
+        run: |
+          echo "## QR-01 Pipeline Status" >> $GITHUB_STEP_SUMMARY
+          echo "Branch: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          case "${{ job.status }}" in
+            success)
+              echo "✅ All tests passed successfully!" >> $GITHUB_STEP_SUMMARY
+              ;;
+            failure)
+              echo "❌ Some tests failed" >> $GITHUB_STEP_SUMMARY
+              echo "- Check [test job](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+              ;;
+            cancelled)
+              echo "⏭️ Workflow cancelled" >> $GITHUB_STEP_SUMMARY
+              ;;
+          esac
+          
