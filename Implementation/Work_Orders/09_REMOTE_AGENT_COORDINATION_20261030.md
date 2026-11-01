@@ -1,5 +1,9 @@
 # Điều phối Antigravity và QODER Remote qua GitHub
 
+## Quyền sở hữu cập nhật ngày 01/11/2026
+
+Theo yêu cầu trực tiếp của chủ dự án, **thu hồi toàn bộ phạm vi triển khai/integrate của Antigravity**. Antigravity dừng code, commit, push, mở PR, merge và chỉnh tài liệu dự án; giữ nguyên WIP/nhánh/commit đã có để tra cứu, không reset/xóa/force-push. Các tác vụ AG-01/AG-02 còn lại chuyển sang **OpenCode local**, theo `20_OPENCODE_PLAYER_UI_TAKEOVER_20261101.md`. Lệnh này thay thế mọi phân công Antigravity ở phần lịch sử bên dưới. Code đã review/merge được giữ lại; chưa xác nhận native Unity hoàn tất. Muse giữ art và native Unity VM; Codex quản lý review/tích hợp. Vì các agent dùng chung tài khoản GitHub, đây là thu hồi quyền sở hữu công việc; không giả định đã chặn credential riêng ở cấp GitHub.
+
 Ngày giao: 2026-10-30, Asia/Tokyo. Chủ dự án yêu cầu tạo nhánh và chia thêm việc cho hai agent trên máy khác; nhận cả epic, triển khai code và bàn giao lên GitHub. Đây là lệnh giao việc, chưa chứng minh agent đã nhận hoặc code đã hoàn thành.
 
 ## 1. Nhánh và baseline

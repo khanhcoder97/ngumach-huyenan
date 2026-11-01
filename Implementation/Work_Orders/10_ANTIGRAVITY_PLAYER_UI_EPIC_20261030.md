@@ -1,5 +1,9 @@
 # Antigravity — AG-01: bộ giao diện người chơi Bến Mưa
 
+## Quyền sở hữu cập nhật ngày 01/11/2026
+
+Theo yêu cầu trực tiếp của chủ dự án, **thu hồi toàn bộ phạm vi triển khai/integrate của Antigravity**. Antigravity dừng code, commit, push, mở PR, merge và chỉnh tài liệu dự án; giữ nguyên WIP/nhánh/commit đã có để tra cứu, không reset/xóa/force-push. Các tác vụ AG-01/AG-02 còn lại chuyển sang **OpenCode local**, theo `20_OPENCODE_PLAYER_UI_TAKEOVER_20261101.md`. Lệnh này thay thế mọi phân công Antigravity ở phần lịch sử bên dưới. Code đã review/merge được giữ lại; chưa xác nhận native Unity hoàn tất. Muse giữ art và native Unity VM; Codex quản lý review/tích hợp. Vì các agent dùng chung tài khoản GitHub, đây là thu hồi quyền sở hữu công việc; không giả định đã chặn credential riêng ở cấp GitHub.
+
 Issue nhận việc và bàn giao: https://github.com/khanhcoder97/ngumach-huyenan/issues/80 . PR milestone dùng `Refs #80`; epic chỉ đóng sau khi toàn bộ phạm vi đã nghiệm thu.
 
 Nhận toàn bộ AG1→AG6, triển khai code liên tục và bàn giao qua GitHub. Branch: `antigravity/ag-01-player-ui-20261030`. Code baseline `92adee098fcb58acb5b280dcb167db9beecb8932`, PR #51 còn draft, native Unity/device chưa nghiệm thu. Đọc work order09 trước.

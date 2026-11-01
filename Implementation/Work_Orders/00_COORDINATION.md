@@ -1,5 +1,9 @@
 # Phân công ba agent — Ngũ Mạch: Huyền Ấn
 
+## Quyền sở hữu cập nhật ngày 01/11/2026
+
+Theo yêu cầu trực tiếp của chủ dự án, **thu hồi toàn bộ phạm vi triển khai/integrate của Antigravity**. Antigravity dừng code, commit, push, mở PR, merge và chỉnh tài liệu dự án; giữ nguyên WIP/nhánh/commit đã có để tra cứu, không reset/xóa/force-push. Các tác vụ AG-01/AG-02 còn lại chuyển sang **OpenCode local**, theo `20_OPENCODE_PLAYER_UI_TAKEOVER_20261101.md`. Lệnh này thay thế mọi phân công Antigravity ở phần lịch sử bên dưới. Code đã review/merge được giữ lại; chưa xác nhận native Unity hoàn tất. Muse giữ art và native Unity VM; Codex quản lý review/tích hợp. Vì các agent dùng chung tài khoản GitHub, đây là thu hồi quyền sở hữu công việc; không giả định đã chặn credential riêng ở cấp GitHub.
+
 ## Owner hiện hành sau bàn giao OpenCode — 2026-10-31
 
 Theo yêu cầu chủ dự án, **Codex nhận toàn bộ OPC-05b/06…12**: coverage, manifest/migration, PNG/meta, preview, pack/CI, compiler dữ liệu ứng viên và adapter map Muse. OpenCode giữ các checkout/WIP cũ để đối chiếu, không sửa/push tiếp các nhánh đã bàn giao. Chi tiết tại `15_CODEX_OPENCODE_TAKEOVER_20261031.md`; các phân công OpenCode bên dưới là lịch sử và không còn là lệnh giao mới.
@@ -19,7 +23,7 @@ Tài liệu này là đầu mối điều phối. Mỗi agent chỉ sửa các k
 | Agent | Trách nhiệm chính | Tài liệu giao việc |
 |---|---|---|
 | Muse | Toàn bộ hình ảnh pixel art, animation, tilemap, VFX và UI art | `01_MUSE_PIXEL_ART.md` |
-| OpenCode | GitHub asset handoff validator và CI; Unity client chuyển thành backlog khi có máy build phù hợp | `02_OPENCODE_CLIENT.md` |
+| OpenCode local | Tiếp nhận toàn UI implementation của Antigravity; headless checks/CI và native packet; asset pipeline cũ đã chuyển Codex | `20_OPENCODE_PLAYER_UI_TAKEOVER_20261101.md` |
 | Qoder | ASP.NET Core authoritative server, gameplay systems, dữ liệu và kiểm thử | `03_QODER_SERVER_CONTENT.md` |
 
 ## Quy ước chung
