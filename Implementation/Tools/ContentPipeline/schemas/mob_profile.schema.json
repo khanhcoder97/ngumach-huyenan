@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/schemas/content-pipeline/mob_profile.schema.json",
+  "title": "Mob profile proposal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mobId",
+    "referenceLevel",
+    "levelBand",
+    "spawnRecordIds",
+    "baseStats",
+    "multipliers",
+    "stats",
+    "speedMetersPerSecond",
+    "speedWuPerSecond",
+    "aggroRadiusMeters",
+    "aggroRadiusWu",
+    "attacks",
+    "lootTableIds"
+  ],
+  "properties": {
+    "mobId": {
+      "type": "string",
+      "pattern": "^MOB_[A-Z0-9_]+$"
+    },
+    "referenceLevel": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "levelBand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "properties": {
+        "min": {"type": "integer", "minimum": 1, "maximum": 100},
+        "max": {"type": "integer", "minimum": 1, "maximum": 100}
+      }
+    },
+    "spawnRecordIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^MAN-[A-Z0-9_-]+$"
+      }
+    },
+    "baseStats": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hp", "attack", "defense"],
+      "properties": {
+        "hp": {"type": "integer", "minimum": 1},
+        "attack": {"type": "integer", "minimum": 1},
+        "defense": {"type": "number", "minimum": 0}
+      }
+    },
+    "multipliers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hp", "attack", "defense"],
+      "properties": {
+        "hp": {"type": "number", "minimum": 0},
+        "attack": {"type": "number", "minimum": 0},
+        "defense": {"type": "number", "minimum": 0}
+      }
+    },
+    "stats": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hp", "attack", "defense"],
+      "properties": {
+        "hp": {"type": "number", "minimum": 0},
+        "attack": {"type": "number", "minimum": 0},
+        "defense": {"type": "number", "minimum": 0}
+      }
+    },
+    "speedMetersPerSecond": {
+      "type": "number",
+      "minimum": 0
+    },
+    "speedWuPerSecond": {
+      "type": "number",
+      "minimum": 0
+    },
+    "aggroRadiusMeters": {
+      "type": "number",
+      "minimum": 0
+    },
+    "aggroRadiusWu": {
+      "type": "number",
+      "minimum": 0
+    },
+    "attacks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["attackId", "kind", "damageMultiplier"],
+        "properties": {
+          "attackId": {
+            "type": "string",
+            "pattern": "^ATK_[A-Z0-9_]+$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["BASIC", "SPECIAL"]
+          },
+          "damageMultiplier": {
+            "type": "number",
+            "minimum": 0
+          },
+          "rangeMeters": {
+            "type": "number",
+            "minimum": 0
+          },
+          "rangeWu": {
+            "type": "number",
+            "minimum": 0
+          },
+          "telegraphSeconds": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "lootTableIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^LT_[A-Z0-9_]+$"
+      }
+    }
+  }
+}
