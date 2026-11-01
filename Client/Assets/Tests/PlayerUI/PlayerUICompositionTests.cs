@@ -57,9 +57,9 @@ namespace NguMach.Client.P1.Tests
                 rootA.OpenPanel(PlayerPanel.Inventory);
                 rootA.OpenPanel(PlayerPanel.QuestJournal);
                 rootA.OpenPanel(PlayerPanel.Map);
-                rootA.CloseTopPanel();
-                rootA.CloseTopPanel();
-                rootA.CloseTopPanel();
+                rootA.CloseTop();
+                rootA.CloseTop();
+                rootA.CloseTop();
             }
             // No unbounded growth of panel instances under the host.
             Assert.LessOrEqual(hostA.transform.childCount, before + 2);

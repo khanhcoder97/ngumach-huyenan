@@ -2,7 +2,7 @@
   "name": "NguMach.PlayerUI.Tests",
   "rootNamespace": "NguMach.Client.P1.Tests",
   "references": [
-    "NguMach.Client.P1",
+    "Assembly-CSharp",
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner"
   ],
