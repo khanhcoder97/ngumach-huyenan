@@ -167,3 +167,28 @@ notes: |
 ```
 
 NHẮC NHỞ CRITICAL: nếu một case FAIL — không đánh dấu UNVERIFIED→done. Reply packet này với case_id FAIL + reason, OpenCode sẽ kiểm pre-check lại headless và chưa merge PR #101 vào main (mọi merge là quyền của Codex).
+
+## 11. OPC-14 M4 — Executable Unity native tests (new)
+
+Branch/head: `opencode/opc-14-ui-runtime-hardening-20261101` (stacked on `opencode/opc-13-player-ui-takeover-20261101` @ `21ce171` + M1/M2 commits). Unity **6000.3.17f1**. Hydrate full checkout (LFS) — sparse checkout is NOT native import proof.
+
+Test assembly: `NguMach.PlayerUI.Tests` (asmdef: `Client/Assets/Tests/PlayerUI/PlayerUI.Tests.asmdef`, Editor-only).
+Test files:
+- `Client/Assets/Tests/PlayerUI/PlayerUICompositionTests.cs` — two-UIDocument independence, 200 open/close/rebind, rebind idempotency.
+- `Client/Assets/Tests/PlayerUI/PlayerUIInputFocusTests.cs` — modal priority / Space blocking.
+
+Exact invocation (batchmode, EditMode):
+```
+Unity.exe -batchmode -nographics -projectPath <full-checkout> -runTests -testPlatform EditMode -testResults TestResults/playerui-editmode.xml -logFile Logs/playerui-editmode.log
+```
+PlayMode (if PlayMode tests added later):
+```
+... -testPlatform PlayMode -testResults TestResults/playerui-playmode.xml -logFile Logs/playerui-playmode.log
+```
+
+Expected metrics:
+- EditMode: 0 compile errors, all tests pass, 0 failures.
+- Composition: panel instance count stays 1/type after 200 cycles (no unbounded growth).
+- Native still UNVERIFIED until Muse runs and returns template (section 10) with XML/log paths.
+
+Note: these are source-level tests; they are NOT native PASS until executed on Muse VM. Headless 156/156 + syntax 55x3 are not Unity compile proof.
