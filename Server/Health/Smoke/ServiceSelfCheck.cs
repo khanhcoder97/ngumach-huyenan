@@ -4557,6 +4557,204 @@ public static class ServiceSelfCheck
             removed.Snapshot.InventoryRevision == 3,
             removed.ErrorCode ?? $"revision={removed.Snapshot?.InventoryRevision}");
 
+        // ─── Mãng Cốt encounter state machine (Q-F part 1) ────
+
+        var bossRules = new BossEncounterRules(PhaseGuardTicks: 3);
+        BossEncounter NewBossEncounter(int cooldownTicks = 10) =>
+            new(bossRules,
+            [
+                new BossMoveDefinition("A", cooldownTicks),
+                new BossMoveDefinition("B", cooldownTicks),
+                new BossMoveDefinition("C", cooldownTicks)
+            ]);
+
+        var badBoss = false;
+        try
+        {
+            _ = new BossEncounter(
+                bossRules, [new BossMoveDefinition("A", 1), new BossMoveDefinition("B", 1)]);
+        }
+        catch (ArgumentException)
+        {
+            badBoss = true;
+        }
+
+        Check(
+            "boss.requires_three_named_moves",
+            badBoss,
+            "A/B/C definitions are required");
+
+        var boss = NewBossEncounter();
+        var bossIdleMove = boss.TryBeginMove(0);
+        Check(
+            "boss.not_engaged",
+            bossIdleMove.BlockedReason == BossEncounterErrorCodes.NotEngaged,
+            bossIdleMove.BlockedReason);
+
+        var bossEngage = boss.Engage(lifeId: 1, tick: 0);
+        Check(
+            "boss.engage",
+            bossEngage.Engaged &&
+            boss.Phase == BossEncounterPhase.One &&
+            boss.Status == BossEncounterStatus.Active,
+            bossEngage.BlockedReason ?? $"phase={boss.Phase}");
+
+        var bossFirst = boss.TryBeginMove(0);
+        Check(
+            "boss.priority_c",
+            bossFirst.Token is { MoveId: "C" },
+            bossFirst.BlockedReason ?? bossFirst.Token?.MoveId);
+
+        var bossOverlap = boss.TryBeginMove(0);
+        Check(
+            "boss.no_overlap",
+            bossOverlap.BlockedReason == BossEncounterErrorCodes.MoveInFlight,
+            bossOverlap.BlockedReason);
+
+        var bossFirstImpact = boss.ResolveImpact(bossFirst.Token!, 100, 100, 0);
+        Check(
+            "boss.impact_keeps_phase_one",
+            bossFirstImpact.Accepted &&
+            !bossFirstImpact.PhaseChanged &&
+            boss.Phase == BossEncounterPhase.One,
+            bossFirstImpact.BlockedReason ?? $"phase={boss.Phase}");
+
+        var bossSecond = boss.TryBeginMove(1);
+        Check(
+            "boss.priority_b_after_c",
+            bossSecond.Token is { MoveId: "B" },
+            bossSecond.BlockedReason ?? bossSecond.Token?.MoveId);
+        boss.ResolveImpact(bossSecond.Token!, 100, 100, 1);
+
+        var bossThird = boss.TryBeginMove(2);
+        Check(
+            "boss.priority_a_after_b",
+            bossThird.Token is { MoveId: "A" },
+            bossThird.BlockedReason ?? bossThird.Token?.MoveId);
+        boss.ResolveImpact(bossThird.Token!, 100, 100, 2);
+
+        var bossCooldown = boss.TryBeginMove(3);
+        Check(
+            "boss.no_move_ready",
+            bossCooldown.BlockedReason == BossEncounterErrorCodes.NoMoveReady,
+            bossCooldown.BlockedReason);
+
+        var bossReadyAgain = boss.TryBeginMove(10);
+        Check(
+            "boss.cooldown_expires",
+            bossReadyAgain.Token is { MoveId: "C" },
+            bossReadyAgain.BlockedReason ?? bossReadyAgain.Token?.MoveId);
+        boss.Reset();
+
+        var phaseBoss = NewBossEncounter(cooldownTicks: 0);
+        phaseBoss.Engage(lifeId: 2, tick: 0);
+        var phaseMove = phaseBoss.TryBeginMove(0);
+        var toPhaseTwo = phaseBoss.ResolveImpact(phaseMove.Token!, 60, 100, 0);
+        Check(
+            "boss.phase_two_at_60",
+            toPhaseTwo.Accepted &&
+            toPhaseTwo.PhaseChanged &&
+            phaseBoss.Phase == BossEncounterPhase.Two &&
+            phaseBoss.Status == BossEncounterStatus.PhaseGuard &&
+            toPhaseTwo.PhaseGuardUntilTick == 3,
+            toPhaseTwo.BlockedReason ?? $"phase={phaseBoss.Phase}");
+
+        var guardMove = phaseBoss.TryBeginMove(1);
+        Check(
+            "boss.phase_guard_blocks_move",
+            guardMove.BlockedReason == BossEncounterErrorCodes.PhaseGuard,
+            guardMove.BlockedReason);
+
+        var guardEndMove = phaseBoss.TryBeginMove(3);
+        Check(
+            "boss.phase_guard_expires",
+            guardEndMove.Started && phaseBoss.Status == BossEncounterStatus.Active,
+            guardEndMove.BlockedReason ?? guardEndMove.Token?.MoveId);
+
+        var toPhaseThree = phaseBoss.ResolveImpact(guardEndMove.Token!, 30, 100, 3);
+        Check(
+            "boss.phase_three_at_30",
+            toPhaseThree.Accepted &&
+            toPhaseThree.PhaseChanged &&
+            phaseBoss.Phase == BossEncounterPhase.Three,
+            toPhaseThree.BlockedReason ?? $"phase={phaseBoss.Phase}");
+
+        var stepBoss = NewBossEncounter(cooldownTicks: 0);
+        stepBoss.Engage(lifeId: 3, tick: 0);
+        var stepMove = stepBoss.TryBeginMove(0);
+        var stepImpact = stepBoss.ResolveImpact(stepMove.Token!, 10, 100, 0);
+        Check(
+            "boss.one_phase_per_impact",
+            stepImpact.Accepted && stepBoss.Phase == BossEncounterPhase.Two,
+            stepImpact.BlockedReason ?? $"phase={stepBoss.Phase}");
+
+        var stepGuard = stepBoss.TryBeginMove(1);
+        Check(
+            "boss.one_step_guard",
+            stepGuard.BlockedReason == BossEncounterErrorCodes.PhaseGuard,
+            stepGuard.BlockedReason);
+
+        var stepSecondMove = stepBoss.TryBeginMove(3);
+        var stepSecondImpact = stepBoss.ResolveImpact(stepSecondMove.Token!, 10, 100, 3);
+        Check(
+            "boss.second_impact_reaches_phase_three",
+            stepSecondImpact.PhaseChanged &&
+            stepBoss.Phase == BossEncounterPhase.Three,
+            stepSecondImpact.BlockedReason ?? $"phase={stepBoss.Phase}");
+
+        var resetBoss = NewBossEncounter(cooldownTicks: 0);
+        resetBoss.Engage(lifeId: 4, tick: 0);
+        var resetToken = resetBoss.TryBeginMove(0).Token!;
+        var episodeBeforeReset = resetBoss.Episode;
+        resetBoss.Reset();
+        var lateImpact = resetBoss.ResolveImpact(resetToken, 50, 100, 1);
+        Check(
+            "boss.reset_rejects_late_impact",
+            !lateImpact.Accepted &&
+            resetBoss.Phase == BossEncounterPhase.Idle &&
+            resetBoss.Status == BossEncounterStatus.Idle &&
+            resetBoss.DefeatedLifeId is null,
+            lateImpact.BlockedReason);
+
+        var reEngage = resetBoss.Engage(lifeId: 4, tick: 2);
+        var replayedToken = resetBoss.ResolveImpact(resetToken, 50, 100, 2);
+        Check(
+            "boss.re_engage_rejects_old_token",
+            reEngage.Engaged &&
+            resetBoss.Episode == episodeBeforeReset + 2 &&
+            replayedToken.BlockedReason == BossEncounterErrorCodes.StaleMove,
+            replayedToken.BlockedReason);
+
+        var deathBoss = NewBossEncounter(cooldownTicks: 0);
+        deathBoss.Engage(lifeId: 5, tick: 0);
+        var deathMove = deathBoss.TryBeginMove(0);
+        var deathImpact = deathBoss.ResolveImpact(deathMove.Token!, 0, 100, 0);
+        Check(
+            "boss.defeat_marks_life",
+            deathImpact.Defeated &&
+            deathBoss.Status == BossEncounterStatus.Defeated &&
+            deathBoss.DefeatedLifeId == 5,
+            deathImpact.BlockedReason ?? $"status={deathBoss.Status}");
+
+        var sameLife = deathBoss.Engage(lifeId: 5, tick: 1);
+        Check(
+            "boss.same_life_reengage_blocked",
+            sameLife.BlockedReason == BossEncounterErrorCodes.LifeAlreadyDefeated,
+            sameLife.BlockedReason);
+
+        deathBoss.Reset();
+        var sameLifeAfterReset = deathBoss.Engage(lifeId: 5, tick: 2);
+        Check(
+            "boss.reset_does_not_erase_defeat",
+            sameLifeAfterReset.BlockedReason == BossEncounterErrorCodes.LifeAlreadyDefeated,
+            sameLifeAfterReset.BlockedReason);
+
+        var nextLife = deathBoss.Engage(lifeId: 6, tick: 3);
+        Check(
+            "boss.new_life_after_reset",
+            nextLife.Engaged && deathBoss.Phase == BossEncounterPhase.One,
+            nextLife.BlockedReason ?? $"phase={deathBoss.Phase}");
+
         // ─── equipment (Q-E) ──────────────────────────────────
 
         Check(
