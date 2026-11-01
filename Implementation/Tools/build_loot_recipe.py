@@ -74,6 +74,19 @@ def main():
     if not rows:
         fail("no LOOT_ENTRY rows")
 
+    # Gear only appears in RECIPE rows (craft outputs). If a mob loot table ever
+    # names an EQ- item, the rarity/roll vector that decides which variant drops
+    # does not exist in any source, so refuse instead of shipping a guess.
+    gear_loot = [
+        row for row in rows
+        if (row.get("item_or_currency_id") or "").strip().startswith("EQ-")
+    ]
+    if gear_loot:
+        fail(
+            "LOOT_ENTRY references gear without a gear roll vector in source: "
+            + ", ".join(row["entry_id"] for row in gear_loot)
+        )
+
     sources = {}
     for row in sorted(rows, key=lambda item: item["entry_id"]):
         source_id = row["source_id"].strip()
