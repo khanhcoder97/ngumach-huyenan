@@ -79,6 +79,11 @@ builder.Services.AddSingleton(serviceProvider =>
 });
 builder.Services.AddSingleton<IQuestXpRule, UnresolvedQuestXpRules>();
 builder.Services.AddSingleton<ExperienceService>();
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return ItemCatalog.Load(ItemCatalogDiscovery.Discover(environment.ContentRootPath));
+});
 builder.Services.AddSingleton<NarrativeFlagStore>();
 builder.Services.AddSingleton<NarrativeService>();
 builder.Services.AddSingleton(serviceProvider =>
@@ -187,6 +192,9 @@ app.Logger.LogInformation("Loaded {SkillCount} combat skills.", combatSkills.Cou
 
 var quests = app.Services.GetRequiredService<IQuestCatalog>();
 app.Logger.LogInformation("Loaded quest definitions: {QuestCount}.", quests.Count);
+
+var itemCatalog = app.Services.GetRequiredService<ItemCatalog>();
+app.Logger.LogInformation("Loaded item catalogue: {ItemCount} items.", itemCatalog.Count);
 
 var narrativeNodes = app.Services.GetRequiredService<NarrativeNodeCatalog>();
 app.Logger.LogInformation(
