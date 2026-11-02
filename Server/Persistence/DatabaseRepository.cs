@@ -329,5 +329,11 @@ CREATE INDEX idx_leases_player ON leases(player_id);"
             var results = await conn.QueryAsync<LeaseInfo>(sql, new { Now = DateTime.UtcNow });
             return results.ToList();
         }
+
+        /// <summary>Get underlying SQLite connection for direct transaction access.</summary>
+        public async Task<SqliteConnection> GetOrCreateConnectionAsync()
+        {
+            return await Task.FromResult(GetConnection());
+        }
     }
 }

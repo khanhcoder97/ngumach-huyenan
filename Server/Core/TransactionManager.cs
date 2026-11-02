@@ -150,23 +150,12 @@ namespace NguMach.Server.Core
 
         private async Task<SqliteConnection> GetConnection()
         {
-            // Access via reflection on private field or expose method
-            var field = typeof(SqliteDatabaseRepository).GetField("_connection", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var dbRepo = (_repository as SqliteDatabaseRepository)!;
-            var conn = field?.GetValue(dbRepo) as SqliteConnection;
-            
-            if (conn == null || conn.State != System.Data.ConnectionState.Open)
+            // FIXED: Use new public method instead of reflection
+            if (_repository is SqliteDatabaseRepository repo)
             {
-                if (conn != null && conn.State == System.Data.ConnectionState.Closed)
-                {
-                    await conn.OpenAsync();
-                }
-                else
-                {
-                    throw new InvalidOperationException("Cannot create transaction without open connection");
-                }
+                return await repo.GetOrCreateConnectionAsync();
             }
-            return conn!;
+            throw new InvalidOperationException("Repository must be SqliteDatabaseRepository for transaction access");
         }
 
         public async Task<string?> CreateLeaseAsync(string playerId, TimeSpan duration, CancellationToken ct)

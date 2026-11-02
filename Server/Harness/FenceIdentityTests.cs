@@ -62,7 +62,8 @@ namespace ServerPersistenceHarness
         {
             // Arrange: Process A starts session
             var dbRepoA = new SqliteDatabaseRepository(_dbPath);
-            var txMgrA = new TransactionManagerImpl(dbRepoDB);
+            var txMgrA = new TransactionManagerImpl(dbRepoA);  // FIXED: was dbRepoDB (typo)
+            
             var leaseA = await txMgrA.AcquireLeaseAsync("reconnect-player", TimeSpan.FromSeconds(30), CancellationToken.None);
 
             // Arrange: Simulate crash by discarding Process A manager
