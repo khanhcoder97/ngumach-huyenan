@@ -30,6 +30,7 @@ namespace NguMach.Client.P1
         private PanelRouter _router;
         private CancellationTokenSource _life;
         private bool _closing;
+        private SettingsConsumerBinder _settingsBinder;
 
         // ── Public API ───────────────────────────────────────────────────────
 
@@ -172,6 +173,31 @@ namespace NguMach.Client.P1
             UpdatePinnedQuest();
             if (cinemaOverlay != null) cinemaOverlay.Initialize(_doc);
 
+            // OPC-14 O1: bind settings to actual owned UI consumers (one binder per doc/session).
+            if (settingsPanel != null && settingsPanel.Presenter != null)
+            {
+                _settingsBinder = new SettingsConsumerBinder(settingsPanel.Presenter);
+                if (settingsPanel is IUiAccessibilityConsumer sc) _settingsBinder.Register(sc);
+                if (cinemaOverlay is IUiAccessibilityConsumer cc) _settingsBinder.Register(cc);
+                if (buttonBar is IUiAccessibilityConsumer bc) _settingsBinder.Register(bc);
+                if (mapPanel is IUiAccessibilityConsumer mc) _settingsBinder.Register(mc);
+                if (inventoryPanel is IUiAccessibilityConsumer ic) _settingsBinder.Register(ic);
+                if (characterPanel is IUiAccessibilityConsumer chc) _settingsBinder.Register(chc);
+            }
+
+            // OPC-14 B: load generated catalog and inject per-session/document resolver.
+            try
+            {
+                var ta = Resources.Load<TextAsset>("PlayerUI/ui_item_catalog");
+                if (ta != null && UiCatalogLoader.TryLoad(ta.text, out var cat, out var err))
+                    UiItemResolver.SetCatalog(cat);
+                else if (ta == null)
+                    Debug.LogWarning("[PlayerUIRoot] ui_item_catalog not found in Resources/PlayerUI; resolver stays on embedded fallback.");
+                else
+                    Debug.LogWarning("[PlayerUIRoot] ui_item_catalog load failed: " + err);
+            }
+            catch (Exception e) { Debug.LogWarning("[PlayerUIRoot] catalog load error: " + e.Message); }
+
             // All panels start hidden.
             HideAllPanels();
         }
@@ -196,6 +222,9 @@ namespace NguMach.Client.P1
 
                 if (questJournalPanel != null && questJournalPanel.Presenter != null)
                     questJournalPanel.Presenter.OnChanged -= UpdatePinnedQuest;
+                _settingsBinder?.Dispose();
+                _settingsBinder = null;
+                UiItemResolver.SetCatalog(null);
                 inventoryPanel?.Teardown();
                 characterPanel?.Teardown();
                 questJournalPanel?.Teardown();

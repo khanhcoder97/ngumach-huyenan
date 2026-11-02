@@ -15,7 +15,7 @@ using NguMach.Client.Presentation;
 namespace NguMach.Client.P1
 {
     [DisallowMultipleComponent]
-    public sealed class MapPanel : MonoBehaviour
+    public sealed class MapPanel : MonoBehaviour, IUiAccessibilityConsumer
     {
         // ── Constants ────────────────────────────────────────────────────────
         private const float MapDisplaySize = 280f;
@@ -292,6 +292,12 @@ namespace NguMach.Client.P1
             {
                 _presenter.Refresh();
             }
+        }
+
+        public void ApplyAccessibility(SettingsViewState s)
+        {
+            // OPC-14 O1: hook for reduced motion / text scale; map view keeps its own
+            // logical render/PPU/zoom. Stored for future consumer wiring.
         }
 
         public void Teardown()

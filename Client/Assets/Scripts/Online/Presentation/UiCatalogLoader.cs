@@ -64,7 +64,27 @@ namespace NguMach.Client.Presentation
         [JsonProperty("count")] public int Count { get; set; }
         [JsonProperty("entries")] public List<UiCatalogEntry> Entries { get; set; }
 
-        private Dictionary<string, UiCatalogEntry> _byId;
+        public bool VerifyDigest()
+        {
+            if (string.IsNullOrEmpty(CatalogDigest) || Entries == null) return false;
+            var digests = new List<string>();
+            foreach (var e in Entries)
+            {
+                if (e == null || string.IsNullOrEmpty(e.Digest) || e.Digest.Length != 64) return false;
+                digests.Add(e.Digest);
+            }
+            if (digests.Count != Entries.Count) return false;
+            // Recompute overall digest exactly as the generator does:
+            // sha256(json.dumps([e["digest"] for e in entries]))
+            string json = JsonConvert.SerializeObject(digests);
+            using (var sha = System.Security.Cryptography.SHA256.Create())
+            {
+                var bytes = System.Text.Encoding.UTF8.GetBytes(json);
+                var hash = sha.ComputeHash(bytes);
+                var hex = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                return string.Equals(hex, CatalogDigest, StringComparison.OrdinalIgnoreCase);
+            }
+        }
 
         public UiCatalogEntry Find(string id)
         {

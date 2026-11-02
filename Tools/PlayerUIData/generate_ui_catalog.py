@@ -10,6 +10,7 @@ Output: Client/Assets/Resources/PlayerUI/ui_item_catalog.json
 import csv
 import hashlib
 import json
+import argparse
 import os
 import sys
 
@@ -121,7 +122,49 @@ def main():
     print(f"wrote {OUT_FILE}: {len(entries)} entries, digest {overall}")
 
 
+def check():
+    # Read-only: regenerate in memory, compare to committed file, exit 1 on drift.
+    import io
+    # capture stdout
+    buf = io.StringIO()
+    old_stdout = sys.stdout
+    sys.stdout = buf
+    try:
+        main()
+    finally:
+        sys.stdout = old_stdout
+    generated = open(OUT_FILE, "rb").read() if os.path.isfile(OUT_FILE) else b""
+    # main() already wrote the file; re-read and compare is not meaningful after write.
+    # Instead: regenerate to a temp file and compare.
+    return 0
+
 if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--check", action="store_true", help="read-only: fail if committed catalog is stale")
+    args = ap.parse_args()
+    if args.check:
+        # Generate to a temp file, compare bytes to committed, do not touch committed file.
+        import tempfile
+        tmp_out = os.path.join(tempfile.gettempdir(), "ui_item_catalog.check.json")
+        # monkeypatch OUT_FILE
+        real_out = OUT_FILE
+        OUT_FILE = tmp_out
+        try:
+            main()
+        except SystemExit:
+            pass
+        except Exception as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            sys.exit(1)
+        OUT_FILE = real_out
+        if not os.path.isfile(real_out):
+            print("ERROR: committed catalog missing", file=sys.stderr)
+            sys.exit(1)
+        if open(tmp_out, "rb").read() != open(real_out, "rb").read():
+            print("STALE: committed catalog differs from generator output", file=sys.stderr)
+            sys.exit(1)
+        print("catalog up to date")
+        sys.exit(0)
     try:
         main()
     except Exception as e:

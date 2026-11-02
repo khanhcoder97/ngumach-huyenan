@@ -10,7 +10,7 @@ using NguMach.Client.Presentation;
 namespace NguMach.Client.P1
 {
     [DisallowMultipleComponent]
-    public sealed class PlayerUIButtonBar : MonoBehaviour
+    public sealed class PlayerUIButtonBar : MonoBehaviour, IUiAccessibilityConsumer
     {
         // ── State ────────────────────────────────────────────────────────────
         private IP1UIAdapter _adapter;
@@ -199,6 +199,13 @@ namespace NguMach.Client.P1
         }
 
         private DisplayStyle _trackerBoxVisibleByQuest = DisplayStyle.None;
+
+        public void ApplyAccessibility(SettingsViewState s)
+        {
+            // OPC-14 O1: hotkey labels follow ShowInputHints; re-evaluate safe-area policy.
+            // (Hotkey labels are on the gameplay HUD, not this bar; bar re-evaluates policy.)
+            ApplySafeAreaPolicy();
+        }
 
         // ── Teardown ─────────────────────────────────────────────────────────
 

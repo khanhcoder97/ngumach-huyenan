@@ -13,7 +13,7 @@ using NguMach.Client.Presentation;
 namespace NguMach.Client.P1
 {
     [DisallowMultipleComponent]
-    public sealed class CinemaOverlay : MonoBehaviour
+    public sealed class CinemaOverlay : MonoBehaviour, IUiAccessibilityConsumer
     {
         private CinemaPresenter _presenter;
         private UIDocument _doc;
@@ -150,6 +150,16 @@ namespace NguMach.Client.P1
         public void HandleSkip()
         {
             if (_presenter != null) _presenter.Skip();
+        }
+
+        // OPC-14 O1: consumer of accessibility settings (reduced motion disables
+        // non-essential transition/pulse; preview harness labeling preserved).
+        private SettingsViewState _accessibility;
+        public void ApplyAccessibility(SettingsViewState s)
+        {
+            _accessibility = s;
+            // Reduced motion: skip non-essential animated transitions (none today beyond
+            // the presenter's elapsed-time driven subtitle; kept as a hook for M1).
         }
 
         private void Update()

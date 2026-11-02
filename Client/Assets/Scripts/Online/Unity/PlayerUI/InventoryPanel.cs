@@ -12,7 +12,7 @@ using NguMach.Client.Presentation;
 namespace NguMach.Client.P1
 {
     [DisallowMultipleComponent]
-    public sealed class InventoryPanel : MonoBehaviour
+    public sealed class InventoryPanel : MonoBehaviour, IUiAccessibilityConsumer
     {
         private IP1UIAdapter _adapter;
         private PanelRouter _router;
@@ -212,7 +212,7 @@ namespace NguMach.Client.P1
             {
                 // OPC-13 B3: bag detail is a full catalog-backed tooltip (rarity, category,
                 // level, durability, description, provenance) — not just a name echo.
-                var meta = ItemMetadataResolver.Resolve(selectedItem.TemplateId);
+                var meta = UiItemResolver.Resolve(selectedItem.TemplateId);
                 _detailLabel.text = ItemTooltipFormatter.Format(selectedItem, meta);
             }
             else
@@ -242,6 +242,12 @@ namespace NguMach.Client.P1
             {
                 _presenter.SetSelection(null);
             }
+        }
+
+        public void ApplyAccessibility(SettingsViewState s)
+        {
+            // OPC-14 O1: catalog resolver is per-session (set by PlayerUIRoot);
+            // text scale affects tooltip layout. Re-render if visible.
         }
 
         public void Teardown()

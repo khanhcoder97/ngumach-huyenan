@@ -12,7 +12,7 @@ using NguMach.Client.Presentation;
 namespace NguMach.Client.P1
 {
     [DisallowMultipleComponent]
-    public sealed class SettingsPanel : MonoBehaviour
+    public sealed class SettingsPanel : MonoBehaviour, IUiAccessibilityConsumer
     {
         [SerializeField] private bool usePlayerPrefsStore = true;
 
@@ -234,6 +234,8 @@ namespace NguMach.Client.P1
             const float baseFontSize = 12f;
             docRoot.style.fontSize = new StyleLength(new Length(baseFontSize * s.TextSize, LengthUnit.Pixel));
         }
+
+        public void ApplyAccessibility(SettingsViewState s) => ApplySettings(s);
 
         public void Teardown()
         {
