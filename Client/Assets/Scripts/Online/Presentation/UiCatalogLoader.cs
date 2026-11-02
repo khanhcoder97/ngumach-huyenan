@@ -64,6 +64,8 @@ namespace NguMach.Client.Presentation
         [JsonProperty("count")] public int Count { get; set; }
         [JsonProperty("entries")] public List<UiCatalogEntry> Entries { get; set; }
 
+        private Dictionary<string, UiCatalogEntry> _byId;
+
         public bool VerifyDigest()
         {
             if (string.IsNullOrEmpty(CatalogDigest) || Entries == null) return false;
