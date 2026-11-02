@@ -2,7 +2,7 @@
   "name": "NguMach.PlayerUI.Tests",
   "rootNamespace": "NguMach.Client.P1.Tests",
   "references": [
-    "Assembly-CSharp",
+    "NguMach.Client",
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner"
   ],
@@ -12,8 +12,10 @@
   "excludePlatforms": [],
   "allowUnsafeCode": false,
   "overrideReferences": true,
-  "precompiledReferences": [],
-  "autoReferenced": true,
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "autoReferenced": false,
   "defineConstraints": [
     "UNITY_INCLUDE_TESTS"
   ],

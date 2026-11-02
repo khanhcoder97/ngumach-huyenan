@@ -1,0 +1,20 @@
+{
+  "name": "NguMach.Client.Editor",
+  "rootNamespace": "NguMach.Client.Editor",
+  "references": [
+    "NguMach.Client"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "Newtonsoft.Json.dll"
+  ],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
