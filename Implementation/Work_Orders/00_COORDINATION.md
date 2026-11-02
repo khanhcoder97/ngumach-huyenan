@@ -1,5 +1,9 @@
 # Phân công ba agent — Ngũ Mạch: Huyền Ấn
 
+## Dispatch hiện hành 03/11/2026
+
+Đọc `23_AGENT_EXECUTION_PACKS_20261103.md`, report `Agent_Review_20261103_vi.md` và quyết định DESIGN-BM-ALPHA-20261103 trước các work order cũ. Qoder local nhận tutorial/boss/12slot alpha; OpenCode giữ runtime UI/HTTP/native correctness; QODER Remote hoàn QR1→QR6 DB thật; Muse nhận asset pack Bến Mưa chơi được. Antigravity tiếp tục bị thu hồi. Không coi report tự xưng hoàn tất hoặc CI không chạy module là nghiệm thu.
+
 ## Quyền sở hữu cập nhật ngày 01/11/2026
 
 Theo yêu cầu trực tiếp của chủ dự án, **thu hồi toàn bộ phạm vi triển khai/integrate của Antigravity**. Antigravity dừng code, commit, push, mở PR, merge và chỉnh tài liệu dự án; giữ nguyên WIP/nhánh/commit đã có để tra cứu, không reset/xóa/force-push. Các tác vụ AG-01/AG-02 còn lại chuyển sang **OpenCode local**, theo `20_OPENCODE_PLAYER_UI_TAKEOVER_20261101.md`. Lệnh này thay thế mọi phân công Antigravity ở phần lịch sử bên dưới. Code đã review/merge được giữ lại; chưa xác nhận native Unity hoàn tất. Muse giữ art và native Unity VM; Codex quản lý review/tích hợp. Vì các agent dùng chung tài khoản GitHub, đây là thu hồi quyền sở hữu công việc; không giả định đã chặn credential riêng ở cấp GitHub.

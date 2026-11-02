@@ -1,0 +1,386 @@
+{
+  "schemaVersion": 1,
+  "decisionId": "DESIGN-BM-ALPHA-20261103",
+  "authority": "Codex project coordination under user instruction to complete game and unblock agents",
+  "status": "APPROVED_FOR_IMPLEMENTATION_PRIVATE_ALPHA_NOT_PLAYTEST_BALANCED",
+  "defaultEnabled": false,
+  "scope": {
+    "classIds": [
+      "CLASS_MINH_KIEM"
+    ],
+    "mapId": "MAP_BEN_MUA",
+    "worldBossEnabled": false,
+    "canonicalPlacementCsvEdited": false,
+    "topologyReviewed": false,
+    "requiresExplicitPrivateProfile": true
+  },
+  "sources": [
+    "Production_Rules_Complete_v1_vi.md sections1/4/5",
+    "Character_Equipment_Inventory_Spec_vi.md section3",
+    "Quest_and_Narrative_Production_Spec_vi.md P00-02..05",
+    "world_records.json MAN-BM-SPAWN_BM_05_QUEST"
+  ],
+  "inventory": {
+    "bagSlots": 100,
+    "equipmentSlots": [
+      "HAT",
+      "CHEST",
+      "LEGS",
+      "WEAPON",
+      "GLOVES",
+      "BOOTS",
+      "NECK",
+      "RING_L",
+      "RING_R",
+      "PENDANT",
+      "CLOAK",
+      "SEAL"
+    ],
+    "autoSwap": false,
+    "revision": "INVENTORY_AGGREGATE",
+    "maxResourceChange": "KEEP_CURRENT_ABSOLUTE_THEN_CLAMP_NO_HEAL",
+    "wireMigration": "V2_SIDE_BY_SIDE_KEEP_V1_FIVE_SLOT_CONTRACT",
+    "routes": {
+      "read": "GET /p1/inventory/v2/{sessionId}",
+      "equip": "POST /p1/inventory/v2/equip",
+      "unequip": "POST /p1/inventory/v2/unequip"
+    },
+    "schemaVersion": 2,
+    "slotLabelSource": "canonical item CSV + 12 EQUIP_* slots spec",
+    "armorAttackAliasRule": "typed armor/weapon_power wins; same primary alias is display duplicate, not another additive stat; independent secondary attributes counted once"
+  },
+  "progression": {
+    "acceptSnapshot": true,
+    "normalQuestXpNumerator": 25,
+    "bossQuestXpNumerator": 55,
+    "denominator": 100,
+    "xpToNext": "ceil(100+50*L+25*L*L)",
+    "absoluteSourceRewardWins": true,
+    "mobXp": "floor(10+2*mobLevel), then existing overlevel/elite/boss modifiers",
+    "migration": "new alpha session explicit stat profile; do not silently refill an existing session"
+  },
+  "newOverlayRecords": [
+    {
+      "recordId": "ALPHA-BM-RIPPLE-01",
+      "entityId": "ALPHA_OBJ_BM_RIPPLE_01",
+      "kind": "INTERACTABLE",
+      "xWu": 70,
+      "yWu": 3,
+      "questId": "P00-02",
+      "countPerCharacter": 1
+    },
+    {
+      "recordId": "ALPHA-BM-RIPPLE-02",
+      "entityId": "ALPHA_OBJ_BM_RIPPLE_02",
+      "kind": "INTERACTABLE",
+      "xWu": 86,
+      "yWu": -3,
+      "questId": "P00-02",
+      "countPerCharacter": 1
+    },
+    {
+      "recordId": "ALPHA-BM-RIPPLE-03",
+      "entityId": "ALPHA_OBJ_BM_RIPPLE_03",
+      "kind": "INTERACTABLE",
+      "xWu": 104,
+      "yWu": 3,
+      "questId": "P00-02",
+      "countPerCharacter": 1
+    },
+    {
+      "recordId": "ALPHA-BM-VILLAGER-01",
+      "entityId": "ALPHA_OBJ_BM_VILLAGER_01",
+      "kind": "RESCUE_INTERACTABLE",
+      "xWu": 138,
+      "yWu": 3,
+      "questId": "P00-03",
+      "countPerCharacter": 1
+    },
+    {
+      "recordId": "ALPHA-BM-VILLAGER-02",
+      "entityId": "ALPHA_OBJ_BM_VILLAGER_02",
+      "kind": "RESCUE_INTERACTABLE",
+      "xWu": 146,
+      "yWu": 3,
+      "questId": "P00-03",
+      "countPerCharacter": 1
+    },
+    {
+      "recordId": "ALPHA-BM-WAVE-TRAINING",
+      "entityId": "ALPHA_WAVE_BM_TRAINING",
+      "kind": "QUEST_HAZARD",
+      "xWu": 144,
+      "yWu": 0,
+      "questId": "P00-03"
+    },
+    {
+      "recordId": "ALPHA-BM-FRAGMENT",
+      "entityId": "ALPHA_OBJ_BM_FRAGMENT",
+      "kind": "INTERACTABLE",
+      "xWu": 178,
+      "yWu": 0,
+      "questId": "P00-05",
+      "condition": "owner boss kill committed, quest ACTIVE and fragment not collected",
+      "countPerCharacter": 1
+    }
+  ],
+  "questRules": {
+    "P00-02": {
+      "turnInNpcId": "NPC_TA_VAN_KHANH",
+      "ripplesRequired": 3,
+      "carplingKillsRequired": 4,
+      "sharePolicy": "PER_CHARACTER",
+      "interactionRangeWu": 5
+    },
+    "P00-03": {
+      "turnInNpcId": "NPC_LYAN",
+      "villagersRequired": 2,
+      "waterrootKillsRequired": 3,
+      "waveTrial": {
+        "rectangleWu": {
+          "minX": 140,
+          "maxX": 148,
+          "minY": -2,
+          "maxY": 2
+        },
+        "windupSeconds": 1.2,
+        "repeatCooldownSeconds": 6,
+        "rawDamage": 12,
+        "credit": "owner inside warning for >=1 tick then avoids impact by valid dodge iframe or leaves attack shape before impact; starting outside gives no credit",
+        "failedTrial": "retry allowed; rescued villagers persist"
+      },
+      "sharePolicy": "PER_CHARACTER"
+    },
+    "P00-04": {
+      "turnInNpcId": "NPC_TA_VAN_KHANH",
+      "actorId": "NPC_LYAN",
+      "instancePolicy": "owner-specific quest instance; same canonical actor within instance, no second escort clone",
+      "speedWuPerSecond": 3,
+      "followRangeWu": 12,
+      "checkpointXs": [
+        80,
+        120
+      ],
+      "waypointsWu": [
+        [
+          42,
+          0
+        ],
+        [
+          80,
+          0
+        ],
+        [
+          120,
+          0
+        ]
+      ],
+      "waveA": {
+        "recordId": "MAN-BM-WAVE_BM_ESCORT_A",
+        "mobId": "MOB_CARPLING",
+        "count": 3
+      },
+      "waveB": {
+        "recordId": "MAN-BM-WAVE_BM_ESCORT_B",
+        "mobId": "MOB_WATERROOT",
+        "count": 3
+      },
+      "creditKey": [
+        "instanceId",
+        "questAttemptId",
+        "waveId",
+        "entityLifeId",
+        "deathEventId"
+      ],
+      "wipe": "restore escort to last committed checkpoint; completed checkpoint wave not farmable for credit; pending wave resets with new life IDs"
+    },
+    "P00-05": {
+      "turnInNpcId": "NPC_TA_VAN_KHANH",
+      "bossRecordId": "MAN-BM-SPAWN_BM_05_QUEST",
+      "worldEventRecordIdDisabledInQuestInstance": "MAN-BM-EVENT_BOSS_BM_MANG_COT",
+      "phaseNpcOverride": {
+        "entityId": "NPC_TA_VAN_KHANH",
+        "xWu": 182,
+        "yWu": 4,
+        "condition": "after P00-05 accept in quest instance, replaces position of same actor, not second actor"
+      },
+      "trialNpcConditionOverride": "NPC_CLASS_TRIAL visible after boss kill AND fragment, before P00-05 COMPLETED (fix circular dependency)",
+      "orderedObjectives": [
+        "BOSS_MANG_COT kill committed",
+        "ALPHA_OBJ_BM_FRAGMENT interact committed",
+        "NPC_CLASS_TRIAL TALK committed"
+      ],
+      "unlock": "P00-05 turn-in commits CHAPTER_C1_UNLOCKED and MAP_THANH_LAC portal access; C1-01 record minLevel11 per existing chapter spec, not silently marked complete"
+    },
+    "all": "existing reward item/currency definitions retained; only unlock activation after all targets/guards/types are implemented and validated",
+    "C1-01": {
+      "minLevel": 11,
+      "startNpcId": "NPC_LYAN",
+      "turnInNpcId": "NPC_LYAN",
+      "mapId": "MAP_THANH_LAC",
+      "prerequisiteQuestIds": [
+        "P00-05"
+      ],
+      "representatives": [
+        "NPC_GUARD_CAPTAIN",
+        "NPC_HA_MAC",
+        "NPC_MASTER_MINH_KIEM"
+      ],
+      "trialRegistrationNpcId": "NPC_CLASS_TRIAL",
+      "mapViewedAction": "MAP_VIEWED intent acknowledged by server only while quest ACTIVE and actor in MAP_THANH_LAC, one credit per quest; no reward on open-map read",
+      "currencyReward": {
+        "currencyId": "COIN",
+        "amount": 80
+      },
+      "xpRule": "normalQuest accept snapshot",
+      "source": "existing C1-01 narrative spec; explicit new alpha representative mapping; class MK slice only",
+      "noLevelBypass": true
+    }
+  },
+  "boss": {
+    "profileId": "BOSS_MANG_COT_QUEST_ALPHA_1",
+    "entityId": "BOSS_MANG_COT",
+    "level": 5,
+    "maxHp": 1200,
+    "attack": 24,
+    "armor": 6,
+    "defenseAliasOfArmor": true,
+    "numbersProvenance": "NEW_DESIGN tutorial alpha tuning; not old world-boss HPx35 profile; not playtest-validated",
+    "arena": {
+      "shape": "CIRCLE",
+      "centerWu": [
+        178,
+        0
+      ],
+      "radiusWu": 11,
+      "source": "quest atlas boss ring diameter22"
+    },
+    "safePads": {
+      "centersWu": [
+        [
+          168,
+          0
+        ],
+        [
+          188,
+          0
+        ]
+      ],
+      "radiusWu": 0.75,
+      "phase3Only": true,
+      "noInvulnerability": true
+    },
+    "phases": {
+      "thresholds": [
+        0.6,
+        0.3
+      ],
+      "maxTransitionsPerImpact": 1,
+      "phaseGuardSeconds": 1.0,
+      "phase2RecoveryMultiplier": 0.8,
+      "phase3AdditionalDamageMultiplier": 1.0,
+      "phase3SafePads": true
+    },
+    "priority": [
+      "C",
+      "B",
+      "A"
+    ],
+    "overlapAllowed": false,
+    "moves": [
+      {
+        "id": "A",
+        "nameVi": "Quật Thân",
+        "shape": "CONE",
+        "angleDegrees": 120,
+        "rangeWu": 8,
+        "windupSeconds": 0.9,
+        "coefficient": 1.2,
+        "recoverySeconds": 0.8,
+        "cooldownSeconds": 4,
+        "targetLock": "telegraph start facing",
+        "interruptibleBy": "STAGGER_ONLY"
+      },
+      {
+        "id": "B",
+        "nameVi": "Lặn Trồi",
+        "shape": "CIRCLE",
+        "radiusWu": 4,
+        "targetRangeWu": 11,
+        "windupSeconds": 1.2,
+        "coefficient": 1.5,
+        "recoverySeconds": 1,
+        "cooldownSeconds": 9,
+        "targetLock": "target position at telegraph start",
+        "interruptibleBy": "STAGGER_ONLY",
+        "submergeIsCosmeticNotImplicitInvulnerability": true
+      },
+      {
+        "id": "C",
+        "nameVi": "Vòng Bọt",
+        "shape": "ANNULUS",
+        "innerRadiusWu": 3,
+        "outerRadiusWu": 7,
+        "windupSeconds": 1,
+        "coefficient": 1.3,
+        "recoverySeconds": 1,
+        "cooldownSeconds": 12,
+        "targetLock": "boss position",
+        "interruptibleBy": "NONE",
+        "dodgeable": true
+      }
+    ],
+    "wipe": {
+      "noAliveTargetSeconds": 10,
+      "resetHp": true,
+      "resetPhase": 1,
+      "attemptLimit": null,
+      "questCheckpointPersists": true,
+      "invalidateOldCastGeneration": true,
+      "newLifeId": "next fresh attempt, not replay/reset request",
+      "noLootOnReset": true
+    },
+    "credit": "owner must be registered at encounter start and eligible at death; late join and prior life events give no credit; party scaling disabled until roster authority exists",
+    "eventProtocol": "keep CombatEventV2 closed types; expose phase/wipe state in new GET /p1/encounters/{encounterId} snapshot schema1 + entity revision; publish accepted existing cast/impact/death events only"
+  },
+  "lootAlphaOnly": {
+    "coinMin": "mobLevel",
+    "coinMax": "2*mobLevel",
+    "inclusiveIntegers": true,
+    "gearRarityWeights": {
+      "COMMON": 100,
+      "FINE": 0,
+      "SPIRIT": 0,
+      "MYSTIC": 0,
+      "ANCIENT": 0
+    },
+    "eligibleGear": "CLASS_MINH_KIEM T1 COMMON variants in canonical CSV, uniform among eligible templates; recipe category/drop chance stays sourced recipe; no cosmetic or unsourced random affix",
+    "rollOnceKey": [
+      "profileVersion",
+      "characterId",
+      "deathEventId",
+      "lifeId",
+      "groupId"
+    ],
+    "noLiveRerollOnRetry": true,
+    "defaultGrantEnabled": false,
+    "bossQuestRewardSeparateFromLoot": true,
+    "economyStatus": "new alpha-only seed data, not production economy approval"
+  },
+  "acceptance": {
+    "productionGatesRemainOff": true,
+    "devProfileMustBeExplicit": true,
+    "noReadDialogueReward": true,
+    "noDuplicateBoss": true,
+    "fullBagKeepsReady": true,
+    "unknownFieldMustFailExport": true,
+    "noTopologySelfCertification": true,
+    "playtestMetrics": [
+      "tutorial completion time",
+      "boss attempts",
+      "time-to-kill",
+      "avoidable damage",
+      "drop totals"
+    ]
+  }
+}
