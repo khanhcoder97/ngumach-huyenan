@@ -1,0 +1,100 @@
+name: QR-01 Server Persistence CI
+
+on:
+  push:
+    branches: [ main, qoder-remote/qr-01-server-persistence-rework-* ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * *' # Daily build at 2 AM UTC
+
+env:
+  DOTNET_VERSION: '10.0.x'
+  NUGET_PACKAGES_PATH: ${{ github.workspace }}/nuget/packages
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          
+      - name: Restore dependencies
+        run: dotnet restore Server/Tests/PersistenceTests/Server.Tests.csproj
+        
+      - name: Build Server.Persistence
+        run: dotnet build Server/ --configuration Release --verbosity minimal
+        
+      - name: Run Unit Tests
+        run: |
+          dotnet test Server/Tests/PersistenceTests/Server.Tests.csproj \
+            --filter "Category=QR-01" \
+            --configuration Release \
+            --logger "trx;LogFileName=test-results.trx" \
+            --collect:"XPlat Code Coverage"
+        env:
+          QODER_DB_PATH: /tmp/test_${{ github.sha }}.sqlite
+            
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qr-01-test-results-${{ github.run_number }}
+          path: |
+            **/*.trx
+            **/coverage*.xml
+          
+  integration:
+    needs: [test]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          
+      - name: Integration Tests
+        run: |
+          export QODER_DB_PATH=/tmp/integration_${{ github.sha }}.sqlite
+          dotnet test Server/Tests/PersistenceTests/Server.Tests.csproj \
+            --filter "IntegrationTests" \
+            --verbosity normal
+            
+      - name: Clean up test database
+        run: rm -f $QODER_DB_PATH* || true
+
+  notify-summary:
+    needs: [test, integration, deploy-preview]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Generate Summary
+        run: |
+          echo "## QR-01 Pipeline Status" >> $GITHUB_STEP_SUMMARY
+          echo "Branch: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          case "${{ job.status }}" in
+            success)
+              echo "✅ All tests passed successfully!" >> $GITHUB_STEP_SUMMARY
+              ;;
+            failure)
+              echo "❌ Some tests failed" >> $GITHUB_STEP_SUMMARY
+              echo "- Check [test job](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+              ;;
+            cancelled)
+              echo "⏭️ Workflow cancelled" >> $GITHUB_STEP_SUMMARY
+              ;;
+          esac
+          
