@@ -3,6 +3,7 @@
 // Hiện/ẩn dựa trên connection state.
 // Owner: Antigravity Remote — Issue #80, #85.
 
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using NguMach.Client.Presentation;
@@ -28,6 +29,11 @@ namespace NguMach.Client.P1
         private VisualElement _trackerBox;
         private Label _trackerTitleLabel;
         private Label _trackerDescLabel;
+        private Button _overflowBtn;
+        private VisualElement _overflowMenu;
+        private bool _showHotkeys = true;
+        private readonly List<(PlayerPanel panel, Button button, string label, string hotkey)> _menuEntries =
+            new List<(PlayerPanel, Button, string, string)>();
 
         // ── Init ─────────────────────────────────────────────────────────────
 
@@ -61,11 +67,50 @@ namespace NguMach.Client.P1
             _settingsBtn  = MakeButton("Cài đặt", () => _root.OpenPanel(PlayerPanel.Settings));
             _mapBtn       = MakeButton("Bản đồ", () => _root.OpenPanel(PlayerPanel.Map));
 
-            _bar.Add(_characterBtn);
-            _bar.Add(_inventoryBtn);
-            _bar.Add(_questBtn);
-            _bar.Add(_settingsBtn);
-            _bar.Add(_mapBtn);
+            _menuEntries.Add((PlayerPanel.Character, _characterBtn, "Nhân vật", "C"));
+            _menuEntries.Add((PlayerPanel.Inventory, _inventoryBtn, "Túi", "B"));
+            _menuEntries.Add((PlayerPanel.QuestJournal, _questBtn, "Nhiệm vụ", "J"));
+            _menuEntries.Add((PlayerPanel.Settings, _settingsBtn, "Cài đặt", ""));
+            _menuEntries.Add((PlayerPanel.Map, _mapBtn, "Bản đồ", "M"));
+
+            foreach (var entry in _menuEntries) _bar.Add(entry.button);
+
+            // OPC-14 O1: real "..." overflow menu. At narrow viewports the policy collapses
+            // the tail into this menu (settings stays reachable — never a dead HUD).
+            _overflowBtn = MakeButton("…", ToggleOverflowMenu);
+            _overflowBtn.style.minWidth = HudOverflowPolicy.OverflowButtonWidthPx;
+            _overflowBtn.style.display = DisplayStyle.None;
+            _bar.Add(_overflowBtn);
+
+            _overflowMenu = new VisualElement();
+            _overflowMenu.style.position = Position.Absolute;
+            _overflowMenu.style.right = 0;
+            _overflowMenu.style.top = 50;
+            _overflowMenu.style.minWidth = 150;
+            _overflowMenu.style.backgroundColor = new Color(0.05f, 0.08f, 0.10f, 0.98f);
+            _overflowMenu.style.borderTopWidth = _overflowMenu.style.borderBottomWidth = 1;
+            _overflowMenu.style.borderLeftWidth = _overflowMenu.style.borderRightWidth = 1;
+            _overflowMenu.style.borderTopColor = _overflowMenu.style.borderBottomColor = new Color(0.24f, 0.36f, 0.44f);
+            _overflowMenu.style.borderLeftColor = _overflowMenu.style.borderRightColor = new Color(0.24f, 0.36f, 0.44f);
+            _overflowMenu.style.paddingLeft = _overflowMenu.style.paddingRight = 4;
+            _overflowMenu.style.paddingTop = _overflowMenu.style.paddingBottom = 4;
+            _overflowMenu.style.display = DisplayStyle.None;
+            for (int i = 0; i < _menuEntries.Count; i++)
+            {
+                var entry = _menuEntries[i];
+                var item = MakeButton(entry.label, () =>
+                {
+                    _overflowMenu.style.display = DisplayStyle.None;
+                    _root?.OpenPanel(entry.panel);
+                });
+                item.style.minWidth = 140;
+                item.style.marginTop = 2;
+                item.style.marginBottom = 2;
+                _overflowMenu.Add(item);
+            }
+            _bar.Add(_overflowMenu);
+
+            ApplyHotkeys();
 
             // HUD Quest Tracker
             _trackerBox = new VisualElement();
@@ -181,9 +226,25 @@ namespace NguMach.Client.P1
             // OPC-14 M0 / OPCREV-03: single writer for display — connection AND safe-area decision.
             // Hidden stays hidden across frames (no RefreshVisibility Flex override).
             if (decision.Mode == HudMode.Hidden || !connected)
+            {
                 _bar.style.display = DisplayStyle.None;
+                if (_overflowMenu != null) _overflowMenu.style.display = DisplayStyle.None;
+            }
             else
+            {
                 _bar.style.display = DisplayStyle.Flex;
+
+                // OPC-14 O1: collapse tail buttons into the real "..." menu when the
+                // safe-area usable width cannot fit every minimum touch target.
+                float usableW = Math.Max(0f, vp.WidthPx - vp.SafeLeft - vp.SafeRight - 20f);
+                var overflow = HudOverflowPolicy.Decide(_menuEntries.Count, usableW);
+                for (int i = 0; i < _menuEntries.Count; i++)
+                    _menuEntries[i].button.style.display = i < overflow.VisibleCount ? DisplayStyle.Flex : DisplayStyle.None;
+                if (_overflowBtn != null)
+                    _overflowBtn.style.display = overflow.HasOverflow ? DisplayStyle.Flex : DisplayStyle.None;
+                if (!overflow.HasOverflow && _overflowMenu != null)
+                    _overflowMenu.style.display = DisplayStyle.None;
+            }
 
             if (_trackerBox != null)
                 _trackerBox.style.display = (decision.TrackerHidden || !connected)
@@ -202,9 +263,30 @@ namespace NguMach.Client.P1
 
         public void ApplyAccessibility(SettingsViewState s)
         {
-            // OPC-14 O1: hotkey labels follow ShowInputHints; re-evaluate safe-area policy.
-            // (Hotkey labels are on the gameplay HUD, not this bar; bar re-evaluates policy.)
+            // OPC-14 O1: hotkey labels follow ShowInputHints (real text change), then the
+            // single visibility writer re-evaluates the safe-area/overflow decision.
+            _showHotkeys = AccessibilityPolicy.HotkeyLabelsVisible(s?.ShowInputHints ?? true);
+            ApplyHotkeys();
             ApplySafeAreaPolicy();
+        }
+
+        private void ApplyHotkeys()
+        {
+            if (_menuEntries.Count == 0) return;
+            foreach (var entry in _menuEntries)
+            {
+                if (entry.button == null) continue;
+                entry.button.text = _showHotkeys && !string.IsNullOrEmpty(entry.hotkey)
+                    ? entry.label + " [" + entry.hotkey + "]"
+                    : entry.label;
+            }
+        }
+
+        private void ToggleOverflowMenu()
+        {
+            if (_overflowMenu == null) return;
+            bool show = _overflowMenu.style.display != DisplayStyle.Flex;
+            _overflowMenu.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
         // ── Teardown ─────────────────────────────────────────────────────────

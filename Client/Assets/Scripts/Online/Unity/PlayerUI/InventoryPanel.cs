@@ -19,6 +19,8 @@ namespace NguMach.Client.P1
         private CancellationToken _ct;
         private InventoryPresenter _presenter;
         private UIDocument _doc;
+        private UiItemResolverSession _items;
+        private float _textScale = 1f;
 
         private VisualElement _root;
         private VisualElement _grid;
@@ -30,14 +32,15 @@ namespace NguMach.Client.P1
 
         // ── Init ─────────────────────────────────────────────────────────────
 
-        public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct, UIDocument doc = null)
+        public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct, UIDocument doc = null, UiItemResolverSession items = null)
         {
             if (_presenter != null) _presenter.OnChanged -= Render;
             _adapter = adapter;
             _router = router;
             _ct = ct;
             _doc = doc ?? _doc;
-            _presenter = new InventoryPresenter(adapter);
+            _items = items;
+            _presenter = new InventoryPresenter(adapter, items);
             _presenter.OnChanged += Render;
             if (_root == null) BuildUI();
             else AttachToDocument(_doc);
@@ -246,9 +249,17 @@ namespace NguMach.Client.P1
 
         public void ApplyAccessibility(SettingsViewState s)
         {
-            // OPC-14 O1: catalog resolver is per-session (set by PlayerUIRoot);
-            // text scale affects tooltip layout. Re-render if visible.
+            // OPC-14 O1: text size and reduced motion change the real bag layout; re-render
+            // against the per-session catalog resolver instead of only storing the settings.
+            _textScale = s?.TextSize ?? 1f;
+            if (_root != null)
+                _root.style.fontSize = new StyleLength(new Length(12f * _textScale, LengthUnit.Pixel));
+            Render();
         }
+
+        /// <summary>Focus scope root for PlayerUIRoot's Tab trap (real UIElements tree).</summary>
+        public VisualElement FocusRoot => _root;
+        public bool IsVisible => _visible && _root != null && _root.style.display == DisplayStyle.Flex;
 
         public void Teardown()
         {
@@ -265,6 +276,7 @@ namespace NguMach.Client.P1
             _adapter = null;
             _router = null;
             _doc = null;
+            _items = null;
         }
 
         private void OnDestroy() => Teardown();

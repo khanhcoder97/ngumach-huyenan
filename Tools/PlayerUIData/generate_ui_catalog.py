@@ -71,7 +71,7 @@ def entry_digest(entry):
     return hashlib.sha256(json.dumps(payload, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
 
 
-def main():
+def build_catalog():
     seen = set()
     by_id = {}
     entries = []
@@ -114,28 +114,33 @@ def main():
     # overall digest over sorted entries
     overall = hashlib.sha256(json.dumps([e["digest"] for e in entries], ensure_ascii=False).encode("utf-8")).hexdigest()
     catalog["catalogDigest"] = overall
+    return catalog
 
+
+def render(catalog):
+    return json.dumps(catalog, ensure_ascii=False, indent=2) + "\n"
+
+
+def main():
+    catalog = build_catalog()
     os.makedirs(OUT_DIR, exist_ok=True)
-    with open(OUT_FILE, "w", encoding="utf-8") as f:
-        json.dump(catalog, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-    print(f"wrote {OUT_FILE}: {len(entries)} entries, digest {overall}")
+    with open(OUT_FILE, "w", encoding="utf-8", newline="\n") as f:
+        f.write(render(catalog))
+    print(f"wrote {OUT_FILE}: {catalog['count']} entries, digest {catalog['catalogDigest']}")
 
 
 def check():
-    # Read-only: regenerate in memory, compare to committed file, exit 1 on drift.
-    import io
-    # capture stdout
-    buf = io.StringIO()
-    old_stdout = sys.stdout
-    sys.stdout = buf
-    try:
-        main()
-    finally:
-        sys.stdout = old_stdout
-    generated = open(OUT_FILE, "rb").read() if os.path.isfile(OUT_FILE) else b""
-    # main() already wrote the file; re-read and compare is not meaningful after write.
-    # Instead: regenerate to a temp file and compare.
+    """Read-only: compare generator output to the committed file; never write it."""
+    generated = render(build_catalog())
+    if not os.path.isfile(OUT_FILE):
+        print("ERROR: committed catalog missing", file=sys.stderr)
+        return 1
+    with open(OUT_FILE, "r", encoding="utf-8", newline="") as f:
+        committed = f.read()
+    if committed != generated:
+        print("STALE: committed catalog differs from generator output", file=sys.stderr)
+        return 1
+    print("catalog up to date")
     return 0
 
 if __name__ == "__main__":
@@ -143,28 +148,11 @@ if __name__ == "__main__":
     ap.add_argument("--check", action="store_true", help="read-only: fail if committed catalog is stale")
     args = ap.parse_args()
     if args.check:
-        # Generate to a temp file, compare bytes to committed, do not touch committed file.
-        import tempfile
-        tmp_out = os.path.join(tempfile.gettempdir(), "ui_item_catalog.check.json")
-        # monkeypatch OUT_FILE
-        real_out = OUT_FILE
-        OUT_FILE = tmp_out
         try:
-            main()
-        except SystemExit:
-            pass
+            sys.exit(check())
         except Exception as e:
             print(f"ERROR: {e}", file=sys.stderr)
             sys.exit(1)
-        OUT_FILE = real_out
-        if not os.path.isfile(real_out):
-            print("ERROR: committed catalog missing", file=sys.stderr)
-            sys.exit(1)
-        if open(tmp_out, "rb").read() != open(real_out, "rb").read():
-            print("STALE: committed catalog differs from generator output", file=sys.stderr)
-            sys.exit(1)
-        print("catalog up to date")
-        sys.exit(0)
     try:
         main()
     except Exception as e:

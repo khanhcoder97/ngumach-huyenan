@@ -19,14 +19,22 @@ namespace NguMach.Client.Presentation
         public static UiCatalog CurrentCatalog => _catalog;
 
         public static ItemMetadata Resolve(string templateId)
+            => ResolveWith(_catalog, templateId);
+
+        /// <summary>
+        /// OPC-14 O1: explicit catalog resolution so a session/document can own its own
+        /// catalog instead of the process-wide ambient one. Null catalog falls back to the
+        /// embedded subset only (never a second live catalog).
+        /// </summary>
+        public static ItemMetadata ResolveWith(UiCatalog catalog, string templateId)
         {
             if (string.IsNullOrEmpty(templateId))
                 return new ItemMetadata("", "Không tên", "Vật phẩm", null, null, null, "Thường", null, 1, "");
 
             // 1. Loaded catalog path (preferred when present).
-            if (_catalog != null)
+            if (catalog != null)
             {
-                var entry = _catalog.Find(templateId);
+                var entry = catalog.Find(templateId);
                 if (entry == null)
                 {
                     // Variant lookup: <base-id>-R-<RARITY>
@@ -35,7 +43,7 @@ namespace NguMach.Client.Presentation
                     {
                         string baseId = templateId.Substring(0, rIdx);
                         string suffix = templateId.Substring(rIdx + 3);
-                        var baseEntry = _catalog.Find(baseId);
+                        var baseEntry = catalog.Find(baseId);
                         if (baseEntry != null)
                         {
                             string rarity = SuffixToRarity(suffix);
@@ -116,5 +124,18 @@ namespace NguMach.Client.Presentation
             }
             return "";
         }
+    }
+
+    /// <summary>
+    /// OPC-14 O1: per-session/document resolver. Panels built for one UIDocument/session
+    /// resolve against exactly the catalog loaded for that session (no process-wide bleed
+    /// when two documents or a rebind are alive).
+    /// </summary>
+    public sealed class UiItemResolverSession
+    {
+        private readonly UiCatalog _catalog;
+        public UiItemResolverSession(UiCatalog catalog) { _catalog = catalog; }
+        public UiCatalog Catalog => _catalog;
+        public ItemMetadata Resolve(string templateId) => UiItemResolver.ResolveWith(_catalog, templateId);
     }
 }

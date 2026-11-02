@@ -58,6 +58,10 @@ namespace NguMach.Client.P1
             if (_root != null) _root.style.display = DisplayStyle.None;
         }
 
+        /// <summary>Focus scope root for PlayerUIRoot's Tab trap (real UIElements tree).</summary>
+        public VisualElement FocusRoot => _root;
+        public bool IsVisible => _visible && _root != null && _root.style.display == DisplayStyle.Flex;
+
         // ── UI Build ─────────────────────────────────────────────────────────
 
         private void BuildUI()

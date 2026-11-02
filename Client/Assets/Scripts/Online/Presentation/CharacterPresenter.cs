@@ -17,15 +17,17 @@ namespace NguMach.Client.Presentation
     public sealed class CharacterPresenter
     {
         private readonly IP1UIAdapter _adapter;
+        private readonly UiItemResolverSession _items;
         private AsyncState<CharacterViewState> _state = AsyncState<CharacterViewState>.Idle;
         private int _generation;
 
         public AsyncState<CharacterViewState> State => _state;
         public event Action OnChanged;
 
-        public CharacterPresenter(IP1UIAdapter adapter)
+        public CharacterPresenter(IP1UIAdapter adapter, UiItemResolverSession items = null)
         {
             _adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));
+            _items = items;
         }
 
         public void Refresh()
@@ -53,7 +55,7 @@ namespace NguMach.Client.Presentation
                         string canonicalSlot = CharacterViewState.NormalizeSlot(item.slot);
                         if (!string.IsNullOrEmpty(canonicalSlot))
                         {
-                            var meta = ItemMetadataResolver.Resolve(item.templateId);
+                            var meta = _items != null ? _items.Resolve(item.templateId) : UiItemResolver.Resolve(item.templateId);
                             equippedMap[canonicalSlot] = new ItemSlotView(item, meta.DisplayName, meta.Rarity);
                         }
                     }

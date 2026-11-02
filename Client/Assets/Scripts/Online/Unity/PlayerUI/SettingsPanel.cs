@@ -237,6 +237,10 @@ namespace NguMach.Client.P1
 
         public void ApplyAccessibility(SettingsViewState s) => ApplySettings(s);
 
+        /// <summary>Focus scope root for PlayerUIRoot's Tab trap (real UIElements tree).</summary>
+        public VisualElement FocusRoot => _root;
+        public bool IsVisible => _visible && _root != null && _root.style.display == DisplayStyle.Flex;
+
         public void Teardown()
         {
             Hide();

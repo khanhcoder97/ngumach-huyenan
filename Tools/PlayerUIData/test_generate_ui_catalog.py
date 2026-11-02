@@ -85,9 +85,61 @@ def test_missing_field_does_not_crash():
             assert k in e
 
 
+def test_identical_shared_row_kept_once_with_provenance():
+    """Cross-file identical rows are allowed: one entry, first file's provenance."""
+    tmp_root = tempfile.mkdtemp()
+    try:
+        variant = '"item_id","display_name","category"\n"SHARED","Cung","Vũ khí"\n'
+        master = '"item_id","display_name","category"\n"SHARED","Cung","Vũ khí"\n'
+        r = _run_in_tmp(tmp_root, variant, master)
+        assert r.returncode == 0, r.stderr
+        out = os.path.join(tmp_root, "Client", "Assets", "Resources", "PlayerUI", "ui_item_catalog.json")
+        data = json.load(open(out, encoding="utf-8"))
+        assert data["count"] == 1
+        assert data["entries"][0]["_source"]["file"] == "Item_Rarity_Variant_Catalog_vi.csv"
+    finally:
+        shutil.rmtree(tmp_root, ignore_errors=True)
+
+
+def test_conflicting_shared_row_fails():
+    """Same item_id but different content across files must fail loudly."""
+    tmp_root = tempfile.mkdtemp()
+    try:
+        variant = '"item_id","display_name","category"\n"SHARED","Cung","Vũ khí"\n'
+        master = '"item_id","display_name","category"\n"SHARED","Kiếm","Vũ khí"\n'
+        r = _run_in_tmp(tmp_root, variant, master)
+        assert r.returncode != 0, "conflicting shared row did not fail"
+        assert "conflicting shared item_id" in (r.stderr + r.stdout)
+    finally:
+        shutil.rmtree(tmp_root, ignore_errors=True)
+
+
+def test_check_detects_stale_without_writing():
+    """--check is read-only and exits 1 when the committed catalog drifted."""
+    tmp_root = tempfile.mkdtemp()
+    try:
+        r = _run_in_tmp(tmp_root, '"item_id","display_name"\n"A","a"\n', '"item_id","display_name"\n"B","b"\n')
+        assert r.returncode == 0, r.stderr
+        out = os.path.join(tmp_root, "Client", "Assets", "Resources", "PlayerUI", "ui_item_catalog.json")
+        committed = open(out, "rb").read()
+        tampered = committed + b" \n"
+        open(out, "wb").write(tampered)
+
+        gen_tmp = os.path.join(tmp_root, "Tools", "PlayerUIData", "generate_ui_catalog.py")
+        check = subprocess.run([sys.executable, gen_tmp, "--check"], capture_output=True, text=True)
+        assert check.returncode != 0, "stale catalog passed --check"
+        assert "STALE" in (check.stderr + check.stdout)
+        assert open(out, "rb").read() == tampered, "--check must not rewrite the committed file"
+    finally:
+        shutil.rmtree(tmp_root, ignore_errors=True)
+
+
 if __name__ == "__main__":
     tests = [test_runs_ok, test_deterministic, test_count_and_digest,
-             test_no_duplicate_keys_fail, test_empty_input_fails, test_missing_field_does_not_crash]
+             test_no_duplicate_keys_fail, test_empty_input_fails, test_missing_field_does_not_crash,
+             test_identical_shared_row_kept_once_with_provenance,
+             test_conflicting_shared_row_fails,
+             test_check_detects_stale_without_writing]
     failed = 0
     for t in tests:
         try:

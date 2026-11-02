@@ -1279,6 +1279,87 @@ namespace PlayerUIChecks
             Assert.Equal(withSet.SetId, m.SetId);
             UiItemResolver.SetCatalog(null);
         }
+
+        // OPC-14 O1: altering any catalog field must break the entry digest, so a stale or
+        // tampered file cannot silently feed wrong tooltip metadata into the panels.
+        [Fact]
+        public void Loader_RejectsTamperedEntryContent()
+        {
+            string text = LoadCatalogText();
+            Assert.True(UiCatalogLoader.TryLoad(text, out var cat, out var loadErr), loadErr);
+            var first = cat.Entries[0];
+
+            int at = text.IndexOf("\"item_id\": \"" + first.ItemId + "\"", StringComparison.Ordinal);
+            Assert.True(at >= 0, "item marker not found");
+            int dn = text.IndexOf("\"display_name\": \"", at, StringComparison.Ordinal);
+            Assert.True(dn >= 0, "display_name marker not found");
+            int start = dn + "\"display_name\": \"".Length;
+            int end = text.IndexOf('"', start);
+            string tampered = text.Substring(0, start) + "TAMPERED-BY-TEST" + text.Substring(end);
+
+            Assert.False(UiCatalogLoader.TryLoad(tampered, out _, out var err));
+            Assert.Contains("digest", err);
+        }
+
+        [Fact]
+        public void Loader_RejectsTamperedOverallDigest()
+        {
+            string text = LoadCatalogText();
+            string tampered = text.Replace("\"catalogDigest\": \"", "\"catalogDigest\": \"0");
+            Assert.NotEqual(text, tampered);
+            Assert.False(UiCatalogLoader.TryLoad(tampered, out _, out var err));
+            Assert.Contains("digest", err);
+        }
+
+        // OPC-14 O1: two documents/sessions must not bleed catalogs into each other.
+        [Fact]
+        public void ResolverSession_TwoDocumentsDoNotBleed()
+        {
+            Assert.True(UiCatalogLoader.TryLoad(LoadCatalogText(), out var cat, out var err), err);
+            var withCatalog = new UiItemResolverSession(cat);
+            var withoutCatalog = new UiItemResolverSession(null);
+
+            var entry = cat.Entries.Find(e => !string.IsNullOrEmpty(e.DisplayName));
+            Assert.NotNull(entry);
+            Assert.Equal(entry.DisplayName, withCatalog.Resolve(entry.ItemId).DisplayName);
+
+            // The null-catalog session falls back to the embedded subset, which does not know
+            // this generated row — it must NOT observe the first session's catalog.
+            var fallback = withoutCatalog.Resolve(entry.ItemId);
+            Assert.NotEqual(entry.DisplayName, fallback.DisplayName);
+            Assert.DoesNotContain("row ", fallback.SourceRef ?? "");
+        }
+
+        // OPC-14 O1: a template outside the embedded subset still renders full catalog detail
+        // through the real formatter used by bag/character view binding.
+        [Fact]
+        public void Formatter_OutOfSubsetItem_RendersExtendedFields()
+        {
+            Assert.True(UiCatalogLoader.TryLoad(LoadCatalogText(), out var cat, out var err), err);
+            var entry = cat.Entries.Find(e => !string.IsNullOrEmpty(e.WeaponPower) && !string.IsNullOrEmpty(e.ItemId));
+            Assert.NotNull(entry);
+
+            var session = new UiItemResolverSession(cat);
+            var meta = session.Resolve(entry.ItemId);
+            Assert.Equal(entry.DisplayName, meta.DisplayName);
+            Assert.Equal(entry.WeaponPower, meta.WeaponPower);
+
+            var item = new P1Item
+            {
+                instanceId = "inst-test-1",
+                templateId = entry.ItemId,
+                location = "BAG",
+                stack = 1,
+                durability = 100,
+                version = 1
+            };
+            var slot = new ItemSlotView(item, entry.DisplayName, entry.RarityPool);
+            string tooltip = ItemTooltipFormatter.Format(slot, meta);
+
+            Assert.Contains("Công vũ khí: " + entry.WeaponPower, tooltip);
+            Assert.Contains(entry.DisplayName, tooltip);
+            Assert.Contains(entry.Source.File, tooltip);
+        }
     }
 
 }

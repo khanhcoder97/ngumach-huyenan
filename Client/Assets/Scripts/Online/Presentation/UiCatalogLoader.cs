@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace NguMach.Client.Presentation
@@ -66,25 +67,145 @@ namespace NguMach.Client.Presentation
 
         private Dictionary<string, UiCatalogEntry> _byId;
 
+        // Canonical field list, sorted exactly like Python json.dumps(sort_keys=True).
+        private static readonly string[] DigestFields =
+        {
+            "affix_rule", "armor", "binding", "category", "class_id", "description",
+            "display_name", "durability", "element", "hidden_effect", "hidden_effect_id",
+            "hidden_effect_unlock", "item_id", "primary_stat", "primary_value",
+            "rarity_pool", "required_level", "secondary_stat", "secondary_value",
+            "set_bonus_2", "set_bonus_4", "set_id", "set_name", "slot", "socket_rule",
+            "source_map", "source_rule", "stack_limit", "tradeable", "weapon_power"
+        };
+
+        /// <summary>
+        /// OPC-14 O1: recompute every entry digest from the loaded content (not just trust
+        /// the stored hex), verify source provenance exists for each row, then recompute the
+        /// overall digest exactly like the generator (Python json.dumps list format).
+        /// A stale/tampered catalog must fail loudly instead of leaking wrong metadata.
+        /// </summary>
         public bool VerifyDigest()
         {
-            if (string.IsNullOrEmpty(CatalogDigest) || Entries == null) return false;
-            var digests = new List<string>();
+            if (string.IsNullOrEmpty(CatalogDigest) || Entries == null || SourceDigests == null) return false;
+            if (Entries.Count != Count) return false;
+
+            var digests = new List<string>(Entries.Count);
             foreach (var e in Entries)
             {
-                if (e == null || string.IsNullOrEmpty(e.Digest) || e.Digest.Length != 64) return false;
-                digests.Add(e.Digest);
+                if (e == null || string.IsNullOrEmpty(e.ItemId) || string.IsNullOrEmpty(e.Digest) || e.Digest.Length != 64) return false;
+                if (e.Source == null || string.IsNullOrEmpty(e.Source.File) || e.Source.Row < 2) return false;
+                if (!SourceDigests.ContainsKey(e.Source.File)) return false;
+
+                string actual = ComputeEntryDigest(e);
+                if (!string.Equals(actual, e.Digest, StringComparison.OrdinalIgnoreCase)) return false;
+                digests.Add(e.Digest.ToLowerInvariant());
             }
-            if (digests.Count != Entries.Count) return false;
-            // Recompute overall digest exactly as the generator does:
-            // sha256(json.dumps([e["digest"] for e in entries]))
-            string json = JsonConvert.SerializeObject(digests);
+
+            // Python: hashlib.sha256(json.dumps([e["digest"] for e in entries], ensure_ascii=False))
+            var sb = new StringBuilder();
+            sb.Append('[');
+            for (int i = 0; i < digests.Count; i++)
+            {
+                if (i > 0) sb.Append(", ");
+                AppendJsonString(sb, digests[i]);
+            }
+            sb.Append(']');
+            string overall = Sha256Hex(sb.ToString());
+            return string.Equals(overall, CatalogDigest, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>Recompute one entry digest from its canonical fields (generator parity).</summary>
+        public static string ComputeEntryDigest(UiCatalogEntry entry)
+        {
+            if (entry == null) return "";
+            var sb = new StringBuilder();
+            sb.Append('{');
+            for (int i = 0; i < DigestFields.Length; i++)
+            {
+                if (i > 0) sb.Append(", ");
+                string field = DigestFields[i];
+                AppendJsonString(sb, field);
+                sb.Append(": ");
+                AppendJsonString(sb, Field(entry, field));
+            }
+            sb.Append('}');
+            return Sha256Hex(sb.ToString());
+        }
+
+        private static string Field(UiCatalogEntry e, string name)
+        {
+            switch (name)
+            {
+                case "affix_rule": return e.AffixRule;
+                case "armor": return e.Armor;
+                case "binding": return e.Binding;
+                case "category": return e.Category;
+                case "class_id": return e.ClassId;
+                case "description": return e.Description;
+                case "display_name": return e.DisplayName;
+                case "durability": return e.Durability;
+                case "element": return e.Element;
+                case "hidden_effect": return e.HiddenEffect;
+                case "hidden_effect_id": return e.HiddenEffectId;
+                case "hidden_effect_unlock": return e.HiddenEffectUnlock;
+                case "item_id": return e.ItemId;
+                case "primary_stat": return e.PrimaryStat;
+                case "primary_value": return e.PrimaryValue;
+                case "rarity_pool": return e.RarityPool;
+                case "required_level": return e.RequiredLevelRaw;
+                case "secondary_stat": return e.SecondaryStat;
+                case "secondary_value": return e.SecondaryValue;
+                case "set_bonus_2": return e.SetBonus2;
+                case "set_bonus_4": return e.SetBonus4;
+                case "set_id": return e.SetId;
+                case "set_name": return e.SetName;
+                case "slot": return e.Slot;
+                case "socket_rule": return e.SocketRule;
+                case "source_map": return e.SourceMap;
+                case "source_rule": return e.SourceRule;
+                case "stack_limit": return e.StackLimit;
+                case "tradeable": return e.Tradeable;
+                case "weapon_power": return e.WeaponPower;
+                default: return null;
+            }
+        }
+
+        // Python json.dumps(ensure_ascii=False) string escaping.
+        private static void AppendJsonString(StringBuilder sb, string value)
+        {
+            sb.Append('"');
+            if (value != null)
+            {
+                foreach (char c in value)
+                {
+                    switch (c)
+                    {
+                        case '"': sb.Append("\\\""); break;
+                        case '\\': sb.Append("\\\\"); break;
+                        case '\b': sb.Append("\\b"); break;
+                        case '\f': sb.Append("\\f"); break;
+                        case '\n': sb.Append("\\n"); break;
+                        case '\r': sb.Append("\\r"); break;
+                        case '\t': sb.Append("\\t"); break;
+                        default:
+                            if (c < 0x20) sb.Append("\\u").Append(((int)c).ToString("x4"));
+                            else sb.Append(c);
+                            break;
+                    }
+                }
+            }
+            sb.Append('"');
+        }
+
+        private static string Sha256Hex(string text)
+        {
             using (var sha = System.Security.Cryptography.SHA256.Create())
             {
-                var bytes = System.Text.Encoding.UTF8.GetBytes(json);
+                var bytes = Encoding.UTF8.GetBytes(text);
                 var hash = sha.ComputeHash(bytes);
-                var hex = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
-                return string.Equals(hex, CatalogDigest, StringComparison.OrdinalIgnoreCase);
+                var hex = new StringBuilder(hash.Length * 2);
+                foreach (byte b in hash) hex.Append(b.ToString("x2"));
+                return hex.ToString();
             }
         }
 
@@ -126,6 +247,8 @@ namespace NguMach.Client.Presentation
                 if (e == null || string.IsNullOrEmpty(e.ItemId)) { error = "entry missing item_id"; return false; }
                 if (string.IsNullOrEmpty(e.Digest)) { error = "entry missing digest: " + e.ItemId; return false; }
             }
+            // OPC-14 O1: content-level digest recompute (entry + overall + provenance).
+            if (!parsed.VerifyDigest()) { error = "catalog digest mismatch (stale or tampered)"; return false; }
             catalog = parsed;
             return true;
         }
