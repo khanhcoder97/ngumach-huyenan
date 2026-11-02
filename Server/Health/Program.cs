@@ -93,8 +93,17 @@ builder.Services.AddSingleton(serviceProvider =>
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
     var path = WorldRecordLoader.DiscoverPath(configuration, environment.ContentRootPath);
-    return WorldRecordLoader.Load(
+    var baseCatalog = WorldRecordLoader.Load(
         path, serviceProvider.GetRequiredService<MapBoundsCatalog>());
+    if (!serviceProvider.GetRequiredService<AlphaProfileOptions>().Enabled)
+    {
+        return baseCatalog;
+    }
+
+    return AlphaOverlayMerger.MergeRecords(
+        baseCatalog,
+        serviceProvider.GetRequiredService<AlphaDesign>(),
+        serviceProvider.GetRequiredService<MapBoundsCatalog>());
 });
 builder.Services.Configure<AlphaProfileOptions>(
     builder.Configuration.GetSection(AlphaProfileOptions.SectionName));
@@ -106,11 +115,16 @@ builder.Services.AddSingleton(serviceProvider =>
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
     var path = AlphaProfileLoader.Discover(configuration, environment.ContentRootPath);
     var design = AlphaProfileLoader.Load(path);
+    var maps = serviceProvider.GetRequiredService<MapBoundsCatalog>();
+    // Validate against the unmerged base records so overlays can never collide
+    // with (or depend on) themselves: the runtime merge stays a pure addition.
+    var recordsPath = WorldRecordLoader.DiscoverPath(configuration, environment.ContentRootPath);
+    var baseRecords = WorldRecordLoader.Load(recordsPath, maps);
     AlphaProfileValidator.Validate(
         design,
-        serviceProvider.GetRequiredService<MapBoundsCatalog>(),
+        maps,
         serviceProvider.GetRequiredService<NpcAnchorCatalog>(),
-        serviceProvider.GetRequiredService<WorldRecordCatalog>());
+        baseRecords);
     return design;
 });
 builder.Services.AddSingleton<IQuestService, InMemoryQuestService>();
@@ -147,8 +161,17 @@ builder.Services.AddSingleton(serviceProvider =>
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
     var path = WorldEntityLoader.DiscoverPath(configuration, environment.ContentRootPath);
-    return WorldEntityLoader.Load(
+    var baseCatalog = WorldEntityLoader.Load(
         path, serviceProvider.GetRequiredService<MapBoundsCatalog>());
+    if (!serviceProvider.GetRequiredService<AlphaProfileOptions>().Enabled)
+    {
+        return baseCatalog;
+    }
+
+    return AlphaOverlayMerger.MergeEntities(
+        baseCatalog,
+        serviceProvider.GetRequiredService<AlphaDesign>(),
+        serviceProvider.GetRequiredService<MapBoundsCatalog>());
 });
 builder.Services.AddSingleton(serviceProvider => new WorldEntityRegistry(
     serviceProvider.GetRequiredService<WorldEntityCatalog>(),
@@ -331,10 +354,15 @@ app.Logger.LogInformation(
     alphaDesign.Boss.ProfileId);
 if (alphaOptions.Enabled)
 {
+    var runtimeEntityCount = alphaDesign.OverlayRecords.Count(overlay =>
+        AlphaOverlayMerger.HasRuntimeEntity(overlay.Kind));
     app.Logger.LogWarning(
-        "PRIVATE ALPHA: P1:AlphaProfile is enabled. Production gates remain OFF; " +
-        "the alpha overlay and quest-pack consumers land in the Q1 checkpoints, so " +
-        "this flag alone does not change the live world yet.");
+        "PRIVATE ALPHA: P1:AlphaProfile is enabled; {OverlayCount} overlay records and " +
+        "{EntityCount} overlay entities are merged into the Bến Mưa world " +
+        "(training-wave hazard stays record-only until the Q1c trial engine). " +
+        "Production gates remain OFF.",
+        alphaDesign.OverlayRecords.Count,
+        runtimeEntityCount);
 }
 
 QuestCatalogValidator.Validate(quests, worldRecords, npcAnchors);

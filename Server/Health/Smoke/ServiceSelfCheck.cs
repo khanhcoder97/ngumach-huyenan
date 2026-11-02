@@ -4648,6 +4648,186 @@ public static class ServiceSelfCheck
             AlphaRejects(alphaDesign with { DefaultEnabled = true }),
             "defaultEnabled=true must fail");
 
+        // ─── QOD-21 Q1b: alpha overlay merge into the runtime catalogs ────
+
+        var alphaBaseEntities = services.GetRequiredService<WorldEntityCatalog>();
+        Check(
+            "alpha.overlay_gate_off_records",
+            alphaRecords.Count == 352 &&
+            alphaDesign.OverlayRecords.All(overlay => !alphaRecords.TryGet(overlay.RecordId, out _)),
+            $"base={alphaRecords.Count}");
+        Check(
+            "alpha.overlay_gate_off_entities",
+            alphaBaseEntities.Count == 44 &&
+            alphaDesign.OverlayRecords.All(overlay =>
+                alphaBaseEntities.Entities.All(entity =>
+                    !string.Equals(entity.EntityId, overlay.EntityId, StringComparison.Ordinal))),
+            $"base={alphaBaseEntities.Count}");
+
+        var alphaMergedRecords = AlphaOverlayMerger.MergeRecords(
+            alphaRecords, alphaDesign, maps);
+        var alphaMergedEntities = AlphaOverlayMerger.MergeEntities(
+            alphaBaseEntities, alphaDesign, maps);
+
+        Check(
+            "alpha.overlay_merge_records",
+            alphaMergedRecords.Count == 359 &&
+            alphaDesign.OverlayRecords.All(overlay =>
+                alphaMergedRecords.TryGet(overlay.RecordId, out var record) &&
+                record.MapId == "MAP_BEN_MUA" &&
+                record.X == overlay.X &&
+                record.Y == overlay.Y &&
+                record.EntityIds.Count == 1 &&
+                record.EntityIds[0] == overlay.EntityId &&
+                record.RespawnSeconds == 0 &&
+                record.Gather is null &&
+                record.DesignState == $"ALPHA_OVERLAY:{alphaDesign.DecisionId}"),
+            $"merged={alphaMergedRecords.Count}");
+
+        var alphaRippleRecord = alphaMergedRecords.TryGet(
+            "ALPHA-BM-RIPPLE-01", out var ripple01) ? ripple01 : null;
+        var alphaVillagerRecord = alphaMergedRecords.TryGet(
+            "ALPHA-BM-VILLAGER-01", out var villager01) ? villager01 : null;
+        var alphaWaveRecord = alphaMergedRecords.TryGet(
+            "ALPHA-BM-WAVE-TRAINING", out var wave01) ? wave01 : null;
+        var alphaFragmentRecord = alphaMergedRecords.TryGet(
+            "ALPHA-BM-FRAGMENT", out var fragment01) ? fragment01 : null;
+        Check(
+            "alpha.overlay_merge_record_kinds",
+            alphaRippleRecord?.RecordType == "INTERACTABLE" &&
+            alphaVillagerRecord?.RecordType == "RESCUE_INTERACTABLE" &&
+            alphaWaveRecord?.RecordType == "QUEST_HAZARD" &&
+            alphaFragmentRecord?.Condition.Contains(
+                "boss kill committed", StringComparison.Ordinal) == true,
+            $"ripple={alphaRippleRecord?.RecordType} " +
+            $"villager={alphaVillagerRecord?.RecordType} " +
+            $"wave={alphaWaveRecord?.RecordType}");
+
+        var alphaResolvedRipple = alphaMergedRecords.TryResolveTarget(
+            "ALPHA_OBJ_BM_RIPPLE_02", "MAP_BEN_MUA", out var resolvedRipple)
+            ? resolvedRipple
+            : null;
+        Check(
+            "alpha.overlay_merge_resolve",
+            alphaResolvedRipple?.RecordId == "ALPHA-BM-RIPPLE-02" &&
+            !alphaMergedRecords.TryResolveTarget(
+                "ALPHA_OBJ_BM_RIPPLE_02", "MAP_THANH_LAC", out _),
+            alphaResolvedRipple?.RecordId ?? "unresolved");
+
+        Check(
+            "alpha.overlay_merge_entities",
+            alphaMergedEntities.Count == 50 &&
+            alphaMergedEntities.Templates.Count == 28 &&
+            alphaDesign.OverlayRecords
+                .Where(overlay => AlphaOverlayMerger.HasRuntimeEntity(overlay.Kind))
+                .All(overlay =>
+                {
+                    var entity = alphaMergedEntities.Entities.SingleOrDefault(candidate =>
+                        string.Equals(candidate.EntityId, overlay.EntityId, StringComparison.Ordinal));
+                    return entity is
+                    {
+                        Kind: WorldEntityKinds.Interactable,
+                        MapId: "MAP_BEN_MUA",
+                        FloorId: "OVERWORLD",
+                        Quantity: 1,
+                        RespawnSeconds: 0,
+                        ClaimPolicy: WorldEntityClaimPolicies.PerCharacter,
+                        State: WorldEntityStates.Available,
+                        Revision: 1,
+                        LifeId: 1
+                    } &&
+                    entity.RecordId == overlay.RecordId &&
+                    entity.X == overlay.X &&
+                    entity.Y == overlay.Y &&
+                    entity.TemplateIds.Count == 1 &&
+                    entity.TemplateIds[0] == overlay.EntityId &&
+                    alphaMergedEntities.Templates.Any(template =>
+                        template.TemplateId == overlay.EntityId &&
+                        template.Kind == WorldEntityKinds.Interactable);
+                }) &&
+            alphaMergedEntities.Entities.All(entity =>
+                !string.Equals(entity.EntityId, "ALPHA_WAVE_BM_TRAINING", StringComparison.Ordinal)),
+            $"entities={alphaMergedEntities.Count} templates={alphaMergedEntities.Templates.Count}");
+
+        var alphaMergedRegistry = new WorldEntityRegistry(
+            alphaMergedEntities, services.GetRequiredService<IServerClock>());
+        var alphaFragmentEntity = alphaMergedRegistry.TryGet(
+            "ALPHA_OBJ_BM_FRAGMENT", out var fragmentEntity) ? fragmentEntity : null;
+        Check(
+            "alpha.overlay_registry_ready",
+            alphaFragmentEntity is { State: WorldEntityStates.Available } &&
+            !alphaMergedRegistry.TryGet("ALPHA_WAVE_BM_TRAINING", out _),
+            alphaFragmentEntity?.State ?? "missing");
+
+        bool AlphaOverlayRecordRejects(AlphaDesign mutated)
+        {
+            try
+            {
+                AlphaOverlayMerger.MergeRecords(alphaRecords, mutated, maps);
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+                return true;
+            }
+        }
+
+        bool AlphaOverlayEntityRejects(AlphaDesign mutated)
+        {
+            try
+            {
+                AlphaOverlayMerger.MergeEntities(alphaBaseEntities, mutated, maps);
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+                return true;
+            }
+        }
+
+        Check(
+            "alpha.overlay_rejects_base_entity_collision",
+            AlphaOverlayEntityRejects(alphaDesign with
+            {
+                OverlayRecords = new[] { alphaDesign.OverlayRecords[0] with
+                {
+                    EntityId = "ENT_MAN_BM_FISHING_LINH"
+                } }.Concat(alphaDesign.OverlayRecords.Skip(1)).ToArray()
+            }),
+            "entityId must not collide with a world entity");
+
+        Check(
+            "alpha.overlay_rejects_non_alpha_record_prefix",
+            AlphaOverlayRecordRejects(alphaDesign with
+            {
+                OverlayRecords = new[] { alphaDesign.OverlayRecords[0] with
+                {
+                    RecordId = "BM-RIPPLE-01"
+                } }.Concat(alphaDesign.OverlayRecords.Skip(1)).ToArray()
+            }),
+            "recordId must keep the ALPHA- prefix");
+
+        Check(
+            "alpha.overlay_rejects_bad_kind",
+            AlphaOverlayRecordRejects(alphaDesign with
+            {
+                OverlayRecords = new[] { alphaDesign.OverlayRecords[0] with
+                {
+                    Kind = "NPC"
+                } }.Concat(alphaDesign.OverlayRecords.Skip(1)).ToArray()
+            }),
+            "kind NPC must fail");
+
+        Check(
+            "alpha.overlay_rejects_duplicate_record",
+            AlphaOverlayRecordRejects(alphaDesign with
+            {
+                OverlayRecords = new[] { alphaDesign.OverlayRecords[0],
+                    alphaDesign.OverlayRecords[0] with { EntityId = "ALPHA_OBJ_BM_RIPPLE_99" } }
+                    .Concat(alphaDesign.OverlayRecords.Skip(1)).ToArray()
+            }),
+            "duplicate recordId must fail");
+
         // ─── Mãng Cốt encounter state machine (Q-F part 1) ────
 
         var bossRules = new BossEncounterRules(PhaseGuardTicks: 3);

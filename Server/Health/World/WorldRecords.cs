@@ -46,6 +46,8 @@ public sealed class WorldRecordCatalog
 
     public int Count => _records.Count;
 
+    public IEnumerable<WorldRecord> All => _records.Values;
+
     public bool TryGet(string recordId, out WorldRecord record) =>
         _records.TryGetValue(recordId, out record!);
 
