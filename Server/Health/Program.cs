@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
 using Server.Health.Endpoints;
+using Server.Health.Gameplay.Alpha;
 using Server.Health.Gameplay.Combat;
 using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
@@ -94,6 +95,23 @@ builder.Services.AddSingleton(serviceProvider =>
     var path = WorldRecordLoader.DiscoverPath(configuration, environment.ContentRootPath);
     return WorldRecordLoader.Load(
         path, serviceProvider.GetRequiredService<MapBoundsCatalog>());
+});
+builder.Services.Configure<AlphaProfileOptions>(
+    builder.Configuration.GetSection(AlphaProfileOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<AlphaProfileOptions>>().Value);
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    var path = AlphaProfileLoader.Discover(configuration, environment.ContentRootPath);
+    var design = AlphaProfileLoader.Load(path);
+    AlphaProfileValidator.Validate(
+        design,
+        serviceProvider.GetRequiredService<MapBoundsCatalog>(),
+        serviceProvider.GetRequiredService<NpcAnchorCatalog>(),
+        serviceProvider.GetRequiredService<WorldRecordCatalog>());
+    return design;
 });
 builder.Services.AddSingleton<IQuestService, InMemoryQuestService>();
 builder.Services.Configure<QuestAcceptOptions>(
@@ -303,6 +321,22 @@ foreach (var questId in quests.QuestIds)
 var worldRecords = app.Services.GetRequiredService<WorldRecordCatalog>();
 app.Logger.LogInformation(
     "Loaded world records: {RecordCount}.", worldRecords.Count);
+var alphaDesign = app.Services.GetRequiredService<AlphaDesign>();
+var alphaOptions = app.Services.GetRequiredService<AlphaProfileOptions>();
+app.Logger.LogInformation(
+    "Loaded alpha profile {DecisionId} ({Status}) with {OverlayCount} overlay records; boss {BossProfile}.",
+    alphaDesign.DecisionId,
+    alphaDesign.Status,
+    alphaDesign.OverlayRecords.Count,
+    alphaDesign.Boss.ProfileId);
+if (alphaOptions.Enabled)
+{
+    app.Logger.LogWarning(
+        "PRIVATE ALPHA: P1:AlphaProfile is enabled. Production gates remain OFF; " +
+        "the alpha overlay and quest-pack consumers land in the Q1 checkpoints, so " +
+        "this flag alone does not change the live world yet.");
+}
+
 QuestCatalogValidator.Validate(quests, worldRecords, npcAnchors);
 InteractionContentValidator.Validate(worldEntities, worldRecords);
 

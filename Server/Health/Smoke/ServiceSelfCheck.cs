@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using Microsoft.Extensions.Options;
 using Server.Health.Contracts;
+using Server.Health.Gameplay.Alpha;
 using Server.Health.Gameplay.Combat;
 using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
@@ -4556,6 +4557,96 @@ public static class ServiceSelfCheck
             removed.Snapshot!.Items.Count == 1 &&
             removed.Snapshot.InventoryRevision == 3,
             removed.ErrorCode ?? $"revision={removed.Snapshot?.InventoryRevision}");
+
+        // ─── QOD-21 Q1a: approved alpha profile ingest ────────
+
+        var alphaRecords = services.GetRequiredService<WorldRecordCatalog>();
+        var alphaDesign = services.GetRequiredService<AlphaDesign>();
+        var alphaOptions = services.GetRequiredService<AlphaProfileOptions>();
+
+        Check(
+            "alpha.profile_loaded",
+            alphaDesign.DecisionId == "DESIGN-BM-ALPHA-20261103" &&
+            alphaDesign.Status.StartsWith(
+                "APPROVED_FOR_IMPLEMENTATION", StringComparison.Ordinal) &&
+            !alphaDesign.DefaultEnabled &&
+            !alphaOptions.Enabled &&
+            alphaDesign.OverlayRecords.Count == 7 &&
+            alphaDesign.Inventory.BagSlots == 100 &&
+            alphaDesign.Inventory.EquipmentSlots.Count == 12 &&
+            alphaDesign.Boss.MaxHp == 1200 &&
+            alphaDesign.Boss.Moves.Count == 3 &&
+            alphaDesign.DeathReturn.AnchorX == 18 &&
+            alphaDesign.DeathReturn.AnchorY == 0,
+            $"{alphaDesign.DecisionId} overlays={alphaDesign.OverlayRecords.Count} " +
+            $"enabled={alphaOptions.Enabled}");
+
+        Check(
+            "alpha.overlay_bounds",
+            maps.TryResolve(alphaDesign.Scope.MapId, out var alphaBounds) &&
+            alphaDesign.OverlayRecords.All(record =>
+                alphaBounds.Contains(record.X, record.Y)),
+            alphaDesign.Scope.MapId);
+
+        bool AlphaRejects(AlphaDesign mutated)
+        {
+            try
+            {
+                AlphaProfileValidator.Validate(mutated, maps, npcAnchors, alphaRecords);
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+                return true;
+            }
+        }
+
+        var badOverlay = new[] { alphaDesign.OverlayRecords[0] with { X = 9999 } }
+            .Concat(alphaDesign.OverlayRecords.Skip(1))
+            .ToArray();
+        Check(
+            "alpha.rejects_out_of_bounds_overlay",
+            AlphaRejects(alphaDesign with { OverlayRecords = badOverlay }),
+            "x=9999 must fail");
+
+        Check(
+            "alpha.rejects_wrong_bag",
+            AlphaRejects(alphaDesign with
+            {
+                Inventory = alphaDesign.Inventory with { BagSlots = 99 }
+            }),
+            "bag 99 must fail");
+
+        Check(
+            "alpha.rejects_missing_boss_move",
+            AlphaRejects(alphaDesign with
+            {
+                Boss = alphaDesign.Boss with
+                {
+                    Moves = alphaDesign.Boss.Moves
+                        .Where(move => move.Id != "C")
+                        .ToArray()
+                }
+            }),
+            "A+B only must fail");
+
+        Check(
+            "alpha.rejects_wrong_death_anchor",
+            AlphaRejects(alphaDesign with
+            {
+                DeathReturn = alphaDesign.DeathReturn with { AnchorX = 0 }
+            }),
+            "anchor 0 must fail");
+
+        Check(
+            "alpha.rejects_unapproved_status",
+            AlphaRejects(alphaDesign with { Status = "DRAFT" }),
+            "DRAFT must fail");
+
+        Check(
+            "alpha.rejects_default_enabled",
+            AlphaRejects(alphaDesign with { DefaultEnabled = true }),
+            "defaultEnabled=true must fail");
 
         // ─── Mãng Cốt encounter state machine (Q-F part 1) ────
 
