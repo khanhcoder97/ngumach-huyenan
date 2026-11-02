@@ -26,6 +26,8 @@ XP acceptance snapshot25%/55% theoRules, mobXP vàthresholdsourced, transactionl
 
 ### Q4 — hành trình kết thúc tutorial và tests không né phần khó
 
+Nối DeathReturnService/domain vào explicitreturnintent route theo JSON deathReturn mới: spawn18/0 nguồnhiệncó,50% effectiveMaxHP, noXP/currency/durabilitypenaltyalpha, no clientcoordinates, casts/counter/guardcancel, replayđúngdeath/life/key. Chỉ gateprivatealpha, publishcontractchoCodex/OpenCode để UIcóđườngthửlại; khôngđểactorDOWNEDvĩnhviễn trongdemo.
+
 P00-05 unlock flag/portal MAP_THANH_LAC và runtimeC1-01 theoJSON min11, không bypass cấp hoặc đánh dấuChươngI đã hoàn tất. Portal kiểmunlock/target/coordinates tại commit, không cho requestdirectteleport vượtgate. Test default gatesOFF, fulltutorial privateprofile, wipe/reset/latecast, phase60/30, actualbossfight, trainingwavecredit, escortcheckpoint/waveattribution, fullbag, v2equipment12slots/revision/race/noheal, exactreward once và2client khácinstance/owner. Domain manualclock có thể tăng tốc test, phải ghi nhãn; ít nhất1HTTP flow qua server thật, không bỏboss hoặcmockcompletedquest để gọi fullcampaignPASS. Report measuredTTK/deaths/completiontime/drops, không tự nói đã cân bằng.
 
 Tiếp cảQ1→Q4, cung cấp endpoint/event/timing mẫu ngay khi contract checkpoint xong. Một phần blocked thật thì nêuexactfield và tiếp phầnđộc lập, không dừng cảgói. Native/collision proof chưa có giữUNVERIFIED, không chặn domain/contract/HTTP test đúngscope.

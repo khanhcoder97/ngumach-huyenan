@@ -382,5 +382,37 @@
       "avoidable damage",
       "drop totals"
     ]
+  },
+  "deathReturn": {
+    "mapId": "MAP_BEN_MUA",
+    "safeAnchorWu": [
+      18,
+      0
+    ],
+    "anchorSource": "existing P1World SpawnX18/SpawnY0 in appsettings; new alpha safe-return approval",
+    "route": "POST /p1/actor/death-return",
+    "schemaVersion": 1,
+    "payload": "empty intent only, never client-supplied coordinates",
+    "aliveNewRequest": "reject not_downed; matched committed replay returns same result",
+    "restoreHp": "max(1,ceil(currentEffectiveMaxHp*0.5))",
+    "restoreMp": "keep current absolute then clamp to effective maxMp",
+    "xpPenalty": 0,
+    "currencyPenalty": 0,
+    "durabilityPenalty": 0,
+    "newDeathReturnCooldownSeconds": 3,
+    "clear": [
+      "inflight casts",
+      "reserved counters",
+      "guard window",
+      "movement held intent"
+    ],
+    "creditKey": [
+      "characterId",
+      "deathEventId",
+      "lifeId",
+      "idempotencyKey"
+    ],
+    "defaultEnabled": false,
+    "scope": "private alpha; reject unknown-map anchor, no generic client teleport; adapter/native UI handoff required"
   }
 }
