@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "questId": "P00-05",
+  "titleKey": "QUEST.P00-05.TITLE",
+  "graphId": "GRAPH_P00_05",
+  "questType": "MAIN",
+  "activation": "BLOCKED",
+  "levelBand": {
+    "min": 1,
+    "max": 10
+  },
+  "startNpcId": "NPC_TA_VAN_KHANH",
+  "prerequisiteQuestIds": [
+    "P00-04"
+  ],
+  "objectives": [
+    {
+      "objectiveId": "OBJ_P00_05_BOSS",
+      "type": "BOSS",
+      "targetIds": [
+        "BOSS_MANG_COT"
+      ],
+      "count": 1,
+      "mapId": "MAP_BEN_MUA"
+    },
+    {
+      "objectiveId": "OBJ_P00_05_CLASS_CONFIRM",
+      "type": "TALK",
+      "targetIds": [
+        "NPC_CLASS_TRIAL"
+      ],
+      "count": 1,
+      "mapId": "MAP_BEN_MUA"
+    }
+  ],
+  "blockedSteps": [
+    {
+      "designStep": "P00_05_BOSS_DATA",
+      "missingField": "bossStats",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05; MAN-BM-EVENT_BOSS_BM_MANG_COT and MAN-BM-SPAWN_BM_05_QUEST both point at BOSS_MANG_COT, marked BOSSDATA_BLOCKED"
+    },
+    {
+      "designStep": "P00_05_FRAGMENT",
+      "missingField": "objectiveTargets",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05 (mảnh ấn); no fragment record on MAP_BEN_MUA (checked MAN-BM-* and ENT_MAN_BM-*)"
+    },
+    {
+      "designStep": "P00_05_TURN_IN_NPC",
+      "missingField": "turnInNpcId",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05 (start NPC_TA_VAN_KHANH tại Đầm Chuông); BM npcs do not name the report hand-in"
+    },
+    {
+      "designStep": "P00_05_CHAPTER_UNLOCK",
+      "missingField": "unlockQuestIds",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-05 (mở Thanh Lạc/Chương I); C1-01 has text in the packet but no runtime quest record"
+    }
+  ],
+  "rewards": {
+    "currency": [],
+    "itemIds": [
+      "EQ-MK-WEAPON-T1-R-COMMON"
+    ],
+    "xpRule": "LEVEL_BAND_BASE"
+  },
+  "unlocks": [],
+  "sourceRef": "Quest_and_Narrative_Production_Spec_vi.md#P00-05"
+}

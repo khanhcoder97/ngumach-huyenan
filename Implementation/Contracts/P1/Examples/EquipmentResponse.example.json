@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "requestId": "5f1c6d7e8f901234567890abcdef0123",
+  "sessionId": "9a0b1c2d3e4f5061728394a5b6c7d8e9",
+  "serverTimeUtc": "2026-11-01T00:00:00Z",
+  "result": {
+    "inventoryRevision": 2,
+    "items": [
+      {
+        "instanceId": "ITM_0123456789ABCDEF0123456789ABCDEF",
+        "templateId": "EQ-MK-BOOTS-T1-R-COMMON",
+        "stack": 1,
+        "location": "EQUIPPED",
+        "slot": "BOOTS",
+        "durability": 100,
+        "version": 2
+      }
+    ],
+    "currencies": []
+  }
+}

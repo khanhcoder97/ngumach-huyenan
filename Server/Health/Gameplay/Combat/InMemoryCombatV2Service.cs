@@ -85,6 +85,18 @@ public sealed class InMemoryCombatV2Service
         _clock = clock;
     }
 
+    public IEnumerable<string> TrackedActions(string characterId) =>
+        _cooldowns.Keys
+            .Where(key => string.Equals(key.CharacterId, characterId, StringComparison.Ordinal))
+            .Select(key => key.ActionKey)
+            .ToArray();
+
+    // Read-only cooldown view for the status projection: a reconnecting client
+    // has to be able to ask "what is still on cooldown" without replaying the
+    // events that already left the bounded buffer.
+    public bool TryGetCooldown(string characterId, string actionKey, out DateTimeOffset endsAtUtc) =>
+        _cooldowns.TryGetValue((characterId, actionKey), out endsAtUtc);
+
     public CombatV2Outcome Resolve(
         PlayerSession actor, string sessionId, CombatV2Intent intent, string? idempotencyKey)
     {

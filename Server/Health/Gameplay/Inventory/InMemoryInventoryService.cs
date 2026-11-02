@@ -41,7 +41,7 @@ public sealed class InMemoryInventoryService : IInventoryService
         }
 
         var invalidField = InventoryValidation.Validate(
-            mutation, out var adds, out var removes, out var deltas);
+            mutation, out var adds, out var removes, out var moves, out var deltas);
         if (invalidField is not null)
         {
             return InventoryOutcome.Invalid(invalidField);
@@ -110,13 +110,59 @@ public sealed class InMemoryInventoryService : IInventoryService
                 return InventoryOutcome.Invalid("currencyDeltas", current);
             }
 
+            // Moves quote the location they expect to find, so a caller cannot
+            // relocate an instance another transaction already moved.
+            var leavingEquipped = new HashSet<string>(StringComparer.Ordinal);
+            for (var index = 0; index < moves.Count; index++)
+            {
+                var move = moves[index];
+                var item = state.FindItem(move.InstanceId);
+                if (item is null)
+                {
+                    return InventoryOutcome.Rejected(
+                        InventoryErrorCodes.ItemNotFound, retryable: false,
+                        $"moveItems[{index}].instanceId", current);
+                }
+
+                if (!string.Equals(item.Location, move.FromLocation, StringComparison.Ordinal))
+                {
+                    return InventoryOutcome.Rejected(
+                        InventoryErrorCodes.WrongLocation, retryable: false,
+                        $"moveItems[{index}].fromLocation", current);
+                }
+
+                if (string.Equals(item.Location, InventoryLocations.Equipped, StringComparison.Ordinal) &&
+                    !string.Equals(move.ToLocation, InventoryLocations.Equipped, StringComparison.Ordinal))
+                {
+                    leavingEquipped.Add(item.InstanceId);
+                }
+            }
+
             var occupiedSlots = new HashSet<string>(StringComparer.Ordinal);
             foreach (var item in state.Items)
             {
                 if (string.Equals(item.Location, InventoryLocations.Equipped, StringComparison.Ordinal) &&
-                    item.Slot is not null)
+                    item.Slot is not null &&
+                    !leavingEquipped.Contains(item.InstanceId))
                 {
                     occupiedSlots.Add(item.Slot);
+                }
+            }
+
+            for (var index = 0; index < moves.Count; index++)
+            {
+                var move = moves[index];
+                if (!string.Equals(move.ToLocation, InventoryLocations.Equipped, StringComparison.Ordinal) ||
+                    move.Slot is null)
+                {
+                    continue;
+                }
+
+                if (!occupiedSlots.Add(move.Slot))
+                {
+                    return InventoryOutcome.Rejected(
+                        InventoryErrorCodes.SlotOccupied, retryable: false,
+                        $"moveItems[{index}].slot", current);
                 }
             }
 
@@ -135,6 +181,17 @@ public sealed class InMemoryInventoryService : IInventoryService
                         InventoryErrorCodes.SlotOccupied, retryable: false,
                         $"addItems[{index}].slot", current);
                 }
+            }
+
+            foreach (var move in moves)
+            {
+                var item = state.FindItem(move.InstanceId)!;
+                item.Location = move.ToLocation;
+                item.Slot = string.Equals(
+                    move.ToLocation, InventoryLocations.Equipped, StringComparison.Ordinal)
+                    ? move.Slot
+                    : null;
+                item.Version++;
             }
 
             foreach (var add in adds)

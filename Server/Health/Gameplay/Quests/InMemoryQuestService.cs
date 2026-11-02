@@ -353,7 +353,11 @@ public sealed class InMemoryQuestService : IQuestService
     {
         return _states.GetOrAdd(characterId, definition.QuestId, () =>
         {
-            var initialState = PrerequisitesMet(characterId, definition)
+            // A blocked quest is not a playable quest: it keeps its place in the
+            // graph but never becomes available, however complete the player's
+            // prerequisites are.
+            var initialState = !definition.IsBlocked &&
+                               PrerequisitesMet(characterId, definition)
                 ? QuestStates.Available
                 : QuestStates.Locked;
 
@@ -372,7 +376,8 @@ public sealed class InMemoryQuestService : IQuestService
         QuestDefinition definition,
         PlayerQuestState state)
     {
-        if (string.Equals(state.State, QuestStates.Locked, StringComparison.Ordinal) &&
+        if (!definition.IsBlocked &&
+            string.Equals(state.State, QuestStates.Locked, StringComparison.Ordinal) &&
             PrerequisitesMet(characterId, definition))
         {
             state.State = QuestStates.Available;

@@ -32,6 +32,12 @@ public static class QuestCatalogLoader
     private static readonly Regex ItemTemplateIdPattern =
         new(@"^[A-Z][A-Z0-9]+(?:-[A-Z0-9]+)*$", RegexOptions.CultureInvariant);
 
+    private static readonly Regex DesignStepPattern =
+        new(@"^[A-Z][A-Z0-9_]*$", RegexOptions.CultureInvariant);
+
+    private static readonly Regex BlockedFieldPattern =
+        new(@"^[A-Za-z][A-Za-z0-9_.]*$", RegexOptions.CultureInvariant);
+
     public static string DiscoverDirectory(IConfiguration configuration, string contentRoot)
     {
         var configured = configuration["Content:QuestsPath"];
@@ -121,6 +127,32 @@ public static class QuestCatalogLoader
             {
                 throw new InvalidOperationException(
                     $"{path}: invalid questType '{file.QuestType}'.");
+            }
+
+            // Required, not defaulted: a quest record that forgets its activation
+            // must not silently become playable content.
+            if (!QuestActivations.IsKnown(file.Activation))
+            {
+                throw new InvalidOperationException(
+                    $"{path}: activation '{file.Activation}' must be one of " +
+                    $"{QuestActivations.Active}|{QuestActivations.Blocked}.");
+            }
+
+            var activation = file.Activation!;
+            var blockedSteps = ParseBlockedSteps(path, questId, file.BlockedSteps);
+            if (string.Equals(activation, QuestActivations.Blocked, StringComparison.Ordinal))
+            {
+                if (blockedSteps.Count == 0)
+                {
+                    throw new InvalidOperationException(
+                        $"{path}: a BLOCKED quest must name at least one blocked step " +
+                        "with the field and source it is waiting for.");
+                }
+            }
+            else if (blockedSteps.Count > 0)
+            {
+                throw new InvalidOperationException(
+                    $"{path}: an ACTIVE quest cannot carry blocked steps.");
             }
 
             var levelBand = file.LevelBand;
@@ -259,8 +291,21 @@ public static class QuestCatalogLoader
                     $"{path}: startNpcId '{startNpcId}' is invalid.");
             }
 
+            // A blocked quest may leave the turn-in NPC open, but only when a
+            // blocked step names that exact field — otherwise the gap would be
+            // invisible.
             var turnInNpcId = file.TurnInNpcId;
-            if (turnInNpcId is null || !NpcIdPattern.IsMatch(turnInNpcId))
+            if (turnInNpcId is null)
+            {
+                if (!string.Equals(activation, QuestActivations.Blocked, StringComparison.Ordinal) ||
+                    !blockedSteps.Any(step =>
+                        string.Equals(step.MissingField, "turnInNpcId", StringComparison.Ordinal)))
+                {
+                    throw new InvalidOperationException(
+                        $"{path}: turnInNpcId is required unless a blocked step names it.");
+                }
+            }
+            else if (!NpcIdPattern.IsMatch(turnInNpcId))
             {
                 throw new InvalidOperationException(
                     $"{path}: turnInNpcId '{turnInNpcId}' is invalid.");
@@ -280,7 +325,9 @@ public static class QuestCatalogLoader
                 initialStepId,
                 turnInNpcId,
                 rewards,
-                unlocks);
+                unlocks,
+                activation,
+                blockedSteps);
 
             if (!quests.TryAdd(quest.QuestId, quest))
             {
@@ -358,6 +405,55 @@ public static class QuestCatalogLoader
         return new QuestRewards(currency, itemIds, file.XpRule);
     }
 
+    // Every gap carries the document that has to fill it: a blocked step without
+    // a source pointer is a TODO, and TODOs are how a quest rots silently.
+    private static IReadOnlyList<QuestBlockedStep> ParseBlockedSteps(
+        string path, string questId, List<BlockedStepFile>? files)
+    {
+        if (files is null || files.Count == 0)
+        {
+            return Array.Empty<QuestBlockedStep>();
+        }
+
+        var steps = new List<QuestBlockedStep>(files.Count);
+        var seen = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var file in files)
+        {
+            if (file.DesignStep is null || !DesignStepPattern.IsMatch(file.DesignStep))
+            {
+                throw new InvalidOperationException(
+                    $"{path}: quest '{questId}' blocked step designStep " +
+                    $"'{file.DesignStep}' is invalid.");
+            }
+
+            if (!seen.Add(file.DesignStep))
+            {
+                throw new InvalidOperationException(
+                    $"{path}: quest '{questId}' duplicate blocked step '{file.DesignStep}'.");
+            }
+
+            if (file.MissingField is null || !BlockedFieldPattern.IsMatch(file.MissingField))
+            {
+                throw new InvalidOperationException(
+                    $"{path}: quest '{questId}' blocked step '{file.DesignStep}' " +
+                    $"missingField '{file.MissingField}' is invalid.");
+            }
+
+            if (file.Source is null || file.Source.Length > 200 ||
+                !(file.Source.Contains(".md", StringComparison.OrdinalIgnoreCase) ||
+                  file.Source.Contains(".csv", StringComparison.OrdinalIgnoreCase)))
+            {
+                throw new InvalidOperationException(
+                    $"{path}: quest '{questId}' blocked step '{file.DesignStep}' source " +
+                    "must point at a document ending in .md or .csv.");
+            }
+
+            steps.Add(new QuestBlockedStep(file.DesignStep, file.MissingField, file.Source));
+        }
+
+        return steps;
+    }
+
     private static IReadOnlyList<string> ParseUnlocks(
         string path, string questId, List<string>? unlocks)
     {
@@ -401,11 +497,20 @@ public static class QuestCatalogLoader
         public string? QuestType { get; init; }
         public string? StartNpcId { get; init; }
         public string? TurnInNpcId { get; init; }
+        public string? Activation { get; init; }
+        public List<BlockedStepFile>? BlockedSteps { get; init; }
         public LevelBandFile? LevelBand { get; init; }
         public List<string>? PrerequisiteQuestIds { get; init; }
         public List<ObjectiveFile>? Objectives { get; init; }
         public QuestRewardsFile? Rewards { get; init; }
         public List<string>? Unlocks { get; init; }
+    }
+
+    private sealed class BlockedStepFile
+    {
+        public string? DesignStep { get; init; }
+        public string? MissingField { get; init; }
+        public string? Source { get; init; }
     }
 
     private sealed class QuestRewardsFile

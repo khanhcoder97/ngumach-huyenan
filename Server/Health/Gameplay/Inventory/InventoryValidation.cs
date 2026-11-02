@@ -23,10 +23,12 @@ public static class InventoryValidation
         InventoryMutation? mutation,
         out List<ItemGrant> adds,
         out List<ItemRemoval> removes,
+        out List<ItemMove> moves,
         out List<CurrencyDelta> deltas)
     {
         adds = new List<ItemGrant>();
         removes = new List<ItemRemoval>();
+        moves = new List<ItemMove>();
         deltas = new List<CurrencyDelta>();
 
         if (mutation is null)
@@ -100,6 +102,51 @@ public static class InventoryValidation
             }
         }
 
+        if (mutation.MoveItems is { } moveItems)
+        {
+            for (var index = 0; index < moveItems.Count; index++)
+            {
+                if (moveItems[index] is not { } move)
+                {
+                    return $"moveItems[{index}]";
+                }
+
+                if (move.InstanceId is null || !InstanceIdPattern.IsMatch(move.InstanceId))
+                {
+                    return $"moveItems[{index}].instanceId";
+                }
+
+                if (!InventoryLocations.IsValid(move.FromLocation))
+                {
+                    return $"moveItems[{index}].fromLocation";
+                }
+
+                if (!InventoryLocations.IsValid(move.ToLocation))
+                {
+                    return $"moveItems[{index}].toLocation";
+                }
+
+                if (string.Equals(move.FromLocation, move.ToLocation, StringComparison.Ordinal))
+                {
+                    return $"moveItems[{index}].toLocation";
+                }
+
+                if (string.Equals(move.ToLocation, InventoryLocations.Equipped, StringComparison.Ordinal))
+                {
+                    if (move.Slot is null || !SlotPattern.IsMatch(move.Slot))
+                    {
+                        return $"moveItems[{index}].slot";
+                    }
+                }
+                else if (move.Slot is not null)
+                {
+                    return $"moveItems[{index}].slot";
+                }
+
+                moves.Add(move);
+            }
+        }
+
         if (mutation.CurrencyDeltas is { } currencyDeltas)
         {
             for (var index = 0; index < currencyDeltas.Count; index++)
@@ -123,7 +170,7 @@ public static class InventoryValidation
             }
         }
 
-        return adds.Count == 0 && removes.Count == 0 && deltas.Count == 0
+        return adds.Count == 0 && removes.Count == 0 && moves.Count == 0 && deltas.Count == 0
             ? "mutation"
             : null;
     }

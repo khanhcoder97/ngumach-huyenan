@@ -72,6 +72,13 @@ public sealed record MobLifecycleEvent(
     DateTimeOffset AtUtc,
     string? TargetCharacterId);
 
+public sealed record MobAttackWindow(
+    string State,
+    string? TargetCharacterId,
+    DateTimeOffset? ImpactAtUtc,
+    DateTimeOffset? RecoverUntilUtc,
+    DateTimeOffset? NextAttackAtUtc);
+
 public sealed class MobLifecycleService
 {
     private const string GroundFloor = "OVERWORLD";
@@ -99,6 +106,19 @@ public sealed class MobLifecycleService
         _brains.TryGetValue(entityId, out var brain)
             ? brain.State
             : MobBehaviorStates.Idle;
+
+    // The committed swing, its target and its timing, for read models that have
+    // to tell a client "this frame lands in N ticks" without reaching into the
+    // AI's internals. Null for an entity the AI has never ticked.
+    public MobAttackWindow? GetAttackWindow(string entityId) =>
+        _brains.TryGetValue(entityId, out var brain)
+            ? new MobAttackWindow(
+                brain.State,
+                brain.TargetCharacterId,
+                brain.ImpactAtUtc,
+                brain.RecoverUntilUtc,
+                brain.NextAttackAtUtc)
+            : null;
 
     public IReadOnlyList<MobLifecycleEvent> Tick(IReadOnlyList<PlayerSession> players)
     {

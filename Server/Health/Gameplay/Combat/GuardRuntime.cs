@@ -91,6 +91,11 @@ public sealed class GuardWindowStore
             ? window
             : null;
 
+    // Cleanup paths must reach a window that closed for another reason but still
+    // holds a reserved counter; Find only answers for open windows.
+    public GuardWindowState? FindAny(string characterId) =>
+        _windows.TryGetValue(characterId, out var window) ? window : null;
+
     // A skipped timer callback must not strand a reserved counter: work due at
     // or before the processed tick stays eligible until it is resolved, and the
     // engine resolves each one exactly once (it also covers a window that closed
@@ -114,6 +119,13 @@ public sealed class GuardWindowStore
             .ThenBy(state => state.Defender.CharacterId, StringComparer.Ordinal)
             .ToArray();
     }
+
+    // Cleanup reach for the tick loop: a window belongs to the map/floor it was
+    // opened on, so a character who changed instance without a cast in flight
+    // still has an open window that must be closed rather than keep reporting a
+    // GUARD/WHIFF phase to the status read model.
+    public IReadOnlyList<GuardWindowState> OpenWindows() =>
+        _windows.Values.Where(state => state.IsOpen).ToArray();
 
     // Opening a window replaces the previous one under the defender's lock, so a
     // mob impact that already started cannot pair one window's damage reduction

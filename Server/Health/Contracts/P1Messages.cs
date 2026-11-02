@@ -93,6 +93,55 @@ public sealed class TurnInIntent
     public string? NpcId { get; init; }
 }
 
+public sealed class EquipEnvelope
+{
+    public int? SchemaVersion { get; init; }
+    public string? RequestId { get; init; }
+    public string? IdempotencyKey { get; init; }
+    public string? SentAtUtc { get; init; }
+    public string? CharacterId { get; init; }
+    public EquipIntent? Payload { get; init; }
+}
+
+public sealed class EquipIntent
+{
+    public string? ItemInstanceId { get; init; }
+    public long? ExpectedRevision { get; init; }
+}
+
+public sealed class UnequipEnvelope
+{
+    public int? SchemaVersion { get; init; }
+    public string? RequestId { get; init; }
+    public string? IdempotencyKey { get; init; }
+    public string? SentAtUtc { get; init; }
+    public string? CharacterId { get; init; }
+    public UnequipIntent? Payload { get; init; }
+}
+
+public sealed class UnequipIntent
+{
+    public string? Slot { get; init; }
+    public long? ExpectedRevision { get; init; }
+}
+
+public sealed class P1EquipmentResponse
+{
+    public int SchemaVersion { get; init; } = 1;
+    public required string RequestId { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? SessionId { get; init; }
+
+    public required string ServerTimeUtc { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public InventorySnapshot? Result { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public P1Error? Error { get; init; }
+}
+
 public sealed class P1InteractResponse
 {
     public int SchemaVersion { get; init; } = 1;
