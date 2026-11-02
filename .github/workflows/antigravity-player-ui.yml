@@ -58,36 +58,34 @@ jobs:
       - name: Test
         run: dotnet test Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj --no-build -c Release --logger trx --results-directory TestResults
 
-      # OPC-14 E: generated catalog must be in sync (deterministic) — fail on drift.
-      - name: Generated UI catalog --check
-        run: |
-          python Tools/PlayerUIData/generate_ui_catalog.py
-          git diff --exit-code -- Client/Assets/Resources/PlayerUI/ui_item_catalog.json
+      # OPC-14 O1: the generated catalog must be in sync AND the generator's own
+      # read-only contract must pass (no write-then-diff, no stale pass).
+      - name: Generated UI catalog tests
+        run: python Tools/PlayerUIData/test_generate_ui_catalog.py
 
-      # OPC-14 E: build the HTTP acceptance harness (compile-only here; execution
-      # requires a private server — see step below).
-      - name: Build HTTP acceptance harness
-        run: dotnet build Client/Tests/PlayerUIAcceptance/PlayerUIAcceptance.csproj -c Release
+      - name: Generated UI catalog --check (read-only)
+        run: python Tools/PlayerUIData/generate_ui_catalog.py --check
+
+      # OPC-14 O2: build + run the mandatory private-server HTTP acceptance.
+      # The runner starts Health with the P1 gates, waits for /health, runs the
+      # real presenters, and writes artifacts; any non-zero exit fails the job.
+      - name: HTTP acceptance (private server, mandatory)
+        run: python Client/Tests/PlayerUIAcceptance/run_acceptance.py
 
       # OPC-13 D: keep the Unity-source syntax gate beside the headless UI suite
       # (syntax only — never claim this is a Unity/Editor compile).
       - name: Unity source syntax gate
         run: dotnet run --project Client/Tests/UnitySyntaxCheck/UnitySyntaxCheck.csproj --configuration Release
 
-      # OPC-14 C/E: real HTTP acceptance (optional, requires P1_BASE_URL).
-      # Missing/unreachable URL or zero assertions -> non-zero exit (CI rejects SKIP).
-      - name: HTTP acceptance (optional)
-        if: env.P1_BASE_URL != ''
-        env:
-          P1_BASE_URL: ${{ secrets.P1_BASE_URL }}
-        run: dotnet run --project Client/Tests/PlayerUIAcceptance/PlayerUIAcceptance.csproj -c Release --no-build
-
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: player-ui-test-results
-          path: TestResults/
+          path: |
+            TestResults/
+            Client/Tests/PlayerUIAcceptance/bin/Release/net8.0/*.log
+          if-no-files-found: ignore
 
   docs-check:
     name: Docs UTF-8 and diff check

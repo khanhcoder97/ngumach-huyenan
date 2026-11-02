@@ -52,4 +52,7 @@ Client/Tests/**/bin/
 # Standalone .NET server outputs are build artifacts, not source.
 Server/**/bin/
 
+# Local acceptance artifacts (CI uploads its own copy from the runner).
+TestResults/
+
 !Client/Tests/NarrativeChecks/NarrativeChecks.csproj
