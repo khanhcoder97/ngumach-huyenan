@@ -5174,6 +5174,201 @@ public static class ServiceSelfCheck
             freeState.ObjectiveCounters.GetValueOrDefault("OBJ_FRAGMENT_FIXTURE") == 1,
             $"changed={freeFragment.Count} fragment={freeState?.ObjectiveCounters.GetValueOrDefault("OBJ_FRAGMENT_FIXTURE")}");
 
+        // Q1c runtime: the training-wave trial (DESIGN-BM-ALPHA-20261103
+        // questRules.P00-03.waveTrial) as a domain-only 20 Hz machine behind
+        // P1:AlphaProfile. The sourced rect (140,-2)-(148,2), windup 1,2 s
+        // (24 ticks), cooldown 6 s (120 ticks) and raw damage 12 come from the
+        // design; the hazard record ALPHA-BM-WAVE-TRAINING has no runtime
+        // entity, so the dodge credit is an INTERACT_CLAIM verified event the
+        // machine records itself. The dash has no iframe, so an iframe escape
+        // is unsupported by design.
+
+        var waveRecording = new RecordingQuestService();
+        var waveCombatOn = new CombatDamageFeature(
+            new P1CombatDamageOptions { Enabled = true },
+            services.GetRequiredService<IConfiguration>(),
+            services.GetRequiredService<IHostEnvironment>());
+        var waveCombatOff = new CombatDamageFeature(
+            new P1CombatDamageOptions { Enabled = false },
+            services.GetRequiredService<IConfiguration>(),
+            services.GetRequiredService<IHostEnvironment>());
+        var waveTrial = new AlphaWaveTrialService(alphaDesign, waveRecording, waveCombatOn);
+        var waveTrialNoDamage = new AlphaWaveTrialService(
+            alphaDesign, waveRecording, waveCombatOff);
+
+        // Enter at tick 1000 (cycle opens, impact 1024), leave during the
+        // warning, and be outside at the impact frame: one dodge credit.
+        var waveActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE");
+        waveActor.X = 144;
+        waveActor.Y = 0;
+        var waveOpen = waveTrial.Tick([waveActor], 1000);
+        waveActor.X = 130;
+        waveTrial.Tick([waveActor], 1005);
+        var waveCredit = waveTrial.Tick([waveActor], 1024);
+        Check(
+            "alpha.wave_trial_dodge_credits",
+            waveOpen.Count == 0 &&
+            waveCredit.Count == 1 &&
+            waveCredit[0].Outcome == WaveTrialOutcomes.Credit &&
+            waveCredit[0].Damage == 0 &&
+            waveActor.Hp == 100 &&
+            waveRecording.Events.Count == 1 &&
+            waveRecording.Events[0].RecordId == "ALPHA-BM-WAVE-TRAINING" &&
+            waveRecording.Events[0].EventType == QuestProgressEventTypes.InteractClaim &&
+            waveRecording.Events[0].MapId == options.DefaultMapId,
+            $"{waveCredit.FirstOrDefault()?.Outcome} hp={waveActor.Hp} events={waveRecording.Events.Count}");
+
+        // Standing back inside during the 120-tick cooldown starts nothing;
+        // once the cooldown expires the trial retriggers and a second dodge
+        // credits again.
+        waveActor.X = 144;
+        var waveCooldownBlock = waveTrial.Tick([waveActor], 1030);
+        waveTrial.Tick([waveActor], 1144);
+        waveActor.X = 130;
+        var waveSecondCredit = waveTrial.Tick([waveActor], 1168);
+        Check(
+            "alpha.wave_trial_cooldown_and_retry",
+            waveCooldownBlock.Count == 0 &&
+            waveSecondCredit.Count == 1 &&
+            waveSecondCredit[0].Outcome == WaveTrialOutcomes.Credit &&
+            waveRecording.Events.Count == 2,
+            $"{waveSecondCredit.FirstOrDefault()?.Outcome} events={waveRecording.Events.Count}");
+
+        // Staying inside through the whole warning resolves a raw-damage hit
+        // on the impact tick, not before, and moves HP and the session
+        // revision exactly once.
+        var waveHitActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_HIT");
+        waveHitActor.X = 144;
+        waveHitActor.Y = 0;
+        var waveHitOpen = waveTrial.Tick([waveHitActor], 2000);
+        var waveHitEarly = waveTrial.Tick([waveHitActor], 2023);
+        var waveHit = waveTrial.Tick([waveHitActor], 2024);
+        Check(
+            "alpha.wave_trial_hit_raw_damage",
+            waveHitOpen.Count == 0 &&
+            waveHitEarly.Count == 0 &&
+            waveHit.Count == 1 &&
+            waveHit[0].Outcome == WaveTrialOutcomes.Hit &&
+            waveHit[0].Damage == 12 &&
+            waveHit[0].HpBefore == 100 &&
+            waveHit[0].HpAfter == 88 &&
+            waveHitActor.Hp == 88 &&
+            waveHitActor.Revision == 2 &&
+            waveRecording.Events.Count == 2,
+            $"{waveHit.FirstOrDefault()?.Outcome} hp={waveHitActor.Hp} rev={waveHitActor.Revision}");
+
+        // With P1:CombatDamage off the same impact resolves blocked: no HP, no
+        // revision, but the cooldown still runs so the trial stays retryable.
+        var waveGatedActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_GATED");
+        waveGatedActor.X = 144;
+        waveGatedActor.Y = 0;
+        waveTrialNoDamage.Tick([waveGatedActor], 3000);
+        var waveGated = waveTrialNoDamage.Tick([waveGatedActor], 3024);
+        Check(
+            "alpha.wave_trial_hit_damage_gated",
+            waveGated.Count == 1 &&
+            waveGated[0].Outcome == WaveTrialOutcomes.DamageBlocked &&
+            waveGated[0].Damage == 0 &&
+            waveGatedActor.Hp == 100 &&
+            waveGatedActor.Revision == 1,
+            $"{waveGated.FirstOrDefault()?.Outcome} hp={waveGatedActor.Hp}");
+
+        // Leaving the map mid-warning cancels with no credit and no cooldown,
+        // so returning can open a fresh cycle immediately.
+        var waveLeaveActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_LEAVE");
+        waveLeaveActor.X = 144;
+        waveLeaveActor.Y = 0;
+        waveTrial.Tick([waveLeaveActor], 4000);
+        waveLeaveActor.MapId = "MAP_THANH_LAC";
+        var waveLeave = waveTrial.Tick([waveLeaveActor], 4010);
+        waveLeaveActor.MapId = options.DefaultMapId;
+        waveTrial.Tick([waveLeaveActor], 4020);
+        waveLeaveActor.X = 130;
+        var waveLeaveCredit = waveTrial.Tick([waveLeaveActor], 4044);
+        Check(
+            "alpha.wave_trial_cancel_on_map_leave",
+            waveLeave.Count == 1 &&
+            waveLeave[0].Outcome == WaveTrialOutcomes.Cancelled &&
+            waveLeave[0].Damage == 0 &&
+            waveLeaveCredit.Count == 1 &&
+            waveLeaveCredit[0].Outcome == WaveTrialOutcomes.Credit &&
+            waveRecording.Events.Count == 3,
+            $"{waveLeave.FirstOrDefault()?.Outcome}/{waveLeaveCredit.FirstOrDefault()?.Outcome}");
+
+        // Leaving and re-entering before the impact is still inside at the
+        // impact frame: the hit lands.
+        var waveReenterActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_REENTER");
+        waveReenterActor.X = 144;
+        waveReenterActor.Y = 0;
+        waveTrial.Tick([waveReenterActor], 5000);
+        waveReenterActor.X = 130;
+        waveTrial.Tick([waveReenterActor], 5010);
+        waveReenterActor.X = 144;
+        var waveReenterHit = waveTrial.Tick([waveReenterActor], 5024);
+        Check(
+            "alpha.wave_trial_reentry_hits",
+            waveReenterHit.Count == 1 &&
+            waveReenterHit[0].Outcome == WaveTrialOutcomes.Hit &&
+            waveReenterHit[0].Damage == 12 &&
+            waveReenterActor.Hp == 88,
+            $"{waveReenterHit.FirstOrDefault()?.Outcome} hp={waveReenterActor.Hp}");
+
+        // A downed actor never opens a cycle; dying mid-warning cancels it
+        // with no damage and no credit.
+        var waveDownActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_DOWN", hp: 0);
+        waveDownActor.X = 144;
+        waveDownActor.Y = 0;
+        var waveDownSkip = waveTrial.Tick([waveDownActor], 6000);
+        var waveDieActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_DIE");
+        waveDieActor.X = 144;
+        waveDieActor.Y = 0;
+        waveTrial.Tick([waveDieActor], 7000);
+        waveDieActor.Hp = 0;
+        var waveDieCancel = waveTrial.Tick([waveDieActor], 7010);
+        Check(
+            "alpha.wave_trial_downed_and_death",
+            waveDownSkip.Count == 0 &&
+            waveDieCancel.Count == 1 &&
+            waveDieCancel[0].Outcome == WaveTrialOutcomes.Cancelled &&
+            waveDieCancel[0].Damage == 0 &&
+            waveRecording.Events.Count == 3,
+            $"{waveDieCancel.FirstOrDefault()?.Outcome} events={waveRecording.Events.Count}");
+
+        // The rectangle belongs to Bến Mưa: the same position on another map
+        // never triggers.
+        var waveForeignActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_FOREIGN");
+        waveForeignActor.MapId = "MAP_THANH_LAC";
+        waveForeignActor.X = 144;
+        waveForeignActor.Y = 0;
+        var waveForeignSkip = waveTrial.Tick([waveForeignActor], 8000);
+        Check(
+            "alpha.wave_trial_foreign_map",
+            waveForeignSkip.Count == 0 &&
+            waveForeignActor.Hp == 100,
+            $"resolutions={waveForeignSkip.Count}");
+
+        // Without the QUEST_HAZARD overlay record the machine is inert: no
+        // fabricated record id, no damage, no credit.
+        var waveNoHazardDesign = alphaDesign with
+        {
+            OverlayRecords = alphaDesign.OverlayRecords
+                .Where(record => !string.Equals(
+                    record.Kind, "QUEST_HAZARD", StringComparison.Ordinal))
+                .ToArray()
+        };
+        var waveInert = new AlphaWaveTrialService(
+            waveNoHazardDesign, waveRecording, waveCombatOn);
+        var waveInertActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_INERT");
+        waveInertActor.X = 144;
+        waveInertActor.Y = 0;
+        var waveInertSkip = waveInert.Tick([waveInertActor], 9000);
+        Check(
+            "alpha.wave_trial_inert_without_hazard_record",
+            waveInertSkip.Count == 0 &&
+            waveInertActor.Hp == 100 &&
+            waveRecording.Events.Count == 3,
+            $"resolutions={waveInertSkip.Count} hp={waveInertActor.Hp}");
+
         // ─── Mãng Cốt encounter state machine (Q-F part 1) ────
 
         var bossRules = new BossEncounterRules(PhaseGuardTicks: 3);
@@ -6314,6 +6509,41 @@ public static class ServiceSelfCheck
 
         public QuestOutcome Fail(PlayerSession actor, string questId) =>
             _inner.Fail(actor, questId);
+    }
+
+    private sealed class RecordingQuestService : IQuestService
+    {
+        public List<RecordedEvent> Events { get; } = [];
+
+        public QuestOutcome GetState(string characterId, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public IReadOnlyList<QuestState> GetStates(string characterId) => [];
+
+        public QuestOutcome Accept(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public IReadOnlyList<QuestState> RecordVerifiedEvent(
+            PlayerSession actor,
+            string eventId,
+            string eventType,
+            string recordId,
+            string mapId)
+        {
+            Events.Add(new RecordedEvent(recordId, eventType, mapId));
+            return [];
+        }
+
+        public QuestOutcome TurnIn(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public QuestOutcome RevertTurnIn(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public QuestOutcome Fail(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public sealed record RecordedEvent(string RecordId, string EventType, string MapId);
     }
 
     private sealed class FailOnceLedgerStore : RewardLedgerStore
