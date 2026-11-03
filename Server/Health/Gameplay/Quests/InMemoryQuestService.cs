@@ -141,8 +141,32 @@ public sealed class InMemoryQuestService : IQuestService
                 }
 
                 var revisionBefore = state.Revision;
+                // Alpha orderedObjectives (DESIGN-BM-ALPHA-20261103 P00-05):
+                // only the first incomplete objective accepts progress, so the
+                // boss must be down before the fragment can be collected.
+                QuestObjectiveDefinition? orderedGate = null;
+                if (definition.OrderedObjectives)
+                {
+                    foreach (var candidate in definition.Objectives)
+                    {
+                        if (state.ObjectiveCounters.GetValueOrDefault(candidate.ObjectiveId) <
+                            candidate.Count)
+                        {
+                            orderedGate = candidate;
+                            break;
+                        }
+                    }
+                }
+
                 foreach (var objective in definition.Objectives)
                 {
+                    if (orderedGate is not null &&
+                        !string.Equals(
+                            orderedGate.ObjectiveId, objective.ObjectiveId, StringComparison.Ordinal))
+                    {
+                        continue;
+                    }
+
                     if (!ObjectiveAcceptsEvent(objective, eventType, recordId, mapId))
                     {
                         continue;
@@ -198,6 +222,7 @@ public sealed class InMemoryQuestService : IQuestService
             QuestObjectiveTypes.Interact => eventType == QuestProgressEventTypes.InteractClaim,
             QuestObjectiveTypes.Talk => eventType == QuestProgressEventTypes.Talk,
             QuestObjectiveTypes.Kill => eventType == QuestProgressEventTypes.Kill,
+            QuestObjectiveTypes.Boss => eventType == QuestProgressEventTypes.Kill,
             _ => false
         };
 
@@ -231,8 +256,9 @@ public sealed class InMemoryQuestService : IQuestService
         string recordId) =>
         objective.Type switch
         {
-            // Kill counts repeat kills of the same record; dedupe by event instead.
-            QuestObjectiveTypes.Kill =>
+            // Kill and boss objectives count deaths; dedupe by event so a
+            // replay of the same death never double-counts the same life.
+            QuestObjectiveTypes.Kill or QuestObjectiveTypes.Boss =>
                 string.Concat("E:", objective.ObjectiveId, ":", eventId),
             // Production Rules §5: unique(actor, quest, objective, record).
             // State is already per character + quest; the objective scope keeps

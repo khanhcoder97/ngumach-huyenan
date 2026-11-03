@@ -5057,6 +5057,123 @@ public static class ServiceSelfCheck
             AlphaQuestMergeRejects(new QuestCatalog(extraPackDefinitions)),
             "an id outside the design pack must fail");
 
+        // Q1c runtime: the merged P00-05 semantics are exercised on fixtures.
+        // BOSS objectives credit only kills of the quest-boss record (the tick
+        // engine already emits KILL with source.RecordId, so a
+        // MAN-BM-SPAWN_BM_05_QUEST death reaches the objective), and
+        // orderedObjectives holds every later objective closed until the first
+        // incomplete one completes (boss before fragment before class-confirm).
+
+        QuestDefinition AlphaOrderedFixture(string questId, bool ordered) =>
+            new(
+                questId,
+                QuestTypes.Main,
+                "NPC_TA_VAN_KHANH",
+                1,
+                10,
+                [],
+                [
+                    new QuestObjectiveDefinition(
+                        "OBJ_BOSS_FIXTURE", QuestObjectiveTypes.Boss,
+                        ["MAN-BM-SPAWN_BM_05_QUEST"], 1, options.DefaultMapId),
+                    new QuestObjectiveDefinition(
+                        "OBJ_FRAGMENT_FIXTURE", QuestObjectiveTypes.Interact,
+                        ["ALPHA-BM-FRAGMENT"], 1, options.DefaultMapId)
+                ],
+                QuestStepIds.FromObjectiveId("OBJ_BOSS_FIXTURE"),
+                "NPC_TA_VAN_KHANH",
+                new QuestRewards([], [], "LEVEL_BAND_BASE"),
+                [],
+                OrderedObjectives: ordered);
+
+        var alphaRuntimeQuests = new InMemoryQuestService(
+            new QuestCatalog(
+                new Dictionary<string, QuestDefinition>
+                {
+                    ["ALPHA-ORDER-01"] = AlphaOrderedFixture("ALPHA-ORDER-01", ordered: true),
+                    ["ALPHA-FREE-01"] = AlphaOrderedFixture("ALPHA-FREE-01", ordered: false)
+                }),
+            new InMemoryQuestStateStore(),
+            alphaMergedRecords,
+            interactClock);
+
+        var alphaBossActor = NewPlayer("CHR_SELFCHECK_ALPHA_BOSS");
+        alphaRuntimeQuests.Accept(alphaBossActor, "ALPHA-ORDER-01");
+        var bossEventId = new string('f', 32);
+        var fragmentEventId = new string('a', 32);
+        var nonKillBossEvent = alphaRuntimeQuests.RecordVerifiedEvent(
+            alphaBossActor, fragmentEventId, QuestProgressEventTypes.InteractClaim,
+            "MAN-BM-SPAWN_BM_05_QUEST", options.DefaultMapId);
+        var bossKill = alphaRuntimeQuests.RecordVerifiedEvent(
+            alphaBossActor, bossEventId, QuestProgressEventTypes.Kill,
+            "MAN-BM-SPAWN_BM_05_QUEST", options.DefaultMapId);
+        var bossReplay = alphaRuntimeQuests.RecordVerifiedEvent(
+            alphaBossActor, bossEventId, QuestProgressEventTypes.Kill,
+            "MAN-BM-SPAWN_BM_05_QUEST", options.DefaultMapId);
+        var bossState = alphaRuntimeQuests.GetState(
+            alphaBossActor.CharacterId, "ALPHA-ORDER-01").State;
+        Check(
+            "alpha.quest_boss_credits_only_kills",
+            nonKillBossEvent.Count == 0 &&
+            bossKill.Count == 1 &&
+            bossReplay.Count == 0 &&
+            bossState is { State: QuestStates.Active } &&
+            bossState.ObjectiveCounters.GetValueOrDefault("OBJ_BOSS_FIXTURE") == 1 &&
+            bossState.ObjectiveCounters.GetValueOrDefault("OBJ_FRAGMENT_FIXTURE") == 0,
+            $"nonKill={nonKillBossEvent.Count} kill={bossKill.Count} " +
+            $"replay={bossReplay.Count} boss={bossState?.ObjectiveCounters.GetValueOrDefault("OBJ_BOSS_FIXTURE")}");
+
+        var alphaOrderActor = NewPlayer("CHR_SELFCHECK_ALPHA_ORDER");
+        alphaRuntimeQuests.Accept(alphaOrderActor, "ALPHA-ORDER-01");
+        var orderStateBefore = alphaRuntimeQuests.GetState(
+            alphaOrderActor.CharacterId, "ALPHA-ORDER-01").State;
+        var earlyFragment = alphaRuntimeQuests.RecordVerifiedEvent(
+            alphaOrderActor, fragmentEventId, QuestProgressEventTypes.InteractClaim,
+            "ALPHA-BM-FRAGMENT", options.DefaultMapId);
+        var orderStateAfter = alphaRuntimeQuests.GetState(
+            alphaOrderActor.CharacterId, "ALPHA-ORDER-01").State;
+        Check(
+            "alpha.quest_ordered_holds_later_objective",
+            earlyFragment.Count == 0 &&
+            orderStateBefore is { State: QuestStates.Active } &&
+            orderStateAfter is { State: QuestStates.Active } &&
+            orderStateAfter.Revision == orderStateBefore!.Revision &&
+            orderStateAfter.ObjectiveCounters.GetValueOrDefault("OBJ_BOSS_FIXTURE") == 0 &&
+            orderStateAfter.ObjectiveCounters.GetValueOrDefault("OBJ_FRAGMENT_FIXTURE") == 0,
+            $"changed={earlyFragment.Count} revision={orderStateAfter?.Revision}");
+
+        var inOrderKill = alphaRuntimeQuests.RecordVerifiedEvent(
+            alphaOrderActor, bossEventId, QuestProgressEventTypes.Kill,
+            "MAN-BM-SPAWN_BM_05_QUEST", options.DefaultMapId);
+        var inOrderFragment = alphaRuntimeQuests.RecordVerifiedEvent(
+            alphaOrderActor, new string('b', 32), QuestProgressEventTypes.InteractClaim,
+            "ALPHA-BM-FRAGMENT", options.DefaultMapId);
+        var orderDone = alphaRuntimeQuests.GetState(
+            alphaOrderActor.CharacterId, "ALPHA-ORDER-01").State;
+        Check(
+            "alpha.quest_ordered_completes_in_order",
+            inOrderKill.Count == 1 &&
+            inOrderFragment.Count == 1 &&
+            orderDone is { State: QuestStates.ReadyToTurnIn } &&
+            orderDone.ObjectiveCounters.GetValueOrDefault("OBJ_BOSS_FIXTURE") == 1 &&
+            orderDone.ObjectiveCounters.GetValueOrDefault("OBJ_FRAGMENT_FIXTURE") == 1,
+            $"{orderDone?.State}");
+
+        var alphaFreeActor = NewPlayer("CHR_SELFCHECK_ALPHA_FREE");
+        alphaRuntimeQuests.Accept(alphaFreeActor, "ALPHA-FREE-01");
+        var freeFragment = alphaRuntimeQuests.RecordVerifiedEvent(
+            alphaFreeActor, fragmentEventId, QuestProgressEventTypes.InteractClaim,
+            "ALPHA-BM-FRAGMENT", options.DefaultMapId);
+        var freeState = alphaRuntimeQuests.GetState(
+            alphaFreeActor.CharacterId, "ALPHA-FREE-01").State;
+        Check(
+            "alpha.quest_unordered_accepts_any_order",
+            freeFragment.Count == 1 &&
+            freeState is { State: QuestStates.Active } &&
+            freeState.ObjectiveCounters.GetValueOrDefault("OBJ_BOSS_FIXTURE") == 0 &&
+            freeState.ObjectiveCounters.GetValueOrDefault("OBJ_FRAGMENT_FIXTURE") == 1,
+            $"changed={freeFragment.Count} fragment={freeState?.ObjectiveCounters.GetValueOrDefault("OBJ_FRAGMENT_FIXTURE")}");
+
         // ─── Mãng Cốt encounter state machine (Q-F part 1) ────
 
         var bossRules = new BossEncounterRules(PhaseGuardTicks: 3);
