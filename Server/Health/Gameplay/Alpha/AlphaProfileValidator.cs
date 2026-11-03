@@ -426,6 +426,21 @@ public static class AlphaProfileValidator
                 throw new InvalidOperationException(
                     $"Alpha boss move {move.Id} has a non-positive timing/coefficient.");
             }
+
+            // The encounter machine hit-tests each shape, so the geometry the
+            // shape needs must be present in the source (never defaulted).
+            var missing = move.Shape switch
+            {
+                "CONE" => move.AngleDegrees is null || move.RangeWu is null,
+                "CIRCLE" => move.RadiusWu is null || move.TargetRangeWu is null,
+                "ANNULUS" => move.InnerRadiusWu is null || move.OuterRadiusWu is null,
+                _ => true
+            };
+            if (missing)
+            {
+                throw new InvalidOperationException(
+                    $"Alpha boss move {move.Id} shape '{move.Shape}' is missing geometry.");
+            }
         }
 
         var moveC = boss.Moves.Single(move => move.Id == "C");

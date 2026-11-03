@@ -63,12 +63,22 @@ public sealed record AlphaProgressionRules(
 
 public sealed record AlphaBossMove(
     string Id,
+    string NameVi,
     string Shape,
     double WindupSeconds,
     double Coefficient,
     double RecoverySeconds,
     double CooldownSeconds,
-    string InterruptibleBy);
+    string TargetLock,
+    string InterruptibleBy,
+    double? AngleDegrees,
+    double? RangeWu,
+    double? RadiusWu,
+    double? TargetRangeWu,
+    double? InnerRadiusWu,
+    double? OuterRadiusWu,
+    bool Dodgeable,
+    bool SubmergeIsCosmetic);
 
 public sealed record AlphaBossRules(
     string ProfileId,
@@ -427,12 +437,22 @@ public sealed class AlphaProfileLoader
             var movePath = $"{path}.moves[{moveIndex++}]";
             moves.Add(new AlphaBossMove(
                 RequireString(move, "id", movePath),
+                RequireString(move, "nameVi", movePath),
                 RequireString(move, "shape", movePath),
                 RequireNumber(move, "windupSeconds", movePath),
                 RequireNumber(move, "coefficient", movePath),
                 RequireNumber(move, "recoverySeconds", movePath),
                 RequireNumber(move, "cooldownSeconds", movePath),
-                RequireString(move, "interruptibleBy", movePath)));
+                RequireString(move, "targetLock", movePath),
+                RequireString(move, "interruptibleBy", movePath),
+                OptionalNumber(move, "angleDegrees"),
+                OptionalNumber(move, "rangeWu"),
+                OptionalNumber(move, "radiusWu"),
+                OptionalNumber(move, "targetRangeWu"),
+                OptionalNumber(move, "innerRadiusWu"),
+                OptionalNumber(move, "outerRadiusWu"),
+                OptionalBool(move, "dodgeable"),
+                OptionalBool(move, "submergeIsCosmeticNotImplicitInvulnerability")));
         }
 
         var wipe = RequireObject(element, "wipe", path);
@@ -594,6 +614,14 @@ public sealed class AlphaProfileLoader
         var value = Require(parent, name, path, JsonValueKind.Number);
         return value.GetDouble();
     }
+
+    private static double? OptionalNumber(JsonElement parent, string name) =>
+        parent.TryGetProperty(name, out var value) && value.ValueKind == JsonValueKind.Number
+            ? value.GetDouble()
+            : null;
+
+    private static bool OptionalBool(JsonElement parent, string name) =>
+        parent.TryGetProperty(name, out var value) && value.ValueKind == JsonValueKind.True;
 
     private static double NumberAt(JsonElement array, int index, string path)
     {

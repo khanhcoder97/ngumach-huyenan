@@ -237,6 +237,7 @@ builder.Services.AddSingleton<WorldEntityProjectionService>();
 builder.Services.AddSingleton<WorldAoiProjectionService>();
 builder.Services.AddSingleton<AlphaWaveTrialService>();
 builder.Services.AddSingleton<AlphaEscortService>();
+builder.Services.AddSingleton<AlphaBossEncounterService>();
 builder.Services.AddHostedService<WorldTickBackgroundService>();
 
 var app = builder.Build();
@@ -372,7 +373,8 @@ if (alphaOptions.Enabled)
         "PRIVATE ALPHA: P1:AlphaProfile is enabled; {OverlayCount} overlay records, " +
         "{EntityCount} overlay entities and {QuestCount} alpha quest definitions " +
         "(P00-02..05 unblocked, C1-01 added) are merged into the Bến Mưa world. " +
-        "The training-wave hazard stays record-only until the Q1c trial engine. " +
+        "The training-wave hazard stays record-only (no wire hazard kind); the wave " +
+        "trial, the P00-04 escort and the P00-05 encounter tick as domain state. " +
         "Production gates remain OFF.",
         alphaDesign.OverlayRecords.Count,
         runtimeEntityCount,

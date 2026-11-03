@@ -8,7 +8,8 @@ namespace Server.Health.World;
 // DEPLETED interactables/mobs, resolves scheduled player casts, drives mob AI
 // (telegraph -> impact -> recovery) only when the fixture gate is on, lands
 // mob damage only when P1:CombatDamage is on, and drives the alpha
-// training-wave trial and the P00-04 escort only when P1:AlphaProfile is on.
+// training-wave trial, the P00-04 escort and the P00-05 Mãng Cốt encounter only
+// when P1:AlphaProfile is on.
 // Per-character gather shard claims are lazy (UtcNow-based), no tick needed.
 public sealed class WorldTickBackgroundService : BackgroundService
 {
@@ -22,6 +23,7 @@ public sealed class WorldTickBackgroundService : BackgroundService
     private readonly AlphaProfileOptions _alphaOptions;
     private readonly AlphaWaveTrialService _waveTrial;
     private readonly AlphaEscortService _escort;
+    private readonly AlphaBossEncounterService _bossEncounter;
     private readonly ISessionStore _sessions;
     private readonly CombatTickEngine _combat;
     private readonly MobSpawnGroupService _groups;
@@ -36,6 +38,7 @@ public sealed class WorldTickBackgroundService : BackgroundService
         IOptions<AlphaProfileOptions> alphaOptions,
         AlphaWaveTrialService waveTrial,
         AlphaEscortService escort,
+        AlphaBossEncounterService bossEncounter,
         ISessionStore sessions,
         CombatTickEngine combat,
         MobSpawnGroupService groups,
@@ -49,6 +52,7 @@ public sealed class WorldTickBackgroundService : BackgroundService
         _alphaOptions = alphaOptions.Value;
         _waveTrial = waveTrial;
         _escort = escort;
+        _bossEncounter = bossEncounter;
         _sessions = sessions;
         _combat = combat;
         _groups = groups;
@@ -118,6 +122,17 @@ public sealed class WorldTickBackgroundService : BackgroundService
                             "ALPHA escort {CharacterId}: {Outcome} {Detail} npc=({NpcX},{NpcY})",
                             resolution.CharacterId, resolution.Outcome,
                             resolution.Detail ?? "-", resolution.NpcX, resolution.NpcY);
+                    }
+
+                    foreach (var resolution in _bossEncounter.Tick(players, tick))
+                    {
+                        _logger.LogInformation(
+                            "ALPHA boss encounter {CharacterId}: {Outcome} {Detail} " +
+                            "phase {Phase} bossHp {BossHp} damage {Damage} " +
+                            "({HpBefore} -> {HpAfter})",
+                            resolution.CharacterId, resolution.Outcome,
+                            resolution.Detail ?? "-", resolution.Phase, resolution.BossHp,
+                            resolution.Damage, resolution.HpBefore, resolution.HpAfter);
                     }
                 }
             }

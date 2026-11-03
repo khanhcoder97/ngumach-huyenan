@@ -5744,6 +5744,332 @@ public static class ServiceSelfCheck
                 r.NpcX == 120),
             $"outcomes={string.Join(",", escortInertResolutions.Select(r => r.Outcome))}");
 
+        // ─── QOD-21 Q2: the P00-05 Mãng Cốt encounter machine ────
+
+        // The real encounter on the 20 Hz loop: the arena gate, the telegraph
+        // → impact → recovery timeline per sourced move shape, the C→B→A
+        // priority with no overlap, the phase thresholds evaluated at the
+        // impact frame, the phase guard, the wipe countdown with a fresh life
+        // and the quest-instance holds (world-event boss disabled, trial NPC
+        // visibility window).
+        WorldEntityInstance BossWorldEntity(string entityId, string recordId)
+        {
+            var boss = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = recordId,
+                Kind = WorldEntityKinds.Boss,
+                TemplateIds = new[] { "BOSS_MANG_COT" },
+                MapId = alphaDesign.Scope.MapId,
+                FloorId = "OVERWORLD",
+                X = 178,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = 0
+            };
+            boss.Initialize();
+            return boss;
+        }
+
+        var bossClock = new ServerClock();
+        (AlphaBossEncounterService Service, BossEncounterQuestStub Quest,
+            WorldEntityInstance QuestBoss, WorldEntityInstance EventBoss) NewBossFixture(
+                bool damageGateOn)
+        {
+            var questBoss = BossWorldEntity(
+                "ENT_SELFCHECK_BOSS_QUEST", alphaDesign.QuestRules.P00_05_BossRecordId);
+            var eventBoss = BossWorldEntity(
+                "ENT_SELFCHECK_BOSS_EVENT", alphaDesign.QuestRules.P00_05_WorldEventRecordIdDisabled);
+            var registry = new WorldEntityRegistry(
+                new WorldEntityCatalog([], [questBoss, eventBoss]), bossClock);
+            var stub = new BossEncounterQuestStub();
+            var feature = damageGateOn ? enabledCombat : combatDamage;
+            var service = new AlphaBossEncounterService(
+                alphaDesign,
+                stub,
+                registry,
+                feature,
+                new GuardDefenseService(
+                    new GuardWindowStore(),
+                    feature,
+                    new CombatEventStore(new CombatEventStreamOptions())));
+            return (service, stub, questBoss, eventBoss);
+        }
+
+        List<BossEncounterResolution> TickBoss(
+            AlphaBossEncounterService service,
+            PlayerSession player,
+            long from,
+            long to)
+        {
+            var all = new List<BossEncounterResolution>();
+            for (var t = from; t <= to; t++)
+            {
+                all.AddRange(service.Tick([player], t));
+            }
+
+            return all;
+        }
+
+        PlayerSession NewArenaOwner(string characterId, double x, int hp = 4000)
+        {
+            var owner = NewPlayer(characterId, hp: hp);
+            owner.X = x;
+            owner.Y = 0;
+            return owner;
+        }
+
+        // Registration needs the quest active AND the owner inside the ring.
+        var (bossService, bossQuest, bossQuestEntity, bossEventEntity) =
+            NewBossFixture(damageGateOn: true);
+        bossQuest.Set("CHR_SELFCHECK_BOSS_MAIN", QuestStates.Active);
+        var bossOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_MAIN", 181);
+        var bossRegistered = TickBoss(bossService, bossOwner, 5000, 5000);
+        var bossOpenState = bossService.TryGetState("CHR_SELFCHECK_BOSS_MAIN", out var bossOpen);
+        Check(
+            "alpha.boss_registers_and_opens_move_c",
+            bossRegistered.Count == 2 &&
+            bossRegistered[0].Outcome == BossEncounterOutcomeCodes.Registered &&
+            bossRegistered[0].Detail == "life=1" &&
+            bossRegistered[1].Outcome == BossEncounterOutcomeCodes.Telegraph &&
+            bossRegistered[1].Detail == "C" &&
+            bossOpenState &&
+            bossOpen.Status == "OPEN" &&
+            bossOpen.Phase == 1 &&
+            bossOpen.BossHp == 1200 &&
+            bossOpen.BossMaxHp == 1200 &&
+            bossOpen.ActiveMoveId == "C" &&
+            bossOpen.ActiveMoveState == "TELEGRAPH" &&
+            bossQuestEntity.State == WorldEntityStates.Alive,
+            $"{string.Join(",", bossRegistered.Select(r => r.Outcome + ":" + (r.Detail ?? "-")))}");
+
+        // questRules.P00-05.worldEventRecordIdDisabledInQuestInstance: the other
+        // (178,0) record stays despawned for as long as the instance is held.
+        var bossHoldTicks = TickBoss(bossService, bossOwner, 5001, 5001);
+        bossEventEntity.ForceRespawn();
+        TickBoss(bossService, bossOwner, 5002, 5002);
+        Check(
+            "alpha.boss_holds_world_event_boss_dead",
+            bossHoldTicks.Count == 0 &&
+            bossEventEntity.State == WorldEntityStates.Dead,
+            $"outcomes={bossHoldTicks.Count} event={bossEventEntity.State}");
+
+        // Move C (Vòng Bọt, ANNULUS 3–7 WU, windup 1.0 s = 20 ticks) lands at
+        // tick 5020; with the damage gate off the frame still commits but pays
+        // nothing, the same rule as the mob impacts.
+        var (bossGateService, bossGateQuest, _, _) = NewBossFixture(damageGateOn: false);
+        bossGateQuest.Set("CHR_SELFCHECK_BOSS_GATE", QuestStates.Active);
+        var bossGateOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_GATE", 181);
+        var bossGateFrames = TickBoss(bossGateService, bossGateOwner, 5000, 5020);
+        Check(
+            "alpha.boss_damage_gate_off_blocks_impact",
+            bossGateFrames.Any(r => r.Outcome == BossEncounterOutcomeCodes.ImpactBlocked &&
+                r.Detail == $"C:{MobAttackBlockedReasons.GateOff}" && r.Damage == 0) &&
+            bossGateOwner.Hp == 4000,
+            $"{string.Join(",", bossGateFrames.Select(r => r.Outcome))}");
+
+        // The full C→B→A cycle against one stationary owner inside every shape:
+        // C 24×1.3 → 28, B 24×1.5 → 32, A 24×1.2 → 26 against armor 10, one
+        // revision bump per landed impact, and the impacts only ever open after
+        // the previous move's recovery (no overlap).
+        var bossImpacts = TickBoss(bossService, bossOwner, 5001, 5110);
+        var bossLanded = bossImpacts
+            .Where(r => r.Outcome == BossEncounterOutcomeCodes.Impact)
+            .Select(r => $"{r.Detail}={r.Damage}")
+            .ToArray();
+        Check(
+            "alpha.boss_impacts_stationary_owner_in_move_order",
+            bossLanded.SequenceEqual(new[] { "C=28", "B=32", "A=26" }) &&
+            bossImpacts.Where(r => r.Outcome == BossEncounterOutcomeCodes.Telegraph)
+                .Select(r => r.Detail).SequenceEqual(new[] { "B", "A" }) &&
+            bossOwner.Hp == 4000 - 28 - 32 - 26 &&
+            bossOwner.Revision == 4,
+            string.Join(",", bossLanded) + $" hp={bossOwner.Hp} rev={bossOwner.Revision}");
+
+        // Out at 9 WU the owner is inside the ring but outside the annulus
+        // (outer 7) and outside the cone (8): those frames dodge, while the
+        // telegraph-start-locked circle (r 4 on the position held at telegraph
+        // start) still lands because nobody moved.
+        var (bossDodgeService, bossDodgeQuest, _, _) = NewBossFixture(damageGateOn: true);
+        bossDodgeQuest.Set("CHR_SELFCHECK_BOSS_DODGE", QuestStates.Active);
+        var bossDodgeOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_DODGE", 187);
+        var bossDodgeFrames = TickBoss(bossDodgeService, bossDodgeOwner, 5000, 5110);
+        Check(
+            "alpha.boss_out_of_shape_frames_are_dodged",
+            bossDodgeFrames.Any(r => r.Outcome == BossEncounterOutcomeCodes.ImpactBlocked &&
+                r.Detail == "C:DODGED") &&
+            bossDodgeFrames.Any(r => r.Outcome == BossEncounterOutcomeCodes.ImpactBlocked &&
+                r.Detail == "A:DODGED") &&
+            bossDodgeFrames.Any(r => r.Outcome == BossEncounterOutcomeCodes.Impact &&
+                r.Detail == "B" && r.Damage == 32) &&
+            bossDodgeOwner.Hp == 4000 - 32,
+            $"{string.Join(",", bossDodgeFrames
+                .Where(r => r.Outcome == BossEncounterOutcomeCodes.Impact ||
+                            r.Outcome == BossEncounterOutcomeCodes.ImpactBlocked)
+                .Select(r => r.Detail))}");
+
+        // Damage before phase: HP dragged to 710 (60% of 1200) before the first
+        // frame flips the fight to phase 2 at that frame. The 20-tick phase
+        // guard then holds the next telegraph, and the recovery the boss needs
+        // before that is the source's 1.0 s shortened by the phase-2 multiplier
+        // 0.8 → 16 ticks, so the guard (until local tick 40) is what releases
+        // move B at tick 5040.
+        var (bossPhaseService, bossPhaseQuest, _, _) = NewBossFixture(damageGateOn: true);
+        bossPhaseQuest.Set("CHR_SELFCHECK_BOSS_PHASE", QuestStates.Active);
+        var bossPhaseOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_PHASE", 181);
+        TickBoss(bossPhaseService, bossPhaseOwner, 5000, 5000);
+        bossPhaseService.ApplyBossDamage("CHR_SELFCHECK_BOSS_PHASE", 490, 5000);
+        var bossPhaseFrames = TickBoss(bossPhaseService, bossPhaseOwner, 5001, 5020);
+        var bossHeldFrames = TickBoss(bossPhaseService, bossPhaseOwner, 5021, 5039);
+        var bossReleasedFrames = TickBoss(bossPhaseService, bossPhaseOwner, 5040, 5045);
+        var bossPhaseChanged = bossPhaseFrames
+            .Where(r => r.Outcome == BossEncounterOutcomeCodes.PhaseChanged)
+            .ToArray();
+        Check(
+            "alpha.boss_phase_two_guard_and_recovery",
+            bossPhaseChanged.Length == 1 &&
+            bossPhaseChanged[0].Detail == "Two" &&
+            bossPhaseChanged[0].Phase == 2 &&
+            bossPhaseChanged[0].BossHp == 710 &&
+            bossHeldFrames.All(r => r.Outcome != BossEncounterOutcomeCodes.Telegraph) &&
+            bossReleasedFrames.Count(r => r.Outcome == BossEncounterOutcomeCodes.Telegraph) == 1 &&
+            bossReleasedFrames.Single(r => r.Outcome == BossEncounterOutcomeCodes.Telegraph).Detail == "B",
+            $"{string.Join(",", bossPhaseFrames.Select(r => r.Outcome + ":" + (r.Detail ?? "-")))} " +
+            $"held={string.Join(",", bossHeldFrames.Select(r => r.Outcome))} " +
+            $"released={string.Join(",", bossReleasedFrames.Select(r => r.Outcome))}");
+
+        // One transition per frame: 350 HP is already past the 30% line, yet a
+        // phase-1 fight only steps to 2 at the first frame and reaches 3 at the
+        // next one.
+        var (bossStepService, bossStepQuest, _, _) = NewBossFixture(damageGateOn: true);
+        bossStepQuest.Set("CHR_SELFCHECK_BOSS_STEP", QuestStates.Active);
+        var bossStepOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_STEP", 181);
+        TickBoss(bossStepService, bossStepOwner, 5000, 5000);
+        bossStepService.ApplyBossDamage("CHR_SELFCHECK_BOSS_STEP", 850, 5000);
+        var bossStepFrames = TickBoss(bossStepService, bossStepOwner, 5001, 5070);
+        var bossStepPhases = bossStepFrames
+            .Where(r => r.Outcome == BossEncounterOutcomeCodes.PhaseChanged)
+            .Select(r => r.Detail)
+            .ToArray();
+        Check(
+            "alpha.boss_one_phase_transition_per_frame",
+            bossStepPhases.SequenceEqual(new[] { "Two", "Three" }) &&
+            bossStepFrames.First(r => r.Outcome == BossEncounterOutcomeCodes.PhaseChanged)
+                .Detail == "Two",
+            string.Join(",", bossStepPhases));
+
+        // A killing hit ends the fight inside its own tick: DEFEATED once, the
+        // boss despawned, and no further frames for that owner.
+        var bossDefeat = bossPhaseService.ApplyBossDamage(
+            "CHR_SELFCHECK_BOSS_PHASE", 710, 5046);
+        var bossDefeatTick = TickBoss(bossPhaseService, bossPhaseOwner, 5047, 5060);
+        var bossDefeatState = bossPhaseService.TryGetState(
+            "CHR_SELFCHECK_BOSS_PHASE", out var bossDefeatSnapshot);
+        Check(
+            "alpha.boss_defeat_reports_once_and_stops",
+            bossDefeat.Count == 1 &&
+            bossDefeat[0].Outcome == BossEncounterOutcomeCodes.Defeated &&
+            bossDefeatTick.Count == 0 &&
+            bossDefeatState &&
+            bossDefeatSnapshot.Status == "DEFEATED" &&
+            bossDefeatSnapshot.BossHp == 0,
+            $"{string.Join(",", bossDefeat.Select(r => r.Outcome))} " +
+            $"{bossDefeatSnapshot.Status}");
+
+        // NPC_CLASS_TRIAL only appears after the boss is down AND the fragment
+        // is claimed; it closes again the moment the instance ends (turn-in),
+        // which the same tick that drops ACTIVE reports as ENDED.
+        var bossTrialNoFragment = bossPhaseService.IsTrialNpcVisible("CHR_SELFCHECK_BOSS_PHASE");
+        bossPhaseQuest.Set("CHR_SELFCHECK_BOSS_PHASE", QuestStates.Active, fragment: 1);
+        var bossTrialVisible = bossPhaseService.IsTrialNpcVisible("CHR_SELFCHECK_BOSS_PHASE");
+        bossPhaseQuest.Set("CHR_SELFCHECK_BOSS_PHASE", QuestStates.Completed, fragment: 1);
+        var bossEnded = TickBoss(bossPhaseService, bossPhaseOwner, 5061, 5061);
+        var bossTrialAfterTurnIn = bossPhaseService.IsTrialNpcVisible("CHR_SELFCHECK_BOSS_PHASE");
+        Check(
+            "alpha.boss_trial_npc_visibility_window",
+            !bossTrialNoFragment &&
+            bossTrialVisible &&
+            !bossTrialAfterTurnIn &&
+            bossEnded.Count == 1 &&
+            bossEnded[0].Outcome == BossEncounterOutcomeCodes.Ended,
+            $"noFragment={bossTrialNoFragment} visible={bossTrialVisible} " +
+            $"afterTurnIn={bossTrialAfterTurnIn} ended={bossEnded.FirstOrDefault()?.Outcome}");
+
+        // The quest leaving ACTIVE while the fight is still open ends the
+        // instance and the boss goes back under despawn hold.
+        var (bossEndService, bossEndQuest, bossEndQuestBoss, _) = NewBossFixture(damageGateOn: true);
+        bossEndQuest.Set("CHR_SELFCHECK_BOSS_END", QuestStates.Active);
+        var bossEndOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_END", 181);
+        TickBoss(bossEndService, bossEndOwner, 5000, 5000);
+        bossEndQuest.Set("CHR_SELFCHECK_BOSS_END", QuestStates.ReadyToTurnIn);
+        var bossEndFrames = TickBoss(bossEndService, bossEndOwner, 5001, 5001);
+        Check(
+            "alpha.boss_ends_when_quest_leaves_active",
+            bossEndFrames.Count == 1 &&
+            bossEndFrames[0].Outcome == BossEncounterOutcomeCodes.Ended &&
+            bossEndFrames[0].Detail == QuestStates.ReadyToTurnIn &&
+            !bossEndService.TryGetState("CHR_SELFCHECK_BOSS_END", out _) &&
+            bossEndQuestBoss.State == WorldEntityStates.Dead,
+            $"{bossEndFrames.FirstOrDefault()?.Outcome} " +
+            $"boss={bossEndQuestBoss.State}");
+
+        // Wipe: ten seconds (200 ticks) without a live target inside the ring
+        // refills the boss, returns it to phase 1 and costs no loot; the owner
+        // coming back is a fresh attempt on a NEW life, never a replay.
+        var (bossWipeService, bossWipeQuest, bossWipeQuestBoss, _) =
+            NewBossFixture(damageGateOn: true);
+        bossWipeQuest.Set("CHR_SELFCHECK_BOSS_WIPE", QuestStates.Active);
+        var bossWipeOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_WIPE", 181);
+        TickBoss(bossWipeService, bossWipeOwner, 5000, 5000);
+        bossWipeOwner.X = 240;
+        var bossWipeEarly = TickBoss(bossWipeService, bossWipeOwner, 5001, 5200);
+        var bossWipeAt = TickBoss(bossWipeService, bossWipeOwner, 5201, 5201);
+        bossWipeOwner.X = 181;
+        var bossRedo = TickBoss(bossWipeService, bossWipeOwner, 5202, 5202);
+        var bossWipeState = bossWipeService.TryGetState("CHR_SELFCHECK_BOSS_WIPE", out var bossWipe);
+        Check(
+            "alpha.boss_wipe_resets_and_restarts_on_a_new_life",
+            bossWipeEarly.All(r => r.Outcome != BossEncounterOutcomeCodes.Wiped) &&
+            bossWipeAt.Count == 1 &&
+            bossWipeAt[0].Outcome == BossEncounterOutcomeCodes.Wiped &&
+            bossWipeAt[0].Detail == "life=2" &&
+            bossWipeAt[0].BossHp == 1200 &&
+            bossRedo.Count == 2 &&
+            bossRedo[0].Outcome == BossEncounterOutcomeCodes.Registered &&
+            bossRedo[0].Detail == "life=2" &&
+            bossWipeQuestBoss.State == WorldEntityStates.Alive &&
+            bossWipeQuestBoss.LifeId == 2 &&
+            bossWipeState &&
+            bossWipe.BossLifeId == 2 &&
+            bossWipe.Phase == 1,
+            $"{bossWipeAt.FirstOrDefault()?.Outcome}:{bossWipeAt.FirstOrDefault()?.Detail} " +
+            $"redo={string.Join(",", bossRedo.Select(r => r.Outcome))}");
+
+        // Outside the ring nothing opens at all: no instance, no state, no
+        // telegraph, and the world-event boss is left alone.
+        var (bossIdleService, _, bossIdleEvent, _) = NewBossFixture(damageGateOn: true);
+        var bossIdleOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_IDLE", 195);
+        var bossIdle = TickBoss(bossIdleService, bossIdleOwner, 5000, 5020);
+        Check(
+            "alpha.boss_never_opens_outside_the_arena",
+            bossIdle.Count == 0 &&
+            !bossIdleService.TryGetState("CHR_SELFCHECK_BOSS_IDLE", out _) &&
+            bossIdleEvent.State == WorldEntityStates.Alive,
+            $"outcomes={bossIdle.Count} event={bossIdleEvent.State}");
+
+        // questRules.P00-05.phaseNpcOverride: the same actor moves to (182,4)
+        // for as long as the instance is held, and only for its owner.
+        var bossPhaseNpc = bossService.TryGetPhaseNpcPosition(
+            "CHR_SELFCHECK_BOSS_MAIN", out double bossNpcX, out double bossNpcY);
+        var bossNpcOther = bossService.TryGetPhaseNpcPosition("CHR_NOBODY", out _, out _);
+        Check(
+            "alpha.boss_phase_npc_override_is_owner_specific",
+            bossPhaseNpc &&
+            bossNpcX == 182 &&
+            bossNpcY == 4 &&
+            !bossNpcOther,
+            $"npc=({bossNpcX},{bossNpcY}) other={bossNpcOther}");
+
         // ─── Mãng Cốt encounter state machine (Q-F part 1) ────
 
         var bossRules = new BossEncounterRules(PhaseGuardTicks: 3);
@@ -6935,6 +7261,56 @@ public static class ServiceSelfCheck
                     State = state,
                     StepId = "STEP_ACTIVE",
                     ObjectiveCounters = new Dictionary<string, int>(),
+                    Revision = 1
+                })
+                : QuestOutcome.Rejected(QuestErrorCodes.QuestNotFound, retryable: false, "stub");
+
+        public IReadOnlyList<QuestState> GetStates(string characterId) => [];
+
+        public QuestOutcome Accept(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public IReadOnlyList<QuestState> RecordVerifiedEvent(
+            PlayerSession actor,
+            string eventId,
+            string eventType,
+            string recordId,
+            string mapId) => [];
+
+        public QuestOutcome TurnIn(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public QuestOutcome RevertTurnIn(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public QuestOutcome Fail(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+    }
+
+    // The boss encounter only reads quest state, and its trial-visibility rule
+    // also reads the fragment objective's counter, so the stub carries both.
+    private sealed class BossEncounterQuestStub : IQuestService
+    {
+        private readonly Dictionary<string, string> _states = new(StringComparer.Ordinal);
+        private readonly Dictionary<string, int> _fragments = new(StringComparer.Ordinal);
+
+        public void Set(string characterId, string state, int fragment = 0)
+        {
+            _states[characterId] = state;
+            _fragments[characterId] = fragment;
+        }
+
+        public QuestOutcome GetState(string characterId, string questId) =>
+            _states.TryGetValue(characterId, out var state)
+                ? QuestOutcome.Success(new QuestState
+                {
+                    QuestId = questId,
+                    State = state,
+                    StepId = "STEP_ACTIVE",
+                    ObjectiveCounters = new Dictionary<string, int>
+                    {
+                        ["OBJ_P00_05_FRAGMENT"] = _fragments.TryGetValue(characterId, out var f) ? f : 0
+                    },
                     Revision = 1
                 })
                 : QuestOutcome.Rejected(QuestErrorCodes.QuestNotFound, retryable: false, "stub");
