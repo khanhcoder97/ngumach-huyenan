@@ -13,7 +13,7 @@ using NguMach.Client.Presentation;
 namespace NguMach.Client.P1
 {
     [DisallowMultipleComponent]
-    public sealed class CinemaOverlay : MonoBehaviour
+    public sealed class CinemaOverlay : MonoBehaviour, IUiAccessibilityConsumer
     {
         private CinemaPresenter _presenter;
         private UIDocument _doc;
@@ -24,6 +24,7 @@ namespace NguMach.Client.P1
         private Label _subtitleLabel;
         private ProgressBar _progressBar;
         private Button _skipBtn;
+        private VisualElement _accentBar;
 
         public CinemaPresenter Presenter => _presenter;
 
@@ -121,6 +122,15 @@ namespace NguMach.Client.P1
             _progressBar.style.height = 8;
             bottomBox.Add(_progressBar);
 
+            // OPC-14 O1: flash/highlight layer — hidden when the player asks for reduced
+            // flash. This is UI-owned (world VFX stay explicitly out of scope).
+            _accentBar = new VisualElement();
+            _accentBar.style.width = 640;
+            _accentBar.style.height = 3;
+            _accentBar.style.marginTop = 4;
+            _accentBar.style.backgroundColor = new Color(0.95f, 0.78f, 0.25f, 0.85f);
+            bottomBox.Add(_accentBar);
+
             _root.Add(bottomBox);
 
             AttachToDocument();
@@ -151,6 +161,24 @@ namespace NguMach.Client.P1
         {
             if (_presenter != null) _presenter.Skip();
         }
+
+        // OPC-14 O1: consumer of accessibility settings (reduced motion disables
+        // non-essential transition/pulse; preview harness labeling preserved).
+        public void ApplyAccessibility(SettingsViewState s)
+        {
+            bool motion = AccessibilityPolicy.MotionEnabled(s?.ReducedMotion ?? false);
+            bool flash = AccessibilityPolicy.FlashEnabled(s?.ReducedFlash ?? false);
+            // Observable UI-owned behavior changes (not just stored prefs):
+            //  - reduced motion hides the animated progress pulse
+            //  - reduced flash hides the accent highlight layer
+            if (_progressBar != null) _progressBar.style.display = motion ? DisplayStyle.Flex : DisplayStyle.None;
+            if (_accentBar != null) _accentBar.style.display = flash ? DisplayStyle.Flex : DisplayStyle.None;
+            if (_subtitleLabel != null) _subtitleLabel.style.opacity = motion ? 1f : 0.85f;
+        }
+
+        /// <summary>Focus scope root for PlayerUIRoot's Tab trap while the cinema owns input.</summary>
+        public VisualElement FocusRoot => _root;
+        public bool IsVisible => _root != null && _root.style.display == DisplayStyle.Flex;
 
         private void Update()
         {

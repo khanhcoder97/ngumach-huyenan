@@ -15,7 +15,7 @@ using NguMach.Client.Presentation;
 namespace NguMach.Client.P1
 {
     [DisallowMultipleComponent]
-    public sealed class MapPanel : MonoBehaviour
+    public sealed class MapPanel : MonoBehaviour, IUiAccessibilityConsumer
     {
         // ── Constants ────────────────────────────────────────────────────────
         private const float MapDisplaySize = 280f;
@@ -27,6 +27,7 @@ namespace NguMach.Client.P1
         private MapPresenter _presenter;
         private bool _visible;
         private UIDocument _doc;
+        private bool _reducedMotion;
 
         // ── UIElements refs ──────────────────────────────────────────────────
         private VisualElement _root;
@@ -290,9 +291,26 @@ namespace NguMach.Client.P1
         {
             if (_visible && _presenter != null)
             {
-                _presenter.Refresh();
+                // Reduced motion: throttle map re-projection instead of the per-frame pulse.
+                if (!_reducedMotion || Time.frameCount % 15 == 0)
+                    _presenter.Refresh();
             }
         }
+
+        public void ApplyAccessibility(SettingsViewState s)
+        {
+            // OPC-14 O1: text scale applies to the map's own labels; reduced motion stops
+            // the continuous repaint pulse (the only UI-owned motion in this panel).
+            float scale = s?.TextSize ?? 1f;
+            if (_root != null)
+                _root.style.fontSize = new StyleLength(new Length(12f * scale, LengthUnit.Pixel));
+            _reducedMotion = s?.ReducedMotion ?? false;
+            if (_visible) _mapContainer?.MarkDirtyRepaint();
+        }
+
+        /// <summary>Focus scope root for PlayerUIRoot's Tab trap (real UIElements tree).</summary>
+        public VisualElement FocusRoot => _root;
+        public bool IsVisible => _visible && _root != null && _root.style.display == DisplayStyle.Flex;
 
         public void Teardown()
         {

@@ -15,12 +15,15 @@ using NguMach.Client.Presentation;
 namespace NguMach.Client.P1
 {
     [DisallowMultipleComponent]
-    public sealed class CharacterPanel : MonoBehaviour
+    public sealed class CharacterPanel : MonoBehaviour, IUiAccessibilityConsumer
     {
         private IP1UIAdapter _adapter;
         private PanelRouter _router;
         private CharacterPresenter _presenter;
         private UIDocument _doc;
+        private UiItemResolverSession _items;
+        private float _textScale = 1f;
+        private bool _visible;
 
         private VisualElement _root;
         private Label _characterNameLabel;
@@ -38,13 +41,14 @@ namespace NguMach.Client.P1
 
         private string _selectedSlot;
 
-        public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct, UIDocument doc = null)
+        public void Initialize(IP1UIAdapter adapter, PanelRouter router, CancellationToken ct, UIDocument doc = null, UiItemResolverSession items = null)
         {
             if (_presenter != null) _presenter.OnChanged -= Render;
             _adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));
             _router = router ?? throw new ArgumentNullException(nameof(router));
             _doc = doc ?? _doc;
-            _presenter = new CharacterPresenter(_adapter);
+            _items = items;
+            _presenter = new CharacterPresenter(_adapter, items);
             _presenter.OnChanged += Render;
 
             if (_root == null) BuildUI();
@@ -222,6 +226,7 @@ namespace NguMach.Client.P1
         public void Show()
         {
             if (_root == null) return;
+            _visible = true;
             _root.style.display = DisplayStyle.Flex;
             _presenter?.Refresh();
         }
@@ -229,6 +234,7 @@ namespace NguMach.Client.P1
         public void Hide()
         {
             if (_root == null) return;
+            _visible = false;
             _root.style.display = DisplayStyle.None;
             _selectedSlot = null;
         }
@@ -291,15 +297,10 @@ namespace NguMach.Client.P1
                 var selectedItem = view.GetEquippedItem(_selectedSlot);
                 if (selectedItem != null)
                 {
-                    var meta = ItemMetadataResolver.Resolve(selectedItem.TemplateId);
-                    _itemDetailLabel.text =
-                        $"Tên: {selectedItem.DisplayName}\n" +
-                        $"Phẩm chất: {meta.Rarity}\n" +
-                        $"Loại: {meta.Category}\n" +
-                        $"Cấp yêu cầu: {meta.RequiredLevel}\n" +
-                        $"Độ bền: {selectedItem.Durability}/100\n" +
-                        $"Phiên bản: v{selectedItem.Version}\n" +
-                        $"Mô tả: {meta.Description}";
+                    // OPC-14 O1: same catalog-backed tooltip as the bag, with the full
+                    // extended field set for templates outside the embedded subset.
+                    var meta = _items != null ? _items.Resolve(selectedItem.TemplateId) : UiItemResolver.Resolve(selectedItem.TemplateId);
+                    _itemDetailLabel.text = ItemTooltipFormatter.Format(selectedItem, meta);
                     _unequipBtn.SetEnabled(false);
                 }
                 else
@@ -335,6 +336,18 @@ namespace NguMach.Client.P1
             }
         }
 
+        public void ApplyAccessibility(SettingsViewState s)
+        {
+            _textScale = s?.TextSize ?? 1f;
+            if (_root != null)
+                _root.style.fontSize = new StyleLength(new Length(12f * _textScale, LengthUnit.Pixel));
+            if (_visible) Render();
+        }
+
+        /// <summary>Focus scope root for PlayerUIRoot's Tab trap (real UIElements tree).</summary>
+        public VisualElement FocusRoot => _root;
+        public bool IsVisible => _visible && _root != null && _root.style.display == DisplayStyle.Flex;
+
         public void Teardown()
         {
             Hide();
@@ -351,6 +364,7 @@ namespace NguMach.Client.P1
             _adapter = null;
             _router = null;
             _doc = null;
+            _items = null;
         }
 
         private void OnDestroy() => Teardown();

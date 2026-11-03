@@ -12,7 +12,7 @@ using NguMach.Client.Presentation;
 namespace NguMach.Client.P1
 {
     [DisallowMultipleComponent]
-    public sealed class SettingsPanel : MonoBehaviour
+    public sealed class SettingsPanel : MonoBehaviour, IUiAccessibilityConsumer
     {
         [SerializeField] private bool usePlayerPrefsStore = true;
 
@@ -234,6 +234,12 @@ namespace NguMach.Client.P1
             const float baseFontSize = 12f;
             docRoot.style.fontSize = new StyleLength(new Length(baseFontSize * s.TextSize, LengthUnit.Pixel));
         }
+
+        public void ApplyAccessibility(SettingsViewState s) => ApplySettings(s);
+
+        /// <summary>Focus scope root for PlayerUIRoot's Tab trap (real UIElements tree).</summary>
+        public VisualElement FocusRoot => _root;
+        public bool IsVisible => _visible && _root != null && _root.style.display == DisplayStyle.Flex;
 
         public void Teardown()
         {

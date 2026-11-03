@@ -19,12 +19,16 @@ namespace NguMach.Client.Presentation
     public sealed class InventoryPresenter
     {
         private readonly IP1UIAdapter _adapter;
+        private readonly UiItemResolverSession _items;
         private AsyncState<InventoryViewState> _state = AsyncState<InventoryViewState>.Idle;
 
         public AsyncState<InventoryViewState> State => _state;
 
-        public InventoryPresenter(IP1UIAdapter adapter)
-            => _adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));
+        public InventoryPresenter(IP1UIAdapter adapter, UiItemResolverSession items = null)
+        {
+            _adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));
+            _items = items;
+        }
 
         /// <summary>
         /// Fetch inventory from server, build view state.
@@ -117,8 +121,9 @@ namespace NguMach.Client.Presentation
 
         // ── Building view state ──────────────────────────────────────────────
 
-        private static InventoryViewState BuildViewState(P1Inventory inv, InventoryViewState prev)
+        private InventoryViewState BuildViewState(P1Inventory inv, InventoryViewState prev)
         {
+            ItemMetadata Resolve(string templateId) => _items != null ? _items.Resolve(templateId) : UiItemResolver.Resolve(templateId);
             var warnings = new List<string>();
             var slots = new Dictionary<int, ItemSlotView>();
             var seenInstances = new HashSet<string>(StringComparer.Ordinal);
@@ -157,7 +162,7 @@ namespace NguMach.Client.Presentation
                             }
                             else
                             {
-                                var meta = ItemMetadataResolver.Resolve(item.templateId);
+                                var meta = Resolve(item.templateId);
                                 slots[slotIndex] = new ItemSlotView(item, meta.DisplayName, meta.Rarity);
                             }
                         }
@@ -191,7 +196,7 @@ namespace NguMach.Client.Presentation
                 if (freeSearchIndex < InventoryViewState.TotalSlots)
                 {
                     seenSlotIndices.Add(freeSearchIndex);
-                    var meta = ItemMetadataResolver.Resolve(item.templateId);
+                    var meta = Resolve(item.templateId);
                     slots[freeSearchIndex] = new ItemSlotView(item, meta.DisplayName, meta.Rarity);
                     freeSearchIndex++;
                 }

@@ -47,8 +47,12 @@ Client/Tests/**/bin/
 !Client/Tests/UnitySyntaxCheck/UnitySyntaxCheck.csproj
 
 !Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj
+!Client/Tests/PlayerUIAcceptance/PlayerUIAcceptance.csproj
 
 # Standalone .NET server outputs are build artifacts, not source.
 Server/**/bin/
+
+# Local acceptance artifacts (CI uploads its own copy from the runner).
+TestResults/
 
 !Client/Tests/NarrativeChecks/NarrativeChecks.csproj

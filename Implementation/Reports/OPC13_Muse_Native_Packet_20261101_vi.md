@@ -167,3 +167,39 @@ notes: |
 ```
 
 NHẮC NHỞ CRITICAL: nếu một case FAIL — không đánh dấu UNVERIFIED→done. Reply packet này với case_id FAIL + reason, OpenCode sẽ kiểm pre-check lại headless và chưa merge PR #101 vào main (mọi merge là quyền của Codex).
+
+## 11. OPC-14 M4 — Executable Unity native tests (new)
+
+Branch/head: `opencode/opc-14-ui-runtime-hardening-20261101` (stacked on `opencode/opc-13-player-ui-takeover-20261101` @ `21ce171` + M1/M2 commits). Unity **6000.3.17f1**. Hydrate full checkout (LFS) — sparse checkout is NOT native import proof.
+
+Test assembly: `NguMach.PlayerUI.Tests` (asmdef: `Client/Assets/Tests/PlayerUI/PlayerUI.Tests.asmdef`, Editor-only).
+Test files:
+- `Client/Assets/Tests/PlayerUI/PlayerUICompositionTests.cs` — two-UIDocument independence, 200 open/close/rebind, rebind idempotency.
+- `Client/Assets/Tests/PlayerUI/PlayerUIInputFocusTests.cs` — modal priority / Space blocking.
+
+Exact invocation (batchmode, EditMode):
+```
+Unity.exe -batchmode -nographics -projectPath <full-checkout> -runTests -testPlatform EditMode -testResults TestResults/playerui-editmode.xml -logFile Logs/playerui-editmode.log
+```
+PlayMode (if PlayMode tests added later):
+```
+... -testPlatform PlayMode -testResults TestResults/playerui-playmode.xml -logFile Logs/playerui-playmode.log
+```
+
+Expected metrics:
+- EditMode: 0 compile errors, all tests pass, 0 failures.
+- Composition: panel instance count stays 1/type after 200 cycles (no unbounded growth).
+- Native still UNVERIFIED until Muse runs and returns template (section 10) with XML/log paths.
+
+Note: these are source-level tests; they are NOT native PASS until executed on Muse VM. Headless 156/156 + syntax 55x3 are not Unity compile proof.
+
+## 12. Update 2026-11-03 — OPC-14 O1–O4 landed (head 8f27d3a)
+
+- Branch/head: `opencode/opc-14-ui-runtime-hardening-20261101` @ `8f27d3a` (PR #103), stacked on PR #101.
+- Headless: `dotnet test PlayerUIChecks -c Release` = **171/171 PASS** (was 167); `UnitySyntaxCheck` = **58 files × 3 profiles, 0 errors**; generator tests **9/9 PASS**; `generate_ui_catalog.py --check` = up to date; HTTP acceptance = **73 assertions PASS, exit 0**.
+- Native test graph: `PlayerUI.Tests.asmdef` now references `NguMach.Client` (not `Assembly-CSharp`) + TestRunner/NUnit; runtime/editor asmdefs added under `Client/Assets/Scripts/Online`. `PlayerUICompositionTests` calls `Initialize(real adapter, doc)` and asserts route + visible tree before the 200-cycle soak; `PlayerUIInputFocusTests` uses `ModalOrchestrator` from the `Presentation` namespace.
+- Consumer wiring (O1): PlayerUIRoot loads `Resources/PlayerUI/ui_item_catalog` before panel init, injects a per-session `UiItemResolverSession` into bag/character, owns exactly one `SettingsConsumerBinder` per open session (created after SettingsPresenter, disposed before teardown), traps Tab/Shift+Tab on the top modal's real focusController, and restores focus on close. PlayerUIButtonBar adds hotkey labels + a real "..." overflow menu (HudOverflowPolicy) keeping Settings reachable. CinemaOverlay/panels observe reduced motion/flash/text scale with observable changes.
+- Catalog (O1): generator entry digest = `sha256(json.dumps({field:value for FIELDS}, sort_keys=True, ensure_ascii=False))`; overall = `sha256(json.dumps(list of entry digests, ensure_ascii=False))` in Python list format `["a", "b"]`; cross-file identical shared rows kept once with first-file provenance (136 rows), conflicting duplicates fail; `UiCatalogLoader.VerifyDigest` recomputes every entry + overall + provenance; `--check` is read-only and fails on drift.
+- HTTP (O2): 73 assertions against a private server — lost first turn-in -> `mutation_outcome_unknown` + pending; `RetryPendingAsync` reuses the same body/key and clears pending; receipt `COMPLETED` + 20 COIN + 1 `EQ-MK-CHEST-T1-R-COMMON`; repeat new key -> `invalid_transition` with no double-grant; delayed reread + rebind stable; real 404 `session_not_found` (legacy `useWorldV2:false`) moves to Expired. Full-bag remains **UNVERIFIED** (no server seed/capacity contract).
+- CI (O4): `antigravity-player-ui.yml` runs the generator tests + read-only `--check`, the mandatory private-server HTTP runner, uploads `TestResults/`, no optional `P1_BASE_URL` skip.
+- Native Unity stays **UNVERIFIED_NATIVE** until Muse runs the packet; full-bag stays **UNVERIFIED**. Do not claim native PASS.

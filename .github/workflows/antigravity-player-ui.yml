@@ -12,18 +12,30 @@ on:
       - 'Client/Assets/Scripts/Online/Unity/PlayerUI/**'
       - 'Client/Tests/PlayerUIChecks/**'
       - 'Client/Tests/UnitySyntaxCheck/**'
+      - 'Client/Tests/PlayerUIAcceptance/**'
+      - 'Client/Assets/Tests/PlayerUI/**'
       - 'Client/Assets/Resources/PlayerUI/**'
+      - 'Tools/PlayerUIData/**'
+      - 'Client/Assets/**/*.asmdef'
+      - '.github/workflows/antigravity-player-ui.yml'
   pull_request:
     branches:
       - 'codex/p1-client-integration-20261029'
       - 'codex/story-gameplay-integration-20261031'
+      - 'opencode/opc-13-player-ui-takeover-20261101'
+      - 'opencode/opc-14-ui-runtime-hardening-20261101'
       - 'main'
     paths:
       - 'Client/Assets/Scripts/Online/Presentation/**'
       - 'Client/Assets/Scripts/Online/Unity/PlayerUI/**'
       - 'Client/Tests/PlayerUIChecks/**'
       - 'Client/Tests/UnitySyntaxCheck/**'
+      - 'Client/Tests/PlayerUIAcceptance/**'
+      - 'Client/Assets/Tests/PlayerUI/**'
       - 'Client/Assets/Resources/PlayerUI/**'
+      - 'Tools/PlayerUIData/**'
+      - 'Client/Assets/**/*.asmdef'
+      - '.github/workflows/antigravity-player-ui.yml'
 
 jobs:
   player-ui-tests:
@@ -46,6 +58,20 @@ jobs:
       - name: Test
         run: dotnet test Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj --no-build -c Release --logger trx --results-directory TestResults
 
+      # OPC-14 O1: the generated catalog must be in sync AND the generator's own
+      # read-only contract must pass (no write-then-diff, no stale pass).
+      - name: Generated UI catalog tests
+        run: python Tools/PlayerUIData/test_generate_ui_catalog.py
+
+      - name: Generated UI catalog --check (read-only)
+        run: python Tools/PlayerUIData/generate_ui_catalog.py --check
+
+      # OPC-14 O2: build + run the mandatory private-server HTTP acceptance.
+      # The runner starts Health with the P1 gates, waits for /health, runs the
+      # real presenters, and writes artifacts; any non-zero exit fails the job.
+      - name: HTTP acceptance (private server, mandatory)
+        run: python Client/Tests/PlayerUIAcceptance/run_acceptance.py
+
       # OPC-13 D: keep the Unity-source syntax gate beside the headless UI suite
       # (syntax only — never claim this is a Unity/Editor compile).
       - name: Unity source syntax gate
@@ -56,7 +82,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: player-ui-test-results
-          path: TestResults/
+          path: |
+            TestResults/
+            Client/Tests/PlayerUIAcceptance/bin/Release/net8.0/*.log
+          if-no-files-found: ignore
 
   docs-check:
     name: Docs UTF-8 and diff check

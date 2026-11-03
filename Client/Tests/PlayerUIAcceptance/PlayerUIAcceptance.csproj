@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <RootNamespace>PlayerUIAcceptance</RootNamespace>
+    <AssemblyName>PlayerUIAcceptance</AssemblyName>
+    <IsPackable>false</IsPackable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1Audio.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1AudioNotice.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1Client.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1ClientV2.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1GameplayInputGate.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1Models.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1ModelsV2.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Core\P1Wire.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\IP1UIAdapter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\P1ClientAdapter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\P1UIState.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\PanelRouter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\ModalOrchestration.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\ItemTooltipFormatter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\QuestJournalPresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\NpcDialoguePresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\NpcContextMapping.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\ItemMetadataResolver.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\CharacterViewState.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\CharacterPresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\CinemaViewState.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\CinemaPresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\SettingsPresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\MapPresenter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\HudSafeAreaPolicy.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\AccessibilityPolicy.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\FocusNavigationPolicy.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\HudOverflowPolicy.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\UiCatalogLoader.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\UiItemResolver.cs" />
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+
+</Project>

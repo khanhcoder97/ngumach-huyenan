@@ -3,6 +3,7 @@
 // Owner: Antigravity Remote — Issue #80, #85.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -30,6 +31,11 @@ namespace NguMach.Client.P1
         private PanelRouter _router;
         private CancellationTokenSource _life;
         private bool _closing;
+        private SettingsConsumerBinder _settingsBinder;
+        private UiItemResolverSession _itemResolver;
+        private VisualElement _focusBeforeOpen;
+
+        private const string FocusScopeGlobal = "global";
 
         // ── Public API ───────────────────────────────────────────────────────
 
@@ -154,9 +160,28 @@ namespace NguMach.Client.P1
 
             var store = GetComponent<ISettingsStore>() ?? GetComponentInParent<ISettingsStore>();
 
+            // OPC-14 O1/B: load the generated catalog before any panel builds its presenter,
+            // then inject the per-session/document resolver into bag + character.
+            UiCatalog catalog = null;
+            try
+            {
+                var ta = Resources.Load<TextAsset>("PlayerUI/ui_item_catalog");
+                if (ta != null && UiCatalogLoader.TryLoad(ta.text, out var cat, out var err))
+                {
+                    catalog = cat;
+                    UiItemResolver.SetCatalog(cat);
+                }
+                else if (ta == null)
+                    Debug.LogWarning("[PlayerUIRoot] ui_item_catalog not found in Resources/PlayerUI; resolver stays on embedded fallback.");
+                else
+                    Debug.LogWarning("[PlayerUIRoot] ui_item_catalog load failed: " + err);
+            }
+            catch (Exception e) { Debug.LogWarning("[PlayerUIRoot] catalog load error: " + e.Message); }
+            _itemResolver = new UiItemResolverSession(catalog);
+
             // Pass references and injected document to child panels.
-            if (inventoryPanel != null) inventoryPanel.Initialize(_adapter, _router, _life.Token, _doc);
-            if (characterPanel != null) characterPanel.Initialize(_adapter, _router, _life.Token, _doc);
+            if (inventoryPanel != null) inventoryPanel.Initialize(_adapter, _router, _life.Token, _doc, _itemResolver);
+            if (characterPanel != null) characterPanel.Initialize(_adapter, _router, _life.Token, _doc, _itemResolver);
             if (questJournalPanel != null)
             {
                 questJournalPanel.Initialize(_adapter, _router, _life.Token, _doc);
@@ -171,6 +196,21 @@ namespace NguMach.Client.P1
             if (buttonBar != null) buttonBar.Initialize(_adapter, this, _doc);
             UpdatePinnedQuest();
             if (cinemaOverlay != null) cinemaOverlay.Initialize(_doc);
+
+            // OPC-14 O1: bind settings to actual owned UI consumers (one binder per doc/session).
+            if (settingsPanel != null && settingsPanel.Presenter != null)
+            {
+                _settingsBinder = new SettingsConsumerBinder(settingsPanel.Presenter);
+                if (settingsPanel is IUiAccessibilityConsumer sc) _settingsBinder.Register(sc);
+                if (cinemaOverlay is IUiAccessibilityConsumer cc) _settingsBinder.Register(cc);
+                if (buttonBar is IUiAccessibilityConsumer bc) _settingsBinder.Register(bc);
+                if (mapPanel is IUiAccessibilityConsumer mc) _settingsBinder.Register(mc);
+                if (inventoryPanel is IUiAccessibilityConsumer ic) _settingsBinder.Register(ic);
+                if (characterPanel is IUiAccessibilityConsumer chc) _settingsBinder.Register(chc);
+            }
+
+            // OPC-14 O1: Tab/Shift+Tab trap on the real focus controller of the top modal.
+            _doc.rootVisualElement.RegisterCallback<KeyDownEvent>(OnRootKeyDown, TrickleDown.TrickleDown);
 
             // All panels start hidden.
             HideAllPanels();
@@ -196,6 +236,13 @@ namespace NguMach.Client.P1
 
                 if (questJournalPanel != null && questJournalPanel.Presenter != null)
                     questJournalPanel.Presenter.OnChanged -= UpdatePinnedQuest;
+                if (_doc != null)
+                    _doc.rootVisualElement.UnregisterCallback<KeyDownEvent>(OnRootKeyDown, TrickleDown.TrickleDown);
+                _focusBeforeOpen = null;
+                _settingsBinder?.Dispose();
+                _settingsBinder = null;
+                _itemResolver = null;
+                UiItemResolver.SetCatalog(null);
                 inventoryPanel?.Teardown();
                 characterPanel?.Teardown();
                 questJournalPanel?.Teardown();
@@ -246,8 +293,132 @@ namespace NguMach.Client.P1
 
         // ── Panel routing ────────────────────────────────────────────────────
 
+        /// <summary>Native visible-tree probe used by EditMode tests (route + display).</summary>
+        public bool IsPanelVisible(PlayerPanel panel)
+        {
+            switch (panel)
+            {
+                case PlayerPanel.Inventory: return inventoryPanel != null && inventoryPanel.IsVisible;
+                case PlayerPanel.Character: return characterPanel != null && characterPanel.IsVisible;
+                case PlayerPanel.QuestJournal: return questJournalPanel != null && questJournalPanel.IsVisible;
+                case PlayerPanel.NpcDialogue: return npcDialoguePanel != null && npcDialoguePanel.IsVisible;
+                case PlayerPanel.Settings: return settingsPanel != null && settingsPanel.IsVisible;
+                case PlayerPanel.Map: return mapPanel != null && mapPanel.IsVisible;
+                default: return false;
+            }
+        }
+
+        private VisualElement ActiveModalRoot()
+        {
+            if (_router != null)
+            {
+                switch (_router.Current)
+                {
+                    case PlayerPanel.Inventory: return inventoryPanel?.FocusRoot;
+                    case PlayerPanel.Character: return characterPanel?.FocusRoot;
+                    case PlayerPanel.QuestJournal: return questJournalPanel?.FocusRoot;
+                    case PlayerPanel.NpcDialogue: return npcDialoguePanel?.FocusRoot;
+                    case PlayerPanel.Settings: return settingsPanel?.FocusRoot;
+                    case PlayerPanel.Map: return mapPanel?.FocusRoot;
+                }
+            }
+            if (CinemaPlaying) return cinemaOverlay?.FocusRoot;
+            return null;
+        }
+
+        private string ActiveFocusScope()
+        {
+            if (_router != null && _router.Current != PlayerPanel.None) return _router.Current.ToString();
+            return CinemaPlaying ? "Cinema" : FocusScopeGlobal;
+        }
+
+        private static string ElementId(VisualElement element)
+        {
+            if (element == null) return null;
+            if (!string.IsNullOrEmpty(element.name)) return element.name;
+            var parts = new List<string>();
+            var cur = element;
+            while (cur != null && cur.parent != null)
+            {
+                parts.Add(cur.parent.IndexOf(cur).ToString());
+                cur = cur.parent;
+            }
+            parts.Reverse();
+            return "path:" + string.Join("/", parts);
+        }
+
+        private static void CollectFocusables(VisualElement root, string scope, List<FocusElement> into)
+        {
+            if (root == null) return;
+            foreach (var child in root.Children())
+            {
+                if (child == null) continue;
+                if (child.focusable)
+                {
+                    bool editor = child is TextField || child is Slider || child is SliderInt ||
+                                  child is IntegerField || child is FloatField || child is LongField;
+                    into.Add(new FocusElement(ElementId(child), scope, into.Count, editor));
+                }
+                CollectFocusables(child, scope, into);
+            }
+        }
+
+        private static bool IsDescendant(VisualElement root, VisualElement element)
+        {
+            var cur = element;
+            while (cur != null) { if (cur == root) return true; cur = cur.parent; }
+            return false;
+        }
+
+        private static void FocusById(VisualElement root, string id)
+        {
+            if (root == null || string.IsNullOrEmpty(id)) return;
+            if (ElementId(root) == id) { root.Focus(); return; }
+            foreach (var child in root.Children())
+            {
+                if (child == null) continue;
+                if (ElementId(child) == id) { child.Focus(); return; }
+                FocusById(child, id);
+            }
+        }
+
+        /// <summary>
+        /// OPC-14 O1: real Tab / Shift+Tab trap on the top modal's own focusController.
+        /// Tab never escapes the open modal into cinema/gameplay; Shift+Tab wraps.
+        /// TextField/Slider children are still focusable and are marked as editors, while
+        /// Space gating stays in P1OnlinePanel's RefreshInputSurface.
+        /// </summary>
+        private void OnRootKeyDown(KeyDownEvent evt)
+        {
+            if (evt == null || evt.keyCode != KeyCode.Tab) return;
+            var root = ActiveModalRoot();
+            if (root == null) return; // no modal open: gameplay owns Tab
+
+            string scope = ActiveFocusScope();
+            var elements = new List<FocusElement>();
+            CollectFocusables(root, scope, elements);
+            if (elements.Count == 0) return;
+
+            var focusController = _doc?.rootVisualElement?.panel?.focusController;
+            var focused = focusController?.focusedElement as VisualElement;
+            string currentId = focused != null && IsDescendant(root, focused) ? ElementId(focused) : null;
+
+            string next = evt.shiftKey
+                ? FocusNavigationPolicy.Previous(currentId, elements, scope)
+                : FocusNavigationPolicy.Next(currentId, elements, scope);
+            if (next == null) return;
+
+            FocusById(root, next);
+            evt.StopPropagation();   // never also reach cinema/gameplay Tab handlers
+            evt.PreventDefault();
+        }
+
         private void HandlePanelChanged(PlayerPanel prev, PlayerPanel next)
         {
+            var focusController = _doc?.rootVisualElement?.panel?.focusController;
+            if (prev == PlayerPanel.None && next != PlayerPanel.None)
+                _focusBeforeOpen = focusController?.focusedElement as VisualElement;
+
             HideAllPanels();
             switch (next)
             {
@@ -258,6 +429,13 @@ namespace NguMach.Client.P1
                 case PlayerPanel.Settings:      if (settingsPanel != null) settingsPanel.Show(); break;
                 case PlayerPanel.Map:           if (mapPanel != null) mapPanel.Show(); break;
                 case PlayerPanel.None:          break;
+            }
+
+            // OPC-14 O1: restore focus to where it was before the modal opened.
+            if (next == PlayerPanel.None && _focusBeforeOpen != null)
+            {
+                if (_focusBeforeOpen.panel != null) _focusBeforeOpen.Focus();
+                _focusBeforeOpen = null;
             }
         }
 

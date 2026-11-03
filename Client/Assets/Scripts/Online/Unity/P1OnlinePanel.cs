@@ -198,7 +198,8 @@ namespace NguMach.Client.P1
         private void RefreshInputSurface()
         {
             var focused = document == null ? null : document.rootVisualElement.panel?.focusController?.focusedElement;
-            bool editing = focused is TextField || focused is Slider || focused is SliderInt;
+            bool editing = focused is TextField || focused is Slider || focused is SliderInt ||
+                           focused is IntegerField || focused is FloatField || focused is LongField;
             _editing = editing;
             inputGate.SetSurface(Application.isFocused, applicationPaused, ModalOpen, editing);
             if (!inputGate.AllowsGameplay) ClearHeldInput();
