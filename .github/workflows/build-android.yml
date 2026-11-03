@@ -1,0 +1,144 @@
+# Build APK Android cho client Ngũ Mạch — Huyền Ấn (Godot .NET 4.7.2)
+# =====================================================================
+# Đặt file này tại:  .github/workflows/build-android.yml
+# trong repo chứa project Godot. Bố cục repo kỳ vọng:
+#
+#   <repo-root>/
+#     NgumachPrototype/     <- project Godot (đổi PROJECT_DIR bên dưới nếu khác)
+#     nuget-local/          <- kho NuGet vendor (tự tải ở bước 6 nếu chưa có)
+#
+# Chạy tay: tab Actions -> "Build Android APK" -> Run workflow.
+# Kết quả: file APK ở mục Artifacts của lần chạy. Job cũng TỰ KIỂM CHỨNG
+# APK (chữ ký, badging, có libgodot + assembly .NET) và fail nếu thiếu.
+#
+# Vì sao cần CI: trên VM của Muse, bước Gradle bị chặn bởi trần commit
+# bộ nhớ của host (~4 GB dùng chung) — xem EVALUATION.md Bổ sung 12.
+# Runner GitHub có đủ RAM nên cùng bộ công cụ này chạy thẳng.
+# =====================================================================
+
+name: Build Android APK
+
+on:
+  workflow_dispatch: {}
+
+env:
+  GODOT_VERSION: "4.7.2-stable"
+  GODOT_CHANNEL: "4.7.2.stable.mono"
+  PROJECT_DIR: "ClientGodot"        # thư mục project Godot trong repo
+  PRESET_NAME: "Android"
+  APK_OUT: "build/android/NgumachPrototype.apk"
+
+jobs:
+  build-android:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cài .NET SDK 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Cài JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      # Runner Ubuntu đã có sẵn Android SDK ở $ANDROID_HOME; chỉ bổ sung
+      # đúng platform/build-tools mà template Godot 4.7.2 yêu cầu.
+      - name: Bổ sung Android SDK (platform 35, build-tools 35)
+        run: |
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKMANAGER" --licenses > /dev/null
+          "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Tải Godot 4.7.2 mono + export templates
+        run: |
+          BASE="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}"
+          curl -sSL -o /tmp/godot.zip "$BASE/Godot_v${GODOT_VERSION}_mono_linux_x86_64.zip"
+          curl -sSL -o /tmp/templates.tpz "$BASE/Godot_v${GODOT_VERSION}_mono_export_templates.tpz"
+          mkdir -p /tmp/godot-editor "$HOME/.local/share/godot/export_templates/${GODOT_CHANNEL}"
+          unzip -q /tmp/godot.zip -d /tmp/godot-editor
+          unzip -q /tmp/templates.tpz -d /tmp/templates_x
+          cp -r /tmp/templates_x/templates/* "$HOME/.local/share/godot/export_templates/${GODOT_CHANNEL}/"
+          echo "GODOT_BIN=$(find /tmp/godot-editor -name 'Godot_v*_mono_linux.x86_64' -type f | head -1)" >> "$GITHUB_ENV"
+          ls "$HOME/.local/share/godot/export_templates/${GODOT_CHANNEL}/" | grep -E "android|version"
+
+      # Project dùng nuget.config local-only trỏ tới ../nuget-local.
+      # Nếu repo chưa vendor sẵn thư mục này, tải đúng bộ gói đã kiểm chứng
+      # (bộ gói của lần publish android-arm64 thành công trên VM).
+      - name: Chuẩn bị nuget-local (nếu repo chưa có)
+        run: |
+          NUGET_DIR="$(dirname "${PROJECT_DIR}")/nuget-local"
+          if [ ! -f "$NUGET_DIR/microsoft.netcore.app.runtime.mono.android-arm64.8.0.11.nupkg" ]; then
+            mkdir -p "$NUGET_DIR"
+            cd "$NUGET_DIR"
+            FLAT="https://api.nuget.org/v3-flatcontainer"
+            for spec in \
+              "godot.net.sdk 4.7.2" \
+              "godotsharp 4.7.2" \
+              "godotsharpeditor 4.7.2" \
+              "godot.sourcegenerators 4.7.2" \
+              "microsoft.netcore.app.runtime.mono.android-arm64 8.0.11" ; do
+              set -- $spec
+              curl -sSL -O "$FLAT/$1/$2/$1.$2.nupkg"
+            done
+          fi
+          ls "$NUGET_DIR"
+
+      # Preset trong project đang ghi đường dẫn keystore tuyệt đối của VM.
+      # Trên CI: sinh debug keystore chuẩn Android rồi trỏ lại preset vào nó.
+      # (Bản này ký bằng debug keystore — đủ để cài/test nội bộ. Keystore
+      # production qua GitHub Secrets: xem README đi kèm.)
+      - name: Sinh debug keystore + trỏ lại preset
+        run: |
+          keytool -genkeypair -keystore "$HOME/ngumach-debug.keystore" \
+            -storepass android -alias androiddebugkey -keypass android \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+          PRESETS="${PROJECT_DIR}/export_presets.cfg"
+          sed -i "s|^keystore/debug=\".*\"|keystore/debug=\"$HOME/ngumach-debug.keystore\"|" "$PRESETS"
+          sed -i "s|^keystore/release=\".*\"|keystore/release=\"$HOME/ngumach-debug.keystore\"|" "$PRESETS"
+          grep -E "^keystore/(debug|release)=" "$PRESETS"
+
+      # Chạy editor một lần để sinh editor_settings + import project,
+      # rồi ghi đường dẫn Android SDK / JDK vào settings cho khâu export.
+      - name: Import project + cấu hình editor settings
+        run: |
+          "$GODOT_BIN" --headless --path "${PROJECT_DIR}" --import || true
+          SETTINGS="$HOME/.config/godot/editor_settings-4.7.tres"
+          sed -i "s|^export/android/android_sdk_path = .*|export/android/android_sdk_path = \"$ANDROID_HOME\"|" "$SETTINGS"
+          sed -i "s|^export/android/java_sdk_path = .*|export/android/java_sdk_path = \"$JAVA_HOME\"|" "$SETTINGS"
+          grep -E "export/android/(android|java)_sdk_path" "$SETTINGS"
+
+      # Cài build template Android vào project và xuất APK trong cùng một
+      # lần chạy editor (cờ chính thức của Godot 4.7).
+      - name: Xuất APK (cài build template + export release)
+        run: |
+          mkdir -p "$(dirname "${APK_OUT}")"
+          export DOTNET_ROOT="$HOME/.dotnet"
+          "$GODOT_BIN" --headless --path "${PROJECT_DIR}" \
+            --install-android-build-template \
+            --export-release "${PRESET_NAME}" "$GITHUB_WORKSPACE/${APK_OUT}"
+          ls -la "${APK_OUT}"
+
+      # Kiểm chứng APK ngay trong pipeline (đây là phần chưa làm được trên
+      # VM): chữ ký hợp lệ, badging đúng gói, có đủ thư viện Godot cho
+      # arm64 và assembly .NET của game.
+      - name: Kiểm chứng APK
+        run: |
+          BT="$ANDROID_HOME/build-tools/35.0.0"
+          "$BT/apksigner" verify --print-certs "${APK_OUT}" | head -3
+          "$BT/aapt" dump badging "${APK_OUT}" | head -4
+          unzip -l "${APK_OUT}" | grep -E "lib/arm64-v8a/libgodot_android\.so" > /dev/null
+          unzip -l "${APK_OUT}" | grep -E "NgumachPrototype\.dll" > /dev/null
+          echo "APK OK: $(du -h "${APK_OUT}" | cut -f1)"
+
+      - name: Tải APK lên Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ngumach-android-apk
+          path: ${{ env.APK_OUT }}
+          retention-days: 14

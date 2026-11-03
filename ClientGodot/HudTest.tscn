@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://nmhudtest"]
+
+[ext_resource type="Script" path="res://scripts/HudTest.cs" id="1"]
+[ext_resource type="PackedScene" path="res://Hud.tscn" id="2"]
+
+[node name="HudTest" type="Node2D"]
+script = ExtResource("1")
+
+[node name="GameHud" parent="." instance=ExtResource("2")]

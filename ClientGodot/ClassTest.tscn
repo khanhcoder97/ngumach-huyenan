@@ -1,0 +1,87 @@
+[gd_scene load_steps=7 format=3 uid="uid://nmclasstest1"]
+
+[ext_resource type="Script" path="res://scripts/ClassTest.cs" id="1"]
+[ext_resource type="Script" path="res://scripts/BenMuaTilemapBuilder.cs" id="2"]
+[ext_resource type="Script" path="res://scripts/PlayerController2D.cs" id="3"]
+[ext_resource type="Script" path="res://scripts/DirectionalAnimator2D.cs" id="4"]
+
+[sub_resource type="RectangleShape2D" id="feet"]
+size = Vector2(24, 12)
+
+[node name="ClassTest" type="Node2D"]
+script = ExtResource("1")
+
+[node name="TilemapBuilder" type="Node" parent="."]
+script = ExtResource("2")
+DataPath = "res://assets/tilemap/full_map/tilemap.json"
+AtlasPath = "res://assets/tilemap/full_map/atlas.png"
+DetailUnderPath = "res://assets/tilemap/full_map/detail_under.png"
+DetailOverPath = "res://assets/tilemap/full_map/detail_over.png"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(420, 690)
+enabled = true
+
+[node name="anh_dao" type="CharacterBody2D" parent="."]
+position = Vector2(300, 730)
+z_index = 10
+script = ExtResource("3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="anh_dao"]
+texture_filter = 1
+
+[node name="DirectionalAnimator2D" type="Node" parent="anh_dao"]
+script = ExtResource("4")
+ClassId = "anh_dao"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="anh_dao"]
+position = Vector2(0, -6)
+shape = SubResource("feet")
+
+[node name="huyen_but" type="CharacterBody2D" parent="."]
+position = Vector2(380, 730)
+z_index = 10
+script = ExtResource("3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="huyen_but"]
+texture_filter = 1
+
+[node name="DirectionalAnimator2D" type="Node" parent="huyen_but"]
+script = ExtResource("4")
+ClassId = "huyen_but"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="huyen_but"]
+position = Vector2(0, -6)
+shape = SubResource("feet")
+
+[node name="thach_chuy" type="CharacterBody2D" parent="."]
+position = Vector2(460, 730)
+z_index = 10
+script = ExtResource("3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="thach_chuy"]
+texture_filter = 1
+
+[node name="DirectionalAnimator2D" type="Node" parent="thach_chuy"]
+script = ExtResource("4")
+ClassId = "thach_chuy"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="thach_chuy"]
+position = Vector2(0, -6)
+shape = SubResource("feet")
+
+[node name="linh_cung" type="CharacterBody2D" parent="."]
+position = Vector2(540, 730)
+z_index = 10
+script = ExtResource("3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="linh_cung"]
+texture_filter = 1
+
+[node name="DirectionalAnimator2D" type="Node" parent="linh_cung"]
+script = ExtResource("4")
+ClassId = "linh_cung"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="linh_cung"]
+position = Vector2(0, -6)
+shape = SubResource("feet")

@@ -1,0 +1,12 @@
+# Godot / .NET build artifacts — never commit (WO24 M-A)
+.godot/
+bin/
+obj/
+android/
+build/
+*.user
+*.suo
+# The repo root .gitignore carries Unity rules (*.csproj, *.sln) — the
+# Godot .NET project files MUST be tracked, so negate them here.
+!*.csproj
+!*.sln
