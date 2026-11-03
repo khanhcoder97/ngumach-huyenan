@@ -1,0 +1,53 @@
+# Gói thực thi lớn: Godot và Bến Mưa chơi được — 03/11/2026
+
+Hiệu lực ngay từ dispatch GitHub của Codex. Tiếp work order 23; thay phần Unity bởi `docs/production/Godot_Client_Execution_Decision_20261103_vi.md`. Đọc review mới và `Encounter_Snapshot_Review_Decisions_20261103_vi.md`. Làm trọn gói, commit/push từng mốc có bằng chứng; chờ review một phần thì làm phần độc lập, không dừng sau ACK/plan/một fix. Antigravity vẫn thu hồi quyền làm việc.
+
+## Qoder local — QOD-21 tiếp: instance, wire và toàn chuỗi alpha
+
+Giữ nhánh `qoder/qod-21-ben-mua-playable-alpha-20261103`, PR #106 stacked tới #91, Refs #87/#41. Đã xác minh 461 self-check qua tại 3ed4ef6; không đồng nghĩa boss chơi được qua client. Không tự merge stack.
+
+**Q-A: sửa instance thật.** Làm các lỗi bắt buộc trong review encounter: boss/world-event và escort wave không dùng chung mutable entity/life giữa owner; credit từ authoritative kill, deterministic dedupe; missing 3+3 actors fail profile activation; không hoàn tất quest do thiếu nguồn. Test 2 owner active đồng thời, A wipe/reconnect/death/abandon, B nguyên vẹn; A đánh actor B bị từ chối. Không cần party hay account production cho gói này.
+
+**Q-B: contract và combat thật.** Triển khai cả current/detail GET, snapshot có locked facing/castId/deadline, schema1/fixtures/negative cases theo văn bản duyệt. Nối combat thường đánh questboss và server 20 Hz; giữ closed CombatEventV2. Công bố route/error/schema SHA cho #85 và Muse #1; thêm fixtures typed để họ làm song song, không đợi toàn epic xong. Không giả HTTP boss bằng domain damage call.
+
+**Q-C: hoàn chuỗi và hệ thống người chơi.** Tiếp Q3/Q4 work order 23: túi100/12slot, effective stats không hồi máu khi swap, revision/replay/overflow, alpha loot có nguồn, death-return có receipt/life scope, quest P00-02..05 đủ collect/dodge/escort/boss/fragment/classTalk/turnin và portal C1 có record thật. Thiết kế đã chốt trong JSON, không hỏi lại. Không bypass minlevel11 của C1-01 hoặc auto cấp item để demo. Chỉ Minh Kiếm có server class hiện hành: bốn class khác phải capability disabled, không pretend đã hỗ trợ; mở thêm class cần contract/source riêng sau mốc này.
+
+**Q-D: bàn giao chạy được.** Runner private alpha bật đúng gates và source versions, HTTP 2 client, log exact assertions, self-check/contract/content checks và CI. Healthcheck/log phải phân biệt baseline với alpha. Gửi script Windows khởi động server trên loopback, port cấu hình, dừng đúng process của script, không reset DB người dùng; không mở production public. Health vẫn in-memory tới khi QR được nghiệm thu. Nếu persistence đang chờ, tiếp alpha thay vì báo blocked cả gói.
+
+## OpenCode — OPC-15: lõi C# portable và hợp đồng tích hợp Godot
+
+Baseline PR #103 head 974139f; giữ branch/worktree hiện có, không sửa root của Qoder. **Dừng mở rộng Unity UI/native graph**. PR #103 là bằng chứng lịch sử/nguồn tái sử dụng, không tự đóng hoặc tuyên bố native pass. Tạo nhánh `opencode/opc-15-godot-client-core-20261103` từ exact OPC-14, worktree riêng `D:/Project/NGUMACHHUYENAN-opencode-godot-core-20261103`, PR stacked vào OPC-14. Nếu branch/path đã tồn tại phải kiểm status rồi dùng, không reset/clean. Refs #85/#80; phối hợp Muse #1.
+
+**O-A: thư viện dùng thật, không đổi chỗ hàng loạt.** Tạo `Shared/ClientCore/` và `.Tests/`, target phù hợp SDK của Godot Muse bàn giao (nêu rõ target, không tự nâng engine). Có thể link nguồn Core/Presentation portable hiện có bằng explicit Compile Include trong giai đoạn stack, giữ provenance SHA; tuyệt đối không UnityEngine/UnityEditor/UI Toolkit, static singleton session hoặc tài nguyên phụ thuộc Resources.Load. Không copy ra hai bản logic rồi sửa lệch. Contract loader/catalog/transport DI phải test ngoài engine được. Dependencies, license, lockfile, build command rõ ràng; đảm bảo csproj được tracked.
+
+**O-B: transport và state bền trước reconnect.** Async timeout/cancel, session lifecycle, revision/snapshot cũ không ghi đè mới, request in-flight đời cũ không áp vào login mới; receipt replay đúng cùng payload, khác payload conflict, không optimistic grant. Catalog verified digest/provenance và session invalidation từ OPC-14 phải hoạt động qua filesystem/stream provider của Godot, dùng cùng canonical ID/error mapping. Không tự tạo bag-full fixture hoặc sửa server để làm test xanh.
+
+**O-C: dùng contract encounter đã duyệt.** DTO/parser/renderer-neutral viewmodel cho discovery/detail, phase/HP/telegraph/shape/facing/castId/deadline/life. Unit tests từ versioned fixtures có nhãn fixture, HTTP test thật chỉ khi Qoder route chạy. Poll không replay animation; reset/life change hủy pending VFX, không tự damage. Handshake capability alpha/class/map/route version rõ ràng để Muse không gọi endpoint chưa có. Gửi một interface integration packet có example Godot consumer; chỉ Muse sửa scene/runtime Godot. Không hard-code phép lật Y ở portable model.
+
+**O-D: acceptance và bàn giao.** Nối runner private HTTP hiện có tới adapter portable, kiểm reward exactly once từ before/after inventory/revision và replay; isolation 2 session, stale async, failed request, logout/relogin, localization IDs. Test không được skip thành PASS; thiếu server/route => UNVERIFIED khác exit0. GitHub CI build/test Shared không cần Unity và log số assertions >0, TRX/raw output. Gửi Muse API + minimal sample + exact SHA sớm, sau đó tiếp O-B..D. Gói đủ khi Muse import được và có ít nhất một flow thực dùng thư viện, không chỉ thêm project test xanh.
+
+## Muse — MUSE-GODOT-ALPHA: source, giao diện chính và full gameplay
+
+PR #107 mới có báo cáo; kết quả VM chưa được Codex kiểm độc lập. Dùng `muse/ben-mua-playable-alpha-20261103` hoặc branch Godot riêng đã công bố, PR tới `codex/story-gameplay-integration-20261031`; không gửi source vào PR report-only mà không cập nhật scope. Refs #1/#29/#39. Không sửa Server/Health/contracts/portable core của OpenCode.
+
+**M-A: bàn giao source có thể tái lập.** `ClientGodot/` + build/test/export script + actual package target/hash/feed + project lockfiles và DEC-024 proposed patch. Chỉ asset đã được phép phát hành mới push Git/LFS; bản chưa duyệt giữ DRAFT và cung cấp manifest/contact sheet/review packet theo quyền hiện có. Không gửi source giả với dependency bí mật rồi báo clone sạch chạy được. Tách thiếu asset và thiếu source thành checklist rõ ràng. Mọi kết quả 10/10 hoặc export phải gắn exact source SHA/toolchain/command/log; raw XML không tự viết tay thay output test.
+
+**M-B: nối gameplay scene chính.** Được giao gắn HUD board-06 vào Main.tscn, nối menu→session→Bến Mưa→quest/NPC/inventory/equip/target/attack/skill/cinema→death-return→boss→turnin→portal. Dùng interface của OPC-15 và server alpha QOD-21; phần route đang chờ thì dùng fixture với banner DRAFT/OFFLINE rõ ràng, không gọi đó là online PASS. HUD skill vòng cung quanh attack, minimap thật, tầm nhìn world rộng, input không xuyên panel và phím ESC/click/touch đúng. Tooltip, error, thiếu nguyên liệu và quest không chỉ là chữ trạng thái. 5 thẻ class giữ được preview, server chưa hỗ trợ thì disabled với lý do, không gửi class giả Minh Kiếm cho lựa chọn khác.
+
+**M-C: pixel/animation và map review lớn.** Chuyển 48×64→64×64 bằng manifest versioned action/row/frame-count thật khi asset đã duyệt; không đọc cố định attack1 nếu source mới là attack, không chơi ô rỗng hoặc lật gương bừa hướng chéo. Bàn giao sample sprite+GIF/video 8 hướng, pivot/footplant/weapon bounds, timing combat. Gửi mapping ART-P1-013→boss move A/B/C: nếu là tutorial move C thì đã có design annulus3..7/windup1s/recovery1s/cd12, được sản xuất theo JSON; không tự áp cho boss khác. Có telegraph nhìn rõ trên nền sáng/tối, reduced-flash và culling không xóa vùng nguy hiểm.
+
+Giữ map lớn/chunk theo nguồn, không thay background bằng một sân nhỏ. Với 306 water+37 bank walkable: gửi tọa độ tile/WU, layer/collision, ảnh annotated, connectivity trước/sau và NPC/quest path liên quan để Codex quyết định; **không tự chặn hàng loạt**. Đối chiếu client/server walkability và footbox, không gắn REVIEWED vì floodfill pass. NPC/map style-2/thuyền/VFX chưa duyệt vẫn DRAFT, cung cấp review bundle lớn theo nhóm, không đẩy lẻ từng PNG rồi dừng. Font tiếng Việt cần đủ dấu/NFC/line-height/license, không bake nhãn lên art.
+
+**M-D: Windows trước, Android qua CI.** Compatibility preset máy yếu, source import lạnh có timeout/log (không lờ cold-cache hang), warm import, build/test/export Windows portable; kiểm launch/window/input/audio/fonts và đo preset thấp, screenshot/video actual game. Bàn giao bundle checksum+commit+README, không chứa credentials. Chuẩn bị workflow Android manual, pin SDK/JDK/templates/.NET đã kiểm, chạy build thật và publish APK artifact khi source vào repo; OOM phải ghi FAIL/blocked, không biến thành PASS. Dùng CI/VM cho build nặng, không bắt máy chủ dự án cài Unity. Cinema tiếp tục opening/CIN006 theo narrative đã duyệt, SRT/VO/stems/fallback/skip; video không cấp quest/reward.
+
+## Qoder remote — giữ QR-01, sửa bàn giao thiếu và hoàn transaction/recovery
+
+Đã xem head mới 5371a46 của PR #98: vẫn chỉ `Server/Health/Health.csproj` được tracked; workflow QR riêng còn `needs: deploy-preview` không tồn tại và chỉ tới project thiếu. Chưa có checkpoint buildable, không phát QR-02.
+
+Nhận trọn R1→R6 work order 23. Checkpoint đầu **bắt buộc** có csproj library/test/harness tracked, .gitignore whitelist đúng chỗ, restore/build/test từ clone/archive sạch; sửa workflow dependencies/build path/cleanup bounded không wildcard biến rỗng. Gửi `git ls-files`, `git show HEAD:path`, exact SHA, test count/TRX và URL workflow QR thật. Sáu job server/content khác xanh không chứng minh module này chạy.
+
+Sau đó hoàn atomic DB transaction/receipt+payload hash/ledger/outbox, DB ownership lease/fencing và 120s reconnect, 2 process same-key/rollback/crash recovery/backup restore thật. `VerifyDatabaseIntegrityAsync => true`, `Simulate batch` và copy DB đang WAL mà không backup API/quiesce không được nghiệm thu. Không reflection private connection, không callback mutate ngoài transaction. Không paste toàn bộ chat log vào repo thay bằng mã nguồn/evidence. Trong khi chờ contract review, làm outbox/restart/restore tests; Health adapter chỉ sau Codex duyệt interface và test. Giữ production OFF.
+
+## Handoff và review
+
+ACK đúng issue với owner, branch, SHA, mốc đang code và phụ thuộc; không tự gắn APPROVED/REVIEWED cho phần của mình. Mỗi milestone có code/assets thật, source version, lệnh tái lập, output và giới hạn. Codex review/merge; CI xanh không thay bằng chứng native hoặc máy thật. Không reset, stash, clean hay checkout worktree của người khác; giữ nguyên file cá nhân trong root. Nếu một dependency chưa xong, tiếp phần độc lập trong gói.
