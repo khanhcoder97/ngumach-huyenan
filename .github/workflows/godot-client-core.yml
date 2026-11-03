@@ -46,7 +46,12 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
-      - name: Build HTTP runner
-        run: dotnet build Shared/ClientCore.HttpRunner/ClientCore.HttpRunner.csproj -c Release --nologo
-      - name: Note
-        run: echo "HTTP runner requires a private server; run via run_acceptance-style script locally/CI-with-server. Build-only gate here."
+      - name: Run portable HTTP runner (private server, mandatory)
+        run: python Shared/ClientCore.HttpRunner/run_http.py
+      - name: Upload HTTP artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clientcore-http-results
+          path: TestResults/clientcore-http/
+          if-no-files-found: ignore

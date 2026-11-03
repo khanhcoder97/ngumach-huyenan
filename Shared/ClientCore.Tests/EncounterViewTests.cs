@@ -6,44 +6,49 @@ namespace NguMach.Client.Core.Tests
 {
     public class EncounterViewTests
     {
-        private static EncounterSnapshot Snap(string castId = "cast-1", long gen = 1, string life = "life-1") =>
+        private static EncounterSnapshot Snap(string castId = "cast-1", long life = 1, int phase = 1) =>
             new EncounterSnapshot
             {
-                EncounterId = "enc-1", BossLifeId = life, Generation = gen,
-                Phase = "Telegraph", ServerTick = 10, Hp = 1200, MaxHp = 1200,
-                Revision = 1, ActiveMove = new ActiveMove { CastId = castId, StateEndsAtTick = 20,
-                    Shape = new MoveShape { Type = "cone", FacingX = 1, FacingY = 0, AngleDegrees = 60 } },
+                EncounterId = "enc-1", BossLifeId = life, StatusRaw = "OPEN", PhaseRaw = phase,
+                ServerTick = 10, BossHp = 1200, BossMaxHp = 1200, BossRevision = 1,
+                ActiveMove = new ActiveMove { CastId = castId, StateRaw = "TELEGRAPH", StateEndsAtTick = 20,
+                    Shape = new MoveShape { KindRaw = "cone", RangeWu = 5, FacingX = 1, FacingY = 0, AngleDegrees = 60 } },
                 DeadlineTick = 20
             };
 
         [Fact]
-        public void Apply_SetsSnapshotAndTracksCast()
+        public void Apply_SetsSnapshotAndReturnsNewEncounter()
         {
             var v = new EncounterView();
-            v.Apply(Snap("cast-1"));
+            var upd = v.Apply(Snap("cast-1"));
             Assert.True(v.HasSnapshot);
             Assert.True(v.IsTelegraphActive);
+            Assert.True(upd.IsNewEncounter);
+            Assert.True(upd.IsNewCast);
+            Assert.Null(v.LastCastId); // not committed yet
+            v.CommitCast();
             Assert.Equal("cast-1", v.LastCastId);
         }
 
         [Fact]
-        public void SameCast_IsNotNew()
+        public void SameCast_IsNotNew_AfterCommit()
         {
             var v = new EncounterView();
             v.Apply(Snap("cast-1"));
-            Assert.False(v.IsNewCast("cast-1"));
-            Assert.True(v.IsNewCast("cast-2"));
+            v.CommitCast();
+            var upd = v.Apply(Snap("cast-1"));
+            Assert.False(upd.IsNewCast);
         }
 
         [Fact]
         public void LifeChange_ResetsCastTracking()
         {
             var v = new EncounterView();
-            v.Apply(Snap("cast-1", 1, "life-1"));
-            v.Apply(Snap("cast-1", 2, "life-2")); // new life/generation
-            // cast id same string but new life => tracking reset then re-set; still recorded
-            Assert.Equal("cast-1", v.LastCastId);
-            Assert.Equal(2, v.LastLifeGeneration);
+            v.Apply(Snap("cast-1", 1));
+            v.CommitCast();
+            var upd = v.Apply(Snap("cast-1", 2)); // new life
+            Assert.True(upd.IsNewLife);
+            Assert.True(upd.IsNewCast);
         }
 
         [Fact]
@@ -51,6 +56,7 @@ namespace NguMach.Client.Core.Tests
         {
             var v = new EncounterView();
             v.Apply(Snap());
+            v.CommitCast();
             v.Reset();
             Assert.False(v.HasSnapshot);
             Assert.Null(v.LastCastId);
@@ -70,6 +76,16 @@ namespace NguMach.Client.Core.Tests
         {
             var v = new EncounterView();
             Assert.Throws<ArgumentNullException>(() => v.Apply(null));
+        }
+
+        [Fact]
+        public void CancelPendingVfx_ClearsPending()
+        {
+            var v = new EncounterView();
+            v.Apply(Snap("cast-2"));
+            Assert.True(v.PendingCastId == "cast-2");
+            v.CancelPendingVfx();
+            Assert.Null(v.PendingCastId);
         }
     }
 }

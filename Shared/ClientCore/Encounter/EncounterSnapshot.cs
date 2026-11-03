@@ -1,52 +1,68 @@
-// OPC-15 O-C — Renderer-neutral encounter DTOs for the approved alpha snapshot contract.
-// Pure C# (no Unity/Godot). Mirrors EncounterSnapshotV1 (additionalProperties:false).
-// Owner: OpenCode (portable core). Muse binds these to Godot scenes; Qoder owns the route.
-// Refs: Encounter_Snapshot_Review_Decisions_20261103_vi.md
+// OPC-15 O1 — Renderer-neutral encounter DTOs matching the approved alpha contract.
+// Numeric boss phase 1/2/3, encounter status OPEN/DEFEATED/RESET, move state
+// TELEGRAPH/IMPACT/RECOVERY, bossHp/bossMaxHp/bossRevision, shape.kind/center/rangeWu/...
+// Strict: no silent mapping of unknown shapes/phases; unknown properties rejected.
+// Pure C# (no Unity/Godot). Owner: OpenCode (portable core).
+// Refs: Encounter_Snapshot_Review_Decisions_20261103_vi.md, work order 25 O1.
 
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace NguMach.Client.Core.Encounter
 {
-    public enum EncounterPhase
+    public enum EncounterStatus
     {
-        Idle = 0,
-        Telegraph = 1,
-        Active = 2,
-        Phase2 = 3,
-        Phase3 = 4,
-        Defeated = 5,
-        Wiped = 6,
+        Open,
+        Defeated,
+        Reset,
+    }
+
+    public enum BossPhase
+    {
+        Phase1 = 1,
+        Phase2 = 2,
+        Phase3 = 3,
+    }
+
+    public enum MoveState
+    {
+        Telegraph,
+        Impact,
+        Recovery,
     }
 
     public enum MoveShapeKind
     {
-        Cone = 0,
-        Circle = 1,
-        Annulus = 2,
+        Cone,
+        Circle,
+        Annulus,
+    }
+
+    public sealed class Point2
+    {
+        [JsonProperty("x")] public double X { get; set; }
+        [JsonProperty("y")] public double Y { get; set; }
     }
 
     public sealed class MoveShape
     {
-        [JsonProperty("type")] public string Type { get; set; } = "cone";
-        // Cone
+        [JsonProperty("kind")] public string KindRaw { get; set; }
+        [JsonProperty("center")] public Point2 Center { get; set; }
+        [JsonProperty("rangeWu")] public double RangeWu { get; set; }
+        [JsonProperty("radiusWu")] public double? RadiusWu { get; set; }
+        [JsonProperty("innerRadiusWu")] public double? InnerRadiusWu { get; set; }
+        [JsonProperty("outerRadiusWu")] public double? OuterRadiusWu { get; set; }
         [JsonProperty("angleDegrees")] public double? AngleDegrees { get; set; }
-        [JsonProperty("range")] public double? Range { get; set; }
-        // Circle
-        [JsonProperty("radius")] public double? Radius { get; set; }
-        // Annulus
-        [JsonProperty("innerRadius")] public double? InnerRadius { get; set; }
-        [JsonProperty("outerRadius")] public double? OuterRadius { get; set; }
-        // Facing (locked at telegraph; finite, normalized within tolerance)
         [JsonProperty("facingX")] public double FacingX { get; set; }
         [JsonProperty("facingY")] public double FacingY { get; set; }
 
-        public MoveShapeKind Kind
+        [JsonIgnore] public MoveShapeKind Kind
         {
             get
             {
-                if (string.Equals(Type, "circle", StringComparison.OrdinalIgnoreCase)) return MoveShapeKind.Circle;
-                if (string.Equals(Type, "annulus", StringComparison.OrdinalIgnoreCase)) return MoveShapeKind.Annulus;
+                if (string.Equals(KindRaw, "circle", StringComparison.OrdinalIgnoreCase)) return MoveShapeKind.Circle;
+                if (string.Equals(KindRaw, "annulus", StringComparison.OrdinalIgnoreCase)) return MoveShapeKind.Annulus;
                 return MoveShapeKind.Cone;
             }
         }
@@ -56,36 +72,75 @@ namespace NguMach.Client.Core.Encounter
     {
         [JsonProperty("moveId")] public string MoveId { get; set; }
         [JsonProperty("castId")] public string CastId { get; set; }
+        [JsonProperty("state")] public string StateRaw { get; set; }
         [JsonProperty("stateEndsAtTick")] public long StateEndsAtTick { get; set; }
         [JsonProperty("shape")] public MoveShape Shape { get; set; }
+
+        [JsonIgnore] public MoveState State
+        {
+            get
+            {
+                MoveState s;
+                return Enum.TryParse(StateRaw, true, out s) ? s : MoveState.Telegraph;
+            }
+        }
+    }
+
+    public sealed class EncounterRegistration
+    {
+        [JsonProperty("registeredCharacterIds")] public List<string> RegisteredCharacterIds { get; set; }
+        [JsonProperty("ownerCharacterId")] public string OwnerCharacterId { get; set; }
+    }
+
+    public sealed class EncounterArena
+    {
+        [JsonProperty("minX")] public double MinX { get; set; }
+        [JsonProperty("maxX")] public double MaxX { get; set; }
+        [JsonProperty("minY")] public double MinY { get; set; }
+        [JsonProperty("maxY")] public double MaxY { get; set; }
+    }
+
+    public sealed class SafePad
+    {
+        [JsonProperty("id")] public string Id { get; set; }
+        [JsonProperty("x")] public double X { get; set; }
+        [JsonProperty("y")] public double Y { get; set; }
+        [JsonProperty("radiusWu")] public double RadiusWu { get; set; }
     }
 
     public sealed class EncounterSnapshot
     {
         [JsonProperty("schemaVersion")] public int SchemaVersion { get; set; } = 1;
         [JsonProperty("encounterId")] public string EncounterId { get; set; }
-        [JsonProperty("bossLifeId")] public string BossLifeId { get; set; }
-        [JsonProperty("generation")] public long Generation { get; set; }
-        [JsonProperty("ownerCharacterId")] public string OwnerCharacterId { get; set; }
-        [JsonProperty("questAttemptId")] public string QuestAttemptId { get; set; }
-        [JsonProperty("phase")] public string Phase { get; set; }
+        [JsonProperty("bossLifeId")] public long BossLifeId { get; set; }
+        [JsonProperty("status")] public string StatusRaw { get; set; }
+        [JsonProperty("phase")] public int PhaseRaw { get; set; }
         [JsonProperty("serverTick")] public long ServerTick { get; set; }
-        [JsonProperty("hp")] public int Hp { get; set; }
-        [JsonProperty("maxHp")] public int MaxHp { get; set; }
-        [JsonProperty("revision")] public long Revision { get; set; }
+        [JsonProperty("bossHp")] public int BossHp { get; set; }
+        [JsonProperty("bossMaxHp")] public int BossMaxHp { get; set; }
+        [JsonProperty("bossRevision")] public long BossRevision { get; set; }
         [JsonProperty("activeMove")] public ActiveMove ActiveMove { get; set; }
         [JsonProperty("deadlineTick")] public long? DeadlineTick { get; set; }
         [JsonProperty("ticksRemaining")] public long? TicksRemaining { get; set; }
-        [JsonProperty("lifeScope")] public string LifeScope { get; set; } // owner | attempt
+        [JsonProperty("registration")] public EncounterRegistration Registration { get; set; }
+        [JsonProperty("arena")] public EncounterArena Arena { get; set; }
+        [JsonProperty("safePads")] public List<SafePad> SafePads { get; set; }
+        [JsonProperty("npcId")] public string NpcId { get; set; }
+        [JsonProperty("cooldowns")] public Dictionary<string, long> Cooldowns { get; set; }
 
-        public EncounterPhase PhaseEnum
+        [JsonExtensionData] public Dictionary<string, object> Extra { get; set; }
+
+        [JsonIgnore] public EncounterStatus Status
         {
             get
             {
-                if (string.IsNullOrEmpty(Phase)) return EncounterPhase.Idle;
-                EncounterPhase p;
-                return Enum.TryParse(Phase, true, out p) ? p : EncounterPhase.Idle;
+                EncounterStatus s;
+                return Enum.TryParse(StatusRaw, true, out s) ? s : EncounterStatus.Open;
             }
+        }
+        [JsonIgnore] public BossPhase Phase
+        {
+            get { return (BossPhase)Math.Max(1, Math.Min(3, PhaseRaw)); }
         }
     }
 }

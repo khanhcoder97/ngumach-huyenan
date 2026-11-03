@@ -28,6 +28,7 @@
     <Compile Include="Catalog/*.cs" />
     <Compile Include="Transport/*.cs" />
     <Compile Include="Handshake/*.cs" />
+    <Compile Include="Composition/*.cs" />
   </ItemGroup>
 
 </Project>

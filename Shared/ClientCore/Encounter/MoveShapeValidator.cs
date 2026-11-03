@@ -1,8 +1,7 @@
-// OPC-15 O-C — Shape validation for encounter telegraphs (renderer-neutral).
-// Cone: angleDegrees in (0,360], range > 0, facing finite & not both zero.
-// Circle: radius > 0.
-// Annulus: 0 <= innerRadius < outerRadius.
-// No engine dep.
+// OPC-15 O1 — Shape validation for encounter telegraphs (renderer-neutral).
+// Uses the approved field names: kind/rangeWu/radiusWu/innerRadiusWu/outerRadiusWu/
+// angleDegrees/facingX/facingY/center. Strict: no silent mapping of unknown kinds.
+// Pure C#. Owner: OpenCode.
 
 using System;
 
@@ -14,26 +13,33 @@ namespace NguMach.Client.Core.Encounter
         {
             reason = null;
             if (s == null) { reason = "null shape"; return false; }
-            switch (s.Kind)
+            // kind must be explicitly one of the three (KindRaw stored)
+            var kind = s.KindRaw;
+            if (string.IsNullOrEmpty(kind)) kind = "cone";
+            if (kind != "cone" && kind != "circle" && kind != "annulus") { reason = "unknown kind: " + kind; return false; }
+
+            if (!IsFinite(s.FacingX) || !IsFinite(s.FacingY)) { reason = "facing must be finite"; return false; }
+            if (s.FacingX == 0 && s.FacingY == 0) { reason = "facing must not be zero vector"; return false; }
+            double len = Math.Sqrt(s.FacingX * s.FacingX + s.FacingY * s.FacingY);
+            if (len < 0.99 || len > 1.01) { reason = "facing not normalized: " + len; return false; }
+
+            switch (kind)
             {
-                case MoveShapeKind.Cone:
-                    if (!s.AngleDegrees.HasValue || s.AngleDegrees.Value <= 0 || s.AngleDegrees.Value > 360)
+                case "cone":
+                    if (s.RangeWu <= 0) { reason = "cone rangeWu must be > 0"; return false; }
+                    if (s.AngleDegrees.HasValue && (s.AngleDegrees.Value <= 0 || s.AngleDegrees.Value > 360))
                     { reason = "cone angleDegrees must be in (0,360]"; return false; }
-                    if (!s.Range.HasValue || s.Range.Value <= 0) { reason = "cone range must be > 0"; return false; }
-                    if (!IsFinite(s.FacingX) || !IsFinite(s.FacingY)) { reason = "facing must be finite"; return false; }
-                    if (s.FacingX == 0 && s.FacingY == 0) { reason = "facing must not be zero vector"; return false; }
                     return true;
-                case MoveShapeKind.Circle:
-                    if (!s.Radius.HasValue || s.Radius.Value <= 0) { reason = "circle radius must be > 0"; return false; }
+                case "circle":
+                    if (!s.RadiusWu.HasValue || s.RadiusWu.Value <= 0) { reason = "circle radiusWu must be > 0"; return false; }
                     return true;
-                case MoveShapeKind.Annulus:
-                    if (!s.InnerRadius.HasValue || !s.OuterRadius.HasValue) { reason = "annulus radii required"; return false; }
-                    if (s.InnerRadius.Value < 0) { reason = "innerRadius must be >= 0"; return false; }
-                    if (s.InnerRadius.Value >= s.OuterRadius.Value) { reason = "innerRadius must be < outerRadius"; return false; }
+                case "annulus":
+                    if (!s.InnerRadiusWu.HasValue || !s.OuterRadiusWu.HasValue) { reason = "annulus radii required"; return false; }
+                    if (s.InnerRadiusWu.Value < 0) { reason = "innerRadiusWu must be >= 0"; return false; }
+                    if (s.InnerRadiusWu.Value >= s.OuterRadiusWu.Value) { reason = "innerRadiusWu must be < outerRadiusWu"; return false; }
                     return true;
-                default:
-                    reason = "unknown shape"; return false;
             }
+            reason = "unhandled kind"; return false;
         }
 
         private static bool IsFinite(double v) { return !double.IsNaN(v) && !double.IsInfinity(v); }

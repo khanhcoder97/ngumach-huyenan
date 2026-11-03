@@ -102,14 +102,17 @@ namespace ClientCoreHttpRunner
                 Check(client.Inventory.currencies.Where(c => c.currencyId == "COIN").Sum(c => c.amount) == 20, "20 coin");
                 Check(client.Inventory.items.Count(i => i != null && i.templateId == ChestTemplate) == 1, "1 chest");
 
-                // receipt replay guard demo
+                // unit-style guard demo (NOT HTTP evidence): replay same payload vs conflict
                 var receipt = new MutationReceipt { Key = "k", PayloadHash = "h", Applied = true, CoinGranted = 20, ChestGranted = 1 };
-                Check(ReceiptReplayGuard.Evaluate(receipt, "k", "h") == ReplayVerdict.ReplaySuccess, "replay same");
-                Check(ReceiptReplayGuard.Evaluate(receipt, "k", "h2") == ReplayVerdict.Conflict, "replay conflict");
+                Check(ReceiptReplayGuard.Evaluate(receipt, "k", "h") == ReplayVerdict.ReplaySuccess, "unit guard: replay same");
+                Check(ReceiptReplayGuard.Evaluate(receipt, "k", "h2") == ReplayVerdict.Conflict, "unit guard: replay conflict");
 
                 var repeat = await dialogue.TurnInQuestAsync("P00-01", "NPC_TA_VAN_KHANH", CancellationToken.None);
                 Check(repeat.IsError && repeat.ErrorCode == "invalid_transition", "repeat rejected");
-                Check(client.Inventory.currencies.Where(c => c.currencyId == "COIN").Sum(c => c.amount) == 20, "no double grant");
+                // fresh read after reject (not cached) to prove no double grant
+                Check((await client.ReadInventoryAsync(CancellationToken.None)).Success, "inv read after repeat");
+                Check(client.Inventory.currencies.Where(c => c.currencyId == "COIN").Sum(c => c.amount) == 20, "no double grant (fresh read)");
+                Check(client.Inventory.items.Count(i => i != null && i.templateId == ChestTemplate) == 1, "no double chest (fresh read)");
 
                 Console.WriteLine("PASS ClientCore HTTP assertions: " + checks);
             }

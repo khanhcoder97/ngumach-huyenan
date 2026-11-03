@@ -38,10 +38,11 @@ namespace NguMach.Client.Core.Tests
         }
 
         [Fact]
-        public void EncounterPhase_Names_AreStable()
+        public void BossPhase_Values_Are123()
         {
-            Assert.Equal("Telegraph", EncounterPhase.Telegraph.ToString());
-            Assert.Equal("Defeated", EncounterPhase.Defeated.ToString());
+            Assert.Equal(1, (int)BossPhase.Phase1);
+            Assert.Equal(2, (int)BossPhase.Phase2);
+            Assert.Equal(3, (int)BossPhase.Phase3);
         }
     }
 }

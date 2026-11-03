@@ -1,28 +1,31 @@
 {
   "schemaVersion": 1,
   "encounterId": "enc-fixture-001",
-  "bossLifeId": "life-fixture-001",
-  "generation": 7,
-  "ownerCharacterId": "char_test",
-  "questAttemptId": "attempt-001",
-  "phase": "Telegraph",
+  "bossLifeId": 7,
+  "status": "OPEN",
+  "phase": 1,
   "serverTick": 100,
-  "hp": 1200,
-  "maxHp": 1200,
-  "revision": 3,
+  "bossHp": 1200,
+  "bossMaxHp": 1200,
+  "bossRevision": 3,
   "activeMove": {
     "moveId": "boss_cone",
     "castId": "cast-fixture-001",
+    "state": "TELEGRAPH",
     "stateEndsAtTick": 120,
     "shape": {
-      "type": "cone",
+      "kind": "cone",
+      "rangeWu": 8,
       "angleDegrees": 60,
-      "range": 8,
       "facingX": 0.8660254,
       "facingY": 0.5
     }
   },
   "deadlineTick": 120,
   "ticksRemaining": 20,
-  "lifeScope": "owner"
+  "registration": {
+    "registeredCharacterIds": ["char_test"],
+    "ownerCharacterId": "char_test"
+  },
+  "npcId": "NPC_TA_VAN_KHANH"
 }
