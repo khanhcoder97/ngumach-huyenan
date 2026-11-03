@@ -35,6 +35,8 @@
     <Compile Include="CatalogDigestTests.cs" />
     <Compile Include="FixtureEncounterTests.cs" />
     <Compile Include="PortableTransportTests.cs" />
+    <Compile Include="TimeoutTransportTests.cs" />
+    <Compile Include="LocalizationAndCatalogPhysicalTests.cs" />
   </ItemGroup>
 
 </Project>
