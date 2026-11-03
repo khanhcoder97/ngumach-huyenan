@@ -33,6 +33,8 @@
     <Compile Include="CapabilityAndFileProviderTests.cs" />
     <Compile Include="MoveShapeValidatorTests.cs" />
     <Compile Include="CatalogDigestTests.cs" />
+    <Compile Include="FixtureEncounterTests.cs" />
+    <Compile Include="PortableTransportTests.cs" />
   </ItemGroup>
 
 </Project>

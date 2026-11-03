@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "encounterId": "enc-fixture-001",
+  "bossLifeId": "life-fixture-001",
+  "generation": 7,
+  "ownerCharacterId": "char_test",
+  "questAttemptId": "attempt-001",
+  "phase": "Telegraph",
+  "serverTick": 100,
+  "hp": 1200,
+  "maxHp": 1200,
+  "revision": 3,
+  "activeMove": {
+    "moveId": "boss_cone",
+    "castId": "cast-fixture-001",
+    "stateEndsAtTick": 120,
+    "shape": {
+      "type": "cone",
+      "angleDegrees": 60,
+      "range": 8,
+      "facingX": 0.8660254,
+      "facingY": 0.5
+    }
+  },
+  "deadlineTick": 120,
+  "ticksRemaining": 20,
+  "lifeScope": "owner"
+}
