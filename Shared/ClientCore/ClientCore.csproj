@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <RootNamespace>NguMach.Client.Core</RootNamespace>
+    <AssemblyName>NguMach.Client.Core</AssemblyName>
+    <IsPackable>false</IsPackable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <!-- Reuse the existing portable Core/Presentation sources by explicit include (provenance kept). -->
+  <ItemGroup>
+    <Compile Include="../../Client/Assets/Scripts/Online/Core/*.cs" />
+    <Compile Include="../../Client/Assets/Scripts/Online/Presentation/*.cs" />
+  </ItemGroup>
+
+  <!-- New Godot-portable additions live next to this csproj. -->
+  <ItemGroup>
+    <Compile Include="Encounter/*.cs" />
+    <Compile Include="Guards/*.cs" />
+    <Compile Include="Catalog/*.cs" />
+    <Compile Include="Transport/*.cs" />
+    <Compile Include="Handshake/*.cs" />
+  </ItemGroup>
+
+</Project>

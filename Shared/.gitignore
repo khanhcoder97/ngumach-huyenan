@@ -1,0 +1,7 @@
+# Shared/ keeps its own csproj tracked (global *.csproj is ignored elsewhere).
+!*.csproj
+!**/*.csproj
+
+# Build outputs are not source.
+**/bin/
+**/obj/
