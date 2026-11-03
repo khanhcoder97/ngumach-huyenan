@@ -74,7 +74,7 @@ public sealed record BossEncounterResolution(
 //   transition per frame), while HP reaching zero ends the fight inside the
 //   tick it lands — DEFEATED is therefore emitted once, from whichever of the
 //   two paths observes it first.
-public sealed class AlphaBossEncounterService
+public sealed class AlphaBossEncounterService : ICombatBossBridge
 {
     private const string QuestId = "P00-05";
     private const string FragmentObjectiveId = "OBJ_P00_05_FRAGMENT";
@@ -84,6 +84,7 @@ public sealed class AlphaBossEncounterService
     private readonly string _worldEventRecordId;
     private readonly int _maxHp;
     private readonly int _attack;
+    private readonly int _bossDefense;
     private readonly double _centerX;
     private readonly double _centerY;
     private readonly double _arenaRadius;
@@ -121,6 +122,7 @@ public sealed class AlphaBossEncounterService
         _worldEventRecordId = design.QuestRules.P00_05_WorldEventRecordIdDisabled;
         _maxHp = boss.MaxHp;
         _attack = boss.Attack;
+        _bossDefense = boss.Armor;
         _centerX = boss.CenterX;
         _centerY = boss.CenterY;
         _arenaRadius = boss.RadiusWu;
@@ -244,10 +246,10 @@ public sealed class AlphaBossEncounterService
         return resolutions;
     }
 
-    // The one entry point for damage on the boss. Today only the self-check
-    // drives it; the combat path calls it once the quest boss is targetable.
-    // HP hitting zero ends the fight inside this tick rather than waiting for
-    // the next impact frame.
+    // The one entry point for damage on the boss. The combat tick engine routes
+    // a cast that lands on the quest boss here, and the self-check drives it
+    // directly. HP hitting zero ends the fight inside this tick rather than
+    // waiting for the next impact frame.
     public IReadOnlyList<BossEncounterResolution> ApplyBossDamage(
         string characterId,
         int damage,
@@ -256,17 +258,54 @@ public sealed class AlphaBossEncounterService
         ArgumentOutOfRangeException.ThrowIfNegative(damage);
         lock (_sync)
         {
-            if (!_instances.TryGetValue(characterId, out var instance) ||
-                instance.Defeated ||
-                instance.AwaitingFreshAttempt)
-            {
-                return Array.Empty<BossEncounterResolution>();
-            }
-
-            instance.BossHp = Math.Max(0, instance.BossHp - damage);
             var resolutions = new List<BossEncounterResolution>();
-            ResolveDefeat(instance, resolutions);
+            DamageBossLocked(characterId, damage, resolutions);
             return resolutions;
+        }
+    }
+
+    // Shared damage path; the caller already holds _sync. Returns HP before and
+    // after, and whether this hit killed the boss.
+    private (int HpBefore, int HpAfter, bool Died) DamageBossLocked(
+        string characterId, int damage, List<BossEncounterResolution> resolutions)
+    {
+        if (!_instances.TryGetValue(characterId, out var instance) ||
+            instance.Defeated ||
+            instance.AwaitingFreshAttempt)
+        {
+            return (0, 0, false);
+        }
+
+        var hpBefore = instance.BossHp;
+        instance.BossHp = Math.Max(0, instance.BossHp - damage);
+        ResolveDefeat(instance, resolutions);
+        return (hpBefore, instance.BossHp, instance.Defeated);
+    }
+
+    // The tick engine casts at the quest boss through this bridge; the encounter
+    // stays the single owner of the boss HP and phase bookkeeping.
+    int ICombatBossBridge.BossDefense => _bossDefense;
+
+    bool ICombatBossBridge.IsLiveBossTarget(string characterId, WorldEntityInstance entity)
+    {
+        lock (_sync)
+        {
+            return _bossEntityId is not null &&
+                string.Equals(entity.EntityId, _bossEntityId, StringComparison.Ordinal) &&
+                _instances.TryGetValue(characterId, out var instance) &&
+                !instance.Defeated &&
+                !instance.AwaitingFreshAttempt &&
+                string.Equals(entity.State, WorldEntityStates.Alive, StringComparison.Ordinal);
+        }
+    }
+
+    (int HpBefore, int HpAfter, bool Died) ICombatBossBridge.ApplyDamage(
+        string characterId, int damage, long tick)
+    {
+        lock (_sync)
+        {
+            var resolutions = new List<BossEncounterResolution>();
+            return DamageBossLocked(characterId, damage, resolutions);
         }
     }
 

@@ -238,6 +238,10 @@ builder.Services.AddSingleton<WorldAoiProjectionService>();
 builder.Services.AddSingleton<AlphaWaveTrialService>();
 builder.Services.AddSingleton<AlphaEscortService>();
 builder.Services.AddSingleton<AlphaBossEncounterService>();
+// The tick engine casts at the alpha quest boss through this bridge; with the
+// profile OFF the encounter holds no instance so the impact path is unchanged.
+builder.Services.AddSingleton<ICombatBossBridge>(sp =>
+    sp.GetRequiredService<AlphaBossEncounterService>());
 builder.Services.AddHostedService<WorldTickBackgroundService>();
 
 var app = builder.Build();

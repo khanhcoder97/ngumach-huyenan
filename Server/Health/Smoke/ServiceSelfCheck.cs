@@ -6070,6 +6070,108 @@ public static class ServiceSelfCheck
             !bossNpcOther,
             $"npc=({bossNpcX},{bossNpcY}) other={bossNpcOther}");
 
+        // The tick engine resolves player casts only against `MOB` entities, so
+        // the quest boss is only strikable through the alpha bridge once an owner
+        // has registered an encounter. This proves all three: with no instance the
+        // boss is not a target; after registration the same cast lands and drains
+        // the encounter's HP; and the killing cast emits DEATH and credits the
+        // P00-05 BOSS objective with the death-event key (no new event types).
+        var bossIntStub = new BossEncounterQuestStub();
+        bossIntStub.Set("CHR_SELFCHECK_BOSS_INT", QuestStates.Active);
+        var bossIntBoss = BossWorldEntity(
+            "ENT_SELFCHECK_BOSS_INT", alphaDesign.QuestRules.P00_05_BossRecordId);
+        var bossIntRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [bossIntBoss]), bossClock);
+        var bossIntEncounter = new AlphaBossEncounterService(
+            alphaDesign,
+            bossIntStub,
+            bossIntRegistry,
+            enabledCombat,
+            new GuardDefenseService(
+                new GuardWindowStore(),
+                enabledCombat,
+                new CombatEventStore(new CombatEventStreamOptions())));
+        var bossIntEngine = new CombatTickEngine(
+            bossIntRegistry,
+            enabledCombat,
+            combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions { CapacityPerSession = 512, MaxPageSize = 512 }),
+            new MobCombatStateStore(),
+            bossIntStub,
+            new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(),
+            tickGeometry,
+            NewDashes(tickGeometry),
+            new ServerClock(),
+            bosses: bossIntEncounter);
+        var bossIntOwner = NewPlayer("CHR_SELFCHECK_BOSS_INT", hp: 500);
+        bossIntOwner.X = 181;
+        bossIntOwner.Y = 0;
+
+        // Cast before the encounter is registered: the boss is a `BOSS`, so the
+        // mob path ignores it and the bridge reports no live target. Count only
+        // events that struck the boss (the cast still emits its own END).
+        var bossPreStrikes = 0;
+        bossIntEngine.Schedule(
+            bossIntOwner, "SES_BOSS_INT", "0000000000000000000000000000a000",
+            CombatV2Actions.BasicAttack, null, -1, 0, 10000);
+        for (var t = 10000L; t <= 10005; t++)
+        {
+            bossPreStrikes += bossIntEngine.Tick(t).Count(evt =>
+                string.Equals(evt.TargetId, bossIntBoss.EntityId, StringComparison.Ordinal));
+        }
+
+        bossIntEncounter.Tick([bossIntOwner], 10010);
+        var bossCastImpacts = 0;
+        var bossDeathEvents = 0;
+        var bossRounds = 0;
+        var bossKilled = false;
+        while (!bossKilled && bossRounds < 80)
+        {
+            var start = 11000 + bossRounds * 10;
+            bossIntEngine.Schedule(
+                bossIntOwner, "SES_BOSS_INT", $"{bossRounds:x32}",
+                CombatV2Actions.BasicAttack, null, -1, 0, start);
+            for (var t = start; t <= start + 5; t++)
+            {
+                foreach (var evt in bossIntEngine.Tick(t))
+                {
+                    if (!string.Equals(evt.TargetId, bossIntBoss.EntityId, StringComparison.Ordinal))
+                    {
+                        continue;
+                    }
+
+                    if (string.Equals(evt.Type, CombatEventTypesV2.Impact, StringComparison.Ordinal))
+                    {
+                        bossCastImpacts++;
+                    }
+                    else if (string.Equals(evt.Type, CombatEventTypesV2.Death, StringComparison.Ordinal))
+                    {
+                        bossDeathEvents++;
+                        bossKilled = true;
+                    }
+                }
+            }
+
+            bossRounds++;
+        }
+
+        var bossIntState = bossIntEncounter.TryGetState("CHR_SELFCHECK_BOSS_INT", out var bossIntSnapshot);
+        Check(
+            "alpha.boss_cast_kill_credits_objective_through_bridge",
+            bossPreStrikes == 0 &&
+            bossIntState &&
+            bossIntSnapshot.Status == "DEFEATED" &&
+            bossIntSnapshot.BossHp == 0 &&
+            bossCastImpacts == 67 &&
+            bossDeathEvents == 1 &&
+            bossIntBoss.State == WorldEntityStates.Dead &&
+            bossIntStub.VerifiedEvents.Any(e =>
+                e.EventType == QuestProgressEventTypes.Kill &&
+                e.RecordId == alphaDesign.QuestRules.P00_05_BossRecordId),
+            $"pre={bossPreStrikes} impacts={bossCastImpacts} deaths={bossDeathEvents} " +
+            $"hp={bossIntSnapshot.BossHp} state={bossIntSnapshot.Status}");
+
         // ─── Mãng Cốt encounter state machine (Q-F part 1) ────
 
         var bossRules = new BossEncounterRules(PhaseGuardTicks: 3);
@@ -7288,11 +7390,13 @@ public static class ServiceSelfCheck
     }
 
     // The boss encounter only reads quest state, and its trial-visibility rule
-    // also reads the fragment objective's counter, so the stub carries both.
+    // also reads the fragment objective's counter, so the stub carries both. The
+    // cast integration asserts kill credit through it, so it also records events.
     private sealed class BossEncounterQuestStub : IQuestService
     {
         private readonly Dictionary<string, string> _states = new(StringComparer.Ordinal);
         private readonly Dictionary<string, int> _fragments = new(StringComparer.Ordinal);
+        public List<(string EventType, string RecordId)> VerifiedEvents { get; } = [];
 
         public void Set(string characterId, string state, int fragment = 0)
         {
@@ -7325,7 +7429,11 @@ public static class ServiceSelfCheck
             string eventId,
             string eventType,
             string recordId,
-            string mapId) => [];
+            string mapId)
+        {
+            VerifiedEvents.Add((eventType, recordId));
+            return [];
+        }
 
         public QuestOutcome TurnIn(PlayerSession actor, string questId) =>
             QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");

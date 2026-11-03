@@ -112,6 +112,7 @@ public sealed class CombatTickEngine
     private readonly DashMovementService _dashes;
     private readonly ServerClock _clock;
     private readonly LootGrantService? _lootGrants;
+    private readonly ICombatBossBridge? _bosses;
     private readonly object _sync = new();
     private readonly Dictionary<string, ScheduledCast> _casts = new(StringComparer.Ordinal);
 
@@ -127,7 +128,8 @@ public sealed class CombatTickEngine
         IWorldGeometryService geometry,
         DashMovementService dashes,
         ServerClock clock,
-        LootGrantService? lootGrants = null)
+        LootGrantService? lootGrants = null,
+        ICombatBossBridge? bosses = null)
     {
         _entities = entities;
         _combat = combat;
@@ -141,6 +143,7 @@ public sealed class CombatTickEngine
         _dashes = dashes;
         _clock = clock;
         _lootGrants = lootGrants;
+        _bosses = bosses;
     }
 
     // Where each accepted dash actually landed and why it stopped; internal
@@ -665,6 +668,18 @@ public sealed class CombatTickEngine
                 continue;
             }
 
+            // The alpha quest boss keeps its HP in the encounter, not in the mob
+            // state store, so it resolves on its own path and feeds the encounter.
+            if (_bosses is not null && _bosses.IsLiveBossTarget(cast.ActorId, target))
+            {
+                foreach (var bossEvent in ResolveBossHit(cast, target, hitIndex, impactTick))
+                {
+                    yield return bossEvent;
+                }
+
+                continue;
+            }
+
             var stats = maybeBundle ? ResolveMobStats(target) : null;
             var maxHp = stats?.Hp ?? 0;
             if (maxHp <= 0)
@@ -737,12 +752,81 @@ public sealed class CombatTickEngine
         }
     }
 
+    private IEnumerable<CombatEventV2> ResolveBossHit(
+        ScheduledCast cast, WorldEntityInstance target, int hitIndex, long impactTick)
+    {
+        // No damage lands while the P1:CombatDamage gate is off, exactly like a
+        // mob impact; the boss simply is not struck.
+        if (!_combat.Enabled)
+        {
+            yield break;
+        }
+
+        var lifeId = target.LifeId;
+        var hitProbability = DamageFormula.HitProbability(
+            CombatActorBaseline.Accuracy, CombatActorBaseline.Dodge);
+        if (!_rolls.Roll(cast.CastId, target.EntityId, hitIndex, CombatRollKind.Hit, hitProbability))
+        {
+            yield return AppendEvent(
+                cast, impactTick, CombatEventTypesV2.Miss, target.EntityId, lifeId,
+                hitIndex, target.Revision,
+                new CombatEventResultV2(false, false, false, 0, 0, 0));
+            yield break;
+        }
+
+        var critProbability = DamageFormula.AttributeCritChance(luk: 5, gearCrit: 0, cap: 0.5);
+        var crit = _rolls.Roll(
+            cast.CastId, target.EntityId, hitIndex, CombatRollKind.Crit, critProbability);
+        var raw = DamageFormula.RawDamage(
+            CombatActorBaseline.Attack, 0, cast.Coefficients[hitIndex], 1, 0);
+        var amount = (int)DamageFormula.FinalDamage(
+            raw,
+            DamageFormula.MitigationMultiplier(_bosses!.BossDefense),
+            1,
+            crit ? DamageFormula.CritMultiplier : 1,
+            1);
+
+        // The encounter owns the boss HP and phase bookkeeping, so the resolved
+        // damage is pushed there rather than into the mob state store.
+        var (hpBefore, _, died) = _bosses.ApplyDamage(cast.ActorId, amount, impactTick);
+        var hpDamage = Math.Min(amount, hpBefore);
+        yield return AppendEvent(
+            cast, impactTick, CombatEventTypesV2.Impact, target.EntityId, lifeId,
+            hitIndex, target.Revision,
+            new CombatEventResultV2(true, crit, false, amount, 0, hpDamage));
+
+        if (!died)
+        {
+            yield break;
+        }
+
+        _entities.Despawn(target.EntityId);
+        var deathEvent = AppendEvent(
+            cast, impactTick + 1, CombatEventTypesV2.Death, target.EntityId, lifeId,
+            hitIndex: null, target.Revision, result: null);
+        yield return deathEvent;
+
+        // Same DEV kill-credit policy as a mob: the P00-05 BOSS objective takes
+        // the killing death event id, keyed so a replay never double-counts.
+        _quests.RecordVerifiedEvent(
+            cast.Actor,
+            deathEvent.EventId,
+            QuestProgressEventTypes.Kill,
+            target.RecordId,
+            target.MapId);
+    }
+
     private List<WorldEntityInstance> SelectTargets(ScheduledCast cast)
     {
         var targets = new List<(WorldEntityInstance Entity, double Distance)>();
         foreach (var entity in _entities.All)
         {
-            if (!string.Equals(entity.Kind, WorldEntityKinds.Mob, StringComparison.Ordinal) ||
+            var isMob = string.Equals(entity.Kind, WorldEntityKinds.Mob, StringComparison.Ordinal);
+            // The alpha quest boss is a `BOSS` entity the bridge vouches for as
+            // this actor's live target; nothing changes when there is no bridge.
+            var isBossTarget = !isMob && _bosses is not null &&
+                _bosses.IsLiveBossTarget(cast.ActorId, entity);
+            if ((!isMob && !isBossTarget) ||
                 !string.Equals(entity.State, WorldEntityStates.Alive, StringComparison.Ordinal) ||
                 !string.Equals(entity.MapId, cast.MapId, StringComparison.Ordinal) ||
                 !string.Equals(entity.FloorId, cast.FloorId, StringComparison.Ordinal))
