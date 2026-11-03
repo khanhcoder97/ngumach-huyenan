@@ -1,5 +1,11 @@
 # Phân công ba agent — Ngũ Mạch: Huyền Ấn
 
+## Điều phối hiện hành từ 03/11/2026
+
+Đọc `24_GODOT_PLAYABLE_ALPHA_FOLLOWTHROUGH_20261103.md` trước các bảng lịch sử bên dưới. Client tiếp tục với **Godot .NET** theo `docs/production/Godot_Client_Execution_Decision_20261103_vi.md`: Muse sở hữu Godot runtime/scene và art; OpenCode sở hữu lõi C# độc lập engine, protocol/HTTP và API tích hợp; Qoder local sở hữu gameplay server, Qoder remote sở hữu persistence. Antigravity vẫn thu hồi. Các phần Unity bên dưới là lịch sử, không là lệnh phát triển client hiện hành. Giữ source cũ; không tự xóa file hoặc đóng PR.
+
+Hợp đồng encounter alpha được duyệt kèm sửa tại `docs/production/Encounter_Snapshot_Review_Decisions_20261103_vi.md`. Gameplay design và production gates OFF của work order 23 giữ nguyên. Review mới: `Implementation/Reports/Latest_Handoff_Review_20261103_vi.md`.
+
 ## Dispatch hiện hành 03/11/2026
 
 Đọc `23_AGENT_EXECUTION_PACKS_20261103.md`, report `Agent_Review_20261103_vi.md` và quyết định DESIGN-BM-ALPHA-20261103 trước các work order cũ. Qoder local nhận tutorial/boss/12slot alpha; OpenCode giữ runtime UI/HTTP/native correctness; QODER Remote hoàn QR1→QR6 DB thật; Muse nhận asset pack Bến Mưa chơi được. Antigravity tiếp tục bị thu hồi. Không coi report tự xưng hoàn tất hoặc CI không chạy module là nghiệm thu.
