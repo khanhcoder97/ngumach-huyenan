@@ -49,9 +49,9 @@ Client nằm tại workspace của Muse (chưa vào repo — việc đưa client
 ### 2.3 HUD board-06 và chọn class
 
 - HUD board-06 đã chạy trong scene online: HP/MP fill động, cooldown sweep động theo thời gian thực, joystick hoạt động, minimap thật, panel quest + pips, portrait theo class, nút BAG, nhịp tấn công, badge, API thanh EXP. Kiểm toán hình học so với layout board-06: 31/31 đạt; HudTest 15/15 PASS.
-- **Hai phát hiện chờ phán quyết của chủ dự án** (đã báo cáo riêng, chưa tự sửa):
-  1. Thanh EXP trên runtime **không bao giờ hiển thị được**: fill được tạo trước ảnh khung `exp_bar.png`, mà ruột ảnh khung là vàng đặc hoàn toàn nên fill bị che kín. Sửa bằng cách đảo thứ tự vẽ hoặc thay ảnh khung rỗng ruột.
-  2. `Main.tscn` **chưa gắn HUD board-06** — scene chính hiện chỉ có một nhãn trạng thái kết nối; HUD đầy đủ mới có trong scene test online.
+- **Phát hiện HUD — một đã sửa, một còn treo:**
+  1. Thanh EXP: **ĐÃ SỬA xong ngày 2026-11-03 theo cách B** (khoét 32.158 px vàng đặc ở ruột `exp_bar.png` thành máng tối, đảo thứ tự vẽ trong `BuildExp` để fill nằm trên khung) — đã kiểm chứng bằng ảnh chụp trong game ở tỉ lệ 35% và battery kiểm thử đầy đủ 10/10 PASS. Phiên bản báo cáo ban đầu ghi mục này là "chưa sửa" — đính chính tại đây.
+  2. `Main.tscn` **chưa gắn HUD board-06** — scene chính hiện chỉ có một nhãn trạng thái kết nối; HUD đầy đủ mới có trong scene test online. Việc này vẫn chờ phán quyết riêng của chủ dự án.
 - Chọn class chạy thật ngay trong menu: 5 thẻ class, chọn bằng click hoặc phím 1–5, portrait đầu nhân vật theo class. Thư viện clip của cả 5 class đã port sang client (bảng clip 48×64 của tuyến cũ).
 - Khuyết duy nhất còn lại của HUD: **font pixel tiếng Việt** — client đang dùng font mặc định của engine, Muse không tự chế font.
 
@@ -70,7 +70,7 @@ Client nằm tại workspace của Muse (chưa vào repo — việc đưa client
 
 Chuẩn thực thi đang khóa: ô 64×64 cho nhân vật (quái giữ ô riêng theo loài, boss đầu 128×128), 8 hàng theo thứ tự N, NE, E, SE, S, SW, W, NW; **hướng chéo sinh riêng, không lật gương** cho nhân vật; FPS là ước số sạch của 60. Board PR #38 chỉ là tham chiếu thiết kế + màu, không bao giờ cắt/xén thành asset; canon và quyết định đã khóa thắng lỗi trên board.
 
-### 3.1 Năm class — tổng 2.676 ô, ART_REVIEW đã đóng 4/5
+### 3.1 Năm class — tổng 2.655 ô, ART_REVIEW đã đóng 4/5
 
 | Class | Ô | Trạng thái ART_REVIEW |
 |---|---|---|
