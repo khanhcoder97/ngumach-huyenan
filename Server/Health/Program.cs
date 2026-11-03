@@ -236,6 +236,7 @@ builder.Services.AddSingleton<MobSpawnGroupService>();
 builder.Services.AddSingleton<WorldEntityProjectionService>();
 builder.Services.AddSingleton<WorldAoiProjectionService>();
 builder.Services.AddSingleton<AlphaWaveTrialService>();
+builder.Services.AddSingleton<AlphaEscortService>();
 builder.Services.AddHostedService<WorldTickBackgroundService>();
 
 var app = builder.Build();

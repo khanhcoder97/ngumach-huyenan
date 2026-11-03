@@ -8,8 +8,8 @@ namespace Server.Health.World;
 // DEPLETED interactables/mobs, resolves scheduled player casts, drives mob AI
 // (telegraph -> impact -> recovery) only when the fixture gate is on, lands
 // mob damage only when P1:CombatDamage is on, and drives the alpha
-// training-wave trial only when P1:AlphaProfile is on. Per-character gather
-// shard claims are lazy (UtcNow-based), no tick needed.
+// training-wave trial and the P00-04 escort only when P1:AlphaProfile is on.
+// Per-character gather shard claims are lazy (UtcNow-based), no tick needed.
 public sealed class WorldTickBackgroundService : BackgroundService
 {
     private static readonly TimeSpan TickPeriod = TimeSpan.FromSeconds(
@@ -21,6 +21,7 @@ public sealed class WorldTickBackgroundService : BackgroundService
     private readonly MobBehaviorOptions _mobOptions;
     private readonly AlphaProfileOptions _alphaOptions;
     private readonly AlphaWaveTrialService _waveTrial;
+    private readonly AlphaEscortService _escort;
     private readonly ISessionStore _sessions;
     private readonly CombatTickEngine _combat;
     private readonly MobSpawnGroupService _groups;
@@ -34,6 +35,7 @@ public sealed class WorldTickBackgroundService : BackgroundService
         IOptions<MobBehaviorOptions> mobOptions,
         IOptions<AlphaProfileOptions> alphaOptions,
         AlphaWaveTrialService waveTrial,
+        AlphaEscortService escort,
         ISessionStore sessions,
         CombatTickEngine combat,
         MobSpawnGroupService groups,
@@ -46,6 +48,7 @@ public sealed class WorldTickBackgroundService : BackgroundService
         _mobOptions = mobOptions.Value;
         _alphaOptions = alphaOptions.Value;
         _waveTrial = waveTrial;
+        _escort = escort;
         _sessions = sessions;
         _combat = combat;
         _groups = groups;
@@ -107,6 +110,14 @@ public sealed class WorldTickBackgroundService : BackgroundService
                             resolution.CharacterId, resolution.Outcome, resolution.Damage,
                             resolution.HpBefore, resolution.HpAfter,
                             resolution.QuestEventId ?? "-");
+                    }
+
+                    foreach (var resolution in _escort.Tick(players, tick))
+                    {
+                        _logger.LogInformation(
+                            "ALPHA escort {CharacterId}: {Outcome} {Detail} npc=({NpcX},{NpcY})",
+                            resolution.CharacterId, resolution.Outcome,
+                            resolution.Detail ?? "-", resolution.NpcX, resolution.NpcY);
                     }
                 }
             }

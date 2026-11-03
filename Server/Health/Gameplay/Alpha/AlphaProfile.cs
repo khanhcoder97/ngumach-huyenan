@@ -146,6 +146,8 @@ public sealed record AlphaQuestRules(
     int P00_03_WaveRawDamage,
     string P00_04_TurnInNpcId,
     string P00_04_ActorId,
+    double P00_04_SpeedWuPerSecond,
+    double P00_04_FollowRangeWu,
     IReadOnlyList<int> P00_04_CheckpointXs,
     IReadOnlyList<AlphaPoint> P00_04_Waypoints,
     AlphaWaveRule P00_04_WaveA,
@@ -375,6 +377,8 @@ public sealed class AlphaProfileLoader
             RequireInt(trial, "rawDamage", trialPath),
             RequireString(p4, "turnInNpcId", p4Path),
             RequireString(p4, "actorId", p4Path),
+            RequireNumber(p4, "speedWuPerSecond", p4Path),
+            RequireNumber(p4, "followRangeWu", p4Path),
             RequireIntArray(p4, "checkpointXs", p4Path),
             ParsePoints(RequireArray(p4, "waypointsWu", p4Path), $"{p4Path}.waypointsWu"),
             new AlphaWaveRule(

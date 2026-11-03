@@ -5369,6 +5369,381 @@ public static class ServiceSelfCheck
             waveRecording.Events.Count == 3,
             $"resolutions={waveInertSkip.Count} hp={waveInertActor.Hp}");
 
+        // ─── Q1c: P00-04 escort checkpoint machine ────
+
+        // Domain-only 20 Hz machine behind P1:AlphaProfile. Sourced values:
+        // NPC_LYAN, speed 3 wu/s (0,15 wu per tick), followRange 12,
+        // waypoints (42,0)->(80,0)->(120,0), checkpoint waves
+        // MAN-BM-WAVE_BM_ESCORT_A (MOB_CARPLING x3 at x=80) and
+        // MAN-BM-WAVE_BM_ESCORT_B (MOB_WATERROOT x3 at x=120). The machine
+        // holds the shared wave members dead until a checkpoint commits,
+        // pauses the NPC while its wave is active, restores the NPC to the
+        // last committed checkpoint on a wipe (resetting an in-progress wave
+        // with new life IDs, never a cleared one), and re-holds cleared-wave
+        // respawns so the wave cannot be farmed.
+
+        WorldEntityInstance EscortWaveMember(
+            string entityId,
+            string recordId,
+            string templateId,
+            double x,
+            int memberIndex)
+        {
+            var member = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = recordId,
+                Kind = WorldEntityKinds.Mob,
+                TemplateIds = new[] { templateId },
+                MapId = alphaDesign.Scope.MapId,
+                FloorId = "OVERWORLD",
+                X = x,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = 0,
+                GroupId = recordId,
+                MemberIndex = memberIndex,
+                GroupRespawnSeconds = 30
+            };
+            member.Initialize();
+            return member;
+        }
+
+        var escortWaveA1 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_A_1", "MAN-BM-WAVE_BM_ESCORT_A", "MOB_CARPLING", 80, 1);
+        var escortWaveA2 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_A_2", "MAN-BM-WAVE_BM_ESCORT_A", "MOB_CARPLING", 80, 2);
+        var escortWaveA3 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_A_3", "MAN-BM-WAVE_BM_ESCORT_A", "MOB_CARPLING", 80, 3);
+        var escortWaveB1 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_B_1", "MAN-BM-WAVE_BM_ESCORT_B", "MOB_WATERROOT", 120, 1);
+        var escortWaveB2 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_B_2", "MAN-BM-WAVE_BM_ESCORT_B", "MOB_WATERROOT", 120, 2);
+        var escortWaveB3 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_B_3", "MAN-BM-WAVE_BM_ESCORT_B", "MOB_WATERROOT", 120, 3);
+        var escortQuestStub = new EscortQuestStub();
+        var escortClock = new ServerClock();
+        var escortRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [
+                    escortWaveA1, escortWaveA2, escortWaveA3,
+                    escortWaveB1, escortWaveB2, escortWaveB3
+                ]),
+            escortClock);
+        var escort = new AlphaEscortService(alphaDesign, escortQuestStub, escortRegistry);
+
+        List<EscortResolution> TickEscort(
+            AlphaEscortService service,
+            PlayerSession player,
+            long from,
+            long to)
+        {
+            var all = new List<EscortResolution>();
+            for (var t = from; t <= to; t++)
+            {
+                all.AddRange(service.Tick([player], t));
+            }
+
+            return all;
+        }
+
+        // The NPC only walks within followRange of the owner, so walking
+        // phases keep the owner pinned to the NPC position each tick.
+        List<EscortResolution> WalkEscortWith(
+            AlphaEscortService service,
+            PlayerSession player,
+            long from,
+            long to)
+        {
+            var all = new List<EscortResolution>();
+            for (var t = from; t <= to; t++)
+            {
+                all.AddRange(service.Tick([player], t));
+                if (service.TryGetNpcPosition(player.CharacterId, out var npcX, out _))
+                {
+                    player.X = npcX;
+                }
+            }
+
+            return all;
+        }
+
+        // With no owner at all the machine still holds every wave member dead:
+        // the waves only exist after their checkpoint commits ("khi Ly An qua
+        // x=80/120" in the world records).
+        var escortBootHold = escort.Tick([], 1);
+        Check(
+            "alpha.escort_holds_waves_at_boot",
+            escortBootHold.Count == 0 &&
+            escortWaveA1.State == WorldEntityStates.Dead &&
+            escortWaveA2.State == WorldEntityStates.Dead &&
+            escortWaveA3.State == WorldEntityStates.Dead &&
+            escortWaveB1.State == WorldEntityStates.Dead &&
+            escortWaveB2.State == WorldEntityStates.Dead &&
+            escortWaveB3.State == WorldEntityStates.Dead,
+            $"a1={escortWaveA1.State} b1={escortWaveB1.State}");
+
+        // Golden path with a 20-tick out-of-range pause: the creation tick
+        // already moves, so 38 wu at 0,15 wu per tick is 254 movement ticks
+        // (1 at start + 253 walking), and the x=80 commit lands exactly 20
+        // ticks late (tick 1273), proving the speed and the followRange wait.
+        escortQuestStub.Set("CHR_SELFCHECK_ESCORT_MAIN", QuestStates.Active);
+        var escortOwner = NewPlayer("CHR_SELFCHECK_ESCORT_MAIN");
+        escortOwner.X = 42;
+        escortOwner.Y = 0;
+        var escortStarted = TickEscort(escort, escortOwner, 1000, 1000);
+        escortOwner.X = 20;
+        TickEscort(escort, escortOwner, 1001, 1020);
+        escortOwner.X = 42;
+        var escortEarlyCommit = WalkEscortWith(escort, escortOwner, 1021, 1272);
+        var escortCommit80 = WalkEscortWith(escort, escortOwner, 1273, 1273);
+        Check(
+            "alpha.escort_starts_and_moves_with_follow_range",
+            escortStarted.Count == 1 &&
+            escortStarted[0].Outcome == EscortOutcomes.Started &&
+            escortStarted[0].NpcX == 42 &&
+            escortEarlyCommit.All(r => r.Outcome != EscortOutcomes.CheckpointCommitted) &&
+            escortCommit80.Count == 2 &&
+            escortCommit80[0].Outcome == EscortOutcomes.CheckpointCommitted &&
+            escortCommit80[0].Detail == "80" &&
+            escortCommit80[1].Outcome == EscortOutcomes.WaveActivated &&
+            escortCommit80[1].Detail == "MAN-BM-WAVE_BM_ESCORT_A",
+            $"{escortStarted.FirstOrDefault()?.Outcome} " +
+            $"{escortCommit80.Select(r => r.Outcome + ":" + r.Detail).FirstOrDefault()}");
+
+        // The commit spawns wave A with fresh life IDs and the NPC waits at
+        // the checkpoint while the wave is active.
+        var escortPaused80 = TickEscort(escort, escortOwner, 1274, 1290);
+        var escortX80Found = escort.TryGetNpcPosition(
+            escortOwner.CharacterId, out double escortX80, out _);
+        Check(
+            "alpha.escort_checkpoint_80_commits_and_spawns_wave_a",
+            escortWaveA1.State == WorldEntityStates.Alive &&
+            escortWaveA1.LifeId == 2 &&
+            escortWaveA2.LifeId == 2 &&
+            escortWaveA3.LifeId == 2 &&
+            escortPaused80.All(r => r.Outcome != EscortOutcomes.CheckpointCommitted) &&
+            escortX80Found &&
+            escortX80 == 80,
+            $"a1={escortWaveA1.State}/{escortWaveA1.LifeId} npc={escortX80}");
+
+        // Two of three deaths never clear the wave; the third clears it and
+        // the NPC resumes on the same tick.
+        escortRegistry.Despawn("ENT_SELFCHECK_ESCORT_A_1");
+        escortRegistry.Despawn("ENT_SELFCHECK_ESCORT_A_2");
+        var escortTwoKills = TickEscort(escort, escortOwner, 1300, 1300);
+        escortRegistry.Despawn("ENT_SELFCHECK_ESCORT_A_3");
+        var escortWaveACleared = TickEscort(escort, escortOwner, 1301, 1301);
+        var escortXAfterAFound = escort.TryGetNpcPosition(
+            escortOwner.CharacterId, out double escortXAfterA, out _);
+        Check(
+            "alpha.escort_wave_a_clears_then_resumes",
+            escortTwoKills.All(r => r.Outcome != EscortOutcomes.WaveCleared) &&
+            escortWaveACleared.Count == 1 &&
+            escortWaveACleared[0].Outcome == EscortOutcomes.WaveCleared &&
+            escortWaveACleared[0].Detail == "MAN-BM-WAVE_BM_ESCORT_A" &&
+            escortXAfterAFound &&
+            escortXAfterA > 80,
+            $"{escortWaveACleared.FirstOrDefault()?.Outcome} npc={escortXAfterA}");
+
+        // Wipe mid-segment: the NPC restores to the last committed checkpoint
+        // and the cleared wave stays dead (not farmable); reviving resumes
+        // the walk from the checkpoint.
+        WalkEscortWith(escort, escortOwner, 1302, 1340);
+        escortOwner.Hp = 0;
+        var escortWipeMidWalk = TickEscort(escort, escortOwner, 1341, 1341);
+        escortOwner.Hp = 100;
+        escortOwner.X = 80;
+        var escortWipeHold = TickEscort(escort, escortOwner, 1342, 1342);
+        Check(
+            "alpha.escort_wipe_restores_checkpoint",
+            escortWipeMidWalk.Count == 1 &&
+            escortWipeMidWalk[0].Outcome == EscortOutcomes.Wiped &&
+            escortWipeMidWalk[0].Detail == "checkpoint=80" &&
+            escortWipeMidWalk[0].NpcX == 80 &&
+            escortWaveA1.State == WorldEntityStates.Dead &&
+            escortWaveA2.State == WorldEntityStates.Dead &&
+            escortWaveA3.State == WorldEntityStates.Dead &&
+            escortWipeHold.All(r => r.Outcome != EscortOutcomes.WaveActivated),
+            $"{escortWipeMidWalk.FirstOrDefault()?.Detail} a1={escortWaveA1.State}");
+
+        // The MobSpawnGroupService would respawn a cleared group after 30 s;
+        // the machine re-holds the members dead on the next tick so the
+        // completed checkpoint cannot be farmed.
+        escortWaveA1.ForceRespawn();
+        escortWaveA2.ForceRespawn();
+        escortWaveA3.ForceRespawn();
+        var escortFarmBlock = TickEscort(escort, escortOwner, 1343, 1343);
+        Check(
+            "alpha.escort_completed_wave_not_farmable",
+            escortFarmBlock.All(r => r.Outcome != EscortOutcomes.WaveActivated) &&
+            escortWaveA1.State == WorldEntityStates.Dead &&
+            escortWaveA2.State == WorldEntityStates.Dead &&
+            escortWaveA3.State == WorldEntityStates.Dead,
+            $"a1={escortWaveA1.State} outcomes={escortFarmBlock.Count}");
+
+        // Second segment: 40 wu is 267 movement ticks from the 1342 resume
+        // (the 1343 farm tick also moves), so the x=120 commit lands at tick
+        // 1608 (1342 + 266).
+        WalkEscortWith(escort, escortOwner, 1344, 1607);
+        var escortCommit120 = WalkEscortWith(escort, escortOwner, 1608, 1608);
+        Check(
+            "alpha.escort_checkpoint_120_and_wave_b",
+            escortCommit120.Count == 2 &&
+            escortCommit120[0].Outcome == EscortOutcomes.CheckpointCommitted &&
+            escortCommit120[0].Detail == "120" &&
+            escortCommit120[1].Outcome == EscortOutcomes.WaveActivated &&
+            escortCommit120[1].Detail == "MAN-BM-WAVE_BM_ESCORT_B" &&
+            escortWaveB1.State == WorldEntityStates.Alive &&
+            escortWaveB1.LifeId == 2,
+            $"{escortCommit120.Select(r => r.Outcome + ":" + r.Detail).FirstOrDefault()} " +
+            $"b1={escortWaveB1.State}/{escortWaveB1.LifeId}");
+
+        // Wipe mid-wave: one of three down, the wipe restores the NPC to 120
+        // and re-lives the whole pending wave (fresh life IDs, back to
+        // alive), so the fight restarts from zero.
+        escortRegistry.Despawn("ENT_SELFCHECK_ESCORT_B_1");
+        TickEscort(escort, escortOwner, 1609, 1609);
+        escortOwner.Hp = 0;
+        var escortWipeMidWave = TickEscort(escort, escortOwner, 1610, 1610);
+        escortOwner.Hp = 100;
+        Check(
+            "alpha.escort_wipe_mid_wave_resets_lives",
+            escortWipeMidWave.Count == 1 &&
+            escortWipeMidWave[0].Outcome == EscortOutcomes.Wiped &&
+            escortWipeMidWave[0].NpcX == 120 &&
+            escortWaveB1.State == WorldEntityStates.Alive &&
+            escortWaveB1.LifeId == 3 &&
+            escortWaveB2.State == WorldEntityStates.Alive &&
+            escortWaveB2.LifeId == 3 &&
+            escortWaveB3.State == WorldEntityStates.Alive &&
+            escortWaveB3.LifeId == 3,
+            $"b1={escortWaveB1.State}/{escortWaveB1.LifeId}");
+
+        // The refight: three new deaths clear the reset wave and complete
+        // the escort at the final waypoint.
+        escortRegistry.Despawn("ENT_SELFCHECK_ESCORT_B_1");
+        escortRegistry.Despawn("ENT_SELFCHECK_ESCORT_B_2");
+        var escortResetPartial = TickEscort(escort, escortOwner, 1611, 1611);
+        escortRegistry.Despawn("ENT_SELFCHECK_ESCORT_B_3");
+        var escortCompleted = TickEscort(escort, escortOwner, 1612, 1612);
+        Check(
+            "alpha.escort_completes_after_wave_b",
+            escortResetPartial.All(r => r.Outcome != EscortOutcomes.WaveCleared) &&
+            escortCompleted.Any(r => r.Outcome == EscortOutcomes.WaveCleared &&
+                r.Detail == "MAN-BM-WAVE_BM_ESCORT_B") &&
+            escortCompleted.Any(r => r.Outcome == EscortOutcomes.Completed &&
+                r.NpcX == 120 && r.NpcY == 0),
+            string.Join(",", escortCompleted.Select(r => r.Outcome)));
+
+        // The instance ends when the quest leaves ACTIVE and the cleared
+        // waves go back under hold.
+        escortQuestStub.Set("CHR_SELFCHECK_ESCORT_MAIN", QuestStates.Completed);
+        var escortEnded = TickEscort(escort, escortOwner, 1613, 1613);
+        Check(
+            "alpha.escort_ends_when_quest_leaves_active",
+            escortEnded.Count == 1 &&
+            escortEnded[0].Outcome == EscortOutcomes.Ended &&
+            escortEnded[0].Detail == QuestStates.Completed &&
+            escortWaveB1.State == WorldEntityStates.Dead &&
+            escortWaveB2.State == WorldEntityStates.Dead &&
+            escortWaveB3.State == WorldEntityStates.Dead,
+            $"{escortEnded.FirstOrDefault()?.Outcome} b1={escortWaveB1.State}");
+
+        // A player without the quest never opens an instance and nothing
+        // spawns.
+        var escortStranger = NewPlayer("CHR_SELFCHECK_ESCORT_STRANGER");
+        escortStranger.X = 42;
+        escortStranger.Y = 0;
+        var escortStrangerTick = TickEscort(escort, escortStranger, 2000, 2100);
+        Check(
+            "alpha.escort_ignores_player_without_quest",
+            escortStrangerTick.Count == 0 &&
+            !escort.TryGetNpcPosition(escortStranger.CharacterId, out _, out _) &&
+            escortWaveA1.State == WorldEntityStates.Dead,
+            $"outcomes={escortStrangerTick.Count}");
+
+        // Owner-specific instances: two owners, one in range and one far
+        // away; only the in-range NPC walks, so no second clone moves.
+        var escortTwoStub = new EscortQuestStub();
+        escortTwoStub.Set("CHR_SELFCHECK_ESCORT_TWO_A", QuestStates.Active);
+        escortTwoStub.Set("CHR_SELFCHECK_ESCORT_TWO_B", QuestStates.Active);
+        var escortTwoRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [
+                    escortWaveA1, escortWaveA2, escortWaveA3,
+                    escortWaveB1, escortWaveB2, escortWaveB3
+                ]),
+            escortClock);
+        var escortTwo = new AlphaEscortService(alphaDesign, escortTwoStub, escortTwoRegistry);
+        var escortOwnerA = NewPlayer("CHR_SELFCHECK_ESCORT_TWO_A");
+        escortOwnerA.X = 42;
+        escortOwnerA.Y = 0;
+        var escortOwnerB = NewPlayer("CHR_SELFCHECK_ESCORT_TWO_B");
+        escortOwnerB.X = 10;
+        escortOwnerB.Y = 0;
+        List<EscortResolution> escortTwoA = [];
+        List<EscortResolution> escortTwoB = [];
+        for (var t = 3000; t <= 3254; t++)
+        {
+            var twoResolutions = escortTwo.Tick([escortOwnerA, escortOwnerB], t);
+            escortTwoA.AddRange(twoResolutions.Where(r =>
+                string.Equals(r.CharacterId, "CHR_SELFCHECK_ESCORT_TWO_A", StringComparison.Ordinal)));
+            escortTwoB.AddRange(twoResolutions.Where(r =>
+                string.Equals(r.CharacterId, "CHR_SELFCHECK_ESCORT_TWO_B", StringComparison.Ordinal)));
+            if (escortTwo.TryGetNpcPosition("CHR_SELFCHECK_ESCORT_TWO_A", out var twoAx, out _))
+            {
+                escortOwnerA.X = twoAx;
+            }
+        }
+
+        var escortBxFound = escortTwo.TryGetNpcPosition(
+            "CHR_SELFCHECK_ESCORT_TWO_B", out double escortBx, out _);
+        Check(
+            "alpha.escort_owner_specific_instances",
+            escortTwoA.Any(r => r.Outcome == EscortOutcomes.CheckpointCommitted) &&
+            escortTwoB.Count == 1 &&
+            escortTwoB[0].Outcome == EscortOutcomes.Started &&
+            escortBxFound &&
+            escortBx == 42,
+            $"a={escortTwoA.Count} b={escortTwoB.Count} bx={escortBx}");
+
+        // Without the wave entities in the registry the machine still walks
+        // the path and commits checkpoints, but never fabricates a spawn or
+        // waits on a wave that cannot exist.
+        var escortInertRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], []),
+            escortClock);
+        var escortInertStub = new EscortQuestStub();
+        escortInertStub.Set("CHR_SELFCHECK_ESCORT_INERT", QuestStates.Active);
+        var escortInert = new AlphaEscortService(alphaDesign, escortInertStub, escortInertRegistry);
+        var escortInertOwner = NewPlayer("CHR_SELFCHECK_ESCORT_INERT");
+        escortInertOwner.X = 42;
+        escortInertOwner.Y = 0;
+        List<EscortResolution> escortInertResolutions = [];
+        for (var t = 4000; t <= 4700; t++)
+        {
+            escortInertResolutions.AddRange(escortInert.Tick([escortInertOwner], t));
+            if (escortInert.TryGetNpcPosition(escortInertOwner.CharacterId, out var inertX, out _))
+            {
+                escortInertOwner.X = inertX;
+            }
+        }
+
+        Check(
+            "alpha.escort_inert_without_wave_entities",
+            escortInertResolutions.Any(r => r.Outcome == EscortOutcomes.CheckpointCommitted &&
+                r.Detail == "80") &&
+            escortInertResolutions.Any(r => r.Outcome == EscortOutcomes.CheckpointCommitted &&
+                r.Detail == "120") &&
+            escortInertResolutions.All(r => r.Outcome != EscortOutcomes.WaveActivated &&
+                r.Outcome != EscortOutcomes.WaveCleared) &&
+            escortInertResolutions.Any(r => r.Outcome == EscortOutcomes.Completed &&
+                r.NpcX == 120),
+            $"outcomes={string.Join(",", escortInertResolutions.Select(r => r.Outcome))}");
+
         // ─── Mãng Cốt encounter state machine (Q-F part 1) ────
 
         var bossRules = new BossEncounterRules(PhaseGuardTicks: 3);
@@ -6544,6 +6919,46 @@ public static class ServiceSelfCheck
             QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
 
         public sealed record RecordedEvent(string RecordId, string EventType, string MapId);
+    }
+
+    private sealed class EscortQuestStub : IQuestService
+    {
+        private readonly Dictionary<string, string> _states = new(StringComparer.Ordinal);
+
+        public void Set(string characterId, string state) => _states[characterId] = state;
+
+        public QuestOutcome GetState(string characterId, string questId) =>
+            _states.TryGetValue(characterId, out var state)
+                ? QuestOutcome.Success(new QuestState
+                {
+                    QuestId = questId,
+                    State = state,
+                    StepId = "STEP_ACTIVE",
+                    ObjectiveCounters = new Dictionary<string, int>(),
+                    Revision = 1
+                })
+                : QuestOutcome.Rejected(QuestErrorCodes.QuestNotFound, retryable: false, "stub");
+
+        public IReadOnlyList<QuestState> GetStates(string characterId) => [];
+
+        public QuestOutcome Accept(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public IReadOnlyList<QuestState> RecordVerifiedEvent(
+            PlayerSession actor,
+            string eventId,
+            string eventType,
+            string recordId,
+            string mapId) => [];
+
+        public QuestOutcome TurnIn(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public QuestOutcome RevertTurnIn(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public QuestOutcome Fail(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
     }
 
     private sealed class FailOnceLedgerStore : RewardLedgerStore
