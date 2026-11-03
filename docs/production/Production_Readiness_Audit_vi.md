@@ -1,4 +1,6 @@
 # RÀ SOÁT MỨC SẴN SÀNG SẢN XUẤT
+
+> **Chú thích 2026-11-04 (DEC-024):** các nhắc tới Unity trong báo cáo này là trạng thái tại thời điểm viết (28-10-2026), giữ nguyên làm bằng chứng lịch sử; trạng thái engine hiện hành đọc theo DEC-024 (Godot 4.7.2 .NET).
 ## Ngũ Mạch: Huyền Ấn — audit cập nhật 28-10-2026
 
 > Lịch sử baseline 28/10. Dùng [audit 30/10](Production_Content_Audit_20261030_vi.md) cho tình trạng hiện tại:230lời đã biên tập, gói âm thanh đã render, catalog đã đồng bộ và PR server đã tiến thêm. Các backlog/đếm NEW_PROPOSED bên dưới không thay inventory mới hoặc quyết định DEC-023.

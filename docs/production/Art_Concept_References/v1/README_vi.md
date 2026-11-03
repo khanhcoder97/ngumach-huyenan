@@ -35,7 +35,7 @@ Ngày2026-10-29. Theo yêu cầu chủ dự án, Codex tạo năm board raster b
 
 **Gate D — scene.** Một hero+Ly An+Cá Linh+4×4tile ground/shore/water đặt trong mockup640×360. Kiểm silhouette và noise thực ở native, rồi720p/1080p; scene video không cần giả engine evidence nếu chỉ là animatic.
 
-**Gate E — tích hợp.** Manifest/PNG/.meta/refs hợp lệ, Unity import/playback log exact SHA khi môi trường có; không có Unity thì ghi unverified và giao source cho máy build khác. ART_APPROVED không thay ENGINE_IMPORTED/DEVICE_QA.
+**Gate E — tích hợp.** Manifest/PNG/refs hợp lệ, Godot import/playback log exact SHA từ máy của Muse; khi chưa có bằng chứng chạy thật thì ghi unverified. ART_APPROVED không thay ENGINE_IMPORTED/DEVICE_QA.
 
 ## Scorecard review (nội bộ mỹ thuật)
 

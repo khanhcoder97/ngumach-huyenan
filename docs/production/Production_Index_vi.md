@@ -65,7 +65,7 @@ Bộ tài liệu chuyển ý tưởng MMORPG 2D nhìn từ trên thành đặc t
 |---|---|
 | Thể loại/hình ảnh | MMORPG hành động 2D nhìn từ trên pixel art; frame-based sprites, tilemap và UI raster theo `Pixel_Art_Production_Standard_vi.md` |
 | Nền tảng | PC + Android/iOS, dùng chung tài khoản/máy chủ; mobile chơi ngang |
-| Engine baseline | Unity 6.3 LTS/C#, backend authoritative; thay engine cần cập nhật kiến trúc |
+| Engine baseline | Godot 4.7.2 .NET/C# (DEC-024, thay Unity từ 2026-10-31), backend authoritative; thay engine cần cập nhật kiến trúc |
 | Camera/world | camera orthographic nhìn từ trên; 1 WU=0,5m; vùng chuẩn 360×72 WU; Thăng Long Thành 900×96 WU; Y=0 là trục đường tham chiếu trên mặt đất |
 | Môn phái | Minh Kiếm/Kim, Ảnh Đao/Hỏa, Huyền Bút/Thủy, Thạch Chùy/Thổ, Linh Cung/Mộc |
 | Campaign | 6 chương, cấp 1–100; 36 quest chính và 40 quest phụ trong bản tài liệu |

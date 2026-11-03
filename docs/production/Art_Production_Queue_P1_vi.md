@@ -43,7 +43,7 @@ Thứ tự khóa phụ thuộc P1: (1) camera/scale test và hero Minh Kiếm; (
 
 ## 3. Kỹ thuật giao asset
 
-Root theo art bible: `Art/Characters/CLASS_MINH_KIEM`, `Art/Characters/NPC_ID`, `Art/Enemies/MOB_ID`, `Art/Bosses/BOSS_ID`, `Art/Environment/MAP_BEN_MUA`, `Art/UI/ComponentName`, `VFX/Skill/SKILL_ID`. Nếu Unity scaffold chuẩn hóa thành `Assets/Art/...`, giữ các leaf ID y nguyên và thêm `assetKey` trong registry; không đổi ID dữ liệu để khớp tên tệp.
+Root theo art bible: `Art/Characters/CLASS_MINH_KIEM`, `Art/Characters/NPC_ID`, `Art/Enemies/MOB_ID`, `Art/Bosses/BOSS_ID`, `Art/Environment/MAP_BEN_MUA`, `Art/UI/ComponentName`, `VFX/Skill/SKILL_ID`. Nếu scaffold client (Godot) chuẩn hóa thành `Assets/Art/...`, giữ các leaf ID y nguyên và thêm `assetKey` trong registry; không đổi ID dữ liệu để khớp tên tệp.
 
 Mỗi gói bàn giao gồm source pixel PNG/layer, export sprite sheet/atlas, cell/frame timing table, palette, PPU, pixel pivot/anchor, scale WU, collision guide, import preset desktop/mobile, thumbnail nền sáng/tối, LowFX variant và provenance/license. Không bone-warp actor runtime. File chưa có source/owner/permission không được đánh dấu `APPROVED`.
 

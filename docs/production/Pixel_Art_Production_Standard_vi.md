@@ -23,7 +23,7 @@
 | Hero | cell hiển thị tối đa 2,4×3,2 WU; footprint capsule ngang 1,2×0,6 WU, offset (0;0,3); sheet nhân vật dùng cell 48×64 source px, pivot bottom-center; hiển thị 192 screen px ở output 1920×1080 (scale 3×) |
 | Tile art | tile nền chuẩn 16×16 source px (0,8 WU); module lớn là bội nguyên của tile, placement gameplay tiếp tục dùng WU |
 
-Unity dùng URP 2D + Pixel Perfect Camera, Reference Resolution 640×360, Assets Pixels Per Unit 20, integer upscale; đầu ra 720p/1080p/1440p lần lượt dùng scale 2×/3×/4×. Tỉ lệ không chia hết dùng integer viewport có letterbox/pillarbox; không kéo scale phân số lên sprite. Với 20:9 landscape giữ 360 logical pixel chiều cao và mở rộng chiều ngang; vùng gameplay/camera không được cấp lợi thế đối kháng riêng cho thiết bị. Portrait dùng layout UI riêng, không ép xoay/scale sprite.
+Client Godot .NET dùng viewport logic 640×360, tỉ lệ gốc 20 px = 1 WU (tương đương Assets Pixels Per Unit 20 của chuẩn cũ), texture filter Nearest, integer upscale; đầu ra 720p/1080p/1440p lần lượt dùng scale 2×/3×/4×. Tỉ lệ không chia hết dùng integer viewport có letterbox/pillarbox; không kéo scale phân số lên sprite. Với 20:9 landscape giữ 360 logical pixel chiều cao và mở rộng chiều ngang; vùng gameplay/camera không được cấp lợi thế đối kháng riêng cho thiết bị. Portrait dùng layout UI riêng, không ép xoay/scale sprite.
 
 ## 3. Import và đóng gói
 

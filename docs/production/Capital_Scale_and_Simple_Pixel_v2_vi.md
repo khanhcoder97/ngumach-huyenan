@@ -1,5 +1,7 @@
 # Thăng Long rộng lớn và pixel art dễ sản xuất — 2026-10-29
 
+> **Chú thích 2026-11-04 (DEC-024):** mệnh đề "Game tiếp tục Unity" trong tài liệu này đã bị DEC-024 thay thế — engine client chính thức là Godot 4.7.2 .NET. Phần quy hoạch/quy mô của tài liệu giữ nguyên hiệu lực.
+
 Chủ dự án muốn kinh thành rộng nhiều khu và đồ họa pixel đơn giản nhưng nét. Game tiếp tục Unity/top-down XY; thay độ phức tạp mỹ thuật và quy hoạch thành, không đổi engine ở đây. Concept cũ chỉ là một góc chợ, không thể hiện tổng thể. Mẫu mới ở Art_Concept_References/v2/ gồm bản đồ tổng thể và một góc phố gameplay; hai ảnh có tỷ lệ khác nhau.
 
 ## Quy mô thiết kế mới

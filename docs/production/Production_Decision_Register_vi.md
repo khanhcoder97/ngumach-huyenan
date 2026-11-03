@@ -5,7 +5,7 @@ Mỗi quyết định dưới đây được áp dụng đồng nhất cho GDD, 
 
 | ID | Quyết định chuẩn | Lý do / áp dụng |
 |---|---|---|
-| DEC-001 | Engine baseline: Unity 6.3 LTS, C#, URP 2D, Pixel Perfect Camera và Tilemap; actor art dùng frame-based spritesheets. | Cụ thể hóa dòng “Unity 6 LTS” và pixel-art migration; chỉ nâng package qua change review. |
+| DEC-001 | Engine baseline: Unity 6.3 LTS, C#, URP 2D, Pixel Perfect Camera và Tilemap; actor art dùng frame-based spritesheets. (Phần engine đã bị DEC-024 thay thế kể từ 2026-10-31; xem DEC-024.) | Cụ thể hóa dòng “Unity 6 LTS” và pixel-art migration; chỉ nâng package qua change review. |
 | DEC-002 | Hai raid 10 người, mỗi raid có **3 encounter**, gồm 2 encounter objective/add và 1 encounter boss cuối; hiện có 1 canonical raid boss mỗi raid. | “3 boss” ở GDD được sửa thành “3 encounter”; khớp Activity spec, art roster và 12 boss canonical. Thêm boss canonical cần quyết định scope mới. |
 | DEC-003 | Giữ mode PvP **Chiến Trường Trấn Sơn 10v10**. Đây là queue/instance riêng, dùng geometry và asset của `MAP_TRAN_SON_SIEGE`, không chung rating, roster hay reward với công thành 20v20. | Hoàn thiện mode đã hứa ở GDD/AI plan mà không nhân đôi map art; cấp data/zone riêng `BG10`. |
 | DEC-004 | Session reconnect grace là **120 giây**. Match tournament reconnect là **một lần trong 90 giây**; đây là luật trận, không thay session recovery. | Tách reconnect phiên khỏi reconnect bracket; dungeon/raid slot còn giữ 120 giây nếu encounter chưa đóng. |
@@ -66,3 +66,17 @@ Codex chốt phần thiết kế còn thiếu theo yêu cầu chủ dự án ho�
 ## DEC-023 — Nhất quán catalog, túi và trạng thái nhân vật (2026-10-30)
 
 `Runtime_State_and_Catalog_Precision_vi.md` chốt túi5×5/25ô mỗi trang, turn-in đầy túi giữ READY; weapon_power/armor và primary tương ứng là alias, không cộng hai lần. Fixed item phải được giữ đầy đủ khi xuất rarity catalog. Maximum HP/MP thay đổi giữ current tuyệt đối và clamp, không heal/revive do equip/level/respec; migration refill là ngoại lệ một lần đã có. Auto-potion không có Undo sau commit; tiêu vé boss và ACTIVE dùng một activation transaction/outbox. Đây là design baseline mới ở phần HP/MP và phân xử/precision ở các phần còn lại, chưa sửa runtime schema/loader hoặc migration save. Các gap số liệu còn lại ghi rõ ở §6; không tự điền thành config production.
+
+## DEC-024 — Chuyển engine client sang Godot .NET (2026-10-31)
+
+Chủ dự án quyết định **không dùng Unity nữa** (2026-10-31). Engine client chính thức của Ngũ Mạch: Huyền Ấn là **Godot 4.7.2 .NET (C#)**, khóa phiên bản qua version control; thay đổi phiên bản engine phải qua change review như quy tắc khóa cũ. DEC-024 **thay thế (supersede) DEC-001 ở phần engine và render stack**; các phần còn lại của DEC-001 vẫn giữ: client viết bằng C#, actor art dùng frame-based spritesheets.
+
+Ánh xạ chuẩn hình ảnh sang Godot (giữ nguyên DEC-014/DEC-015/DEC-016): viewport logic 640×360; tỉ lệ gốc **20 px = 1 WU** (tương đương PPU 20 của chuẩn Unity cũ); texture filter **Nearest** (tương đương Point), tắt mipmaps, nén lossless; tilemap dùng **TileMapLayer**; animation frame bằng **AnimatedSprite2D/AnimationPlayer**, không bone-warp. Tọa độ thế giới WU và tọa độ server là nguồn chuẩn; client Godot dùng hệ Y-xuống nên khi ánh xạ WU→pixel phải áp quy ước lật Y đã kiểm chứng ở client mẫu (py = (36 − y) · 20 cho dải chuẩn Bến Mưa).
+
+Hệ quả thực thi:
+
+1. Client Godot .NET tại tuyến phát triển của Muse là client duy nhất được phát triển và nghiệm thu. Mọi bằng chứng build/QA client từ nay là bản build/export Godot và log chạy thật, không còn nghiệm thu Unity.
+2. Project Unity trong repo (thư mục `Client/`), PR #22 (full-animation Minh Kiếm phía Unity) và PR #51 (client Unity của Codex) trở thành **tham chiếu lịch sử**: giữ nguyên trạng, không phát triển tiếp; đóng hay giữ mở là quyết định riêng của chủ dự án.
+3. Milestone BM-D của gói Bến Mưa đổi đích tích hợp từ Unity sang Godot; hình học, anchor, tiledata và collision của map không đổi.
+4. Vai trò "client gameplay integration" và các gate nhắc tới môi trường Unity trong tài liệu chuẩn được đọc là môi trường Godot kể từ quyết định này; phân vai chi tiết do Codex xác nhận khi áp dụng.
+5. Không thay engine nữa nếu không có decision mới của chủ dự án.

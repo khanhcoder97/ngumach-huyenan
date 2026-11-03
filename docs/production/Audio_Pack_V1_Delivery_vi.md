@@ -43,7 +43,7 @@ NumPy và python-soundfile/libsndfile là thư viện công cụ; giấy phép u
 
 ## 4. Hợp đồng tích hợp cho Muse/client
 
-1. Muse import và nghe trên Unity VM bằng một scene audition riêng; chưa gắn cả pack vào scene sản phẩm. `.meta` có GUID ổn định, loadType đề xuất streaming cho loop và giải nén khi nạp cho one-shot; đây là thiết lập tĩnh **chưa được Unity xác nhận**. Không đổi GUID tùy tiện. WAV đã mono, OGG stereo. Thử target build vì engine có thể transcode nguồn.
+1. Muse import và nghe trên máy Godot của Muse bằng một scene audition riêng; chưa gắn cả pack vào scene sản phẩm. `.meta` có GUID ổn định, loadType đề xuất streaming cho loop và giải nén khi nạp cho one-shot; đây là thiết lập tĩnh **chưa được Unity xác nhận**. Không đổi GUID tùy tiện. WAV đã mono, OGG stereo. Thử target build vì engine có thể transcode nguồn.
 2. Client tạo lookup cueKey → các clip theo manifest audio riêng. Không trộn vào manifest sprite. Cache/pool có giới hạn, không preload 541 clip cùng lúc, không đưa master/MP3 preview vào build.
 3. Chỉ nối skill/hit/hurt/boss/trade/forge theo event hoặc state được server xác nhận; packet yêu cầu và cast animation không chứng minh hit. Guard cast không phát parry; heal không phát hurt; đặt bẫy không phát trap hit; fail forge không phát success.
 4. Kiếm Trận SK-MK-03: v01/v02/v03 lần lượt nhẹ/vừa/nặng theo hitIndex 0/1/2; mỗi clip chỉ một phần nhát đánh. Liên Châu phát theo từng projectile xác nhận. Các cue khác chọn không lặp ngay, seed presentation tách RNG gameplay.
@@ -58,6 +58,6 @@ Local giải mã đủ 541 runtime clip, xác nhận frame/sample rate/channel/f
 
 8 bài kiểm validator bao gồm file hỏng/hash sai, clipping, im lặng, LFS pointer, traversal, CRLF source, WAV thật và OGG stereo dài với codec ghi theo chunk để tránh crash stack trên Windows. CI giải mã lại media đã checkout LFS; chỉ PASS kỹ thuật mới cho phép bàn giao ứng viên, không tự duyệt nghệ thuật.
 
-Trước bật trong bản chơi cần báo cáo của Muse/client ghi Unity version, build/device, mixer settings và clip quay: mono/stereo/tai nghe/loa nhỏ; mute từng bus/master; 10 người spam skill vẫn nghe warning; đổi map và reconnect không sót loop/nhân tiếng; kiểm guard/trap/heal đúng ngữ nghĩa; profiler voice count/memory; nghe seam qua nhiều vòng; nghe nhạc khám phá 60–120s không gây mệt. Cân lại mức gain theo cảnh chơi thật và người dùng. Nghiệm thu này chưa thực hiện trong lần render.
+Trước bật trong bản chơi cần báo cáo của Muse/client ghi Godot version, build/device, mixer settings và clip quay: mono/stereo/tai nghe/loa nhỏ; mute từng bus/master; 10 người spam skill vẫn nghe warning; đổi map và reconnect không sót loop/nhân tiếng; kiểm guard/trap/heal đúng ngữ nghĩa; profiler voice count/memory; nghe seam qua nhiều vòng; nghe nhạc khám phá 60–120s không gây mệt. Cân lại mức gain theo cảnh chơi thật và người dùng. Nghiệm thu này chưa thực hiện trong lần render.
 
 Không đánh dấu toàn bộ CX-04 hoàn tất chỉ vì đã có asset. Phần đã xong: tạo nguồn, master, runtime, preview, manifest và kiểm kỹ thuật. Phần còn lại: nghe duyệt, import/mix, adapter runtime, QA thiết bị; thoại và cinema final là luồng riêng.

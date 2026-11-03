@@ -72,7 +72,7 @@ Video không cấp reward, không tự set quest COMPLETE, không pause shared s
 
 ## 8. File paths và manifest video
 
-Source ngoài Unity: `Art_Source/Cinematics/CIN_xxx/` (cần bổ sung quyền sở hữu vào work order). Delivery MP4: `Client/Assets/Cinematics/CIN_xxx/`; subtitles/manifest: `Implementation/Content/Narrative/Deliveries/CIN_xxx/`. Preview qua GitHub release artifact hoặc PR link khi dung lượng quá lớn; không ép người review tải mọi master. MP4/WAV/PNG theo Git LFS; không commit cache/model weights.
+Source ngoài Unity: `Art_Source/Cinematics/CIN_xxx/` (cần bổ sung quyền sở hữu vào work order). Delivery MP4: `Client/Assets/Cinematics/CIN_xxx/` (đường dẫn thuộc project Unity cũ — theo DEC-024, delivery sẽ trỏ tới thư mục asset tương ứng trong project Godot; đường dẫn cụ thể chốt khi CINEMA-01 khởi động); subtitles/manifest: `Implementation/Content/Narrative/Deliveries/CIN_xxx/`. Preview qua GitHub release artifact hoặc PR link khi dung lượng quá lớn; không ép người review tải mọi master. MP4/WAV/PNG theo Git LFS; không commit cache/model weights.
 
 Manifest video sidecar tách schema manifest sprite hiện có: sceneId/questId/packVersion/status/duration/fps/width/height/codec/videoPath/posterPath/subtitlePaths/audioStems/sourceCommit/referenceHashes/modelInfo/licenseEvidence/continuityNotes/reviewer/evidenceUrls. Video chưa có thì delivery manifest không tạo path giả. Trạng thái REQUESTED→STORYBOARD→ANIMATIC→VISUAL_APPROVED→AUDIO_APPROVED→ENGINE_TESTED→DEVICE_QA.
 

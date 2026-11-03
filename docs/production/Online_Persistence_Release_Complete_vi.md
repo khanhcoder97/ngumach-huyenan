@@ -65,4 +65,4 @@ Asset evidence gồm original source/license, PNG thật đã fetch LFS, frame r
 | RECOVERY | server kill, DB interruption, deploy rollback | restore result RPO/RTO, không mất ledger/nhân bản actor |
 | SHIP | onboarding→progression→social→endgame trên PC/mobile | artifact signing, performance, moderation/support, license và market approval |
 
-Máy local yếu: coding/data validator chạy local, Unity build/gameplay QA trên máy ảo có license, server build/smoke trên CI. Không thay engine giữa chừng chỉ để bỏ qua gate thiết bị. Không đánh dấu SHIP khi vẫn có DRAFT map/asset hoặc lỗi P0/P1.
+Máy local yếu: coding/data validator chạy local, Godot build/gameplay QA trên máy ảo của Muse (không cần license), server build/smoke trên CI. Không thay engine giữa chừng chỉ để bỏ qua gate thiết bị. Không đánh dấu SHIP khi vẫn có DRAFT map/asset hoặc lỗi P0/P1.

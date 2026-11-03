@@ -286,13 +286,13 @@ Chuẩn tham chiếu: logical 640×360; 20 PPU và camera 32×18 WU; hero 5 WU t
 
 ### 8.3 Engine hình ảnh đề xuất
 
-Khởi đầu bằng **Unity 6.3 LTS + C#**, URP 2D, Pixel Perfect Camera và Tilemap. Sprite import: PPU=20, Filter=Point, Compression=None, Mip Maps=Off; Animator điều khiển frame sprite, không bone-warp. Phiên bản engine được khóa theo DEC-001; thay package/render preset qua change review. Khóa phiên bản editor/package trước khi tạo project; không tự nâng giữa sprint.
+Khởi đầu bằng **Godot 4.7.2 .NET + C#** và TileMapLayer 2D, camera orthographic cố định theo chuẩn pixel. Sprite import: 20 px = 1 WU, Filter=Nearest, Compression=None, Mip Maps=Off; AnimatedSprite2D/AnimationPlayer điều khiển frame sprite, không bone-warp. Phiên bản engine được khóa theo DEC-024; thay package/render preset qua change review. Khóa phiên bản editor/package trước khi tạo project; không tự nâng giữa sprint.
 
 ## 9. Kiến trúc online
 
 ### 9.1 Thành phần
 
-- **Client Unity:** render, điều khiển, UI, dự đoán chuyển động nhẹ/interpolation, tải cấu hình; không quyết định sát thương, loot, tiền.
+- **Client Godot:** render, điều khiển, UI, dự đoán chuyển động nhẹ/interpolation, tải cấu hình; không quyết định sát thương, loot, tiền.
 - **Gateway/API:** đăng nhập, nhân vật, phiên, định tuyến tới máy chủ vùng.
 - **Máy chủ vùng:** bản đồ/instance, vị trí, va chạm, quái, quest, chiến đấu, loot, chat khu vực.
 - **Dịch vụ tài khoản/nhân vật:** xác thực, khóa nhân vật, lưu trạng thái/khôi phục phiên.

@@ -4,7 +4,7 @@ Ngày 2026-10-28, chủ dự án xác nhận game di chuyển nhìn từ trên. 
 
 ## 1. Không gian và điều khiển
 
-- Dùng camera orthographic cố định, artwork nhìn từ trên chếch để thấy mặt/thân nhân vật và mái nhà. Không xoay camera, không projection isometric. Tọa độ Unity XY chính là tọa độ server; +X Đông, +Y Bắc; Z dành render.
+- Dùng camera orthographic cố định, artwork nhìn từ trên chếch để thấy mặt/thân nhân vật và mái nhà. Không xoay camera, không projection isometric. Tọa độ thế giới (WU) của server là nguồn chuẩn, +X Đông, +Y Bắc; client Godot ánh xạ sang pixel theo tỉ lệ 20 px = 1 WU và lật dấu Y theo quy ước của DEC-024; Z dành render.
 - 1 WU = 0,5 m; 20 source px/WU. Input vector trong [-1,1]; normalize khi độ dài >1 để đường chéo không nhanh hơn. Analog giữ độ lớn nhỏ hơn 1. Facing quantize 8 hướng, hướng cũ được giữ khi đứng yên.
 - DirIndex: N=0, NE=1, E=2, SE=3, S=4, SW=5, W=6, NW=7. Click/aim dùng tọa độ mặt đất; không dùng đỉnh sprite làm điểm aim.
 - Không có gravity/jump/rơi kiểu platformer. Né, đẩy lùi, lao và truy đuổi đều trên mặt phẳng XY; bật khỏi mặt đất chỉ là VFX/animation, không bỏ collision.
@@ -44,7 +44,7 @@ Ngày 2026-10-28, chủ dự án xác nhận game di chuyển nhìn từ trên. 
 ## 5. Nghiệm thu và thứ tự thực hiện
 
 1. Qoder bổ sung metadata đơn vị và migration range theo decision; server kiểm tra terrain/floor, sequence và diagonal.
-2. Muse bàn giao Bến Mưa top-down blockout trước khi nhân rộng Thăng Long; sheet 8 hướng DEC-015 tiếp tục dùng. Dựng Unity trên máy ảo nếu khả dụng; log ghi exact commit, Editor version, command, output và video gameplay.
-3. OpenCode chạy validator/preview nhẹ và inventory coverage trên máy local; không bắt cài Unity.
+2. Muse bàn giao Bến Mưa top-down blockout trước khi nhân rộng Thăng Long; sheet 8 hướng DEC-015 tiếp tục dùng. Dựng client Godot trên máy ảo; log ghi exact commit, Godot version, command, output và video gameplay.
+3. OpenCode chạy validator/preview nhẹ và inventory coverage trên máy local; không bắt cài Godot.
 4. Hai client phải thấy cùng XY; đi 8 hướng có cùng tốc độ tối đa, không xuyên góc, không bay khỏi mặt đất; portal/interaction theo khoảng cách và floor; cây/mái không che telegraph. Kiểm camera 720p/1080p và PvP 16:9/20:9.
 5. Mỗi map ký riêng gate topology/collision/placement. Sheet đủ hướng, compile thành công hoặc validator xanh không thay gate này.

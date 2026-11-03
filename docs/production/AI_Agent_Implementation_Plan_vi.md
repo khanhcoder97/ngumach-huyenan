@@ -4,7 +4,7 @@ Tài liệu đi kèm GDD: GDD_Ngu_Mach_Huyen_An_vi.md. Production_Index_vi.md l�
 
 ## 1. Chốt kỹ thuật trước khi tạo project
 
-- Client: Unity 6.3 LTS, C#, URP 2D và Pixel Perfect Camera; khóa editor/package bằng cấu hình version control. Animator nhân vật dùng sprite sheet frame-based.
+- Client: Godot 4.7.2 .NET, C#, TileMapLayer 2D và camera pixel cố định; khóa phiên bản engine/.NET bằng cấu hình version control. Animation nhân vật dùng sprite sheet frame-based (AnimatedSprite2D).
 - Server: C# backend trên runtime LTS đang được hỗ trợ tại lúc khởi dự án; máy chủ zone tách tiến trình, nhưng backend bản đầu là modular monolith.
 - Lưu dữ liệu: PostgreSQL; Redis/cache tương đương cho session, tìm nhóm và dữ liệu tạm.
 - Client-target: Windows, Android, iOS; xử lý input/UI theo nền tảng nhưng dùng chung gameplay/data schema.
@@ -32,7 +32,7 @@ Mỗi module có thư mục, API public và dữ liệu sở hữu rõ. Thay đ�
 ### P0 — Khởi tạo nền (đầu tiên, không song song)
 
 **Việc cần làm**
-1. Tạo repo, branch policy, Unity project khóa phiên bản, cấu trúc Client/Server/Docs/Content/Tools.
+1. Tạo repo, branch policy, Godot project khóa phiên bản, cấu trúc Client/Server/Docs/Content/Tools.
 2. Tạo quy ước ID, JSON/ScriptableObject schemas, versioning, localization key và config môi trường local/staging.
 3. Tạo client mở được màn hình title và server health endpoint; logging có correlation ID.
 4. Dùng Pixel Perfect Camera có sẵn trong URP 17.3 (không cài package Pixel Perfect riêng của Built-in RP); đặt reference 640×360, 20 PPU, point filter, no mipmaps, lossless sprites, grid snapping; thêm tilemap/frame-sprite smoke scene.
