@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Server.Health.Contracts;
 using Server.Health.Gameplay.Alpha;
@@ -4827,6 +4828,234 @@ public static class ServiceSelfCheck
                     .Concat(alphaDesign.OverlayRecords.Skip(1)).ToArray()
             }),
             "duplicate recordId must fail");
+
+        // ─── QOD-21 Q1c: alpha quest pack merge ────────
+
+        var alphaEnvironment = services.GetRequiredService<IHostEnvironment>();
+        var alphaOverlayQuests = QuestCatalogLoader.Load(
+            AlphaQuestCatalogMerger.DiscoverOverlayDirectory(
+                alphaEnvironment.ContentRootPath));
+        var alphaMergedQuests = AlphaQuestCatalogMerger.Merge(
+            questCatalog, alphaOverlayQuests);
+
+        Check(
+            "alpha.quest_gate_off_catalog",
+            questCatalog.Count == 5 &&
+            !questCatalog.TryGet("C1-01", out _),
+            $"base={questCatalog.Count}");
+
+        Check(
+            "alpha.quest_merge_catalog",
+            alphaMergedQuests.Count == 6 &&
+            alphaMergedQuests.QuestIds.SequenceEqual(
+                new[] { "C1-01", "P00-01", "P00-02", "P00-03", "P00-04", "P00-05" },
+                StringComparer.Ordinal),
+            $"merged={alphaMergedQuests.Count}");
+
+        var alphaP00_02 = alphaMergedQuests.TryGet("P00-02", out var alphaP2)
+            ? alphaP2
+            : null;
+        Check(
+            "alpha.quest_p00_02",
+            alphaP00_02 is
+            {
+                IsBlocked: false,
+                StartNpcId: "NPC_TA_VAN_KHANH",
+                TurnInNpcId: "NPC_TA_VAN_KHANH",
+                MinLevel: 1,
+                MaxLevel: 10
+            } &&
+            alphaP00_02.Objectives.Count == 2 &&
+            alphaP00_02.Objectives[0].Type == QuestObjectiveTypes.Interact &&
+            alphaP00_02.Objectives[0].Count == 3 &&
+            alphaP00_02.Objectives[0].TargetIds.SequenceEqual(
+                new[] { "ALPHA-BM-RIPPLE-01", "ALPHA-BM-RIPPLE-02", "ALPHA-BM-RIPPLE-03" },
+                StringComparer.Ordinal) &&
+            alphaP00_02.Objectives[1].Type == QuestObjectiveTypes.Kill &&
+            alphaP00_02.Objectives[1].Count == 4 &&
+            alphaP00_02.Objectives[1].TargetIds.SequenceEqual(
+                new[] { "MOB_CARPLING" }, StringComparer.Ordinal) &&
+            alphaP00_02.Unlocks.SequenceEqual(new[] { "P00-03" }, StringComparer.Ordinal) &&
+            alphaP00_02.Rewards.ItemIds.SequenceEqual(
+                new[] { "POT-HP-01" }, StringComparer.Ordinal),
+            $"activation={alphaP00_02?.Activation}");
+
+        var alphaP00_03 = alphaMergedQuests.TryGet("P00-03", out var alphaP3)
+            ? alphaP3
+            : null;
+        Check(
+            "alpha.quest_p00_03",
+            alphaP00_03 is
+            {
+                IsBlocked: false,
+                StartNpcId: "NPC_LYAN",
+                TurnInNpcId: "NPC_LYAN"
+            } &&
+            alphaP00_03.Objectives.Count == 3 &&
+            alphaP00_03.Objectives[0].Type == QuestObjectiveTypes.Interact &&
+            alphaP00_03.Objectives[0].Count == 2 &&
+            alphaP00_03.Objectives[0].TargetIds.SequenceEqual(
+                new[] { "ALPHA-BM-VILLAGER-01", "ALPHA-BM-VILLAGER-02" },
+                StringComparer.Ordinal) &&
+            alphaP00_03.Objectives[1].Type == QuestObjectiveTypes.Kill &&
+            alphaP00_03.Objectives[1].Count == 3 &&
+            alphaP00_03.Objectives[1].TargetIds.SequenceEqual(
+                new[] { "MOB_WATERROOT" }, StringComparer.Ordinal) &&
+            alphaP00_03.Objectives[2].Type == QuestObjectiveTypes.Interact &&
+            alphaP00_03.Objectives[2].Count == 1 &&
+            alphaP00_03.Objectives[2].TargetIds.SequenceEqual(
+                new[] { "ALPHA-BM-WAVE-TRAINING" }, StringComparer.Ordinal) &&
+            alphaP00_03.Unlocks.SequenceEqual(new[] { "P00-04" }, StringComparer.Ordinal),
+            $"objectives={alphaP00_03?.Objectives.Count}");
+
+        var alphaP00_04 = alphaMergedQuests.TryGet("P00-04", out var alphaP4)
+            ? alphaP4
+            : null;
+        Check(
+            "alpha.quest_p00_04",
+            alphaP00_04 is
+            {
+                IsBlocked: false,
+                StartNpcId: "NPC_TA_VAN_KHANH",
+                TurnInNpcId: "NPC_TA_VAN_KHANH"
+            } &&
+            alphaP00_04.Objectives.Count == 2 &&
+            alphaP00_04.Objectives.All(objective =>
+                objective.Type == QuestObjectiveTypes.Kill && objective.Count == 3) &&
+            alphaP00_04.Objectives[0].TargetIds.SequenceEqual(
+                new[] { "MAN-BM-WAVE_BM_ESCORT_A" }, StringComparer.Ordinal) &&
+            alphaP00_04.Objectives[1].TargetIds.SequenceEqual(
+                new[] { "MAN-BM-WAVE_BM_ESCORT_B" }, StringComparer.Ordinal) &&
+            alphaP00_04.Rewards.Currency.Count == 1 &&
+            alphaP00_04.Rewards.Currency[0].CurrencyId == "COIN" &&
+            alphaP00_04.Rewards.Currency[0].Amount == 30,
+            $"objectives={alphaP00_04?.Objectives.Count}");
+
+        var alphaP00_05 = alphaMergedQuests.TryGet("P00-05", out var alphaP5)
+            ? alphaP5
+            : null;
+        Check(
+            "alpha.quest_p00_05",
+            alphaP00_05 is
+            {
+                IsBlocked: false,
+                StartNpcId: "NPC_TA_VAN_KHANH",
+                TurnInNpcId: "NPC_TA_VAN_KHANH"
+            } &&
+            alphaP00_05.OrderedObjectives &&
+            alphaP00_05.Objectives.Count == 3 &&
+            alphaP00_05.Objectives[0].Type == QuestObjectiveTypes.Boss &&
+            alphaP00_05.Objectives[0].TargetIds.SequenceEqual(
+                new[] { "MAN-BM-SPAWN_BM_05_QUEST" }, StringComparer.Ordinal) &&
+            alphaP00_05.Objectives[1].Type == QuestObjectiveTypes.Interact &&
+            alphaP00_05.Objectives[1].TargetIds.SequenceEqual(
+                new[] { "ALPHA-BM-FRAGMENT" }, StringComparer.Ordinal) &&
+            alphaP00_05.Objectives[2].Type == QuestObjectiveTypes.Talk &&
+            alphaP00_05.Objectives[2].TargetIds.SequenceEqual(
+                new[] { "NPC_CLASS_TRIAL" }, StringComparer.Ordinal) &&
+            alphaP00_05.Unlocks.SequenceEqual(new[] { "C1-01" }, StringComparer.Ordinal) &&
+            alphaP00_05.Rewards.ItemIds.SequenceEqual(
+                new[] { "EQ-MK-WEAPON-T1-R-COMMON" }, StringComparer.Ordinal),
+            $"ordered={alphaP00_05?.OrderedObjectives}");
+
+        var alphaC1_01 = alphaMergedQuests.TryGet("C1-01", out var alphaC1)
+            ? alphaC1
+            : null;
+        Check(
+            "alpha.quest_c1_01",
+            alphaC1_01 is
+            {
+                IsBlocked: false,
+                QuestType: QuestTypes.Main,
+                StartNpcId: "NPC_LYAN",
+                TurnInNpcId: "NPC_LYAN",
+                MinLevel: 11,
+                MaxLevel: 20
+            } &&
+            alphaC1_01.PrerequisiteQuestIds.SequenceEqual(
+                new[] { "P00-05" }, StringComparer.Ordinal) &&
+            alphaC1_01.Objectives.Count == 2 &&
+            alphaC1_01.Objectives[0].Type == QuestObjectiveTypes.Talk &&
+            alphaC1_01.Objectives[0].Count == 3 &&
+            alphaC1_01.Objectives[0].MapId == "MAP_THANH_LAC" &&
+            alphaC1_01.Objectives[0].TargetIds.SequenceEqual(
+                new[] { "NPC_GUARD_CAPTAIN", "NPC_HA_MAC", "NPC_MASTER_MINH_KIEM" },
+                StringComparer.Ordinal) &&
+            alphaC1_01.Objectives[1].Type == QuestObjectiveTypes.Talk &&
+            alphaC1_01.Objectives[1].TargetIds.SequenceEqual(
+                new[] { "NPC_CLASS_TRIAL" }, StringComparer.Ordinal) &&
+            alphaC1_01.Rewards.Currency.Count == 1 &&
+            alphaC1_01.Rewards.Currency[0].CurrencyId == "COIN" &&
+            alphaC1_01.Rewards.Currency[0].Amount == 80 &&
+            alphaC1_01.Unlocks.Count == 0,
+            $"band={alphaC1_01?.MinLevel}..{alphaC1_01?.MaxLevel}");
+
+        var alphaQuestValidationPassed = true;
+        string? alphaQuestValidationError = null;
+        try
+        {
+            QuestCatalogValidator.Validate(
+                alphaMergedQuests, alphaMergedRecords, npcAnchors);
+        }
+        catch (InvalidOperationException exception)
+        {
+            alphaQuestValidationPassed = false;
+            alphaQuestValidationError = exception.Message;
+        }
+
+        Check(
+            "alpha.quest_merge_validates",
+            alphaQuestValidationPassed,
+            alphaQuestValidationError);
+
+        Dictionary<string, QuestDefinition> AlphaOverlayDefinitions() =>
+            alphaOverlayQuests.QuestIds.ToDictionary(
+                questId => questId,
+                questId => alphaOverlayQuests.TryGet(questId, out var definition)
+                    ? definition
+                    : throw new InvalidOperationException($"missing overlay quest {questId}"),
+                StringComparer.Ordinal);
+
+        bool AlphaQuestMergeRejects(QuestCatalog overlay)
+        {
+            try
+            {
+                AlphaQuestCatalogMerger.Merge(questCatalog, overlay);
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+                return true;
+            }
+        }
+
+        var blockedOverlayDefinitions = AlphaOverlayDefinitions();
+        blockedOverlayDefinitions["P00-02"] = blockedOverlayDefinitions["P00-02"] with
+        {
+            Activation = QuestActivations.Blocked,
+            BlockedSteps = [new QuestBlockedStep("X", "turnInNpcId", "design.md")]
+        };
+        Check(
+            "alpha.quest_rejects_blocked_overlay",
+            AlphaQuestMergeRejects(new QuestCatalog(blockedOverlayDefinitions)),
+            "a BLOCKED alpha definition must fail");
+
+        var missingPackDefinitions = AlphaOverlayDefinitions();
+        missingPackDefinitions.Remove("C1-01");
+        Check(
+            "alpha.quest_rejects_missing_pack_quest",
+            AlphaQuestMergeRejects(new QuestCatalog(missingPackDefinitions)),
+            "a pack without C1-01 must fail");
+
+        var extraPackDefinitions = AlphaOverlayDefinitions();
+        extraPackDefinitions["P00-06"] = extraPackDefinitions["P00-02"] with
+        {
+            QuestId = "P00-06"
+        };
+        Check(
+            "alpha.quest_rejects_unknown_pack_quest",
+            AlphaQuestMergeRejects(new QuestCatalog(extraPackDefinitions)),
+            "an id outside the design pack must fail");
 
         // ─── Mãng Cốt encounter state machine (Q-F part 1) ────
 

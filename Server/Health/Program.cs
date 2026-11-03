@@ -63,7 +63,17 @@ builder.Services.AddSingleton<IQuestCatalog>(serviceProvider =>
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
     var directory = QuestCatalogLoader.DiscoverDirectory(
         configuration, environment.ContentRootPath);
-    return QuestCatalogLoader.Load(directory);
+    var catalog = QuestCatalogLoader.Load(directory);
+    var alphaOptions = serviceProvider.GetRequiredService<AlphaProfileOptions>();
+    if (!alphaOptions.Enabled)
+    {
+        return catalog;
+    }
+
+    var overlayDirectory = AlphaQuestCatalogMerger.DiscoverOverlayDirectory(
+        environment.ContentRootPath);
+    return AlphaQuestCatalogMerger.Merge(
+        catalog, QuestCatalogLoader.Load(overlayDirectory));
 });
 builder.Services.AddSingleton<IQuestStateStore, InMemoryQuestStateStore>();
 builder.Services.AddSingleton(serviceProvider =>
@@ -357,12 +367,14 @@ if (alphaOptions.Enabled)
     var runtimeEntityCount = alphaDesign.OverlayRecords.Count(overlay =>
         AlphaOverlayMerger.HasRuntimeEntity(overlay.Kind));
     app.Logger.LogWarning(
-        "PRIVATE ALPHA: P1:AlphaProfile is enabled; {OverlayCount} overlay records and " +
-        "{EntityCount} overlay entities are merged into the Bến Mưa world " +
-        "(training-wave hazard stays record-only until the Q1c trial engine). " +
+        "PRIVATE ALPHA: P1:AlphaProfile is enabled; {OverlayCount} overlay records, " +
+        "{EntityCount} overlay entities and {QuestCount} alpha quest definitions " +
+        "(P00-02..05 unblocked, C1-01 added) are merged into the Bến Mưa world. " +
+        "The training-wave hazard stays record-only until the Q1c trial engine. " +
         "Production gates remain OFF.",
         alphaDesign.OverlayRecords.Count,
-        runtimeEntityCount);
+        runtimeEntityCount,
+        quests.Count);
 }
 
 QuestCatalogValidator.Validate(quests, worldRecords, npcAnchors);
