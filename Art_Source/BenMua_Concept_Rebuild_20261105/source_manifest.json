@@ -1,0 +1,605 @@
+{
+  "schemaVersion": 1,
+  "generator": "built-in image_gen",
+  "stage": "STRUCTURE_CHECKED_VISUAL_REVIEW_REQUIRED",
+  "assets": {
+    "cottage": {
+      "file": "village.png",
+      "rect": [
+        0,
+        0,
+        480,
+        512
+      ],
+      "contentBounds": [
+        119,
+        142,
+        381,
+        434
+      ],
+      "pivot": [
+        250.0,
+        434
+      ]
+    },
+    "townhouse": {
+      "file": "village.png",
+      "rect": [
+        480,
+        0,
+        480,
+        512
+      ],
+      "contentBounds": [
+        44,
+        93,
+        404,
+        447
+      ],
+      "pivot": [
+        224.0,
+        447
+      ]
+    },
+    "hall": {
+      "file": "village.png",
+      "rect": [
+        960,
+        0,
+        576,
+        512
+      ],
+      "contentBounds": [
+        3,
+        81,
+        537,
+        462
+      ],
+      "pivot": [
+        270.0,
+        462
+      ]
+    },
+    "garden": {
+      "file": "village.png",
+      "rect": [
+        0,
+        512,
+        480,
+        512
+      ],
+      "contentBounds": [
+        64,
+        110,
+        421,
+        399
+      ],
+      "pivot": [
+        242.5,
+        399
+      ]
+    },
+    "market": {
+      "file": "village.png",
+      "rect": [
+        448,
+        512,
+        576,
+        512
+      ],
+      "contentBounds": [
+        34,
+        147,
+        543,
+        366
+      ],
+      "pivot": [
+        288.5,
+        366
+      ]
+    },
+    "roof_boat": {
+      "file": "village.png",
+      "rect": [
+        1024,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        16,
+        155,
+        476,
+        332
+      ],
+      "pivot": [
+        246.0,
+        332
+      ]
+    },
+    "banyan": {
+      "file": "nature.png",
+      "rect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "contentBounds": [
+        28,
+        45,
+        488,
+        471
+      ],
+      "pivot": [
+        258.0,
+        471
+      ]
+    },
+    "canopy": {
+      "file": "nature.png",
+      "rect": [
+        512,
+        0,
+        512,
+        512
+      ],
+      "contentBounds": [
+        48,
+        59,
+        462,
+        453
+      ],
+      "pivot": [
+        255.0,
+        453
+      ]
+    },
+    "rocks": {
+      "file": "nature.png",
+      "rect": [
+        1024,
+        0,
+        512,
+        512
+      ],
+      "contentBounds": [
+        35,
+        192,
+        470,
+        347
+      ],
+      "pivot": [
+        252.5,
+        347
+      ]
+    },
+    "shrub": {
+      "file": "nature.png",
+      "rect": [
+        0,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        58,
+        150,
+        465,
+        365
+      ],
+      "pivot": [
+        261.5,
+        365
+      ]
+    },
+    "reeds": {
+      "file": "nature.png",
+      "rect": [
+        512,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        48,
+        68,
+        458,
+        428
+      ],
+      "pivot": [
+        253.0,
+        428
+      ]
+    },
+    "lotus": {
+      "file": "nature.png",
+      "rect": [
+        1024,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        56,
+        127,
+        455,
+        347
+      ],
+      "pivot": [
+        255.5,
+        347
+      ]
+    },
+    "skiff": {
+      "file": "details.png",
+      "rect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "contentBounds": [
+        72,
+        194,
+        474,
+        362
+      ],
+      "pivot": [
+        273.0,
+        362
+      ]
+    },
+    "well": {
+      "file": "details.png",
+      "rect": [
+        512,
+        0,
+        512,
+        512
+      ],
+      "contentBounds": [
+        101,
+        119,
+        409,
+        428
+      ],
+      "pivot": [
+        255.0,
+        428
+      ]
+    },
+    "jars": {
+      "file": "details.png",
+      "rect": [
+        1024,
+        0,
+        512,
+        512
+      ],
+      "contentBounds": [
+        35,
+        107,
+        429,
+        428
+      ],
+      "pivot": [
+        232.0,
+        428
+      ]
+    },
+    "steps": {
+      "file": "details.png",
+      "rect": [
+        0,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        192,
+        59,
+        342,
+        447
+      ],
+      "pivot": [
+        267.0,
+        447
+      ]
+    },
+    "fence": {
+      "file": "details.png",
+      "rect": [
+        512,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        46,
+        88,
+        432,
+        421
+      ],
+      "pivot": [
+        239.0,
+        421
+      ]
+    },
+    "flowers": {
+      "file": "details.png",
+      "rect": [
+        1024,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        43,
+        118,
+        436,
+        393
+      ],
+      "pivot": [
+        239.5,
+        393
+      ]
+    },
+    "willow": {
+      "file": "../reboot/props.png",
+      "rect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "contentBounds": [
+        65,
+        42,
+        443,
+        470
+      ],
+      "pivot": [
+        254.0,
+        470
+      ]
+    },
+    "bamboo": {
+      "file": "../reboot/props.png",
+      "rect": [
+        512,
+        0,
+        512,
+        512
+      ],
+      "contentBounds": [
+        67,
+        50,
+        431,
+        448
+      ],
+      "pivot": [
+        249.0,
+        448
+      ]
+    },
+    "workshop": {
+      "file": "../reboot/props.png",
+      "rect": [
+        0,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        37,
+        63,
+        477,
+        462
+      ],
+      "pivot": [
+        257.0,
+        462
+      ]
+    },
+    "stall": {
+      "file": "../reboot/props.png",
+      "rect": [
+        512,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        99,
+        107,
+        414,
+        398
+      ],
+      "pivot": [
+        256.5,
+        398
+      ]
+    },
+    "dock": {
+      "file": "../reboot/props.png",
+      "rect": [
+        1024,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        159,
+        52,
+        348,
+        456
+      ],
+      "pivot": [
+        253.5,
+        456
+      ]
+    },
+    "villager_0": {
+      "file": "villagers.png",
+      "rect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "contentBounds": [
+        158,
+        86,
+        374,
+        438
+      ],
+      "pivot": [
+        266.0,
+        438
+      ]
+    },
+    "villager_1": {
+      "file": "villagers.png",
+      "rect": [
+        512,
+        0,
+        512,
+        512
+      ],
+      "contentBounds": [
+        170,
+        82,
+        339,
+        439
+      ],
+      "pivot": [
+        254.5,
+        439
+      ]
+    },
+    "villager_2": {
+      "file": "villagers.png",
+      "rect": [
+        1024,
+        0,
+        512,
+        512
+      ],
+      "contentBounds": [
+        73,
+        83,
+        422,
+        438
+      ],
+      "pivot": [
+        247.5,
+        438
+      ]
+    },
+    "villager_3": {
+      "file": "villagers.png",
+      "rect": [
+        0,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        178,
+        68,
+        356,
+        440
+      ],
+      "pivot": [
+        267.0,
+        440
+      ]
+    },
+    "villager_4": {
+      "file": "villagers.png",
+      "rect": [
+        512,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        174,
+        70,
+        337,
+        437
+      ],
+      "pivot": [
+        255.5,
+        437
+      ]
+    },
+    "villager_5": {
+      "file": "villagers.png",
+      "rect": [
+        1024,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        138,
+        69,
+        341,
+        438
+      ],
+      "pivot": [
+        239.5,
+        438
+      ]
+    }
+  },
+  "files": [
+    {
+      "file": "details.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "a01b6eda7fcc95b1dbd956699da763011473a16ad5117aa98eb125480d1b1054"
+    },
+    {
+      "file": "ground.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "490f7e9d07ed511fe2a75fc4aa6fe6ba0b73ba39955a7e75eed8da83db61eea6"
+    },
+    {
+      "file": "nature.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "9238adff9c5ea99b0e36b2a9e4377d1d046079b1688ffe5dcb034facce44cba7"
+    },
+    {
+      "file": "village.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "56ddf4db7056d04963b69871a655a7b94bb5253c69a7966be996d49a2596e39f"
+    },
+    {
+      "file": "villagers.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "7cb9196fb23118c0e38608d1933853e15dbbf4e383b5dc6fbfbb740b68d5038a"
+    }
+  ]
+}

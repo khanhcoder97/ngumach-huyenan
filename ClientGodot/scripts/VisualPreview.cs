@@ -11,7 +11,7 @@ namespace Ngumach.VisualReboot;
 public partial class VisualPreview : Node2D
 {
     public const int Columns = 160, Rows = 120, CellPixels = 16;
-    private readonly List<Rect2> _blocked = new();
+    private BenMuaEnvironment _environment = null!;
     private CharacterBody2D _hero = null!;
     private Sprite2D _body = null!;
     private TopDownCamera _camera = null!;
@@ -24,6 +24,7 @@ public partial class VisualPreview : Node2D
     private string? _capture;
     private bool _captureStarted;
     private bool _cleanCapture;
+    private bool _focused=true, _awaitMovementRelease;
 
     public override void _Ready()
     {
@@ -34,23 +35,19 @@ public partial class VisualPreview : Node2D
             if (args[i] == "--capture") _capture = args[i + 1];
         TextureFilter = TextureFilterEnum.Nearest;
         _manifest = JsonDocument.Parse(FileAccess.GetFileAsString("res://assets/reboot/manifest.json"));
-        BuildTerrain();
         var actors = new Node2D { Name = "DepthSorted", YSortEnabled = true };
         AddChild(actors);
-        BuildProps(actors);
+        _environment=new BenMuaEnvironment();
+        AddChild(_environment);
+        _environment.Build(actors);
         _heroTexture = GD.Load<Texture2D>("res://assets/reboot/hero_idle_body.png");
-        _hero = new CharacterBody2D { Name = "Hero", Position = new Vector2(1280, 896),
+        _hero = new CharacterBody2D { Name = "Hero", Position = _environment.Spawn,
             CollisionLayer = 1, CollisionMask = 1, MotionMode = CharacterBody2D.MotionModeEnum.Floating };
         actors.AddChild(_hero);
         _hero.AddChild(new CollisionShape2D { Shape = new CircleShape2D { Radius = 5 } });
         _body = new Sprite2D { Texture = _heroTexture, RegionEnabled = true, Centered = false };
         _hero.AddChild(_body);
         ApplyDirection();
-        // Only the staging map has these footprints. No canonical nav data is changed.
-        AddBlock(new Rect2(0, 71 * CellPixels, Columns * CellPixels, (Rows - 71) * CellPixels));
-        AddBlock(new Rect2(-20, -20, 20, Rows * CellPixels + 40));
-        AddBlock(new Rect2(Columns * CellPixels, -20, 20, Rows * CellPixels + 40));
-        AddBlock(new Rect2(0, -20, Columns * CellPixels, 20));
         _camera = new TopDownCamera { Name = "WorldCamera" };
         AddChild(_camera);
         _camera.Configure(new Vector2(Columns * CellPixels, Rows * CellPixels));
@@ -61,71 +58,7 @@ public partial class VisualPreview : Node2D
         _hud = new PreviewHud { Name = "Hud", Visible = !_cleanCapture };
         canvas.AddChild(_hud);
         if (_selfTest) RunCameraTests();
-    }
-
-    private void BuildTerrain()
-    {
-        var source = new TileSetAtlasSource {
-            Texture = GD.Load<Texture2D>("res://assets/reboot/terrain.png"),
-            TextureRegionSize = new Vector2I(256, 256)
-        };
-        for (int y = 0; y < 4; y++) for (int x = 0; x < 6; x++) source.CreateTile(new Vector2I(x, y));
-        var tiles = new TileSet { TileSize = new Vector2I(256, 256) };
-        tiles.AddSource(source, 0);
-        var ground = new TileMapLayer { Name = "GroundTiles", TileSet = tiles,
-            Scale = Vector2.One * (CellPixels / 256f) };
-        AddChild(ground);
-        for (int y = 0; y < Rows; y++)
-        for (int x = 0; x < Columns; x++)
-        {
-            int tile;
-            if (y > 70) tile = 6 + ((x * 13 + y * 7) % 9 == 0 ? 2 : 1);
-            else if (y == 70) tile = 12; // land north, water south, verified from actual pixels
-            else if ((y >= 52 && y <= 56) || (x >= 77 && x <= 82)) tile = 4;
-            else if ((x >= 35 && x <= 38) || (x >= 120 && x <= 123) || (y >= 25 && y <= 27)) tile = 3;
-            else tile = ((x * 17 + y * 31) % 11 < 2) ? 1 : 0;
-            ground.SetCell(new Vector2I(x, y), 0, new Vector2I(tile % 6, tile / 6));
-        }
-    }
-
-    private void BuildProps(Node2D actors)
-    {
-        var tex = GD.Load<Texture2D>("res://assets/reboot/props.png");
-        void Prop(int slot, Vector2 position, float size, bool solid)
-        {
-            var bounds = new Rect2((slot % 3) * 512, (slot / 3) * 512, 512, 512);
-            var sprite = new Sprite2D { Texture = new AtlasTexture { Atlas = tex, Region = bounds },
-                Position = position, Centered = false, Offset = new Vector2(-256, -456),
-                Scale = Vector2.One * (size / 512) };
-            actors.AddChild(sprite);
-            if (solid) AddBlock(new Rect2(position.X - size * .34f, position.Y - size * .70f, size * .68f, size * .68f));
-        }
-        for (int districtY = 0; districtY < 2; districtY++)
-        for (int districtX = 0; districtX < 6; districtX++)
-        {
-            float x = 240 + districtX * 360;
-            float y = districtY == 0 ? 720 : 1050;
-            if (Mathf.Abs(x - 1280) < 170) x += 100;
-            Prop((districtX + districtY) % 3 == 0 ? 3 : 2, new Vector2(x, y), 208, true);
-            Prop(4, new Vector2(x + 125, y + 20), 96, true);
-        }
-        for (int i = 0; i < 28; i++)
-        {
-            float x = 100 + (i * 313 % 2300);
-            float y = 180 + (i * 197 % 760);
-            if (x > 1180 && x < 1380 || y > 800 && y < 930 || _blocked.Any(r => r.Grow(60).HasPoint(new Vector2(x,y)))) continue;
-            Prop(i % 2, new Vector2(x, y), i % 2 == 0 ? 152 : 128, false);
-        }
-        Prop(5, new Vector2(1160, 1240), 192, false);
-        Prop(5, new Vector2(1720, 1240), 192, false);
-    }
-
-    private void AddBlock(Rect2 rect)
-    {
-        _blocked.Add(rect);
-        var body = new StaticBody2D { Position = rect.GetCenter(), CollisionLayer = 1 };
-        body.AddChild(new CollisionShape2D { Shape = new RectangleShape2D { Size = rect.Size } });
-        AddChild(body);
+        else if(args.Contains("--scene-self-test")) RunSceneTests();
     }
 
     public override void _UnhandledKeyInput(InputEvent @event)
@@ -139,7 +72,8 @@ public partial class VisualPreview : Node2D
     public override void _Notification(int what)
     {
         // No injected movement state is kept across focus loss.
-        if (what == NotificationApplicationFocusOut && _hero != null) _hero.Velocity = Vector2.Zero;
+        if (what == NotificationApplicationFocusOut){_focused=false;if(_hero!=null)_hero.Velocity=Vector2.Zero;}
+        if (what == NotificationApplicationFocusIn){_focused=true;_awaitMovementRelease=true;}
     }
 
     public override void _PhysicsProcess(double delta)
@@ -150,6 +84,8 @@ public partial class VisualPreview : Node2D
             (Input.IsPhysicalKeyPressed(Key.A) || Input.IsPhysicalKeyPressed(Key.Left) ? 1 : 0),
             (Input.IsPhysicalKeyPressed(Key.S) || Input.IsPhysicalKeyPressed(Key.Down) ? 1 : 0) -
             (Input.IsPhysicalKeyPressed(Key.W) || Input.IsPhysicalKeyPressed(Key.Up) ? 1 : 0));
+        if(!_focused) move=Vector2.Zero;
+        if(_awaitMovementRelease){if(move==Vector2.Zero)_awaitMovementRelease=false;move=Vector2.Zero;}
         if (move != Vector2.Zero)
         {
             move = move.Normalized();
@@ -158,6 +94,7 @@ public partial class VisualPreview : Node2D
         }
         _hero.Velocity = move * 80; // 4 WU/s for staging only, not a server movement rule
         _hero.MoveAndSlide();
+        _environment.UpdateOcclusion(_hero.Position);
         _camera.Follow(_hero.Position);
         _hud.Coordinates = _hero.Position / TopDownCamera.PixelsPerWorldUnit;
         _hud.Compact = _camera.Compact;
@@ -171,7 +108,7 @@ public partial class VisualPreview : Node2D
         var pivot = frame.GetProperty("pivot").EnumerateArray().Select(v => v.GetSingle()).ToArray();
         _body.RegionRect = new Rect2(rect[0], rect[1], rect[2], rect[3]);
         _body.Offset = -new Vector2(pivot[0], pivot[1]);
-        _body.Scale = Vector2.One * (48f / 372f);
+        _body.Scale = Vector2.One * (36f / 372f);
     }
 
     public override void _Process(double delta)
@@ -210,8 +147,18 @@ public partial class VisualPreview : Node2D
             var slots = PreviewHud.SkillCenters();
             foreach (var p in slots) Check(p.X-23 >= 16 && p.X+23 <= 1264 && p.Y-23 >= 16 && p.Y+23 <= 704, "skill arc safe area");
             for(int i=0;i<slots.Length;i++) for(int j=i+1;j<slots.Length;j++) Check(slots[i].DistanceTo(slots[j]) > 46, "skill slots do not overlap");
-            Check(_blocked.Any(r => r.HasPoint(new Vector2(100,1500))), "water blocked");
-            Check(!_blocked.Any(r => r.HasPoint(_hero.Position)), "spawn walkable");
+            Check(!_environment.IsWalkable(_environment.World(new Vector2(360,586))), "curved river blocked");
+            Check(_environment.IsWalkable(_hero.Position), "spawn walkable");
+            Check(_environment.IsWalkable(_environment.World(new Vector2(660,580))), "pier is walkable over water");
+            Check(_environment.AuthoredPlacementCount == 113, "authored placement registry");
+            Check(_environment.ShoreDetailCount > 100, "shore decoration coverage");
+            var reachable=_environment.Reachable(_hero.Position);
+            foreach(var target in new[]{new Vector2(648,72),new Vector2(980,327),new Vector2(170,360),new Vector2(660,580),new Vector2(458,335)})
+            {
+                var wp=_environment.World(target);
+                var grid=new Vector2I(Mathf.RoundToInt(wp.X/16),Mathf.RoundToInt(wp.Y/16));
+                Check(reachable.Contains(grid), "route from spawn to "+target);
+            }
             Check(_manifest.RootElement.GetProperty("heroFrames").GetArrayLength() == 8, "8 explicit regions");
             foreach (var frame in _manifest.RootElement.GetProperty("heroFrames").EnumerateArray())
             {
@@ -227,6 +174,48 @@ public partial class VisualPreview : Node2D
             if (_capture == null) GetTree().Quit();
         }
         catch (Exception ex) { GD.PushError("CAMERA_SELF_TEST FAIL " + ex); GetTree().Quit(1); }
+    }
+
+
+    private async void RunSceneTests()
+    {
+        int assertions=0;
+        void Check(bool ok,string message){assertions++;if(!ok)throw new InvalidOperationException(message);}
+        void KeyState(Key key,bool pressed)=>Input.ParseInputEvent(new InputEventKey{Keycode=key,PhysicalKeycode=key,Pressed=pressed});
+        async System.Threading.Tasks.Task Frames(int count)
+        {for(int i=0;i<count;i++)await ToSignal(GetTree(),SceneTree.SignalName.PhysicsFrame);}
+        var original=_hero.Position;
+        try
+        {
+            await Frames(3);
+            var before=_hero.Position;
+            KeyState(Key.D,true);await Frames(24);KeyState(Key.D,false);await Frames(3);
+            Check(_hero.Position.X-before.X>20,"real input moves hero on physics frames");
+            Check(Mathf.Abs(_hero.Position.Y-before.Y)<.2f,"east movement stays on axis");
+            var stopped=_hero.Position;await Frames(5);
+            Check(stopped.DistanceTo(_hero.Position)<.1f,"key release stops movement");
+            KeyState(Key.D,true);await Frames(4);
+            _Notification((int)NotificationApplicationFocusOut);var unfocused=_hero.Position;await Frames(6);
+            Check(unfocused.DistanceTo(_hero.Position)<.1f,"focus loss blocks held input");
+            _Notification((int)NotificationApplicationFocusIn);await Frames(6);
+            Check(unfocused.DistanceTo(_hero.Position)<.1f,"focus regain requires release");
+            KeyState(Key.D,false);await Frames(2);
+            KeyState(Key.D,true);await Frames(6);KeyState(Key.D,false);await Frames(2);
+            Check(_hero.Position.X>unfocused.X+4,"fresh press works after focus recovery");
+            _hero.Position=_environment.World(new Vector2(660,575));await Frames(2);
+            KeyState(Key.S,true);await Frames(60);KeyState(Key.S,false);await Frames(2);
+            var pierLocal=_hero.Position-_environment.DistrictOrigin;
+            Check(pierLocal.Y>590&&pierLocal.Y<604,"physics stops at pier end, not in river: "+pierLocal);
+            _hero.Position=_environment.World(new Vector2(337,270));await Frames(2);
+            var willow=_hero.GetParent().GetNode<Sprite2D>("ART_BM_TREE_10");
+            Check(willow.Modulate.A<.6f,"canopy fades when hiding hero");
+            _hero.Position=original;await Frames(2);
+            Check(willow.Modulate.A>.99f,"canopy restores after player leaves");
+            GD.Print("SCENE_SELF_TEST PASS assertions="+assertions);
+            GetTree().Quit();
+        }
+        catch(Exception ex){GD.PushError("SCENE_SELF_TEST FAIL "+ex);GetTree().Quit(1);}
+        finally{KeyState(Key.D,false);KeyState(Key.S,false);}
     }
 
     public override void _ExitTree() => _manifest?.Dispose();

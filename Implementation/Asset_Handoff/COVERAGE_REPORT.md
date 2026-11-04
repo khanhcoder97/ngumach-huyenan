@@ -8,8 +8,8 @@
 > python Implementation/Asset_Handoff/coverage_audit.py --check
 > ```
 
-- **Source commit:** `72f966c9feede2c21cd753349752c4d92b160100` — last commit touching the evidence files (not the report commit).
-- **Evidence digest:** `cc1afb9ff86584f7c6d969b9d82410309685ae20bf2344d59b4e961993d59301` over 42 files (SHA256 per file in §8).
+- **Source commit:** `dd50ec6fa62b4391b68e727ad692e095ee571178` — last commit touching the evidence files (not the report commit).
+- **Evidence digest:** `ae2bd87410eb2974752475dcafc7c18beb05860b6107a576c4da492d84b838df` over 42 files (SHA256 per file in §8).
 - **Phạm vi:** chỉ đọc nguồn; không sửa schema, manifest, asset, `.meta`, server hay gameplay numeric.
 
 ## 1. Kết luận
@@ -214,9 +214,9 @@ File text được hash ở dạng **LF chuẩn hoá** để Windows và Linux c
 | `docs/production/NPC_Actor_Production_Registry_vi.csv` | 32835 | `d9743b8148620e00dd0762eca2bfd1b733b7a8808583725a381262fd004cd52a` |
 | `docs/production/Online_Persistence_Release_Complete_vi.md` | 9433 | `14ec979208e5d563882ab184115f34683791973180888d6b6c089c6b81855f2e` |
 | `docs/production/Pet_Mount_Production_Data_vi.csv` | 5100 | `383a40438f741931a26a5e3e19fa6d2b5527ffaa6c69bb45875ef162e6bf2d73` |
-| `docs/production/Pixel_Art_Production_Standard_vi.md` | 10186 | `52bfc0a84a504d3d47bd34beb8f8d3c3c0ce5d1a3fd201d013a1f35ed6535c83` |
+| `docs/production/Pixel_Art_Production_Standard_vi.md` | 10510 | `76ece1bfdc07d794bfa7957053cf98869ef0db0fc25432f3a72635ff995dacb0` |
 | `docs/production/Quest_Dialogue_Production_Data_vi.csv` | 118934 | `241593fe9ba87ad0441a4292b602602729d6a14493c07869cb0bba0e1c9c2fab` |
 | `docs/production/Weekly_Boss_Rotation_Data_vi.csv` | 3201 | `940214ce7a34978487403520c50ffef825da7da94210eeb3b1841d46f4e372e2` |
 | `docs/production/World_Spawn_Gathering_Manifest_vi.csv` | 198229 | `7fe2d4d5229e2fb7a93eb8c0fd452b741cb5f050c49a9c72bee30f8eff06c457` |
 
-**Evidence digest:** `cc1afb9ff86584f7c6d969b9d82410309685ae20bf2344d59b4e961993d59301`
+**Evidence digest:** `ae2bd87410eb2974752475dcafc7c18beb05860b6107a576c4da492d84b838df`

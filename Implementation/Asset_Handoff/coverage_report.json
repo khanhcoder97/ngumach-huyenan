@@ -4570,9 +4570,9 @@
       "sha256": "383a40438f741931a26a5e3e19fa6d2b5527ffaa6c69bb45875ef162e6bf2d73"
     },
     {
-      "bytes": 10186,
+      "bytes": 10510,
       "path": "docs/production/Pixel_Art_Production_Standard_vi.md",
-      "sha256": "52bfc0a84a504d3d47bd34beb8f8d3c3c0ce5d1a3fd201d013a1f35ed6535c83"
+      "sha256": "76ece1bfdc07d794bfa7957053cf98869ef0db0fc25432f3a72635ff995dacb0"
     },
     {
       "bytes": 118934,
@@ -4642,8 +4642,8 @@
     "sourceLicense": "original"
   },
   "repo": {
-    "evidenceDigest": "cc1afb9ff86584f7c6d969b9d82410309685ae20bf2344d59b4e961993d59301",
-    "sourceCommit": "72f966c9feede2c21cd753349752c4d92b160100",
+    "evidenceDigest": "ae2bd87410eb2974752475dcafc7c18beb05860b6107a576c4da492d84b838df",
+    "sourceCommit": "dd50ec6fa62b4391b68e727ad692e095ee571178",
     "sourceCommitMeaning": "last commit touching the evidence files (not the report commit)"
   },
   "reportSchema": "opc05b.coverage_report/1",

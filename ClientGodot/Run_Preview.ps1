@@ -22,6 +22,9 @@ $env:PATH = $env:DOTNET_ROOT + ';' + $env:PATH
 if ($LASTEXITCODE -ne 0) { throw 'Build failed; preview was not started.' }
 & $GodotPath --headless --editor --path $clientRoot --quit
 if ($LASTEXITCODE -ne 0) { throw 'Import failed; preview was not started.' }
-if ($Test) { & $GodotPath --headless --path $clientRoot -- --camera-self-test }
+if ($Test) {
+    & $GodotPath --headless --path $clientRoot -- --camera-self-test
+    if ($LASTEXITCODE -eq 0) { & $GodotPath --headless --path $clientRoot -- --scene-self-test }
+}
 else { & $GodotPath --path $clientRoot }
 exit $LASTEXITCODE
