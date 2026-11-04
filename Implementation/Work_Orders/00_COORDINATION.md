@@ -1,8 +1,12 @@
 # Phân công ba agent — Ngũ Mạch: Huyền Ấn
 
-## Điều phối hiện hành từ 03/11/2026
+## Điều phối hiện hành05/11/2026
 
-**Review Muse chuyên sâu 04/11:** `27_MUSE_NATIVE_REVIEW_AND_PLAYABLE_DELIVERY_20261104.md`, report `Muse_Complete_Handoff_Review_20261104_vi.md` và native evidence trong `Implementation/Reports/Evidence/Muse_20261104/`. Source prototype build/import/render được trên Windows; PR111/112 còn CHANGES_REQUIRED, không coi 10/10 hoặc fullalpha đã nghiệm thu. Work26 của ba vai trò còn lại giữ nguyên; Muse tiếp trọn R1..R6 theo work27.
+**Camera/map:** CAM-TOPDOWN-WIDE-20261105 — north-up, art gần nhìn thẳng từ trên, default64×36WU. Xem docs/production/TopDown_Wide_Camera_20261105_vi.md; không tiếp tục chuẩn32×18 hoặc chỉ hub48×27.
+
+**OWNER OVERRIDE — đọc trước mọi gói cũ:** `28_MUSE_MEDIA_ONLY_AND_CODEX_VISUAL_REBOOT.md`. Chủ dự án rút toàn bộ graphics/UIUX/VFX/animation/map/Godot runtime khỏi Muse và giao Codex làm lại hình ảnh. Muse chỉ video/cinematic/âm thanh. Work24..27 giao Muse graphics/runtime đã hết hiệu lực; PR22/111/112 đóng, source giữ làm lịch sử. Policy `Implementation/Coordination/agent_scope_v2.json`; Codex là đầu mối client visual/runtime cho OpenCode và Qoder.
+
+**Review Muse chuyên sâu 04/11:** `27_MUSE_NATIVE_REVIEW_AND_PLAYABLE_DELIVERY_20261104.md`, report `Muse_Complete_Handoff_Review_20261104_vi.md` và native evidence trong `Implementation/Reports/Evidence/Muse_20261104/`. Source prototype build/import/render được trên Windows; PR111/112 đã đóng theo owner override; không coi 10/10 hoặc fullalpha đã nghiệm thu. Work26 của ba vai trò còn lại giữ nguyên; Muse dừng R1..R5 cũ, chuyển MEDIA-01 work28.
 
 **Cập nhật 04/11:** ưu tiên `26_ALL_AGENTS_PLAYABLE_ALPHA_20261104.md` và report `All_Agent_Handoff_Review_20261104_vi.md`. Blocker Qoder được giải quyết tại `Qoder_Q3_Blocker_Resolution_20261104_vi.md` + JSONQ3; encounter có reference payload chung và collision306ô có quyết định triển khai/navgates. Các work order cũ vẫn làm nền, không hỏi lại approval đã có. Bốn vai trò hoạt động: OpenCode, Qoder local, Qoder remote, Muse; Antigravity không trở lại.
 

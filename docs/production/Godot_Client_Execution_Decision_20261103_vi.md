@@ -1,5 +1,7 @@
 # Hướng triển khai client Godot .NET — 03/11/2026
 
+**Cập nhật quyền sở hữu05/11:** work28 và CAM-TOPDOWN-WIDE-20261105 thay phân công Muse và camera cũ. Codex nhận toàn graphics/UIUX/VFX/animation/map và Godot runtime; Muse chỉ video/cinematic/audio. PR22/111/112 đã đóng theo lệnh chủ dự án. Các mục báo cáo tình trạng03/11 bên dưới giữ để tra cứu.
+
 Trạng thái: quyết định điều phối hiện hành, chưa phải chứng nhận bản game đã chạy trên máy chủ dự án. Thay thế yêu cầu phát triển client Unity trong các work order cũ khi chúng mâu thuẫn với tài liệu này. Giữ lịch sử và source Unity; không xóa, di chuyển hoặc tự đóng PR #22/#51.
 
 ## Căn cứ và lựa chọn
@@ -21,11 +23,11 @@ Godot **4.7.2 stable .NET** là baseline giao nhận theo PR #107; đây là phi
 
 | Chủ sở hữu | Phạm vi hiện hành |
 |---|---|
-| Muse | Client Godot, scene chính/HUD/input/render/animation, asset pixel, map, VFX, cinema và Godot CI/export |
-| OpenCode | Lõi C# độc lập engine, DTO/transport/presenter/policy/catalog và kiểm thử protocol/HTTP; giao adapter interface để Muse nối Godot |
+| Muse | Chỉ video/cinematic/âm thanh, source media/subtitles/stems; không Godot code/graphics |
+| OpenCode | Lõi C# độc lập engine, DTO/transport/presenter/policy/catalog và kiểm thử protocol/HTTP; giao adapter interface để Codex nối Godot |
 | Qoder local | Authoritative gameplay/server, contract và profile alpha |
 | Qoder remote | Persistence library, transaction, identity/fencing, outbox và phục hồi; chưa được nối Health trước nghiệm thu |
-| Codex | Review/tích hợp, thiết kế, biên tập và quản lý quyết định; không coi báo cáo VM là bằng chứng chạy độc lập |
+| Codex | Toàn bộ art mới và Godot runtime/scene/HUD/camera/input/render/import/tích hợp; review và quản lý quyết định |
 
 Work order 24 là phân công mới; work order 23 giữ hiệu lực phần server và design alpha. Antigravity vẫn không được giao lại việc.
 

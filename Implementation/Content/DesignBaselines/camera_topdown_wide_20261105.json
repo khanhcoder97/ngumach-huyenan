@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "decisionId": "CAM-TOPDOWN-WIDE-20261105",
+  "projection": "ORTHOGRAPHIC_2D",
+  "northUp": true,
+  "cameraRotationDegrees": 0,
+  "artElevationTargetDegrees": [
+    80,
+    85
+  ],
+  "pixelsPerWorldUnit": 20,
+  "worldViewportPixels": [
+    1280,
+    720
+  ],
+  "defaultProfile": "WIDE",
+  "profiles": {
+    "WIDE": {
+      "visibleWorldUnits": [
+        64,
+        36
+      ],
+      "cameraZoom": [
+        1,
+        1
+      ]
+    },
+    "COMPACT": {
+      "visibleWorldUnits": [
+        48,
+        27
+      ],
+      "cameraZoom": [
+        1.3333333333333333,
+        1.3333333333333333
+      ]
+    }
+  },
+  "fixedAspectRatio": [
+    16,
+    9
+  ],
+  "hudLayer": "CanvasLayer",
+  "textureFilter": "NEAREST",
+  "cameraSmoothing": false,
+  "serverVisibilityUnchanged": true,
+  "canonicalMapGeometryUnchanged": true,
+  "runtimeStatus": "ART_STAGING_IMPLEMENTED_ONLINE_PENDING"
+}
