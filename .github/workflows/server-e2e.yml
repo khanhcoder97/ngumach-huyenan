@@ -64,3 +64,19 @@ jobs:
           python-version: "3.12"
       - name: Run two-client isolation E2E scenario
         run: bash Server/Health/Smoke/run_e2e_p1.sh two-client
+
+  # The private-alpha tutorial chain walks 160 WU of road, fights fourteen mobs
+  # and a 1200 HP encounter over real HTTP, so it gets the longest budget.
+  e2e-alpha-p00:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run the alpha P00-01..P00-05 + C1-01 tutorial E2E scenario
+        run: bash Server/Health/Smoke/run_e2e_p1.sh alpha-p00

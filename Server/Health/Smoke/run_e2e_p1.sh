@@ -8,6 +8,11 @@
 #                                                  # gates only, quest gates stay
 #                                                  # OFF, plus endurance pools so
 #                                                  # one actor survives every phase
+#   ./Server/Health/Smoke/run_e2e_p1.sh alpha-p00  # the private-alpha tutorial
+#                                                  # chain P00-01..P00-05 + C1-01
+#                                                  # over real HTTP: every gameplay
+#                                                  # gate plus P1:AlphaProfile, and
+#                                                  # endurance pools for the boss
 #
 # Requires: dotnet SDK (10.x), python3, curl.
 
@@ -46,6 +51,25 @@ elif [ "${PROFILE}" = "two-client" ]; then
   P1__Interact__Enabled=true \
   P1__QuestTurnIn__Enabled=true \
   P1__Equipment__Enabled=true \
+    dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
+elif [ "${PROFILE}" = "alpha-p00" ]; then
+  # The private-alpha tutorial chain over real HTTP: every gate the opening
+  # P00-01..P00-05 + C1-01 loop touches, with the alpha profile on. Endurance
+  # pools are enlarged so one actor can stand in the Mãng Cốt ring and live
+  # through 1200 HP of boss; damage numbers still come from the shipped
+  # formula, so the run proves the chain, not a tuning claim.
+  P1__AlphaProfile__Enabled=true \
+  P1__QuestAccept__Enabled=true \
+  P1__Interact__Enabled=true \
+  P1__QuestTurnIn__Enabled=true \
+  P1__Equipment__Enabled=true \
+  P1__CombatV2__Enabled=true \
+  P1__CombatDamage__Enabled=true \
+  P1__MobBehavior__Enabled=true \
+  P1World__StartingHp=2000 \
+  P1World__StartingMaxHp=2000 \
+  P1World__StartingMp=500 \
+  P1World__StartingMaxMp=500 \
     dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
 elif [ "${PROFILE}" = "mob-combat" ]; then
   # Combat gates only. The starting pools are enlarged purely so one actor can

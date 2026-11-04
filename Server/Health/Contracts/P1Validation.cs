@@ -58,8 +58,12 @@ public static class P1Validation
     private static readonly Regex NpcIdPattern =
         new(@"^NPC_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
 
+    // The approved alpha overlay names its runtime entities ALPHA_OBJ_* / ALPHA_WAVE_*,
+    // so an ENT_-only pattern made the design's own interactables unaddressable: the
+    // ripples, villagers and fragment could never be claimed over HTTP even though the
+    // registry carries them. Both prefixes are accepted; nothing else is.
     private static readonly Regex EntityIdPattern =
-        new(@"^ENT_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
+        new(@"^(?:ENT|ALPHA)_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
 
     public static bool IsHex32(string? value)
     {

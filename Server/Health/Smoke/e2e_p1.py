@@ -49,7 +49,20 @@ REVIEWED bundle is ever loaded, the same move must return 422
 movement_blocked; the script accepts exactly those two outcomes and
 fails on anything else.
 
-Usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client>
+  alpha-p00 — the private-alpha tutorial chain over real HTTP (QOD-21 Q4):
+            every gate the opening loop touches plus P1:AlphaProfile, with
+            endurance pools so one actor can stand in the Mãng Cốt ring.
+            Walks P00-01 → P00-05 and reads C1-01 through the API only:
+            packages, ripples, CARPLING kills, a villager rescue, WATERROOT
+            kills, the training-wave dodge, the P00-04 escort to both
+            checkpoints with both waves cleared, the quest boss killed through
+            the ordinary cast path, the fragment claim — and then the finale's
+            TALK objective, for which P1 has no route, so the profile asserts
+            the campaign stops there (P00-05 stays ACTIVE, C1-01 stays LOCKED)
+            instead of faking a completion. A second client proves the same
+            build keeps progress per character.
+
+Usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client|alpha-p00>
 """
 
 import sys
@@ -1080,9 +1093,555 @@ def two_client_profile():
           f"campaign=BLOCKED({blocked_fields[0].split('.')[-1]})")
 
 
+ALPHA_RIPPLES = (
+    ("ALPHA_OBJ_BM_RIPPLE_01", 70.0, 3.0),
+    ("ALPHA_OBJ_BM_RIPPLE_02", 86.0, -3.0),
+    ("ALPHA_OBJ_BM_RIPPLE_03", 104.0, 3.0),
+)
+ALPHA_VILLAGERS = (
+    ("ALPHA_OBJ_BM_VILLAGER_01", 138.0, 3.0),
+    ("ALPHA_OBJ_BM_VILLAGER_02", 146.0, 3.0),
+)
+ALPHA_WAVE_RECT = (140.0, -2.0, 148.0, 2.0)  # minX, minY, maxX, maxY (design)
+ALPHA_FRAGMENT = ("ALPHA_OBJ_BM_FRAGMENT", 178.0, 0.0)
+ALPHA_BOSS_ENTITY = "ENT_MAN_BM_SPAWN_BM_05_QUEST"
+# Each candidate carries the spawn record's own atlas position, because a mob the
+# audience cannot see yet (more than 40 WU away) has no row to read x/y from — the
+# runner has to walk to the group first, then fight what it finds there.
+ALPHA_CARPLING_GROUP = (
+    ("ENT_MAN_BM_SPAWN_BM_01", 84.0, 0.0),
+    ("ENT_MAN_BM_SPAWN_BM_01_M2", 84.0, 0.0),
+    ("ENT_MAN_BM_SPAWN_BM_01_M3", 84.0, 0.0),
+    ("ENT_MAN_BM_SPAWN_BM_02", 116.0, 0.0),
+    ("ENT_MAN_BM_SPAWN_BM_02_M2", 116.0, 0.0),
+    ("ENT_MAN_BM_SPAWN_BM_02_M3", 116.0, 0.0),
+    ("ENT_MAN_BM_SPAWN_BM_02_M4", 116.0, 0.0),
+)
+ALPHA_WATERROOT_GROUP = (
+    ("ENT_MAN_BM_SPAWN_BM_03", 143.0, 0.0),
+    ("ENT_MAN_BM_SPAWN_BM_03_M2", 143.0, 0.0),
+    ("ENT_MAN_BM_SPAWN_BM_03_M3", 143.0, 0.0),
+    ("ENT_MAN_BM_SPAWN_BM_04_M2", 160.0, 0.0),
+)
+ALPHA_WAVE_A = (
+    ("ENT_MAN_BM_WAVE_BM_ESCORT_A", 80.0, 0.0),
+    ("ENT_MAN_BM_WAVE_BM_ESCORT_A_M2", 80.0, 0.0),
+    ("ENT_MAN_BM_WAVE_BM_ESCORT_A_M3", 80.0, 0.0),
+)
+ALPHA_WAVE_B = (
+    ("ENT_MAN_BM_WAVE_BM_ESCORT_B", 120.0, 0.0),
+    ("ENT_MAN_BM_WAVE_BM_ESCORT_B_M2", 120.0, 0.0),
+    ("ENT_MAN_BM_WAVE_BM_ESCORT_B_M3", 120.0, 0.0),
+)
+ALPHA_PACKAGES = (
+    ("ENT_MAN_BM_OBJ_BM_PACKAGE_01", 36.0),
+    ("ENT_MAN_BM_OBJ_BM_PACKAGE_02", 44.0),
+    ("ENT_MAN_BM_OBJ_BM_PACKAGE_03", 52.0),
+)
+
+_key_counter = [0]
+
+
+def alpha_key(tag):
+    """32-hex idempotency/request key, unique per run and per tag."""
+    _key_counter[0] += 1
+    return f"{tag:02x}{_key_counter[0]:030x}"
+
+
+def alpha_session(character_id):
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/sessions",
+        {"characterId": character_id, "classId": "CLASS_MINH_KIEM"})
+    smoke_p1.check(status == 201, f"{character_id} session returned {status}: {body}")
+    smoke_p1.check(
+        (body.get("result") or {}).get("mapId") == "MAP_BEN_MUA",
+        f"{character_id} started on {(body.get('result') or {}).get('mapId')}")
+    return body.get("sessionId"), 1
+
+
+def alpha_quests_read(session_id):
+    """Unasserted quest read, for the conditional waits: a probe that polls this
+    would otherwise add one check per poll and the reported total would drift
+    with timing."""
+    status, _, body = smoke_p1.call("GET", f"/p1/quests/{session_id}")
+    if status != 200:
+        return None
+    return {entry.get("questId"): entry for entry in (body.get("result") or [])}
+
+
+def alpha_quests(session_id):
+    quests = alpha_quests_read(session_id)
+    smoke_p1.check(quests is not None, f"quest read for {session_id} did not return 200")
+    return quests
+
+
+def alpha_counter(quests, quest_id, objective_id):
+    entry = quests.get(quest_id) or {}
+    return (entry.get("objectiveCounters") or {}).get(objective_id, -1)
+
+
+def alpha_step(session_id, character_id, sequence, move_x, move_y, pace):
+    sequence += 1
+    time.sleep(pace)
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/move",
+        smoke_p1.move_envelope(sequence, move_x, move_y, character_id=character_id),
+        {"X-Session-ID": session_id})
+    moved = ((body.get("result") or {}).get("self") or {})
+    return sequence, status, moved.get("x", 0.0), moved.get("y", 0.0)
+
+
+def alpha_approach(session_id, character_id, sequence, target_x, target_y,
+                   within=3.0, pace=STEP_SECONDS, failures=None):
+    """Walk the 1,5-WU grid until the target is inside `within` WU *in a straight
+    line* (the P1 interaction range is a euclidean 5 WU, so stopping on a
+    per-axis tolerance would let a diagonal stop fail the very next interact).
+    Steps are never asserted per step. Without `failures` the caller gets one
+    check for this walk; with it, the caller owns a single check for a whole
+    phase, because a loop that retries candidates must not grow the profile's
+    reported total with the number of attempts the fight happened to need.
+    """
+    _, self_state, _, _ = v2_snapshot(session_id)
+    x = self_state.get("x", 0.0)
+    y = self_state.get("y", 0.0)
+
+    def gap():
+        return ((x - target_x) ** 2 + (y - target_y) ** 2) ** 0.5
+
+    step_failures = []
+    for _ in range(240):
+        if gap() <= within:
+            break
+        if abs(target_x - x) >= abs(target_y - y):
+            sequence, status, x, y = alpha_step(
+                session_id, character_id, sequence,
+                1 if target_x > x else -1, 0, pace)
+        else:
+            sequence, status, x, y = alpha_step(
+                session_id, character_id, sequence,
+                0, 1 if target_y > y else -1, pace)
+        if status != 200:
+            step_failures.append((sequence, status))
+    distance = gap()
+    if failures is None:
+        smoke_p1.check(
+            not step_failures,
+            f"walk to {target_x},{target_y} had failing moves: {step_failures}")
+        smoke_p1.check(
+            distance <= within,
+            f"walk to {target_x},{target_y} stopped {distance} WU away at {x},{y}")
+    else:
+        failures.extend(step_failures)
+        if distance > within:
+            failures.append(f"stop {round(distance, 2)}>{within} at {x},{y}")
+    return sequence, x, y
+
+
+def alpha_accept(session_id, character_id, quest_id, npc_id):
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/quests/accept",
+        smoke_p1.quest_accept_envelope(
+            quest_id, npc_id, character_id=character_id,
+            request_id=alpha_key(0xa1), idempotency_key=alpha_key(0xa2)),
+        {"X-Session-ID": session_id})
+    return status, body
+
+
+def alpha_interact(session_id, character_id, target_id):
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/world/interact",
+        smoke_p1.interact_envelope(
+            target_id, character_id=character_id,
+            request_id=alpha_key(0xb1), idempotency_key=alpha_key(0xb2)),
+        {"X-Session-ID": session_id})
+    return status, body
+
+
+def alpha_turnin(session_id, character_id, quest_id, npc_id):
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/quests/turnin",
+        smoke_p1.turnin_envelope(
+            quest_id, npc_id, character_id=character_id,
+            request_id=alpha_key(0xc1), idempotency_key=alpha_key(0xc2)),
+        {"X-Session-ID": session_id})
+    return status, body
+
+
+def alpha_kill(session_id, character_id, sequence, entity_id, pace=0.12):
+    """Cast the basic attack at one entity, staying in reach, until the snapshot
+    reports that life DEAD. Returns (nextSequence, acceptedCasts, refusedCodes,
+    witnessedDeath) — a cast that merely stopped seeing the entity is NOT counted
+    as a kill, because the group respawn makes an absent row ambiguous and the
+    quest counter must be compared against deaths the run actually observed.
+    """
+    accepted = 0
+    refused = {}
+    for _ in range(1200):
+        _, self_state, entities, _ = v2_snapshot(session_id)
+        target = entities.get(entity_id)
+        if target is None or self_state.get("hp", 0) <= 0:
+            return sequence, accepted, refused, False
+        if target.get("state") == "DEAD":
+            return sequence, accepted, refused, True
+        me_x = self_state.get("x", 0.0)
+        me_y = self_state.get("y", 0.0)
+        gap_x = target.get("x", me_x) - me_x
+        gap_y = target.get("y", me_y) - me_y
+        distance = (gap_x * gap_x + gap_y * gap_y) ** 0.5
+        if distance > 2.5:
+            # Close in on the longer axis first; the basic attack is a facing
+            # cone, so walking past the target is as useless as missing it.
+            sequence, _, _, _ = alpha_step(
+                session_id, character_id, sequence,
+                1 if gap_x >= 0 else -1, 0, STEP_SECONDS)
+            continue
+        aim_x = round(gap_x / distance, 4) if distance else 1.0
+        aim_y = round(gap_y / distance, 4) if distance else 0.0
+        sequence += 1
+        status, _, body = smoke_p1.call(
+            "POST", "/p1/v2/combat",
+            smoke_p1.combat_v2_envelope(
+                "BASIC_ATTACK", sequence, character_id=character_id,
+                target_id=entity_id, aim_x=aim_x, aim_y=aim_y,
+                request_id=alpha_key(0xd1), idempotency_key=alpha_key(0xd2)),
+            {"X-Session-ID": session_id})
+        if status == 200:
+            accepted += 1
+        else:
+            code = (body.get("error") or {}).get("code") or str(status)
+            refused[code] = refused.get(code, 0) + 1
+        time.sleep(pace)
+    return sequence, accepted, refused, False
+
+
+def alpha_kill_watched(session, character, sequence, pool, wanted, label):
+    """Kill until `wanted` deaths are witnessed. Every candidate is approached at
+    its spawn record's atlas position first (a mob outside the 40-WU audience has
+    no row to read yet), then fought until the snapshot reports that life DEAD.
+    Returns (nextSequence, deaths, refusalsByName)."""
+    deaths = 0
+    attempts = 0
+    refused = {}
+    walk_failures = []
+    while deaths < wanted and attempts < wanted * 4:
+        for entity_id, anchor_x, anchor_y in pool:
+            if deaths >= wanted:
+                break
+            attempts += 1
+            _, _, entities, _ = v2_snapshot(session)
+            if (entities.get(entity_id) or {}).get("state") == "DEAD":
+                continue
+            sequence, _, _ = alpha_approach(
+                session, character, sequence, anchor_x, anchor_y, within=3.0,
+                failures=walk_failures)
+            sequence, accepted, codes, died = alpha_kill(
+                session, character, sequence, entity_id)
+            for code, count in codes.items():
+                refused[code] = refused.get(code, 0) + count
+            if died:
+                deaths += 1
+    smoke_p1.check(
+        deaths >= wanted and not walk_failures,
+        f"{label}: witnessed {deaths} of {wanted} deaths (attempts {attempts}, "
+        f"refusals {refused}, walks {walk_failures[:4]})")
+    return sequence, deaths, refused
+
+
+def alpha_p00_profile():
+    """QOD-21 Q4: the whole private-alpha opening, over real HTTP, on one actor.
+
+    This is the leg every earlier report marked UNVERIFIED: P00-01 -> P00-05
+    needs the whole prerequisite chain to actually run through the API, because
+    prerequisite_not_met is enforced and no in-process fixture can stand in for
+    it. Progress is read from the authoritative quest read only — never from a
+    client-side assumption about what should have counted.
+    """
+    smoke_p1.check(
+        smoke_p1.call("GET", "/health")[0] == 200, "health check failed")
+
+    character = "CHR_E2E_ALPHA_A"
+    session, sequence = alpha_session(character)
+
+    quests = alpha_quests(session)
+    smoke_p1.check(
+        set(quests) == {"P00-01", "P00-02", "P00-03", "P00-04", "P00-05", "C1-01"},
+        f"alpha quest surface is {sorted(quests)}")
+    smoke_p1.check(
+        all(quests[qid].get("state") != "BLOCKED" for qid in
+            ("P00-02", "P00-03", "P00-04", "P00-05")),
+        f"alpha pack still blocked: {[(qid, quests[qid].get('state')) for qid in ('P00-02', 'P00-03', 'P00-04', 'P00-05')]}")
+
+    # ── P00-01: three packages, then the first real XP receipt ──
+    sequence, _, _ = alpha_approach(session, character, sequence, 42.0, 0.0)
+    status, body = alpha_accept(session, character, "P00-01", "NPC_LYAN")
+    smoke_p1.check(status == 200 and (body.get("result") or {}).get("state") == "ACTIVE",
+                   f"accept P00-01 {status}: {(body.get('error') or {})}")
+
+    for index, (entity_id, target_x) in enumerate(ALPHA_PACKAGES, start=1):
+        sequence, _, _ = alpha_approach(session, character, sequence, target_x, 0.0)
+        status, body = alpha_interact(session, character, entity_id)
+        updates = ((body.get("result") or {}).get("questUpdates")) or []
+        smoke_p1.check(
+            status == 200 and updates and
+            updates[0].get("objectiveCounters", {}).get("OBJ_P00_01_PACKAGES") == index,
+            f"package {entity_id} {status}: {updates or (body.get('error') or {})}")
+
+    sequence, _, _ = alpha_approach(session, character, sequence, TURN_IN_NPC_X, 0.0)
+    status, body = alpha_turnin(session, character, "P00-01", "NPC_TA_VAN_KHANH")
+    first_rewards = (body.get("result") or {}).get("rewards") or {}
+    smoke_p1.check(
+        status == 200 and (body.get("result") or {}).get("questState", {}).get("state")
+        == "COMPLETED",
+        f"turnin P00-01 {status}: {(body.get('error') or {})}")
+    # The alpha XP rule finally resolves over HTTP: with the profile off the
+    # shipped resolver answers applied:false, and the self-check's L1 oracle value
+    # (43) is server-side only — the frozen turn-in contract carries {xpRule,
+    # applied} and no amount, so this asserts the receipt, not a number the wire
+    # does not expose.
+    smoke_p1.check(
+        (first_rewards.get("xp") or {}).get("applied") is True and
+        (first_rewards.get("xp") or {}).get("xpRule") == "LEVEL_BAND_BASE",
+        f"P00-01 XP receipt {first_rewards.get('xp')}")
+    quests = alpha_quests(session)
+    smoke_p1.check(quests["P00-02"].get("state") == "AVAILABLE",
+                   f"P00-02 after P00-01 is {quests['P00-02'].get('state')}")
+
+    # ── P00-02: water ripples (overlay records) + four CARPLING kills ──
+    status, body = alpha_accept(session, character, "P00-02", "NPC_TA_VAN_KHANH")
+    smoke_p1.check(status == 200, f"accept P00-02 {status}: {(body.get('error') or {})}")
+
+    for index, (entity_id, target_x, target_y) in enumerate(ALPHA_RIPPLES, start=1):
+        sequence, _, _ = alpha_approach(session, character, sequence, target_x, target_y)
+        status, body = alpha_interact(session, character, entity_id)
+        updates = ((body.get("result") or {}).get("questUpdates")) or []
+        smoke_p1.check(
+            status == 200 and updates and
+            updates[0].get("objectiveCounters", {}).get("OBJ_P00_02_RIPPLES") == index,
+            f"ripple {entity_id} {status}: {updates or (body.get('error') or {})}")
+
+    sequence, carpling_kills, _ = alpha_kill_watched(
+        session, character, sequence, ALPHA_CARPLING_GROUP, 4, "P00-02 CARPLING")
+    quests = alpha_quests(session)
+    smoke_p1.check(
+        alpha_counter(quests, "P00-02", "OBJ_P00_02_CARPLING") >= 4,
+        f"CARPLING counter after {carpling_kills} kills is "
+        f"{alpha_counter(quests, 'P00-02', 'OBJ_P00_02_CARPLING')}")
+
+    sequence, _, _ = alpha_approach(session, character, sequence, TURN_IN_NPC_X, 0.0)
+    status, body = alpha_turnin(session, character, "P00-02", "NPC_TA_VAN_KHANH")
+    smoke_p1.check(
+        status == 200 and (body.get("result") or {}).get("unlocks") == ["P00-03"],
+        f"turnin P00-02 {status}: {(body.get('error') or (body.get('result') or {}))}")
+
+    # ── P00-03: two villagers, three WATERROOT kills, the training-wave dodge ──
+    sequence, _, _ = alpha_approach(session, character, sequence, 42.0, 0.0)
+    status, body = alpha_accept(session, character, "P00-03", "NPC_LYAN")
+    smoke_p1.check(status == 200, f"accept P00-03 {status}: {(body.get('error') or {})}")
+
+    for index, (entity_id, target_x, target_y) in enumerate(ALPHA_VILLAGERS, start=1):
+        sequence, _, _ = alpha_approach(session, character, sequence, target_x, target_y)
+        status, body = alpha_interact(session, character, entity_id)
+        updates = ((body.get("result") or {}).get("questUpdates")) or []
+        smoke_p1.check(
+            status == 200 and updates and
+            updates[0].get("objectiveCounters", {}).get("OBJ_P00_03_VILLAGERS") == index,
+            f"villager {entity_id} {status}: {updates or (body.get('error') or {})}")
+
+    sequence, waterroot_kills, _ = alpha_kill_watched(
+        session, character, sequence, ALPHA_WATERROOT_GROUP, 3, "P00-03 WATERROOT")
+
+    # The trial cycle only opens while the actor stands inside the sourced rect
+    # (140,-2)-(148,2) and credits at the impact tick if they left first: 24 ticks
+    # of windup at 20 Hz = 1,2 s, so dip in, get out, and let the tick decide. A
+    # hit is not a dodge — only standing outside at the impact frame can credit
+    # this, so an accidental hit while clearing the waterroots above cannot fake it.
+    min_x, _, max_x, _ = ALPHA_WAVE_RECT
+    dip_x = min_x + 2.0
+    escape_x = min_x - 6.0
+    def wave_trial_credited():
+        polled = alpha_quests_read(session) or {}
+        return alpha_counter(polled, "P00-03", "OBJ_P00_03_WAVE_TRIAL") >= 1
+
+    attempts = 0
+    dodge_walk_failures = []
+    while attempts < 6 and not wait_for(0.2, wave_trial_credited):
+        attempts += 1
+        sequence, _, _ = alpha_approach(session, character, sequence, dip_x, 0.0,
+                                       within=1.0, pace=0.15,
+                                       failures=dodge_walk_failures)
+        sequence, _, _ = alpha_approach(session, character, sequence, escape_x, 0.0,
+                                       within=1.0, pace=0.15,
+                                       failures=dodge_walk_failures)
+        time.sleep(0.7)
+
+    smoke_p1.check(
+        wait_for(20.0, wave_trial_credited) is not None and not dodge_walk_failures,
+        f"the training-wave dodge never credited OBJ_P00_03_WAVE_TRIAL over HTTP "
+        f"after {attempts} in/out attempts (walks {dodge_walk_failures[:4]})")
+
+    # P00-03 hands in to Ly An, not to Ta Van Khanh: the walk back is part of
+    # the quest, and the server gates it by distance.
+    sequence, _, _ = alpha_approach(session, character, sequence, 42.0, 0.0)
+    status, body = alpha_turnin(session, character, "P00-03", "NPC_LYAN")
+    smoke_p1.check(
+        status == 200 and (body.get("result") or {}).get("questState", {}).get("state")
+        == "COMPLETED",
+        f"turnin P00-03 {status}: {(body.get('error') or {})}")
+
+    # ── P00-04: walk the escort to both checkpoints and clear each wave ──
+    # Ta Van Khanh gives the quest, Ly An is the actor being escorted, so the
+    # leg starts by accepting at x=64 and then walks back to the NPC's own
+    # station at x=42 before accompanying it east.
+    sequence, _, _ = alpha_approach(session, character, sequence, TURN_IN_NPC_X, 0.0)
+    status, body = alpha_accept(session, character, "P00-04", "NPC_TA_VAN_KHANH")
+    smoke_p1.check(status == 200, f"accept P00-04 {status}: {(body.get('error') or {})}")
+    sequence, _, _ = alpha_approach(session, character, sequence, 42.0, 0.0)
+
+    def wave_alive(expected):
+        _, _, entities, _ = v2_snapshot(session)
+        alive = [entry[0] for entry in expected
+                 if (entities.get(entry[0]) or {}).get("state") not in (None, "DEAD")]
+        return alive if len(alive) == len(expected) else None
+
+    def accompany_until(limit_x, start_x):
+        """Pace east at the NPC's 3 wu/s and report the first tick on which the
+        checkpoint wave is up. Steps are not asserted per step (the count depends
+        on wall-clock), so one check after the walk carries the whole leg.
+        """
+        nonlocal sequence
+        walked = 0
+        x = start_x
+        while walked < 45 and x < limit_x:
+            sequence, _, x, _ = alpha_step(session, character, sequence, 1, 0, 0.5)
+            walked += 1
+        return walked, x
+
+    # Wave A activates when the escort reaches its x=80 checkpoint.
+    walked_a, x_after_a = accompany_until(82.0, 42.0)
+    alive_a = wait_for(60.0, lambda: wave_alive(ALPHA_WAVE_A))
+    smoke_p1.check(
+        alive_a is not None,
+        f"the P00-04 escort never activated wave A (walked {walked_a} paced steps "
+        f"to x={x_after_a})")
+    sequence, wave_a_deaths, _ = alpha_kill_watched(
+        session, character, sequence, ALPHA_WAVE_A, 3, "P00-04 wave A")
+
+    _, self_state, _, _ = v2_snapshot(session)
+    walked_b, x_after_b = accompany_until(122.0, self_state.get("x", 82.0))
+    alive_b = wait_for(75.0, lambda: wave_alive(ALPHA_WAVE_B))
+    smoke_p1.check(
+        alive_b is not None,
+        f"the P00-04 escort never activated wave B (walked {walked_b} paced steps "
+        f"to x={x_after_b})")
+    sequence, wave_b_deaths, _ = alpha_kill_watched(
+        session, character, sequence, ALPHA_WAVE_B, 3, "P00-04 wave B")
+
+    quests = alpha_quests(session)
+    smoke_p1.check(
+        alpha_counter(quests, "P00-04", "OBJ_P00_04_WAVE_A") == 3 and
+        alpha_counter(quests, "P00-04", "OBJ_P00_04_WAVE_B") == 3,
+        f"P00-04 counters {quests.get('P00-04', {}).get('objectiveCounters')}")
+    sequence, _, _ = alpha_approach(session, character, sequence, TURN_IN_NPC_X, 0.0)
+    status, body = alpha_turnin(session, character, "P00-04", "NPC_TA_VAN_KHANH")
+    smoke_p1.check(
+        status == 200 and (body.get("result") or {}).get("unlocks") == ["P00-05"],
+        f"turnin P00-04 {status}: {(body.get('error') or {})}")
+
+    # ── P00-05: the Mãng Cốt encounter, fought over HTTP ──
+    sequence, _, _ = alpha_approach(session, character, sequence, TURN_IN_NPC_X, 0.0)
+    status, body = alpha_accept(session, character, "P00-05", "NPC_TA_VAN_KHANH")
+    smoke_p1.check(status == 200, f"accept P00-05 {status}: {(body.get('error') or {})}")
+
+    # Registration is physical: the owner has to stand inside the sourced ring
+    # (circle (178,0) r 11) before any cast reaches the quest boss.
+    sequence, _, _ = alpha_approach(session, character, sequence, 178.0, 0.0, within=3.0)
+    # Standing in the ring is what registers the encounter for this owner, and the
+    # owner-facing audience row is the promise that makes the fight reachable: the
+    # quest boss reads ALIVE and targetable here (and only for this session) before
+    # any cast lands.
+    _, _, boss_rows, _ = v2_snapshot(session)
+    boss_row = boss_rows.get(ALPHA_BOSS_ENTITY) or {}
+    smoke_p1.check(
+        boss_row.get("targetable") is True and boss_row.get("healthState") == "ALIVE",
+        f"the quest boss row was not owner-targetable before the fight: "
+        f"targetable={boss_row.get('targetable')} healthState={boss_row.get('healthState')}")
+    sequence, accepted, refused, boss_died = alpha_kill(
+        session, character, sequence, ALPHA_BOSS_ENTITY)
+    smoke_p1.check(
+        accepted > 20 and boss_died,
+        f"the quest boss never died for this owner: {accepted} casts accepted, "
+        f"witnessed death {boss_died}, refusals {refused}")
+    _, _, dead_rows, _ = v2_snapshot(session)
+    dead_row = dead_rows.get(ALPHA_BOSS_ENTITY) or {}
+    smoke_p1.check(
+        dead_row.get("targetable") is False and
+        dead_row.get("healthState") == "DEAD",
+        f"the quest boss stayed targetable after its death: "
+        f"targetable={dead_row.get('targetable')} healthState={dead_row.get('healthState')}")
+    quests = alpha_quests(session)
+    smoke_p1.check(
+        alpha_counter(quests, "P00-05", "OBJ_P00_05_BOSS") == 1,
+        f"BOSS counter after the kill is "
+        f"{alpha_counter(quests, 'P00-05', 'OBJ_P00_05_BOSS')}")
+
+    entity_id, target_x, target_y = ALPHA_FRAGMENT
+    sequence, _, _ = alpha_approach(session, character, sequence, target_x, target_y,
+                                    within=3.0)
+    status, body = alpha_interact(session, character, entity_id)
+    smoke_p1.check(
+        status == 200 and ((body.get("result") or {}).get("questUpdates") or [{}])[0]
+        .get("objectiveCounters", {}).get("OBJ_P00_05_FRAGMENT") == 1,
+        f"fragment interact {status}: {(body.get('result') or {}).get('questUpdates') or (body.get('error') or {})}")
+
+    # The finale's last objective is a TALK, and P1 has no dialogue route: this
+    # is where the HTTP tutorial genuinely stops. Recorded as the named reason
+    # it is, rather than being skipped or passed by fixture.
+    status, body = alpha_turnin(session, character, "P00-05", "NPC_TA_VAN_KHANH")
+    quests = alpha_quests(session)
+    smoke_p1.check(
+        status != 200 and
+        alpha_counter(quests, "P00-05", "OBJ_P00_05_CLASS_CONFIRM") == 0 and
+        quests["P00-05"].get("state") == "ACTIVE",
+        f"P00-05 stopped where expected? turnin {status}: {(body.get('error') or {})} "
+        f"state {quests['P00-05'].get('state')}")
+    smoke_p1.check(
+        quests["C1-01"].get("state") == "LOCKED",
+        f"C1-01 before P00-05 completes is {quests['C1-01'].get('state')}")
+
+    # ── a second client, so "per character" is proven on the same build ──
+    second = "CHR_E2E_ALPHA_B"
+    session_b, sequence_b = alpha_session(second)
+    sequence_b, _, _ = alpha_approach(session_b, second, sequence_b, 42.0, 0.0)
+    status, body = alpha_accept(session_b, second, "P00-01", "NPC_LYAN")
+    smoke_p1.check(status == 200, f"B accept P00-01 {status}: {(body.get('error') or {})}")
+    sequence_b, _, _ = alpha_approach(session_b, second, sequence_b, 36.0, 0.0)
+    status, body = alpha_interact(session_b, second, "ENT_MAN_BM_OBJ_BM_PACKAGE_01")
+    smoke_p1.check(
+        status == 200 and ((body.get("result") or {}).get("questUpdates") or [{}])[0]
+        .get("objectiveCounters", {}).get("OBJ_P00_01_PACKAGES") == 1,
+        f"B package claim {status}: {(body.get('error') or {})}")
+    quests_b = alpha_quests(session_b)
+    smoke_p1.check(
+        alpha_counter(quests_b, "P00-02", "OBJ_P00_02_RIPPLES") == 0 and
+        alpha_counter(quests_b, "P00-02", "OBJ_P00_02_CARPLING") == 0,
+        f"B inherited A's P00-02 progress: {quests_b.get('P00-02')}")
+    # B is one quest deep, so the graph stops it exactly the way it stops
+    # everyone else: P00-02 stays LOCKED until P00-01 is handed in.
+    smoke_p1.check(
+        quests_b["P00-02"].get("state") == "LOCKED" and
+        quests["P00-05"].get("state") == "ACTIVE",
+        f"B P00-02 state {quests_b.get('P00-02', {}).get('state')}, "
+        f"A P00-05 state {quests.get('P00-05', {}).get('state')}")
+
+    print(
+        "profile=alpha-p00 chain=P00-01..P00-05 "
+        f"boss=KILLED fragment=OK wave_trial=OK escort=A+B "
+        f"talk=NO_HTTP_ROUTE c1_01=LOCKED second_client=ISOLATED")
+
+
 def main():
     if len(sys.argv) < 3:
-        fail("usage: e2e_p1.py <base_url> <default|dev|mob-combat>")
+        fail("usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client|alpha-p00>")
     smoke_p1.BASE_URL = sys.argv[1].rstrip("/")
     mode = sys.argv[2]
     if mode == "default":
@@ -1093,8 +1652,11 @@ def main():
         mob_combat_profile()
     elif mode == "two-client":
         two_client_profile()
+    elif mode == "alpha-p00":
+        alpha_p00_profile()
     else:
-        fail(f"unknown mode '{mode}' (expected default|dev|mob-combat|two-client)")
+        fail(f"unknown mode '{mode}' "
+             "(expected default|dev|mob-combat|two-client|alpha-p00)")
 
     print(f"PASS: e2e_p1 ({mode}) {smoke_p1.CHECKS} checks against {smoke_p1.BASE_URL}")
 

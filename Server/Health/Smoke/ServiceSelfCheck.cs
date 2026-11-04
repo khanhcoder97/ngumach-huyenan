@@ -8119,6 +8119,22 @@ public static class ServiceSelfCheck
             $"rejected={chapterRolledBack.Failure?.Code} count={countAfterRollback} " +
             $"state={chapterRolledState?.State} retry={chapterRetried.Failure?.Code}");
 
+        // The alpha overlay's entities are addressed by the interact route under
+        // their own ALPHA_ prefix, so the wire vocabulary has to name both prefixes
+        // and nothing looser: a prefix-free id (or a dash, or lowercase) is still
+        // rejected, which is what keeps the widening from becoming "any string".
+        Check(
+            "contracts.entity_id_accepts_ent_and_alpha_prefixes",
+            P1Validation.IsEntityId("ENT_MAN_BM_SPAWN_BM_01") &&
+            P1Validation.IsEntityId("ALPHA_OBJ_BM_RIPPLE_01") &&
+            P1Validation.IsEntityId("ALPHA_WAVE_BM_TRAINING") &&
+            !P1Validation.IsEntityId("ent_MAN_BM_SPAWN_BM_01") &&
+            !P1Validation.IsEntityId("FOO_MAN_BM_SPAWN_BM_01") &&
+            !P1Validation.IsEntityId("ENT-MAN-BM-SPAWN") &&
+            !P1Validation.IsEntityId("MAN_BM_SPAWN") &&
+            !P1Validation.IsEntityId(null),
+            "ALPHA_ and ENT_ accepted, everything else still refused");
+
         // ─── overflow: balance near long.MaxValue rejects without partial commit ───
 
         var overflowActor = NewPlayer("CHR_SELFCHECK_OVERFLOW");
