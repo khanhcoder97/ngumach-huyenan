@@ -81,8 +81,15 @@ def world_x(session_id):
 
 
 def walk_east(session_id, character_id, start_sequence, stop_before_x):
-    """Move +x in 1.5-WU steps until x >= stop_before_x. Returns (sequence, x)."""
+    """Move +x in 1.5-WU steps until x >= stop_before_x. Returns (sequence, x).
+
+    How many steps the 20 Hz tick budget allows depends on wall-clock, so a check
+    inside this loop would run a different number of times per run and the reported
+    total would stop meaning "these checks all ran". Failures are collected and
+    asserted once, after the walk.
+    """
     sequence = start_sequence
+    failures = []
     x = world_x(session_id)
     while x < stop_before_x:
         sequence += 1
@@ -91,8 +98,10 @@ def walk_east(session_id, character_id, start_sequence, stop_before_x):
             "POST", "/p1/move",
             smoke_p1.move_envelope(sequence, 1, 0, character_id=character_id),
             {"X-Session-ID": session_id})
-        smoke_p1.check(status == 200, f"move {sequence} returned {status}: {body}")
+        if status != 200:
+            failures.append((sequence, status, str(body)[:120]))
         x = ((body.get("result") or {}).get("self") or {}).get("x", x)
+    smoke_p1.check(not failures, f"walk_east to {stop_before_x} had failing moves: {failures}")
     return sequence, x
 
 
@@ -556,6 +565,7 @@ def walk_to(session_id, character_id, sequence, target_x, target_y,
     y = self_state.get("y", 0.0)
     for axis in axes:
         target = target_x if axis == "x" else target_y
+        step_failures = []
         for _ in range(200):
             current = x if axis == "x" else y
             delta = target - current
@@ -571,12 +581,17 @@ def walk_to(session_id, character_id, sequence, target_x, target_y,
                     0 if axis == "x" else direction,
                     character_id=character_id),
                 {"X-Session-ID": session_id})
-            smoke_p1.check(status == 200, f"walk {axis} step {sequence} {status}: {body}")
+            if status != 200:
+                # One check per axis, after the walk: the number of steps depends on
+                # the tick budget, so a check per step would drift the total.
+                step_failures.append((axis, sequence, status, str(body)[:120]))
             moved = ((body.get("result") or {}).get("self") or {})
             x = moved.get("x", x)
             y = moved.get("y", y)
         else:
             fail(f"walk along {axis} never reached {target} (stopped at {current})")
+        smoke_p1.check(
+            not step_failures, f"walk along {axis} had failing moves: {step_failures}")
     return sequence, x, y
 
 
