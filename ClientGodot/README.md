@@ -2,7 +2,7 @@
 
 Godot 4.7.2 .NET, .NET SDK 8; Compatibility renderer. Có hai chế độ riêng:
 
-- **Chơi online local:** chạy Run_Playable_Alpha.ps1. Script build client SDK8/server SDK10, khởi động server loopback riêng, kiểm health + PID, mở game và dừng đúng server mình tạo khi đóng game. Chưa có gói export độc lập SDK.
+- **Chơi online local:** nhấp đôi Choi_Ben_Mua.cmd, hoặc chạy Run_Playable_Alpha.ps1. Script build client SDK8/server SDK10, khởi động server loopback riêng, kiểm health + PID, mở game và dừng đúng server mình tạo khi đóng game. Chưa có gói export độc lập SDK.
 - **Xem art offline:** chạy Run_Preview.ps1. Không cấp quest, tiền, damage hoặc vật phẩm. F2 đổi tầm nhìn; phím 1–6 thử sáu VFX Minh Kiếm, Space thử animation tấn công.
 
 ## Điều khiển bản online local
