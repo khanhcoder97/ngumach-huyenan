@@ -3,9 +3,10 @@
 Target framework: `net8.0` (Godot 4.7.2 stable .NET baseline; do not self-upgrade).
 No `UnityEngine` / `UnityEditor` / UI Toolkit / `Resources.Load`. Engine-agnostic.
 
-Code head: `ce4ce5b83505e55059722b06f4e347292f27144b`
-(PR #109, branch `opencode/opc-15-godot-client-core-20261103`); encounter
-validation is bound to Qoder's published QOD-21 Q2 schema
+Code head: `ce4ce5b83505e55059722b06f4e347292f27144b`; last verified head:
+`37704f485b95c7a9c9e40cd3ad97aef75c081631` (PR #109, branch
+`opencode/opc-15-godot-client-core-20261103`); encounter validation is bound to
+Qoder's published QOD-21 Q2 schema
 `Implementation/Contracts/P1/EncounterSnapshotV1.schema.json` (PR #106).
 
 ## Projects
@@ -94,7 +95,8 @@ Do not flip Y in the portable model; Godot side owns render transform.
 No scene/runtime Godot edits belong to OpenCode — only this library + adapter contract.
 
 ## Verification status
-Verified in CI run `41803595203` (`godot-client-core`, code head `ce4ce5b`):
+Verified in CI run `41803595203` (`godot-client-core`, code head `ce4ce5b`) and
+again in run `41803960912` (head `37704f4`):
 - build core + sample: PASS
 - `135/135` unit tests: PASS (TRX counters `total=135 passed=135 failed=0`)
 - private HTTP runner: PASS with `55` assertions.

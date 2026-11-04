@@ -1,11 +1,13 @@
 # OPC-15 Muse — Godot integration packet (portable core)
 
 Branch: `opencode/opc-15-godot-client-core-20261103` (stacked on OPC-14 `974139f`).
-Code head: `ce4ce5b83505e55059722b06f4e347292f27144b` (PR #109).
+Code head: `ce4ce5b83505e55059722b06f4e347292f27144b`; last verified head:
+`37704f485b95c7a9c9e40cd3ad97aef75c081631` (PR #109).
 Owner: OpenCode (portable core only; Muse owns Godot scene/runtime).
 
 ## Trạng thái đã xác minh
-- `godot-client-core` CI run `41803595203`: **PASS** cả hai job.
+- `godot-client-core` CI run `41803595203` (code head) và `41803960912` (head
+  `37704f4`): **PASS** cả hai job.
 - `Shared/ClientCore.Tests`: **135/135** test PASS (TRX `total=135 passed=135 failed=0`).
 - HTTP runner với private Health server thật: **55 assertions**, marker
   `PASS ClientCore HTTP assertions: 55`; CI gate đọc `assertions.txt` và fail nếu 0/thiếu.
@@ -107,7 +109,8 @@ pad/NPC ngoài arena đều bị từ chối, không throw và không silent-map
 
 ## Bằng chứng
 - PR #109: https://github.com/khanhcoder97/ngumach-huyenan/pull/109
-- CI: run `41803595203`, workflow `godot-client-core`, 2/2 job PASS.
+- CI: run `41803595203` (code head) và `41803960912` (head `37704f4`),
+  workflow `godot-client-core`, 2/2 job PASS.
 - Unit evidence: TRX counters `total=135 passed=135 failed=0`.
 - Assertion marker CI: `PASS ClientCore HTTP assertions: 55`
   và bước gate in `HTTP assertions: 55`.
