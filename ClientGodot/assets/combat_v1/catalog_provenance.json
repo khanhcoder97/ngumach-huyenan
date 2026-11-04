@@ -1,0 +1,23 @@
+{
+  "hashNormalization": "UTF8 original bytes with CRLF normalized to LF",
+  "sources": [
+    {
+      "path": "docs/production/Item_Master_Catalog_vi.csv",
+      "sha256": "77e1405963fab1e915c56a8b738e347bd60809c6cf1fb78bee5831202e67065c"
+    },
+    {
+      "path": "docs/production/Item_Rarity_Variant_Catalog_vi.csv",
+      "sha256": "7979ba05bd06403b02190d7f51698891549d886ef27957f9d5e079070627b27c"
+    },
+    {
+      "path": "Client/Assets/Resources/Narrative/dialogue_vi.json",
+      "sha256": "53ca0a5ec0faa9e8c61cffc3cffecc68281ebc4a562f6cdbe3cfe7930d1966e1"
+    },
+    {
+      "path": "docs/production/World_Spawn_Gathering_Manifest_vi.csv",
+      "sha256": "7fe2d4d5229e2fb7a93eb8c0fd452b741cb5f050c49a9c72bee30f8eff06c457"
+    }
+  ],
+  "items": 2656,
+  "entities": 24
+}

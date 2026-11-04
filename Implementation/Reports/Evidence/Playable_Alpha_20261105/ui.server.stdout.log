@@ -1,0 +1,2304 @@
+info: Health[0]
+      Loaded map bounds for 46 maps.
+info: Health[0]
+      Loaded 3 combat skills.
+info: Health[0]
+      Loaded quest definitions: 5.
+info: Health[0]
+      Loaded narrative nodes: 229 (flags 2).
+info: Health[0]
+      Loaded NPC anchors: 104.
+info: Health[0]
+      Loaded topology bundles: 1 (reviewed 0).
+warn: Health[0]
+      DEV STUB: P1:CombatDamage is enabled with the REFERENCE_L5 mob stat bundle (DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION); the QOD-16 proposal is not approved yet, so every damage number in flight is a DEV fixture, not reviewed production balance.
+warn: Health[0]
+      DEV STUB: P1:CombatV2 is enabled — /p1/v2/world, /p1/v2/combat and /p1/v2/events use the QOD-17 tick engine for the supported DEV subset.
+info: Health[0]
+      Combat event stream: 512 events per session, page 200.
+info: Health[0]
+      Loaded world entities: 44 (mobs 25, bosses 2, nodes 9, npcs 8).
+info: Health[0]
+      Loaded world records: 352.
+warn: Health[0]
+      DEV FIXTURE: P1:Interact is enabled with AssumedProfessionLevel=1 and respawn fixtures; no reviewed gathering topology bundle exists.
+warn: Health[0]
+      DEV STUB: P1:QuestAccept is enabled. Interaction line-of-sight is not enforced because no walkability bundle exists.
+warn: Health[0]
+      DEV STUB: P1:QuestTurnIn is enabled. Reward ledger is in-memory and XP applied=false; no reviewed walkability bundle exists.
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://127.0.0.1:56836
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/health - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /health'
+info: Health[0]
+      Health check requested. CorrelationId: d374182c-7c32-4729-9595-57706a61579c
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type '<>f__AnonymousType0`3' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /health'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/health - 200 - application/json;+charset=utf-8 275.6113ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/sessions - application/json;+charset=utf-8 29
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/sessions => CreateSessionAsync'
+info: P1.Sessions[0]
+      Session e678c9f2570b4c1aa9037bc772871d92 created for CHR_4C23D492 on MAP_BEN_MUA at (18,0)
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/sessions => CreateSessionAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/sessions - 201 - application/json;+charset=utf-8 202.2528ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 67.8618ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 3.0288ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1QuestListResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 40.3726ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1InventoryResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 28.7991ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 48.6555ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 7.0092ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1QuestListResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 2.5245ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1InventoryResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.4321ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.6800ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 237
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 88.8561ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.9011ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.4049ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 237
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 1.1678ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.7405ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 237
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 1.1276ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.4697ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 237
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 2.5211ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.1067ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.4180ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 237
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 3.1298ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.5744ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 237
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 1.5920ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.2645ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 237
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 1.3257ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.6174ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.5356ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 237
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.8467ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 3.7086ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 237
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 1.8427ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.7359ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.6649ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.5107ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.7087ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 4.3959ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.5947ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 1.1866ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.2802ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 5.9292ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.5983ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.5928ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 2.2405ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.7682ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.8811ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 7.3692ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 1.3066ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.6591ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 1.1318ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 4.4847ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.5949ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 1.7422ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.6057ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.7773ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.8374ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.5202ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 2.0459ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.5563ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.6805ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.5268ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.4947ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.3619ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 1.4704ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 3.0937ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 10.7214ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 2.2247ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.7639ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 2.4480ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.5301ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.4054ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 2.4567ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.7633ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 1.3378ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.7402ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 253
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 4.5160ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.8832ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 1.8564ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 5.6755ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 1.4956ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/quests/accept - application/json;+charset=utf-8 232
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/quests/accept => QuestAcceptAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1QuestAcceptResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/quests/accept => QuestAcceptAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/quests/accept - 200 - application/json;+charset=utf-8 47.6990ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.9917ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1QuestListResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.3839ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1InventoryResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.7299ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.4590ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 239
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 3.3308ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.4899ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.8699ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 239
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 1.2868ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 3.0511ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 239
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.5663ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.5329ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 254
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 2.7627ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.0158ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.8203ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/world/interact - application/json;+charset=utf-8 236
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/world/interact => InteractAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1InteractResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/world/interact => InteractAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/world/interact - 200 - application/json;+charset=utf-8 72.5836ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 3.0000ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 4.5815ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1QuestListResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.3274ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1InventoryResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 2.6492ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 3.4800ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 2.2937ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.5720ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 2.0880ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.6255ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.4063ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 1.4794ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.7061ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 2.2300ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 3.6438ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.8145ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 100.9370ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 2.4320ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.5644ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.5246ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.6245ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.5243ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 5.6287ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 2.4480ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.4626ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.6279ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.1867ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/world/interact - application/json;+charset=utf-8 236
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/world/interact => InteractAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1InteractResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/world/interact => InteractAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/world/interact - 200 - application/json;+charset=utf-8 0.6506ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.6122ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.8470ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1QuestListResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 2.8529ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1InventoryResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 2.7920ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.8047ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.7967ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 9.6177ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 7.4628ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.5694ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.6715ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 4.6375ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 2.2082ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.7714ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.4043ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 3.0139ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.6280ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.6137ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.7356ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 2.1456ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.6699ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.8981ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.4017ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 13.2771ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.7795ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 13.8209ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 11.8655ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 1.6703ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 20.1662ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.2799ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 253
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 1.2733ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.6873ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/world/interact - application/json;+charset=utf-8 236
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/world/interact => InteractAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1InteractResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/world/interact => InteractAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/world/interact - 200 - application/json;+charset=utf-8 1.4675ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 4.7944ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 7.2294ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1QuestListResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 2.2924ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1InventoryResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.7722ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.4107ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 2.3369ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.8206ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.3634ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 2.3040ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.6080ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.4192ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.3954ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.4816ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.7879ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.8611ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 1.5924ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.5263ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 8.8821ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.8377ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.4482ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.7353ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.3205ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.5195ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.8685ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.7120ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.7183ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.4069ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.7283ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 1.5478ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 3.3976ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.4657ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 238
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.3656ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.2943ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/move - application/json;+charset=utf-8 253
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/move => MoveAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/move - 200 - application/json;+charset=utf-8 0.3220ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.4617ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 1.0664ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://127.0.0.1:56836/p1/quests/turnin - application/json;+charset=utf-8 240
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /p1/quests/turnin => TurnInAsync'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1TurnInResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /p1/quests/turnin => TurnInAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://127.0.0.1:56836/p1/quests/turnin - 200 - application/json;+charset=utf-8 179.9697ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 5.0240ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1InventoryResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 6.4159ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.4778ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1QuestListResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 1.1898ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1InventoryResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.2507ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.2362ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 2.4001ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.9071ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.2667ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.6148ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 3.1755ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.4113ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.3129ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.4267ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1QuestListResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/quests/{sessionId} => GetQuests'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/quests/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.3586ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1InventoryResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/inventory/{sessionId} => GetInventory'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/inventory/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.2443ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.1914ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 1.1140ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.8428ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.2183ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1WorldV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/world/{sessionId} => GetWorldV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/world/e678c9f2570b4c1aa9037bc772871d92 - 200 - application/json;+charset=utf-8 0.3538ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'P1CombatEventPageV2Response' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /p1/v2/events/{sessionId} => GetCombatEventsV2'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://127.0.0.1:56836/p1/v2/events/e678c9f2570b4c1aa9037bc772871d92?cursor=0&max=100 - 200 - application/json;+charset=utf-8 0.9402ms

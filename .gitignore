@@ -59,3 +59,7 @@ ClientGodot/.godot/
 ClientGodot/bin/
 ClientGodot/obj/
 ClientGodot/**/*.import
+
+!ClientGodot/Portable/*.csproj
+ClientGodot/Portable/bin/
+ClientGodot/Portable/obj/

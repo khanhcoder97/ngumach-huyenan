@@ -1,0 +1,12 @@
+Use case: stylized-concept
+Asset type: SIX standalone pixel-art game sprites for the real opening quest of original Vietnamese fantasy RPG Ngu Mach Huyen An.
+1536x1024 canvas3columns2rows,512squarecells. Whole objects centered, at least48px blank padding, nevercrosscell. True transparent alpha0 aroundobjects; no coloredbackground/checkerboard, no floor, no text/numbers/grid. Crisp deliberate pixelclusters, warmtopleftlight, jade/ivory/ochre/terracotta palette matching reference village and hero; highangle topdown RPG view, no isometric or horizon.
+ROW1 three complete adult chibi NPCs, consistent bodyheight340sourcepixels and bootbaseline440, facingS or slightSE:
+col1 LY AN, original female courier: darkbrown hair tiedtoone side, short rainblue cloak with earthyellow piping, ivoryshirt and charcoal trousers/boots, large practical tan crossbodycourierbag closed at hip; calmalertface, hands relaxed, no weapons.
+col2 TA VAN KHANH, original older male official: darknavy modest Vietnamese robe, tiedbackblackhair with fewgraystrands, one forearm wrapped in ivorybandage, a short brokenjian safelyinbelt scabbard, dignified practicalexpression, no heroic goldenarmor.
+col3 village MEDIC: adult herbalist in muted greenlinen robe, brownmedicinebag and small foldedcloth, darkhairbun, friendlyreservedexpression, no magicalglow.
+ROW2 three independent item sprites:
+col1 ordinary small wooden PARCEL tiedwith thicktanrope, sealed corner, no readablewriting/no glowingrunes, highangleoverhead, width280sourcepixels;
+col2 starter MINH KIEM CHEST ARMOR item icon, ivory cloth jacket with modest darkteal lamellar shoulders and smallbrassclasps, empty garmentdisplay no person/head/arms;
+col3 small open browncloth coinpouch with3restrained brassroundcoins, no jewel/gems.
+Originaldesigns coherent with reference. Do not turn NPCs into portraits or draw giant faces. No frame decoration.
