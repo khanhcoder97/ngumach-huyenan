@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Portable/**" />
+    <ProjectReference Include="Portable/P1NativeCore.csproj" />
+  </ItemGroup>
 </Project>

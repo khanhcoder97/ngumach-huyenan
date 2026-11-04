@@ -304,5 +304,21 @@ public partial class BenMuaEnvironment : Node2D
         return found;
     }
 
+
+    /// <summary>Backdrop coverage only. Online navigation always belongs to the server.
+    /// Authored district A2 is not promoted to canonical nav by this extension.</summary>
+    public void ExtendOnlineBackdrop(Rect2 bounds)
+    {
+        var source=new TileSetAtlasSource{Texture=Texture("ground.png"),TextureRegionSize=new Vector2I(512,512)};
+        source.CreateTile(Vector2I.Zero);
+        var tiles=new TileSet{TileSize=new Vector2I(512,512)};tiles.AddSource(source,0);
+        var layer=new TileMapLayer{Name="OnlineBoundsBackdrop",TileSet=tiles,Scale=Vector2.One*.25f,
+            Material=GroundMaterial(0),ZIndex=-30};
+        AddChild(layer);
+        int minX=Mathf.FloorToInt(bounds.Position.X/128),minY=Mathf.FloorToInt(bounds.Position.Y/128);
+        int maxX=Mathf.CeilToInt(bounds.End.X/128),maxY=Mathf.CeilToInt(bounds.End.Y/128);
+        for(int y=minY;y<maxY;y++)for(int x=minX;x<maxX;x++)layer.SetCell(new Vector2I(x,y),0,Vector2I.Zero);
+    }
+
     public override void _ExitTree(){_layout?.Dispose();_assets?.Dispose();}
 }
