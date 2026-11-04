@@ -9,6 +9,7 @@ Codex sản xuất bằng **trình tạo ảnh tích hợp (image_gen)**; toàn 
 - ben_mua_questkit_v1: Ly An, Tạ Vân Khanh, thầy thuốc; kiện hàng, áo thưởng, túi tiền. Các người thực cao quá hàng512 theo prompt nên metadata dùng top608px, đồ ởy608..1024; giữ nguyên chân, không cắt theo grid giả.
 - ben_mua_mobs_v1: Cá Linh và Rễ Nước, mỗi loại idle/attack/dead;512px/cell. Bind homogeneous runtime spawn01/02/03 theo catalog; mixed04 vẫn chưa resolved.
 - ben_mua_nodes_v1: hai mạch quặng sắt, dược thảo, gốc gỗ, lá dược nổi, mảnh ấn decorative. Runtime chỉ bind exact node types có source; shard prop chưa tạo gameplay object/grant.
+- minh_kiem_skill_icons_v1: sáu silhouette từ skill_vfx_art_v1, không dùng ảnh effect làm icon. HUD giữ vòng cung, glyph32px có hotkey riêng; hover tên và trạng thái chưa hỗ trợ online. Rect content tính từ alpha để dùng Atlas-region khi render, không sửa PNG.
 
 source_manifest.json và runtime manifest.json chứa kích thước/SHA256/rect/pivot thực. Asset vẫn NATIVE_REVIEW_CANDIDATE: structural pass không chứng minh gait đẹp, tất cả direction đồng nhất hay art đã final. Native gallery và regression báo cáo riêng; chưa có đủ đồ họa năm class/30skill/boss/campaign.
 

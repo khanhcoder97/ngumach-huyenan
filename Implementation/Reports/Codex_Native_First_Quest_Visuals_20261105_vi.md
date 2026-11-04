@@ -33,6 +33,7 @@ Art_Source/Combat_Visuals_20261105 chứa nguồn/prompt/metadata; dùng image_g
 - 36phase VFX cho sáu skill Minh Kiếm; pool24/LowFX8, không collision/damage. Gallery đóng băng keyframe chỉ để review.
 - Ly An/Tạ/thầy thuốc +kiện/áo/túi tiền; NPCtopregion608px giữ nguyên chân.
 - Cá Linh/Rễ Nước mỗi loại3pose idle/attack/dead; năm loại node thực +mảnhấn decorative chưa bind gameplay.
+- Sáu iconpixel kỹ năng đúng silhouette nguồn, đưa vào vòngcung46px quanhĐÁNH; có hotkey/tooltip và dim cho slotonline chưa hỗtrợ. native_hud_skill_arc.png là Godotcapture thực.
 
 native_vfx_gallery.png là Godot render của environment và hiệu ứng; native_ui_p00_01_inventory.png là inventory sau completedquest. Chưa nghiệm thu tất cả gait/direction/equipmentlayers, nămclass/30skill/boss/fullNPC. Unknown mixedspawn không tự gán species.
 

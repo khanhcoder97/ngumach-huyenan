@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Linq;
+using System.Text.Json;
 namespace Ngumach.VisualReboot;
 
 /// <summary>Live HUD. Online values are read from detached authoritative snapshots.</summary>
@@ -24,7 +25,28 @@ public partial class PreviewHud : Node2D
     private readonly Color _panel=new(.035f,.065f,.055f,.96f);
     private readonly Color _bronze=Color.FromHtml("#be9b53"),_ink=Color.FromHtml("#eee6cc");
     private Font _font=null!;
-    public override void _Ready(){_font=ThemeDB.FallbackFont;QueueRedraw();}
+    private Texture2D _skillTexture=null!;
+    private readonly Rect2[] _skillIconRects=new Rect2[6];
+    private int _hover=-1;
+    public override void _Ready()
+    {
+        _font=ThemeDB.FallbackFont;
+        _skillTexture=GD.Load<Texture2D>("res://assets/combat_v1/minh_kiem_skill_icons.png");
+        using var manifest=JsonDocument.Parse(FileAccess.GetFileAsString("res://assets/combat_v1/manifest.json"));
+        for(int i=0;i<6;i++)
+        {
+            var icon=manifest.RootElement.GetProperty("uiIcons")[i];var r=icon.GetProperty("rect");var b=icon.GetProperty("contentBounds");
+            _skillIconRects[i]=new Rect2(r[0].GetSingle()+b[0].GetSingle()-2,r[1].GetSingle()+b[1].GetSingle()-2,
+                b[2].GetSingle()-b[0].GetSingle()+4,b[3].GetSingle()-b[1].GetSingle()+4);
+        }
+        QueueRedraw();
+    }
+    public override void _Process(double delta)
+    {
+        int hover=-1;var at=GetLocalMousePosition();var slots=SkillCenters();
+        for(int i=0;i<6;i++)if(at.DistanceTo(slots[i])<=23){hover=i;break;}
+        if(hover!=_hover){_hover=hover;QueueRedraw();}
+    }
     public void ApplyOnline(NativeOnlineFrame frame){Online=true;_frame=frame;StatusText=frame.Message;QueueRedraw();}
     private void Text(Vector2 at,string text,int size=14,Color? color=null)=>
         DrawString(_font,at,text,HorizontalAlignment.Left,-1,size,color??_ink);
@@ -92,7 +114,19 @@ public partial class PreviewHud : Node2D
         for(int i=0;i<6;i++)
         {
             var p=slotCenters[i];var color=Online&&i>=3?Color.FromHtml("#59665b"):_bronze;
-            DrawCircle(p,23,_panel);DrawArc(p,23,0,Mathf.Tau,32,color,2);Text(p+new Vector2(-4,5),(i+1).ToString(),14,color);
+            DrawCircle(p,23,_panel);DrawArc(p,23,0,Mathf.Tau,32,color,_hover==i?3:2);
+            var source=_skillIconRects[i];var size=source.Size*(32/Math.Max(source.Size.X,source.Size.Y));
+            DrawTextureRectRegion(_skillTexture,new Rect2(p-size/2,size),source,
+                Online&&i>=3?new Color(.4f,.4f,.4f,.8f):Colors.White);
+            DrawRect(new Rect2(p+new Vector2(7,7),new Vector2(15,14)),_panel);
+            Text(p+new Vector2(10,19),(i+1).ToString(),11,color);
+        }
+        if(_hover>=0)
+        {
+            var p=slotCenters[_hover];var at=new Vector2(Mathf.Clamp(p.X-110,16,1044),p.Y-75);
+            Panel(new Rect2(at,new Vector2(220,45)));
+            Text(at+new Vector2(9,18),SkillVfxPlayer.Names[_hover],13,_bronze);
+            Text(at+new Vector2(9,35),Online&&_hover>=3?"Chưa hỗ trợ online":Online?"Máy chủ xác nhận hành động":"Thử hình ảnh ngoại tuyến",11);
         }
         Panel(new Rect2(16,650,810,56));
         Text(new Vector2(28,672),Online?"WASD di chuyển · E nói/nhặt · I túi · Space đánh · 1–3 kỹ năng":"WASD di chuyển · 1–6 thử kỹ năng · Space đánh mẫu · H ẩn HUD",13);

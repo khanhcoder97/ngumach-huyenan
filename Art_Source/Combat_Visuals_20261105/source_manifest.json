@@ -2063,6 +2063,98 @@
       ]
     }
   },
+  "uiIcons": [
+    {
+      "skillId": "SK-MK-01",
+      "rect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "contentBounds": [
+        119,
+        103,
+        443,
+        435
+      ]
+    },
+    {
+      "skillId": "SK-MK-02",
+      "rect": [
+        512,
+        0,
+        512,
+        512
+      ],
+      "contentBounds": [
+        43,
+        176,
+        470,
+        352
+      ]
+    },
+    {
+      "skillId": "SK-MK-03",
+      "rect": [
+        1024,
+        0,
+        512,
+        512
+      ],
+      "contentBounds": [
+        63,
+        93,
+        443,
+        435
+      ]
+    },
+    {
+      "skillId": "SK-MK-04",
+      "rect": [
+        0,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        97,
+        67,
+        427,
+        436
+      ]
+    },
+    {
+      "skillId": "SK-MK-05",
+      "rect": [
+        512,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        45,
+        134,
+        452,
+        354
+      ]
+    },
+    {
+      "skillId": "SK-MK-06",
+      "rect": [
+        1024,
+        512,
+        512,
+        512
+      ],
+      "contentBounds": [
+        98,
+        48,
+        404,
+        449
+      ]
+    }
+  ],
   "files": [
     {
       "file": "minh_kiem_walk.png",
@@ -2107,6 +2199,14 @@
     {
       "file": "ben_mua_nodes.png",
       "sha256": "4bb0227b68454dc07d6e9f462852e37b130a4127b8bade916e6c6e232b8e0368",
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "file": "minh_kiem_skill_icons.png",
+      "sha256": "5bd531d2bf327edd2233dcdbf7950e2eba6a2f1d884a7f77a963d150b02cf1b4",
       "size": [
         1536,
         1024
