@@ -40,6 +40,7 @@ public partial class NativeActorsView : Node2D
         get=>_targetId;
         set{_targetId=value;QueueRedraw();}
     }
+    public Vector2[] OcclusionFocus {get;private set;}=Array.Empty<Vector2>();
 
     // Presentation origin aligns canonical first-quest x18..64 with the authored
     // village's east-west street. It changes no server coordinate/navigation.
@@ -80,6 +81,8 @@ public partial class NativeActorsView : Node2D
         }).ToArray()??Array.Empty<P1Entity>();
         _v2=frame.WorldV2?.entities.ToDictionary(e=>e.entityId,StringComparer.Ordinal)
             ??new Dictionary<string,P1EntityV2>(StringComparer.Ordinal);
+        OcclusionFocus=_entities.Where(e=>e.kind=="NPC"&&DistanceSquared(e,_self)<=49)
+            .Select(e=>RenderPoint(e.x,e.y)).ToArray();
         var present=new HashSet<string>(_entities.Select(e=>e.entityId),StringComparer.Ordinal);
         foreach(var id in _actors.Keys.Where(id=>!present.Contains(id)).ToArray())
         {

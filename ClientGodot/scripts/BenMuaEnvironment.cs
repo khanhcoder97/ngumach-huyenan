@@ -214,12 +214,16 @@ public partial class BenMuaEnvironment : Node2D
         return sprite;
     }
 
-    public void UpdateOcclusion(Vector2 player)
+    public void UpdateOcclusion(Vector2 player,IReadOnlyList<Vector2>? nearbyNpcFeet=null)
     {
+        bool Hides((Sprite2D Sprite,Rect2 Bounds,Vector2 Foot) entry,Vector2 foot)=>
+            foot.Y<entry.Foot.Y-8&&entry.Bounds.Grow(6).Intersects(new Rect2(foot+new Vector2(-16,-42),new Vector2(32,42)));
         foreach(var entry in _occluders)
         {
-            bool hiding=entry.Bounds.Grow(6).HasPoint(player+new Vector2(0,-16))&&player.Y<entry.Foot.Y-8;
-            entry.Sprite.Modulate=new Color(1,1,1,hiding?.48f:1f);
+            bool hiding=Hides(entry,player);
+            if(!hiding&&nearbyNpcFeet!=null)
+                for(int i=0;i<nearbyNpcFeet.Count&&!hiding;i++)hiding=Hides(entry,nearbyNpcFeet[i]);
+            entry.Sprite.Modulate=new Color(1,1,1,hiding?.28f:1f);
         }
     }
 

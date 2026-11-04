@@ -52,3 +52,5 @@ Hai lỗi portable đã tái hiện và gửiOpenCode: timeout40ms vẫn không 
 Muse dùng NPCreference mới làm characterlock choP0video, không sửagraphics. DEC-MEDIA-P0/DEC-DEATH-RETURN/DEC-ALPHA-INTERACT-IDS đã chốt, không còn approvalcũ làm lý do dừng các phần độc lập.
 
 Presentation origin sau QA được căn từx920 sangx560 để canonicalfirstquest18..64 nằm trong khu làng authored; vẫn20px/WU, servercoords/nav/IDs không đổi. Đây là translationrender, không migration.
+
+QA native bổ sung: tán cây/nhà xét giao hình với body32×42px của player và NPC gần7WU, mờ28% khi che, khôi phục khi rời. Không chỉ xét một điểm đầu; screenshotworld thể hiện người chơi và Tạ tách nhau trong khu làng. UItest đứng cạnh NPC39.5/61.5 thay vì chồng đúng footpoint42/64, vẫn114assertion thực. Scenephysics/occlusion9assertion đã chạy lạiPASS.

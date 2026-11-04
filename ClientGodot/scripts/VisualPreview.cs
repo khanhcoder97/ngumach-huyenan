@@ -181,7 +181,7 @@ public partial class VisualPreview : Node2D
         }
         if(_body is HeroAnimator animator)animator.SetMoving(_online!=null?_movingGrace>0:_hero.Velocity.LengthSquared()>1);
 
-        _environment.UpdateOcclusion(_hero.Position);
+        _environment.UpdateOcclusion(_hero.Position,_liveActors?.OcclusionFocus);
         _camera.Follow(_hero.Position);
         _hud.Coordinates = _online!=null?NativeActorsView.WorldPoint(_hero.Position):_hero.Position/TopDownCamera.PixelsPerWorldUnit;
         _hud.Compact = _camera.Compact;
