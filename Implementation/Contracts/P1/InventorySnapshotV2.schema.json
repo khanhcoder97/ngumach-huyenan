@@ -1,0 +1,276 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/contracts/p1/InventorySnapshotV2.schema.json",
+  "title": "P1 v2 inventory snapshot (twelve closed slots beside the frozen v1 five)",
+  "description": "Served by GET /p1/inventory/v2/{sessionId}. slots always lists all twelve approved tokens in design order and an empty slot carries item:null. An equipped item that cannot be named in the twelve is reported in unsupported instead of being dropped (incompatibleV1Projection). bagSlots and the slot list come from DESIGN-BM-ALPHA-20261103 inventory; the v1 five-token contract is unchanged and still served by GET /p1/inventory/{sessionId}.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "slotSpec",
+    "inventoryRevision",
+    "bagSlots",
+    "slots",
+    "bag",
+    "unsupported",
+    "currencies"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 2
+    },
+    "slotSpec": {
+      "type": "string",
+      "const": "V2_SIDE_BY_SIDE_KEEP_V1_FIVE_SLOT_CONTRACT"
+    },
+    "inventoryRevision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "bagSlots": {
+      "type": "integer",
+      "const": 100
+    },
+    "slots": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "slotId",
+          "item"
+        ],
+        "properties": {
+          "slotId": {
+            "type": "string",
+            "enum": [
+              "HAT",
+              "CHEST",
+              "LEGS",
+              "WEAPON",
+              "GLOVES",
+              "BOOTS",
+              "NECK",
+              "RING_L",
+              "RING_R",
+              "PENDANT",
+              "CLOAK",
+              "SEAL"
+            ]
+          },
+          "item": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "instanceId",
+                  "templateId",
+                  "stack",
+                  "location",
+                  "slotId",
+                  "durability",
+                  "version"
+                ],
+                "properties": {
+                  "instanceId": {
+                    "type": "string",
+                    "pattern": "^ITM_[A-Z0-9_]+$"
+                  },
+                  "templateId": {
+                    "type": "string",
+                    "pattern": "^[A-Z0-9_]+(?:-[A-Z0-9_]+)*$"
+                  },
+                  "stack": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "location": {
+                    "type": "string",
+                    "enum": [
+                      "BAG",
+                      "EQUIPPED",
+                      "BANK"
+                    ]
+                  },
+                  "slotId": {
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "HAT",
+                          "CHEST",
+                          "LEGS",
+                          "WEAPON",
+                          "GLOVES",
+                          "BOOTS",
+                          "NECK",
+                          "RING_L",
+                          "RING_R",
+                          "PENDANT",
+                          "CLOAK",
+                          "SEAL"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "durability": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "version": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "bag": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "instanceId",
+          "templateId",
+          "stack",
+          "location",
+          "slotId",
+          "durability",
+          "version"
+        ],
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "pattern": "^ITM_[A-Z0-9_]+$"
+          },
+          "templateId": {
+            "type": "string",
+            "pattern": "^[A-Z0-9_]+(?:-[A-Z0-9_]+)*$"
+          },
+          "stack": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "location": {
+            "type": "string",
+            "enum": [
+              "BAG",
+              "EQUIPPED",
+              "BANK"
+            ]
+          },
+          "slotId": {
+            "oneOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "HAT",
+                  "CHEST",
+                  "LEGS",
+                  "WEAPON",
+                  "GLOVES",
+                  "BOOTS",
+                  "NECK",
+                  "RING_L",
+                  "RING_R",
+                  "PENDANT",
+                  "CLOAK",
+                  "SEAL"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "durability": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "unsupported": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "instanceId",
+          "templateId",
+          "sourceSlot",
+          "reason"
+        ],
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "pattern": "^ITM_[A-Z0-9_]+$"
+          },
+          "templateId": {
+            "type": "string",
+            "pattern": "^[A-Z0-9_]+(?:-[A-Z0-9_]+)*$"
+          },
+          "sourceSlot": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "UNMAPPED_SLOT"
+            ]
+          }
+        }
+      }
+    },
+    "currencies": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "currencyId",
+          "amount"
+        ],
+        "properties": {
+          "currencyId": {
+            "type": "string",
+            "pattern": "^[A-Z0-9_]+$"
+          },
+          "amount": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,3 +1,4 @@
+using Server.Health.Gameplay.Inventory;
 using Server.Health.World;
 
 namespace Server.Health.Gameplay.Alpha;
@@ -10,12 +11,6 @@ namespace Server.Health.Gameplay.Alpha;
 public static class AlphaProfileValidator
 {
     public const string DecisionId = "DESIGN-BM-ALPHA-20261103";
-
-    public static readonly IReadOnlyList<string> EquipmentSlots = new[]
-    {
-        "HAT", "CHEST", "LEGS", "WEAPON", "GLOVES", "BOOTS",
-        "NECK", "RING_L", "RING_R", "PENDANT", "CLOAK", "SEAL"
-    };
 
     public static void Validate(
         AlphaDesign design,
@@ -117,11 +112,12 @@ public static class AlphaProfileValidator
                 $"Alpha bagSlots {inventory.BagSlots} is not the approved 100.");
         }
 
-        if (!inventory.EquipmentSlots.SequenceEqual(EquipmentSlots, StringComparer.Ordinal))
-        {
-            throw new InvalidOperationException(
-                "Alpha equipmentSlots must be the approved 12-slot list in order.");
-        }
+        // The implemented twelve-token vocabulary is the single source of truth: the
+        // design list must equal it (same tokens, same order) and every token must be
+        // reachable from a canonical catalog slot label. A design edit therefore fails
+        // here instead of being served by a stale list.
+        InventoryV2Slots.ValidateAgainstDesign(inventory.EquipmentSlots);
+        InventoryV2Slots.ValidateLabelMap();
 
         if (inventory.AutoSwap ||
             !string.Equals(inventory.Revision, "INVENTORY_AGGREGATE", StringComparison.Ordinal) ||

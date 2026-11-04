@@ -6187,6 +6187,131 @@ public static class ServiceSelfCheck
             $"clear={string.Join(",", escortIsoBClearRound.Select(r => r.Outcome))} " +
             $"m1={escortIsoM1.LifeId}");
 
+        // ─── QOD-21 Q3: the v2 slot vocabulary beside the frozen v1 five ────
+
+        // The twelve tokens are the contract the clients bind to, so both directions
+        // of the side-by-side rule are pinned: the design list and the implemented
+        // list are one source of truth, every token is reachable from a canonical
+        // catalog slot label, and the collapse onto v1's five tokens never invents a
+        // v1 name for something v1 cannot say.
+        InventoryV2Slots.ValidateAgainstDesign(alphaDesign.Inventory.EquipmentSlots);
+        InventoryV2Slots.ValidateLabelMap();
+        var v2HatCollapses = InventoryV2Slots.CollapseToV1(InventoryV2Slots.Hat, out var v2HatV1);
+        var v2RingCollapses = InventoryV2Slots.CollapseToV1(InventoryV2Slots.RingLeft, out var v2RingV1);
+        var v2LegsCollapses = InventoryV2Slots.CollapseToV1(InventoryV2Slots.Legs, out var v2LegsV1);
+        var v2GlovesCollapses = InventoryV2Slots.CollapseToV1(InventoryV2Slots.Gloves, out _);
+        var v2LabelResolves = InventoryV2Slots.TryResolveLabel(
+            ItemCatalog.ArmorCategory, "Quần", out var v2LegsSlot);
+        var v2WeaponResolves = InventoryV2Slots.TryResolveLabel(
+            ItemCatalog.WeaponCategory, "Cung", out var v2WeaponSlot);
+        var v2SealResolves = InventoryV2Slots.TryResolveLabel(
+            ItemCatalog.AccessoryCategory, "Ấn hộ mệnh", out var v2SealSlot);
+        var v2NonEquipmentRejected = !InventoryV2Slots.TryResolveLabel(
+            "TIÊU HAO", "Nón", out _);
+        var v2UnknownLabelRejected = !InventoryV2Slots.TryResolveLabel(
+            ItemCatalog.ArmorCategory, "Khiên", out _);
+        var v2OrderGuard = false;
+        try
+        {
+            InventoryV2Slots.ValidateAgainstDesign(
+                alphaDesign.Inventory.EquipmentSlots.Reverse().ToList());
+        }
+        catch (InvalidOperationException)
+        {
+            v2OrderGuard = true;
+        }
+
+        var v2Unsupported = new InventoryV2UnsupportedItem
+        {
+            InstanceId = "ITM_SELFCHECK_V2_ORPHAN",
+            TemplateId = "EQ-MK-CHEST-T1-R-COMMON",
+            SourceSlot = "RING_S",
+            Reason = InventoryV2UnsupportedReasons.UnmappedSlot
+        };
+        var v2Snapshot = new InventorySnapshotV2
+        {
+            SlotSpec = alphaDesign.Inventory.WireMigration,
+            InventoryRevision = 4,
+            BagSlots = alphaDesign.Inventory.BagSlots,
+            Slots = InventoryV2Slots.All.Select(slot => new InventoryV2SlotEntry
+            {
+                SlotId = slot,
+                Item = slot switch
+                {
+                    InventoryV2Slots.Legs => new InventoryItemV2
+                    {
+                        InstanceId = "ITM_SELFCHECK_V2_LEGS",
+                        TemplateId = "EQ-MK-LEGS-T1-R-COMMON",
+                        Stack = 1,
+                        Location = "EQUIPPED",
+                        SlotId = InventoryV2Slots.Legs,
+                        Durability = 0,
+                        Version = 1
+                    },
+                    InventoryV2Slots.RingLeft => new InventoryItemV2
+                    {
+                        InstanceId = "ITM_SELFCHECK_V2_RING_L",
+                        TemplateId = "EQ-MK-RING_L-T1-R-COMMON",
+                        Stack = 1,
+                        Location = "EQUIPPED",
+                        SlotId = InventoryV2Slots.RingLeft,
+                        Durability = 0,
+                        Version = 1
+                    },
+                    _ => null
+                }
+            }).ToList(),
+            Bag =
+            [
+                new InventoryItemV2
+                {
+                    InstanceId = "ITM_SELFCHECK_V2_POTION",
+                    TemplateId = "POT-HP-01",
+                    Stack = 5,
+                    Location = "BAG",
+                    SlotId = null,
+                    Durability = 0,
+                    Version = 1
+                }
+            ],
+            Unsupported = [v2Unsupported],
+            Currencies = [new InventoryCurrency { CurrencyId = "COIN", Amount = 80 }]
+        };
+        var v2Wire = JsonSerializer.Serialize(v2Snapshot, P1Json.Options);
+        var v2RoundTrip = JsonSerializer.Deserialize<InventorySnapshotV2>(v2Wire, P1Json.Options);
+        Check(
+            "alpha.inventory_v2_slots_beside_v1_five",
+            InventoryV2Slots.All.Count == 12 &&
+            InventoryV2Slots.All.Distinct(StringComparer.Ordinal).Count() == 12 &&
+            InventoryV2Slots.All.SequenceEqual(
+                alphaDesign.Inventory.EquipmentSlots, StringComparer.Ordinal) &&
+            alphaDesign.Inventory.BagSlots == 100 &&
+            alphaDesign.Inventory.SchemaVersion == 2 &&
+            string.Equals(alphaDesign.Inventory.WireMigration,
+                "V2_SIDE_BY_SIDE_KEEP_V1_FIVE_SLOT_CONTRACT", StringComparison.Ordinal) &&
+            v2HatCollapses && v2HatV1 == EquipmentSlots.Hat &&
+            v2RingCollapses && v2RingV1 == EquipmentSlots.Accessory &&
+            !v2LegsCollapses && v2LegsV1.Length == 0 &&
+            !v2GlovesCollapses &&
+            v2LabelResolves && v2LegsSlot == InventoryV2Slots.Legs &&
+            v2WeaponResolves && v2WeaponSlot == InventoryV2Slots.Weapon &&
+            v2SealResolves && v2SealSlot == InventoryV2Slots.Seal &&
+            v2NonEquipmentRejected &&
+            v2UnknownLabelRejected &&
+            v2OrderGuard &&
+            v2RoundTrip is not null &&
+            v2RoundTrip.Slots.Count == 12 &&
+            v2RoundTrip.Slots.Count(entry => entry.Item is null) == 10 &&
+            v2RoundTrip.Bag.Count == 1 &&
+            v2RoundTrip.Bag[0].SlotId is null &&
+            v2RoundTrip.Unsupported.Count == 1 &&
+            v2RoundTrip.Unsupported[0].Reason == InventoryV2UnsupportedReasons.UnmappedSlot &&
+            v2RoundTrip.Unsupported[0].SourceSlot == "RING_S" &&
+            v2RoundTrip.Slots.Single(entry => entry.SlotId == InventoryV2Slots.RingLeft)
+                .Item?.TemplateId == "EQ-MK-RING_L-T1-R-COMMON",
+            $"collapse={v2HatV1}/{v2RingV1}/{v2LegsV1} roundTrip={v2RoundTrip?.Slots.Count} " +
+            $"empty={v2RoundTrip?.Slots.Count(e => e.Item is null)} order={v2OrderGuard}");
+
         // ─── QOD-21 Q2: the P00-05 Mãng Cốt encounter machine ────
 
         // The real encounter on the 20 Hz loop: the arena gate, the telegraph

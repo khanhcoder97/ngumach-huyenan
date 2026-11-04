@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 2,
+  "requestId": "11111111111111111111111111111111",
+  "idempotencyKey": "22222222222222222222222222222222",
+  "sentAtUtc": "2026-11-04T09:00:00Z",
+  "characterId": "CHR_MINH_KIEM_01",
+  "payload": {
+    "itemInstanceId": "ITM_SELFCHECK_V2_BOOTS",
+    "expectedRevision": 4
+  }
+}
