@@ -52,3 +52,10 @@ Client/Tests/**/bin/
 Server/**/bin/
 
 !Client/Tests/NarrativeChecks/NarrativeChecks.csproj
+
+# Godot client source and generated artifacts
+!ClientGodot/*.csproj
+ClientGodot/.godot/
+ClientGodot/bin/
+ClientGodot/obj/
+ClientGodot/**/*.import
