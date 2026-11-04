@@ -394,15 +394,25 @@ public sealed class CombatTickEngine
     // Q-E: the kill path hands every death to the grant service exactly once.
     // The shipped loot bundle is grant-off until the coin band exists, so the
     // outcome records that reason instead of inventing an amount.
-    private void RecordLootOnDeath(PlayerSession killer, CombatEventV2 death, long lifeId)
+    private void RecordLootOnDeath(
+        PlayerSession killer, WorldEntityInstance target, CombatEventV2 death, long lifeId)
     {
-        _lootGrants?.Grant(
+        // Whether anything is payable is the grant policy's answer, not this call
+        // site's: with no alpha profile the policy blocks with the same reason the
+        // shipped bundle has always carried, so the death path stays byte-identical.
+        var templateId = target.TemplateIds.FirstOrDefault();
+        if (_lootGrants is null || templateId is null)
+        {
+            return;
+        }
+
+        _lootGrants.OnMobDeath(
             killer,
+            target,
+            templateId,
+            () => _combat.MobStats.ReferenceLevel,
             death.EventId,
-            lifeId,
-            grantEnabled: false,
-            blockedReason: LootGrantPolicies.SourceShortReason,
-            items: []);
+            lifeId);
     }
 
     // The quest machines that pay objective credit for a kill are told here, at
@@ -589,7 +599,7 @@ public sealed class CombatTickEngine
         _entities.Despawn(source.EntityId);
         var death = AppendGuardEvent(
             window, tick, CombatEventTypesV2.Death, source, result: null);
-        RecordLootOnDeath(window.Defender, death, source.LifeId);
+        RecordLootOnDeath(window.Defender, source, death, source.LifeId);
         NotifyMobKilled(window.Defender, source, death);
         yield return death;
 
@@ -756,7 +766,7 @@ public sealed class CombatTickEngine
             var deathEvent = AppendEvent(
                 cast, impactTick + 1, CombatEventTypesV2.Death, target.EntityId, lifeId,
                 hitIndex: null, target.Revision, result: null);
-            RecordLootOnDeath(cast.Actor, deathEvent, lifeId);
+            RecordLootOnDeath(cast.Actor, target, deathEvent, lifeId);
             NotifyMobKilled(cast.Actor, target, deathEvent);
             yield return deathEvent;
 

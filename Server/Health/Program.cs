@@ -131,6 +131,10 @@ builder.Services.Configure<AlphaProfileOptions>(
     builder.Configuration.GetSection(AlphaProfileOptions.SectionName));
 builder.Services.AddSingleton(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<AlphaProfileOptions>>().Value);
+builder.Services.Configure<AlphaLootOptions>(
+    builder.Configuration.GetSection(AlphaLootOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<AlphaLootOptions>>().Value);
 builder.Services.AddSingleton(serviceProvider =>
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
@@ -243,6 +247,12 @@ builder.Services.AddSingleton<DeathReturnService>();
 builder.Services.AddSingleton<CombatTickEngine>();
 builder.Services.AddSingleton<LootReceiptLedger>();
 builder.Services.AddSingleton<LootGrantLedger>();
+// Who may be paid for a kill is the alpha profile's answer; every other profile
+// resolves to the same block the shipped bundle has always carried.
+builder.Services.AddSingleton<ILootGrantPolicy>(serviceProvider => new AlphaLootGrantPolicy(
+    serviceProvider.GetRequiredService<AlphaDesign>(),
+    serviceProvider.GetRequiredService<AlphaProfileOptions>(),
+    serviceProvider.GetRequiredService<AlphaLootOptions>()));
 builder.Services.AddSingleton<LootGrantService>();
 builder.Services.AddSingleton<MobSpawnGroupService>();
 builder.Services.AddSingleton<WorldEntityProjectionService>();
@@ -400,6 +410,21 @@ if (alphaOptions.Enabled)
         alphaDesign.OverlayRecords.Count,
         runtimeEntityCount,
         quests.Count);
+}
+
+// The loot payout switch is validated against the profile that owns the only coin
+// band, so no other profile can pay it out by turning one flag on.
+var alphaLootOptions = app.Services.GetRequiredService<AlphaLootOptions>();
+AlphaLootPolicy.Validate(alphaLootOptions, alphaOptions, alphaDesign);
+if (AlphaLootPolicy.EffectiveGrantEnabled(alphaLootOptions, alphaOptions, alphaDesign))
+{
+    app.Logger.LogWarning(
+        "PRIVATE ALPHA LOOT: P1:AlphaLoot:GrantEnabled is on with P1:AlphaProfile, so a " +
+        "resolved mob kill rolls {CoinMin}..{CoinMax} coin and the sourced recipe items, " +
+        "once per (profile, character, death, life, group). The design states this band as " +
+        "alpha-only seed data, not a production economy approval.",
+        alphaDesign.Loot.CoinMinExpression,
+        alphaDesign.Loot.CoinMaxExpression);
 }
 
 QuestCatalogValidator.Validate(quests, worldRecords, npcAnchors);

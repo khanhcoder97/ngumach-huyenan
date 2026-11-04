@@ -5402,6 +5402,111 @@ public static class ServiceSelfCheck
             waveRecording.Events.Count == 3,
             $"resolutions={waveInertSkip.Count} hp={waveInertActor.Hp}");
 
+        // ─── QOD-21 Q3: the alpha loot payout switch ────
+
+        // DESIGN-BM-Q3-20261104 `loot`: effectiveGrant is AlphaProfile.Enabled AND
+        // explicit private alpha AND P1:AlphaLoot:GrantEnabled, off means a dry-run
+        // that is never paid later, and the roll happens once per kill key.
+        var lootProfileOff = new AlphaProfileOptions { Enabled = false };
+        var lootProfileOn = new AlphaProfileOptions { Enabled = true };
+        var lootFlagOff = new AlphaLootOptions { GrantEnabled = false };
+        var lootFlagOn = new AlphaLootOptions { GrantEnabled = true };
+        var lootRoller = new LootRoller(
+            enabledCombat.LootRecipes, new LootRngRollSource());
+        var lootLevel = new Func<int>(() => 5);
+        var lootMob = new WorldEntityInstance
+        {
+            EntityId = "ENT_SELFCHECK_LOOT_MOB",
+            RecordId = "MAN-SELFCHECK-LOOT",
+            Kind = WorldEntityKinds.Mob,
+            TemplateIds = new[] { "MOB_CARPLING" },
+            MapId = alphaDesign.Scope.MapId,
+            FloorId = "OVERWORLD",
+            X = 84,
+            Y = 0,
+            Quantity = 1,
+            RespawnSeconds = 0,
+            GroupId = "MAN-BM-SPAWN_BM_01",
+            MemberIndex = 1
+        };
+        lootMob.Initialize();
+        var lootActor = NewPlayer("CHR_SELFCHECK_ALPHA_LOOT");
+
+        // One ledger shared by the three switches: a death recorded while the
+        // payout was off must keep that answer after it is turned on.
+        var alphaLootGrantLedger = new LootGrantLedger();
+        var lootOffProduction = new LootGrantService(
+            services.GetRequiredService<IInventoryService>(), alphaLootGrantLedger,
+            new AlphaLootGrantPolicy(alphaDesign, lootProfileOff, lootFlagOff),
+            enabledCombat, new LootReceiptLedger());
+        var lootOffAlpha = new LootGrantService(
+            services.GetRequiredService<IInventoryService>(), alphaLootGrantLedger,
+            new AlphaLootGrantPolicy(alphaDesign, lootProfileOn, lootFlagOff),
+            enabledCombat, new LootReceiptLedger());
+        var lootOnAlpha = new LootGrantService(
+            services.GetRequiredService<IInventoryService>(), alphaLootGrantLedger,
+            new AlphaLootGrantPolicy(alphaDesign, lootProfileOn, lootFlagOn),
+            enabledCombat, new LootReceiptLedger());
+
+        var blockedProductionDeath = new string('a', 32);
+        var blockedAlphaDeath = new string('b', 32);
+        var productionBlock = lootOffProduction.OnMobDeath(
+            lootActor, lootMob, "MOB_CARPLING", lootLevel, blockedProductionDeath, 1);
+        var alphaDryRun = lootOffAlpha.OnMobDeath(
+            lootActor, lootMob, "MOB_CARPLING", lootLevel, blockedAlphaDeath, 1);
+        // Turning the flag on afterwards must not reach back for that death.
+        var afterFlagOn = lootOnAlpha.OnMobDeath(
+            lootActor, lootMob, "MOB_CARPLING", lootLevel, blockedAlphaDeath, 1);
+        var paidDeath = new string('c', 32);
+        var paidOnce = lootOnAlpha.OnMobDeath(
+            lootActor, lootMob, "MOB_CARPLING", lootLevel, paidDeath, 1);
+        var paidReplay = lootOnAlpha.OnMobDeath(
+            lootActor, lootMob, "MOB_CARPLING", lootLevel, paidDeath, 1);
+
+        var lootValidatorRejected = false;
+        try
+        {
+            AlphaLootPolicy.Validate(lootFlagOn, lootProfileOff, alphaDesign);
+        }
+        catch (InvalidOperationException)
+        {
+            lootValidatorRejected = true;
+        }
+
+        var rollKey = LootRollKeys.For(
+            lootRoller.ProfileVersion, lootActor.CharacterId, paidDeath, 1,
+            "MAN-BM-SPAWN_BM_01");
+
+        Check(
+            "alpha.loot_grant_requires_profile_and_own_flag",
+            alphaDesign.Loot.DefaultGrantEnabled == false &&
+            alphaDesign.Loot.NoLiveRerollOnRetry &&
+            alphaDesign.Loot.InclusiveIntegers &&
+            alphaDesign.Loot.CoinMinExpression == "mobLevel" &&
+            alphaDesign.Loot.CoinMaxExpression == "2*mobLevel" &&
+            alphaDesign.Loot.RollOnceKey.SequenceEqual(
+                new[] { "profileVersion", "characterId", "deathEventId", "lifeId", "groupId" }) &&
+            string.Equals(alphaDesign.Status,
+                "APPROVED_FOR_IMPLEMENTATION_PRIVATE_ALPHA_NOT_PLAYTEST_BALANCED",
+                StringComparison.Ordinal) &&
+            !alphaDesign.DefaultEnabled &&
+            !productionBlock.Granted &&
+            productionBlock.BlockedReason == LootGrantPolicies.SourceShortReason &&
+            !alphaDryRun.Granted &&
+            alphaDryRun.BlockedReason == LootGrantPolicies.DryRunReason &&
+            !afterFlagOn.Granted &&
+            afterFlagOn.BlockedReason == LootGrantPolicies.DryRunReason &&
+            paidOnce.Granted &&
+            paidOnce.Coin >= 5 && paidOnce.Coin <= 10 &&
+            paidReplay.Replayed && paidReplay.Coin == paidOnce.Coin &&
+            lootValidatorRejected &&
+            rollKey == string.Concat(
+                lootRoller.ProfileVersion, "|", lootActor.CharacterId, "|", paidDeath,
+                "|1|MAN-BM-SPAWN_BM_01"),
+            $"prod={productionBlock.BlockedReason} dry={alphaDryRun.BlockedReason} " +
+            $"backfill={afterFlagOn.Granted}/{afterFlagOn.BlockedReason} " +
+            $"coin={paidOnce.Coin} replay={paidReplay.Replayed}/{paidReplay.Coin}");
+
         // ─── QOD-21 Q3: alpha quest XP valued at the accepted level ────
 
         // DESIGN-BM-Q3-20261104 `xp`: nextLevelXp(L) = 100 + 50L + 25L², grant =

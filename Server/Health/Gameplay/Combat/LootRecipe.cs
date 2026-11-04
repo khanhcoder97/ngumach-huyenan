@@ -90,6 +90,35 @@ public sealed class LootRoller
         _rolls = rolls;
     }
 
+    // Which recipe bundle a roll belongs to, so the sourced roll-once key can name
+    // its profile version and a bundle swap cannot reuse an old receipt.
+    public string ProfileVersion => $"{_bundle.BundleId}/v{_bundle.SchemaVersion}";
+
+    // The alpha coin band, drawn from the same deterministic roll source as the
+    // recipe: uniform over the inclusive integers the design states, so the same
+    // kill key always returns the same amount (`noLiveRerollOnRetry`).
+    public long RollCoinInclusive(string killKey, int coinMin, int coinMax)
+    {
+        if (coinMax < coinMin || coinMin <= 0)
+        {
+            return 0;
+        }
+
+        var span = (long)coinMax - coinMin + 1;
+        var roll = _rolls.Uniform01($"{killKey}|coin");
+        if (roll < 0)
+        {
+            roll = 0;
+        }
+
+        if (roll >= 1)
+        {
+            return coinMax;
+        }
+
+        return coinMin + (long)(roll * span);
+    }
+
     public LootReceipt Roll(string mobTemplateId, string killKey)
     {
         if (!_bundle.MobTemplateToSource.TryGetValue(mobTemplateId, out var sourceId) ||
