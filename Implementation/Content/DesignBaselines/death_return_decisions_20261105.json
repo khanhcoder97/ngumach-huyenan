@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "decisionId": "DEC-DEATH-RETURN-20261105",
+  "status": "APPROVED_FOR_PRIVATE_ALPHA_IMPLEMENTATION",
+  "authority": "Codex project coordination under user's explicit instruction to finish missing production decisions and delegate large implementation packages",
+  "packetHead": "77bc3a6e1e25d3bd73b0b0e326e1f668b1a41764",
+  "route": "POST /p1/actor/death-return",
+  "requestPayload": {},
+  "mapId": "MAP_BEN_MUA",
+  "safeAnchorWu": [
+    18,
+    0
+  ],
+  "restoreHp": "max(1,ceil(currentEffectiveMaxHp*0.5))",
+  "restoreMp": "clamp(currentAbsoluteMp,0,currentEffectiveMaxMp)",
+  "penalties": {
+    "xp": 0,
+    "currency": 0,
+    "durability": 0
+  },
+  "lifeDecision": {
+    "option": 2,
+    "playerLifeVersionInitial": 1,
+    "deathTransition": "hp>0 to hp==0 only; atomic with damage+revision; record once for every damage path",
+    "deathEventId": "PDEATH_ + lowercase SHA256(UTF8 canonical JSON array [characterId,lifeVersion,deathRevision])",
+    "deathRevision": "aggregate revision immediately after the lethal damage commit",
+    "lifeAdvance": "each committed resurrection from hp==0 to hp>0 advances lifeVersion once; replay never advances",
+    "scope": "internal domain record; do not add CombatEventV2 type or fields to existing frozen wire",
+    "creditKey": [
+      "characterId",
+      "deathEventId",
+      "lifeVersion",
+      "idempotencyKey"
+    ],
+    "reconnect": "retain per-character death/life/receipt state across session reconnect; never derive from session ID"
+  },
+  "replay": {
+    "matchedCommitted": "HTTP200 same committed snapshot with applied=false,replayed=true; never heal/teleport/advance cooldown again",
+    "ordering": "validate request and authenticated/session ownership before receipt lookup; then committed replay before not_downed/cooldown guards",
+    "newKeyWhileAlive": "HTTP409 not_downed",
+    "newDeathSameOldKey": "return old committed receipt only, no new resurrection; client must create a new intent key",
+    "clientFreshRead": "refresh actor/world/inventory after receipt; historical replay is not current world state"
+  },
+  "cooldown": {
+    "seconds": 3,
+    "ticksAt20Hz": 60,
+    "start": "successful apply tick only",
+    "refusedRequestsExtend": false,
+    "replaysExtend": false,
+    "errorCode": "death_return_cooldown",
+    "httpStatus": 422,
+    "retryable": true,
+    "nextReturnAllowedAtTick": "successfulApplyTick+60; expose exact server tick in result/error metadata using frozen schema"
+  },
+  "gates": {
+    "mapRouteOnlyWhen": [
+      "P1:AlphaProfile:Enabled",
+      "P1:DeathReturn:Enabled"
+    ],
+    "productionDefault": false,
+    "disabledRouteStatus": 404,
+    "alphaWithPositiveRestoreHpFixture": "startup validation failure; formula and fixture cannot both own HP"
+  },
+  "encounter": {
+    "deadOwnerMayReturn": true,
+    "forceBossReset": false,
+    "grantOrUnlock": false,
+    "wipe": "existing owner-scoped no-target/wipe timer rules; do not modify another owner's encounter",
+    "teleportToArena": false,
+    "clear": [
+      "inflight casts",
+      "reserved counters",
+      "guard window",
+      "last movement timing/held intent"
+    ],
+    "stableAttemptId": true
+  },
+  "client": {
+    "downed": "existing authoritative HP<=0 only",
+    "addDownedFieldToFrozenWorld": false,
+    "returnActionEnabled": "only when server capability/private profile confirms route; handle real404 without fake success",
+    "unknownMap": "HTTP409 unknown_map"
+  }
+}
