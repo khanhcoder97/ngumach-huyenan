@@ -2,6 +2,8 @@
 
 ## Điều phối hiện hành từ 03/11/2026
 
+**Cập nhật 04/11:** ưu tiên `26_ALL_AGENTS_PLAYABLE_ALPHA_20261104.md` và report `All_Agent_Handoff_Review_20261104_vi.md`. Blocker Qoder được giải quyết tại `Qoder_Q3_Blocker_Resolution_20261104_vi.md` + JSONQ3; encounter có reference payload chung và collision306ô có quyết định triển khai/navgates. Các work order cũ vẫn làm nền, không hỏi lại approval đã có. Bốn vai trò hoạt động: OpenCode, Qoder local, Qoder remote, Muse; Antigravity không trở lại.
+
 Tiếp theo: `25_OPENCODE_QODER_GODOT_GAMEPLAY_INTEGRATION_20261103.md` giao đồng thời OpenCode và Qoder sau checkpoint #109/#106. OpenCode sửa wire/composition và chạy HTTP thật; Qoder thực thi approval encounter đã có, đồng bộ AOI/instance và hoàn inventory/death-return/quest alpha. Không chờ lại ba câu hỏi đã trả lời tại PR108. Review: `Implementation/Reports/OPC15_QOD21_Integration_Checkpoint_Review_20261103_vi.md`.
 
 Đọc `24_GODOT_PLAYABLE_ALPHA_FOLLOWTHROUGH_20261103.md` trước các bảng lịch sử bên dưới. Client tiếp tục với **Godot .NET** theo `docs/production/Godot_Client_Execution_Decision_20261103_vi.md`: Muse sở hữu Godot runtime/scene và art; OpenCode sở hữu lõi C# độc lập engine, protocol/HTTP và API tích hợp; Qoder local sở hữu gameplay server, Qoder remote sở hữu persistence. Antigravity vẫn thu hồi. Các phần Unity bên dưới là lịch sử, không là lệnh phát triển client hiện hành. Giữ source cũ; không tự xóa file hoặc đóng PR.
