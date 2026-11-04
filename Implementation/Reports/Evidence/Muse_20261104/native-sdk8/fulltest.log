@@ -1,0 +1,22 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+TILEMAP layer GroundLayer: 16879 cells
+TILEMAP layer WaterLayer: 4960 cells
+TILEMAP layer PathLayer: 5161 cells
+TILEMAP collision tile polygons: 1
+TILEMAP built: 450x60, tiles=47, blocked=5069
+FULLTEST PASS: grid_450x60 450x60
+FULLTEST PASS: unique_tiles_47 =47
+FULLTEST PASS: layer_ground_16879 =16879
+FULLTEST PASS: layer_water_4960 =4960
+FULLTEST PASS: layer_path_5161 =5161
+FULLTEST PASS: blocked_5069 =5069
+FULLTEST PASS: seam_64wu_cross moved=128,0px endCol=84 seamCol=80 row=41
+FULLTEST PASS: seam_128wu_cross moved=128,0px endCol=164 seamCol=160 row=40
+FULLTEST PASS: seam_192wu_cross moved=128,0px endCol=244 seamCol=240 row=41
+FULLTEST PASS: seam_256wu_cross moved=128,0px endCol=324 seamCol=320 row=41
+FULLTEST PASS: seam_320wu_cross moved=128,0px endCol=404 seamCol=400 row=42
+FULLTEST PASS: river_192_256_blocks stop x=4100,0 (wall 4112)
+FULLTEST PASS: east_gate_open moved=128,0px endCol=438
+FULLTEST PASS: arena_floor_open moved 64,0 px
+FULLTEST RESULT: PASS

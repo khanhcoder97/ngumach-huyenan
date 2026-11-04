@@ -1,0 +1,27 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+TILEMAP layer GroundLayer: 16879 cells
+TILEMAP layer WaterLayer: 4960 cells
+TILEMAP layer PathLayer: 5161 cells
+TILEMAP collision tile polygons: 1
+TILEMAP built: 450x60, tiles=47, blocked=5069
+TILEMAP detail layers on: under z=5, over z=15 (7200x960)
+  PASS layers_active
+  PASS sizes_7200x960
+  PASS z_order
+  PASS under_sample_opaque(0,0)
+  PASS under_sample_walkable(0,0)
+  PASS under_sample_opaque(26,403)
+  PASS under_sample_walkable(1,25)
+  PASS under_sample_opaque(5103,959)
+  PASS under_sample_walkable(318,59)
+  PASS over_sample_opaque(4112,0)
+  PASS over_sample_blocked(257,0)
+  PASS over_sample_opaque(3059,843)
+  PASS over_sample_blocked(191,52)
+  PASS over_sample_opaque(7199,959)
+  PASS over_sample_blocked(449,59)
+  PASS coverage_sane
+  PASS player_at_spot
+DETAILTEST: 17 passed, 0 failed
+DETAILTEST RESULT: PASS
