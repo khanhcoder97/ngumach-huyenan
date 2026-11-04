@@ -1314,7 +1314,7 @@ public static class ServiceSelfCheck
             tickRespawnedMob.State == WorldEntityStates.Alive &&
             respawnImpact is { TargetLifeId: 2, HitIndex: 0 } &&
             (deathStore.TryGet("ENT_SELFCHECK_TICK_MOB", 2)?.Hp ?? 0) == 173 &&
-            killStateAfterRespawn.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL") == 1,
+            killStateAfterRespawn?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL") == 1,
             $"life={tickRespawnedMob.LifeId} hp={deathStore.TryGet("ENT_SELFCHECK_TICK_MOB", 2)?.Hp}");
 
         // QOD-21 Q2: the quest machines get their credit from this notification, so
@@ -3297,7 +3297,7 @@ public static class ServiceSelfCheck
             secondDash is not null &&
             secondDash.AchievedWu < 0.05 &&
             secondDash.StopReason is DashStopReasons.ZeroDistance or DashStopReasons.BlockedByGeometry &&
-            wallDashHero.X == wallDash.X &&
+            wallDashHero.X == wallDash?.X &&
             wallDashHero.Revision == revisionBeforeSecond,
             secondDash is null ? "no resolution" : $"{secondDash.AchievedWu}/{secondDash.StopReason}");
 
@@ -4090,8 +4090,8 @@ public static class ServiceSelfCheck
         Check(
             "quest.dedupe_duplicate_event",
             duplicateEvent.Count == 0 &&
-            duplicateState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_A") == 1 &&
-            duplicateState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_B") == 1,
+            duplicateState?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_A") == 1 &&
+            duplicateState?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_B") == 1,
             $"updates={duplicateEvent.Count}");
 
         syntheticQuests.RecordVerifiedEvent(
@@ -4137,8 +4137,8 @@ public static class ServiceSelfCheck
             dedupeScopeActor.CharacterId, "TEST-KILL-01").State;
         Check(
             "quest.dedupe_kill_event_scope",
-            killFirst.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_A") == 1 &&
-            killFirst.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_B") == 1 &&
+            killFirst?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_A") == 1 &&
+            killFirst?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_B") == 1 &&
             killReplay.Count == 0 &&
             killSecond is { State: QuestStates.ReadyToTurnIn } &&
             killSecond.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_A") == 2 &&
@@ -6884,7 +6884,7 @@ public static class ServiceSelfCheck
             bossSnapDeadSnap.TrialNpcVisible == false,
             $"id={bossSnapA.EncounterId} cast={bossSnapA.ActiveMove?.CastId} " +
             $"rev={bossSnapA.BossRevision}->{bossSnapDeadSnap.BossRevision} " +
-            $"cone={bossConeFacing.Kind}/flen={bossConeFacingLength} " +
+            $"cone={bossConeFacing?.Kind}/flen={bossConeFacingLength} " +
             $"dead={bossSnapDeadSnap.Status}/{bossSnapDeadSnap.ActiveMove?.MoveId}");
 
 
@@ -7967,6 +7967,157 @@ public static class ServiceSelfCheck
             ledgerInventoryRetry.Currencies[0].Amount == 20 &&
             ledgerInventoryRetry.Items.Count == 1,
             $"items={ledgerInventoryRetry.Items.Count} currencies={ledgerInventoryRetry.Currencies.Count}");
+
+        // ─── QOD-21 Q4: P00-05's chapter consequence lives inside the transaction ────
+
+        // The design states the consequence as prose, so the two tokens it names are
+        // pinned before anything uses them: a design whose sentence drops the flag or
+        // swaps the portal map has to fail startup rather than grant something the
+        // source no longer names.
+        Check(
+            "alpha.quest_p5_unlock_clause_is_pinned",
+            alphaDesign.QuestRules.P00_05_UnlockText.Contains(
+                "CHAPTER_C1_UNLOCKED", StringComparison.Ordinal) &&
+            alphaDesign.QuestRules.P00_05_UnlockText.Contains(
+                "MAP_THANH_LAC", StringComparison.Ordinal) &&
+            AlphaRejects(alphaDesign with
+            {
+                QuestRules = alphaDesign.QuestRules with
+                {
+                    P00_05_UnlockText = "P00-05 turn-in commits CHAPTER_C1 and portal"
+                }
+            }) &&
+            AlphaRejects(alphaDesign with
+            {
+                QuestRules = alphaDesign.QuestRules with
+                {
+                    P00_05_UnlockText = "P00-05 turn-in commits CHAPTER_C1_UNLOCKED " +
+                        "and MAP_GIANG_CHAU portal access"
+                }
+            }),
+            $"text={alphaDesign.QuestRules.P00_05_UnlockText}");
+
+        // A throwaway two-quest graph, because the consequence keys on the quest id
+        // the design names: P00-05 must grant, its neighbour must not, and both have
+        // to reach READY_TO_TURN_IN through the real quest service.
+        QuestDefinition ChapterFixture(string questId) => new(
+            questId,
+            QuestTypes.Main,
+            "NPC_TA_VAN_KHANH",
+            1,
+            10,
+            [],
+            [
+                new QuestObjectiveDefinition(
+                    "OBJ_CH_" + questId, QuestObjectiveTypes.Boss,
+                    ["MAN-BM-SPAWN_BM_05_QUEST"], 1, "MAP_BEN_MUA")
+            ],
+            QuestStepIds.FromObjectiveId("OBJ_CH_" + questId),
+            "NPC_TA_VAN_KHANH",
+            new QuestRewards([new QuestRewardCurrency("COIN", 20)], [], "LEVEL_BAND_BASE"),
+            []);
+
+        var chapterCatalog = new QuestCatalog(new Dictionary<string, QuestDefinition>
+        {
+            ["P00-05"] = ChapterFixture("P00-05"),
+            ["P00-04"] = ChapterFixture("P00-04")
+        });
+        var chapterQuests = new InMemoryQuestService(
+            chapterCatalog, new InMemoryQuestStateStore(), alphaMergedRecords, interactClock);
+
+        InMemoryQuestTurnInService ChapterTurnInService(
+            RewardLedgerStore ledger, IChapterUnlockSink sink) => new(
+                chapterCatalog,
+                chapterQuests,
+                inventory,
+                npcAnchors,
+                services.GetRequiredService<IWorldGeometryService>(),
+                ledger,
+                services.GetRequiredService<ExperienceService>(),
+                services.GetRequiredService<QuestXpSnapshotStore>(),
+                services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value,
+                sink);
+
+        void WalkToTurnInAnchor(PlayerSession actor, string questId, string eventId)
+        {
+            chapterQuests.Accept(actor, questId);
+            chapterQuests.RecordVerifiedEvent(
+                actor, eventId, QuestProgressEventTypes.Kill,
+                "MAN-BM-SPAWN_BM_05_QUEST", "MAP_BEN_MUA");
+            actor.X = turnInAnchor.X;
+            actor.Y = turnInAnchor.Y;
+        }
+
+        var chapterStore = new ChapterUnlockStore(new AlphaProfileOptions { Enabled = true });
+        var chapterKey = NewKey();
+        var chapterActor = NewPlayer("CHR_SELFCHECK_CHAPTER_P5");
+        WalkToTurnInAnchor(chapterActor, "P00-05", new string('1', 32));
+        var chapterTurnIn = ChapterTurnInService(new RewardLedgerStore(), chapterStore);
+        var chapterCommitted = chapterTurnIn.TurnIn(
+            chapterActor, "P00-05", "NPC_TA_VAN_KHANH", chapterKey);
+        var chapterReplay = chapterTurnIn.TurnIn(
+            chapterActor, "P00-05", "NPC_TA_VAN_KHANH", chapterKey);
+        var neighbourActor = NewPlayer("CHR_SELFCHECK_CHAPTER_P4");
+        WalkToTurnInAnchor(neighbourActor, "P00-04", new string('2', 32));
+        var neighbourCommitted = chapterTurnIn.TurnIn(
+            neighbourActor, "P00-04", "NPC_TA_VAN_KHANH", NewKey());
+        Check(
+            "alpha.chapter_unlock.p5_turn_in_grants_flag_and_portal",
+            chapterCommitted.Accepted && chapterReplay.Accepted && neighbourCommitted.Accepted &&
+            chapterStore.Count == 1 &&
+            chapterStore.HasFlag(chapterActor.CharacterId, AlphaChapterUnlockRules.Flag) &&
+            chapterStore.AllowsPortal(
+                chapterActor.CharacterId, AlphaChapterUnlockRules.PortalMapId) &&
+            !chapterStore.AllowsPortal(chapterActor.CharacterId, "MAP_BEN_MUA") &&
+            !chapterStore.HasFlag(neighbourActor.CharacterId, AlphaChapterUnlockRules.Flag),
+            $"count={chapterStore.Count} p5={chapterCommitted.Failure?.Code} " +
+            $"p4={neighbourCommitted.Failure?.Code}");
+
+        // With the profile off the sink is wired but inert: the turn-in still
+        // commits, and no chapter consequence is recorded for anybody.
+        var chapterOffStore = new ChapterUnlockStore(new AlphaProfileOptions { Enabled = false });
+        var chapterOffActor = NewPlayer("CHR_SELFCHECK_CHAPTER_OFF");
+        WalkToTurnInAnchor(chapterOffActor, "P00-05", new string('3', 32));
+        var chapterOffTurnIn = ChapterTurnInService(new RewardLedgerStore(), chapterOffStore)
+            .TurnIn(chapterOffActor, "P00-05", "NPC_TA_VAN_KHANH", NewKey());
+        Check(
+            "alpha.chapter_unlock.gate_off_records_nothing",
+            chapterOffTurnIn.Accepted &&
+            chapterOffStore.Count == 0 &&
+            !chapterOffStore.HasFlag(chapterOffActor.CharacterId, AlphaChapterUnlockRules.Flag) &&
+            !chapterOffStore.AllowsPortal(
+                chapterOffActor.CharacterId, AlphaChapterUnlockRules.PortalMapId),
+            $"count={chapterOffStore.Count} code={chapterOffTurnIn.Failure?.Code}");
+
+        // A ledger failure rolls the whole transaction back, and the consequence is
+        // part of it: the grant has to disappear with the flip and reappear on the
+        // retry, never survive a turn-in the client was told failed.
+        var chapterRevokeStore = new ChapterUnlockStore(new AlphaProfileOptions { Enabled = true });
+        var chapterRevokeLedger = new FailOnceLedgerStore();
+        var chapterRevokeTurnIn = ChapterTurnInService(chapterRevokeLedger, chapterRevokeStore);
+        var chapterRevokeActor = NewPlayer("CHR_SELFCHECK_CHAPTER_REVOKE");
+        WalkToTurnInAnchor(chapterRevokeActor, "P00-05", new string('4', 32));
+        var chapterRolledBack = chapterRevokeTurnIn.TurnIn(
+            chapterRevokeActor, "P00-05", "NPC_TA_VAN_KHANH", NewKey());
+        var chapterRolledState = chapterQuests.GetState(
+            chapterRevokeActor.CharacterId, "P00-05").State;
+        var countAfterRollback = chapterRevokeStore.Count;
+        var grantedAfterRollback = chapterRevokeStore.HasFlag(
+            chapterRevokeActor.CharacterId, AlphaChapterUnlockRules.Flag);
+        var chapterRetried = chapterRevokeTurnIn.TurnIn(
+            chapterRevokeActor, "P00-05", "NPC_TA_VAN_KHANH", NewKey());
+        Check(
+            "alpha.chapter_unlock.ledger_failure_rolls_the_grant_back",
+            !chapterRolledBack.Accepted &&
+            countAfterRollback == 0 &&
+            !grantedAfterRollback &&
+            string.Equals(
+                chapterRolledState?.State, QuestStates.ReadyToTurnIn, StringComparison.Ordinal) &&
+            chapterRetried.Accepted &&
+            chapterRevokeStore.HasFlag(
+                chapterRevokeActor.CharacterId, AlphaChapterUnlockRules.Flag),
+            $"rejected={chapterRolledBack.Failure?.Code} count={countAfterRollback} " +
+            $"state={chapterRolledState?.State} retry={chapterRetried.Failure?.Code}");
 
         // ─── overflow: balance near long.MaxValue rejects without partial commit ───
 

@@ -176,6 +176,13 @@ builder.Services.Configure<QuestTurnInOptions>(
 builder.Services.AddSingleton(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
 builder.Services.AddSingleton<RewardLedgerStore>();
+// P00-05's chapter consequence is written inside the turn-in transaction and
+// revoked if a later step of that transaction rolls back. The store records
+// nothing while P1:AlphaProfile is off, so every other profile's turn-in is
+// byte-identical to what it was before this seam existed.
+builder.Services.AddSingleton<ChapterUnlockStore>();
+builder.Services.AddSingleton<IChapterUnlockSink>(sp =>
+    sp.GetRequiredService<ChapterUnlockStore>());
 builder.Services.AddSingleton<IQuestTurnInService, InMemoryQuestTurnInService>();
 builder.Services.AddSingleton(serviceProvider =>
 {

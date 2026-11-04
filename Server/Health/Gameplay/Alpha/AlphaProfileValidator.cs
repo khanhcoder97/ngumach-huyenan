@@ -349,6 +349,26 @@ public static class AlphaProfileValidator
             throw new InvalidOperationException(
                 "C1-01 alpha record does not match the approved min-level/reward contract.");
         }
+
+        // The unlock clause is prose in the design, so the flag and the portal map
+        // the server commits are pinned against the sentence itself: a design that
+        // renames either one fails startup rather than granting something the
+        // source no longer names, and the portal it grants has to be the same map
+        // C1-01 is played on.
+        if (!rules.P00_05_UnlockText.Contains(
+                AlphaChapterUnlockRules.Flag, StringComparison.Ordinal) ||
+            !rules.P00_05_UnlockText.Contains(
+                AlphaChapterUnlockRules.PortalMapId, StringComparison.Ordinal) ||
+            !string.Equals(
+                AlphaChapterUnlockRules.PortalMapId, rules.C1_01_MapId, StringComparison.Ordinal) ||
+            !maps.TryResolve(AlphaChapterUnlockRules.PortalMapId, out _))
+        {
+            throw new InvalidOperationException(
+                "P00-05 unlock clause must name both the committed flag " +
+                $"'{AlphaChapterUnlockRules.Flag}' and the C1-01 portal map " +
+                $"'{AlphaChapterUnlockRules.PortalMapId}'; found " +
+                $"'{rules.P00_05_UnlockText}'.");
+        }
     }
 
     private static void ValidateBoss(AlphaBossRules boss, MapBoundsCatalog maps)
