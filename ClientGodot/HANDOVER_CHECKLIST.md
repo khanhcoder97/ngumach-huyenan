@@ -28,7 +28,12 @@ merge belong to Codex, release approval to the project owner.
       and boats have no runtime position/layer yet. For the 306 water
       cells specifically, Work Order 24 M-C requires an evidence pack for
       Codex's decision in deliveries — the local draft blocked them, this
-      checkpoint ships the pre-change tiledata unchanged.
+      checkpoint ships the pre-change tiledata unchanged. Owner decision
+      2026-11-04 (option B): the shipped tilemap was reverted to exactly
+      that pre-change state (blocked 5,069; converter assert and the
+      FullMapMain check pinned back to 5,069), and the M-C evidence pack
+      ships with this checkpoint at `docs/evidence_water_block_20261104/`
+      for Codex's decision.
 - [ ] **Placeholder NPC art** — excluded (no license, prototype-only).
 - [ ] **Production Android keystore** — owner's; CI uses a generated
       debug keystore.

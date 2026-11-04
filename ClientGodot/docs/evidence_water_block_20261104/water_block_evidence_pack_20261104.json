@@ -1,0 +1,7411 @@
+{
+ "title": "WO24 M-C evidence pack: 306 water cells + 37 bank cells (DRAFT, for Codex decision)",
+ "status": "DRAFT — local source tiledata already blocks the 306 (owner ART_REVIEW 2026-11-03); Godot runtime still on blocked 5069 (integration pending, not changed by this pack). This pack changes nothing; it only evidences the cells for Codex to decide.",
+ "sources": [
+  "strip_064_128.json + _pre_waterblock_20261103.json",
+  "strip_128_192.json + _pre_waterblock_20261103.json"
+ ],
+ "grid": "450x60, cell 0.8 WU, origin Y 36.0 at north edge, row 0 = north",
+ "totals_all_strips": {
+  "cells": 27000,
+  "water": 4960,
+  "blocked_after": 5375,
+  "blocked_before": 5069
+ },
+ "totals_by_strip": {
+  "strip_064_128": {
+   "water": 847,
+   "blocked_before": 740,
+   "blocked_after": 908
+  },
+  "strip_128_192": {
+   "water": 619,
+   "blocked_before": 507,
+   "blocked_after": 645
+  }
+ },
+ "water_cells": {
+  "count": 306,
+  "blocked_change": "0 -> 1, all other layers unchanged vs pre",
+  "water_types": {
+   "water_base_a": 267,
+   "water_ripple_a": 17,
+   "water_lily_a": 18,
+   "water_sparkle_a": 4
+  },
+  "rows": {
+   "50": 49,
+   "51": 59,
+   "52": 61,
+   "53": 57,
+   "54": 69,
+   "55": 11
+  },
+  "by_strip": {
+   "strip_064_128": 168,
+   "strip_128_192": 138
+  },
+  "clusters": [
+   {
+    "cluster": 0,
+    "cells": 268,
+    "wu_x": [
+     104.8,
+     153.6
+    ],
+    "wu_y": [
+     -8.0,
+     -4.0
+    ],
+    "global_cols": [
+     131,
+     191
+    ],
+    "global_rows": [
+     50,
+     54
+    ]
+   },
+   {
+    "cluster": 1,
+    "cells": 36,
+    "wu_x": [
+     64.0,
+     72.8
+    ],
+    "wu_y": [
+     -8.8,
+     -4.0
+    ],
+    "global_cols": [
+     80,
+     90
+    ],
+    "global_rows": [
+     50,
+     55
+    ]
+   },
+   {
+    "cluster": 2,
+    "cells": 2,
+    "wu_x": [
+     96.0,
+     96.8
+    ],
+    "wu_y": [
+     -7.2,
+     -5.6
+    ],
+    "global_cols": [
+     120,
+     120
+    ],
+    "global_rows": [
+     52,
+     53
+    ]
+   }
+  ],
+  "cells": [
+   {
+    "strip": "strip_064_128",
+    "local_col": 0,
+    "local_row": 50,
+    "global_col": 80,
+    "global_row": 50,
+    "wu_x": [
+     64.0,
+     64.8
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 52,
+    "local_row": 50,
+    "global_col": 132,
+    "global_row": 50,
+    "wu_x": [
+     105.6,
+     106.4
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 53,
+    "local_row": 50,
+    "global_col": 133,
+    "global_row": 50,
+    "wu_x": [
+     106.4,
+     107.2
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 54,
+    "local_row": 50,
+    "global_col": 134,
+    "global_row": 50,
+    "wu_x": [
+     107.2,
+     108.0
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 55,
+    "local_row": 50,
+    "global_col": 135,
+    "global_row": 50,
+    "wu_x": [
+     108.0,
+     108.8
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 57,
+    "local_row": 50,
+    "global_col": 137,
+    "global_row": 50,
+    "wu_x": [
+     109.6,
+     110.4
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 59,
+    "local_row": 50,
+    "global_col": 139,
+    "global_row": 50,
+    "wu_x": [
+     111.2,
+     112.0
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 62,
+    "local_row": 50,
+    "global_col": 142,
+    "global_row": 50,
+    "wu_x": [
+     113.6,
+     114.4
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 63,
+    "local_row": 50,
+    "global_col": 143,
+    "global_row": 50,
+    "wu_x": [
+     114.4,
+     115.2
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 65,
+    "local_row": 50,
+    "global_col": 145,
+    "global_row": 50,
+    "wu_x": [
+     116.0,
+     116.8
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 66,
+    "local_row": 50,
+    "global_col": 146,
+    "global_row": 50,
+    "wu_x": [
+     116.8,
+     117.6
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 67,
+    "local_row": 50,
+    "global_col": 147,
+    "global_row": 50,
+    "wu_x": [
+     117.6,
+     118.4
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 68,
+    "local_row": 50,
+    "global_col": 148,
+    "global_row": 50,
+    "wu_x": [
+     118.4,
+     119.2
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 69,
+    "local_row": 50,
+    "global_col": 149,
+    "global_row": 50,
+    "wu_x": [
+     119.2,
+     120.0
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 72,
+    "local_row": 50,
+    "global_col": 152,
+    "global_row": 50,
+    "wu_x": [
+     121.6,
+     122.4
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 73,
+    "local_row": 50,
+    "global_col": 153,
+    "global_row": 50,
+    "wu_x": [
+     122.4,
+     123.2
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 74,
+    "local_row": 50,
+    "global_col": 154,
+    "global_row": 50,
+    "wu_x": [
+     123.2,
+     124.0
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 75,
+    "local_row": 50,
+    "global_col": 155,
+    "global_row": 50,
+    "wu_x": [
+     124.0,
+     124.8
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 76,
+    "local_row": 50,
+    "global_col": 156,
+    "global_row": 50,
+    "wu_x": [
+     124.8,
+     125.6
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 77,
+    "local_row": 50,
+    "global_col": 157,
+    "global_row": 50,
+    "wu_x": [
+     125.6,
+     126.4
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 79,
+    "local_row": 50,
+    "global_col": 159,
+    "global_row": 50,
+    "wu_x": [
+     127.2,
+     128.0
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 0,
+    "local_row": 51,
+    "global_col": 80,
+    "global_row": 51,
+    "wu_x": [
+     64.0,
+     64.8
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 1,
+    "local_row": 51,
+    "global_col": 81,
+    "global_row": 51,
+    "wu_x": [
+     64.8,
+     65.6
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 2,
+    "local_row": 51,
+    "global_col": 82,
+    "global_row": 51,
+    "wu_x": [
+     65.6,
+     66.4
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 3,
+    "local_row": 51,
+    "global_col": 83,
+    "global_row": 51,
+    "wu_x": [
+     66.4,
+     67.2
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 51,
+    "local_row": 51,
+    "global_col": 131,
+    "global_row": 51,
+    "wu_x": [
+     104.8,
+     105.6
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 52,
+    "local_row": 51,
+    "global_col": 132,
+    "global_row": 51,
+    "wu_x": [
+     105.6,
+     106.4
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 53,
+    "local_row": 51,
+    "global_col": 133,
+    "global_row": 51,
+    "wu_x": [
+     106.4,
+     107.2
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 54,
+    "local_row": 51,
+    "global_col": 134,
+    "global_row": 51,
+    "wu_x": [
+     107.2,
+     108.0
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 55,
+    "local_row": 51,
+    "global_col": 135,
+    "global_row": 51,
+    "wu_x": [
+     108.0,
+     108.8
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 56,
+    "local_row": 51,
+    "global_col": 136,
+    "global_row": 51,
+    "wu_x": [
+     108.8,
+     109.6
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 57,
+    "local_row": 51,
+    "global_col": 137,
+    "global_row": 51,
+    "wu_x": [
+     109.6,
+     110.4
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 58,
+    "local_row": 51,
+    "global_col": 138,
+    "global_row": 51,
+    "wu_x": [
+     110.4,
+     111.2
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 59,
+    "local_row": 51,
+    "global_col": 139,
+    "global_row": 51,
+    "wu_x": [
+     111.2,
+     112.0
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 60,
+    "local_row": 51,
+    "global_col": 140,
+    "global_row": 51,
+    "wu_x": [
+     112.0,
+     112.8
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 61,
+    "local_row": 51,
+    "global_col": 141,
+    "global_row": 51,
+    "wu_x": [
+     112.8,
+     113.6
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 62,
+    "local_row": 51,
+    "global_col": 142,
+    "global_row": 51,
+    "wu_x": [
+     113.6,
+     114.4
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 63,
+    "local_row": 51,
+    "global_col": 143,
+    "global_row": 51,
+    "wu_x": [
+     114.4,
+     115.2
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 64,
+    "local_row": 51,
+    "global_col": 144,
+    "global_row": 51,
+    "wu_x": [
+     115.2,
+     116.0
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 65,
+    "local_row": 51,
+    "global_col": 145,
+    "global_row": 51,
+    "wu_x": [
+     116.0,
+     116.8
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 66,
+    "local_row": 51,
+    "global_col": 146,
+    "global_row": 51,
+    "wu_x": [
+     116.8,
+     117.6
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 67,
+    "local_row": 51,
+    "global_col": 147,
+    "global_row": 51,
+    "wu_x": [
+     117.6,
+     118.4
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 69,
+    "local_row": 51,
+    "global_col": 149,
+    "global_row": 51,
+    "wu_x": [
+     119.2,
+     120.0
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 70,
+    "local_row": 51,
+    "global_col": 150,
+    "global_row": 51,
+    "wu_x": [
+     120.0,
+     120.8
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 71,
+    "local_row": 51,
+    "global_col": 151,
+    "global_row": 51,
+    "wu_x": [
+     120.8,
+     121.6
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 72,
+    "local_row": 51,
+    "global_col": 152,
+    "global_row": 51,
+    "wu_x": [
+     121.6,
+     122.4
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 73,
+    "local_row": 51,
+    "global_col": 153,
+    "global_row": 51,
+    "wu_x": [
+     122.4,
+     123.2
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 74,
+    "local_row": 51,
+    "global_col": 154,
+    "global_row": 51,
+    "wu_x": [
+     123.2,
+     124.0
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 75,
+    "local_row": 51,
+    "global_col": 155,
+    "global_row": 51,
+    "wu_x": [
+     124.0,
+     124.8
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 76,
+    "local_row": 51,
+    "global_col": 156,
+    "global_row": 51,
+    "wu_x": [
+     124.8,
+     125.6
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 77,
+    "local_row": 51,
+    "global_col": 157,
+    "global_row": 51,
+    "wu_x": [
+     125.6,
+     126.4
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 79,
+    "local_row": 51,
+    "global_col": 159,
+    "global_row": 51,
+    "wu_x": [
+     127.2,
+     128.0
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 0,
+    "local_row": 52,
+    "global_col": 80,
+    "global_row": 52,
+    "wu_x": [
+     64.0,
+     64.8
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 1,
+    "local_row": 52,
+    "global_col": 81,
+    "global_row": 52,
+    "wu_x": [
+     64.8,
+     65.6
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 2,
+    "local_row": 52,
+    "global_col": 82,
+    "global_row": 52,
+    "wu_x": [
+     65.6,
+     66.4
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 3,
+    "local_row": 52,
+    "global_col": 83,
+    "global_row": 52,
+    "wu_x": [
+     66.4,
+     67.2
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 5,
+    "local_row": 52,
+    "global_col": 85,
+    "global_row": 52,
+    "wu_x": [
+     68.0,
+     68.8
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 40,
+    "local_row": 52,
+    "global_col": 120,
+    "global_row": 52,
+    "wu_x": [
+     96.0,
+     96.8
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 2
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 51,
+    "local_row": 52,
+    "global_col": 131,
+    "global_row": 52,
+    "wu_x": [
+     104.8,
+     105.6
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 52,
+    "local_row": 52,
+    "global_col": 132,
+    "global_row": 52,
+    "wu_x": [
+     105.6,
+     106.4
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 53,
+    "local_row": 52,
+    "global_col": 133,
+    "global_row": 52,
+    "wu_x": [
+     106.4,
+     107.2
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 54,
+    "local_row": 52,
+    "global_col": 134,
+    "global_row": 52,
+    "wu_x": [
+     107.2,
+     108.0
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 55,
+    "local_row": 52,
+    "global_col": 135,
+    "global_row": 52,
+    "wu_x": [
+     108.0,
+     108.8
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 56,
+    "local_row": 52,
+    "global_col": 136,
+    "global_row": 52,
+    "wu_x": [
+     108.8,
+     109.6
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 57,
+    "local_row": 52,
+    "global_col": 137,
+    "global_row": 52,
+    "wu_x": [
+     109.6,
+     110.4
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 58,
+    "local_row": 52,
+    "global_col": 138,
+    "global_row": 52,
+    "wu_x": [
+     110.4,
+     111.2
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 59,
+    "local_row": 52,
+    "global_col": 139,
+    "global_row": 52,
+    "wu_x": [
+     111.2,
+     112.0
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 60,
+    "local_row": 52,
+    "global_col": 140,
+    "global_row": 52,
+    "wu_x": [
+     112.0,
+     112.8
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 61,
+    "local_row": 52,
+    "global_col": 141,
+    "global_row": 52,
+    "wu_x": [
+     112.8,
+     113.6
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 62,
+    "local_row": 52,
+    "global_col": 142,
+    "global_row": 52,
+    "wu_x": [
+     113.6,
+     114.4
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 63,
+    "local_row": 52,
+    "global_col": 143,
+    "global_row": 52,
+    "wu_x": [
+     114.4,
+     115.2
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 64,
+    "local_row": 52,
+    "global_col": 144,
+    "global_row": 52,
+    "wu_x": [
+     115.2,
+     116.0
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 65,
+    "local_row": 52,
+    "global_col": 145,
+    "global_row": 52,
+    "wu_x": [
+     116.0,
+     116.8
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 66,
+    "local_row": 52,
+    "global_col": 146,
+    "global_row": 52,
+    "wu_x": [
+     116.8,
+     117.6
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 67,
+    "local_row": 52,
+    "global_col": 147,
+    "global_row": 52,
+    "wu_x": [
+     117.6,
+     118.4
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 68,
+    "local_row": 52,
+    "global_col": 148,
+    "global_row": 52,
+    "wu_x": [
+     118.4,
+     119.2
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 69,
+    "local_row": 52,
+    "global_col": 149,
+    "global_row": 52,
+    "wu_x": [
+     119.2,
+     120.0
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 70,
+    "local_row": 52,
+    "global_col": 150,
+    "global_row": 52,
+    "wu_x": [
+     120.0,
+     120.8
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 71,
+    "local_row": 52,
+    "global_col": 151,
+    "global_row": 52,
+    "wu_x": [
+     120.8,
+     121.6
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 72,
+    "local_row": 52,
+    "global_col": 152,
+    "global_row": 52,
+    "wu_x": [
+     121.6,
+     122.4
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 73,
+    "local_row": 52,
+    "global_col": 153,
+    "global_row": 52,
+    "wu_x": [
+     122.4,
+     123.2
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 74,
+    "local_row": 52,
+    "global_col": 154,
+    "global_row": 52,
+    "wu_x": [
+     123.2,
+     124.0
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 75,
+    "local_row": 52,
+    "global_col": 155,
+    "global_row": 52,
+    "wu_x": [
+     124.0,
+     124.8
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 76,
+    "local_row": 52,
+    "global_col": 156,
+    "global_row": 52,
+    "wu_x": [
+     124.8,
+     125.6
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 78,
+    "local_row": 52,
+    "global_col": 158,
+    "global_row": 52,
+    "wu_x": [
+     126.4,
+     127.2
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 79,
+    "local_row": 52,
+    "global_col": 159,
+    "global_row": 52,
+    "wu_x": [
+     127.2,
+     128.0
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 0,
+    "local_row": 53,
+    "global_col": 80,
+    "global_row": 53,
+    "wu_x": [
+     64.0,
+     64.8
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 1,
+    "local_row": 53,
+    "global_col": 81,
+    "global_row": 53,
+    "wu_x": [
+     64.8,
+     65.6
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 2,
+    "local_row": 53,
+    "global_col": 82,
+    "global_row": 53,
+    "wu_x": [
+     65.6,
+     66.4
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 3,
+    "local_row": 53,
+    "global_col": 83,
+    "global_row": 53,
+    "wu_x": [
+     66.4,
+     67.2
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 4,
+    "local_row": 53,
+    "global_col": 84,
+    "global_row": 53,
+    "wu_x": [
+     67.2,
+     68.0
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 5,
+    "local_row": 53,
+    "global_col": 85,
+    "global_row": 53,
+    "wu_x": [
+     68.0,
+     68.8
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 40,
+    "local_row": 53,
+    "global_col": 120,
+    "global_row": 53,
+    "wu_x": [
+     96.0,
+     96.8
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 2
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 51,
+    "local_row": 53,
+    "global_col": 131,
+    "global_row": 53,
+    "wu_x": [
+     104.8,
+     105.6
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 52,
+    "local_row": 53,
+    "global_col": 132,
+    "global_row": 53,
+    "wu_x": [
+     105.6,
+     106.4
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 53,
+    "local_row": 53,
+    "global_col": 133,
+    "global_row": 53,
+    "wu_x": [
+     106.4,
+     107.2
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 54,
+    "local_row": 53,
+    "global_col": 134,
+    "global_row": 53,
+    "wu_x": [
+     107.2,
+     108.0
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 55,
+    "local_row": 53,
+    "global_col": 135,
+    "global_row": 53,
+    "wu_x": [
+     108.0,
+     108.8
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 56,
+    "local_row": 53,
+    "global_col": 136,
+    "global_row": 53,
+    "wu_x": [
+     108.8,
+     109.6
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 57,
+    "local_row": 53,
+    "global_col": 137,
+    "global_row": 53,
+    "wu_x": [
+     109.6,
+     110.4
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 58,
+    "local_row": 53,
+    "global_col": 138,
+    "global_row": 53,
+    "wu_x": [
+     110.4,
+     111.2
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 59,
+    "local_row": 53,
+    "global_col": 139,
+    "global_row": 53,
+    "wu_x": [
+     111.2,
+     112.0
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 60,
+    "local_row": 53,
+    "global_col": 140,
+    "global_row": 53,
+    "wu_x": [
+     112.0,
+     112.8
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 61,
+    "local_row": 53,
+    "global_col": 141,
+    "global_row": 53,
+    "wu_x": [
+     112.8,
+     113.6
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 63,
+    "local_row": 53,
+    "global_col": 143,
+    "global_row": 53,
+    "wu_x": [
+     114.4,
+     115.2
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 64,
+    "local_row": 53,
+    "global_col": 144,
+    "global_row": 53,
+    "wu_x": [
+     115.2,
+     116.0
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 65,
+    "local_row": 53,
+    "global_col": 145,
+    "global_row": 53,
+    "wu_x": [
+     116.0,
+     116.8
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 66,
+    "local_row": 53,
+    "global_col": 146,
+    "global_row": 53,
+    "wu_x": [
+     116.8,
+     117.6
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 68,
+    "local_row": 53,
+    "global_col": 148,
+    "global_row": 53,
+    "wu_x": [
+     118.4,
+     119.2
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 69,
+    "local_row": 53,
+    "global_col": 149,
+    "global_row": 53,
+    "wu_x": [
+     119.2,
+     120.0
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 70,
+    "local_row": 53,
+    "global_col": 150,
+    "global_row": 53,
+    "wu_x": [
+     120.0,
+     120.8
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 71,
+    "local_row": 53,
+    "global_col": 151,
+    "global_row": 53,
+    "wu_x": [
+     120.8,
+     121.6
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 72,
+    "local_row": 53,
+    "global_col": 152,
+    "global_row": 53,
+    "wu_x": [
+     121.6,
+     122.4
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 73,
+    "local_row": 53,
+    "global_col": 153,
+    "global_row": 53,
+    "wu_x": [
+     122.4,
+     123.2
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 74,
+    "local_row": 53,
+    "global_col": 154,
+    "global_row": 53,
+    "wu_x": [
+     123.2,
+     124.0
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 75,
+    "local_row": 53,
+    "global_col": 155,
+    "global_row": 53,
+    "wu_x": [
+     124.0,
+     124.8
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 76,
+    "local_row": 53,
+    "global_col": 156,
+    "global_row": 53,
+    "wu_x": [
+     124.8,
+     125.6
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 78,
+    "local_row": 53,
+    "global_col": 158,
+    "global_row": 53,
+    "wu_x": [
+     126.4,
+     127.2
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 79,
+    "local_row": 53,
+    "global_col": 159,
+    "global_row": 53,
+    "wu_x": [
+     127.2,
+     128.0
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 0,
+    "local_row": 54,
+    "global_col": 80,
+    "global_row": 54,
+    "wu_x": [
+     64.0,
+     64.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 1,
+    "local_row": 54,
+    "global_col": 81,
+    "global_row": 54,
+    "wu_x": [
+     64.8,
+     65.6
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 2,
+    "local_row": 54,
+    "global_col": 82,
+    "global_row": 54,
+    "wu_x": [
+     65.6,
+     66.4
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 3,
+    "local_row": 54,
+    "global_col": 83,
+    "global_row": 54,
+    "wu_x": [
+     66.4,
+     67.2
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 4,
+    "local_row": 54,
+    "global_col": 84,
+    "global_row": 54,
+    "wu_x": [
+     67.2,
+     68.0
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 5,
+    "local_row": 54,
+    "global_col": 85,
+    "global_row": 54,
+    "wu_x": [
+     68.0,
+     68.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 6,
+    "local_row": 54,
+    "global_col": 86,
+    "global_row": 54,
+    "wu_x": [
+     68.8,
+     69.6
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 7,
+    "local_row": 54,
+    "global_col": 87,
+    "global_row": 54,
+    "wu_x": [
+     69.6,
+     70.4
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 8,
+    "local_row": 54,
+    "global_col": 88,
+    "global_row": 54,
+    "wu_x": [
+     70.4,
+     71.2
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 51,
+    "local_row": 54,
+    "global_col": 131,
+    "global_row": 54,
+    "wu_x": [
+     104.8,
+     105.6
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 52,
+    "local_row": 54,
+    "global_col": 132,
+    "global_row": 54,
+    "wu_x": [
+     105.6,
+     106.4
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 53,
+    "local_row": 54,
+    "global_col": 133,
+    "global_row": 54,
+    "wu_x": [
+     106.4,
+     107.2
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 54,
+    "local_row": 54,
+    "global_col": 134,
+    "global_row": 54,
+    "wu_x": [
+     107.2,
+     108.0
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_sparkle_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 55,
+    "local_row": 54,
+    "global_col": 135,
+    "global_row": 54,
+    "wu_x": [
+     108.0,
+     108.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 56,
+    "local_row": 54,
+    "global_col": 136,
+    "global_row": 54,
+    "wu_x": [
+     108.8,
+     109.6
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 57,
+    "local_row": 54,
+    "global_col": 137,
+    "global_row": 54,
+    "wu_x": [
+     109.6,
+     110.4
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 58,
+    "local_row": 54,
+    "global_col": 138,
+    "global_row": 54,
+    "wu_x": [
+     110.4,
+     111.2
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 59,
+    "local_row": 54,
+    "global_col": 139,
+    "global_row": 54,
+    "wu_x": [
+     111.2,
+     112.0
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 60,
+    "local_row": 54,
+    "global_col": 140,
+    "global_row": 54,
+    "wu_x": [
+     112.0,
+     112.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 61,
+    "local_row": 54,
+    "global_col": 141,
+    "global_row": 54,
+    "wu_x": [
+     112.8,
+     113.6
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 62,
+    "local_row": 54,
+    "global_col": 142,
+    "global_row": 54,
+    "wu_x": [
+     113.6,
+     114.4
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 63,
+    "local_row": 54,
+    "global_col": 143,
+    "global_row": 54,
+    "wu_x": [
+     114.4,
+     115.2
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 64,
+    "local_row": 54,
+    "global_col": 144,
+    "global_row": 54,
+    "wu_x": [
+     115.2,
+     116.0
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_sparkle_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 65,
+    "local_row": 54,
+    "global_col": 145,
+    "global_row": 54,
+    "wu_x": [
+     116.0,
+     116.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 66,
+    "local_row": 54,
+    "global_col": 146,
+    "global_row": 54,
+    "wu_x": [
+     116.8,
+     117.6
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 67,
+    "local_row": 54,
+    "global_col": 147,
+    "global_row": 54,
+    "wu_x": [
+     117.6,
+     118.4
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 68,
+    "local_row": 54,
+    "global_col": 148,
+    "global_row": 54,
+    "wu_x": [
+     118.4,
+     119.2
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 69,
+    "local_row": 54,
+    "global_col": 149,
+    "global_row": 54,
+    "wu_x": [
+     119.2,
+     120.0
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 70,
+    "local_row": 54,
+    "global_col": 150,
+    "global_row": 54,
+    "wu_x": [
+     120.0,
+     120.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 71,
+    "local_row": 54,
+    "global_col": 151,
+    "global_row": 54,
+    "wu_x": [
+     120.8,
+     121.6
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 72,
+    "local_row": 54,
+    "global_col": 152,
+    "global_row": 54,
+    "wu_x": [
+     121.6,
+     122.4
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 73,
+    "local_row": 54,
+    "global_col": 153,
+    "global_row": 54,
+    "wu_x": [
+     122.4,
+     123.2
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 74,
+    "local_row": 54,
+    "global_col": 154,
+    "global_row": 54,
+    "wu_x": [
+     123.2,
+     124.0
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 75,
+    "local_row": 54,
+    "global_col": 155,
+    "global_row": 54,
+    "wu_x": [
+     124.0,
+     124.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 76,
+    "local_row": 54,
+    "global_col": 156,
+    "global_row": 54,
+    "wu_x": [
+     124.8,
+     125.6
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 77,
+    "local_row": 54,
+    "global_col": 157,
+    "global_row": 54,
+    "wu_x": [
+     125.6,
+     126.4
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 78,
+    "local_row": 54,
+    "global_col": 158,
+    "global_row": 54,
+    "wu_x": [
+     126.4,
+     127.2
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 79,
+    "local_row": 54,
+    "global_col": 159,
+    "global_row": 54,
+    "wu_x": [
+     127.2,
+     128.0
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 0,
+    "local_row": 55,
+    "global_col": 80,
+    "global_row": 55,
+    "wu_x": [
+     64.0,
+     64.8
+    ],
+    "wu_y": [
+     -8.8,
+     -8.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 1,
+    "local_row": 55,
+    "global_col": 81,
+    "global_row": 55,
+    "wu_x": [
+     64.8,
+     65.6
+    ],
+    "wu_y": [
+     -8.8,
+     -8.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 2,
+    "local_row": 55,
+    "global_col": 82,
+    "global_row": 55,
+    "wu_x": [
+     65.6,
+     66.4
+    ],
+    "wu_y": [
+     -8.8,
+     -8.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 3,
+    "local_row": 55,
+    "global_col": 83,
+    "global_row": 55,
+    "wu_x": [
+     66.4,
+     67.2
+    ],
+    "wu_y": [
+     -8.8,
+     -8.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 4,
+    "local_row": 55,
+    "global_col": 84,
+    "global_row": 55,
+    "wu_x": [
+     67.2,
+     68.0
+    ],
+    "wu_y": [
+     -8.8,
+     -8.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 5,
+    "local_row": 55,
+    "global_col": 85,
+    "global_row": 55,
+    "wu_x": [
+     68.0,
+     68.8
+    ],
+    "wu_y": [
+     -8.8,
+     -8.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 6,
+    "local_row": 55,
+    "global_col": 86,
+    "global_row": 55,
+    "wu_x": [
+     68.8,
+     69.6
+    ],
+    "wu_y": [
+     -8.8,
+     -8.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 7,
+    "local_row": 55,
+    "global_col": 87,
+    "global_row": 55,
+    "wu_x": [
+     69.6,
+     70.4
+    ],
+    "wu_y": [
+     -8.8,
+     -8.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 8,
+    "local_row": 55,
+    "global_col": 88,
+    "global_row": 55,
+    "wu_x": [
+     70.4,
+     71.2
+    ],
+    "wu_y": [
+     -8.8,
+     -8.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 9,
+    "local_row": 55,
+    "global_col": 89,
+    "global_row": 55,
+    "wu_x": [
+     71.2,
+     72.0
+    ],
+    "wu_y": [
+     -8.8,
+     -8.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 10,
+    "local_row": 55,
+    "global_col": 90,
+    "global_row": 55,
+    "wu_x": [
+     72.0,
+     72.8
+    ],
+    "wu_y": [
+     -8.8,
+     -8.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 1
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 0,
+    "local_row": 50,
+    "global_col": 160,
+    "global_row": 50,
+    "wu_x": [
+     128.0,
+     128.8
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 1,
+    "local_row": 50,
+    "global_col": 161,
+    "global_row": 50,
+    "wu_x": [
+     128.8,
+     129.6
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 3,
+    "local_row": 50,
+    "global_col": 163,
+    "global_row": 50,
+    "wu_x": [
+     130.4,
+     131.2
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 4,
+    "local_row": 50,
+    "global_col": 164,
+    "global_row": 50,
+    "wu_x": [
+     131.2,
+     132.0
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 5,
+    "local_row": 50,
+    "global_col": 165,
+    "global_row": 50,
+    "wu_x": [
+     132.0,
+     132.8
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 6,
+    "local_row": 50,
+    "global_col": 166,
+    "global_row": 50,
+    "wu_x": [
+     132.8,
+     133.6
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 7,
+    "local_row": 50,
+    "global_col": 167,
+    "global_row": 50,
+    "wu_x": [
+     133.6,
+     134.4
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 9,
+    "local_row": 50,
+    "global_col": 169,
+    "global_row": 50,
+    "wu_x": [
+     135.2,
+     136.0
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 10,
+    "local_row": 50,
+    "global_col": 170,
+    "global_row": 50,
+    "wu_x": [
+     136.0,
+     136.8
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 11,
+    "local_row": 50,
+    "global_col": 171,
+    "global_row": 50,
+    "wu_x": [
+     136.8,
+     137.6
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 12,
+    "local_row": 50,
+    "global_col": 172,
+    "global_row": 50,
+    "wu_x": [
+     137.6,
+     138.4
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 14,
+    "local_row": 50,
+    "global_col": 174,
+    "global_row": 50,
+    "wu_x": [
+     139.2,
+     140.0
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 15,
+    "local_row": 50,
+    "global_col": 175,
+    "global_row": 50,
+    "wu_x": [
+     140.0,
+     140.8
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 16,
+    "local_row": 50,
+    "global_col": 176,
+    "global_row": 50,
+    "wu_x": [
+     140.8,
+     141.6
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 17,
+    "local_row": 50,
+    "global_col": 177,
+    "global_row": 50,
+    "wu_x": [
+     141.6,
+     142.4
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 18,
+    "local_row": 50,
+    "global_col": 178,
+    "global_row": 50,
+    "wu_x": [
+     142.4,
+     143.2
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 19,
+    "local_row": 50,
+    "global_col": 179,
+    "global_row": 50,
+    "wu_x": [
+     143.2,
+     144.0
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 20,
+    "local_row": 50,
+    "global_col": 180,
+    "global_row": 50,
+    "wu_x": [
+     144.0,
+     144.8
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 21,
+    "local_row": 50,
+    "global_col": 181,
+    "global_row": 50,
+    "wu_x": [
+     144.8,
+     145.6
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 22,
+    "local_row": 50,
+    "global_col": 182,
+    "global_row": 50,
+    "wu_x": [
+     145.6,
+     146.4
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 23,
+    "local_row": 50,
+    "global_col": 183,
+    "global_row": 50,
+    "wu_x": [
+     146.4,
+     147.2
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 25,
+    "local_row": 50,
+    "global_col": 185,
+    "global_row": 50,
+    "wu_x": [
+     148.0,
+     148.8
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 26,
+    "local_row": 50,
+    "global_col": 186,
+    "global_row": 50,
+    "wu_x": [
+     148.8,
+     149.6
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 27,
+    "local_row": 50,
+    "global_col": 187,
+    "global_row": 50,
+    "wu_x": [
+     149.6,
+     150.4
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 28,
+    "local_row": 50,
+    "global_col": 188,
+    "global_row": 50,
+    "wu_x": [
+     150.4,
+     151.2
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 29,
+    "local_row": 50,
+    "global_col": 189,
+    "global_row": 50,
+    "wu_x": [
+     151.2,
+     152.0
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 30,
+    "local_row": 50,
+    "global_col": 190,
+    "global_row": 50,
+    "wu_x": [
+     152.0,
+     152.8
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 31,
+    "local_row": 50,
+    "global_col": 191,
+    "global_row": 50,
+    "wu_x": [
+     152.8,
+     153.6
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 0,
+    "local_row": 51,
+    "global_col": 160,
+    "global_row": 51,
+    "wu_x": [
+     128.0,
+     128.8
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 1,
+    "local_row": 51,
+    "global_col": 161,
+    "global_row": 51,
+    "wu_x": [
+     128.8,
+     129.6
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 2,
+    "local_row": 51,
+    "global_col": 162,
+    "global_row": 51,
+    "wu_x": [
+     129.6,
+     130.4
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 3,
+    "local_row": 51,
+    "global_col": 163,
+    "global_row": 51,
+    "wu_x": [
+     130.4,
+     131.2
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 4,
+    "local_row": 51,
+    "global_col": 164,
+    "global_row": 51,
+    "wu_x": [
+     131.2,
+     132.0
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 5,
+    "local_row": 51,
+    "global_col": 165,
+    "global_row": 51,
+    "wu_x": [
+     132.0,
+     132.8
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 7,
+    "local_row": 51,
+    "global_col": 167,
+    "global_row": 51,
+    "wu_x": [
+     133.6,
+     134.4
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 9,
+    "local_row": 51,
+    "global_col": 169,
+    "global_row": 51,
+    "wu_x": [
+     135.2,
+     136.0
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 10,
+    "local_row": 51,
+    "global_col": 170,
+    "global_row": 51,
+    "wu_x": [
+     136.0,
+     136.8
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 11,
+    "local_row": 51,
+    "global_col": 171,
+    "global_row": 51,
+    "wu_x": [
+     136.8,
+     137.6
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 12,
+    "local_row": 51,
+    "global_col": 172,
+    "global_row": 51,
+    "wu_x": [
+     137.6,
+     138.4
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 13,
+    "local_row": 51,
+    "global_col": 173,
+    "global_row": 51,
+    "wu_x": [
+     138.4,
+     139.2
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 14,
+    "local_row": 51,
+    "global_col": 174,
+    "global_row": 51,
+    "wu_x": [
+     139.2,
+     140.0
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 15,
+    "local_row": 51,
+    "global_col": 175,
+    "global_row": 51,
+    "wu_x": [
+     140.0,
+     140.8
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 16,
+    "local_row": 51,
+    "global_col": 176,
+    "global_row": 51,
+    "wu_x": [
+     140.8,
+     141.6
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 18,
+    "local_row": 51,
+    "global_col": 178,
+    "global_row": 51,
+    "wu_x": [
+     142.4,
+     143.2
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 19,
+    "local_row": 51,
+    "global_col": 179,
+    "global_row": 51,
+    "wu_x": [
+     143.2,
+     144.0
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 20,
+    "local_row": 51,
+    "global_col": 180,
+    "global_row": 51,
+    "wu_x": [
+     144.0,
+     144.8
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 21,
+    "local_row": 51,
+    "global_col": 181,
+    "global_row": 51,
+    "wu_x": [
+     144.8,
+     145.6
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 22,
+    "local_row": 51,
+    "global_col": 182,
+    "global_row": 51,
+    "wu_x": [
+     145.6,
+     146.4
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 23,
+    "local_row": 51,
+    "global_col": 183,
+    "global_row": 51,
+    "wu_x": [
+     146.4,
+     147.2
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 24,
+    "local_row": 51,
+    "global_col": 184,
+    "global_row": 51,
+    "wu_x": [
+     147.2,
+     148.0
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 25,
+    "local_row": 51,
+    "global_col": 185,
+    "global_row": 51,
+    "wu_x": [
+     148.0,
+     148.8
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 26,
+    "local_row": 51,
+    "global_col": 186,
+    "global_row": 51,
+    "wu_x": [
+     148.8,
+     149.6
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 27,
+    "local_row": 51,
+    "global_col": 187,
+    "global_row": 51,
+    "wu_x": [
+     149.6,
+     150.4
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 28,
+    "local_row": 51,
+    "global_col": 188,
+    "global_row": 51,
+    "wu_x": [
+     150.4,
+     151.2
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_sparkle_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 29,
+    "local_row": 51,
+    "global_col": 189,
+    "global_row": 51,
+    "wu_x": [
+     151.2,
+     152.0
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 30,
+    "local_row": 51,
+    "global_col": 190,
+    "global_row": 51,
+    "wu_x": [
+     152.0,
+     152.8
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 0,
+    "local_row": 52,
+    "global_col": 160,
+    "global_row": 52,
+    "wu_x": [
+     128.0,
+     128.8
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 1,
+    "local_row": 52,
+    "global_col": 161,
+    "global_row": 52,
+    "wu_x": [
+     128.8,
+     129.6
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 2,
+    "local_row": 52,
+    "global_col": 162,
+    "global_row": 52,
+    "wu_x": [
+     129.6,
+     130.4
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 3,
+    "local_row": 52,
+    "global_col": 163,
+    "global_row": 52,
+    "wu_x": [
+     130.4,
+     131.2
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 4,
+    "local_row": 52,
+    "global_col": 164,
+    "global_row": 52,
+    "wu_x": [
+     131.2,
+     132.0
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 5,
+    "local_row": 52,
+    "global_col": 165,
+    "global_row": 52,
+    "wu_x": [
+     132.0,
+     132.8
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 6,
+    "local_row": 52,
+    "global_col": 166,
+    "global_row": 52,
+    "wu_x": [
+     132.8,
+     133.6
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 7,
+    "local_row": 52,
+    "global_col": 167,
+    "global_row": 52,
+    "wu_x": [
+     133.6,
+     134.4
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 8,
+    "local_row": 52,
+    "global_col": 168,
+    "global_row": 52,
+    "wu_x": [
+     134.4,
+     135.2
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 9,
+    "local_row": 52,
+    "global_col": 169,
+    "global_row": 52,
+    "wu_x": [
+     135.2,
+     136.0
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 10,
+    "local_row": 52,
+    "global_col": 170,
+    "global_row": 52,
+    "wu_x": [
+     136.0,
+     136.8
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 11,
+    "local_row": 52,
+    "global_col": 171,
+    "global_row": 52,
+    "wu_x": [
+     136.8,
+     137.6
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 12,
+    "local_row": 52,
+    "global_col": 172,
+    "global_row": 52,
+    "wu_x": [
+     137.6,
+     138.4
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 13,
+    "local_row": 52,
+    "global_col": 173,
+    "global_row": 52,
+    "wu_x": [
+     138.4,
+     139.2
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 15,
+    "local_row": 52,
+    "global_col": 175,
+    "global_row": 52,
+    "wu_x": [
+     140.0,
+     140.8
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 16,
+    "local_row": 52,
+    "global_col": 176,
+    "global_row": 52,
+    "wu_x": [
+     140.8,
+     141.6
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 17,
+    "local_row": 52,
+    "global_col": 177,
+    "global_row": 52,
+    "wu_x": [
+     141.6,
+     142.4
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 18,
+    "local_row": 52,
+    "global_col": 178,
+    "global_row": 52,
+    "wu_x": [
+     142.4,
+     143.2
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 19,
+    "local_row": 52,
+    "global_col": 179,
+    "global_row": 52,
+    "wu_x": [
+     143.2,
+     144.0
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 20,
+    "local_row": 52,
+    "global_col": 180,
+    "global_row": 52,
+    "wu_x": [
+     144.0,
+     144.8
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 22,
+    "local_row": 52,
+    "global_col": 182,
+    "global_row": 52,
+    "wu_x": [
+     145.6,
+     146.4
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 24,
+    "local_row": 52,
+    "global_col": 184,
+    "global_row": 52,
+    "wu_x": [
+     147.2,
+     148.0
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 25,
+    "local_row": 52,
+    "global_col": 185,
+    "global_row": 52,
+    "wu_x": [
+     148.0,
+     148.8
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 26,
+    "local_row": 52,
+    "global_col": 186,
+    "global_row": 52,
+    "wu_x": [
+     148.8,
+     149.6
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 27,
+    "local_row": 52,
+    "global_col": 187,
+    "global_row": 52,
+    "wu_x": [
+     149.6,
+     150.4
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 28,
+    "local_row": 52,
+    "global_col": 188,
+    "global_row": 52,
+    "wu_x": [
+     150.4,
+     151.2
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 29,
+    "local_row": 52,
+    "global_col": 189,
+    "global_row": 52,
+    "wu_x": [
+     151.2,
+     152.0
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 0,
+    "local_row": 53,
+    "global_col": 160,
+    "global_row": 53,
+    "wu_x": [
+     128.0,
+     128.8
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 4,
+    "local_row": 53,
+    "global_col": 164,
+    "global_row": 53,
+    "wu_x": [
+     131.2,
+     132.0
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 5,
+    "local_row": 53,
+    "global_col": 165,
+    "global_row": 53,
+    "wu_x": [
+     132.0,
+     132.8
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 8,
+    "local_row": 53,
+    "global_col": 168,
+    "global_row": 53,
+    "wu_x": [
+     134.4,
+     135.2
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 9,
+    "local_row": 53,
+    "global_col": 169,
+    "global_row": 53,
+    "wu_x": [
+     135.2,
+     136.0
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 10,
+    "local_row": 53,
+    "global_col": 170,
+    "global_row": 53,
+    "wu_x": [
+     136.0,
+     136.8
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 11,
+    "local_row": 53,
+    "global_col": 171,
+    "global_row": 53,
+    "wu_x": [
+     136.8,
+     137.6
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 12,
+    "local_row": 53,
+    "global_col": 172,
+    "global_row": 53,
+    "wu_x": [
+     137.6,
+     138.4
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 13,
+    "local_row": 53,
+    "global_col": 173,
+    "global_row": 53,
+    "wu_x": [
+     138.4,
+     139.2
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 14,
+    "local_row": 53,
+    "global_col": 174,
+    "global_row": 53,
+    "wu_x": [
+     139.2,
+     140.0
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 15,
+    "local_row": 53,
+    "global_col": 175,
+    "global_row": 53,
+    "wu_x": [
+     140.0,
+     140.8
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 16,
+    "local_row": 53,
+    "global_col": 176,
+    "global_row": 53,
+    "wu_x": [
+     140.8,
+     141.6
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 17,
+    "local_row": 53,
+    "global_col": 177,
+    "global_row": 53,
+    "wu_x": [
+     141.6,
+     142.4
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 18,
+    "local_row": 53,
+    "global_col": 178,
+    "global_row": 53,
+    "wu_x": [
+     142.4,
+     143.2
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_lily_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 19,
+    "local_row": 53,
+    "global_col": 179,
+    "global_row": 53,
+    "wu_x": [
+     143.2,
+     144.0
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 20,
+    "local_row": 53,
+    "global_col": 180,
+    "global_row": 53,
+    "wu_x": [
+     144.0,
+     144.8
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 21,
+    "local_row": 53,
+    "global_col": 181,
+    "global_row": 53,
+    "wu_x": [
+     144.8,
+     145.6
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 22,
+    "local_row": 53,
+    "global_col": 182,
+    "global_row": 53,
+    "wu_x": [
+     145.6,
+     146.4
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 24,
+    "local_row": 53,
+    "global_col": 184,
+    "global_row": 53,
+    "wu_x": [
+     147.2,
+     148.0
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 25,
+    "local_row": 53,
+    "global_col": 185,
+    "global_row": 53,
+    "wu_x": [
+     148.0,
+     148.8
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 26,
+    "local_row": 53,
+    "global_col": 186,
+    "global_row": 53,
+    "wu_x": [
+     148.8,
+     149.6
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 27,
+    "local_row": 53,
+    "global_col": 187,
+    "global_row": 53,
+    "wu_x": [
+     149.6,
+     150.4
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 28,
+    "local_row": 53,
+    "global_col": 188,
+    "global_row": 53,
+    "wu_x": [
+     150.4,
+     151.2
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 29,
+    "local_row": 53,
+    "global_col": 189,
+    "global_row": 53,
+    "wu_x": [
+     151.2,
+     152.0
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 0,
+    "local_row": 54,
+    "global_col": 160,
+    "global_row": 54,
+    "wu_x": [
+     128.0,
+     128.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 1,
+    "local_row": 54,
+    "global_col": 161,
+    "global_row": 54,
+    "wu_x": [
+     128.8,
+     129.6
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 2,
+    "local_row": 54,
+    "global_col": 162,
+    "global_row": 54,
+    "wu_x": [
+     129.6,
+     130.4
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 3,
+    "local_row": 54,
+    "global_col": 163,
+    "global_row": 54,
+    "wu_x": [
+     130.4,
+     131.2
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 4,
+    "local_row": 54,
+    "global_col": 164,
+    "global_row": 54,
+    "wu_x": [
+     131.2,
+     132.0
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 5,
+    "local_row": 54,
+    "global_col": 165,
+    "global_row": 54,
+    "wu_x": [
+     132.0,
+     132.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 6,
+    "local_row": 54,
+    "global_col": 166,
+    "global_row": 54,
+    "wu_x": [
+     132.8,
+     133.6
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 7,
+    "local_row": 54,
+    "global_col": 167,
+    "global_row": 54,
+    "wu_x": [
+     133.6,
+     134.4
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 8,
+    "local_row": 54,
+    "global_col": 168,
+    "global_row": 54,
+    "wu_x": [
+     134.4,
+     135.2
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 9,
+    "local_row": 54,
+    "global_col": 169,
+    "global_row": 54,
+    "wu_x": [
+     135.2,
+     136.0
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 10,
+    "local_row": 54,
+    "global_col": 170,
+    "global_row": 54,
+    "wu_x": [
+     136.0,
+     136.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 11,
+    "local_row": 54,
+    "global_col": 171,
+    "global_row": 54,
+    "wu_x": [
+     136.8,
+     137.6
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 12,
+    "local_row": 54,
+    "global_col": 172,
+    "global_row": 54,
+    "wu_x": [
+     137.6,
+     138.4
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_sparkle_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 13,
+    "local_row": 54,
+    "global_col": 173,
+    "global_row": 54,
+    "wu_x": [
+     138.4,
+     139.2
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 14,
+    "local_row": 54,
+    "global_col": 174,
+    "global_row": 54,
+    "wu_x": [
+     139.2,
+     140.0
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 15,
+    "local_row": 54,
+    "global_col": 175,
+    "global_row": 54,
+    "wu_x": [
+     140.0,
+     140.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 16,
+    "local_row": 54,
+    "global_col": 176,
+    "global_row": 54,
+    "wu_x": [
+     140.8,
+     141.6
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 17,
+    "local_row": 54,
+    "global_col": 177,
+    "global_row": 54,
+    "wu_x": [
+     141.6,
+     142.4
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 18,
+    "local_row": 54,
+    "global_col": 178,
+    "global_row": 54,
+    "wu_x": [
+     142.4,
+     143.2
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 19,
+    "local_row": 54,
+    "global_col": 179,
+    "global_row": 54,
+    "wu_x": [
+     143.2,
+     144.0
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 20,
+    "local_row": 54,
+    "global_col": 180,
+    "global_row": 54,
+    "wu_x": [
+     144.0,
+     144.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 21,
+    "local_row": 54,
+    "global_col": 181,
+    "global_row": 54,
+    "wu_x": [
+     144.8,
+     145.6
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 22,
+    "local_row": 54,
+    "global_col": 182,
+    "global_row": 54,
+    "wu_x": [
+     145.6,
+     146.4
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 23,
+    "local_row": 54,
+    "global_col": 183,
+    "global_row": 54,
+    "wu_x": [
+     146.4,
+     147.2
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 24,
+    "local_row": 54,
+    "global_col": 184,
+    "global_row": 54,
+    "wu_x": [
+     147.2,
+     148.0
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_ripple_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 25,
+    "local_row": 54,
+    "global_col": 185,
+    "global_row": 54,
+    "wu_x": [
+     148.0,
+     148.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 26,
+    "local_row": 54,
+    "global_col": 186,
+    "global_row": 54,
+    "wu_x": [
+     148.8,
+     149.6
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 27,
+    "local_row": 54,
+    "global_col": 187,
+    "global_row": 54,
+    "wu_x": [
+     149.6,
+     150.4
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 28,
+    "local_row": 54,
+    "global_col": 188,
+    "global_row": 54,
+    "wu_x": [
+     150.4,
+     151.2
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 29,
+    "local_row": 54,
+    "global_col": 189,
+    "global_row": 54,
+    "wu_x": [
+     151.2,
+     152.0
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 30,
+    "local_row": 54,
+    "global_col": 190,
+    "global_row": 54,
+    "wu_x": [
+     152.0,
+     152.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "water_base_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 1,
+    "cluster": 0
+   }
+  ]
+ },
+ "bank_cells_kept_walkable": {
+  "count": 37,
+  "blocked_change": "none (stays 0)",
+  "types": {
+   "reeds_dense_a": 14,
+   "mud_bank_a": 21,
+   "mud_dark_a": 2
+  },
+  "by_strip": {
+   "strip_064_128": 21,
+   "strip_128_192": 16
+  },
+  "cells": [
+   {
+    "strip": "strip_064_128",
+    "local_col": 1,
+    "local_row": 50,
+    "global_col": 81,
+    "global_row": 50,
+    "wu_x": [
+     64.8,
+     65.6
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "reeds_dense_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     1
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 51,
+    "local_row": 50,
+    "global_col": 131,
+    "global_row": 50,
+    "wu_x": [
+     104.8,
+     105.6
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "reeds_dense_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 56,
+    "local_row": 50,
+    "global_col": 136,
+    "global_row": 50,
+    "wu_x": [
+     108.8,
+     109.6
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "reeds_dense_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 58,
+    "local_row": 50,
+    "global_col": 138,
+    "global_row": 50,
+    "wu_x": [
+     110.4,
+     111.2
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "reeds_dense_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 60,
+    "local_row": 50,
+    "global_col": 140,
+    "global_row": 50,
+    "wu_x": [
+     112.0,
+     112.8
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "reeds_dense_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 61,
+    "local_row": 50,
+    "global_col": 141,
+    "global_row": 50,
+    "wu_x": [
+     112.8,
+     113.6
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "reeds_dense_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 64,
+    "local_row": 50,
+    "global_col": 144,
+    "global_row": 50,
+    "wu_x": [
+     115.2,
+     116.0
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 70,
+    "local_row": 50,
+    "global_col": 150,
+    "global_row": 50,
+    "wu_x": [
+     120.0,
+     120.8
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 71,
+    "local_row": 50,
+    "global_col": 151,
+    "global_row": 50,
+    "wu_x": [
+     120.8,
+     121.6
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 78,
+    "local_row": 50,
+    "global_col": 158,
+    "global_row": 50,
+    "wu_x": [
+     126.4,
+     127.2
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 40,
+    "local_row": 51,
+    "global_col": 120,
+    "global_row": 51,
+    "wu_x": [
+     96.0,
+     96.8
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "reeds_dense_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     2
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 68,
+    "local_row": 51,
+    "global_col": 148,
+    "global_row": 51,
+    "wu_x": [
+     118.4,
+     119.2
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 78,
+    "local_row": 51,
+    "global_col": 158,
+    "global_row": 51,
+    "wu_x": [
+     126.4,
+     127.2
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 4,
+    "local_row": 52,
+    "global_col": 84,
+    "global_row": 52,
+    "wu_x": [
+     67.2,
+     68.0
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "reeds_dense_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     1
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 77,
+    "local_row": 52,
+    "global_col": 157,
+    "global_row": 52,
+    "wu_x": [
+     125.6,
+     126.4
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 6,
+    "local_row": 53,
+    "global_col": 86,
+    "global_row": 53,
+    "wu_x": [
+     68.8,
+     69.6
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "reeds_dense_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     1
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 7,
+    "local_row": 53,
+    "global_col": 87,
+    "global_row": 53,
+    "wu_x": [
+     69.6,
+     70.4
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "reeds_dense_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     1
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 62,
+    "local_row": 53,
+    "global_col": 142,
+    "global_row": 53,
+    "wu_x": [
+     113.6,
+     114.4
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 67,
+    "local_row": 53,
+    "global_col": 147,
+    "global_row": 53,
+    "wu_x": [
+     117.6,
+     118.4
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 77,
+    "local_row": 53,
+    "global_col": 157,
+    "global_row": 53,
+    "wu_x": [
+     125.6,
+     126.4
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_064_128",
+    "local_col": 40,
+    "local_row": 54,
+    "global_col": 120,
+    "global_row": 54,
+    "wu_x": [
+     96.0,
+     96.8
+    ],
+    "wu_y": [
+     -8.0,
+     -7.2
+    ],
+    "ground": null,
+    "water": "reeds_dense_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     2
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 2,
+    "local_row": 50,
+    "global_col": 162,
+    "global_row": 50,
+    "wu_x": [
+     129.6,
+     130.4
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 8,
+    "local_row": 50,
+    "global_col": 168,
+    "global_row": 50,
+    "wu_x": [
+     134.4,
+     135.2
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "reeds_dense_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 13,
+    "local_row": 50,
+    "global_col": 173,
+    "global_row": 50,
+    "wu_x": [
+     138.4,
+     139.2
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "reeds_dense_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 24,
+    "local_row": 50,
+    "global_col": 184,
+    "global_row": 50,
+    "wu_x": [
+     147.2,
+     148.0
+    ],
+    "wu_y": [
+     -4.8,
+     -4.0
+    ],
+    "ground": null,
+    "water": "reeds_dense_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 6,
+    "local_row": 51,
+    "global_col": 166,
+    "global_row": 51,
+    "wu_x": [
+     132.8,
+     133.6
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 8,
+    "local_row": 51,
+    "global_col": 168,
+    "global_row": 51,
+    "wu_x": [
+     134.4,
+     135.2
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 17,
+    "local_row": 51,
+    "global_col": 177,
+    "global_row": 51,
+    "wu_x": [
+     141.6,
+     142.4
+    ],
+    "wu_y": [
+     -5.6,
+     -4.8
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 14,
+    "local_row": 52,
+    "global_col": 174,
+    "global_row": 52,
+    "wu_x": [
+     139.2,
+     140.0
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "mud_dark_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 21,
+    "local_row": 52,
+    "global_col": 181,
+    "global_row": 52,
+    "wu_x": [
+     144.8,
+     145.6
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 23,
+    "local_row": 52,
+    "global_col": 183,
+    "global_row": 52,
+    "wu_x": [
+     146.4,
+     147.2
+    ],
+    "wu_y": [
+     -6.4,
+     -5.6
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 1,
+    "local_row": 53,
+    "global_col": 161,
+    "global_row": 53,
+    "wu_x": [
+     128.8,
+     129.6
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 2,
+    "local_row": 53,
+    "global_col": 162,
+    "global_row": 53,
+    "wu_x": [
+     129.6,
+     130.4
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 3,
+    "local_row": 53,
+    "global_col": 163,
+    "global_row": 53,
+    "wu_x": [
+     130.4,
+     131.2
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 6,
+    "local_row": 53,
+    "global_col": 166,
+    "global_row": 53,
+    "wu_x": [
+     132.8,
+     133.6
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 7,
+    "local_row": 53,
+    "global_col": 167,
+    "global_row": 53,
+    "wu_x": [
+     133.6,
+     134.4
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "mud_bank_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   },
+   {
+    "strip": "strip_128_192",
+    "local_col": 23,
+    "local_row": 53,
+    "global_col": 183,
+    "global_row": 53,
+    "wu_x": [
+     146.4,
+     147.2
+    ],
+    "wu_y": [
+     -7.2,
+     -6.4
+    ],
+    "ground": null,
+    "water": "mud_dark_a",
+    "path": null,
+    "blocked_before": 0,
+    "blocked_after": 0,
+    "adjacent_water_clusters": [
+     0
+    ]
+   }
+  ]
+ },
+ "notes": [
+  "All 306 water cells have ground=None and path=None: pure water tiles, no deck/prop on them.",
+  "Bridge decks are path-layer tiles and are NOT among the 306; the 2-cell cluster inside the 92-108 bridge span (global col 120, rows 52-53) is river water under the bridge, not deck.",
+  "The 37 bank cells sit in the water layer as reeds_dense_a (14), mud_bank_a (21), mud_dark_a (2); they are shore vegetation/mud, kept walkable per the 2026-11-03 decision, not blocked.",
+  "No cell outside strips 064_128 / 128_192 changed blocked state vs the pre-waterblock backup."
+ ]
+}

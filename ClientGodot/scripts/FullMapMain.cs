@@ -7,7 +7,7 @@ using System.Linq;
 /// (450x60 cells = 360x48 WU) by tools/convert_full_map.py, loaded by the
 /// same BenMuaTilemapBuilder with different DataPath/AtlasPath exports.
 /// Modes:
-///   --fulltest : counts vs BM audit (27,000 / water 4,960 / blocked 5,375),
+///   --fulltest : counts vs BM audit (27,000 / water 4,960 / blocked 5,069),
 ///                walk across all 5 seams on path rows, river collision in
 ///                strip 192-256, east-gate passage (348 WU) stays open,
 ///                boss-arena floor (178 WU) walks freely.
@@ -71,7 +71,7 @@ public partial class FullMapMain : Node2D
         Check("layer_ground_16879", _builder.LayerCounts["GroundLayer"] == 16879, $"={_builder.LayerCounts["GroundLayer"]}");
         Check("layer_water_4960", _builder.LayerCounts["WaterLayer"] == 4960, $"={_builder.LayerCounts["WaterLayer"]}");
         Check("layer_path_5161", _builder.LayerCounts["PathLayer"] == 5161, $"={_builder.LayerCounts["PathLayer"]}");
-        Check("blocked_5375", _builder.BlockedCount == 5375, $"={_builder.BlockedCount}");
+        Check("blocked_5069", _builder.BlockedCount == 5069, $"={_builder.BlockedCount}");
 
         // Walk across every seam on a path row: 2 s east = 128 px from
         // 4 cells west of the seam; an invisible seam wall would show up

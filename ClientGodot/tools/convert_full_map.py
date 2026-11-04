@@ -7,7 +7,7 @@ at its column offset in a shared atlas/id space. Output schema is identical
 to the single-strip converter, so BenMuaTilemapBuilder consumes it unchanged.
 
 Audit targets (from TILEDATA_README / BM audits): 27,000 cells total,
-water 4,960, blocked 5,375 — asserted here, not just printed.
+water 4,960, blocked 5,069 — asserted here, not just printed.
 Also renders the full map (7200x960) + a downscaled preview from the merged
 data alone, as a visual seam check.
 """
@@ -90,8 +90,8 @@ def main():
     print(f"layers: {layer_counts}, blocked={len(blocked)}")
     assert total == 27000, total
     assert layer_counts['water'] == 4960, layer_counts['water']
-    assert len(blocked) == 5375, len(blocked)
-    print("FULL MAP CONVERT OK — totals match BM audit (27000 / water 4960 / blocked 5375)")
+    assert len(blocked) == 5069, len(blocked)
+    print("FULL MAP CONVERT OK — totals match BM audit (27000 / water 4960 / blocked 5069)")
 
 if __name__ == '__main__':
     main()
