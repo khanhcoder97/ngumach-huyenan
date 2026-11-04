@@ -12,3 +12,5 @@ Godot 4.7.2 .NET, .NET SDK 8; Compatibility renderer. Đây là scene kiểm cam
 - Import: godot --headless --editor --path . --quit. Test: godot --headless --path . -- --camera-self-test.
 - Native capture: godot --path . -- --capture <absolute.png> (chạy render thật, tự đóng sau capture). Thêm --clean-capture để ẩn HUD.
 - Các slot HUD chỉ trình bày bố cục vòng cung để review, chưa có combat/tooltip/cooldown binding. Không gọi là UI gameplay đã nghiệm thu.
+
+Máy hiện tại có thể chạy Run_Preview.ps1; script tự tìm bộGodot/.NET portable trong thư mục tools cạnh repo, hoặc dùng tham số -GodotPath/-DotnetPath. -Test chạy camera selftest. Không chạy server hoặc kill tiến trình khác.
