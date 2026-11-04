@@ -3,11 +3,14 @@
 Target framework: `net8.0` (Godot 4.7.2 stable .NET baseline; do not self-upgrade).
 No `UnityEngine` / `UnityEditor` / UI Toolkit / `Resources.Load`. Engine-agnostic.
 
-Code head: `ce4ce5b83505e55059722b06f4e347292f27144b`; last verified head:
-`37704f485b95c7a9c9e40cd3ad97aef75c081631` (PR #109, branch
+Code head: `ce4ce5b83505e55059722b06f4e347292f27144b`; verified head:
+`35228071dab9d59562e8a9691c62d390de374c2a` (2026-11-04 re-verify, PR #109) (branch
 `opencode/opc-15-godot-client-core-20261103`); encounter validation is bound to
 Qoder's published QOD-21 Q2 schema
-`Implementation/Contracts/P1/EncounterSnapshotV1.schema.json` (PR #106).
+`Implementation/Contracts/P1/EncounterSnapshotV1.schema.json`. Re-verified against
+Qoder head `4cdbb312d235ebb4b865b9ef523987d5d52a4be9` (PR #106, still OPEN):
+schema/example bytes unchanged; the new commits add QOD-21 Q3 loot/XP and an
+audience projection only.
 
 ## Projects
 - `Shared/ClientCore/ClientCore.csproj` — class library. Reuses the existing portable
@@ -95,11 +98,16 @@ Do not flip Y in the portable model; Godot side owns render transform.
 No scene/runtime Godot edits belong to OpenCode — only this library + adapter contract.
 
 ## Verification status
-Verified in CI run `41803595203` (`godot-client-core`, code head `ce4ce5b`) and
-again in run `41803960912` (head `37704f4`):
+Verified in CI run `41803595203` (`godot-client-core`, code head `ce4ce5b`),
+run `41803960912` (head `37704f4`) and run `41804668063` (head `3522807`):
 - build core + sample: PASS
 - `135/135` unit tests: PASS (TRX counters `total=135 passed=135 failed=0`)
 - private HTTP runner: PASS with `55` assertions.
+
+Re-verified locally on 2026-11-05 against Qoder head `4cdbb312`: schema/example
+diff vs `0004812` is empty (no wire change); local `dotnet test` `135/135` and
+`run_http.py` exit `0` with `55` assertions, encounter route still
+`UNVERIFIED` (`404 encounter_not_found`).
 
 UNVERIFIED / blocked:
 - encounter HTTP routes: 404 `encounter_not_found` until Qoder merges/runs the

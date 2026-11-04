@@ -1,16 +1,18 @@
 # OPC-15 Muse — Godot integration packet (portable core)
 
 Branch: `opencode/opc-15-godot-client-core-20261103` (stacked on OPC-14 `974139f`).
-Code head: `ce4ce5b83505e55059722b06f4e347292f27144b`; last verified head:
-`37704f485b95c7a9c9e40cd3ad97aef75c081631` (PR #109).
+Code head: `ce4ce5b83505e55059722b06f4e347292f27144b`; verified head:
+`35228071dab9d59562e8a9691c62d390de374c2a` (re-verify 2026-11-05, PR #109).
 Owner: OpenCode (portable core only; Muse owns Godot scene/runtime).
 
 ## Trạng thái đã xác minh
-- `godot-client-core` CI run `41803595203` (code head) và `41803960912` (head
-  `37704f4`): **PASS** cả hai job.
-- `Shared/ClientCore.Tests`: **135/135** test PASS (TRX `total=135 passed=135 failed=0`).
+- `godot-client-core` CI run `41803595203` (code head), `41803960912` (head
+  `37704f4`) và `41804668063` (head `3522807`): **PASS** cả hai job.
+- `Shared/ClientCore.Tests`: **135/135** test PASS (TRX `total=135 passed=135 failed=0`);
+  re-verify local ngày 2026-11-05 vẫn `135/135`.
 - HTTP runner với private Health server thật: **55 assertions**, marker
-  `PASS ClientCore HTTP assertions: 55`; CI gate đọc `assertions.txt` và fail nếu 0/thiếu.
+  `PASS ClientCore HTTP assertions: 55`; CI gate đọc `assertions.txt` và fail nếu 0/thiếu;
+  local `run_http.py` exit `0` với `55` assertions.
 - Build core, sample và HTTP runner: 0 warning/0 error ở phần ClientCore.
 
 ## OpenCode bàn giao gì
@@ -97,8 +99,14 @@ pad/NPC ngoài arena đều bị từ chối, không throw và không silent-map
   `P1:AlphaProfile:Enabled`, production vẫn OFF. Hiện route trả 404
   `encounter_not_found`; runner ghi **UNVERIFIED**, client trả `NotFound` typed và
   không dựng snapshot giả.
-- Khi Qoder publish route/schema, chạy lại `python Shared/ClientCore.HttpRunner/run_http.py`
-  và cập nhật packet/PR bằng exact SHA + assertion count mới.
+- Re-verify ngày 2026-11-05 với Qoder head `4cdbb312` (PR #106, OPEN, chưa merge):
+  diff schema/example so với `0004812` là rỗng — wire encounter không đổi. Các commit
+  mới chỉ thêm QOD-21 Q3 (loot payout sau flag riêng default-OFF, XP theo level khi
+  accept, smoke/e2e reproducible) và projection `targetable` cho boss/escort; không
+  cần sửa validator/client.
+- Khi Qoder merge PR #106 và bật alpha gate trên server test, chạy lại
+  `python Shared/ClientCore.HttpRunner/run_http.py` và cập nhật packet/PR bằng
+  exact SHA + assertion count mới.
 
 ## UNVERIFIED / blocker
 - Native Godot import/build/export và playmode: Muse-owned, chưa có evidence.
@@ -109,8 +117,10 @@ pad/NPC ngoài arena đều bị từ chối, không throw và không silent-map
 
 ## Bằng chứng
 - PR #109: https://github.com/khanhcoder97/ngumach-huyenan/pull/109
-- CI: run `41803595203` (code head) và `41803960912` (head `37704f4`),
-  workflow `godot-client-core`, 2/2 job PASS.
+- CI: run `41803595203` (code head), `41803960912` (head `37704f4`),
+  `41804668063` (head `3522807`), workflow `godot-client-core`, 2/2 job PASS.
 - Unit evidence: TRX counters `total=135 passed=135 failed=0`.
 - Assertion marker CI: `PASS ClientCore HTTP assertions: 55`
   và bước gate in `HTTP assertions: 55`.
+- Re-verify 2026-11-05 vs Qoder head `4cdbb312`: schema/example không đổi;
+  local `dotnet test` `135/135`, `run_http.py` exit `0` — `55` assertions.
