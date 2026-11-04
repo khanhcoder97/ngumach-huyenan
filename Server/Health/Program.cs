@@ -88,7 +88,19 @@ builder.Services.AddSingleton(serviceProvider =>
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
     return LevelProgressionTable.Load(LevelProgressionTable.Discover(environment.ContentRootPath));
 });
-builder.Services.AddSingleton<IQuestXpRule, UnresolvedQuestXpRules>();
+builder.Services.AddSingleton<QuestXpSnapshotStore>();
+builder.Services.AddSingleton<IQuestXpRule>(serviceProvider =>
+{
+    // The approved alpha progression is the only source that states what a quest
+    // reward is worth; with the profile off nothing does, so the shipped resolver
+    // keeps answering "unresolved" and XP stays unapplied on the wire.
+    var alphaProfile = serviceProvider
+        .GetRequiredService<IOptions<AlphaProfileOptions>>().Value;
+    return alphaProfile.Enabled
+        ? new AlphaQuestXpRules(
+            serviceProvider.GetRequiredService<AlphaDesign>().Progression)
+        : new UnresolvedQuestXpRules();
+});
 builder.Services.AddSingleton<ExperienceService>();
 builder.Services.AddSingleton(serviceProvider =>
 {

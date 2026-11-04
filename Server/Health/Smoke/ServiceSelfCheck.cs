@@ -1913,12 +1913,14 @@ public static class ServiceSelfCheck
         var xpTable = services.GetRequiredService<LevelProgressionTable>();
         var scriptedXp = new ExperienceService(xpTable, new FixedQuestXpRule(400));
         var xpActor = NewPlayer("CHR_SELFCHECK_XP");
-        var xpApplied = scriptedXp.TryApply(xpActor, "TEST_RULE", out var xpGrant, out _);
+        var xpApplied = scriptedXp.TryApply(
+            xpActor, new QuestXpRequest("TEST_RULE", 1, false), out var xpGrant, out _);
         var hugeXp = new ExperienceService(xpTable, new FixedQuestXpRule(50_000_000));
         var cappedActor = NewPlayer("CHR_SELFCHECK_XP_CAP");
-        hugeXp.TryApply(cappedActor, "TEST_RULE", out _, out _);
+        hugeXp.TryApply(cappedActor, new QuestXpRequest("TEST_RULE", 1, false), out _, out _);
         var unresolved = new ExperienceService(xpTable, new UnresolvedQuestXpRules())
-            .TryApply(xpActor, "LEVEL_BAND_BASE", out _, out var unresolvedRule);
+            .TryApply(
+                xpActor, new QuestXpRequest("LEVEL_BAND_BASE", 1, false), out _, out var unresolvedRule);
         Check(
             "xp.transaction_levels_and_caps",
             xpApplied && xpTable.At(1).XpToNext == 175 &&
@@ -3638,7 +3640,8 @@ public static class ServiceSelfCheck
 
         var losAccept = new InMemoryQuestAcceptService(
             questCatalog, quests, npcAnchors, geometry,
-            services.GetRequiredService<QuestAcceptOptions>());
+            services.GetRequiredService<QuestAcceptOptions>(),
+            services.GetRequiredService<QuestXpSnapshotStore>());
 
         var blockedActor = NewPlayer("CHR_SELFCHECK_LOS_BLOCKED");
         blockedActor.X = 46.5;
@@ -5398,6 +5401,107 @@ public static class ServiceSelfCheck
             waveInertActor.Hp == 100 &&
             waveRecording.Events.Count == 3,
             $"resolutions={waveInertSkip.Count} hp={waveInertActor.Hp}");
+
+        // ─── QOD-21 Q3: alpha quest XP valued at the accepted level ────
+
+        // DESIGN-BM-Q3-20261104 `xp`: nextLevelXp(L) = 100 + 50L + 25L², grant =
+        // floor(nextLevelXp * numerator / 100), normal 25 / boss 55, snapshotted at
+        // QUEST_ACCEPT_COMMIT. The decision ships three worked levels and the
+        // resolver is pinned to all six numbers, not to one of them.
+        var xpRules = new AlphaQuestXpRules(alphaDesign.Progression);
+        var xpNormal = new long?[4];
+        var xpBoss = new long?[4];
+        for (var level = 1; level <= 3; level++)
+        {
+            xpNormal[level] = xpRules.Resolve(new QuestXpRequest("LEVEL_BAND_BASE", level, false));
+            xpBoss[level] = xpRules.Resolve(new QuestXpRequest("LEVEL_BAND_BASE", level, true));
+        }
+
+        var xpUnknownRule = xpRules.Resolve(new QuestXpRequest("SOME_OTHER_RULE", 1, false));
+        var xpWithoutSnapshot = xpRules.Resolve(new QuestXpRequest("LEVEL_BAND_BASE", 0, false));
+        var xpZeroRules = new AlphaQuestXpRules(alphaDesign.Progression with
+        {
+            NormalQuestXpNumerator = 0,
+            BossQuestXpNumerator = 0
+        });
+        var xpZero = xpZeroRules.Resolve(new QuestXpRequest("LEVEL_BAND_BASE", 1, false));
+        var xpFormulaGuard = false;
+        try
+        {
+            _ = new AlphaQuestXpRules(alphaDesign.Progression with { XpToNext = "ceil(99+50*L)" });
+        }
+        catch (InvalidOperationException)
+        {
+            xpFormulaGuard = true;
+        }
+
+        // The snapshot, not the current level, decides the payout: accept at 1,
+        // reach 5 while doing the quest, and the reward is still the level-1 value.
+        var xpSnapshots = services.GetRequiredService<QuestXpSnapshotStore>();
+        var xpSnapshotActor = NewPlayer("CHR_SELFCHECK_XP_SNAPSHOT");
+        xpSnapshotActor.Level = 1;
+        xpSnapshots.RecordAccept(xpSnapshotActor.CharacterId, "P00-02", 1);
+        var xpSnapshotHasLevel = xpSnapshots.TryGetAcceptedLevel(
+            xpSnapshotActor.CharacterId, "P00-02", out var xpStoredLevel);
+        xpSnapshotActor.Level = 5;
+        var xpSnapshotService = new ExperienceService(
+            services.GetRequiredService<LevelProgressionTable>(), xpRules);
+        var xpSnapshotApplied = xpSnapshotService.TryApply(
+            xpSnapshotActor,
+            new QuestXpRequest("LEVEL_BAND_BASE", xpStoredLevel, false),
+            out var xpSnapshotGrant,
+            out _);
+        var xpSnapshotDelta = xpSnapshotGrant!.TotalXpAfter - xpSnapshotGrant.TotalXpBefore;
+        var xpNoSnapshot = xpSnapshots.TryGetAcceptedLevel(
+            "CHR_SELFCHECK_XP_NEVER_ACCEPTED", "P00-02", out _);
+        // With the profile off — which is how the self-check runs — the shipped
+        // container must still refuse to value LEVEL_BAND_BASE at all.
+        var xpGateOffRule = services.GetRequiredService<IQuestXpRule>();
+        var xpGateOffResolved = xpGateOffRule.Resolve(new QuestXpRequest("LEVEL_BAND_BASE", 1, true));
+
+        Check(
+            "alpha.xp_accept_snapshot_oracle",
+            alphaDesign.Progression.NormalQuestXpNumerator == 25 &&
+            alphaDesign.Progression.BossQuestXpNumerator == 55 &&
+            alphaDesign.Progression.Denominator == 100 &&
+            alphaDesign.Progression.AcceptSnapshot &&
+            xpNormal[1] == 43 && xpNormal[2] == 75 && xpNormal[3] == 118 &&
+            xpBoss[1] == 96 && xpBoss[2] == 165 && xpBoss[3] == 261 &&
+            xpUnknownRule is null &&
+            xpWithoutSnapshot is null &&
+            xpZero == 0 &&
+            xpFormulaGuard &&
+            xpSnapshotHasLevel && xpStoredLevel == 1 &&
+            xpSnapshotApplied && xpSnapshotDelta == 43 &&
+            xpSnapshotActor.TotalXp == 43 &&
+            !xpNoSnapshot &&
+            xpGateOffRule is UnresolvedQuestXpRules && xpGateOffResolved is null,
+            $"L1={xpNormal[1]}/{xpBoss[1]} L2={xpNormal[2]}/{xpBoss[2]} " +
+            $"L3={xpNormal[3]}/{xpBoss[3]} snapshot={xpSnapshotDelta} " +
+            $"level={xpSnapshotActor.Level} gateOff={xpGateOffRule.GetType().Name}");
+
+        // The snapshot is written by the real accept service at its commit point,
+        // and an idempotent replay returns the recorded answer without re-reading
+        // the (now different) level.
+        var xpAcceptActor = NewPlayer("CHR_SELFCHECK_XP_ACCEPT");
+        xpAcceptActor.X = 42;
+        xpAcceptActor.Y = 0;
+        xpAcceptActor.Level = 3;
+        var xpFirstAccept = questAccept.Accept(
+            xpAcceptActor, "P00-01", "NPC_LYAN", new string('c', 32)).Accepted;
+        var xpAcceptSnapshot = xpSnapshots.TryGetAcceptedLevel(
+            xpAcceptActor.CharacterId, "P00-01", out var xpAcceptedLevel);
+        xpAcceptActor.Level = 7;
+        var xpReplayAccept = questAccept.Accept(
+            xpAcceptActor, "P00-01", "NPC_LYAN", new string('c', 32)).Accepted;
+        var xpAfterReplay = xpSnapshots.TryGetAcceptedLevel(
+            xpAcceptActor.CharacterId, "P00-01", out var xpReplayedLevel);
+
+        Check(
+            "alpha.xp_snapshot_written_at_accept_commit",
+            xpFirstAccept && xpAcceptSnapshot && xpAcceptedLevel == 3 &&
+            xpReplayAccept && xpAfterReplay && xpReplayedLevel == 3,
+            $"accepted={xpFirstAccept} level={xpAcceptedLevel} replay={xpReplayedLevel}");
 
         // ─── Q1c: P00-04 escort checkpoint machine ────
 
@@ -7280,6 +7384,7 @@ public static class ServiceSelfCheck
             services.GetRequiredService<IWorldGeometryService>(),
             failOnceLedger,
             services.GetRequiredService<ExperienceService>(),
+            services.GetRequiredService<QuestXpSnapshotStore>(),
             services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
 
         var failActor = NewPlayer("CHR_SELFCHECK_FAILONCE");
@@ -7348,6 +7453,7 @@ public static class ServiceSelfCheck
             services.GetRequiredService<IWorldGeometryService>(),
             flipFailLedger,
             services.GetRequiredService<ExperienceService>(),
+            services.GetRequiredService<QuestXpSnapshotStore>(),
             services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
 
         var flipFailActor = NewPlayer("CHR_SELFCHECK_FLIPFAIL");
@@ -7414,6 +7520,7 @@ public static class ServiceSelfCheck
             services.GetRequiredService<IWorldGeometryService>(),
             failOnceLedgerStore,
             services.GetRequiredService<ExperienceService>(),
+            services.GetRequiredService<QuestXpSnapshotStore>(),
             services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
 
         var ledgerFailActor = NewPlayer("CHR_SELFCHECK_LEDGERFAIL");
@@ -7980,7 +8087,7 @@ public static class ServiceSelfCheck
 
         public FixedQuestXpRule(long amount) => _amount = amount;
 
-        public long? Resolve(string ruleId) => _amount;
+        public long? Resolve(QuestXpRequest request) => _amount;
     }
 
     private static void RunBarrierParallel(int count, Action<int> body)

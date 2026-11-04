@@ -123,18 +123,24 @@ public sealed class ExperienceGrant
     public required LevelProgressionTable Table { get; init; }
 }
 
+// What a quest reward is worth depends on the level the player was at when the
+// quest was accepted (DESIGN-BM-Q3-20261104 `xp.snapshotAt`), so the resolver is
+// handed that context instead of a bare rule token.
+public readonly record struct QuestXpRequest(string RuleId, int AcceptedLevel, bool IsBossQuest);
+
 public interface IQuestXpRule
 {
-    // Null means the source does not define this rule's amount yet; the caller
-    // must not guess and must leave the reward unapplied.
-    long? Resolve(string ruleId);
+    // Null means the source does not define this reward's amount; the caller
+    // must not guess and must leave the reward unapplied. A resolved 0 is a real
+    // answer and is applied as 0 (`zeroRewardStaysZero`).
+    long? Resolve(QuestXpRequest request);
 }
 
 // The shipped resolver: no canonical document states how much XP
 // LEVEL_BAND_BASE is worth, so it resolves nothing until that lands.
 public sealed class UnresolvedQuestXpRules : IQuestXpRule
 {
-    public long? Resolve(string ruleId) => null;
+    public long? Resolve(QuestXpRequest request) => null;
 }
 
 public sealed class ExperienceService
@@ -150,15 +156,17 @@ public sealed class ExperienceService
 
     public LevelProgressionTable Table => _table;
 
-    public bool TryApply(PlayerSession actor, string ruleId, out ExperienceGrant? grant, out string? unresolvedRule)
+    public bool TryApply(
+        PlayerSession actor, QuestXpRequest request,
+        out ExperienceGrant? grant, out string? unresolvedRule)
     {
         ArgumentNullException.ThrowIfNull(actor);
 
-        var amount = _rules.Resolve(ruleId);
+        var amount = _rules.Resolve(request);
         if (amount is not { } xp || xp < 0)
         {
             grant = null;
-            unresolvedRule = ruleId;
+            unresolvedRule = request.RuleId;
             return false;
         }
 

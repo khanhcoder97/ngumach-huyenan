@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using System.Security.Cryptography;
 using System.Text;
 using Server.Health.Contracts;
+using Server.Health.Gameplay.Progress;
 using Server.Health.World;
 
 namespace Server.Health.Gameplay.Quests;
@@ -15,6 +16,7 @@ public sealed class InMemoryQuestAcceptService : IQuestAcceptService
     private readonly NpcAnchorCatalog _anchors;
     private readonly IWorldGeometryService _geometry;
     private readonly QuestAcceptOptions _options;
+    private readonly QuestXpSnapshotStore _xpSnapshots;
     private readonly ConcurrentDictionary<(string CharacterId, string Key), IdempotencyEntry>
         _entries = new();
 
@@ -23,13 +25,15 @@ public sealed class InMemoryQuestAcceptService : IQuestAcceptService
         IQuestService quests,
         NpcAnchorCatalog anchors,
         IWorldGeometryService geometry,
-        QuestAcceptOptions options)
+        QuestAcceptOptions options,
+        QuestXpSnapshotStore xpSnapshots)
     {
         _catalog = catalog;
         _quests = quests;
         _anchors = anchors;
         _geometry = geometry;
         _options = options;
+        _xpSnapshots = xpSnapshots;
     }
 
     public QuestAcceptOutcome Accept(
@@ -153,6 +157,9 @@ public sealed class InMemoryQuestAcceptService : IQuestAcceptService
                 "state");
         }
 
+        // QUEST_ACCEPT_COMMIT: the level the reward is valued at is frozen here,
+        // so levelling while doing the quest cannot change what it pays out.
+        _xpSnapshots.RecordAccept(actor.CharacterId, questId, actor.Level);
         _entries[key] = new IdempotencyEntry(requestHash, accepted.State);
         return QuestAcceptOutcome.Success(accepted.State);
     }

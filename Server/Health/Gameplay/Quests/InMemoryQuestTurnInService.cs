@@ -19,6 +19,7 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
     private readonly IWorldGeometryService _geometry;
     private readonly RewardLedgerStore _ledger;
     private readonly ExperienceService _experience;
+    private readonly QuestXpSnapshotStore _xpSnapshots;
     private readonly QuestTurnInOptions _options;
     private readonly ConcurrentDictionary<(string CharacterId, string Key), TurnInIdempotencyEntry>
         _entries = new();
@@ -31,6 +32,7 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
         IWorldGeometryService geometry,
         RewardLedgerStore ledger,
         ExperienceService experience,
+        QuestXpSnapshotStore xpSnapshots,
         QuestTurnInOptions options)
     {
         _catalog = catalog;
@@ -40,6 +42,7 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
         _geometry = geometry;
         _ledger = ledger;
         _experience = experience;
+        _xpSnapshots = xpSnapshots;
         _options = options;
     }
 
@@ -158,9 +161,17 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
 
             // XP belongs to the same transaction as the items and currency: it
             // commits only when the rule has a source, and it is restored if a
-            // later step (ledger) fails.
+            // later step (ledger) fails. The amount is valued at the level the
+            // quest was accepted at, never at the level it is handed in at.
+            var hasSnapshot = _xpSnapshots.TryGetAcceptedLevel(
+                actor.CharacterId, questId, out var acceptedLevel);
+            var xpRequest = new QuestXpRequest(
+                definition.Rewards.XpRule,
+                hasSnapshot ? acceptedLevel : 0,
+                definition.Objectives.Any(objective =>
+                    string.Equals(objective.Type, QuestObjectiveTypes.Boss, StringComparison.Ordinal)));
             var xpApplied = _experience.TryApply(
-                actor, definition.Rewards.XpRule, out var xpGrant, out _);
+                actor, xpRequest, out var xpGrant, out _);
             var rewardSnapshot = BuildRewards(definition, mutation, xpApplied);
             var result = new TurnInResult
             {
