@@ -227,6 +227,104 @@ namespace NguMach.Client.Core.Tests
         }
 
         [Fact]
+        public void Reference_Strict_RejectsInvalidMoveId()
+        {
+            var obj = ReferenceObject();
+            ((JObject)obj["activeMove"])["moveId"] = "D";
+            AssertRejected(obj);
+        }
+
+        [Fact]
+        public void Reference_Strict_RejectsInvalidCastIdPattern()
+        {
+            var obj = ReferenceObject();
+            ((JObject)obj["activeMove"])["castId"] = "cast-1";
+            AssertRejected(obj);
+        }
+
+        [Fact]
+        public void Reference_Strict_RejectsInvalidTargetLock()
+        {
+            var obj = ReferenceObject();
+            ((JObject)obj["activeMove"])["targetLock"] = "PLAYER_POSITION";
+            AssertRejected(obj);
+        }
+
+        [Fact]
+        public void Reference_Strict_RejectsImpactStateNotInPublishedSchema()
+        {
+            // QOD-21 Q2 publishes only TELEGRAPH and RECOVERY; IMPACT is not a
+            // serialized snapshot state.
+            var obj = ReferenceObject();
+            ((JObject)obj["activeMove"])["state"] = "IMPACT";
+            AssertRejected(obj);
+        }
+
+        [Fact]
+        public void Reference_Strict_RejectsInvalidEncounterIdPattern()
+        {
+            var obj = ReferenceObject();
+            obj["encounterId"] = "enc-1";
+            AssertRejected(obj);
+        }
+
+        [Fact]
+        public void Reference_Strict_RejectsInvalidQuestIdPattern()
+        {
+            var obj = ReferenceObject();
+            obj["questId"] = "P5";
+            AssertRejected(obj);
+        }
+
+        [Fact]
+        public void Reference_Strict_RejectsInvalidBossRecordIdPattern()
+        {
+            var obj = ReferenceObject();
+            obj["bossRecordId"] = "BOSS_05";
+            AssertRejected(obj);
+        }
+
+        [Fact]
+        public void Reference_Strict_RejectsInvalidBossEntityIdPattern()
+        {
+            var obj = ReferenceObject();
+            obj["bossEntityId"] = "boss-05";
+            AssertRejected(obj);
+        }
+
+        [Fact]
+        public void Reference_Strict_RejectsInvalidOwnerPattern()
+        {
+            var obj = ReferenceObject();
+            obj["registeredCharacterIds"] = new JArray("owner-1");
+            AssertRejected(obj);
+        }
+
+        [Fact]
+        public void Reference_Strict_RejectsBossRevisionZero()
+        {
+            var obj = ReferenceObject();
+            obj["bossRevision"] = 0;
+            AssertRejected(obj);
+        }
+
+        [Fact]
+        public void Reference_Strict_RejectsMissingCooldownKey()
+        {
+            var obj = ReferenceObject();
+            ((JObject)obj["moveCooldownRemainingTicks"]).Remove("B");
+            AssertRejected(obj);
+        }
+
+        [Fact]
+        public void Reference_Strict_RejectsUnknownCooldownKey()
+        {
+            var obj = ReferenceObject();
+            ((JObject)obj["moveCooldownRemainingTicks"])["D"] = 10;
+            AssertRejected(obj);
+        }
+
+        [Fact]
         public void Reference_Strict_RejectsOutOfRangePhase()
         {
             var obj = ReferenceObject();

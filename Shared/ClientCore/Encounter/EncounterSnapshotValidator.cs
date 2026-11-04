@@ -1,14 +1,17 @@
 // OPC-15 O1 (WO26) — Strict validation for encounter snapshots.
-// Wire shape authority: encounter_snapshot_v1_reference_20261104.json (design baseline).
+// Wire shape authority: encounter_snapshot_v1_reference_20261104.json (design baseline),
+// bound to the published QOD-21 Q2 schema `EncounterSnapshotV1.schema.json`:
 // additionalProperties:false at every object, required fields, exact enum casing,
-// finite numbers, shape-specific semantics and owner/bounds checks. This parser never
-// throws for malformed input: callers get false + a stable error string.
+// ID patterns, finite numbers, shape-specific semantics and owner/bounds checks.
+// Published move states are TELEGRAPH|RECOVERY; IMPACT is not a snapshot state.
+// This parser never throws for malformed input: callers get false + a stable error string.
 // Pure C#. Owner: OpenCode.
 
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -52,6 +55,20 @@ namespace NguMach.Client.Core.Encounter
         private static readonly HashSet<string> AllowedPhaseNpc = new HashSet<string>(StringComparer.Ordinal)
         {
             "npcId", "xWu", "yWu", "active"
+        };
+
+        private static readonly HashSet<string> RequiredCooldowns = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "A", "B", "C"
+        };
+
+        private static readonly string[] MoveIds = { "A", "B", "C" };
+        private static readonly string[] MoveStates = { "TELEGRAPH", "RECOVERY" };
+        private static readonly string[] TargetLocks =
+        {
+            "TELEGRAPH_START_FACING",
+            "TELEGRAPH_START_TARGET_POSITION",
+            "BOSS_POSITION"
         };
 
         public static bool TryParse(string json, out EncounterSnapshot snapshot, out string error)
@@ -99,9 +116,29 @@ namespace NguMach.Client.Core.Encounter
 
             string encounterId, questId, bossRecordId, bossEntityId, status;
             if (!ReadString(obj, "encounterId", true, out encounterId, out error)) return false;
+            if (!Matches(encounterId, "^ENC-[0-9A-F]{24}$"))
+            {
+                error = "invalid encounterId pattern";
+                return false;
+            }
             if (!ReadString(obj, "questId", true, out questId, out error)) return false;
+            if (!Matches(questId, "^P[0-9]{2}-[0-9]{2}$"))
+            {
+                error = "invalid questId pattern";
+                return false;
+            }
             if (!ReadString(obj, "bossRecordId", true, out bossRecordId, out error)) return false;
+            if (!Matches(bossRecordId, "^MAN-BM-[A-Z0-9_]+$"))
+            {
+                error = "invalid bossRecordId pattern";
+                return false;
+            }
             if (!ReadString(obj, "bossEntityId", true, out bossEntityId, out error)) return false;
+            if (!Matches(bossEntityId, "^ENT_[A-Z0-9_]+$"))
+            {
+                error = "invalid bossEntityId pattern";
+                return false;
+            }
             if (!ReadString(obj, "status", true, out status, out error)) return false;
             if (!IsOneOf(status, "OPEN", "DEFEATED", "RESET")) { error = "invalid status: " + status; return false; }
 
@@ -110,7 +147,7 @@ namespace NguMach.Client.Core.Encounter
             if (!ReadLong(obj, "bossLifeId", true, out bossLifeId, out error)) return false;
             if (bossLifeId < 1) { error = "bossLifeId must be >= 1"; return false; }
             if (!ReadLong(obj, "bossRevision", true, out bossRevision, out error)) return false;
-            if (bossRevision < 0) { error = "bossRevision must be >= 0"; return false; }
+            if (bossRevision < 1) { error = "bossRevision must be >= 1"; return false; }
             if (!ReadInt(obj, "phase", true, out phase, out error)) return false;
             if (phase < 1 || phase > 3) { error = "phase must be 1..3"; return false; }
             if (!ReadInt(obj, "bossHp", true, out bossHp, out error)) return false;
@@ -143,6 +180,11 @@ namespace NguMach.Client.Core.Encounter
             var owners = new HashSet<string>(StringComparer.Ordinal);
             foreach (var owner in registered)
             {
+                if (!Matches(owner, "^CHR_[A-Z0-9]+$"))
+                {
+                    error = "invalid registeredCharacterIds owner pattern";
+                    return false;
+                }
                 if (!owners.Add(owner))
                 {
                     error = "registeredCharacterIds contains duplicate owner";
@@ -228,10 +270,17 @@ namespace NguMach.Client.Core.Encounter
 
             string moveId, castId, state, targetLock;
             if (!ReadString(am, "moveId", true, out moveId, out error)) return false;
+            if (!IsOneOf(moveId, MoveIds)) { error = "invalid moveId: " + moveId; return false; }
             if (!ReadString(am, "castId", true, out castId, out error)) return false;
+            if (!Matches(castId, "^CAST-[A-Z0-9-]{8,40}$"))
+            {
+                error = "invalid castId pattern";
+                return false;
+            }
             if (!ReadString(am, "state", true, out state, out error)) return false;
-            if (!IsOneOf(state, "TELEGRAPH", "IMPACT", "RECOVERY")) { error = "invalid move state: " + state; return false; }
+            if (!IsOneOf(state, MoveStates)) { error = "invalid move state: " + state; return false; }
             if (!ReadString(am, "targetLock", true, out targetLock, out error)) return false;
+            if (!IsOneOf(targetLock, TargetLocks)) { error = "invalid targetLock: " + targetLock; return false; }
 
             long ticksRemaining, stateEndsAtTick;
             if (!ReadLong(am, "ticksRemaining", true, out ticksRemaining, out error)) return false;
@@ -411,14 +460,25 @@ namespace NguMach.Client.Core.Encounter
         {
             cooldowns = null;
             if (!TryGetObject(obj, "moveCooldownRemainingTicks", out var mc, out error)) return false;
+            foreach (var property in mc.Properties())
+            {
+                if (!RequiredCooldowns.Contains(property.Name))
+                {
+                    error = "unknown moveCooldownRemainingTicks key: " + property.Name;
+                    return false;
+                }
+            }
+            foreach (var key in RequiredCooldowns)
+            {
+                if (!mc.ContainsKey(key))
+                {
+                    error = "missing moveCooldownRemainingTicks key: " + key;
+                    return false;
+                }
+            }
             cooldowns = new Dictionary<string, long>(StringComparer.Ordinal);
             foreach (var property in mc.Properties())
             {
-                if (string.IsNullOrWhiteSpace(property.Name))
-                {
-                    error = "moveCooldownRemainingTicks key must be non-empty";
-                    return false;
-                }
                 if (property.Value.Type != JTokenType.Integer)
                 {
                     error = "moveCooldownRemainingTicks." + property.Name + " must be integer";
@@ -742,6 +802,11 @@ namespace NguMach.Client.Core.Encounter
         {
             foreach (var item in allowed) if (string.Equals(value, item, StringComparison.Ordinal)) return true;
             return false;
+        }
+
+        private static bool Matches(string value, string pattern)
+        {
+            return value != null && Regex.IsMatch(value, pattern, RegexOptions.CultureInvariant);
         }
     }
 }
