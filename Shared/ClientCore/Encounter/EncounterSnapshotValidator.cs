@@ -1,5 +1,4 @@
-// OPC-15 O1 — Strict validation for encounter snapshots. Rejects unknown properties,
-// invalid enums, non-finite geometry, non-unit facing, out-of-range values.
+// OPC-15 O1 (WO26) — Strict validation for encounter snapshots per reference payload.
 // Pure C#. Owner: OpenCode.
 
 using System;
@@ -12,6 +11,15 @@ namespace NguMach.Client.Core.Encounter
 {
     public static class EncounterSnapshotValidator
     {
+        private static readonly HashSet<string> AllowedTop = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "schemaVersion","encounterId","questId","bossRecordId","bossEntityId","bossLifeId",
+            "bossRevision","status","phase","bossHp","bossMaxHp","serverTick",
+            "registeredCharacterIds","activeMove","moveCooldownRemainingTicks",
+            "phaseGuardRemainingTicks","wipeCountdownTicks","arena","safePads",
+            "phaseNpc","trialNpcVisible"
+        };
+
         public static bool TryParse(string json, out EncounterSnapshot snapshot, out string error)
         {
             snapshot = null; error = null;
@@ -20,38 +28,26 @@ namespace NguMach.Client.Core.Encounter
             try { obj = JObject.Parse(json); }
             catch (Exception e) { error = "json parse: " + e.Message; return false; }
 
-            // strict: no unknown top-level properties
-            var allowedTop = new HashSet<string>(StringComparer.Ordinal)
-            {
-                "schemaVersion","encounterId","bossLifeId","status","phase","serverTick",
-                "bossHp","bossMaxHp","bossRevision","activeMove","deadlineTick","ticksRemaining",
-                "registration","arena","safePads","npcId","cooldowns"
-            };
             foreach (var p in obj.Properties())
-                if (!allowedTop.Contains(p.Name)) { error = "unknown property: " + p.Name; return false; }
+                if (!AllowedTop.Contains(p.Name)) { error = "unknown property: " + p.Name; return false; }
 
             // required
-            if (obj["encounterId"] == null || string.IsNullOrWhiteSpace(obj["encounterId"].Value<string>())) { error = "missing encounterId"; return false; }
-            if (obj["bossLifeId"] == null) { error = "missing bossLifeId"; return false; }
-            if (obj["status"] == null) { error = "missing status"; return false; }
-            if (obj["phase"] == null) { error = "missing phase"; return false; }
-            if (obj["serverTick"] == null) { error = "missing serverTick"; return false; }
-            if (obj["bossHp"] == null) { error = "missing bossHp"; return false; }
-            if (obj["bossMaxHp"] == null) { error = "missing bossMaxHp"; return false; }
-            if (obj["bossRevision"] == null) { error = "missing bossRevision"; return false; }
+            foreach (var req in new[] { "encounterId","bossLifeId","status","phase","bossHp","bossMaxHp","serverTick","registeredCharacterIds" })
+                if (obj[req] == null) { error = "missing " + req; return false; }
 
-            // enums
+            if (string.IsNullOrWhiteSpace(obj["encounterId"].Value<string>())) { error = "missing encounterId"; return false; }
             var status = obj["status"].Value<string>();
             if (status != "OPEN" && status != "DEFEATED" && status != "RESET") { error = "invalid status: " + status; return false; }
             int phase = obj["phase"].Value<int>();
             if (phase < 1 || phase > 3) { error = "invalid phase: " + phase; return false; }
+            if (obj["bossLifeId"].Value<long>() <= 0) { error = "invalid bossLifeId"; return false; }
 
             // activeMove strict
             if (obj["activeMove"] != null && obj["activeMove"].Type != JTokenType.Null)
             {
                 var am = obj["activeMove"] as JObject;
                 if (am == null) { error = "activeMove not object"; return false; }
-                var allowedAm = new HashSet<string>(StringComparer.Ordinal) { "moveId","castId","state","stateEndsAtTick","shape" };
+                var allowedAm = new HashSet<string>(StringComparer.Ordinal) { "moveId","castId","state","ticksRemaining","stateEndsAtTick","shape","targetLock" };
                 foreach (var p in am.Properties()) if (!allowedAm.Contains(p.Name)) { error = "unknown activeMove property: " + p.Name; return false; }
                 if (am["state"] != null)
                 {
@@ -62,26 +58,20 @@ namespace NguMach.Client.Core.Encounter
                 {
                     var sh = am["shape"] as JObject;
                     if (sh == null) { error = "shape not object"; return false; }
-                    var allowedSh = new HashSet<string>(StringComparer.Ordinal) { "kind","center","rangeWu","radiusWu","innerRadiusWu","outerRadiusWu","angleDegrees","facingX","facingY" };
+                    var allowedSh = new HashSet<string>(StringComparer.Ordinal) { "kind","centerXWu","centerYWu","angleDegrees","rangeWu","radiusWu","innerRadiusWu","outerRadiusWu","facingX","facingY" };
                     foreach (var p in sh.Properties()) if (!allowedSh.Contains(p.Name)) { error = "unknown shape property: " + p.Name; return false; }
-                    var kind = sh["kind"] != null ? sh["kind"].Value<string>() : "cone";
-                    if (kind != "cone" && kind != "circle" && kind != "annulus") { error = "invalid shape kind: " + kind; return false; }
-                    // finite checks
-                    foreach (var key in new[] { "rangeWu","radiusWu","innerRadiusWu","outerRadiusWu","angleDegrees","facingX","facingY" })
+                    var kind = sh["kind"] != null ? sh["kind"].Value<string>() : null;
+                    if (kind == null) { error = "missing shape kind"; return false; }
+                    if (kind != "CONE" && kind != "CIRCLE" && kind != "ANNULUS" &&
+                        kind != "cone" && kind != "circle" && kind != "annulus") { error = "invalid shape kind: " + kind; return false; }
+                    foreach (var key in new[] { "centerXWu","centerYWu","angleDegrees","rangeWu","radiusWu","innerRadiusWu","outerRadiusWu","facingX","facingY" })
                     {
-                        if (sh[key] != null)
+                        if (sh[key] != null && sh[key].Type != JTokenType.Null)
                         {
                             double v = sh[key].Value<double>();
                             if (double.IsNaN(v) || double.IsInfinity(v)) { error = "non-finite " + key; return false; }
                         }
                     }
-                    if (sh["center"] != null)
-                    {
-                        var c = sh["center"] as JObject;
-                        if (c == null) { error = "center not object"; return false; }
-                        foreach (var p in c.Properties()) if (p.Name != "x" && p.Name != "y") { error = "unknown center property: " + p.Name; return false; }
-                    }
-                    // facing normalized tolerance (if both present)
                     if (sh["facingX"] != null && sh["facingY"] != null)
                     {
                         double fx = sh["facingX"].Value<double>();
@@ -89,32 +79,48 @@ namespace NguMach.Client.Core.Encounter
                         double len = Math.Sqrt(fx * fx + fy * fy);
                         if (len < 0.99 || len > 1.01) { error = "facing not normalized: " + len; return false; }
                     }
-                    // shape-specific
-                    if (kind == "circle")
-                    {
-                        if (sh["radiusWu"] == null || sh["radiusWu"].Value<double>() <= 0) { error = "circle radiusWu must be > 0"; return false; }
-                    }
-                    if (kind == "annulus")
-                    {
-                        if (sh["innerRadiusWu"] == null || sh["outerRadiusWu"] == null) { error = "annulus radii required"; return false; }
-                        double ir = sh["innerRadiusWu"].Value<double>();
-                        double or = sh["outerRadiusWu"].Value<double>();
-                        if (ir < 0 || ir >= or) { error = "annulus innerRadius must be < outerRadius"; return false; }
-                    }
-                    if (kind == "cone")
-                    {
-                        if (sh["rangeWu"] != null && sh["rangeWu"].Value<double>() <= 0) { error = "cone rangeWu must be > 0"; return false; }
-                        if (sh["angleDegrees"] != null)
-                        {
-                            double a = sh["angleDegrees"].Value<double>();
-                            if (a <= 0 || a > 360) { error = "cone angleDegrees must be in (0,360]"; return false; }
-                        }
-                    }
-                    // id pattern for encounterId already checked; no id in shape
                 }
             }
 
-            // parse via Newtonsoft (strict-ish via settings)
+            // arena strict
+            if (obj["arena"] != null && obj["arena"].Type != JTokenType.Null)
+            {
+                var a = obj["arena"] as JObject;
+                if (a == null) { error = "arena not object"; return false; }
+                var allowedA = new HashSet<string>(StringComparer.Ordinal) { "shape","centerXWu","centerYWu","radiusWu" };
+                foreach (var p in a.Properties()) if (!allowedA.Contains(p.Name)) { error = "unknown arena property: " + p.Name; return false; }
+            }
+
+            // safePads strict
+            if (obj["safePads"] != null && obj["safePads"].Type != JTokenType.Null)
+            {
+                var arr = obj["safePads"] as JArray;
+                if (arr == null) { error = "safePads not array"; return false; }
+                foreach (var item in arr)
+                {
+                    var sp = item as JObject;
+                    if (sp == null) { error = "safePad not object"; return false; }
+                    var allowedSp = new HashSet<string>(StringComparer.Ordinal) { "centerXWu","centerYWu","radiusWu","applies" };
+                    foreach (var p in sp.Properties()) if (!allowedSp.Contains(p.Name)) { error = "unknown safePad property: " + p.Name; return false; }
+                }
+            }
+
+            // phaseNpc strict
+            if (obj["phaseNpc"] != null && obj["phaseNpc"].Type != JTokenType.Null)
+            {
+                var pn = obj["phaseNpc"] as JObject;
+                if (pn == null) { error = "phaseNpc not object"; return false; }
+                var allowedPn = new HashSet<string>(StringComparer.Ordinal) { "npcId","xWu","yWu","active" };
+                foreach (var p in pn.Properties()) if (!allowedPn.Contains(p.Name)) { error = "unknown phaseNpc property: " + p.Name; return false; }
+            }
+
+            // moveCooldownRemainingTicks strict (object of number)
+            if (obj["moveCooldownRemainingTicks"] != null && obj["moveCooldownRemainingTicks"].Type != JTokenType.Null)
+            {
+                var mc = obj["moveCooldownRemainingTicks"] as JObject;
+                if (mc == null) { error = "moveCooldownRemainingTicks not object"; return false; }
+            }
+
             var settings = new JsonSerializerSettings { MissingMemberHandling = MissingMemberHandling.Ignore };
             try { snapshot = JsonConvert.DeserializeObject<EncounterSnapshot>(json, settings); }
             catch (Exception e) { error = "deserialize: " + e.Message; return false; }
@@ -124,19 +130,13 @@ namespace NguMach.Client.Core.Encounter
                 error = "unknown top-level property: " + string.Join(",", snapshot.Extra.Keys);
                 return false;
             }
-            // activeMove extra check
-            if (snapshot.ActiveMove != null)
+            // ticksRemaining consistency if present
+            if (snapshot.ActiveMove != null && snapshot.ActiveMove.TicksRemaining != 0 && snapshot.ActiveMove.StateEndsAtTick != 0)
             {
-                // re-parse activeMove extras via JObject already done above; ensure stateEndsAtTick >= serverTick if present
-                if (snapshot.ActiveMove.StateEndsAtTick != 0 && snapshot.ActiveMove.StateEndsAtTick < snapshot.ServerTick)
-                { error = "stateEndsAtTick < serverTick"; return false; }
-            }
-            // ticksRemaining consistency
-            if (snapshot.TicksRemaining.HasValue && snapshot.DeadlineTick.HasValue)
-            {
-                long calc = snapshot.DeadlineTick.Value - snapshot.ServerTick;
+                long calc = snapshot.ActiveMove.StateEndsAtTick - snapshot.ServerTick;
                 if (calc < 0) calc = 0;
-                if (snapshot.TicksRemaining.Value != calc) { error = "ticksRemaining mismatch"; return false; }
+                // ticksRemaining in activeMove is the move's own; not strictly equal to stateEndsAtTick-serverTick? reference: ticksRemaining 18, stateEndsAtTick 2018, serverTick 2000 => 18. So must match.
+                if (snapshot.ActiveMove.TicksRemaining != calc) { error = "ticksRemaining mismatch"; return false; }
             }
             return true;
         }
@@ -154,20 +154,11 @@ namespace NguMach.Client.Core.Encounter
             if (s.ActiveMove != null && s.ActiveMove.Shape != null)
             {
                 var sh = s.ActiveMove.Shape;
-                if (sh.Kind == MoveShapeKind.Circle)
-                {
-                    if (!sh.RadiusWu.HasValue || sh.RadiusWu.Value <= 0) { reason = "circle radiusWu must be > 0"; return false; }
-                }
-                if (sh.Kind == MoveShapeKind.Annulus)
-                {
-                    if (!sh.InnerRadiusWu.HasValue || !sh.OuterRadiusWu.HasValue) { reason = "annulus radii required"; return false; }
-                    if (sh.InnerRadiusWu.Value < 0 || sh.InnerRadiusWu.Value >= sh.OuterRadiusWu.Value) { reason = "annulus inner < outer"; return false; }
-                }
-                if (sh.Kind == MoveShapeKind.Cone)
-                {
-                    if (sh.RangeWu <= 0) { reason = "cone rangeWu must be > 0"; return false; }
-                    if (sh.AngleDegrees.HasValue && (sh.AngleDegrees.Value <= 0 || sh.AngleDegrees.Value > 360)) { reason = "cone angleDegrees invalid"; return false; }
-                }
+                // kind case-insensitive
+                var kind = sh.KindRaw;
+                if (string.IsNullOrEmpty(kind)) kind = "cone";
+                if (kind != "cone" && kind != "circle" && kind != "annulus" &&
+                    kind != "CONE" && kind != "CIRCLE" && kind != "ANNULUS") { reason = "invalid kind"; return false; }
                 double len = Math.Sqrt(sh.FacingX * sh.FacingX + sh.FacingY * sh.FacingY);
                 if (len < 0.99 || len > 1.01) { reason = "facing not normalized"; return false; }
                 if (double.IsNaN(sh.FacingX) || double.IsInfinity(sh.FacingX) || double.IsNaN(sh.FacingY) || double.IsInfinity(sh.FacingY)) { reason = "non-finite facing"; return false; }

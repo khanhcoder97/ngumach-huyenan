@@ -12,8 +12,7 @@ namespace NguMach.Client.Core.Tests
                 EncounterId = "enc-1", BossLifeId = life, StatusRaw = "OPEN", PhaseRaw = phase,
                 ServerTick = 10, BossHp = 1200, BossMaxHp = 1200, BossRevision = 1,
                 ActiveMove = new ActiveMove { CastId = castId, StateRaw = "TELEGRAPH", StateEndsAtTick = 20,
-                    Shape = new MoveShape { KindRaw = "cone", RangeWu = 5, FacingX = 1, FacingY = 0, AngleDegrees = 60 } },
-                DeadlineTick = 20
+                    Shape = new MoveShape { KindRaw = "cone", RangeWu = 5, FacingX = 1, FacingY = 0, AngleDegrees = 60 } }
             };
 
         [Fact]

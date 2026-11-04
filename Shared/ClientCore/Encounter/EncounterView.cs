@@ -109,8 +109,8 @@ namespace NguMach.Client.Core.Encounter
 
         public long RemainingTicks(long currentServerTick)
         {
-            if (Snapshot == null || !Snapshot.DeadlineTick.HasValue) return 0;
-            long r = Snapshot.DeadlineTick.Value - currentServerTick;
+            if (Snapshot == null || Snapshot.ActiveMove == null) return 0;
+            long r = Snapshot.ActiveMove.StateEndsAtTick - currentServerTick;
             return r < 0 ? 0 : r;
         }
 
