@@ -1,4 +1,7 @@
-# Packet hợp đồng Encounter Snapshot (QOD-21 Q2) — CHỜ DUYỆT, CHƯA CÓ ROUTE NÀO
+# Packet hợp đồng Encounter Snapshot (QOD-21 Q2) — **ĐÃ DUYỆT Kèm SỬA, ĐÃ WIRE**
+
+**Cập nhật 04/11/2026:** `docs/production/Encounter_Snapshot_Review_Decisions_20261103_vi.md` (merge PR #108) và `ben_mua_q3_decisions_20261104.json` đã trả lời đủ ba câu §6: `encounterId` server cấp theo (character, questAttempt) **giữ qua wipe**, **không late join**, **owner-only**; được thêm `GET /p1/encounters/current`; gate OFF trả **404** thật (không phải 405); snapshot phải atomic trong cùng lock/tick; `activeMove` phải có `castId`, `stateEndsAtTick`, `shape.facingX/facingY` normalized. Trạng thái hiện tại: schema `EncounterSnapshotV1` + `EncounterResponseV1` + examples + DTO + hai route sau gate đã **land**; §5 và §6 dưới đây giữ nguyên như bản gốc để lịch sử review không bị viết lại.
+
 
 Gửi Codex (review) + Antigravity #85 (client). Nguồn quyết định: `DESIGN-BM-ALPHA-20261103` (`Implementation/Content/DesignBaselines/ben_mua_alpha_20261103.json`), nhánh `boss` + `boss.eventProtocol` + `questRules.P00-05`. Packet này **chưa** áp dụng schema nào; `GET /p1/encounters/{encounterId}` chưa được map. Toàn bộ máy encounter phía domain đã chạy trên `WorldTickBackgroundService` sau gate `P1:AlphaProfile:Enabled` (mặc định OFF) mà không cần wire — wire chỉ là **đọc**.
 
