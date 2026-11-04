@@ -85,7 +85,8 @@ public partial class NativeGameplayUiTest : Node
             await Press("×");
             Check(!_panel.IsOpen,"close button dismisses modal");
 
-            await WalkTo(42);
+            // Stand beside the NPC, not inside its authoritative footpoint.
+            await WalkTo(39.5);
             Stage("read_offer_without_accepting");
             _interact();
             await WaitFor(()=>_panel.IsOpen,5);
@@ -121,7 +122,7 @@ public partial class NativeGameplayUiTest : Node
             }
             Check(Counter()==3,"all three parcels are credited");
 
-            await WalkTo(64);
+            await WalkTo(61.5);
             Stage("read_turnin_without_grant");
             _interact();
             await WaitFor(()=>_panel.IsOpen,5);
@@ -147,6 +148,7 @@ public partial class NativeGameplayUiTest : Node
             Check(Coins()==20&&Coats()==1,"committed page navigation leaves reward unchanged");
             await Press("Rời đi");
             Check(!_panel.IsOpen,"leave button dismisses committed dialog");
+            await CaptureWorldIfRequested();
 
             Stage("inventory_after_reward");
             _openInventory();
@@ -194,6 +196,20 @@ public partial class NativeGameplayUiTest : Node
             foreach(var item in names.RootElement.EnumerateObject())
                 if(item.Value.ValueKind==JsonValueKind.String)_itemNames[item.Name]=item.Value.GetString()!;
         }
+    }
+
+    private async Task CaptureWorldIfRequested()
+    {
+        var args=OS.GetCmdlineUserArgs();
+        int index=Array.IndexOf(args,"--capture");
+        if(index<0||index+1>=args.Length)return;
+        var directory=System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(args[index+1]))!;
+        string path=System.IO.Path.Combine(directory,"native_ui_p00_01_world.png");
+        await Frames(3);
+        await ToSignal(RenderingServer.Singleton,RenderingServer.SignalName.FramePostDraw);
+        var result=GetViewport().GetTexture().GetImage().SavePng(path);
+        if(result!=Error.Ok)throw new InvalidOperationException("Native world capture: "+result);
+        GD.Print("NATIVE_UI_WORLD_CAPTURE "+path);
     }
 
     private async Task ReadPagesWithoutMutation(string[] pages,string finalAction,string expectedState)

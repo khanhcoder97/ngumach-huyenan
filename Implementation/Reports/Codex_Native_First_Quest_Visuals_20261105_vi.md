@@ -39,7 +39,7 @@ native_vfx_gallery.png là Godot render của environment và hiệu ứng; nati
 
 ## Map và giới hạn bản chơi
 
-Camera64×36WU rộng, compact48×27 do người chơi chọn. ART_BM_STAGING_A2 authored128×96WU/113placement/14tuyến. Canonical online bounds vẫn360×84WU, x0..360,y−12..72; render=(920+20*x,896−20*y). Extendedgrass chỉ backdrop, không migrationnav/map. Server đang bố trí nhiều entity trên một trục; không tự dời NPC/quest để khớp concept. Qoder phải giao packetnav/transform/placement toàn map được review.
+Camera64×36WU rộng, compact48×27 do người chơi chọn. ART_BM_STAGING_A2 authored128×96WU/113placement/14tuyến. Canonical online bounds vẫn360×84WU, x0..360,y−12..72; render=(560+20*x,896−20*y). Extendedgrass chỉ backdrop, không migrationnav/map. Server đang bố trí nhiều entity trên một trục; không tự dời NPC/quest để khớp concept. Qoder phải giao packetnav/transform/placement toàn map được review.
 
 Launcher Run_Playable_Alpha.ps1 build/healthidentity/ownedPID/loopback; finally dừng đúng process nó tạo. MobBehavior và DeathReturnOFF, nên chưa là combat survive/boss/deathloop. Không sửa production config. Các bước ngoàiP00-01, v2equip12slot, forge/guild/trade/persistence/reconnect/campaign/mobile/export chưa được native nghiệm thu; **không gọi là MMORPG hoàn thiện**.
 
@@ -50,3 +50,5 @@ Work29 đã merge qua PR117. Đã post góiO1–O8 tới85, Q1–Q8 tới87, R1�
 Hai lỗi portable đã tái hiện và gửiOpenCode: timeout40ms vẫn không kết thúc sau316ms nếu inner bỏquaCT; Dispose trong encounterread gây ObjectDisposedException ởSemaphoreSlim.Release. AlphaobjectIDs sáu giá trị exact được quyết định và gửi cảclient/server; không tự đổi ENT contract hoặc enumv1. Các lỗi này chưa được gói nativebridge tuyên bố đã sửa trong PR109.
 
 Muse dùng NPCreference mới làm characterlock choP0video, không sửagraphics. DEC-MEDIA-P0/DEC-DEATH-RETURN/DEC-ALPHA-INTERACT-IDS đã chốt, không còn approvalcũ làm lý do dừng các phần độc lập.
+
+Presentation origin sau QA được căn từx920 sangx560 để canonicalfirstquest18..64 nằm trong khu làng authored; vẫn20px/WU, servercoords/nav/IDs không đổi. Đây là translationrender, không migration.

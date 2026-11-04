@@ -85,7 +85,7 @@ public partial class VisualPreview : Node2D
         if(!string.IsNullOrWhiteSpace(url)&&!_selfTest&&!_visualTest)
         {
             _hero.CollisionLayer=0;_hero.CollisionMask=0;
-            var bounds=new Rect2(920,-544,7200,1680);
+            var bounds=new Rect2(NativeActorsView.RenderOrigin+new Vector2(0,-1440),new Vector2(7200,1680));
             _camera.ConfigureBounds(bounds);_environment.ExtendOnlineBackdrop(bounds);
             _liveActors=new NativeActorsView();actors.AddChild(_liveActors);
             _dialog=new NativeDialoguePanel();AddChild(_dialog);

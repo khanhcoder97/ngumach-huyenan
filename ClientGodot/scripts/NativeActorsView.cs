@@ -41,8 +41,11 @@ public partial class NativeActorsView : Node2D
         set{_targetId=value;QueueRedraw();}
     }
 
-    public static Vector2 RenderPoint(double x,double y)=>new((float)(920+20*x),(float)(896-20*y));
-    public static Vector2 WorldPoint(Vector2 render)=>new((render.X-920)/20,(896-render.Y)/20);
+    // Presentation origin aligns canonical first-quest x18..64 with the authored
+    // village's east-west street. It changes no server coordinate/navigation.
+    public static Vector2 RenderOrigin=>new(560,896);
+    public static Vector2 RenderPoint(double x,double y)=>RenderOrigin+new Vector2((float)(20*x),(float)(-20*y));
+    public static Vector2 WorldPoint(Vector2 render)=>new((render.X-RenderOrigin.X)/20,(RenderOrigin.Y-render.Y)/20);
 
     public override void _Ready()
     {

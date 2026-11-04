@@ -17,7 +17,7 @@ MobBehavior và DeathReturn OFF trong launcher hiện tại; enemy không tự �
 
 Camera top-down orthographic, mặc định 64×36 WU; F2 chọn 48×27 WU. Viewport 1280×720, 20 px/WU, nearest + integer scaling/letterbox. HUD ngoài camera, sáu ô kỹ năng theo vòng cung quanh ĐÁNH. Phím H ẩn HUD.
 
-Art staging ART_BM_STAGING_A2 là 128×96 WU, 113 placement/14 tuyến, sông cong và cầu tàu có collision offline. **Canonical MAP_BEN_MUA hiện vẫn x0..360, y−12..72 (360×84 WU)**. Bản online dùng transform render=(920+20*x,896−20*y), server quyết định vị trí/nav; ngoài district authored chỉ mở rộng grass backdrop. Không coi staging hay backdrop là migration map 2D đã nghiệm thu. Toàn bản đồ/nav đang chờ packet Qoder.
+Art staging ART_BM_STAGING_A2 là 128×96 WU, 113 placement/14 tuyến, sông cong và cầu tàu có collision offline. **Canonical MAP_BEN_MUA hiện vẫn x0..360, y−12..72 (360×84 WU)**. Bản online dùng transform render=(560+20*x,896−20*y), server quyết định vị trí/nav; ngoài district authored chỉ mở rộng grass backdrop. Không coi staging hay backdrop là migration map 2D đã nghiệm thu. Toàn bản đồ/nav đang chờ packet Qoder.
 
 Nguồn mới: Art_Source/Visual_Reboot_20261104, BenMua_Concept_Rebuild_20261105, Combat_Visuals_20261105. Không dùng concept làm nền hoặc cắt concept thành sprite. Whole-body walk/attack tám hướng có metadata riêng; vũ khí hiện chỉ xuất hiện trong attack, chưa là equipment-layer system. Sáu VFX Minh Kiếm là presentation candidate; các lớp khác chưa có đủ animation/VFX. CARPLING/WATERROOT có idle/attack/dead, chưa eight-direction creature animation. NPC khác ngoài ba người được vẽ mới còn archetype tạm; nhóm quái mixed không tự gán sai species.
 
