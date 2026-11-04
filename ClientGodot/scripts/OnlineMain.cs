@@ -467,10 +467,12 @@ public partial class OnlineMain : Node2D
 
     // ---------------- class-select test (offline) ----------------
     // The full session-per-class proof lives in RunOnlineTest (needs the
-    // server). This offline suite proves the menu flow itself: menu is
-    // shown first, choosing applies animator library + HUD portrait +
-    // character id, and the connect attempt is made for THAT class
-    // (it fails gracefully here — no server in this suite).
+    // server). This offline suite proves the menu flow itself under the
+    // WO24 M-B rule: server-unsupported classes are DISABLED with a
+    // reason (preview kept) and choosing one is refused at the menu —
+    // only Minh Kiếm can be picked, and picking it applies animator
+    // library + HUD portrait + character id, then attempts the connect
+    // for THAT class (fails gracefully here — no server in this suite).
     private int _selFailures;
     private void SelCheck(string name, bool ok, string detail = "")
     {
@@ -486,19 +488,44 @@ public partial class OnlineMain : Node2D
         SelCheck("menu_shown_first", _classSelect.Visible);
         SelCheck("no_class_yet", SelectedClass == null);
 
+        // WO24 M-B: exactly one card enabled (Minh Kiếm); the other four
+        // are disabled because the alpha server does not support them.
+        bool cardStates = true;
+        foreach (var info in ClassSelect.Classes)
+            cardStates &= _classSelect.IsCardDisabled(info.Id)
+                          == (info.ServerClassId != "CLASS_MINH_KIEM");
+        SelCheck("cards_disabled_except_minh_kiem", cardStates);
+
+        // Choosing a disabled class is refused at the menu: nothing is
+        // emitted, the menu stays open, the reason is shown.
         _classSelect.Choose("linh_cung");
+        for (int i = 0; i < 3; i++)
+            await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        SelCheck("refused_menu_stays_open", _classSelect.Visible);
+        SelCheck("refused_no_selection", SelectedClass == null && _classSelect.SelectedClass == null);
+        SelCheck("refused_reason_shown", _classSelect.RefusalMessage.Contains("Minh Kiếm"),
+            _classSelect.RefusalMessage);
+        SelCheck("refused_animator_untouched", _animator.ClassId == "minh_kiem", _animator.ClassId);
+
+        // The key path refuses the same way (key 4 = Thạch Chùy).
+        _classSelect.SimulateKeyIndex(3);
+        SelCheck("refused_key_path", _classSelect.Visible
+            && _classSelect.RefusalMessage.Contains("THẠCH CHÙY"), _classSelect.RefusalMessage);
+
+        // Minh Kiếm — the one supported class — goes through end-to-end.
+        _classSelect.Choose("minh_kiem");
         await Task.Delay(400); // StartGame applies sync, connect attempt fails fast (no server)
         for (int i = 0; i < 3; i++)
             await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
         SelCheck("menu_hidden_after_choose", !_classSelect.Visible);
-        SelCheck("selected_linh_cung", SelectedClass == "linh_cung", SelectedClass ?? "null");
-        SelCheck("animator_class_switched", _animator.ClassId == "linh_cung", _animator.ClassId);
-        SelCheck("animator_library_40", _animator.SpriteFramesAnimationCount == 40,
-            _animator.SpriteFramesAnimationCount.ToString());
-        SelCheck("hud_portrait_switched", _hud != null && _hud.CurrentPortraitClass == "linh_cung",
+        SelCheck("selected_minh_kiem", SelectedClass == "minh_kiem", SelectedClass ?? "null");
+        SelCheck("animator_minh_kiem_128", _animator.ClassId == "minh_kiem"
+            && _animator.SpriteFramesAnimationCount == 128,
+            $"{_animator.ClassId}/{_animator.SpriteFramesAnimationCount}");
+        SelCheck("hud_portrait_minh_kiem", _hud != null && _hud.CurrentPortraitClass == "minh_kiem",
             _hud?.CurrentPortraitClass ?? "nohud");
-        SelCheck("character_id_for_class", ClientCharacterId == "CHR_LINH_CUNG_01",
+        SelCheck("character_id_for_class", ClientCharacterId == "CHR_MINH_KIEM_01",
             ClientCharacterId ?? "null");
         SelCheck("not_connected_without_server", !_connected);
 
@@ -515,15 +542,15 @@ public partial class OnlineMain : Node2D
         string path = ProjectSettings.GlobalizePath("res://screenshot_select.png");
         image.SavePng(path);
         GD.Print($"SELECTSHOT SAVED: {path}");
-        // Second capture: pick Linh Cung — with the server up this shows
-        // the graceful P1-scope message; the character + HUD portrait
-        // still switch locally.
-        _classSelect.Choose("linh_cung");
-        await Task.Delay(1500);
+        // Second capture: press key 5 (Linh Cung) — the card is disabled
+        // in the alpha, so the menu stays open and the refusal reason
+        // appears on the notice line.
+        _classSelect.SimulateKeyIndex(4);
+        await Task.Delay(300);
         for (int i = 0; i < 3; i++)
             await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
         var image2 = GetViewport().GetTexture().GetImage();
-        string path2 = ProjectSettings.GlobalizePath("res://screenshot_linhcung_pick.png");
+        string path2 = ProjectSettings.GlobalizePath("res://screenshot_select_refusal.png");
         image2.SavePng(path2);
         GD.Print($"SELECTSHOT2 SAVED: {path2}");
         GetTree().Quit(0);

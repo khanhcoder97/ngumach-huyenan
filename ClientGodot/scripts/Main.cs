@@ -11,6 +11,14 @@ using System.Linq;
 ///    10 s, 3 s timeout, status label. UnityWebRequest coroutine becomes
 ///    an HttpRequest node + Timer.
 /// Also hosts the headless self-test (run with: godot --headless -- --selftest).
+///
+/// Work Order 24 M-B: the board-06 gameplay HUD (Hud.tscn) is attached
+/// to this main scene too (it already drives the online scene): attack /
+/// skill buttons play the animator's combo clips, the minimap tracks
+/// the player, and the HUD joystick feeds movement when touched. Vitals
+/// stay at the HUD's own full defaults — this offline scene has no
+/// authoritative stats source; the online scene overwrites them from
+/// server snapshots.
 /// </summary>
 public partial class Main : Node2D
 {
@@ -21,6 +29,12 @@ public partial class Main : Node2D
     private Label _statusLabel;
     private HttpRequest _http;
     private bool _selfTest;
+    private Hud _hud;
+    private int _comboStep;
+    private ulong _lastAttackMs;
+    private bool _attackKeyWasDown;
+    private bool _joystickWasActive;
+    private Vector2I _lastMinimapCell = new(int.MinValue, int.MinValue);
 
     public override void _Ready()
     {
@@ -30,6 +44,10 @@ public partial class Main : Node2D
         _http = GetNode<HttpRequest>("HealthRequest");
         _http.Timeout = 3;
         _http.RequestCompleted += OnHealthCompleted;
+        _hud = GetNode<Hud>("GameHud");
+        _hud.AttackPressed += OnAttackPressed;
+        _hud.SkillActivated += OnSkillActivated;
+        UpdateHudTracking();
 
         _selfTest = OS.GetCmdlineUserArgs().Contains("--selftest");
         if (_selfTest)
@@ -59,6 +77,62 @@ public partial class Main : Node2D
     {
         bool online = result == (long)HttpRequest.Result.Success && code >= 200 && code < 300;
         _statusLabel.Text = online ? "Máy chủ: Trực tuyến" : "Máy chủ: Ngoại tuyến";
+    }
+
+    // ---------------- board-06 HUD wiring (WO24 M-B) ----------------
+    // Same presentation pattern as the online scene: HUD attack button
+    // (or Space/J) steps the Attack1->2->3 combo inside a 1.2 s window;
+    // skill buttons 1-3 play Skill1-3. Client-side presentation only.
+
+    private void OnAttackPressed()
+    {
+        ulong now = Time.GetTicksMsec();
+        if (now - _lastAttackMs > 1200) _comboStep = 0;
+        _animator?.PlayAction(3 + _comboStep);
+        _comboStep = (_comboStep + 1) % 3;
+        _lastAttackMs = now;
+    }
+
+    private void OnSkillActivated(int index)
+    {
+        if (index < 3) _animator?.PlayAction(6 + index);
+    }
+
+    /// <summary>Point the HUD minimap at the player (throttled to
+    /// tile-cell changes). Player px -> world WU: x/20, 36 - y/20.</summary>
+    private void UpdateHudTracking()
+    {
+        if (_hud == null || _player == null) return;
+        var cell = new Vector2I(Mathf.FloorToInt(_player.GlobalPosition.X / 16f),
+                                Mathf.FloorToInt(_player.GlobalPosition.Y / 16f));
+        if (cell == _lastMinimapCell) return;
+        _lastMinimapCell = cell;
+        _hud.SetMinimapCenter(_player.GlobalPosition.X / 20.0,
+                              36.0 - _player.GlobalPosition.Y / 20.0);
+    }
+
+    public override void _Process(double delta)
+    {
+        if (_selfTest || _hud == null) return;
+        bool atk = Input.IsKeyPressed(Key.Space) || Input.IsKeyPressed(Key.J);
+        if (atk && !_attackKeyWasDown) OnAttackPressed();
+        _attackKeyWasDown = atk;
+
+        // HUD joystick feeds movement while touched; on release, hand
+        // control back to the keyboard path with one zero injection.
+        var joy = _hud.JoystickVector;
+        if (joy.LengthSquared() > 0.01f)
+        {
+            _player.SetMoveInput(joy, running: false);
+            _joystickWasActive = true;
+        }
+        else if (_joystickWasActive)
+        {
+            _player.SetMoveInput(Vector2.Zero, running: false);
+            _joystickWasActive = false;
+        }
+        if (_player.Velocity.LengthSquared() > 1f) _hud.NoteMovement();
+        UpdateHudTracking();
     }
 
     private async System.Threading.Tasks.Task RunScreenshot()
@@ -95,6 +169,7 @@ public partial class Main : Node2D
     private async System.Threading.Tasks.Task RunSelfTest()
     {
         await WaitPhysicsFrames(10); // let _Ready of children + first frames run
+        var minimapRegionAtStart = _hud.MinimapRegion;
 
         // 1. Animation library built from sheets: 16 actions x 8 dirs = 128.
         Check("anim_count_128", _animator.SpriteFramesAnimationCount == 128,
@@ -133,6 +208,27 @@ public partial class Main : Node2D
         moved = _player.GlobalPosition - start;
         Check("run_n_moves_fast", moved.Y < -40 && Math.Abs(moved.X) < 2, $"moved={moved}");
         Check("run_flag_and_anim", running && animDuring == "run_N", $"running={running} anim={animDuring}");
+
+        // 6. Board-06 HUD attached to the main scene (WO24 M-B) and
+        // wired: portrait defaults to Minh Kiếm, the HUD attack path
+        // plays the combo clip, the minimap window followed the player
+        // east during the walks above.
+        Check("hud_present_in_main", _hud != null);
+        Check("hud_portrait_minh_kiem", _hud.CurrentPortraitClass == "minh_kiem",
+            _hud.CurrentPortraitClass);
+        OnAttackPressed();
+        await WaitPhysicsFrames(3);
+        Check("hud_attack_plays_combo", _animator.CurrentAnimation.StartsWith("attack1_"),
+            _animator.CurrentAnimation);
+        // The minimap window (56 WU wide) is clamped at the west edge
+        // near spawn, so prove tracking from a teleport deep into the
+        // map: center px (1800,600) must put the region origin at
+        // 1800-560=1240 (start was clamped to 0).
+        _player.GlobalPosition = new Vector2(1800, 600);
+        UpdateHudTracking();
+        Check("hud_minimap_tracks_player",
+            Mathf.Abs(_hud.MinimapRegion.Position.X - 1240f) < 2f,
+            $"region x {_hud.MinimapRegion.Position.X} (start {minimapRegionAtStart.Position.X})");
 
         GD.Print(_failures == 0 ? "SELFTEST RESULT: PASS" : $"SELFTEST RESULT: FAIL ({_failures})");
         GetTree().Quit(_failures == 0 ? 0 : 1);

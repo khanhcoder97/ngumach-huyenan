@@ -41,13 +41,21 @@ merge belong to Codex, release approval to the project owner.
 
 ## Pending integration (later work-order packages)
 
-- [ ] M-B: HUD board-06 into Main.tscn; full chain menu→session→map→
-      quest/NPC/inventory/equip/target/attack/skill/cinema→death-return→
-      boss→turn-in→portal, on OPC-15 interfaces (PR #109) + QOD-21 server
-      alpha (PR #106); pending routes stay fixtures with a DRAFT/OFFLINE
-      banner. Class-select change required by M-B: server-unsupported
-      class cards must be **disabled with a reason** (current build keeps
-      them selectable and reports the server 400 — to be replaced).
+- [ ] M-B: full chain menu→session→map→quest/NPC/inventory/equip/
+      target/attack/skill/cinema→death-return→boss→turn-in→portal, on
+      OPC-15 interfaces (PR #109) + QOD-21 server alpha (PR #106);
+      pending routes stay fixtures with a DRAFT/OFFLINE banner.
+  - [x] HUD board-06 attached to Main.tscn (M-B checkpoint 2026-11-04):
+        attack/skill wiring, minimap tracking, joystick feed; vitals
+        stay at HUD defaults offline (online scene uses snapshots).
+        Proven by SELFTEST additions.
+  - [x] Class cards for server-unsupported classes are **disabled
+        with a reason** (M-B checkpoint 2026-11-04): preview kept
+        (dimmed portrait), reason on the card + notice line, choosing
+        refused at the menu; the gate mirrors OPC-15 ClientCapability
+        (alpha: CLASS_MINH_KIEM only) and binds to
+        ClientCapability.IsClassSupported when Shared/ClientCore merges
+        into this branch. Proven by the rewritten SELECTTEST.
 - [ ] M-C: 48×64→64×64 via versioned manifest; boss-move mapping
       ART-P1-013; telegraph/reduced-flash checks.
 - [ ] M-D: Windows-first verification (cold-import timeout/log ✓ in

@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://ngumachproto1"]
+[gd_scene load_steps=8 format=3 uid="uid://ngumachproto1"]
 
 [ext_resource type="Script" path="res://scripts/Main.cs" id="1"]
 [ext_resource type="Texture2D" path="res://assets/ben_mua_full_map.png" id="2"]
 [ext_resource type="Script" path="res://scripts/PlayerController2D.cs" id="3"]
 [ext_resource type="Script" path="res://scripts/DirectionalAnimator2D.cs" id="4"]
 [ext_resource type="Script" path="res://scripts/PlaceholderNpc.cs" id="5"]
+[ext_resource type="PackedScene" path="res://Hud.tscn" id="6"]
 
 [sub_resource type="RectangleShape2D" id="feet"]
 size = Vector2(24, 12)
@@ -40,9 +41,16 @@ drag_vertical_enabled = false
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="StatusLabel" type="Label" parent="HUD"]
-offset_left = 8.0
-offset_top = 6.0
+offset_left = 150.0
+offset_top = 330.0
+offset_right = 490.0
+offset_bottom = 344.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.75)
+theme_override_font_sizes/font_size = 8
 text = "Đang kết nối máy chủ…"
+horizontal_alignment = 1
+
+[node name="GameHud" parent="." instance=ExtResource("6")]
 
 [node name="HealthRequest" type="HTTPRequest" parent="."]
 

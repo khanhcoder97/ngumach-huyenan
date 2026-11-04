@@ -9,6 +9,15 @@ using Godot;
 /// class's own idle sheet (S frame), so what you pick is what you play.
 /// Text uses the engine default font, like the HUD (the game's
 /// Vietnamese pixel font does not exist yet).
+///
+/// Work Order 24 M-B + OPC-15 packet: a class the server does not
+/// support yet is shown as a DISABLED card (portrait preview kept) with
+/// the reason on the card and on the notice line — it is never chosen
+/// and never sent to the server as another class. The gate below
+/// mirrors OPC-15's ClientCapability list (alpha: CLASS_MINH_KIEM
+/// only); when Shared/ClientCore merges into this branch it binds to
+/// ClientCapability.IsClassSupported directly. The server stays the
+/// source of truth (it rejects other classes with a clean 400).
 /// </summary>
 public partial class ClassSelect : CanvasLayer
 {
@@ -28,6 +37,20 @@ public partial class ClassSelect : CanvasLayer
     public static ClassInfo Find(string id) =>
         System.Array.Find(Classes, c => c.Id == id) ?? Classes[0];
 
+    // --- alpha capability gate (mirror of OPC-15 ClientCapability) ---
+    private static readonly string[] AlphaSupportedServerClasses = { "CLASS_MINH_KIEM" };
+    public static bool IsServerSupported(ClassInfo info) =>
+        System.Array.IndexOf(AlphaSupportedServerClasses, info.ServerClassId) >= 0;
+    public const string UnsupportedReason = "Server alpha hiện chỉ mở Minh Kiếm";
+
+    private readonly System.Collections.Generic.Dictionary<string, Button> _cards = new();
+    private Label _notice;
+    /// <summary>Last refusal text shown for a disabled class ("" if none).</summary>
+    public string RefusalMessage { get; private set; } = "";
+    /// <summary>True when the class's card is disabled (server-unsupported).</summary>
+    public bool IsCardDisabled(string classId) =>
+        _cards.TryGetValue(classId, out var b) && b.Disabled;
+
     public string SelectedClass { get; private set; }
 
     public override void _Ready()
@@ -46,6 +69,18 @@ public partial class ClassSelect : CanvasLayer
 
         for (int i = 0; i < Classes.Length; i++)
             AddCard(i, Classes[i]);
+
+        _notice = new Label
+        {
+            Text = "",
+            Position = new Vector2(0, 296),
+            Size = new Vector2(640, 14),
+            HorizontalAlignment = HorizontalAlignment.Center,
+            MouseFilter = Control.MouseFilterEnum.Ignore
+        };
+        _notice.AddThemeFontSizeOverride("font_size", 10);
+        _notice.AddThemeColorOverride("font_color", new Color(0.98f, 0.62f, 0.5f));
+        AddChild(_notice);
 
         AddLabel("Bấm vào thẻ hoặc nhấn phím 1–5 để chọn", 0, 322, 640, 9,
                  new Color(0.65f, 0.68f, 0.75f), HorizontalAlignment.Center);
@@ -69,12 +104,15 @@ public partial class ClassSelect : CanvasLayer
 
     private void AddCard(int i, ClassInfo info)
     {
+        bool supported = IsServerSupported(info);
         var btn = new Button
         {
             Position = new Vector2(20 + i * 122, 100),
             Size = new Vector2(112, 180),
-            Text = ""
+            Text = "",
+            Disabled = !supported
         };
+        _cards[info.Id] = btn;
         var normal = new StyleBoxFlat
         {
             BgColor = new Color(0.05f, 0.07f, 0.10f, 0.97f),
@@ -90,6 +128,13 @@ public partial class ClassSelect : CanvasLayer
         btn.AddThemeStyleboxOverride("hover", hover);
         btn.AddThemeStyleboxOverride("pressed", hover);
         btn.AddThemeStyleboxOverride("focus", new StyleBoxEmpty());
+        if (!supported)
+        {
+            var disabledBox = (StyleBoxFlat)normal.Duplicate();
+            disabledBox.BgColor = new Color(0.04f, 0.05f, 0.07f, 0.97f);
+            disabledBox.BorderColor = new Color(0.3f, 0.3f, 0.34f);
+            btn.AddThemeStyleboxOverride("disabled", disabledBox);
+        }
         string id = info.Id;
         btn.Pressed += () => Choose(id);
         AddChild(btn);
@@ -105,6 +150,8 @@ public partial class ClassSelect : CanvasLayer
             TextureFilter = CanvasItem.TextureFilterEnum.Nearest,
             MouseFilter = Control.MouseFilterEnum.Ignore
         };
+        if (!supported)
+            portrait.Modulate = new Color(0.45f, 0.45f, 0.5f); // preview kept, clearly dimmed
         btn.AddChild(portrait);
         portrait.Position = new Vector2(24, 14);
         portrait.Size = new Vector2(64, 64);
@@ -118,7 +165,7 @@ public partial class ClassSelect : CanvasLayer
             MouseFilter = Control.MouseFilterEnum.Ignore
         };
         name.AddThemeFontSizeOverride("font_size", 11);
-        name.AddThemeColorOverride("font_color", Colors.White);
+        name.AddThemeColorOverride("font_color", supported ? Colors.White : new Color(0.55f, 0.56f, 0.6f));
         btn.AddChild(name);
 
         var sub = new Label
@@ -131,8 +178,23 @@ public partial class ClassSelect : CanvasLayer
             MouseFilter = Control.MouseFilterEnum.Ignore
         };
         sub.AddThemeFontSizeOverride("font_size", 8);
-        sub.AddThemeColorOverride("font_color", new Color(0.8f, 0.75f, 0.55f));
+        sub.AddThemeColorOverride("font_color", supported ? new Color(0.8f, 0.75f, 0.55f) : new Color(0.5f, 0.48f, 0.4f));
         btn.AddChild(sub);
+
+        if (!supported)
+        {
+            var reason = new Label
+            {
+                Text = "Chưa mở ở bản alpha",
+                Position = new Vector2(2, 148),
+                Size = new Vector2(108, 12),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                MouseFilter = Control.MouseFilterEnum.Ignore
+            };
+            reason.AddThemeFontSizeOverride("font_size", 8);
+            reason.AddThemeColorOverride("font_color", new Color(0.98f, 0.62f, 0.5f));
+            btn.AddChild(reason);
+        }
 
         var key = new Label
         {
@@ -149,12 +211,32 @@ public partial class ClassSelect : CanvasLayer
     public void ShowMenu() => Visible = true;
     public void HideMenu() => Visible = false;
 
-    /// <summary>Pick a class (same path as clicking its card).</summary>
+    /// <summary>Pick a class (same path as clicking its card). A
+    /// server-unsupported class is REFUSED here as a second line of
+    /// defence (its card is already disabled): the menu stays open and
+    /// the reason is shown — nothing is emitted, nothing is sent.</summary>
     public void Choose(string classId)
     {
+        var info = Find(classId);
+        if (!IsServerSupported(info)) { ShowRefusal(info); return; }
         SelectedClass = classId;
         Visible = false;
         EmitSignal(SignalName.ClassChosen, classId);
+    }
+
+    private void ShowRefusal(ClassInfo info)
+    {
+        RefusalMessage = $"{info.DisplayName} — {UnsupportedReason}";
+        if (_notice != null) _notice.Text = RefusalMessage;
+    }
+
+    /// <summary>Same path as pressing keys 1-5 (also used by tests/shots).</summary>
+    public void SimulateKeyIndex(int idx)
+    {
+        if (!Visible || idx < 0 || idx >= Classes.Length) return;
+        var info = Classes[idx];
+        if (IsServerSupported(info)) Choose(info.Id);
+        else ShowRefusal(info);
     }
 
     public override void _UnhandledInput(InputEvent e)
@@ -167,7 +249,7 @@ public partial class ClassSelect : CanvasLayer
                 Key.Key1 => 0, Key.Key2 => 1, Key.Key3 => 2, Key.Key4 => 3, Key.Key5 => 4,
                 _ => -1
             };
-            if (idx >= 0) Choose(Classes[idx].Id);
+            if (idx >= 0) SimulateKeyIndex(idx);
         }
     }
 }
