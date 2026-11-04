@@ -5,6 +5,7 @@ using NguMach.Client.Core.Composition;
 using NguMach.Client.Core.Encounter;
 using NguMach.Client.Core.Guards;
 using NguMach.Client.Core.Handshake;
+using NguMach.Client.Core.Transport;
 using NguMach.Client.P1;
 
 namespace ClientCoreSample
@@ -25,7 +26,19 @@ namespace ClientCoreSample
 
         private static async Task MainAsync()
         {
-            using (var session = new ClientSession(new StubTransport(), ownsTransport: false, useWorldV2: false))
+            string baseUrl = Environment.GetEnvironmentVariable("P1_BASE_URL");
+            IP1Transport transport;
+            if (!string.IsNullOrWhiteSpace(baseUrl))
+            {
+                Console.WriteLine("using HttpClientTransport -> " + baseUrl);
+                transport = new HttpClientTransport(baseUrl);
+            }
+            else
+            {
+                Console.WriteLine("using StubTransport (no P1_BASE_URL)");
+                transport = new StubTransport();
+            }
+            using (var session = new ClientSession(transport, ownsTransport: transport is HttpClientTransport, useWorldV2: false))
             {
                 var res = await session.ConnectAsync();
                 Console.WriteLine("connect: " + res.Success + " session=" + session.Client.SessionId);

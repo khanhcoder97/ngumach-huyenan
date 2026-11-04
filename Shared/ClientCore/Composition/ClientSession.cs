@@ -51,12 +51,24 @@ namespace NguMach.Client.Core.Composition
         // Re-login: new epoch, old in-flight responses rejected by guard.
         public async Task<P1Result> ReloginAsync(CancellationToken ct = default)
         {
+            // cancel the previous lifetime's CTS; old in-flight work must not apply
+            try { _cts.Cancel(); } catch { }
+            _cts.Dispose();
+            _cts = new CancellationTokenSource();
             Guard.EndSession();
-            // reset client by creating a fresh one on the same transport
+            // epoch is monotonic: do NOT reset to 0
             Client = new P1Client(_transport, useWorldV2: Client.UseWorldV2);
             Adapter = new P1ClientAdapter(Client);
-            SessionGeneration = 0;
             return await ConnectAsync(ct);
+        }
+
+        // Apply state only if the response still belongs to the active session/epoch.
+        public bool TryApply(string responseSessionId, string responseRequestId, long responseGeneration, Action apply)
+        {
+            if (apply == null) return false;
+            if (!Guard.IsApplicable(responseSessionId, responseRequestId, responseGeneration)) return false;
+            apply();
+            return true;
         }
 
         public void Cancel() { try { _cts.Cancel(); } catch { } }
