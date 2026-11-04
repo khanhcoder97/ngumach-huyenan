@@ -113,6 +113,7 @@ public sealed class CombatTickEngine
     private readonly ServerClock _clock;
     private readonly LootGrantService? _lootGrants;
     private readonly ICombatBossBridge? _bosses;
+    private readonly ICombatKillSink? _kills;
     private readonly object _sync = new();
     private readonly Dictionary<string, ScheduledCast> _casts = new(StringComparer.Ordinal);
 
@@ -129,7 +130,8 @@ public sealed class CombatTickEngine
         DashMovementService dashes,
         ServerClock clock,
         LootGrantService? lootGrants = null,
-        ICombatBossBridge? bosses = null)
+        ICombatBossBridge? bosses = null,
+        ICombatKillSink? kills = null)
     {
         _entities = entities;
         _combat = combat;
@@ -144,6 +146,7 @@ public sealed class CombatTickEngine
         _clock = clock;
         _lootGrants = lootGrants;
         _bosses = bosses;
+        _kills = kills;
     }
 
     // Where each accepted dash actually landed and why it stopped; internal
@@ -402,6 +405,21 @@ public sealed class CombatTickEngine
             items: []);
     }
 
+    // The quest machines that pay objective credit for a kill are told here, at
+    // the moment the death is resolved, with the same event id the killer's
+    // combat stream carries. Nothing about the mob path changes when no sink is
+    // wired.
+    private void NotifyMobKilled(
+        PlayerSession killer, WorldEntityInstance target, CombatEventV2 death)
+    {
+        _kills?.OnMobKilled(new CombatMobKill(
+            killer.CharacterId,
+            target.EntityId,
+            target.RecordId,
+            target.LifeId,
+            death.EventId));
+    }
+
     public IReadOnlyList<CombatEventV2> CancelPendingFor(string characterId)
     {
         ArgumentNullException.ThrowIfNull(characterId);
@@ -572,6 +590,7 @@ public sealed class CombatTickEngine
         var death = AppendGuardEvent(
             window, tick, CombatEventTypesV2.Death, source, result: null);
         RecordLootOnDeath(window.Defender, death, source.LifeId);
+        NotifyMobKilled(window.Defender, source, death);
         yield return death;
 
         _quests.RecordVerifiedEvent(
@@ -738,6 +757,7 @@ public sealed class CombatTickEngine
                 cast, impactTick + 1, CombatEventTypesV2.Death, target.EntityId, lifeId,
                 hitIndex: null, target.Revision, result: null);
             RecordLootOnDeath(cast.Actor, deathEvent, lifeId);
+            NotifyMobKilled(cast.Actor, target, deathEvent);
             yield return deathEvent;
 
             // QOD-17 DEV kill-credit policy: the source that lands the killing

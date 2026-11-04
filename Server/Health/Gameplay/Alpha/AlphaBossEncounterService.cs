@@ -29,12 +29,10 @@ public sealed record BossEncounterResolution(
 
 // QOD-21 Q2: the real Mãng Cốt encounter (DESIGN-BM-ALPHA-20261103 `boss`) as a
 // 20 Hz tickable machine behind P1:AlphaProfile:Enabled, running on the Q-F
-// phase machine. There is no approved wire surface yet — the read-only
-// snapshot is proposed in
-// Implementation/Work_Orders/Proposals/QOD-21_EncounterSnapshot_Contract_Packet_20261103_vi.md
-// — so this is domain-only: the boss HP, the move timeline, the phase
-// transitions, the wipe countdown and the P00-05 quest-instance overrides live
-// server-side and the self-check exercises them deterministically.
+// phase machine. Its approved read model is `EncounterSnapshotV1`, served by
+// `GET /p1/encounters/current` and `GET /p1/encounters/{encounterId}`; the
+// per-owner HP, move timeline, phase transitions, wipe countdown and P00-05
+// quest-instance overrides all live here and nowhere else.
 //
 // Sourced values (never defaulted): profile BOSS_MANG_COT_QUEST_ALPHA_1 on
 // entity BOSS_MANG_COT (level 5, HP 1200, attack 24, armor 6), arena CIRCLE
@@ -66,10 +64,11 @@ public sealed record BossEncounterResolution(
 // - `safePads` (168,0)/(188,0) r 0.75, `phase3Only`, `noInvulnerability` are
 //   snapshot data: no source states a mechanical effect for them, so the
 //   machine applies nothing (the packet exposes them for the client to draw).
-// - Player damage reaches the boss through `ApplyBossDamage`, the single entry
-//   point the combat path will call once the quest boss is targetable (the tick
-//   engine still only targets `MOB` kinds); until then the self-check is the
-//   damage source. Phase transitions are evaluated at the boss's own impact
+// - Player damage reaches the boss through `ApplyBossDamage`, which the combat
+//   tick engine calls when one of the acting character's casts lands on the
+//   encounter boss (see `ICombatBossBridge`); the v2 audience read model marks
+//   that same boss targetable for its owner and only for its owner. Phase
+//   transitions are evaluated at the boss's own impact
 //   frames, which is the Q-F contract (damage first, phase second, one
 //   transition per frame), while HP reaching zero ends the fight inside the
 //   tick it lands — DEFEATED is therefore emitted once, from whichever of the
@@ -306,13 +305,42 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
     {
         lock (_sync)
         {
-            return _bossEntityId is not null &&
-                string.Equals(entity.EntityId, _bossEntityId, StringComparison.Ordinal) &&
-                _instances.TryGetValue(characterId, out var instance) &&
-                !instance.Defeated &&
-                !instance.AwaitingFreshAttempt &&
-                string.Equals(entity.State, WorldEntityStates.Alive, StringComparison.Ordinal);
+            return IsLiveBossTargetLocked(characterId, entity);
         }
+    }
+
+    // The same predicate the cast path uses, so the audience read model can
+    // never advertise a boss the engine would refuse to hit.
+    private bool IsLiveBossTargetLocked(string characterId, WorldEntityInstance entity) =>
+        _bossEntityId is not null &&
+        string.Equals(entity.EntityId, _bossEntityId, StringComparison.Ordinal) &&
+        _instances.TryGetValue(characterId, out var instance) &&
+        !instance.Defeated &&
+        !instance.AwaitingFreshAttempt &&
+        string.Equals(entity.State, WorldEntityStates.Alive, StringComparison.Ordinal);
+
+    bool ICombatBossBridge.TryGetAudience(
+        string characterId,
+        WorldEntityInstance entity,
+        out BossEncounterAudience audience)
+    {
+        lock (_sync)
+        {
+            if (_bossEntityId is not null &&
+                string.Equals(entity.EntityId, _bossEntityId, StringComparison.Ordinal) &&
+                _instances.TryGetValue(characterId, out var instance))
+            {
+                audience = new BossEncounterAudience(
+                    IsLiveBossTargetLocked(characterId, entity),
+                    instance.Defeated,
+                    instance.Defeated ? 0 : instance.BossHp,
+                    _maxHp);
+                return true;
+            }
+        }
+
+        audience = default;
+        return false;
     }
 
     (int HpBefore, int HpAfter, bool Died) ICombatBossBridge.ApplyDamage(

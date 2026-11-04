@@ -59,6 +59,7 @@ public sealed class WorldAoiProjectionService
     private readonly CombatDamageFeature _combat;
     private readonly GatherClaimStore _claims;
     private readonly MobCombatStateStore _states;
+    private readonly ICombatBossBridge? _bosses;
     private readonly ConcurrentDictionary<string, SessionVisibility> _visibility =
         new(StringComparer.Ordinal);
 
@@ -67,13 +68,15 @@ public sealed class WorldAoiProjectionService
         MobLifecycleService mobs,
         CombatDamageFeature combat,
         GatherClaimStore claims,
-        MobCombatStateStore states)
+        MobCombatStateStore states,
+        ICombatBossBridge? bosses = null)
     {
         _entities = entities;
         _mobs = mobs;
         _combat = combat;
         _claims = claims;
         _states = states;
+        _bosses = bosses;
     }
 
     public int SessionCount => _visibility.Count;
@@ -133,9 +136,22 @@ public sealed class WorldAoiProjectionService
                 entity.Kind, WorldEntityKinds.GatherNode, StringComparison.Ordinal) ||
             string.Equals(entity.Kind, WorldEntityKinds.Interactable, StringComparison.Ordinal);
 
+        // The alpha boss encounter is owner-scoped, so only the registered owner
+        // has an audience view of it; everyone else keeps the blocked policy.
+        BossEncounterAudience? bossAudience = null;
+        if (isBoss && _bosses is not null &&
+            _bosses.TryGetAudience(viewer.CharacterId, entity, out var audience))
+        {
+            bossAudience = audience;
+        }
+
         var state = isMob || isBoss
             ? _mobs.GetState(entity.EntityId)
             : entity.State;
+        if (bossAudience?.Defeated == true)
+        {
+            state = MobBehaviorStates.Dead;
+        }
 
         string healthState;
         var targetable = false;
@@ -155,10 +171,20 @@ public sealed class WorldAoiProjectionService
         }
         else if (isBoss)
         {
-            // Mãng Cốt stays BOSSDATA_BLOCKED until the QOD-19 encounter data
-            // exists; a blocked boss is not shown as dead and is not targetable.
+            // A boss with no encounter for this viewer stays BOSSDATA_BLOCKED:
+            // it is not shown as dead and is not targetable. The owner of a live
+            // encounter gets the same view the cast path will accept, so the
+            // audience never advertises a target the engine would refuse.
             healthState = WorldHealthStates.Blocked;
-            targetable = false;
+            if (bossAudience is { } owned)
+            {
+                healthState = owned.Defeated
+                    ? WorldHealthStates.Dead
+                    : WorldHealthStates.Alive;
+                targetable = owned.Targetable;
+                hp = owned.Hp;
+                maxHp = owned.MaxHp;
+            }
         }
         else if (isNpc)
         {

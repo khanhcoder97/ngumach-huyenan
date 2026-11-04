@@ -242,6 +242,11 @@ builder.Services.AddSingleton<AlphaBossEncounterService>();
 // profile OFF the encounter holds no instance so the impact path is unchanged.
 builder.Services.AddSingleton<ICombatBossBridge>(sp =>
     sp.GetRequiredService<AlphaBossEncounterService>());
+// Resolved mob deaths are pushed to the escort machine instead of inferred from
+// polled world state; with the profile OFF the escort holds no instance, so
+// every kill notification is dropped and the mob path is unchanged.
+builder.Services.AddSingleton<ICombatKillSink>(sp =>
+    sp.GetRequiredService<AlphaEscortService>());
 builder.Services.AddHostedService<WorldTickBackgroundService>();
 
 var app = builder.Build();

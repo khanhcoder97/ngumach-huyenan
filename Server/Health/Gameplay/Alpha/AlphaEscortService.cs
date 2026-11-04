@@ -1,5 +1,6 @@
 using System.Globalization;
 using Server.Health.Contracts;
+using Server.Health.Gameplay.Combat;
 using Server.Health.Gameplay.Quests;
 using Server.Health.World;
 
@@ -11,6 +12,7 @@ public static class EscortOutcomes
     public const string CheckpointCommitted = "CHECKPOINT_COMMITTED";
     public const string WaveActivated = "WAVE_ACTIVATED";
     public const string WaveCleared = "WAVE_CLEARED";
+    public const string WaveActivationFailed = "WAVE_ACTIVATION_FAILED";
     public const string Wiped = "WIPED";
     public const string Completed = "COMPLETED";
     public const string Ended = "ENDED";
@@ -23,7 +25,7 @@ public sealed record EscortResolution(
     double NpcX,
     double NpcY);
 
-// QOD-21 Q1c: the P00-04 escort (DESIGN-BM-ALPHA-20261103 questRules.P00-04)
+// QOD-21 Q1c/Q2: the P00-04 escort (DESIGN-BM-ALPHA-20261103 questRules.P00-04)
 // as a 20 Hz tickable machine behind P1:AlphaProfile:Enabled. There is no
 // approved wire surface for the escort NPC or the wave lifecycle, so the
 // machine is domain-only: the NPC position, the checkpoint commits and the
@@ -38,26 +40,32 @@ public sealed record EscortResolution(
 // [instanceId, questAttemptId, waveId, entityLifeId, deathEventId], wipe
 // restores the last committed checkpoint.
 //
-// Interpretation of the sourced rules (no invented numbers): the NPC walks
-// the waypoint path at 3 wu/s only while the owner is alive, on the map and
-// within 12 wu of the NPC. Arriving at a checkpoint commits it and spawns its
-// wave with fresh life IDs; the NPC waits at the checkpoint until every wave
-// member is dead (the wave is cleared), then resumes on the same tick.
-// Committing the final waypoint with no pending wave completes the escort
-// (so a bundle without the wave entities still walks the path and finishes).
-// An owner death restores
-// the NPC to the last committed checkpoint, resets an in-progress wave with
-// new life IDs (re-fight) and never respawns a cleared wave (not farmable).
-// The P1 quest runtime has no attempt lifecycle, so the questAttemptId
-// component of the credit key is constant; the combat engine's deathEventId
-// is not observable domain-side, so the machine mints its own per
-// (member, life) key when it observes the registry death. Wave members are
-// shared world spawns (the content ships one group per wave), so two owners
-// fighting the same wave share the fight; a wipe reset re-lives the shared
-// members. The machine holds every wave member dead unless an instance has
-// the wave active, which also cancels the MobSpawnGroupService respawn of a
-// cleared wave.
-public sealed class AlphaEscortService
+// Interpretation of the sourced rules (no invented numbers): the NPC walks the
+// waypoint path at 3 wu/s only while the owner is alive, on the map and within
+// 12 wu of the NPC. Reaching a checkpoint commits it and activates that
+// checkpoint's wave; the NPC waits while the wave is active and resumes on the
+// tick that observes it cleared. Clearing every required wave of every
+// committed checkpoint is the only path to completion: a checkpoint whose wave
+// cannot be activated — the bundle ships fewer than the sourced 3+3 actors, or
+// the group is mid-fight for another owner — fails activation with a diagnostic
+// and holds the NPC at the checkpoint instead of walking on. An owner death
+// restores the NPC to the last committed checkpoint and re-activates an
+// in-progress wave (new life IDs, re-fight); a cleared wave is never re-opened
+// for the same instance, so it cannot be farmed.
+//
+// Kill credit is push-based, not polled. The tick engine hands each death it
+// resolves to `OnMobKilled` — entity, life, killer and the DEATH event id it
+// wrote to the killer's combat stream — and the credit key is exactly the
+// sourced five-tuple. A replayed event therefore cannot double-count, and
+// another owner's kills cannot fill this instance's wave. The P1 quest runtime
+// has no attempt lifecycle, so the questAttemptId component stays at its first
+// value. A wave cleared inside the sink is reported on the machine's next tick:
+// the sink runs in the combat loop and has no combat stream to write into.
+//
+// Wave members are shared world spawns — the content ships one group per wave —
+// so a group is only re-spawned when no other instance holds that wave active:
+// one owner's wipe or late arrival must not reset another owner's generation.
+public sealed class AlphaEscortService : ICombatKillSink
 {
     private const string QuestId = "P00-04";
 
@@ -71,8 +79,11 @@ public sealed class AlphaEscortService
     private readonly object _sync = new();
     private readonly Dictionary<string, List<WorldEntityInstance>> _waveMembers =
         new(StringComparer.Ordinal);
+    private readonly Dictionary<string, string> _waveByEntityId =
+        new(StringComparer.Ordinal);
     private readonly Dictionary<string, EscortInstance> _instances =
         new(StringComparer.Ordinal);
+    private readonly List<EscortResolution> _deferred = [];
 
     public AlphaEscortService(
         AlphaDesign design,
@@ -92,12 +103,17 @@ public sealed class AlphaEscortService
         _entities = entities;
         foreach (var wave in _waves)
         {
-            _waveMembers[wave.RecordId] = entities.All
+            var members = entities.All
                 .Where(entity =>
                     string.Equals(entity.GroupId, wave.RecordId, StringComparison.Ordinal) &&
                     string.Equals(entity.Kind, WorldEntityKinds.Mob, StringComparison.Ordinal))
                 .OrderBy(entity => entity.MemberIndex)
                 .ToList();
+            _waveMembers[wave.RecordId] = members;
+            foreach (var member in members)
+            {
+                _waveByEntityId[member.EntityId] = wave.RecordId;
+            }
         }
     }
 
@@ -105,20 +121,25 @@ public sealed class AlphaEscortService
         IReadOnlyList<PlayerSession> players,
         long tick)
     {
-        if (_waypoints.Count < 2)
-        {
-            return Array.Empty<EscortResolution>();
-        }
-
-        var targets = new Dictionary<string, PlayerSession>(StringComparer.Ordinal);
-        foreach (var player in players)
-        {
-            targets[player.CharacterId] = player;
-        }
-
         var resolutions = new List<EscortResolution>();
         lock (_sync)
         {
+            // Kill-driven transitions are reported here: the sink is called from
+            // the combat loop and has nowhere else to hand them.
+            resolutions.AddRange(_deferred);
+            _deferred.Clear();
+
+            if (_waypoints.Count < 2)
+            {
+                return resolutions;
+            }
+
+            var targets = new Dictionary<string, PlayerSession>(StringComparer.Ordinal);
+            foreach (var player in players)
+            {
+                targets[player.CharacterId] = player;
+            }
+
             foreach (var characterId in _instances.Keys.ToArray())
             {
                 var instance = _instances[characterId];
@@ -198,6 +219,63 @@ public sealed class AlphaEscortService
         return resolutions;
     }
 
+    // The only credit source: a death the combat engine actually resolved.
+    void ICombatKillSink.OnMobKilled(CombatMobKill kill)
+    {
+        lock (_sync)
+        {
+            if (!_waveByEntityId.TryGetValue(kill.EntityId, out var recordId) ||
+                !_instances.TryGetValue(kill.KillerCharacterId, out var instance))
+            {
+                return;
+            }
+
+            var wave = _waves.First(candidate =>
+                string.Equals(candidate.RecordId, recordId, StringComparison.Ordinal));
+            var state = instance.Waves[recordId];
+            if (state.Status != WaveStatuses.Active ||
+                !state.MemberLives.TryGetValue(kill.EntityId, out var generation) ||
+                generation != kill.LifeId)
+            {
+                // Not this instance's fight: a wave it has not activated or has
+                // already cleared, or a life other than the one it is fighting.
+                return;
+            }
+
+            // The sourced credit key — every component authoritative server-side,
+            // so claiming the same death twice is a no-op, not a new credit.
+            var key = string.Concat(
+                instance.InstanceId,
+                "|",
+                EscortInstance.QuestAttemptId,
+                "|",
+                wave.RecordId,
+                "|",
+                kill.LifeId.ToString(CultureInfo.InvariantCulture),
+                "|",
+                kill.DeathEventId);
+            if (!instance.CreditKeys.Add(key))
+            {
+                return;
+            }
+
+            state.CreditedMembers.Add(kill.EntityId);
+            if (state.CreditedMembers.Count < wave.Count)
+            {
+                return;
+            }
+
+            state.Status = WaveStatuses.Cleared;
+            _deferred.Add(new EscortResolution(
+                instance.CharacterId,
+                EscortOutcomes.WaveCleared,
+                wave.RecordId,
+                instance.NpcX,
+                instance.NpcY));
+            CompleteIfAtEnd(instance, _deferred);
+        }
+    }
+
     public bool TryGetNpcPosition(string characterId, out double x, out double y)
     {
         lock (_sync)
@@ -220,20 +298,27 @@ public sealed class AlphaEscortService
         PlayerSession owner,
         List<EscortResolution> resolutions)
     {
-        // The final waypoint's wave still fights after the last commit, so
-        // the wave check must come before the path-complete guard.
+        // The final waypoint's wave still fights after the last commit, so the
+        // wave check has to come before the path-complete guard.
         var blockingWave = WaveAt(instance.LastCommittedIndex);
-        if (blockingWave is not null && instance.Waves[blockingWave.RecordId].Status == WaveStatuses.Active)
+        if (blockingWave is not null)
         {
-            ObserveWave(instance, blockingWave, resolutions);
-            if (instance.Waves[blockingWave.RecordId].Status == WaveStatuses.Active)
+            var state = instance.Waves[blockingWave.RecordId];
+            if (state.Status == WaveStatuses.Pending)
             {
-                return;
+                // Retry a deferred activation: the group may have respawned, or
+                // the other owner's fight may have ended.
+                TryActivate(instance, blockingWave, resolutions);
             }
 
-            // The wave cleared this tick: the NPC resumes on the same tick,
-            // unless that was the final waypoint.
-            if (instance.WaypointIndex >= _waypoints.Count)
+            if (state.Status == WaveStatuses.Active)
+            {
+                AdoptRespawns(instance, blockingWave);
+            }
+
+            // Still fighting, or activation failed and is being retried: either
+            // way the NPC stays at the checkpoint. Nothing else completes it.
+            if (state.Status != WaveStatuses.Cleared)
             {
                 return;
             }
@@ -278,125 +363,144 @@ public sealed class AlphaEscortService
             instance.NpcY));
 
         var wave = WaveAt(instance.LastCommittedIndex);
-        if (wave is null || instance.Waves[wave.RecordId].Status == WaveStatuses.Cleared)
+        if (wave is null)
+        {
+            // The approved decision pairs one wave with every checkpoint after the
+            // start, so a checkpoint with no wave rule is a data fault — never a
+            // free pass to the next waypoint.
+            resolutions.Add(new EscortResolution(
+                instance.CharacterId,
+                EscortOutcomes.WaveActivationFailed,
+                $"checkpoint {checkpointX} has no wave rule",
+                instance.NpcX,
+                instance.NpcY));
+            return;
+        }
+
+        if (instance.Waves[wave.RecordId].Status == WaveStatuses.Cleared)
         {
             CompleteIfAtEnd(instance, resolutions);
             return;
         }
 
-        var members = _waveMembers[wave.RecordId];
-        if (members.Count == 0)
-        {
-            CompleteIfAtEnd(instance, resolutions);
-            return;
-        }
+        TryActivate(instance, wave, resolutions);
+    }
 
+    // Brings the checkpoint's wave up for this instance and makes it what stands
+    // between the NPC and the next waypoint.
+    private bool TryActivate(
+        EscortInstance instance,
+        AlphaWaveRule wave,
+        List<EscortResolution> resolutions)
+    {
         var state = instance.Waves[wave.RecordId];
-        var alive = members.FirstOrDefault(member =>
-            string.Equals(member.State, WorldEntityStates.Alive, StringComparison.Ordinal));
-        if (alive is null)
+        var members = _waveMembers[wave.RecordId];
+        if (members.Count != wave.Count)
+        {
+            FailActivation(instance, state, resolutions,
+                $"wave {wave.RecordId} ships {members.Count} of {wave.Count} " +
+                $"required {wave.MobId} actors");
+            return false;
+        }
+
+        if (!IsHeldByOtherInstance(instance, wave.RecordId))
         {
             foreach (var member in members)
             {
-                member.ForceRespawn();
+                if (!IsAlive(member))
+                {
+                    member.ForceRespawn();
+                }
             }
-
-            state.Generation = members[0].LifeId;
         }
-        else
+        else if (members.Any(member => !IsAlive(member)))
         {
-            state.Generation = alive.LifeId;
+            // Another owner is fighting this shared group now. Re-spawning its
+            // dead members would reset their generation and their credit.
+            FailActivation(instance, state, resolutions,
+                $"wave {wave.RecordId} is held by another owner's active fight");
+            return false;
         }
 
+        state.MemberLives.Clear();
+        foreach (var member in members)
+        {
+            state.MemberLives[member.EntityId] = member.LifeId;
+        }
+
+        state.CreditedMembers.Clear();
         state.Status = WaveStatuses.Active;
+        state.ActivationFailure = null;
         resolutions.Add(new EscortResolution(
             instance.CharacterId,
             EscortOutcomes.WaveActivated,
             wave.RecordId,
             instance.NpcX,
             instance.NpcY));
+        return true;
     }
 
-    private void ObserveWave(
+    private static void FailActivation(
         EscortInstance instance,
-        AlphaWaveRule wave,
-        List<EscortResolution> resolutions)
+        WaveState state,
+        List<EscortResolution> resolutions,
+        string reason)
     {
-        var members = _waveMembers[wave.RecordId];
-        if (members.Count == 0)
+        state.Status = WaveStatuses.Pending;
+        if (string.Equals(state.ActivationFailure, reason, StringComparison.Ordinal))
         {
+            // Already reported once; the NPC just stays at the checkpoint.
             return;
         }
 
-        var state = instance.Waves[wave.RecordId];
-        var alive = members.FirstOrDefault(member =>
-            string.Equals(member.State, WorldEntityStates.Alive, StringComparison.Ordinal));
-        if (alive is not null && alive.LifeId != state.Generation)
-        {
-            state.Generation = alive.LifeId;
-            state.Credits = 0;
-        }
-
-        foreach (var member in members)
-        {
-            if (member.LifeId != state.Generation ||
-                !string.Equals(member.State, WorldEntityStates.Dead, StringComparison.Ordinal))
-            {
-                continue;
-            }
-
-            if (instance.CreditedLives.TryGetValue(member.EntityId, out var credited) &&
-                credited == member.LifeId)
-            {
-                continue;
-            }
-
-            var key = string.Concat(
-                instance.InstanceId,
-                "|",
-                EscortInstance.QuestAttemptId,
-                "|",
-                wave.RecordId,
-                "|",
-                member.LifeId.ToString(CultureInfo.InvariantCulture),
-                "|",
-                Guid.NewGuid().ToString("N"));
-            if (!instance.CreditKeys.Add(key))
-            {
-                continue;
-            }
-
-            instance.CreditedLives[member.EntityId] = member.LifeId;
-            state.Credits++;
-        }
-
-        if (state.Credits < members.Count)
-        {
-            return;
-        }
-
-        state.Status = WaveStatuses.Cleared;
+        state.ActivationFailure = reason;
         resolutions.Add(new EscortResolution(
             instance.CharacterId,
-            EscortOutcomes.WaveCleared,
-            wave.RecordId,
+            EscortOutcomes.WaveActivationFailed,
+            reason,
             instance.NpcX,
             instance.NpcY));
-        CompleteIfAtEnd(instance, resolutions);
+    }
+
+    // A member the content respawned under this instance starts a fresh life for
+    // the wave: its old death stops counting and it has to be killed again.
+    private void AdoptRespawns(EscortInstance instance, AlphaWaveRule wave)
+    {
+        var state = instance.Waves[wave.RecordId];
+        foreach (var member in _waveMembers[wave.RecordId])
+        {
+            if (state.MemberLives.TryGetValue(member.EntityId, out var generation) &&
+                generation == member.LifeId)
+            {
+                continue;
+            }
+
+            state.MemberLives[member.EntityId] = member.LifeId;
+            state.CreditedMembers.Remove(member.EntityId);
+        }
     }
 
     private void CompleteIfAtEnd(EscortInstance instance, List<EscortResolution> resolutions)
     {
-        if (instance.WaypointIndex >= _waypoints.Count && !instance.Completed)
+        if (instance.WaypointIndex < _waypoints.Count || instance.Completed)
         {
-            instance.Completed = true;
-            resolutions.Add(new EscortResolution(
-                instance.CharacterId,
-                EscortOutcomes.Completed,
-                null,
-                instance.NpcX,
-                instance.NpcY));
+            return;
         }
+
+        var lastWave = WaveAt(instance.LastCommittedIndex);
+        if (lastWave is null ||
+            instance.Waves[lastWave.RecordId].Status != WaveStatuses.Cleared)
+        {
+            return;
+        }
+
+        instance.Completed = true;
+        resolutions.Add(new EscortResolution(
+            instance.CharacterId,
+            EscortOutcomes.Completed,
+            null,
+            instance.NpcX,
+            instance.NpcY));
     }
 
     private void Wipe(EscortInstance instance, List<EscortResolution> resolutions)
@@ -409,15 +513,11 @@ public sealed class AlphaEscortService
         var wave = WaveAt(instance.LastCommittedIndex);
         if (wave is not null && instance.Waves[wave.RecordId].Status == WaveStatuses.Active)
         {
-            var members = _waveMembers[wave.RecordId];
-            foreach (var member in members)
-            {
-                member.ForceRespawn();
-            }
-
-            var state = instance.Waves[wave.RecordId];
-            state.Generation = members[0].LifeId;
-            state.Credits = 0;
+            // "pending wave resets with new life IDs": the re-spawn itself is
+            // TryActivate's job, and it refuses to touch a group another owner is
+            // fighting. A cleared wave is never re-opened.
+            instance.Waves[wave.RecordId].Status = WaveStatuses.Pending;
+            TryActivate(instance, wave, resolutions);
         }
 
         resolutions.Add(new EscortResolution(
@@ -427,6 +527,11 @@ public sealed class AlphaEscortService
             instance.NpcX,
             instance.NpcY));
     }
+
+    private bool IsHeldByOtherInstance(EscortInstance self, string recordId) =>
+        _instances.Values.Any(other =>
+            !ReferenceEquals(other, self) &&
+            other.Waves[recordId].Status == WaveStatuses.Active);
 
     private void HoldWaves()
     {
@@ -449,10 +554,14 @@ public sealed class AlphaEscortService
 
             foreach (var member in _waveMembers[wave.RecordId])
             {
-                if (!string.Equals(member.State, WorldEntityStates.Dead, StringComparison.Ordinal))
+                if (!IsAlive(member))
                 {
-                    _entities.Despawn(member.EntityId);
+                    continue;
                 }
+
+                // The world records gate these spawns on the escort passing
+                // x=80/120, so the wave only exists while an instance holds it.
+                _entities.Despawn(member.EntityId);
             }
         }
     }
@@ -475,6 +584,9 @@ public sealed class AlphaEscortService
         return Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
     }
 
+    private static bool IsAlive(WorldEntityInstance member) =>
+        string.Equals(member.State, WorldEntityStates.Alive, StringComparison.Ordinal);
+
     private static string FormatWu(double value) =>
         value.ToString("0.#", CultureInfo.InvariantCulture);
 
@@ -487,6 +599,8 @@ public sealed class AlphaEscortService
 
     private sealed class EscortInstance
     {
+        // P1 has no quest-attempt lifecycle, so the attempt component of the
+        // sourced credit key stays at its first value.
         public const string QuestAttemptId = "1";
 
         public EscortInstance(IReadOnlyList<AlphaWaveRule> waves, string characterId)
@@ -498,7 +612,11 @@ public sealed class AlphaEscortService
             }
         }
 
-        public string InstanceId { get; } = Guid.NewGuid().ToString("N");
+        // Derived from (quest, attempt, character) rather than minted per process,
+        // so a credit key is reproducible for the same evidence.
+        public string InstanceId =>
+            $"ESCORT-{QuestId}-{QuestAttemptId}-{CharacterId}";
+
         public string CharacterId { get; }
         public double NpcX;
         public double NpcY;
@@ -507,14 +625,14 @@ public sealed class AlphaEscortService
         public bool OwnerAlive = true;
         public bool Completed;
         public HashSet<string> CreditKeys { get; } = new(StringComparer.Ordinal);
-        public Dictionary<string, long> CreditedLives { get; } = new(StringComparer.Ordinal);
         public Dictionary<string, WaveState> Waves { get; } = new(StringComparer.Ordinal);
     }
 
     private sealed class WaveState
     {
         public int Status;
-        public long Generation;
-        public int Credits;
+        public string? ActivationFailure;
+        public Dictionary<string, long> MemberLives { get; } = new(StringComparer.Ordinal);
+        public HashSet<string> CreditedMembers { get; } = new(StringComparer.Ordinal);
     }
 }

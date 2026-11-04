@@ -1254,13 +1254,16 @@ public static class ServiceSelfCheck
         var deathQuests = new InMemoryQuestService(
             TickCatalog(), new InMemoryQuestStateStore(), tickRecords, tickClock);
         deathQuests.Accept(deathActor, "TEST-TICK-01");
+        var deathKills = new RecordingKillSink();
         var deathEngine = new CombatTickEngine(
             deathRegistry, enabledCombat, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), deathStore,
             deathQuests, new FixedCombatRolls(hit: true, crit: false),
-            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock());
+            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock(),
+            kills: deathKills);
 
         var deathCount = 0;
+        var deathEventIds = new List<string>();
         for (var castIndex = 0; castIndex < 6; castIndex++)
         {
             var startTick = 1000 + (castIndex * 20);
@@ -1269,8 +1272,16 @@ public static class ServiceSelfCheck
                 CombatV2Actions.Skill, "SK-MK-03", 1, 0, startTick);
             for (var tick = startTick; tick <= startTick + 10; tick++)
             {
-                deathCount += deathEngine.Tick(tick)
-                    .Count(combatEvent => combatEvent.Type == CombatEventTypesV2.Death);
+                foreach (var combatEvent in deathEngine.Tick(tick))
+                {
+                    if (combatEvent.Type != CombatEventTypesV2.Death)
+                    {
+                        continue;
+                    }
+
+                    deathCount++;
+                    deathEventIds.Add(combatEvent.EventId);
+                }
             }
         }
 
@@ -1305,6 +1316,24 @@ public static class ServiceSelfCheck
             (deathStore.TryGet("ENT_SELFCHECK_TICK_MOB", 2)?.Hp ?? 0) == 173 &&
             killStateAfterRespawn.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL") == 1,
             $"life={tickRespawnedMob.LifeId} hp={deathStore.TryGet("ENT_SELFCHECK_TICK_MOB", 2)?.Hp}");
+
+        // QOD-21 Q2: the quest machines get their credit from this notification, so
+        // it must carry exactly the death the engine resolved — one report per
+        // resolved kill, the killer the engine charged, the life that ended, and the
+        // same event id the killer's combat stream shows. A respawned life that is
+        // only hit (not killed) reports nothing.
+        Check(
+            "tick.kill_sink_reports_authoritative_death",
+            deathKills.Kills.Count == 1 &&
+            deathEventIds.Count == 1 &&
+            deathKills.Kills[0].KillerCharacterId == deathActor.CharacterId &&
+            deathKills.Kills[0].EntityId == "ENT_SELFCHECK_TICK_MOB" &&
+            deathKills.Kills[0].RecordId == "MAN-TEST-ENT_SELFCHECK_TICK_MOB" &&
+            deathKills.Kills[0].LifeId == 1 &&
+            deathKills.Kills[0].DeathEventId == deathEventIds[0],
+            $"kills={deathKills.Kills.Count} " +
+            $"first={deathKills.Kills.FirstOrDefault().EntityId}/" +
+            $"{deathKills.Kills.FirstOrDefault().LifeId}");
 
         // QOD-17 loot: versioned CSV export, one roll per group then weighted
         // SELECT_ONE, deterministic server RNG and dry-run receipts (grant OFF
@@ -5470,6 +5499,32 @@ public static class ServiceSelfCheck
             return all;
         }
 
+        // The escort credits only the kill notification the combat engine
+        // produces, so the fixture resolves a death the way the engine does —
+        // despawn the member, then report it with the event id the killer's
+        // combat stream carries. The returned notification can be handed over
+        // again to prove a replay cannot double-count.
+        var escortKillSequence = 0L;
+        CombatMobKill KillEscortWaveMember(
+            AlphaEscortService service,
+            WorldEntityRegistry registry,
+            WorldEntityInstance member,
+            string recordId,
+            string killerCharacterId)
+        {
+            var lifeId = member.LifeId;
+            registry.Despawn(member.EntityId);
+            escortKillSequence++;
+            var kill = new CombatMobKill(
+                killerCharacterId,
+                member.EntityId,
+                recordId,
+                lifeId,
+                $"{escortKillSequence:x32}");
+            ((ICombatKillSink)service).OnMobKilled(kill);
+            return kill;
+        }
+
         // With no owner at all the machine still holds every wave member dead:
         // the waves only exist after their checkpoint commits ("khi Ly An qua
         // x=80/120" in the world records).
@@ -5529,12 +5584,29 @@ public static class ServiceSelfCheck
             escortX80 == 80,
             $"a1={escortWaveA1.State}/{escortWaveA1.LifeId} npc={escortX80}");
 
-        // Two of three deaths never clear the wave; the third clears it and
-        // the NPC resumes on the same tick.
-        escortRegistry.Despawn("ENT_SELFCHECK_ESCORT_A_1");
-        escortRegistry.Despawn("ENT_SELFCHECK_ESCORT_A_2");
+        // Two of three credited deaths do not clear the wave, and replaying one of
+        // them adds no credit (the same death event id is the same key). The third
+        // kill clears it and the NPC resumes on the tick that reports the clear.
+        KillEscortWaveMember(
+            escort,
+            escortRegistry,
+            escortWaveA1,
+            "MAN-BM-WAVE_BM_ESCORT_A",
+            escortOwner.CharacterId);
+        var escortKillA2 = KillEscortWaveMember(
+            escort,
+            escortRegistry,
+            escortWaveA2,
+            "MAN-BM-WAVE_BM_ESCORT_A",
+            escortOwner.CharacterId);
+        ((ICombatKillSink)escort).OnMobKilled(escortKillA2);
         var escortTwoKills = TickEscort(escort, escortOwner, 1300, 1300);
-        escortRegistry.Despawn("ENT_SELFCHECK_ESCORT_A_3");
+        KillEscortWaveMember(
+            escort,
+            escortRegistry,
+            escortWaveA3,
+            "MAN-BM-WAVE_BM_ESCORT_A",
+            escortOwner.CharacterId);
         var escortWaveACleared = TickEscort(escort, escortOwner, 1301, 1301);
         var escortXAfterAFound = escort.TryGetNpcPosition(
             escortOwner.CharacterId, out double escortXAfterA, out _);
@@ -5601,33 +5673,59 @@ public static class ServiceSelfCheck
             $"{escortCommit120.Select(r => r.Outcome + ":" + r.Detail).FirstOrDefault()} " +
             $"b1={escortWaveB1.State}/{escortWaveB1.LifeId}");
 
-        // Wipe mid-wave: one of three down, the wipe restores the NPC to 120
-        // and re-lives the whole pending wave (fresh life IDs, back to
-        // alive), so the fight restarts from zero.
-        escortRegistry.Despawn("ENT_SELFCHECK_ESCORT_B_1");
+        // Wipe mid-wave: one of three credited deaths down, the wipe restores the
+        // NPC to 120 and re-activates the pending wave. Only the member that is
+        // actually dead is re-spawned (fresh life ID); the ones still fighting keep
+        // their lives, and the instance's credit set resets to zero either way, so
+        // the fight restarts from the beginning without disturbing a life that is
+        // still in play.
+        KillEscortWaveMember(
+            escort,
+            escortRegistry,
+            escortWaveB1,
+            "MAN-BM-WAVE_BM_ESCORT_B",
+            escortOwner.CharacterId);
         TickEscort(escort, escortOwner, 1609, 1609);
         escortOwner.Hp = 0;
         var escortWipeMidWave = TickEscort(escort, escortOwner, 1610, 1610);
         escortOwner.Hp = 100;
         Check(
             "alpha.escort_wipe_mid_wave_resets_lives",
-            escortWipeMidWave.Count == 1 &&
-            escortWipeMidWave[0].Outcome == EscortOutcomes.Wiped &&
-            escortWipeMidWave[0].NpcX == 120 &&
+            escortWipeMidWave.Count == 2 &&
+            escortWipeMidWave.Any(r => r.Outcome == EscortOutcomes.Wiped &&
+                r.NpcX == 120 && r.Detail == "checkpoint=120") &&
+            escortWipeMidWave.Any(r => r.Outcome == EscortOutcomes.WaveActivated &&
+                r.Detail == "MAN-BM-WAVE_BM_ESCORT_B") &&
             escortWaveB1.State == WorldEntityStates.Alive &&
             escortWaveB1.LifeId == 3 &&
             escortWaveB2.State == WorldEntityStates.Alive &&
-            escortWaveB2.LifeId == 3 &&
+            escortWaveB2.LifeId == 2 &&
             escortWaveB3.State == WorldEntityStates.Alive &&
-            escortWaveB3.LifeId == 3,
-            $"b1={escortWaveB1.State}/{escortWaveB1.LifeId}");
+            escortWaveB3.LifeId == 2,
+            $"b1={escortWaveB1.State}/{escortWaveB1.LifeId} b2={escortWaveB2.LifeId}");
 
-        // The refight: three new deaths clear the reset wave and complete
-        // the escort at the final waypoint.
-        escortRegistry.Despawn("ENT_SELFCHECK_ESCORT_B_1");
-        escortRegistry.Despawn("ENT_SELFCHECK_ESCORT_B_2");
+        // The refight: the reset lives have to be killed again — the credit the
+        // previous generation earned is gone — and the third kill completes the
+        // escort at the final waypoint.
+        KillEscortWaveMember(
+            escort,
+            escortRegistry,
+            escortWaveB1,
+            "MAN-BM-WAVE_BM_ESCORT_B",
+            escortOwner.CharacterId);
+        KillEscortWaveMember(
+            escort,
+            escortRegistry,
+            escortWaveB2,
+            "MAN-BM-WAVE_BM_ESCORT_B",
+            escortOwner.CharacterId);
         var escortResetPartial = TickEscort(escort, escortOwner, 1611, 1611);
-        escortRegistry.Despawn("ENT_SELFCHECK_ESCORT_B_3");
+        KillEscortWaveMember(
+            escort,
+            escortRegistry,
+            escortWaveB3,
+            "MAN-BM-WAVE_BM_ESCORT_B",
+            escortOwner.CharacterId);
         var escortCompleted = TickEscort(escort, escortOwner, 1612, 1612);
         Check(
             "alpha.escort_completes_after_wave_b",
@@ -5711,9 +5809,10 @@ public static class ServiceSelfCheck
             escortBx == 42,
             $"a={escortTwoA.Count} b={escortTwoB.Count} bx={escortBx}");
 
-        // Without the wave entities in the registry the machine still walks
-        // the path and commits checkpoints, but never fabricates a spawn or
-        // waits on a wave that cannot exist.
+        // Without the wave entities in the registry the machine reaches the first
+        // checkpoint and then stops: activation fails with a diagnostic naming the
+        // wave and how many actors it ships, and the escort neither fabricates a
+        // spawn nor walks on to "complete" a run it never fought.
         var escortInertRegistry = new WorldEntityRegistry(
             new WorldEntityCatalog([], []),
             escortClock);
@@ -5734,16 +5833,150 @@ public static class ServiceSelfCheck
         }
 
         Check(
-            "alpha.escort_inert_without_wave_entities",
+            "alpha.escort_missing_wave_blocks_instead_of_completing",
             escortInertResolutions.Any(r => r.Outcome == EscortOutcomes.CheckpointCommitted &&
                 r.Detail == "80") &&
-            escortInertResolutions.Any(r => r.Outcome == EscortOutcomes.CheckpointCommitted &&
-                r.Detail == "120") &&
+            escortInertResolutions.Count(r =>
+                r.Outcome == EscortOutcomes.WaveActivationFailed) == 1 &&
+            escortInertResolutions.Single(r =>
+                r.Outcome == EscortOutcomes.WaveActivationFailed).Detail ==
+                "wave MAN-BM-WAVE_BM_ESCORT_A ships 0 of 3 required MOB_CARPLING actors" &&
             escortInertResolutions.All(r => r.Outcome != EscortOutcomes.WaveActivated &&
-                r.Outcome != EscortOutcomes.WaveCleared) &&
-            escortInertResolutions.Any(r => r.Outcome == EscortOutcomes.Completed &&
-                r.NpcX == 120),
+                r.Outcome != EscortOutcomes.WaveCleared &&
+                r.Outcome != EscortOutcomes.CheckpointCommitted ||
+                r.Detail == "80") &&
+            escortInertResolutions.All(r => r.Outcome != EscortOutcomes.Completed) &&
+            escortInert.TryGetNpcPosition(escortInertOwner.CharacterId, out var inertHeld, out _) &&
+            inertHeld == 80,
             $"outcomes={string.Join(",", escortInertResolutions.Select(r => r.Outcome))}");
+
+        // ─── QOD-21 Q2: escort credit authority across two owners ────
+
+        // One wave group, two owners. The content ships a single shared group per
+        // wave, so the machine has to prove three things: an owner is only ever
+        // credited for the kills its own cast landed, one owner's wipe never
+        // re-spawns (and therefore never resets) the generation the other owner is
+        // fighting, and a deferred activation says so instead of walking on.
+        var escortIsoStub = new EscortQuestStub();
+        escortIsoStub.Set("CHR_SELFCHECK_ESCORT_ISO_A", QuestStates.Active);
+        escortIsoStub.Set("CHR_SELFCHECK_ESCORT_ISO_B", QuestStates.Active);
+        var escortIsoM1 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_ISO_1", "MAN-BM-WAVE_BM_ESCORT_A", "MOB_CARPLING", 80, 1);
+        var escortIsoM2 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_ISO_2", "MAN-BM-WAVE_BM_ESCORT_A", "MOB_CARPLING", 80, 2);
+        var escortIsoM3 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_ISO_3", "MAN-BM-WAVE_BM_ESCORT_A", "MOB_CARPLING", 80, 3);
+        var escortIsoRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [escortIsoM1, escortIsoM2, escortIsoM3]),
+            escortClock);
+        var escortIso = new AlphaEscortService(alphaDesign, escortIsoStub, escortIsoRegistry);
+        var escortIsoOwnerA = NewPlayer("CHR_SELFCHECK_ESCORT_ISO_A");
+        escortIsoOwnerA.X = 42;
+        escortIsoOwnerA.Y = 0;
+        var escortIsoOwnerB = NewPlayer("CHR_SELFCHECK_ESCORT_ISO_B");
+        escortIsoOwnerB.X = 42;
+        escortIsoOwnerB.Y = 0;
+        List<EscortResolution> escortIsoA = [];
+        List<EscortResolution> escortIsoB = [];
+        for (var t = 5000; t <= 5270; t++)
+        {
+            var isoRound = escortIso.Tick([escortIsoOwnerA, escortIsoOwnerB], t);
+            escortIsoA.AddRange(isoRound.Where(r =>
+                string.Equals(r.CharacterId, "CHR_SELFCHECK_ESCORT_ISO_A", StringComparison.Ordinal)));
+            escortIsoB.AddRange(isoRound.Where(r =>
+                string.Equals(r.CharacterId, "CHR_SELFCHECK_ESCORT_ISO_B", StringComparison.Ordinal)));
+            if (escortIso.TryGetNpcPosition(escortIsoOwnerA.CharacterId, out var isoAx, out _))
+            {
+                escortIsoOwnerA.X = isoAx;
+            }
+
+            if (escortIso.TryGetNpcPosition(escortIsoOwnerB.CharacterId, out var isoBx, out _))
+            {
+                escortIsoOwnerB.X = isoBx;
+            }
+        }
+
+        Check(
+            "alpha.escort_two_owners_join_one_shared_wave",
+            escortIsoA.Count(r => r.Outcome == EscortOutcomes.WaveActivated) == 1 &&
+            escortIsoB.Count(r => r.Outcome == EscortOutcomes.WaveActivated) == 1 &&
+            escortIsoM1.State == WorldEntityStates.Alive &&
+            escortIsoM1.LifeId == 2 &&
+            escortIsoM2.LifeId == 2 &&
+            escortIsoM3.LifeId == 2 &&
+            escortIsoA.All(r => r.Outcome != EscortOutcomes.WaveActivationFailed) &&
+            escortIsoB.All(r => r.Outcome != EscortOutcomes.WaveActivationFailed),
+            $"a={string.Join(",", escortIsoA.Select(r => r.Outcome))} " +
+            $"m1={escortIsoM1.LifeId}");
+
+        // Owner A kills one member and then dies. Its wipe re-activation must not
+        // touch the group owner B is still fighting: the same lives, the same dead
+        // member, and A reports the deferral instead of completing.
+        KillEscortWaveMember(
+            escortIso,
+            escortIsoRegistry,
+            escortIsoM1,
+            "MAN-BM-WAVE_BM_ESCORT_A",
+            escortIsoOwnerA.CharacterId);
+        escortIsoOwnerA.Hp = 0;
+        var escortIsoWipeRound = escortIso.Tick([escortIsoOwnerA, escortIsoOwnerB], 5300);
+        escortIsoOwnerA.Hp = 100;
+        Check(
+            "alpha.escort_wipe_does_not_respawn_another_owners_wave",
+            escortIsoWipeRound.Any(r =>
+                r.CharacterId == "CHR_SELFCHECK_ESCORT_ISO_A" &&
+                r.Outcome == EscortOutcomes.Wiped) &&
+            escortIsoWipeRound.Any(r =>
+                r.CharacterId == "CHR_SELFCHECK_ESCORT_ISO_A" &&
+                r.Outcome == EscortOutcomes.WaveActivationFailed &&
+                r.Detail ==
+                    "wave MAN-BM-WAVE_BM_ESCORT_A is held by another owner's active fight") &&
+            escortIsoWipeRound.All(r =>
+                r.CharacterId != "CHR_SELFCHECK_ESCORT_ISO_B" ||
+                (r.Outcome != EscortOutcomes.Wiped &&
+                 r.Outcome != EscortOutcomes.WaveActivationFailed &&
+                 r.Outcome != EscortOutcomes.WaveCleared)) &&
+            escortIsoM1.State == WorldEntityStates.Dead &&
+            escortIsoM1.LifeId == 2 &&
+            escortIsoM2.State == WorldEntityStates.Alive &&
+            escortIsoM2.LifeId == 2 &&
+            escortIsoM3.State == WorldEntityStates.Alive &&
+            escortIsoM3.LifeId == 2,
+            $"round={string.Join(",", escortIsoWipeRound.Select(r => r.Outcome))} " +
+            $"m1={escortIsoM1.State}/{escortIsoM1.LifeId}");
+
+        // The world's own group respawn brings the dead member back under a fresh
+        // life; both owners re-arm onto it (activation is no longer deferred). Owner
+        // B then kills all three. Only B's instance clears — the credit key names the
+        // instance of the character the engine reported as the killer.
+        escortIsoM1.ForceRespawn();
+        var escortIsoRespawnRound = escortIso.Tick([escortIsoOwnerA, escortIsoOwnerB], 5301);
+        KillEscortWaveMember(
+            escortIso, escortIsoRegistry, escortIsoM1,
+            "MAN-BM-WAVE_BM_ESCORT_A", escortIsoOwnerB.CharacterId);
+        KillEscortWaveMember(
+            escortIso, escortIsoRegistry, escortIsoM2,
+            "MAN-BM-WAVE_BM_ESCORT_A", escortIsoOwnerB.CharacterId);
+        KillEscortWaveMember(
+            escortIso, escortIsoRegistry, escortIsoM3,
+            "MAN-BM-WAVE_BM_ESCORT_A", escortIsoOwnerB.CharacterId);
+        var escortIsoBClearRound = escortIso.Tick([escortIsoOwnerA, escortIsoOwnerB], 5302);
+        Check(
+            "alpha.escort_kill_credit_is_owner_scoped",
+            escortIsoRespawnRound.Count(r => r.Outcome == EscortOutcomes.WaveActivated) == 1 &&
+            escortIsoRespawnRound.Single(r => r.Outcome == EscortOutcomes.WaveActivated)
+                .CharacterId == "CHR_SELFCHECK_ESCORT_ISO_A" &&
+            escortIsoM1.LifeId == 3 &&
+            escortIsoBClearRound.Count(r => r.Outcome == EscortOutcomes.WaveCleared) == 1 &&
+            escortIsoBClearRound.Single(r => r.Outcome == EscortOutcomes.WaveCleared)
+                .CharacterId == "CHR_SELFCHECK_ESCORT_ISO_B" &&
+            escortIso.TryGetNpcPosition("CHR_SELFCHECK_ESCORT_ISO_A", out var isoAStill, out _) &&
+            isoAStill == 80 &&
+            escortIso.TryGetNpcPosition("CHR_SELFCHECK_ESCORT_ISO_B", out var isoBAfter, out _) &&
+            isoBAfter > 80,
+            $"respawn={string.Join(",", escortIsoRespawnRound.Select(r => r.Outcome))} " +
+            $"clear={string.Join(",", escortIsoBClearRound.Select(r => r.Outcome))} " +
+            $"m1={escortIsoM1.LifeId}");
 
         // ─── QOD-21 Q2: the P00-05 Mãng Cốt encounter machine ────
 
@@ -6320,6 +6553,84 @@ public static class ServiceSelfCheck
             $"cone={bossConeFacing.Kind}/flen={bossConeFacingLength} " +
             $"dead={bossSnapDeadSnap.Status}/{bossSnapDeadSnap.ActiveMove?.MoveId}");
 
+
+        // The audience half of the same read model: the v2 world snapshot must show
+        // the encounter boss as targetable, with the encounter's HP, to the owner
+        // whose casts the engine will actually accept — and must keep the blocked
+        // policy for every other viewer, because one owner's encounter is not
+        // another player's fight. Same predicate on both sides, so a client can
+        // never be handed a target the cast path would refuse.
+        var audienceClock = new ServerClock();
+        var audienceQuestBoss = BossWorldEntity(
+            "ENT_SELFCHECK_AOI_BOSS_QUEST", alphaDesign.QuestRules.P00_05_BossRecordId);
+        var audienceRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [audienceQuestBoss]), audienceClock);
+        var audienceQuest = new BossEncounterQuestStub();
+        audienceQuest.Set("CHR_SELFCHECK_AOI_BOSS_OWNER", QuestStates.Active);
+        var audienceService = new AlphaBossEncounterService(
+            alphaDesign,
+            audienceQuest,
+            audienceRegistry,
+            enabledCombat,
+            new GuardDefenseService(
+                new GuardWindowStore(),
+                enabledCombat,
+                new CombatEventStore(new CombatEventStreamOptions())));
+        var audienceProjection = new WorldAoiProjectionService(
+            audienceRegistry,
+            new MobLifecycleService(
+                audienceRegistry,
+                services.GetRequiredService<IWorldGeometryService>(),
+                aoiMobOptions,
+                audienceClock),
+            enabledCombat,
+            new GatherClaimStore(audienceClock),
+            new MobCombatStateStore(),
+            audienceService);
+        var audienceOwner = NewArenaOwner("CHR_SELFCHECK_AOI_BOSS_OWNER", 181);
+        var audienceStranger = NewArenaOwner("CHR_SELFCHECK_AOI_BOSS_STRANGER", 175);
+        TickBoss(audienceService, audienceOwner, 6000, 6000);
+        var audienceBossForOwner = audienceProjection
+            .Project(audienceOwner)
+            .Single(entity => entity.EntityId == "ENT_SELFCHECK_AOI_BOSS_QUEST");
+        var audienceBossForStranger = audienceProjection
+            .Project(audienceStranger)
+            .Single(entity => entity.EntityId == "ENT_SELFCHECK_AOI_BOSS_QUEST");
+        var audienceKillResolutions = audienceService.ApplyBossDamage(
+            "CHR_SELFCHECK_AOI_BOSS_OWNER", 1200, 6001).Count;
+        var audienceDeadBoss = audienceProjection
+            .Project(audienceOwner)
+            .Single(entity => entity.EntityId == "ENT_SELFCHECK_AOI_BOSS_QUEST");
+        Check(
+            "alpha.boss_audience_is_targetable_only_for_its_owner",
+            audienceBossForOwner is
+            {
+                Kind: WorldEntityKinds.Boss,
+                HealthState: WorldHealthStates.Alive,
+                Targetable: true,
+                Hp: 1200,
+                MaxHp: 1200
+            } &&
+            audienceBossForStranger is
+            {
+                HealthState: WorldHealthStates.Blocked,
+                Targetable: false,
+                Hp: 0,
+                MaxHp: 0
+            } &&
+            audienceKillResolutions == 1 &&
+            audienceDeadBoss is
+            {
+                HealthState: WorldHealthStates.Dead,
+                State: MobBehaviorStates.Dead,
+                Targetable: false,
+                Hp: 0,
+                MaxHp: 1200
+            },
+            $"owner={audienceBossForOwner.HealthState}/{audienceBossForOwner.Targetable}" +
+            $"/{audienceBossForOwner.Hp} stranger={audienceBossForStranger.HealthState} " +
+            $"dead={audienceDeadBoss.HealthState}/{audienceDeadBoss.State}/" +
+            $"{audienceDeadBoss.Targetable}");
 
         // ─── Mãng Cốt encounter state machine (Q-F part 1) ────
 
@@ -7541,6 +7852,16 @@ public static class ServiceSelfCheck
     // The boss encounter only reads quest state, and its trial-visibility rule
     // also reads the fragment objective's counter, so the stub carries both. The
     // cast integration asserts kill credit through it, so it also records events.
+    // Records what the tick engine reports as a resolved kill, so the
+    // notification itself can be pinned (one per death, the right life, the same
+    // event id the combat stream carries).
+    private sealed class RecordingKillSink : ICombatKillSink
+    {
+        public List<CombatMobKill> Kills { get; } = [];
+
+        public void OnMobKilled(CombatMobKill kill) => Kills.Add(kill);
+    }
+
     private sealed class BossEncounterQuestStub : IQuestService
     {
         private readonly Dictionary<string, string> _states = new(StringComparer.Ordinal);
