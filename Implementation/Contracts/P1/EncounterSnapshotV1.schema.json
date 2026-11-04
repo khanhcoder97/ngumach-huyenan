@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/contracts/p1/EncounterSnapshotV1.schema.json",
+  "title": "P1 alpha encounter snapshot (one atomic copy of a single boss generation)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "encounterId",
+    "questId",
+    "bossRecordId",
+    "bossEntityId",
+    "bossLifeId",
+    "bossRevision",
+    "status",
+    "phase",
+    "bossHp",
+    "bossMaxHp",
+    "serverTick",
+    "registeredCharacterIds",
+    "activeMove",
+    "moveCooldownRemainingTicks",
+    "phaseGuardRemainingTicks",
+    "wipeCountdownTicks",
+    "arena",
+    "safePads",
+    "phaseNpc",
+    "trialNpcVisible"
+  ],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "encounterId": { "type": "string", "pattern": "^ENC-[0-9A-F]{24}$" },
+    "questId": { "type": "string", "pattern": "^P[0-9]{2}-[0-9]{2}$" },
+    "bossRecordId": { "type": "string", "pattern": "^MAN-BM-[A-Z0-9_]+$" },
+    "bossEntityId": { "type": "string", "pattern": "^ENT_[A-Z0-9_]+$" },
+    "bossLifeId": { "type": "integer", "minimum": 1 },
+    "bossRevision": { "type": "integer", "minimum": 1 },
+    "status": { "type": "string", "enum": ["OPEN", "RESET", "DEFEATED"] },
+    "phase": { "type": "integer", "minimum": 1, "maximum": 3 },
+    "bossHp": { "type": "integer", "minimum": 0 },
+    "bossMaxHp": { "type": "integer", "minimum": 1 },
+    "serverTick": { "type": "integer", "minimum": 0 },
+    "registeredCharacterIds": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": { "type": "string", "pattern": "^CHR_[A-Z0-9]+$" }
+    },
+    "activeMove": {
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/activeMove" }
+      ]
+    },
+    "moveCooldownRemainingTicks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["A", "B", "C"],
+      "properties": {
+        "A": { "type": "integer", "minimum": 0 },
+        "B": { "type": "integer", "minimum": 0 },
+        "C": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "phaseGuardRemainingTicks": { "type": "integer", "minimum": 0 },
+    "wipeCountdownTicks": { "type": ["integer", "null"], "minimum": 0 },
+    "arena": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["shape", "centerXWu", "centerYWu", "radiusWu"],
+      "properties": {
+        "shape": { "type": "string", "enum": ["CIRCLE"] },
+        "centerXWu": { "type": "number" },
+        "centerYWu": { "type": "number" },
+        "radiusWu": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "safePads": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["centerXWu", "centerYWu", "radiusWu", "applies"],
+        "properties": {
+          "centerXWu": { "type": "number" },
+          "centerYWu": { "type": "number" },
+          "radiusWu": { "type": "number", "exclusiveMinimum": 0 },
+          "applies": { "type": "boolean" }
+        }
+      }
+    },
+    "phaseNpc": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["npcId", "xWu", "yWu", "active"],
+      "properties": {
+        "npcId": { "type": "string", "pattern": "^NPC_[A-Z0-9_]+$" },
+        "xWu": { "type": "number" },
+        "yWu": { "type": "number" },
+        "active": { "type": "boolean" }
+      }
+    },
+    "trialNpcVisible": { "type": "boolean" }
+  },
+  "$defs": {
+    "activeMove": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "moveId", "castId", "state", "ticksRemaining",
+        "stateEndsAtTick", "shape", "targetLock"
+      ],
+      "properties": {
+        "moveId": { "type": "string", "enum": ["A", "B", "C"] },
+        "castId": { "type": "string", "pattern": "^CAST-[A-Z0-9-]{8,40}$" },
+        "state": { "type": "string", "enum": ["TELEGRAPH", "RECOVERY"] },
+        "ticksRemaining": { "type": "integer", "minimum": 0 },
+        "stateEndsAtTick": { "type": "integer", "minimum": 0 },
+        "shape": { "$ref": "#/$defs/shape" },
+        "targetLock": {
+          "type": "string",
+          "enum": [
+            "TELEGRAPH_START_FACING",
+            "TELEGRAPH_START_TARGET_POSITION",
+            "BOSS_POSITION"
+          ]
+        }
+      }
+    },
+    "shape": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind", "centerXWu", "centerYWu", "angleDegrees", "rangeWu",
+        "radiusWu", "innerRadiusWu", "outerRadiusWu", "facingX", "facingY"
+      ],
+      "properties": {
+        "kind": { "type": "string", "enum": ["CONE", "CIRCLE", "ANNULUS"] },
+        "centerXWu": { "type": "number" },
+        "centerYWu": { "type": "number" },
+        "angleDegrees": { "type": ["number", "null"] },
+        "rangeWu": { "type": ["number", "null"] },
+        "radiusWu": { "type": ["number", "null"] },
+        "innerRadiusWu": { "type": ["number", "null"] },
+        "outerRadiusWu": { "type": ["number", "null"] },
+        "facingX": { "type": ["number", "null"] },
+        "facingY": { "type": ["number", "null"] }
+      }
+    }
+  }
+}

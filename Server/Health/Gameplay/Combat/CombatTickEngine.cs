@@ -800,7 +800,10 @@ public sealed class CombatTickEngine
             yield break;
         }
 
-        _entities.Despawn(target.EntityId);
+        // The shared world entity is deliberately NOT despawned: it is the anchor
+        // other owners are fighting too. The encounter marks this owner's attempt
+        // defeated, and the bridge stops vouching for it, so the killed attempt
+        // cannot be cast at again while another owner's fight is untouched.
         var deathEvent = AppendEvent(
             cast, impactTick + 1, CombatEventTypesV2.Death, target.EntityId, lifeId,
             hitIndex: null, target.Revision, result: null);

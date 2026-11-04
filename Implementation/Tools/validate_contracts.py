@@ -4,6 +4,7 @@
 import argparse
 import csv
 import json
+import math
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -480,6 +481,98 @@ def check_combat_event_page_v2(example, label, errors):
         errors.append(f"{label}.resyncReason: only allowed when resyncRequired is true")
 
 
+def check_encounter_snapshot_v1(example, label, errors):
+    """Per-kind shape rules the JSON-Schema subset cannot express (no if/then),
+    plus the deadline/identity coherence the approved decisions require."""
+    if not isinstance(example, dict):
+        return
+
+    def finite(value):
+        return isinstance(value, (int, float)) and not isinstance(value, bool) \
+            and math.isfinite(value)
+
+    hp, max_hp = example.get("bossHp"), example.get("bossMaxHp")
+    if not finite(hp) or not finite(max_hp):
+        return
+    if hp > max_hp:
+        errors.append(f"{label}.bossHp: must not exceed bossMaxHp")
+    status = example.get("status")
+    if status == "DEFEATED" and hp != 0:
+        errors.append(f"{label}.bossHp: a defeated boss must read 0")
+    if status in ("OPEN", "RESET") and hp <= 0:
+        errors.append(f"{label}.bossHp: {status} requires a living boss")
+
+    tick = example.get("serverTick")
+    move = example.get("activeMove")
+    if move is None:
+        return
+    if not isinstance(move, dict) or not isinstance(tick, int):
+        return
+    ends = move.get("stateEndsAtTick")
+    remaining = move.get("ticksRemaining")
+    if not isinstance(ends, int) or not isinstance(remaining, int):
+        return
+    if ends < tick:
+        errors.append(f"{label}.activeMove.stateEndsAtTick: must be >= serverTick")
+    if remaining != ends - tick:
+        errors.append(
+            f"{label}.activeMove.ticksRemaining: must equal "
+            "stateEndsAtTick - serverTick")
+
+    shape = move.get("shape")
+    if not isinstance(shape, dict):
+        return
+    kind = shape.get("kind")
+    cone = kind == "CONE"
+    circle = kind == "CIRCLE"
+    annulus = kind == "ANNULUS"
+    required = {
+        "angleDegrees": cone, "rangeWu": cone,
+        "facingX": cone, "facingY": cone,
+        "radiusWu": circle,
+        "innerRadiusWu": annulus, "outerRadiusWu": annulus,
+    }
+    for field, must_have in required.items():
+        present = shape.get(field) is not None
+        if must_have and not present:
+            errors.append(f"{label}.activeMove.shape.{field}: required for {kind}")
+        if not must_have and present:
+            errors.append(
+                f"{label}.activeMove.shape.{field}: must be null for {kind}")
+    if cone:
+        fx, fy = shape.get("facingX"), shape.get("facingY")
+        if finite(fx) and finite(fy):
+            length = math.sqrt(fx * fx + fy * fy)
+            if abs(length - 1.0) > 1e-6:
+                errors.append(
+                    f"{label}.activeMove.shape: cone facing must be normalized "
+                    f"(|facing|={length})")
+        angle = shape.get("angleDegrees")
+        if not finite(angle) or not 0 < angle <= 360:
+            errors.append(f"{label}.activeMove.shape.angleDegrees: cone needs 0<angle<=360")
+        reach = shape.get("rangeWu")
+        if not finite(reach) or reach <= 0:
+            errors.append(f"{label}.activeMove.shape.rangeWu: cone needs range > 0")
+    if annulus:
+        inner, outer = shape.get("innerRadiusWu"), shape.get("outerRadiusWu")
+        if not finite(inner) or not finite(outer) or not 0 <= inner < outer:
+            errors.append(
+                f"{label}.activeMove.shape: annulus needs 0 <= innerRadius < outerRadius")
+    for field in ("centerXWu", "centerYWu"):
+        if not finite(shape.get(field)):
+            errors.append(f"{label}.activeMove.shape.{field}: must be a finite number")
+
+    if example.get("phaseGuardRemainingTicks", 0) > 0 and move.get("state") is not None:
+        errors.append(
+            f"{label}.phaseGuardRemainingTicks: a guarded boss resolves no move")
+
+    phase = example.get("phase")
+    for index, pad in enumerate(example.get("safePads") or []):
+        if isinstance(pad, dict) and pad.get("applies") and phase is not None and phase < 3:
+            errors.append(
+                f"{label}.safePads[{index}].applies: pads only apply from phase 3")
+
+
 def check_example_semantics(name, example, map_config, errors):
     label = f"{name}{EXAMPLE_SUFFIX}"
     check_map_bounds(example, map_config, label, errors)
@@ -487,6 +580,8 @@ def check_example_semantics(name, example, map_config, errors):
         check_world_snapshot(example, label, errors)
     elif name == "WorldSnapshotV2":
         check_world_snapshot_v2(example, label, errors)
+    elif name == "EncounterSnapshotV1":
+        check_encounter_snapshot_v1(example, label, errors)
     elif name == "CombatInputV2":
         check_combat_input_v2(example, label, errors)
     elif name == "CombatEventV2":

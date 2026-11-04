@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Text.Json;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Server.Health.Contracts;
@@ -5843,16 +5844,19 @@ public static class ServiceSelfCheck
             bossQuestEntity.State == WorldEntityStates.Alive,
             $"{string.Join(",", bossRegistered.Select(r => r.Outcome + ":" + (r.Detail ?? "-")))}");
 
-        // questRules.P00-05.worldEventRecordIdDisabledInQuestInstance: the other
-        // (178,0) record stays despawned for as long as the instance is held.
+        // The world-event record at the same coordinate is a different entity and
+        // must survive another player's quest instance: instance scoping, not a
+        // global despawn, is what keeps the quest boss and the world boss apart.
         var bossHoldTicks = TickBoss(bossService, bossOwner, 5001, 5001);
         bossEventEntity.ForceRespawn();
         TickBoss(bossService, bossOwner, 5002, 5002);
         Check(
-            "alpha.boss_holds_world_event_boss_dead",
+            "alpha.boss_leaves_world_event_boss_untouched",
             bossHoldTicks.Count == 0 &&
-            bossEventEntity.State == WorldEntityStates.Dead,
-            $"outcomes={bossHoldTicks.Count} event={bossEventEntity.State}");
+            bossEventEntity.State == WorldEntityStates.Alive &&
+            bossQuestEntity.State == WorldEntityStates.Alive,
+            $"outcomes={bossHoldTicks.Count} event={bossEventEntity.State} " +
+            $"quest={bossQuestEntity.State}");
 
         // Move C (Vòng Bọt, ANNULUS 3–7 WU, windup 1.0 s = 20 ticks) lands at
         // tick 5020; with the damage gate off the frame still commits but pays
@@ -6009,7 +6013,7 @@ public static class ServiceSelfCheck
             bossEndFrames[0].Outcome == BossEncounterOutcomeCodes.Ended &&
             bossEndFrames[0].Detail == QuestStates.ReadyToTurnIn &&
             !bossEndService.TryGetState("CHR_SELFCHECK_BOSS_END", out _) &&
-            bossEndQuestBoss.State == WorldEntityStates.Dead,
+            bossEndQuestBoss.State == WorldEntityStates.Alive,
             $"{bossEndFrames.FirstOrDefault()?.Outcome} " +
             $"boss={bossEndQuestBoss.State}");
 
@@ -6038,7 +6042,7 @@ public static class ServiceSelfCheck
             bossRedo[0].Outcome == BossEncounterOutcomeCodes.Registered &&
             bossRedo[0].Detail == "life=2" &&
             bossWipeQuestBoss.State == WorldEntityStates.Alive &&
-            bossWipeQuestBoss.LifeId == 2 &&
+            bossWipeQuestBoss.LifeId == 1 &&
             bossWipeState &&
             bossWipe.BossLifeId == 2 &&
             bossWipe.Phase == 1,
@@ -6165,12 +6169,157 @@ public static class ServiceSelfCheck
             bossIntSnapshot.BossHp == 0 &&
             bossCastImpacts == 67 &&
             bossDeathEvents == 1 &&
-            bossIntBoss.State == WorldEntityStates.Dead &&
+            bossIntBoss.State == WorldEntityStates.Alive &&
             bossIntStub.VerifiedEvents.Any(e =>
                 e.EventType == QuestProgressEventTypes.Kill &&
                 e.RecordId == alphaDesign.QuestRules.P00_05_BossRecordId),
             $"pre={bossPreStrikes} impacts={bossCastImpacts} deaths={bossDeathEvents} " +
             $"hp={bossIntSnapshot.BossHp} state={bossIntSnapshot.Status}");
+
+        // Two owners fighting the same record template on one shared anchor must
+        // never share mutable state: A's damage, defeat and wipe leave B's HP, life,
+        // revision, status and snapshot identity exactly as they were.
+        var (bossIsoService, bossIsoQuest, _, _) = NewBossFixture(damageGateOn: true);
+        bossIsoQuest.Set("CHR_SELFCHECK_BOSS_ISO_A", QuestStates.Active);
+        bossIsoQuest.Set("CHR_SELFCHECK_BOSS_ISO_B", QuestStates.Active);
+        var bossIsoA = NewArenaOwner("CHR_SELFCHECK_BOSS_ISO_A", 181);
+        var bossIsoB = NewArenaOwner("CHR_SELFCHECK_BOSS_ISO_B", 184);
+        bossIsoService.Tick([bossIsoA, bossIsoB], 5000);
+        var bossIsoBBefore = bossIsoService.TryGetSnapshot(
+            "CHR_SELFCHECK_BOSS_ISO_B", 5000, out var bossIsoBPinned);
+        bossIsoService.ApplyBossDamage("CHR_SELFCHECK_BOSS_ISO_A", 1190, 5001);
+        bossIsoService.ApplyBossDamage("CHR_SELFCHECK_BOSS_ISO_A", 10, 5002);
+        bossIsoA.X = 300;
+        // Both owners stay in the roster (dropping one would legitimately end its
+        // instance), so only A's own state may move.
+        for (var t = 5003; t <= 5210; t++)
+        {
+            bossIsoService.Tick([bossIsoA, bossIsoB], t);
+        }
+        var bossIsoAa = bossIsoService.TryGetSnapshot(
+            "CHR_SELFCHECK_BOSS_ISO_A", 5210, out var bossIsoASnap);
+        var bossIsoBb = bossIsoService.TryGetSnapshot(
+            "CHR_SELFCHECK_BOSS_ISO_B", 5211, out var bossIsoBSnap);
+        // Strict round-trip under the P1 JSON options: the wire DTO must serialize
+        // and deserialize with no unmapped member, so a client binding the shipped
+        // contract sees exactly these fields.
+        var bossIsoWire = JsonSerializer.Serialize(bossIsoBSnap, P1Json.Options);
+        var bossIsoRoundTrip =
+            JsonSerializer.Deserialize<EncounterSnapshotV1>(bossIsoWire, P1Json.Options);
+        Check(
+            "alpha.boss_two_owner_attempts_are_isolated",
+            bossIsoBBefore &&
+            bossIsoAa &&
+            bossIsoBb &&
+            bossIsoASnap.Status == "DEFEATED" &&
+            bossIsoASnap.BossHp == 0 &&
+            bossIsoASnap.BossLifeId == 1 &&
+            bossIsoBSnap.Status == "OPEN" &&
+            bossIsoBSnap.BossHp == 1200 &&
+            bossIsoBSnap.BossLifeId == 1 &&
+            // B's own fight keeps advancing on its own tick budget, so only the
+            // fields A could have leaked into must be pinned.
+            bossIsoBSnap.BossRevision >= bossIsoBPinned.BossRevision &&
+            bossIsoBSnap.Phase == bossIsoBPinned.Phase &&
+            bossIsoBSnap.EncounterId == bossIsoBPinned.EncounterId &&
+            bossIsoASnap.EncounterId != bossIsoBSnap.EncounterId &&
+            !bossIsoBSnap.RegisteredCharacterIds.Contains("CHR_SELFCHECK_BOSS_ISO_A") &&
+            bossIsoRoundTrip is not null &&
+            bossIsoRoundTrip.EncounterId == bossIsoBSnap.EncounterId &&
+            bossIsoRoundTrip.BossHp == bossIsoBSnap.BossHp &&
+            bossIsoRoundTrip.Arena.CenterXWu == bossIsoBSnap.Arena.CenterXWu &&
+            bossIsoRoundTrip.SafePads.Count == bossIsoBSnap.SafePads.Count &&
+            bossIsoRoundTrip.MoveCooldownRemainingTicks.C ==
+                bossIsoBSnap.MoveCooldownRemainingTicks.C,
+            $"a={bossIsoASnap.Status}/{bossIsoASnap.BossHp} " +
+            $"b={bossIsoBSnap.Status}/{bossIsoBSnap.BossHp}/{bossIsoBSnap.BossRevision}");
+
+        // The approved read model: stable opaque id, one registered character, a
+        // locked cone facing that is normalized, deadlines that agree with the tick
+        // they were read on, per-move cooldowns, pads that only apply in phase 3,
+        // the same-actor phase NPC and a revision that moves only with real state.
+        var (bossSnapService, bossSnapQuest, _, _) = NewBossFixture(damageGateOn: true);
+        bossSnapQuest.Set("CHR_SELFCHECK_BOSS_SNAP", QuestStates.Active);
+        var bossSnapOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_SNAP", 181);
+        TickBoss(bossSnapService, bossSnapOwner, 5000, 5000);
+        var bossSnapOnce = bossSnapService.TryGetSnapshot(
+            "CHR_SELFCHECK_BOSS_SNAP", 5005, out var bossSnapA);
+        var bossSnapAgain = bossSnapService.TryGetSnapshot(
+            "CHR_SELFCHECK_BOSS_SNAP", 5006, out var bossSnapB);
+        var bossSnapFacingLength = Math.Sqrt(
+            (bossSnapA.ActiveMove?.Shape.FacingX ?? 0) * (bossSnapA.ActiveMove?.Shape.FacingX ?? 0) +
+            (bossSnapA.ActiveMove?.Shape.FacingY ?? 0) * (bossSnapA.ActiveMove?.Shape.FacingY ?? 0));
+        // Move C opens first (priority), so the first frame is an annulus: it must
+        // carry no cone fields at all. Drive to move A's telegraph to read the cone
+        // facing the client needs, and check it is a normalized direction vector.
+        TickBoss(bossSnapService, bossSnapOwner, 5001, 5087);
+        var bossSnapConeOk = bossSnapService.TryGetSnapshot(
+            "CHR_SELFCHECK_BOSS_SNAP", 5088, out var bossSnapCone);
+        var bossConeFacing = bossSnapCone.ActiveMove?.Shape;
+        var bossConeFacingLength = Math.Sqrt(
+            (bossConeFacing?.FacingX ?? 0) * (bossConeFacing?.FacingX ?? 0) +
+            (bossConeFacing?.FacingY ?? 0) * (bossConeFacing?.FacingY ?? 0));
+        var bossSnapAfterKill = bossSnapService.ApplyBossDamage(
+            "CHR_SELFCHECK_BOSS_SNAP", 1200, 5089).Count;
+        var bossSnapDead = bossSnapService.TryGetSnapshot(
+            "CHR_SELFCHECK_BOSS_SNAP", 5090, out var bossSnapDeadSnap);
+        Check(
+            "alpha.boss_snapshot_is_atomic_and_owner_scoped",
+            bossSnapOnce && bossSnapAgain && bossSnapDead &&
+            System.Text.RegularExpressions.Regex.IsMatch(
+                bossSnapA.EncounterId, @"^ENC-[0-9A-F]{24}$") &&
+            bossSnapA.EncounterId == bossSnapB.EncounterId &&
+            bossSnapA.QuestId == "P00-05" &&
+            bossSnapA.BossRecordId == "MAN-BM-SPAWN_BM_05_QUEST" &&
+            // The fixture registers the quest-boss record under its own entity id;
+            // the canonical ENT_MAN_BM_SPAWN_BM_05_QUEST pairing is pinned by the
+            // shipped example and the contract validator.
+            bossSnapA.BossEntityId == "ENT_SELFCHECK_BOSS_QUEST" &&
+            bossSnapA.RegisteredCharacterIds.Count == 1 &&
+            bossSnapA.RegisteredCharacterIds[0] == "CHR_SELFCHECK_BOSS_SNAP" &&
+            bossSnapA.ActiveMove!.CastId == bossSnapB.ActiveMove!.CastId &&
+            bossSnapA.ActiveMove.State == "TELEGRAPH" &&
+            bossSnapA.ActiveMove.TicksRemaining ==
+                bossSnapA.ActiveMove.StateEndsAtTick - bossSnapA.ServerTick &&
+            bossSnapA.ActiveMove.StateEndsAtTick >= bossSnapA.ServerTick &&
+            bossSnapA.ActiveMove.Shape.Kind == "ANNULUS" &&
+            bossSnapA.ActiveMove.Shape.AngleDegrees is null &&
+            bossSnapA.ActiveMove.Shape.RangeWu is null &&
+            bossSnapA.ActiveMove.Shape.FacingX is null &&
+            bossSnapA.ActiveMove.Shape.FacingY is null &&
+            bossSnapA.ActiveMove.Shape.RadiusWu is null &&
+            bossSnapFacingLength == 0 &&
+            bossSnapA.ActiveMove.Shape.OuterRadiusWu == 7 &&
+            bossSnapA.ActiveMove.Shape.InnerRadiusWu == 3 &&
+            bossSnapA.MoveCooldownRemainingTicks.C == 235 &&
+            bossSnapA.MoveCooldownRemainingTicks.A == 0 &&
+            bossSnapConeOk &&
+            bossConeFacing!.Kind == "CONE" &&
+            bossConeFacing.AngleDegrees == 120 &&
+            bossConeFacing.RangeWu == 8 &&
+            bossConeFacing.InnerRadiusWu is null &&
+            bossConeFacing.RadiusWu is null &&
+            Math.Abs(bossConeFacingLength - 1.0) < 1e-9 &&
+            bossSnapCone!.ActiveMove!.TargetLock == "TELEGRAPH_START_FACING" &&
+            bossSnapA.Arena.Shape == "CIRCLE" &&
+            bossSnapA.Arena.RadiusWu == 11 &&
+            bossSnapA.SafePads.Count == 2 &&
+            bossSnapA.SafePads.All(pad => !pad.Applies) &&
+            bossSnapA.PhaseNpc.NpcId == "NPC_TA_VAN_KHANH" &&
+            bossSnapA.PhaseNpc.XWu == 182 &&
+            bossSnapA.PhaseNpc.YWu == 4 &&
+            !bossSnapA.TrialNpcVisible &&
+            bossSnapB.BossRevision == bossSnapA.BossRevision &&
+            bossSnapAfterKill == 1 &&
+            bossSnapDeadSnap.Status == "DEFEATED" &&
+            bossSnapDeadSnap.BossRevision > bossSnapB.BossRevision &&
+            bossSnapDeadSnap.ActiveMove is null &&
+            bossSnapDeadSnap.TrialNpcVisible == false,
+            $"id={bossSnapA.EncounterId} cast={bossSnapA.ActiveMove?.CastId} " +
+            $"rev={bossSnapA.BossRevision}->{bossSnapDeadSnap.BossRevision} " +
+            $"cone={bossConeFacing.Kind}/flen={bossConeFacingLength} " +
+            $"dead={bossSnapDeadSnap.Status}/{bossSnapDeadSnap.ActiveMove?.MoveId}");
+
 
         // ─── Mãng Cốt encounter state machine (Q-F part 1) ────
 

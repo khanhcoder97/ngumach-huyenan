@@ -88,6 +88,10 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
     private readonly double _centerX;
     private readonly double _centerY;
     private readonly double _arenaRadius;
+    private readonly string _arenaShape;
+    private readonly IReadOnlyList<AlphaPoint> _safePads;
+    private readonly double _safePadRadius;
+    private readonly bool _safePadsPhase3Only;
     private readonly int _phaseGuardTicks;
     private readonly double _phase2RecoveryMultiplier;
     private readonly double _phase3DamageMultiplier;
@@ -99,6 +103,7 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
     private readonly GuardDefenseService _guards;
     private readonly double _phaseNpcX;
     private readonly double _phaseNpcY;
+    private readonly string _phaseNpcId;
     private readonly string? _bossEntityId;
     private readonly object _sync = new();
     private readonly Dictionary<string, EncounterInstance> _instances =
@@ -120,12 +125,23 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
         _mapId = design.Scope.MapId;
         _bossRecordId = design.QuestRules.P00_05_BossRecordId;
         _worldEventRecordId = design.QuestRules.P00_05_WorldEventRecordIdDisabled;
+        // The two (178,0) records must stay distinct or "which boss is this cast
+        // hitting" stops being answerable per instance.
+        if (string.Equals(_bossRecordId, _worldEventRecordId, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "Alpha quest boss and world-event boss must be different records.");
+        }
         _maxHp = boss.MaxHp;
         _attack = boss.Attack;
         _bossDefense = boss.Armor;
         _centerX = boss.CenterX;
         _centerY = boss.CenterY;
         _arenaRadius = boss.RadiusWu;
+        _arenaShape = boss.ArenaShape;
+        _safePads = boss.SafePads;
+        _safePadRadius = boss.SafePadRadiusWu;
+        _safePadsPhase3Only = boss.SafePadsPhase3Only;
         // Integer ceilings on the source seconds, the same policy as the mob
         // telegraph projection: 1.0 s at 20 Hz is 20 ticks and 10 s is 200.
         _phaseGuardTicks = (int)Math.Ceiling(boss.PhaseGuardSeconds * ServerClock.TicksPerSecond);
@@ -136,6 +152,7 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
         _moves = boss.Moves;
         _phaseNpcX = design.QuestRules.P00_05_PhaseNpcX;
         _phaseNpcY = design.QuestRules.P00_05_PhaseNpcY;
+        _phaseNpcId = design.QuestRules.P00_05_PhaseNpcId;
         _quests = quests;
         _entities = entities;
         _combat = combat;
@@ -170,11 +187,11 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
                     questOutcome.State is not { } questState ||
                     !string.Equals(questState.State, QuestStates.Active, StringComparison.Ordinal))
                 {
-                    // The instance leaves with its owner; the boss goes back
-                    // under despawn hold so no half-fought encounter is left
-                    // alive in the world.
+                    // The instance leaves with its owner. The shared world entity
+                    // is deliberately untouched: another owner may be fighting the
+                    // same record, and one attempt ending must not change anyone
+                    // else's boss (owner/attempt state lives in the instance).
                     _instances.Remove(characterId);
-                    DespawnBoss();
                     resolutions.Add(new BossEncounterResolution(
                         characterId,
                         BossEncounterOutcomeCodes.Ended,
@@ -239,8 +256,6 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
                 StartAttempt(instance, tick, resolutions);
                 Step(instance, player, tick, resolutions);
             }
-
-            HoldWorldEventBoss();
         }
 
         return resolutions;
@@ -278,6 +293,7 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
 
         var hpBefore = instance.BossHp;
         instance.BossHp = Math.Max(0, instance.BossHp - damage);
+        instance.BossRevision++;
         ResolveDefeat(instance, resolutions);
         return (hpBefore, instance.BossHp, instance.Defeated);
     }
@@ -340,29 +356,186 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
         return false;
     }
 
+    // The approved wire read: one atomic copy of a single generation, taken under
+    // the same lock that mutates it, so HP, phase, life, revision, active move and
+    // its deadline can never come from different ticks. `tick` is the authoritative
+    // server tick the caller is reading at, so every countdown agrees with it.
+    public bool TryGetSnapshot(string characterId, long tick, out EncounterSnapshotV1 snapshot)
+    {
+        lock (_sync)
+        {
+            if (_instances.TryGetValue(characterId, out var instance) &&
+                _bossEntityId is not null)
+            {
+                snapshot = BuildSnapshot(instance, tick);
+                return true;
+            }
+        }
+
+        snapshot = null!;
+        return false;
+    }
+
+    private EncounterSnapshotV1 BuildSnapshot(EncounterInstance instance, long tick)
+    {
+        var local = LocalTick(instance, tick);
+        var phase = PhaseOf(instance);
+        var move = instance.Active;
+        var bossX = BossX;
+        var bossY = BossY;
+        EncounterMoveShapeV1? shape = null;
+        EncounterActiveMoveV1? activeMove = null;
+        if (move is not null)
+        {
+            // Cone keeps the direction locked at the telegraph; circle centres on
+            // the position locked at the telegraph; annulus rides the boss itself.
+            var coneCenterX = bossX;
+            var coneCenterY = bossY;
+            double facingX = 0;
+            double facingY = 0;
+            switch (move.Move.Shape)
+            {
+                case "CONE":
+                {
+                    var length = Math.Sqrt(
+                        (move.BossFacingX * move.BossFacingX) +
+                        (move.BossFacingY * move.BossFacingY));
+                    // A zero-length facing (the owner was standing on the boss at
+                    // the telegraph) has no direction; the +X fallback keeps the
+                    // vector normalized and is display-only, because the hit test
+                    // already treats that case as "the cone covers its origin".
+                    facingX = length <= 1e-9 ? 1 : move.BossFacingX / length;
+                    facingY = length <= 1e-9 ? 0 : move.BossFacingY / length;
+                    break;
+                }
+                case "CIRCLE":
+                {
+                    coneCenterX = move.TargetLockX;
+                    coneCenterY = move.TargetLockY;
+                    break;
+                }
+            }
+
+            shape = new EncounterMoveShapeV1
+            {
+                Kind = move.Move.Shape,
+                CenterXWu = coneCenterX,
+                CenterYWu = coneCenterY,
+                AngleDegrees = move.Move.Shape == "CONE" ? move.Move.AngleDegrees : null,
+                RangeWu = move.Move.Shape == "CONE" ? move.Move.RangeWu : null,
+                FacingX = move.Move.Shape == "CONE" ? facingX : null,
+                FacingY = move.Move.Shape == "CONE" ? facingY : null,
+                RadiusWu = move.Move.Shape == "CIRCLE" ? move.Move.RadiusWu : null,
+                InnerRadiusWu = move.Move.Shape == "ANNULUS" ? move.Move.InnerRadiusWu : null,
+                OuterRadiusWu = move.Move.Shape == "ANNULUS" ? move.Move.OuterRadiusWu : null
+            };
+            activeMove = new EncounterActiveMoveV1
+            {
+                MoveId = move.Move.Id,
+                CastId = move.CastId,
+                State = move.InRecovery
+                    ? EncounterMoveStates.Recovery
+                    : EncounterMoveStates.Telegraph,
+                TicksRemaining = move.TicksRemaining(tick),
+                StateEndsAtTick = move.StateEndsAtTick,
+                Shape = shape,
+                TargetLock = move.Move.TargetLock switch
+                {
+                    "telegraph start facing" => EncounterTargetLocks.TelegraphStartFacing,
+                    "target position at telegraph start" =>
+                        EncounterTargetLocks.TelegraphStartTargetPosition,
+                    _ => EncounterTargetLocks.BossPosition
+                }
+            };
+        }
+
+        var padsApply = !_safePadsPhase3Only || phase >= 3;
+        return new EncounterSnapshotV1
+        {
+            EncounterId = instance.EncounterId,
+            QuestId = QuestId,
+            BossRecordId = _bossRecordId,
+            BossEntityId = _bossEntityId!,
+            BossLifeId = instance.BossLifeId,
+            BossRevision = instance.BossRevision,
+            Status = instance.Defeated
+                ? EncounterSnapshotStatuses.Defeated
+                : instance.AwaitingFreshAttempt
+                    ? EncounterSnapshotStatuses.Reset
+                    : EncounterSnapshotStatuses.Open,
+            Phase = phase,
+            BossHp = instance.BossHp,
+            BossMaxHp = _maxHp,
+            ServerTick = tick,
+            RegisteredCharacterIds = new[] { instance.CharacterId },
+            ActiveMove = activeMove,
+            MoveCooldownRemainingTicks = new EncounterMoveCooldownsV1
+            {
+                A = instance.Machine.CooldownRemainingTicks("A", local),
+                B = instance.Machine.CooldownRemainingTicks("B", local),
+                C = instance.Machine.CooldownRemainingTicks("C", local)
+            },
+            PhaseGuardRemainingTicks = instance.Machine.PhaseGuardRemainingTicks(local),
+            WipeCountdownTicks = instance.NoTargetSinceTick is { } since
+                ? (int)Math.Clamp(_wipeTicks - (tick - since), 0, int.MaxValue)
+                : null,
+            Arena = new EncounterArenaV1
+            {
+                Shape = _arenaShape,
+                CenterXWu = _centerX,
+                CenterYWu = _centerY,
+                RadiusWu = _arenaRadius
+            },
+            SafePads = _safePads
+                .Select(pad => new EncounterSafePadV1
+                {
+                    CenterXWu = pad.X,
+                    CenterYWu = pad.Y,
+                    RadiusWu = _safePadRadius,
+                    Applies = padsApply
+                })
+                .ToArray(),
+            PhaseNpc = new EncounterPhaseNpcV1
+            {
+                NpcId = _phaseNpcId,
+                XWu = _phaseNpcX,
+                YWu = _phaseNpcY,
+                Active = true
+            },
+            TrialNpcVisible = TrialVisibleLocked(instance)
+        };
+    }
+
     // NPC_CLASS_TRIAL becomes visible after the boss is down AND the fragment
     // is claimed, and only while P00-05 has not been turned in: the sourced fix
-    // for the circular dependency. P1 has no wire for NPC visibility, so this
-    // is the domain answer the encounter snapshot packet would expose.
+    // for the circular dependency.
     public bool IsTrialNpcVisible(string characterId)
     {
         lock (_sync)
         {
-            if (!_instances.TryGetValue(characterId, out var instance) || !instance.Defeated)
-            {
-                return false;
-            }
-
-            var outcome = _quests.GetState(characterId, QuestId);
-            if (outcome.State is not { } state ||
-                string.Equals(state.State, QuestStates.Completed, StringComparison.Ordinal))
-            {
-                return false;
-            }
-
-            return state.ObjectiveCounters.TryGetValue(FragmentObjectiveId, out var claimed) &&
-                   claimed > 0;
+            return _instances.TryGetValue(characterId, out var instance) &&
+                TrialVisibleLocked(instance);
         }
+    }
+
+    // Assumes _sync is held (the snapshot reads it in the same lock as the rest of
+    // the generation, so visibility cannot disagree with HP or phase).
+    private bool TrialVisibleLocked(EncounterInstance instance)
+    {
+        if (!instance.Defeated)
+        {
+            return false;
+        }
+
+        var outcome = _quests.GetState(instance.CharacterId, QuestId);
+        if (outcome.State is not { } state ||
+            string.Equals(state.State, QuestStates.Completed, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        return state.ObjectiveCounters.TryGetValue(FragmentObjectiveId, out var claimed) &&
+               claimed > 0;
     }
 
     // questRules.P00-05.phaseNpcOverride: after P00-05 is accepted in the quest
@@ -387,23 +560,14 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
     private void StartAttempt(EncounterInstance instance, long tick,
         List<BossEncounterResolution> resolutions)
     {
-        // The entity life is synced first so the machine engages against the
-        // same lifeId the world carries (a wipe's ForceRespawn bumps it).
-        var entity = BossEntity;
-        if (entity is not null)
-        {
-            if (!string.Equals(entity.State, WorldEntityStates.Alive, StringComparison.Ordinal))
-            {
-                entity.ForceRespawn();
-            }
-
-            instance.BossLifeId = entity.LifeId;
-        }
-
+        // The life/attempt generation is owned by this instance, not by the
+        // shared world entity: a fresh attempt bumps the instance life while
+        // every other owner's fight on the same record keeps its own state.
         instance.Machine.Engage(instance.BossLifeId, LocalTick(instance, tick));
         instance.BossHp = _maxHp;
         instance.Active = null;
         instance.AwaitingFreshAttempt = false;
+        instance.BossRevision++;
         resolutions.Add(new BossEncounterResolution(
             instance.CharacterId,
             BossEncounterOutcomeCodes.Registered,
@@ -444,7 +608,12 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
                 owner.X - BossX,
                 owner.Y - BossY,
                 owner.X,
-                owner.Y);
+                owner.Y)
+            {
+                CastId = $"CAST-{instance.InstanceId[..12].ToUpperInvariant()}-" +
+                    $"{++instance.MoveSequence:x4}"
+            };
+            instance.BossRevision++;
             resolutions.Add(new BossEncounterResolution(
                 instance.CharacterId,
                 BossEncounterOutcomeCodes.Telegraph,
@@ -550,6 +719,7 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
         // Damage-before-phase at the frame, one transition per frame: the Q-F
         // contract, with the HP the boss actually has now.
         var impact = instance.Machine.ResolveImpact(timeline.Token, instance.BossHp, _maxHp, local);
+        instance.BossRevision++;
         if (impact.Accepted && impact.PhaseChanged)
         {
             resolutions.Add(new BossEncounterResolution(
@@ -581,15 +751,17 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
     {
         // Wiped: HP refills, phase returns to 1, the episode bumps so every
         // token issued before the reset is stale, the quest checkpoint stays
-        // where it is and nothing pays loot. The boss waits despawned until the
-        // owner re-enters the ring, which is a fresh attempt on a new life.
+        // where it is and nothing pays loot. The instance waits in RESET until
+        // the owner re-enters the ring, which is a fresh attempt on a new life.
+        // The shared world entity is not despawned: another owner's fight on the
+        // same record must not change because this attempt wiped.
         instance.Machine.Reset();
         instance.Active = null;
         instance.BossHp = _maxHp;
         instance.NoTargetSinceTick = null;
         instance.AwaitingFreshAttempt = true;
         instance.BossLifeId++;
-        DespawnBoss();
+        instance.BossRevision++;
         resolutions.Add(new BossEncounterResolution(
             instance.CharacterId,
             BossEncounterOutcomeCodes.Wiped,
@@ -611,7 +783,7 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
 
         instance.Defeated = true;
         instance.Active = null;
-        DespawnBoss();
+        instance.BossRevision++;
         resolutions.Add(new BossEncounterResolution(
             instance.CharacterId,
             BossEncounterOutcomeCodes.Defeated,
@@ -693,16 +865,6 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
 
     private double BossY => BossEntity?.Y ?? _centerY;
 
-    private void DespawnBoss()
-    {
-        var entity = BossEntity;
-        if (entity is not null &&
-            !string.Equals(entity.State, WorldEntityStates.Dead, StringComparison.Ordinal))
-        {
-            _entities.Despawn(entity.EntityId);
-        }
-    }
-
     private bool IsLiveTarget(PlayerSession player) =>
         string.Equals(player.MapId, _mapId, StringComparison.Ordinal) &&
         player.Hp > 0 &&
@@ -723,26 +885,6 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
                     move.Id,
                     (int)Math.Ceiling(move.CooldownSeconds * ServerClock.TicksPerSecond)))
                 .ToList());
-
-    // The design names exactly one of the two (178,0) boss records for the
-    // quest, so while an owner holds an instance the world-event record is held
-    // despawned rather than coexisting with it.
-    private void HoldWorldEventBoss()
-    {
-        if (_instances.Count == 0)
-        {
-            return;
-        }
-
-        foreach (var entity in _entities.All.Where(candidate =>
-                     string.Equals(candidate.RecordId, _worldEventRecordId, StringComparison.Ordinal)))
-        {
-            if (!string.Equals(entity.State, WorldEntityStates.Dead, StringComparison.Ordinal))
-            {
-                _entities.Despawn(entity.EntityId);
-            }
-        }
-    }
 
     private sealed class EncounterInstance
     {
@@ -765,6 +907,15 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
         public long StartTick { get; }
         public BossEncounter Machine { get; }
         public int BossHp;
+
+        // Opaque identity of this (character, quest attempt): a wipe keeps it and a
+        // finished attempt never re-issues it, so clients can poll one id.
+        public string EncounterId => $"ENC-{InstanceId[..24].ToUpperInvariant()}";
+
+        // Bumped whenever snapshot-relevant state moves, so two polls can tell a
+        // real change from an identical-looking frame.
+        public long BossRevision = 1;
+        public int MoveSequence;
         public long BossLifeId = 1;
         public MoveTimeline? Active;
         public long? NoTargetSinceTick;
@@ -801,6 +952,14 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
         public double TargetLockY { get; }
         public bool InRecovery;
         public long RecoveryUntilTick;
+
+        // Stable for the whole cast of this move, and derived from the instance so
+        // another owner's identical swing can never collide with it.
+        public string CastId { get; init; } = string.Empty;
+
+        public long StateEndsAtTick => InRecovery ? RecoveryUntilTick : ImpactTick;
+        public int TicksRemaining(long tick) =>
+            (int)Math.Max(0, StateEndsAtTick - tick);
     }
 }
 

@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
 using Server.Health.Contracts;
+using Server.Health.Gameplay.Alpha;
 using Server.Health.Gameplay.Combat;
 using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
@@ -67,7 +68,80 @@ public static class P1Endpoints
             app.MapGet("/p1/v2/events/{sessionId}", GetCombatEventsV2);
         }
 
+        // The alpha encounter read model. With the gate OFF neither route is
+        // mapped, so the real pipeline answers 404 (the literal `current` segment is
+        // matched before the id parameter, so an owner never has to guess the id).
+        var alphaProfile = app.ServiceProvider
+            .GetRequiredService<IOptions<AlphaProfileOptions>>()
+            .Value;
+        if (alphaProfile.Enabled)
+        {
+            app.MapGet("/p1/encounters/current", GetEncounterCurrent);
+            app.MapGet("/p1/encounters/{encounterId}", GetEncounterById);
+        }
+
         return app;
+    }
+
+    private static IResult GetEncounterCurrent(
+        HttpContext context,
+        ISessionStore sessions,
+        AlphaBossEncounterService encounters,
+        ServerClock clock) =>
+        EncounterResult(context, sessions, encounters, clock, encounterId: null);
+
+    private static IResult GetEncounterById(
+        HttpContext context,
+        string encounterId,
+        ISessionStore sessions,
+        AlphaBossEncounterService encounters,
+        ServerClock clock) =>
+        EncounterResult(context, sessions, encounters, clock, encounterId.Trim());
+
+    // Owner-only by construction: the snapshot is read for the character this
+    // session belongs to, and any other id (including another player's live
+    // encounter) answers the same not-found as an unknown one, so nothing here
+    // discloses that someone else is fighting.
+    private static IResult EncounterResult(
+        HttpContext context,
+        ISessionStore sessions,
+        AlphaBossEncounterService encounters,
+        ServerClock clock,
+        string? encounterId)
+    {
+        var requestId = NewRequestId();
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status400BadRequest,
+                P1ErrorCodes.InvalidPayload, ["X-Session-ID"]);
+        }
+
+        var session = sessions.Find(sessionId);
+        if (session is null)
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status404NotFound,
+                P1ErrorCodes.SessionNotFound, ["X-Session-ID"]);
+        }
+
+        if (!encounters.TryGetSnapshot(session.CharacterId, clock.Tick, out var snapshot) ||
+            (encounterId is not null &&
+             !string.Equals(encounterId, snapshot.EncounterId, StringComparison.Ordinal)))
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status404NotFound,
+                EncounterErrorCodes.EncounterNotFound, ["encounterId"]);
+        }
+
+        return Results.Json(new P1EncounterResponse
+        {
+            RequestId = requestId,
+            SessionId = session.SessionId,
+            ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+            Result = snapshot
+        }, P1Json.Options);
     }
 
     private static async Task<IResult> CreateSessionAsync(
