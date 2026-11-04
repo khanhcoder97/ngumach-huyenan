@@ -20,20 +20,20 @@ namespace NguMach.Client.Core.Encounter
         [JsonProperty("centerXWu")] public double CenterXWu { get; set; }
         [JsonProperty("centerYWu")] public double CenterYWu { get; set; }
         [JsonProperty("angleDegrees")] public double? AngleDegrees { get; set; }
-        [JsonProperty("rangeWu")] public double RangeWu { get; set; }
+        [JsonProperty("rangeWu")] public double? RangeWu { get; set; }
         [JsonProperty("radiusWu")] public double? RadiusWu { get; set; }
         [JsonProperty("innerRadiusWu")] public double? InnerRadiusWu { get; set; }
         [JsonProperty("outerRadiusWu")] public double? OuterRadiusWu { get; set; }
-        [JsonProperty("facingX")] public double FacingX { get; set; }
-        [JsonProperty("facingY")] public double FacingY { get; set; }
+        [JsonProperty("facingX")] public double? FacingX { get; set; }
+        [JsonProperty("facingY")] public double? FacingY { get; set; }
 
         [JsonIgnore] public MoveShapeKind Kind
         {
             get
             {
-                if (string.Equals(KindRaw, "circle", StringComparison.OrdinalIgnoreCase)) return MoveShapeKind.Circle;
-                if (string.Equals(KindRaw, "annulus", StringComparison.OrdinalIgnoreCase)) return MoveShapeKind.Annulus;
-                return MoveShapeKind.Cone;
+                MoveShapeKind parsed;
+                if (Enum.TryParse(KindRaw, true, out parsed)) return parsed;
+                throw new InvalidOperationException("Unknown shape kind: " + (KindRaw ?? "<null>"));
             }
         }
     }
@@ -50,7 +50,12 @@ namespace NguMach.Client.Core.Encounter
 
         [JsonIgnore] public MoveState State
         {
-            get { MoveState s; return Enum.TryParse(StateRaw, true, out s) ? s : MoveState.Telegraph; }
+            get
+            {
+                MoveState parsed;
+                if (Enum.TryParse(StateRaw, true, out parsed)) return parsed;
+                throw new InvalidOperationException("Unknown move state: " + (StateRaw ?? "<null>"));
+            }
         }
     }
 
@@ -102,15 +107,23 @@ namespace NguMach.Client.Core.Encounter
         [JsonProperty("phaseNpc")] public PhaseNpc PhaseNpc { get; set; }
         [JsonProperty("trialNpcVisible")] public bool TrialNpcVisible { get; set; }
 
-        [JsonExtensionData] public Dictionary<string, object> Extra { get; set; }
-
         [JsonIgnore] public EncounterStatus Status
         {
-            get { EncounterStatus s; return Enum.TryParse(StatusRaw, true, out s) ? s : EncounterStatus.Open; }
+            get
+            {
+                EncounterStatus parsed;
+                if (Enum.TryParse(StatusRaw, true, out parsed)) return parsed;
+                throw new InvalidOperationException("Unknown encounter status: " + (StatusRaw ?? "<null>"));
+            }
         }
         [JsonIgnore] public BossPhase Phase
         {
-            get { return (BossPhase)Math.Max(1, Math.Min(3, PhaseRaw)); }
+            get
+            {
+                if (PhaseRaw < 1 || PhaseRaw > 3)
+                    throw new InvalidOperationException("Boss phase out of range: " + PhaseRaw);
+                return (BossPhase)PhaseRaw;
+            }
         }
     }
 }

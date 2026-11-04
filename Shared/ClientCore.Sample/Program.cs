@@ -5,7 +5,6 @@ using NguMach.Client.Core.Composition;
 using NguMach.Client.Core.Encounter;
 using NguMach.Client.Core.Guards;
 using NguMach.Client.Core.Handshake;
-using NguMach.Client.Core.Transport;
 using NguMach.Client.P1;
 
 namespace ClientCoreSample
@@ -20,38 +19,62 @@ namespace ClientCoreSample
                     return Task.FromResult(new P1HttpReply { StatusCode = 201, Body = "{\"schemaVersion\":1,\"requestId\":\"" + r.CorrelationId + "\",\"sessionId\":\"0123456789abcdef0123456789abcdef\",\"result\":{\"mapId\":\"MAP_BEN_MUA\",\"serverTick\":1,\"revision\":0,\"self\":{\"characterId\":\"char_test\",\"classId\":\"CLASS_MINH_KIEM\",\"x\":18,\"y\":0,\"hp\":100,\"maxHp\":100,\"mp\":50,\"maxMp\":50,\"swordIntent\":0},\"entities\":[]}}", CorrelationId = r.CorrelationId });
                 if (r.Path.StartsWith("/p1/world/", StringComparison.Ordinal))
                     return Task.FromResult(new P1HttpReply { StatusCode = 200, Body = "{\"schemaVersion\":1,\"requestId\":\"" + r.CorrelationId + "\",\"sessionId\":\"" + r.SessionId + "\",\"result\":{\"mapId\":\"MAP_BEN_MUA\",\"serverTick\":2,\"revision\":1,\"self\":{\"characterId\":\"char_test\",\"classId\":\"CLASS_MINH_KIEM\",\"x\":18,\"y\":0,\"hp\":100,\"maxHp\":100,\"mp\":50,\"maxMp\":50,\"swordIntent\":0},\"entities\":[]}}", CorrelationId = r.CorrelationId });
-                return Task.FromResult(new P1HttpReply { StatusCode = 404, Body = "", CorrelationId = r.CorrelationId });
+                return Task.FromResult(new P1HttpReply { StatusCode = 404, Body = "{\"schemaVersion\":1,\"requestId\":\"0123456789abcdef0123456789abcdef\",\"error\":{\"code\":\"encounter_not_found\"}}", CorrelationId = r.CorrelationId });
             }
         }
 
         private static async Task MainAsync()
         {
             string baseUrl = Environment.GetEnvironmentVariable("P1_BASE_URL");
-            IP1Transport transport;
+            ClientSession session;
             if (!string.IsNullOrWhiteSpace(baseUrl))
             {
-                Console.WriteLine("using HttpClientTransport -> " + baseUrl);
-                transport = new HttpClientTransport(baseUrl);
+                Console.WriteLine("using ClientSessionFactory/HttpClientTransport -> " + baseUrl);
+                session = ClientSessionFactory.CreateHttp(baseUrl, characterId: "char_test");
             }
             else
             {
                 Console.WriteLine("using StubTransport (no P1_BASE_URL)");
-                transport = new StubTransport();
+                session = new ClientSession(new StubTransport(), useWorldV2: false, characterId: "char_test");
             }
-            using (var session = new ClientSession(transport, ownsTransport: transport is HttpClientTransport, useWorldV2: false))
+
+            // Capability is deployment/source-versioned. Client support is not the same
+            // as server enablement; encounter is not usable while the alpha gate is OFF.
+            var profile = DeploymentProfile.ProductionOff();
+            var cap = ClientCapability.FromProfile(profile);
+            Console.WriteLine("capability client=" + cap.ClientCoreVersion + " profile=" + cap.DeploymentProfileId +
+                              " encounter-usable=" + cap.IsEncounterUsable);
+
+            using (session)
             {
+                session.EncounterUpdated += update =>
+                {
+                    if (update.IsCleared) Console.WriteLine("encounter cleared");
+                    else if (update.IsNewCast) Console.WriteLine("new cast: " + update.CastId);
+                };
+
                 var res = await session.ConnectAsync();
                 Console.WriteLine("connect: " + res.Success + " session=" + session.Client.SessionId);
                 var guard = session.Guard;
                 guard.BeginRequest("r1");
                 Console.WriteLine("guard applicable: " + guard.IsApplicable(session.Client.SessionId, "r1", session.SessionGeneration));
 
-                var view = new EncounterView();
-                Console.WriteLine("encounter view created, hasSnapshot=" + view.HasSnapshot);
+                // Typed current/detail encounter API: 404 is a typed NotFound result,
+                // never an exception or a fabricated snapshot.
+                var current = await session.ReadCurrentEncounterAsync();
+                Console.WriteLine("encounter current: " + current.Outcome + " " + current.ErrorCode);
+                if (current.Success)
+                {
+                    Console.WriteLine("boss life=" + current.State.BossLifeId + " revision=" + current.State.BossRevision);
+                    session.Encounter.CommitCast();
+                }
 
-                var cap = new ClientCapability();
+                var detail = await session.ReadEncounterAsync("ENC-0123456789ABCDEF01234567");
+                Console.WriteLine("encounter detail: " + detail.Outcome + " " + detail.ErrorCode);
+
+                var capAlpha = ClientCapability.FromProfile(DeploymentProfile.PrivateAlpha(true));
+                Console.WriteLine("alpha profile encounter usable: " + capAlpha.IsEncounterUsable);
                 Console.WriteLine("class supported: " + CapabilityHandshake.IsClassSupported(cap, "CLASS_MINH_KIEM"));
-                Console.WriteLine("route supported: " + CapabilityHandshake.IsRouteSupported(cap, "/p1/encounters/current"));
 
                 await session.Client.ReadWorldAsync(CancellationToken.None);
                 Console.WriteLine("world tick: " + session.Client.World.serverTick);

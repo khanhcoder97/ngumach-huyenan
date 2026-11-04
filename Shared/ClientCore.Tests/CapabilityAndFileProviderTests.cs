@@ -22,10 +22,15 @@ namespace NguMach.Client.Core.Tests
         }
 
         [Fact]
-        public void SupportedRoute_True()
+        public void SupportedRoute_IsClientKnowledgeOnly()
         {
             var c = new ClientCapability();
             Assert.True(CapabilityHandshake.IsRouteSupported(c, "/p1/encounters/current"));
+            Assert.True(CapabilityHandshake.IsRouteSupported(c, "/p1/encounters/{id}"));
+            // Knowing the route does not claim the deployed server enabled it.
+            Assert.False(CapabilityHandshake.IsRouteEnabled(c, "/p1/encounters/current"));
+            Assert.False(CapabilityHandshake.IsRouteEnabled(c, "/p1/encounters/{id}"));
+            Assert.False(c.IsEncounterUsable);
         }
 
         [Fact]
@@ -40,6 +45,60 @@ namespace NguMach.Client.Core.Tests
         {
             Assert.False(CapabilityHandshake.IsClassSupported(null, "x"));
             Assert.False(CapabilityHandshake.IsRouteSupported(null, "x"));
+            Assert.False(CapabilityHandshake.IsRouteEnabled(null, "x"));
+            Assert.False(CapabilityHandshake.IsEncounterUsable(null));
+        }
+
+        [Fact]
+        public void DefaultProfile_IsProductionOff()
+        {
+            var cap = ClientCapability.FromProfile(DeploymentProfile.ProductionOff());
+            Assert.Equal("production-off", cap.DeploymentProfileId);
+            Assert.False(cap.AlphaBossEnabled);
+            Assert.Empty(cap.ServerEnabledRoutes);
+            Assert.False(cap.IsEncounterUsable);
+            Assert.False(CapabilityHandshake.IsEncounterUsable(cap));
+        }
+
+        [Fact]
+        public void PrivateAlpha_DistinguishesServerEnabledFromClientSupported()
+        {
+            var off = ClientCapability.FromProfile(DeploymentProfile.PrivateAlpha(false));
+            Assert.False(off.AlphaBossEnabled);
+            Assert.False(off.IsEncounterUsable);
+            Assert.False(CapabilityHandshake.IsRouteEnabled(off, "/p1/encounters/current"));
+            Assert.True(CapabilityHandshake.IsRouteSupported(off, "/p1/encounters/current"));
+
+            var on = ClientCapability.FromProfile(DeploymentProfile.PrivateAlpha(true));
+            Assert.True(on.AlphaBossEnabled);
+            Assert.True(CapabilityHandshake.IsRouteEnabled(on, "/p1/encounters/current"));
+            Assert.True(CapabilityHandshake.IsRouteEnabled(on, "/p1/encounters/{id}"));
+            Assert.True(on.IsEncounterUsable);
+            Assert.True(CapabilityHandshake.IsEncounterUsable(on));
+        }
+
+        [Fact]
+        public void AlphaGateOnButRouteMissing_IsNotUsable()
+        {
+            var cap = ClientCapability.FromProfile(DeploymentProfile.PrivateAlpha(true));
+            cap.ServerEnabledRoutes.Remove("/p1/encounters/{id}");
+            Assert.False(cap.IsEncounterUsable);
+            Assert.False(CapabilityHandshake.IsEncounterUsable(cap));
+        }
+
+        [Fact]
+        public void AlphaGateOffWithRoutes_IsNotUsable()
+        {
+            var cap = new ClientCapability
+            {
+                AlphaBossEnabled = false,
+                ServerEnabledRoutes = new System.Collections.Generic.List<string>
+                {
+                    "/p1/encounters/current", "/p1/encounters/{id}"
+                }
+            };
+            Assert.False(cap.IsEncounterUsable);
+            Assert.False(CapabilityHandshake.IsEncounterUsable(cap));
         }
     }
 

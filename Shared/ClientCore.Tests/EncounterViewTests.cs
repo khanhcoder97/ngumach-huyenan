@@ -86,5 +86,91 @@ namespace NguMach.Client.Core.Tests
             v.CancelPendingVfx();
             Assert.Null(v.PendingCastId);
         }
+
+        [Fact]
+        public void SameCastPollBeforeCommit_KeepsPending()
+        {
+            var v = new EncounterView();
+            var first = v.Apply(Snap("cast-1"));
+            Assert.True(first.IsNewCast);
+            var second = v.Apply(Snap("cast-1"));
+            Assert.False(second.IsNewCast);
+            Assert.Equal("cast-1", v.PendingCastId);
+            Assert.Null(v.LastCastId);
+            v.CommitCast();
+            Assert.Equal("cast-1", v.LastCastId);
+        }
+
+        [Fact]
+        public void StaleLife_IsRejectedAndDoesNotOverwrite()
+        {
+            var v = new EncounterView();
+            v.Apply(Snap("cast-2", 2));
+            Assert.True(v.HasSnapshot);
+            var update = v.Apply(Snap("cast-1", 1));
+            Assert.False(update.Accepted);
+            Assert.Contains("stale life", update.RejectReason);
+            Assert.Equal(2, v.Snapshot.BossLifeId);
+            Assert.Equal("cast-2", v.Snapshot.ActiveMove.CastId);
+        }
+
+        [Fact]
+        public void StaleRevision_IsRejectedAndDoesNotOverwrite()
+        {
+            var v = new EncounterView();
+            var newer = Snap("cast-2", 1);
+            newer.BossRevision = 5;
+            v.Apply(newer);
+            var older = Snap("cast-1", 1);
+            older.BossRevision = 4;
+            var update = v.Apply(older);
+            Assert.False(update.Accepted);
+            Assert.Contains("stale revision", update.RejectReason);
+            Assert.Equal(5, v.Snapshot.BossRevision);
+        }
+
+        [Fact]
+        public void NewLife_ClearsPendingVfxAndTracksNewCast()
+        {
+            var v = new EncounterView();
+            v.Apply(Snap("cast-1", 1));
+            v.CommitCast();
+            var update = v.Apply(Snap("cast-2", 2));
+            Assert.True(update.Accepted);
+            Assert.True(update.IsNewLife);
+            Assert.True(update.IsNewCast);
+            Assert.Equal("cast-2", v.PendingCastId);
+        }
+
+        [Fact]
+        public void TerminalStatus_IsReportedAndClearsPending()
+        {
+            var v = new EncounterView();
+            var snap = Snap("cast-1");
+            snap.StatusRaw = "DEFEATED";
+            var update = v.Apply(snap);
+            Assert.True(update.IsTerminal);
+            Assert.False(update.IsNewCast);
+            Assert.Null(v.PendingCastId);
+            Assert.Equal(EncounterStatus.Defeated, v.Snapshot.Status);
+        }
+
+        [Fact]
+        public void PhaseChange_IsReported()
+        {
+            var v = new EncounterView();
+            v.Apply(Snap("cast-1", 1, 1));
+            var update = v.Apply(Snap("cast-2", 1, 2));
+            Assert.True(update.PhaseChanged);
+            Assert.Equal(BossPhase.Phase2, v.Snapshot.Phase);
+        }
+
+        [Fact]
+        public void RemainingTicks_UsesSnapshotServerTick()
+        {
+            var v = new EncounterView();
+            v.Apply(Snap());
+            Assert.Equal(10, v.RemainingTicks());
+        }
     }
 }

@@ -33,6 +33,7 @@
     <Compile Include="CapabilityAndFileProviderTests.cs" />
     <Compile Include="MoveShapeValidatorTests.cs" />
     <Compile Include="CatalogDigestTests.cs" />
+    <Compile Include="CompositionTests.cs" />
     <Compile Include="FixtureEncounterTests.cs" />
     <Compile Include="PortableTransportTests.cs" />
     <Compile Include="TimeoutTransportTests.cs" />

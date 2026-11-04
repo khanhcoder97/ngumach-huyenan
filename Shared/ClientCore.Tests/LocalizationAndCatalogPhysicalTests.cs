@@ -9,11 +9,31 @@ namespace NguMach.Client.Core.Tests
 {
     public class CatalogPhysicalProviderTests
     {
+        // The catalog is part of this checkout; a missing file is a real failure, not a skip.
+        internal static string FindRepoRoot()
+        {
+            var relative = Path.Combine("Client", "Assets", "Resources", "PlayerUI", "ui_item_catalog.json");
+            var starts = new[]
+            {
+                AppContext.BaseDirectory,
+                Directory.GetCurrentDirectory()
+            };
+            foreach (var start in starts)
+            {
+                var dir = new DirectoryInfo(Path.GetFullPath(start));
+                for (int depth = 0; dir != null && depth < 12; depth++, dir = dir.Parent)
+                {
+                    if (File.Exists(Path.Combine(dir.FullName, relative))) return dir.FullName;
+                }
+            }
+            throw new FileNotFoundException("checkout root with " + relative + " was not found");
+        }
+
         [Fact]
         public void PhysicalProvider_LoadsRealCatalog()
         {
-            var path = @"D:\Project\NGUMACHHUYENAN-opencode-godot-core-20261103\Client\Assets\Resources\PlayerUI\ui_item_catalog.json";
-            if (!File.Exists(path)) return; // environment without checkout
+            var path = Path.Combine(FindRepoRoot(), "Client", "Assets", "Resources", "PlayerUI", "ui_item_catalog.json");
+            Assert.True(File.Exists(path), path);
             var prov = new PhysicalFileProvider();
             Assert.True(CatalogLoader.TryLoad(prov, path, out var text, out var err), err);
             Assert.True(UiCatalogLoader.TryLoad(text, out var cat, out var lerr), lerr);
@@ -29,7 +49,8 @@ namespace NguMach.Client.Core.Tests
         {
             // P1 result codes are localization keys, never empty.
             var codes = new[] { "not_connected", "invalid_input", "session_not_found",
-                "mutation_outcome_unknown", "invalid_transition", "resync_required" };
+                "mutation_outcome_unknown", "invalid_transition", "resync_required",
+                "network_unavailable", "invalid_envelope", "invalid_snapshot" };
             foreach (var c in codes)
             {
                 Assert.False(string.IsNullOrWhiteSpace(c));
