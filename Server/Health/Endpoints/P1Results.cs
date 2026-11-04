@@ -211,7 +211,41 @@ internal static class P1Results
             },
             statusCode: statusCode);
 
-    public static IResult TurnInSuccess(        string requestId,
+    // The v2 inventory answers carry schemaVersion 2 and the twelve-slot snapshot as
+    // `result`, so a client never has to infer which vocabulary it is being served.
+    public static IResult InventoryV2(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        string? sessionId,
+        int statusCode,
+        InventorySnapshotV2? result = null,
+        string? code = null,
+        IReadOnlyList<string>? fieldErrors = null,
+        bool retryable = false) =>
+        Results.Json(
+            new P1InventoryV2Response
+            {
+                RequestId = requestId,
+                SessionId = sessionId,
+                ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+                Result = result,
+                Error = code is null
+                    ? null
+                    : new P1Error
+                    {
+                        Code = code,
+                        MessageKey = $"P1.ERROR.{code.ToUpperInvariant()}",
+                        Retryable = retryable,
+                        FieldErrors = fieldErrors ?? Array.Empty<string>(),
+                        CorrelationId = context.TraceIdentifier
+                    }
+            },
+            P1Json.Options,
+            statusCode: statusCode);
+
+    public static IResult TurnInSuccess(
+        string requestId,
         string sessionId,
         ServerClock clock,
         TurnInResult result) =>

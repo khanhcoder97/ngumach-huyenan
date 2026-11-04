@@ -462,6 +462,108 @@ public static class P1Validation
         return errors;
     }
 
+    // The v2 inventory envelopes differ from v1 only in the schema version they
+    // carry (2) and the slot vocabulary `unequip` names; the header rules are the
+    // same, so the answers stay comparable across the two contract generations.
+    public static List<string> ValidateEquipV2Envelope(EquipV2Envelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        ValidateV2EnvelopeHeader(
+            errors, envelope.SchemaVersion, envelope.RequestId, envelope.IdempotencyKey,
+            envelope.SentAtUtc, envelope.CharacterId);
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+            return errors;
+        }
+
+        var instanceId = envelope.Payload.ItemInstanceId;
+        if (instanceId is null || instanceId.Length is < 1 or > 64)
+        {
+            errors.Add("payload.itemInstanceId");
+        }
+
+        if (envelope.Payload.ExpectedRevision is null or < 1)
+        {
+            errors.Add("payload.expectedRevision");
+        }
+
+        return errors;
+    }
+
+    public static List<string> ValidateUnequipV2Envelope(UnequipV2Envelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        ValidateV2EnvelopeHeader(
+            errors, envelope.SchemaVersion, envelope.RequestId, envelope.IdempotencyKey,
+            envelope.SentAtUtc, envelope.CharacterId);
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+            return errors;
+        }
+
+        if (!InventoryV2Slots.IsValid(envelope.Payload.SlotId))
+        {
+            errors.Add("payload.slotId");
+        }
+
+        if (envelope.Payload.ExpectedRevision is null or < 1)
+        {
+            errors.Add("payload.expectedRevision");
+        }
+
+        return errors;
+    }
+
+    private static void ValidateV2EnvelopeHeader(
+        List<string> errors,
+        int? schemaVersion,
+        string? requestId,
+        string? idempotencyKey,
+        string? sentAtUtc,
+        string? characterId)
+    {
+        if (schemaVersion != 2)
+        {
+            errors.Add("schemaVersion");
+        }
+
+        if (!IsHex32(requestId))
+        {
+            errors.Add("requestId");
+        }
+
+        if (!IsHex32(idempotencyKey))
+        {
+            errors.Add("idempotencyKey");
+        }
+
+        if (!TryParseUtc(sentAtUtc, out _))
+        {
+            errors.Add("sentAtUtc");
+        }
+
+        if (!IsCharacterId(characterId))
+        {
+            errors.Add("characterId");
+        }
+    }
+
     private static void ValidateEnvelopeHeader(
         List<string> errors,
         int? schemaVersion,

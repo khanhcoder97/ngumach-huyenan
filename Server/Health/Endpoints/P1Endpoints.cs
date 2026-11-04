@@ -78,6 +78,12 @@ public static class P1Endpoints
         {
             app.MapGet("/p1/encounters/current", GetEncounterCurrent);
             app.MapGet("/p1/encounters/{encounterId}", GetEncounterById);
+            // The twelve-slot inventory surface (QOD-21 Q3). Same reason as above:
+            // with the gate off these three are unmapped and answer 404, and the v1
+            // routes are never touched by either vocabulary.
+            app.MapGet("/p1/inventory/v2/{sessionId}", GetInventoryV2);
+            app.MapPost("/p1/inventory/v2/equip", EquipV2Async);
+            app.MapPost("/p1/inventory/v2/unequip", UnequipV2Async);
         }
 
         return app;
@@ -1475,6 +1481,224 @@ public static class P1Endpoints
             context, clock, requestId, session.SessionId,
             EquipmentStatus(failure.Code), failure.Code,
             failure.FieldErrors, failure.Retryable, outcome.Snapshot);
+    }
+
+    // QOD-21 Q3: the v2 inventory surface, mapped only while P1:AlphaProfile is on.
+    // The slot a v2 request lands in is never taken from the request — the catalog
+    // label decides — so these handlers accept an instance or a token and let the
+    // service resolve everything else from source data.
+    private static IResult GetInventoryV2(
+        HttpContext context,
+        string sessionId,
+        ISessionStore sessions,
+        IEquipmentV2Service equipment,
+        ServerClock clock)
+    {
+        var requestId = NewRequestId();
+        var session = sessions.Find(sessionId.Trim());
+        if (session is null)
+        {
+            return P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status404NotFound,
+                code: P1ErrorCodes.SessionNotFound,
+                fieldErrors: ["sessionId"], retryable: false);
+        }
+
+        var outcome = equipment.Read(session);
+        return P1Results.InventoryV2(
+            context, clock, requestId, session.SessionId,
+            StatusCodes.Status200OK, result: outcome.Snapshot);
+    }
+
+    private static async Task<IResult> EquipV2Async(
+        HttpContext context,
+        ISessionStore sessions,
+        IEquipmentV2Service equipment,
+        ServerClock clock,
+        ILoggerFactory loggerFactory)
+    {
+        var requestId = NewRequestId();
+        EquipV2Envelope? envelope;
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge || string.IsNullOrWhiteSpace(body) || !context.Request.HasJsonContentType())
+        {
+            return P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                tooLarge ? StatusCodes.Status413PayloadTooLarge
+                         : StatusCodes.Status400BadRequest,
+                code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["body"], retryable: false);
+        }
+
+        try
+        {
+            envelope = JsonSerializer.Deserialize<EquipV2Envelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["body"], retryable: false);
+        }
+
+        if (envelope?.RequestId is { } incomingRequestId && P1Validation.IsHex32(incomingRequestId))
+        {
+            requestId = incomingRequestId;
+        }
+
+        var fieldErrors = P1Validation.ValidateEquipV2Envelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: fieldErrors, retryable: false);
+        }
+
+        var sessionOutcome = ResolveInventorySession(
+            context, clock, requestId, sessions, envelope!.CharacterId);
+        if (sessionOutcome.Session is null)
+        {
+            return sessionOutcome.Result!;
+        }
+
+        var outcome = equipment.Equip(
+            sessionOutcome.Session,
+            envelope.Payload!.ItemInstanceId!,
+            envelope.Payload.ExpectedRevision!.Value,
+            envelope.IdempotencyKey!);
+        return InventoryV2Result(
+            context, clock, requestId, sessionOutcome.Session, outcome, "equip", loggerFactory);
+    }
+
+    private static async Task<IResult> UnequipV2Async(
+        HttpContext context,
+        ISessionStore sessions,
+        IEquipmentV2Service equipment,
+        ServerClock clock,
+        ILoggerFactory loggerFactory)
+    {
+        var requestId = NewRequestId();
+        UnequipV2Envelope? envelope;
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge || string.IsNullOrWhiteSpace(body) || !context.Request.HasJsonContentType())
+        {
+            return P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                tooLarge ? StatusCodes.Status413PayloadTooLarge
+                         : StatusCodes.Status400BadRequest,
+                code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["body"], retryable: false);
+        }
+
+        try
+        {
+            envelope = JsonSerializer.Deserialize<UnequipV2Envelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["body"], retryable: false);
+        }
+
+        if (envelope?.RequestId is { } incomingRequestId && P1Validation.IsHex32(incomingRequestId))
+        {
+            requestId = incomingRequestId;
+        }
+
+        var fieldErrors = P1Validation.ValidateUnequipV2Envelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: fieldErrors, retryable: false);
+        }
+
+        var sessionOutcome = ResolveInventorySession(
+            context, clock, requestId, sessions, envelope!.CharacterId);
+        if (sessionOutcome.Session is null)
+        {
+            return sessionOutcome.Result!;
+        }
+
+        var outcome = equipment.Unequip(
+            sessionOutcome.Session,
+            envelope.Payload!.SlotId!,
+            envelope.Payload.ExpectedRevision!.Value,
+            envelope.IdempotencyKey!);
+        return InventoryV2Result(
+            context, clock, requestId, sessionOutcome.Session, outcome, "unequip", loggerFactory);
+    }
+
+    private static (PlayerSession? Session, IResult? Result) ResolveInventorySession(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        ISessionStore sessions,
+        string? characterId)
+    {
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return (null, P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["X-Session-ID"], retryable: false));
+        }
+
+        var session = sessions.Find(sessionId);
+        if (session is null)
+        {
+            return (null, P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status404NotFound, code: P1ErrorCodes.SessionNotFound,
+                fieldErrors: ["X-Session-ID"], retryable: false));
+        }
+
+        if (!string.Equals(characterId, session.CharacterId, StringComparison.Ordinal))
+        {
+            return (null, P1Results.InventoryV2(
+                context, clock, requestId, session.SessionId,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["characterId"], retryable: false));
+        }
+
+        return (session, null);
+    }
+
+    private static IResult InventoryV2Result(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        PlayerSession session,
+        EquipmentV2Outcome outcome,
+        string operation,
+        ILoggerFactory loggerFactory)
+    {
+        var logger = loggerFactory.CreateLogger("P1.EquipmentV2");
+        if (outcome.Accepted && outcome.Snapshot is { } snapshot)
+        {
+            logger.LogDebug(
+                "Accepted v2 inventory {Operation} for {SessionId} at revision {Revision}",
+                operation, session.SessionId, snapshot.InventoryRevision);
+            return P1Results.InventoryV2(
+                context, clock, requestId, session.SessionId, StatusCodes.Status200OK,
+                result: snapshot);
+        }
+
+        var failure = outcome.Failure!;
+        logger.LogDebug(
+            "Rejected v2 inventory {Operation} for {SessionId}: {Code}",
+            operation, session.SessionId, failure.Code);
+        return P1Results.InventoryV2(
+            context, clock, requestId, session.SessionId, EquipmentStatus(failure.Code),
+            code: failure.Code, fieldErrors: failure.FieldErrors,
+            retryable: failure.Retryable, result: outcome.Snapshot);
     }
 
     private static int EquipmentStatus(string code) => code switch

@@ -82,37 +82,40 @@ public static class InventoryV2UnsupportedReasons
     public static bool IsKnown(string? value) => value is UnmappedSlot;
 }
 
-public sealed class EquipV2Payload
+// Request envelopes. Every member is nullable so a malformed request answers with
+// the exact field names that failed, the same way the v1 envelopes do; the schemas
+// decide what is legal.
+public sealed class EquipV2Envelope
 {
-    public required string ItemInstanceId { get; init; }
-    public required long ExpectedRevision { get; init; }
+    public int? SchemaVersion { get; init; }
+    public string? RequestId { get; init; }
+    public string? IdempotencyKey { get; init; }
+    public string? SentAtUtc { get; init; }
+    public string? CharacterId { get; init; }
+    public EquipV2Intent? Payload { get; init; }
 }
 
-public sealed class UnequipV2Payload
+public sealed class EquipV2Intent
+{
+    public string? ItemInstanceId { get; init; }
+    public long? ExpectedRevision { get; init; }
+}
+
+public sealed class UnequipV2Envelope
+{
+    public int? SchemaVersion { get; init; }
+    public string? RequestId { get; init; }
+    public string? IdempotencyKey { get; init; }
+    public string? SentAtUtc { get; init; }
+    public string? CharacterId { get; init; }
+    public UnequipV2Intent? Payload { get; init; }
+}
+
+public sealed class UnequipV2Intent
 {
     // The token to empty, from the twelve.
-    public required string SlotId { get; init; }
-    public required long ExpectedRevision { get; init; }
-}
-
-public sealed class EquipV2Request
-{
-    public required int SchemaVersion { get; init; }
-    public required string RequestId { get; init; }
-    public required string IdempotencyKey { get; init; }
-    public required string SentAtUtc { get; init; }
-    public required string CharacterId { get; init; }
-    public required EquipV2Payload Payload { get; init; }
-}
-
-public sealed class UnequipV2Request
-{
-    public required int SchemaVersion { get; init; }
-    public required string RequestId { get; init; }
-    public required string IdempotencyKey { get; init; }
-    public required string SentAtUtc { get; init; }
-    public required string CharacterId { get; init; }
-    public required UnequipV2Payload Payload { get; init; }
+    public string? SlotId { get; init; }
+    public long? ExpectedRevision { get; init; }
 }
 
 public sealed class P1InventoryV2Response

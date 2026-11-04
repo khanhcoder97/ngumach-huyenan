@@ -61,7 +61,7 @@
               },
               "templateId": {
                 "type": "string",
-                "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)*$"
+                "pattern": "^[A-Z0-9_]+(?:-[A-Z0-9_]+)*$"
               },
               "stack": {
                 "type": "integer",

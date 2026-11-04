@@ -7,8 +7,11 @@ public static class InventoryValidation
 {
     private const long MaxCurrencyDelta = 1_000_000_000_000L;
 
+    // Underscores are allowed because the canonical catalogue names two slots
+    // RING_L and RING_R, and their item ids carry them (EQ-MK-RING_L-T1-...). The
+    // old pattern silently made those items ungrantable.
     private static readonly Regex TemplateIdPattern =
-        new(@"^[A-Z0-9]+(?:-[A-Z0-9]+)*$", RegexOptions.CultureInvariant);
+        new(@"^[A-Z0-9_]+(?:-[A-Z0-9_]+)*$", RegexOptions.CultureInvariant);
 
     private static readonly Regex InstanceIdPattern =
         new(@"^ITM_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
@@ -133,12 +136,32 @@ public static class InventoryValidation
 
                 if (string.Equals(move.ToLocation, InventoryLocations.Equipped, StringComparison.Ordinal))
                 {
-                    if (move.Slot is null || !SlotPattern.IsMatch(move.Slot))
+                    // A v2 write carries the twelve-slot token plus, when v1 has a
+                    // word for it, the collapsed v1 token. Requiring the two to agree
+                    // is what keeps the two vocabularies from ever disagreeing about
+                    // who is wearing what; LEGS and GLOVES legitimately carry no v1
+                    // token at all.
+                    if (move.SlotV2 is { } precise)
+                    {
+                        if (!InventoryV2Slots.IsValid(precise))
+                        {
+                            return $"moveItems[{index}].slotV2";
+                        }
+
+                        var collapsed = InventoryV2Slots.CollapseToV1(precise, out var v1Token)
+                            ? v1Token
+                            : null;
+                        if (!string.Equals(move.Slot, collapsed, StringComparison.Ordinal))
+                        {
+                            return $"moveItems[{index}].slot";
+                        }
+                    }
+                    else if (move.Slot is null || !SlotPattern.IsMatch(move.Slot))
                     {
                         return $"moveItems[{index}].slot";
                     }
                 }
-                else if (move.Slot is not null)
+                else if (move.Slot is not null || move.SlotV2 is not null)
                 {
                     return $"moveItems[{index}].slot";
                 }

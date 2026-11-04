@@ -89,6 +89,52 @@ public static class InventoryV2Slots
         return v1Slot.Length > 0;
     }
 
+    // The v2 slot an item belongs to, from its canonical catalog label. This is the
+    // only place that decides it, so an equip request cannot be steered by a client
+    // and a read cannot disagree with the write.
+    public static bool TryResolveEntry(ItemCatalogEntry entry, out string slot)
+    {
+        ArgumentNullException.ThrowIfNull(entry);
+        slot = "";
+        return entry.SlotLabel is { } label &&
+            TryResolveLabel(entry.Category, label, out var resolved) &&
+            (slot = resolved).Length > 0;
+    }
+
+    // The slot an equipped item is worn in, for the v2 read model, in the order the
+    // truth is known: a token a v2 write stored is authoritative; otherwise the
+    // canonical catalogue names it (which is how an accessory equipped through v1's
+    // lumped ACCESSORY token still lands in its own one of the six); otherwise a
+    // stored string that already is one of the twelve; otherwise nothing, and the
+    // caller reports the item in `unsupported` instead of dropping it.
+    public static bool TryResolveWorn(
+        ItemCatalogEntry? entry,
+        string? storedV2,
+        string? storedV1,
+        out string slot)
+    {
+        if (IsValid(storedV2))
+        {
+            slot = storedV2!;
+            return true;
+        }
+
+        if (entry is not null && TryResolveEntry(entry, out var resolved))
+        {
+            slot = resolved;
+            return true;
+        }
+
+        if (IsValid(storedV1))
+        {
+            slot = storedV1!;
+            return true;
+        }
+
+        slot = "";
+        return false;
+    }
+
     // The design names the twelve slots and their order; the implementation must
     // agree exactly, so a design edit cannot be served by the old vocabulary.
     public static void ValidateAgainstDesign(IReadOnlyList<string> designSlots)
@@ -128,6 +174,38 @@ public static class InventoryV2Slots
         {
             throw new InvalidOperationException(
                 $"No canonical slot label reaches {string.Join(',', uncovered)}.");
+        }
+    }
+
+    // The other direction, over the real catalogue: every equipment row's label has
+    // to land on one of the twelve and every token has to be reachable from some
+    // row. A label that appears in the CSV and not here means v2 would refuse to
+    // equip an item the source clearly names, which is a data fault to fail on at
+    // startup rather than a runtime `not_equippable` surprise.
+    public static void ValidateCatalogLabels(ItemCatalog catalog)
+    {
+        ArgumentNullException.ThrowIfNull(catalog);
+
+        var unmapped = new SortedSet<string>(StringComparer.Ordinal);
+        var covered = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var entry in catalog.EquipmentEntries)
+        {
+            if (TryResolveEntry(entry, out var slot))
+            {
+                covered.Add(slot);
+                continue;
+            }
+
+            unmapped.Add($"{entry.Category}/{entry.SlotLabel ?? "(none)"}");
+        }
+
+        var unreachable = All.Where(slot => !covered.Contains(slot)).ToArray();
+        if (unmapped.Count > 0 || unreachable.Length > 0)
+        {
+            throw new InvalidOperationException(
+                "Canonical equipment slots do not partition onto the approved twelve: " +
+                $"labels with no token [{string.Join(';', unmapped)}], " +
+                $"tokens no catalogue row reaches [{string.Join(',', unreachable)}].");
         }
     }
 }

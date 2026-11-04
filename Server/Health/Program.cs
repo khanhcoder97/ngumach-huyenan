@@ -151,6 +151,11 @@ builder.Services.AddSingleton(serviceProvider =>
         maps,
         serviceProvider.GetRequiredService<NpcAnchorCatalog>(),
         baseRecords);
+    // The v2 twelve-slot vocabulary has to cover every equipment label the canonical
+    // catalogue carries; a label it cannot name would only surface as a runtime
+    // refusal to equip, so it fails here instead.
+    InventoryV2Slots.ValidateCatalogLabels(
+        serviceProvider.GetRequiredService<ItemCatalog>());
     return design;
 });
 builder.Services.AddSingleton<IQuestService, InMemoryQuestService>();
@@ -209,6 +214,9 @@ builder.Services.Configure<EquipmentOptions>(
 builder.Services.AddSingleton(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<EquipmentOptions>>().Value);
 builder.Services.AddSingleton<IEquipmentService, EquipmentService>();
+// The v2 twelve-slot surface beside the frozen v1 five: same store, same aggregate
+// revision, different vocabulary. Its routes are mapped only under P1:AlphaProfile.
+builder.Services.AddSingleton<IEquipmentV2Service, EquipmentV2Service>();
 builder.Services.AddSingleton<ITeleportService, InMemoryTeleportService>();
 builder.Services.Configure<InteractionOptions>(
     builder.Configuration.GetSection(InteractionOptions.SectionName));

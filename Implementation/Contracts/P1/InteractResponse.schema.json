@@ -92,7 +92,7 @@
           "properties": {
             "itemId": {
               "type": "string",
-              "pattern": "^[A-Z][A-Z0-9-]+$"
+              "pattern": "^[A-Z][A-Z0-9_-]+$"
             },
             "quantity": {
               "type": "integer",

@@ -142,10 +142,13 @@ public sealed class InMemoryInventoryService : IInventoryService
             foreach (var item in state.Items)
             {
                 if (string.Equals(item.Location, InventoryLocations.Equipped, StringComparison.Ordinal) &&
-                    item.Slot is not null &&
+                    // The twelve-slot token a v2 write placed this item in is the
+                    // occupancy truth; a v1 write has none, so its v1 token is used
+                    // exactly as before.
+                    (item.SlotV2 ?? item.Slot) is { } worn &&
                     !leavingEquipped.Contains(item.InstanceId))
                 {
-                    occupiedSlots.Add(item.Slot);
+                    occupiedSlots.Add(worn);
                 }
             }
 
@@ -153,12 +156,12 @@ public sealed class InMemoryInventoryService : IInventoryService
             {
                 var move = moves[index];
                 if (!string.Equals(move.ToLocation, InventoryLocations.Equipped, StringComparison.Ordinal) ||
-                    move.Slot is null)
+                    (move.SlotV2 ?? move.Slot) is not { } target)
                 {
                     continue;
                 }
 
-                if (!occupiedSlots.Add(move.Slot))
+                if (!occupiedSlots.Add(target))
                 {
                     return InventoryOutcome.Rejected(
                         InventoryErrorCodes.SlotOccupied, retryable: false,
@@ -186,11 +189,11 @@ public sealed class InMemoryInventoryService : IInventoryService
             foreach (var move in moves)
             {
                 var item = state.FindItem(move.InstanceId)!;
+                var worn = string.Equals(
+                    move.ToLocation, InventoryLocations.Equipped, StringComparison.Ordinal);
                 item.Location = move.ToLocation;
-                item.Slot = string.Equals(
-                    move.ToLocation, InventoryLocations.Equipped, StringComparison.Ordinal)
-                    ? move.Slot
-                    : null;
+                item.Slot = worn ? move.Slot : null;
+                item.SlotV2 = worn ? move.SlotV2 : null;
                 item.Version++;
             }
 

@@ -18,6 +18,11 @@ public sealed class ItemMove
     public required string FromLocation { get; init; }
     public required string ToLocation { get; init; }
     public string? Slot { get; init; }
+
+    // The twelve-slot token a v2 equip is placing this item into, when the write came
+    // from that vocabulary. Occupancy is counted on it when present, which is what
+    // lets v2 hold two accessories at once while v1 keeps seeing one ACCESSORY.
+    public string? SlotV2 { get; init; }
 }
 
 public sealed class ItemGrant

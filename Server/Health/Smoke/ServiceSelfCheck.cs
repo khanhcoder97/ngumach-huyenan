@@ -7435,6 +7435,164 @@ public static class ServiceSelfCheck
                     outcome?.Failure?.Code ??
                     $"{outcome?.Snapshot?.InventoryRevision}")));
 
+        // ─── QOD-21 Q3: the v2 twelve-slot handler ────
+
+        // Same store, same aggregate revision, second vocabulary: these checks pin
+        // what v2 is for (two accessories and the two armour slots v1 cannot name)
+        // and that v1 keeps seeing its own five tokens for the very same items.
+        var eqV2 = new EquipmentV2Service(
+            inventory,
+            services.GetRequiredService<IInventoryStateStore>(),
+            itemCatalog,
+            alphaDesign);
+        var eqV2Actor = NewPlayer("CHR_SELFCHECK_EQUIP_V2");
+        var eqV2Seed = inventory.Apply(eqV2Actor, new InventoryMutation
+        {
+            AddItems =
+            [
+                new ItemGrant { TemplateId = "EQ-MK-NECK-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-MK-NECK-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-MK-RING_L-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-MK-RING_R-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-MK-LEGS-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-MK-GLOVES-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-MK-NECK-T2-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-AD-HAT-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "POT-HP-01", Stack = 1, Location = InventoryLocations.Bag }
+            ]
+        });
+        var eqV2Items = eqV2Seed.Snapshot!.Items;
+        string EqV2Instance(string templateId, int occurrence = 1) => eqV2Items
+            .Where(item => item.TemplateId == templateId)
+            .Select(item => item.InstanceId)
+            .ElementAt(occurrence - 1);
+
+        var eqV2Empty = eqV2.Read(eqV2Actor).Snapshot!;
+        var eqV2Neck = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-NECK-T1-R-COMMON"), 1, NewKey()).Snapshot!;
+        var eqV2RingL = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-RING_L-T1-R-COMMON"), 2, NewKey()).Snapshot!;
+        var eqV2Legs = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-LEGS-T1-R-COMMON"), 3, NewKey()).Snapshot!;
+        var eqV2V1View = inventory.GetSnapshot(eqV2Actor.CharacterId);
+        var eqV2RingLOut = eqV2.Unequip(eqV2Actor, InventoryV2Slots.RingLeft, 4, NewKey()).Snapshot!;
+
+        Check(
+            "equipment_v2.equips_the_twelve_slots_without_moving_v1",
+            eqV2Seed.IsSuccess && eqV2Seed.Snapshot!.InventoryRevision == 1 &&
+            eqV2Empty.Slots.Count == 12 &&
+            eqV2Empty.Slots.All(entry => entry.Item is null) &&
+            eqV2Empty.BagSlots == 100 &&
+            eqV2Empty.Bag.Count == 9 &&
+            string.Equals(eqV2Empty.SlotSpec, alphaDesign.Inventory.WireMigration,
+                StringComparison.Ordinal) &&
+            eqV2Empty.InventoryRevision == 1 &&
+            // Two accessories in two slots is the whole point of v2.
+            eqV2RingL.Slots.Single(e => e.SlotId == InventoryV2Slots.Neck).Item is { } wornNeck &&
+            wornNeck.SlotId == InventoryV2Slots.Neck &&
+            eqV2RingL.Slots.Single(e => e.SlotId == InventoryV2Slots.RingLeft).Item?.TemplateId ==
+                "EQ-MK-RING_L-T1-R-COMMON" &&
+            eqV2Legs.Slots.Count(e => e.Item is not null) == 3 &&
+            eqV2Legs.Bag.Count == 6 &&
+            eqV2Legs.InventoryRevision == 4 &&
+            // v1 still reads three equipped items, in its own vocabulary or with no
+            // slot at all for the two armour pieces it has no token for.
+            eqV2V1View.Items.Count(item =>
+                item.Location == InventoryLocations.Equipped) == 3 &&
+            eqV2V1View.Items.Single(item =>
+                item.TemplateId == "EQ-MK-NECK-T1-R-COMMON" &&
+                item.Location == InventoryLocations.Equipped).Slot ==
+                EquipmentSlots.Accessory &&
+            eqV2V1View.Items.Single(item =>
+                item.TemplateId == "EQ-MK-RING_L-T1-R-COMMON" &&
+                item.Location == InventoryLocations.Equipped).Slot ==
+                EquipmentSlots.Accessory &&
+            eqV2V1View.Items.Single(item =>
+                item.TemplateId == "EQ-MK-LEGS-T1-R-COMMON" &&
+                item.Location == InventoryLocations.Equipped).Slot is null &&
+            eqV2RingLOut.Slots.Single(e => e.SlotId == InventoryV2Slots.RingLeft).Item is null &&
+            eqV2RingLOut.Bag.Single(item =>
+                item.TemplateId == "EQ-MK-RING_L-T1-R-COMMON" &&
+                item.Location == InventoryLocations.Bag).SlotId is null &&
+            inventory.GetSnapshot(eqV2Actor.CharacterId).Items.Count(item =>
+                item.Location == InventoryLocations.Equipped) == 2,
+            $"slots={eqV2Legs.Slots.Count(e => e.Item is not null)} " +
+            $"v1={string.Join('|', eqV2V1View.Items.Where(i => i.Location == InventoryLocations.Equipped).Select(i => i.Slot ?? "(none)"))}");
+
+        var eqV2NeckTaken = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-NECK-T1-R-COMMON", 2), 5, NewKey());
+        var eqV2Potion = eqV2.Equip(eqV2Actor, EqV2Instance("POT-HP-01"), 5, NewKey());
+        var eqV2TooHigh = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-NECK-T2-R-COMMON"), 5, NewKey());
+        var eqV2WrongClass = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-AD-HAT-T1-R-COMMON"), 5, NewKey());
+        var eqV2Unknown = eqV2.Equip(eqV2Actor, "ITM_NOPE_NOT_THERE", 5, NewKey());
+        var eqV2AlreadyWorn = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-LEGS-T1-R-COMMON"), 5, NewKey());
+        var eqV2EmptySlot = eqV2.Unequip(eqV2Actor, InventoryV2Slots.Seal, 5, NewKey());
+        var eqV2StaleRevision = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-GLOVES-T1-R-COMMON"), 2, NewKey());
+        var eqV2Key = NewKey();
+        var eqV2First = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-GLOVES-T1-R-COMMON"), 5, eqV2Key);
+        var eqV2Replay = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-GLOVES-T1-R-COMMON"), 5, eqV2Key);
+        var eqV2Conflict = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-RING_R-T1-R-COMMON"), 6, eqV2Key);
+
+        Check(
+            "equipment_v2.gates_revisions_and_idempotency_match_v1_rules",
+            eqV2NeckTaken.Failure?.Code == EquipmentErrorCodes.SlotOccupied &&
+            eqV2NeckTaken.Snapshot is not null &&
+            eqV2Potion.Failure?.Code == EquipmentErrorCodes.NotEquippable &&
+            eqV2TooHigh.Failure?.Code == EquipmentErrorCodes.LevelRequired &&
+            eqV2WrongClass.Failure?.Code == EquipmentErrorCodes.ClassRestricted &&
+            eqV2Unknown.Failure?.Code == EquipmentErrorCodes.ItemNotFound &&
+            eqV2AlreadyWorn.Failure?.Code == EquipmentErrorCodes.WrongLocation &&
+            eqV2EmptySlot.Failure?.Code == EquipmentErrorCodes.WrongLocation &&
+            eqV2StaleRevision.Failure?.Code == EquipmentErrorCodes.RevisionConflict &&
+            eqV2StaleRevision.Failure.Retryable &&
+            eqV2StaleRevision.Snapshot?.InventoryRevision == 5 &&
+            eqV2First.Accepted && eqV2First.Snapshot!.InventoryRevision == 6 &&
+            eqV2Replay.Accepted && ReferenceEquals(eqV2Replay.Snapshot, eqV2First.Snapshot) &&
+            inventory.GetSnapshot(eqV2Actor.CharacterId).Items.Count(item =>
+                item.Location == InventoryLocations.Equipped) == 3 &&
+            eqV2Conflict.Failure?.Code == EquipmentErrorCodes.IdempotencyConflict,
+            $"occupied={eqV2NeckTaken.Failure?.Code} potion={eqV2Potion.Failure?.Code} " +
+            $"level={eqV2TooHigh.Failure?.Code} class={eqV2WrongClass.Failure?.Code} " +
+            $"stale={eqV2StaleRevision.Failure?.Code} replay={eqV2Replay.Snapshot?.InventoryRevision}");
+
+        // A slot string neither vocabulary can name must surface, not vanish: the
+        // decision's incompatibleV1Projection rule, exercised through the store seam
+        // because no route can write one.
+        var eqV2OrphanActor = NewPlayer("CHR_SELFCHECK_EQUIP_V2_ORPHAN");
+        inventory.Apply(eqV2OrphanActor, new InventoryMutation
+        {
+            AddItems =
+            [
+                new ItemGrant
+                {
+                    TemplateId = "POT-HP-01",
+                    Stack = 1,
+                    Location = InventoryLocations.Equipped,
+                    Slot = "TOTEM"
+                }
+            ]
+        });
+        var eqV2Orphan = eqV2.Read(eqV2OrphanActor).Snapshot!;
+
+        Check(
+            "equipment_v2.unsupported_reports_every_slot_it_cannot_name",
+            eqV2Orphan.Slots.Count == 12 &&
+            eqV2Orphan.Slots.All(entry =>
+                entry.Item is null && entry.SlotId.Length > 0) &&
+            eqV2Orphan.Unsupported.Count == 1 &&
+            eqV2Orphan.Unsupported[0].Reason == InventoryV2UnsupportedReasons.UnmappedSlot &&
+            eqV2Orphan.Unsupported[0].SourceSlot == "TOTEM" &&
+            eqV2Orphan.Bag.Count == 0,
+            $"unsupported={eqV2Orphan.Unsupported.Count} " +
+            $"reason={eqV2Orphan.Unsupported.FirstOrDefault()?.Reason}");
+
         // ─── turn-in ───────────────────────────────────────────
 
         var turnInActor = NewPlayer("CHR_SELFCHECK_TURNIN");

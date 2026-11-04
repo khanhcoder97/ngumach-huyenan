@@ -14,10 +14,16 @@ namespace Server.Health.Gameplay.Inventory;
 // `not_equippable` rather than guessed into a neighbouring slot. Any *other*
 // equipment label without a token fails the loader, so a new source slot can
 // never slip through silently.
+//
+// The v2 contract (QOD-21 Q3) does name all twelve, so the raw canonical label
+// is kept on the entry next to the v1 token: `InventoryV2Slots` resolves it
+// without any consumer having to re-read the CSV or guess from an item id. The
+// v1 token stays exactly as it was, so v1 behaviour is untouched.
 public sealed record ItemCatalogEntry(
     string ItemId,
     string Category,
     string? SlotToken,
+    string? SlotLabel,
     string? ClassId,
     int RequiredLevel,
     string RarityPool,
@@ -66,6 +72,11 @@ public sealed class ItemCatalog
 
     public bool TryGet(string itemId, out ItemCatalogEntry entry) =>
         _items.TryGetValue(itemId, out entry!);
+
+    // Equipment rows only, so a vocabulary check can walk every gear label without
+    // any consumer re-reading the CSV or guessing from item ids.
+    public IEnumerable<ItemCatalogEntry> EquipmentEntries =>
+        _items.Values.Where(entry => IsEquipmentCategory(entry.Category));
 
     public static bool IsEquipmentCategory(string? category) =>
         string.Equals(category, ArmorCategory, StringComparison.Ordinal) ||
@@ -161,7 +172,8 @@ public sealed class ItemCatalog
                     throw new InvalidOperationException(
                         $"{path}:{line + 1}: equipment item '{itemId}' has slot " +
                         $"'{slotLabel}' with no approved wire token; extend the " +
-                        "EquipRequest/UnequipRequest slot enum first.");
+                        "EquipRequest/UnequipRequest slot enum first. If the label is " +
+                        "one of the v2 twelve, add it to InventoryV2Slots.LabelToSlot.");
                 }
 
                 if (string.IsNullOrEmpty(Cell("class_id")))
@@ -175,6 +187,7 @@ public sealed class ItemCatalog
                 itemId,
                 category,
                 slotToken,
+                IsEquipmentCategory(category) ? slotLabel : null,
                 string.IsNullOrEmpty(Cell("class_id")) ? null : Cell("class_id"),
                 requiredLevel,
                 Cell("rarity_pool"),
