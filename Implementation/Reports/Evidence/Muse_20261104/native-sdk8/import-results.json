@@ -1,0 +1,20 @@
+[
+  {
+    "suite": "IMPORT",
+    "command": [
+      "D:/Project/NGUMACHHUYENAN-tools/godot-4.7.2/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe",
+      "--headless",
+      "--path",
+      "D:/Project/NGUMACHHUYENAN-muse-review-20261104/ClientGodot",
+      "--editor",
+      "--import"
+    ],
+    "exit": 0,
+    "timeout": false,
+    "seconds": 14.19,
+    "markers": [],
+    "pass": true,
+    "runtime_errors": 1,
+    "log": "D:\\Project\\NGUMACHHUYENAN-tools\\dispatch\\muse-complete-20261104\\native-sdk8\\import.log"
+  }
+]
