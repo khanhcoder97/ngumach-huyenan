@@ -1,0 +1,95 @@
+{
+ "schemaVersion": 1,
+ "checkpoint": "MEDIA-02 checkpoint 18 - per-scene clip export (Goi 30 item 6): CIN_001/CIN_002/CIN_004 video clips + CIN_006 timing/SRT only (no panels yet)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_004",
+ "title": "Vết đau của linh thú",
+ "durationSeconds": 18,
+ "dialogueCues": 1,
+ "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT; OFFSCREEN_DECIDED_DEC_MEDIA_P0",
+ "files": {
+  "mp4": {
+   "path": "assets/cinematics/CIN_004/CIN_004_640x360_30fps.mp4",
+   "sha256": "f491a39c625a7a0717cbb3f43ab5de72f04bd9ca14b123dbd522bf2461146b50",
+   "sizeBytes": 209135,
+   "codec": "h264",
+   "width": 640,
+   "height": 360,
+   "fps": 30,
+   "durationSeconds": 18.0,
+   "frames": 540
+  },
+  "ogv": {
+   "path": "assets/cinematics/CIN_004/CIN_004_640x360_30fps.ogv",
+   "sha256": "82d226ce5b0cf66c4d9be1c2a9973b5db980a9f9716934e866d07fecb733a960",
+   "sizeBytes": 485991,
+   "codec": "theora",
+   "width": 640,
+   "height": 360,
+   "fps": 30,
+   "durationSeconds": 18.0,
+   "storedFrames": 45
+  },
+  "poster": {
+   "path": "assets/cinematics/CIN_004/CIN_004_poster.png",
+   "sha256": "e43df4ff0178dcc2dc390ee907bd1d05e35632cdbc9e8672b2310eb535d54829",
+   "sizeBytes": 384737,
+   "sourcePanel": "panel_CIN_004_S01.png"
+  },
+  "timing": {
+   "path": "assets/cinematics/CIN_004/CIN_004_timing_v1.json",
+   "sha256": "431b3b025d37bcc39190b87f5a0847b6e0c74e0dbb719998de5cd48ff6f75a97",
+   "sizeBytes": 1783
+  },
+  "srt": {
+   "path": "assets/cinematics/CIN_004/CIN_004_vi.srt",
+   "sha256": "b06b87b1f07f841d082a7ee7ed60647d488f05939e419a1321df4ad5a4296645",
+   "sizeBytes": 68,
+   "status": "DRAFT"
+  }
+ },
+ "notes": [
+  "Scene-local time starts at 0; shot list is rebased from reel time. The copied SRT is already scene-local.",
+  "The 72 s P0 reel is review/gallery only, NOT auto-run as opening; this per-scene clip is the runtime unit (Goi 30 item 6)."
+ ],
+ "reelOffsetSeconds": {
+  "start": 54.0,
+  "end": 72.0
+ },
+ "reelTotalSeconds": 72.0,
+ "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+ "frameCheck": {
+  "first": {
+   "panel": "panel_CIN_004_S01.png",
+   "meanAbsChannelDiff": 2.833,
+   "maxAllowed": 10.0
+  },
+  "last": {
+   "panel": "panel_CIN_004_S03.png",
+   "meanAbsChannelDiff": 2.782,
+   "maxAllowed": 10.0
+  }
+ },
+ "shots": [
+  {
+   "shotId": "CIN_004_S01",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "panel": "panel_CIN_004_S01.png"
+  },
+  {
+   "shotId": "CIN_004_S02",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "panel": "panel_CIN_004_S02.png"
+  },
+  {
+   "shotId": "CIN_004_S03",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "panel": "panel_CIN_004_S03.png"
+  }
+ ]
+}

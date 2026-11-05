@@ -1,6 +1,6 @@
 {
  "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
- "checkpoint": "MEDIA-02 checkpoint 16 - Gói 30 fix (c): CIN_002_S02 corrected keyframe + separate 16:9 keyframes (animatic v3); audio/timing unchanged from checkpoint 10/13/14/15",
+ "checkpoint": "MEDIA-02 checkpoint 18 - per-scene clip export (Goi 30 item 6): CIN_001/CIN_002/CIN_004 video clips + CIN_006 timing/SRT only (no panels yet); animatic v3 + audio/timing unchanged from checkpoint 16/17",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "campaignTotals": {
@@ -14,7 +14,8 @@
   "Timing JSON + SRT per scene copied from Narrative/Deliveries with sha256 verification against the checkpoint 01/05/06 manifests. SRT is UTF-8/NFC, DRAFT.",
   "dialogueCues is derived from parsed timing JSON shots[].dialogue, cross-checked against the parsed SRT cue count and, where present, the source manifest 'cues' list (Gói 30 item 1 / PR119 review finding 1). P0 + CIN_006 source manifests carry no 'cues' key; their counts come from timing/SRT. Any disagreement aborts this build.",
   "Only CIN_001_S05 (24.8-28.5 s, version B) is DECIDED; all other dialogue windows remain PROPOSED_ANIMATIC_PLACEMENT until director/Codex confirms them.",
-  "No final picture: animatic is storyboard level (revision v3 fixes all 5 recorded panel defects, not final picture); character keyframes still await lock for locked shots."
+  "No final picture: animatic is storyboard level (revision v3 fixes all 5 recorded panel defects, not final picture); character keyframes still await lock for locked shots.",
+  "Per-scene clips (checkpoint 18, Goi 30 item 6): CIN_001 (36 s), CIN_002 (18 s) and CIN_004 (18 s) each exported as its own MP4 + OGV + poster + SRT + timing + hash manifest under assets/cinematics/<SCENE>/; CIN_006 has timing + SRT only because it has no storyboard panels yet (no video fabricated). The 72 s reel stays review/gallery only, NOT auto-run as opening."
  ],
  "animatic": [
   {
@@ -34,6 +35,181 @@
    "sha256": "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8",
    "sizeBytes": 368439,
    "status": "VERIFIED_CHECKPOINT_13"
+  }
+ ],
+ "sceneClips": [
+  {
+   "sceneId": "CIN_001",
+   "durationSeconds": 36,
+   "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+   "reelOffsetSeconds": {
+    "start": 0.0,
+    "end": 36.0
+   },
+   "dialogueCues": 1,
+   "files": {
+    "mp4": {
+     "path": "assets/cinematics/CIN_001/CIN_001_640x360_30fps.mp4",
+     "sha256": "fb9cbaf4c707615c72cfa05707757a9a817fcb98795cd14d2c08cda7c82dfa27",
+     "sizeBytes": 330742,
+     "codec": "h264",
+     "width": 640,
+     "height": 360,
+     "fps": 30,
+     "durationSeconds": 36.0,
+     "frames": 1080
+    },
+    "ogv": {
+     "path": "assets/cinematics/CIN_001/CIN_001_640x360_30fps.ogv",
+     "sha256": "020d3b693497604c1b98f4dad42aebafdcc97793e684c51f7373d65e0ef5ed5a",
+     "sizeBytes": 915569,
+     "codec": "theora",
+     "width": 640,
+     "height": 360,
+     "fps": 30,
+     "durationSeconds": 36.0,
+     "storedFrames": 171
+    },
+    "poster": {
+     "path": "assets/cinematics/CIN_001/CIN_001_poster.png",
+     "sha256": "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8",
+     "sizeBytes": 368439,
+     "sourcePanel": "panel_CIN_001_S01.png"
+    },
+    "timing": {
+     "path": "assets/cinematics/CIN_001/CIN_001_timing_v1.json",
+     "sha256": "2c905e375145aa31d0465fae87638cbccfb76d74df184dc90d1d5130755f65e3",
+     "sizeBytes": 2503
+    },
+    "srt": {
+     "path": "assets/cinematics/CIN_001/CIN_001_vi.srt",
+     "sha256": "c014be143d1878eecf656679f4b7df70087fac87f10383b3d4218cd092da4f8d",
+     "sizeBytes": 73,
+     "status": "DRAFT"
+    }
+   }
+  },
+  {
+   "sceneId": "CIN_002",
+   "durationSeconds": 18,
+   "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+   "reelOffsetSeconds": {
+    "start": 36.0,
+    "end": 54.0
+   },
+   "dialogueCues": 1,
+   "files": {
+    "mp4": {
+     "path": "assets/cinematics/CIN_002/CIN_002_640x360_30fps.mp4",
+     "sha256": "5eca0abd958c6578df9a8622e78998f03b2ce7826105a55759e087189f813178",
+     "sizeBytes": 156427,
+     "codec": "h264",
+     "width": 640,
+     "height": 360,
+     "fps": 30,
+     "durationSeconds": 18.0,
+     "frames": 540
+    },
+    "ogv": {
+     "path": "assets/cinematics/CIN_002/CIN_002_640x360_30fps.ogv",
+     "sha256": "209e062c8278381118b9e7d13cc372957a67170d45178aaaeb236e0c6e616e6b",
+     "sizeBytes": 465574,
+     "codec": "theora",
+     "width": 640,
+     "height": 360,
+     "fps": 30,
+     "durationSeconds": 18.0,
+     "storedFrames": 61
+    },
+    "poster": {
+     "path": "assets/cinematics/CIN_002/CIN_002_poster.png",
+     "sha256": "3553e28e24322bbea33affabfd900d5d2360a132c5a492355a7fe3a173906fb3",
+     "sizeBytes": 271088,
+     "sourcePanel": "panel_CIN_002_S01.png"
+    },
+    "timing": {
+     "path": "assets/cinematics/CIN_002/CIN_002_timing_v1.json",
+     "sha256": "bc0578cd80ee0f7584fec695e97be34e356899df9ae7e5d9919a9b665fc70c0c",
+     "sizeBytes": 1708
+    },
+    "srt": {
+     "path": "assets/cinematics/CIN_002/CIN_002_vi.srt",
+     "sha256": "466a5051eb04f99af62497ecc2a36eec96fb08416ef3511055f8cc932b55dbbd",
+     "sizeBytes": 105,
+     "status": "DRAFT"
+    }
+   }
+  },
+  {
+   "sceneId": "CIN_004",
+   "durationSeconds": 18,
+   "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+   "reelOffsetSeconds": {
+    "start": 54.0,
+    "end": 72.0
+   },
+   "dialogueCues": 1,
+   "files": {
+    "mp4": {
+     "path": "assets/cinematics/CIN_004/CIN_004_640x360_30fps.mp4",
+     "sha256": "f491a39c625a7a0717cbb3f43ab5de72f04bd9ca14b123dbd522bf2461146b50",
+     "sizeBytes": 209135,
+     "codec": "h264",
+     "width": 640,
+     "height": 360,
+     "fps": 30,
+     "durationSeconds": 18.0,
+     "frames": 540
+    },
+    "ogv": {
+     "path": "assets/cinematics/CIN_004/CIN_004_640x360_30fps.ogv",
+     "sha256": "82d226ce5b0cf66c4d9be1c2a9973b5db980a9f9716934e866d07fecb733a960",
+     "sizeBytes": 485991,
+     "codec": "theora",
+     "width": 640,
+     "height": 360,
+     "fps": 30,
+     "durationSeconds": 18.0,
+     "storedFrames": 45
+    },
+    "poster": {
+     "path": "assets/cinematics/CIN_004/CIN_004_poster.png",
+     "sha256": "e43df4ff0178dcc2dc390ee907bd1d05e35632cdbc9e8672b2310eb535d54829",
+     "sizeBytes": 384737,
+     "sourcePanel": "panel_CIN_004_S01.png"
+    },
+    "timing": {
+     "path": "assets/cinematics/CIN_004/CIN_004_timing_v1.json",
+     "sha256": "431b3b025d37bcc39190b87f5a0847b6e0c74e0dbb719998de5cd48ff6f75a97",
+     "sizeBytes": 1783
+    },
+    "srt": {
+     "path": "assets/cinematics/CIN_004/CIN_004_vi.srt",
+     "sha256": "b06b87b1f07f841d082a7ee7ed60647d488f05939e419a1321df4ad5a4296645",
+     "sizeBytes": 68,
+     "status": "DRAFT"
+    }
+   }
+  },
+  {
+   "sceneId": "CIN_006",
+   "durationSeconds": 18,
+   "videoStatus": "PENDING_PANELS_NO_STORYBOARD",
+   "reelOffsetSeconds": null,
+   "dialogueCues": 1,
+   "files": {
+    "timing": {
+     "path": "assets/cinematics/CIN_006/CIN_006_timing_v1.json",
+     "sha256": "4c237f04195989b6b113a8800d114320ca05079bb8163fa0c9d3871988402955",
+     "sizeBytes": 2704
+    },
+    "srt": {
+     "path": "assets/cinematics/CIN_006/CIN_006_vi.srt",
+     "sha256": "cf43595db5e0a88fa687ee934ca953f19aa4e8e614af39bc27a9af01a164f708",
+     "sizeBytes": 141,
+     "status": "DRAFT"
+    }
+   }
   }
  ],
  "scenes": [

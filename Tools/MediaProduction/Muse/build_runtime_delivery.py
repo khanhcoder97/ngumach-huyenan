@@ -413,9 +413,57 @@ def main():
             "dialogueCues": timing_dialogues,
         })
     total_dialogue_cues = sum(e["dialogueCues"] for e in scene_entries)
+
+    # --- 6. Per-scene clips (checkpoint 18, Goi 30 item 6) ---
+    # Each scene folder holds its own MP4/OGV/poster/SRT/timing + export
+    # manifest; CIN_006 has timing + SRT only (no panels yet, no video).
+    # Verified here against the export manifests, not trusted blindly.
+    scene_clip_entries = []
+    for scene_id in ("CIN_001", "CIN_002", "CIN_004", "CIN_006"):
+        exp_path = CINE_DEST / scene_id / "scene_export_manifest_v1.json"
+        check(exp_path.exists(),
+              f"scene clip manifest missing: {scene_id}")
+        if not exp_path.exists():
+            continue
+        exp = json.loads(exp_path.read_text(encoding="utf-8"))
+        check(exp.get("sceneId") == scene_id,
+              f"scene clip manifest sceneId mismatch: {scene_id}")
+        for key, f in exp.get("files", {}).items():
+            p = ROOT / "ClientGodot" / f["path"]
+            check(p.exists(), f"scene clip missing: {f['path']}")
+            if not p.exists():
+                continue
+            check(not is_lfs_pointer(p),
+                  f"scene clip is LFS pointer: {f['path']}")
+            check(sha256(p) == f["sha256"],
+                  f"scene clip sha mismatch: {f['path']}")
+            check(p.stat().st_size == f["sizeBytes"],
+                  f"scene clip size mismatch: {f['path']}")
+            if key in ("mp4", "ogv"):
+                try:
+                    got_dur = ffprobe_duration_s(p)
+                except Exception as e:  # noqa: BLE001
+                    failures.append(f"scene clip {scene_id}/{key}: "
+                                    f"ffprobe failed: {e}")
+                    continue
+                check(abs(got_dur - f["durationSeconds"]) <= DUR_TOL_S,
+                      f"scene clip {scene_id}/{key}: duration {got_dur} "
+                      f"!= manifest {f['durationSeconds']}")
+        scene_clip_entries.append({
+            "sceneId": scene_id,
+            "durationSeconds": exp["durationSeconds"],
+            "videoStatus": exp["videoStatus"],
+            "reelOffsetSeconds": exp.get("reelOffsetSeconds"),
+            "dialogueCues": exp["dialogueCues"],
+            "files": exp["files"],
+        })
+    check(len(scene_clip_entries) == 4,
+          f"expected 4 per-scene clip exports, got "
+          f"{len(scene_clip_entries)}")
+
     cine_manifest = {
         "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
-        "checkpoint": "MEDIA-02 checkpoint 16 - Gói 30 fix (c): CIN_002_S02 corrected keyframe + separate 16:9 keyframes (animatic v3); audio/timing unchanged from checkpoint 10/13/14/15",
+        "checkpoint": "MEDIA-02 checkpoint 18 - per-scene clip export (Goi 30 item 6): CIN_001/CIN_002/CIN_004 video clips + CIN_006 timing/SRT only (no panels yet); animatic v3 + audio/timing unchanged from checkpoint 16/17",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "campaignTotals": {"scenes": 20, "shots": 63, "seconds": 378,
@@ -444,8 +492,16 @@ def main():
             "No final picture: animatic is storyboard level (revision v3 "
             "fixes all 5 recorded panel defects, not final picture); "
             "character keyframes still await lock for locked shots.",
+            "Per-scene clips (checkpoint 18, Goi 30 item 6): CIN_001 "
+            "(36 s), CIN_002 (18 s) and CIN_004 (18 s) each exported as "
+            "its own MP4 + OGV + poster + SRT + timing + hash manifest "
+            "under assets/cinematics/<SCENE>/; CIN_006 has timing + SRT "
+            "only because it has no storyboard panels yet (no video "
+            "fabricated). The 72 s reel stays review/gallery only, NOT "
+            "auto-run as opening.",
         ],
         "animatic": cine_files,
+        "sceneClips": scene_clip_entries,
         "scenes": scene_entries,
     }
     (CINE_DEST / "RUNTIME_CINEMATICS_manifest_v1.json").write_text(
@@ -456,6 +512,7 @@ def main():
           f"sfx/ui variants={counts['sfx_ui_variants']} vo={counts['vo']} "
           f"total={len(audio_entries)}")
     print(f"cinematics: animatic verified={len(cine_files)} "
+          f"sceneClips={len(scene_clip_entries)} "
           f"scenes={len(scene_entries)} "
           f"(timing+srt files={len(scene_entries) * 2})")
     if failures:

@@ -1,0 +1,53 @@
+{
+ "schemaVersion": 1,
+ "checkpoint": "MEDIA-02 checkpoint 18 - per-scene clip export (Goi 30 item 6): CIN_001/CIN_002/CIN_004 video clips + CIN_006 timing/SRT only (no panels yet)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_006",
+ "title": "Con dấu qua phố",
+ "durationSeconds": 18,
+ "dialogueCues": 1,
+ "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+ "files": {
+  "timing": {
+   "path": "assets/cinematics/CIN_006/CIN_006_timing_v1.json",
+   "sha256": "4c237f04195989b6b113a8800d114320ca05079bb8163fa0c9d3871988402955",
+   "sizeBytes": 2704
+  },
+  "srt": {
+   "path": "assets/cinematics/CIN_006/CIN_006_vi.srt",
+   "sha256": "cf43595db5e0a88fa687ee934ca953f19aa4e8e614af39bc27a9af01a164f708",
+   "sizeBytes": 141,
+   "status": "DRAFT"
+  }
+ },
+ "notes": [
+  "Scene-local time starts at 0; shot list is rebased from reel time. The copied SRT is already scene-local.",
+  "The 72 s P0 reel is review/gallery only, NOT auto-run as opening; this per-scene clip is the runtime unit (Goi 30 item 6).",
+  "No video clip: CIN_006 was never storyboarded into the 72 s P0 reel (checkpoint 05 was timing only) and has no panels yet. Timing + SRT are exported; the clip waits for panels, it is NOT faked from an empty or tone-generator frame."
+ ],
+ "reelOffsetSeconds": null,
+ "reelTotalSeconds": null,
+ "videoStatus": "PENDING_PANELS_NO_STORYBOARD",
+ "shots": [
+  {
+   "shotId": "CIN_006_S01",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "panel": null
+  },
+  {
+   "shotId": "CIN_006_S02",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "panel": null
+  },
+  {
+   "shotId": "CIN_006_S03",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "panel": null
+  }
+ ]
+}

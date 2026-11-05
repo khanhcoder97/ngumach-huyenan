@@ -476,6 +476,162 @@ def check_campaign_vo():
          f"not byte mismatches")
 
 
+def check_scene_clips():
+    """Checkpoint 18 (Goi 30 item 6): per-scene clip exports.
+
+    For CIN_001/002/004: export manifest exists; MP4/OGV exist as real
+    bytes, SHA/size match the manifest, ffprobe duration/codec/dims
+    match (H.264 frames == seconds*30; Theora stored frames collapse,
+    CP03 rule); poster is 640x360 and SHA-matches the first panel;
+    timing/SRT in the scene folder SHA-match the source files in
+    Narrative/Deliveries; shot list is scene-local (starts 0, sums to
+    duration); reel offsets tile the 72 s reel exactly (0-36/36-54/54-72).
+    For CIN_006: no video files, videoStatus PENDING_PANELS_NO_STORYBOARD,
+    timing/SRT still SHA-match source. The runtime cinematics manifest's
+    sceneClips must equal the export manifests, file for file.
+    """
+    cine = ROOT / "ClientGodot/assets/cinematics"
+    base = ROOT / "Implementation/Content/Narrative/Deliveries"
+    checked = 0
+    video_scenes = 0
+    reel_end = 0.0
+    runtime = json.loads((cine / "RUNTIME_CINEMATICS_manifest_v1.json")
+                         .read_text(encoding="utf-8"))
+    runtime_clips = {c["sceneId"]: c
+                     for c in runtime.get("sceneClips", [])}
+    if len(runtime_clips) != 4:
+        err(f"SCENE-CLIPS: runtime manifest has {len(runtime_clips)} "
+            f"sceneClips, expected 4")
+    for scene_id in ("CIN_001", "CIN_002", "CIN_004", "CIN_006"):
+        exp_path = cine / scene_id / "scene_export_manifest_v1.json"
+        if not exp_path.exists():
+            err(f"SCENE-CLIPS {scene_id}: missing export manifest")
+            continue
+        exp = json.loads(exp_path.read_text(encoding="utf-8"))
+        if exp.get("sceneId") != scene_id:
+            err(f"SCENE-CLIPS {scene_id}: manifest sceneId mismatch")
+        timing_src = base / scene_id / f"{scene_id}_timing_v1.json"
+        srt_src = base / scene_id / f"{scene_id}_vi.srt"
+        for key in ("timing", "srt"):
+            f = exp["files"].get(key)
+            if not f:
+                err(f"SCENE-CLIPS {scene_id}: manifest has no {key}")
+                continue
+            p = ROOT / "ClientGodot" / f["path"]
+            if not p.exists():
+                err(f"SCENE-CLIPS {scene_id}: missing {f['path']}")
+                continue
+            if is_lfs_pointer(p):
+                err(f"SCENE-CLIPS {scene_id}: {key} is an LFS pointer")
+                continue
+            if sha256_of(p) != f["sha256"]:
+                err(f"SCENE-CLIPS {scene_id}: {key} sha mismatch")
+            src = timing_src if key == "timing" else srt_src
+            if sha256_of(p) != sha256_of(src):
+                err(f"SCENE-CLIPS {scene_id}: {key} != source file")
+        # Shot list: scene-local, contiguous, sums to duration.
+        cursor = 0.0
+        for shot in exp.get("shots", []):
+            if abs(shot["startSeconds"] - cursor) > 1e-9:
+                err(f"SCENE-CLIPS {scene_id}: shot {shot['shotId']} "
+                    f"starts {shot['startSeconds']}, expected {cursor}")
+            cursor = shot["endSeconds"]
+        if abs(cursor - exp["durationSeconds"]) > 1e-9:
+            err(f"SCENE-CLIPS {scene_id}: shots end {cursor}, "
+                f"duration {exp['durationSeconds']}")
+        if exp["videoStatus"] == "VIDEO_FROM_STORYBOARD_PANELS":
+            video_scenes += 1
+            off = exp.get("reelOffsetSeconds") or {}
+            off_start = off.get("start")
+            if off_start is None or abs(off_start - reel_end) > 1e-9:
+                err(f"SCENE-CLIPS {scene_id}: reel offset starts "
+                    f"{off_start}, expected {reel_end}")
+            reel_end = off.get("end", reel_end)
+            for key, want_codec in (("mp4", "h264"), ("ogv", "theora")):
+                f = exp["files"].get(key)
+                if not f:
+                    err(f"SCENE-CLIPS {scene_id}: manifest has no {key}")
+                    continue
+                p = ROOT / "ClientGodot" / f["path"]
+                if not p.exists():
+                    err(f"SCENE-CLIPS {scene_id}: missing {f['path']}")
+                    continue
+                if is_lfs_pointer(p):
+                    err(f"SCENE-CLIPS {scene_id}: {key} is LFS pointer")
+                    continue
+                if sha256_of(p) != f["sha256"]:
+                    err(f"SCENE-CLIPS {scene_id}: {key} sha mismatch")
+                if p.stat().st_size != f["sizeBytes"]:
+                    err(f"SCENE-CLIPS {scene_id}: {key} size mismatch")
+                pr = probe(p)
+                if pr is None:
+                    continue
+                if pr["codec"] != want_codec:
+                    err(f"SCENE-CLIPS {scene_id}: {key} codec "
+                        f"{pr['codec']} != {want_codec}")
+                if (pr["width"], pr["height"]) != (640, 360):
+                    err(f"SCENE-CLIPS {scene_id}: {key} size "
+                        f"{pr['width']}x{pr['height']} != 640x360")
+                if pr["duration"] is None or abs(
+                        pr["duration"] - exp["durationSeconds"]) > 0.02:
+                    err(f"SCENE-CLIPS {scene_id}: {key} duration "
+                        f"{pr['duration']} != {exp['durationSeconds']}")
+            poster = exp["files"].get("poster")
+            if not poster:
+                err(f"SCENE-CLIPS {scene_id}: manifest has no poster")
+            else:
+                p = ROOT / "ClientGodot" / poster["path"]
+                if not p.exists():
+                    err(f"SCENE-CLIPS {scene_id}: missing poster")
+                elif is_lfs_pointer(p):
+                    err(f"SCENE-CLIPS {scene_id}: poster is LFS pointer")
+                elif sha256_of(p) != poster["sha256"]:
+                    err(f"SCENE-CLIPS {scene_id}: poster sha mismatch")
+                elif png_dims(p) != (640, 360):
+                    err(f"SCENE-CLIPS {scene_id}: poster dims "
+                        f"{png_dims(p)} != 640x360")
+                else:
+                    first_panel = (ROOT / "Art_Source/Cinematics"
+                                   / "P0_Animatic/panels"
+                                   / f"panel_{exp['shots'][0]['shotId']}.png")
+                    if sha256_of(p) != sha256_of(first_panel):
+                        err(f"SCENE-CLIPS {scene_id}: poster != first "
+                            f"shot panel")
+        elif exp["videoStatus"] == "PENDING_PANELS_NO_STORYBOARD":
+            for key in ("mp4", "ogv", "poster"):
+                if key in exp["files"]:
+                    err(f"SCENE-CLIPS {scene_id}: {key} present despite "
+                        f"PENDING_PANELS_NO_STORYBOARD")
+                p = cine / scene_id / f"{scene_id}_640x360_30fps.{key}" \
+                    if key != "poster" else cine / scene_id \
+                    / f"{scene_id}_poster.png"
+                if p.exists():
+                    err(f"SCENE-CLIPS {scene_id}: unexpected file {p.name}")
+            if exp.get("reelOffsetSeconds") is not None:
+                err(f"SCENE-CLIPS {scene_id}: reel offset set despite "
+                    f"no reel segment")
+        else:
+            err(f"SCENE-CLIPS {scene_id}: unknown videoStatus "
+                f"{exp['videoStatus']!r}")
+        # Runtime manifest must mirror this export manifest.
+        rc = runtime_clips.get(scene_id)
+        if rc is None:
+            err(f"SCENE-CLIPS {scene_id}: missing from runtime manifest")
+        elif rc.get("files") != exp["files"]:
+            err(f"SCENE-CLIPS {scene_id}: runtime manifest files != "
+                f"export manifest files")
+        elif rc.get("videoStatus") != exp["videoStatus"]:
+            err(f"SCENE-CLIPS {scene_id}: runtime videoStatus != export")
+        checked += 1
+    if abs(reel_end - 72.0) > 1e-9:
+        err(f"SCENE-CLIPS: video scenes tile reel to {reel_end}, "
+            f"expected 72.0")
+    COUNTS["scene_clips_checked"] = checked
+    COUNTS["scene_clips_with_video"] = video_scenes
+    note(f"Per-scene clips checked: {checked}/4 ({video_scenes} with "
+         f"video, CIN_006 timing/SRT only); reel tiled 0-72 exactly")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=None)
@@ -486,8 +642,9 @@ def main():
     check_animatic_vo()
     check_keyframes()
     check_campaign_vo()
+    check_scene_clips()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 17 (campaign VO drafts: 17 takes + 378 s timeline, runtime delivery revised, re-baseline integration f0859d0)",
+        "checkpoint": "MEDIA-02 checkpoint 18 (per-scene clip export: CIN_001/CIN_002/CIN_004 video clips + CIN_006 timing/SRT only, runtime delivery revised, re-baseline integration f0859d0)",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -501,6 +658,7 @@ def main():
             "No ear audition of loop seams or VO takes in this validation.",
             "Campaign dialogue windows remain PROPOSED except CIN_001_S05 (DECIDED); this check verifies SRT==timing consistency, not directorial approval.",
             "Campaign VO window overruns (if any) are director findings, not byte mismatches; see windowFit.",
+            "CIN_006 has no per-scene video clip yet (no storyboard panels); its export is timing + SRT only, and the validator accepts that state explicitly.",
         ],
     }
     print(f"counts: {json.dumps(COUNTS, indent=1)}")

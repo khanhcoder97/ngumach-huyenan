@@ -147,10 +147,26 @@ def check_cinematics_manifest():
         check_file(scene["srtFile"], scene["srtSha256"], None,
                    f"SRT {scene['sceneId']}")
         srt += 1
+    clips = 0
+    clip_files = 0
+    for clip in manifest.get("sceneClips", []):
+        clips += 1
+        for key, f in clip.get("files", {}).items():
+            audio_fields = None
+            if key in ("mp4", "ogv"):
+                audio_fields = {"durationSeconds": f["durationSeconds"]}
+            check_file(f["path"], f["sha256"], f["sizeBytes"],
+                       f"SCENE-CLIP {clip['sceneId']}/{key}",
+                       audio_fields=audio_fields)
+            clip_files += 1
     COUNTS["animatic_files_checked"] = anim
     COUNTS["cinematics_scenes_checked"] = scenes
     COUNTS["timing_files_checked"] = timing
     COUNTS["srt_files_checked"] = srt
+    COUNTS["scene_clips_checked"] = clips
+    COUNTS["scene_clip_files_checked"] = clip_files
+    if clips != 4:
+        err(f"CINEMATICS manifest sceneClips {clips} != 4")
     totals = manifest.get("campaignTotals", {})
     if totals.get("scenes") != scenes:
         err(f"CINEMATICS manifest scenes {totals.get('scenes')} != checked {scenes}")
@@ -164,10 +180,10 @@ def main():
     check_audio_manifest()
     check_cinematics_manifest()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 17 (campaign VO drafts) - runtime re-verification",
+        "checkpoint": "MEDIA-02 checkpoint 18 (per-scene clip export) - runtime re-verification",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
-        "verifies": "checkpoint 10 runtime delivery as revised by checkpoint 13 (animatic v2), checkpoint 14 (dialogueCues fix), checkpoint 15 (LF + LFS fix), checkpoint 16 (animatic v3: CIN_002_S02 corrected keyframe + 16:9 keyframes) and checkpoint 17 (campaign VO: 17 takes + 378 s timeline) (RUNTIME_AUDIO_manifest_v1.json + RUNTIME_CINEMATICS_manifest_v1.json)",
+        "verifies": "checkpoint 10 runtime delivery as revised by checkpoint 13 (animatic v2), checkpoint 14 (dialogueCues fix), checkpoint 15 (LF + LFS fix), checkpoint 16 (animatic v3: CIN_002_S02 corrected keyframe + 16:9 keyframes), checkpoint 17 (campaign VO: 17 takes + 378 s timeline) and checkpoint 18 (per-scene clips: CIN_001/CIN_002/CIN_004 video + CIN_006 timing/SRT only) (RUNTIME_AUDIO_manifest_v1.json + RUNTIME_CINEMATICS_manifest_v1.json)",
         "counts": COUNTS,
         "mismatches": ERRORS,
         "notes": NOTES,
