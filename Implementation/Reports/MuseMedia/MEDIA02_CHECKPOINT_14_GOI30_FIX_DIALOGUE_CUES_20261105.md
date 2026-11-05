@@ -99,8 +99,9 @@ còn lại = 1. Khớp: timing dialogue 21 == SRT cue 21 == runtime manifest
 ## Trạng thái repo
 
 - Nhánh media: head `7891265` trước checkpoint này; commit checkpoint 14
-  ĐÃ PUSH (xem SHA ở cuối báo cáo; scope audit 0 violations, base
-  integration HEAD `f383233`).
+  `94d7a99` ĐÃ PUSH (ls-remote xác nhận; scope audit 699 paths,
+  0 violations, base integration HEAD `f383233`). PR #119 nay có
+  20 commit.
 - Chỉ 4 file sửa + 2 JSON báo cáo mới trong commit này; không đụng audio,
   timing, SRT, panel hay animatic.
 
