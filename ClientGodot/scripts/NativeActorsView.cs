@@ -32,6 +32,7 @@ public partial class NativeActorsView : Node2D
     private P1Entity[] _entities=Array.Empty<P1Entity>();
     private Dictionary<string,P1EntityV2> _v2=new(StringComparer.Ordinal);
     private bool _ready;
+    private int _lastRipplePhase=-1;
     private string? _targetId;
     private Vector2 _self;
 
@@ -69,6 +70,18 @@ public partial class NativeActorsView : Node2D
 
     private static JsonDocument Read(string path)=>
         JsonDocument.Parse(FileAccess.GetFileAsString(path).TrimStart('\uFEFF'));
+
+    public override void _Process(double delta)
+    {
+        if(!_ready)return;
+        int phase=(int)(Godot.Time.GetTicksMsec()/180%4);
+        if(phase==_lastRipplePhase)return;
+        _lastRipplePhase=phase;
+        var r=_manifest.RootElement.GetProperty("questMarkers").GetProperty("RIPPLE_"+phase).GetProperty("rect");
+        foreach(var v in _actors.Values)
+            if(v.SpriteKey.StartsWith("RIPPLE_",StringComparison.Ordinal)&&v.Body.Texture is AtlasTexture atlas)
+                atlas.Region=new Rect2(r[0].GetSingle(),r[1].GetSingle(),r[2].GetSingle(),r[3].GetSingle());
+    }
 
     public void UpdateFrame(NativeOnlineFrame frame)
     {
@@ -136,6 +149,9 @@ public partial class NativeActorsView : Node2D
         string name=_npcNames.TryGetValue(e.entityId,out var n)?n.Name:
             npc!=null&&_namesByNpc.TryGetValue(npc,out var named)?named:
             e.entityId.Contains("OBJ_BM_PACKAGE_",StringComparison.Ordinal)?"Kiện hàng":
+            e.entityId.StartsWith("ALPHA_OBJ_BM_RIPPLE_",StringComparison.Ordinal)?"Gợn nước lạ":
+            e.entityId.StartsWith("ALPHA_OBJ_BM_VILLAGER_",StringComparison.Ordinal)?"Người dân mắc kẹt":
+            e.entityId=="ALPHA_OBJ_BM_FRAGMENT"?"Mảnh ấn":
             MobFamily(e.entityId)=="CARPLING"?"Cá Linh":
             MobFamily(e.entityId)=="WATERROOT"?"Rễ Nước":
             _entityNames.TryGetValue(e.entityId,out var entityName)?entityName:
@@ -170,6 +186,18 @@ public partial class NativeActorsView : Node2D
             region=_manifest.RootElement.GetProperty("nodes").GetProperty(nodeKey);
             file="res://assets/combat_v1/ben_mua_nodes.png";key=nodeKey;
             wantedWidth=nodeKey.StartsWith("HERB",StringComparison.Ordinal)?25:nodeKey=="WOOD_01"?34:36;
+        }
+        else if(e.kind=="INTERACTABLE"&&QuestMarkerKey(e.entityId) is string marker)
+        {
+            region=_manifest.RootElement.GetProperty("questMarkers").GetProperty(marker);
+            file="res://assets/combat_v1/ben_mua_quest_markers.png";key=marker;
+            if(marker.StartsWith("RIPPLE_",StringComparison.Ordinal))wantedWidth=40;
+            else wantedHeight=36;
+        }
+        else if(e.kind=="INTERACTABLE"&&e.entityId=="ALPHA_OBJ_BM_FRAGMENT")
+        {
+            region=_manifest.RootElement.GetProperty("nodes").GetProperty("FRAGMENT");
+            file="res://assets/combat_v1/ben_mua_nodes.png";key="FRAGMENT";wantedWidth=25;
         }
         else if(hostile&&MobFamily(e.entityId) is string family&&
             _manifest.RootElement.TryGetProperty("mobs",out var mobs))
@@ -225,6 +253,10 @@ public partial class NativeActorsView : Node2D
     private static Vector2[] BarPolygon(float width)=>new[]{Vector2.Zero,new Vector2(width,0),new Vector2(width,4),new Vector2(0,4)};
 
     private static string HostileName(string kind)=>kind=="BOSS"?"Thủ lĩnh":kind=="MOB"?"Yêu thú":"Người dân";
+    private static string? QuestMarkerKey(string id)=>id switch{
+        "ALPHA_OBJ_BM_RIPPLE_01" or "ALPHA_OBJ_BM_RIPPLE_02" or "ALPHA_OBJ_BM_RIPPLE_03"=>"RIPPLE_0",
+        "ALPHA_OBJ_BM_VILLAGER_01"=>"VILLAGER_01_WAIT",
+        "ALPHA_OBJ_BM_VILLAGER_02"=>"VILLAGER_02_WAIT",_=>null};
     private static string? NodeKey(string id)
     {
         foreach(var key in new[]{"ORE_01","ORE_02","HERB_01","HERB_02","WOOD_01"})

@@ -19,7 +19,13 @@ if (-not $Dotnet10Path) { $Dotnet10Path = Join-Path $toolsRoot 'dotnet10/dotnet.
 foreach ($requiredTool in @($GodotPath,$Dotnet8Path,$Dotnet10Path)) {
     if (-not (Test-Path -LiteralPath $requiredTool -PathType Leaf)) { throw "Missing tool: $requiredTool. Supply its path as a script parameter." }
 }
-if (-not $EvidenceDirectory) { $EvidenceDirectory = Join-Path $repoRoot 'Implementation/Reports/Evidence/Playable_Alpha_20261105' }
+if (-not $EvidenceDirectory) {
+    if ($Test) { $EvidenceDirectory = Join-Path $repoRoot 'Implementation/Reports/Evidence/Playable_Alpha_20261105' }
+    else {
+        $playSession = [DateTime]::UtcNow.ToString('yyyyMMdd-HHmmss')+'-'+[Guid]::NewGuid().ToString('N').Substring(0,8)
+        $EvidenceDirectory = Join-Path $toolsRoot ('play-sessions/'+$playSession)
+    }
+}
 $EvidenceDirectory = [IO.Path]::GetFullPath($EvidenceDirectory)
 New-Item -ItemType Directory -Path $EvidenceDirectory -Force | Out-Null
 $prefix = if ($UiTest) { 'ui.' } else { '' }
@@ -36,11 +42,11 @@ $gameExit = 1
 try {
     $env:DOTNET_ROOT = Split-Path $Dotnet10Path -Parent
     $env:PATH = $env:DOTNET_ROOT + ';' + $priorPath
-    & $Dotnet10Path build (Join-Path $repoRoot 'Server/Health/Health.csproj') -c Release --nologo
+    & $Dotnet10Path build (Join-Path $repoRoot 'Server/Health/Health.csproj') -c Release --nologo -m:1
     if ($LASTEXITCODE -ne 0) { throw 'Health build failed.' }
     $env:DOTNET_ROOT = Split-Path $Dotnet8Path -Parent
     $env:PATH = $env:DOTNET_ROOT + ';' + $priorPath
-    & $Dotnet8Path build (Join-Path $clientRoot 'VisualReboot.csproj') -p:RestoreLockedMode=true --nologo
+    & $Dotnet8Path build (Join-Path $clientRoot 'VisualReboot.csproj') -p:RestoreLockedMode=true --nologo -m:1
     if ($LASTEXITCODE -ne 0) { throw 'Godot client build failed.' }
     & $GodotPath --headless --editor --path $clientRoot --quit
     if ($LASTEXITCODE -ne 0) { throw 'Godot import failed.' }
@@ -63,6 +69,7 @@ try {
         'P1__CombatDamage__Enabled' = 'true'
         'P1__MobBehavior__Enabled' = 'false'
         'P1__DeathReturn__Enabled' = 'false'
+        'Logging__LogLevel__Microsoft.AspNetCore' = $(if ($Test) { 'Information' } else { 'Warning' })
     }
     $priorServerSettings = @{}
     try {
@@ -96,6 +103,7 @@ try {
         & $GodotPath --path $clientRoot -- $testFlag --capture $capturePath 2>&1 | Tee-Object -FilePath $gameLog
     } else {
         Write-Output 'Online local: WASD move, E talk/collect, I inventory, Space attack, 1-3 skills, Esc close.'
+        Write-Output ("Session logs: "+$EvidenceDirectory)
         & $GodotPath --path $clientRoot 2>&1 | Tee-Object -FilePath $gameLog
     }
     $gameExit = $LASTEXITCODE

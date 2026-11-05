@@ -13,7 +13,7 @@ public partial class PreviewHud : Node2D
     public string LastSkill="";
     public bool LowFx;
     public event Action<int>? SkillPressed;
-    public event Action? AttackPressed,InventoryPressed,InteractPressed,RetryPressed;
+    public event Action? AttackPressed,InventoryPressed,InteractPressed,RetryPressed,JournalPressed;
     private NativeOnlineFrame? _frame;
     public static Vector2 AttackCenter=>new(1172,624);
     public static Vector2[] SkillCenters()
@@ -60,6 +60,7 @@ public partial class PreviewHud : Node2D
         if(new Rect2(16,236,90,32).HasPoint(m.Position)){InventoryPressed?.Invoke();GetViewport().SetInputAsHandled();}
         else if(new Rect2(112,236,90,32).HasPoint(m.Position)){InteractPressed?.Invoke();GetViewport().SetInputAsHandled();}
         else if(new Rect2(208,236,90,32).HasPoint(m.Position)){RetryPressed?.Invoke();GetViewport().SetInputAsHandled();}
+        else if(new Rect2(16,128,282,98).HasPoint(m.Position)){JournalPressed?.Invoke();GetViewport().SetInputAsHandled();}
     }
     public override void _Draw()
     {
@@ -80,13 +81,12 @@ public partial class PreviewHud : Node2D
         Text(new Vector2(28,151),Compact?"Camera 48 × 27 WU":"Camera 64 × 36 WU",14,_bronze);
         if(Online)
         {
-            var q=_frame?.Quests.FirstOrDefault(q=>q.questId=="P00-01");
-            string progress=q?.state switch{"AVAILABLE"=>"Gặp Ly An để nhận việc.","ACTIVE"=>"Tìm ba kiện hàng quanh bến.",
-                "READY_TO_TURN_IN"=>"Mang hàng tới Tạ Vân Khanh.","COMPLETED"=>"Đã giao hàng và nhận thưởng.",_=>"Đang đọc nhiệm vụ..."};
-            Text(new Vector2(28,174),"Thư qua bến",15);
-            Text(new Vector2(28,195),progress,13);
-            int count=q!=null&&q.objectiveCounters.TryGetValue("OBJ_P00_01_PACKAGES",out var n)?n:0;
-            Text(new Vector2(28,216),$"Kiện hàng: {count}/3",12,_bronze);
+            var q=NativeQuestCatalog.Tracked(_frame);
+            string title=q!=null?NativeQuestCatalog.Find(q.questId)?.Title??"Nhật ký":"Nhật ký · Bến Mưa";
+            string progress=NativeQuestCatalog.Summary(q);
+            Text(new Vector2(28,174),title,15);
+            Text(new Vector2(28,195),progress.Length>38?progress[..35]+"…":progress,13);
+            Text(new Vector2(28,216),"J · Nhật ký nhiệm vụ",12,_bronze);
         }
         else
         {
@@ -129,7 +129,7 @@ public partial class PreviewHud : Node2D
             Text(at+new Vector2(9,35),Online&&_hover>=3?"Chưa hỗ trợ online":Online?"Máy chủ xác nhận hành động":"Thử hình ảnh ngoại tuyến",11);
         }
         Panel(new Rect2(16,650,810,56));
-        Text(new Vector2(28,672),Online?"WASD di chuyển · E nói/nhặt · I túi · Space đánh · 1–3 kỹ năng":"WASD di chuyển · 1–6 thử kỹ năng · Space đánh mẫu · H ẩn HUD",13);
+        Text(new Vector2(28,672),Online?"WASD di chuyển · E nói/nhặt · J nhật ký · I túi · Space đánh · 1–3 kỹ năng":"WASD di chuyển · 1–6 thử kỹ năng · Space đánh mẫu · H ẩn HUD",13);
         var status=StatusText.Length>106?StatusText[..103]+"...":StatusText;
         Text(new Vector2(28,695),status,13,_bronze);
         DrawLine(new Vector2(16,714),new Vector2(1264,714),_bronze,2);

@@ -75,6 +75,12 @@ public partial class NativeGameplayUiTest : Node
             Check(CurrentQuest()!.state=="AVAILABLE","fresh quest is AVAILABLE");
             Check(Coins()==0&&Coats()==0,"fresh character has no pre-granted reward");
             Check(Math.Abs(Self().X-18)<.05&&Math.Abs(Self().Y)<.05,"fresh authoritative spawn is (18,0)");
+            Stage("journal_before_accept");
+            await PressJournalKey();
+            Check(VisibleText().Contains("Nhật ký · Bến Mưa",StringComparison.Ordinal),"J opens actual journal");
+            Check(VisibleText().Contains("Có thể nhận",StringComparison.Ordinal),"journal shows server AVAILABLE state");
+            Check(CurrentQuest()!.state=="AVAILABLE"&&Coins()==0&&Coats()==0,"journal reading grants nothing");
+            await Press("×");
 
             Stage("inventory_before_reward");
             _session.SetMove(Vector2.Zero);
@@ -149,6 +155,14 @@ public partial class NativeGameplayUiTest : Node
             await Press("Rời đi");
             Check(!_panel.IsOpen,"leave button dismisses committed dialog");
             await CaptureWorldIfRequested();
+            Stage("journal_after_completion");
+            await PressJournalKey();
+            Check(VisibleText().Contains("Đã hoàn thành",StringComparison.Ordinal),"journal shows real completion");
+            Check(VisibleText().Contains("Kiện hàng: 3 / 3",StringComparison.Ordinal),"journal shows server counters with sourced totals");
+            Check(VisibleText().Contains(_committed[0][..Math.Min(80,_committed[0].Length)],StringComparison.Ordinal),"completed journal uses committed story, not unfinished objective hint");
+            Check(Coins()==20&&Coats()==1,"reading completed journal does not repeat reward");
+            await CaptureWorldIfRequested("native_ui_p00_01_journal.png");
+            await Press("×");
 
             Stage("inventory_after_reward");
             _openInventory();
@@ -198,13 +212,21 @@ public partial class NativeGameplayUiTest : Node
         }
     }
 
-    private async Task CaptureWorldIfRequested()
+    private async Task PressJournalKey()
+    {
+        Input.ParseInputEvent(new InputEventKey{Keycode=Key.J,PhysicalKeycode=Key.J,Pressed=true});
+        await Frames(2);
+        Input.ParseInputEvent(new InputEventKey{Keycode=Key.J,PhysicalKeycode=Key.J,Pressed=false});
+        await WaitFor(()=>_panel.IsOpen,5);
+    }
+
+    private async Task CaptureWorldIfRequested(string filename="native_ui_p00_01_world.png")
     {
         var args=OS.GetCmdlineUserArgs();
         int index=Array.IndexOf(args,"--capture");
         if(index<0||index+1>=args.Length)return;
         var directory=System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(args[index+1]))!;
-        string path=System.IO.Path.Combine(directory,"native_ui_p00_01_world.png");
+        string path=System.IO.Path.Combine(directory,filename);
         await Frames(3);
         await ToSignal(RenderingServer.Singleton,RenderingServer.SignalName.FramePostDraw);
         var result=GetViewport().GetTexture().GetImage().SavePng(path);
