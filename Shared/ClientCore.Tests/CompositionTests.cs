@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using NguMach.Client.Core.Composition;
+using NguMach.Client.Core.Dispatch;
 using NguMach.Client.Core.Encounter;
 using NguMach.Client.Core.Guards;
 using NguMach.Client.P1;
@@ -355,6 +356,8 @@ namespace NguMach.Client.Core.Tests
                         // Deliberately ignores cancellation: a real transport may complete late.
                         return DelayBeyondCancellation(release.Task, () => EncounterReply(request, encounterJson));
                     }
+                    if (r.Path.StartsWith("/p1/world/", StringComparison.Ordinal))
+                        return Task.FromResult(SessionReply(r, r.SessionId ?? SessionTwo));
                     return Task.FromResult(NetworkFailure(r));
                 }
             };
@@ -407,6 +410,8 @@ namespace NguMach.Client.Core.Tests
                         started.TrySetResult(true);
                         return DelayBeyondCancellation(release.Task, () => NetworkFailure(request));
                     }
+                    if (r.Path.StartsWith("/p1/world/", StringComparison.Ordinal))
+                        return Task.FromResult(SessionReply(r, r.SessionId ?? SessionTwo));
                     return Task.FromResult(NetworkFailure(r));
                 }
             };
@@ -683,6 +688,8 @@ namespace NguMach.Client.Core.Tests
                         started.TrySetResult(true);
                         return DelayBeyondCancellation(release.Task, () => EncounterReply(request, encounterJson));
                     }
+                    if (r.Path.StartsWith("/p1/world/", StringComparison.Ordinal))
+                        return Task.FromResult(SessionReply(r, r.SessionId ?? SessionTwo));
                     return Task.FromResult(NetworkFailure(r));
                 }
             };
@@ -773,6 +780,8 @@ namespace NguMach.Client.Core.Tests
                                    "\"nextReturnAllowedAtTick\":1900}}"
                         });
                     }
+                    if (r.Path.StartsWith("/p1/world/", StringComparison.Ordinal))
+                        return Task.FromResult(SessionReply(r, r.SessionId ?? SessionTwo));
                     return Task.FromResult(NetworkFailure(r));
                 }
             };
@@ -816,6 +825,8 @@ namespace NguMach.Client.Core.Tests
                         }
                         return DelayBeyondCancellation(release.Task, () => EncounterReply(r, encounterJson));
                     }
+                    if (r.Path.StartsWith("/p1/world/", StringComparison.Ordinal))
+                        return Task.FromResult(SessionReply(r, r.SessionId ?? SessionTwo));
                     return Task.FromResult(NetworkFailure(r));
                 }
             };
@@ -858,6 +869,8 @@ namespace NguMach.Client.Core.Tests
                         started.TrySetResult(true);
                         return DelayBeyondCancellation(release.Task, () => EncounterReply(r, encounterJson));
                     }
+                    if (r.Path.StartsWith("/p1/world/", StringComparison.Ordinal))
+                        return Task.FromResult(SessionReply(r, r.SessionId ?? SessionTwo));
                     return Task.FromResult(NetworkFailure(r));
                 }
             };
@@ -878,6 +891,271 @@ namespace NguMach.Client.Core.Tests
             // The callback queued before relogin must not invoke the old consumer
             // under the old epoch.
             Assert.Equal(0, Volatile.Read(ref events));
+        }
+
+        // ── Work30 round2: deterministic queued-ordering tests ────────────────
+
+        private sealed class SingleThreadSyncContext : SynchronizationContext
+        {
+            private readonly Queue<Tuple<SendOrPostCallback, object>> _queue =
+                new Queue<Tuple<SendOrPostCallback, object>>();
+            public override void Post(SendOrPostCallback d, object state)
+                => _queue.Enqueue(Tuple.Create(d, state));
+            public override void Send(SendOrPostCallback d, object state) => d(state);
+            public int QueuedCount => _queue.Count;
+            public bool RunOne()
+            {
+                if (_queue.TryDequeue(out var item)) { item.Item1(item.Item2); return true; }
+                return false;
+            }
+            public void RunAll()
+            {
+                while (RunOne()) { }
+            }
+        }
+
+        // Queued dispatcher: Post() enqueues instead of running inline, so tests
+        // can deterministically drain callbacks before/after Dispose/relogin.
+        private sealed class QueuedDispatcher : IMainThreadDispatcher
+        {
+            public bool IsMainThread => true;
+            private readonly Queue<Action> _queue = new Queue<Action>();
+            public void Post(Action action) => _queue.Enqueue(action ?? throw new ArgumentNullException(nameof(action)));
+            public Task InvokeAsync(Func<Task> action)
+            {
+                _queue.Enqueue(async () => { if (action != null) await action(); });
+                return Task.CompletedTask;
+            }
+            public int QueuedCount => _queue.Count;
+            public void RunAll()
+            {
+                while (_queue.TryDequeue(out var action)) action();
+            }
+        }
+
+        [Fact]
+        public async Task ReturnFromDeath_QueuedSuccessBeforeDispose_DoesNotMutateState()
+        {
+            // HTTP reply is successfully received (transport completes) but the
+            // continuation after the await is queued on a single-threaded UI
+            // context. Dispose runs before the queued continuation drains, so
+            // ct.ThrowIfCancellationRequested() inside Core must throw and the
+            // pending mutation must be preserved.
+            var syncCtx = new SingleThreadSyncContext();
+            var previous = SynchronizationContext.Current;
+            SynchronizationContext.SetSynchronizationContext(syncCtx);
+            try
+            {
+                var t = new DelegateTransport
+                {
+                    Handler = async (r, ct) =>
+                    {
+                        if (r.Path == "/p1/sessions")
+                            return SessionReply(r, SessionOne);
+                        if (r.Path == "/p1/actor/death-return")
+                        {
+                            // Yield once so the continuation is queued on syncCtx.
+                            await Task.Yield();
+                            return new P1HttpReply
+                            {
+                                StatusCode = 200,
+                                CorrelationId = r.CorrelationId,
+                                Body = "{\"schemaVersion\":1,\"requestId\":\"" + r.CorrelationId +
+                                       "\",\"sessionId\":\"" + SessionOne + "\",\"result\":{" +
+                                       "\"applied\":true,\"replayed\":false,\"mapId\":\"MAP_BEN_MUA\"," +
+                                       "\"xWu\":18.0,\"yWu\":0.0,\"hp\":50,\"maxHp\":100," +
+                                       "\"mp\":50,\"maxMp\":50,\"serverTick\":1840,\"revision\":12," +
+                                       "\"cleared\":{\"inflightCasts\":1,\"reservedCounters\":0," +
+                                       "\"guardWindowClosed\":false,\"movementWindowReset\":true}," +
+                                       "\"penalties\":{\"xp\":0,\"currency\":0,\"durability\":0}," +
+                                       "\"nextReturnAllowedAtTick\":1900}}"
+                            };
+                        }
+                        return NetworkFailure(r);
+                    }
+                };
+                using (var s = new ClientSession(t))
+                {
+                    Assert.True((await s.ConnectAsync()).Success);
+                    Assert.Null(s.Client.LastDeathReturn);
+
+                    var death = s.ReturnFromDeathAsync(CancellationToken.None);
+                    Assert.False(death.IsCompleted); // still queued on syncCtx
+
+                    // Dispose runs on the same thread before the queued continuation.
+                    s.Dispose();
+
+                    // Drain the UI context: the queued continuation resumes and
+                    // ct.ThrowIfCancellationRequested() must throw inside Core.
+                    syncCtx.RunAll();
+
+                    var result = await death.WaitAsync(TimeSpan.FromSeconds(5));
+                    Assert.False(result.Success, "stale death-return must not succeed");
+                    Assert.Null(s.Client.LastDeathReturn);
+                    Assert.Null(s.Client.NextReturnAllowedAtTick);
+                    // Pending mutation preserved for same-key retry.
+                    Assert.NotNull(s.Client.CapturePendingMutation());
+                }
+            }
+            finally
+            {
+                SynchronizationContext.SetSynchronizationContext(previous);
+            }
+        }
+
+        [Fact]
+        public async Task ReturnFromDeath_OldReplyAcrossRelogin_PreservesPending()
+        {
+            // Session 1 sends death-return; reply is delayed. Relogin to session 2.
+            // Session 2 retries with the same key. The old reply from session 1
+            // arrives after relogin and must not mutate session 2.
+            int sessionCounter = 0;
+            var release1 = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var started1 = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var t = new DelegateTransport
+            {
+                Handler = (r, ct) =>
+                {
+                    if (r.Path == "/p1/sessions")
+                    {
+                        var id = Interlocked.Increment(ref sessionCounter);
+                        return Task.FromResult(SessionReply(r, id == 1 ? SessionOne : SessionTwo));
+                    }
+                    if (r.Path == "/p1/actor/death-return")
+                    {
+                        if (!started1.Task.IsCompleted)
+                        {
+                            // First death-return (session 1): delay its reply.
+                            started1.TrySetResult(true);
+                            return DelayBeyondCancellation(release1.Task, () => new P1HttpReply
+                            {
+                                StatusCode = 200,
+                                CorrelationId = r.CorrelationId,
+                                Body = "{\"schemaVersion\":1,\"requestId\":\"" + r.CorrelationId +
+                                       "\",\"sessionId\":\"" + SessionOne + "\",\"result\":{" +
+                                       "\"applied\":true,\"replayed\":false,\"mapId\":\"MAP_BEN_MUA\"," +
+                                       "\"xWu\":18.0,\"yWu\":0.0,\"hp\":50,\"maxHp\":100," +
+                                       "\"mp\":50,\"maxMp\":50,\"serverTick\":1840,\"revision\":12," +
+                                       "\"cleared\":{\"inflightCasts\":1,\"reservedCounters\":0," +
+                                       "\"guardWindowClosed\":false,\"movementWindowReset\":true}," +
+                                       "\"penalties\":{\"xp\":0,\"currency\":0,\"durability\":0}," +
+                                       "\"nextReturnAllowedAtTick\":1900}}"
+                            });
+                        }
+                        // Second death-return (session 2 retry): immediate reply.
+                        return Task.FromResult(new P1HttpReply
+                        {
+                            StatusCode = 200,
+                            CorrelationId = r.CorrelationId,
+                            Body = "{\"schemaVersion\":1,\"requestId\":\"" + r.CorrelationId +
+                                   "\",\"sessionId\":\"" + SessionTwo + "\",\"result\":{" +
+                                   "\"applied\":true,\"replayed\":false,\"mapId\":\"MAP_BEN_MUA\"," +
+                                   "\"xWu\":18.0,\"yWu\":0.0,\"hp\":50,\"maxHp\":100," +
+                                   "\"mp\":50,\"maxMp\":50,\"serverTick\":1841,\"revision\":13," +
+                                   "\"cleared\":{\"inflightCasts\":0,\"reservedCounters\":0," +
+                                   "\"guardWindowClosed\":true,\"movementWindowReset\":true}," +
+                                   "\"penalties\":{\"xp\":0,\"currency\":0,\"durability\":0}," +
+                                   "\"nextReturnAllowedAtTick\":1901}}"
+                        });
+                    }
+                    if (r.Path.StartsWith("/p1/world/", StringComparison.Ordinal))
+                        return Task.FromResult(SessionReply(r, r.SessionId ?? SessionTwo));
+                    return Task.FromResult(NetworkFailure(r));
+                }
+            };
+            using (var s = new ClientSession(t))
+            {
+                Assert.True((await s.ConnectAsync()).Success);
+                Assert.Equal(SessionOne, s.Client.SessionId);
+
+                // Session 1: death-return sent, reply delayed.
+                var death1 = s.ReturnFromDeathAsync(CancellationToken.None);
+                await started1.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+                // Relogin to session 2 (replaces Client, bumps generation).
+                Assert.True((await s.ReloginAsync()).Success);
+                Assert.Equal(SessionTwo, s.Client.SessionId);
+
+                // Session 2: same-key retry. The pending mutation from session 1 is
+                // carried over; RetryPending resubmits with the same body/key.
+                var retry = await s.Adapter.RetryPendingAsync(CancellationToken.None);
+                Assert.True(retry.Success, retry.Code);
+
+                // Release the old session-1 reply. It must not mutate session 2.
+                release1.TrySetResult(true);
+                var result = await death1.WaitAsync(TimeSpan.FromSeconds(5));
+                // Old reply rejected: stale epoch, not applied.
+                Assert.False(result.Success);
+                // Session 2's own retry succeeded and set LastDeathReturn.
+                Assert.NotNull(s.Client.LastDeathReturn);
+                Assert.Equal(13, s.Client.LastDeathReturn.revision);
+                // Pending cleared after successful retry.
+                Assert.Null(s.Client.CapturePendingMutation());
+            }
+        }
+
+        [Fact]
+        public async Task DispatcherCallback_AfterFailedRelogin_DoesNotCallOldConsumer()
+        {
+            // Callback queued on the dispatcher before a FAILED relogin must not
+            // invoke the old consumer: Client reference changes even though
+            // SessionGeneration does not (ConnectAsync failed).
+            var encounterJson = FindFixture();
+            int sessionIndex = 0;
+            var release = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var started = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var dispatcher = new QueuedDispatcher();
+            var t = new DelegateTransport
+            {
+                Handler = (r, ct) =>
+                {
+                    if (r.Path == "/p1/sessions")
+                    {
+                        // First call: success (session 1). Second call (relogin): failure.
+                        if (Interlocked.Increment(ref sessionIndex) == 1)
+                            return Task.FromResult(SessionReply(r, SessionOne));
+                        return Task.FromResult(new P1HttpReply
+                        {
+                            StatusCode = 500,
+                            CorrelationId = r.CorrelationId,
+                            Body = "{\"schemaVersion\":1,\"requestId\":\"" + r.CorrelationId +
+                                   "\",\"error\":{\"code\":\"internal_error\",\"retryable\":false}}"
+                        });
+                    }
+                    if (r.Path == "/p1/encounters/current")
+                    {
+                        started.TrySetResult(true);
+                        return Task.FromResult(EncounterReply(r, encounterJson));
+                    }
+                    if (r.Path.StartsWith("/p1/world/", StringComparison.Ordinal))
+                        return Task.FromResult(SessionReply(r, r.SessionId ?? SessionTwo));
+                    return Task.FromResult(NetworkFailure(r));
+                }
+            };
+            var s = new ClientSession(t, dispatcher: dispatcher);
+            int events = 0;
+            Action<EncounterUpdate> handler = _ => Interlocked.Increment(ref events);
+            s.EncounterUpdated += handler;
+            Assert.True((await s.ConnectAsync()).Success);
+
+            // Queue an encounter read on session 1; reply comes back immediately
+            // and its callback is enqueued on the dispatcher (not yet drained).
+            var read = s.ReadCurrentEncounterAsync();
+            await started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.True(read.IsCompleted);
+            Assert.Equal(1, dispatcher.QueuedCount);
+
+            // Relogin FAILS: session endpoint returns 500 on the second call.
+            // ReloginAsync replaces Client before ConnectAsync, so Client reference
+            // changes but SessionGeneration does not.
+            var relogin = await s.ReloginAsync(CancellationToken.None);
+            Assert.False(relogin.Success);
+
+            // Drain the dispatcher: the queued callback must not invoke the old
+            // consumer because Client != capturedClient.
+            dispatcher.RunAll();
+            Assert.Equal(0, Volatile.Read(ref events));
+            Assert.True((await read).Success);
         }
     }
 }

@@ -216,16 +216,26 @@ namespace NguMach.Client.P1
                 // An expired session cannot carry the retry. The composition layer must
                 // relogin first; it rebinds the same request/key to the new session.
                 if (SessionId == null) return Fail("not_connected");
-                return await SubmitPending(ct);
+                return await SubmitPending(ct, SessionId);
             }
             finally { lane.Release(); }
         }
 
-        private async Task<P1Result> SubmitPending(CancellationToken ct)
+        private async Task<P1Result> SubmitPending(CancellationToken ct, string expectedSessionId = null)
         {
             // Cancellation after send is also ambiguous; never leave new input enabled.
             State = P1ConnectionState.UncertainMutation;
             var reply = await Send(pending, ct);
+
+            // Guard cancellation/session lifetime inside Core immediately after the
+            // transport await and BEFORE ClearPendingMutation, receipt/cooldown/world
+            // apply. If the session was disposed/relogined or the caller cancelled,
+            // surface stale and leave the pending mutation (body+key) intact for retry.
+            ct.ThrowIfCancellationRequested();
+            if (expectedSessionId != null &&
+                !string.Equals(SessionId, expectedSessionId, StringComparison.Ordinal))
+                return P1Result.Fail("stale_session");
+
             if (pendingKind == PendingKind.Interact) return await ApplyInteraction(reply, ct);
             if (pendingKind == PendingKind.TurnIn) return await ApplyTurnIn(reply, ct);
             if (pendingKind == PendingKind.CombatV2) return await ApplyCombatV2(reply, ct);

@@ -168,37 +168,30 @@ namespace NguMach.Client.Core.Composition
             if (Client.SessionId == null)
                 return P1Result.Fail("not_connected");
 
-            string sessionId = Client.SessionId;
-            long generation = SessionGeneration;
-
-            // Capture death-return state before the request so a stale late reply
-            // (non-cancelling transport) cannot leave mutated receipt/HP behind.
-            var beforeLastDeathReturn = Client.LastDeathReturn;
-            var beforeNextReturnAllowedAtTick = Client.NextReturnAllowedAtTick;
+            // captureoldclient + epoch before await: guard happens inside Core
+            // before any receipt/cooldown/world mutation.
+            var client = Client;
+            string expectedSessionId = client.SessionId;
+            long expectedGeneration = SessionGeneration;
 
             using (var linked = CreateLinkedToken(ct))
             {
                 P1Result result;
                 try
                 {
-                    result = await Client.ReturnFromDeathAsync(linked.Token);
+                    result = await client.ReturnFromDeathAsync(linked.Token, expectedSessionId);
                 }
                 catch (OperationCanceledException)
                 {
-                    // Dispose cancelled the token mid-request. Surface as stale,
+                    // Dispose/caller cancelled the token mid-request. Surface as stale,
                     // not a throw; pending key is preserved inside P1Client.
                     return P1Result.Fail("stale_session");
                 }
 
-                // A dispose/relogin between send and receive makes this response
-                // stale: never apply a late receipt, HP, or world read. Restore
-                // death-return state to its pre-request values.
-                if (!IsCurrentEpoch(sessionId, generation))
-                {
-                    Client.LastDeathReturn = beforeLastDeathReturn;
-                    Client.NextReturnAllowedAtTick = beforeNextReturnAllowedAtTick;
+                // Facade-level confirmation: dispose/relogin between Core return and
+                // here must not let a stale result through.
+                if (!IsCurrentEpoch(expectedSessionId, expectedGeneration))
                     return P1Result.Fail("stale_session");
-                }
 
                 return result;
             }
@@ -378,15 +371,16 @@ namespace NguMach.Client.Core.Composition
         {
             var handler = EncounterUpdated;
             if (handler == null) return;
+            // captureoldclient: a failed relogin replaces Client without bumping
+            // generation, so compare the reference too.
+            var capturedClient = Client;
             long generation = SessionGeneration;
             _dispatcher.Post(() =>
             {
                 lock (_disposeGate)
                 {
-                    // A callback queued before Dispose or relogin must not invoke
-                    // the old consumer: check disposed state, epoch, and whether the
-                    // subscription still exists at execution time.
-                    if (_disposed || SessionGeneration != generation || EncounterUpdated == null) return;
+                    if (_disposed || SessionGeneration != generation || EncounterUpdated == null ||
+                        Client != capturedClient) return;
                 }
                 try { handler(update); }
                 catch (Exception) { /* a consumer callback must not corrupt the client lane */ }

@@ -10,8 +10,8 @@ namespace NguMach.Client.P1
     {
         public P1WorldV2 WorldV2 { get; private set; }
         public P1InventorySnapshotV2 InventoryV2 { get; private set; }
-        public P1DeathReturnResultV1 LastDeathReturn { get; internal set; }
-        public long? NextReturnAllowedAtTick { get; internal set; }
+        public P1DeathReturnResultV1 LastDeathReturn { get; private set; }
+        public long? NextReturnAllowedAtTick { get; private set; }
         public P1TurnInResult LastTurnIn { get; private set; }
         public long EventCursor { get; private set; }
         public int EventResyncCount { get; private set; }
@@ -278,7 +278,7 @@ namespace NguMach.Client.P1
             return pending != null ? P1Result.Ok() : Ready();
         }
         // ── Death-return (DEC-DEATH-RETURN-20261105, frozen schema at 4b59b08) ──
-        public async Task<P1Result> ReturnFromDeathAsync(CancellationToken ct)
+        public async Task<P1Result> ReturnFromDeathAsync(CancellationToken ct, string expectedSessionId = null)
         {
             await lane.WaitAsync(ct);
             try
@@ -286,7 +286,7 @@ namespace NguMach.Client.P1
                 if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
                 pending = Command("/p1/actor/death-return", new P1DeathReturnIntent());
                 pendingKind = PendingKind.DeathReturn;
-                return await SubmitPending(ct);
+                return await SubmitPending(ct, expectedSessionId);
             }
             finally { lane.Release(); }
         }
