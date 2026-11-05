@@ -81,6 +81,22 @@ jobs:
       - name: Run the alpha P00-01..P00-05 + C1-01 tutorial E2E scenario
         run: bash Server/Health/Smoke/run_e2e_p1.sh alpha-p00
 
+  # Work order 30 item 2: the revival the escort chain relies on, exercised on its
+  # own - a downed actor brought back by the public route, then able to act again.
+  e2e-alpha-revive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run the alpha revival E2E scenario
+        run: bash Server/Health/Smoke/run_e2e_p1.sh alpha-revive
+
   # The approved death-return route, driven end to end over HTTP.
   e2e-death-return:
     runs-on: ubuntu-latest

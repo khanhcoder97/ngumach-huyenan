@@ -197,6 +197,24 @@ elif [ "${PROFILE}" = "alpha-p00" ]; then
   P1World__StartingMp=500 \
   P1World__StartingMaxMp=500 \
     dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
+# The revival the escort chain depends on: the actor is downed by real mob damage and
+# brought back by the same public POST /p1/actor/death-return the runner now makes
+# before each kill batch (work order 30 item 2). Small pools on purpose - 60 HP is a
+# handful of CARPLING hits, so the death is the shipped damage path, and the return
+# answers max(1, ceil(60 * 0.5)) = 30 under the approved alpha rule.
+elif [ "${PROFILE}" = "alpha-revive" ]; then
+  P1__AlphaProfile__Enabled=true \r
+  P1__DeathReturn__Enabled=true \r
+  P1__CombatV2__Enabled=true \r
+  P1__CombatDamage__Enabled=true \r
+  P1__MobBehavior__Enabled=true \r
+  P1__QuestAccept__Enabled=true \r
+  P1__Interact__Enabled=true \r
+  P1World__StartingHp=60 \r
+  P1World__StartingMaxHp=60 \r
+  P1World__StartingMp=500 \r
+  P1World__StartingMaxMp=500 \r
+    dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
 elif [ "${PROFILE}" = "mob-combat" ]; then
   # Combat gates only. The starting pools are enlarged purely so one actor can
   # walk, escape, take hits, guard and then die inside a single run; every

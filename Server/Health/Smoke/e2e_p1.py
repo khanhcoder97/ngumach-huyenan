@@ -93,7 +93,7 @@ fails on anything else.
             rather than returning the stored receipt — and the loop must still run from
             the cold store, so "nothing survived" is not confused with "broken".
 
-Usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client|alpha-p00|audience-gateoff|death-return|gate-one|gate-refusal|restart-before|restart-after>
+Usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client|alpha-p00|alpha-revive|audience-gateoff|death-return|gate-one|gate-refusal|restart-before|restart-after>
   gate-refusal - the inverse of the matrix: a gate combination the composition root
             refuses (P1:AlphaLoot without P1:AlphaProfile) must not serve at all. The
             runner boots it, expects the process to die, and this profile reads the log:
@@ -1602,6 +1602,69 @@ def alpha_kill(session_id, character_id, sequence, entity_id, pace=0.12):
     # unreachable: the loop exits through the returns above
 
 
+def alpha_revive_profile():
+    """Work order 30 item 2: prove the revival the escort chain relies on really works.
+
+    The death-return route has its own 17-check profile; what had **no** coverage was
+    `alpha_ensure_alive`'s branch - an actor going down during a fight and being brought
+    back by the same public call the runner makes. Item 2's boss-leg cause was exactly
+    that situation, so the fix should not ship on faith.
+
+    The boot for this mode sets the pool small (P1World__StartingHp / StartingMaxHp = 60)
+    so a death is a few mob hits instead of a minute of standing: the road group at
+    (84,0) is three CARPLING, aggro opens at 6 WU and one swing lands per 2s attack
+    cooldown, all sourced numbers. The wait is on the server's reported HP, not on a
+    stopwatch.
+    """
+    character = "CHR_QOD21_REVIVE"
+    session, sequence = alpha_session(character)
+    _, self_state, _, _ = v2_snapshot(session)
+    smoke_p1.check(self_state.get("hp", 0) > 0,
+                   "the revive fixture did not start alive")
+
+    walk_failures = []
+    for _ in range(40):
+        _, live_state, _, _ = v2_snapshot(session)
+        if (live_state.get("hp") or 0) <= 0:
+            break
+        sequence, _, _ = alpha_approach(
+            session, character, sequence, 86.0, 0.0, within=1.0,
+            failures=walk_failures)
+        time.sleep(1.0)
+
+    # `hp` must be compared directly: writing `state.get("hp") or 1` turns a real 0 into
+    # a 1 and makes "is the actor down?" unanswerable, which is exactly how this leg
+    # reported "never ended the actor's life" while the actor lay at hp 0.
+    downed = wait_for(150.0, lambda: v2_snapshot(session)[1].get("hp") == 0)
+    _, end_state, end_entities, _ = v2_snapshot(session)
+    mob = end_entities.get("ENT_MAN_BM_SPAWN_BM_01") or {}
+    smoke_p1.check(downed is not None,
+                   "the road group never ended the actor's life "
+                   f"(actor at ({end_state.get('x')},{end_state.get('y')}) "
+                   f"hp {end_state.get('hp')} of {end_state.get('maxHp')}; "
+                   f"group row state={mob.get('state')} hp={mob.get('hp')} "
+                   f"at ({mob.get('x')},{mob.get('y')}); "
+                   f"walk notes {walk_failures[-2:]})")
+
+    sequence, revived = alpha_ensure_alive(session, character, sequence,
+                                            "alpha-revive profile")
+    smoke_p1.check(revived,
+                   "alpha_ensure_alive did not report a revival for a downed actor")
+    _, after, _, _ = v2_snapshot(session)
+    smoke_p1.check((after.get("hp") or 0) > 0,
+                   f"the actor stayed down after the return route: {after.get('hp')}")
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/v2/combat",
+        smoke_p1.combat_v2_envelope(
+            "BASIC_ATTACK", sequence + 1, character_id=character,
+            target_id="ENT_MAN_BM_SPAWN_BM_01", aim_x=1.0, aim_y=0.0,
+            request_id=alpha_key(0xf1), idempotency_key=alpha_key(0xf2)),
+        {"X-Session-ID": session})
+    smoke_p1.check(status == 200,
+                   f"a revived actor still cannot act: {status} "
+                   f"{(body.get('error') or {})}")
+
+
 ALPHA_REVIVES = {"count": 0}
 
 
@@ -2732,6 +2795,8 @@ def main():
         two_client_profile()
     elif mode == "alpha-p00":
         alpha_p00_profile()
+    elif mode == "alpha-revive":
+        alpha_revive_profile()
     elif mode == "audience-gateoff":
         audience_gateoff_profile()
     elif mode == "death-return":
