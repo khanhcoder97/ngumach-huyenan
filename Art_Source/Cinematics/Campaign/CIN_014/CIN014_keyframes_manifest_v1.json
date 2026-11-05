@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN014_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 25 - CIN_014 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_014",
+ "title": "Dấu lệnh đặt xuống",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_TONG_BANH) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "keyframes": [
+  {
+   "shotId": "CIN_014_S01",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_014_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "7b86ccd06052602eced18ae642a281f500090fa1418fc1073ac13b3766f7772b",
+   "sourceStagingFile": "media-generation-keyframe-cin-014-s01-0-15a15de7-efdf-47d5-9b00-210ea26bb267.webp",
+   "sourceStagingSha256": "890a0e636b013390303c117930b2e68798249836f0b66124699fcbc065c9419c",
+   "sourceSnapshotId": "f4c554c1-b486-4851-8f96-57259188a738:a0crbw",
+   "framing": "Medium shot: Tong Banh kneels in profile at frame right, head bowed, beside a scattered pile of disconnected lamellar armor plates and a fallen torn red command banner, against a ruined stone wall and bamboo.",
+   "knownDefects": "The asymmetrical single large shoulder guard is only weakly expressed (he wears heavy armor on both shoulders), and the armor reads as battlefield debris more than deliberately disconnected siege plates; otherwise matches the prompt at storyboard level."
+  },
+  {
+   "shotId": "CIN_014_S02",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_014_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "71df6b897fe8b15262fdf535e948cdea185f0fc1b0e23ca21a619b157149c203",
+   "sourceStagingFile": "media-generation-keyframe-cin-014-s02-0-f0bb3e3c-d062-4d68-9fc0-479a06eb9509.webp",
+   "sourceStagingSha256": "1089ce61bdc906f47c6d624be78e332d60f585849f9df5511a46fd817025d2db",
+   "sourceSnapshotId": "ed54698d-7a70-4391-bb9a-17019265a993:9hxnwi",
+   "framing": "Medium close shot: Tong Banh leans over bare flagstones and sets a square patterned command seal flat on the stone with his bare right hand, the removed arm guard lying on the stones beside him and his other hand still gloved.",
+   "knownDefects": "Framing drift — medium shot of the whole upper body instead of a tight detail close-up of hand, seal and glove; the command seal reads as a flat patterned plaque rather than a seal stamp and the removed piece reads as a vambrace, not a glove; character rendering is inconsistent with S01 (woven hat, dark cloak, teal armor here vs headband and bronze lamellar there)."
+  },
+  {
+   "shotId": "CIN_014_S03",
+   "camera": "WIDE_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_014_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "1646f8adccbc206b6ebd4cc799354720aa454eb791000ec8244ad04a2dd27dd2",
+   "sourceStagingFile": "media-generation-keyframe-cin-014-s03-0-423ffbf2-8fdf-4ad5-8f0f-af7914026fe4.webp",
+   "sourceStagingSha256": "f800b7f2627edf8e84f6275c2995fee47acc93cca837d5b78206635f67d1d908",
+   "sourceSnapshotId": "26d6e597-1f98-4994-a5c1-e4e2eac42a34:jdt12b",
+   "framing": "Wide shot: a refugee group with bundles stands inside an open wooden gate at frame left while two unarmored men — a robed figure mid-ground and a conical-hat figure in the right foreground — stand apart from them across a fenced yard at dusk.",
+   "knownDefects": "Tong Banh is not identifiable — two unarmored candidates (robed man mid-ground; conical-hat man foreground right, an extra figure the prompt does not call for), neither matching his S01/S02 armor, so the intended foreground separation is ambiguous; the refugees stand inside the gate rather than clearly behind it in the background, and the palette shifts to dusk blue against the daylight of S01/S02."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Recorded keyframe defects: Tong Banh's rendering is inconsistent across all three shots (bronze lamellar with headband in S01; woven hat, dark cloak and teal armor in S02; not identifiable at all in S03, where two unarmored candidates stand apart and neither matches his armor), so the intended foreground separation in S03 is ambiguous; S02 is a medium shot instead of the tight detail close-up and its seal reads as a flat plaque; S03's palette shifts to dusk blue against the daylight of S01/S02. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+ ]
+}

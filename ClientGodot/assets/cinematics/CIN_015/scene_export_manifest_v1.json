@@ -1,0 +1,130 @@
+{
+ "schemaVersion": 1,
+ "checkpoint": "MEDIA-02 checkpoint 25 - CIN_015 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_015",
+ "title": "Thành phố dưới nước",
+ "durationSeconds": 18.0,
+ "dialogueCues": 1,
+ "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+ "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+ "motionModel": {
+  "kind": "ANIMATIC_MOTION_KEN_BURNS",
+  "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
+  "shots": {
+   "CIN_015_S01": "push-in centered",
+   "CIN_015_S02": "push-in centered",
+   "CIN_015_S03": "zoom-out centered"
+  }
+ },
+ "reelOffsetSeconds": null,
+ "reelTotalSeconds": null,
+ "files": {
+  "mp4": {
+   "path": "assets/cinematics/CIN_015/CIN_015_640x360_30fps.mp4",
+   "sha256": "c7e0afa620308e51f68fc2fe46066aa79be958cb75c3ac68ec47127c424e1bb2",
+   "sizeBytes": 1252075,
+   "codec": "h264",
+   "width": 640,
+   "height": 360,
+   "fps": 30,
+   "durationSeconds": 18.0,
+   "frames": 540
+  },
+  "ogv": {
+   "path": "assets/cinematics/CIN_015/CIN_015_640x360_30fps.ogv",
+   "sha256": "b86abcd4f182de40d8ab404fda0aa3b00d16495e0e6ee26df48f87895a801c04",
+   "sizeBytes": 459532,
+   "codec": "theora",
+   "width": 640,
+   "height": 360,
+   "fps": 30,
+   "durationSeconds": 18.0,
+   "storedFrames": 491
+  },
+  "poster": {
+   "path": "assets/cinematics/CIN_015/CIN_015_poster.png",
+   "sha256": "6dd170f8d6f336fcbf888a7896a74417b7532844ac6ed204154f8086b94abe30",
+   "sizeBytes": 353997,
+   "sourceKeyframe": "keyframe_CIN_015_S01.png"
+  },
+  "timing": {
+   "path": "assets/cinematics/CIN_015/CIN_015_timing_v1.json",
+   "sha256": "fabb7e50869d6288018866064be18ee7432f23cef96eac74abe6c7d3f3edb201",
+   "sizeBytes": 2405
+  },
+  "srt": {
+   "path": "assets/cinematics/CIN_015/CIN_015_vi.srt",
+   "sha256": "c12278572991353372b3a95d389b43afa574364ebe58552bf3ebaba20a3cf387",
+   "sizeBytes": 97,
+   "status": "DRAFT"
+  }
+ },
+ "frameCheck": {
+  "CIN_015_S01": {
+   "identitySeconds": 0.0,
+   "identityMeanAbsChannelDiff": 4.012,
+   "identityMaxAllowed": 10.0,
+   "motionSeconds": 5.9,
+   "motionMeanAbsChannelDiff": 22.846,
+   "motionMinRequired": 1.5,
+   "continuousMotionMeanAbsChannelDiff": 19.242,
+   "continuousMinRequired": 0.5
+  },
+  "CIN_015_S02": {
+   "identitySeconds": 6.0,
+   "identityMeanAbsChannelDiff": 3.34,
+   "identityMaxAllowed": 10.0,
+   "motionSeconds": 11.9,
+   "motionMeanAbsChannelDiff": 33.148,
+   "motionMinRequired": 1.5,
+   "continuousMotionMeanAbsChannelDiff": 27.116,
+   "continuousMinRequired": 0.5
+  },
+  "CIN_015_S03": {
+   "identitySeconds": 17.9667,
+   "identityMeanAbsChannelDiff": 6.488,
+   "identityMaxAllowed": 10.0,
+   "motionSeconds": 12.0,
+   "motionMeanAbsChannelDiff": 31.61,
+   "motionMinRequired": 1.5,
+   "continuousMotionMeanAbsChannelDiff": 27.37,
+   "continuousMinRequired": 0.5
+  }
+ },
+ "shots": [
+  {
+   "shotId": "CIN_015_S01",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "camera": "WIDE_STATIC",
+   "keyframe": "keyframe_CIN_015_S01.png",
+   "motion": "push-in centered"
+  },
+  {
+   "shotId": "CIN_015_S02",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "camera": "DETAIL_LOCKED",
+   "keyframe": "keyframe_CIN_015_S02.png",
+   "motion": "push-in centered"
+  },
+  {
+   "shotId": "CIN_015_S03",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "camera": "TOPDOWN_MATCH",
+   "keyframe": "keyframe_CIN_015_S03.png",
+   "motion": "zoom-out centered"
+  }
+ ],
+ "notes": [
+  "Campaign animated take (Goi 30 item 7, checkpoint 25 batch): real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+  "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
+  "CIN_015 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
+  "Scene SRT carries 1 cue (the diver captain, CIN_015_S03 at 12.5-17.5 s). Dialogue window status in the campaign manifest: PROPOSED_ANIMATIC_PLACEMENT, approved for DRAFT VO production only by the checkpoint-14 D1 decision. The checkpoint 17 VO draft for this cue measures 2.880 s at natural speed (windowFit FITS, not sped up).",
+  "Recorded keyframe defects: S02 is a setting failure — a dry above-water courtyard in grey daylight instead of the drowned underwater ruin, with a large pale mascot-like figure invented at frame left, a clay pot instead of the dining bowl, an oversized disembodied diver hand with a modern buckled strap, and a clothesline reading as ordinary laundry — and is the first item for the final-picture revision pass; S01 adds an unscripted dry-standing figure with a lit lantern and overly dense bubble columns; S03's underwater read is weak (no water tint or bubbles; slate-purple palette drifts from S01's deep teal), though its three station motifs, warm route lamp and gameplay-plane alignment are on-prompt."
+ ]
+}

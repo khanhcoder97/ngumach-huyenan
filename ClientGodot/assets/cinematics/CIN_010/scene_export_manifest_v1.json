@@ -1,0 +1,130 @@
+{
+ "schemaVersion": 1,
+ "checkpoint": "MEDIA-02 checkpoint 25 - CIN_010 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_010",
+ "title": "Bình nước cuối xe",
+ "durationSeconds": 18.0,
+ "dialogueCues": 1,
+ "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+ "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+ "motionModel": {
+  "kind": "ANIMATIC_MOTION_KEN_BURNS",
+  "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
+  "shots": {
+   "CIN_010_S01": "push-in centered",
+   "CIN_010_S02": "push-in centered",
+   "CIN_010_S03": "push-in centered"
+  }
+ },
+ "reelOffsetSeconds": null,
+ "reelTotalSeconds": null,
+ "files": {
+  "mp4": {
+   "path": "assets/cinematics/CIN_010/CIN_010_640x360_30fps.mp4",
+   "sha256": "9b88d2bdd6f5cc1746ea3503840b5dc9175074f908f5611c340900d71f5d96ac",
+   "sizeBytes": 1355979,
+   "codec": "h264",
+   "width": 640,
+   "height": 360,
+   "fps": 30,
+   "durationSeconds": 18.0,
+   "frames": 540
+  },
+  "ogv": {
+   "path": "assets/cinematics/CIN_010/CIN_010_640x360_30fps.ogv",
+   "sha256": "77046c230ef8c28ae73afd6b71f85ddb06cd324a1a67dfd1e87380709ac347ff",
+   "sizeBytes": 461208,
+   "codec": "theora",
+   "width": 640,
+   "height": 360,
+   "fps": 30,
+   "durationSeconds": 18.0,
+   "storedFrames": 441
+  },
+  "poster": {
+   "path": "assets/cinematics/CIN_010/CIN_010_poster.png",
+   "sha256": "cc6cda9f2d27aaaba61e554b92163fd5ba623d37283689eaee55153b1da5cc9b",
+   "sizeBytes": 476873,
+   "sourceKeyframe": "keyframe_CIN_010_S01.png"
+  },
+  "timing": {
+   "path": "assets/cinematics/CIN_010/CIN_010_timing_v1.json",
+   "sha256": "05b194a3b2119721a535a9f60d0c34159164b9857ee075b9144cbd163fc5fef1",
+   "sizeBytes": 2399
+  },
+  "srt": {
+   "path": "assets/cinematics/CIN_010/CIN_010_vi.srt",
+   "sha256": "8905b67970f5304bc0746f157633fde77479526f242a3a5400503e1d9568c336",
+   "sizeBytes": 90,
+   "status": "DRAFT"
+  }
+ },
+ "frameCheck": {
+  "CIN_010_S01": {
+   "identitySeconds": 0.0,
+   "identityMeanAbsChannelDiff": 5.68,
+   "identityMaxAllowed": 10.0,
+   "motionSeconds": 5.9,
+   "motionMeanAbsChannelDiff": 45.651,
+   "motionMinRequired": 1.5,
+   "continuousMotionMeanAbsChannelDiff": 38.947,
+   "continuousMinRequired": 0.5
+  },
+  "CIN_010_S02": {
+   "identitySeconds": 6.0,
+   "identityMeanAbsChannelDiff": 3.274,
+   "identityMaxAllowed": 10.0,
+   "motionSeconds": 11.9,
+   "motionMeanAbsChannelDiff": 31.681,
+   "motionMinRequired": 1.5,
+   "continuousMotionMeanAbsChannelDiff": 27.343,
+   "continuousMinRequired": 0.5
+  },
+  "CIN_010_S03": {
+   "identitySeconds": 12.0,
+   "identityMeanAbsChannelDiff": 3.169,
+   "identityMaxAllowed": 10.0,
+   "motionSeconds": 17.9,
+   "motionMeanAbsChannelDiff": 25.979,
+   "motionMinRequired": 1.5,
+   "continuousMotionMeanAbsChannelDiff": 21.121,
+   "continuousMinRequired": 0.5
+  }
+ },
+ "shots": [
+  {
+   "shotId": "CIN_010_S01",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "camera": "WIDE_STATIC",
+   "keyframe": "keyframe_CIN_010_S01.png",
+   "motion": "push-in centered"
+  },
+  {
+   "shotId": "CIN_010_S02",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "camera": "DETAIL_LOCKED",
+   "keyframe": "keyframe_CIN_010_S02.png",
+   "motion": "push-in centered"
+  },
+  {
+   "shotId": "CIN_010_S03",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "camera": "MEDIUM_STATIC",
+   "keyframe": "keyframe_CIN_010_S03.png",
+   "motion": "push-in centered"
+  }
+ ],
+ "notes": [
+  "Campaign animated take (Goi 30 item 7, checkpoint 25 batch): real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+  "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
+  "CIN_010 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
+  "Scene SRT carries 1 cue (Sam Chu Quy, CIN_010_S03 at 12.5-17.5 s). Dialogue window status in the campaign manifest: PROPOSED_ANIMATIC_PLACEMENT, approved for DRAFT VO production only by the checkpoint-14 D1 decision. The checkpoint 17 VO draft for this cue measures 2.808 s at natural speed (windowFit FITS, not sped up).",
+  "Recorded keyframe defects: environment continuity collapses after S01 (ash-gold desert -> lush bamboo grove in S02 -> green-tinged rocky scrub in S03), so the water-scarcity context is lost in S02; Sam's placeholder rendering (slim young man in a blue tunic, consistent between S02 and S03) does not match his stocky middle-aged merchant brief; S01's barrel reads as an open vat rather than a lidded barrel. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+ ]
+}

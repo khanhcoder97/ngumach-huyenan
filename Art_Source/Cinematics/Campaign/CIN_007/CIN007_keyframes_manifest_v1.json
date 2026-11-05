@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN007_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 25 - CIN_007 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_007",
+ "title": "Tên trong vỏ cây",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_LYAN) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "keyframes": [
+  {
+   "shotId": "CIN_007_S01",
+   "camera": "WIDE_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_007_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "9d3233d4c0c93495ba27e61de37b85785f28b768782cadfa1e8587128e566efd",
+   "sourceStagingFile": "media-generation-keyframe-cin-007-s01-0-ef99056b-94c7-49fa-9309-89563254089c.webp",
+   "sourceStagingSha256": "c86227a8f42f09eafe8e4c1456839e8990852741c95563bafa666b7de5928e9e",
+   "sourceSnapshotId": "435df26a-a964-48ef-8f93-42e7ed3e3022:pgmuqs",
+   "framing": "Wide shot of an ancient rain-green forest clearing: a shallow trickle winds between mossy trunks and exposed roots while clusters of pale fungi dot the grass along the water's course.",
+   "knownDefects": "The prompt frames an empty environment shot, but a lone figure in a conical hat and green cloak stands center-right (unnamed traveler, not an enemy, so no canon conflict, but an added figure). Otherwise faithful: fungi path, trickle, no enemies, no text."
+  },
+  {
+   "shotId": "CIN_007_S02",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_007_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "d416f874bf82e81963a5cf19c3db85f587265f9e4c72b64ac13c8c8bc824db78",
+   "sourceStagingFile": "media-generation-keyframe-cin-007-s02-0-df5d2fe0-2a2c-4e86-9f27-756e74e75fff.webp",
+   "sourceStagingSha256": "b0d0ad6b3adae7c95e6c82a8588cc6e27f926d0a84b6e35dcf1fa1ccb926df89",
+   "sourceSnapshotId": "5f515976-7491-4b30-920b-86cf3f27279d:eux5eg",
+   "framing": "Diagonal close view of a massive sloped bark surface with four glowing cyan channels carved into it carrying bright abstract stroke patterns, a dark leaf form lying across the right-hand channels, and Ly An standing small at frame left looking at them.",
+   "knownDefects": "The four grooves render as wide, strongly luminous cyan canals, far brighter and larger than the prompt's shallow grooves brightening gently; Ly An appears in frame although the prompt is a pure bark/water detail shot; the leaf shadow is rendered as an actual oversized leaf lying on the bark rather than only a passing shadow. The in-groove strokes stay abstract and unreadable, as required."
+  },
+  {
+   "shotId": "CIN_007_S03",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_007_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "d63aae2bc98946ece924e63ad17331c7319e0886d51999ed765c1f2245926dfe",
+   "sourceStagingFile": "media-generation-keyframe-cin-007-s03-0-bf19a754-694d-41cf-811d-3e671d8c4ce3.webp",
+   "sourceStagingSha256": "167621bed74fcb45ca5963c6ba868ad45bf754f1f0024b776d7b564b2eb1c8a7",
+   "sourceSnapshotId": "0770b048-3b2d-4215-a70b-c895a7a07638:gdiejj",
+   "framing": "Medium shot of Ly An kneeling beside a moss-covered trunk in the forest, holding a registry slip in her raised hand while a blank copied slip lies on the moss beside the bark, her brown mail satchel at her hip.",
+   "knownDefects": "Setting drift: a tiled-roof structure with hanging signboards stands at frame left (not in the prompt), and its signboards carry glyph-like marks that approach lettering (illegible, but borderline against the no-readable-writing rule). She holds the slip up reading it instead of laying it beside the bark — the laid slip is the blank one, so the prompt's action is only half-present. Her satchel bears a small envelope pictogram. Lighting is warm daylight, drifting from the deep-green gloom of S01/S02. Minor continuity nit: her carry-gear differs between S02 (woven backpack) and S03 (leather satchel), though hair (dark topknot) and blue courier dress read as the same person."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Recorded keyframe defects: S01 adds an unnamed conical-hat figure to what the prompt frames as an empty environment shot; S02's grooves render as wide, strongly luminous cyan canals and Ly An appears in what the prompt frames as a pure bark detail; S03 adds a tiled-roof structure with borderline glyph-like signboards and Ly An holds the slip up reading instead of laying it beside the bark. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+ ]
+}

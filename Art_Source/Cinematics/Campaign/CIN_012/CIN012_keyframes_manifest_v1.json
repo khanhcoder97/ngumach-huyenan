@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN012_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 25 - CIN_012 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_012",
+ "title": "Giữ tên người sống",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_HA_MAC) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "keyframes": [
+  {
+   "shotId": "CIN_012_S01",
+   "camera": "WIDE_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_012_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "8c2efbd483159254395fd7d6b76e86ed8b59bda510043ff9ac696c4160fef60a",
+   "sourceStagingFile": "media-generation-keyframe-cin-012-s01-0-13fcca93-ea9b-4977-83e1-3f9bbf30dcdf.webp",
+   "sourceStagingSha256": "26ccba35b83cf5652567f50aa5fe1fd93b4871e29ed9dc6106fe13702a20e9b8",
+   "sourceSnapshotId": "075ef9db-ad43-4745-aa7b-927bb21f1d8d:ablhxj",
+   "framing": "Two workers sit on a wooden platform before a large stone furnace with glowing embers, their removed dust masks lying on the planks beside them, coal baskets and workshop clutter around the yard.",
+   "knownDefects": "A large white hooded mascot-like figure with a smiling face and pink cheeks sits at frame left — not in the prompt and not a worker (same intrusion failure mode as CIN_006_S02 and CIN_015_S02). Overall palette reads dark blue dusk rather than the prompt's stepped orange heat palette (orange appears only in the ember glow), and the framing is closer to medium than the wide shot the camera specifies."
+  },
+  {
+   "shotId": "CIN_012_S02",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_012_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "069d26835f3e4d8b89a2aa31f15d7a9afa3f13a1c41f9ec56e3870ddb04a9777",
+   "sourceStagingFile": "media-generation-keyframe-cin-012-s02-0-bc292f4e-600a-483b-8993-f140333f4a97.webp",
+   "sourceStagingSha256": "3a356ecd3b891f8d2c7beb51ef49a5a40db5986ca7e55a8566d0aed3a42c0732",
+   "sourceSnapshotId": "577e8010-8d43-4b7a-b0f9-99ec7feae8b1:dyjob1",
+   "framing": "Ha Mac sits at an archive desk laying a narrow paper strip across a line of the open recovered journal, a public-copy sheet at frame left and a string-tied sealed archive folder at frame right, scroll shelves behind him.",
+   "knownDefects": "Framing drift: a medium shot of Ha Mac at the desk instead of the detail close view of the journal and papers the camera asks for. The journal and copy sheet carry illegible dashed pseudo-writing (abstract, not readable). His dark solid robe and dark hair bow here differ from S03's layered teal-over-cream robe with blue ribbon — the placeholder appearance is inconsistent within the scene."
+  },
+  {
+   "shotId": "CIN_012_S03",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_012_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "39ba784c33b1ea758b0018b4bdfdbf17f3f5d960cddfb50d94fc2fb66706d60e",
+   "sourceStagingFile": "media-generation-keyframe-cin-012-s03-0-27904e96-51c9-4f62-8fbc-931af41d0fbe.webp",
+   "sourceStagingSha256": "8c6054e9c63548aadc7380f4b79b0c4d76854f90f4b692e6ba391a39c1e8a4cd",
+   "sourceSnapshotId": "2db70f2b-0e5b-49df-bca9-119cce1580e9:mze9z2",
+   "framing": "Ha Mac stands behind a table bearing two equally lit blank papers, both hands withdrawn to the table edge, gazing offscreen right in a lantern-lit hall with mountains visible through the window.",
+   "knownDefects": "MAJOR: a baked-in game choice UI bar spans the bottom of the frame with two legible English buttons ('WAIT IN SILENCE' / 'OFFER THE PAPERS') — the prompt requires the frame to stay clean for the choice overlay the game adds later, and forbids HUD and readable generated writing; the bar also eats the composition's lower area. Costume also drifts from S02 (layered teal robe, blue hair ribbon). This shot is the first item for the final-picture revision pass."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Recorded keyframe defects: S03 carries a baked-in game choice UI bar with two legible English buttons ('WAIT IN SILENCE' / 'OFFER THE PAPERS') at the bottom of the frame — a hard violation of the prompt's clean-frame rule for the game's own choice overlay — and is the first item for the final-picture revision pass; S01 has the same large white hooded mascot-like figure intrusion recorded at CIN_006_S02 and CIN_015_S02, and its palette reads dark blue dusk instead of the stepped orange heat palette; S02 is a medium shot instead of the detail close view and Ha Mac's costume differs between S02 and S03."
+ ]
+}

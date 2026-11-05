@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN008_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 25 - CIN_008 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_008",
+ "title": "Bàn tay đã ký",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_TA_VAN_KHANH) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "keyframes": [
+  {
+   "shotId": "CIN_008_S01",
+   "camera": "MEMORY_DETAIL",
+   "file": "keyframes_16x9/keyframe_CIN_008_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "65bc88c32426d7122d246be724c247b264a3410d69884523e095b8fb3bfc8d16",
+   "sourceStagingFile": "media-generation-keyframe-cin-008-s01-0-9265c416-8597-401d-a696-7e8933cff89d.webp",
+   "sourceStagingSha256": "922355475df95878fb59fc62f878c824355160d35e22432ec48e59acb9aa4eca",
+   "sourceSnapshotId": "2563797e-2f34-42bd-a710-4f9719575a31:kvzaph",
+   "framing": "Extreme close view of a brush hand in an indigo scale-patterned sleeve writing abstract glyphs across a paper order, with a round seal stamp and ink stone at the paper's lower-left, all in a desaturated indigo palette.",
+   "knownDefects": "The seal reads as a large round stamp already impressed on the paper rather than a seal block the hand pauses over, and the page is densely filled with abstract glyphs (illegible, as required), reading more like a completed form than the moment of signing; the sleeve's scale pattern is an unusual invented detail."
+  },
+  {
+   "shotId": "CIN_008_S02",
+   "camera": "MEMORY_WIDE",
+   "file": "keyframes_16x9/keyframe_CIN_008_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "c34be2f4e9e2c8ddd914de7cd862f936306ef529fcaeae0c52a004deaaa08aab",
+   "sourceStagingFile": "media-generation-keyframe-cin-008-s02-0-7f909d93-158f-4276-bb73-3435db94eeb2.webp",
+   "sourceStagingSha256": "ec9913de59a14efcb87e17895d5dcfbab7b43762544727129da4ee29adbb2021",
+   "sourceSnapshotId": "7a6b5d19-4e80-43fb-beb8-77fd4cfa4f21:7yk4po",
+   "framing": "Wide shot from outside a tall wooden double gate standing nearly shut with a lantern-lit sliver of the chamber beyond, while a robed adult waits at frame left holding a clay water vessel.",
+   "knownDefects": "No material defect observed at storyboard level."
+  },
+  {
+   "shotId": "CIN_008_S03",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_008_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "ac807d2e6875f5d148bcfb8a71c490305dbddf54b9d6783b6dfbe8ab4722d254",
+   "sourceStagingFile": "media-generation-keyframe-cin-008-s03-0-acd70052-7808-4144-919b-0fc6405679c1.webp",
+   "sourceStagingSha256": "c2754e87b5b2e57c08b52c38e67d937bec20a7be705de964e9d7eccef6508cc0",
+   "sourceSnapshotId": "d2cae441-a2a1-4992-80e8-1b02ddba942d:7vagfq",
+   "framing": "Medium shot of Ta Van Khanh standing at frame right beside a bamboo forest pool, his bandaged forearm lowered and his good hand open at his side as he looks off-frame left toward the unseen listener.",
+   "knownDefects": "The bandage is present and lowered as prompted, but in this pose it wraps the forearm on the frame-center side, reading as the character's right forearm — worth checking against the character lock at final picture (canon places the bandage on the character's LEFT forearm); the bandaged hand also grips two dangling white strips, an ambiguous object the prompt does not mention."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Recorded keyframe defects: S01's seal reads as a large round stamp already impressed on the paper and the page reads as a completed form rather than the moment of signing; S03's bandage wraps the forearm on the frame-center side, reading as the character's RIGHT forearm, while canon places the bandage on the character's LEFT forearm — to be checked against the character lock at final picture; S03's bandaged hand also grips two dangling white strips the prompt does not mention. S02 had no material defect at storyboard level."
+ ]
+}

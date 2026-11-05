@@ -856,11 +856,14 @@ def check_scene_clips():
                          .read_text(encoding="utf-8"))
     runtime_clips = {c["sceneId"]: c
                      for c in runtime.get("sceneClips", [])}
-    if len(runtime_clips) != 7:
+    if len(runtime_clips) != 20:
         err(f"SCENE-CLIPS: runtime manifest has {len(runtime_clips)} "
-            f"sceneClips, expected 7")
+            f"sceneClips, expected 20")
     for scene_id in ("CIN_001", "CIN_002", "CIN_004", "CIN_006", "CIN_005",
-                     "CIN_009", "CIN_020"):
+                     "CIN_009", "CIN_020",
+                     "CIN_003", "CIN_007", "CIN_008", "CIN_010", "CIN_011",
+                     "CIN_012", "CIN_013", "CIN_014", "CIN_015", "CIN_016",
+                     "CIN_017", "CIN_018", "CIN_019"):
         exp_path = cine / scene_id / "scene_export_manifest_v1.json"
         if not exp_path.exists():
             err(f"SCENE-CLIPS {scene_id}: missing export manifest")
@@ -998,9 +1001,9 @@ def check_scene_clips():
             f"expected 72.0")
     COUNTS["scene_clips_checked"] = checked
     COUNTS["scene_clips_with_video"] = video_scenes
-    note(f"Per-scene clips checked: {checked}/7 ({video_scenes} with "
-         f"video: P0 x3 panel-hold + CIN_005/CIN_006/CIN_009/CIN_020 "
-         f"animated takes); reel tiled 0-72 exactly")
+    note(f"Per-scene clips checked: {checked}/20 ({video_scenes} with "
+         f"video: P0 x3 panel-hold + 17 campaign animated takes); "
+         f"reel tiled 0-72 exactly")
 
 
 def check_cin020_keyframes():
@@ -1069,6 +1072,114 @@ def check_cin020_keyframes():
          f"staging SHA-verified)")
 
 
+BATCH_SCENES = ("CIN_003", "CIN_007", "CIN_008", "CIN_010", "CIN_011",
+                "CIN_012", "CIN_013", "CIN_014", "CIN_015", "CIN_016",
+                "CIN_017", "CIN_018", "CIN_019")
+
+
+def check_campaign_keyframes_batch():
+    """Checkpoint 25: storyboard keyframes for the 13 batch scenes.
+
+    Same verification shape as the per-scene checkers of checkpoints
+    21-24, generalized: each scene's keyframe manifest must carry 3
+    entries whose files exist under Art_Source/Cinematics/Campaign/
+    <scene>/, are 640x360 real image bytes matching the recorded SHA,
+    whose staging WebP still exists at its recorded path with the
+    recorded SHA, and which carry framing + known-defects notes. Shot
+    IDs are cross-checked against the scene timing JSON.
+
+    This checker also closes the gap recorded at checkpoint 24 (the
+    CIN_009 manifest carried CIN_006's title undetected since
+    checkpoint 23): the keyframe manifest TITLE is cross-checked
+    against the timing JSON title for every campaign scene that has a
+    keyframe manifest -- the 13 batch scenes plus CIN_005/CIN_006/
+    CIN_009/CIN_020.
+    """
+    staging_base = Path("/home/hatch/workspace/goals"
+                        "/ng-m-ch-continuous-development/hidden_files")
+    checked = 0
+    for scene_id in BATCH_SCENES:
+        tag = scene_id.replace("_", "") + "-KEYFRAMES"
+        scene_dir = ROOT / "Art_Source/Cinematics/Campaign" / scene_id
+        manifest_path = (scene_dir
+                         / f"{scene_id.replace('_', '')}"
+                           "_keyframes_manifest_v1.json")
+        if not manifest_path.exists():
+            err(f"{tag}: missing keyframe manifest")
+            continue
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        timing = json.loads((ROOT / "Implementation/Content/Narrative"
+                             / f"Deliveries/{scene_id}"
+                               f"/{scene_id}_timing_v1.json")
+                            .read_text(encoding="utf-8"))
+        if manifest.get("title") != timing.get("title"):
+            err(f"{tag}: manifest title {manifest.get('title')!r} != "
+                f"timing title {timing.get('title')!r}")
+        if manifest.get("status") != "STORYBOARD":
+            err(f"{tag}: status {manifest.get('status')!r} != STORYBOARD")
+        timing_ids = {s["shotId"] for s in timing.get("shots", [])}
+        staging_root = (staging_base
+                        / f"{scene_id.replace('_', '').lower()}"
+                          "_keyframes_staging")
+        scene_checked = 0
+        for entry in manifest.get("keyframes", []):
+            sid = entry["shotId"]
+            if sid not in timing_ids:
+                err(f"{tag} {sid}: not in {scene_id} timing shots")
+                continue
+            kf = scene_dir / entry["file"]
+            if not kf.exists():
+                err(f"{tag} {sid}: missing {entry['file']}")
+                continue
+            if is_lfs_pointer(kf):
+                err(f"{tag} {sid}: file is an LFS pointer")
+                continue
+            if png_dims(kf) != (640, 360):
+                err(f"{tag} {sid}: dims {png_dims(kf)} != 640x360")
+            if sha256_of(kf) != entry["sha256"]:
+                err(f"{tag} {sid}: sha mismatch")
+            staged = staging_root / entry["sourceStagingFile"]
+            if not staged.exists():
+                err(f"{tag} {sid}: staging source missing "
+                    f"{entry['sourceStagingFile']}")
+            elif sha256_of(staged) != entry["sourceStagingSha256"]:
+                err(f"{tag} {sid}: staging source sha mismatch")
+            if not entry.get("framing"):
+                err(f"{tag} {sid}: no framing note")
+            if not entry.get("knownDefects"):
+                err(f"{tag} {sid}: no known-defects note")
+            scene_checked += 1
+        if scene_checked != 3:
+            err(f"{tag}: {scene_checked}/3 keyframes checked")
+        if {e["shotId"] for e in manifest.get("keyframes", [])} \
+                != timing_ids:
+            err(f"{tag}: keyframe shot set != timing shot set")
+        checked += scene_checked
+    # Title cross-check for the earlier campaign keyframe scenes
+    # (their per-scene checkers predate the checkpoint-24 gap finding).
+    for scene_id in ("CIN_005", "CIN_006", "CIN_009", "CIN_020"):
+        tag = scene_id.replace("_", "") + "-KEYFRAMES"
+        manifest_path = (ROOT / "Art_Source/Cinematics/Campaign" / scene_id
+                         / f"{scene_id.replace('_', '')}"
+                           "_keyframes_manifest_v1.json")
+        if not manifest_path.exists():
+            err(f"{tag}: missing keyframe manifest (title cross-check)")
+            continue
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        timing = json.loads((ROOT / "Implementation/Content/Narrative"
+                             / f"Deliveries/{scene_id}"
+                               f"/{scene_id}_timing_v1.json")
+                            .read_text(encoding="utf-8"))
+        if manifest.get("title") != timing.get("title"):
+            err(f"{tag}: manifest title {manifest.get('title')!r} != "
+                f"timing title {timing.get('title')!r}")
+    COUNTS["campaign_batch_keyframes_checked"] = checked
+    note(f"Campaign batch keyframes checked: {checked}/39 across 13 "
+         f"scenes (storyboard level, staging SHA-verified); keyframe "
+         f"manifest titles cross-checked vs timing for all 17 campaign "
+         f"keyframe scenes")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=None)
@@ -1082,12 +1193,13 @@ def main():
     check_cin006_keyframes()
     check_cin009_keyframes()
     check_cin020_keyframes()
+    check_campaign_keyframes_batch()
     check_campaign_vo()
     check_cin006_vo()
     check_p0_mix()
     check_scene_clips()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 24 (CIN_020 animated take: 3 storyboard keyframes + 18 s Ken Burns clip, MP4 + OGV + poster + timing/SRT; closing campaign scene with video; CIN_009 keyframe manifest title corrected; runtime delivery revised)",
+        "checkpoint": "MEDIA-02 checkpoint 25 (campaign video batch: animated takes for the remaining 13 campaign scenes, 3 storyboard keyframes + 18 s Ken Burns clip each, MP4 + OGV + poster + timing/SRT; all 20 scenes now carry video; generic batch keyframe checker added with title cross-check for all 17 campaign keyframe scenes; runtime delivery revised)",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -1108,6 +1220,8 @@ def main():
             "CIN_009 keyframes are STORYBOARD level: the pack character list is empty, so no character lock is involved; the S02 workers are unnamed generation-invented figures, and S01 carries an invented white hooded figure not in the prompt, recorded as a defect for the final-picture revision pass.",
             "CIN_020 keyframes are STORYBOARD level: the unnamed villager's appearance drifts across the three shots (three outfits/headgear) and S02 is an interior medium shot instead of a detail close view; both recorded for the final-picture revision pass.",
             "CIN_009 clip motion is animatic-level Ken Burns on still keyframes, not a final pose-animated take; S03 is not strictly top-down and adds a shrine not in the prompt.",
+            "Checkpoint 25 batch keyframes are STORYBOARD level: every batch scene has named characters on screen with no approved cinematic character lock, so all faces/costumes are placeholders and final picture per shot stays blocked on the lock. Headline defects are recorded per shot in the keyframe manifests; the worst are CIN_012_S03's baked-in choice UI bar with legible English buttons, CIN_017_S02's missing subject (no core, no serpent), CIN_015_S02's dry-courtyard setting failure with an invented mascot figure, and CIN_011's invented teal-robed woman in S01/S03.",
+            "All campaign clip motion (checkpoints 21-25) is animatic-level Ken Burns on still keyframes, not final pose-animated takes.",
         ],
     }
     print(f"counts: {json.dumps(COUNTS, indent=1)}")

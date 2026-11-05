@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN010_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 25 - CIN_010 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_010",
+ "title": "Bình nước cuối xe",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_SAM_CHU_QUY) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "keyframes": [
+  {
+   "shotId": "CIN_010_S01",
+   "camera": "WIDE_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_010_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "cc6cda9f2d27aaaba61e554b92163fd5ba623d37283689eaee55153b1da5cc9b",
+   "sourceStagingFile": "media-generation-keyframe-cin-010-s01-0-1fe965ec-2c22-4c2f-a34f-88473b42ec9d.webp",
+   "sourceStagingSha256": "d7dbc675cc44e8515b8e66e2305ded9bae054213f8c107bcc94216b28e59e8db",
+   "sourceSnapshotId": "cbdeb099-3679-4d39-93f7-de33ee2cb540:uon6ng",
+   "framing": "Wide shot of a desert caravan halted under a tattered cloth canopy: three adults re-bind the big wooden cart wheel at center-right, cargo sacks and jars around, and a huge nearly-empty communal water barrel dominating the foreground left, ash-gold dunes and rock mesas behind.",
+   "knownDefects": "Two small teal hanging signs on the canopy carry glyph-like abstract marks (not legible text, but motif-like); the barrel reads as a wide open vat with debris and a spill puddle beneath it rather than a lidded barrel. Otherwise on-prompt — no ambush, no readable writing."
+  },
+  {
+   "shotId": "CIN_010_S02",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_010_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "318ffd4e508c4f4f2fbe7dd34f8d082613acd2c2f92fc80bfa10af9b3ca39389",
+   "sourceStagingFile": "media-generation-keyframe-cin-010-s02-0-3ecb1429-804e-4065-aa7a-5e429c4efc4e.webp",
+   "sourceStagingSha256": "80a1ac4b267aaec0fcd0a13487b25014e9d94a4755698637399825a7d77953f5",
+   "sourceSnapshotId": "5640da35-1af5-4782-8523-226e238a4dec:c6aedm",
+   "framing": "Medium shot in a green bamboo grove: a young man in a blue tunic kneels and pours a thin stream from a small clay flask into a large carved stone communal bowl beside a mossy stone wall and small tiled shrine.",
+   "knownDefects": "Setting contradicts the scene — lush bamboo forest and shrine instead of the ash-gold desert caravan rest of S01, so the water-scarcity context is lost; the figure is a slim young man, not the stocky middle-aged merchant Sam is described as (he recurs identically in S03, so S02/S03 agree with each other but not with the character brief); the communal vessel is a stone basin, not the caravan barrel. The pour itself is modest and glow-free, as prompted."
+  },
+  {
+   "shotId": "CIN_010_S03",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_010_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "856aa420940e2a1b98339cd86a51f9742d52c8976f2ce9ecbe9d0f85869da462",
+   "sourceStagingFile": "media-generation-keyframe-cin-010-s03-0-083ccaf8-502c-439d-b40b-d26157be4728.webp",
+   "sourceStagingSha256": "ec74cad96b0b9d2be3cdfd5ce28e903660867d047d6e1866591a82b1f824a0e9",
+   "sourceSnapshotId": "1ea8323f-2d15-4df4-9b7c-b86e513addf8:m1vbfm",
+   "framing": "Medium shot on rocky scrub ground: the young man in the blue tunic crouches beside a large blank map cloth weighted with stones, two dark route cords laid across it — one crossing a pile of jagged stones, the other curving toward the shaded side — as he sets down a small bottle and points at the routes.",
+   "knownDefects": "Ground is green-tinged rocky scrub rather than S01's ash-gold desert (cross-shot environment drift, though closer than S02); the figure is the same slim young man as S02, not a stocky middle-aged merchant; he holds a small glass bottle rather than visibly replacing the clay flask. No readable map text, as required."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Recorded keyframe defects: environment continuity collapses after S01 (ash-gold desert -> lush bamboo grove in S02 -> green-tinged rocky scrub in S03), so the water-scarcity context is lost in S02; Sam's placeholder rendering (slim young man in a blue tunic, consistent between S02 and S03) does not match his stocky middle-aged merchant brief; S01's barrel reads as an open vat rather than a lidded barrel. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+ ]
+}

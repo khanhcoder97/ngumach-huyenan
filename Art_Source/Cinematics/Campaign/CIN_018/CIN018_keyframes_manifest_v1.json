@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN018_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 25 - CIN_018 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_018",
+ "title": "Điều ông không cho ai từ chối",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_CO_VO_TUONG) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "keyframes": [
+  {
+   "shotId": "CIN_018_S01",
+   "camera": "MEMORY_MEDIUM",
+   "file": "keyframes_16x9/keyframe_CIN_018_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "cd345c964e8cc5d3641cf23bb74629df726474ca3bbd2ce483d8bdfd426dab9f",
+   "sourceStagingFile": "media-generation-keyframe-cin-018-s01-0-543e4875-087a-4f40-adaf-92c80963b63f.webp",
+   "sourceStagingSha256": "f4e337d8f65bd0e6afd347a16bfff0cc02472fae78d9e935bfdddc823adb7880",
+   "sourceSnapshotId": "ca421f08-ddd3-4e7a-bcc5-4d3ad12f9d2c:3nh8zh",
+   "framing": "Medium shot in a cracked dry field: the young engineer pours water from his own woven flask into a cup while the second adult crouches beside the tall tick-marked drought gauge and sets a sealed folded petition on the ground near his hand.",
+   "knownDefects": "The petition renders as a modern wax-sealed envelope rather than a folded petition sheet; otherwise the beats match the prompt (own water ration shared, gauge post present, no current-day mechanical frame, no legible text)."
+  },
+  {
+   "shotId": "CIN_018_S02",
+   "camera": "MEMORY_DETAIL",
+   "file": "keyframes_16x9/keyframe_CIN_018_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "52ad288cee2d24163113f47803c2761069c96ef9f20e29bfd2ba5557f3b1e7da",
+   "sourceStagingFile": "media-generation-keyframe-cin-018-s02-0-1cb4e617-acf9-4090-a30a-31650ccb70dd.webp",
+   "sourceStagingSha256": "f54b4b43a305b60b73822d0a7953fd5dbd184f528818ee6604c1d27db3748d32",
+   "sourceSnapshotId": "66b53919-6ad2-4fc9-9ad2-a7bf474d19fb:90f1p6",
+   "framing": "Medium interior shot: the engineer sits at a desk and closes a large ledger over the petition slip, ink set and seal stamp at hand, with a dry water ring clearly visible on the desk in the foreground.",
+   "knownDefects": "Framing is a medium shot rather than the detail close view of hand, petition and ledger; the figure's hair (topknot with long side locks) differs from S01's short-haired young engineer although both shots are the same memory period — in-scene appearance inconsistency."
+  },
+  {
+   "shotId": "CIN_018_S03",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_018_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "5a03d1045b06025ee8449e281aedf2eca3112b1ed70f32c532d320efab077c9b",
+   "sourceStagingFile": "media-generation-keyframe-cin-018-s03-0-df3f3ac8-ee9b-46a7-9583-046137fbc3f0.webp",
+   "sourceStagingSha256": "3c2bcd62eb895f426eca17f040de44b3fb2b34cbba5bdfdec25e92397d363630",
+   "sourceSnapshotId": "0edac9fe-f07b-4208-8a47-4f757c977b08:yok4q8",
+   "framing": "Medium shot: present-day Co Vo Tuong in an ink-black hooded cloak, cracked porcelain mask and copper chest machinery stands in profile with one hand raised, facing across a stopped wooden gear machine in a lantern-lit bamboo courtyard.",
+   "knownDefects": "The porcelain mask covers the full face instead of the specified cracked half mask; the copper machinery spans the whole torso, reading more automaton than a man wearing a chest core and back brace; small white spark-like specks float near the raised hand; night palette (the prompt specifies no time of day)."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Recorded keyframe defects: S03's porcelain mask covers the full face instead of the specified cracked half mask, and its copper machinery spans the whole torso, reading more automaton than a man wearing a chest core and back brace; S02 is a medium shot instead of the detail close view and its engineer's hair differs from S01's although both shots are the same memory period; S01's petition renders as a modern wax-sealed envelope rather than a folded petition sheet. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+ ]
+}
