@@ -10,8 +10,8 @@ namespace NguMach.Client.P1
     {
         public P1WorldV2 WorldV2 { get; private set; }
         public P1InventorySnapshotV2 InventoryV2 { get; private set; }
-        public P1DeathReturnResultV1 LastDeathReturn { get; private set; }
-        public long? NextReturnAllowedAtTick { get; private set; }
+        public P1DeathReturnResultV1 LastDeathReturn { get; internal set; }
+        public long? NextReturnAllowedAtTick { get; internal set; }
         public P1TurnInResult LastTurnIn { get; private set; }
         public long EventCursor { get; private set; }
         public int EventResyncCount { get; private set; }

@@ -739,5 +739,145 @@ namespace NguMach.Client.Core.Tests
         {
             Assert.False(IsAlphaId(target));
         }
+
+        // ── Work30: public-API repro fixes ──────────────────────────────────
+
+        [Fact]
+        public async Task ReturnFromDeath_DisposeDuringRequest_DoesNotMutateState()
+        {
+            // Transport returns a death-return receipt only after the release gate,
+            // simulating a non-cancelling transport whose reply arrives late.
+            var release = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var started = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var t = new DelegateTransport
+            {
+                Handler = (r, ct) =>
+                {
+                    if (r.Path == "/p1/sessions")
+                        return Task.FromResult(SessionReply(r, SessionOne));
+                    if (r.Path == "/p1/actor/death-return")
+                    {
+                        started.TrySetResult(true);
+                        return DelayBeyondCancellation(release.Task, () => new P1HttpReply
+                        {
+                            StatusCode = 200,
+                            CorrelationId = r.CorrelationId,
+                            Body = "{\"schemaVersion\":1,\"requestId\":\"" + r.CorrelationId +
+                                   "\",\"sessionId\":\"" + SessionOne + "\",\"result\":{" +
+                                   "\"applied\":true,\"replayed\":false,\"mapId\":\"MAP_BEN_MUA\"," +
+                                   "\"xWu\":18.0,\"yWu\":0.0,\"hp\":50,\"maxHp\":100," +
+                                   "\"mp\":50,\"maxMp\":50,\"serverTick\":1840,\"revision\":12," +
+                                   "\"cleared\":{\"inflightCasts\":1,\"reservedCounters\":0," +
+                                   "\"guardWindowClosed\":false,\"movementWindowReset\":true}," +
+                                   "\"penalties\":{\"xp\":0,\"currency\":0,\"durability\":0}," +
+                                   "\"nextReturnAllowedAtTick\":1900}}"
+                        });
+                    }
+                    return Task.FromResult(NetworkFailure(r));
+                }
+            };
+            using (var s = new ClientSession(t))
+            {
+                Assert.True((await s.ConnectAsync()).Success);
+                Assert.Null(s.Client.LastDeathReturn);
+
+                var death = s.ReturnFromDeathAsync(CancellationToken.None);
+                await started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+                // Dispose while the death-return request is in flight.
+                s.Dispose();
+                release.TrySetResult(true);
+
+                var result = await death.WaitAsync(TimeSpan.FromSeconds(5));
+                // Late reply is rejected as stale: no receipt/HP/world-read mutation.
+                Assert.False(result.Success, "stale death-return must not succeed");
+                Assert.Null(s.Client.LastDeathReturn);
+                Assert.Null(s.Client.NextReturnAllowedAtTick);
+            }
+        }
+
+        [Fact]
+        public async Task DispatcherCallback_AfterDispose_DoesNotCallOldConsumer()
+        {
+            var encounterJson = FindFixture();
+            var firstRead = false;
+            var release = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var t = new DelegateTransport
+            {
+                Handler = (r, ct) =>
+                {
+                    if (r.Path == "/p1/sessions") return Task.FromResult(SessionReply(r, SessionOne));
+                    if (r.Path == "/p1/encounters/current")
+                    {
+                        if (!firstRead)
+                        {
+                            firstRead = true;
+                            return Task.FromResult(EncounterReply(r, encounterJson));
+                        }
+                        return DelayBeyondCancellation(release.Task, () => EncounterReply(r, encounterJson));
+                    }
+                    return Task.FromResult(NetworkFailure(r));
+                }
+            };
+            var s = new ClientSession(t);
+            int events = 0;
+            Action<EncounterUpdate> handler = _ => Interlocked.Increment(ref events);
+            s.EncounterUpdated += handler;
+            Assert.True((await s.ConnectAsync()).Success);
+            Assert.True((await s.ReadCurrentEncounterAsync()).Success);
+            events = 0; // do not count the first read's callback
+
+            // Queue another read so its callback is pending, then dispose.
+            var read = s.ReadCurrentEncounterAsync();
+            await Task.Delay(50); // let the delayed handler enter WaitAsync
+            s.Dispose();
+            release.TrySetResult(true);
+
+            var result = await read.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.Equal(EncounterReadOutcome.Stale, result.Outcome);
+            // The callback queued before Dispose must not invoke the old consumer.
+            Assert.Equal(0, Volatile.Read(ref events));
+        }
+
+        [Fact]
+        public async Task Relogin_QueuedDispatcherCallback_DoesNotCallOldConsumer()
+        {
+            var encounterJson = FindFixture();
+            var sessionIndex = 0;
+            var started = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var release = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var t = new DelegateTransport
+            {
+                Handler = (r, ct) =>
+                {
+                    if (r.Path == "/p1/sessions")
+                        return Task.FromResult(SessionReply(r,
+                            Interlocked.Increment(ref sessionIndex) == 1 ? SessionOne : SessionTwo));
+                    if (r.Path == "/p1/encounters/current")
+                    {
+                        started.TrySetResult(true);
+                        return DelayBeyondCancellation(release.Task, () => EncounterReply(r, encounterJson));
+                    }
+                    return Task.FromResult(NetworkFailure(r));
+                }
+            };
+            var s = new ClientSession(t);
+            int events = 0;
+            Action<EncounterUpdate> handler = _ => Interlocked.Increment(ref events);
+            s.EncounterUpdated += handler;
+            Assert.True((await s.ConnectAsync()).Success);
+
+            // Queue a read on session 1, then relogin (bumps epoch) before the reply.
+            var read = s.ReadCurrentEncounterAsync();
+            await started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.True((await s.ReloginAsync()).Success);
+            release.TrySetResult(true);
+
+            var result = await read.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.Equal(EncounterReadOutcome.Stale, result.Outcome);
+            // The callback queued before relogin must not invoke the old consumer
+            // under the old epoch.
+            Assert.Equal(0, Volatile.Read(ref events));
+        }
     }
 }

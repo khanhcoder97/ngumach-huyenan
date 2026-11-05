@@ -152,10 +152,56 @@ namespace NguMach.Client.Core.Composition
 
         // Death-return intent goes through the same P1Client lane so the
         // idempotency key survives relogin/replay and no second grant can occur.
+        // The response is gated by the captured session+epoch: a dispose or
+        // relogin between send and receive makes the late reply stale, so it
+        // never mutates receipt/HP or starts a fresh world read. The unresolved
+        // operation keeps its request id/idempotency key for a same-key retry.
         public Task<P1Result> ReturnFromDeathAsync(CancellationToken ct = default)
         {
             if (_disposed) throw new ObjectDisposedException(nameof(ClientSession));
-            return Client.ReturnFromDeathAsync(ct);
+            return ReturnFromDeathCoreAsync(ct);
+        }
+
+        private async Task<P1Result> ReturnFromDeathCoreAsync(CancellationToken ct)
+        {
+            if (_disposed) throw new ObjectDisposedException(nameof(ClientSession));
+            if (Client.SessionId == null)
+                return P1Result.Fail("not_connected");
+
+            string sessionId = Client.SessionId;
+            long generation = SessionGeneration;
+
+            // Capture death-return state before the request so a stale late reply
+            // (non-cancelling transport) cannot leave mutated receipt/HP behind.
+            var beforeLastDeathReturn = Client.LastDeathReturn;
+            var beforeNextReturnAllowedAtTick = Client.NextReturnAllowedAtTick;
+
+            using (var linked = CreateLinkedToken(ct))
+            {
+                P1Result result;
+                try
+                {
+                    result = await Client.ReturnFromDeathAsync(linked.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    // Dispose cancelled the token mid-request. Surface as stale,
+                    // not a throw; pending key is preserved inside P1Client.
+                    return P1Result.Fail("stale_session");
+                }
+
+                // A dispose/relogin between send and receive makes this response
+                // stale: never apply a late receipt, HP, or world read. Restore
+                // death-return state to its pre-request values.
+                if (!IsCurrentEpoch(sessionId, generation))
+                {
+                    Client.LastDeathReturn = beforeLastDeathReturn;
+                    Client.NextReturnAllowedAtTick = beforeNextReturnAllowedAtTick;
+                    return P1Result.Fail("stale_session");
+                }
+
+                return result;
+            }
         }
 
         public Task<EncounterReadResult> ReadEncounterAsync(string encounterId, CancellationToken ct = default)
@@ -332,8 +378,16 @@ namespace NguMach.Client.Core.Composition
         {
             var handler = EncounterUpdated;
             if (handler == null) return;
+            long generation = SessionGeneration;
             _dispatcher.Post(() =>
             {
+                lock (_disposeGate)
+                {
+                    // A callback queued before Dispose or relogin must not invoke
+                    // the old consumer: check disposed state, epoch, and whether the
+                    // subscription still exists at execution time.
+                    if (_disposed || SessionGeneration != generation || EncounterUpdated == null) return;
+                }
                 try { handler(update); }
                 catch (Exception) { /* a consumer callback must not corrupt the client lane */ }
             });
@@ -395,25 +449,18 @@ namespace NguMach.Client.Core.Composition
             _cts.Dispose();
             Guard.EndSession();
 
-            // Wait for any in-flight encounter read to finish its finally block
-            // BEFORE disposing the lane; otherwise Release() races Dispose().
-            var disposeDeadline = DateTime.UtcNow.AddSeconds(2);
-            while (DateTime.UtcNow < disposeDeadline)
+            // Non-blocking shutdown: never spin-wait on the UI thread. Cancel the
+            // token source so cancellation-aware reads exit, mark the lane disposed
+            // so in-flight reads skip Release() in their finally blocks, and take
+            // the lane only if no read holds it. A non-cancelling transport may
+            // keep a read in-flight past Dispose; that read exits on its own and
+            // its late reply is rejected by the epoch check in ReadEncounterCoreAsync.
+            lock (_disposeGate) { _encounterLaneDisposed = true; }
+            try
             {
-                // Take ownership of the lane. Success means no read is between
-                // WaitAsync and Release, so disposing it below is safe.
-                try
-                {
-                    if (_encounterLane.Wait(0)) break;
-                }
-                catch (ObjectDisposedException) { break; }
-                Thread.Sleep(1);
+                if (_encounterLane.Wait(0)) _encounterLane.Release();
             }
-            lock (_disposeGate)
-            {
-                _encounterLaneDisposed = true;
-            }
-            try { _encounterLane.Dispose(); } catch (ObjectDisposedException) { }
+            catch (ObjectDisposedException) { }
             if (_ownsTransport)
             {
                 var disposable = _rawTransport as IDisposable;
