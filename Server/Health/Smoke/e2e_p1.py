@@ -352,8 +352,10 @@ def dev_profile():
          if item.get("instanceId") == chest.get("instanceId")), {})
     smoke_p1.check(
         equipped_item.get("location") == "EQUIPPED" and
-        equipped_item.get("slot") == "CHEST",
-        f"equipped item {equipped_item}")
+        equipped_item.get("slot") == "CHEST" and
+        equipped_item.get("durability") == 100,
+        f"equipped item {equipped_item} — durability must be the catalog's 100, not "
+        f"the 0 an unspecified grant used to store (Q5 audit)")
     smoke_p1.check(equipped.get("inventoryRevision") == revision + 1,
                    f"equip revision {equipped.get('inventoryRevision')}")
 
