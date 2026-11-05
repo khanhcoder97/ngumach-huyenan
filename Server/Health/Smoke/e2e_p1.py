@@ -105,6 +105,7 @@ Usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client|alpha-p00|alpha-r
 """
 
 import json
+import math
 import os
 import sys
 import threading
@@ -113,6 +114,9 @@ import time
 import smoke_p1
 
 STEP_SECONDS = 0.3
+# ServerClock.TicksPerSecond: the tick the read model reports and the tick every
+# server-side deadline (cooldowns, impact frames, the return window) is counted in.
+TICKS_PER_SECOND = 20
 WALL_X_MIN = 45.0
 WALL_X_MAX = 46.0
 TURN_IN_NPC_X = 64.0
@@ -1488,7 +1492,13 @@ def alpha_counter(quests, quest_id, objective_id):
 
 def alpha_step(session_id, character_id, sequence, move_x, move_y, pace):
     sequence += 1
-    time.sleep(pace)
+    # The pause between moves is the step's own duration, waited on the server's
+    # authoritative tick instead of time.sleep: a 0,3 s sleep can overrun whenever the
+    # runner is busy, which quietly lengthens every walk in the suite and made the
+    # escorted legs' timing depend on machine load. Waiting for ceil(pace * 20 Hz)
+    # ticks guarantees at least the simulated duration the move stands for, and nothing
+    # more, on the clock the world itself runs on.
+    advance_ticks(math.ceil(pace * TICKS_PER_SECOND), session_id)
     status, _, body = smoke_p1.call(
         "POST", "/p1/move",
         smoke_p1.move_envelope(sequence, move_x, move_y, character_id=character_id),
