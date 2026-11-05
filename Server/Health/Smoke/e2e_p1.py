@@ -1603,10 +1603,19 @@ def alpha_kill_watched(session, character, sequence, pool, wanted, label):
                 refused[code] = refused.get(code, 0) + count
             if died:
                 deaths += 1
+    _, _, final_entities, _ = v2_snapshot(session)
+    pool_states = {
+        entity_id: ((final_entities.get(entity_id) or {}).get("state"),
+                    (final_entities.get(entity_id) or {}).get("healthState"),
+                    (final_entities.get(entity_id) or {}).get("targetable"),
+                    (final_entities.get(entity_id) or {}).get("hp"))
+        for entity_id, _anchor_x, _anchor_y in pool
+    }
     smoke_p1.check(
         deaths >= wanted and not walk_failures,
         f"{label}: witnessed {deaths} of {wanted} deaths (attempts {attempts}, "
-        f"refusals {refused}, walks {walk_failures[:4]})")
+        f"refusals {refused}, walks {walk_failures[:4]}, "
+        f"pool at give-up {pool_states})")
     return sequence, deaths, refused
 
 
