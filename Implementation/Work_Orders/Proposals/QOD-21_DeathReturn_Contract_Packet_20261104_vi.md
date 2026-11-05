@@ -1,4 +1,4 @@
-# Packet hợp đồng Death-Return (QOD-21 Q4) — **ĐÃ DUYỆT: DEC-DEATH-RETURN-20261105** (#87, 2026-11-04T20:57:58Z; nguồn máy đọc `Implementation/Content/DesignBaselines/death_return_decisions_20261105.json`)
+# Packet hợp đồng Death-Return (QOD-21 Q4) — **ĐÃ DUYỆT: DEC-DEATH-RETURN-20261105** (#87, 2026-11-04T20:57:58Z; nguồn máy đọc `Implementation/Content/DesignBaselines/death_return_decisions_20261105.json` — file đó do nhán integration tạo và **chưa có trong nhán này**, nên packet trích nội dung đã đăng trên #87; không copy file content sang để tránh xứng độ baseline khi owner merge)
 
 Sáu câu hỏi §5 đã có trả lời và được implement theo đúng quyết định, không hỏi lại:
 
