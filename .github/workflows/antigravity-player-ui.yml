@@ -4,19 +4,25 @@ on:
   push:
     branches:
       - 'antigravity/**'
+      # OPC-13 (work order 20): the player UI epic moved to OpenCode local;
+      # the same PlayerUIChecks gate must run on its branch and stacked PR target.
+      - 'opencode/**'
     paths:
       - 'Client/Assets/Scripts/Online/Presentation/**'
       - 'Client/Assets/Scripts/Online/Unity/PlayerUI/**'
       - 'Client/Tests/PlayerUIChecks/**'
+      - 'Client/Tests/UnitySyntaxCheck/**'
       - 'Client/Assets/Resources/PlayerUI/**'
   pull_request:
     branches:
       - 'codex/p1-client-integration-20261029'
+      - 'codex/story-gameplay-integration-20261031'
       - 'main'
     paths:
       - 'Client/Assets/Scripts/Online/Presentation/**'
       - 'Client/Assets/Scripts/Online/Unity/PlayerUI/**'
       - 'Client/Tests/PlayerUIChecks/**'
+      - 'Client/Tests/UnitySyntaxCheck/**'
       - 'Client/Assets/Resources/PlayerUI/**'
 
 jobs:
@@ -39,6 +45,11 @@ jobs:
 
       - name: Test
         run: dotnet test Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj --no-build -c Release --logger trx --results-directory TestResults
+
+      # OPC-13 D: keep the Unity-source syntax gate beside the headless UI suite
+      # (syntax only — never claim this is a Unity/Editor compile).
+      - name: Unity source syntax gate
+        run: dotnet run --project Client/Tests/UnitySyntaxCheck/UnitySyntaxCheck.csproj --configuration Release
 
       - name: Upload test results
         if: always()

@@ -23,10 +23,14 @@ namespace NguMach.Client.P1
 
         private IP1UIAdapter _adapter;
 
-        /// <summary>Call from P1OnlinePanel.Open after P1Client is ready.</summary>
+        /// <summary>
+        /// Call from P1OnlinePanel.Open after P1Client is ready.
+        /// Idempotent (OPC-13 A): calling again with the same adapter/document keeps the live composition;
+        /// a rebind closes the previous composition first so no stale view/pin/session survives.
+        /// </summary>
         public void Initialize(IP1UIAdapter adapter, UIDocument injectedDoc = null)
         {
-            _adapter = adapter;
+            if (adapter == null) return;
             var doc = injectedDoc ?? playerUIDocument;
 
             if (playerUIRoot == null)
@@ -38,11 +42,19 @@ namespace NguMach.Client.P1
                 }
             }
 
-            if (playerUIRoot != null)
+            if (ReferenceEquals(_adapter, adapter) && playerUIRoot != null && playerUIRoot.IsInitialized(doc))
             {
-                playerUIRoot.HandleEscapeInput = false; // Single Escape owner: P1OnlinePanel dispatches Escape
-                playerUIRoot.Initialize(_adapter, doc);
+                return; // Same session; nothing to rebind.
             }
+
+            if (_adapter != null)
+            {
+                playerUIRoot.Close(); // Drop previous view/pin/state before rebinding (OPC-13 A lifecycle).
+            }
+            _adapter = adapter;
+
+            playerUIRoot.HandleEscapeInput = false; // Single Escape owner: P1OnlinePanel dispatches Escape
+            playerUIRoot.Initialize(_adapter, doc);
         }
 
         /// <summary>Open a specific player panel (inventory, map, character, etc.).</summary>
@@ -84,6 +96,18 @@ namespace NguMach.Client.P1
 
         /// <summary>True if any player panel is open (used by P1OnlinePanel.ModalOpen).</summary>
         public bool IsAnyPanelOpen => playerUIRoot != null && playerUIRoot.IsAnyOpen;
+
+        /// <summary>True if any router panel is open and NO cinematic is running (modal orchestrator probe, OPC-13).</summary>
+        public bool HasAnyPanelOpen => playerUIRoot != null && playerUIRoot.HasAnyPanelOpen;
+
+        /// <summary>True while the cinematic overlay is playing (modal orchestrator probe, OPC-13).</summary>
+        public bool CinemaPlaying => playerUIRoot != null && playerUIRoot.CinemaPlaying;
+
+        /// <summary>Skip the running cinematic without touching panels (modal orchestrator handler, OPC-13).</summary>
+        public void SkipCinema()
+        {
+            if (playerUIRoot != null) playerUIRoot.SkipCinema();
+        }
 
         private void OnDestroy() => Dispose();
     }

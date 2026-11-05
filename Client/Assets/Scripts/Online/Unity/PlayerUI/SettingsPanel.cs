@@ -121,7 +121,7 @@ namespace NguMach.Client.P1
             });
             scroll.Add(_masterVolumeSlider);
 
-            _textSizeSlider = MakeSlider("Cỡ chữ", 0.75f, 1.5f);
+            _textSizeSlider = MakeSlider("Cỡ chữ (preview)", 0.75f, 1.5f);
             _textSizeSlider.RegisterValueChangedCallback(ev =>
             {
                 if (!_suppressCallbacks)
@@ -212,15 +212,27 @@ namespace NguMach.Client.P1
             if (s == null) return;
             // Apply volume via Unity AudioListener
             AudioListener.volume = s.MasterVolume;
-            // Apply UI scale to root visual element (scales entire UI per WO-14)
-            if (_doc != null && _doc.rootVisualElement != null)
+            if (_doc == null || _doc.rootVisualElement == null)
             {
-                _doc.rootVisualElement.transform.scale = new Vector3(s.UiScale, s.UiScale, 1f);
+                if (_root != null)
+                    _root.transform.scale = new Vector3(s.UiScale, s.UiScale, 1f);
+                return;
             }
-            else if (_root != null)
-            {
-                _root.transform.scale = new Vector3(s.UiScale, s.UiScale, 1f);
-            }
+
+            // All settings apply on the INJECTED document root — two documents stay
+            // independent (no cross-document scale/callback bleed). Reopen re-applies
+            // (Render → ApplySettings) and Reset re-applies Default, so values both
+            // survive reopen and revert cleanly on reset.
+            var docRoot = _doc.rootVisualElement;
+            docRoot.transform.scale = new Vector3(s.UiScale, s.UiScale, 1f);
+
+            // OPC-13 C: TextSize now applies too — preset the inherited default font
+            // size so labels without an explicit fontSize follow the setting. Labels
+            // with hard-coded sizes keep theirs (native-wide text relayout is a
+            // Muse-VM verification item, hence the "(preview)" label — never a fake
+            // graphics-preset button that would only save prefs).
+            const float baseFontSize = 12f;
+            docRoot.style.fontSize = new StyleLength(new Length(baseFontSize * s.TextSize, LengthUnit.Pixel));
         }
 
         public void Teardown()

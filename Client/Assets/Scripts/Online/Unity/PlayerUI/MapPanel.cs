@@ -1,9 +1,12 @@
 // MapPanel — hiển thị MapViewState từ MapPresenter.
 // IMGUIContainer vẽ markers đơn giản. Player position, entity markers.
 // Warning label nếu TopologyIsCandidate. Slider zoom (0.25-4). Nút đóng.
-// Khi UncertainMutation: disable zoom slider.
-// Owner: Antigravity Remote — Issue #80.
+// OPC-13 C: drag-to-pan cửa sổ nhìn (clamp theo map_bounds.json), nút về vị trí
+// người chơi; camera rectangle/waypoint ghi UNSUPPORTED (chưa có authority contract).
+// Khi UncertainMutation: disable zoom slider (pan vẫn là gesture view thuần).
+// Owner: Antigravity Remote — Issue #80; Package C OPC-13 — Issue #85.
 
+using System;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -30,8 +33,13 @@ namespace NguMach.Client.P1
         private Label _positionLabel;
         private Label _warningLabel;
         private Label _statusLabel;
+        private Label _unsupportedLabel;
         private Slider _zoomSlider;
         private IMGUIContainer _mapContainer;
+
+        // OPC-13 C: drag-to-pan gesture state (pure local view, no authority).
+        private bool _panning;
+        private float _lastPanPointerX, _lastPanPointerY;
 
         // ── Init ─────────────────────────────────────────────────────────────
 
@@ -94,11 +102,15 @@ namespace NguMach.Client.P1
             _positionLabel = new Label { style = { fontSize = 11, marginBottom = 4 } };
             _root.Add(_positionLabel);
 
-            // IMGUI map canvas
+            // IMGUI map canvas — drag-to-pan (OPC-13 C)
             _mapContainer = new IMGUIContainer(DrawMap);
             _mapContainer.style.width = MapDisplaySize;
             _mapContainer.style.height = MapDisplaySize;
             _mapContainer.style.backgroundColor = new Color(0.05f, 0.08f, 0.10f, 1f);
+            _mapContainer.RegisterCallback<PointerDownEvent>(OnMapPointerDown);
+            _mapContainer.RegisterCallback<PointerMoveEvent>(OnMapPointerMove);
+            _mapContainer.RegisterCallback<PointerUpEvent>(OnMapPointerUp);
+            _mapContainer.RegisterCallback<PointerLeaveEvent>(OnMapPointerLeave);
             _root.Add(_mapContainer);
 
             // Zoom slider
@@ -107,6 +119,20 @@ namespace NguMach.Client.P1
             _zoomSlider.style.minHeight = 44; _zoomSlider.style.marginTop = 4;
             _zoomSlider.RegisterValueChangedCallback(ev => OnZoomChanged(ev.newValue));
             _root.Add(_zoomSlider);
+
+            // OPC-13 C: re-center helper — drops the pan offset (zoom preserved).
+            var centerBtn = new Button(() => _presenter?.CenterOnPlayer()) { text = "Về vị trí của bạn" };
+            centerBtn.style.minHeight = 36; centerBtn.style.marginTop = 2;
+            _root.Add(centerBtn);
+
+            // OPC-13 C: camera gameplay rectangle / waypoint UI is UNSUPPORTED — no
+            // server authority contract exists (no approved camera fields, no waypoint
+            // endpoints). The panel states this instead of inventing coordinates.
+            _unsupportedLabel = new Label("Ô quay gameplay / waypoint: UNSUPPORTED — chưa có authority contract (hiển thị read-only)")
+            {
+                style = { whiteSpace = WhiteSpace.Normal, fontSize = 10, opacity = 0.75f, marginTop = 2 }
+            };
+            _root.Add(_unsupportedLabel);
 
             AttachToDocument();
         }
@@ -132,6 +158,8 @@ namespace NguMach.Client.P1
             float zoom = state.ZoomLevel;
             float cx = MapDisplaySize * 0.5f;
             float cy = MapDisplaySize * 0.5f;
+            float centerX = (float)state.ViewCenterX; // player + UI-only pan (clamped)
+            float centerY = (float)state.ViewCenterY;
             float playerX = (float)state.PlayerX;
             float playerY = (float)state.PlayerY;
 
@@ -140,11 +168,11 @@ namespace NguMach.Client.P1
             float baseScale = (float)(MapDisplaySize / Math.Max(1.0, bounds.Width));
             float scale = baseScale * zoom;
 
-            // Draw markers
+            // Draw markers relative to the pan-clamped view center
             foreach (var m in state.Markers)
             {
-                float wx = (float)(m.X - playerX) * scale + cx;
-                float wy = -(float)(m.Y - playerY) * scale + cy; // Y flipped for screen
+                float wx = (float)(m.X - centerX) * scale + cx;
+                float wy = -(float)(m.Y - centerY) * scale + cy; // Y flipped for screen
 
                 // Bounds clipping within map display container
                 if (wx < 0 || wx > MapDisplaySize || wy < 0 || wy > MapDisplaySize) continue;
@@ -168,12 +196,47 @@ namespace NguMach.Client.P1
                     GUI.Label(new Rect(wx + 6, wy - 8, 80, 16), m.Label);
             }
 
-            // Player crosshair
+            // Player crosshair at the player's projected position (may leave center when panning)
+            float px = (playerX - centerX) * scale + cx;
+            float py = -(playerY - centerY) * scale + cy;
             GUI.color = new Color(1f, 1f, 1f, 0.4f);
-            GUI.DrawTexture(new Rect(cx - 1, cy - 8, 2, 16), Texture2D.whiteTexture);
-            GUI.DrawTexture(new Rect(cx - 8, cy - 1, 16, 2), Texture2D.whiteTexture);
+            GUI.DrawTexture(new Rect(px - 1, py - 8, 2, 16), Texture2D.whiteTexture);
+            GUI.DrawTexture(new Rect(px - 8, py - 1, 16, 2), Texture2D.whiteTexture);
             GUI.color = Color.white;
         }
+
+        // ── Pan gesture handlers (OPC-13 C, UI-only) ─────────────────────────
+
+        private void OnMapPointerDown(PointerDownEvent e)
+        {
+            // Pan is a pure local view gesture: no wire command, so it also stays
+            // available while a mutation is pending (same stance as pin/unpin).
+            if (e.button != 0 || _presenter?.State == null) return;
+            _panning = true;
+            _lastPanPointerX = e.position.x;
+            _lastPanPointerY = e.position.y;
+        }
+
+        private void OnMapPointerMove(PointerMoveEvent e)
+        {
+            if (!_panning) return;
+            float dx = e.position.x - _lastPanPointerX;
+            float dy = e.position.y - _lastPanPointerY;
+            _lastPanPointerX = e.position.x;
+            _lastPanPointerY = e.position.y;
+
+            var state = _presenter?.State;
+            if (state == null) return;
+            // px → world: scale = (MapDisplaySize / bounds.Width) * zoom.
+            var bounds = state.Bounds ?? MapBounds.ForMap(state.MapId);
+            float scale = (float)((MapDisplaySize / Math.Max(1.0, bounds.Width)) * state.ZoomLevel);
+            if (scale <= 0f) return;
+            // Drag right pulls the map right → view center moves −X; drag down moves +Y (Y flipped).
+            _presenter.PanBy(-dx / scale, dy / scale);
+        }
+
+        private void OnMapPointerUp(PointerUpEvent e) => _panning = false;
+        private void OnMapPointerLeave(PointerLeaveEvent e) => _panning = false;
 
         // ── Render ───────────────────────────────────────────────────────────
 
@@ -229,11 +292,6 @@ namespace NguMach.Client.P1
             {
                 _presenter.Refresh();
             }
-        }
-
-        private void OnDestroy()
-        {
-            if (_presenter != null) _presenter.OnChanged -= Render;
         }
 
         public void Teardown()

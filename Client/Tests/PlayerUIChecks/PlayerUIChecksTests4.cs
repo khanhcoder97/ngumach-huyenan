@@ -170,12 +170,13 @@ namespace PlayerUIChecks
             await journalPresenter.LoadAsync(CancellationToken.None);
             Assert.Empty(journalPresenter.State.Value.Active);
 
-            // Step 2: Interact with Ly An using world Entity ID
-            var dialogueState = await dialoguePresenter.InteractAsync("ENT_MAN_BM_NPC_LYAN", CancellationToken.None);
+            // Step 2: Interact with Ly An using world Entity ID — OPC-13 B: snapshot-only (no NPC POST).
+            var dialogueState = await dialoguePresenter.OpenSnapshotAsync("ENT_MAN_BM_NPC_LYAN", CancellationToken.None);
             Assert.True(dialogueState.IsLoaded);
             Assert.Equal("NPC_LYAN", dialogueState.Value.NpcTemplateId);
             Assert.Equal("ENT_MAN_BM_NPC_LYAN", dialogueState.Value.InteractionTargetEntityId);
             Assert.Contains(dialogueState.Value.Choices, c => c.ActionType == DialogueActionType.AcceptQuest && c.QuestId == "P00-01");
+            Assert.DoesNotContain(transport.DispatchedRequests, r => r.Path.StartsWith("/p1/world/interact", StringComparison.OrdinalIgnoreCase));
 
             // Step 3: Accept Quest via Dialogue
             var acceptResult = await dialoguePresenter.AcceptQuestAsync("P00-01", "ENT_MAN_BM_NPC_LYAN", CancellationToken.None);
@@ -195,11 +196,12 @@ namespace PlayerUIChecks
             Assert.Equal("Đã thu thập đủ 3 gói hàng. Hãy nộp nhiệm vụ cho Tạ Vân Khanh.", journalPresenter.State.Value.Active[0].ObjectiveDesc);
             Assert.True(journalPresenter.State.Value.Active[0].IsReadyToTurnIn);
 
-            // Step 6: Interact with Ta Van Khanh
-            var turnInDialogue = await dialoguePresenter.InteractAsync("ENT_MAN_BM_NPC_TA_VAN_KHANH", CancellationToken.None);
+            // Step 6: Interact with Ta Van Khanh — snapshot-only dialogue (no NPC POST).
+            var turnInDialogue = await dialoguePresenter.OpenSnapshotAsync("ENT_MAN_BM_NPC_TA_VAN_KHANH", CancellationToken.None);
             Assert.True(turnInDialogue.IsLoaded);
             Assert.Equal("NPC_TA_VAN_KHANH", turnInDialogue.Value.NpcTemplateId);
             Assert.Contains(turnInDialogue.Value.Choices, c => c.ActionType == DialogueActionType.TurnInQuest && c.QuestId == "P00-01");
+            Assert.DoesNotContain(transport.DispatchedRequests, r => r.Path.StartsWith("/p1/world/interact", StringComparison.OrdinalIgnoreCase));
 
             // Step 7: Turn in Quest
             var turnInResult = await dialoguePresenter.TurnInQuestAsync("P00-01", "ENT_MAN_BM_NPC_TA_VAN_KHANH", CancellationToken.None);
@@ -287,29 +289,33 @@ namespace PlayerUIChecks
         [Fact]
         public async Task Lifecycle_NpcSwitch_AToB_DropsOldNpcGeneration()
         {
+            // OPC-13 B: NPC dialogue open is snapshot-only (no wire pending). The late-result
+            // generation guarantee is therefore exercised on the node-side wire path (gated)
+            // against a snapshot NPC switch — one deterministic sequence, no races.
             var adapter = new FakeLifetimeAdapter();
-            var tcsA = new TaskCompletionSource<P1Result>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var tcsWire = new TaskCompletionSource<P1Result>(TaskCreationOptions.RunContinuationsAsynchronously);
             var presenter = new NpcDialoguePresenter(adapter);
 
-            // Start interacting with NPC A (delayed)
-            adapter.NextRead = tcsA;
-            var taskA = presenter.InteractAsync("ENT_MAN_BM_NPC_LYAN", CancellationToken.None);
+            // Start a gather-node interaction (wire path stays pending).
+            adapter.NextRead = tcsWire;
+            var nodeTask = presenter.InteractAsync("ENT_MAN_BM_NODE_UNKNOWN_X", CancellationToken.None);
             Assert.True(presenter.State.IsLoading);
 
-            // Switch to NPC B immediately (immediate complete)
+            // Switch to NPC B via the snapshot route (bumps the generation).
             adapter.NextRead = null;
-            var taskB = presenter.InteractAsync("ENT_MAN_BM_NPC_TA_VAN_KHANH", CancellationToken.None);
+            var taskB = presenter.OpenSnapshotAsync("ENT_MAN_BM_NPC_TA_VAN_KHANH", CancellationToken.None);
             await taskB;
 
             Assert.True(presenter.State.IsLoaded);
             Assert.Equal("NPC_TA_VAN_KHANH", presenter.State.Value.NpcTemplateId);
 
-            // Now complete task A late
-            tcsA.SetResult(P1Result.Ok());
-            await taskA;
+            // Now complete the wire interaction late — its generation is stale.
+            tcsWire.SetResult(P1Result.Ok());
+            await nodeTask;
 
-            // Generation token must have preserved B, dropping late completion from A
+            // Generation token must have preserved B, dropping the late wire update.
             Assert.Equal("NPC_TA_VAN_KHANH", presenter.State.Value.NpcTemplateId);
+            Assert.True(presenter.State.IsLoaded);
         }
 
         [Fact]

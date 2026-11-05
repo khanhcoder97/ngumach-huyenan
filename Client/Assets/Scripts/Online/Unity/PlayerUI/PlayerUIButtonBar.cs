@@ -16,6 +16,7 @@ namespace NguMach.Client.P1
         private IP1UIAdapter _adapter;
         private PlayerUIRoot _root;
         private UIDocument _doc;
+        private UIConnectionState _connectionState = UIConnectionState.Disconnected;
 
         // ── UIElements refs ──────────────────────────────────────────────────
         private VisualElement _bar;
@@ -35,6 +36,9 @@ namespace NguMach.Client.P1
             _adapter = adapter;
             _root = root;
             _doc = doc ?? _doc;
+            // OPC-14 M0 / OPCREV-03: rebind must re-evaluate visibility from scratch
+            // (cached safe-area decision must not survive a document swap).
+            _hudDecisionInit = false;
             if (_bar == null) BuildUI();
             else AttachToDocument();
         }
@@ -111,27 +115,33 @@ namespace NguMach.Client.P1
             if (_trackerBox == null) return;
             if (string.IsNullOrEmpty(title))
             {
-                _trackerBox.style.display = DisplayStyle.None;
+                _trackerBoxVisibleByQuest = DisplayStyle.None;
             }
             else
             {
-                _trackerBox.style.display = DisplayStyle.Flex;
+                _trackerBoxVisibleByQuest = DisplayStyle.Flex;
                 if (_trackerTitleLabel != null) _trackerTitleLabel.text = "★ " + title;
                 if (_trackerDescLabel != null) _trackerDescLabel.text = objectiveDesc ?? "";
             }
+            // OPC-14 M0 / OPCREV-03: re-apply the single visibility writer so tracker
+            // transitions (pin/unpin) respect the current safe-area decision.
+            ApplySafeAreaPolicy();
         }
 
         public void RefreshVisibility(UIConnectionState cs)
         {
             if (_bar == null) return;
 
+            _connectionState = cs;
+
             bool connected = cs == UIConnectionState.Ready
                           || cs == UIConnectionState.NeedsResync
                           || cs == UIConnectionState.UncertainMutation;
 
-            _bar.style.display = connected ? DisplayStyle.Flex : DisplayStyle.None;
-
             bool canClick = cs == UIConnectionState.Ready || cs == UIConnectionState.NeedsResync;
+            // OPC-14 M0 / OPCREV-03: visibility is written by ApplySafeAreaPolicy only
+            // (single writer) so a cached Hidden decision is not overwritten by Flex.
+            ApplySafeAreaPolicy();
             _characterBtn?.SetEnabled(canClick);
             _inventoryBtn?.SetEnabled(canClick);
             _questBtn?.SetEnabled(canClick);
@@ -139,7 +149,61 @@ namespace NguMach.Client.P1
             _mapBtn?.SetEnabled(canClick);
         }
 
+        // ── OPC-13 C — safe-area overload (compact/hide, never spill over notch) ──
+
+        private HudDecision _lastHudDecision;
+        private bool _hudDecisionInit;
+
+        /// <summary>
+        /// OPC-13 C: evaluate the pure safe-area policy and apply its controlled
+        /// scale/hide tiers to this HUD. Degenerate inputs (zero-size screens in
+        /// editor/tool contexts) must degrade sanely instead of hiding the only
+        /// panel access on a playable viewport.
+        /// </summary>
+        internal void ApplySafeAreaPolicy()
+        {
+            if (_bar == null) return;
+
+            var vp = new HudViewport(
+                Screen.width, Screen.height,
+                Screen.safeArea.xMin, Screen.safeArea.yMin,
+                Screen.width - Screen.safeArea.xMax, Screen.height - Screen.safeArea.yMax);
+
+            var decision = HudSafeAreaPolicy.Decide(vp, 5); // 5 menu controls
+            bool changed = !_hudDecisionInit || !decision.Equals(_lastHudDecision);
+            _lastHudDecision = decision;
+            _hudDecisionInit = true;
+
+            bool connected = _connectionState == UIConnectionState.Ready
+                          || _connectionState == UIConnectionState.NeedsResync
+                          || _connectionState == UIConnectionState.UncertainMutation;
+
+            // OPC-14 M0 / OPCREV-03: single writer for display — connection AND safe-area decision.
+            // Hidden stays hidden across frames (no RefreshVisibility Flex override).
+            if (decision.Mode == HudMode.Hidden || !connected)
+                _bar.style.display = DisplayStyle.None;
+            else
+                _bar.style.display = DisplayStyle.Flex;
+
+            if (_trackerBox != null)
+                _trackerBox.style.display = (decision.TrackerHidden || !connected)
+                    ? DisplayStyle.None
+                    : _trackerBoxVisibleByQuest;
+
+            // Scale only re-applied on decision change (avoid per-frame churn).
+            if (changed && decision.Mode != HudMode.Hidden)
+            {
+                float s = Math.Clamp(decision.Scale, 0.6f, 1f);
+                _bar.style.scale = new Scale(new Vector2(s, s));
+            }
+        }
+
+        private DisplayStyle _trackerBoxVisibleByQuest = DisplayStyle.None;
+
         // ── Teardown ─────────────────────────────────────────────────────────
+
+        /// <summary>OPC-13 C: safe area/orientation can change mid-session; the policy no-ops when the decision is unchanged.</summary>
+        private void Update() => ApplySafeAreaPolicy();
 
         public void Teardown()
         {
@@ -150,6 +214,9 @@ namespace NguMach.Client.P1
             _adapter = null;
             _root = null;
             _doc = null;
+            _connectionState = UIConnectionState.Disconnected;
+            _hudDecisionInit = false;
+            _lastHudDecision = default;
         }
 
         private void OnDestroy() => Teardown();

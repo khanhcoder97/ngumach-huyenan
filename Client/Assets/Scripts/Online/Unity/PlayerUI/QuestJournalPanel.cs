@@ -152,17 +152,30 @@ namespace NguMach.Client.P1
 
             var journal = state.Value;
             string selectedId = journal.SelectedQuestId;
+            string pinnedId = journal.PinnedQuestId;
 
-            // Active
+            // Active — entry row with selection + pin/unpin toggle (OPC-13 B2).
             _activeList.Clear();
             foreach (var q in journal.Active)
             {
                 var q_ = q;
+                var row = new VisualElement { style = { flexDirection = FlexDirection.Row } };
                 var btn = new Button(() => OnQuestClicked(q_.QuestId)) { text = q.DisplayName + " [" + q.State + "]" };
-                btn.style.minHeight = 36; btn.SetEnabled(!uncertain);
+                btn.style.minHeight = 36; btn.SetEnabled(!uncertain); btn.style.flexGrow = 1;
                 if (q.QuestId == selectedId)
                     btn.style.backgroundColor = new Color(0.2f, 0.45f, 0.7f, 1f);
-                _activeList.Add(btn);
+                row.Add(btn);
+
+                if (q.State == "ACTIVE" || q.State == "READY_TO_TURN_IN")
+                {
+                    bool isPinned = string.Equals(q.QuestId, pinnedId, StringComparison.OrdinalIgnoreCase);
+                    var pinBtn = new Button(() => OnQuestPinClicked(q_.QuestId))
+                    { text = isPinned ? "☆ Bỏ ghim" : "★ Ghim" };
+                    pinBtn.style.minHeight = 36; pinBtn.style.minWidth = 64;
+                    if (isPinned) pinBtn.style.color = new Color(1f, 0.85f, 0.2f);
+                    row.Add(pinBtn);
+                }
+                _activeList.Add(row);
             }
             if (journal.Active.Count == 0)
                 _activeList.Add(new Label("(trống)") { style = { opacity = 0.6f } });
@@ -204,6 +217,14 @@ namespace NguMach.Client.P1
             _presenter.SetSelection(questId);
         }
 
+        private void OnQuestPinClicked(string questId)
+        {
+            // OPC-13 B2: pin/unpin is a pure local view toggle (no wire command), so it stays
+            // available even while a server mutation is pending — it can never mutate quest state.
+            if (string.IsNullOrEmpty(questId) || _presenter.State.Value == null) return;
+            _presenter.TogglePin(questId);
+        }
+
         private void OnDestroy()
         {
             if (_presenter != null) _presenter.OnChanged -= Render;
@@ -225,8 +246,6 @@ namespace NguMach.Client.P1
             _router = null;
             _doc = null;
         }
-
-        private void OnDestroy() => Teardown();
 
         private static VisualElement MakePanel()
         {

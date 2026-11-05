@@ -34,6 +34,14 @@ namespace NguMach.Client.P1
         // ── Public API ───────────────────────────────────────────────────────
 
         public bool IsAnyOpen => (_router != null && _router.IsAnyOpen) || (cinemaOverlay != null && cinemaOverlay.Presenter != null && cinemaOverlay.Presenter.State != null && cinemaOverlay.Presenter.State.IsPlaying);
+
+        /// <summary>True when any panel/modal of the router is open but no cinematic is playing (OPC-13 modal probe).</summary>
+        public bool HasAnyPanelOpen => _router != null && _router.IsAnyOpen;
+
+        /// <summary>True while the cinematic overlay is playing (single-owner probe).</summary>
+        public bool CinemaPlaying => cinemaOverlay != null && cinemaOverlay.Presenter != null && cinemaOverlay.Presenter.State != null &&
+            (cinemaOverlay.Presenter.State.Phase == CinemaPlaybackPhase.Playing || cinemaOverlay.Presenter.State.Phase == CinemaPlaybackPhase.Fallback);
+
         public PanelRouter Router => _router;
         public bool HandleEscapeInput { get; set; } = false; // AGR2-03: Single Escape owner
 
@@ -43,6 +51,12 @@ namespace NguMach.Client.P1
             if (_adapter != null && _doc != doc)
                 throw new InvalidOperationException("Close PlayerUI before changing its document.");
             _configuredDocument = doc;
+        }
+
+        /// <summary>True when a composition is live on the given document (idempotent rebind support, OPC-13 A).</summary>
+        public bool IsInitialized(UIDocument doc)
+        {
+            return _adapter != null && ReferenceEquals(_doc, doc);
         }
 
         /// <summary>Uses the injected composition document, or a document on this host/parent.</summary>
@@ -81,6 +95,40 @@ namespace NguMach.Client.P1
             HideAllPanels();
         }
 
+        // ── OPC-13 B2 — live quest snapshot wiring ─────────────────────────────
+
+        private string _lastQuestsSignature;
+
+        /// <summary>Sessions start with no known signature; a new Open/rebind re-arms the tracker.</summary>
+        private static string QuestsSignature(IP1UIAdapter adapter)
+        {
+            var qs = adapter?.Quests;
+            if (qs == null) return null;
+            var sb = new System.Text.StringBuilder();
+            for (int i = 0; i < qs.Length; i++)
+            {
+                var q = qs[i];
+                if (q == null) continue;
+                sb.Append(q.questId).Append('|').Append(q.state).Append('|').Append(q.revision).Append(';');
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// OPC-13 B2: the HUD quest tracker lives off the session quest snapshot. When the
+        /// server-reported quests change (state or revision), the journal view and the pinned
+        /// tracker refresh locally — no wire call, no reopening the journal panel. Pin state
+        /// survives refreshes; if the pinned quest completes, the tracker hides itself.
+        /// </summary>
+        private void RefreshTrackerFromSnapshot()
+        {
+            if (questJournalPanel?.Presenter == null) return;
+            var signature = QuestsSignature(_adapter);
+            if (string.Equals(signature, _lastQuestsSignature, StringComparison.Ordinal)) return;
+            _lastQuestsSignature = signature;
+            questJournalPanel.Presenter.RefreshFromSnapshot();
+        }
+
         /// <summary>Close topmost open modal panel or skip cinema overlay.</summary>
         public void CloseTop()
         {
@@ -97,6 +145,7 @@ namespace NguMach.Client.P1
         {
             if (_adapter != null) { Debug.LogError("[PlayerUIRoot] Open called twice; call Close first."); return; }
             _closing = false;
+            _lastQuestsSignature = null; // B2: re-arm the tracker wiring for the new session
             _adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));
             _doc = doc ?? throw new ArgumentNullException(nameof(doc));
             _life = new CancellationTokenSource();
@@ -166,6 +215,9 @@ namespace NguMach.Client.P1
         }
 
         public void PlayCinema(string sceneId) => cinemaOverlay?.PlayScene(sceneId);
+
+        /// <summary>Skip the running cinematic — invoked by the modal orchestrator only (OPC-13).</summary>
+        public void SkipCinema() => cinemaOverlay?.HandleSkip();
 
         private void UpdatePinnedQuest()
         {
@@ -256,6 +308,7 @@ namespace NguMach.Client.P1
             }
 
             if (buttonBar != null) buttonBar.RefreshVisibility(cs);
+            RefreshTrackerFromSnapshot();
         }
 
         private void TogglePanel(PlayerPanel panel)
