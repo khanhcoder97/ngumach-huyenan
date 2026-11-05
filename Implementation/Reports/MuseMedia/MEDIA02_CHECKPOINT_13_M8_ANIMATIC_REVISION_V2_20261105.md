@@ -103,8 +103,16 @@ Chạy tool checkpoint 11 (chỉ cập nhật nhãn),
 ## Trạng thái repo
 
 - Nhánh media: head `3f34f0d` trước checkpoint này; commit checkpoint 13
-  (SHA sẽ ghi ở commit báo cáo sau khi push); scope audit 0 violations,
-  base integration HEAD `f383233`. PR #119 vẫn OPEN.
+  `3243c0c` ĐÃ PUSH (ls-remote xác nhận; scope audit 699 paths,
+  0 violations, base integration HEAD `f383233`). PR #119 nay có
+  18 commit, 699 file.
+- Lưu ý lưu trữ (để các lượt sau không lặp lỗi): file animatic
+  (panel/sheet/MP4/poster) lưu BYTE THẬT trong git từ checkpoint 03, dù
+  `.gitattributes` khai `filter=lfs`; `git add` thường (có git-lfs trong
+  PATH) sẽ đổi chúng thành con trỏ LFS 131 byte — lượt này đã add với
+  filter lfs tắt (`-c filter.lfs.clean=` …) để giữ nguyên cách lưu trữ.
+  Audio masters vẫn là con trỏ LFS như trước. OGV không thuộc filter lfs
+  (không có `*.ogv` trong `.gitattributes`) nên luôn là byte thật.
 - ACK comment checkpoint 13 trên issue #116: CẦN thẻ duyệt của chủ dự án
   qua GitHub connector — ghi rõ để luồng chính xử lý, lượt chạy này
   không treo chờ.
