@@ -49,7 +49,7 @@ Ba ràng buộc kỹ thuật, đều kiểm được trong repo:
 | SK-AD-06 | 75 | chưa | `maxTargets` vùng không có trong nguồn; tiêu Nhiệt | C+B |
 | SK-HB-01 | 80 | chưa | telegraph (0,25s là bay đạn); xuyên 3 mục tiêu | A+C |
 | SK-HB-02 | 83 | **có** | — | shipped |
-| SK-HB-03 | 86 | chưa | telegraph; target đồng minh; "bảng nội tại" Tĩnh Thủy | A+B+D |
+| SK-HB-03 | 86 | chưa | telegraph; target đồng minh; số Tĩnh Thủy **đã có** (`low_hp_ally_shield_pct 5%`), chỉ thiếu ngưỡng HP | A+B+D |
 | SK-HB-04 | 89 | **có** | (khai báo pve 0 vì bản chất là hồi máu) | shipped |
 | SK-HB-05 | 92 | chưa | telegraph; buff tốc chạy | A+B |
 | SK-HB-06 | 95 | chưa | telegraph; party trong cùng encounter; hệ số raid | A+B+D |
@@ -71,8 +71,8 @@ Loại: **A** = thiếu telegraph điểm; **B** = server chưa có subsystem; *
 ## 4. Câu hỏi cần Codex/owner chốt (kèm options, tôi không tự chọn)
 
 1. **`telegraphSeconds` cho 19 skill A.** Options: (i) cho phép `null` nghĩa là "chưa duyệt" (đổi schema → cần approval, có packet); (ii) chốt một điểm trong dải `spec:28-30` per nhóm skill; (iii) owner/Codex ghi số per skill. Mặc định của tôi: để skill đó **không có row**.
-2. **Bảng kháng boss/quái.** `spec:83` ("tùy bảng kháng"), `spec:123` ("nếu có kháng"), `spec:109` ("boss không bị ép đổi mục tiêu"). Repo chưa có bảng `mob/boss × hiệu ứng` nào. Options: Codex thêm cột vào `combat_mob_stats_v1.json`, hoặc một `status_immunity_v1.json` mới (tôi làm được, cần duyệt).
-3. **"Bảng nội tại" Tĩnh Thủy** (`spec:86`): thiếu % khiên thêm và ngưỡng HP. Bible chỉ nêu tên nội tại (`:139`).
+2. **Bảng kháng boss/quái.** *(Cập nhật `c5fd9ff`: bảng passive có **cap** trên sát thương/trạng thái — `boss_damage_taken_pct` cap `4% boss`, `high_heat_skill_damage_pct` cap `5% PvP/boss`, `pve_threat_pct` cap `PvE only` — nhưng cap không phải miễn nhiễm; bảng `mob/boss × hiệu ứng` vẫn chưa tồn tại ở đâu cả.)* `spec:83` ("tùy bảng kháng"), `spec:123` ("nếu có kháng"), `spec:109` ("boss không bị ép đổi mục tiêu"). Repo chưa có bảng `mob/boss × hiệu ứng` nào. Options: Codex thêm cột vào `combat_mob_stats_v1.json`, hoặc một `status_immunity_v1.json` mới (tôi làm được, cần duyệt).
+3. **"Bảng nội tại" Tĩnh Thủy** (`spec:86`) — **đã tìm thấy một nửa (2026-11-05, `c5fd9ff`).** `Class_Passive_Production_Data_vi.csv` có `PAS-HUYEN_BUT-HOI_DONG-T2 = low_hp_ally_shield_pct 5 percent, cap "5% PvP"` ⇒ con số khiên **đã có nguồn**, nên câu hỏi này rút lại. Còn thiếu: **ngưỡng "thấp HP"** là bao nhiêu % (CSV không có cột điều kiện). **Mâu thuẫn mới, cần chốt, tôi không tự sửa:** `spec:66` + `Bible:124` nói Bóng Sát = **+8%** sau lưng quái, nhưng CSV cho `rear_damage_pct = 5 percent` (cap `"5%; boss 2%"`), không dòng nào bằng 8. CSV mang `status=BASELINE` nên tôi đọc nó làm production data; tôi không sửa số trong spec và không cộng hai giá trị.
 4. **Set bonus còn là biến chữ:** `Item_Catalog_and_Set_Bible_vi.md:97` ghi "tăng **n%** damage" và "tăng **m%** damage". Cần giá trị, hoặc cho phép ghi `null` trong catalog.
 5. **Party/guild.** `spec:89` ("không hồi mục tiêu ngoài party/guild"), `spec:95` ("chỉ party trong cùng encounter") chặn HB-03/HB-04/HB-06 ở phía *điều kiện*, không chặn row. Server chưa có route party nào (Q7) → tôi để nguyên, không giả danh sách party.
 6. **Schema không biểu diễn được hình học.** Options cho `rangeWu` đơn: thêm `effectRadiusWu` + `castRangeWu`, thêm `durationSeconds` cho trap/zone, thêm mảng `hits[]` cho multi-hit. Đây là đổi schema đã đóng băng → chỉ làm khi được duyệt, và tôi sẽ viết packet trước khi động vào file.
