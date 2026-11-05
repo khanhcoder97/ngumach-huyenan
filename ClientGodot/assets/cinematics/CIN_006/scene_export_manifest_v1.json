@@ -1,15 +1,55 @@
 {
  "schemaVersion": 1,
- "checkpoint": "MEDIA-02 checkpoint 18 - per-scene clip export (Goi 30 item 6): CIN_001/CIN_002/CIN_004 video clips + CIN_006 timing/SRT only (no panels yet)",
+ "checkpoint": "MEDIA-02 checkpoint 22 - CIN_006 animated take (Goi 30 item 7): CIN_006 storyboard panels + 18 s Ken Burns clip; scene leaves PENDING_PANELS_NO_STORYBOARD",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "baseSha": "f0859d0",
  "sceneId": "CIN_006",
  "title": "Con dấu qua phố",
- "durationSeconds": 18,
+ "durationSeconds": 18.0,
  "dialogueCues": 1,
  "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+ "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+ "motionModel": {
+  "kind": "ANIMATIC_MOTION_KEN_BURNS",
+  "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
+  "shots": {
+   "CIN_006_S01": "push-in centered",
+   "CIN_006_S02": "push-in centered on the seal die",
+   "CIN_006_S03": "zoom-out centered"
+  }
+ },
+ "reelOffsetSeconds": null,
+ "reelTotalSeconds": null,
  "files": {
+  "mp4": {
+   "path": "assets/cinematics/CIN_006/CIN_006_640x360_30fps.mp4",
+   "sha256": "d263ddf90240b951fb810c30b0593cc13f6d24033664421512f0173fafe64631",
+   "sizeBytes": 1447359,
+   "codec": "h264",
+   "width": 640,
+   "height": 360,
+   "fps": 30,
+   "durationSeconds": 18.0,
+   "frames": 540
+  },
+  "ogv": {
+   "path": "assets/cinematics/CIN_006/CIN_006_640x360_30fps.ogv",
+   "sha256": "8c10c78c9c0160b536adbe348c22e3934680bcd9583dd3a4f883c682a45d079a",
+   "sizeBytes": 496730,
+   "codec": "theora",
+   "width": 640,
+   "height": 360,
+   "fps": 30,
+   "durationSeconds": 18.0,
+   "storedFrames": 453
+  },
+  "poster": {
+   "path": "assets/cinematics/CIN_006/CIN_006_poster.png",
+   "sha256": "53859a1946cb9ac6ea3609cb67de7c74be2efda5c9187587e5ca9a741c7fe830",
+   "sizeBytes": 437339,
+   "sourceKeyframe": "keyframe_CIN_006_S01.png"
+  },
   "timing": {
    "path": "assets/cinematics/CIN_006/CIN_006_timing_v1.json",
    "sha256": "4c237f04195989b6b113a8800d114320ca05079bb8163fa0c9d3871988402955",
@@ -22,32 +62,69 @@
    "status": "DRAFT"
   }
  },
- "notes": [
-  "Scene-local time starts at 0; shot list is rebased from reel time. The copied SRT is already scene-local.",
-  "The 72 s P0 reel is review/gallery only, NOT auto-run as opening; this per-scene clip is the runtime unit (Goi 30 item 6).",
-  "No video clip: CIN_006 was never storyboarded into the 72 s P0 reel (checkpoint 05 was timing only) and has no panels yet. Timing + SRT are exported; the clip waits for panels, it is NOT faked from an empty or tone-generator frame."
- ],
- "reelOffsetSeconds": null,
- "reelTotalSeconds": null,
- "videoStatus": "PENDING_PANELS_NO_STORYBOARD",
+ "frameCheck": {
+  "CIN_006_S01": {
+   "identitySeconds": 0.0,
+   "identityMeanAbsChannelDiff": 5.637,
+   "identityMaxAllowed": 10.0,
+   "motionSeconds": 5.9,
+   "motionMeanAbsChannelDiff": 38.215,
+   "motionMinRequired": 1.5,
+   "continuousMotionMeanAbsChannelDiff": 33.179,
+   "continuousMinRequired": 0.5
+  },
+  "CIN_006_S02": {
+   "identitySeconds": 6.0,
+   "identityMeanAbsChannelDiff": 3.297,
+   "identityMaxAllowed": 10.0,
+   "motionSeconds": 11.9,
+   "motionMeanAbsChannelDiff": 40.687,
+   "motionMinRequired": 1.5,
+   "continuousMotionMeanAbsChannelDiff": 34.272,
+   "continuousMinRequired": 0.5
+  },
+  "CIN_006_S03": {
+   "identitySeconds": 17.9667,
+   "identityMeanAbsChannelDiff": 7.041,
+   "identityMaxAllowed": 10.0,
+   "motionSeconds": 12.0,
+   "motionMeanAbsChannelDiff": 43.119,
+   "motionMinRequired": 1.5,
+   "continuousMotionMeanAbsChannelDiff": 36.531,
+   "continuousMinRequired": 0.5
+  }
+ },
  "shots": [
   {
    "shotId": "CIN_006_S01",
    "startSeconds": 0.0,
    "endSeconds": 6.0,
-   "panel": null
+   "camera": "MEDIUM_STATIC",
+   "keyframe": "keyframe_CIN_006_S01.png",
+   "motion": "push-in centered"
   },
   {
    "shotId": "CIN_006_S02",
    "startSeconds": 6.0,
    "endSeconds": 12.0,
-   "panel": null
+   "camera": "DETAIL_LOCKED",
+   "keyframe": "keyframe_CIN_006_S02.png",
+   "motion": "push-in centered on the seal die"
   },
   {
    "shotId": "CIN_006_S03",
    "startSeconds": 12.0,
    "endSeconds": 18.0,
-   "panel": null
+   "camera": "MEDIUM_STATIC",
+   "keyframe": "keyframe_CIN_006_S03.png",
+   "motion": "zoom-out centered"
   }
+ ],
+ "notes": [
+  "CIN_006 leaves PENDING_PANELS_NO_STORYBOARD (checkpoint 18) with this animated take: real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+  "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
+  "CIN_006 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
+  "Canonical dialogue window 12.5-17.5 s stays PROPOSED_ANIMATIC_PLACEMENT. Its VO draft (checkpoint 19) overruns the window by +0.520 s at natural speed; owner verdict 2026-11-06: keep the window unchanged and let Codex decide at PR #119 review (the clip carries no audio).",
+  "Alternate take CIN_006_ALT_T01 stays separate under its own takeId/version (DEC-MEDIA-P0 Q3); it is not in the SRT and not in this clip."
  ]
 }

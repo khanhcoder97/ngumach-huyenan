@@ -23,6 +23,9 @@ Sources (all already measured from real bytes in checkpoints 01-09):
   - Art_Source/Cinematics/Campaign/CIN_005/
     (3 storyboard keyframes 640x360 + scene export manifest with the
     18 s animated take MP4/OGV/poster, checkpoint 21)
+  - Art_Source/Cinematics/Campaign/CIN_006/
+    (3 storyboard keyframes 640x360 + scene export manifest with the
+    18 s animated take MP4/OGV/poster, checkpoint 22)
   - Implementation/Content/Narrative/Deliveries/{P0,CAMPAIGN}_timing_manifest_v1.json
     + CIN_006/CIN_006_timing_manifest_v1.json (20 scenes timing JSON + SRT)
 
@@ -533,7 +536,8 @@ def main():
     # --- 6. Per-scene clips (checkpoint 18, Goi 30 item 6; CIN_005
     # animated take added in checkpoint 21, Goi 30 item 7) ---
     # Each scene folder holds its own MP4/OGV/poster/SRT/timing + export
-    # manifest; CIN_006 has timing + SRT only (no panels yet, no video).
+    # manifest; all five scenes carry video (CIN_006 joined in
+    # checkpoint 22 with its own storyboard panels + animated take).
     # Verified here against the export manifests, not trusted blindly.
     scene_clip_entries = []
     for scene_id in ("CIN_001", "CIN_002", "CIN_004", "CIN_006", "CIN_005"):
@@ -580,7 +584,7 @@ def main():
 
     cine_manifest = {
         "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
-        "checkpoint": "MEDIA-02 checkpoint 21 - CIN_005 animated take (Goi 30 item 7): first campaign video with real motion (18 s Ken Burns clip, MP4 + OGV + poster); P0 animatic v3 + audio/timing unchanged from checkpoint 20",
+        "checkpoint": "MEDIA-02 checkpoint 22 - CIN_006 animated take (Goi 30 item 7): CIN_006 storyboard panels + 18 s Ken Burns clip; all 5 exported scenes now carry video; P0 animatic v3 + audio/timing unchanged from checkpoint 21",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "campaignTotals": {"scenes": 20, "shots": 63, "seconds": 378,
@@ -612,10 +616,8 @@ def main():
             "Per-scene clips (checkpoint 18, Goi 30 item 6): CIN_001 "
             "(36 s), CIN_002 (18 s) and CIN_004 (18 s) each exported as "
             "its own MP4 + OGV + poster + SRT + timing + hash manifest "
-            "under assets/cinematics/<SCENE>/; CIN_006 has timing + SRT "
-            "only because it has no storyboard panels yet (no video "
-            "fabricated). The 72 s reel stays review/gallery only, NOT "
-            "auto-run as opening.",
+            "under assets/cinematics/<SCENE>/. The 72 s reel stays "
+            "review/gallery only, NOT auto-run as opening.",
             "CIN_005 animated take (checkpoint 21, Goi 30 item 7): first "
             "campaign video with real motion -- 18 s / 3 shots, slow Ken "
             "Burns camera moves on 3 storyboard keyframes "
@@ -624,6 +626,17 @@ def main():
             "NOT a final pose-animated take; no audio track in the clip "
             "(VO/music/ambience added separately in editing); no baked "
             "subtitles. Known defect: S02 roof palette drifts from S01.",
+            "CIN_006 animated take (checkpoint 22, Goi 30 item 7): the "
+            "scene leaves PENDING_PANELS_NO_STORYBOARD with 3 storyboard "
+            "keyframes (Art_Source/Cinematics/Campaign/CIN_006/"
+            "keyframes_16x9/, CIN006_keyframes_manifest_v1.json) + 18 s "
+            "Ken Burns clip. NPC_HA_MAC / NPC_SAM_CHU_QUY have NO "
+            "approved character lock: faces/costumes are storyboard "
+            "placeholders, cinematic-only staging per DEC-MEDIA-P0 Q4. "
+            "Known defects: S02 composition (oversized blurred glove + "
+            "pale face-like shape at frame right) and cross-shot "
+            "lighting drift, recorded per shot for the final-picture "
+            "revision pass.",
         ],
         "animatic": cine_files,
         "sceneClips": scene_clip_entries,
