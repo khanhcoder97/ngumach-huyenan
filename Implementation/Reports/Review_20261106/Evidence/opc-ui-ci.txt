@@ -102,22 +102,22 @@ PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:17.9519327Z [command]/usr
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:17.9550345Z ##[group]Checking out the ref
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:17.9552594Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/109/merge
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2624224Z Note: switching to 'refs/remotes/pull/109/merge'.
-PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2625687Z 
+PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2625687Z
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2626831Z You are in 'detached HEAD' state. You can look around, make experimental
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2629953Z changes and commit them, and you can discard any commits you make in this
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2632760Z state without impacting any branches by switching back to a branch.
-PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2634312Z 
+PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2634312Z
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2635726Z If you want to create a new branch to retain commits you create, you may
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2638430Z do so (now or later) by using -c with the switch command. Example:
-PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2639843Z 
+PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2639843Z
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2640437Z   git switch -c <new-branch-name>
-PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2641394Z 
+PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2641394Z
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2641968Z Or undo this operation with:
-PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2642846Z 
+PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2642846Z
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2643355Z   git switch -
-PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2644054Z 
+PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2644054Z
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2645193Z Turn off this advice by setting config variable advice.detachedHead to false
-PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2646874Z 
+PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2646874Z
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2649007Z HEAD is now at bafd71e Merge a3a639b769a21508658c1e0c50799a9336902d51 into 974139f299f57af512c53e8eab78ddc8f767f385
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2953100Z ##[endgroup]
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:18.2994415Z [command]/usr/bin/git log -1 --format=%H
@@ -149,14 +149,14 @@ PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:22.2022623Z   DOTNET_ROOT
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:22.2022898Z ##[endgroup]
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.7977047Z ##[error]/home/runner/work/ngumach-huyenan/ngumach-huyenan/Client/Assets/Scripts/Online/Presentation/P1ClientAdapter.cs(16,57): error CS0246: The type or namespace name 'IP1InventoryV2Adapter' could not be found (are you missing a using directive or an assembly reference?) [/home/runner/work/ngumach-huyenan/ngumach-huyenan/Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj]
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.7991469Z ##[error]/home/runner/work/ngumach-huyenan/ngumach-huyenan/Client/Assets/Scripts/Online/Presentation/P1ClientAdapter.cs(16,80): error CS0246: The type or namespace name 'IP1DeathReturnAdapter' could not be found (are you missing a using directive or an assembly reference?) [/home/runner/work/ngumach-huyenan/ngumach-huyenan/Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj]
-PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8171257Z 
+PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8171257Z
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8183702Z Build FAILED.
-PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8184058Z 
+PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8184058Z
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8186480Z ##[error]/home/runner/work/ngumach-huyenan/ngumach-huyenan/Client/Assets/Scripts/Online/Presentation/P1ClientAdapter.cs(16,57): error CS0246: The type or namespace name 'IP1InventoryV2Adapter' could not be found (are you missing a using directive or an assembly reference?) [/home/runner/work/ngumach-huyenan/ngumach-huyenan/Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj]
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8191890Z ##[error]/home/runner/work/ngumach-huyenan/ngumach-huyenan/Client/Assets/Scripts/Online/Presentation/P1ClientAdapter.cs(16,80): error CS0246: The type or namespace name 'IP1DeathReturnAdapter' could not be found (are you missing a using directive or an assembly reference?) [/home/runner/work/ngumach-huyenan/ngumach-huyenan/Client/Tests/PlayerUIChecks/PlayerUIChecks.csproj]
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8194008Z     0 Warning(s)
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8194247Z     2 Error(s)
-PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8194369Z 
+PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8194369Z
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8194511Z Time Elapsed 00:00:04.41
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8379592Z ##[error]Process completed with exit code 1.
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8474596Z ##[group]Run actions/upload-artifact@v4
@@ -164,7 +164,7 @@ PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8474914Z with:
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8475162Z   name: player-ui-test-results
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8475538Z   path: TestResults/
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	Client/Tests/PlayerUIAcceptance/bin/Release/net8.0/*.log
-PlayerUIChecks (.NET 10)	UNKNOWN STEP	
+PlayerUIChecks (.NET 10)	UNKNOWN STEP
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8475978Z   if-no-files-found: ignore
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8476228Z   compression-level: 6
 PlayerUIChecks (.NET 10)	UNKNOWN STEP	2026-11-05T18:13:26.8476450Z   overwrite: false

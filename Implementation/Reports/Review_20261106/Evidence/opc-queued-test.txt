@@ -10,7 +10,7 @@ Results File: D:\Project\NGUMACHHUYENAN-handoff-20261106\Implementation\Reports\
 Test Run Aborted.
 
 The active Test Run was aborted because the host process exited unexpectedly. Please inspect the call stack above, if available, to get more information about where the exception originated from.
-The test running when the crash occurred: 
+The test running when the crash occurred:
 NguMach.Client.Core.Tests.CompositionTests.ReturnFromDeath_QueuedSuccessBeforeDispose_DoesNotMutateState
 
 This test may, or may not be the source of the crash.
