@@ -1709,8 +1709,13 @@ def alpha_revive_profile():
         # swing this configuration produces (10 per hit, the same number the mob-combat
         # profile pins) is 6 swings, and the group's attack cooldown is 2 s = 40 ticks at
         # the declared 20 Hz. Six swings over three mobs in one group is ~80 ticks of
-        # pure damage; 2400 ticks (120 s) is the ceiling the leg allows, and it reports
-        # how many it actually used rather than silently trusting the stopwatch.
+        # 2400 ticks (120 s) is the ceiling the leg allows, and it reports how many it
+        # actually used rather than silently trusting the stopwatch. Measured on CI at
+        # cd383d7 the answer is 0: the leg entered this wait already at hp 0 of 60, so the
+        # thing that ends the actor's life is the 40-iteration approach walk above (one
+        # second of sleep per iteration), not this wait. The bound is therefore honest
+        # slack, and bounding that walk is the remaining work, not a secret already
+        # solved by this line.
         2400, lambda: v2_snapshot(session)[1].get("hp") == 0, session, death_ticks)
     _, end_state, end_entities, _ = v2_snapshot(session)
     # Printed, never asserted: the margin between the bound this leg allowed and the
