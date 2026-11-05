@@ -111,13 +111,34 @@ def build(rows):
                 fail(f"{node['nodeId']}: choice {choice['choiceId']} sets no flag")
             flags.add(choice["flag"])
 
+    # `known - next_ids` are the nodes nobody points *to*: those are the roots
+    # (entry), not the terminals. Terminals are the nodes that point to nothing.
+    # The bundle shipped with the root set under the name `terminalNodeIds`, which
+    # no loader read, so the mislabel was invisible until now.
+    terminal_ids = sorted(node["nodeId"] for node in catalog if not node["nextNodeId"])
+    root_ids = sorted(known - next_ids)
+
+    for quest_id in sorted({node["questId"] for node in catalog}):
+        quest_roots = [n for n in catalog if n["questId"] == quest_id and n["nodeId"] in set(root_ids)]
+        quest_terminals = [n for n in catalog if n["questId"] == quest_id and n["nodeId"] in set(terminal_ids)]
+        if len(quest_roots) != 1 or len(quest_terminals) < 1:
+            fail(f"{quest_id}: expected one root and at least one terminal, "
+                 f"found {len(quest_roots)} root(s) and {len(quest_terminals)} terminal(s)")
+        if quest_roots[0]["type"] != "OFFER":
+            fail(f"{quest_id}: root node {quest_roots[0]['nodeId']} is {quest_roots[0]['type']}, not OFFER")
+        for node in quest_terminals:
+            if node["type"] not in ("TURN_IN", "CHOICE"):
+                fail(f"{quest_id}: terminal node {node['nodeId']} is {node['type']}, "
+                     "expected TURN_IN or CHOICE")
+
     return {
         "schemaVersion": 1,
         "sourceRef": SOURCE.as_posix(),
         "conditionKeys": sorted(CONDITION_KEYS),
         "onEnterEvents": sorted(ENTER_EVENTS),
         "flags": sorted(flags),
-        "terminalNodeIds": sorted(known - next_ids),
+        "rootNodeIds": root_ids,
+        "terminalNodeIds": terminal_ids,
         "nodes": catalog,
     }
 
