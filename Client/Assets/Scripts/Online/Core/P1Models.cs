@@ -25,6 +25,8 @@ namespace NguMach.Client.P1
         public string code, messageKey, correlationId;
         public bool retryable;
         public string[] fieldErrors;
+        // Death-return cooldown carries the server tick a retry is allowed from.
+        public long? nextReturnAllowedAtTick;
     }
     [Serializable] public sealed class P1World
     {

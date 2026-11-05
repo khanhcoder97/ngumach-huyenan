@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "requestId": "0f0e0d0c0b0a09080706050403020100",
+  "sessionId": "5e4d3c2b1a0987654321fedcba987650",
+  "serverTimeUtc": "2026-11-05T09:00:01Z",
+  "result": {
+    "applied": true,
+    "replayed": true,
+    "mapId": "MAP_BEN_MUA",
+    "xWu": 18.0,
+    "yWu": 0.0,
+    "hp": 0,
+    "maxHp": 100,
+    "mp": 50,
+    "maxMp": 50,
+    "serverTick": 1840,
+    "revision": 12,
+    "cleared": {
+      "inflightCasts": 1,
+      "reservedCounters": 0,
+      "guardWindowClosed": false,
+      "movementWindowReset": true
+    },
+    "penalties": {
+      "xp": 1,
+      "currency": 0,
+      "durability": 0
+    },
+    "nextReturnAllowedAtTick": 1900
+  }
+}

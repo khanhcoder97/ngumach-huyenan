@@ -37,6 +37,9 @@
     <Compile Include="FixtureEncounterTests.cs" />
     <Compile Include="PortableTransportTests.cs" />
     <Compile Include="TimeoutTransportTests.cs" />
+    <Compile Include="InventoryV2Tests.cs" />
+    <Compile Include="DeathReturnTests.cs" />
+    <Compile Include="V2PresentersTests.cs" />
     <Compile Include="LocalizationAndCatalogPhysicalTests.cs" />
   </ItemGroup>
 

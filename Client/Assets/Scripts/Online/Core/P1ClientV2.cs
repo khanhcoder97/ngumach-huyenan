@@ -9,6 +9,9 @@ namespace NguMach.Client.P1
     public sealed partial class P1Client
     {
         public P1WorldV2 WorldV2 { get; private set; }
+        public P1InventorySnapshotV2 InventoryV2 { get; private set; }
+        public P1DeathReturnResultV1 LastDeathReturn { get; private set; }
+        public long? NextReturnAllowedAtTick { get; private set; }
         public P1TurnInResult LastTurnIn { get; private set; }
         public long EventCursor { get; private set; }
         public int EventResyncCount { get; private set; }
@@ -17,7 +20,8 @@ namespace NguMach.Client.P1
         { lock (presentationEvents) { var result = presentationEvents.ToArray(); presentationEvents.Clear(); return result; } }
         private void ResetV2()
         {
-            WorldV2 = null; LastTurnIn = null; EventCursor = 0; EventResyncCount = 0;
+            WorldV2 = null; InventoryV2 = null; LastDeathReturn = null; NextReturnAllowedAtTick = null;
+            LastTurnIn = null; EventCursor = 0; EventResyncCount = 0;
             lock (presentationEvents) presentationEvents.Clear();
         }
         private static bool Timestamp(string value)
@@ -273,9 +277,233 @@ namespace NguMach.Client.P1
             if (Inventory == null || r.result.inventoryRevision >= Inventory.inventoryRevision) Inventory = r.result;
             return pending != null ? P1Result.Ok() : Ready();
         }
+        // ── Death-return (DEC-DEATH-RETURN-20261105, frozen schema at 4b59b08) ──
+        public async Task<P1Result> ReturnFromDeathAsync(CancellationToken ct)
+        {
+            await lane.WaitAsync(ct);
+            try
+            {
+                if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
+                pending = Command("/p1/actor/death-return", new P1DeathReturnIntent());
+                pendingKind = PendingKind.DeathReturn;
+                return await SubmitPending(ct);
+            }
+            finally { lane.Release(); }
+        }
+
+        private async Task<P1Result> ApplyDeathReturn(P1HttpReply reply, CancellationToken ct)
+        {
+            var r = Parse<P1DeathReturnResultV1>(reply);
+            if (IsExpired(r)) return Expire();
+            if (MissingRoute(reply, r)) return RejectPending("feature_unavailable");
+            // The two-gate mapping normally makes this a 404; the schema still
+            // names 503 death_return_disabled so a consumer never sees a mystery.
+            if (r != null && r.error != null && r.error.code == "death_return_disabled")
+                return RejectPending("death_return_disabled");
+            if (Ambiguous(reply, r)) return Uncertain(reply.CorrelationId);
+            if (r == null || r.requestId != pending.CorrelationId) return Uncertain(reply.CorrelationId);
+
+            if (!Good(reply, r))
+            {
+                if (r.error != null && r.error.nextReturnAllowedAtTick.HasValue)
+                    NextReturnAllowedAtTick = r.error.nextReturnAllowedAtTick;
+                return RejectPending(Error(reply, r));
+            }
+
+            var result = r.result;
+            if (r.sessionId != SessionId || !ValidDeathReturn(result)) return Uncertain(reply.CorrelationId);
+
+            // The receipt is authoritative for what the server committed; a
+            // replay repeats historical HP/anchor, so never apply it as current
+            // world state. Fresh-read the actor/world instead.
+            pending = null;
+            LastDeathReturn = result;
+            NextReturnAllowedAtTick = result.nextReturnAllowedAtTick;
+            State = P1ConnectionState.NeedsResync;
+            var sync = await ReadWorld(ct);
+            if (sync.Success) return P1Result.Ok();
+            return SessionId == null ? sync : Fail("death_return_refresh_pending", sync.CorrelationId);
+        }
+
+        private static bool ValidDeathReturn(P1DeathReturnResultV1 r)
+        {
+            if (r == null || (r.applied == r.replayed) || string.IsNullOrEmpty(r.mapId) ||
+                r.mapId.Length <= 4 || !r.mapId.StartsWith("MAP_", StringComparison.Ordinal) ||
+                !ValidUpperToken(r.mapId.Substring(4), false) ||
+                !P1Wire.Finite(r.xWu) || !P1Wire.Finite(r.yWu) ||
+                r.maxHp < 1 || r.hp < 1 || r.hp > r.maxHp ||
+                r.maxMp < 0 || r.mp < 0 || r.mp > r.maxMp ||
+                r.serverTick < 0 || r.revision < 0 || r.nextReturnAllowedAtTick < 0) return false;
+            if (r.cleared == null || r.cleared.inflightCasts < 0 || r.cleared.reservedCounters < 0) return false;
+            if (r.penalties == null || r.penalties.xp != 0 || r.penalties.currency != 0 || r.penalties.durability != 0)
+                return false;
+            return true;
+        }
+
         private static bool MissingRoute<T>(P1HttpReply h, P1Response<T> r)
         { return (h.StatusCode == 404 || h.StatusCode == 405) && r == null; }
         private P1Result RejectPending(string reason)
         { pending = null; State = P1ConnectionState.Ready; return Fail(reason); }
+
+        // ── Inventory v2 (Qoder 77bc3a6: twelve closed slots beside frozen v1) ──
+        private static readonly string[] InventoryV2SlotOrder =
+        {
+            "HAT", "CHEST", "LEGS", "WEAPON", "GLOVES", "BOOTS",
+            "NECK", "RING_L", "RING_R", "PENDANT", "CLOAK", "SEAL"
+        };
+        private const string InventoryV2SlotSpec = "V2_SIDE_BY_SIDE_KEEP_V1_FIVE_SLOT_CONTRACT";
+
+        public async Task<P1Result> ReadInventoryV2Async(CancellationToken ct)
+        {
+            await lane.WaitAsync(ct);
+            try
+            {
+                if (SessionId == null) return Fail("not_connected");
+                var reply = await Send(Get("/p1/inventory/v2/" + SessionId), ct);
+                var r = Parse<P1InventorySnapshotV2>(reply, 2);
+                if (IsExpired(r)) return Expire();
+                if (MissingRoute(reply, r)) return Fail("feature_unavailable");
+                if (!Good(reply, r) || r.sessionId != SessionId || !ValidInventoryV2(r.result))
+                {
+                    State = pending != null ? P1ConnectionState.UncertainMutation : P1ConnectionState.NeedsResync;
+                    return Fail(Error(reply, r), reply.CorrelationId);
+                }
+                if (InventoryV2 == null || r.result.inventoryRevision >= InventoryV2.inventoryRevision)
+                    InventoryV2 = r.result;
+                LastError = null;
+                return P1Result.Ok();
+            }
+            finally { lane.Release(); }
+        }
+
+        public async Task<P1Result> EquipV2Async(string itemInstanceId, long expectedRevision, CancellationToken ct)
+        {
+            await lane.WaitAsync(ct);
+            try
+            {
+                if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
+                if (!ValidInstanceIdV2(itemInstanceId) || expectedRevision < 1) return Fail("invalid_input");
+                pending = Command("/p1/inventory/v2/equip",
+                    new P1EquipV2 { itemInstanceId = itemInstanceId, expectedRevision = expectedRevision }, 2);
+                pendingKind = PendingKind.InventoryV2;
+                return await SubmitPending(ct);
+            }
+            finally { lane.Release(); }
+        }
+
+        public async Task<P1Result> UnequipV2Async(string slotId, long expectedRevision, CancellationToken ct)
+        {
+            await lane.WaitAsync(ct);
+            try
+            {
+                if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
+                if (Array.IndexOf(InventoryV2SlotOrder, slotId) < 0 || expectedRevision < 1) return Fail("invalid_input");
+                pending = Command("/p1/inventory/v2/unequip",
+                    new P1UnequipV2 { slotId = slotId, expectedRevision = expectedRevision }, 2);
+                pendingKind = PendingKind.InventoryV2;
+                return await SubmitPending(ct);
+            }
+            finally { lane.Release(); }
+        }
+
+        private async Task<P1Result> ApplyInventoryV2(P1HttpReply reply)
+        {
+            var r = Parse<P1InventorySnapshotV2>(reply, 2);
+            if (IsExpired(r)) return Expire();
+            if (MissingRoute(reply, r)) return RejectPending("feature_unavailable");
+            if (Ambiguous(reply, r)) return Uncertain(reply.CorrelationId);
+            if (r == null || r.requestId != pending.CorrelationId) return Uncertain(reply.CorrelationId);
+            if (r.result != null && !ValidInventoryV2(r.result)) return Uncertain(reply.CorrelationId);
+
+            if (!Good(reply, r))
+            {
+                // A rejection may carry the current authoritative snapshot
+                // (revision_conflict / slot_occupied). Adopt it but never retry
+                // silently: the definite error reaches the UI.
+                if (r.result != null && (InventoryV2 == null || r.result.inventoryRevision >= InventoryV2.inventoryRevision))
+                    InventoryV2 = r.result;
+                return RejectPending(Error(reply, r));
+            }
+
+            long expected;
+            if (pending.Path.EndsWith("/equip", StringComparison.Ordinal))
+                expected = P1Wire.Decode<P1Envelope<P1EquipV2>>(pending.Body).payload.expectedRevision;
+            else
+                expected = P1Wire.Decode<P1Envelope<P1UnequipV2>>(pending.Body).payload.expectedRevision;
+
+            if (r.sessionId != SessionId || r.result == null ||
+                r.result.inventoryRevision <= expected) return Uncertain(reply.CorrelationId);
+            InventoryV2 = r.result;
+            pending = null;
+            LastError = null;
+            return Ready();
+        }
+
+        private static bool ValidInventoryV2(P1InventorySnapshotV2 inv)
+        {
+            if (inv == null || inv.schemaVersion != 2 || inv.slotSpec != InventoryV2SlotSpec ||
+                inv.inventoryRevision < 0 || inv.bagSlots != 100 || inv.slots == null || inv.slots.Length != 12 ||
+                inv.bag == null || inv.unsupported == null || inv.currencies == null) return false;
+
+            var ids = new HashSet<string>(StringComparer.Ordinal);
+            for (int i = 0; i < InventoryV2SlotOrder.Length; i++)
+            {
+                var slot = inv.slots[i];
+                if (slot == null || slot.slotId != InventoryV2SlotOrder[i]) return false;
+                if (slot.item == null) continue;
+                if (!ValidItemV2(slot.item) || slot.item.location != "EQUIPPED" || slot.item.slotId != slot.slotId) return false;
+                if (!ids.Add(slot.item.instanceId)) return false;
+            }
+            foreach (var item in inv.bag)
+            {
+                if (!ValidItemV2(item) || !ids.Add(item.instanceId)) return false;
+            }
+            foreach (var unsupported in inv.unsupported)
+            {
+                if (unsupported == null || !ValidInstanceIdV2(unsupported.instanceId) ||
+                    !ValidTemplateIdV2(unsupported.templateId) || unsupported.reason != "UNMAPPED_SLOT" ||
+                    (unsupported.sourceSlot != null && unsupported.sourceSlot.Length == 0) ||
+                    !ids.Add(unsupported.instanceId)) return false;
+            }
+            var currencies = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var currency in inv.currencies)
+                if (currency == null || currency.amount < 0 || !ValidUpperToken(currency.currencyId, false) ||
+                    !currencies.Add(currency.currencyId)) return false;
+            return true;
+        }
+
+        private static bool ValidItemV2(P1ItemV2 item)
+        {
+            return item != null && ValidInstanceIdV2(item.instanceId) && ValidTemplateIdV2(item.templateId) &&
+                   item.stack >= 1 && OneOf(item.location, "BAG", "EQUIPPED", "BANK") &&
+                   (item.slotId == null || Array.IndexOf(InventoryV2SlotOrder, item.slotId) >= 0) &&
+                   item.durability >= 0 && item.version >= 1;
+        }
+
+        private static bool ValidInstanceIdV2(string value)
+        {
+            return value != null && value.Length > 4 && value.StartsWith("ITM_", StringComparison.Ordinal) &&
+                   ValidUpperToken(value, false);
+        }
+
+        // ^[A-Z0-9_]+(?:-[A-Z0-9_]+)*$ — v2 templateId accepts underscores (catalog correction).
+        private static bool ValidTemplateIdV2(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return false;
+            foreach (var part in value.Split('-'))
+                if (!ValidUpperToken(part, false)) return false;
+            return true;
+        }
+
+        private static bool ValidUpperToken(string value, bool allowHyphen)
+        {
+            if (string.IsNullOrEmpty(value)) return false;
+            foreach (char c in value)
+            {
+                bool ok = (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || (allowHyphen && c == '-');
+                if (!ok) return false;
+            }
+            return true;
+        }
     }
 }

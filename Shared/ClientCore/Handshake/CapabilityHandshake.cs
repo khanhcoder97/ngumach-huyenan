@@ -14,8 +14,10 @@ namespace NguMach.Client.Core.Handshake
     public sealed class DeploymentProfile
     {
         public string ProfileId { get; set; } = "production-off";
-        public string ContractVersion { get; set; } = "v1";
+        public string ContractVersion { get; set; } = "v2";
         public bool AlphaBossEnabled { get; set; }
+        public bool AlphaInventoryV2Enabled { get; set; }
+        public bool DeathReturnEnabled { get; set; }
         public List<string> ServerEnabledRoutes { get; set; } = new List<string>();
         public string SourceVersion { get; set; } = "unknown";
 
@@ -25,20 +27,38 @@ namespace NguMach.Client.Core.Handshake
             {
                 ProfileId = "production-off",
                 AlphaBossEnabled = false,
+                AlphaInventoryV2Enabled = false,
+                DeathReturnEnabled = false,
                 ServerEnabledRoutes = new List<string>(),
                 SourceVersion = "unknown"
             };
         }
 
-        public static DeploymentProfile PrivateAlpha(bool encounterEnabled)
+        public static DeploymentProfile PrivateAlpha(
+            bool encounterEnabled,
+            bool inventoryV2Enabled = false,
+            bool deathReturnEnabled = false)
         {
+            var routes = new List<string>();
+            if (encounterEnabled)
+            {
+                routes.Add("/p1/encounters/current");
+                routes.Add("/p1/encounters/{id}");
+            }
+            if (inventoryV2Enabled)
+            {
+                routes.Add("/p1/inventory/v2/{id}");
+                routes.Add("/p1/inventory/v2/equip");
+                routes.Add("/p1/inventory/v2/unequip");
+            }
+            if (deathReturnEnabled) routes.Add("/p1/actor/death-return");
             return new DeploymentProfile
             {
                 ProfileId = "private-alpha",
                 AlphaBossEnabled = encounterEnabled,
-                ServerEnabledRoutes = encounterEnabled
-                    ? new List<string> { "/p1/encounters/current", "/p1/encounters/{id}" }
-                    : new List<string>(),
+                AlphaInventoryV2Enabled = inventoryV2Enabled,
+                DeathReturnEnabled = deathReturnEnabled,
+                ServerEnabledRoutes = routes,
                 SourceVersion = "private-alpha"
             };
         }
@@ -47,7 +67,7 @@ namespace NguMach.Client.Core.Handshake
     public sealed class ClientCapability
     {
         public string ClientCoreVersion { get; set; } = "opc-15-0.2";
-        public string ContractVersion { get; set; } = "v1";
+        public string ContractVersion { get; set; } = "v2";
         public string TargetFramework { get; set; } = "net8.0";
         public string DeploymentProfileId { get; set; } = "production-off";
         public string ServerSourceVersion { get; set; } = "unknown";
@@ -58,19 +78,33 @@ namespace NguMach.Client.Core.Handshake
         public List<string> SupportedRoutes { get; set; } = new List<string>
         {
             "/p1/sessions", "/p1/world/{id}", "/p1/quests/{id}", "/p1/inventory/{id}",
-            "/p1/encounters/current", "/p1/encounters/{id}"
+            "/p1/encounters/current", "/p1/encounters/{id}",
+            "/p1/inventory/v2/{id}", "/p1/inventory/v2/equip", "/p1/inventory/v2/unequip",
+            "/p1/actor/death-return"
         };
 
         // Routes the deployment profile says the server actually exposes.
         public List<string> ServerEnabledRoutes { get; set; } = new List<string>();
 
-        // Alpha gate is OFF unless an explicit private profile enables it.
+        // Alpha gates are OFF unless an explicit private profile enables them.
         public bool AlphaBossEnabled { get; set; }
+        public bool AlphaInventoryV2Enabled { get; set; }
+        public bool DeathReturnEnabled { get; set; }
 
         public bool IsEncounterUsable =>
             AlphaBossEnabled &&
             CapabilityHandshake.IsRouteEnabled(this, "/p1/encounters/current") &&
             CapabilityHandshake.IsRouteEnabled(this, "/p1/encounters/{id}");
+
+        public bool IsInventoryV2Usable =>
+            AlphaInventoryV2Enabled &&
+            CapabilityHandshake.IsRouteEnabled(this, "/p1/inventory/v2/{id}") &&
+            CapabilityHandshake.IsRouteEnabled(this, "/p1/inventory/v2/equip") &&
+            CapabilityHandshake.IsRouteEnabled(this, "/p1/inventory/v2/unequip");
+
+        public bool IsDeathReturnUsable =>
+            DeathReturnEnabled &&
+            CapabilityHandshake.IsRouteEnabled(this, "/p1/actor/death-return");
 
         public static ClientCapability FromProfile(DeploymentProfile profile)
         {
@@ -81,6 +115,8 @@ namespace NguMach.Client.Core.Handshake
                 ContractVersion = profile.ContractVersion,
                 ServerSourceVersion = profile.SourceVersion,
                 AlphaBossEnabled = profile.AlphaBossEnabled,
+                AlphaInventoryV2Enabled = profile.AlphaInventoryV2Enabled,
+                DeathReturnEnabled = profile.DeathReturnEnabled,
                 ServerEnabledRoutes = new List<string>(profile.ServerEnabledRoutes ?? new List<string>())
             };
         }
@@ -108,6 +144,20 @@ namespace NguMach.Client.Core.Handshake
             if (cap == null || !cap.AlphaBossEnabled) return false;
             return IsRouteEnabled(cap, "/p1/encounters/current") &&
                    IsRouteEnabled(cap, "/p1/encounters/{id}");
+        }
+
+        public static bool IsInventoryV2Usable(ClientCapability cap)
+        {
+            if (cap == null || !cap.AlphaInventoryV2Enabled) return false;
+            return IsRouteEnabled(cap, "/p1/inventory/v2/{id}") &&
+                   IsRouteEnabled(cap, "/p1/inventory/v2/equip") &&
+                   IsRouteEnabled(cap, "/p1/inventory/v2/unequip");
+        }
+
+        public static bool IsDeathReturnUsable(ClientCapability cap)
+        {
+            if (cap == null || !cap.DeathReturnEnabled) return false;
+            return IsRouteEnabled(cap, "/p1/actor/death-return");
         }
 
         public static bool IsClassSupported(ClientCapability cap, string classId)

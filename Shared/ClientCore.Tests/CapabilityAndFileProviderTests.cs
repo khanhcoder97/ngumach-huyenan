@@ -100,6 +100,45 @@ namespace NguMach.Client.Core.Tests
             Assert.False(cap.IsEncounterUsable);
             Assert.False(CapabilityHandshake.IsEncounterUsable(cap));
         }
+
+        [Fact]
+        public void InventoryV2AndDeathReturn_RequireOwnGatesAndRoutes()
+        {
+            var off = ClientCapability.FromProfile(DeploymentProfile.PrivateAlpha(true));
+            Assert.True(CapabilityHandshake.IsRouteSupported(off, "/p1/inventory/v2/{id}"));
+            Assert.True(CapabilityHandshake.IsRouteSupported(off, "/p1/actor/death-return"));
+            Assert.False(off.IsInventoryV2Usable);
+            Assert.False(off.IsDeathReturnUsable);
+            Assert.False(CapabilityHandshake.IsInventoryV2Usable(off));
+            Assert.False(CapabilityHandshake.IsDeathReturnUsable(off));
+
+            var on = ClientCapability.FromProfile(DeploymentProfile.PrivateAlpha(true, true, true));
+            Assert.True(on.IsInventoryV2Usable);
+            Assert.True(on.IsDeathReturnUsable);
+            Assert.True(CapabilityHandshake.IsInventoryV2Usable(on));
+            Assert.True(CapabilityHandshake.IsDeathReturnUsable(on));
+
+            var missingEquip = ClientCapability.FromProfile(DeploymentProfile.PrivateAlpha(true, true, true));
+            missingEquip.ServerEnabledRoutes.Remove("/p1/inventory/v2/equip");
+            Assert.False(missingEquip.IsInventoryV2Usable);
+            Assert.False(CapabilityHandshake.IsInventoryV2Usable(missingEquip));
+
+            var noReturnRoute = ClientCapability.FromProfile(DeploymentProfile.PrivateAlpha(true, true, true));
+            noReturnRoute.ServerEnabledRoutes.Remove("/p1/actor/death-return");
+            Assert.False(noReturnRoute.IsDeathReturnUsable);
+            Assert.False(CapabilityHandshake.IsDeathReturnUsable(noReturnRoute));
+        }
+
+        [Fact]
+        public void ProductionOff_NeverAdvertisesV2OrDeathReturn()
+        {
+            var cap = ClientCapability.FromProfile(DeploymentProfile.ProductionOff());
+            Assert.False(cap.IsInventoryV2Usable);
+            Assert.False(cap.IsDeathReturnUsable);
+            Assert.False(CapabilityHandshake.IsInventoryV2Usable(cap));
+            Assert.False(CapabilityHandshake.IsDeathReturnUsable(cap));
+            Assert.Empty(cap.ServerEnabledRoutes);
+        }
     }
 
     public class FileProviderTests

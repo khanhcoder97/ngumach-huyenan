@@ -21,7 +21,7 @@ namespace NguMach.Client.P1
         private int sequence;
         private P1Request pending;
         private bool pendingCombat;
-        private enum PendingKind { Legacy, Interact, TurnIn, CombatV2 }
+        private enum PendingKind { Legacy, Interact, TurnIn, CombatV2, InventoryV2, DeathReturn }
         private PendingKind pendingKind;
         private readonly HashSet<string> seenEvents = new HashSet<string>(StringComparer.Ordinal);
         private readonly Queue<string> seenEventOrder = new Queue<string>();
@@ -229,6 +229,8 @@ namespace NguMach.Client.P1
             if (pendingKind == PendingKind.Interact) return await ApplyInteraction(reply, ct);
             if (pendingKind == PendingKind.TurnIn) return await ApplyTurnIn(reply, ct);
             if (pendingKind == PendingKind.CombatV2) return await ApplyCombatV2(reply, ct);
+            if (pendingKind == PendingKind.InventoryV2) return await ApplyInventoryV2(reply);
+            if (pendingKind == PendingKind.DeathReturn) return await ApplyDeathReturn(reply, ct);
             if (pendingCombat)
             {
                 var r = Parse<P1CombatEvent>(reply);

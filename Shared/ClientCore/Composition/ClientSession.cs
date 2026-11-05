@@ -142,6 +142,14 @@ namespace NguMach.Client.Core.Composition
             return ReadEncounterCoreAsync("/p1/encounters/current", true, ct);
         }
 
+        // Death-return intent goes through the same P1Client lane so the
+        // idempotency key survives relogin/replay and no second grant can occur.
+        public Task<P1Result> ReturnFromDeathAsync(CancellationToken ct = default)
+        {
+            if (_disposed) throw new ObjectDisposedException(nameof(ClientSession));
+            return Client.ReturnFromDeathAsync(ct);
+        }
+
         public Task<EncounterReadResult> ReadEncounterAsync(string encounterId, CancellationToken ct = default)
         {
             if (string.IsNullOrWhiteSpace(encounterId))
