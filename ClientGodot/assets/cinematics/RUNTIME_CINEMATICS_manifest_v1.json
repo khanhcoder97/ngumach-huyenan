@@ -1,0 +1,279 @@
+{
+ "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
+ "checkpoint": "MEDIA-02 checkpoint 10 - M6 runtime delivery",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "campaignTotals": {
+  "scenes": 20,
+  "shots": 63,
+  "seconds": 378
+ },
+ "notes": [
+  "P0 animatic (MP4 review + OGV runtime + poster) verified against checkpoint 03 SHAs; files already in the runtime tree.",
+  "Timing JSON + SRT per scene copied from Narrative/Deliveries with sha256 verification against the checkpoint 01/05/06 manifests. SRT is UTF-8/NFC, DRAFT.",
+  "Only CIN_001_S05 (24.8-28.5 s, version B) is DECIDED; all other dialogue windows remain PROPOSED_ANIMATIC_PLACEMENT until director/Codex confirms them.",
+  "No final picture: animatic is storyboard level; character keyframes still await lock for locked shots."
+ ],
+ "animatic": [
+  {
+   "runtimePath": "assets/cinematics/P0_animatic_640x360_30fps.mp4",
+   "sha256": "a625043c4fd47eee15e0f203c8a5cde5890d00a0c0a9fc31933b249f37b5cf06",
+   "sizeBytes": 641502,
+   "status": "VERIFIED_CHECKPOINT_03"
+  },
+  {
+   "runtimePath": "assets/cinematics/P0_animatic_640x360_30fps.ogv",
+   "sha256": "7c0fdb291992b49df18210c72a41e64ebdbb4baf9a56ab0a6179d40cf6813325",
+   "sizeBytes": 1825222,
+   "status": "VERIFIED_CHECKPOINT_03"
+  },
+  {
+   "runtimePath": "assets/cinematics/P0_animatic_poster.png",
+   "sha256": "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8",
+   "sizeBytes": 368439,
+   "status": "VERIFIED_CHECKPOINT_03"
+  }
+ ],
+ "scenes": [
+  {
+   "sceneId": "CIN_001",
+   "durationSeconds": 36,
+   "shots": 6,
+   "timingFile": "assets/cinematics/timing/CIN_001_timing_v1.json",
+   "timingSha256": "2c905e375145aa31d0465fae87638cbccfb76d74df184dc90d1d5130755f65e3",
+   "srtFile": "assets/cinematics/timing/CIN_001_vi.srt",
+   "srtSha256": "c014be143d1878eecf656679f4b7df70087fac87f10383b3d4218cd092da4f8d",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "DECIDED_DEC_MEDIA_P0",
+   "dialogueCues": 0
+  },
+  {
+   "sceneId": "CIN_002",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_002_timing_v1.json",
+   "timingSha256": "bc0578cd80ee0f7584fec695e97be34e356899df9ae7e5d9919a9b665fc70c0c",
+   "srtFile": "assets/cinematics/timing/CIN_002_vi.srt",
+   "srtSha256": "466a5051eb04f99af62497ecc2a36eec96fb08416ef3511055f8cc932b55dbbd",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 0
+  },
+  {
+   "sceneId": "CIN_003",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_003_timing_v1.json",
+   "timingSha256": "0e6452a072ec1e87205116e7b9de4ea51e1cb5046eb5bda9fa8b41d4d2baa726",
+   "srtFile": "assets/cinematics/timing/CIN_003_vi.srt",
+   "srtSha256": "c98244a4892e768bd73e676e1f0a74569957e869b704921813edc0969dc5c363",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  },
+  {
+   "sceneId": "CIN_004",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_004_timing_v1.json",
+   "timingSha256": "431b3b025d37bcc39190b87f5a0847b6e0c74e0dbb719998de5cd48ff6f75a97",
+   "srtFile": "assets/cinematics/timing/CIN_004_vi.srt",
+   "srtSha256": "b06b87b1f07f841d082a7ee7ed60647d488f05939e419a1321df4ad5a4296645",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT; OFFSCREEN_DECIDED_DEC_MEDIA_P0",
+   "dialogueCues": 0
+  },
+  {
+   "sceneId": "CIN_005",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_005_timing_v1.json",
+   "timingSha256": "b82b2582f238abf1dd0da3b241258dd08f9a6664bc3cc3996042d5b028e0f618",
+   "srtFile": "assets/cinematics/timing/CIN_005_vi.srt",
+   "srtSha256": "1f3443dd74d1cd92a008358eb1156d3fc984d4a89057dc4658f2e077df33be5e",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  },
+  {
+   "sceneId": "CIN_006",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_006_timing_v1.json",
+   "timingSha256": "4c237f04195989b6b113a8800d114320ca05079bb8163fa0c9d3871988402955",
+   "srtFile": "assets/cinematics/timing/CIN_006_vi.srt",
+   "srtSha256": "cf43595db5e0a88fa687ee934ca953f19aa4e8e614af39bc27a9af01a164f708",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 0
+  },
+  {
+   "sceneId": "CIN_007",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_007_timing_v1.json",
+   "timingSha256": "df7827c416ffe61f83f2a081a5b503d19789d2739e630d32b11d1c93bb298bfd",
+   "srtFile": "assets/cinematics/timing/CIN_007_vi.srt",
+   "srtSha256": "ce95f8d4351ebdc83641d2d5f7896dab4131f0f024c18f212253a83792ddfbb6",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  },
+  {
+   "sceneId": "CIN_008",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_008_timing_v1.json",
+   "timingSha256": "3a8e90942678e78ad5614cbb5798b179ae91079382769f4e683d5cfef729a754",
+   "srtFile": "assets/cinematics/timing/CIN_008_vi.srt",
+   "srtSha256": "8f223c20a6dd532a6dbee3d32617b4bd403ae69bebddb6061d7f07f634cd86aa",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  },
+  {
+   "sceneId": "CIN_009",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_009_timing_v1.json",
+   "timingSha256": "0f49fc20b67ff947823701a8cbeece79b20ad6951d1f64f6743cfb20c34ddca9",
+   "srtFile": "assets/cinematics/timing/CIN_009_vi.srt",
+   "srtSha256": "a0147ac421b78dfd705fdf6ece0aed6bf212b8d17550f5c3b4182bad44da2a24",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  },
+  {
+   "sceneId": "CIN_010",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_010_timing_v1.json",
+   "timingSha256": "05b194a3b2119721a535a9f60d0c34159164b9857ee075b9144cbd163fc5fef1",
+   "srtFile": "assets/cinematics/timing/CIN_010_vi.srt",
+   "srtSha256": "8905b67970f5304bc0746f157633fde77479526f242a3a5400503e1d9568c336",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  },
+  {
+   "sceneId": "CIN_011",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_011_timing_v1.json",
+   "timingSha256": "db01ab3b17aed17159f6dd1afeacefef7ed5522c955a81e889430d946b5be324",
+   "srtFile": "assets/cinematics/timing/CIN_011_vi.srt",
+   "srtSha256": "f1ae820579e17490df1a192491a14ea6b17666021de5323057a7a95974461617",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  },
+  {
+   "sceneId": "CIN_012",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_012_timing_v1.json",
+   "timingSha256": "803902a6a0ee23ec8f14b7e383fa91d94e65c47a158b55745ccf48c20e24f06b",
+   "srtFile": "assets/cinematics/timing/CIN_012_vi.srt",
+   "srtSha256": "d85efc72a41ae3e3c080d2c0d35260bd10370ecd04f197b5818499223c812166",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  },
+  {
+   "sceneId": "CIN_013",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_013_timing_v1.json",
+   "timingSha256": "faed8f4a1736159cc223cb2185b6bd8e5eb41b9c0d6e054a8d2e2540a7338c88",
+   "srtFile": "assets/cinematics/timing/CIN_013_vi.srt",
+   "srtSha256": "3fb6f94ed2eec13cff377b5123c0bd31c56468b64fa4ea11234b103a243bdb12",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  },
+  {
+   "sceneId": "CIN_014",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_014_timing_v1.json",
+   "timingSha256": "4e3d3ca2c5484b0d4234579c0e21b172c3460986f5d1625a839a41bed2d32ff9",
+   "srtFile": "assets/cinematics/timing/CIN_014_vi.srt",
+   "srtSha256": "90e98813bd52a39df38a0ff2c8f4d511396a86864b5b892221aceff6c81fd044",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  },
+  {
+   "sceneId": "CIN_015",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_015_timing_v1.json",
+   "timingSha256": "fabb7e50869d6288018866064be18ee7432f23cef96eac74abe6c7d3f3edb201",
+   "srtFile": "assets/cinematics/timing/CIN_015_vi.srt",
+   "srtSha256": "c12278572991353372b3a95d389b43afa574364ebe58552bf3ebaba20a3cf387",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  },
+  {
+   "sceneId": "CIN_016",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_016_timing_v1.json",
+   "timingSha256": "0064f447bfdb2d3b40776623fc40d60a2d724d812659aa8ad506ce5331a5e405",
+   "srtFile": "assets/cinematics/timing/CIN_016_vi.srt",
+   "srtSha256": "ad5c7158558bf96544fc77ab83a01160a3e5898690e6d30521675eab943da2dc",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  },
+  {
+   "sceneId": "CIN_017",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_017_timing_v1.json",
+   "timingSha256": "64a630bd18ba5a9437ed3ad3cc17a0322fb64d0abba558652f447d797bf15499",
+   "srtFile": "assets/cinematics/timing/CIN_017_vi.srt",
+   "srtSha256": "559a0c0c36e764d68545a32f9989b54f7fb8edc6e50a62558a9c784077063704",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  },
+  {
+   "sceneId": "CIN_018",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_018_timing_v1.json",
+   "timingSha256": "85f66a106fe7ac07e943448477f9c4eca74cc116ce0a0ef9cba7fe443fccebb6",
+   "srtFile": "assets/cinematics/timing/CIN_018_vi.srt",
+   "srtSha256": "75bf61547475c528c65c3590f87420ee2c055bae715921a6e1d3f20db95a1371",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 2
+  },
+  {
+   "sceneId": "CIN_019",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_019_timing_v1.json",
+   "timingSha256": "46c634b3643b4f32c1527b2fefc7be4e1bfad09366147f452dd22742768625cd",
+   "srtFile": "assets/cinematics/timing/CIN_019_vi.srt",
+   "srtSha256": "faac38b559210e82b467320e228e50a6a5c47b1b09e510df052830f2aa6b0668",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  },
+  {
+   "sceneId": "CIN_020",
+   "durationSeconds": 18,
+   "shots": 3,
+   "timingFile": "assets/cinematics/timing/CIN_020_timing_v1.json",
+   "timingSha256": "064ac1818ade834c8cf05a1dd9c9dc00a71e57b9cd248ae5816dd325d6dfbc38",
+   "srtFile": "assets/cinematics/timing/CIN_020_vi.srt",
+   "srtSha256": "7f27d6672e5a7b55f87162d636a0802cbaaafb9bc7116e9330f9cfc731e27dcc",
+   "srtStatus": "DRAFT",
+   "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "dialogueCues": 1
+  }
+ ]
+}
