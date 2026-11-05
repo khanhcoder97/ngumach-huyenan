@@ -104,3 +104,5 @@ seamlessness PASS).
 - Ambience and gameplay SFX/UI remain the ported PackV1 renders with their own
   provenance; this checkpoint composes the music set and the cinema stingers,
   which are the cues inside Muse's cinema scope.
+
+> **Erratum (same day):** the report commit message states a scope-audit count of 1062 paths; the verified three-dot diff count vs integration `f0859d0` is **1058 paths, 0 violations**. The commit message is not amended (no force-push); this note is the correction of record.
