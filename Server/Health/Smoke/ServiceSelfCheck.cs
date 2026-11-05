@@ -1292,6 +1292,62 @@ public static class ServiceSelfCheck
             (tickStateStore.TryGet("ENT_SELFCHECK_TICK_MOB", 1)?.Hp ?? 0) == 138,
             $"{mk03Hit1.Result?.Amount}/{mk03Hit2.Result?.Amount}/{mk03Hit3.Result?.Amount}");
 
+        // Work order 29 freezes "VFX không quyết định hit". The runtime form of that
+        // sentence is two catalogues that differ in exactly one field - the VFX key -
+        // resolving the same SK-MK-03 cast into the same three impacts on the same
+        // ticks. A grep would only prove nobody reads the key today; this proves the
+        // resolution cannot depend on it.
+        var variantDefs = new Dictionary<string, CombatSkillDefinition>(StringComparer.Ordinal);
+        foreach (var variantId in new[] { "SK-MK-01", "SK-MK-02", "SK-MK-03" })
+        {
+            combatSkills.TryGet(variantId, out var shippedDefinition);
+            variantDefs[variantId] = shippedDefinition with { VfxKey = "VFX/Skill/SK-MK-99" };
+        }
+
+        var vfxActor = NewPlayer("CHR_SELFCHECK_VFX_ONLY");
+        vfxActor.X = 0;
+        vfxActor.Y = 0;
+        var vfxQuests = new InMemoryQuestService(
+            TickCatalog(), new InMemoryQuestStateStore(), tickRecords, tickClock);
+        vfxQuests.Accept(vfxActor, "TEST-TICK-01");
+        var vfxRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_VFX_MOB", 3)]), tickClock);
+        var vfxEventStore = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var vfxStateStore = new MobCombatStateStore();
+        var vfxEngine = new CombatTickEngine(
+            vfxRegistry,
+            enabledCombat,
+            new CombatSkillCatalog(variantDefs),
+            vfxEventStore,
+            vfxStateStore,
+            vfxQuests,
+            new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(),
+            tickGeometry,
+            NewDashes(tickGeometry),
+            new ServerClock());
+
+        vfxEngine.Schedule(
+            vfxActor, vfxActor.SessionId, new string('f', 32),
+            CombatV2Actions.Skill, "SK-MK-03", 1, 0, 300);
+        var vfxHit1 = vfxEngine.Tick(302)
+            .Single(combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        var vfxHit2 = vfxEngine.Tick(305)
+            .Single(combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        var vfxHit3 = vfxEngine.Tick(308)
+            .Single(combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        Check(
+            "tick.vfx_key_cannot_change_the_hit",
+            vfxHit1.HitIndex == 0 && vfxHit1.Result?.Amount == 8 &&
+            vfxHit2.HitIndex == 1 && vfxHit2.Result?.Amount == 10 &&
+            vfxHit3.HitIndex == 2 && vfxHit3.Result?.Amount == 17 &&
+            (vfxStateStore.TryGet("ENT_SELFCHECK_VFX_MOB", 1)?.Hp ?? 0) == 157,
+            $"{vfxHit1.Result?.Amount}/{vfxHit2.Result?.Amount}/{vfxHit3.Result?.Amount}");
+
         foreach (var cancelReason in new[] { "DEAD", "MAP", "FLOOR" })
         {
             var cancelledSource = NewPlayer("CHR_CANCEL_" + cancelReason);
