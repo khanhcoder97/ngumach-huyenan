@@ -244,6 +244,128 @@ public static class ServiceSelfCheck
             unapprovedStatus is not null && unapprovedStatus.Contains("status", StringComparison.Ordinal),
             unapprovedStatus ?? "none");
 
+        // Q5 names currency, and docs/production/Currency_Production_Data_vi.csv is its
+        // canonical table. The server hard-coded the one id it grants and only guarded
+        // arithmetic overflow, so the caps, the character/account split and the fact that
+        // nothing is tradeable were all unwritten rules. Loading is not enforcing: turning
+        // balance_cap into a refusal needs an error code on the wire, so the catalogue is
+        // data plus these structural checks.
+        var currencies = services.GetRequiredService<CurrencyCatalog>();
+        Check(
+            "currency.catalog_sixteen_rows",
+            currencies.Count == 16 &&
+            currencies.Rows.Select(currency => currency.CurrencyType).Distinct().Count() == 7,
+            $"count={currencies.Count}");
+
+        currencies.TryGet("COIN", out var coin);
+        Check(
+            "currency.catalog_coin_row_matches_the_source",
+            coin is { CurrencyType: "SOFT", Tradeable: false, StorageScope: "character", BalanceCap: 2_000_000_000 } &&
+            coin.DailyCap.Kind == DailyCapKind.None &&
+            coin.WeeklyReset == "none" &&
+            coin.Notes.Contains("client never submits balances", StringComparison.Ordinal),
+            $"coin={coin?.BalanceCap} daily={coin?.DailyCap.Kind}");
+
+        Check(
+            "currency.catalog_no_shipped_currency_is_tradeable",
+            currencies.CountWhere(currency => currency.Tradeable) == 0,
+            $"tradeable={currencies.CountWhere(c => c.Tradeable)}");
+
+        // The eight account-scoped currencies (all five regional reputations, both merit
+        // currencies, the Long Mon medal) cannot be held per character, and the server has
+        // no account concept at all - this is the count, recorded rather than invented.
+        Check(
+            "currency.catalog_scope_split_names_the_missing_account_concept",
+            currencies.CountWhere(currency => currency.StorageScope == "character") == 8 &&
+            currencies.CountWhere(currency => currency.StorageScope == "account") == 8 &&
+            currencies.Rows
+                .Where(currency => currency.CurrencyType == "REGIONAL_REPUTATION")
+                .All(currency => currency.StorageScope == "account" && currency.BalanceCap == 10_000 &&
+                                 currency.DailyCap.Kind == DailyCapKind.Amount && currency.DailyCap.Amount == 200),
+            $"character={currencies.CountWhere(c => c.StorageScope == "character")}");
+
+        Check(
+            "currency.catalog_keeps_an_unscheduled_cap_visible_instead_of_rounding_it",
+            currencies.CountWhere(currency => currency.DailyCap.Kind == DailyCapKind.Amount) == 8 &&
+            currencies.CountWhere(currency => currency.DailyCap.Kind == DailyCapKind.None) == 7 &&
+            currencies.CountWhere(currency => currency.DailyCap.Kind == DailyCapKind.Unscheduled) == 1 &&
+            currencies.Rows
+                .Single(currency => currency.DailyCap.Kind == DailyCapKind.Unscheduled)
+                .DailyCap.Raw == "per scheduled match",
+            $"amount={currencies.CountWhere(c => c.DailyCap.Kind == DailyCapKind.Amount)} " +
+            $"none={currencies.CountWhere(c => c.DailyCap.Kind == DailyCapKind.None)}");
+
+        // Every currency the shipped quest rewards pay out has to exist in the table, so a
+        // quest cannot name an id that no cap, scope or display name covers.
+        var shippedQuests = services.GetRequiredService<IQuestCatalog>();
+        var rewardCurrencyIds = shippedQuests.QuestIds
+            .Select(questId => shippedQuests.TryGet(questId, out var questDefinition) ? questDefinition : null)
+            .Where(questDefinition => questDefinition is not null)
+            .SelectMany(questDefinition => questDefinition!.Rewards.Currency)
+            .Select(reward => reward.CurrencyId)
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        Check(
+            "currency.every_reward_currency_id_exists_in_the_catalog",
+            rewardCurrencyIds.Count > 0 &&
+            rewardCurrencyIds.All(currencyId => currencies.TryGet(currencyId, out _)) &&
+            currencies.TryGet(LootCurrencyIds.Coin, out _),
+            $"rewards={string.Join("|", rewardCurrencyIds)}");
+
+        var balanceBearingRequests = typeof(InventoryItem).Assembly
+            .GetTypes()
+            .Where(type => type.Name.EndsWith("Request", StringComparison.Ordinal))
+            .SelectMany(type => type.GetProperties(System.Reflection.BindingFlags.Public |
+                                                   System.Reflection.BindingFlags.Instance))
+            .Where(property => property.Name.Contains("Balance", StringComparison.OrdinalIgnoreCase))
+            .Select(property => property.DeclaringType?.Name + "." + property.Name)
+            .ToArray();
+        Check(
+            "currency.no_request_dto_accepts_a_client_submitted_balance",
+            balanceBearingRequests.Length == 0,
+            string.Join("|", balanceBearingRequests));
+
+        static string Cut(string? message) =>
+            message is null ? "none" : message[..Math.Min(90, message.Length)];
+
+        string? CurrencyLoadFailure(string from, string to)
+        {
+            var root = Path.Combine(Path.GetTempPath(), "p1-currency-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var directory = Path.Combine(root, "docs", "production");
+                Directory.CreateDirectory(directory);
+                var source = File.ReadAllLines(Path.Combine(
+                    CurrencyCatalogLoader.DiscoverDirectory(AppContext.BaseDirectory),
+                    CurrencyCatalogLoader.RelativePath));
+                File.WriteAllLines(
+                    Path.Combine(directory, Path.GetFileName(CurrencyCatalogLoader.RelativePath)),
+                    source.Select(line => line.Replace(from, to, StringComparison.Ordinal)).ToArray());
+
+                try
+                {
+                    CurrencyCatalogLoader.Load(root);
+                    return "LOADED";
+                }
+                catch (InvalidOperationException exception)
+                {
+                    return exception.Message;
+                }
+            }
+            finally
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+
+        var badCurrencyType = CurrencyLoadFailure(",SOFT,", ",GOLD,");
+        var badBalanceCap = CurrencyLoadFailure("2000000000", "none");
+        Check(
+            "currency.catalog_rejects_an_unknown_type_and_a_non_numeric_cap",
+            badCurrencyType is not null && badCurrencyType.Contains("currency_type", StringComparison.Ordinal) &&
+            badBalanceCap is not null && badBalanceCap.Contains("balance_cap", StringComparison.Ordinal),
+            $"type='{Cut(badCurrencyType)}' cap='{Cut(badBalanceCap)}'");
+
         var combatActor = NewPlayer("CHR_SELFCHECK_COMBAT");
         var badSkill = combat.Resolve(
             combatActor, new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-99" });

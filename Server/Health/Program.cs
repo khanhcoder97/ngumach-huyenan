@@ -114,6 +114,12 @@ builder.Services.AddSingleton(serviceProvider =>
     return ClassPassiveCatalogLoader.Load(
         ClassPassiveCatalogLoader.DiscoverDirectory(environment.ContentRootPath));
 });
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return CurrencyCatalogLoader.Load(
+        CurrencyCatalogLoader.DiscoverDirectory(environment.ContentRootPath));
+});
 builder.Services.AddSingleton<NarrativeFlagStore>();
 builder.Services.AddSingleton<NarrativeService>();
 builder.Services.AddSingleton(serviceProvider =>
@@ -329,6 +335,15 @@ app.Logger.LogInformation("Loaded quest definitions: {QuestCount}.", quests.Coun
 
 var itemCatalog = app.Services.GetRequiredService<ItemCatalog>();
 app.Logger.LogInformation("Loaded item catalogue: {ItemCount} items.", itemCatalog.Count);
+
+var currencies = app.Services.GetRequiredService<CurrencyCatalog>();
+app.Logger.LogInformation(
+    "Loaded currency catalogue: {CurrencyCount} currencies ({CharacterScoped} character-scoped, " +
+    "{AccountScoped} account-scoped, {Tradeable} tradeable - caps are data, not enforced yet).",
+    currencies.Count,
+    currencies.CountWhere(currency => currency.StorageScope == "character"),
+    currencies.CountWhere(currency => currency.StorageScope == "account"),
+    currencies.CountWhere(currency => currency.Tradeable));
 
 var classPassives = app.Services.GetRequiredService<ClassPassiveCatalog>();
 app.Logger.LogInformation(
