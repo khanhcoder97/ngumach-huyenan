@@ -180,16 +180,16 @@ def main():
     check_audio_manifest()
     check_cinematics_manifest()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 19 (CIN_006 VO delivery) - runtime re-verification",
+        "checkpoint": "MEDIA-02 checkpoint 20 (P0 draft mix delivery) - runtime re-verification",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
-        "verifies": "checkpoint 10 runtime delivery as revised by checkpoint 13 (animatic v2), checkpoint 14 (dialogueCues fix), checkpoint 15 (LF + LFS fix), checkpoint 16 (animatic v3: CIN_002_S02 corrected keyframe + 16:9 keyframes), checkpoint 17 (campaign VO: 17 takes + 378 s timeline), checkpoint 18 (per-scene clips: CIN_001/CIN_002/CIN_004 video + CIN_006 timing/SRT only) and checkpoint 19 (CIN_006 VO: canonical + alternate takes + 18 s timeline) (RUNTIME_AUDIO_manifest_v1.json + RUNTIME_CINEMATICS_manifest_v1.json)",
+        "verifies": "checkpoint 10 runtime delivery as revised by checkpoint 13 (animatic v2), checkpoint 14 (dialogueCues fix), checkpoint 15 (LF + LFS fix), checkpoint 16 (animatic v3: CIN_002_S02 corrected keyframe + 16:9 keyframes), checkpoint 17 (campaign VO: 17 takes + 378 s timeline), checkpoint 18 (per-scene clips: CIN_001/CIN_002/CIN_004 video + CIN_006 timing/SRT only) checkpoint 19 (CIN_006 VO: canonical + alternate takes + 18 s timeline) and checkpoint 20 (P0 draft mixes: 3 scenes + 72 s review) (RUNTIME_AUDIO_manifest_v1.json + RUNTIME_CINEMATICS_manifest_v1.json)",
         "counts": COUNTS,
         "mismatches": ERRORS,
         "notes": NOTES,
         "verdict": "PASS" if not ERRORS else "MISMATCHES_FOUND",
         "limits": [
-            "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08/17/19, measured from real bytes.",
+            "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08/17/19/20, measured from real bytes.",
             "This check verifies runtime copies still match their manifests; it does not verify the source packs (see validate_media_deliveries.py, re-run at checkpoint 11).",
             "NOT a mix PASS and NOT an ear audition; NOT a Godot wiring check (presentation adapter is Codex's work).",
         ],

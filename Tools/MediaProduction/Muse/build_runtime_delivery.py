@@ -18,6 +18,8 @@ Sources (all already measured from real bytes in checkpoints 01-09):
   - Art_Source/Audio/Muse/VO/CIN006_DRAFT/CIN006_VO_manifest_v1.json
     (CIN_006 canonical take + alternate take + 18 s VO timeline WAV,
     checkpoint 19)
+  - Art_Source/Audio/Muse/MIX/P0_DRAFT/P0_MIX_manifest_v1.json
+    (3 P0 scene draft mixes + 72 s review mix WAV, checkpoint 20)
   - Implementation/Content/Narrative/Deliveries/{P0,CAMPAIGN}_timing_manifest_v1.json
     + CIN_006/CIN_006_timing_manifest_v1.json (20 scenes timing JSON + SRT)
 
@@ -26,6 +28,7 @@ Destinations (policy-allowed media roots):
   - ClientGodot/assets/audio/vo/p0/                     (4 files)
   - ClientGodot/assets/audio/vo/campaign/               (18 files)
   - ClientGodot/assets/audio/vo/cin006/                 (3 files)
+  - ClientGodot/assets/audio/mix/p0/                    (4 files)
   - ClientGodot/assets/cinematics/timing/               (40 files)
   - ClientGodot/assets/cinematics/P0_animatic_*         (already there
     since checkpoint 03, revised in checkpoint 13; verified here, not re-copied)
@@ -55,6 +58,7 @@ PACK_PREFIX = "Client/Assets/Audio/PackV1/"
 VO_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "VO" / "P0_DRAFT"
 CAMPAIGN_VO_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "VO" / "CAMPAIGN_DRAFT"
 CIN006_VO_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "VO" / "CIN006_DRAFT"
+P0_MIX_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "P0_DRAFT"
 DUR_TOL_S = 0.02
 
 # P0 animatic files delivered in checkpoint 03, revised in checkpoint 13
@@ -154,7 +158,8 @@ def copy_verified_audio(src_rel, dest_rel, expect_sha, expect_size,
 
 def main():
     audio_entries = []
-    counts = {"music_ambience": 0, "sfx_ui_variants": 0, "vo": 0}
+    counts = {"music_ambience": 0, "sfx_ui_variants": 0, "vo": 0,
+              "mix": 0}
 
     # --- 1. Music + ambience runtime OGGs (checkpoint 07) ---
     ma = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
@@ -345,12 +350,51 @@ def main():
         audio_entries.append(entry)
         counts["vo"] += 1
 
+    # --- 3d. P0 draft mixes (checkpoint 20) ---
+    pmix = json.loads((P0_MIX_SRC / "P0_MIX_manifest_v1.json")
+                      .read_text(encoding="utf-8"))
+    for scene in pmix["scenes"]:
+        mx = scene["mix"]
+        src_rel = f"Art_Source/Audio/Muse/MIX/P0_DRAFT/{mx['file']}"
+        dest_rel = f"mix/p0/{mx['file']}"
+        entry = copy_verified_audio(
+            src_rel, dest_rel, mx["sha256"], mx["format"]["bytes"],
+            mx["durationSeconds"], f"P0 mix {scene['sceneId']}")
+        if entry is None:
+            continue
+        entry.update({"cueKey": f"MIX/{scene['sceneId']}",
+                      "category": "mix", "sceneId": scene["sceneId"],
+                      "codec": mx["format"]["codec"],
+                      "sampleRateHz": mx["format"]["sampleRateHz"],
+                      "channels": mx["format"]["channels"],
+                      "integratedLufs": float(mx["integratedLUFS"]),
+                      "truePeakDbtp": float(mx["truePeakDBTP"]),
+                      "assetState": "DRAFT_MIX_NOT_FINAL",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["mix"] += 1
+    rmx = pmix["reviewMix"]
+    entry = copy_verified_audio(
+        f"Art_Source/Audio/Muse/MIX/P0_DRAFT/{rmx['file']}",
+        f"mix/p0/{rmx['file']}", rmx["sha256"],
+        (P0_MIX_SRC / rmx["file"]).stat().st_size,
+        rmx.get("durationSeconds", 72.0), "P0 mix review 72 s")
+    if entry is not None:
+        entry.update({"cueKey": "MIX/P0_REVIEW_72S", "category": "mix",
+                      "codec": "pcm_s16le", "sampleRateHz": 48000,
+                      "channels": 2,
+                      "integratedLufs": float(rmx["integratedLUFS"]),
+                      "truePeakDbtp": float(rmx["truePeakDBTP"]),
+                      "assetState": "DRAFT_MIX_NOT_FINAL",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["mix"] += 1
+
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 checkpoint 19 - M6 runtime delivery "
-                       "revised: CIN_006 VO drafts (canonical take + "
-                       "alternate take + 18 s timeline) added; 21/21 "
-                       "dialogue windows now have draft VO"),
+        "checkpoint": ("MEDIA-02 checkpoint 20 - M6 runtime delivery "
+                       "revised: P0 draft mixes (3 scene mixes + 72 s "
+                       "review mix) added"),
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "counts": counts,
@@ -380,6 +424,13 @@ def main():
             "Q3 (no window assigned, not in the SRT, not on the scene "
             "timeline, does not replace canonical). With this delivery "
             "all 21 D1-approved dialogue windows have a draft VO take.",
+            "P0 draft mixes (checkpoint 20): DRAFT_MIX_NOT_FINAL, "
+            "built from the CP02 PROPOSED_CANDIDATE stem table and "
+            "CP04 draft VO with formula gain staging and sidechain "
+            "ducking; NOT a mix PASS (no ear audition, stem table "
+            "not locked, stinger placements PROPOSED pending "
+            "picture lock). The 72 s review mix is review/gallery "
+            "only, NOT an auto-run opening.",
         ],
         "files": audio_entries,
     }
@@ -572,6 +623,7 @@ def main():
 
     print(f"audio copied: music/ambience={counts['music_ambience']} "
           f"sfx/ui variants={counts['sfx_ui_variants']} vo={counts['vo']} "
+          f"mix={counts['mix']} "
           f"total={len(audio_entries)}")
     print(f"cinematics: animatic verified={len(cine_files)} "
           f"sceneClips={len(scene_clip_entries)} "

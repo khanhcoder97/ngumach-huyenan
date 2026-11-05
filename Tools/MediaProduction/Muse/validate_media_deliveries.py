@@ -558,6 +558,86 @@ def check_cin006_vo():
          f"{canon_fit}); 21/21 dialogue windows now have draft VO")
 
 
+def check_p0_mix():
+    """Checkpoint 20: P0 draft mixes (3 scenes + 72 s review mix).
+
+    Byte checks are strict (existence, not an LFS pointer, SHA,
+    duration, 48 kHz stereo pcm_s16le). The manifest's mix evidence
+    is sanity-checked as data: every scene with a ducked bus must
+    show a negative in-window ducking depth and zero depth outside
+    the window (sidechain keyed by VO only), and every ambience
+    loop join must carry a loop-QA ratio. The mix itself is a
+    DRAFT (see the manifest mixVerdict); nothing here is a mix PASS.
+    """
+    mix_dir = ROOT / "Art_Source/Audio/Muse/MIX/P0_DRAFT"
+    manifest_path = mix_dir / "P0_MIX_manifest_v1.json"
+    if not manifest_path.exists():
+        err("P0 MIX: missing P0_MIX_manifest_v1.json")
+        return
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    scenes = manifest.get("scenes", [])
+    if len(scenes) != 3:
+        err(f"P0 MIX: {len(scenes)}/3 scenes in manifest")
+    checked = 0
+    for scene in scenes:
+        mx = scene["mix"]
+        wav = mix_dir / mx["file"]
+        if not wav.exists():
+            err(f"P0 MIX {scene['sceneId']}: missing {mx['file']}")
+            continue
+        if is_lfs_pointer(wav):
+            err(f"P0 MIX {scene['sceneId']}: wav is an LFS pointer")
+            continue
+        if sha256_of(wav) != mx["sha256"]:
+            err(f"P0 MIX {scene['sceneId']}: wav sha mismatch")
+        p = probe(wav)
+        if p and abs(p["duration"] - mx["durationSeconds"]) > 0.02:
+            err(f"P0 MIX {scene['sceneId']}: duration {p['duration']} "
+                f"!= manifest {mx['durationSeconds']}")
+        if p:
+            if (p.get("codec") != "pcm_s16le"
+                    or p.get("sample_rate") != 48000
+                    or p.get("channels") != 2):
+                err(f"P0 MIX {scene['sceneId']}: format "
+                    f"{p.get('codec')}/{p.get('sample_rate')}/"
+                    f"{p.get('channels')} != pcm_s16le/48000/2")
+        if abs(mx["durationSeconds"] - scene["seconds"]) > 0.05:
+            err(f"P0 MIX {scene['sceneId']}: mix duration "
+                f"{mx['durationSeconds']} != scene {scene['seconds']}")
+        for ev in scene["ducking"]["evidence"]:
+            if ev["depthInWindowDb"] >= 0:
+                err(f"P0 MIX {scene['sceneId']}: ducking depth in "
+                    f"window {ev['depthInWindowDb']} >= 0 on "
+                    f"{ev['bus']} bus")
+            if ev["depthOutsideWindowDb"] != 0:
+                err(f"P0 MIX {scene['sceneId']}: ducking depth "
+                    f"outside window {ev['depthOutsideWindowDb']} "
+                    f"!= 0 on {ev['bus']} bus")
+        for lq in scene["loopQA"]:
+            for join in lq["joins"]:
+                if join.get("ratioToP999") is None:
+                    err(f"P0 MIX {scene['sceneId']}: loop join "
+                        f"{lq['cue']} @{join['atSeconds']} has no "
+                        f"QA ratio")
+        checked += 1
+    rmx = manifest.get("reviewMix", {})
+    review = mix_dir / rmx.get("file", "")
+    if not review.exists():
+        err("P0 MIX: missing review mix wav")
+    else:
+        if is_lfs_pointer(review):
+            err("P0 MIX: review mix is an LFS pointer")
+        if sha256_of(review) != rmx["sha256"]:
+            err("P0 MIX: review mix sha mismatch")
+        p = probe(review)
+        if p and abs(p["duration"] - 72.0) > 0.05:
+            err(f"P0 MIX review duration {p['duration']} != 72.0")
+        checked += 1
+    COUNTS["p0_mix_files_checked"] = checked
+    note(f"P0 draft mixes checked: {checked}/4 files (3 scenes + "
+         f"72 s review); DRAFT_MIX_NOT_FINAL, not a mix PASS")
+
+
 def check_scene_clips():
     """Checkpoint 18 (Goi 30 item 6): per-scene clip exports.
 
@@ -725,9 +805,10 @@ def main():
     check_keyframes()
     check_campaign_vo()
     check_cin006_vo()
+    check_p0_mix()
     check_scene_clips()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 19 (CIN_006 VO drafts: canonical take + alternate take + 18 s timeline; 21/21 dialogue windows covered; runtime delivery revised)",
+        "checkpoint": "MEDIA-02 checkpoint 20 (P0 draft mix: 3 scene mixes + 72 s review mix from CP02 stem table + CP04 VO, ducking and loop QA measured; runtime delivery revised)",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -737,12 +818,13 @@ def main():
         "notes": NOTES,
         "verdict": "PASS" if not ERRORS else "MISMATCHES_FOUND",
         "limits": [
-            "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08/17/19, measured from real bytes.",
+            "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08/17/19/20, measured from real bytes.",
             "No ear audition of loop seams or VO takes in this validation.",
             "Campaign dialogue windows remain PROPOSED except CIN_001_S05 (DECIDED); this check verifies SRT==timing consistency, not directorial approval.",
             "Campaign VO window overruns (if any) are director findings, not byte mismatches; see windowFit.",
             "CIN_006 has no per-scene video clip yet (no storyboard panels); its export is timing + SRT only, and the validator accepts that state explicitly.",
             "CIN_006 alternate take CIN_006_ALT_T01 has no dialogue window by design (DEC-MEDIA-P0 Q3); its absence from the SRT and from the scene timeline is verified, not an omission.",
+            "P0 mixes are DRAFT_MIX_NOT_FINAL: this check verifies bytes, durations and the recorded ducking/loop evidence, not the audible balance; no ear audition has been done.",
         ],
     }
     print(f"counts: {json.dumps(COUNTS, indent=1)}")
