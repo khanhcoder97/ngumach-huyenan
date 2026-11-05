@@ -367,6 +367,21 @@ def main():
           f"payload.skillId missing from {error.get('fieldErrors')}")
     expect_correlation(headers, "smoke-combat-bad-skill")
 
+    # The catalogue now loads source-backed rows for four classes the alpha cannot
+    # reach. Loading them must not make them nameable: the wire vocabulary is the
+    # alpha subset, so a foreign-class id and an outside-the-enum id are refused the
+    # same way, before the catalogue is consulted.
+    for catalogued_id in ("SK-TC-01", "SK-HB-02"):
+        status, headers, body = call(
+            "POST", "/p1/combat", combat_envelope(4, catalogued_id),
+            {"X-Session-ID": session_id,
+             "X-Correlation-ID": f"smoke-combat-catalogued-{catalogued_id}"})
+        check(status == 400, f"{catalogued_id} returned {status}: {body}")
+        error = body.get("error") or {}
+        check(error.get("code") == "invalid_payload", f"{catalogued_id} error {error.get('code')}")
+        check("payload.skillId" in (error.get("fieldErrors") or []),
+              f"payload.skillId missing for {catalogued_id}: {error.get('fieldErrors')}")
+
     status, headers, body = call(
         "POST", "/p1/combat",
         combat_envelope(4, "SK-MK-02", idempotency_key="7" * 32),

@@ -58,7 +58,53 @@ public static class ServiceSelfCheck
                 options.StartingMaxMp,
                 DateTimeOffset.UtcNow);
 
-        Check("combat.catalog", combatSkills.Count == 3, $"count={combatSkills.Count}");
+        // Work order 29 Q4: the catalogue now carries sourced rows for classes the
+        // alpha cannot reach. A row is data plus a `sourceRef`, not an executable
+        // claim: the engine implements only SELF/DASH/CONE targeting and `/p1/sessions`
+        // refuses every class but Minh Kiem, so the castable surface stays exactly the
+        // three MK rows asserted further down.
+        Check(
+            "combat.catalog",
+            combatSkills.Count == 7,
+            $"count={combatSkills.Count}");
+
+        combatSkills.TryGet("SK-HB-02", out var hb02);
+        combatSkills.TryGet("SK-HB-04", out var hb04);
+        combatSkills.TryGet("SK-TC-01", out var tc01);
+        combatSkills.TryGet("SK-TC-05", out var tc05);
+        Check(
+            "combat.catalog_foreign_rows_carry_source_numbers",
+            hb02 is { ClassId: "CLASS_HUYEN_BUT", CooldownSeconds: 12, ResourceCost: 18, MaxTargets: 1 } &&
+            hb04 is { ClassId: "CLASS_HUYEN_BUT", CooldownSeconds: 18, ResourceCost: 28, MaxTargets: 5 } &&
+            tc01 is { ClassId: "CLASS_THACH_CHUY", CooldownSeconds: 8, ResourceCost: 14, MaxTargets: 1 } &&
+            tc05 is { ClassId: "CLASS_THACH_CHUY", CooldownSeconds: 10, ResourceCost: 12, MaxTargets: 1 },
+            "spec:83/89/100/112 CD, MP and target caps");
+
+        Check(
+            "combat.catalog_metres_become_wu_at_two_per_unit",
+            hb04.RangeWu == 6.0 && tc01.RangeWu == 5.2 && tc05.RangeWu == 8.0 &&
+            hb02.RangeWu is null && tc01.AngleDegrees == 60 &&
+            hb02.TelegraphSeconds == 0.18 && hb04.TelegraphSeconds == 0.45 &&
+            tc01.TelegraphSeconds == 0.25 && tc05.TelegraphSeconds == 0.22,
+            "3 m->6 WU, 2,6 m->5,2 WU, 4 m->8 WU; Hanh Cham declares no cast range because source gives none");
+
+        Check(
+            "combat.catalog_pvp_is_the_one_sourced_cross_mode_coefficient",
+            hb02.Coefficients.Pvp == 0.65 && hb04.Coefficients.Pvp == 0.65 &&
+            tc01.Coefficients.Pvp == 0.65 && tc05.Coefficients.Pvp == 0.65 &&
+            hb02.Coefficients.Pve == 1.1 && tc01.Coefficients.Pve == 1.7 &&
+            tc05.Coefficients.Pve == 1.0 && hb04.Coefficients.Pve == 0.0,
+            "GDD:155 fixes PvP at 0,65 server-side; Mua Tinh heals, so it carries no damage coefficient");
+
+        Check(
+            "combat.catalog_minh_kiem_surface_unchanged",
+            combatSkills.TryGet("SK-MK-01", out _) &&
+            combatSkills.TryGet("SK-MK-02", out _) &&
+            combatSkills.TryGet("SK-MK-03", out _) &&
+            !combatSkills.TryGet("SK-MK-04", out _) &&
+            !combatSkills.TryGet("SK-MK-05", out _) &&
+            !combatSkills.TryGet("SK-MK-06", out _),
+            "MK-04..06 stay out: no stated prepare time, and MK-06 spends Kiem Y the server does not model");
 
         var combatActor = NewPlayer("CHR_SELFCHECK_COMBAT");
         var badSkill = combat.Resolve(
@@ -76,6 +122,38 @@ public static class ServiceSelfCheck
             "combat.class_gate",
             wrongClassCast.Failure?.Code == CombatErrorCodes.SkillNotAvailable,
             wrongClassCast.Failure?.Code);
+
+        // A loaded row for a class no session can hold must still refuse to cast, so
+        // "present in the catalogue" never reads as "available in the alpha".
+        // The wire vocabulary is deliberately narrower than the content vocabulary,
+        // and loading a row must not move it: a client still cannot name a skill
+        // outside the alpha subset at all.
+        Check(
+            "contracts.skill_id_wire_vocabulary_still_alpha_only",
+            P1Validation.IsSkillId("SK-MK-01") &&
+            P1Validation.IsSkillId("SK-MK-02") &&
+            P1Validation.IsSkillId("SK-MK-03") &&
+            !P1Validation.IsSkillId("SK-TC-01") &&
+            !P1Validation.IsSkillId("SK-HB-02") &&
+            !P1Validation.IsSkillId("SK-MK-04") &&
+            !P1Validation.IsSkillId("SK-MK-07") &&
+            !P1Validation.IsSkillId("sk-MK-01") &&
+            !P1Validation.IsSkillId(null),
+            "content rows load for four more classes; the request vocabulary is untouched");
+
+        // A loaded row for a class no session can hold is refused before the catalogue is
+        // even consulted: v1 validates the id against the alpha wire vocabulary first, so
+        // growing the catalogue cannot widen what a client may name. The class gate behind
+        // it is the second layer, already proven by combat.class_gate below.
+        var foreignSkillActor = NewPlayer("CHR_SELFCHECK_FOREIGN_SKILL");
+        var foreignSkillCast = combat.Resolve(
+            foreignSkillActor,
+            new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-TC-01" });
+        Check(
+            "combat.catalog_foreign_class_cast_refused",
+            foreignSkillCast.Failure?.Code == P1ErrorCodes.InvalidPayload &&
+            foreignSkillCast.Failure?.FieldErrors.Contains("skillId") is true,
+            $"{foreignSkillCast.Failure?.Code}/{foreignSkillCast.Failure?.FieldErrors.Count}");
 
         var staleActor = NewPlayer("CHR_SELFCHECK_STALE");
         staleActor.LastInputSequence = 1;

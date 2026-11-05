@@ -1,6 +1,5 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using Server.Health.Contracts;
 
 namespace Server.Health.Gameplay.Combat;
 
@@ -16,6 +15,13 @@ public static class CombatSkillCatalogLoader
 
     private static readonly Regex ClassIdPattern =
         new(@"^CLASS_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
+
+    // Content identity, not wire vocabulary: this mirrors the published
+    // SkillDefinition.schema.json `skillId` pattern so a source-backed row for any
+    // class can load. The id a client may PUT is gated separately and much tighter
+    // by P1Validation.IsSkillId, which still accepts only the alpha subset.
+    private static readonly Regex ContentSkillIdPattern =
+        new(@"^SK-[A-Z0-9]{2}-[0-9]{2}$", RegexOptions.CultureInvariant);
 
     private static readonly Regex TargetingTypePattern =
         new(@"^[A-Z_]+$", RegexOptions.CultureInvariant);
@@ -98,7 +104,7 @@ public static class CombatSkillCatalogLoader
                     $"{path}: unsupported schemaVersion '{file.SchemaVersion}'.");
             }
 
-            if (!P1Validation.IsSkillId(file.SkillId))
+            if (file.SkillId is not { } contentSkillId || !ContentSkillIdPattern.IsMatch(contentSkillId))
             {
                 throw new InvalidOperationException($"{path}: invalid skillId '{file.SkillId}'.");
             }
