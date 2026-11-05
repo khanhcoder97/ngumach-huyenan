@@ -2155,6 +2155,152 @@
       ]
     }
   ],
+  "questMarkers": {
+    "RIPPLE_0": {
+      "rect": [
+        0,
+        0,
+        384,
+        512
+      ],
+      "pivot": [
+        192,
+        256
+      ],
+      "contentBounds": [
+        25,
+        122,
+        362,
+        357
+      ]
+    },
+    "RIPPLE_1": {
+      "rect": [
+        384,
+        0,
+        384,
+        512
+      ],
+      "pivot": [
+        192,
+        256
+      ],
+      "contentBounds": [
+        25,
+        121,
+        362,
+        358
+      ]
+    },
+    "RIPPLE_2": {
+      "rect": [
+        768,
+        0,
+        384,
+        512
+      ],
+      "pivot": [
+        192,
+        256
+      ],
+      "contentBounds": [
+        25,
+        122,
+        362,
+        358
+      ]
+    },
+    "RIPPLE_3": {
+      "rect": [
+        1152,
+        0,
+        384,
+        512
+      ],
+      "pivot": [
+        192,
+        256
+      ],
+      "contentBounds": [
+        25,
+        122,
+        362,
+        358
+      ]
+    },
+    "VILLAGER_01_WAIT": {
+      "rect": [
+        0,
+        512,
+        384,
+        512
+      ],
+      "pivot": [
+        199.0,
+        471
+      ],
+      "contentBounds": [
+        62,
+        99,
+        336,
+        471
+      ]
+    },
+    "VILLAGER_01_STAND": {
+      "rect": [
+        384,
+        512,
+        384,
+        512
+      ],
+      "pivot": [
+        194.0,
+        475
+      ],
+      "contentBounds": [
+        118,
+        42,
+        270,
+        475
+      ]
+    },
+    "VILLAGER_02_WAIT": {
+      "rect": [
+        768,
+        512,
+        384,
+        512
+      ],
+      "pivot": [
+        170.5,
+        462
+      ],
+      "contentBounds": [
+        18,
+        138,
+        323,
+        462
+      ]
+    },
+    "VILLAGER_02_STAND": {
+      "rect": [
+        1152,
+        512,
+        384,
+        512
+      ],
+      "pivot": [
+        188.5,
+        476
+      ],
+      "contentBounds": [
+        76,
+        41,
+        301,
+        476
+      ]
+    }
+  },
   "files": [
     {
       "file": "minh_kiem_walk.png",
@@ -2207,6 +2353,14 @@
     {
       "file": "minh_kiem_skill_icons.png",
       "sha256": "5bd531d2bf327edd2233dcdbf7950e2eba6a2f1d884a7f77a963d150b02cf1b4",
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "file": "ben_mua_quest_markers.png",
+      "sha256": "497406a29195fe95a63672d300f7e1cc7adc5eb68dacd0b5ae53996dbf8c14e1",
       "size": [
         1536,
         1024

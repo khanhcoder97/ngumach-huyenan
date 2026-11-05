@@ -33,7 +33,7 @@ public partial class NativeDialoguePanel : CanvasLayer
     private string _npcId="",_fingerprint="";
     private string[] _pages=Array.Empty<string>();
     private int _page;
-    private bool _inventory,_committed,_replyOpen,_ready;
+    private bool _inventory,_journal,_committed,_replyOpen,_ready;
     private string? _replyText,_waitingKind;
 
     public bool IsOpen {get;private set;}
@@ -193,7 +193,7 @@ public partial class NativeDialoguePanel : CanvasLayer
     public void ShowNpc(string npcId,NativeOnlineFrame frame)
     {
         if(!_ready)return;
-        _frame=frame;_inventory=false;_committed=false;_replyOpen=false;_replyText=null;
+        _frame=frame;_inventory=false;_journal=false;_committed=false;_replyOpen=false;_replyText=null;
         _waitingKind=null;_entry=null;_page=0;
         _npcId=_npcs.FirstOrDefault(n=>n.EntityId==npcId)?.NpcId??npcId;
         SelectEntry(true);
@@ -203,7 +203,14 @@ public partial class NativeDialoguePanel : CanvasLayer
     public void ShowInventory(NativeOnlineFrame frame)
     {
         if(!_ready)return;
-        _frame=frame;_inventory=true;_entry=null;_waitingKind=null;_replyOpen=false;
+        _frame=frame;_inventory=true;_journal=false;_entry=null;_waitingKind=null;_replyOpen=false;
+        IsOpen=true;_root.Visible=true;ResizePanel();Render();
+    }
+
+    public void ShowJournal(NativeOnlineFrame frame)
+    {
+        if(!_ready)return;
+        _frame=frame;_inventory=true;_journal=true;_entry=null;_waitingKind=null;_replyOpen=false;
         IsOpen=true;_root.Visible=true;ResizePanel();Render();
     }
 
@@ -219,11 +226,12 @@ public partial class NativeDialoguePanel : CanvasLayer
     private void SelectEntry(bool force)
     {
         string map=_frame.World?.mapId??_frame.WorldV2?.mapId??"";
-        var candidates=_entries.Where(e=>e.QuestId=="P00-01"&&e.Speaker==_npcId&&e.Checkpoint==null&&
+        var candidates=_entries.Where(e=>e.QuestId.StartsWith("P00-",StringComparison.Ordinal)&&e.Speaker==_npcId&&e.Checkpoint==null&&
             (e.Maps.Length==0||e.Maps.Contains(map,StringComparer.Ordinal)))
             .Select(e=>(Entry:e,State:QuestState(e.QuestId)))
             .Where(x=>x.State==x.Entry.State||(x.State=="COMPLETED"&&x.Entry.Command=="TURN_IN"&&x.Entry.Committed.Length>0))
-            .OrderByDescending(x=>x.State=="READY_TO_TURN_IN"?4:x.State=="ACTIVE"?3:x.State=="AVAILABLE"?2:1);
+            .OrderByDescending(x=>x.State=="READY_TO_TURN_IN"?4:x.State=="ACTIVE"?3:x.State=="AVAILABLE"?2:1)
+            .ThenBy(x=>x.Entry.QuestId,StringComparer.Ordinal);
         var selected=candidates.FirstOrDefault();
         if(selected.Entry==null)
         {
@@ -258,9 +266,10 @@ public partial class NativeDialoguePanel : CanvasLayer
         if(fingerprint!=_fingerprint)Render();
     }
 
-    private string Fingerprint()=>string.Join("|",_inventory,_npcId,_entry?.Id,_committed,_page,_replyOpen,
+    private string Fingerprint()=>string.Join("|",_inventory,_journal,_npcId,_entry?.Id,_committed,_page,_replyOpen,
         _waitingKind,_frame.ConnectionState,_frame.Message,_frame.Inventory?.inventoryRevision,
-        string.Join(";",_frame.Quests.Select(q=>q.questId+":"+q.state+":"+q.revision)),NpcInRange());
+        string.Join(";",_frame.Quests.Select(q=>q.questId+":"+q.state+":"+q.revision+":"+
+            string.Join(",",q.objectiveCounters.OrderBy(p=>p.Key,StringComparer.Ordinal).Select(p=>p.Key+"="+p.Value)))),NpcInRange());
 
     private bool NpcInRange()
     {
@@ -283,7 +292,7 @@ public partial class NativeDialoguePanel : CanvasLayer
         _retry.Disabled=string.IsNullOrEmpty(_frame.SessionId);
         _body.Visible=!_inventory;_inventoryRows.Visible=_inventory;
         foreach(var child in _replyButtons.GetChildren()){_replyButtons.RemoveChild(child);child.QueueFree();}
-        if(_inventory){RenderInventory();return;}
+        if(_inventory){if(_journal)RenderJournal();else RenderInventory();return;}
         string name=_npcs.FirstOrDefault(n=>n.NpcId==_npcId)?.Name??_npcId;
         _title.Text=name+(_entry==null?"":" · "+_entry.Title);
         if(_entry==null)
@@ -338,6 +347,35 @@ public partial class NativeDialoguePanel : CanvasLayer
         int variant=id.IndexOf("-R-",StringComparison.Ordinal);
         if(variant>0&&_itemNames.TryGetValue(id[..variant],out name))return name;
         return id;
+    }
+
+    private void RenderJournal()
+    {
+        _title.Text="Nhật ký · Bến Mưa";
+        _back.Visible=false;_next.Visible=false;_action.Visible=false;_pageInfo.Text="";
+        foreach(var child in _inventoryRows.GetChildren()){_inventoryRows.RemoveChild(child);child.QueueFree();}
+        foreach(var card in NativeQuestCatalog.All)
+        {
+            var q=_frame.Quests.FirstOrDefault(q=>q.questId==card.Id);
+            var panel=new PanelContainer();panel.AddThemeStyleboxOverride("panel",Box(Color.FromHtml("#1b2d27"),Color.FromHtml("#756444"),1,5,12));
+            var column=new VBoxContainer();column.AddThemeConstantOverride("separation",6);panel.AddChild(column);
+            void Line(string text,int size,Color color)
+            {var label=new Label{Text=text,AutowrapMode=TextServer.AutowrapMode.WordSmart};label.AddThemeFontSizeOverride("font_size",size);label.AddThemeColorOverride("font_color",color);column.AddChild(label);}
+            bool locked=q==null||q.state=="LOCKED";
+            Line(locked?"Chặng chưa mở":card.Title,18,Color.FromHtml("#e4c480"));
+            Line(NativeQuestCatalog.StateLabel(q?.state),14,Color.FromHtml("#adbcab"));
+            if(locked)Line("Chặng này chưa mở trong phiên hiện tại.",15,Color.FromHtml("#adbcab"));
+            else
+            {
+                string excerpt=q!.state=="COMPLETED"?card.Completed:q.state=="AVAILABLE"?card.Offer:card.Clue;
+                Line(excerpt,15,Color.FromHtml("#e8e2cf"));
+                foreach(var obj in card.Objectives)
+                {q.objectiveCounters.TryGetValue(obj.Id,out int count);Line(obj.Label+": "+count+" / "+obj.Count,14,Color.FromHtml("#c4d5bd"));}
+                foreach(var extra in q.objectiveCounters.Where(p=>!card.Objectives.Any(o=>o.Id==p.Key)))
+                    Line("Tiến độ bổ sung: "+extra.Value,14,Color.FromHtml("#c4d5bd"));
+            }
+            _inventoryRows.AddChild(panel);
+        }
     }
 
     private void RenderInventory()

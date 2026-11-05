@@ -5,6 +5,8 @@ on:
       - 'ClientGodot/**'
       - 'Client/Assets/Scripts/Online/Core/**'
       - 'Client/Assets/Resources/Narrative/dialogue_vi.json'
+      - 'Implementation/Content/Examples/QuestDefinition/**'
+      - 'Implementation/Content/Examples/QuestDefinitionAlpha/**'
       - 'docs/production/Item_Master_Catalog_vi.csv'
       - 'docs/production/Item_Rarity_Variant_Catalog_vi.csv'
       - 'docs/production/World_Spawn_Gathering_Manifest_vi.csv'

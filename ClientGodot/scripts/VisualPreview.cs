@@ -27,7 +27,7 @@ public partial class VisualPreview : Node2D
     private Vector2 _facing=Vector2.Down;
     private double _movingGrace;
     private int _previewCast;
-    private bool _onlineTest,_onlineUiTest,_visualTest,_vfxReview,_reviewStarted,_scenarioCapture;
+    private bool _onlineTest,_onlineUiTest,_visualTest,_vfxReview,_questArtReview,_reviewStarted,_scenarioCapture;
     private string _lastSession="";
     private readonly HashSet<string> _impactIds=new();
 
@@ -46,6 +46,7 @@ public partial class VisualPreview : Node2D
         _onlineUiTest=args.Contains("--online-ui-self-test");
         _visualTest=args.Contains("--visual-self-test");
         _vfxReview=args.Contains("--vfx-review");
+        _questArtReview=args.Contains("--quest-art-review");
         _cleanCapture = args.Contains("--clean-capture");
         for (int i = 0; i < args.Length - 1; i++)
             if (args[i] == "--capture") _capture = args[i + 1];
@@ -78,11 +79,12 @@ public partial class VisualPreview : Node2D
         _hud.AttackPressed+=Attack;
         _hud.InventoryPressed+=OpenInventory;
         _hud.InteractPressed+=InteractNearest;
+        _hud.JournalPressed+=OpenJournal;
         _hud.RetryPressed+=()=>_online?.Command("RETRY");
         var url=OS.GetEnvironment("P1_BASE_URL");
         if((_onlineTest||_onlineUiTest)&&(!Uri.TryCreate(url,UriKind.Absolute,out var testUri)||!testUri.IsLoopback))
         {GD.PushError("Online acceptance requires the launcher's private loopback server.");GetTree().Quit(2);return;}
-        if(!string.IsNullOrWhiteSpace(url)&&!_selfTest&&!_visualTest)
+        if(!string.IsNullOrWhiteSpace(url)&&!_selfTest&&!_visualTest&&!_vfxReview&&!_questArtReview&&!args.Contains("--quest-ui-self-test"))
         {
             _hero.CollisionLayer=0;_hero.CollisionMask=0;
             var bounds=new Rect2(NativeActorsView.RenderOrigin+new Vector2(0,-1440),new Vector2(7200,1680));
@@ -114,6 +116,7 @@ public partial class VisualPreview : Node2D
             }
         }
         else if(_onlineTest||_onlineUiTest){GD.PushError("P1_BASE_URL is required for online test.");GetTree().Quit(2);return;}
+        if(args.Contains("--quest-ui-self-test"))QuestPresentationSelfTest.Run(this);
         if(_visualTest) RunVisualTests();
         if (_selfTest) RunCameraTests();
         else if(args.Contains("--scene-self-test")) RunSceneTests();
@@ -128,6 +131,7 @@ public partial class VisualPreview : Node2D
             GetTree().Quit();return;
         }
         if(key.Keycode==Key.I){OpenInventory();return;}
+        if(key.Keycode==Key.J){OpenJournal();return;}
         if(_dialog?.IsOpen==true)return;
         int slot=(int)key.Keycode-(int)Key.Key1;
         if(slot>=0&&slot<6){UseSkill(slot);return;}
@@ -202,7 +206,8 @@ public partial class VisualPreview : Node2D
     public override void _Process(double delta)
     {
         _frames++;
-        if(_vfxReview&&!_reviewStarted&&_frames>3){_reviewStarted=true;ShowVfxReview();}
+        if((_vfxReview||_questArtReview)&&!_reviewStarted&&_frames>3)
+        {_reviewStarted=true;if(_questArtReview)ShowQuestArtReview();else ShowVfxReview();}
         if (_capture != null && _frames >= 20 && !_captureStarted && (_online==null||_scenarioCapture))
         {
             _captureStarted = true;
@@ -379,6 +384,12 @@ public partial class VisualPreview : Node2D
         if(_dialog.IsOpen){_dialog.HidePanel();return;}
         _online?.SetMove(Vector2.Zero);_online?.Command("REFRESH");_dialog.ShowInventory(_onlineFrame);
     }
+    private void OpenJournal()
+    {
+        if(_onlineFrame==null||_dialog==null){_hud.StatusText="Nhật ký sẽ mở khi vào bản online local.";return;}
+        if(_dialog.IsOpen){_dialog.HidePanel();return;}
+        _online?.SetMove(Vector2.Zero);_online?.Command("REFRESH");_dialog.ShowJournal(_onlineFrame);
+    }
     private void Attack()
     {
         if(_dialog?.IsOpen==true)return;
@@ -424,6 +435,30 @@ public partial class VisualPreview : Node2D
             label.AddThemeConstantOverride("outline_size",3);AddChild(label);
         }
         _hud.StatusText="Gallery VFX: khung chính để kiểm hình. Chế độ chơi phát đầy đủ timeline.";
+    }
+    private void ShowQuestArtReview()
+    {
+        _hud.Visible=false;_hero.Visible=false;
+        var a=_hero.Position+new Vector2(-530,-250);var z=_hero.Position+new Vector2(530,230);
+        AddChild(new Polygon2D{Polygon=new[]{a,new Vector2(z.X,a.Y),z,new Vector2(a.X,z.Y)},Color=new Color(.025f,.05f,.045f,.97f),ZIndex=20});
+        var heading=new Label{Text="Bến Mưa · kiểm hình asset, không phải vị trí spawn",Position=a+new Vector2(20,12),ZIndex=22};
+        heading.AddThemeFontSizeOverride("font_size",18);heading.AddThemeColorOverride("font_color",Color.FromHtml("#e7c783"));AddChild(heading);
+        using var manifest=JsonDocument.Parse(FileAccess.GetFileAsString("res://assets/combat_v1/manifest.json"));
+        var texture=GD.Load<Texture2D>("res://assets/combat_v1/ben_mua_quest_markers.png");
+        string[] keys={"RIPPLE_0","RIPPLE_1","RIPPLE_2","RIPPLE_3","VILLAGER_01_WAIT","VILLAGER_01_STAND","VILLAGER_02_WAIT","VILLAGER_02_STAND"};
+        for(int i=0;i<8;i++)
+        {
+            var data=manifest.RootElement.GetProperty("questMarkers").GetProperty(keys[i]);
+            var r=data.GetProperty("rect");var p=data.GetProperty("pivot");var b=data.GetProperty("contentBounds");
+            var foot=_hero.Position+new Vector2(-390+(i%4)*260,i<4?-140:160);
+            float scale=i<4?70/(b[2].GetSingle()-b[0].GetSingle()):72/(b[3].GetSingle()-b[1].GetSingle());
+            var sprite=new Sprite2D{Texture=new AtlasTexture{Atlas=texture,Region=new Rect2(r[0].GetSingle(),r[1].GetSingle(),r[2].GetSingle(),r[3].GetSingle()),FilterClip=true},
+                Centered=false,Position=foot,Offset=-new Vector2(p[0].GetSingle(),p[1].GetSingle()),Scale=Vector2.One*scale,ZIndex=21,TextureFilter=TextureFilterEnum.Nearest};
+            AddChild(sprite);
+            var label=new Label{Text=i<4?"Gợn nước · "+(i+1):i<6?"Người dân · "+(i-3):"Người dân · "+(i-5),
+                Position=foot+new Vector2(-60,i<4?40:15),ZIndex=22};
+            label.AddThemeFontSizeOverride("font_size",16);label.AddThemeColorOverride("font_outline_color",Colors.Black);label.AddThemeConstantOverride("outline_size",3);AddChild(label);
+        }
     }
     private async void RunVisualTests()
     {

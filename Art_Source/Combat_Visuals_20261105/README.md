@@ -14,3 +14,5 @@ Codex sản xuất bằng **trình tạo ảnh tích hợp (image_gen)**; toàn 
 source_manifest.json và runtime manifest.json chứa kích thước/SHA256/rect/pivot thực. Asset vẫn NATIVE_REVIEW_CANDIDATE: structural pass không chứng minh gait đẹp, tất cả direction đồng nhất hay art đã final. Native gallery và regression báo cáo riêng; chưa có đủ đồ họa năm class/30skill/boss/campaign.
 
 Các reference NPC chỉ dùng làm character lock cho video; Muse không được sửa graphics/runtime. Nguồn canon câu thoại và quest vẫn tại repo, không lấy text trong bitmap.
+
+- ben_mua_quest_markers_v1: bốn pha gợn nước và hai người dân với pose chờ/đứng. PNG tạo bằng image_gen tích hợp, prompt riêng; rect/pivot từ ảnh thật. Runtime chỉ bind exact ALPHA ripple/rescue IDs đã có trong snapshot; không tạo actor, không cộng tiến độ. Pose đứng hiện mới để review, không tự coi là đã cứu. Gallery có nhãn rõ, không phải vị trí spawn.

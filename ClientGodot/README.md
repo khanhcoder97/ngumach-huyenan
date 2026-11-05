@@ -33,3 +33,11 @@ Nguồn mới: Art_Source/Visual_Reboot_20261104, BenMua_Concept_Rebuild_2026110
 - godot --path . -- --vfx-review --capture <absolute.png>: gallery đóng băng keyframe để review, không phải timeline chơi thật.
 
 Bằng chứng native, source prompt và báo cáo trong Implementation/Reports/Evidence/Playable_Alpha_20261105. Máy hiện tại có Godot/SDK portable ở thư mục NGUMACHHUYENAN-tools cạnh repo; máy khác truyền -GodotPath/-Dotnet8Path/-Dotnet10Path. Không cần Unity.
+
+## Tiếp nối — nhật ký và phần khám phá
+
+J hoặc nhấp bảng nhiệm vụ để mở nhật ký. Giao diện hỗ trợ source P00-01..05 nhưng chỉ hiển thị trạng thái/counter server gửi; chặng LOCKED không lộ nội dung. Nhiệm vụ đã hoàn thành dùng đúng phần thoại sau giao nhận, không lặp lời nhắc còn thiếu đồ. Trong baseline hiện tại P00-02..05 vẫn chưa mở: PR106/109 đang được sửa sau review, không tự giả completion.
+
+--quest-ui-self-test kiểm UI bằng source/DTO fixture, không HTTP/grant; --quest-art-review là gallery hình gợn nước/cứu dân. -UiTest đã mở rộng kiểm J và nhật ký trong tuyến P00-01 thực. Log chơi tay nay tách vào NGUMACHHUYENAN-tools/play-sessions/<timestamp-id>, không ghi đè bằng chứng kiểm thử đã lưu.
+
+Khi chơi tay, launcher giảm log HTTP polling xuống Warning trong đúng tiến trình server nó tạo, để tránh log tăng liên tục và giảm tải máy. Các phiên đã mở trước thay đổi này vẫn giữ cấu hình cũ; launcher không dừng hoặc sửa tiến trình của người chơi đang chạy.

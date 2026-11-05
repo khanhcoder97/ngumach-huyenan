@@ -61,7 +61,8 @@ def inspect(write=False):
              "ben_mua_questkit.png":"Characters/ben_mua_questkit_v1.png",
              "ben_mua_mobs.png":"Characters/ben_mua_mobs_v1.png",
              "ben_mua_nodes.png":"Nodes/ben_mua_nodes_v1.png",
-             "minh_kiem_skill_icons.png":"UI/minh_kiem_skill_icons_v1.png"}
+             "minh_kiem_skill_icons.png":"UI/minh_kiem_skill_icons_v1.png",
+             "ben_mua_quest_markers.png":"Quest/ben_mua_quest_markers_v1.png"}
     for runtime,source in mapping.items():
         data=(RUN/runtime).read_bytes();assert data==(ART/source).read_bytes(),runtime
         with Image.open(RUN/runtime) as im:
@@ -108,14 +109,22 @@ def inspect(write=False):
             rect=[i%3*512,i//3*512,512,512];bb=bounds(im,rect)
             assert bb and min(bb[0],bb[1],512-bb[2],512-bb[3])>2,(i,bb)
             icons.append(dict(skillId="SK-MK-0"+str(i+1),rect=rect,contentBounds=list(bb)))
+    quest_markers={}
+    with Image.open(RUN/"ben_mua_quest_markers.png") as im:
+        assert im.size==(1536,1024)
+        keys=["RIPPLE_0","RIPPLE_1","RIPPLE_2","RIPPLE_3","VILLAGER_01_WAIT","VILLAGER_01_STAND","VILLAGER_02_WAIT","VILLAGER_02_STAND"]
+        for i,key in enumerate(keys):
+            rect=[i%4*384,i//4*512,384,512];bb=bounds(im,rect)
+            assert bb and min(bb[0],bb[1],384-bb[2],512-bb[3])>2,(key,bb)
+            quest_markers[key]=dict(rect=rect,pivot=[192,256] if i<4 else [(bb[0]+bb[2])/2,bb[3]],contentBounds=list(bb))
     manifest=dict(schemaVersion=1,status="NATIVE_REVIEW_CANDIDATE",sourceBodyHeight=208,attackSourceBodyHeight=112,
-        walk=walk,attack=attack,vfx=vfx,questKit=actors,mobs=mobs,nodes=nodes,uiIcons=icons,files=records)
+        walk=walk,attack=attack,vfx=vfx,questKit=actors,mobs=mobs,nodes=nodes,uiIcons=icons,questMarkers=quest_markers,files=records)
     target=RUN/"manifest.json"
     if write:
         target.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
         (ART/"source_manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
     else:assert json.loads(target.read_text(encoding="utf8"))==manifest,"stale metadata"
-    print("COMBAT_ART PASS: 7 byte-identical source pairs,64 whole-body frames,36 VFX frames,6 quest sprites,6 mob poses,6 nodes,6 HUD icons")
+    print("COMBAT_ART PASS: 8 byte-identical source pairs,64 whole-body frames,36 VFX frames,6 quest sprites,6 mob poses,6 nodes,6 HUD icons,8 quest marker frames")
     print("Structural result; gait/art quality still needs native visual review.")
 if __name__=="__main__":
     p=argparse.ArgumentParser();p.add_argument("--write-manifest",action="store_true");inspect(p.parse_args().write_manifest)
