@@ -30,6 +30,7 @@
     <Compile Include="Dispatch/*.cs" />
     <Compile Include="Handshake/*.cs" />
     <Compile Include="Composition/*.cs" />
+    <Compile Include="Tutorial/*.cs" />
   </ItemGroup>
 
 </Project>

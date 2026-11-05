@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using NguMach.Client.Core.Dispatch;
 using NguMach.Client.Core.Encounter;
 using NguMach.Client.Core.Guards;
+using NguMach.Client.Core.Handshake;
 using NguMach.Client.Core.Transport;
 using NguMach.Client.P1;
 using NguMach.Client.Presentation;
@@ -61,6 +62,10 @@ namespace NguMach.Client.Core.Composition
         public P1ClientAdapter Adapter { get; private set; }
         public StaleResponseGuard Guard { get; private set; }
         public EncounterView Encounter { get; }
+        // Host-supplied deployment facts. Production-off is the default; no route is
+        // ever advertised just because the client knows how to call it.
+        public ClientCapability Capability { get; }
+        public ServiceAvailability Availability { get; }
         public long SessionGeneration { get; private set; }
         public IMainThreadDispatcher Dispatcher => _dispatcher;
         public CancellationToken Token { get { return _cts != null ? _cts.Token : CancellationToken.None; } }
@@ -76,7 +81,8 @@ namespace NguMach.Client.Core.Composition
             bool useWorldV2 = false,
             TimeSpan? requestTimeout = null,
             IMainThreadDispatcher dispatcher = null,
-            string characterId = null)
+            string characterId = null,
+            DeploymentProfile profile = null)
         {
             _rawTransport = transport ?? throw new ArgumentNullException(nameof(transport));
             _ownsTransport = ownsTransport;
@@ -87,6 +93,8 @@ namespace NguMach.Client.Core.Composition
             Adapter = new P1ClientAdapter(Client);
             Guard = new StaleResponseGuard();
             Encounter = new EncounterView();
+            Capability = ClientCapability.FromProfile(profile ?? DeploymentProfile.ProductionOff());
+            Availability = ServiceAvailabilityPolicy.Evaluate(Capability);
             _cts = new CancellationTokenSource();
         }
 

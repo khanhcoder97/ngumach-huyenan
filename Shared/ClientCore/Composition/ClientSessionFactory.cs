@@ -4,6 +4,7 @@
 
 using System;
 using NguMach.Client.Core.Dispatch;
+using NguMach.Client.Core.Handshake;
 using NguMach.Client.Core.Transport;
 
 namespace NguMach.Client.Core.Composition
@@ -15,7 +16,8 @@ namespace NguMach.Client.Core.Composition
             string characterId = null,
             bool useWorldV2 = false,
             TimeSpan? requestTimeout = null,
-            IMainThreadDispatcher dispatcher = null)
+            IMainThreadDispatcher dispatcher = null,
+            DeploymentProfile profile = null)
         {
             if (string.IsNullOrWhiteSpace(baseUrl))
                 throw new ArgumentNullException(nameof(baseUrl));
@@ -25,7 +27,8 @@ namespace NguMach.Client.Core.Composition
                 useWorldV2: useWorldV2,
                 requestTimeout: requestTimeout,
                 dispatcher: dispatcher,
-                characterId: characterId);
+                characterId: characterId,
+                profile: profile);
         }
     }
 }

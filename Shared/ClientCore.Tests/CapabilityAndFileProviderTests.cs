@@ -1,4 +1,5 @@
 using NguMach.Client.Core.Catalog;
+using NguMach.Client.Core.Composition;
 using NguMach.Client.Core.Handshake;
 using System;
 using Xunit;
@@ -138,6 +139,113 @@ namespace NguMach.Client.Core.Tests
             Assert.False(CapabilityHandshake.IsInventoryV2Usable(cap));
             Assert.False(CapabilityHandshake.IsDeathReturnUsable(cap));
             Assert.Empty(cap.ServerEnabledRoutes);
+        }
+
+        [Fact]
+        public void ProductionOff_ReportsCoreUnknownAndAlphaDisabled()
+        {
+            var availability = ServiceAvailabilityPolicy.Evaluate(
+                ClientCapability.FromProfile(DeploymentProfile.ProductionOff()));
+
+            // No route list and no capability endpoint: core services are unknown,
+            // never "available" by wishful thinking.
+            Assert.Equal(ServiceAvailabilityState.Unknown, availability.Get("quests").State);
+            Assert.Equal("profile_unknown", availability.Get("quests").ReasonCode);
+            Assert.Equal(ServiceAvailabilityState.Unknown, availability.Get("move").State);
+            Assert.Equal(ServiceAvailabilityState.Unknown, availability.Get("world-v2").State);
+
+            // Gated services are disabled, not unknown: the profile explicitly says OFF.
+            Assert.Equal(ServiceAvailabilityState.Disabled, availability.Get("encounter").State);
+            Assert.Equal(ServiceAvailabilityState.Disabled, availability.Get("inventory-v2").State);
+            Assert.Equal(ServiceAvailabilityState.Disabled, availability.Get("death-return").State);
+            Assert.Empty(availability.AvailableServiceIds);
+            Assert.False(availability.CanCall("quests"));
+        }
+
+        [Fact]
+        public void PrivateAlpha_CoreAvailableAndGatedServicesDisabled()
+        {
+            var availability = ServiceAvailabilityPolicy.Evaluate(
+                ClientCapability.FromProfile(DeploymentProfile.PrivateAlpha(false)));
+
+            Assert.True(availability.CanCall("sessions"));
+            Assert.True(availability.CanCall("world-v1"));
+            Assert.True(availability.CanCall("quests"));
+            Assert.True(availability.CanCall("inventory-v1"));
+            Assert.True(availability.CanCall("move"));
+            Assert.True(availability.CanCall("combat-v1"));
+            Assert.True(availability.CanCall("world-v2"));
+            Assert.True(availability.CanCall("combat-v2"));
+            Assert.True(availability.CanCall("events-v2"));
+
+            Assert.Equal(ServiceAvailabilityState.Disabled, availability.Get("encounter").State);
+            Assert.Equal(ServiceAvailabilityState.Disabled, availability.Get("inventory-v2").State);
+            Assert.Equal(ServiceAvailabilityState.Disabled, availability.Get("death-return").State);
+            Assert.Contains("quests", availability.AvailableServiceIds);
+            Assert.Contains("encounter", availability.DisabledServiceIds);
+        }
+
+        [Fact]
+        public void PrivateAlpha_AllGatesOnMakesAlphaServicesAvailable()
+        {
+            var availability = ServiceAvailabilityPolicy.Evaluate(
+                ClientCapability.FromProfile(DeploymentProfile.PrivateAlpha(true, true, true)));
+
+            Assert.True(availability.CanCall("encounter"));
+            Assert.True(availability.CanCall("inventory-v2"));
+            Assert.True(availability.CanCall("death-return"));
+            Assert.True(availability.CanCall("quests"));
+        }
+
+        [Fact]
+        public void MissingPartialRoute_DisablesWholeService()
+        {
+            var cap = ClientCapability.FromProfile(DeploymentProfile.PrivateAlpha(false, true, true));
+            cap.ServerEnabledRoutes.Remove("/p1/inventory/v2/equip");
+
+            var availability = ServiceAvailabilityPolicy.Evaluate(cap);
+
+            Assert.Equal(ServiceAvailabilityState.Disabled, availability.Get("inventory-v2").State);
+            Assert.Equal("route_not_advertised", availability.Get("inventory-v2").ReasonCode);
+            Assert.True(availability.CanCall("death-return"));
+        }
+
+        [Fact]
+        public void UnsupportedService_AndUnsupportedRoute_AreReportedHonestly()
+        {
+            var cap = ClientCapability.FromProfile(DeploymentProfile.PrivateAlpha(false));
+            cap.SupportedRoutes.Remove("/p1/v2/combat");
+
+            var availability = ServiceAvailabilityPolicy.Evaluate(cap);
+
+            Assert.Equal(ServiceAvailabilityState.Unsupported, availability.Get("combat-v2").State);
+            Assert.Equal("client_unsupported", availability.Get("combat-v2").ReasonCode);
+            Assert.Equal(ServiceAvailabilityState.Unsupported, availability.Get("no-such-service").State);
+            Assert.False(ServiceAvailabilityPolicy.Evaluate(cap, "no-such-service").IsAvailable);
+        }
+
+        [Fact]
+        public void Session_DefaultProfileIsProductionOff_AndPrivateProfileIsWired()
+        {
+            using (var off = ClientSessionFactory.CreateHttp("http://127.0.0.1:1"))
+            {
+                Assert.Equal("production-off", off.Capability.DeploymentProfileId);
+                Assert.False(off.Capability.AlphaBossEnabled);
+                Assert.False(off.Availability.CanCall("quests"));
+                Assert.Equal(ServiceAvailabilityState.Disabled, off.Availability.Get("encounter").State);
+            }
+
+            using (var alpha = ClientSessionFactory.CreateHttp(
+                "http://127.0.0.1:1",
+                profile: DeploymentProfile.PrivateAlpha(true, true, true)))
+            {
+                Assert.Equal("private-alpha", alpha.Capability.DeploymentProfileId);
+                Assert.True(alpha.Capability.IsEncounterUsable);
+                Assert.True(alpha.Capability.IsInventoryV2Usable);
+                Assert.True(alpha.Capability.IsDeathReturnUsable);
+                Assert.True(alpha.Availability.CanCall("quests"));
+                Assert.True(alpha.Availability.CanCall("inventory-v2"));
+            }
         }
     }
 

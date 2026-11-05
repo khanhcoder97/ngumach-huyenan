@@ -40,6 +40,7 @@
     <Compile Include="InventoryV2Tests.cs" />
     <Compile Include="DeathReturnTests.cs" />
     <Compile Include="V2PresentersTests.cs" />
+    <Compile Include="TutorialProgressTests.cs" />
     <Compile Include="LocalizationAndCatalogPhysicalTests.cs" />
   </ItemGroup>
 

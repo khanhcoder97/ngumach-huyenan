@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using NguMach.Client.Core.Composition;
 using NguMach.Client.Core.Encounter;
+using NguMach.Client.Core.Handshake;
+using NguMach.Client.Core.Tutorial;
 using NguMach.Client.P1;
 using NguMach.Client.Presentation;
 
@@ -128,14 +130,46 @@ namespace ClientCoreHttpRunner
             using (var httpA = new Http(baseUrl))
             using (var expB = new ExpiringTransport(new Http(baseUrl)))
             using (var sessionA = new ClientSession(httpA, ownsTransport: true, useWorldV2: true,
-                       requestTimeout: TimeSpan.FromSeconds(15), characterId: CharacterA))
+                       requestTimeout: TimeSpan.FromSeconds(15), characterId: CharacterA,
+                       profile: DeploymentProfile.PrivateAlpha(encounterEnabled: false)))
             using (var sessionB = new ClientSession(expB, ownsTransport: true, useWorldV2: true,
-                       requestTimeout: TimeSpan.FromSeconds(15), characterId: CharacterB))
+                       requestTimeout: TimeSpan.FromSeconds(15), characterId: CharacterB,
+                       profile: DeploymentProfile.PrivateAlpha(encounterEnabled: false)))
             {
                 // ---------- A: normal flow + lost response + fresh inventory ----------
                 Check((await sessionA.ConnectAsync()).Success, "A connect");
                 Check(sessionA.Adapter.ConnectionState == UIConnectionState.Ready, "A ready");
                 Check(sessionA.Client.World.self.characterId == CharacterA, "A identity");
+
+                // O5: the host profile describes this local deployment explicitly;
+                // core routes are available, alpha surfaces stay disabled.
+                Check(sessionA.Availability.CanCall("quests"), "A availability quests");
+                Check(sessionA.Availability.CanCall("world-v2"), "A availability world-v2");
+                Check(sessionA.Availability.Get("encounter").State == ServiceAvailabilityState.Disabled,
+                    "A availability encounter disabled");
+                Check(!sessionA.Availability.CanCall("inventory-v2"), "A availability inventory-v2 off");
+                Check(!sessionA.Availability.CanCall("death-return"), "A availability death-return off");
+
+                // ---------- A: opening tutorial chain, server-authoritative only ----------
+                Check((await sessionA.Client.ReadQuestsAsync(CancellationToken.None)).Success, "A tutorial quests read");
+                var tutorial = TutorialProgress.FromServer(sessionA.Client.Quests);
+                Check(tutorial.IsAuthoritative, "A tutorial chain authoritative");
+                Check(tutorial.Steps.Count == 5 && tutorial.Steps[0].QuestId == "P00-01" &&
+                      tutorial.Steps[4].QuestId == "P00-05", "A tutorial chain P00-01..05");
+                Check(tutorial.Steps[0].IsAvailable && tutorial.Steps[0].StepId == "STEP_P00_01_PACKAGES",
+                    "A P00-01 available packages step");
+                Check(tutorial.Steps[0].Counter("OBJ_P00_01_PACKAGES") == 0, "A P00-01 counter starts at 0");
+                Check(tutorial.Steps.Skip(1).All(s => s.IsLocked), "A P00-02..05 locked by source");
+                Check(tutorial.NextActionable != null && tutorial.NextActionable.QuestId == "P00-01",
+                    "A next actionable P00-01");
+                Check(tutorial.FirstIncomplete != null && tutorial.FirstIncomplete.QuestId == "P00-01",
+                    "A first incomplete P00-01");
+
+                // The blocked quest must reject for its named activation fields, not
+                // pretend a prerequisite was met and not leave a pending mutation.
+                var blocked = await sessionA.Client.AcceptQuestAsync("P00-02", "NPC_TA_VAN_KHANH", CancellationToken.None);
+                Check(!blocked.Success && blocked.Code == "prerequisite_not_met", "A P00-02 blocked by activation");
+                Check(!sessionA.Client.HasPendingMutation, "A blocked accept clears pending");
 
                 var dialogueA = new NpcDialoguePresenter(sessionA.Adapter);
                 Check((await sessionA.Client.ReadInventoryAsync(CancellationToken.None)).Success, "A inv pre");
@@ -153,6 +187,21 @@ namespace ClientCoreHttpRunner
                 Check((await sessionA.Client.ReadInventoryAsync(CancellationToken.None)).Success, "A inv post");
                 Check(sessionA.Client.Inventory.currencies.Where(c => c.currencyId == "COIN").Sum(c => c.amount) == 20, "A 20 coin");
                 Check(sessionA.Client.Inventory.items.Count(i => i != null && i.templateId == ChestTemplate) == 1, "A 1 chest");
+
+                Check((await sessionA.Client.ReadQuestsAsync(CancellationToken.None)).Success, "A tutorial quests after turn-in");
+                var tutorialAfter = TutorialProgress.FromServer(sessionA.Client.Quests);
+                Check(tutorialAfter.Steps[0].IsCompleted, "A P00-01 completed");
+                Check(tutorialAfter.Steps[0].Counter("OBJ_P00_01_PACKAGES") == 3, "A P00-01 counter 3");
+                Check(tutorialAfter.Steps.Skip(1).All(s => s.IsLocked), "A P00-02..05 still locked");
+                Check(tutorialAfter.NextActionable == null, "A no client-side unlock");
+                Check(tutorialAfter.FirstIncomplete != null && tutorialAfter.FirstIncomplete.QuestId == "P00-02",
+                    "A first incomplete P00-02");
+                Check(sessionA.Client.LastTurnIn != null && sessionA.Client.LastTurnIn.unlocks != null &&
+                      sessionA.Client.LastTurnIn.unlocks.Contains("P00-02"), "A server unlock claim P00-02");
+                var blockedAfterUnlock = await sessionA.Client.AcceptQuestAsync("P00-02", "NPC_TA_VAN_KHANH", CancellationToken.None);
+                Check(!blockedAfterUnlock.Success && blockedAfterUnlock.Code == "prerequisite_not_met",
+                    "A P00-02 still not activatable");
+                Check(!sessionA.Client.HasPendingMutation, "A blocked P00-02 clears pending");
 
                 var repeat = await dialogueA.TurnInQuestAsync("P00-01", "NPC_TA_VAN_KHANH", CancellationToken.None);
                 Check(repeat.IsError && repeat.ErrorCode == "invalid_transition", "A repeat rejected");

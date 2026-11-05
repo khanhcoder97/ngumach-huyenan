@@ -39,7 +39,14 @@ namespace NguMach.Client.Core.Handshake
             bool inventoryV2Enabled = false,
             bool deathReturnEnabled = false)
         {
-            var routes = new List<string>();
+            // Core P1 routes are part of the private-alpha deployment itself; the
+            // alpha gates below are additive opt-ins, never a replacement.
+            var routes = new List<string>
+            {
+                "/p1/sessions", "/p1/world/{id}", "/p1/quests/{id}", "/p1/inventory/{id}",
+                "/p1/move", "/p1/combat",
+                "/p1/v2/world/{id}", "/p1/v2/combat", "/p1/v2/events/{id}"
+            };
             if (encounterEnabled)
             {
                 routes.Add("/p1/encounters/current");
@@ -78,6 +85,8 @@ namespace NguMach.Client.Core.Handshake
         public List<string> SupportedRoutes { get; set; } = new List<string>
         {
             "/p1/sessions", "/p1/world/{id}", "/p1/quests/{id}", "/p1/inventory/{id}",
+            "/p1/move", "/p1/combat",
+            "/p1/v2/world/{id}", "/p1/v2/combat", "/p1/v2/events/{id}",
             "/p1/encounters/current", "/p1/encounters/{id}",
             "/p1/inventory/v2/{id}", "/p1/inventory/v2/equip", "/p1/inventory/v2/unequip",
             "/p1/actor/death-return"
