@@ -77,6 +77,7 @@ VO_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "VO" / "P0_DRAFT"
 CAMPAIGN_VO_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "VO" / "CAMPAIGN_DRAFT"
 CIN006_VO_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "VO" / "CIN006_DRAFT"
 P0_MIX_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "P0_DRAFT"
+P0_MIX_V2_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "P0_DRAFT_V2"
 DUR_TOL_S = 0.02
 
 # P0 animatic files delivered in checkpoint 03, revised in checkpoint 13
@@ -423,6 +424,52 @@ def main():
         audio_entries.append(entry)
         counts["mix"] += 1
 
+    # --- 3g. P0 draft mixes v2 from composed stems (checkpoint 29) ---
+    # Same three scenes + 72 s review, re-mixed from the checkpoint-26
+    # composed music/stingers (ported ambience + CP04 VO unchanged).
+    # Delivered in parallel under mix/p0_v2/; the v1 mixes in mix/p0/
+    # are byte-identical to before. Adoption is Codex's decision.
+    pmix2 = json.loads((P0_MIX_V2_SRC / "P0_MIX_V2_manifest_v1.json")
+                       .read_text(encoding="utf-8"))
+    for scene in pmix2["scenes"]:
+        mx = scene["mix"]
+        src_rel = f"Art_Source/Audio/Muse/MIX/P0_DRAFT_V2/{mx['file']}"
+        dest_rel = f"mix/p0_v2/{mx['file']}"
+        entry = copy_verified_audio(
+            src_rel, dest_rel, mx["sha256"], mx["format"]["bytes"],
+            mx["durationSeconds"], f"P0 mix v2 {scene['sceneId']}")
+        if entry is None:
+            continue
+        entry.update({"cueKey": f"MIX/V2/{scene['sceneId']}",
+                      "category": "mix", "sceneId": scene["sceneId"],
+                      "mixVersion": "v2_composed_stems",
+                      "codec": mx["format"]["codec"],
+                      "sampleRateHz": mx["format"]["sampleRateHz"],
+                      "channels": mx["format"]["channels"],
+                      "integratedLufs": float(mx["integratedLUFS"]),
+                      "truePeakDbtp": float(mx["truePeakDBTP"]),
+                      "assetState": "DRAFT_MIX_NOT_FINAL",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["mix"] += 1
+    rmx2 = pmix2["reviewMix"]
+    entry = copy_verified_audio(
+        f"Art_Source/Audio/Muse/MIX/P0_DRAFT_V2/{rmx2['file']}",
+        f"mix/p0_v2/{rmx2['file']}", rmx2["sha256"],
+        (P0_MIX_V2_SRC / rmx2["file"]).stat().st_size,
+        rmx2.get("durationSeconds", 72.0), "P0 mix v2 review 72 s")
+    if entry is not None:
+        entry.update({"cueKey": "MIX/V2/P0_REVIEW_72S", "category": "mix",
+                      "mixVersion": "v2_composed_stems",
+                      "codec": "pcm_s16le", "sampleRateHz": 48000,
+                      "channels": 2,
+                      "integratedLufs": float(rmx2["integratedLUFS"]),
+                      "truePeakDbtp": float(rmx2["truePeakDBTP"]),
+                      "assetState": "DRAFT_MIX_NOT_FINAL",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["mix"] += 1
+
     # --- 3e. Composed music + cinema stingers (checkpoint 26) ---
     # The composer (build_composed_music.py) already rendered the
     # runtime OGGs into ClientGodot/assets/audio/composed/; this
@@ -523,11 +570,12 @@ def main():
 
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 checkpoint 27 - M6 runtime delivery "
-                       "revised: prologue CIN_000 narration VO (5 "
-                       "takes) + prologue film mix registered; "
-                       "composed music (checkpoint 26) and the "
-                       "ported packs unchanged"),
+        "checkpoint": ("MEDIA-02 checkpoint 29 - M6 runtime delivery "
+                       "revised: P0 draft mixes v2 from composed stems "
+                       "(3 scenes + 72 s review, mix/p0_v2/) registered "
+                       "in parallel to the untouched v1 mixes; "
+                       "prologue (checkpoint 27/28), composed music "
+                       "(checkpoint 26) and the ported packs unchanged"),
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "counts": counts,
@@ -564,6 +612,14 @@ def main():
             "not locked, stinger placements PROPOSED pending "
             "picture lock). The 72 s review mix is review/gallery "
             "only, NOT an auto-run opening.",
+            "P0 draft mixes v2 (checkpoint 29): same three scenes + "
+            "72 s review, re-mixed from the checkpoint-26 composed "
+            "music + cinema stingers (ported ambience and CP04 VO "
+            "unchanged; same placements, gain targets, ducking and "
+            "peak guard as v1). Delivered in parallel under "
+            "mix/p0_v2/; v1 mixes in mix/p0/ are untouched. "
+            "Adoption is Codex's presentation-adapter decision. "
+            "DRAFT_MIX_NOT_FINAL, no ear audition.",
             "Composed music + stingers (checkpoint 26, Goi 30 item "
             "7): 13 ORIGINAL cues composed by Muse (9 music + 4 "
             "SFX/CINEMA stingers), provenance "
