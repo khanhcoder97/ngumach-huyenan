@@ -941,65 +941,52 @@ namespace NguMach.Client.Core.Tests
             // context. Dispose runs before the queued continuation drains, so
             // ct.ThrowIfCancellationRequested() inside Core must throw and the
             // pending mutation must be preserved.
-            var syncCtx = new SingleThreadSyncContext();
-            var previous = SynchronizationContext.Current;
-            SynchronizationContext.SetSynchronizationContext(syncCtx);
-            try
+            var replyTcs = new TaskCompletionSource<P1HttpReply>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var t = new DelegateTransport
             {
-                var t = new DelegateTransport
+                Handler = (r, ct) =>
                 {
-                    Handler = async (r, ct) =>
-                    {
-                        if (r.Path == "/p1/sessions")
-                            return SessionReply(r, SessionOne);
-                        if (r.Path == "/p1/actor/death-return")
-                        {
-                            // Yield once so the continuation is queued on syncCtx.
-                            await Task.Yield();
-                            return new P1HttpReply
-                            {
-                                StatusCode = 200,
-                                CorrelationId = r.CorrelationId,
-                                Body = "{\"schemaVersion\":1,\"requestId\":\"" + r.CorrelationId +
-                                       "\",\"sessionId\":\"" + SessionOne + "\",\"result\":{" +
-                                       "\"applied\":true,\"replayed\":false,\"mapId\":\"MAP_BEN_MUA\"," +
-                                       "\"xWu\":18.0,\"yWu\":0.0,\"hp\":50,\"maxHp\":100," +
-                                       "\"mp\":50,\"maxMp\":50,\"serverTick\":1840,\"revision\":12," +
-                                       "\"cleared\":{\"inflightCasts\":1,\"reservedCounters\":0," +
-                                       "\"guardWindowClosed\":false,\"movementWindowReset\":true}," +
-                                       "\"penalties\":{\"xp\":0,\"currency\":0,\"durability\":0}," +
-                                       "\"nextReturnAllowedAtTick\":1900}}"
-                            };
-                        }
-                        return NetworkFailure(r);
-                    }
-                };
-                using (var s = new ClientSession(t))
-                {
-                    Assert.True((await s.ConnectAsync()).Success);
-                    Assert.Null(s.Client.LastDeathReturn);
-
-                    var death = s.ReturnFromDeathAsync(CancellationToken.None);
-                    Assert.False(death.IsCompleted); // still queued on syncCtx
-
-                    // Dispose runs on the same thread before the queued continuation.
-                    s.Dispose();
-
-                    // Drain the UI context: the queued continuation resumes and
-                    // ct.ThrowIfCancellationRequested() must throw inside Core.
-                    syncCtx.RunAll();
-
-                    var result = await death.WaitAsync(TimeSpan.FromSeconds(5));
-                    Assert.False(result.Success, "stale death-return must not succeed");
-                    Assert.Null(s.Client.LastDeathReturn);
-                    Assert.Null(s.Client.NextReturnAllowedAtTick);
-                    // Pending mutation preserved for same-key retry.
-                    Assert.NotNull(s.Client.CapturePendingMutation());
+                    if (r.Path == "/p1/sessions")
+                        return Task.FromResult(SessionReply(r, SessionOne));
+                    if (r.Path == "/p1/actor/death-return")
+                        return replyTcs.Task;
+                    return Task.FromResult(NetworkFailure(r));
                 }
-            }
-            finally
+            };
+            using (var s = new ClientSession(t))
             {
-                SynchronizationContext.SetSynchronizationContext(previous);
+                Assert.True((await s.ConnectAsync()).Success);
+                Assert.Null(s.Client.LastDeathReturn);
+
+                var death = s.ReturnFromDeathAsync(CancellationToken.None);
+                Assert.False(death.IsCompleted); // reply has not arrived yet
+
+                // Dispose runs before the reply is delivered.
+                s.Dispose();
+
+                // Reply arrives after dispose: transport completes, then
+                // ct.ThrowIfCancellationRequested() inside Core must throw.
+                replyTcs.SetResult(new P1HttpReply
+                {
+                    StatusCode = 200,
+                    CorrelationId = Guid.NewGuid().ToString("N"),
+                    Body = "{\"schemaVersion\":1,\"requestId\":\"" + Guid.NewGuid().ToString("N") +
+                           "\",\"sessionId\":\"" + SessionOne + "\",\"result\":{" +
+                           "\"applied\":true,\"replayed\":false,\"mapId\":\"MAP_BEN_MUA\"," +
+                           "\"xWu\":18.0,\"yWu\":0.0,\"hp\":50,\"maxHp\":100," +
+                           "\"mp\":50,\"maxMp\":50,\"serverTick\":1840,\"revision\":12," +
+                           "\"cleared\":{\"inflightCasts\":1,\"reservedCounters\":0," +
+                           "\"guardWindowClosed\":false,\"movementWindowReset\":true}," +
+                           "\"penalties\":{\"xp\":0,\"currency\":0,\"durability\":0}," +
+                           "\"nextReturnAllowedAtTick\":1900}}"
+                });
+
+                var result = await death.WaitAsync(TimeSpan.FromSeconds(5));
+                Assert.False(result.Success, "stale death-return must not succeed");
+                Assert.Null(s.Client.LastDeathReturn);
+                Assert.Null(s.Client.NextReturnAllowedAtTick);
+                // Pending mutation preserved for same-key retry.
+                Assert.NotNull(s.Client.CapturePendingMutation());
             }
         }
 
