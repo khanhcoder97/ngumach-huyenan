@@ -1,7 +1,10 @@
-// OPC-15 O-B — Timeout/cancellation-aware transport wrapper for portable core.
-// Wraps any IP1Transport with a per-request timeout and cancellation propagation.
-// Pure C# (no engine dep). Ensures an in-flight request cannot hang forever and
-// that cancellation flows through to the inner transport.
+// OPC-15 O-B / Gói 29 lifecycle fix — Timeout/cancellation-aware transport wrapper.
+// A transport that ignores CancellationToken must not keep the caller past the
+// deadline: the caller completes on time, the late completion is rejected and
+// observed (no unobserved exception), and the request identity is preserved so
+// upstream adapters can keep the uncertain mutation key/payload.
+//
+// Pure C#. Owner: OpenCode.
 
 using System;
 using System.Threading;
@@ -24,21 +27,58 @@ namespace NguMach.Client.Core.Transport
 
         public async Task<P1HttpReply> SendAsync(P1Request request, CancellationToken ct)
         {
+            if (request == null) throw new ArgumentNullException(nameof(request));
+            var correlationId = request.CorrelationId;
+
             using (var cts = CancellationTokenSource.CreateLinkedTokenSource(ct))
             {
                 cts.CancelAfter(_timeout);
-                try
+                var innerTask = _inner.SendAsync(request, cts.Token);
+
+                var timeoutTask = Task.Delay(Timeout.InfiniteTimeSpan, cts.Token);
+                var completed = await Task.WhenAny(innerTask, timeoutTask).ConfigureAwait(false);
+
+                if (completed == innerTask)
                 {
-                    return await _inner.SendAsync(request, cts.Token);
+                    // Normal path: propagate result or caller cancellation.
+                    try
+                    {
+                        return await innerTask.ConfigureAwait(false);
+                    }
+                    catch (OperationCanceledException) when (ct.IsCancellationRequested)
+                    {
+                        throw;
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // Cancellation came from the timeout itself but the inner
+                        // still completed first; treat as timeout, not success.
+                        return TimeoutReply(correlationId);
+                    }
                 }
-                catch (OperationCanceledException)
-                {
-                    if (ct.IsCancellationRequested)
-                        throw; // caller cancelled
-                    // timeout
-                    return new P1HttpReply { StatusCode = 0, CorrelationId = request.CorrelationId, Body = null };
-                }
+
+                // Deadline reached while inner is still running (or its token
+                // was ignored): observe-and-abandon so its late completion or
+                // fault can never overwrite the caller result.
+                _ = ObserveLate(innerTask);
+                if (ct.IsCancellationRequested)
+                    throw new OperationCanceledException(ct);
+                return TimeoutReply(correlationId);
             }
+        }
+
+        private static P1HttpReply TimeoutReply(string correlationId)
+        {
+            return new P1HttpReply { StatusCode = 0, CorrelationId = correlationId, Body = null };
+        }
+
+        // Runs to completion without throwing; folds any late fault/reply into
+        // nothing so GC does not report an unobserved task exception and the
+        // caller-facing result stays the timeout reply.
+        private static async Task ObserveLate(Task<P1HttpReply> innerTask)
+        {
+            try { await innerTask.ConfigureAwait(false); }
+            catch (Exception) { /* late result rejected by Task.WhenAny */ }
         }
     }
 }

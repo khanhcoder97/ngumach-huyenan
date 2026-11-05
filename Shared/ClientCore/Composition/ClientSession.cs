@@ -51,9 +51,11 @@ namespace NguMach.Client.Core.Composition
         private readonly string _characterId;
         private readonly IMainThreadDispatcher _dispatcher;
         private readonly SemaphoreSlim _encounterLane = new SemaphoreSlim(1, 1);
+        private readonly object _disposeGate = new object();
         private CancellationTokenSource _cts;
         private PendingMutationSnapshot _pendingCarry;
         private bool _disposed;
+        private bool _encounterLaneDisposed;
 
         public P1Client Client { get; private set; }
         public P1ClientAdapter Adapter { get; private set; }
@@ -166,7 +168,12 @@ namespace NguMach.Client.Core.Composition
                 }
                 catch (OperationCanceledException)
                 {
-                    return EncounterReadResult.Fail(EncounterReadOutcome.Error, "canceled");
+                    return CanceledOrStale(sessionId, generation, "canceled_wait");
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Dispose won the race for the lane after the entry check.
+                    return EncounterReadResult.Fail(EncounterReadOutcome.Stale, "stale_session");
                 }
 
                 try
@@ -178,7 +185,7 @@ namespace NguMach.Client.Core.Composition
                     }
                     catch (OperationCanceledException)
                     {
-                        return EncounterReadResult.Fail(EncounterReadOutcome.Error, "canceled");
+                        return CanceledOrStale(sessionId, generation, "canceled");
                     }
                     catch (Exception e)
                     {
@@ -193,7 +200,17 @@ namespace NguMach.Client.Core.Composition
                 }
                 finally
                 {
-                    _encounterLane.Release();
+                    // Dispose() waits for this release before disposing the lane;
+                    // the gate guarantees Release() can never race Dispose().
+                    lock (_disposeGate)
+                    {
+                        if (!_encounterLaneDisposed)
+                        {
+                            try { _encounterLane.Release(); }
+                            catch (ObjectDisposedException) { }
+                            catch (SemaphoreFullException) { }
+                        }
+                    }
                 }
             }
         }
@@ -329,6 +346,16 @@ namespace NguMach.Client.Core.Composition
             return CancellationTokenSource.CreateLinkedTokenSource(caller, _cts.Token);
         }
 
+        private EncounterReadResult CanceledOrStale(string sessionId, long generation, string code)
+        {
+            // A dispose or relogin cancels the in-flight token. That is a stale
+            // response, not a network error: the caller must not surface it as
+            // actionable failure, and no state/event may be applied afterwards.
+            if (_disposed || !IsCurrentEpoch(sessionId, generation))
+                return EncounterReadResult.Fail(EncounterReadOutcome.Stale, "stale_session");
+            return EncounterReadResult.Fail(EncounterReadOutcome.Error, code);
+        }
+
         private static string ReadString(JObject obj, string name)
         {
             var token = obj[name];
@@ -340,13 +367,37 @@ namespace NguMach.Client.Core.Composition
 
         public void Dispose()
         {
-            if (_disposed) return;
-            _disposed = true;
+            bool already;
+            lock (_disposeGate)
+            {
+                already = _disposed;
+                _disposed = true;
+            }
+            if (already) return;
             EncounterUpdated = null;
             try { _cts.Cancel(); } catch (Exception) { }
             _cts.Dispose();
             Guard.EndSession();
-            _encounterLane.Dispose();
+
+            // Wait for any in-flight encounter read to finish its finally block
+            // BEFORE disposing the lane; otherwise Release() races Dispose().
+            var disposeDeadline = DateTime.UtcNow.AddSeconds(2);
+            while (DateTime.UtcNow < disposeDeadline)
+            {
+                // Take ownership of the lane. Success means no read is between
+                // WaitAsync and Release, so disposing it below is safe.
+                try
+                {
+                    if (_encounterLane.Wait(0)) break;
+                }
+                catch (ObjectDisposedException) { break; }
+                Thread.Sleep(1);
+            }
+            lock (_disposeGate)
+            {
+                _encounterLaneDisposed = true;
+            }
+            try { _encounterLane.Dispose(); } catch (ObjectDisposedException) { }
             if (_ownsTransport)
             {
                 var disposable = _rawTransport as IDisposable;

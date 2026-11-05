@@ -663,5 +663,81 @@ namespace NguMach.Client.Core.Tests
             Assert.True(token.IsCancellationRequested);
             await Assert.ThrowsAsync<ObjectDisposedException>(() => s.ReadCurrentEncounterAsync());
         }
+
+        [Fact]
+        public async Task DisposeDuringRead_NoThrowNoEventNoState()
+        {
+            // Codex harness at 685b888: Dispose during encounter read threw
+            // ObjectDisposedException at SemaphoreSlim.Release.
+            var encounterJson = FindFixture();
+            var started = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var release = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var t = new DelegateTransport
+            {
+                Handler = (r, ct) =>
+                {
+                    if (r.Path == "/p1/sessions") return Task.FromResult(SessionReply(r, SessionOne));
+                    if (r.Path == "/p1/encounters/current")
+                    {
+                        var request = r;
+                        started.TrySetResult(true);
+                        return DelayBeyondCancellation(release.Task, () => EncounterReply(request, encounterJson));
+                    }
+                    return Task.FromResult(NetworkFailure(r));
+                }
+            };
+            var s = new ClientSession(t);
+            int events = 0;
+            s.EncounterUpdated += _ => Interlocked.Increment(ref events);
+            Assert.True((await s.ConnectAsync()).Success);
+
+            var read = s.ReadCurrentEncounterAsync();
+            await started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+            // Dispose while read is in flight — must never throw, even when the
+            // late reply arrives and the read's finally runs.
+            s.Dispose();
+            release.TrySetResult(true);
+
+            var result = await read.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.Equal(0, Volatile.Read(ref events));
+            Assert.False(s.Encounter.HasSnapshot);
+            Assert.Equal(EncounterReadOutcome.Stale, result.Outcome);
+        }
+
+        private static bool IsAlphaId(string target)
+        {
+            var method = typeof(P1Client).GetMethod("IsValidInteractTarget",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public);
+            if (method == null) throw new InvalidOperationException("IsValidInteractTarget missing");
+            return (bool)method.Invoke(null, new object[] { target });
+        }
+
+        [Theory]
+        [InlineData("ALPHA_OBJ_BM_FRAGMENT")]
+        [InlineData("ALPHA_OBJ_BM_RIPPLE_01")]
+        [InlineData("ALPHA_OBJ_BM_RIPPLE_02")]
+        [InlineData("ALPHA_OBJ_BM_RIPPLE_03")]
+        [InlineData("ALPHA_OBJ_BM_VILLAGER_01")]
+        [InlineData("ALPHA_OBJ_BM_VILLAGER_02")]
+        [InlineData("ENT_MAN_BM_OBJ_BM_PACKAGE_01")]
+        public void AlphaInteractIds_Accepted(string target)
+        {
+            Assert.True(IsAlphaId(target));
+        }
+
+        [Theory]
+        [InlineData("ALPHA_NPC_RESCUE_01")]
+        [InlineData("ALPHA_NPC_RESCUE")]
+        [InlineData("ALPHA_OBJ_BM_RIPPLE_04")]
+        [InlineData("ALPHA_IDENTITY_HACK")]
+        [InlineData("ENT_")]
+        [InlineData("")]
+        [InlineData("   ")]
+        [InlineData("npc_lyan")]
+        public void AlphaInteractIds_Rejected(string target)
+        {
+            Assert.False(IsAlphaId(target));
+        }
     }
 }

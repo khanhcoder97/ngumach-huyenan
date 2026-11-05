@@ -24,6 +24,27 @@ namespace NguMach.Client.P1
         { return DateTimeOffset.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out _); }
         private static bool OneOf(string value, params string[] allowed) { return Array.IndexOf(allowed, value) >= 0; }
 
+        // DEC-ALPHA-INTERACT-IDS-20261105: the six published alpha interact
+        // targets kept beside the canonical ENT_ rule. The retired
+        // ALPHA_NPC_RESCUE* names are NOT canonical and are rejected.
+        private static readonly string[] AlphaInteractIds =
+        {
+            "ALPHA_OBJ_BM_FRAGMENT",
+            "ALPHA_OBJ_BM_RIPPLE_01",
+            "ALPHA_OBJ_BM_RIPPLE_02",
+            "ALPHA_OBJ_BM_RIPPLE_03",
+            "ALPHA_OBJ_BM_VILLAGER_01",
+            "ALPHA_OBJ_BM_VILLAGER_02"
+        };
+
+        internal static bool IsValidInteractTarget(string target)
+        {
+            if (string.IsNullOrWhiteSpace(target)) return false;
+            // "ENT_" alone is not an entity id; require a non-empty suffix.
+            if (target.Length > 4 && target.StartsWith("ENT_", StringComparison.Ordinal)) return true;
+            return Array.IndexOf(AlphaInteractIds, target) >= 0;
+        }
+
         private async Task<P1Result> ReadWorldV2(CancellationToken ct)
         {
             var reply = await Send(Get("/p1/v2/world/" + SessionId), ct);
@@ -184,7 +205,7 @@ namespace NguMach.Client.P1
             try
             {
                 if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
-                if (string.IsNullOrWhiteSpace(target) || !target.StartsWith("ENT_", StringComparison.Ordinal)) return Fail("invalid_target");
+                if (!IsValidInteractTarget(target)) return Fail("invalid_target");
                 pending = Command("/p1/world/interact", new P1Interact { targetId = target }); pendingKind = PendingKind.Interact;
                 return await SubmitPending(ct);
             }
