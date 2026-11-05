@@ -26,17 +26,62 @@ public sealed record PlayerDeathRecord(
 
 public sealed class PlayerLifeLedger
 {
-    // Bounded the same way the death-return ledger is: a long-lived process
-    // cannot grow with actor count, and an evicted character simply starts its
-    // life numbering again at 1 — which only ever renumbers a life whose death
-    // was never returned, so no receipt can be double-paid by an eviction.
+    // Retention rule, replacing the arrival-order bound the progress review filed as a
+    // live-character loss. An entry may be reclaimed only when that character's life is
+    // CLOSED: it is standing with no death recorded here, or it has already been returned,
+    // so the death on file belongs to an earlier life than the one it is living now. A
+    // character that is downed and not yet returned is pinned, because evicting it restarts
+    // its life numbering at 1 and lets the next death of what is really the same life mint
+    // a fresh identity - the double-pay the receipt exists to prevent.
+    //
+    // If every entry is pinned the ledger grows past this number and says so, instead of
+    // discarding a receipt to keep a round figure. Reclaiming under a real expiry rule
+    // needs persistence, which is the published scope of the QODER Remote Server/Persistence
+    // track; this type does not get to invent one.
     public const int Capacity = 256;
 
     public const string DeathEventIdPrefix = "PDEATH_";
 
     private readonly object _sync = new();
     private readonly Dictionary<string, LifeState> _states = new(StringComparer.Ordinal);
-    private readonly Queue<string> _order = new();
+    private long _touchClock;
+    private int _exceededBy;
+
+    // Observability for the rule above, so growth is a reported consequence instead of an
+    // invisible leak: how many characters are tracked, how many are pinned by an
+    // unredeemed death, and how many times the bound had to be exceeded.
+    public int TrackedCharacters
+    {
+        get
+        {
+            lock (_sync)
+            {
+                return _states.Count;
+            }
+        }
+    }
+
+    public int PinnedCharacters
+    {
+        get
+        {
+            lock (_sync)
+            {
+                return _states.Values.Count(state => !IsClosable(state));
+            }
+        }
+    }
+
+    public int CapacityExceededBy
+    {
+        get
+        {
+            lock (_sync)
+            {
+                return _exceededBy;
+            }
+        }
+    }
 
     public int LifeVersion(string characterId)
     {
@@ -131,23 +176,43 @@ public sealed class PlayerLifeLedger
     {
         if (_states.TryGetValue(characterId, out var existing))
         {
+            existing.LastTouched = ++_touchClock;
             return existing;
         }
 
-        if (_states.Count >= Capacity && _order.TryDequeue(out var oldest))
+        if (_states.Count >= Capacity)
         {
-            _states.Remove(oldest!);
+            var reclaimable = _states
+                .Where(pair => IsClosable(pair.Value))
+                .OrderBy(pair => pair.Value.LastTouched)
+                .Select(pair => pair.Key)
+                .ToList();
+            if (reclaimable.Count == 0)
+            {
+                // Every tracked character is downed and unreturned. Growing is the only
+                // honest option: dropping one would renumber a life still owed a return.
+                _exceededBy++;
+            }
+            else
+            {
+                _states.Remove(reclaimable[0]);
+            }
         }
 
-        var state = new LifeState();
+        var state = new LifeState { LastTouched = ++_touchClock };
         _states[characterId] = state;
-        _order.Enqueue(characterId);
         return state;
     }
+
+    // A life is reclaimable when nothing is owed on it: either the character never died in
+    // this ledger, or the death on record belongs to a life it has already left.
+    private static bool IsClosable(LifeState state) =>
+        state.LastDeath is not { } death || death.LifeVersion < state.LifeVersion;
 
     private sealed class LifeState
     {
         public int LifeVersion = 1;
         public PlayerDeathRecord? LastDeath;
+        public long LastTouched;
     }
 }

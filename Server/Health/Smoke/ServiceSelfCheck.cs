@@ -4439,6 +4439,65 @@ public static class ServiceSelfCheck
             idSameLife != idSameRevision,
             $"id={idA.Length}");
 
+        // Work order 30 item 1: churn of unrelated deaths must not cost a live character
+        // its life identity. 300 characters die and none is returned; the two first
+        // tracked still have to answer their own death with the same derived id and the
+        // same life number, and the ledger has to report how far past the bound it grew
+        // instead of silently dropping them (the old rule renumbered an evicted character
+        // at 1, so its next death minted a fresh identity for the same life).
+        var churnLedger = new PlayerLifeLedger();
+        var churnFirstDeath = churnLedger.RecordDamageCommit(
+            "CHR_CHURN_FIRST", 100, 0, 11, DateTimeOffset.UnixEpoch);
+        var churnSecondDeath = churnLedger.RecordDamageCommit(
+            "CHR_CHURN_SECOND", 100, 0, 12, DateTimeOffset.UnixEpoch);
+        for (var churnIndex = 0; churnIndex < 300; churnIndex++)
+        {
+            churnLedger.RecordDamageCommit(
+                $"CHR_CHURN_{churnIndex:D3}", 100, 0, churnIndex + 100, DateTimeOffset.UnixEpoch);
+        }
+
+        var churnSurvived = churnLedger.LatestDeath("CHR_CHURN_FIRST");
+        Check(
+            "lifecycle.churn_of_300_other_deaths_keeps_a_downed_characters_death_identity",
+            churnFirstDeath is not null && churnSecondDeath is not null &&
+            churnSurvived is not null &&
+            churnSurvived.DeathEventId == churnFirstDeath.DeathEventId &&
+            churnLedger.LifeVersion("CHR_CHURN_FIRST") == 1 &&
+            churnLedger.LifeVersion("CHR_CHURN_SECOND") == 1 &&
+            churnLedger.TrackedCharacters == 302 &&
+            churnLedger.PinnedCharacters == 302 &&
+            churnLedger.CapacityExceededBy == 46,
+            $"tracked={churnLedger.TrackedCharacters} pinned={churnLedger.PinnedCharacters} " +
+            $"exceeded={churnLedger.CapacityExceededBy} " +
+            $"firstLife={churnLedger.LifeVersion("CHR_CHURN_FIRST")} " +
+            $"idKept={churnSurvived?.DeathEventId == churnFirstDeath?.DeathEventId}");
+
+        // The other half of the rule: reclaiming happens only where nothing is owed. Once
+        // 46 of those lives are closed by a committed return, the next character is
+        // absorbed by reclaiming one closed entry, the tracked count stops growing, and
+        // the overflow counter stays where it was. Pinned lands on 257, not on the bound:
+        // the newcomer is itself a downed character, so one closed entry left and one
+        // pinned entry arrived in the same insert.
+        for (var churnIndex = 0; churnIndex < 46; churnIndex++)
+        {
+            churnLedger.RecordResurrectionCommit($"CHR_CHURN_{churnIndex:D3}", 0, 100);
+        }
+
+        churnLedger.RecordDamageCommit(
+            "CHR_CHURN_NEWCOMER", 100, 0, 999, DateTimeOffset.UnixEpoch);
+        Check(
+            "lifecycle.only_a_closed_life_is_reclaimable_so_the_bound_holds_again",
+            churnLedger.TrackedCharacters == 302 &&
+            churnLedger.PinnedCharacters == 257 &&
+            churnLedger.CapacityExceededBy == 46 &&
+            churnLedger.LatestDeath("CHR_CHURN_000") is null &&
+            churnLedger.LatestDeath("CHR_CHURN_045") is not null &&
+            churnLedger.LatestDeath("CHR_CHURN_NEWCOMER") is not null,
+            $"tracked={churnLedger.TrackedCharacters} pinned={churnLedger.PinnedCharacters} " +
+            $"exceeded={churnLedger.CapacityExceededBy} " +
+            $"reclaimedOldestClosed={churnLedger.LatestDeath("CHR_CHURN_000") is null} " +
+            $"newestClosedKept={churnLedger.LatestDeath("CHR_CHURN_045") is not null}");
+
         var ledgerNoDoubleRecord = new PlayerLifeLedger();
         var repeatAt = returnClock.UtcNow;
         var repeatFirst = ledgerNoDoubleRecord.RecordDamageCommit(
