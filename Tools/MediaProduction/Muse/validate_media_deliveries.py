@@ -216,6 +216,66 @@ def check_timing_srt():
     COUNTS["srt_cues"] = srt_cues
 
 
+def check_runtime_cine_manifest():
+    """Cross-manifest equality for dialogue cues (Gói 30 item 1 / PR119
+    review finding 1): the runtime cinematics manifest's dialogueCues
+    must equal, per scene, the timing JSON's shots[].dialogue count, the
+    parsed SRT cue count, and the source manifest's "cues" length where
+    that key exists. P0 + CIN_006 source manifests carry no "cues" key;
+    their counts come from timing/SRT only."""
+    runtime = json.loads((ROOT / "ClientGodot/assets/cinematics"
+                          / "RUNTIME_CINEMATICS_manifest_v1.json")
+                         .read_text(encoding="utf-8"))
+    base = ROOT / "Implementation/Content/Narrative/Deliveries"
+    source_cues = {}
+    for name in ("P0_timing_manifest_v1.json",
+                 "CAMPAIGN_timing_manifest_v1.json"):
+        manifest = json.loads((base / name).read_text(encoding="utf-8"))
+        for s in manifest["scenes"]:
+            if "cues" in s:
+                source_cues[s["sceneId"]] = len(s["cues"])
+    c6 = json.loads((base / "CIN_006/CIN_006_timing_manifest_v1.json")
+                    .read_text(encoding="utf-8"))
+    if "cues" in c6["scene"]:
+        source_cues[c6["scene"]["sceneId"]] = len(c6["scene"]["cues"])
+    scenes = 0
+    total = 0
+    for entry in runtime["scenes"]:
+        sid = entry["sceneId"]
+        scenes += 1
+        timing = json.loads((base / sid / f"{sid}_timing_v1.json")
+                            .read_text(encoding="utf-8"))
+        timing_dialogues = sum(
+            1 for sh in timing.get("shots", [])
+            if isinstance(sh.get("dialogue"), dict))
+        srt_path = base / sid / f"{sid}_vi.srt"
+        cues = parse_srt(srt_path.read_text(encoding="utf-8"))
+        if cues is None:
+            err(f"RUNTIME-CUES {sid}: unparseable source SRT")
+            continue
+        srt_cues = len(cues)
+        got = entry.get("dialogueCues")
+        if got != timing_dialogues:
+            err(f"RUNTIME-CUES {sid}: runtime dialogueCues {got} "
+                f"!= timing dialogues {timing_dialogues}")
+        if got != srt_cues:
+            err(f"RUNTIME-CUES {sid}: runtime dialogueCues {got} "
+                f"!= SRT cues {srt_cues}")
+        if sid in source_cues and source_cues[sid] != timing_dialogues:
+            err(f"RUNTIME-CUES {sid}: source manifest cues "
+                f"{source_cues[sid]} != timing dialogues "
+                f"{timing_dialogues}")
+        total += timing_dialogues
+    totals = runtime.get("campaignTotals", {})
+    if totals.get("dialogueCues") != total:
+        err(f"RUNTIME-CUES: campaignTotals.dialogueCues "
+            f"{totals.get('dialogueCues')} != derived total {total}")
+    COUNTS["runtime_cine_scenes_checked"] = scenes
+    COUNTS["runtime_dialogue_cues_total"] = total
+    note(f"Runtime cinematics dialogue cues cross-checked: {scenes} "
+         f"scenes, {total} cues (timing == SRT == runtime manifest)")
+
+
 def png_dims(path):
     with open(path, "rb") as f:
         head = f.read(33)
@@ -296,9 +356,10 @@ def main():
     args = ap.parse_args()
     check_audio_packs()
     check_timing_srt()
+    check_runtime_cine_manifest()
     check_animatic_vo()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 13 (M8 animatic revision v2 re-validation)",
+        "checkpoint": "MEDIA-02 checkpoint 14 (Gói 30 fix (a): dialogueCues cross-manifest validation)",
         "base_integration": "f383233",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,

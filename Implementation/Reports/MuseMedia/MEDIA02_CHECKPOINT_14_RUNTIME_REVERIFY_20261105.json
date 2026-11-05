@@ -1,0 +1,25 @@
+{
+ "checkpoint": "MEDIA-02 checkpoint 14 (Gói 30 fix (a)) - runtime re-verification",
+ "base_integration": "f383233",
+ "branch": "muse/media-production-20261104",
+ "verifies": "checkpoint 10 runtime delivery as revised by checkpoint 13 (animatic v2) and checkpoint 14 (dialogueCues fix) (RUNTIME_AUDIO_manifest_v1.json + RUNTIME_CINEMATICS_manifest_v1.json)",
+ "counts": {
+  "runtime_audio_files_checked": 545,
+  "runtime_audio_manifest_total": 545,
+  "animatic_files_checked": 3,
+  "cinematics_scenes_checked": 20,
+  "timing_files_checked": 20,
+  "srt_files_checked": 20
+ },
+ "mismatches": [],
+ "notes": [
+  "Audio manifest counts: {'music_ambience': 22, 'sfx_ui_variants': 519, 'vo': 4}",
+  "Campaign totals in manifest: {'scenes': 20, 'shots': 63, 'seconds': 378, 'dialogueCues': 21}"
+ ],
+ "verdict": "PASS",
+ "limits": [
+  "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08, measured from real bytes.",
+  "This check verifies runtime copies still match their manifests; it does not verify the source packs (see validate_media_deliveries.py, re-run at checkpoint 11).",
+  "NOT a mix PASS and NOT an ear audition; NOT a Godot wiring check (presentation adapter is Codex's work)."
+ ]
+}

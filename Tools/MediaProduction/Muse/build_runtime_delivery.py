@@ -35,6 +35,7 @@ Outputs:
 """
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -79,6 +80,32 @@ def ffprobe_duration_s(path: Path):
          "-of", "csv=p=0", str(path)],
         capture_output=True, text=True, check=True)
     return float(out.stdout.strip())
+
+
+SRT_TIME_RE = re.compile(
+    r"^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d$")
+
+
+def count_srt_cues(text: str):
+    """Count SRT cue blocks; None when the file is unparseable.
+
+    A cue block is an index line followed by a timestamp line. This is the
+    same strict shape validate_media_deliveries.parse_srt enforces, counted
+    here so the builder never trusts a manifest's cue list alone.
+    """
+    blocks = [b.strip() for b in re.split(r"\n\s*\n", text.strip())
+              if b.strip()]
+    if not blocks:
+        return None
+    count = 0
+    for block in blocks:
+        lines = block.splitlines()
+        if len(lines) < 3 or not lines[0].strip().isdigit():
+            return None
+        if not SRT_TIME_RE.match(lines[1].strip()):
+            return None
+        count += 1
+    return count
 
 
 def check(cond, msg):
@@ -294,6 +321,26 @@ def main():
         check(srt_sha == s["srtSha256"],
               f"{scene_id}: srt sha mismatch {srt_sha} != {s['srtSha256']}")
         timing = json.loads(timing_dest.read_text(encoding="utf-8"))
+        # Gói 30 item 1 / PR119 review finding 1: dialogueCues must come
+        # from parsed timing dialogue + SRT, NOT from len(s.get("cues")).
+        # The three source manifests have different shapes: P0 and CIN_006
+        # scenes carry no "cues" key at all, so the old expression wrote 0
+        # for CIN_001/002/004/006 even though each SRT has one cue. Any
+        # disagreement between the three layers aborts the delivery.
+        timing_dialogues = sum(
+            1 for sh in timing.get("shots", [])
+            if isinstance(sh.get("dialogue"), dict))
+        srt_cues = count_srt_cues(srt_dest.read_text(encoding="utf-8"))
+        check(srt_cues is not None,
+              f"{scene_id}: unparseable SRT {srt_src.name}")
+        if srt_cues is not None:
+            check(timing_dialogues == srt_cues,
+                  f"{scene_id}: timing dialogues {timing_dialogues} "
+                  f"!= SRT cues {srt_cues}")
+        if "cues" in s:
+            check(len(s["cues"]) == timing_dialogues,
+                  f"{scene_id}: source manifest cues {len(s['cues'])} "
+                  f"!= timing dialogues {timing_dialogues}")
         scene_entries.append({
             "sceneId": scene_id,
             "durationSeconds": s.get("durationSeconds",
@@ -305,26 +352,36 @@ def main():
             "srtSha256": srt_sha,
             "srtStatus": s.get("srtStatus", "DRAFT"),
             "dialogueWindowStatus": s.get("dialogueWindowStatus"),
-            "dialogueCues": len(s.get("cues", [])),
+            "dialogueCues": timing_dialogues,
         })
+    total_dialogue_cues = sum(e["dialogueCues"] for e in scene_entries)
     cine_manifest = {
         "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
-        "checkpoint": "MEDIA-02 checkpoint 13 - P0 animatic revision v2 (D4 panel fixes); audio/timing unchanged from checkpoint 10",
+        "checkpoint": "MEDIA-02 checkpoint 14 - Gói 30 fix (a): dialogueCues derived from parsed timing dialogue/SRT (PR119 review finding 1); audio/timing unchanged from checkpoint 10/13",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
-        "campaignTotals": {"scenes": 20, "shots": 63, "seconds": 378},
+        "campaignTotals": {"scenes": 20, "shots": 63, "seconds": 378,
+                           "dialogueCues": total_dialogue_cues},
         "notes": [
             "P0 animatic v2 (MP4 review + OGV runtime + poster) verified "
-            "against checkpoint 13 SHAs; files already in the runtime tree.",
+            "against checkpoint 13 SHAs (outputs v2 manifest); 4 panels "
+            "revised (CIN_001_S03, CIN_001_S06, CIN_004_S01, CIN_004_S03), "
+            "8 panels byte-identical to v1; poster unchanged (CIN_001_S01).",
             "Timing JSON + SRT per scene copied from Narrative/Deliveries "
             "with sha256 verification against the checkpoint 01/05/06 "
             "manifests. SRT is UTF-8/NFC, DRAFT.",
+            "dialogueCues is derived from parsed timing JSON "
+            "shots[].dialogue, cross-checked against the parsed SRT cue "
+            "count and, where present, the source manifest 'cues' list "
+            "(Gói 30 item 1 / PR119 review finding 1). P0 + CIN_006 source "
+            "manifests carry no 'cues' key; their counts come from "
+            "timing/SRT. Any disagreement aborts this build.",
             "Only CIN_001_S05 (24.8-28.5 s, version B) is DECIDED; all "
             "other dialogue windows remain PROPOSED_ANIMATIC_PLACEMENT "
             "until director/Codex confirms them.",
             "No final picture: animatic is storyboard level (revision v2 "
-            "fixes 4 panel defects); character keyframes still await lock "
-            "for locked shots.",
+            "fixes 4 panel defects, not final picture); character keyframes "
+            "still await lock for locked shots.",
         ],
         "animatic": cine_files,
         "scenes": scene_entries,
