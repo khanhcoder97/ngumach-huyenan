@@ -59,3 +59,11 @@ Minh Kiếm có16pose cho mỗi hướng của4hành động idle/walk/attack/ca
 HUD dùng cache và chỉ composite vùng có nội dung; nền và đá tĩnh được bake lúc chạy, giữ nearest pixel. Bấm chuột/phím có flash, thông báo kết quả và cooldown từ server. Skill tự thân gửi target null; Phản Quang chỉ hiện cue phòng thủ lúc cast, không giả đòn phản kích. Online hiện hỗ trợ3skill; ô4–6 báo chưa mở.
 
 Kiểm: Run_Playable_Alpha.ps1 -MotionTest -UiGallery; --motion-self-test (fixture physics/pointer/pose, không HTTP); --motion-art-review --capture <absolute.png> (ảnh128pose/hành động tĩnh, không FPS demo); --performance-profile <absolute.json> --profile-walk (đo bằng Stopwatch, warmup3s+lấy mẫu12s, kèm PNG).
+
+## Khóa mục tiêu và phản hồi chiến đấu
+
+Nhấp quái còn sống để khóa; Tab đổi lần lượt các mục tiêu hiện trên màn hình, Shift+Tab đổi ngược. Chuột phải trên map hoặc × ở bảng mục tiêu để bỏ khóa. Bảng giữa phía trên hiển thị tên, HP thực, khoảng cách WU và trạng thái server; minimap có viền hình thoi cho mục tiêu. Phím đánh/skill có mục tiêu sẽ xoay nhân vật về phía khóa trước khi gửi aim. Tự chọn chỉ chọn quái đang nhìn thấy và có art hợp lệ.
+
+Khóa được bỏ khi mục tiêu chết, ra khỏi snapshot, hồi sinh sang life khác hoặc đổi phiên/instance/floor/phase. Quái/NPC nội suy vị trí nhận được, không mô phỏng AI hoặc HP tại client. Tên chồng nhau ưu tiên mục tiêu đang khóa; vị trí spawn không bị dời. Float damage/miss/immune/absorb, flash trúng đòn và cleanup đọc theo event thực, map/floor/life; không hiển thị hit cũ lên quái vừa hồi sinh. Cast gây damage kết thúc không có hit có thông báo; guard/dash không bị gán là đòn hụt.
+
+Kiểm riêng: Run_Playable_Alpha.ps1 -CombatTest -EvidenceDirectory <thư mục riêng>. Runner đi từ spawn x18 theo public movement tới bờ sông gần cá x84, chọn/cycle/đánh/cast bằng pointer event; đo FPS online với target HUD, đọc HP/MP/cooldown thực và kiểm không cấp loot/quest giả. Mob AI vẫn OFF theo baseline. --target-self-test là fixture UI/DTO/pointer riêng, không HTTP; thêm --capture <absolute.png> để chụp bảng kiểm có nhãn fixture.

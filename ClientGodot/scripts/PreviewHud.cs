@@ -16,6 +16,9 @@ public partial class PreviewHud : Node2D
     public event Action? AttackPressed,InventoryPressed,InteractPressed,RetryPressed,JournalPressed;
     public event Action<string>? MenuPressed;
     private NativeOnlineFrame? _frame;
+    private CombatTargetInfo? _target;
+    public CombatTargetInfo? CombatTarget=>_target;
+    public event Action? TargetClearPressed;
     private Font _font=null!;
     private SubViewport _cache=null!;
     private HudInk _ink=null!;
@@ -85,6 +88,19 @@ public partial class PreviewHud : Node2D
         if(frame.RejectedAction is "CAST" or "BASIC_ATTACK")
         {int slot=frame.RejectedAction=="BASIC_ATTACK"?-1:SkillIndex(frame.RejectedSkill);ShowAction(slot,CombatMessage(frame.ActionError),false);}
     }
+    public void ApplyTarget(CombatTargetInfo? target)
+    {
+        if(_target==target)return;_target=target;_map.TargetId=target?.EntityId;InvalidateRender();
+    }
+    public bool BlocksWorldPointer(Vector2 point)
+    {
+        if(!IsVisibleInTree())return false;
+        return new Rect2(14,14,364,340).HasPoint(point)||new Rect2(836,14,202,54).HasPoint(point)||
+            new Rect2(1042,14,224,176).HasPoint(point)||new Rect2(14,600,343,111).HasPoint(point)||
+            new Rect2(377,650,517,65).HasPoint(point)||new Rect2(1018,474,254,216).HasPoint(point)||
+            (_target!=null&&new Rect2(448,22,376,100).HasPoint(point))||
+            (_chat&&new Rect2(14,457,343,151).HasPoint(point));
+    }
     private static int SkillIndex(string? id)=>Array.IndexOf(new[]{"SK-MK-01","SK-MK-02","SK-MK-03"},id);
     public string CombatHint=>_combatHint;
     public bool IsPressed(int slot)=>slot<0?_press>0:slot<6&&_slotPress[slot]>0;
@@ -149,7 +165,9 @@ public partial class PreviewHud : Node2D
     }
     public override void _UnhandledInput(InputEvent ev)
     {
+        if(!IsVisibleInTree())return;
         if(ev is not InputEventMouseButton m||m.ButtonIndex!=MouseButton.Left||!m.Pressed)return;
+        if(_target!=null&&new Rect2(794,28,24,24).HasPoint(m.Position)){TargetClearPressed?.Invoke();GetViewport().SetInputAsHandled();return;}
         if(m.Position.DistanceTo(AttackCenter)<=57){AttackPressed?.Invoke();GetViewport().SetInputAsHandled();return;}
         int slot=HitSkill(m.Position);if(slot>=0){SkillPressed?.Invoke(slot);GetViewport().SetInputAsHandled();return;}
         foreach(var b in _buttons)if(b.Rect.HasPoint(m.Position)){b.Action();GetViewport().SetInputAsHandled();return;}
@@ -164,6 +182,7 @@ public partial class PreviewHud : Node2D
         if(_cache==null)return;
         // Composite only occupied HUD regions. Fullscreen transparent blending wastes fill rate on older GPUs.
         var regions=new List<Rect2>{new(14,14,364,340),new(836,14,202,54),new(1042,14,224,176),new(14,600,343,111),new(377,650,517,65),new(1018,474,254,216)};
+        if(_target!=null)regions.Add(new Rect2(440,14,392,116));
         if(_chat)regions.Add(new Rect2(14,457,343,151));
         if(_hintTime>0)regions.Add(new Rect2(892,412,371,63));
         if(_hover>=0||_buttonHover>=0)
@@ -187,6 +206,19 @@ public partial class PreviewHud : Node2D
         long? coins=_frame?.Inventory?.currencies?.FirstOrDefault(c=>c.currencyId=="COIN")?.amount;
         Text(new Vector2(252,105),Online?"Đồng  "+(coins?.ToString()??"—"):"Kiếm ý",11,MoonGlassTheme.Gold);
         if(!Online||self!=null)for(int i=0;i<5;i++)_drawer.DrawCircle(new Vector2(328+i*5,103),1.5f,i<(self?.swordIntent??0)?MoonGlassTheme.Violet:new Color(.61f,.64f,.8f,.3f));
+        if(_target is {} target)
+        {
+            Panel(new Rect2(448,22,376,100),.80f);
+            Text(new Vector2(464,42),target.Kind=="BOSS"?"THỦ LĨNH":"MỤC TIÊU",10,MoonGlassTheme.Gold);
+            Text(new Vector2(464,64),target.Name.Length>28?target.Name[..25]+"…":target.Name,17);
+            Text(new Vector2(717,43),target.Distance.ToString("0.0",System.Globalization.CultureInfo.InvariantCulture)+" WU",11,MoonGlassTheme.Muted);
+            Text(new Vector2(801,44),"×",18,MoonGlassTheme.Silver);
+            Bar(new Rect2(464,76,344,12),target.Hp/(float)Math.Max(1,target.MaxHp),Color.FromHtml("#b84470"),MoonGlassTheme.Hp);
+            Center(new Vector2(636,86),target.Hp+" / "+target.MaxHp,10);
+            string state=target.State switch{"ATTACK"=>"Đang tấn công","WINDUP" or "TELEGRAPH"=>"Đang chuẩn bị đánh","CHASE"=>"Đang truy đuổi","RETURN" or "RETURNING"=>"Đang quay về",_=>"Đang khóa mục tiêu"};
+            Text(new Vector2(464,109),state,11,MoonGlassTheme.Muted);
+            Text(new Vector2(660,109),"Tab đổi · Chuột phải bỏ",10,MoonGlassTheme.Muted);
+        }
         Panel(new Rect2(22,192,278,154),.65f);
         var tabs=new[]{"Chính tuyến","Hằng ngày","Sự kiện"};
         for(int i=0;i<3;i++){if(i==_questTab)_drawer.DrawRect(new Rect2(24+i*92,194,90,27),new Color(.44f,.44f,.7f,.38f));Center(new Vector2(69+i*92,212),tabs[i],12,i==_questTab?MoonGlassTheme.Ink:MoonGlassTheme.Muted);}

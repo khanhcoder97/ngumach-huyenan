@@ -28,9 +28,12 @@ public partial class VisualPreview : Node2D
     private readonly AuthoritativeMotion _motion=new();
     private double _movingGrace;
     private int _previewCast;
+    private bool _nativeCombatTest;
     private bool _onlineTest,_onlineUiTest,_visualTest,_vfxReview,_questArtReview,_reviewStarted,_scenarioCapture;
     private string _lastSession="";
-    private readonly HashSet<string> _impactIds=new();
+    private readonly CombatEventGate _combatEvents=new();
+    private double _targetHudRefresh;
+    private readonly Dictionary<string,bool> _damageCasts=new();
     private bool _uiGallery;
 
     private int _frames;
@@ -51,6 +54,7 @@ public partial class VisualPreview : Node2D
             if(refresh>=59&&refresh<=61)Engine.MaxFps=0;
         }
         var args = OS.GetCmdlineUserArgs();
+        _nativeCombatTest=args.Contains("--combat-online-test");
         _selfTest = args.Contains("--camera-self-test");
         _onlineTest=args.Contains("--online-self-test");
         _onlineUiTest=args.Contains("--online-ui-self-test");
@@ -88,6 +92,7 @@ public partial class VisualPreview : Node2D
         canvas.AddChild(_hud);
         _hud.SkillPressed+=UseSkill;
         _hud.AttackPressed+=Attack;
+        _hud.TargetClearPressed+=()=>{if(_liveActors!=null)_liveActors.TargetId=null;};
         _hud.InventoryPressed+=OpenInventory;
         _hud.InteractPressed+=InteractNearest;
         _hud.JournalPressed+=OpenJournal;
@@ -95,18 +100,19 @@ public partial class VisualPreview : Node2D
         _hud.MenuPressed+=OpenMenu;
         _dialog=new NativeDialoguePanel();AddChild(_dialog);
         _dialog.CommandRequested+=(kind,target,quest)=>_online?.Command(kind,target,quest);
-        _dialog.Closed+=()=>_online?.SetMove(Vector2.Zero);
+        _dialog.Closed+=()=>{_online?.SetMove(Vector2.Zero);_hud.Visible=!_cleanCapture&&!_hudHidden;};
         _dialog.DisplaySettingsChanged+=(low,compact)=>{_vfx.LowFx=low;_hud.LowFx=low;_camera.SetCompact(compact);};
         if(!args.Any(a=>a.Contains("test",StringComparison.Ordinal))&&_capture==null&&!args.Contains("--performance-profile"))_dialog.ApplySavedPreferences();
         var url=OS.GetEnvironment("P1_BASE_URL");
-        if((_onlineTest||_onlineUiTest)&&(!Uri.TryCreate(url,UriKind.Absolute,out var testUri)||!testUri.IsLoopback))
+        if((_onlineTest||_onlineUiTest||_nativeCombatTest)&&(!Uri.TryCreate(url,UriKind.Absolute,out var testUri)||!testUri.IsLoopback))
         {GD.PushError("Online acceptance requires the launcher's private loopback server.");GetTree().Quit(2);return;}
-        if(!string.IsNullOrWhiteSpace(url)&&!_selfTest&&!_visualTest&&!_vfxReview&&!_questArtReview&&!args.Contains("--quest-ui-self-test")&&!args.Contains("--motion-self-test")&&!args.Contains("--motion-art-review"))
+        if(!string.IsNullOrWhiteSpace(url)&&!_selfTest&&!_visualTest&&!_vfxReview&&!_questArtReview&&!args.Contains("--quest-ui-self-test")&&!args.Contains("--motion-self-test")&&!args.Contains("--motion-art-review")&&!args.Contains("--target-self-test"))
         {
             _hero.CollisionLayer=1;_hero.CollisionMask=1;
             var bounds=new Rect2(NativeActorsView.RenderOrigin+new Vector2(0,-1440),new Vector2(7200,1680));
             _camera.ConfigureBounds(bounds);_environment.ExtendOnlineBackdrop(bounds);
             _liveActors=new NativeActorsView();actors.AddChild(_liveActors);
+            _liveActors.TargetChanged+=()=>_hud.ApplyTarget(_liveActors.TargetInfo);
             _online=new NativeOnlineSession();AddChild(_online);
             _online.FrameReady+=ApplyOnlineFrame;
             _online.ScenarioPassed+=count=>
@@ -118,6 +124,7 @@ public partial class VisualPreview : Node2D
             };
             _online.ScenarioFailed+=error=>{GD.PushError(error);if(_onlineTest||_onlineUiTest)GetTree().Quit(1);else _hud.StatusText=error;};
             _online.Start(url,_onlineTest);
+            if(_nativeCombatTest){_captureStarted=true;var combatTest=new NativeCombatAcceptance();AddChild(combatTest);combatTest.Configure(_online,_liveActors,_hud,_vfx,_capture??throw new InvalidOperationException("Combat acceptance needs capture path"));}
             if(_onlineUiTest)
             {
                 var test=new NativeGameplayUiTest();AddChild(test);
@@ -130,9 +137,10 @@ public partial class VisualPreview : Node2D
                 },error=>{GD.PushError(error);GetTree().Quit(1);});
             }
         }
-        else if(_onlineTest||_onlineUiTest){GD.PushError("P1_BASE_URL is required for online test.");GetTree().Quit(2);return;}
+        else if(_onlineTest||_onlineUiTest||_nativeCombatTest){GD.PushError("P1_BASE_URL is required for online test.");GetTree().Quit(2);return;}
         if(args.Contains("--quest-ui-self-test"))QuestPresentationSelfTest.Run(this);
         if(args.Contains("--motion-self-test"))RunMotionTests();
+        if(args.Contains("--target-self-test"))RunTargetTests();
         if(args.Contains("--motion-art-review")){_captureStarted=true;RunMotionArtReview();}
         int screen=Array.IndexOf(args,"--ui-screen");
         if(screen>=0&&screen+1<args.Length)OpenMenu(args[screen+1]);
@@ -165,14 +173,20 @@ public partial class VisualPreview : Node2D
         if(key.Keycode==Key.R)_online?.Command("RETRY");
         if(key.Keycode==Key.Tab&&_onlineFrame?.World!=null)
         {
-            var entity=_liveActors?.NearestTargetable(new Vector2((float)_onlineFrame.World.self.x,(float)_onlineFrame.World.self.y));
-            if(_liveActors!=null)_liveActors.TargetId=entity?.entityId;
+            _liveActors?.CycleTarget(WorldView(),Input.IsPhysicalKeyPressed(Key.Shift));
         }
         if(key.Keycode==Key.F2)_camera.SetCompact(!_camera.Compact);
         if(key.Keycode==Key.F6){_vfx.LowFx=!_vfx.LowFx;_hud.LowFx=_vfx.LowFx;}
         if(key.Keycode==Key.H)_hudHidden=!_hudHidden;
     }
 
+    private Rect2 WorldView()=>new(_camera.GlobalPosition-_camera.VisibleWorldSize*TopDownCamera.PixelsPerWorldUnit/2,_camera.VisibleWorldSize*TopDownCamera.PixelsPerWorldUnit);
+    public override void _UnhandledInput(InputEvent input)
+    {
+        if(input is not InputEventMouseButton mouse||!mouse.Pressed||_dialog?.IsOpen==true||_liveActors==null||_hud.BlocksWorldPointer(mouse.Position))return;
+        if(mouse.ButtonIndex==MouseButton.Right){_liveActors.TargetId=null;GetViewport().SetInputAsHandled();return;}
+        if(mouse.ButtonIndex==MouseButton.Left&&_liveActors.SelectAt(GetViewport().GetCanvasTransform().AffineInverse()*mouse.Position,WorldView()))GetViewport().SetInputAsHandled();
+    }
     public override void _Notification(int what)
     {
         // No injected movement state is kept across focus loss.
@@ -199,7 +213,7 @@ public partial class VisualPreview : Node2D
         }
         if(_online!=null)
         {
-            if(!_onlineUiTest)_online.SetMove(new Vector2(move.X,-move.Y));
+            if(!_onlineUiTest&&!_nativeCombatTest)_online.SetMove(new Vector2(move.X,-move.Y));
             var target=_motion.Sample(AuthoritativeMotion.Now,_hero.Position);
             var displacement=target-_hero.Position;
             _hero.Velocity=Vector2.Zero;
@@ -219,6 +233,7 @@ public partial class VisualPreview : Node2D
         _hud.Coordinates = _online!=null?NativeActorsView.WorldPoint(_hero.Position):_hero.Position/TopDownCamera.PixelsPerWorldUnit;
         _hud.Facing=_facing;
         _hud.Compact = _camera.Compact;
+        _targetHudRefresh+=delta;if(_targetHudRefresh>=.2){_targetHudRefresh=0;_hud.ApplyTarget(_liveActors?.TargetInfo);}
 
     }
 
@@ -368,9 +383,10 @@ public partial class VisualPreview : Node2D
 
     private void ApplyOnlineFrame(NativeOnlineFrame frame)
     {
-        _onlineFrame=frame;_hud.ApplyOnline(frame);_liveActors?.UpdateFrame(frame);_dialog?.ApplyFrame(frame);
+        _onlineFrame=frame;_hud.ApplyOnline(frame);_liveActors?.UpdateFrame(frame);_hud.ApplyTarget(_liveActors?.TargetInfo);_dialog?.ApplyFrame(frame);
+        if(_combatEvents.Bind(frame)){_vfx.Clear();_damageCasts.Clear();}
+        var presentationEvents=frame.Events.Where(_combatEvents.Accept).ToArray();
         if(frame.World==null)return;
-        if(_lastSession!=""&&_lastSession!=frame.SessionId){_vfx.Clear();_impactIds.Clear();}
         var point=NativeActorsView.RenderPoint(frame.World.self.x,frame.World.self.y);
         bool first=_lastSession==""||_lastSession!=frame.SessionId;
         var delta=point-_hero.Position;
@@ -387,36 +403,33 @@ public partial class VisualPreview : Node2D
         if(frame.AcceptedAction is "CAST" or "BASIC_ATTACK")
         {
             if(_body is HeroAnimator animator){if(frame.AcceptedAction=="CAST")animator.Cast();else animator.Attack();}
+            if(frame.AcceptedAction=="BASIC_ATTACK"||frame.AcceptedSkill=="SK-MK-03")
+            {
+                var start=presentationEvents.LastOrDefault(e=>e.type=="CAST_START"&&e.actorId==frame.World.self.characterId);
+                if(start!=null){if(_damageCasts.Count>=64)_damageCasts.Remove(_damageCasts.Keys.First());_damageCasts[start.castId]=false;}
+            }
             if(frame.AcceptedAction=="CAST"&&frame.AcceptedSkill!=null)
             {
                 int index=Array.IndexOf(new[]{"SK-MK-01","SK-MK-02","SK-MK-03"},frame.AcceptedSkill);
                 // A successful guard cast is not a successful counter. Its release
                 // arc must wait for COUNTER_CONFIRMED, including a result-less event.
-                var cast=frame.Events.LastOrDefault(e=>e.type=="CAST_START"&&e.actorId==frame.World.self.characterId);
+                var cast=presentationEvents.LastOrDefault(e=>e.type=="CAST_START"&&e.actorId==frame.World.self.characterId);
                 if(cast!=null){if(index>0)_vfx.Play(index,_hero.Position,_facing,cast.castId);else if(index==0)_vfx.GuardCue(_hero.Position,cast.castId);}
             }
         }
-        foreach(var ev in frame.Events)
+        foreach(var ev in presentationEvents)
         {
-            if(!_impactIds.Add(ev.eventId))continue;
-            if(_impactIds.Count>512)_impactIds.Clear();
             if(ev.actorId==frame.World.self.characterId)
             {
+                if(ev.result!=null&&_damageCasts.ContainsKey(ev.castId))_damageCasts[ev.castId]=true;
+                if(ev.type=="END"&&_damageCasts.Remove(ev.castId,out bool resolved)&&!resolved)_hud.ShowAction(-1,"Đòn đánh kết thúc, không trúng mục tiêu.");
                 if(ev.type=="COUNTER_CONFIRMED")_vfx.Play(0,_hero.Position,_facing,ev.castId);
-                if(ev.type=="CANCEL")_vfx.Clear();
+                if(ev.type=="CANCEL"){_damageCasts.Remove(ev.castId);_vfx.Clear();_hud.ShowAction(-1,"Chiêu thức đã bị ngắt.");}
             }
-            if(ev.result==null)continue;
-            var target=frame.World.entities.FirstOrDefault(e=>e.entityId==ev.targetId);
-            if(target==null)continue;
-            var text=new Label{Text=ev.result.hit?ev.result.hpDamage.ToString():"Trượt",
-                Position=NativeActorsView.RenderPoint(target.x,target.y)+new Vector2(-12,-55)};
-            text.AddThemeFontSizeOverride("font_size",18);
-            text.AddThemeColorOverride("font_outline_color",Colors.Black);text.AddThemeConstantOverride("outline_size",3);
-            AddChild(text);text.ZIndex=25;
-            var tween=CreateTween();tween.SetParallel();
-            tween.TweenProperty(text,"position:y",text.Position.Y-24,.7);
-            tween.TweenProperty(text,"modulate:a",0,.7);
-            tween.Chain().TweenCallback(Callable.From(()=>text.QueueFree()));
+            if(ev.result==null||_liveActors==null||!CombatEventGate.MatchesLife(ev,_liveActors.EntityLife(ev.targetId??"")))continue;
+            var at=_liveActors.VisualPosition(ev.targetId!);
+            if(ev.result.hit&&!ev.result.immune&&ev.result.hpDamage>0)_liveActors.FlashImpact(ev.targetId!);
+            _vfx.Impact(ev.result,at);
         }
     }
 
@@ -460,20 +473,24 @@ public partial class VisualPreview : Node2D
         {_hud.ShowAction(slot,"Đang hồi · "+Math.Ceiling(_hud.Cooldown(slot))+" giây");return false;}
         return true;
     }
+    private void FaceTarget(NguMach.Client.P1.P1Entity target)
+    {
+        if(_onlineFrame?.World?.self is not {} self)return;
+        var direction=new Vector2((float)(target.x-self.x),(float)(self.y-target.y));if(direction.LengthSquared()<.0001)return;
+        _facing=direction.Normalized();_direction=((int)Mathf.Round((Mathf.Atan2(_facing.X,-_facing.Y)+Mathf.Tau)/(Mathf.Pi/4)))%8;ApplyDirection();
+    }
     private void Attack()
     {
         if(!BeginCombat(-1))return;
-        if(_body is HeroAnimator swing)swing.Attack();
         if(_online!=null)
         {
             if(_onlineFrame?.World==null)return;
-            var self=_onlineFrame.World.self;
-            var target=_liveActors?.TargetId;
-            if(target==null)target=_liveActors?.NearestTargetable(new Vector2((float)self.x,(float)self.y))?.entityId;
-            if(target==null){_hud.ShowAction(-1,"Chưa có mục tiêu có thể tấn công.");return;}
-            _online.Command("BASIC_ATTACK",target,aimX:_facing.X,aimY:-_facing.Y);
+            var target=_liveActors?.CombatTarget(WorldView());
+            if(target==null){if(_body is HeroAnimator air)air.Attack();_hud.ShowAction(-1,"Chưa có mục tiêu có thể tấn công.");return;}
+            FaceTarget(target);if(_body is HeroAnimator swing)swing.Attack();
+            _online.Command("BASIC_ATTACK",target.entityId,aimX:_facing.X,aimY:-_facing.Y);
         }
-        else _hud.ShowAction(-1,"Tấn công · xem thử",true);
+        else{if(_body is HeroAnimator swing)swing.Attack();_hud.ShowAction(-1,"Tấn công · xem thử",true);}
     }
     private void UseSkill(int index)
     {
@@ -483,11 +500,11 @@ public partial class VisualPreview : Node2D
         {
             if(index>=3){_hud.ShowAction(index,"Kỹ năng này chưa được mở.");return;}
             if(_onlineFrame?.World==null)return;
-            var self=_onlineFrame.World.self;
-            var target=index==0?null:_liveActors?.TargetId??_liveActors?.NearestTargetable(new Vector2((float)self.x,(float)self.y))?.entityId;
+            var target=index==0?null:_liveActors?.CombatTarget(WorldView());
             if(index>0&&target==null){_hud.ShowAction(index,"Cần chọn mục tiêu còn sống.");return;}
+            if(target!=null)FaceTarget(target);
             if(_body is HeroAnimator castActor)castActor.Cast();
-            _online.Command("CAST",target??"",skillId:"SK-MK-0"+(index+1),aimX:_facing.X,aimY:-_facing.Y);
+            _online.Command("CAST",target?.entityId??"",skillId:"SK-MK-0"+(index+1),aimX:_facing.X,aimY:-_facing.Y);
         }
         else
         {
