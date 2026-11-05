@@ -967,7 +967,10 @@ def mob_combat_profile():
     # Drop onto the road beside the target group. The escort group four WU back
     # stays out: at x=87 it is 7 WU away, past its own radius.
     sequence, x, y = walk_to(session, character_id, sequence, APPROACH_X, 0.0)
-    engaged = wait_for(10, group_engaged)
+    # One AI pass is a single tick (the mob re-reads distance every tick at 20 Hz),
+    # and the descent that caused it is a handful of moves, so 200 ticks is the
+    # sourced ceiling replacing the old 10 s literal.
+    engaged = wait_for_ticks(200, group_engaged, session)
     smoke_p1.check(engaged is not None,
                    f"descending onto the road did not engage exactly the target group: "
                    f"{engaged_mobs()}")
@@ -975,7 +978,9 @@ def mob_combat_profile():
     smoke_p1.check(landed.get("hp") == full_hp,
                    f"mob damage landed during the descent: {landed.get('hp')}")
 
-    telegraph = wait_for(15, telegraphed_mob)
+    # One attack cooldown (2 s = 40 ticks) opens a telegraph, so 300 ticks is seven
+    # whole cycles stated on the world clock instead of a 15 s literal.
+    telegraph = wait_for_ticks(300, telegraphed_mob, session)
     smoke_p1.check(telegraph is not None, "the engaged mob never opened a TELEGRAPH")
 
     # Step out of the 1,2 WU attack range before the committed impact frame.
@@ -992,7 +997,14 @@ def mob_combat_profile():
     _, self_state, _, _ = v2_snapshot(session)
     smoke_p1.check(abs(self_state.get("x", 0) - ESCAPE_X) < 1e-6,
                    f"escape stopped at {self_state.get('x')}")
-    time.sleep(0.7)
+    # The same 0,7 s of world time the escape pause always meant, now counted on the
+    # server clock. Deliberately NOT lengthened to a whole attack cooldown: waiting
+    # 40 ticks here makes the next telegraph land for real reasons, the leg stops
+    # proving that stepping out of range saved the actor, and the guard loop then
+    # samples the mob after its impact frame - which is exactly how this conversion
+    # first failed locally with "no COUNTER_CONFIRMED appeared for any of the 1 guard
+    # casts (hp now 280)". A faithful translation, not a stronger one.
+    advance_ticks(14, session)
     _, self_state, _, _ = v2_snapshot(session)
     smoke_p1.check(self_state.get("hp") == full_hp,
                    f"the committed telegraph still landed after stepping out of range: "
@@ -1005,7 +1017,9 @@ def mob_combat_profile():
         hp = self_state.get("hp", full_hp)
         return self_state if hp < full_hp else None
 
-    hurt = wait_for(25, hp_dropped)
+    # Standing inside the 1,2-WU range, a committed swing arrives every attack
+    # cooldown (2 s = 40 ticks); 600 ticks is fifteen cooldowns of ceiling.
+    hurt = wait_for_ticks(600, hp_dropped, session)
     smoke_p1.check(hurt is not None, "standing in range produced no mob damage")
     drop = full_hp - hurt.get("hp")
     smoke_p1.check(drop % CARPLING_DAMAGE == 0,
@@ -1039,7 +1053,7 @@ def mob_combat_profile():
         _, alive_check, _, _ = v2_snapshot(session)
         if alive_check.get("hp", 0) <= 0:
             break
-        telegraph = wait_for(15, telegraphed_mob)
+        telegraph = wait_for_ticks(300, telegraphed_mob, session)
         if telegraph is None:
             continue
         # The read window is 0,45 s = nine ticks and the guard covers the eight
@@ -1072,7 +1086,9 @@ def mob_combat_profile():
             drain_events()
             return find_event("COUNTER_CONFIRMED", cast_id=cid)
 
-        confirmation = wait_for(1.0, confirmed)
+        # The window closes 0,45 s = nine ticks after the read, so 20 ticks is more
+        # than two windows rather than a rounded second of sleep.
+        confirmation = wait_for_ticks(20, confirmed, session)
         if confirmation:
             break
 
@@ -1094,7 +1110,8 @@ def mob_combat_profile():
         drain_events()
         return find_event("IMPACT", cast_id=cid) or find_event("MISS", cast_id=cid)
 
-    counter = wait_for(2.0, resolved_counter)
+    # The reserved counter resolves inside one attack cooldown (40 ticks).
+    counter = wait_for_ticks(40, resolved_counter, session)
     smoke_p1.check(counter is not None, "the reserved counter never resolved")
     smoke_p1.check(counter.get("targetId") == counter_source,
                    f"counter retargeted: {counter.get('targetId')} != {counter_source}")
@@ -1109,7 +1126,7 @@ def mob_combat_profile():
     # with it (a counter misses legitimately — it shares the DEC-022 hit channel
     # the self-check pins). A hit must match the mob's snapshot HP; a miss must
     # leave it untouched.
-    mob = (wait_for(3, lambda: mob_in_snapshot(counter_source)) if counter_impact
+    mob = (wait_for_ticks(60, lambda: mob_in_snapshot(counter_source), session) if counter_impact
            else mob_in_snapshot(counter_source))
     smoke_p1.check(
         mob is not None and mob.get("maxHp") == CARPLING_MAX_HP and
@@ -1126,7 +1143,10 @@ def mob_combat_profile():
         _, self_state, _, _ = v2_snapshot(session)
         return self_state if self_state.get("hp", 1) == 0 else None
 
-    downed = wait_for(90, hp_zero)
+    # The sourced worst case: 400 starting HP divided by the 10-damage CARPLING swing
+    # is 40 swings, one per attack cooldown (40 ticks) = 1600 ticks, so 1800 is the
+    # ceiling - the same 90 s of world time the literal meant, now stated in ticks.
+    downed = wait_for_ticks(1800, hp_zero, session)
     smoke_p1.check(downed is not None, "standing in range never led to death")
     _, self_state, _, _ = v2_snapshot(session)
     smoke_p1.check(self_state.get("hp") == 0, f"downed actor hp {self_state.get('hp')}")
@@ -1142,7 +1162,8 @@ def mob_combat_profile():
                    (body.get("error") or {}).get("code") == "actor_not_alive",
                    f"downed actor cast returned {status}: {body}")
 
-    time.sleep(3)
+    # Three seconds of world time, counted in ticks, to prove no auto-heal arrives.
+    advance_ticks(60, session)
     _, self_state, _, _ = v2_snapshot(session)
     smoke_p1.check(self_state.get("hp") == 0,
                    f"HP came back on its own: {self_state.get('hp')}")
@@ -1154,7 +1175,9 @@ def mob_combat_profile():
         return live if live and all(entry.get("state") in ("RETURN", "IDLE")
                                     for entry in live) else None
 
-    disengaged = wait_for(30, group_disengaged)
+    # Dropping aggro and walking home at the shipped 2 WU/s over the leash span is
+    # world time, so the bound is 600 ticks of it.
+    disengaged = wait_for_ticks(600, group_disengaged, session)
     smoke_p1.check(disengaged is not None,
                    "mobs still chasing a downed actor never dropped the target")
 
@@ -2477,7 +2500,10 @@ def death_return_profile():
         _, state, _, _ = v2_snapshot(session)
         return state.get("hp") == 0 or None
 
-    downed_state = wait_for(120.0, downed)
+    # Sourced ceiling for this fixture: the walk to the group plus one CARPLING swing
+    # at the shipped 10 damage ends a 10-HP pool, so 2400 ticks (one attack cooldown
+    # is 40 of them) covers the approach by two orders of magnitude.
+    downed_state = wait_for_ticks(2400, downed, session)
     smoke_p1.check(
         downed_state is not None,
         "the mob damage path never ended the life within 120s, so the return has "
