@@ -93,7 +93,12 @@ fails on anything else.
             rather than returning the stored receipt — and the loop must still run from
             the cold store, so "nothing survived" is not confused with "broken".
 
-Usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client|alpha-p00|audience-gateoff|death-return|gate-one|restart-before|restart-after>
+Usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client|alpha-p00|audience-gateoff|death-return|gate-one|gate-refusal|restart-before|restart-after>
+  gate-refusal - the inverse of the matrix: a gate combination the composition root
+            refuses (P1:AlphaLoot without P1:AlphaProfile) must not serve at all. The
+            runner boots it, expects the process to die, and this profile reads the log:
+            nothing answered /health, and the startup failure names the missing partner.
+
        (gate-one also reads the E2E_GATE environment variable for the leg name;
        restart-before/restart-after read E2E_EVIDENCE for the file that carries what
        the first process proved to the second one)
@@ -355,6 +360,12 @@ GATE_ROUTES = {
     # from quietly attaching a route to them.
     "CombatDamage": {},
     "MobBehavior": {},
+    # AlphaLoot is the tenth production switch and it is not a route switch at all:
+    # `GrantEnabled` only decides whether a mob death pays the sourced coin band, and
+    # only while P1:AlphaProfile is on. A leg that maps nothing is what proves that -
+    # an accidental route behind this gate would mean loot could be granted through an
+    # endpoint nobody reviewed.
+    "AlphaLoot": {},
 }
 
 # Routes a leg maps only because of a gate combination. The death-return 404 is the
@@ -376,7 +387,11 @@ LEGS = {
     "DeathReturn": ("DeathReturn",),
     "CombatDamage": ("CombatDamage",),
     "MobBehavior": ("MobBehavior",),
+    "AlphaLoot": ("AlphaLoot",),
+    # The two pairing legs. DeathReturn needs a partner before its route exists;
+    # AlphaLoot must not add one even with its partner on.
     "DeathReturnAlpha": ("DeathReturn", "AlphaProfile"),
+    "AlphaLootAlpha": ("AlphaLoot", "AlphaProfile"),
 }
 
 
@@ -419,6 +434,38 @@ def gate_one_profile():
             f"[{gate}] {method} {path} expected {wanted}, got {status}: {str(body)[:160]}")
 
     print(f"profile=gate-one gate={gate} routes_probed={len(GATED_ROUTES)}")
+
+
+def gate_refusal_profile():
+    """A gate combination the composition root refuses must not serve, not even a 404.
+
+    `alpha.loot_grant_requires_profile_and_own_flag` proves the policy function; this
+    proves the shipped process stops at startup, because an operator can set the
+    environment variables without ever calling that function. Three checks, so the leg
+    still reports a fixed total like every other leg in the matrix.
+    """
+    log_path = os.environ.get("E2E_REFUSAL_LOG", "")
+    if not log_path:
+        smoke_p1.fail("gate-refusal needs E2E_REFUSAL_LOG pointing at the server log")
+    with open(log_path, encoding="utf-8", errors="replace") as handle:
+        log = handle.read()
+
+    gate = os.environ.get("E2E_GATE", "")
+    try:
+        smoke_p1.call("GET", "/health")
+        served = True
+    except Exception:
+        served = False
+    smoke_p1.check(not served, f"[{gate}] answered /health at all")
+
+    smoke_p1.check(
+        "requires P1:AlphaProfile:Enabled=true" in log,
+        f"[{gate}] startup did not name the missing partner: {log[-200:]}")
+    smoke_p1.check(
+        "P1:AlphaLoot:GrantEnabled=true" in log or "AlphaLootPolicy.Validate" in log,
+        f"[{gate}] startup failure is not the loot policy: {log[-200:]}")
+
+    print(f"profile=gate-refusal gate={gate} served=false refusal=named_in_startup_log")
 
 
 def dev_profile():
@@ -2528,7 +2575,7 @@ def main():
     if len(sys.argv) < 3:
         fail("usage: e2e_p1.py <base_url> "
              "<default|dev|mob-combat|two-client|alpha-p00|audience-gateoff|"
-             "death-return|gate-one|restart-before|restart-after>")
+             "death-return|gate-one|gate-refusal|restart-before|restart-after>")
     smoke_p1.BASE_URL = sys.argv[1].rstrip("/")
     mode = sys.argv[2]
     if mode == "default":
@@ -2551,10 +2598,12 @@ def main():
         restart_before_profile()
     elif mode == "restart-after":
         restart_after_profile()
+    elif mode == "gate-refusal":
+        gate_refusal_profile()
     else:
         fail(f"unknown mode '{mode}' "
              "(expected default|dev|mob-combat|two-client|alpha-p00|"
-             "audience-gateoff|death-return|gate-one|restart-before|restart-after)")
+             "audience-gateoff|death-return|gate-one|gate-refusal|restart-before|restart-after)")
 
     print(f"PASS: e2e_p1 ({mode}) {smoke_p1.CHECKS} checks against {smoke_p1.BASE_URL}")
 

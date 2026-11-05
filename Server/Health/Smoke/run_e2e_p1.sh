@@ -21,6 +21,10 @@
 #                                                  # profile then asserts which routes
 #                                                  # that gate maps and that every other
 #                                                  # gated route stays unmapped
+#                                                  # E2E_GATE=AlphaLoot is the exception:
+#                                                  # that combination must not boot, so the
+#                                                  # leg asserts no listener plus the refusal
+#                                                  # text in the startup log
 #   ./Server/Health/Smoke/run_e2e_p1.sh restart     # work order 29 Q8 restart HTTP
 #                                                  # proof: loop in process #1, stop the
 #                                                  # owned PID, assert nothing survived
@@ -234,9 +238,10 @@ elif [ "${PROFILE}" = "audience-gateoff" ]; then
 elif [ "${PROFILE}" = "gate-one" ]; then
   # One gate at a time, so that "enabling a feature cannot light up another
   # feature's route" is measured rather than assumed. The legs with no mapped
-  # route (DeathReturn alone, CombatDamage, MobBehavior) are the pairing proof:
-  # /p1/actor/death-return needs AlphaProfile AND DeathReturn, and the two damage
-  # gates never map a route of their own.
+  # route (DeathReturn alone, CombatDamage, MobBehavior, AlphaLoot) are the pairing
+  # proof: /p1/actor/death-return needs AlphaProfile AND DeathReturn, the two damage
+  # gates never map a route of their own, and AlphaLoot must not add one even when it
+  # sits next to the profile that gives it something to do.
   case "${E2E_GATE:-none}" in
     QuestAccept) GATE_ENV="P1__QuestAccept__Enabled=true" ;;
     Interact) GATE_ENV="P1__Interact__Enabled=true" ;;
@@ -247,9 +252,41 @@ elif [ "${PROFILE}" = "gate-one" ]; then
     DeathReturn) GATE_ENV="P1__DeathReturn__Enabled=true" ;;
     CombatDamage) GATE_ENV="P1__CombatDamage__Enabled=true" ;;
     MobBehavior) GATE_ENV="P1__MobBehavior__Enabled=true" ;;
+    AlphaLoot) GATE_ENV="P1__AlphaLoot__GrantEnabled=true" ;;
+    AlphaLootAlpha) GATE_ENV="P1__AlphaLoot__GrantEnabled=true P1__AlphaProfile__Enabled=true" ;;
     DeathReturnAlpha) GATE_ENV="P1__DeathReturn__Enabled=true P1__AlphaProfile__Enabled=true" ;;
     *) echo "==> unknown E2E_GATE=${E2E_GATE:-unset}" >&2; exit 2 ;;
   esac
+  # A refusal leg boots the same way but must never reach a healthy listener: the
+  # composition root stops the process, and the gate-refusal profile reads why from
+  # the log. AlphaLoot without AlphaProfile is that combination - the coin band only
+  # exists in DESIGN-BM-ALPHA-20261103, so paying it out from any other profile is a
+  # configuration the server refuses rather than a server that answers 404s.
+  if [ "${E2E_GATE}" = "AlphaLoot" ]; then
+    # shellcheck disable=SC2086
+    env ${GATE_ENV} dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
+    REFUSAL_PID=$!
+    echo "${REFUSAL_PID}" > "${PID_FILE}"
+    for attempt in $(seq 1 30); do
+      if curl --silent --fail "${BASE_URL}/health" > /dev/null 2>&1; then
+        echo "==> ${E2E_GATE} became healthy; the startup refusal is gone" >&2
+        exit 1
+      fi
+      if ! kill -0 "${REFUSAL_PID}" 2>/dev/null; then
+        break
+      fi
+      sleep 1
+    done
+    E2E_REFUSAL_LOG="${LOG_FILE}" python3 "${SCRIPT_DIR}/e2e_p1.py" \
+        "${BASE_URL}" gate-refusal || {
+      echo "==> gate-refusal failed; server log tail:"
+      tail -n 20 "${LOG_FILE}"
+      exit 1
+    }
+    echo "==> E2E PASS (profile=gate-one gate=${E2E_GATE} refused at startup)"
+    exit 0
+  fi
+
   # shellcheck disable=SC2086
   env ${GATE_ENV} dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
 else

@@ -134,7 +134,9 @@ jobs:
           - DeathReturn
           - CombatDamage
           - MobBehavior
+          - AlphaLoot
           - DeathReturnAlpha
+          - AlphaLootAlpha
     name: e2e-gate-one (${{ matrix.gate }})
     steps:
       - uses: actions/checkout@v4
