@@ -675,6 +675,14 @@ Six positions are **reviewed deltas, listed in the tool with both values**, and 
 
 ## Headless E2E scenario (QOD-15)
 
+Two invariants the alpha escort leg learned the hard way (work order 30 item 2, fixed in `2f2bf9a` and verified green at `835ae2a`), because both look like test noise and neither is:
+
+- **A world row that is present and `DEAD` is a witnessed death; a row that is absent is not.** The escort loop used to test `state == "DEAD"` and `continue` without crediting it, so a member that died while the loop was working on another target could never be counted and the leg failed as `witnessed 2 of 3 deaths` while all three rows reported `('DEAD','DEAD',False,0)`. Absence stays uncounted because the manifest group respawn makes it ambiguous - that is the rule's original purpose.
+- **A fight is bounded by the fight, not by the clock.** `alpha_kill` keeps casting while the target's HP is moving, gives up after 60 casts with no HP movement, and ceilings at `maxHp + 200` casts. The previous shape (fixed 1200 iterations plus a wall-clock sleep) let a slower server fail a leg: the per-impact logging in `5c77b8f` starved the boss to 57 of the ~67 casts it needed against 1200 HP and CI went red for that reason alone. Reverted in `3d16072`, re-landed in `835ae2a` once the bound was arithmetic: the chain then measured 112 checks with 268 impacts logged.
+
+`alpha_ensure_alive` (`c324df6`, CI 25/25) additionally revives a downed actor over `POST /p1/actor/death-return` before each kill batch - the actor dying mid-chain (`IMPACT B:DOWN phase 3 bossHp 244 damage 32 (12 -> 0)`) was the real cause of the "the quest boss never died, 57 casts accepted" failure, and the revival goes through the same public route a client would use rather than a private grant. Residual: no run has driven HP to 0 with the revival present, so that branch is still unexercised even though the route has its own 17-check profile.
+
+
 One command builds the server, starts it and drives the whole gameplay loop:
 
 ```bash
