@@ -4202,6 +4202,30 @@ public static class ServiceSelfCheck
             returnEvents.Read(downHero.SessionId, 0, 256).Events.Count == eventsAfterReplay,
             $"{replayReturn.Replayed}/{stolenKeyReturn.ErrorCode}");
 
+        // Reconnect case (work order 30 item 1): the receipt follows the character, not
+        // the session. A second session for the same character that presents the key the
+        // first one committed gets the recorded snapshot back and moves nobody - the new
+        // actor stays exactly where it is, which is why the decision tells a client to
+        // fresh-read the world instead of reading a receipt as current state.
+        var reconnectService = NewDeathReturn(0);
+        var reconnectFirst = NewPlayer("CHR_SELFCHECK_RETURN_RECONNECT", hp: 0);
+        returnSessions.Add(reconnectFirst);
+        var reconnectApplied = reconnectService.ReturnToAnchor(
+            reconnectFirst.SessionId, "c" + new string('0', 31));
+        var reconnectSecond = NewPlayer("CHR_SELFCHECK_RETURN_RECONNECT", hp: 0);
+        returnSessions.Add(reconnectSecond);
+        var reconnectSecondX = reconnectSecond.X;
+        var reconnectReplay = reconnectService.ReturnToAnchor(
+            reconnectSecond.SessionId, "c" + new string('0', 31));
+        Check(
+            "death_return.a_reconnected_session_replaying_the_old_key_gets_the_receipt",
+            reconnectApplied is { Applied: true } &&
+            reconnectReplay is { Applied: false, Replayed: true } &&
+            reconnectReplay.Hp == reconnectApplied.Hp &&
+            reconnectSecond.Hp == 0 &&
+            reconnectSecond.X == reconnectSecondX,
+            $"applied={reconnectApplied.Applied}/{reconnectApplied.Hp} replay={reconnectReplay.Applied}/{reconnectReplay.Replayed}/{reconnectReplay.Hp} newActor={reconnectSecond.Hp}@{reconnectSecond.X}");
+
         // Two clients racing one key must produce one return, not two moves and
         // two revision bumps.
         var racedHero = NewGuardHero("RETURN_RACE");
