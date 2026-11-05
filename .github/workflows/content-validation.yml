@@ -26,6 +26,11 @@ jobs:
       # story as the records the server loads, and lists every reviewed disagreement.
       - name: Reconcile the map atlas against shipped placements
         run: python Implementation/Tools/reconcile_map_atlas.py
+      # Production_Technical_Contracts_vi.md is the frozen contract baseline and nothing
+      # read it until now; this compares its envelope, event and canonical-error lists to
+      # the shipped schemas and wire codes and prints every divergence by name.
+      - name: Reconcile the technical contract against the shipped surface
+        run: python Implementation/Tools/reconcile_technical_contract.py
       - name: Rebuild world runtime content and verify no drift
         run: |
           python Implementation/Tools/build_world_records.py
