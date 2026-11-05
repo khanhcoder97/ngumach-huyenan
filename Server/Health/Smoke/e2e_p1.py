@@ -1905,10 +1905,28 @@ def alpha_p00_profile():
     sequence, _, _ = alpha_approach(session, character, sequence, 42.0, 0.0)
 
     def wave_alive(expected):
+        # Authoritative fields only. `state` alone is not aliveness: a mob whose stats the
+        # server cannot resolve is reported BLOCKED (and an already-dead one DEAD), so
+        # reading `state != "DEAD"` lets a wave that nobody can hit look activated. This
+        # reads healthState ALIVE plus targetable, which is what the cast path resolves
+        # against, and keeps the observed fields so a failure names the cause instead of
+        # just the fact.
         _, _, entities, _ = v2_snapshot(session)
-        alive = [entry[0] for entry in expected
-                 if (entities.get(entry[0]) or {}).get("state") not in (None, "DEAD")]
-        return alive if len(alive) == len(expected) else None
+        states = {}
+        alive = []
+        for member in expected:
+            entity_id = member[0]
+            entry = entities.get(entity_id) or {}
+            states[entity_id] = (entry.get("state"), entry.get("healthState"),
+                                 entry.get("targetable"), entry.get("hp"))
+            if entry.get("healthState") == "ALIVE" and entry.get("targetable") is True:
+                alive.append(entity_id)
+        if len(alive) == len(expected):
+            return alive
+        wave_states[expected[0][0]] = states
+        return None
+
+    wave_states = {}
 
     def accompany_until(limit_x, start_x):
         """Pace east at the NPC's 3 wu/s and report the first tick on which the
@@ -1929,7 +1947,7 @@ def alpha_p00_profile():
     smoke_p1.check(
         alive_a is not None,
         f"the P00-04 escort never activated wave A (walked {walked_a} paced steps "
-        f"to x={x_after_a})")
+        f"to x={x_after_a}; observed {wave_states})")
     sequence, wave_a_deaths, _ = alpha_kill_watched(
         session, character, sequence, ALPHA_WAVE_A, 3, "P00-04 wave A")
 
@@ -1939,7 +1957,7 @@ def alpha_p00_profile():
     smoke_p1.check(
         alive_b is not None,
         f"the P00-04 escort never activated wave B (walked {walked_b} paced steps "
-        f"to x={x_after_b})")
+        f"to x={x_after_b}; observed {wave_states})")
     sequence, wave_b_deaths, _ = alpha_kill_watched(
         session, character, sequence, ALPHA_WAVE_B, 3, "P00-04 wave B")
 
