@@ -1,0 +1,132 @@
+{
+  "checkpoint": "MEDIA-02 checkpoint 04 - P0 VO drafts (3 lines)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_NOT_FINAL_VO",
+  "notes": [
+    "Fictional system voices only; no real-voice cloning, no unlicensed samples.",
+    "CIN_002/CIN_004 placements remain PROPOSED; only CIN_001_S05 text+window are DECIDED.",
+    "Per-take loudness only, NOT a mix PASS; stems stay separate.",
+    "Timeline is VO-only draft assembly; no music/ambience mixed in."
+  ],
+  "takes": [
+    {
+      "key": "CIN001_S05",
+      "shotId": "CIN_001_S05",
+      "speaker": "NPC_LYAN",
+      "voice": "avocado_v2:MAI_01",
+      "voiceLabel": "Aria (fictional system voice)",
+      "mp3": "CIN001_S05.mp3",
+      "wav": "VO_CIN001_S05_LYAN_draft_v1.wav",
+      "text": "Đầu kia! Giữ giúp tôi đầu kia!",
+      "windowSceneSeconds": [
+        24.8,
+        28.5
+      ],
+      "sceneOffsetSeconds": 0.0,
+      "status": "DECIDED_DEC_MEDIA_P0",
+      "wavSha256": "51fc65de235916c3c8b4a002564db7a6e484298f11567af803ff0437b4c1d113",
+      "rawMp3": "CIN001_S05_tts_raw.mp3",
+      "rawMp3Sha256": "a22b506761bf81bd1567187aba410a7a2029cc5f00e79b378664d2f12bfd7413",
+      "durationSeconds": 2.568,
+      "windowSeconds": 3.6999999999999993,
+      "slackSeconds": 1.132,
+      "fit": "FITS",
+      "timelineStartSeconds": 24.8,
+      "loudness": {
+        "integratedLUFS": "-16.01",
+        "truePeakDBTP": "-1.85",
+        "loudnessRangeLU": "0.00",
+        "thresholdLUFS": "-26.22"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 246628
+      }
+    },
+    {
+      "key": "CIN002_S02",
+      "shotId": "CIN_002_S02",
+      "speaker": "NPC_TA_VAN_KHANH",
+      "voice": "avocado_v2:MAI_03",
+      "voiceLabel": "Helio (fictional system voice)",
+      "mp3": "CIN002_S02.mp3",
+      "wav": "VO_CIN002_S02_TAVANKHANH_draft_v1.wav",
+      "text": "Trên bờ chỉ nghe nửa tiếng. Phần còn lại ở dưới ấy.",
+      "windowSceneSeconds": [
+        7.0,
+        11.0
+      ],
+      "sceneOffsetSeconds": 36.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "4439578bfb58f5a29cd4d5177c6e53474621ec516b527c08b0802193d407bdcc",
+      "rawMp3": "CIN002_S02_tts_raw.mp3",
+      "rawMp3Sha256": "66d4ae86fcf6310386f895bd726fd17db72d35b0b2203276a2274d7585e28a54",
+      "durationSeconds": 3.792,
+      "windowSeconds": 4.0,
+      "slackSeconds": 0.208,
+      "fit": "FITS",
+      "timelineStartSeconds": 43.0,
+      "loudness": {
+        "integratedLUFS": "-21.61",
+        "truePeakDBTP": "-4.24",
+        "loudnessRangeLU": "0.30",
+        "thresholdLUFS": "-31.61"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 364132
+      }
+    },
+    {
+      "key": "CIN004_S02",
+      "shotId": "CIN_004_S02",
+      "speaker": "NPC_LYAN",
+      "voice": "avocado_v2:MAI_01",
+      "voiceLabel": "Aria (fictional system voice)",
+      "mp3": "CIN004_S02.mp3",
+      "wav": "VO_CIN004_S02_LYAN_OFFSCREEN_draft_v1.wav",
+      "text": "Nó cứ tránh chỗ nước ấy.",
+      "windowSceneSeconds": [
+        7.5,
+        9.5
+      ],
+      "sceneOffsetSeconds": 54.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT; OFFSCREEN_DECIDED_DEC_MEDIA_P0",
+      "wavSha256": "1fcc662e7621f83bc5f51940b5481ae0342868f7f46c038d3d074ac254028496",
+      "rawMp3": "CIN004_S02_tts_raw.mp3",
+      "rawMp3Sha256": "5a001d7523e0f851ea5a0d20fc5afd7d9c1b689d75f41f0c66f5e71c9bfeaf64",
+      "durationSeconds": 1.752,
+      "windowSeconds": 2.0,
+      "slackSeconds": 0.248,
+      "fit": "FITS",
+      "timelineStartSeconds": 61.5,
+      "loudness": {
+        "integratedLUFS": "-21.41",
+        "truePeakDBTP": "-8.56",
+        "loudnessRangeLU": "0.00",
+        "thresholdLUFS": "-31.41"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 168292
+      }
+    }
+  ],
+  "timeline": {
+    "file": "P0_VO_timeline_draft_v1.wav",
+    "sha256": "d5a853807456c6926680ae2c88cd7bc1de2e6061028b371e91d35751e98bba1f",
+    "durationSeconds": 72.0,
+    "format": {
+      "codec": "pcm_s16le",
+      "sampleRateHz": 48000,
+      "channels": 1
+    }
+  }
+}
