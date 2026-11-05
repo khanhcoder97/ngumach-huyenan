@@ -16,6 +16,25 @@ Packet này được sinh ra bởi E2E `alpha-p00` (head `61b96a2`), không ph�
 
 Nghĩa là **chương 1 không thể vào được bằng HTTP hôm nay**, độc lập với death-return. Đây là khoảng wire, không phải khoảng data: quest pack đã đủ, NPC anchor đã có (`NPC_CLASS_TRIAL` ở (188,0) `MAP_BEN_MUA` và (186,0) `MAP_THANH_LAC`), flag `CHAPTER_C1_UNLOCKED` đã được ghi từ `77bc3a6`.
 
+## 1b. Số liệu hội thoại đã đo (2026-11-05, `112dc61`) — phần này **thay thế** một mặc định tôi từng chọn
+
+| cái gì | số đo |
+|---|---|
+| `docs/production/Quest_Dialogue_Production_Data_vi.csv` | **230 dòng** = 76 quest × 3 node (`OFFER`/`CLUE`/`TURN_IN`) + 2 dòng `CHOICE` **cùng** `node_id` `DLG_C3_05_CHOICE` |
+| bundle runtime `narrative_nodes_v1.json` | **229 node** ⇒ builder gộp đúng hai dòng choice thành một node có `choices[]`; **không mất dòng thoại nào** (đối chiếu id hai chiều: rỗng cả hai phía) |
+| vocabulary | `condition_key` = `QUEST_AVAILABLE` / `QUEST_ACTIVE` / `QUEST_READY_TO_TURN_IN` — đúng ba state quest server đã có; `on_enter_event` = `ACCEPT_QUEST` / `OBJECTIVE_PROGRESS` / `COMMIT_REWARD` / `CHOICE_REQUIRED` |
+| speaker | **17 NPC**, không NPC nào chỉ có 1 node; `NPC_LYAN` nói **44** node, `NPC_TA_VAN_KHANH` 19 |
+| **độ mơ hồ** | cặp `(speaker, condition_key)` có **51** tổ hợp, trong đó **33 tổ hợp map tới nhiều hơn một node** ⇒ không thể resolve node chỉ từ `npcId` + state |
+| `CHOICE` | đúng **1** node trên cả campaign (`DLG_C3_05_CHOICE`, group `CHOICE_C3_05_EVIDENCE`, 2 lựa chọn, set flag `C3_05_PUBLISHED` / `C3_05_COUNCIL_ONLY`) |
+| thoại đã biên tập | `localization_status`: **15** dòng `VI_EDITED_P1`, **215** `VI_BASELINE`. 15 dòng đó nằm trọn ở **P00-01..P00-05** (5 quest × 3 node, không quest nào trộn hai trạng thái); **C1-01 vẫn là `VI_BASELINE`** |
+| node của P00-05 / C1-01 | `DLG_P00_05_CLUE` (order 2, `QUEST_ACTIVE`, `OBJECTIVE_PROGRESS`, speaker `NPC_TA_VAN_KHANH`) và `DLG_C1_01_CLUE` (cùng dạng, speaker `NPC_LYAN`) |
+
+**Sửa lại mặc định của chính tôi ở Q2:** bản packet này từng chọn "`nodeId` optional, server resolve theo `npcId`". Số liệu ở trên bác bỏ lựa chọn đó: 33/51 cặp `(speaker, condition)` là mơ hồ, nên resolve theo NPC sẽ **đoán**. Mặc định mới: **`nodeId` bắt buộc**, và server kiểm node đó có `conditionKey` khớp state hiện tại của quest + `speakerNpcId` khớp NPC đang nói; không khớp thì `409 invalid_transition` (mang field `nodeId`).
+
+**Một lỗi tôi vừa sửa trong chính data:** export đặt `known - next_ids` vào field `terminalNodeIds` — tập đó là **node vào (76 `OFFER`)**, không phải node cuối (76 `TURN_IN`). Field này không loader nào đọc nên chưa gây hỏng hành vi; `112dc61` tách thành `rootNodeIds` + `terminalNodeIds` đúng nghĩa và thêm ràng buộc build fail nếu quest nào không có đúng một root `OFFER` hoặc có terminal không phải `TURN_IN`/`CHOICE`.
+
+**Hệ quả cho Q6 của packet (thoại đã biên tập):** nếu owner muốn P00-05 đóng chuỗi bằng thoại **đã duyệt**, dữ liệu đã sẵn (`VI_EDITED_P1`). Riêng `C1-01` vẫn là baseline — route TALK không nên làm người chơi tin rằng đó là bản thoại cuối; packet sẽ không tự sửa text (docs là phạm vi tôi không được đụng).
+
 ## 2. Phương án — tôi đề xuất (A), và nêu (B) để owner chọn
 
 ### A. Một verb mới, tối thiểu: `POST /p1/quests/talk`
@@ -60,7 +79,7 @@ Ràng buộc server-side, tái dùng máy đã có thay vì viết mới:
 ## 3. Những gì packet này KHÔNG tự quyết (câu hỏi cho owner)
 
 - **Q1** — `NPC_CLASS_TRIAL` có thuộc tính khả kiến là điều kiện finale (boss down **và** fragment claimed). Route có phải **từ chối** khi điều kiện chưa mở (`409 invalid_transition` + field `revealGate`), hay coi như node chưa tồn tại (`404 quest_not_found`)? Nguồn không nói. Mặc định tôi chọn vế đầu.
-- **Q2** — `nodeId` optional hay bắt buộc? Optional tiện client hơn nhưng cho phép client phụ thuộc thứ tự catalog; mặc định tôi chọn "optional, bắt buộc khi catalog mơ hồ" như §2.A.
+- **Q2** — ~~optional hay bắt buộc~~ — **đã có câu trả lời bằng số liệu ở §1b: bắt buộc `nodeId`** (33/51 cặp `(speaker, condition)` mơ hồ). Câu hỏi còn lại cho owner chỉ là: client lấy `nodeId` từ đâu — catalog narrative mà client đang có, hay một read route (`GET /p1/quests/{sessionId}/dialogue`) mà packet này **chưa** mở rộng.
 - **Q3** — cây lựa chọn (`CHOICE` nodes trong `narrative_nodes_v1.json`) có được đưa vào verb này không? Mặc định: **không**, ở lại ngoài; chỉ `TALK` để mở khoá chuỗi chương.
 - **Q4** — flag vocabulary: `narrative_nodes_v1.json` chỉ có `C3_05_COUNCIL_ONLY`/`C3_05_PUBLISHED`, còn `CHAPTER_C1_UNLOCKED` không thuộc bundle nào — nó do `AlphaDesign` sở hữu (đã pin ở `77bc3a6`). Xác nhận: `appliedFlag` của response **chỉ** mang flag của node narrative, không mang unlock flag của chương.
 - **Q5** — `questRules.C1-01.mapViewedAction` ("MAP_VIEWED intent acknowledged by server only while quest ACTIVE and actor in MAP_THANH_LAC, one credit per quest; no reward on open-map read") có cần verb riêng (`POST /p1/quests/map-viewed`) không, hay thuộc về packet death-return/portal? Tôi nghiêng: **một verb duy nhất sau này cho cả hai**, không thêm route thứ hai bây giờ.
