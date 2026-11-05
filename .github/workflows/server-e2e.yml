@@ -137,6 +137,7 @@ jobs:
           - AlphaLoot
           - DeathReturnAlpha
           - AlphaLootAlpha
+          - DeathReturnFixture
     name: e2e-gate-one (${{ matrix.gate }})
     steps:
       - uses: actions/checkout@v4

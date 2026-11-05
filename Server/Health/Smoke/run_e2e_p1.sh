@@ -254,15 +254,18 @@ elif [ "${PROFILE}" = "gate-one" ]; then
     MobBehavior) GATE_ENV="P1__MobBehavior__Enabled=true" ;;
     AlphaLoot) GATE_ENV="P1__AlphaLoot__GrantEnabled=true" ;;
     AlphaLootAlpha) GATE_ENV="P1__AlphaLoot__GrantEnabled=true P1__AlphaProfile__Enabled=true" ;;
+    DeathReturnFixture) GATE_ENV="P1__AlphaProfile__Enabled=true P1__DeathReturn__RestoreHpFixture=5" ;;
     DeathReturnAlpha) GATE_ENV="P1__DeathReturn__Enabled=true P1__AlphaProfile__Enabled=true" ;;
     *) echo "==> unknown E2E_GATE=${E2E_GATE:-unset}" >&2; exit 2 ;;
   esac
   # A refusal leg boots the same way but must never reach a healthy listener: the
   # composition root stops the process, and the gate-refusal profile reads why from
-  # the log. AlphaLoot without AlphaProfile is that combination - the coin band only
-  # exists in DESIGN-BM-ALPHA-20261103, so paying it out from any other profile is a
-  # configuration the server refuses rather than a server that answers 404s.
-  if [ "${E2E_GATE}" = "AlphaLoot" ]; then
+  # the log. Two configurations are like this - P1:AlphaLoot without AlphaProfile (the
+  # mob coin band exists only in DESIGN-BM-ALPHA-20261103) and a positive
+  # P1:DeathReturn:RestoreHpFixture under AlphaProfile (DEC-DEATH-RETURN-20261105 fixes
+  # the returned HP by formula, so a fixture would silently override it). Neither is a
+  # server that answers 404s; both are a server that must not start.
+  if [ "${E2E_GATE}" = "AlphaLoot" ] || [ "${E2E_GATE}" = "DeathReturnFixture" ]; then
     # shellcheck disable=SC2086
     env ${GATE_ENV} dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
     REFUSAL_PID=$!

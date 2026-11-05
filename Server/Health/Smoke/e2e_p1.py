@@ -387,11 +387,25 @@ LEGS = {
     "DeathReturn": ("DeathReturn",),
     "CombatDamage": ("CombatDamage",),
     "MobBehavior": ("MobBehavior",),
-    "AlphaLoot": ("AlphaLoot",),
     # The two pairing legs. DeathReturn needs a partner before its route exists;
     # AlphaLoot must not add one even with its partner on.
     "DeathReturnAlpha": ("DeathReturn", "AlphaProfile"),
     "AlphaLootAlpha": ("AlphaLoot", "AlphaProfile"),
+}
+
+# Configurations the composition root refuses at startup get no route leg: there is no
+# listener to probe. They still deserve a process-level proof, because the in-process
+# validator checks prove the function, not that a server started from environment
+# variables actually stops. Each tuple is the two substrings that must appear in the
+# startup log - the rule, and the setting that broke it.
+REFUSAL_LEGS = ("AlphaLoot", "DeathReturnFixture")
+REFUSAL_EXPECTATIONS = {
+    "AlphaLoot": (
+        "requires P1:AlphaProfile:Enabled=true",
+        "P1:AlphaLoot:GrantEnabled=true"),
+    "DeathReturnFixture": (
+        "must be 0 while P1:AlphaProfile:Enabled=true",
+        "P1:DeathReturn:RestoreHpFixture"),
 }
 
 
@@ -458,12 +472,15 @@ def gate_refusal_profile():
         served = False
     smoke_p1.check(not served, f"[{gate}] answered /health at all")
 
+    expected = REFUSAL_EXPECTATIONS.get(gate)
+    if expected is None:
+        smoke_p1.fail(f"no refusal expectation for leg '{gate}'")
     smoke_p1.check(
-        "requires P1:AlphaProfile:Enabled=true" in log,
+        expected[0] in log,
         f"[{gate}] startup did not name the missing partner: {log[-200:]}")
     smoke_p1.check(
-        "P1:AlphaLoot:GrantEnabled=true" in log or "AlphaLootPolicy.Validate" in log,
-        f"[{gate}] startup failure is not the loot policy: {log[-200:]}")
+        expected[1] in log,
+        f"[{gate}] startup failure is not the expected validator: {log[-200:]}")
 
     print(f"profile=gate-refusal gate={gate} served=false refusal=named_in_startup_log")
 
