@@ -164,10 +164,10 @@ def main():
     check_audio_manifest()
     check_cinematics_manifest()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 11 (M8 handover/QA) - runtime re-verification",
-        "base_integration": "cf17178",
+        "checkpoint": "MEDIA-02 checkpoint 13 (M8 animatic revision v2) - runtime re-verification",
+        "base_integration": "f383233",
         "branch": "muse/media-production-20261104",
-        "verifies": "checkpoint 10 runtime delivery (RUNTIME_AUDIO_manifest_v1.json + RUNTIME_CINEMATICS_manifest_v1.json)",
+        "verifies": "checkpoint 10 runtime delivery as revised by checkpoint 13 (animatic v2) (RUNTIME_AUDIO_manifest_v1.json + RUNTIME_CINEMATICS_manifest_v1.json)",
         "counts": COUNTS,
         "mismatches": ERRORS,
         "notes": NOTES,

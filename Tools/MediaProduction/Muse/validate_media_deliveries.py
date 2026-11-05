@@ -251,7 +251,7 @@ def check_animatic_vo():
             err(f"ANIMATIC poster dims {dims} != (640, 360)")
     else:
         err("ANIMATIC: missing poster in ClientGodot/assets/cinematics")
-    outputs = json.loads((ROOT / "Art_Source/Cinematics/P0_Animatic/P0_animatic_outputs_v1.json").read_text(encoding="utf-8"))
+    outputs = json.loads((ROOT / "Art_Source/Cinematics/P0_Animatic/P0_animatic_outputs_v2.json").read_text(encoding="utf-8"))
     panels_ok = 0
     for shot in outputs["shots"]:
         panel = ROOT / shot["panel"]
@@ -298,8 +298,8 @@ def main():
     check_timing_srt()
     check_animatic_vo()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 09 (M7/V4 validation)",
-        "base_integration": "cf17178",
+        "checkpoint": "MEDIA-02 checkpoint 13 (M8 animatic revision v2 re-validation)",
+        "base_integration": "f383233",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
         "mismatches": ERRORS,

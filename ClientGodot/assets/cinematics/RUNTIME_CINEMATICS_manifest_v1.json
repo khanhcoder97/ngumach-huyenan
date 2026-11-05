@@ -1,6 +1,6 @@
 {
  "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
- "checkpoint": "MEDIA-02 checkpoint 10 - M6 runtime delivery",
+ "checkpoint": "MEDIA-02 checkpoint 13 - P0 animatic revision v2 (D4 panel fixes); audio/timing unchanged from checkpoint 10",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "campaignTotals": {
@@ -9,29 +9,30 @@
   "seconds": 378
  },
  "notes": [
-  "P0 animatic (MP4 review + OGV runtime + poster) verified against checkpoint 03 SHAs; files already in the runtime tree.",
+  "P0 animatic v2 (MP4 review + OGV runtime + poster) verified against checkpoint 13 SHAs (outputs v2 manifest); 4 panels revised (CIN_001_S03, CIN_001_S06, CIN_004_S01, CIN_004_S03), 8 panels byte-identical to v1; poster unchanged (CIN_001_S01).",
   "Timing JSON + SRT per scene copied from Narrative/Deliveries with sha256 verification against the checkpoint 01/05/06 manifests. SRT is UTF-8/NFC, DRAFT.",
   "Only CIN_001_S05 (24.8-28.5 s, version B) is DECIDED; all other dialogue windows remain PROPOSED_ANIMATIC_PLACEMENT until director/Codex confirms them.",
-  "No final picture: animatic is storyboard level; character keyframes still await lock for locked shots."
+  "No final picture: animatic is storyboard level; character keyframes still await lock for locked shots.",
+  "Animatic is still storyboard level (revision v2 fixes 4 panel defects, not final picture); character keyframes still await lock for locked shots."
  ],
  "animatic": [
   {
    "runtimePath": "assets/cinematics/P0_animatic_640x360_30fps.mp4",
-   "sha256": "a625043c4fd47eee15e0f203c8a5cde5890d00a0c0a9fc31933b249f37b5cf06",
-   "sizeBytes": 641502,
-   "status": "VERIFIED_CHECKPOINT_03"
+   "sha256": "872e7b0c8fbc0059c3adf58cf46e31fcb768ebc7a5d3311798812e6ff9a93e83",
+   "sizeBytes": 695097,
+   "status": "VERIFIED_CHECKPOINT_13"
   },
   {
    "runtimePath": "assets/cinematics/P0_animatic_640x360_30fps.ogv",
-   "sha256": "7c0fdb291992b49df18210c72a41e64ebdbb4baf9a56ab0a6179d40cf6813325",
-   "sizeBytes": 1825222,
-   "status": "VERIFIED_CHECKPOINT_03"
+   "sha256": "7498a8f14970ad352869fda516fd42a188620fcab7cd6856c6a5001e77dc8d72",
+   "sizeBytes": 1852526,
+   "status": "VERIFIED_CHECKPOINT_13"
   },
   {
    "runtimePath": "assets/cinematics/P0_animatic_poster.png",
    "sha256": "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8",
    "sizeBytes": 368439,
-   "status": "VERIFIED_CHECKPOINT_03"
+   "status": "VERIFIED_CHECKPOINT_13"
   }
  ],
  "scenes": [

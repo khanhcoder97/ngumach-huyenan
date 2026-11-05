@@ -21,7 +21,7 @@ Destinations (policy-allowed media roots):
   - ClientGodot/assets/audio/vo/p0/                     (4 files)
   - ClientGodot/assets/cinematics/timing/               (40 files)
   - ClientGodot/assets/cinematics/P0_animatic_*         (already there
-    since checkpoint 03; verified here, not re-copied)
+    since checkpoint 03, revised in checkpoint 13; verified here, not re-copied)
 
 Verification per file (any failure aborts with non-zero exit):
   - source is real bytes, never a git-LFS pointer
@@ -47,12 +47,12 @@ PACK_PREFIX = "Client/Assets/Audio/PackV1/"
 VO_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "VO" / "P0_DRAFT"
 DUR_TOL_S = 0.02
 
-# P0 animatic files already delivered in checkpoint 03 (report SHAs).
+# P0 animatic files delivered in checkpoint 03, revised in checkpoint 13 (report SHAs).
 ANIMATIC_EXPECTED = {
     "P0_animatic_640x360_30fps.mp4":
-        "a625043c4fd47eee15e0f203c8a5cde5890d00a0c0a9fc31933b249f37b5cf06",
+        "872e7b0c8fbc0059c3adf58cf46e31fcb768ebc7a5d3311798812e6ff9a93e83",
     "P0_animatic_640x360_30fps.ogv":
-        "7c0fdb291992b49df18210c72a41e64ebdbb4baf9a56ab0a6179d40cf6813325",
+        "7498a8f14970ad352869fda516fd42a188620fcab7cd6856c6a5001e77dc8d72",
     "P0_animatic_poster.png":
         "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8",
 }
@@ -240,7 +240,7 @@ def main():
         json.dumps(audio_manifest, ensure_ascii=False, indent=1),
         encoding="utf-8")
 
-    # --- 4. Cinematics: verify P0 animatic already in runtime (cp03) ---
+    # --- 4. Cinematics: verify P0 animatic already in runtime (cp03, revised cp13) ---
     cine_files = []
     for name, expect_sha in ANIMATIC_EXPECTED.items():
         p = CINE_DEST / name
@@ -252,7 +252,7 @@ def main():
         check(got == expect_sha, f"animatic sha mismatch: {name}")
         cine_files.append({"runtimePath": f"assets/cinematics/{name}",
                            "sha256": got, "sizeBytes": p.stat().st_size,
-                           "status": "VERIFIED_CHECKPOINT_03"})
+                           "status": "VERIFIED_CHECKPOINT_13"})
 
     # --- 5. Timing JSON + SRT for all 20 scenes (cp01/05/06) ---
     scenes = {}
@@ -309,21 +309,22 @@ def main():
         })
     cine_manifest = {
         "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
-        "checkpoint": "MEDIA-02 checkpoint 10 - M6 runtime delivery",
+        "checkpoint": "MEDIA-02 checkpoint 13 - P0 animatic revision v2 (D4 panel fixes); audio/timing unchanged from checkpoint 10",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "campaignTotals": {"scenes": 20, "shots": 63, "seconds": 378},
         "notes": [
-            "P0 animatic (MP4 review + OGV runtime + poster) verified "
-            "against checkpoint 03 SHAs; files already in the runtime tree.",
+            "P0 animatic v2 (MP4 review + OGV runtime + poster) verified "
+            "against checkpoint 13 SHAs; files already in the runtime tree.",
             "Timing JSON + SRT per scene copied from Narrative/Deliveries "
             "with sha256 verification against the checkpoint 01/05/06 "
             "manifests. SRT is UTF-8/NFC, DRAFT.",
             "Only CIN_001_S05 (24.8-28.5 s, version B) is DECIDED; all "
             "other dialogue windows remain PROPOSED_ANIMATIC_PLACEMENT "
             "until director/Codex confirms them.",
-            "No final picture: animatic is storyboard level; character "
-            "keyframes still await lock for locked shots.",
+            "No final picture: animatic is storyboard level (revision v2 "
+            "fixes 4 panel defects); character keyframes still await lock "
+            "for locked shots.",
         ],
         "animatic": cine_files,
         "scenes": scene_entries,
