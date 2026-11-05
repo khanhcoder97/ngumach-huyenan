@@ -108,7 +108,9 @@ Codex cần làm: review PR #119, trả lời D1–D4, làm presentation adapter
   (ACK checkpoint 03–07 + PR #119, 2026-11-05 04:45 UTC). DEC-MEDIA-P0
   không đổi.
 - Integration HEAD không đổi: `cf17178`. Nhánh media: head `5d8cc70`
-  trước checkpoint này; commit checkpoint 11 sẽ push sau scope audit.
+  trước checkpoint này; commit checkpoint 11 `f6df4b2` ĐÃ PUSH
+  (ls-remote xác nhận; scope audit 687 paths, 0 violations). PR #119 nay
+  có 14 commit.
 - ACK comment checkpoint 11 trên issue #116: CẦN thẻ duyệt của chủ dự án
   qua GitHub connector — ghi rõ để luồng chính xử lý, lượt chạy này không
   treo chờ.
