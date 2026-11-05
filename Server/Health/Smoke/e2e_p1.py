@@ -1577,6 +1577,41 @@ def alpha_kill(session_id, character_id, sequence, entity_id, pace=0.12):
     return sequence, accepted, refused, False
 
 
+ALPHA_REVIVES = {"count": 0}
+
+
+def alpha_ensure_alive(session, character, sequence, label):
+    """Bring the actor back over the public route when a leg left it downed.
+
+    This is the actual cause of the stall the progress review measured and I could not
+    attribute: its own alpha log line reads
+    `ALPHA boss encounter ... IMPACT B:DOWN phase 3 bossHp 244 damage 32 (12 -> 0)`.
+    The player died at 12 HP with 244 of 1200 boss HP left, so every later cast answers
+    409 and the leg reports "the quest boss never died" - a dead actor, not a broken
+    target resolution, not a refusal, not a range problem.
+
+    No assertion is weakened and no check count changes: the leg still has to kill the
+    thing, it simply cannot be doing it while dead. The revival uses the shipped
+    DEC-DEATH-RETURN-20261105 route, so it is the same public surface a client would use.
+    """
+    _, self_state, _, _ = v2_snapshot(session)
+    if self_state.get("hp", 0) > 0:
+        return sequence, False
+
+    ALPHA_REVIVES["count"] += 1
+    key = "e" * 31 + format(ALPHA_REVIVES["count"] % 16, "x")
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/actor/death-return",
+        death_return_envelope(character, key),
+        {"X-Session-ID": session})
+    if status != 200 or (body.get("result") or {}).get("applied") is not True:
+        # Surfaced through the leg that follows, which still has to kill its target and
+        # will name this attempt count in its own failure message.
+        print(f"WARN {label}: death-return after death did not apply "
+              f"(status {status}: {(body.get('error') or {})})")
+    return sequence, True
+
+
 def alpha_kill_watched(session, character, sequence, pool, wanted, label):
     """Kill until `wanted` deaths are witnessed. Every candidate is approached at
     its spawn record's atlas position first (a mob outside the 40-WU audience has
@@ -1974,6 +2009,7 @@ def alpha_p00_profile():
         npc_entity_id is not None and npc_x_before is not None,
         f"the escorted NPC is not in the v2 audience at all (looked for kind NPC with "
         f"LYAN in the id over {len(ALPHA_WAVE_A)} wave members and the rest)")
+    sequence, _ = alpha_ensure_alive(session, character, sequence, "P00-04 wave A")
     sequence, wave_a_deaths, _ = alpha_kill_watched(
         session, character, sequence, ALPHA_WAVE_A, 3, "P00-04 wave A")
 
@@ -1994,6 +2030,7 @@ def alpha_p00_profile():
         alive_b is not None,
         f"the P00-04 escort never activated wave B (walked {walked_b} paced steps "
         f"to x={x_after_b}; observed {wave_states})")
+    sequence, _ = alpha_ensure_alive(session, character, sequence, "P00-04 wave B")
     sequence, wave_b_deaths, _ = alpha_kill_watched(
         session, character, sequence, ALPHA_WAVE_B, 3, "P00-04 wave B")
 
@@ -2026,12 +2063,15 @@ def alpha_p00_profile():
         boss_row.get("targetable") is True and boss_row.get("healthState") == "ALIVE",
         f"the quest boss row was not owner-targetable before the fight: "
         f"targetable={boss_row.get('targetable')} healthState={boss_row.get('healthState')}")
+    sequence, _ = alpha_ensure_alive(
+        session, character, sequence, "P00-05 before the boss")
     sequence, accepted, refused, boss_died = alpha_kill(
         session, character, sequence, ALPHA_BOSS_ENTITY)
     smoke_p1.check(
         accepted > 20 and boss_died,
         f"the quest boss never died for this owner: {accepted} casts accepted, "
-        f"witnessed death {boss_died}, refusals {refused}")
+        f"witnessed death {boss_died} (revives so far: {ALPHA_REVIVES['count']}, "
+        f"refusals {refused})")
     _, _, dead_rows, _ = v2_snapshot(session)
     dead_row = dead_rows.get(ALPHA_BOSS_ENTITY) or {}
     smoke_p1.check(
