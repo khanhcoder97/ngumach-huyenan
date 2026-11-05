@@ -45,9 +45,9 @@ Công cụ mới chỉ đọc cây repo và đối chiếu với các pack/báo 
 - Cửa sổ thoại campaign vẫn PROPOSED, chỉ CIN_001_S05 là DECIDED; kiểm chứng này chỉ khẳng định SRT khớp timing đã giao, không khẳng định đạo diễn đã duyệt cửa sổ.
 - VO vẫn là bản dự thảo TTS (giọng hư cấu hệ thống, không clone giọng thật), chưa nghe thử bằng tai, chưa copy sang runtime.
 
-## 6. Trạng thái push (điền sau khi chạy scope audit)
+## 6. Trạng thái push
 
-- Scope audit: _chưa chạy lúc viết bản nháp — xem commit message sau push_.
-- Commit checkpoint 09: _điền SHA sau khi push + xác minh ls-remote_.
+- Scope audit: `Tools/Coordination/check_agent_scope.py --base cf17178 --head HEAD --branch muse/media-production-20261104` → **92 changed paths (tích lũy từ base), 0 violations**.
+- Commit checkpoint 09: `18e5887` (đã push, xác minh bằng ls-remote: `18e5887e82cc39b4f019f64c9200d9f01841be4a`).
 - PR #119: vẫn mở, chưa merge; commit này nối tiếp lên cùng nhánh media, KHÔNG mở PR mới, KHÔNG tự merge.
 - Khối tiếp theo: M6 runtime delivery (copy có kiểm chứng các deliverable P0/campaign đã kiểm chứng này sang `ClientGodot/assets/cinematics/` + `ClientGodot/assets/audio/` kèm manifest runtime), hoặc VO dự thảo campaign khi cửa sổ được xác nhận.
