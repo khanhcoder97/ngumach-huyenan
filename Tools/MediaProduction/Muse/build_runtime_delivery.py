@@ -519,6 +519,54 @@ def main():
         audio_entries.append(entry)
         counts["composed"] += 1
 
+    # --- 3h. Composed ambience (checkpoint 30) ---
+    # The composer (build_composed_ambience.py) already rendered the
+    # runtime OGGs into ClientGodot/assets/audio/composed/ambience/;
+    # this section verifies them in place against the delivery pack
+    # and registers them in the runtime audio manifest. The ported
+    # PackV1 entries above are untouched; composed cues are parallel
+    # candidates whose adoption is Codex's adapter decision.
+    composed_amb = json.loads(
+        (ROOT / "Implementation/Content/Audio/Deliveries"
+         / "AMBIENCE_COMPOSED_pack_v1.json").read_text(encoding="utf-8"))
+    for cue in composed_amb["cues"]:
+        rt = cue["runtime"]
+        dest_rel = rt["path"].split("assets/audio/", 1)[1]
+        dest = AUDIO_DEST / dest_rel
+        label = f"composed ambience {cue['cueKey']}"
+        check(dest.exists(), f"{label}: runtime file missing {rt['path']}")
+        if not dest.exists():
+            continue
+        check(not is_lfs_pointer(dest),
+              f"{label}: runtime file is an LFS pointer")
+        got_sha = sha256(dest)
+        got_size = dest.stat().st_size
+        check(got_sha == rt["sha256"],
+              f"{label}: sha mismatch {got_sha} != {rt['sha256']}")
+        check(got_size == rt["sizeBytes"],
+              f"{label}: size mismatch {got_size} != {rt['sizeBytes']}")
+        got_dur = ffprobe_duration_s(dest)
+        check(abs(got_dur - rt["durationSeconds"]) <= DUR_TOL_S,
+              f"{label}: duration mismatch {got_dur} != "
+              f"{rt['durationSeconds']}")
+        entry = {"runtimePath": "assets/audio/" + dest_rel,
+                 "sourcePath": cue["master"]["path"],
+                 "sha256": got_sha, "sizeBytes": got_size,
+                 "durationSeconds": round(got_dur, 4)}
+        entry.update({
+            "cueKey": cue["cueKey"],
+            "category": "composed_ambience",
+            "codec": rt["codec"],
+            "sampleRateHz": rt["sampleRateHz"],
+            "channels": rt["channels"],
+            "integratedLufs": rt["integratedLufs"],
+            "truePeakDbtp": rt["truePeakDbtp"],
+            "assetState": "COMPOSED_CANDIDATE",
+            "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER",
+            "provenance": "ORIGINAL_COMPOSED_BY_MUSE"})
+        audio_entries.append(entry)
+        counts["composed"] += 1
+
     # --- 3f. Prologue CIN_000 narration VO + film mix (checkpoint 27) ---
     # The prologue is a standalone pre-game film (owner-ordered,
     # script approved in main chat 2026-11-06), NOT part of the
@@ -570,12 +618,13 @@ def main():
 
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 checkpoint 29 - M6 runtime delivery "
-                       "revised: P0 draft mixes v2 from composed stems "
-                       "(3 scenes + 72 s review, mix/p0_v2/) registered "
-                       "in parallel to the untouched v1 mixes; "
-                       "prologue (checkpoint 27/28), composed music "
-                       "(checkpoint 26) and the ported packs unchanged"),
+        "checkpoint": ("MEDIA-02 checkpoint 30 - M6 runtime delivery "
+                       "revised: original composed ambience (13 cues, "
+                       "assets/audio/composed/ambience/) registered in "
+                       "parallel to the untouched ported packs; P0 draft "
+                       "mixes v2 (checkpoint 29), prologue (checkpoint "
+                       "27/28) and composed music (checkpoint 26) "
+                       "unchanged"),
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "counts": counts,
@@ -628,6 +677,17 @@ def main():
             "They do NOT replace the ported PackV1 files (541 files, "
             "checkpoints 07/08) or their bindings; adoption is "
             "Codex's presentation-adapter decision. Loudness is "
+            "measured from real bytes; no ear audition.",
+            "Composed ambience (checkpoint 30): 13 ORIGINAL cues "
+            "composed by Muse (all AMBIENCE/* cues), provenance "
+            "ORIGINAL_COMPOSED_BY_MUSE, delivered in parallel under "
+            "assets/audio/composed/ambience/ from "
+            "AMBIENCE_COMPOSED_pack_v1.json. Filtered-noise beds + "
+            "sparse deterministic events; crowd beds are filtered "
+            "noise only (no voices, no words). They do NOT replace "
+            "the ported PackV1 files or their bindings; adoption is "
+            "Codex's presentation-adapter decision. Loudness targets "
+            "are the ported cues' checkpoint-07 measured LUFS; "
             "measured from real bytes; no ear audition.",
             "Prologue CIN_000 (checkpoint 27): 5 narration draft "
             "takes (fictional TTS narrator, DRAFT casting) + the "

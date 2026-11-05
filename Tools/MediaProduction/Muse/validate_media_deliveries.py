@@ -170,6 +170,46 @@ def check_composed_pack():
          f"(9 music + 4 cinema stingers), {total} files")
 
 
+def check_composed_ambience_pack():
+    """Checkpoint 30: the ORIGINAL composed ambience pack (all 13
+    AMBIENCE/* cues). Same contract as check_composed_pack: provenance
+    must stay explicit, every cue loops, both sides byte-checked."""
+    pack = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                       / "AMBIENCE_COMPOSED_pack_v1.json").read_text(
+                           encoding="utf-8"))
+    if pack["counts"] != {"ambience": 13, "total": 13}:
+        err(f"COMPOSED AMBIENCE pack counts drift: {pack['counts']}")
+    total = 0
+    for cue in pack["cues"]:
+        if cue.get("provenance") != "ORIGINAL_COMPOSED_BY_MUSE":
+            err(f"COMPOSED AMBIENCE {cue['cueKey']}: provenance "
+                f"missing/drift")
+        if cue.get("kind") != "AMBIENCE":
+            err(f"COMPOSED AMBIENCE {cue['cueKey']}: kind drift "
+                f"{cue.get('kind')}")
+        for side_name in ("master", "runtime"):
+            side = cue[side_name]
+            entry = {"path": side["path"], "sha256": side["sha256"],
+                     "size_bytes": side["sizeBytes"],
+                     "codec": side["codec"],
+                     "sample_rate_hz": side["sampleRateHz"],
+                     "channels": side["channels"],
+                     "duration_s": side["durationSeconds"]}
+            check_audio_file(entry, f"COMPOSED AMBIENCE {cue['cueKey']}/"
+                             f"{side_name}")
+            total += 1
+        if not cue.get("loop"):
+            err(f"COMPOSED AMBIENCE {cue['cueKey']}: ambience cue must "
+                f"loop")
+        if abs(cue["master"]["durationSeconds"] - 16.0) > 0.05:
+            err(f"COMPOSED AMBIENCE {cue['cueKey']}: duration "
+                f"{cue['master']['durationSeconds']} != 16.0 s")
+    COUNTS["audio_composed_ambience_cues"] = len(pack["cues"])
+    COUNTS["audio_files_checked"] += total
+    note(f"composed ambience pack validated: {len(pack['cues'])} cues, "
+         f"{total} files")
+
+
 def parse_srt(text):
     cues = []
     blocks = [b.strip() for b in re.split(r"\n\s*\n", text.strip()) if b.strip()]
@@ -1568,10 +1608,10 @@ def check_prologue():
     if vo_n != 5 or mix_n != 1:
         err(f"PROLOGUE: runtime audio registrations vo={vo_n} "
             f"mix={mix_n} (want 5/1)")
-    # Checkpoint 29: 589 + 4 P0 draft mixes v2 (mix/p0_v2/) = 593.
-    if am.get("totalFiles") != 593:
+    # Checkpoint 30: 593 + 13 composed ambience cues = 606.
+    if am.get("totalFiles") != 606:
         err(f"PROLOGUE: runtime audio total {am.get('totalFiles')}"
-            f" != 593")
+            f" != 606")
     COUNTS["prologue_files_checked"] = checked
     COUNTS["audio_files_checked"] = \
         COUNTS.get("audio_files_checked", 0) + 6
@@ -1591,6 +1631,7 @@ def main():
     args = ap.parse_args()
     check_audio_packs()
     check_composed_pack()
+    check_composed_ambience_pack()
     check_timing_srt()
     check_runtime_cine_manifest()
     check_animatic_vo()
@@ -1607,7 +1648,7 @@ def main():
     check_scene_clips()
     check_prologue()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 29 (P0 draft mix v2 from checkpoint-26 composed stems: 3 scenes + 72 s review re-mixed in parallel to the untouched v1 mixes, mix/p0_v2/; v2 checker added; runtime delivery revised)",
+        "checkpoint": "MEDIA-02 checkpoint 30 (original composed ambience: all 13 AMBIENCE/* cues, filtered-noise beds + sparse deterministic events, delivered in parallel under assets/audio/composed/ambience/; ambience checker added; runtime delivery revised, total 606)",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -1617,7 +1658,7 @@ def main():
         "notes": NOTES,
         "verdict": "PASS" if not ERRORS else "MISMATCHES_FOUND",
         "limits": [
-            "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08/17/19/20/26/29, measured from real bytes.",
+            "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08/17/19/20/26/29/30, measured from real bytes.",
             "No ear audition of loop seams or VO takes in this validation.",
             "Campaign dialogue windows remain PROPOSED except CIN_001_S05 (DECIDED); this check verifies SRT==timing consistency, not directorial approval.",
             "Campaign VO window overruns (if any) are director findings, not byte mismatches; see windowFit.",
@@ -1631,6 +1672,7 @@ def main():
             "Checkpoint 25 batch keyframes are STORYBOARD level: every batch scene has named characters on screen with no approved cinematic character lock, so all faces/costumes are placeholders and final picture per shot stays blocked on the lock. Headline defects are recorded per shot in the keyframe manifests; the worst are CIN_012_S03's baked-in choice UI bar with legible English buttons, CIN_017_S02's missing subject (no core, no serpent), CIN_015_S02's dry-courtyard setting failure with an invented mascot figure, and CIN_011's invented teal-robed woman in S01/S03.",
             "All campaign clip motion (checkpoints 21-25) is animatic-level Ken Burns on still keyframes, not final pose-animated takes.",
             "Composed pack (checkpoint 26, Goi 30 item 7): 13 ORIGINAL cues composed by Muse (9 music + 4 SFX/CINEMA stingers) from one leitmotif system; loudness measured from real bytes by the composer (music -22.0 LUFS target, stingers -25.0), this check re-verifies bytes/SHA/duration only. Loop seams are recorded per cue in the delivery manifest: wrapJump after a disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it; no ear audition. The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; composed cues are parallel candidates whose adoption is Codex's presentation-adapter decision.",
+            "Composed ambience pack (checkpoint 30): 13 ORIGINAL cues composed by Muse (all AMBIENCE/* cues, 16.0 s each) from filtered-noise beds with slow gust/swell envelopes and sparse deterministic events; loudness targets are the ported cues' checkpoint-07 measured LUFS, this check re-verifies bytes/SHA/duration only. Loop seams are recorded per cue in the delivery manifest with the same disclosed 0.25 s end-landing construction; no ear audition. Crowd beds are filtered noise only (no voices, no words). The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; composed cues are parallel candidates whose adoption is Codex's presentation-adapter decision.",
             "Prologue CIN_000 (checkpoint 27): a standalone pre-game film, NOT a campaign scene; its narration is DRAFT TTS (narrator casting is a director decision), its mix is DRAFT_MIX_NOT_FINAL, and no ear audition has been done. Identity checks inside the film builder use crop-compensated diffs (full-res < 20, 160x90 structure < 8) because the render path resamples twice; a brute-force fit on S01 confirmed the designed zooms (1.015/1.035/1.055) at zero offset with a 4.2-6.5 structure floor. Headline picture defects: S01/S03 mechanism design drift and S11's ambiguous arrival direction, recorded per shot in CIN000_keyframes_manifest_v1.json.",
             "Prologue subtitled variant (checkpoint 28, owner request): a VIEWING variant only -- the canonical MP4/OGV keep the checkpoint 27 mix at its measured level (-20.81 LUFS) and the canonical SRT keeps its 6 cues. The variant's +5 dB is a flat presentation gain (no dynamics change, measured -15.83 LUFS / -4.09 dBTP on the variant file), and its readable SRT is a presentation split whose concatenated text is verified identical to the canonical SRT. Burned-in subtitle font is DejaVu Sans (the project has no locked Vietnamese display font, same placeholder status as the title card). No OGV subtitled variant: in-engine subtitle display is the presentation adapter's concern (Codex).",
         ],
