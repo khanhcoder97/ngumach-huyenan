@@ -339,6 +339,48 @@ namespace NguMach.Client.Core.Tests
         }
 
         [Fact]
+        public async Task EquipV2_FeatureUnavailable_DoesNotLeavePending()
+        {
+            var transport = new ScriptedTransport();
+            transport.Handler = (r, ct) =>
+            {
+                if (r.Path == "/p1/sessions") return Task.FromResult(SessionReply(r));
+                if (r.Path == "/p1/inventory/v2/" + Session)
+                    return Task.FromResult(Envelope(r, 200, Snapshot(4)));
+                return Task.FromResult(new P1HttpReply { StatusCode = 404, CorrelationId = r.CorrelationId, Body = "" });
+            };
+            var client = new P1Client(transport);
+            Assert.True((await client.ConnectAsync(CancellationToken.None)).Success);
+
+            var result = await client.EquipV2Async("ITM_TEST_HAT", 4, CancellationToken.None);
+
+            Assert.False(result.Success);
+            Assert.Equal("feature_unavailable", result.Code);
+            Assert.False(client.HasPendingMutation);
+        }
+
+        [Fact]
+        public async Task UnequipV2_FeatureUnavailable_DoesNotLeavePending()
+        {
+            var transport = new ScriptedTransport();
+            transport.Handler = (r, ct) =>
+            {
+                if (r.Path == "/p1/sessions") return Task.FromResult(SessionReply(r));
+                if (r.Path == "/p1/inventory/v2/" + Session)
+                    return Task.FromResult(Envelope(r, 200, Snapshot(4, "ITM_TEST_HAT")));
+                return Task.FromResult(new P1HttpReply { StatusCode = 404, CorrelationId = r.CorrelationId, Body = "" });
+            };
+            var client = new P1Client(transport);
+            Assert.True((await client.ConnectAsync(CancellationToken.None)).Success);
+
+            var result = await client.UnequipV2Async("HAT", 4, CancellationToken.None);
+
+            Assert.False(result.Success);
+            Assert.Equal("feature_unavailable", result.Code);
+            Assert.False(client.HasPendingMutation);
+        }
+
+        [Fact]
         public async Task V1InventoryRouteAndModel_Unchanged()
         {
             var v1 = "{\"inventoryRevision\":3,\"items\":[{\"instanceId\":\"ITM_V1\",\"templateId\":\"POT-HP-01\"," +

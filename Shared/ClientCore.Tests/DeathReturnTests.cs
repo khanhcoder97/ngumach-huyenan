@@ -335,6 +335,56 @@ namespace NguMach.Client.Core.Tests
             Assert.Null(client.LastDeathReturn);
         }
 
+        [Fact]
+        public async Task AmbiguousSubmit_RetryFailsAgain_KeepsPending()
+        {
+            int failCount = 0;
+            var transport = Transport(r =>
+            {
+                failCount++;
+                if (failCount <= 2) return new P1HttpReply { StatusCode = 0, CorrelationId = r.CorrelationId };
+                return Envelope(r, 200, ResultJson(true, false));
+            }, out var client);
+
+            var first = await client.ReturnFromDeathAsync(CancellationToken.None);
+            Assert.False(first.Success);
+            Assert.True(client.HasPendingMutation);
+
+            var second = await client.RetryPendingAsync(CancellationToken.None);
+            Assert.False(second.Success);
+            Assert.True(client.HasPendingMutation);
+
+            var third = await client.RetryPendingAsync(CancellationToken.None);
+            Assert.True(third.Success, third.Code);
+            Assert.False(client.HasPendingMutation);
+            Assert.NotNull(client.LastDeathReturn);
+            Assert.True(client.LastDeathReturn.applied);
+        }
+
+        [Fact]
+        public async Task Commit_WorldReadFailure_ReturnsRefreshPending()
+        {
+            var transport = new ScriptedTransport();
+            transport.Handler = (r, ct) =>
+            {
+                if (r.Path == "/p1/sessions") return Task.FromResult(SessionReply(r));
+                if (r.Path == "/p1/actor/death-return")
+                    return Task.FromResult(Envelope(r, 200, ResultJson(true, false)));
+                if (r.Path.StartsWith("/p1/world/", StringComparison.Ordinal))
+                    return Task.FromResult(Error(r, 500, "internal_error", false));
+                return Task.FromResult(new P1HttpReply { StatusCode = 404, CorrelationId = r.CorrelationId, Body = "" });
+            };
+            var client = new P1Client(transport);
+            Assert.True((await client.ConnectAsync(CancellationToken.None)).Success);
+
+            var result = await client.ReturnFromDeathAsync(CancellationToken.None);
+
+            Assert.False(result.Success);
+            Assert.Equal("death_return_refresh_pending", result.Code);
+            Assert.NotNull(client.LastDeathReturn);
+            Assert.True(client.LastDeathReturn.applied);
+        }
+
         private static string FindFixture()
         {
             return FindFixtureFile("death_return_response_v1_reference_20261105.json");
