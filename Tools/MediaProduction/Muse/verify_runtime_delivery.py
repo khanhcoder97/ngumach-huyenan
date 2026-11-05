@@ -164,10 +164,10 @@ def main():
     check_audio_manifest()
     check_cinematics_manifest()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 15 (Gói 30 fix (b)) - runtime re-verification",
-        "base_integration": "a84ce590",
+        "checkpoint": "MEDIA-02 checkpoint 16 (Gói 30 fix (c)) - runtime re-verification",
+        "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
-        "verifies": "checkpoint 10 runtime delivery as revised by checkpoint 13 (animatic v2), checkpoint 14 (dialogueCues fix) and checkpoint 15 (LF + LFS fix) (RUNTIME_AUDIO_manifest_v1.json + RUNTIME_CINEMATICS_manifest_v1.json)",
+        "verifies": "checkpoint 10 runtime delivery as revised by checkpoint 13 (animatic v2), checkpoint 14 (dialogueCues fix), checkpoint 15 (LF + LFS fix) and checkpoint 16 (animatic v3: CIN_002_S02 corrected keyframe + 16:9 keyframes) (RUNTIME_AUDIO_manifest_v1.json + RUNTIME_CINEMATICS_manifest_v1.json)",
         "counts": COUNTS,
         "mismatches": ERRORS,
         "notes": NOTES,

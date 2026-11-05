@@ -311,7 +311,7 @@ def check_animatic_vo():
             err(f"ANIMATIC poster dims {dims} != (640, 360)")
     else:
         err("ANIMATIC: missing poster in ClientGodot/assets/cinematics")
-    outputs = json.loads((ROOT / "Art_Source/Cinematics/P0_Animatic/P0_animatic_outputs_v2.json").read_text(encoding="utf-8"))
+    outputs = json.loads((ROOT / "Art_Source/Cinematics/P0_Animatic/P0_animatic_outputs_v3.json").read_text(encoding="utf-8"))
     panels_ok = 0
     for shot in outputs["shots"]:
         panel = ROOT / shot["panel"]
@@ -350,6 +350,54 @@ def check_animatic_vo():
     COUNTS["vo_takes_checked"] = len(manifest["takes"])
 
 
+def check_keyframes():
+    """Checkpoint 16: separate 16:9 keyframes, one per P0 shot.
+
+    Verifies the keyframes manifest: 12 entries, each file exists,
+    is 640x360, is real image bytes (not an LFS pointer), and matches
+    the recorded SHA. Cross-checks the keyframe list against the
+    animatic outputs manifest (same 12 shot IDs).
+    """
+    manifest_path = (ROOT / "Art_Source/Cinematics/P0_Animatic"
+                     / "P0_keyframes_16x9_manifest_v1.json")
+    if not manifest_path.exists():
+        err("KEYFRAMES: missing P0_keyframes_16x9_manifest_v1.json")
+        return
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    outputs = json.loads((ROOT / "Art_Source/Cinematics/P0_Animatic"
+                          / "P0_animatic_outputs_v3.json").read_text(encoding="utf-8"))
+    output_ids = {s["shotId"] for s in outputs["shots"]}
+    checked = 0
+    for entry in manifest["shots"]:
+        sid = entry["shotId"]
+        if sid not in output_ids:
+            err(f"KEYFRAMES {sid}: not in animatic outputs manifest")
+            continue
+        kf = ROOT / entry["file"]
+        if not kf.exists():
+            err(f"KEYFRAMES {sid}: missing {entry['file']}")
+            continue
+        if is_lfs_pointer(kf):
+            err(f"KEYFRAMES {sid}: file is an LFS pointer, not image bytes")
+            continue
+        if png_dims(kf) != (640, 360):
+            err(f"KEYFRAMES {sid}: dims {png_dims(kf)} != 640x360")
+        if sha256_of(kf) != entry["sha256"]:
+            err(f"KEYFRAMES {sid}: sha mismatch")
+        if entry.get("source") not in ("generated-16x9-checkpoint-16",
+                                        "panel-16x9-checkpoint-13",
+                                        "panel-sheet-crop-v1"):
+            err(f"KEYFRAMES {sid}: unknown source {entry.get('source')!r}")
+        checked += 1
+    if checked != 12:
+        err(f"KEYFRAMES: {checked}/12 keyframes checked")
+    if {s["shotId"] for s in manifest["shots"]} != output_ids:
+        err("KEYFRAMES: keyframe shot set != animatic shot set")
+    COUNTS["keyframes_checked"] = checked
+    note(f"Keyframes 16:9 checked: {checked}/12 (S02 generated checkpoint 16; "
+         f"4 checkpoint-13 panels; 7 v1 sheet crops re-verified for framing)")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=None)
@@ -358,9 +406,10 @@ def main():
     check_timing_srt()
     check_runtime_cine_manifest()
     check_animatic_vo()
+    check_keyframes()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 15 (Gói 30 fix (b): LF + LFS, renormalize per integration a84ce590)",
-        "base_integration": "a84ce590",
+        "checkpoint": "MEDIA-02 checkpoint 16 (Gói 30 fix (c): CIN_002_S02 corrected keyframe + separate 16:9 keyframes, animatic v3, re-baseline integration f0859d0)",
+        "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
         "mismatches": ERRORS,

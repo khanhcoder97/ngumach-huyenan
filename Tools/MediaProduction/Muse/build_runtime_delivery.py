@@ -48,12 +48,13 @@ PACK_PREFIX = "Client/Assets/Audio/PackV1/"
 VO_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "VO" / "P0_DRAFT"
 DUR_TOL_S = 0.02
 
-# P0 animatic files delivered in checkpoint 03, revised in checkpoint 13 (report SHAs).
+# P0 animatic files delivered in checkpoint 03, revised in checkpoint 13
+# (4 panels) and checkpoint 16 (CIN_002_S02 keyframe; report SHAs).
 ANIMATIC_EXPECTED = {
     "P0_animatic_640x360_30fps.mp4":
-        "872e7b0c8fbc0059c3adf58cf46e31fcb768ebc7a5d3311798812e6ff9a93e83",
+        "570c78ff0f3a03409ef0b292d5f505f15719476e64cb1e30f49047112091dcf4",
     "P0_animatic_640x360_30fps.ogv":
-        "7498a8f14970ad352869fda516fd42a188620fcab7cd6856c6a5001e77dc8d72",
+        "06acf54e73eeba5358d5e738984f63c48484a3bfacf75cc5a63fcaa407c68f50",
     "P0_animatic_poster.png":
         "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8",
 }
@@ -357,16 +358,20 @@ def main():
     total_dialogue_cues = sum(e["dialogueCues"] for e in scene_entries)
     cine_manifest = {
         "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
-        "checkpoint": "MEDIA-02 checkpoint 15 - Gói 30 fix (b): LF + LFS (24 raw binaries to pointers, renormalize per integration a84ce590); audio/timing unchanged from checkpoint 10/13/14",
+        "checkpoint": "MEDIA-02 checkpoint 16 - Gói 30 fix (c): CIN_002_S02 corrected keyframe + separate 16:9 keyframes (animatic v3); audio/timing unchanged from checkpoint 10/13/14/15",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "campaignTotals": {"scenes": 20, "shots": 63, "seconds": 378,
                            "dialogueCues": total_dialogue_cues},
         "notes": [
-            "P0 animatic v2 (MP4 review + OGV runtime + poster) verified "
-            "against checkpoint 13 SHAs (outputs v2 manifest); 4 panels "
-            "revised (CIN_001_S03, CIN_001_S06, CIN_004_S01, CIN_004_S03), "
-            "8 panels byte-identical to v1; poster unchanged (CIN_001_S01).",
+            "P0 animatic v3 (MP4 review + OGV runtime + poster) verified "
+            "against checkpoint 16 SHAs (outputs v3 manifest); 5 panels "
+            "revised in total (4 in checkpoint 13: CIN_001_S03, CIN_001_S06, "
+            "CIN_004_S01, CIN_004_S03; 1 in checkpoint 16: CIN_002_S02), "
+            "7 panels byte-identical to v1; poster unchanged (CIN_001_S01). "
+            "Separate 16:9 keyframes per shot in "
+            "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/ "
+            "(P0_keyframes_16x9_manifest_v1.json).",
             "Timing JSON + SRT per scene copied from Narrative/Deliveries "
             "with sha256 verification against the checkpoint 01/05/06 "
             "manifests. SRT is UTF-8/NFC, DRAFT.",
@@ -379,9 +384,9 @@ def main():
             "Only CIN_001_S05 (24.8-28.5 s, version B) is DECIDED; all "
             "other dialogue windows remain PROPOSED_ANIMATIC_PLACEMENT "
             "until director/Codex confirms them.",
-            "No final picture: animatic is storyboard level (revision v2 "
-            "fixes 4 panel defects, not final picture); character keyframes "
-            "still await lock for locked shots.",
+            "No final picture: animatic is storyboard level (revision v3 "
+            "fixes all 5 recorded panel defects, not final picture); "
+            "character keyframes still await lock for locked shots.",
         ],
         "animatic": cine_files,
         "scenes": scene_entries,
