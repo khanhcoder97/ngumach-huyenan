@@ -2275,7 +2275,10 @@ def alpha_p00_profile():
 
     # The NPC walks at the sourced 3 wu/s, so after wave A is cleared and the escort
     # resumes, at least one WU of ground has to show up in the audience read.
-    time.sleep(8.0)
+    # 8 s of world time = 160 ticks: the escorted NPC has to have moved in the read
+    # model before the second sample means anything, and the clock that decides that
+    # is the server's, not the runner's.
+    advance_ticks(160, session)
     _, npc_x_after = escorted_npc_x()
     smoke_p1.check(
         npc_x_after is not None and npc_x_after > npc_x_before,
@@ -2693,8 +2696,9 @@ def audience_gateoff_profile():
         f"cast at a blocked mob: status={status} distance={round(distance, 2)} "
         f"error={(body.get('error') or {})}")
 
-    # Past the windup and the impact tick, then one read of the whole stream.
-    time.sleep(1.5)
+    # Past the windup and the impact tick, then one read of the whole stream - 30
+    # ticks of world time, counted on the server clock this profile is asserting on.
+    advance_ticks(30, session)
     status, events, _ = v2_events(session, 0)
     naming = [(event.get("type"), event.get("targetId"))
               for event in events if event.get("targetId") == entity_id]
