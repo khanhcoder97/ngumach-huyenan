@@ -1,14 +1,14 @@
 {
  "manifestId": "NGM_CIN008_KEYFRAMES_V1",
- "checkpoint": "MEDIA-02 checkpoint 25 - CIN_008 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_008 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
- "baseSha": "f0859d0",
+ "baseSha": "abcf254",
  "sceneId": "CIN_008",
  "title": "Bàn tay đã ký",
  "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
  "status": "STORYBOARD",
- "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_TA_VAN_KHANH) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_TA_VAN_KHANH) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock. Checkpoint 32 (Goi 31 item 2) revises CIN_008_S03; all other shots unchanged.",
  "keyframes": [
   {
    "shotId": "CIN_008_S01",
@@ -42,16 +42,16 @@
    "file": "keyframes_16x9/keyframe_CIN_008_S03.png",
    "width": 640,
    "height": 360,
-   "sha256": "ac807d2e6875f5d148bcfb8a71c490305dbddf54b9d6783b6dfbe8ab4722d254",
-   "sourceStagingFile": "media-generation-keyframe-cin-008-s03-0-acd70052-7808-4144-919b-0fc6405679c1.webp",
-   "sourceStagingSha256": "c2754e87b5b2e57c08b52c38e67d937bec20a7be705de964e9d7eccef6508cc0",
-   "sourceSnapshotId": "d2cae441-a2a1-4992-80e8-1b02ddba942d:7vagfq",
-   "framing": "Medium shot of Ta Van Khanh standing at frame right beside a bamboo forest pool, his bandaged forearm lowered and his good hand open at his side as he looks off-frame left toward the unseen listener.",
-   "knownDefects": "The bandage is present and lowered as prompted, but in this pose it wraps the forearm on the frame-center side, reading as the character's right forearm — worth checking against the character lock at final picture (canon places the bandage on the character's LEFT forearm); the bandaged hand also grips two dangling white strips, an ambiguous object the prompt does not mention."
+   "sha256": "e41232c9c3b552d5523b1239edc6cb69cceb6f331e1f2ee495d64db16516e4f1",
+   "sourceStagingFile": "media-generation-keyframe-cin-008-s03-0-26afee66-7e40-43a7-a087-b91cabeb3888.webp",
+   "sourceStagingSha256": "3512f03a4418083303b7040dfbaa8ebee892d484f8b87fbe544e26b98720709f",
+   "sourceSnapshotId": "94c55a17-1eee-4233-920f-07c16d41892e:rwbkdx",
+   "framing": "Medium shot of Ta Van Khanh standing at frame right beside a bamboo forest pool (duckweed, lotus buds, reeds, stones, bamboo), looking off-frame left toward the unseen listener; his bandaged LEFT forearm is lowered on the outer side away from the pool and his good right hand is open at his side toward the pool.",
+   "knownDefects": "Character is still a placeholder without a character lock: high topknot + ponytail, dark grey-blue robe with brown belt, differing from the checkpoint 25 rendering (short hair, blue robe with gold trim) -- to be checked against the lock at final picture. The good right hand sits on the pool side rather than the outer side; the bandaged hand closes near the right frame edge but stays fully visible. The bandaged hand holds nothing."
   }
  ],
  "notes": [
   "3 separate 16:9 keyframes, one per shot, 640x360 each.",
-  "Recorded keyframe defects: S01's seal reads as a large round stamp already impressed on the paper and the page reads as a completed form rather than the moment of signing; S03's bandage wraps the forearm on the frame-center side, reading as the character's RIGHT forearm, while canon places the bandage on the character's LEFT forearm — to be checked against the character lock at final picture; S03's bandaged hand also grips two dangling white strips the prompt does not mention. S02 had no material defect at storyboard level."
+  "Checkpoint 32 (Goi 31 item 2) revises S03: the bandage now wraps the LEFT forearm (outer side, away from the pool); the bandaged hand holds nothing. S01/S02 unchanged from checkpoint 25."
  ]
 }

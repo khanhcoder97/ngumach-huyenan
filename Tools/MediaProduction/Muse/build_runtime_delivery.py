@@ -667,14 +667,15 @@ def main():
 
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 checkpoint 31 - M6 runtime delivery "
-                       "revised: P0 draft mixes v3 from fully composed "
-                       "stems (checkpoint-26 music/stingers + "
-                       "checkpoint-30 ambience) registered in parallel "
-                       "under mix/p0_v3/; v1/v2 mixes, prologue "
-                       "(checkpoint 27/28), composed music (checkpoint "
-                       "26) and composed ambience (checkpoint 30) "
-                       "unchanged"),
+        "checkpoint": ("MEDIA-02 checkpoint 32 - M6 runtime delivery "
+                       "revised: status phrasing corrected (all 21 "
+                       "dialogue windows approved for DRAFT VO production "
+                       "per the Goi 30 D1 decision, PR #120; only "
+                       "CIN_001_S05 is DECIDED); audio files unchanged "
+                       "from checkpoint 31 (total still 610); P0 draft "
+                       "mixes v3 (checkpoint 31), prologue (checkpoint "
+                       "27/28), composed music (checkpoint 26) and "
+                       "composed ambience (checkpoint 30) unchanged"),
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "counts": counts,
@@ -689,8 +690,12 @@ def main():
             "no .gd/.tscn/.cs).",
             "Per-cue loudness only, NOT a mix PASS; no combined mix, no "
             "ducking was measured here.",
-            "CIN_002/CIN_004 VO windows remain PROPOSED; only CIN_001_S05 "
-            "is DECIDED (24.8-28.5 s).",
+            "CIN_001_S05 is the only DECIDED dialogue window (24.8-28.5 s, "
+            "version B); all 21 dialogue windows are approved for DRAFT "
+            "VO production per the Goi 30 D1 decision (PR #120, "
+            "media_draft_timing_decisions_20261105.json). The other 20 "
+            "windows remain PROPOSED_ANIMATIC_PLACEMENT; final picture, "
+            "mix and autoplay are NOT approved.",
             "Campaign VO (checkpoint 17): 17 draft takes, 15 FITS / 2 "
             "OVERRUN at natural speed (CIN_005_S03 -0.16 s, CIN_018_S03 "
             "-0.28 s; D1 forbids voice speed-up to fit, so the overruns "
@@ -1019,7 +1024,7 @@ def main():
 
     cine_manifest = {
         "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
-        "checkpoint": "MEDIA-02 checkpoint 28 - prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
+        "checkpoint": "MEDIA-02 checkpoint 32 - Goi 31 item 2 shot-content fixes (14 revised keyframes across 8 scenes, re-exported video, before/after contact sheets) + status phrasing corrected (all 21 dialogue windows approved for DRAFT VO per Goi 30 D1, PR #120; only CIN_001_S05 DECIDED); prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "campaignTotals": {"scenes": 20, "shots": 63, "seconds": 378,
@@ -1042,9 +1047,14 @@ def main():
             "(Gói 30 item 1 / PR119 review finding 1). P0 + CIN_006 source "
             "manifests carry no 'cues' key; their counts come from "
             "timing/SRT. Any disagreement aborts this build.",
-            "Only CIN_001_S05 (24.8-28.5 s, version B) is DECIDED; all "
-            "other dialogue windows remain PROPOSED_ANIMATIC_PLACEMENT "
-            "until director/Codex confirms them.",
+            "CIN_001_S05 (24.8-28.5 s, version B) is the only DECIDED "
+            "dialogue window; the other 20 windows remain "
+            "PROPOSED_ANIMATIC_PLACEMENT, but all 21 windows are "
+            "approved for DRAFT VO production per the Goi 30 D1 "
+            "decision (PR #120, "
+            "media_draft_timing_decisions_20261105.json). Final picture, "
+            "mix and autoplay are NOT approved. (Status phrasing "
+            "corrected in checkpoint 32, Goi 31 item 1.)",
             "No final picture: animatic is storyboard level (revision v3 "
             "fixes all 5 recorded panel defects, not final picture); "
             "character keyframes still await lock for locked shots.",
@@ -1068,10 +1078,12 @@ def main():
             "Ken Burns clip. NPC_HA_MAC / NPC_SAM_CHU_QUY have NO "
             "approved character lock: faces/costumes are storyboard "
             "placeholders, cinematic-only staging per DEC-MEDIA-P0 Q4. "
-            "Known defects: S02 composition (oversized blurred glove + "
-            "pale face-like shape at frame right) and cross-shot "
-            "lighting drift, recorded per shot for the final-picture "
-            "revision pass.",
+            "Known defects: S02's composition defect (oversized blurred "
+            "glove + pale face-like shape at frame right) was FIXED in "
+            "checkpoint 32 (Goi 31 item 2, retry 3: whole-table view, "
+            "small glove, fiber trapped inside the paper); cross-shot "
+            "lighting drift remains, recorded per shot for the "
+            "final-picture revision pass.",
             "CIN_009 animated take (checkpoint 23, Goi 30 item 7): first "
             "Chapter 2 campaign scene with video -- 18 s / 3 shots, slow "
             "Ken Burns camera moves on 3 storyboard keyframes "
@@ -1081,10 +1093,11 @@ def main():
             "are unnamed generation-invented figures. Animatic-level "
             "motion, NOT a final pose-animated take; no audio track in "
             "the clip (VO/music/ambience added separately in editing); "
-            "no baked subtitles. Known defects: S01 carries an invented "
-            "white hooded figure not in the prompt and reads darker than "
-            "a daylight payoff; S03 is not strictly top-down and adds a "
-            "shrine not in the prompt.",
+            "no baked subtitles. Known defects: S01's invented white "
+            "hooded figure was REMOVED in checkpoint 32 (Goi 31 item 2) "
+            "and the spring now reads as a bright daylight payoff; S03 "
+            "is not strictly top-down and adds a shrine not in the "
+            "prompt (unchanged).",
             "CIN_020 animated take (checkpoint 24, Goi 30 item 7): the "
             "closing campaign scene -- 18 s / 3 shots, slow Ken Burns "
             "camera moves on 3 storyboard keyframes "
@@ -1133,7 +1146,13 @@ def main():
             "LEFT; CIN_018 has two dialogue cues and its S03 VO draft "
             "still overruns its window by +0.280 s (owner decision "
             "2026-11-06: window kept as-is, Codex decides at PR "
-            "review).",
+            "review). All headline defects listed in this note were "
+            "FIXED in checkpoint 32 (Goi 31 item 2): 14 revised "
+            "keyframes across 8 scenes (CIN_006, CIN_008, CIN_009, "
+            "CIN_010, CIN_011, CIN_012, CIN_015, CIN_017), "
+            "re-exported video, before/after contact sheets; the "
+            "revised keyframe manifests carry the new known-defect "
+            "state per shot.",
             "Prologue film CIN_000 (checkpoint 27): a standalone "
             "87.367 s pre-game lore film (owner-ordered; narration "
             "script approved in main chat 2026-11-06), registered "
@@ -1155,6 +1174,27 @@ def main():
             "CIN000_keyframes_manifest_v1.json). Wiring the "
             "prologue into the post-character-creation flow is "
             "Codex's presentation-adapter work.",
+            "Shot-content fixes (checkpoint 32, Goi 31 item 2): the "
+            "three Codex-review errors are fixed without waiting for "
+            "the character lock -- CIN_012_S03's baked-in English "
+            "choice UI bar is removed (frame clean for the game's own "
+            "choice overlay), CIN_017_S02 now shows the white-blue "
+            "crystal core supported by three stone pressure channels "
+            "with the tide serpent coiled around it (no machine, no "
+            "robed man), CIN_015_S02 is now a fully submerged drowned "
+            "ruin (dining bowl, guide rope, bare diver hand; no "
+            "mascot, no clay pot) -- plus unprompted mascot/character "
+            "cleanup (CIN_012_S01, CIN_015_S01, CIN_017_S03, "
+            "CIN_011_S01/S03, CIN_009_S01, CIN_006_S02), bandage on "
+            "the LEFT forearm (CIN_008_S03) and environment continuity "
+            "(CIN_010_S02/S03 back to the ash-gold desert caravan rest "
+            "of S01; CIN_015_S03 reads underwater). 14 revised "
+            "keyframes across 8 scenes, each with a before/after "
+            "contact sheet next to the keyframes; the 8 scene videos "
+            "were re-exported with the same motion model per shot. "
+            "Motion is still animatic-level Ken Burns on storyboard "
+            "stills, NOT final pose animation; final picture per shot "
+            "stays blocked on the character lock.",
         ],
         "animatic": cine_files,
         "sceneClips": scene_clip_entries,

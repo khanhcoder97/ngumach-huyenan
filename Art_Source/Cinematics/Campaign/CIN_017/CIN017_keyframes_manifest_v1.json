@@ -1,14 +1,14 @@
 {
  "manifestId": "NGM_CIN017_KEYFRAMES_V1",
- "checkpoint": "MEDIA-02 checkpoint 25 - CIN_017 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_017 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
- "baseSha": "f0859d0",
+ "baseSha": "abcf254",
  "sceneId": "CIN_017",
  "title": "Lõi và dòng triều",
  "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
  "status": "STORYBOARD",
- "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (BOSS_TIDE_SERPENT) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (BOSS_TIDE_SERPENT) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock. Checkpoint 32 (Goi 31 item 2) revises CIN_017_S02, CIN_017_S03; all other shots unchanged.",
  "keyframes": [
   {
    "shotId": "CIN_017_S01",
@@ -29,12 +29,12 @@
    "file": "keyframes_16x9/keyframe_CIN_017_S02.png",
    "width": 640,
    "height": 360,
-   "sha256": "6e747e26b83143627726feb3ed0b068f6338daca7bb3c4872e0bf3d40619aea1",
-   "sourceStagingFile": "media-generation-keyframe-cin-017-s02-0-b039a9e6-f429-4871-aa82-18ef498ef840.webp",
-   "sourceStagingSha256": "4240bc842bca03b2610024ea16c7dc8000e15ff51c49e598d3f4e3b70da4f405",
-   "sourceSnapshotId": "2eab799a-9a84-4a85-964f-4c4ac30af891:8p6il6",
-   "framing": "Night scene dominated by a bamboo-and-pipe machine whose central cage holds a patterned sphere, with three steep channels carrying rows of glowing orbs (cyan at left, violet down the center, amber at right); bamboo grove, stone steps and a tiled roof at the edges.",
-   "knownDefects": "MAJOR subject miss: neither the crystal core nor the serpent appears — the 'core supported by three pressure channels' is rendered as a mechanical bamboo pipe apparatus with three rows of glowing orbs in an above-water night setting instead of the teal memory plane; an invented robed man (arms crossed) stands at frame left although the pack character list contains only BOSS_TIDE_SERPENT. First item for the final-picture revision pass."
+   "sha256": "710c1941fb89b3b4ee01dd89bc1c070c22646000b0965272b26745865183a57d",
+   "sourceStagingFile": "media-generation-media-generation-keyframe-cin-0-173cd08f-ed9e-4ba5-bd2b-b65ad8edc1cf.webp",
+   "sourceStagingSha256": "667118daada8bd229c2a7364f236def98520f5995409f8914608dd6a276d2158",
+   "sourceSnapshotId": "e21d3ee4-a52e-4bf4-9f4f-c09c0a6286e0:omcg5k",
+   "framing": "Underwater teal scene: a glowing faceted white-blue crystal core at center, supported by three carved stone pressure channels (left arm, right arm and central column meeting at the core); a pale turquoise water serpent with diamond mirror scales coils around the core and the channels; bubbles and teal water plants at the edges.",
+   "knownDefects": "The three stone channels read as carved stone structures (culvert/stone bridge) more than distinct 'pressure channels'; the serpent's head/tail are not clearly distinguished; the serpent coils around the stone more than directly around the core (only one loop hugs the core); small light rays around the core. Serpent design remains a placeholder without a boss lock."
   },
   {
    "shotId": "CIN_017_S03",
@@ -42,16 +42,16 @@
    "file": "keyframes_16x9/keyframe_CIN_017_S03.png",
    "width": 640,
    "height": 360,
-   "sha256": "decd8051c206825e6b23d0aa97dc4b8c86ada2615246bcdc0a69748d5b3c3cf4",
-   "sourceStagingFile": "media-generation-keyframe-cin-017-s03-0-2ab2a1ca-c5ff-43ad-9fdd-dc57fee82389.webp",
-   "sourceStagingSha256": "77bc0437ddda0799a24ab4d2680726333158da0740c9ffb37587e7b96c428d43",
-   "sourceSnapshotId": "79389a28-0cbd-4f5f-bc05-c9ed160ab8d1:tpt254",
-   "framing": "Wide misty river gorge between bamboo-topped cliffs: the serpent's remembered silhouette reads as a dark S-curve shadow winding down the calm water toward the distance, exactly the receding-memory beat; broken bamboo gear and stones litter the near bank.",
-   "knownDefects": "An invented armed figure in conical hat and gold-patterned armor stands full-height at frame left although the pack character list contains only BOSS_TIDE_SERPENT and the shot is only the receding silhouette (he plausibly anticipates the off-screen diver captain whose line plays over this shot, but he is not in the prompt). The water also carries regular rows of pale dotted glints (minor patterning artifact). The silhouette itself matches the prompt."
+   "sha256": "fe4a603b1c5628baa5f375bc8d562e137872ef752df278116a1b631c70d6974e",
+   "sourceStagingFile": "media-generation-media-generation-keyframe-cin-0-3625b252-8da9-45ec-85aa-f2dffdd4d013.webp",
+   "sourceStagingSha256": "f3d1f1cd7211306b83191752b4a587d1b3851b3ec11abf0e38546c7485d858e7",
+   "sourceSnapshotId": "e4ca2305-2dda-4b9b-92da-fd9292936f44:ysgtmq",
+   "framing": "Misty river gorge in cold grey-blue tones: a dark S-curve serpent silhouette shadow runs down the middle of the river into the distance, dissolving into mist; bamboo-topped cliffs on both sides; broken bamboo pole, woven bamboo basket and stones in the left foreground.",
+   "knownDefects": "The serpent reads as a flat dark streak on the water rather than a submerged shadow with volume; the 'broken bamboo gear' reads as a woven fish trap basket + bamboo pole (plausible but vague); the palette carries less teal than S02. No person, no armed figure, no dotted glint rows on the water."
   }
  ],
  "notes": [
   "3 separate 16:9 keyframes, one per shot, 640x360 each.",
-  "Recorded keyframe defects: S02 is a major subject miss — neither the crystal core nor the serpent appears; the core on three pressure channels is rendered as a mechanical bamboo pipe apparatus with three rows of glowing orbs in an above-water night setting, and an invented robed man stands at frame left although the pack character list contains only BOSS_TIDE_SERPENT — and is the first item for the final-picture revision pass; S03 adds an invented armed figure at frame left (the shot is only the receding silhouette) and regular rows of pale dotted glints on the water; S01's serpent carries small white antlers the prompt does not mention. The serpent design is consistent where it appears (S01 body/head; S03 is a silhouette by design)."
+  "Checkpoint 32 (Goi 31 item 2) revises S02/S03: S02 now shows the white-blue crystal core supported by three stone pressure channels with the tide serpent coiled around it (no machine, no robed man); S03 is only the receding serpent silhouette (no armed figure, no dotted glints). S01 unchanged from checkpoint 25."
  ]
 }

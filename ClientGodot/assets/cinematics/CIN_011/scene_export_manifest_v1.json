@@ -1,9 +1,9 @@
 {
  "schemaVersion": 1,
- "checkpoint": "MEDIA-02 checkpoint 25 - CIN_011 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_011 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
- "baseSha": "f0859d0",
+ "baseSha": "abcf254",
  "sceneId": "CIN_011",
  "title": "Chữ khắc bị sửa",
  "durationSeconds": 18.0,
@@ -24,8 +24,8 @@
  "files": {
   "mp4": {
    "path": "assets/cinematics/CIN_011/CIN_011_640x360_30fps.mp4",
-   "sha256": "37984cfc9ac6ea28edcf9e2f8c28ff1a883df7b89173816eedf0af3fdd41daef",
-   "sizeBytes": 1327048,
+   "sha256": "e15a930c457db50739404119d63ca65abe28c35899345ee9bc23bae29905b049",
+   "sizeBytes": 1431348,
    "codec": "h264",
    "width": 640,
    "height": 360,
@@ -35,19 +35,19 @@
   },
   "ogv": {
    "path": "assets/cinematics/CIN_011/CIN_011_640x360_30fps.ogv",
-   "sha256": "45d3f748dd54a6e76f36a6aaa40f4c2d09b0830972f9ad026313856fe3e74943",
-   "sizeBytes": 493546,
+   "sha256": "b6d6c8a9e7d6d45c55287304c63a40a76230f5a5bbfa90dc43eed0ab9ecf0d95",
+   "sizeBytes": 491892,
    "codec": "theora",
    "width": 640,
    "height": 360,
    "fps": 30,
    "durationSeconds": 18.0,
-   "storedFrames": 451
+   "storedFrames": 486
   },
   "poster": {
    "path": "assets/cinematics/CIN_011/CIN_011_poster.png",
-   "sha256": "81d4d3c07ccd760a51e4562f8131823214cc3aba193c8663986f3c5168091543",
-   "sizeBytes": 367323,
+   "sha256": "5762cd1600830847ee2b2cae065d8eb4d007dd2db3f02263e1d0af3f6823c302",
+   "sizeBytes": 390493,
    "sourceKeyframe": "keyframe_CIN_011_S01.png"
   },
   "timing": {
@@ -65,12 +65,12 @@
  "frameCheck": {
   "CIN_011_S01": {
    "identitySeconds": 0.0,
-   "identityMeanAbsChannelDiff": 4.438,
+   "identityMeanAbsChannelDiff": 4.421,
    "identityMaxAllowed": 10.0,
    "motionSeconds": 5.9,
-   "motionMeanAbsChannelDiff": 29.706,
+   "motionMeanAbsChannelDiff": 32.751,
    "motionMinRequired": 1.5,
-   "continuousMotionMeanAbsChannelDiff": 24.419,
+   "continuousMotionMeanAbsChannelDiff": 28.233,
    "continuousMinRequired": 0.5
   },
   "CIN_011_S02": {
@@ -78,19 +78,19 @@
    "identityMeanAbsChannelDiff": 4.47,
    "identityMaxAllowed": 10.0,
    "motionSeconds": 11.9,
-   "motionMeanAbsChannelDiff": 42.843,
+   "motionMeanAbsChannelDiff": 42.859,
    "motionMinRequired": 1.5,
-   "continuousMotionMeanAbsChannelDiff": 39.134,
+   "continuousMotionMeanAbsChannelDiff": 39.179,
    "continuousMinRequired": 0.5
   },
   "CIN_011_S03": {
    "identitySeconds": 12.0,
-   "identityMeanAbsChannelDiff": 3.725,
+   "identityMeanAbsChannelDiff": 3.933,
    "identityMaxAllowed": 10.0,
    "motionSeconds": 17.9,
-   "motionMeanAbsChannelDiff": 41.235,
+   "motionMeanAbsChannelDiff": 35.422,
    "motionMinRequired": 1.5,
-   "continuousMotionMeanAbsChannelDiff": 34.621,
+   "continuousMotionMeanAbsChannelDiff": 29.237,
    "continuousMinRequired": 0.5
   }
  },
@@ -121,10 +121,10 @@
   }
  ],
  "notes": [
-  "Campaign animated take (Goi 30 item 7, checkpoint 25 batch): real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+  "Campaign revised take (Goi 31 item 2, checkpoint 32): shot-content fixes, real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
   "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
   "CIN_011 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
   "Scene SRT carries 1 cue (Ha Mac, CIN_011_S03 at 12.2-17.8 s — the widest campaign window, 5.6 s). Dialogue window status in the campaign manifest: PROPOSED_ANIMATIC_PLACEMENT, approved for DRAFT VO production only by the checkpoint-14 D1 decision. The checkpoint 17 VO draft for this cue measures 5.592 s at natural speed (windowFit FITS with only a 0.008 s margin, not sped up).",
-  "Recorded keyframe defects: an unnamed teal-robed woman who appears in no prompt sits in both S01 and S03, design-consistent between the two, which makes her read as a deliberate companion the pack never called for — first item for the final-picture revision pass; S01's relief is a single round disc rather than three joined fragments; S02's handoff direction is ambiguous and modern open-end wrenches hang in its tool rack; S03 is a medium two-shot instead of the detail close view and its relief is cracked stone, not S01's copper (material continuity break)."
+  "Checkpoint 32 (Goi 31 item 2) revises S01/S03: the unnamed teal-robed woman is removed; S01's relief is three joined copper fragments; S03 is a detail close view of the copper relief with Ha Mac alone. S02 unchanged from checkpoint 25."
  ]
 }

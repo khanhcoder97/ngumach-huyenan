@@ -1,14 +1,14 @@
 {
  "manifestId": "NGM_CIN011_KEYFRAMES_V1",
- "checkpoint": "MEDIA-02 checkpoint 25 - CIN_011 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_011 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
- "baseSha": "f0859d0",
+ "baseSha": "abcf254",
  "sceneId": "CIN_011",
  "title": "Chữ khắc bị sửa",
  "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
  "status": "STORYBOARD",
- "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_HA_MAC) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_HA_MAC) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock. Checkpoint 32 (Goi 31 item 2) revises CIN_011_S01, CIN_011_S03; all other shots unchanged.",
  "keyframes": [
   {
    "shotId": "CIN_011_S01",
@@ -16,12 +16,12 @@
    "file": "keyframes_16x9/keyframe_CIN_011_S01.png",
    "width": 640,
    "height": 360,
-   "sha256": "81d4d3c07ccd760a51e4562f8131823214cc3aba193c8663986f3c5168091543",
-   "sourceStagingFile": "media-generation-keyframe-cin-011-s01-0-c1f81384-2a58-4294-a091-fc0467e3d9b0.webp",
-   "sourceStagingSha256": "09a321c90fbfb29e3fc3fd19d2595f684d26f7310e4fe2fbde24a2227b744cc4",
-   "sourceSnapshotId": "8c537238-bd60-4f67-9edf-3454885eb236:b8zoho",
-   "framing": "Angled view over a workshop table: a large round copper relief disc with wave carving sits center, and a flat foreground panel carries a row of tally counting marks above a row of open-hand-and-droplet water-sharing symbols, with hand tools scattered around.",
-   "knownDefects": "The relief is a single round disc rather than three joined fragments, and the counting marks / hand-water symbols sit on a separate foreground slab instead of on the fragments; an unnamed teal-robed woman who appears in no prompt sits at frame right."
+   "sha256": "5762cd1600830847ee2b2cae065d8eb4d007dd2db3f02263e1d0af3f6823c302",
+   "sourceStagingFile": "media-generation-keyframe-cin-011-s01-0-901ffe9f-8ca7-4230-8f00-47d050696e84.webp",
+   "sourceStagingSha256": "e0216bd14e37e168d6ba4707efc547e8928970c0487682f9f303a453204e4a2f",
+   "sourceSnapshotId": "318e712b-ff20-49be-aca3-1156b9c5d443:wwtd03",
+   "framing": "Top-down view over a workshop table with no person in frame: three copper relief fragments joined by metal hinges lie at center, surrounded by hammer, chisel, pliers, brush and copper wire coils; open-hand and droplet water-sharing symbols sit beneath rows of tally counting marks.",
+   "knownDefects": "The copper fragments have jagged broken edges and heavy green verdigris; the lower-right fragment carries a small vertical crack so the fragment count could read as 4 if the crack is counted; tally marks appear as two rows on the left fragment instead of a single row. No woman, no second person."
   },
   {
    "shotId": "CIN_011_S02",
@@ -42,16 +42,16 @@
    "file": "keyframes_16x9/keyframe_CIN_011_S03.png",
    "width": 640,
    "height": 360,
-   "sha256": "316a94358172220a3c800dd80d2c00edc9891ebe7a2dfbed862be4d2c52c421a",
-   "sourceStagingFile": "media-generation-keyframe-cin-011-s03-0-e07c97e5-5fb8-4c5e-9a0d-01e980660e32.webp",
-   "sourceStagingSha256": "29e286eb0a5b27342847f831008e64b46333b89113b429d98e5101b94fa27237",
-   "sourceSnapshotId": "41ad93b5-d689-4705-8471-10bee6b84d1f:06p43u",
-   "framing": "A medium two-shot in a ruined courtyard: a topknotted man in an olive tunic (Ha Mac) sits at left holding a brush over an open gridded notebook, a teal-robed woman sits beside him, and a large cracked stone relief wall with geometric carvings fills the background.",
-   "knownDefects": "Framing is a medium two-shot instead of the detail close view of relief and brush; the relief is cracked stone in the background, not the copper relief of S01 (material continuity break), and the brush hovers over the notebook rather than over the chisel scars; the same unnamed teal-robed woman from S01 — in no prompt — sits smiling beside Ha Mac."
+   "sha256": "6f167581ede016058f2d44fd7ac39000f290ed9f088e6a1eaab30454167a676a",
+   "sourceStagingFile": "media-generation-keyframe-cin-011-s03-0-4999b3ba-582e-450c-8bcd-f7e7c83f7d4e.webp",
+   "sourceStagingSha256": "08c0a4fa7aab0ae1e8900623fb169275ba2f3a63a35411f1696a5a0e4d018a03",
+   "sourceSnapshotId": "bc5cdec1-185a-408b-abcc-45888bcd58c8:sojgl4",
+   "framing": "Detail close-up: Ha Mac leans in close, brush in hand stopped over the diagonal chisel scars of a copper relief (mountains/waves/clouds); his open notebook sits at the lower-left with the right page left blank. Ha Mac alone in frame.",
+   "knownDefects": "The S03 relief is a single framed rectangular copper plate, a different form from S01's three loose joined fragments (relief-form continuity not yet matched); the notebook's left page carries a few abstract teal scribbles (illegible); Ha Mac's face/costume remain generation-invented placeholders without a character lock."
   }
  ],
  "notes": [
   "3 separate 16:9 keyframes, one per shot, 640x360 each.",
-  "Recorded keyframe defects: an unnamed teal-robed woman who appears in no prompt sits in both S01 and S03, design-consistent between the two, which makes her read as a deliberate companion the pack never called for — first item for the final-picture revision pass; S01's relief is a single round disc rather than three joined fragments; S02's handoff direction is ambiguous and modern open-end wrenches hang in its tool rack; S03 is a medium two-shot instead of the detail close view and its relief is cracked stone, not S01's copper (material continuity break)."
+  "Checkpoint 32 (Goi 31 item 2) revises S01/S03: the unnamed teal-robed woman is removed; S01's relief is three joined copper fragments; S03 is a detail close view of the copper relief with Ha Mac alone. S02 unchanged from checkpoint 25."
  ]
 }

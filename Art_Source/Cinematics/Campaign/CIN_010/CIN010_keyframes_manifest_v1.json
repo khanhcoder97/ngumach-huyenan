@@ -1,14 +1,14 @@
 {
  "manifestId": "NGM_CIN010_KEYFRAMES_V1",
- "checkpoint": "MEDIA-02 checkpoint 25 - CIN_010 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_010 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
- "baseSha": "f0859d0",
+ "baseSha": "abcf254",
  "sceneId": "CIN_010",
  "title": "Bình nước cuối xe",
  "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
  "status": "STORYBOARD",
- "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_SAM_CHU_QUY) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_SAM_CHU_QUY) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock. Checkpoint 32 (Goi 31 item 2) revises CIN_010_S02, CIN_010_S03; all other shots unchanged.",
  "keyframes": [
   {
    "shotId": "CIN_010_S01",
@@ -29,12 +29,12 @@
    "file": "keyframes_16x9/keyframe_CIN_010_S02.png",
    "width": 640,
    "height": 360,
-   "sha256": "318ffd4e508c4f4f2fbe7dd34f8d082613acd2c2f92fc80bfa10af9b3ca39389",
-   "sourceStagingFile": "media-generation-keyframe-cin-010-s02-0-3ecb1429-804e-4065-aa7a-5e429c4efc4e.webp",
-   "sourceStagingSha256": "80a1ac4b267aaec0fcd0a13487b25014e9d94a4755698637399825a7d77953f5",
-   "sourceSnapshotId": "5640da35-1af5-4782-8523-226e238a4dec:c6aedm",
-   "framing": "Medium shot in a green bamboo grove: a young man in a blue tunic kneels and pours a thin stream from a small clay flask into a large carved stone communal bowl beside a mossy stone wall and small tiled shrine.",
-   "knownDefects": "Setting contradicts the scene — lush bamboo forest and shrine instead of the ash-gold desert caravan rest of S01, so the water-scarcity context is lost; the figure is a slim young man, not the stocky middle-aged merchant Sam is described as (he recurs identically in S03, so S02/S03 agree with each other but not with the character brief); the communal vessel is a stone basin, not the caravan barrel. The pour itself is modest and glow-free, as prompted."
+   "sha256": "b89f28480c08c4f16c98aee123b01a12be343f84c3a4f3b2d4dbdb891503c213",
+   "sourceStagingFile": "media-generation-keyframe-cin-010-s02-0-6f665082-ad87-4590-b318-debf366cdb11.webp",
+   "sourceStagingSha256": "c69ee04b82fa824dbb4f2d00a553c1066dd5cd98d5a5d5478c757b94d86907cc",
+   "sourceSnapshotId": "befb972e-4b4c-495c-a33d-2126df8a8992:7ils7p",
+   "framing": "Stocky middle-aged Sam Chu Quy (beard, headcloth, blue tunic + dark vest) stands at center pouring a thin stream from his personal clay flask into a large lidded wooden communal water barrel (lid leaning open beside it). Background: ash-gold dunes, rock mesas, a tattered cloth canopy at frame right, a wooden cart with sacks, sacks and clay jars at frame left.",
+   "knownDefects": "The barrel lid is drawn leaning open rather than shut; the water stream reads bright blue against the muted palette; pixel detail is finer than strict hard-edged clusters. No legible text, no HUD. Environment now matches S01's ash-gold desert caravan rest."
   },
   {
    "shotId": "CIN_010_S03",
@@ -42,16 +42,16 @@
    "file": "keyframes_16x9/keyframe_CIN_010_S03.png",
    "width": 640,
    "height": 360,
-   "sha256": "856aa420940e2a1b98339cd86a51f9742d52c8976f2ce9ecbe9d0f85869da462",
-   "sourceStagingFile": "media-generation-keyframe-cin-010-s03-0-083ccaf8-502c-439d-b40b-d26157be4728.webp",
-   "sourceStagingSha256": "ec74cad96b0b9d2be3cdfd5ce28e903660867d047d6e1866591a82b1f824a0e9",
-   "sourceSnapshotId": "1ea8323f-2d15-4df4-9b7c-b86e513addf8:m1vbfm",
-   "framing": "Medium shot on rocky scrub ground: the young man in the blue tunic crouches beside a large blank map cloth weighted with stones, two dark route cords laid across it — one crossing a pile of jagged stones, the other curving toward the shaded side — as he sets down a small bottle and points at the routes.",
-   "knownDefects": "Ground is green-tinged rocky scrub rather than S01's ash-gold desert (cross-shot environment drift, though closer than S02); the figure is the same slim young man as S02, not a stocky middle-aged merchant; he holds a small glass bottle rather than visibly replacing the clay flask. No readable map text, as required."
+   "sha256": "d998bf59e9980bf031fe51282d87c432debf2c1ee5bf84bdb610164dd7fbfa71",
+   "sourceStagingFile": "media-generation-keyframe-cin-010-s03-0-117687d2-3fa4-472a-aafa-4957abaa7221.webp",
+   "sourceStagingSha256": "33a34e5aec4a14e5ab60a49b20d6ff59fe60686bb249243c32c1041f6447c73c",
+   "sourceSnapshotId": "43c28f54-11a7-4f8b-b80b-0a47e26b22ed:cm6kzf",
+   "framing": "Stocky middle-aged Sam Chu Quy (grey beard, wrapped headcloth) crouches to set a small clay flask on the edge of a large blank map cloth spread on the sand and weighted with stones at the corners; two route cords lie across the cloth, one shorter cord passing jagged stones, the other curving toward scattered shade. Background: ash-gold dunes, rock mesas, wooden cart and sacks under a tattered canopy.",
+   "knownDefects": "Sam's costume differs from S02 (brown woven vest + wrapped headcloth vs blue tunic + headband in S02) -- costume continuity between the two revised shots is not fully matched; the second cord curves toward a shaded area on the cloth so 'scattered shade' reads loosely; the flask sits ON the cloth edge rather than beside it; faint map-like lines on the cloth (no legible text). Face/costume remain placeholders without a character lock."
   }
  ],
  "notes": [
   "3 separate 16:9 keyframes, one per shot, 640x360 each.",
-  "Recorded keyframe defects: environment continuity collapses after S01 (ash-gold desert -> lush bamboo grove in S02 -> green-tinged rocky scrub in S03), so the water-scarcity context is lost in S02; Sam's placeholder rendering (slim young man in a blue tunic, consistent between S02 and S03) does not match his stocky middle-aged merchant brief; S01's barrel reads as an open vat rather than a lidded barrel. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+  "Checkpoint 32 (Goi 31 item 2) revises S02/S03: environment continuity restored to the ash-gold desert caravan rest of S01; Sam Chu Quy is now a stocky middle-aged merchant; the communal vessel is the lidded barrel and the flask is clay. S01 unchanged from checkpoint 25."
  ]
 }

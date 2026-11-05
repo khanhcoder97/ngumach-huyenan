@@ -1,14 +1,14 @@
 {
  "manifestId": "NGM_CIN009_KEYFRAMES_V1",
- "checkpoint": "MEDIA-02 checkpoint 23 - CIN_009 animated take (Goi 30 item 7): 3 storyboard keyframes + 18 s Ken Burns clip; first Chapter 2 campaign scene with video",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_009 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
- "baseSha": "f0859d0",
+ "baseSha": "abcf254",
  "sceneId": "CIN_009",
  "title": "Tiếng rừng được đáp",
  "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
  "status": "STORYBOARD",
- "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. CIN_009 has an empty pack character list, so no named character lock blocks these pictures; the three workers in S02 are unnamed generation-invented figures, not canon designs.",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. CIN_009 has an empty pack character list, so no named character lock blocks these pictures; the three workers in S02 are unnamed generation-invented figures, not canon designs. Checkpoint 32 (Goi 31 item 2) revises CIN_009_S01; all other shots unchanged.",
  "keyframes": [
   {
    "shotId": "CIN_009_S01",
@@ -16,12 +16,12 @@
    "file": "keyframes_16x9/keyframe_CIN_009_S01.png",
    "width": 640,
    "height": 360,
-   "sha256": "d38c7ad8e4ef7c667494f57b5fc51a70c647f19b94d6b3b6f87c0c02e9b9cd07",
-   "sourceStagingFile": "media-generation-keyframe-cin-009-s01-0-43e76bbc-1ea1-4712-aafd-f83489f26d5d.webp",
-   "sourceStagingSha256": "9fbc26675694de55b29696656a9a0222ddb3b1bb49ec6d6d361491841af42e13",
-   "sourceSnapshotId": "d9681288-24e6-493a-ac04-025f4f80ba45:wxlyb1",
-   "framing": "Detail shot of a freed spring flowing between split tree roots: turquoise water with small light flecks drifting along it, mossy roots framing both sides, bamboo and lotus at the edges.",
-   "knownDefects": "An invented small white hooded figure (unnamed, not in the prompt) stands at lower left by the spring; the scene reads darker/bluer than a daylight payoff; light flecks are square glows."
+   "sha256": "5d64d3e203105788591923c9e416e50f876e3ec4e8896ac602ca3212b29080d7",
+   "sourceStagingFile": "media-generation-s01-original-vietnamese-inspir-0-fe4280cc-174f-44c9-9331-8a7533af89c7.webp",
+   "sourceStagingSha256": "2b80ea8d5599a73c7a11b30f38132c648a0210370fa0b3f9e8d6c6ad7374597d",
+   "sourceSnapshotId": "c28b0c75-8646-4428-a4d9-817f01c84f2b:jxe5wt",
+   "framing": "A teal spring flows down the middle of the frame between two large moss-covered split root banks left and right; small stones in the stream bed; small warm light flecks detach from bark and drift along the water; bamboo, ferns and bright green canopy behind.",
+   "knownDefects": "The composition reads as a wide stream channel between two root banks rather than a single narrow split-root cleft; light flecks are still small square glows; some background bushes and stones are generic generation detail. No person, no hooded figure, no mascot; bright daylight."
   },
   {
    "shotId": "CIN_009_S02",
@@ -52,7 +52,6 @@
  ],
  "notes": [
   "3 separate 16:9 keyframes, one per shot, 640x360 each.",
-  "No named character appears: the pack character list is empty. The S02 workers are unnamed generation-invented figures from the prompt's own wording (\"workers hear familiar distant voices\"), storyboard placeholders only.",
-  "S01 carries an invented white hooded figure (unnamed, not in the prompt) and reads darker/bluer than a daylight payoff; S03 is not strictly top-down and adds a shrine not in the prompt. All defects are recorded per shot and are first items for the final-picture revision pass."
+  "Checkpoint 32 (Goi 31 item 2) revises S01: the invented white hooded figure is removed; the spring reads as a bright daylight payoff. S02/S03 unchanged from checkpoint 23."
  ]
 }

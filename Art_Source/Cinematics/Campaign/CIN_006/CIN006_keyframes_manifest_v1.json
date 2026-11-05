@@ -1,14 +1,14 @@
 {
  "manifestId": "NGM_CIN006_KEYFRAMES_V1",
- "checkpoint": "MEDIA-02 checkpoint 22 - CIN_006 animated take (Goi 30 item 7): CIN_006 storyboard panels + 18 s Ken Burns clip; scene leaves PENDING_PANELS_NO_STORYBOARD",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_006 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
- "baseSha": "f0859d0",
+ "baseSha": "abcf254",
  "sceneId": "CIN_006",
  "title": "Con dấu qua phố",
  "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
  "status": "STORYBOARD",
- "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. CIN_006 names NPC_HA_MAC and NPC_SAM_CHU_QUY but no approved character lock exists for either, so their faces and costumes here are placeholders; per DEC-MEDIA-P0 Q4 they are cinematic-only staging and these frames create no persistent design canon.",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. CIN_006 names NPC_HA_MAC and NPC_SAM_CHU_QUY but no approved character lock exists for either, so their faces and costumes here are placeholders; per DEC-MEDIA-P0 Q4 they are cinematic-only staging and these frames create no persistent design canon. Checkpoint 32 (Goi 31 item 2) revises CIN_006_S02; all other shots unchanged.",
  "keyframes": [
   {
    "shotId": "CIN_006_S01",
@@ -29,12 +29,12 @@
    "file": "keyframes_16x9/keyframe_CIN_006_S02.png",
    "width": 640,
    "height": 360,
-   "sha256": "0f8c4f103f8aafdf47887f3a76778ce22eaafcedf5f79a49a03b8d7ba4bdd5a9",
-   "sourceStagingFile": "media-generation-keyframe-cin-006-s02-0-60b221c7-b431-4c08-a187-902069a5d535.webp",
-   "sourceStagingSha256": "07bae84e388bee35be3cbd59f8ca343698c60817117ca4463116e822827664c3",
-   "sourceSnapshotId": "88a7637a-a4d2-4f58-a570-0cf96209ce35:1i67qk",
-   "framing": "Detail close-up on a work table: brass hand stamp standing at frame left, large round brass seal die at center being aligned by a gloved hand, green resin spread across rough paper sheets.",
-   "knownDefects": "Composition defect: an oversized blurred gloved hand and a pale featureless face-like shape with a single black eye intrude from frame right and dominate the shot; the green resin reads as a crystalline splash on the paper rather than a fiber trapped inside it. First item for the final-picture revision pass."
+   "sha256": "ef1a9a09e83d2e7d5d2757dc6755c98a554c7e7c9cd31c88f3e757382f250ac0",
+   "sourceStagingFile": "media-generation-keyframe-cin-006-s02-retry3-0-36425724-194b-4e43-a3ab-85836d8da787.webp",
+   "sourceStagingSha256": "ac435918dd6bc0e746366a1106847791da41fc21af4b02e82b42adb2f71568c2",
+   "sourceSnapshotId": "20bc59c1-e49a-459a-b0ae-3ce4704945c6:xzm2zu",
+   "framing": "Whole work table seen from slightly above: a brass hand stamp stands on a stack of rough paper sheets at center, thin green resin fibers visible between the paper layers, and one small green-gloved hand at the lower-right corner holding the paper edge, fully inside the frame.",
+   "knownDefects": "The gloved hand holds the paper edge rather than aligning the stamp directly; the composition is wider than a strict close-up (per the repair direction); the glove is dark green. No oversized/blurred hand, no face or eye, no second person, no legible text. Staging attempts 1-2 (oversized hand) superseded, kept in staging only."
   },
   {
    "shotId": "CIN_006_S03",
@@ -52,7 +52,6 @@
  ],
  "notes": [
   "3 separate 16:9 keyframes, one per shot, 640x360 each.",
-  "Named characters appear WITHOUT an approved character lock: faces/costumes are generation-invented from the pack prompt descriptions, storyboard placeholders only (direction doc: create storyboard first, do not guess final design).",
-  "S02 has a composition defect (oversized blurred glove + pale face-like shape at frame right) and the three shots drift in lighting (warm night / workshop / cool daylight); both are recorded per shot and are first items for the final-picture revision pass."
+  "Checkpoint 32 (Goi 31 item 2) revises S02: the oversized blurred gloved hand and pale face-like intrusion from frame right are removed; the green resin now reads as a fiber trapped inside the rough paper. S01/S03 unchanged from checkpoint 22."
  ]
 }

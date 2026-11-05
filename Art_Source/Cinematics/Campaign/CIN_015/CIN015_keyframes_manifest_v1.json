@@ -1,14 +1,14 @@
 {
  "manifestId": "NGM_CIN015_KEYFRAMES_V1",
- "checkpoint": "MEDIA-02 checkpoint 25 - CIN_015 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_015 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
- "baseSha": "f0859d0",
+ "baseSha": "abcf254",
  "sceneId": "CIN_015",
  "title": "Thành phố dưới nước",
  "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
  "status": "STORYBOARD",
- "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_DIVER_LEAD) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_DIVER_LEAD) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock. Checkpoint 32 (Goi 31 item 2) revises CIN_015_S01, CIN_015_S02, CIN_015_S03; all other shots unchanged.",
  "keyframes": [
   {
    "shotId": "CIN_015_S01",
@@ -16,12 +16,12 @@
    "file": "keyframes_16x9/keyframe_CIN_015_S01.png",
    "width": 640,
    "height": 360,
-   "sha256": "6dd170f8d6f336fcbf888a7896a74417b7532844ac6ed204154f8086b94abe30",
-   "sourceStagingFile": "media-generation-keyframe-cin-015-s01-0-6b8a84c9-3061-4b25-99bc-d0cd2c47ed37.webp",
-   "sourceStagingSha256": "0e51519c81e8195c0c4615c100060bf1a98167836a552553e8711b6dab34fbc4",
-   "sourceSnapshotId": "5891248a-1c30-4da8-898a-9ebaee43b0df:6i5d26",
-   "framing": "Wide isometric view of a drowned city district under deep teal water: collapsed red-tile roofs, broken stone arches and empty window frames, columns of bubbles rising past the ruins, small fish drifting at the edges.",
-   "knownDefects": "An unscripted figure stands upright on a ruin wall at lower right (conical hat, dark robe, holding a lit lantern): the S01 prompt names no character, and the dry-land standing pose breaks the underwater staging. Bubble columns are dense and bright, heavier than the prompt's restrained pixel clusters."
+   "sha256": "6b067babad5b0adba570a85129cef0768f14098ecd56ef44a9b93dcf20034b29",
+   "sourceStagingFile": "media-generation-keyframe-cin-015-s01-0-59f70a7d-81bd-453f-98b6-66f04737fe03.webp",
+   "sourceStagingSha256": "6acb536d0bfbde3bb8e351e4cd466ae6788b8b51a2e1f0147e21ed266e4ba981",
+   "sourceSnapshotId": "39ba2065-65c6-44cd-9544-3008a0c95d4c:0ak5h8",
+   "framing": "Drowned ruins under deep teal water across the whole frame: moss-covered collapsed red-tile roofs, broken stone arches, empty window frames, a fallen stone column, small fish at the edges, small bubble clusters rising.",
+   "knownDefects": "Bubble columns still run slightly dense and long vertically, a little heavier than the prompt's 'restrained'; a few roof fragments read fairly intact rather than collapsed. No person, no figure, no lantern-holder."
   },
   {
    "shotId": "CIN_015_S02",
@@ -29,12 +29,12 @@
    "file": "keyframes_16x9/keyframe_CIN_015_S02.png",
    "width": 640,
    "height": 360,
-   "sha256": "fc4e92eb71410d49ab994e9d6d83b258981ed745f96ebfd240d2127c7a831c34",
-   "sourceStagingFile": "media-generation-keyframe-cin-015-s02-0-74871b78-db1d-43d9-a278-bd03f9bff1db.webp",
-   "sourceStagingSha256": "e297019de5319e91d523fed6fd19418658112969736f7b352b35b07cfb6d3a0e",
-   "sourceSnapshotId": "6b3493f5-10f9-4bbe-97c8-698eb388a35e:zjgszz",
-   "framing": "A stone table in a courtyard with a clay pot lashed to it by rope, clotheslines with laundry and herbs strung overhead toward a doorway where an oversized gloved hand reaches in, and a large pale mascot-like figure standing at frame left.",
-   "knownDefects": "Setting failure: the frame is a dry above-water courtyard in grey daylight, not the drowned underwater ruin of the prompt (no teal water, no submersion cues). A large pale cream mascot-like figure with a round smiling face stands at frame left — an invented character absent from the prompt. The tied vessel is a clay pot, not a dining bowl; the diver's hand is oversized and disembodied, and its buckled wrist strap reads modern against the no-modern-equipment rule. The clothesline reads as ordinary laundry in a living courtyard rather than an underwater guide line. First item for the final-picture revision pass."
+   "sha256": "11847adf7efeb5dc44af008e7a5f3e9f84c191772c376e8dd8d03603d4edc4f7",
+   "sourceStagingFile": "media-generation-keyframe-cin-015-s02-0-19c1f53e-f5d9-4dc1-971d-0d634ee20564.webp",
+   "sourceStagingSha256": "50ceab668b24cbd1123b6237634407c01e865f1096d6b0833c1b6dca8874ca4a",
+   "sourceSnapshotId": "94eaa51e-0201-429f-84dc-d171e704680c:by7gfx",
+   "framing": "Fully underwater, deep teal across the whole frame: a moss-covered submerged stone table with a white-blue ceramic DINING BOWL tied to it with old cord; a guide rope runs taut from the table to a dark stone arch doorway at frame right; a bare diver's hand grips the rope at the right edge; small bubble clusters.",
+   "knownDefects": "The diver's hand/forearm in the foreground is fairly large and cropped at the right edge (close-up angle; it still reads slightly oversized although the strap and glove are gone); the bowl pattern reads more Greek-key than Vietnamese; the rope winds around the table base in a slightly tangled way. No mascot, no clay pot, no laundry, no dry courtyard."
   },
   {
    "shotId": "CIN_015_S03",
@@ -42,16 +42,16 @@
    "file": "keyframes_16x9/keyframe_CIN_015_S03.png",
    "width": 640,
    "height": 360,
-   "sha256": "eb8af0fdc0fcce9899a672c5035212728397aebc9c9dd6388fc1ebf036f361f1",
-   "sourceStagingFile": "media-generation-keyframe-cin-015-s03-0-6837532c-ebc3-4564-b959-489b3a5d98a4.webp",
-   "sourceStagingSha256": "1ea970291f62c7a0b970fd8af0bd86dfb9cba4bb1140bef5431d0a62ae3f7a41",
-   "sourceSnapshotId": "8643fdf0-0291-4b3d-b510-221531413d59:1wrv7i",
-   "framing": "Strict top-down view of a stone ruin corridor: three brass pressure-station motifs in a row at the far end, a warm lamp glowing on the left wall marking the route, and a small conical-hat figure at the near entrance aligned to the gameplay plane.",
-   "knownDefects": "Underwater read is weak: no water tint, bubbles or submersion cues, so the corridor reads as a dry interior ruin and its slate-purple palette drifts from S01's deep teal. Otherwise on-prompt (three station motifs, warm route lamp, gameplay-plane alignment all present)."
+   "sha256": "e7db810dc5c1c7fcac1b47d69926467f905ee1830748df1c472c52fc05fb52b7",
+   "sourceStagingFile": "media-generation-keyframe-cin-015-s03-0-c0ce565d-aac3-4425-8402-8a5536664677.webp",
+   "sourceStagingSha256": "976204679b98e6936c408b664d8d575687db68a6ca2cc81cbd079ed09a280125",
+   "sourceSnapshotId": "69ab2f31-7b60-4f40-808a-8012b33dcd09:91edpw",
+   "framing": "Submerged stone ruin corridor seen from above, deep teal water tint across the whole frame: three brass pressure-station motifs in a row at the far end (top), a warm lamp glowing on the left wall marking the route, a small conical-hat diver at the near entrance (bottom center) aligned to the gameplay plane, small bubble clusters throughout the corridor.",
+   "knownDefects": "The view carries a slight tilt/perspective rather than a strict top-down; the three brass motifs read slightly like machinery valves/pipes; the diver is very small and seen only from behind (placeholder, awaiting character lock)."
   }
  ],
  "notes": [
   "3 separate 16:9 keyframes, one per shot, 640x360 each.",
-  "Recorded keyframe defects: S02 is a setting failure — a dry above-water courtyard in grey daylight instead of the drowned underwater ruin, with a large pale mascot-like figure invented at frame left, a clay pot instead of the dining bowl, an oversized disembodied diver hand with a modern buckled strap, and a clothesline reading as ordinary laundry — and is the first item for the final-picture revision pass; S01 adds an unscripted dry-standing figure with a lit lantern and overly dense bubble columns; S03's underwater read is weak (no water tint or bubbles; slate-purple palette drifts from S01's deep teal), though its three station motifs, warm route lamp and gameplay-plane alignment are on-prompt."
+  "Checkpoint 32 (Goi 31 item 2) revises S01/S02/S03: S02 is now a fully submerged drowned ruin (dining bowl tied to a stone table, guide rope, bare diver hand, no mascot, no clay pot); S01 has no unscripted figure and restrained bubbles; S03 reads underwater with deep teal tint and bubbles."
  ]
 }

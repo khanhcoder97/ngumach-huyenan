@@ -1,9 +1,9 @@
 {
  "schemaVersion": 1,
- "checkpoint": "MEDIA-02 checkpoint 25 - CIN_017 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_017 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
- "baseSha": "f0859d0",
+ "baseSha": "abcf254",
  "sceneId": "CIN_017",
  "title": "Lõi và dòng triều",
  "durationSeconds": 18.0,
@@ -24,8 +24,8 @@
  "files": {
   "mp4": {
    "path": "assets/cinematics/CIN_017/CIN_017_640x360_30fps.mp4",
-   "sha256": "f29928e4c5d1236d9471d73cb32f2a2515bfe6723d5ed2c562c5f02ee7736dd2",
-   "sizeBytes": 1284453,
+   "sha256": "001ee554a9f9d19c246d0d0a1fab11479098a5af4348c0fc497a2a8804ecf8e7",
+   "sizeBytes": 1220752,
    "codec": "h264",
    "width": 640,
    "height": 360,
@@ -35,8 +35,8 @@
   },
   "ogv": {
    "path": "assets/cinematics/CIN_017/CIN_017_640x360_30fps.ogv",
-   "sha256": "aa8674c8913bdc741743b1da34c2f50368468bfc5b778093899dae2daa71c35b",
-   "sizeBytes": 459560,
+   "sha256": "3278b2626e2df9eed2f8d8270fe59b6ec7bb9182b1184f8d9a102b659b8a74ef",
+   "sizeBytes": 460245,
    "codec": "theora",
    "width": 640,
    "height": 360,
@@ -68,29 +68,29 @@
    "identityMeanAbsChannelDiff": 4.871,
    "identityMaxAllowed": 10.0,
    "motionSeconds": 5.9,
-   "motionMeanAbsChannelDiff": 32.009,
+   "motionMeanAbsChannelDiff": 32.018,
    "motionMinRequired": 1.5,
-   "continuousMotionMeanAbsChannelDiff": 25.806,
+   "continuousMotionMeanAbsChannelDiff": 25.826,
    "continuousMinRequired": 0.5
   },
   "CIN_017_S02": {
    "identitySeconds": 6.0,
-   "identityMeanAbsChannelDiff": 3.663,
+   "identityMeanAbsChannelDiff": 3.932,
    "identityMaxAllowed": 10.0,
    "motionSeconds": 11.9,
-   "motionMeanAbsChannelDiff": 31.261,
+   "motionMeanAbsChannelDiff": 36.053,
    "motionMinRequired": 1.5,
-   "continuousMotionMeanAbsChannelDiff": 26.825,
+   "continuousMotionMeanAbsChannelDiff": 25.891,
    "continuousMinRequired": 0.5
   },
   "CIN_017_S03": {
    "identitySeconds": 12.0,
-   "identityMeanAbsChannelDiff": 3.183,
+   "identityMeanAbsChannelDiff": 2.452,
    "identityMaxAllowed": 10.0,
    "motionSeconds": 17.9,
-   "motionMeanAbsChannelDiff": 22.734,
+   "motionMeanAbsChannelDiff": 14.69,
    "motionMinRequired": 1.5,
-   "continuousMotionMeanAbsChannelDiff": 19.372,
+   "continuousMotionMeanAbsChannelDiff": 12.797,
    "continuousMinRequired": 0.5
   }
  },
@@ -121,10 +121,10 @@
   }
  ],
  "notes": [
-  "Campaign animated take (Goi 30 item 7, checkpoint 25 batch): real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+  "Campaign revised take (Goi 31 item 2, checkpoint 32): shot-content fixes, real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
   "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
   "CIN_017 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
   "Scene SRT carries 1 cue (the diver captain, voice over CIN_017_S03 at 12.5-17.5 s). Dialogue window status in the campaign manifest: PROPOSED_ANIMATIC_PLACEMENT, approved for DRAFT VO production only by the checkpoint-14 D1 decision. The checkpoint 17 VO draft for this cue measures 3.168 s at natural speed (windowFit FITS, not sped up).",
-  "Recorded keyframe defects: S02 is a major subject miss — neither the crystal core nor the serpent appears; the core on three pressure channels is rendered as a mechanical bamboo pipe apparatus with three rows of glowing orbs in an above-water night setting, and an invented robed man stands at frame left although the pack character list contains only BOSS_TIDE_SERPENT — and is the first item for the final-picture revision pass; S03 adds an invented armed figure at frame left (the shot is only the receding silhouette) and regular rows of pale dotted glints on the water; S01's serpent carries small white antlers the prompt does not mention. The serpent design is consistent where it appears (S01 body/head; S03 is a silhouette by design)."
+  "Checkpoint 32 (Goi 31 item 2) revises S02/S03: S02 now shows the white-blue crystal core supported by three stone pressure channels with the tide serpent coiled around it (no machine, no robed man); S03 is only the receding serpent silhouette (no armed figure, no dotted glints). S01 unchanged from checkpoint 25."
  ]
 }

@@ -1,14 +1,14 @@
 {
  "manifestId": "NGM_CIN012_KEYFRAMES_V1",
- "checkpoint": "MEDIA-02 checkpoint 25 - CIN_012 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_012 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
- "baseSha": "f0859d0",
+ "baseSha": "abcf254",
  "sceneId": "CIN_012",
  "title": "Giữ tên người sống",
  "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
  "status": "STORYBOARD",
- "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_HA_MAC) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_HA_MAC) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock. Checkpoint 32 (Goi 31 item 2) revises CIN_012_S01, CIN_012_S03; all other shots unchanged.",
  "keyframes": [
   {
    "shotId": "CIN_012_S01",
@@ -16,12 +16,12 @@
    "file": "keyframes_16x9/keyframe_CIN_012_S01.png",
    "width": 640,
    "height": 360,
-   "sha256": "8c2efbd483159254395fd7d6b76e86ed8b59bda510043ff9ac696c4160fef60a",
-   "sourceStagingFile": "media-generation-keyframe-cin-012-s01-0-13fcca93-ea9b-4977-83e1-3f9bbf30dcdf.webp",
-   "sourceStagingSha256": "26ccba35b83cf5652567f50aa5fe1fd93b4871e29ed9dc6106fe13702a20e9b8",
-   "sourceSnapshotId": "075ef9db-ad43-4745-aa7b-927bb21f1d8d:ablhxj",
-   "framing": "Two workers sit on a wooden platform before a large stone furnace with glowing embers, their removed dust masks lying on the planks beside them, coal baskets and workshop clutter around the yard.",
-   "knownDefects": "A large white hooded mascot-like figure with a smiling face and pink cheeks sits at frame left — not in the prompt and not a worker (same intrusion failure mode as CIN_006_S02 and CIN_015_S02). Overall palette reads dark blue dusk rather than the prompt's stepped orange heat palette (orange appears only in the ember glow), and the framing is closer to medium than the wide shot the camera specifies."
+   "sha256": "489eb56b85cd3480628ae8ab0265b69086df0bcb562d8ff4e15f98bfd8982cb2",
+   "sourceStagingFile": "media-generation-keyframe-cin-012-s01-0-b55063cb-5cce-4cf7-8b13-4ac9ac0655da.webp",
+   "sourceStagingSha256": "90426e1d6dd3fe617bbdc3a89beecb69faa3d5ddb8ab7ad52805f763b828df7b",
+   "sourceSnapshotId": "bc176ef2-9f79-45fe-8087-6927974b5c7f:ljumwi",
+   "framing": "Wide shot of a large stone furnace at center; two workers sit on the wooden platform before it facing the furnace, removed dust masks lying on the planks; charcoal, bamboo baskets and smithing tools at both sides; warm orange light covers the whole scene.",
+   "knownDefects": "Composition differs from the old frame (furnace centered, workers seated lower); the right worker wears a ponytail and the left worker no longer wears a conical hat -- staging detail, no prompt violation. No mascot, exactly two workers, stepped orange heat palette."
   },
   {
    "shotId": "CIN_012_S02",
@@ -42,16 +42,16 @@
    "file": "keyframes_16x9/keyframe_CIN_012_S03.png",
    "width": 640,
    "height": 360,
-   "sha256": "39ba784c33b1ea758b0018b4bdfdbf17f3f5d960cddfb50d94fc2fb66706d60e",
-   "sourceStagingFile": "media-generation-keyframe-cin-012-s03-0-27904e96-51c9-4f62-8fbc-931af41d0fbe.webp",
-   "sourceStagingSha256": "8c6054e9c63548aadc7380f4b79b0c4d76854f90f4b692e6ba391a39c1e8a4cd",
-   "sourceSnapshotId": "2db70f2b-0e5b-49df-bca9-119cce1580e9:mze9z2",
-   "framing": "Ha Mac stands behind a table bearing two equally lit blank papers, both hands withdrawn to the table edge, gazing offscreen right in a lantern-lit hall with mountains visible through the window.",
-   "knownDefects": "MAJOR: a baked-in game choice UI bar spans the bottom of the frame with two legible English buttons ('WAIT IN SILENCE' / 'OFFER THE PAPERS') — the prompt requires the frame to stay clean for the choice overlay the game adds later, and forbids HUD and readable generated writing; the bar also eats the composition's lower area. Costume also drifts from S02 (layered teal robe, blue hair ribbon). This shot is the first item for the final-picture revision pass."
+   "sha256": "848370053c2f6768a1f13597db84fea6e3ed27c4a3f14dcd423f012d552230a0",
+   "sourceStagingFile": "media-generation-keyframe-cin-012-s03-0-fd71e60f-5995-4941-8cc9-4617b3a5e0c2.webp",
+   "sourceStagingSha256": "0783f1f67852620088a0195ef03c634bb534f9eba53d2374f741125285c3ddb2",
+   "sourceSnapshotId": "5ba69691-e94e-4602-863f-94c948985dd5:bjh9hm",
+   "framing": "Ha Mac in a dark blue robe, hair in a topknot, stands behind a long wooden table looking offscreen right; two blank white papers lie equally lit on the table; lantern-lit hall with lanterns at both sides, mountains and pines through a large window behind; the lower third of the frame is empty wooden table and floor.",
+   "knownDefects": "Ha Mac's hands are hidden behind the table so their withdrawn position at the table edge is not clearly visible (hands not on the papers, as 'withdrawn' requires, but not clearly seen); the framing is a tighter medium shot than the old frame; face/costume remain placeholders without a character lock. No UI bar, no buttons, no text anywhere."
   }
  ],
  "notes": [
   "3 separate 16:9 keyframes, one per shot, 640x360 each.",
-  "Recorded keyframe defects: S03 carries a baked-in game choice UI bar with two legible English buttons ('WAIT IN SILENCE' / 'OFFER THE PAPERS') at the bottom of the frame — a hard violation of the prompt's clean-frame rule for the game's own choice overlay — and is the first item for the final-picture revision pass; S01 has the same large white hooded mascot-like figure intrusion recorded at CIN_006_S02 and CIN_015_S02, and its palette reads dark blue dusk instead of the stepped orange heat palette; S02 is a medium shot instead of the detail close view and Ha Mac's costume differs between S02 and S03."
+  "Checkpoint 32 (Goi 31 item 2) revises S01/S03: S03's baked-in English choice UI bar is removed -- the frame is clean for the game's own choice overlay; S01's white hooded mascot is removed and the stepped orange heat palette is restored. S02 unchanged from checkpoint 25."
  ]
 }

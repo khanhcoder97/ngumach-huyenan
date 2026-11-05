@@ -1,6 +1,6 @@
 {
  "manifestId": "NGM_RUNTIME_AUDIO_V1",
- "checkpoint": "MEDIA-02 checkpoint 31 - M6 runtime delivery revised: P0 draft mixes v3 from fully composed stems (checkpoint-26 music/stingers + checkpoint-30 ambience) registered in parallel under mix/p0_v3/; v1/v2 mixes, prologue (checkpoint 27/28), composed music (checkpoint 26) and composed ambience (checkpoint 30) unchanged",
+ "checkpoint": "MEDIA-02 checkpoint 32 - M6 runtime delivery revised: status phrasing corrected (all 21 dialogue windows approved for DRAFT VO production per the Goi 30 D1 decision, PR #120; only CIN_001_S05 is DECIDED); audio files unchanged from checkpoint 31 (total still 610); P0 draft mixes v3 (checkpoint 31), prologue (checkpoint 27/28), composed music (checkpoint 26) and composed ambience (checkpoint 30) unchanged",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "counts": {
@@ -15,7 +15,7 @@
   "Every file copied from real bytes and verified: sha256 + size + ffprobe duration against the checkpoint 04/07/08 pack records. LFS pointers fail the copy.",
   "All cues remain RENDERED_CANDIDATE / DRAFT_NOT_FINAL_VO. Files are delivered into the runtime tree; wiring them into Godot scenes/code is Codex's presentation adapter work (Muse writes no .gd/.tscn/.cs).",
   "Per-cue loudness only, NOT a mix PASS; no combined mix, no ducking was measured here.",
-  "CIN_002/CIN_004 VO windows remain PROPOSED; only CIN_001_S05 is DECIDED (24.8-28.5 s).",
+  "CIN_001_S05 is the only DECIDED dialogue window (24.8-28.5 s, version B); all 21 dialogue windows are approved for DRAFT VO production per the Goi 30 D1 decision (PR #120, media_draft_timing_decisions_20261105.json). The other 20 windows remain PROPOSED_ANIMATIC_PLACEMENT; final picture, mix and autoplay are NOT approved.",
   "Campaign VO (checkpoint 17): 17 draft takes, 15 FITS / 2 OVERRUN at natural speed (CIN_005_S03 -0.16 s, CIN_018_S03 -0.28 s; D1 forbids voice speed-up to fit, so the overruns stand as director findings). All 17 campaign windows are PROPOSED_ANIMATIC_PLACEMENT. PLAYER take is a timing-only placeholder voice; CIN_020 uses placeholder role voice VOICE_LETTER_RECIPIENT.",
   "CIN_006 VO (checkpoint 19): canonical take CIN_006_S03 (window 12.5-17.5 s PROPOSED, D1 draft only) + alternate take CIN_006_ALT_T01 v1-alt kept separate per DEC-MEDIA-P0 Q3 (no window assigned, not in the SRT, not on the scene timeline, does not replace canonical). With this delivery all 21 D1-approved dialogue windows have a draft VO take.",
   "P0 draft mixes (checkpoint 20): DRAFT_MIX_NOT_FINAL, built from the CP02 PROPOSED_CANDIDATE stem table and CP04 draft VO with formula gain staging and sidechain ducking; NOT a mix PASS (no ear audition, stem table not locked, stinger placements PROPOSED pending picture lock). The 72 s review mix is review/gallery only, NOT an auto-run opening.",

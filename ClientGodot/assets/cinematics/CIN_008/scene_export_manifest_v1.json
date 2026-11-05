@@ -1,9 +1,9 @@
 {
  "schemaVersion": 1,
- "checkpoint": "MEDIA-02 checkpoint 25 - CIN_008 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_008 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
- "baseSha": "f0859d0",
+ "baseSha": "abcf254",
  "sceneId": "CIN_008",
  "title": "Bàn tay đã ký",
  "durationSeconds": 18.0,
@@ -24,8 +24,8 @@
  "files": {
   "mp4": {
    "path": "assets/cinematics/CIN_008/CIN_008_640x360_30fps.mp4",
-   "sha256": "2ed5fc71d5c872281e0bd7479604ef0979a729141c979366b119125e6e0371b5",
-   "sizeBytes": 1018388,
+   "sha256": "c367c26391248b43bd156b8e75edeb4b20e384e327573b7dbfddae63c84f16d4",
+   "sizeBytes": 957937,
    "codec": "h264",
    "width": 640,
    "height": 360,
@@ -35,14 +35,14 @@
   },
   "ogv": {
    "path": "assets/cinematics/CIN_008/CIN_008_640x360_30fps.ogv",
-   "sha256": "963352eefb9453ccc4166859dc6ae295b6394f5adb7994efb57ddcf0d98a277d",
-   "sizeBytes": 459622,
+   "sha256": "ffeabb382df616a1b64a76b1835887f1e5cb94efa795c30828edd573512c349d",
+   "sizeBytes": 459433,
    "codec": "theora",
    "width": 640,
    "height": 360,
    "fps": 30,
    "durationSeconds": 18.0,
-   "storedFrames": 510
+   "storedFrames": 509
   },
   "poster": {
    "path": "assets/cinematics/CIN_008/CIN_008_poster.png",
@@ -78,19 +78,19 @@
    "identityMeanAbsChannelDiff": 2.977,
    "identityMaxAllowed": 10.0,
    "motionSeconds": 11.9,
-   "motionMeanAbsChannelDiff": 20.904,
+   "motionMeanAbsChannelDiff": 20.926,
    "motionMinRequired": 1.5,
-   "continuousMotionMeanAbsChannelDiff": 17.993,
+   "continuousMotionMeanAbsChannelDiff": 18.012,
    "continuousMinRequired": 0.5
   },
   "CIN_008_S03": {
    "identitySeconds": 12.0,
-   "identityMeanAbsChannelDiff": 4.207,
+   "identityMeanAbsChannelDiff": 3.668,
    "identityMaxAllowed": 10.0,
    "motionSeconds": 17.9,
-   "motionMeanAbsChannelDiff": 34.17,
+   "motionMeanAbsChannelDiff": 32.029,
    "motionMinRequired": 1.5,
-   "continuousMotionMeanAbsChannelDiff": 29.433,
+   "continuousMotionMeanAbsChannelDiff": 26.891,
    "continuousMinRequired": 0.5
   }
  },
@@ -121,10 +121,10 @@
   }
  ],
  "notes": [
-  "Campaign animated take (Goi 30 item 7, checkpoint 25 batch): real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+  "Campaign revised take (Goi 31 item 2, checkpoint 32): shot-content fixes, real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
   "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
   "CIN_008 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
   "Scene SRT carries 1 cue (Ta Van Khanh, CIN_008_S03 at 12.5-17.5 s). Dialogue window status in the campaign manifest: PROPOSED_ANIMATIC_PLACEMENT, approved for DRAFT VO production only by the checkpoint-14 D1 decision. The checkpoint 17 VO draft for this cue measures 3.552 s at natural speed (windowFit FITS, not sped up).",
-  "Recorded keyframe defects: S01's seal reads as a large round stamp already impressed on the paper and the page reads as a completed form rather than the moment of signing; S03's bandage wraps the forearm on the frame-center side, reading as the character's RIGHT forearm, while canon places the bandage on the character's LEFT forearm — to be checked against the character lock at final picture; S03's bandaged hand also grips two dangling white strips the prompt does not mention. S02 had no material defect at storyboard level."
+  "Checkpoint 32 (Goi 31 item 2) revises S03: the bandage now wraps the LEFT forearm (outer side, away from the pool); the bandaged hand holds nothing. S01/S02 unchanged from checkpoint 25."
  ]
 }
