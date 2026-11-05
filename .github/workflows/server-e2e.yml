@@ -89,7 +89,6 @@ jobs:
   e2e-alpha-revive:
     continue-on-error: true
     runs-on: ubuntu-latest
-    runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
