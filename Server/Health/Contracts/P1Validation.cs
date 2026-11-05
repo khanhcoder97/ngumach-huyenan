@@ -58,12 +58,26 @@ public static class P1Validation
     private static readonly Regex NpcIdPattern =
         new(@"^NPC_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
 
-    // The approved alpha overlay names its runtime entities ALPHA_OBJ_* / ALPHA_WAVE_*,
-    // so an ENT_-only pattern made the design's own interactables unaddressable: the
-    // ripples, villagers and fragment could never be claimed over HTTP even though the
-    // registry carries them. Both prefixes are accepted; nothing else is.
     private static readonly Regex EntityIdPattern =
-        new(@"^(?:ENT|ALPHA)_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
+        new(@"^ENT_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
+
+    // DEC-ALPHA-INTERACT-IDS-20261105: the alpha overlay's interactables are
+    // addressed by their own ALPHA_ prefix, which an ENT_-only vocabulary cannot
+    // name — but the approval is an exact list of the six published ids, not the
+    // prefix. So the alpha set is enumerated and nothing else under ALPHA_ is
+    // addressable: the training hazard (ALPHA_WAVE_BM_TRAINING) is a server-side
+    // rect the wave trial reads by position, and any other ALPHA_ id is refused as
+    // invalid_payload before the registry is consulted.
+    public static readonly IReadOnlySet<string> AlphaInteractEntityIds =
+        new HashSet<string>(StringComparer.Ordinal)
+        {
+            "ALPHA_OBJ_BM_FRAGMENT",
+            "ALPHA_OBJ_BM_RIPPLE_01",
+            "ALPHA_OBJ_BM_RIPPLE_02",
+            "ALPHA_OBJ_BM_RIPPLE_03",
+            "ALPHA_OBJ_BM_VILLAGER_01",
+            "ALPHA_OBJ_BM_VILLAGER_02"
+        };
 
     public static bool IsHex32(string? value)
     {
@@ -105,6 +119,11 @@ public static class P1Validation
 
     public static bool IsEntityId(string? value) =>
         value is not null && EntityIdPattern.IsMatch(value);
+
+    // What the interact route may address: a canonical ENT_ entity, or one of the
+    // six alpha ids the decision published.
+    public static bool IsInteractTargetId(string? value) =>
+        IsEntityId(value) || (value is not null && AlphaInteractEntityIds.Contains(value));
 
     public static bool TryParseUtc(string? value, out DateTimeOffset parsed)
     {
@@ -361,7 +380,7 @@ public static class P1Validation
             return errors;
         }
 
-        if (!IsEntityId(envelope.Payload.TargetId))
+        if (!IsInteractTargetId(envelope.Payload.TargetId))
         {
             errors.Add("payload.targetId");
         }

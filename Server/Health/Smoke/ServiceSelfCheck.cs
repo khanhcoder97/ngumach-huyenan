@@ -8452,21 +8452,56 @@ public static class ServiceSelfCheck
             $"rejected={chapterRolledBack.Failure?.Code} count={countAfterRollback} " +
             $"state={chapterRolledState?.State} retry={chapterRetried.Failure?.Code}");
 
-        // The alpha overlay's entities are addressed by the interact route under
-        // their own ALPHA_ prefix, so the wire vocabulary has to name both prefixes
-        // and nothing looser: a prefix-free id (or a dash, or lowercase) is still
-        // rejected, which is what keeps the widening from becoming "any string".
+        // DEC-ALPHA-INTERACT-IDS-20261105 narrows the widening I shipped in
+        // 61b96a2: the approval is an exact list of the six published overlay ids,
+        // not the ALPHA_ prefix. The interact route therefore addresses ENT_
+        // entities plus those six and nothing looser — the training hazard (a
+        // position-read rect, not an interaction) and any other ALPHA_ id are
+        // refused as invalid_payload before the registry is consulted, so no state
+        // can be touched through an id the decision never published. The cast
+        // vocabulary stays ENT_-only: /p1/v2/combat checks its target with
+        // IsEntityId, which no longer accepts the prefix at all.
         Check(
-            "contracts.entity_id_accepts_ent_and_alpha_prefixes",
+            "contracts.interact_target_accepts_ent_and_the_six_alpha_ids",
             P1Validation.IsEntityId("ENT_MAN_BM_SPAWN_BM_01") &&
-            P1Validation.IsEntityId("ALPHA_OBJ_BM_RIPPLE_01") &&
-            P1Validation.IsEntityId("ALPHA_WAVE_BM_TRAINING") &&
-            !P1Validation.IsEntityId("ent_MAN_BM_SPAWN_BM_01") &&
-            !P1Validation.IsEntityId("FOO_MAN_BM_SPAWN_BM_01") &&
-            !P1Validation.IsEntityId("ENT-MAN-BM-SPAWN") &&
-            !P1Validation.IsEntityId("MAN_BM_SPAWN") &&
-            !P1Validation.IsEntityId(null),
-            "ALPHA_ and ENT_ accepted, everything else still refused");
+            P1Validation.IsInteractTargetId("ENT_MAN_BM_OBJ_BM_PACKAGE_01") &&
+            P1Validation.AlphaInteractEntityIds.All(P1Validation.IsInteractTargetId) &&
+            P1Validation.AlphaInteractEntityIds.Count == 6 &&
+            !P1Validation.IsEntityId("ALPHA_OBJ_BM_RIPPLE_01") &&
+            !P1Validation.IsInteractTargetId("ALPHA_OBJ_BM_RIPPLE_99") &&
+            !P1Validation.IsInteractTargetId("ALPHA_WAVE_BM_TRAINING") &&
+            !P1Validation.IsInteractTargetId("alpha_obj_bm_fragment") &&
+            !P1Validation.IsInteractTargetId("ALPHA-OBJ-BM-FRAGMENT") &&
+            !P1Validation.IsInteractTargetId("FOO_MAN_BM_SPAWN_BM_01") &&
+            !P1Validation.IsInteractTargetId("ENT-MAN-BM-SPAWN") &&
+            !P1Validation.IsInteractTargetId("MAN_BM_SPAWN") &&
+            !P1Validation.IsInteractTargetId(null),
+            "ENT_ plus the six exact alpha ids accepted; the prefix and everything " +
+            "else still refused");
+
+        // The same rule at the route's own front door: an unpublished alpha id is
+        // named in fieldErrors and nothing else about the envelope is reported, so
+        // the answer cannot be mistaken for a state conflict.
+        List<string> InteractTargetErrors(string targetId) =>
+            P1Validation.ValidateInteractEnvelope(new InteractEnvelope
+            {
+                SchemaVersion = 1,
+                RequestId = new string('c', 32),
+                IdempotencyKey = new string('d', 32),
+                SentAtUtc = "2026-11-05T00:00:00Z",
+                CharacterId = "CHR_SELFCHECK_INTERACT_ID",
+                Payload = new InteractIntent { TargetId = targetId }
+            });
+
+        var unpublishedAlphaErrors = InteractTargetErrors("ALPHA_OBJ_BM_RIPPLE_99");
+        Check(
+            "contracts.interact_envelope_refuses_an_unpublished_alpha_id",
+            unpublishedAlphaErrors.Count == 1 &&
+            unpublishedAlphaErrors[0] == "payload.targetId" &&
+            InteractTargetErrors("ALPHA_OBJ_BM_RIPPLE_01").Count == 0 &&
+            InteractTargetErrors("ENT_MAN_BM_OBJ_BM_PACKAGE_01").Count == 0 &&
+            InteractTargetErrors("ALPHA_WAVE_BM_TRAINING").Count == 1,
+            $"unpublished={string.Join(",", unpublishedAlphaErrors)}");
 
         // ─── overflow: balance near long.MaxValue rejects without partial commit ───
 
