@@ -32,7 +32,7 @@
 
 - Tool assert 173 cue (146 SFX + 27 UI), mỗi cue 3 variant, tất cả `loop=False` rồi mới đo; file con trỏ LFS sẽ làm tool dừng lỗi thay vì cho số giả — lượt này 1038/1038 file đều là byte thật trước khi đo (đã đếm lại sau pull).
 - Số đo checkpoint 01/02 cho các stinger cinema đã nằm trong pack này vẫn nhất quán (cùng file, cùng phương pháp).
-- Scope: `Tools/Coordination/check_agent_scope.py --base cf17178 --head HEAD --branch muse/media-production-20261104` → **89 changed paths (tích lũy từ base), 0 violations**; commit checkpoint 08 là `b756a89` (xác minh bằng ls-remote sau push, xem cuối báo cáo luồng chạy).
+- Scope: `Tools/Coordination/check_agent_scope.py --base cf17178 --head HEAD --branch muse/media-production-20261104` → **89 changed paths (tích lũy từ base), 0 violations**; commit checkpoint 08 là `0ea00b1` (đã push, xác minh bằng ls-remote: `0ea00b1dac77912200791f9d275c6c95f4b87187`).
 
 ## 5. Giới hạn còn mở
 
