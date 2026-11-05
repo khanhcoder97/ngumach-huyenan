@@ -177,7 +177,7 @@ def copy_verified_audio(src_rel, dest_rel, expect_sha, expect_size,
 def main():
     audio_entries = []
     counts = {"music_ambience": 0, "sfx_ui_variants": 0, "vo": 0,
-              "mix": 0}
+              "mix": 0, "composed": 0}
 
     # --- 1. Music + ambience runtime OGGs (checkpoint 07) ---
     ma = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
@@ -408,11 +408,61 @@ def main():
         audio_entries.append(entry)
         counts["mix"] += 1
 
+    # --- 3e. Composed music + cinema stingers (checkpoint 26) ---
+    # The composer (build_composed_music.py) already rendered the
+    # runtime OGGs into ClientGodot/assets/audio/composed/; this
+    # section verifies them in place against the delivery pack and
+    # registers them in the runtime audio manifest. The ported PackV1
+    # entries above are untouched; composed cues are parallel
+    # candidates whose adoption is Codex's adapter decision.
+    composed = json.loads(
+        (ROOT / "Implementation/Content/Audio/Deliveries"
+         / "MUSIC_COMPOSED_pack_v1.json").read_text(encoding="utf-8"))
+    for cue in composed["cues"]:
+        rt = cue["runtime"]
+        dest_rel = rt["path"].split("assets/audio/", 1)[1]
+        dest = AUDIO_DEST / dest_rel
+        label = f"composed {cue['cueKey']}"
+        check(dest.exists(), f"{label}: runtime file missing {rt['path']}")
+        if not dest.exists():
+            continue
+        check(not is_lfs_pointer(dest),
+              f"{label}: runtime file is an LFS pointer")
+        got_sha = sha256(dest)
+        got_size = dest.stat().st_size
+        check(got_sha == rt["sha256"],
+              f"{label}: sha mismatch {got_sha} != {rt['sha256']}")
+        check(got_size == rt["sizeBytes"],
+              f"{label}: size mismatch {got_size} != {rt['sizeBytes']}")
+        got_dur = ffprobe_duration_s(dest)
+        check(abs(got_dur - rt["durationSeconds"]) <= DUR_TOL_S,
+              f"{label}: duration mismatch {got_dur} != "
+              f"{rt['durationSeconds']}")
+        entry = {"runtimePath": "assets/audio/" + dest_rel,
+                 "sourcePath": cue["master"]["path"],
+                 "sha256": got_sha, "sizeBytes": got_size,
+                 "durationSeconds": round(got_dur, 4)}
+        entry.update({
+            "cueKey": cue["cueKey"],
+            "category": ("composed_music" if cue["kind"] == "MUSIC"
+                         else "composed_sfx"),
+            "codec": rt["codec"],
+            "sampleRateHz": rt["sampleRateHz"],
+            "channels": rt["channels"],
+            "integratedLufs": rt["integratedLufs"],
+            "truePeakDbtp": rt["truePeakDbtp"],
+            "assetState": "COMPOSED_CANDIDATE",
+            "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER",
+            "provenance": "ORIGINAL_COMPOSED_BY_MUSE"})
+        audio_entries.append(entry)
+        counts["composed"] += 1
+
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 checkpoint 20 - M6 runtime delivery "
-                       "revised: P0 draft mixes (3 scene mixes + 72 s "
-                       "review mix) added"),
+        "checkpoint": ("MEDIA-02 checkpoint 26 - M6 runtime delivery "
+                       "revised: original composed music + cinema "
+                       "stingers (9 music + 4 stingers, checkpoint 26) "
+                       "registered alongside the ported packs"),
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "counts": counts,
@@ -449,6 +499,15 @@ def main():
             "not locked, stinger placements PROPOSED pending "
             "picture lock). The 72 s review mix is review/gallery "
             "only, NOT an auto-run opening.",
+            "Composed music + stingers (checkpoint 26, Goi 30 item "
+            "7): 13 ORIGINAL cues composed by Muse (9 music + 4 "
+            "SFX/CINEMA stingers), provenance "
+            "ORIGINAL_COMPOSED_BY_MUSE, delivered in parallel under "
+            "assets/audio/composed/ from MUSIC_COMPOSED_pack_v1.json. "
+            "They do NOT replace the ported PackV1 files (541 files, "
+            "checkpoints 07/08) or their bindings; adoption is "
+            "Codex's presentation-adapter decision. Loudness is "
+            "measured from real bytes; no ear audition.",
         ],
         "files": audio_entries,
     }
@@ -728,7 +787,7 @@ def main():
 
     print(f"audio copied: music/ambience={counts['music_ambience']} "
           f"sfx/ui variants={counts['sfx_ui_variants']} vo={counts['vo']} "
-          f"mix={counts['mix']} "
+          f"mix={counts['mix']} composed={counts['composed']} "
           f"total={len(audio_entries)}")
     print(f"cinematics: animatic verified={len(cine_files)} "
           f"sceneClips={len(scene_clip_entries)} "

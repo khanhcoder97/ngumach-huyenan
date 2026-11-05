@@ -137,6 +137,39 @@ def check_audio_packs():
     note(f"P0 stem pool cues validated as files: {sorted(stem_keys)}")
 
 
+def check_composed_pack():
+    """Checkpoint 26: the ORIGINAL composed pack (Goi 30 item 7).
+    Entries use camelCase in the delivery manifest; reshape them to
+    the check_audio_file contract. Provenance must stay explicit:
+    composed cues are new audio, ported PackV1 files are not."""
+    pack = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                       / "MUSIC_COMPOSED_pack_v1.json").read_text(
+                           encoding="utf-8"))
+    if pack["counts"] != {"music": 9, "cinemaStingers": 4, "total": 13}:
+        err(f"COMPOSED pack counts drift: {pack['counts']}")
+    total = 0
+    for cue in pack["cues"]:
+        if cue.get("provenance") != "ORIGINAL_COMPOSED_BY_MUSE":
+            err(f"COMPOSED {cue['cueKey']}: provenance missing/drift")
+        for side_name in ("master", "runtime"):
+            side = cue[side_name]
+            entry = {"path": side["path"], "sha256": side["sha256"],
+                     "size_bytes": side["sizeBytes"],
+                     "codec": side["codec"],
+                     "sample_rate_hz": side["sampleRateHz"],
+                     "channels": side["channels"],
+                     "duration_s": side["durationSeconds"]}
+            check_audio_file(entry, f"COMPOSED {cue['cueKey']}/"
+                             f"{side_name}")
+            total += 1
+        if cue["kind"] == "MUSIC" and not cue.get("loop"):
+            err(f"COMPOSED {cue['cueKey']}: music cue must loop")
+    COUNTS["audio_composed_cues"] = len(pack["cues"])
+    COUNTS["audio_files_checked"] += total
+    note(f"composed pack validated: {len(pack['cues'])} cues "
+         f"(9 music + 4 cinema stingers), {total} files")
+
+
 def parse_srt(text):
     cues = []
     blocks = [b.strip() for b in re.split(r"\n\s*\n", text.strip()) if b.strip()]
@@ -1185,6 +1218,7 @@ def main():
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
     check_audio_packs()
+    check_composed_pack()
     check_timing_srt()
     check_runtime_cine_manifest()
     check_animatic_vo()
@@ -1199,7 +1233,7 @@ def main():
     check_p0_mix()
     check_scene_clips()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 25 (campaign video batch: animated takes for the remaining 13 campaign scenes, 3 storyboard keyframes + 18 s Ken Burns clip each, MP4 + OGV + poster + timing/SRT; all 20 scenes now carry video; generic batch keyframe checker added with title cross-check for all 17 campaign keyframe scenes; runtime delivery revised)",
+        "checkpoint": "MEDIA-02 checkpoint 26 (original composed music + cinema stingers: 13 cues from one leitmotif system, Goi 30 item 7; composed-pack checker added; runtime delivery revised)",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -1222,6 +1256,7 @@ def main():
             "CIN_009 clip motion is animatic-level Ken Burns on still keyframes, not a final pose-animated take; S03 is not strictly top-down and adds a shrine not in the prompt.",
             "Checkpoint 25 batch keyframes are STORYBOARD level: every batch scene has named characters on screen with no approved cinematic character lock, so all faces/costumes are placeholders and final picture per shot stays blocked on the lock. Headline defects are recorded per shot in the keyframe manifests; the worst are CIN_012_S03's baked-in choice UI bar with legible English buttons, CIN_017_S02's missing subject (no core, no serpent), CIN_015_S02's dry-courtyard setting failure with an invented mascot figure, and CIN_011's invented teal-robed woman in S01/S03.",
             "All campaign clip motion (checkpoints 21-25) is animatic-level Ken Burns on still keyframes, not final pose-animated takes.",
+            "Composed pack (checkpoint 26, Goi 30 item 7): 13 ORIGINAL cues composed by Muse (9 music + 4 SFX/CINEMA stingers) from one leitmotif system; loudness measured from real bytes by the composer (music -22.0 LUFS target, stingers -25.0), this check re-verifies bytes/SHA/duration only. Loop seams are recorded per cue in the delivery manifest: wrapJump after a disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it; no ear audition. The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; composed cues are parallel candidates whose adoption is Codex's presentation-adapter decision.",
         ],
     }
     print(f"counts: {json.dumps(COUNTS, indent=1)}")
