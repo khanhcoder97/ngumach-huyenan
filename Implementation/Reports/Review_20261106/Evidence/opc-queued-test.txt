@@ -1,0 +1,19 @@
+Test run for D:\Project\NGUMACHHUYENAN-handoff-opc-20261106\Shared\ClientCore.Tests\bin\Release\net8.0\NguMach.Client.Core.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+The active test run was aborted. Reason: Test host process crashed
+Data collector 'Blame' message: The specified inactivity time of 20 seconds has elapsed. Collecting hang dumps from testhost and its child processes.
+Results File: D:\Project\NGUMACHHUYENAN-handoff-20261106\Implementation\Reports\Review_20261106\Evidence\opc-queued.trx
+
+Test Run Aborted.
+
+The active Test Run was aborted because the host process exited unexpectedly. Please inspect the call stack above, if available, to get more information about where the exception originated from.
+The test running when the crash occurred: 
+NguMach.Client.Core.Tests.CompositionTests.ReturnFromDeath_QueuedSuccessBeforeDispose_DoesNotMutateState
+
+This test may, or may not be the source of the crash.
+
+Attachments:
+  D:\Project\NGUMACHHUYENAN-handoff-20261106\Implementation\Reports\Review_20261106\Evidence\18aa9cbf-9df0-456d-894c-593561139cbc\Sequence_e2c93d56fc5745a0b21a5d7dfa9f50c6.xml

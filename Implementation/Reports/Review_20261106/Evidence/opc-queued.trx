@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="c9105291-0d05-42f8-9edc-f209558eefc2" name="KHANH SAMA@KHANHSAMA 2026-11-06 07:09:42" runUser="KHANHSAMA\KHANH SAMA" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-11-06T07:09:42.4456394+09:00" queuing="2026-11-06T07:09:42.4456403+09:00" start="2026-11-06T07:09:18.0662759+09:00" finish="2026-11-06T07:09:42.4470645+09:00" />
+  <TestSettings name="default" id="a412ebb4-556e-4370-88ab-c419113ee4d8">
+    <Deployment runDeploymentRoot="KHANH_SAMA_KHANHSAMA_2026-11-06_07_09_42" />
+  </TestSettings>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="0" executed="0" passed="0" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.01] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.11)&#xD;
+[xUnit.net 00:00:00.29]   Discovering: NguMach.Client.Core.Tests&#xD;
+[xUnit.net 00:00:00.54]   Discovered:  NguMach.Client.Core.Tests&#xD;
+[xUnit.net 00:00:00.55]   Starting:    NguMach.Client.Core.Tests&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="KHANHSAMA" outcome="Error" timestamp="2026-11-06T07:09:42.2061703+09:00">
+        <Text>The active test run was aborted. Reason: Test host process crashed</Text>
+      </RunInfo>
+      <RunInfo computerName="KHANHSAMA" outcome="Warning" timestamp="2026-11-06T07:09:42.2335905+09:00">
+        <Text>Data collector 'Blame' message: The specified inactivity time of 20 seconds has elapsed. Collecting hang dumps from testhost and its child processes.</Text>
+      </RunInfo>
+    </RunInfos>
+    <CollectorDataEntries>
+      <Collector agentName="KHANHSAMA" uri="datacollector://microsoft/TestPlatform/Extensions/Blame/v1" collectorDisplayName="Blame">
+        <UriAttachments>
+          <UriAttachment>
+            <A href="KHANHSAMA\Sequence_e2c93d56fc5745a0b21a5d7dfa9f50c6.xml"></A>
+          </UriAttachment>
+        </UriAttachments>
+      </Collector>
+    </CollectorDataEntries>
+  </ResultSummary>
+</TestRun>

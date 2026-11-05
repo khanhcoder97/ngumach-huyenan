@@ -1,0 +1,40 @@
+Traceback (most recent call last):
+  File "D:\Project\NGUMACHHUYENAN-handoff-media-20261106\Tools\MediaProduction\Muse\verify_runtime_delivery.py", line 257, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "D:\Project\NGUMACHHUYENAN-handoff-media-20261106\Tools\MediaProduction\Muse\verify_runtime_delivery.py", line 226, in main
+    check_cinematics_manifest()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\Project\NGUMACHHUYENAN-handoff-media-20261106\Tools\MediaProduction\Muse\verify_runtime_delivery.py", line 194, in check_cinematics_manifest
+    pr = json.loads(subprocess.run(
+                    ~~~~~~~~~~~~~~^
+        ["ffprobe", "-v", "error", "-show_streams", "-of",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         "json", str(CLIENT / rel)],
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        capture_output=True, text=True).stdout)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\subprocess.py", line 555, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\subprocess.py", line 1039, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\subprocess.py", line 1553, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+                             # no special security
+                             ^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                             cwd,
+                             ^^^^
+                             startupinfo)
+                             ^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified
