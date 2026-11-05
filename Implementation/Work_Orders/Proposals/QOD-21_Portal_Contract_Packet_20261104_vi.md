@@ -1,4 +1,4 @@
-# Packet hợp đồng Portal / đổi map (QOD-21 Q4) — **CHỜ DUYỆT — chưa wire, chưa handler, và thiếu nguồn toạ độ**
+# Packet hợp đồng Portal / đổi map (QOD-21 Q4) — **CHỜ DUYỆT — chưa wire, chưa handler. Toạ độ ĐÃ CÓ NGUỒN (map atlas, đối chiếu bằng CI); chi phí/cooldown/điểm an toàn vẫn thiếu nguồn**
 
 Gửi Codex (review) + owner (#87) + Antigravity #85 / Muse #1 (client).
 Lý do packet này tồn tại: E2E `alpha-p00` (head `61b96a2`) đi hết `P00-01 → P00-05` qua HTTP rồi dừng ở `TALK` (packet `QOD-21_TalkDialogue_Contract_Packet_20261104_vi.md`), và **ngay cả khi TALK được duyệt thì `C1-01` vẫn bất khả thi về vật lý**: hai khách quan của nó ở `MAP_THANH_LAC`, còn server không có route nào được phép đổi map của một actor.
@@ -57,11 +57,12 @@ Client chỉ được chọn **portal record id** do server phát hành. Server 
 
 Design chỉ nói một câu: `questRules.P00-05.unlock` = "P00-05 turn-in commits CHAPTER_C1_UNLOCKED and MAP_THANH_LAC portal access". Nó **không** cung cấp:
 
-1. **Tọa độ portal hai đầu.** `map_bounds.json` không có override cho `MAP_THANH_LAC` (dùng `defaultBounds`), và `world_records.json` không có record portal nào. Không có nguồn thì không có `portalId` hợp lệ nào để map.
+1. **Tọa độ portal hai đầu — ĐÃ CÓ NGUỒN, cập nhật 05/11:** `docs/production/Map_Production_Atlas_vi.md` §3/§4 đặt cổng ở `(348,0)` Bến Mưa → Thanh Lạc và `(20,0)` Thanh Lạc → Bến Mưa, cùng `TP_BM_HUB=(24,0)`, `TP_BM_DAM_CHUONG=(150,0)`, `TP_TL_WEST=(8,0)`, `TP_TL_EAST/THANG_LONG/LAM_TRIEU=(350,0)`, và quy tắc của chính atlas: *"các điểm cùng tọa độ dùng một route"* (nên `TP_BM_THANH_LAC` và `TP_BM_THANG_LONG` cùng ở 348 là MỘT cổng hai đích). `reconcile_map_atlas.py` (CI `content-validation`) giờ giữ 9 hàng cổng này trong danh sách "chưa tồn tại" — ngày record portal xuất hiện, CI đòi so số thật. vẫn còn thiếu: `map_bounds.json` không override `MAP_THANH_LAC`, và `world_records.json` chưa có record portal nào.
+1b. **Điều kiện mở đã có một phần:** atlas ghi `TP_BM_THANG_LONG` *"mở sau C1-06"* (không phải C1-01) và `NPC_BOAT_KEEPER (343,0)` *"cổng/đi thuyền sau P00-05"* — tức cổng theo chương là có nguồn, còn quyền vào map nào thì vẫn phải do `ChapterUnlockStore` trả lời.
 2. **Cặp map nào được đi** (Bến Mưa → Thanh Lạc một chiều? hai chiều? có mở tiếp map khác không).
-3. **Điều kiện ngoài quyền**: level? quest đang `ACTIVE`? party solo scale 1–3 như boss ring?
+3. **Điều kiện ngoài quyền**: level? quest đang `ACTIVE`? party solo scale 1–3 như boss ring? — vẫn **chưa có nguồn** (atlas chỉ cho điều kiện theo chương).
 4. **Chi phí/ cooldown / thời gianLoading**: P1 không có khái niệm travel time; nếu client cần animation thì server phải trả gì.
-5. **Điểm đến có phải anchor cứng không** — `NPC_LYAN` ở Thanh Lạc là (30,0), nhưng đứng ở (30,0) có phải chỗ an toàn không thì không nguồn nào nói.
+5. **Điểm đến có phải anchor cứng không** — atlas xác nhận `NPC_LYAN=(30,0)` ở Thanh Lạc **khớp** với anchor server đang đặt (một trong 21 hàng Thanh Lạc khớp tuyệt đối), nhưng "(30,0) có phải chỗ an toàn để đổ người chơi xuống không" thì vẫn không nguồn nào nói; respawn của Thanh Lạc là `SP_TL=(160,0)` theo atlas và **không** có quyết định duyệt nào cho nó (khác Bến Mưa, nơi DEC-DEATH-RETURN chốt (18,0) — và chính atlas ghi (24,0) cho `SP_BM`, một lệch đã ghi trong `KNOWN_DELTAS`).
 
 Vì vậy packet này **chưa thể thành handler** kể cả khi owner gật về hình thức: cần owner ( hoặc design) bổ sung mục 4.1–4.5 vào baseline alpha, đúng kiểu `boss` block đã phải bổ sung số cho Mãng Cốt ở Q2.
 

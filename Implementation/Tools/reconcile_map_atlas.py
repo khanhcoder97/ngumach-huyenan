@@ -31,7 +31,9 @@ ATLAS = "docs/production/Map_Production_Atlas_vi.md"
 RECORDS = "Implementation/Content/Runtime/world_records.json"
 ANCHORS = "Implementation/Content/Runtime/npc_anchors.json"
 ALPHA = "Implementation/Content/DesignBaselines/ben_mua_alpha_20261103.json"
-MAP_ID = "MAP_BEN_MUA"
+# Atlas heading -> the map whose shipped placements it describes. Section 3 is Ben Mua
+# and section 4 Thanh Lac; both state positions as numbers, so both get reconciled.
+SECTIONS = {"### 3.": "MAP_BEN_MUA", "### 4.": "MAP_THANH_LAC"}
 
 # The alpha design owns these rows; the atlas is the older layout statement for them.
 # Both numbers are kept here so closing one out has to edit this file deliberately.
@@ -46,6 +48,26 @@ KNOWN_ABSENT = {
     "TP_BM_DAM_CHUONG": "no teleport/portal route exists (portal packet awaits approval)",
     "OBJ_BM_SEAL": "the ring seal is carried by the encounter, not by a world record",
 }
+
+# Thanh Lac disagrees with nothing today - 21 of its 30 atlas rows match the shipped
+# records exactly - so it only needs the absence list: five portals, a respawn anchor and
+# two trial rows the atlas places and nothing ships, each with the reason.
+ABSENT_THANH_LAC = {
+    "TP_TL_BEN_MUA": "no portal/teleport route exists (portal packet awaits approval)",
+    "TP_TL_WEST": "no portal/teleport route exists (portal packet awaits approval)",
+    "TP_TL_EAST": "no portal/teleport route exists (portal packet awaits approval)",
+    "TP_TL_THANG_LONG": "no portal/teleport route exists (portal packet awaits approval)",
+    "TP_TL_LAM_TRIEU": "no portal/teleport route exists (portal packet awaits approval)",
+    "SP_TL": "the approved death-return anchor exists only for the private-alpha map",
+    "SPAWN_TL_STATUES": "the statue trial ships as individual SPAWN_TL_* rows, not a group",
+    "OBJ_TL_CONTROL_STAKE_A": "the C1-01 control stake is not in the shipped record set",
+}
+
+ABSENT_BY_MAP = {"MAP_BEN_MUA": KNOWN_ABSENT, "MAP_THANH_LAC": ABSENT_THANH_LAC}
+
+# An id has to look like an id: without this, prose such as "A tai (154,0)/B (176,0)"
+# contributes a row named "B" that nothing could ever ship.
+ID = re.compile(r"[A-Z][A-Z0-9_]{3,}")
 
 ALPHA_OVERLAY_ALIASES = {
     "OBJ_BM_WATER_RIPPLE_01": "ALPHA-BM-RIPPLE-01",
@@ -84,7 +106,7 @@ def parse_positions(section):
     # Table rows: | NPC_LYAN | (42,0) | ... |  and  | SPAWN_BM_01 | (84,0) | ...
     for line in section.splitlines():
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        if len(cells) >= 2 and re.fullmatch(r"[A-Z][A-Z0-9_]*", cells[0] or ""):
+        if len(cells) >= 2 and ID.fullmatch(cells[0] or ""):
             match = re.fullmatch(PAIR, cells[1])
             if match:
                 found[cells[0]] = (int(match.group(1)), int(match.group(2)))
@@ -98,40 +120,38 @@ def parse_positions(section):
         for index, pair in enumerate(pairs):
             found[f"{stem}_{int(first) + index:02d}"] = (int(pair[0]), int(pair[1]))
 
-    for npc_id, anchor_x, anchor_y in re.findall(rf"([A-Z][A-Z0-9_]*)=\s*{PAIR}", section):
+    for npc_id, anchor_x, anchor_y in re.findall(rf"({ID.pattern})=\s*{PAIR}", section):
         found.setdefault(npc_id, (int(anchor_x), int(anchor_y)))
 
     return found
 
 
-def runtime_positions(root):
+def runtime_positions(root, map_id):
     positions = {}
     records = json.load(open(os.path.join(root, RECORDS), encoding="utf-8"))["records"]
     for record in records:
-        if record.get("mapId") != MAP_ID:
+        if record.get("mapId") != map_id:
             continue
         # `MAN-BM-OBJ_BM_PACKAGE_01` - the manifest prefix is two segments.
         positions[record["recordId"].split("-", 2)[2]] = (
             int(record["xWu"]), int(record["yWu"]))
-    for record in json.load(open(os.path.join(root, ALPHA), encoding="utf-8"))[
-            "newOverlayRecords"]:
-        positions[record["recordId"]] = (int(record["xWu"]), int(record["yWu"]))
+    alpha = json.load(open(os.path.join(root, ALPHA), encoding="utf-8"))
+    if map_id == "MAP_BEN_MUA":
+        # The alpha overlay only ever adds Ben Mua records, and the approved
+        # death-return anchor is a Ben Mua rule; both are compared on that map alone.
+        for record in alpha["newOverlayRecords"]:
+            positions[record["recordId"]] = (int(record["xWu"]), int(record["yWu"]))
+        positions["SP_BM"] = tuple(int(value) for value in
+                                  alpha["deathReturn"]["safeAnchorWu"])
     for anchor in json.load(open(os.path.join(root, ANCHORS), encoding="utf-8"))["anchors"]:
-        if anchor.get("mapId") == MAP_ID and anchor.get("npcId"):
-            positions[anchor["npcId"]] = (int(anchor["xWu"]), int(anchor["yWu"]))
-
-    death_return = json.load(open(os.path.join(root, ALPHA),
-                                  encoding="utf-8"))["deathReturn"]
-    positions["SP_BM"] = tuple(int(value) for value in death_return["safeAnchorWu"])
+        if anchor.get("mapId") == map_id and anchor.get("npcId"):
+            positions.setdefault(anchor["npcId"],
+                                 (int(anchor["xWu"]), int(anchor["yWu"])))
     return positions
 
 
-def main():
-    root = sys.argv[1] if len(sys.argv) > 1 else os.getcwd()
-    section = atlas_section(root, "### 3.")
-    atlas_positions = parse_positions(section)
-    runtime = runtime_positions(root)
-
+def reconcile(atlas_positions, runtime, absent_allowed):
+    """One map's verdict: the five buckets the report is printed from."""
     missing, agreements, deltas, surprises, absent = [], [], [], [], []
     for atlas_id, atlas_position in sorted(atlas_positions.items()):
         overlay_id = ALPHA_OVERLAY_ALIASES.get(atlas_id, atlas_id)
@@ -142,7 +162,7 @@ def main():
                 # manifest's way of naming the quest-scoped instance of the same point.
                 overlay_id = prefixed[0]
         if overlay_id not in runtime:
-            if atlas_id in KNOWN_ABSENT:
+            if atlas_id in absent_allowed:
                 absent.append(atlas_id)
             else:
                 missing.append((atlas_id, atlas_position))
@@ -156,31 +176,54 @@ def main():
             deltas.append(atlas_id)
         else:
             surprises.append((atlas_id, atlas_position, runtime_position, known))
+    return missing, agreements, deltas, surprises, absent
 
-    stale = [key for key in KNOWN_DELTAS if key not in deltas]
-    new_absent = [key for key in KNOWN_ABSENT if key not in absent]
 
-    print(f"atlas rows={len(atlas_positions)} agree={len(agreements)} "
-          f"known_deltas={len(deltas)} unreviewed={len(surprises)} "
-          f"missing_in_runtime={len(missing)} listed_absent={len(absent)} "
-          f"stale_allowed={len(stale)} stale_absent={len(new_absent)}")
-    for atlas_id in sorted(new_absent):
-        print(f"  ARRIVED   {atlas_id}: listed as absent, but the runtime now answers to "
-              f"it - compare the position and delete the entry")
-    for atlas_id, position in missing:
-        print(f"  MISSING   {atlas_id} at {position} - the atlas names it, no shipped "
-              f"record on {MAP_ID} carries it")
-    for atlas_id, atlas_position, runtime_position, known in surprises:
-        print(f"  UNREVIEWED {atlas_id}: atlas={atlas_position} runtime={runtime_position} "
-              f"allowed={known}")
-    for atlas_id in stale:
-        print(f"  RESOLVED  {atlas_id}: the allowed delta no longer matches - either the "
-              f"sources agree now (delete the entry) or one side moved by mistake")
-    for atlas_id in deltas:
-        print(f"  DELTA     {atlas_id}: atlas={atlas_positions[atlas_id]} "
-              f"runtime={runtime[ALPHA_OVERLAY_ALIASES.get(atlas_id, atlas_id)]}")
+def main():
+    root = sys.argv[1] if len(sys.argv) > 1 else os.getcwd()
 
-    if missing or surprises or stale or new_absent:
+    totals = {"rows": 0, "agree": 0, "delta": 0, "absent": 0}
+    problems = []
+    for heading, map_id in sorted(SECTIONS.items()):
+        atlas_positions = parse_positions(atlas_section(root, heading))
+        runtime = runtime_positions(root, map_id)
+        missing, agreements, deltas, surprises, absent = reconcile(
+            atlas_positions, runtime, ABSENT_BY_MAP[map_id])
+
+        # A listed entry that stopped being true is as much a signal as a new delta:
+        # either the sources were brought together (delete the entry) or one side moved.
+        stale = [key for key in KNOWN_DELTAS
+                 if key in atlas_positions and key not in deltas]
+        new_absent = [key for key in ABSENT_BY_MAP[map_id]
+                      if key in atlas_positions and key not in absent]
+
+        for atlas_id, position in missing:
+            problems.append(f"{map_id} MISSING {atlas_id} at {position} - the atlas "
+                            "names it, no shipped record carries it")
+        for atlas_id, atlas_position, runtime_position, known in surprises:
+            problems.append(f"{map_id} UNREVIEWED {atlas_id}: atlas={atlas_position} "
+                            f"runtime={runtime_position} allowed={known}")
+        for atlas_id in stale:
+            problems.append(f"{map_id} RESOLVED {atlas_id}: the allowed delta no longer "
+                            "matches - the entry must be deleted deliberately")
+        for atlas_id in new_absent:
+            problems.append(f"{map_id} ARRIVED {atlas_id}: listed as not shipping, but a "
+                            "record exists now - compare it and delete the entry")
+        for atlas_id in deltas:
+            print(f"  DELTA     {map_id} {atlas_id}: atlas={atlas_positions[atlas_id]} "
+                  f"runtime={runtime[ALPHA_OVERLAY_ALIASES.get(atlas_id, atlas_id)]}")
+
+        totals["rows"] += len(atlas_positions)
+        totals["agree"] += len(agreements)
+        totals["delta"] += len(deltas)
+        totals["absent"] += len(absent)
+
+    print(f"atlas rows={totals['rows']} agree={totals['agree']} "
+          f"known_deltas={totals['delta']} listed_absent={totals['absent']} "
+          f"problems={len(problems)}")
+    for line in problems:
+        print(f"  {line}")
+    if problems:
         print("FAIL: atlas/runtime reconciliation is not the reviewed state")
         return 1
     print("OK: every atlas position either matches the shipped data, is a listed "
