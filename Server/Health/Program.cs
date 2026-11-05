@@ -120,6 +120,12 @@ builder.Services.AddSingleton(serviceProvider =>
     return CurrencyCatalogLoader.Load(
         CurrencyCatalogLoader.DiscoverDirectory(environment.ContentRootPath));
 });
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return LifeSimCatalogLoader.Load(
+        LifeSimCatalogLoader.DiscoverDirectory(environment.ContentRootPath));
+});
 builder.Services.AddSingleton<NarrativeFlagStore>();
 builder.Services.AddSingleton<NarrativeService>();
 builder.Services.AddSingleton(serviceProvider =>
@@ -335,6 +341,13 @@ app.Logger.LogInformation("Loaded quest definitions: {QuestCount}.", quests.Coun
 
 var itemCatalog = app.Services.GetRequiredService<ItemCatalog>();
 app.Logger.LogInformation("Loaded item catalogue: {ItemCount} items.", itemCatalog.Count);
+
+var lifeSim = app.Services.GetRequiredService<LifeSimCatalog>();
+app.Logger.LogInformation(
+    "Loaded life sim catalog: {ContentCount} entries ({Crops} CROP, {Fish} FISH) - timings and caps are data, not a running gather loop.",
+    lifeSim.Count,
+    lifeSim.CountOfType("CROP"),
+    lifeSim.CountOfType("FISH"));
 
 var currencies = app.Services.GetRequiredService<CurrencyCatalog>();
 app.Logger.LogInformation(

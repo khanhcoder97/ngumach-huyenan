@@ -366,6 +366,100 @@ public static class ServiceSelfCheck
             badBalanceCap is not null && badBalanceCap.Contains("balance_cap", StringComparison.Ordinal),
             $"type='{Cut(badCurrencyType)}' cap='{Cut(badBalanceCap)}'");
 
+        // Q5's gather/craft half lives in docs/production/Life_Sim_Content_Data_vi.csv:
+        // five crop plots and six fishing waters with their seed or bait, yield range,
+        // grow time, daily cap, season, tool, quality weights, failure rule and the
+        // minigame the client must present. Nothing here runs it - the server has no
+        // gather loop for it - but the references stop being unverifiable prose.
+        var lifeSim = services.GetRequiredService<LifeSimCatalog>();
+        Check(
+            "lifesim.catalog_eleven_rows",
+            lifeSim.Count == 11 && lifeSim.CountOfType("CROP") == 5 && lifeSim.CountOfType("FISH") == 6,
+            $"count={lifeSim.Count}");
+
+        var mapBoundsCatalog = services.GetRequiredService<MapBoundsCatalog>();
+        var referencedItemIds = lifeSim.Rows
+            .SelectMany(entry => new[] { entry.InputItemId, entry.OutputItemId, entry.ToolId }
+                .Concat(entry.BaitItemId is null ? [] : [entry.BaitItemId]))
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        Check(
+            "lifesim.catalog_references_resolve_in_shipped_content",
+            referencedItemIds.Count == 14 &&
+            referencedItemIds.All(itemId => itemCatalog.TryGet(itemId, out _)) &&
+            lifeSim.Rows.All(entry => mapBoundsCatalog.TryResolve(entry.MapId, out _)),
+            $"items={referencedItemIds.Count}");
+
+        Check(
+            "lifesim.catalog_quality_weights_are_a_full_basis",
+            lifeSim.Rows.All(entry => entry.QualityWeights.Sum(weight => weight.Weight) == 10000) &&
+            lifeSim.Rows.All(entry => entry.QualityWeights.Count >= 1) &&
+            lifeSim.Rows.SelectMany(entry => entry.QualityWeights)
+                .Select(weight => weight.Rarity)
+                .Distinct(StringComparer.Ordinal)
+                .Count() == 3,
+            $"weights ok for {lifeSim.Count} rows");
+
+        // The Q3 packet argues the single-lane assumption is provisional. This row is the
+        // proof that an approved production table already places content off the lane.
+        lifeSim.TryGet("LIFE_FISH_CA_RE", out var offLane);
+        Check(
+            "lifesim.catalog_keeps_the_one_off_lane_row_off_lane",
+            offLane is { XWu: 158, YWu: -3 } &&
+            lifeSim.Rows.Count(entry => entry.YWu != 0) == 1,
+            $"off-lane y!=0 count={lifeSim.Rows.Count(entry => entry.YWu != 0)}");
+
+        Check(
+            "lifesim.catalog_timings_and_daily_caps_follow_their_own_columns",
+            lifeSim.Rows.Where(entry => entry.ContentType == "CROP")
+                .OrderBy(entry => entry.LevelRequired)
+                .Select(entry => entry.ProcessSeconds)
+                .SequenceEqual([3600, 7200, 10800, 14400, 21600]) &&
+            lifeSim.Rows.Where(entry => entry.ContentType == "CROP")
+                .All(entry => entry.InteractionSeconds == 2 && entry.DailyCap == 12) &&
+            lifeSim.Rows.Where(entry => entry.ContentType == "FISH")
+                .All(entry => entry.InteractionSeconds == 4 && entry.DailyCap == 20 &&
+                               entry.ProcessSeconds is >= 30 and <= 90),
+            $"crop grow times are monotone in level; fish always 4s and 20/day");
+
+        string? LifeSimLoadFailure(string from, string to)
+        {
+            var root = Path.Combine(Path.GetTempPath(), "p1-lifesim-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var directory = Path.Combine(root, "docs", "production");
+                Directory.CreateDirectory(directory);
+                var source = File.ReadAllLines(Path.Combine(
+                    LifeSimCatalogLoader.DiscoverDirectory(AppContext.BaseDirectory),
+                    LifeSimCatalogLoader.RelativePath));
+                File.WriteAllLines(
+                    Path.Combine(directory, Path.GetFileName(LifeSimCatalogLoader.RelativePath)),
+                    source.Select(line => line.Replace(from, to, StringComparison.Ordinal)).ToArray());
+
+                try
+                {
+                    LifeSimCatalogLoader.Load(root);
+                    return "LOADED";
+                }
+                catch (InvalidOperationException exception)
+                {
+                    return exception.Message;
+                }
+            }
+            finally
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+
+        var badWeightTotal = LifeSimLoadFailure("COMMON:8000", "COMMON:7000");
+        var badType = LifeSimLoadFailure(",CROP,", ",MINE,");
+        Check(
+            "lifesim.catalog_rejects_a_partial_weight_set_and_an_unknown_type",
+            badWeightTotal is not null && badWeightTotal.Contains("quality_weights", StringComparison.Ordinal) &&
+            badType is not null && badType.Contains("content_type", StringComparison.Ordinal),
+            $"weights='{Cut(badWeightTotal)}' type='{Cut(badType)}'");
+
         var combatActor = NewPlayer("CHR_SELFCHECK_COMBAT");
         var badSkill = combat.Resolve(
             combatActor, new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-99" });
