@@ -13,6 +13,7 @@ on:
       - 'Art_Source/Visual_Reboot_20261104/**'
       - 'Art_Source/BenMua_Concept_Rebuild_20261105/**'
       - 'Art_Source/Combat_Visuals_20261105/**'
+      - 'Art_Source/MoonGlass_UI_20261105/**'
       - 'Tools/ArtProduction/**'
       - 'Tools/Coordination/**'
       - 'Implementation/Coordination/**'
@@ -31,11 +32,12 @@ jobs:
         with:
           python-version: '3.12'
       - name: Fetch only the new art batch
-        run: git lfs pull --include="Art_Source/Visual_Reboot_20261104/**,ClientGodot/assets/reboot/**,Art_Source/BenMua_Concept_Rebuild_20261105/**,ClientGodot/assets/ben_mua_v3/**,Art_Source/Combat_Visuals_20261105/**,ClientGodot/assets/combat_v1/**" --exclude=""
+        run: git lfs pull --include="Art_Source/Visual_Reboot_20261104/**,ClientGodot/assets/reboot/**,Art_Source/BenMua_Concept_Rebuild_20261105/**,ClientGodot/assets/ben_mua_v3/**,Art_Source/Combat_Visuals_20261105/**,ClientGodot/assets/combat_v1/**,Art_Source/MoonGlass_UI_20261105/**,ClientGodot/assets/ui_moonglass/**" --exclude=""
       - run: python -m pip install Pillow==11.3.0
       - run: python Tools/ArtProduction/inspect_reboot.py
       - run: python Tools/ArtProduction/inspect_environment.py
       - run: python Tools/ArtProduction/inspect_combat.py
+      - run: python Tools/ArtProduction/inspect_moonglass.py
       - run: python Tools/ArtProduction/export_native_catalog.py --check
       - run: python -m unittest discover -s Tools/Coordination -p 'test_*.py' -v
       - run: dotnet restore ClientGodot/VisualReboot.csproj --locked-mode

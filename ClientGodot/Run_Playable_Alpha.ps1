@@ -1,6 +1,7 @@
 param(
     [switch]$Test,
     [switch]$UiTest,
+    [switch]$UiGallery,
     [int]$Port = 0,
     [string]$GodotPath,
     [string]$Dotnet8Path,
@@ -8,6 +9,7 @@ param(
     [string]$EvidenceDirectory
 )
 $ErrorActionPreference = 'Stop'
+if ($UiGallery) { $UiTest = $true }
 if ($UiTest) { $Test = $true }
 $clientRoot = $PSScriptRoot
 $repoRoot = Split-Path $clientRoot -Parent
@@ -100,7 +102,8 @@ try {
     $env:P1_BASE_URL = $baseUrl
     if ($Test) {
         $testFlag = if ($UiTest) { '--online-ui-self-test' } else { '--online-self-test' }
-        & $GodotPath --path $clientRoot -- $testFlag --capture $capturePath 2>&1 | Tee-Object -FilePath $gameLog
+        if ($UiGallery) { & $GodotPath --path $clientRoot -- $testFlag --ui-gallery --capture $capturePath 2>&1 | Tee-Object -FilePath $gameLog }
+        else { & $GodotPath --path $clientRoot -- $testFlag --capture $capturePath 2>&1 | Tee-Object -FilePath $gameLog }
     } else {
         Write-Output 'Online local: WASD move, E talk/collect, I inventory, Space attack, 1-3 skills, Esc close.'
         Write-Output ("Session logs: "+$EvidenceDirectory)

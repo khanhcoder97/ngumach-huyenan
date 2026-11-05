@@ -41,3 +41,9 @@ J hoặc nhấp bảng nhiệm vụ để mở nhật ký. Giao diện hỗ tr�
 --quest-ui-self-test kiểm UI bằng source/DTO fixture, không HTTP/grant; --quest-art-review là gallery hình gợn nước/cứu dân. -UiTest đã mở rộng kiểm J và nhật ký trong tuyến P00-01 thực. Log chơi tay nay tách vào NGUMACHHUYENAN-tools/play-sessions/<timestamp-id>, không ghi đè bằng chứng kiểm thử đã lưu.
 
 Khi chơi tay, launcher giảm log HTTP polling xuống Warning trong đúng tiến trình server nó tạo, để tránh log tăng liên tục và giảm tải máy. Các phiên đã mở trước thay đổi này vẫn giữ cấu hình cũ; launcher không dừng hoặc sửa tiến trình của người chơi đang chạy.
+
+## Giao diện MoonGlass
+
+Màu xanh tím than/tím khói bán trong suốt theo ảnh tham khảo2–3, viền bạc, nhấn champagne. Avatar/HP/MP, bảng nhiệm vụ, minimap và sáu kỹ năng vòng cung đã đổi cùng theme13mục. Mở panel ẩn HUD phía sau; sidebar và nội dung cuộn riêng. C mở nhân vật, K kỹ năng, M bản đồ, F10 cài đặt; J và I như cũ. Cài đặt camera/VFX/âm lượng lưu tại user://moonglass_ui.cfg. Các mục chưa có backend hiện empty/disabled state, không giả giao dịch.
+
+Run_Playable_Alpha.ps1 -UiGallery chạy kiểm UI nhiệm vụ thật và xuất ảnh HUD+13mục. --ui-screen Inventory (hoặc Character/Settings/...) --capture <absolute.png> chụp giao diện offline, không có dữ liệu server. Quy chuẩn trong docs/production/MoonGlass_UI_UX_vi.md; ảnh nguồn/avatar mới và prompt ở Art_Source/MoonGlass_UI_20261105.

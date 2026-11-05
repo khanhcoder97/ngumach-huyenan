@@ -91,8 +91,9 @@ public partial class NativeGameplayUiTest : Node
             await Press("×");
             Check(!_panel.IsOpen,"close button dismisses modal");
 
-            // Stand beside the NPC, not inside its authoritative footpoint.
-            await WalkTo(39.5);
+            // Stand safely on the NPC side of the parcel/NPC nearest-target boundary.
+            // At x39.5 the .6 arrival tolerance could stop below the midpoint x39.
+            await WalkTo(40);
             Stage("read_offer_without_accepting");
             _interact();
             await WaitFor(()=>_panel.IsOpen,5);
@@ -169,7 +170,7 @@ public partial class NativeGameplayUiTest : Node
             await WaitFor(()=>_panel.IsOpen&&VisibleText().Contains(ItemName(CoatId),StringComparison.Ordinal),5);
             string text=Normalize(VisibleText());
             Check(text.Contains("Túi đồ",StringComparison.Ordinal),"inventory title is visible");
-            Check(text.Contains(Normalize(ItemName("COIN")+" 20"),StringComparison.Ordinal),"actual currency amount is rendered");
+            Check(text.Contains(Normalize("Đồng 20"),StringComparison.Ordinal),"actual currency amount is rendered with localized label");
             Check(text.Contains(ItemName(CoatId),StringComparison.Ordinal)&&text.Contains("×1",StringComparison.Ordinal),
                 "localized actual coat row and stack are rendered");
             Check(_session.Frame.Inventory!.items.Count(i=>i.templateId==CoatId)==1,"actual server inventory has one coat instance");
