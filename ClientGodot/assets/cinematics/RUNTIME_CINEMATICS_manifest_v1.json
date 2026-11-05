@@ -1,6 +1,6 @@
 {
  "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
- "checkpoint": "MEDIA-02 checkpoint 14 - Gói 30 fix (a): dialogueCues derived from parsed timing dialogue/SRT (PR119 review finding 1); audio/timing unchanged from checkpoint 10/13",
+ "checkpoint": "MEDIA-02 checkpoint 15 - Gói 30 fix (b): LF + LFS (24 raw binaries to pointers, renormalize per integration a84ce590); audio/timing unchanged from checkpoint 10/13/14",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "campaignTotals": {

@@ -359,8 +359,8 @@ def main():
     check_runtime_cine_manifest()
     check_animatic_vo()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 14 (Gói 30 fix (a): dialogueCues cross-manifest validation)",
-        "base_integration": "f383233",
+        "checkpoint": "MEDIA-02 checkpoint 15 (Gói 30 fix (b): LF + LFS, renormalize per integration a84ce590)",
+        "base_integration": "a84ce590",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
         "mismatches": ERRORS,
