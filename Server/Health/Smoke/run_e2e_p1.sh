@@ -13,6 +13,10 @@
 #                                                  # over real HTTP: every gameplay
 #                                                  # gate plus P1:AlphaProfile, and
 #                                                  # endurance pools for the boss
+#   ./Server/Health/Smoke/run_e2e_p1.sh death-return # the approved return route:
+#                                                  # die to mob damage, return
+#                                                  # to the design anchor, replay
+#                                                  # as a pure read, 5 negatives
 #   ./Server/Health/Smoke/run_e2e_p1.sh audience-gateoff
 #                                                  # the issue #96 shape: v2 world
 #                                                  # and mob AI ON, P1:CombatDamage
@@ -89,6 +93,23 @@ elif [ "${PROFILE}" = "mob-combat" ]; then
   P1World__StartingMaxHp=400 \
   P1World__StartingMp=200 \
   P1World__StartingMaxMp=200 \
+    dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
+elif [ "${PROFILE}" = "death-return" ]; then
+  # DEC-DEATH-RETURN-20261105: the two gates that map the route, plus the combat
+  # gates that can actually end a life. The pools are small on purpose — 10 HP is
+  # one CARPLING hit, so the death is the shipped damage path rather than a
+  # fixture, and max(1, ceil(10 * 0.5)) = 5 is a number only the approved formula
+  # can produce. RestoreHpFixture stays 0: under the alpha profile a positive
+  # fixture is a startup failure.
+  P1__AlphaProfile__Enabled=true \
+  P1__DeathReturn__Enabled=true \
+  P1__CombatV2__Enabled=true \
+  P1__CombatDamage__Enabled=true \
+  P1__MobBehavior__Enabled=true \
+  P1World__StartingHp=10 \
+  P1World__StartingMaxHp=10 \
+  P1World__StartingMp=7 \
+  P1World__StartingMaxMp=7 \
     dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
 elif [ "${PROFILE}" = "audience-gateoff" ]; then
   # The configuration issue #96 was filed against: the v2 world read and the mob

@@ -376,11 +376,13 @@ DeathReturnOptionsValidator.Validate(
 if (deathReturn.Enabled)
 {
     app.Logger.LogWarning(
-        "DEV FIXTURE: P1:DeathReturn is enabled. The anchor is P1World SpawnX/SpawnY " +
-        "clamped to the actor's map bounds, not a reviewed safe anchor, and " +
-        "RestoreHpFixture {RestoreHp} is a configured starting HP, not a produced " +
-        "restore rule; no penalty is applied because no source defines one. Nothing " +
-        "reaches it over HTTP until the QOD-18 DeathReturn contract is approved.",
+        "DEV FIXTURE: P1:DeathReturn is enabled. With P1:AlphaProfile off the anchor " +
+        "is P1World SpawnX/SpawnY clamped to the actor's map bounds (not a reviewed " +
+        "safe anchor), RestoreHpFixture {RestoreHp} is a configured starting HP rather " +
+        "than the approved formula, and there is no cooldown because no source defines " +
+        "one; in that shape the route stays unmapped and only in-process callers reach " +
+        "it. With both gates on the anchor, HP, cooldown and penalties come from " +
+        "DEC-DEATH-RETURN-20261105.",
         deathReturn.RestoreHpFixture);
 }
 

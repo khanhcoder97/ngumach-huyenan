@@ -204,11 +204,14 @@ public sealed class DeathReturnService
             if (_ledger.TryGetValue(idempotencyKey, out var prior))
             {
                 // A replay never heals, never moves, never advances the life
-                // counter and never restarts the cooldown — the decision says the
-                // client must fresh-read the world instead of trusting this
-                // historical snapshot as current state.
+                // counter and never restarts the cooldown. It repeats the committed
+                // snapshot verbatim - including its serverTick and revision, which
+                // is why the decision tells the client to fresh-read the world
+                // instead of treating a receipt as current state - and it answers
+                // applied=false/replayed=true so no consumer can read the second
+                // arrival as a second return.
                 return prior.CharacterId == actor.CharacterId
-                    ? prior.Result with { Replayed = true, ServerTick = _clock.Tick }
+                    ? prior.Result with { Applied = false, Replayed = true }
                     : Rejected(DeathReturnErrorCodes.KeyConflict, actor);
             }
 

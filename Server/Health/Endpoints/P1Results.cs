@@ -213,6 +213,42 @@ internal static class P1Results
 
     // The v2 inventory answers carry schemaVersion 2 and the twelve-slot snapshot as
     // `result`, so a client never has to infer which vocabulary it is being served.
+    // The death-return envelope carries one member the shared P1 error does not:
+    // the tick a cooldown refusal may be retried at. It is declared on this
+    // route's own error type so no other route's frozen error shape changes.
+    public static IResult DeathReturn(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        string? sessionId,
+        int statusCode,
+        DeathReturnResultV1? result = null,
+        string? code = null,
+        IReadOnlyList<string>? fieldErrors = null,
+        bool retryable = false,
+        long? nextReturnAllowedAtTick = null) =>
+        Results.Json(
+            new P1DeathReturnResponse
+            {
+                RequestId = requestId,
+                SessionId = sessionId,
+                ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+                Result = result,
+                Error = code is null
+                    ? null
+                    : new DeathReturnErrorV1
+                    {
+                        Code = code,
+                        MessageKey = $"P1.ERROR.{code.ToUpperInvariant()}",
+                        Retryable = retryable,
+                        FieldErrors = fieldErrors ?? Array.Empty<string>(),
+                        CorrelationId = context.TraceIdentifier,
+                        NextReturnAllowedAtTick = nextReturnAllowedAtTick
+                    }
+            },
+            P1Json.Options,
+            statusCode: statusCode);
+
     public static IResult InventoryV2(
         HttpContext context,
         ServerClock clock,

@@ -86,7 +86,176 @@ public static class P1Endpoints
             app.MapPost("/p1/inventory/v2/unequip", UnequipV2Async);
         }
 
+        // DEC-DEATH-RETURN-20261105 gates.mapRouteOnlyWhen: the return route exists
+        // only while P1:AlphaProfile AND P1:DeathReturn are both on. Turning one
+        // flag alone therefore changes nothing on the wire, and the answer for an
+        // unmapped path is a real 404 rather than a status the server invented.
+        var deathReturnGates = app.ServiceProvider
+            .GetRequiredService<IOptions<DeathReturnOptions>>()
+            .Value;
+        if (alphaProfile.Enabled && deathReturnGates.Enabled)
+        {
+            app.MapPost("/p1/actor/death-return", DeathReturnAsync);
+        }
+
         return app;
+    }
+
+    // The approved return: an empty intent, a session, and nothing the client may
+    // choose. Status mapping lives here rather than in the domain so the domain
+    // answer stays one shape for every caller (self-check, tick engine, HTTP).
+    private static async Task<IResult> DeathReturnAsync(
+        HttpContext context,
+        ISessionStore sessions,
+        DeathReturnService returns,
+        ServerClock clock)
+    {
+        var requestId = NewRequestId();
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge || string.IsNullOrWhiteSpace(body) ||
+            !context.Request.HasJsonContentType())
+        {
+            return P1Results.DeathReturn(
+                context, clock, requestId, sessionId: null,
+                tooLarge ? StatusCodes.Status413PayloadTooLarge
+                         : StatusCodes.Status400BadRequest,
+                code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["body"], retryable: false);
+        }
+
+        DeathReturnEnvelope? envelope;
+        try
+        {
+            envelope = JsonSerializer.Deserialize<DeathReturnEnvelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.DeathReturn(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["body"], retryable: false);
+        }
+
+        if (envelope?.RequestId is { } incomingRequestId &&
+            P1Validation.IsHex32(incomingRequestId))
+        {
+            requestId = incomingRequestId;
+        }
+
+        // Validate the request and its owner first, exactly as the decision orders
+        // it, so a key that already committed is answered from the receipt and
+        // never re-runs the state guards.
+        var fieldErrors = P1Validation.ValidateDeathReturnEnvelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.DeathReturn(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: fieldErrors, retryable: false);
+        }
+
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return P1Results.DeathReturn(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["X-Session-ID"], retryable: false);
+        }
+
+        var actor = sessions.Find(sessionId);
+        if (actor is null)
+        {
+            return P1Results.DeathReturn(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status404NotFound, code: P1ErrorCodes.SessionNotFound,
+                fieldErrors: ["X-Session-ID"], retryable: false);
+        }
+
+        if (!string.Equals(envelope!.CharacterId, actor.CharacterId,
+                StringComparison.Ordinal))
+        {
+            return P1Results.DeathReturn(
+                context, clock, requestId, actor.SessionId,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["characterId"], retryable: false);
+        }
+
+        var outcome = returns.ReturnToAnchor(sessionId, envelope.IdempotencyKey);
+        if (outcome.ErrorCode is { } errorCode)
+        {
+            var (status, retryable, isPayload) = errorCode switch
+            {
+                DeathReturnErrorCodes.UnknownSession =>
+                    (StatusCodes.Status404NotFound, false, false),
+                DeathReturnErrorCodes.InvalidKey =>
+                    (StatusCodes.Status400BadRequest, false, true),
+                DeathReturnErrorCodes.NotDowned =>
+                    (StatusCodes.Status409Conflict, false, false),
+                DeathReturnErrorCodes.UnknownMap =>
+                    (StatusCodes.Status409Conflict, false, false),
+                DeathReturnErrorCodes.KeyConflict =>
+                    (StatusCodes.Status409Conflict, false, false),
+                DeathReturnErrorCodes.Cooldown =>
+                    (StatusCodes.Status422UnprocessableEntity, true, false),
+                DeathReturnErrorCodes.Disabled =>
+                    (StatusCodes.Status503ServiceUnavailable, false, false),
+                _ => (StatusCodes.Status400BadRequest, false, true)
+            };
+            var wireCode = errorCode switch
+            {
+                DeathReturnErrorCodes.UnknownSession => P1ErrorCodes.SessionNotFound,
+                DeathReturnErrorCodes.InvalidKey => P1ErrorCodes.InvalidPayload,
+                // KeyConflict is already the wire vocabulary ("idempotency_conflict"),
+                // so it needs no translation.
+                _ => errorCode
+            };
+            return P1Results.DeathReturn(
+                context, clock, requestId,
+                wireCode == P1ErrorCodes.SessionNotFound ? null : actor.SessionId,
+                status,
+                code: wireCode,
+                fieldErrors: isPayload
+                    ? new[] { "idempotencyKey" }
+                    : Array.Empty<string>(),
+                retryable: retryable,
+                nextReturnAllowedAtTick: outcome.NextReturnAllowedAtTick);
+        }
+
+        return P1Results.DeathReturn(
+            context, clock, requestId, actor.SessionId,
+            StatusCodes.Status200OK,
+            result: new DeathReturnResultV1
+            {
+                Applied = outcome.Applied,
+                Replayed = outcome.Replayed,
+                MapId = outcome.MapId!,
+                XWu = outcome.X,
+                YWu = outcome.Y,
+                Hp = outcome.Hp,
+                MaxHp = outcome.MaxHp,
+                Mp = outcome.Mp,
+                MaxMp = outcome.MaxMp,
+                ServerTick = outcome.ServerTick,
+                Revision = outcome.Revision,
+                Cleared = new DeathReturnClearedV1
+                {
+                    InflightCasts = outcome.InflightCastsCancelled,
+                    ReservedCounters = outcome.ReservedCountersCancelled,
+                    GuardWindowClosed = outcome.GuardWindowClosed,
+                    MovementWindowReset = outcome.MovementTimingReset
+                },
+                // Echoed from the decision: every penalty is zero, and the schema
+                // pins each at const 0, so a future penalty needs a new decision
+                // instead of a silent widening of this response.
+                Penalties = new DeathReturnPenaltiesV1
+                {
+                    Xp = 0,
+                    Currency = 0,
+                    Durability = 0
+                },
+                NextReturnAllowedAtTick = outcome.NextReturnAllowedAtTick
+            });
     }
 
     private static IResult GetEncounterCurrent(

@@ -64,6 +64,16 @@ fails on anything else.
             instead of faking a completion. A second client proves the same
             build keeps progress per character.
 
+  death-return — the approved DEC-DEATH-RETURN-20261105 route over real HTTP:
+            an actor is killed by the shipped mob damage path, returns to the
+            design's safe anchor at the formula's HP, replays its key as a pure
+            read, and every negative (missing header, foreign characterId,
+            non-hex key, wrong schemaVersion, a payload naming a destination)
+            answers 400 with the exact field name. The 404 half of the matrix is
+            asserted by `default`, and the 422 cooldown refusal is in-process
+            only: the approved anchor is 66 WU from the nearest thing that can
+            end a life, which no 3-second window can reach.
+
   audience-gateoff — the shape issue #96 reported: P1:CombatV2 and
             P1:MobBehavior ON with P1:CombatDamage OFF, so no mob stat bundle
             exists. No other profile boots it, which is how a MOB audience row
@@ -230,6 +240,20 @@ def default_profile():
         smoke_p1.check(
             status == 405,
             f"{label} expected 405 (gate OFF), got {status}: {body}")
+
+    # /p1/actor/death-return matches no read template at all, so with either of
+    # its two gates off it answers a real 404 instead of the 405 the routes above
+    # get: DEC-DEATH-RETURN-20261105 freezes disabledRouteStatus 404 because the
+    # path is not mapped, not because the server picked a status.
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/actor/death-return",
+        {"schemaVersion": 1, "requestId": "a" * 32, "idempotencyKey": "b" * 32,
+         "sentAtUtc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+         "characterId": "CHR_E2E_DEFAULT", "payload": {}},
+        {"X-Session-ID": session_id})
+    smoke_p1.check(
+        status == 404,
+        f"death-return with the gates OFF expected 404, got {status}: {body}")
 
     smoke_p1.check(
         smoke_p1.call("GET", f"/p1/quests/{session_id}")[0] == 200,
@@ -1803,6 +1827,175 @@ def alpha_p00_profile():
         f"talk=NO_HTTP_ROUTE c1_01=LOCKED second_client=ISOLATED")
 
 
+def death_return_envelope(character, key, payload=None, schema_version=1,
+                          request_id=None, character_id=None):
+    """One POST /p1/actor/death-return body. The payload is the empty intent the
+    decision froze unless a caller deliberately puts a destination in it, which is
+    the negative case."""
+    body = {
+        "schemaVersion": schema_version,
+        "requestId": request_id or alpha_key(0xe1),
+        "idempotencyKey": key,
+        "sentAtUtc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "characterId": character if character_id is None else character_id,
+        "payload": {} if payload is None else payload,
+    }
+    return body
+
+
+def death_return_profile():
+    """DEC-DEATH-RETURN-20261105 over real HTTP: die, return, replay, refuse, and
+    read the world back.
+
+    This is the matrix the work order asked for and the first time the route
+    exists at all. The gate-OFF half of the matrix (a real 404 because the path is
+    not mapped) is asserted by the `default` profile, which boots with every P1
+    flag off. The 422 cooldown refusal is not reachable through HTTP in this
+    topology and is pinned in-process instead: the approved anchor puts the actor
+    at (18,0) while the only thing that can end a life is a mob group 66 WU away,
+    and at the shipped step limits (1,5 WU per move) walking back takes far longer
+    than the three-second window. What HTTP *does* prove here is the cooldown
+    value itself - nextReturnAllowedAtTick is exactly serverTick + 60.
+    """
+    character = "CHR_QOD21_DEATH_RETURN"
+    session, sequence = alpha_session(character)
+
+    _, self_state, _, _ = v2_snapshot(session)
+    smoke_p1.check(
+        self_state.get("hp") == 10 and self_state.get("maxHp") == 10 and
+        self_state.get("mp") == 7 and self_state.get("maxMp") == 7,
+        f"the fixture pools are not what the expected numbers were computed from: "
+        f"{self_state}")
+
+    alive_key = alpha_key(0xe2)
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/actor/death-return", death_return_envelope(character, alive_key),
+        {"X-Session-ID": session})
+    smoke_p1.check(
+        status == 409 and (body.get("error") or {}).get("code") == "not_downed" and
+        (body.get("error") or {}).get("retryable") is False and
+        body.get("result") is None,
+        f"an alive actor with a fresh key got {status}: {(body.get('error') or {})}")
+
+    negative_cases = [
+        ("missing session header", None, death_return_envelope(character, alpha_key(0xe3)),
+         ["X-Session-ID"]),
+        ("another character in the body", session,
+         death_return_envelope(character, alpha_key(0xe4), character_id="CHR_OTHER"),
+         ["characterId"]),
+        ("a key that is not 32 hex", session,
+         death_return_envelope(character, "not-a-hex-key"), ["idempotencyKey"]),
+        ("schemaVersion 2", session,
+         death_return_envelope(character, alpha_key(0xe5), schema_version=2),
+         ["schemaVersion"]),
+        ("a payload naming a destination", session,
+         death_return_envelope(character, alpha_key(0xe6), payload={"xWu": 999.0}),
+         ["body"]),
+    ]
+    for label, header, envelope, expected_fields in negative_cases:
+        status, _, body = smoke_p1.call(
+            "POST", "/p1/actor/death-return", envelope,
+            {} if header is None else {"X-Session-ID": header})
+        error = body.get("error") or {}
+        smoke_p1.check(
+            status == 400 and error.get("code") == "invalid_payload" and
+            error.get("fieldErrors") == expected_fields,
+            f"{label}: expected 400 invalid_payload {expected_fields}, got {status} "
+            f"{error}")
+
+    # Let the CARPLING group end the life. No cast is fired and no HP is invented:
+    # the actor walks into reach and stands there until the authoritative snapshot
+    # reads hp 0.
+    failures = []
+    sequence, _, _ = alpha_approach(
+        session, character, sequence, 84.0, 0.0, within=2.5, failures=failures)
+    smoke_p1.check(not failures, f"walk into the CARPLING group failed: {failures}")
+
+    def downed():
+        _, state, _, _ = v2_snapshot(session)
+        return state.get("hp") == 0 or None
+
+    downed_state = wait_for(120.0, downed)
+    smoke_p1.check(
+        downed_state is not None,
+        "the mob damage path never ended the life within 120s, so the return has "
+        "nothing to answer")
+
+    # The aggregate revision lives on the snapshot itself, not on `self`, so the
+    # "+1 per return" claim has to be read from there.
+    status, _, before_body = smoke_p1.call(
+        "GET", f"/p1/v2/world/{session}", None, {"X-Session-ID": session})
+    before_result = before_body.get("result") or {}
+    downed_revision = before_result.get("revision")
+    smoke_p1.check(
+        status == 200 and isinstance(downed_revision, int) and
+        (before_result.get("self") or {}).get("hp") == 0,
+        f"the downed snapshot does not carry an authoritative hp 0 and a revision: "
+        f"{status} {before_result.get('self')} rev={downed_revision}")
+    return_key = alpha_key(0xe7)
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/actor/death-return", death_return_envelope(character, return_key),
+        {"X-Session-ID": session})
+    result = body.get("result") or {}
+    smoke_p1.check(
+        status == 200 and result.get("applied") is True and
+        result.get("replayed") is False and body.get("error") is None,
+        f"the return answered {status}: {str(body)[:200]}")
+    smoke_p1.check(
+        result.get("mapId") == "MAP_BEN_MUA" and
+        result.get("xWu") == 18.0 and result.get("yWu") == 0.0 and
+        result.get("hp") == 5 and result.get("maxHp") == 10 and
+        result.get("mp") == 7 and result.get("maxMp") == 7 and
+        result.get("revision") == downed_revision + 1 and
+        result.get("penalties") == {"xp": 0, "currency": 0, "durability": 0} and
+        (result.get("cleared") or {}).get("movementWindowReset") is True and
+        result.get("nextReturnAllowedAtTick") == result.get("serverTick") + 60,
+        f"the receipt does not match the approved numbers: {result}")
+
+    status, _, after_body = smoke_p1.call(
+        "GET", f"/p1/v2/world/{session}", None, {"X-Session-ID": session})
+    after_result = after_body.get("result") or {}
+    after_state = after_result.get("self") or {}
+    smoke_p1.check(
+        status == 200 and after_state.get("hp") == 5 and
+        after_state.get("x") == 18 and after_state.get("y") == 0 and
+        after_result.get("revision") == result.get("revision"),
+        f"the world does not agree with the receipt: {after_state} "
+        f"rev={after_result.get('revision')}")
+
+    status, _, replay = smoke_p1.call(
+        "POST", "/p1/actor/death-return", death_return_envelope(character, return_key),
+        {"X-Session-ID": session})
+    replay_result = replay.get("result") or {}
+    status, _, replayed_body = smoke_p1.call(
+        "GET", f"/p1/v2/world/{session}", None, {"X-Session-ID": session})
+    replayed_result = replayed_body.get("result") or {}
+    smoke_p1.check(
+        status == 200 and replay_result.get("applied") is False and
+        replay_result.get("replayed") is True and
+        replay_result.get("revision") == result.get("revision") and
+        replay_result.get("hp") == result.get("hp") and
+        replay_result.get("nextReturnAllowedAtTick") ==
+        result.get("nextReturnAllowedAtTick") and
+        replayed_result.get("revision") == after_result.get("revision"),
+        f"the replay was not a pure read of the first commit: {status} "
+        f"{replay_result} world={replayed_result.get('revision')}")
+
+    status, _, again = smoke_p1.call(
+        "POST", "/p1/actor/death-return", death_return_envelope(character, alpha_key(0xe8)),
+        {"X-Session-ID": session})
+    smoke_p1.check(
+        status == 409 and (again.get("error") or {}).get("code") == "not_downed",
+        f"a second key on a returned actor answered {status}: "
+        f"{(again.get('error') or {})}")
+
+    print(
+        f"profile=death-return diedByMob=OK returned=18,0 hp={result.get('hp')}/"
+        f"{result.get('maxHp')} cooldownTicks=60 replay=readOnly notDowned=409 "
+        f"negatives=5x400 gateOff=asserted_in_default_profile "
+        f"cooldownRefusalHttp=UNREACHABLE_BY_ANCHOR_DISTANCE")
+
+
 def audience_gateoff_profile():
     """The #96 report shape over real HTTP: P1:CombatV2 and P1:MobBehavior ON
     with P1:CombatDamage OFF.
@@ -1937,7 +2130,8 @@ def audience_gateoff_profile():
 def main():
     if len(sys.argv) < 3:
         fail("usage: e2e_p1.py <base_url> "
-             "<default|dev|mob-combat|two-client|alpha-p00|audience-gateoff>")
+             "<default|dev|mob-combat|two-client|alpha-p00|audience-gateoff|"
+             "death-return>")
     smoke_p1.BASE_URL = sys.argv[1].rstrip("/")
     mode = sys.argv[2]
     if mode == "default":
@@ -1952,10 +2146,12 @@ def main():
         alpha_p00_profile()
     elif mode == "audience-gateoff":
         audience_gateoff_profile()
+    elif mode == "death-return":
+        death_return_profile()
     else:
         fail(f"unknown mode '{mode}' "
              "(expected default|dev|mob-combat|two-client|alpha-p00|"
-             "audience-gateoff)")
+             "audience-gateoff|death-return)")
 
     print(f"PASS: e2e_p1 ({mode}) {smoke_p1.CHECKS} checks against {smoke_p1.BASE_URL}")
 

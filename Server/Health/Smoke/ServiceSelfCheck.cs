@@ -3604,7 +3604,7 @@ public static class ServiceSelfCheck
         var eventsAfterReplay = returnEvents.Read(downHero.SessionId, 0, 256).Events.Count;
         Check(
             "death_return_replays_the_recorded_answer",
-            replayReturn is { Applied: true, Replayed: true } &&
+            replayReturn is { Applied: false, Replayed: true } &&
             replayReturn.Revision == firstReturn.Revision &&
             replayReturn.X == firstReturn.X && replayReturn.Y == firstReturn.Y &&
             downHero.Revision == firstReturn.Revision &&
@@ -3757,7 +3757,7 @@ public static class ServiceSelfCheck
             cooldownReturn.NextReturnAllowedAtTick == alphaCooldownStartTick + 60 &&
             cooldownReturn.Hp == 0 &&
             alphaHero.X == cooldownPosition &&
-            replayInCooldown is { Applied: true, Replayed: true } &&
+            replayInCooldown is { Applied: false, Replayed: true } &&
             replayInCooldown.Hp == alphaReturn.Hp &&
             replayInCooldown.X == alphaReturn.X &&
             replayInCooldown.NextReturnAllowedAtTick ==

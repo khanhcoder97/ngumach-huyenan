@@ -534,6 +534,52 @@ public static class P1Validation
         return errors;
     }
 
+    // DEC-DEATH-RETURN-20261105: the payload has no fields, so there is nothing to
+    // validate inside it. Presence is still required - a request that omits
+    // "payload" is a different shape than the one the decision froze - and no
+    // destination may ever appear here, because the anchor is server-owned.
+    public static List<string> ValidateDeathReturnEnvelope(DeathReturnEnvelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        if (envelope.SchemaVersion != 1)
+        {
+            errors.Add("schemaVersion");
+        }
+
+        if (!IsHex32(envelope.RequestId))
+        {
+            errors.Add("requestId");
+        }
+
+        if (!IsHex32(envelope.IdempotencyKey))
+        {
+            errors.Add("idempotencyKey");
+        }
+
+        if (!TryParseUtc(envelope.SentAtUtc, out _))
+        {
+            errors.Add("sentAtUtc");
+        }
+
+        if (!IsCharacterId(envelope.CharacterId))
+        {
+            errors.Add("characterId");
+        }
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+        }
+
+        return errors;
+    }
+
     private static void ValidateV2EnvelopeHeader(
         List<string> errors,
         int? schemaVersion,

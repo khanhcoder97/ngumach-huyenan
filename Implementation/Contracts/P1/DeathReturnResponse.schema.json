@@ -173,8 +173,10 @@
             "not_downed",
             "unknown_map",
             "idempotency_conflict",
-            "death_return_cooldown"
-          ]
+            "death_return_cooldown",
+            "death_return_disabled"
+          ],
+          "description": "death_return_disabled is only reachable if the route is mapped while P1:DeathReturn:Enabled is false, which the two-gate mapping prevents; it is listed so a client has a name for the 503 rather than a mystery."
         },
         "messageKey": {
           "type": "string",
