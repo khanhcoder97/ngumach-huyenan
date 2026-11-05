@@ -5,6 +5,7 @@ using Server.Health.Gameplay.Alpha;
 using Server.Health.Gameplay.Combat;
 using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
+using Server.Health.Gameplay.Pets;
 using Server.Health.Gameplay.Progress;
 using Server.Health.Gameplay.Quests;
 using Server.Health.Gameplay.Teleport;
@@ -152,6 +153,16 @@ builder.Services.AddSingleton(serviceProvider =>
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
     return NpcActorRegistry.Load(ProductionTableDiscovery.DiscoverDirectory(
         environment.ContentRootPath, NpcActorRegistry.RelativePath));
+});
+// QOD-24: the pet and mount table, loaded as data only. There is no companion route and
+// no gate for it: nothing in Production_Rules says how a pet enters the damage formula,
+// the leash tick or the bag, so the table is read to pin what it claims against the item
+// catalogue, not to act on it.
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return CompanionCatalog.Load(ProductionTableDiscovery.DiscoverDirectory(
+        environment.ContentRootPath, CompanionCatalog.RelativePath));
 });
 builder.Services.AddSingleton<NarrativeFlagStore>();
 builder.Services.AddSingleton<NarrativeService>();
@@ -395,6 +406,14 @@ app.Logger.LogInformation(
     "Loaded NPC actor registry: {RowCount} NPCs, {ServiceCount} carrying a service token, none combat-targetable - service availability is data, not a route.",
     npcActors.Count,
     npcActors.Count(actor => actor.InteractionServiceId != "NONE"));
+
+var companions = app.Services.GetRequiredService<IReadOnlyList<CompanionEntry>>();
+app.Logger.LogInformation(
+    "Loaded pet and mount table: {CompanionCount} companions (leash {RangeWu} WU, fed every {FeedHours}h for cosmetics only) and {MountCount} cosmetic mounts (no combat) - the item catalogue names a different creature for every one of these ids, which the self-check pins; there is no companion route.",
+    companions.Count(entry => entry.IsCompanion),
+    companions.First(entry => entry.IsCompanion).OwnerRangeWu,
+    companions.First(entry => entry.IsCompanion).FeedCooldownHours,
+    companions.Count(entry => !entry.IsCompanion));
 
 var consumableRules = app.Services.GetRequiredService<IReadOnlyList<ConsumableEntry>>();
 app.Logger.LogInformation(

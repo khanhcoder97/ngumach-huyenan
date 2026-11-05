@@ -7,6 +7,7 @@ using Server.Health.Gameplay.Alpha;
 using Server.Health.Gameplay.Combat;
 using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
+using Server.Health.Gameplay.Pets;
 using Server.Health.Gameplay.Progress;
 using Server.Health.Gameplay.Quests;
 using Server.Health.Gameplay.Teleport;
@@ -8906,6 +8907,205 @@ public static class ServiceSelfCheck
             "npc_the_loader_refuses_a_registry_row_the_audience_policy_cannot_express",
             targetableNpcRefused.Contains("combat_targetable=true", StringComparison.Ordinal),
             $"refused={Cut(targetableNpcRefused)}");
+
+        // ─── QOD-24: the pet/mount table, read for the first time, against the catalogue ───
+
+        var petRows = services.GetRequiredService<IReadOnlyList<CompanionEntry>>();
+        var companionRows = petRows.Where(row => row.IsCompanion).ToArray();
+        var mountRows = petRows.Where(row => !row.IsCompanion).ToArray();
+        var productionDirectory = ProductionTableDiscovery.DiscoverDirectory(
+            AppContext.BaseDirectory, CompanionCatalog.RelativePath);
+        Check(
+            "companion.table_is_five_companions_and_five_cosmetic_mounts",
+            petRows.Count == 10 && companionRows.Length == 5 && mountRows.Length == 5 &&
+            companionRows.All(row => row.LevelCap == 30 && row.OwnerRangeWu == 8 &&
+                row.Element != "COSMETIC" && row.FeedItemId == "PET-FEED-01" &&
+                row.FeedCooldownHours == 12) &&
+            mountRows.All(row => row.LevelCap == 1 && row.OwnerRangeWu == 0 &&
+                row.Element == "COSMETIC" && row.FeedItemId.Length == 0 &&
+                row.FeedCooldownHours == 0 && row.ActiveSkillId.Length == 0 &&
+                row.PassiveSkillId.Length == 0) &&
+            petRows.All(row => row.FeedStat.Contains("cosmetic", StringComparison.OrdinalIgnoreCase)),
+            $"rows={petRows.Count} companionRange={companionRows.Max(row => row.OwnerRangeWu)} " +
+            $"companionCap={companionRows.Max(row => row.LevelCap)} " +
+            $"mountRange={mountRows.Max(row => row.OwnerRangeWu)} " +
+            $"mountCap={mountRows.Max(row => row.LevelCap)} " +
+            $"feedHours={companionRows.Max(row => row.FeedCooldownHours)} " +
+            $"statFeedRows={petRows.Count(row => !row.FeedStat.Contains("cosmetic", StringComparison.OrdinalIgnoreCase))}");
+
+        // The item catalogue carries its own row for every one of these ids, so the two
+        // approved sources can be compared without guessing. `nameDisagreements` is the
+        // headline: the same item_id names a different creature in each file, and the pet
+        // table's four equipment slots exist in neither catalogue.
+        var catalogueRows =
+            new Dictionary<string, (string DisplayName, string Element, int RequiredLevel, string PrimaryValue)>(
+                StringComparer.Ordinal);
+        var petSlotTokenRows = 0;
+        foreach (var line in File
+                     .ReadAllLines(Path.Combine(productionDirectory, ItemCatalog.RelativePath))
+                     .Skip(1))
+        {
+            var cells = MobEliteVariantCatalog.SplitCsvLine(line);
+            if (cells.Count < 12)
+            {
+                continue;
+            }
+
+            if (cells[3].Contains("PET_", StringComparison.Ordinal) ||
+                cells[3].Contains("MOUNT_", StringComparison.Ordinal))
+            {
+                petSlotTokenRows++;
+            }
+
+            if (cells[0].StartsWith("PET-", StringComparison.Ordinal) ||
+                cells[0].StartsWith("MOUNT-", StringComparison.Ordinal))
+            {
+                catalogueRows[cells[0]] = (
+                    cells[1],
+                    cells[5],
+                    int.TryParse(cells[6], System.Globalization.NumberStyles.Integer,
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        out var requiredLevel) ? requiredLevel : -1,
+                    cells[11]);
+            }
+        }
+
+        var nameDisagreements = new List<string>();
+        var blankCatalogueElements = 0;
+        var impossibleLevelRows = 0;
+        var companionPlaceholders = 0;
+        var mountSpeedAgreements = 0;
+        var missingTemplates = 0;
+        foreach (var row in petRows)
+        {
+            if (!catalogueRows.TryGetValue(row.ItemTemplateId, out var catalogue))
+            {
+                missingTemplates++;
+                continue;
+            }
+
+            if (!string.Equals(catalogue.DisplayName, row.DisplayNameVi, StringComparison.Ordinal))
+            {
+                nameDisagreements.Add($"{row.ItemTemplateId} pet='{row.DisplayNameVi}' " +
+                    $"catalogue='{catalogue.DisplayName}'");
+            }
+
+            if (catalogue.Element.Length == 0)
+            {
+                blankCatalogueElements++;
+            }
+
+            if (catalogue.RequiredLevel > row.LevelCap)
+            {
+                impossibleLevelRows++;
+            }
+
+            if (row.IsCompanion && catalogue.PrimaryValue == "Pet passive")
+            {
+                companionPlaceholders++;
+            }
+
+            if (!row.IsCompanion &&
+                catalogue.PrimaryValue.Contains("+10%", StringComparison.Ordinal))
+            {
+                mountSpeedAgreements++;
+            }
+        }
+
+        Check(
+            "companion.every_template_id_exists_in_the_item_catalogue_and_names_another_creature",
+            missingTemplates == 0 && catalogueRows.Count == 11 &&
+            nameDisagreements.Count == 10,
+            $"missing={missingTemplates} disagreements={nameDisagreements.Count} " +
+            $"first={Cut(nameDisagreements.Count > 0 ? nameDisagreements[0] : "none")} " +
+            $"last={Cut(nameDisagreements.Count > 0 ? nameDisagreements[^1] : "none")}");
+
+        Check(
+            "companion.the_item_catalogue_states_no_element_and_no_item_fills_a_pet_slot",
+            blankCatalogueElements == 10 && petSlotTokenRows == 0,
+            $"blankElements={blankCatalogueElements} petSlotItems={petSlotTokenRows}");
+
+        // A mount whose source says level_cap 1 while the catalogue requires level 10 to
+        // bind/use it cannot be summoned at any level. This is a decision, not a number I
+        // can pick, so it is pinned as five rows until someone states which column wins.
+        Check(
+            "companion.the_five_mount_rows_gate_above_their_own_level_cap",
+            impossibleLevelRows == 5 && mountRows.All(row =>
+                catalogueRows[row.ItemTemplateId].RequiredLevel > row.LevelCap) &&
+            companionRows.All(row => catalogueRows[row.ItemTemplateId].RequiredLevel <= row.LevelCap),
+            $"impossible={impossibleLevelRows} mountRequired=" +
+            string.Join("|", mountRows.Select(row =>
+                $"{row.ItemTemplateId}:{catalogueRows[row.ItemTemplateId].RequiredLevel}/" +
+                $"cap{row.LevelCap}")));
+
+        Check(
+            "companion.the_sources_agree_only_on_the_mount_speed_rule",
+            mountSpeedAgreements == 5 && companionPlaceholders == 5,
+            $"mountSpeed={mountSpeedAgreements} companionPlaceholders={companionPlaceholders}");
+
+        var companionSkillIds = companionRows
+            .SelectMany(row => new[] { row.ActiveSkillId, row.PassiveSkillId })
+            .ToArray();
+        var otherSourceFiles = Directory.EnumerateFiles(productionDirectory)
+            .Where(file => file.EndsWith(".csv", StringComparison.OrdinalIgnoreCase) ||
+                           file.EndsWith(".md", StringComparison.OrdinalIgnoreCase))
+            .Where(file => !file.EndsWith("Pet_Mount_Production_Data_vi.csv", StringComparison.Ordinal))
+            .ToArray();
+        var skillIdsDefinedElsewhere = companionSkillIds
+            .Where(id => otherSourceFiles.Any(file =>
+                File.ReadAllText(file).Contains(id, StringComparison.Ordinal)))
+            .ToArray();
+        Check(
+            "companion.the_ten_pet_skill_ids_are_defined_nowhere_but_in_the_pet_table",
+            companionSkillIds.Length == 10 &&
+            companionSkillIds.Distinct(StringComparer.Ordinal).Count() == 10 &&
+            skillIdsDefinedElsewhere.Length == 0,
+            $"ids={companionSkillIds.Length} definedElsewhere=" +
+            $"{string.Join("|", skillIdsDefinedElsewhere)}");
+
+        string CompanionLoadFailure(string from, string to)
+        {
+            var root = Path.Combine(
+                Path.GetTempPath(), "p1-companion-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var directory = Path.Combine(root, "docs", "production");
+                Directory.CreateDirectory(directory);
+                var source = File.ReadAllLines(
+                    Path.Combine(productionDirectory, CompanionCatalog.RelativePath));
+                File.WriteAllLines(
+                    Path.Combine(directory, Path.GetFileName(CompanionCatalog.RelativePath)),
+                    source.Select(line => line.Replace(from, to, StringComparison.Ordinal)).ToArray());
+
+                try
+                {
+                    CompanionCatalog.Load(root);
+                    return "LOADED";
+                }
+                catch (InvalidOperationException exception)
+                {
+                    return exception.Message;
+                }
+            }
+            finally
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+
+        var statBearingSlots = CompanionLoadFailure(
+            "MOUNT_SADDLE cosmetic only", "MOUNT_SADDLE +5% hp");
+        var pvpPetRule = CompanionLoadFailure(
+            "PvE normal mobs only; no pet damage/heal in PvP",
+            "PvE and PvP damage allowed");
+        var mountGrowsALeash = CompanionLoadFailure(
+            ",0,\"dismount on combat", ",8,\"dismount on combat");
+        Check(
+            "companion.loader_refuses_a_stat_slot_a_pvp_rule_and_a_mount_that_leashes",
+            statBearingSlots.Contains("equipment_slots", StringComparison.Ordinal) &&
+            pvpPetRule.Contains("combat_rule", StringComparison.Ordinal) &&
+            mountGrowsALeash.Contains("contradicts the MOUNT leash", StringComparison.Ordinal),
+            $"slots={Cut(statBearingSlots)}|rule={Cut(pvpPetRule)}|leash={Cut(mountGrowsALeash)}");
 
         // ─── QOD-21 Q3: the v2 twelve-slot handler ────
 
