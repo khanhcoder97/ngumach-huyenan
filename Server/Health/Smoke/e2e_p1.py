@@ -1691,32 +1691,33 @@ def alpha_revive_profile():
 
     walk_failures = []
     death_ticks = {}
-    for _ in range(40):
-        _, live_state, _, _ = v2_snapshot(session)
-        if (live_state.get("hp") or 0) <= 0:
-            break
-        sequence, _, _ = alpha_approach(
-            session, character, sequence, 86.0, 0.0, within=1.0,
-            failures=walk_failures)
-        time.sleep(1.0)
 
     # `hp` must be compared directly: writing `state.get("hp") or 1` turns a real 0 into
     # a 1 and makes "is the actor down?" unanswerable, which is exactly how this leg
     # reported "never ended the actor's life" while the actor lay at hp 0.
-    downed = wait_for_ticks(
-        # Sourced bound, then widened so a shared runner cannot manufacture a give-up:
-        # 60 starting HP under DESIGN-BM-ALPHA-20261103 divided by the CARPLING
-        # swing this configuration produces (10 per hit, the same number the mob-combat
-        # profile pins) is 6 swings, and the group's attack cooldown is 2 s = 40 ticks at
-        # the declared 20 Hz. Six swings over three mobs in one group is ~80 ticks of
-        # 2400 ticks (120 s) is the ceiling the leg allows, and it reports how many it
-        # actually used rather than silently trusting the stopwatch. Measured on CI at
-        # cd383d7 the answer is 0: the leg entered this wait already at hp 0 of 60, so the
-        # thing that ends the actor's life is the 40-iteration approach walk above (one
-        # second of sleep per iteration), not this wait. The bound is therefore honest
-        # slack, and bounding that walk is the remaining work, not a secret already
-        # solved by this line.
-        2400, lambda: v2_snapshot(session)[1].get("hp") == 0, session, death_ticks)
+    #
+    # One loop does both jobs, and it is bounded by the server's tick instead of by
+    # 40 iterations with a one-second sleep. Holding the approach inside the predicate
+    # is what keeps the group's 6-WU aggro alive (an actor that stopped walking fell
+    # out of the fight and could not be killed at all), while the bound itself comes
+    # from the shipped numbers: 60 starting HP under DESIGN-BM-ALPHA-20261103 divided
+    # by the swing this configuration produces (10 per hit, the same number the
+    # mob-combat profile pins) is 6 swings, the group's attack cooldown is 2 s = 40
+    # ticks at the declared 20 Hz, so ~80 ticks is the floor of pure damage and 2400
+    # ticks is the ceiling the leg allows. CI at cd383d7 measured the old shape waiting
+    # 0 ticks because the walk had already killed the actor, which is exactly the
+    # ambiguity this removes: now the ticks printed are the ticks of the fight.
+    def press_until_down():
+        nonlocal sequence
+        _, live_state, _, _ = v2_snapshot(session)
+        if (live_state.get("hp") or 0) <= 0:
+            return True
+        sequence, _, _ = alpha_approach(
+            session, character, sequence, 86.0, 0.0, within=1.0,
+            failures=walk_failures)
+        return False
+
+    downed = wait_for_ticks(2400, press_until_down, session, death_ticks)
     _, end_state, end_entities, _ = v2_snapshot(session)
     # Printed, never asserted: the margin between the bound this leg allowed and the
     # ticks the shipped damage actually needed is the number a future reader needs to
