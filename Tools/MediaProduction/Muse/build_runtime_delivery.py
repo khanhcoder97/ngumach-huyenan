@@ -779,6 +779,53 @@ def main():
             if p.exists():
                 check(sha256(p) == pexp[sha_key],
                       f"prologue {key} sha mismatch")
+        # --- 6c. Prologue subtitled variant (checkpoint 28) ---
+        # Owner-requested viewing variant of the same film: burned-in
+        # + embedded readable Vietnamese subtitles, narration at
+        # +5 dB presentation gain. Verified in place against the
+        # export manifest and registered alongside the canonical
+        # files; canonical MP4/OGV/SRT are unchanged.
+        pro_sub = None
+        if "mp4SubVi" in pexp:
+            f = pexp["mp4SubVi"]
+            p = ROOT / f["path"]
+            check(p.exists(),
+                  f"prologue sub-vi file missing: {f['path']}")
+            if p.exists():
+                check(not is_lfs_pointer(p),
+                      f"prologue sub-vi file is LFS pointer: "
+                      f"{f['path']}")
+                check(sha256(p) == f["sha256"],
+                      f"prologue sub-vi sha mismatch: {f['path']}")
+                check(p.stat().st_size == f["sizeBytes"],
+                      f"prologue sub-vi size mismatch: {f['path']}")
+                got_dur = ffprobe_first_stream_duration_s(p)
+                check(abs(got_dur - f["durationSeconds"]) <=
+                      DUR_TOL_S,
+                      f"prologue sub-vi duration {got_dur} != "
+                      f"{f['durationSeconds']}")
+                pr = json.loads(subprocess.run(
+                    ["ffprobe", "-v", "error", "-show_streams",
+                     "-of", "json", str(p)],
+                    capture_output=True, text=True).stdout)
+                kinds = [s["codec_type"] for s in pr["streams"]]
+                check(kinds == ["video", "audio", "subtitle"],
+                      f"prologue sub-vi streams {kinds} != "
+                      f"[video, audio, subtitle]")
+            rs = pexp["readableSrt"]
+            rp = ROOT / rs["path"]
+            check(rp.exists(), "prologue readable SRT missing")
+            if rp.exists():
+                check(sha256(rp) == rs["sha256"],
+                      "prologue readable SRT sha mismatch")
+                check(rp.stat().st_size == rs["sizeBytes"],
+                      "prologue readable SRT size mismatch")
+            pro_sub = {
+                "mp4SubVi": f,
+                "readableSrtFile": "assets/cinematics/CIN_000/"
+                                   "CIN_000_vi_readable.srt",
+                "readableSrtSha256": rs["sha256"],
+            }
         prologue_entry = {
             "sceneId": "CIN_000",
             "title": pexp["title"],
@@ -792,11 +839,12 @@ def main():
             "timingSha256": pexp["timingSha256"],
             "srtFile": "assets/cinematics/CIN_000/CIN_000_vi.srt",
             "srtSha256": pexp["srtSha256"],
+            **(pro_sub or {}),
         }
 
     cine_manifest = {
         "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
-        "checkpoint": "MEDIA-02 checkpoint 27 - prologue film CIN_000 registered under a separate 'prologue' key (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
+        "checkpoint": "MEDIA-02 checkpoint 28 - prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "campaignTotals": {"scenes": 20, "shots": 63, "seconds": 378,

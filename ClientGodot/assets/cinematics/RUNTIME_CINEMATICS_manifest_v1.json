@@ -1,6 +1,6 @@
 {
  "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
- "checkpoint": "MEDIA-02 checkpoint 27 - prologue film CIN_000 registered under a separate 'prologue' key (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
+ "checkpoint": "MEDIA-02 checkpoint 28 - prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "campaignTotals": {
@@ -1041,7 +1041,34 @@
   "timingFile": "assets/cinematics/CIN_000/CIN_000_timing_v1.json",
   "timingSha256": "bcd17d90578852b3f1bfdf2f372a767daa286cf5bffd8d893525f175ac15d350",
   "srtFile": "assets/cinematics/CIN_000/CIN_000_vi.srt",
-  "srtSha256": "0bc4151acff93982acbed8f82192aae6a820653611451a15c436d99f20af1af0"
+  "srtSha256": "0bc4151acff93982acbed8f82192aae6a820653611451a15c436d99f20af1af0",
+  "mp4SubVi": {
+   "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps_sub_vi.mp4",
+   "sha256": "2aae25e418c5c264efc494ac117a1416c555e8bb09efe0f55a4fb63f9d0ba25b",
+   "sizeBytes": 11918592,
+   "durationSeconds": 87.2667,
+   "streams": [
+    "video:h264",
+    "audio:aac",
+    "subtitle:mov_text"
+   ],
+   "subtitles": {
+    "burnedIn": true,
+    "embeddedTrack": "mov_text, language vie, default",
+    "renderer": "libass subtitles filter, DejaVu Sans bold 16, white on semi-transparent black box",
+    "sourceFile": "CIN_000_vi_readable.srt",
+    "chunks": 26
+   },
+   "audio": {
+    "source": "checkpoint 27 embedded mix of the canonical MP4 (mix file itself unchanged)",
+    "presentationGainDb": 5.0,
+    "loudnessLufs": -15.83,
+    "truePeakDbtp": -4.09
+   },
+   "note": "Owner-requested viewing variant (2026-11-06): on-screen Vietnamese subtitles + clearly audible narration. Canonical MP4 / OGV / SRT unchanged."
+  },
+  "readableSrtFile": "assets/cinematics/CIN_000/CIN_000_vi_readable.srt",
+  "readableSrtSha256": "762b86690b0b7ac925a17080f67fdde046403b56c8129365e7e10f373ef7d508"
  },
  "scenes": [
   {

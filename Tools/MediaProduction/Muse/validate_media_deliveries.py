@@ -1227,6 +1227,8 @@ def check_prologue():
     keyframe manifest against the staging WebPs, the film + mix
     manifests, and the runtime delivery (film files WITH an embedded
     audio stream + the runtime manifests' prologue registrations).
+    Checkpoint 28 extends it to the subtitled viewing variant
+    (mp4SubVi + readable SRT, owner-requested).
     The prologue is NOT part of the 20-scene campaign totals."""
     import subprocess as sp
     checked = 0
@@ -1368,6 +1370,67 @@ def check_prologue():
         if abs(dur - f["durationSeconds"]) > 0.05:
             err(f"PROLOGUE {key}: duration drift {dur}")
         checked += 1
+    # --- subtitled viewing variant (checkpoint 28) ---
+    sub = exp.get("mp4SubVi")
+    if not sub:
+        err("PROLOGUE: export manifest lacks mp4SubVi (cp28)")
+    else:
+        p = ROOT / sub["path"]
+        if not p.exists():
+            err(f"PROLOGUE mp4SubVi: missing {sub['path']}")
+        else:
+            if sha256_of(p) != sub["sha256"]:
+                err("PROLOGUE mp4SubVi: sha drift")
+            out = sp.run(["ffprobe", "-v", "error", "-show_streams",
+                          "-of", "json", str(p)],
+                         capture_output=True, text=True).stdout
+            prs = json.loads(out)
+            kinds = [s["codec_type"] for s in prs["streams"]]
+            if kinds != ["video", "audio", "subtitle"]:
+                err(f"PROLOGUE mp4SubVi: streams {kinds}")
+            dur = float(prs["streams"][0]["duration"])
+            if abs(dur - sub["durationSeconds"]) > 0.05:
+                err(f"PROLOGUE mp4SubVi: duration drift {dur}")
+            checked += 1
+            rs = exp.get("readableSrt", {})
+            rp = ROOT / rs.get("path", "")
+            if not rp.exists():
+                err("PROLOGUE: readable SRT missing in runtime")
+            else:
+                if sha256_of(rp) != rs.get("sha256"):
+                    err("PROLOGUE: readable SRT sha drift")
+                rcues = parse_srt(rp.read_text(encoding="utf-8"))
+                if len(rcues) != rs.get("cues"):
+                    err(f"PROLOGUE: readable cues {len(rcues)} "
+                        f"!= manifest {rs.get('cues')}")
+                import re as _re
+
+                def _norm(s):
+                    return _re.sub(r"\s+", " ", s).strip()
+                if _norm(" ".join(c["text"] for c in rcues)) != \
+                        _norm(" ".join(c["text"] for c in cues)):
+                    err("PROLOGUE: readable SRT text != canonical "
+                        "SRT text (whitespace-normalized)")
+                prev = 0.0
+                for c in rcues:
+                    if c["start"] < prev - 0.001 or \
+                            c["end"] <= c["start"]:
+                        err("PROLOGUE: readable cues not monotonic")
+                        break
+                    prev = c["end"]
+                if rcues and rcues[-1]["end"] > \
+                        timing["durationSeconds"] + 0.05:
+                    err("PROLOGUE: readable cues past film end")
+                emb = parse_srt(sp.run(
+                    ["ffmpeg", "-v", "error", "-i", str(p), "-map",
+                     "0:s:0", "-f", "srt", "-"],
+                    capture_output=True, text=True).stdout)
+                if len(emb) != len(rcues) or \
+                        _norm(" ".join(c["text"] for c in emb)) != \
+                        _norm(" ".join(c["text"] for c in rcues)):
+                    err("PROLOGUE: embedded subtitle track != "
+                        "readable SRT")
+                checked += 2
     poster = ROOT / exp["poster"]["path"]
     title_png = (ROOT / "Art_Source/Cinematics/Prologue"
                  / "keyframes_16x9/keyframe_CIN_000_S12.png")
@@ -1391,6 +1454,10 @@ def check_prologue():
         err("PROLOGUE: runtime cinematics manifest lacks 'prologue'")
     elif pro.get("mp4", {}).get("sha256") != exp["mp4"]["sha256"]:
         err("PROLOGUE: runtime manifest prologue sha != export")
+    if pro and exp.get("mp4SubVi") and \
+            pro.get("mp4SubVi", {}).get("sha256") != \
+            exp["mp4SubVi"]["sha256"]:
+        err("PROLOGUE: runtime manifest mp4SubVi sha != export")
     if cm.get("campaignTotals", {}).get("scenes") != 20:
         err("PROLOGUE: campaign totals changed (must stay 20)")
     am = json.loads((ROOT / "ClientGodot/assets/audio"
@@ -1413,6 +1480,11 @@ def check_prologue():
     note("Prologue CIN_000 (checkpoint 27): standalone pre-game film, "
          "87.367 s, narration derived from measured VO durations; "
          "final line reuses the CP04 take; campaign totals unchanged.")
+    note("Prologue subtitled variant (checkpoint 28): mp4SubVi with "
+         "burned-in + embedded readable Vietnamese subtitles "
+         "(26 chunks split from the canonical 6 cues, text identical) "
+         "and the checkpoint 27 narration at +5 dB presentation "
+         "gain; canonical MP4/OGV/SRT unchanged.")
 
 
 def main():
@@ -1436,7 +1508,7 @@ def main():
     check_scene_clips()
     check_prologue()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 27 (prologue film CIN_000: standalone pre-game lore film, 11 generated panels + title card, narration VO + embedded draft mix; prologue checker added; runtime delivery revised)",
+        "checkpoint": "MEDIA-02 checkpoint 28 (prologue subtitled variant: mp4SubVi with burned-in + embedded readable Vietnamese subtitles, 26 chunks from the canonical 6 cues, narration +5 dB presentation gain; canonical film files unchanged; checkpoint 27 prologue film CIN_000: standalone pre-game lore film, 11 generated panels + title card, narration VO + embedded draft mix; prologue checker extended; runtime delivery revised)",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -1461,6 +1533,7 @@ def main():
             "All campaign clip motion (checkpoints 21-25) is animatic-level Ken Burns on still keyframes, not final pose-animated takes.",
             "Composed pack (checkpoint 26, Goi 30 item 7): 13 ORIGINAL cues composed by Muse (9 music + 4 SFX/CINEMA stingers) from one leitmotif system; loudness measured from real bytes by the composer (music -22.0 LUFS target, stingers -25.0), this check re-verifies bytes/SHA/duration only. Loop seams are recorded per cue in the delivery manifest: wrapJump after a disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it; no ear audition. The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; composed cues are parallel candidates whose adoption is Codex's presentation-adapter decision.",
             "Prologue CIN_000 (checkpoint 27): a standalone pre-game film, NOT a campaign scene; its narration is DRAFT TTS (narrator casting is a director decision), its mix is DRAFT_MIX_NOT_FINAL, and no ear audition has been done. Identity checks inside the film builder use crop-compensated diffs (full-res < 20, 160x90 structure < 8) because the render path resamples twice; a brute-force fit on S01 confirmed the designed zooms (1.015/1.035/1.055) at zero offset with a 4.2-6.5 structure floor. Headline picture defects: S01/S03 mechanism design drift and S11's ambiguous arrival direction, recorded per shot in CIN000_keyframes_manifest_v1.json.",
+            "Prologue subtitled variant (checkpoint 28, owner request): a VIEWING variant only -- the canonical MP4/OGV keep the checkpoint 27 mix at its measured level (-20.81 LUFS) and the canonical SRT keeps its 6 cues. The variant's +5 dB is a flat presentation gain (no dynamics change, measured -15.83 LUFS / -4.09 dBTP on the variant file), and its readable SRT is a presentation split whose concatenated text is verified identical to the canonical SRT. Burned-in subtitle font is DejaVu Sans (the project has no locked Vietnamese display font, same placeholder status as the title card). No OGV subtitled variant: in-engine subtitle display is the presentation adapter's concern (Codex).",
         ],
     }
     print(f"counts: {json.dumps(COUNTS, indent=1)}")

@@ -181,6 +181,28 @@ def check_cinematics_manifest():
         check_file(pro["srtFile"], pro["srtSha256"], None,
                    "PROLOGUE srt")
         pro_files += 2
+        if "mp4SubVi" in pro:
+            f = pro["mp4SubVi"]
+            rel = f["path"]
+            if rel.startswith("ClientGodot/"):
+                rel = rel[len("ClientGodot/"):]
+            check_file(rel, f["sha256"], f["sizeBytes"],
+                       "PROLOGUE mp4SubVi",
+                       audio_fields={"durationSeconds":
+                                     f["durationSeconds"]})
+            pro_files += 1
+            pr = json.loads(subprocess.run(
+                ["ffprobe", "-v", "error", "-show_streams", "-of",
+                 "json", str(CLIENT / rel)],
+                capture_output=True, text=True).stdout)
+            kinds = [s["codec_type"] for s in pr["streams"]]
+            if kinds != ["video", "audio", "subtitle"]:
+                err(f"PROLOGUE mp4SubVi: streams {kinds} != "
+                    f"[video, audio, subtitle]")
+            check_file(pro["readableSrtFile"],
+                       pro["readableSrtSha256"], None,
+                       "PROLOGUE readable srt")
+            pro_files += 1
     COUNTS["prologue_files_checked"] = pro_files
     COUNTS["animatic_files_checked"] = anim
     COUNTS["cinematics_scenes_checked"] = scenes
@@ -203,10 +225,10 @@ def main():
     check_audio_manifest()
     check_cinematics_manifest()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 27 (prologue film CIN_000) - runtime re-verification",
+        "checkpoint": "MEDIA-02 checkpoint 28 (prologue film CIN_000 + subtitled variant) - runtime re-verification",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
-        "verifies": "checkpoint 10 runtime delivery as revised by checkpoint 13 (animatic v2), checkpoint 14 (dialogueCues fix), checkpoint 15 (LF + LFS fix), checkpoint 16 (animatic v3: CIN_002_S02 corrected keyframe + 16:9 keyframes), checkpoint 17 (campaign VO: 17 takes + 378 s timeline), checkpoint 18 (per-scene clips: CIN_001/CIN_002/CIN_004 video + CIN_006 timing/SRT only) checkpoint 19 (CIN_006 VO: canonical + alternate takes + 18 s timeline), checkpoint 20 (P0 draft mixes: 3 scenes + 72 s review) checkpoint 21 (CIN_005 animated take: 3 keyframes + 18 s clip), checkpoint 22 (CIN_006 animated take: 3 keyframes + 18 s clip; CIN_006 leaves PENDING_PANELS_NO_STORYBOARD) checkpoint 23 (CIN_009 animated take: 3 keyframes + 18 s clip; first Chapter 2 campaign scene with video) and checkpoint 24 (CIN_020 animated take: 3 keyframes + 18 s clip; closing campaign scene with video; CIN_009 keyframe manifest title corrected) and checkpoint 25 (campaign video batch: animated takes for the remaining 13 campaign scenes, 3 keyframes + 18 s clip each; all 20 scenes now carry video) and checkpoint 26 (original composed music + cinema stingers: 13 cues registered in the runtime audio manifest under assets/audio/composed/, parallel to the untouched ported packs) and checkpoint 27 (prologue film CIN_000: 5 narration VO takes + film mix in the audio manifest, total 589; the film registered under the cinematics manifest's separate 'prologue' key, campaign totals unchanged) (RUNTIME_AUDIO_manifest_v1.json + RUNTIME_CINEMATICS_manifest_v1.json)",
+        "verifies": "checkpoint 10 runtime delivery as revised by checkpoint 13 (animatic v2), checkpoint 14 (dialogueCues fix), checkpoint 15 (LF + LFS fix), checkpoint 16 (animatic v3: CIN_002_S02 corrected keyframe + 16:9 keyframes), checkpoint 17 (campaign VO: 17 takes + 378 s timeline), checkpoint 18 (per-scene clips: CIN_001/CIN_002/CIN_004 video + CIN_006 timing/SRT only) checkpoint 19 (CIN_006 VO: canonical + alternate takes + 18 s timeline), checkpoint 20 (P0 draft mixes: 3 scenes + 72 s review) checkpoint 21 (CIN_005 animated take: 3 keyframes + 18 s clip), checkpoint 22 (CIN_006 animated take: 3 keyframes + 18 s clip; CIN_006 leaves PENDING_PANELS_NO_STORYBOARD) checkpoint 23 (CIN_009 animated take: 3 keyframes + 18 s clip; first Chapter 2 campaign scene with video) and checkpoint 24 (CIN_020 animated take: 3 keyframes + 18 s clip; closing campaign scene with video; CIN_009 keyframe manifest title corrected) and checkpoint 25 (campaign video batch: animated takes for the remaining 13 campaign scenes, 3 keyframes + 18 s clip each; all 20 scenes now carry video) and checkpoint 26 (original composed music + cinema stingers: 13 cues registered in the runtime audio manifest under assets/audio/composed/, parallel to the untouched ported packs) and checkpoint 27 (prologue film CIN_000: 5 narration VO takes + film mix in the audio manifest, total 589; the film registered under the cinematics manifest's separate 'prologue' key, campaign totals unchanged) and checkpoint 28 (prologue subtitled viewing variant: mp4SubVi with burned-in + embedded readable Vietnamese subtitles and +5 dB narration presentation gain, plus CIN_000_vi_readable.srt, registered under the same 'prologue' key; canonical prologue files unchanged; prologue files checked now 7) (RUNTIME_AUDIO_manifest_v1.json + RUNTIME_CINEMATICS_manifest_v1.json)",
         "counts": COUNTS,
         "mismatches": ERRORS,
         "notes": NOTES,
