@@ -91,5 +91,13 @@ by value, so the line cannot rot silently again; the same run prints
     128 (1: NarrativeNodes), 256 (6: AlphaChapterUnlocks, ConsumableCatalog, DeathReturn,
     Equipment, EquipmentV2, PlayerLifeLedger), 512 (2: CombatDash, LootGrant)
 
-Measured at `02bd7b2` with `python Implementation/Tools/reconcile_technical_contract.py`,
-exit 0, and the CI step that runs it stayed green at that head.
+Measured locally at `02bd7b2`, which is where the stale sentence was found; the derived
+line then ran in CI's `content-validation` step at `02eaaba` and printed the same
+grouping on Linux:
+
+    128 (1: NarrativeNodes), 256 (6: AlphaChapterUnlocks, ConsumableCatalog, DeathReturn,
+    Equipment, EquipmentV2, PlayerLifeLedger), 512 (2: CombatDash, LootGrant)
+
+All 26 checks were green at `02eaaba`. Until that commit the CI step printed the
+hardcoded sentence, so every run since the step existed published the stale number -
+which is the reason it reads constants now instead of a sentence.
