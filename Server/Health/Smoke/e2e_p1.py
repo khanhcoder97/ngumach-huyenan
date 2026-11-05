@@ -2098,7 +2098,7 @@ def alpha_p00_profile():
 
     attempts = 0
     dodge_walk_failures = []
-    while attempts < 6 and not wait_for(0.2, wave_trial_credited):
+    while attempts < 6 and not wait_for_ticks(8, wave_trial_credited, session):
         attempts += 1
         sequence, _, _ = alpha_approach(session, character, sequence, dip_x, 0.0,
                                        within=1.0, pace=0.15,
@@ -2108,10 +2108,19 @@ def alpha_p00_profile():
                                        failures=dodge_walk_failures)
         time.sleep(0.7)
 
+    # One bound, sourced: the hazard credits on the impact frame, 24 ticks after the
+    # windup starts, so a single windup is the floor and 400 ticks (16 windups) is the
+    # ceiling the leg allows - and it prints what it spent rather than trusting a clock.
+    wave_trial_ticks = {}
+    credited = wait_for_ticks(400, wave_trial_credited, session, wave_trial_ticks)
+    print(f"P00-03 wave trial credited after {wave_trial_ticks.get('ticks')} ticks of "
+          f"the 400 allowed (one windup is 24 ticks) over {attempts} in/out attempts")
     smoke_p1.check(
-        wait_for(20.0, wave_trial_credited) is not None and not dodge_walk_failures,
+        credited is not None and not dodge_walk_failures,
         f"the training-wave dodge never credited OBJ_P00_03_WAVE_TRIAL over HTTP "
-        f"after {attempts} in/out attempts (walks {dodge_walk_failures[:4]})")
+        f"after {attempts} in/out attempts, waiting "
+        f"{wave_trial_ticks.get('ticks')} of 400 allowed ticks "
+        f"(walks {dodge_walk_failures[:4]})")
 
     # P00-03 hands in to Ly An, not to Ta Van Khanh: the walk back is part of
     # the quest, and the server gates it by distance.
@@ -2170,11 +2179,21 @@ def alpha_p00_profile():
 
     # Wave A activates when the escort reaches its x=80 checkpoint.
     walked_a, x_after_a = accompany_until(82.0, 42.0)
-    alive_a = wait_for(60.0, lambda: wave_alive(ALPHA_WAVE_A))
+    # Wave A activates when the escort reaches its x=80 checkpoint. The bound is the
+    # escort's own sourced traverse time: the checkpoint span (x=42 to x=80, 38 WU) at
+    # P00_04_SpeedWuPerSecond = 3 wu/s is 12,67 s = 254 ticks at 20 Hz, and the leg
+    # allows 1200 ticks so a shared runner cannot manufacture a give-up. What it spent
+    # is printed on the success path too - a bound nobody measures is a magic number.
+    wave_a_ticks = {}
+    alive_a = wait_for_ticks(1200, lambda: wave_alive(ALPHA_WAVE_A), session,
+                             wave_a_ticks)
+    print(f"P00-04 wave A activated after {wave_a_ticks.get('ticks')} ticks of the "
+          f"1200 allowed (sourced traverse: 38 WU at 3 wu/s = 254 ticks)")
     smoke_p1.check(
         alive_a is not None,
         f"the P00-04 escort never activated wave A (walked {walked_a} paced steps "
-        f"to x={x_after_a}; observed {wave_states})")
+        f"to x={x_after_a}; waited {wave_a_ticks.get('ticks')} of 1200 allowed ticks; "
+        f"observed {wave_states})")
 
     # Work order 30 item 3: the escorted actor's position has to come out of the domain
     # through the read model. If the world snapshot still reported the static anchor, a
@@ -2208,11 +2227,18 @@ def alpha_p00_profile():
 
     _, self_state, _, _ = v2_snapshot(session)
     walked_b, x_after_b = accompany_until(122.0, self_state.get("x", 82.0))
-    alive_b = wait_for(75.0, lambda: wave_alive(ALPHA_WAVE_B))
+    # Wave B is the second checkpoint: x=82 to x=122 is 40 WU at the same sourced 3
+    # wu/s = 267 ticks, and the leg allows 1500 ticks.
+    wave_b_ticks = {}
+    alive_b = wait_for_ticks(1500, lambda: wave_alive(ALPHA_WAVE_B), session,
+                             wave_b_ticks)
+    print(f"P00-04 wave B activated after {wave_b_ticks.get('ticks')} ticks of the "
+          f"1500 allowed (sourced traverse: 40 WU at 3 wu/s = 267 ticks)")
     smoke_p1.check(
         alive_b is not None,
         f"the P00-04 escort never activated wave B (walked {walked_b} paced steps "
-        f"to x={x_after_b}; observed {wave_states})")
+        f"to x={x_after_b}; waited {wave_b_ticks.get('ticks')} of 1500 allowed ticks; "
+        f"observed {wave_states})")
     sequence, _ = alpha_ensure_alive(session, character, sequence, "P00-04 wave B")
     sequence, wave_b_deaths, _ = alpha_kill_watched(
         session, character, sequence, ALPHA_WAVE_B, 3, "P00-04 wave B")
