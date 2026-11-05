@@ -20,6 +20,9 @@ Sources (all already measured from real bytes in checkpoints 01-09):
     checkpoint 19)
   - Art_Source/Audio/Muse/MIX/P0_DRAFT/P0_MIX_manifest_v1.json
     (3 P0 scene draft mixes + 72 s review mix WAV, checkpoint 20)
+  - Art_Source/Cinematics/Campaign/CIN_005/
+    (3 storyboard keyframes 640x360 + scene export manifest with the
+    18 s animated take MP4/OGV/poster, checkpoint 21)
   - Implementation/Content/Narrative/Deliveries/{P0,CAMPAIGN}_timing_manifest_v1.json
     + CIN_006/CIN_006_timing_manifest_v1.json (20 scenes timing JSON + SRT)
 
@@ -527,12 +530,13 @@ def main():
         })
     total_dialogue_cues = sum(e["dialogueCues"] for e in scene_entries)
 
-    # --- 6. Per-scene clips (checkpoint 18, Goi 30 item 6) ---
+    # --- 6. Per-scene clips (checkpoint 18, Goi 30 item 6; CIN_005
+    # animated take added in checkpoint 21, Goi 30 item 7) ---
     # Each scene folder holds its own MP4/OGV/poster/SRT/timing + export
     # manifest; CIN_006 has timing + SRT only (no panels yet, no video).
     # Verified here against the export manifests, not trusted blindly.
     scene_clip_entries = []
-    for scene_id in ("CIN_001", "CIN_002", "CIN_004", "CIN_006"):
+    for scene_id in ("CIN_001", "CIN_002", "CIN_004", "CIN_006", "CIN_005"):
         exp_path = CINE_DEST / scene_id / "scene_export_manifest_v1.json"
         check(exp_path.exists(),
               f"scene clip manifest missing: {scene_id}")
@@ -570,13 +574,13 @@ def main():
             "dialogueCues": exp["dialogueCues"],
             "files": exp["files"],
         })
-    check(len(scene_clip_entries) == 4,
-          f"expected 4 per-scene clip exports, got "
+    check(len(scene_clip_entries) == 5,
+          f"expected 5 per-scene clip exports, got "
           f"{len(scene_clip_entries)}")
 
     cine_manifest = {
         "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
-        "checkpoint": "MEDIA-02 checkpoint 18 - per-scene clip export (Goi 30 item 6): CIN_001/CIN_002/CIN_004 video clips + CIN_006 timing/SRT only (no panels yet); animatic v3 + audio/timing unchanged from checkpoint 16/17",
+        "checkpoint": "MEDIA-02 checkpoint 21 - CIN_005 animated take (Goi 30 item 7): first campaign video with real motion (18 s Ken Burns clip, MP4 + OGV + poster); P0 animatic v3 + audio/timing unchanged from checkpoint 20",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "campaignTotals": {"scenes": 20, "shots": 63, "seconds": 378,
@@ -612,6 +616,14 @@ def main():
             "only because it has no storyboard panels yet (no video "
             "fabricated). The 72 s reel stays review/gallery only, NOT "
             "auto-run as opening.",
+            "CIN_005 animated take (checkpoint 21, Goi 30 item 7): first "
+            "campaign video with real motion -- 18 s / 3 shots, slow Ken "
+            "Burns camera moves on 3 storyboard keyframes "
+            "(Art_Source/Cinematics/Campaign/CIN_005/keyframes_16x9/, "
+            "CIN005_keyframes_manifest_v1.json). Animatic-level motion, "
+            "NOT a final pose-animated take; no audio track in the clip "
+            "(VO/music/ambience added separately in editing); no baked "
+            "subtitles. Known defect: S02 roof palette drifts from S01.",
         ],
         "animatic": cine_files,
         "sceneClips": scene_clip_entries,

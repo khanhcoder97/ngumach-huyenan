@@ -398,6 +398,70 @@ def check_keyframes():
          f"4 checkpoint-13 panels; 7 v1 sheet crops re-verified for framing)")
 
 
+def check_cin005_keyframes():
+    """Checkpoint 21: CIN_005 storyboard keyframes (3, one per shot).
+
+    Verifies the keyframe manifest: 3 entries, each file exists under
+    Art_Source/Cinematics/Campaign/CIN_005/, is 640x360, is real image
+    bytes (not an LFS pointer), and matches the recorded SHA. Provenance
+    is tied back to the staged generation: the staging WebP must still
+    exist at its recorded path with the recorded SHA, and each entry
+    must carry framing + known-defects notes. Shot IDs are cross-checked
+    against the CIN_005 timing JSON.
+    """
+    manifest_path = (ROOT / "Art_Source/Cinematics/Campaign/CIN_005"
+                     / "CIN005_keyframes_manifest_v1.json")
+    if not manifest_path.exists():
+        err("CIN005-KEYFRAMES: missing CIN005_keyframes_manifest_v1.json")
+        return
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    timing = json.loads((ROOT / "Implementation/Content/Narrative"
+                         / "Deliveries/CIN_005/CIN_005_timing_v1.json")
+                        .read_text(encoding="utf-8"))
+    timing_ids = {s["shotId"] for s in timing.get("shots", [])}
+    staging_root = Path("/home/hatch/workspace/goals"
+                        "/ng-m-ch-continuous-development/hidden_files"
+                        "/cin005_keyframes_staging")
+    checked = 0
+    for entry in manifest.get("keyframes", []):
+        sid = entry["shotId"]
+        if sid not in timing_ids:
+            err(f"CIN005-KEYFRAMES {sid}: not in CIN_005 timing shots")
+            continue
+        kf = ROOT / "Art_Source/Cinematics/Campaign/CIN_005" / entry["file"]
+        if not kf.exists():
+            err(f"CIN005-KEYFRAMES {sid}: missing {entry['file']}")
+            continue
+        if is_lfs_pointer(kf):
+            err(f"CIN005-KEYFRAMES {sid}: file is an LFS pointer")
+            continue
+        if png_dims(kf) != (640, 360):
+            err(f"CIN005-KEYFRAMES {sid}: dims {png_dims(kf)} != 640x360")
+        if sha256_of(kf) != entry["sha256"]:
+            err(f"CIN005-KEYFRAMES {sid}: sha mismatch")
+        staged = staging_root / entry["sourceStagingFile"]
+        if not staged.exists():
+            err(f"CIN005-KEYFRAMES {sid}: staging source missing "
+                f"{entry['sourceStagingFile']}")
+        elif sha256_of(staged) != entry["sourceStagingSha256"]:
+            err(f"CIN005-KEYFRAMES {sid}: staging source sha mismatch")
+        if not entry.get("framing"):
+            err(f"CIN005-KEYFRAMES {sid}: no framing note")
+        if not entry.get("knownDefects"):
+            err(f"CIN005-KEYFRAMES {sid}: no known-defects note")
+        checked += 1
+    if checked != 3:
+        err(f"CIN005-KEYFRAMES: {checked}/3 keyframes checked")
+    if {e["shotId"] for e in manifest.get("keyframes", [])} != timing_ids:
+        err("CIN005-KEYFRAMES: keyframe shot set != timing shot set")
+    if manifest.get("status") != "STORYBOARD":
+        err(f"CIN005-KEYFRAMES: status {manifest.get('status')!r} "
+            f"!= STORYBOARD")
+    COUNTS["cin005_keyframes_checked"] = checked
+    note(f"CIN_005 keyframes checked: {checked}/3 (storyboard level, "
+         f"staging SHA-verified)")
+
+
 WINDOW_FIT_OVERRUNS = []
 
 
@@ -661,10 +725,10 @@ def check_scene_clips():
                          .read_text(encoding="utf-8"))
     runtime_clips = {c["sceneId"]: c
                      for c in runtime.get("sceneClips", [])}
-    if len(runtime_clips) != 4:
+    if len(runtime_clips) != 5:
         err(f"SCENE-CLIPS: runtime manifest has {len(runtime_clips)} "
-            f"sceneClips, expected 4")
-    for scene_id in ("CIN_001", "CIN_002", "CIN_004", "CIN_006"):
+            f"sceneClips, expected 5")
+    for scene_id in ("CIN_001", "CIN_002", "CIN_004", "CIN_006", "CIN_005"):
         exp_path = cine / scene_id / "scene_export_manifest_v1.json"
         if not exp_path.exists():
             err(f"SCENE-CLIPS {scene_id}: missing export manifest")
@@ -701,14 +765,21 @@ def check_scene_clips():
         if abs(cursor - exp["durationSeconds"]) > 1e-9:
             err(f"SCENE-CLIPS {scene_id}: shots end {cursor}, "
                 f"duration {exp['durationSeconds']}")
-        if exp["videoStatus"] == "VIDEO_FROM_STORYBOARD_PANELS":
+        if exp["videoStatus"] in ("VIDEO_FROM_STORYBOARD_PANELS",
+                                  "VIDEO_ANIMATED_TAKE_KEN_BURNS"):
             video_scenes += 1
-            off = exp.get("reelOffsetSeconds") or {}
-            off_start = off.get("start")
-            if off_start is None or abs(off_start - reel_end) > 1e-9:
-                err(f"SCENE-CLIPS {scene_id}: reel offset starts "
-                    f"{off_start}, expected {reel_end}")
-            reel_end = off.get("end", reel_end)
+            if exp["videoStatus"] == "VIDEO_FROM_STORYBOARD_PANELS":
+                off = exp.get("reelOffsetSeconds") or {}
+                off_start = off.get("start")
+                if off_start is None or abs(off_start - reel_end) > 1e-9:
+                    err(f"SCENE-CLIPS {scene_id}: reel offset starts "
+                        f"{off_start}, expected {reel_end}")
+                reel_end = off.get("end", reel_end)
+            else:
+                # Campaign animated take: not part of the 72 s P0 reel.
+                if exp.get("reelOffsetSeconds") is not None:
+                    err(f"SCENE-CLIPS {scene_id}: reel offset set despite "
+                        f"no reel segment")
             for key, want_codec in (("mp4", "h264"), ("ogv", "theora")):
                 f = exp["files"].get(key)
                 if not f:
@@ -753,12 +824,17 @@ def check_scene_clips():
                     err(f"SCENE-CLIPS {scene_id}: poster dims "
                         f"{png_dims(p)} != 640x360")
                 else:
-                    first_panel = (ROOT / "Art_Source/Cinematics"
-                                   / "P0_Animatic/panels"
-                                   / f"panel_{exp['shots'][0]['shotId']}.png")
+                    if scene_id == "CIN_005":
+                        first_panel = (ROOT / "Art_Source/Cinematics"
+                                       / "Campaign/CIN_005/keyframes_16x9"
+                                       / f"keyframe_{exp['shots'][0]['shotId']}.png")
+                    else:
+                        first_panel = (ROOT / "Art_Source/Cinematics"
+                                       / "P0_Animatic/panels"
+                                       / f"panel_{exp['shots'][0]['shotId']}.png")
                     if sha256_of(p) != sha256_of(first_panel):
                         err(f"SCENE-CLIPS {scene_id}: poster != first "
-                            f"shot panel")
+                            f"shot keyframe/panel")
         elif exp["videoStatus"] == "PENDING_PANELS_NO_STORYBOARD":
             for key in ("mp4", "ogv", "poster"):
                 if key in exp["files"]:
@@ -790,8 +866,9 @@ def check_scene_clips():
             f"expected 72.0")
     COUNTS["scene_clips_checked"] = checked
     COUNTS["scene_clips_with_video"] = video_scenes
-    note(f"Per-scene clips checked: {checked}/4 ({video_scenes} with "
-         f"video, CIN_006 timing/SRT only); reel tiled 0-72 exactly")
+    note(f"Per-scene clips checked: {checked}/5 ({video_scenes} with "
+         f"video: P0 x3 panel-hold + CIN_005 animated take, CIN_006 "
+         f"timing/SRT only); reel tiled 0-72 exactly")
 
 
 def main():
@@ -803,12 +880,13 @@ def main():
     check_runtime_cine_manifest()
     check_animatic_vo()
     check_keyframes()
+    check_cin005_keyframes()
     check_campaign_vo()
     check_cin006_vo()
     check_p0_mix()
     check_scene_clips()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 20 (P0 draft mix: 3 scene mixes + 72 s review mix from CP02 stem table + CP04 VO, ducking and loop QA measured; runtime delivery revised)",
+        "checkpoint": "MEDIA-02 checkpoint 21 (CIN_005 animated take: 3 storyboard keyframes + 18 s Ken Burns clip, MP4 + OGV + poster + timing/SRT; runtime delivery revised)",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -825,6 +903,7 @@ def main():
             "CIN_006 has no per-scene video clip yet (no storyboard panels); its export is timing + SRT only, and the validator accepts that state explicitly.",
             "CIN_006 alternate take CIN_006_ALT_T01 has no dialogue window by design (DEC-MEDIA-P0 Q3); its absence from the SRT and from the scene timeline is verified, not an omission.",
             "P0 mixes are DRAFT_MIX_NOT_FINAL: this check verifies bytes, durations and the recorded ducking/loop evidence, not the audible balance; no ear audition has been done.",
+            "CIN_005 clip motion is animatic-level Ken Burns on still keyframes, not a final pose-animated take; S02 roof palette drifts from S01 (blue-grey vs red), recorded as a known defect for art-direction lock.",
         ],
     }
     print(f"counts: {json.dumps(COUNTS, indent=1)}")
