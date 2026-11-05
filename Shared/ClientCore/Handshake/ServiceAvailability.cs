@@ -81,6 +81,9 @@ namespace NguMach.Client.Core.Handshake
         private const string GateAlphaBoss = "AlphaBossEnabled";
         private const string GateInventoryV2 = "AlphaInventoryV2Enabled";
         private const string GateDeathReturn = "DeathReturnEnabled";
+        private const string GateQuestTalk = "QuestTalkEnabled";
+        private const string GatePortal = "PortalEnabled";
+        private const string GateMapViewed = "MapViewedEnabled";
 
         private sealed class Definition
         {
@@ -115,6 +118,21 @@ namespace NguMach.Client.Core.Handshake
             {
                 Id = "death-return", DisplayVi = "Hồi sinh", Gate = GateDeathReturn,
                 Routes = new[] { "/p1/actor/death-return" }
+            },
+            new Definition
+            {
+                Id = "quest-talk", DisplayVi = "Nói chuyện NPC", Gate = GateQuestTalk,
+                Routes = new[] { "/p1/quests/talk" }
+            },
+            new Definition
+            {
+                Id = "portal", DisplayVi = "Cổng chuyển cảnh", Gate = GatePortal,
+                Routes = new[] { "/p1/world/portal" }
+            },
+            new Definition
+            {
+                Id = "map-viewed", DisplayVi = "Đánh dấu bản đồ", Gate = GateMapViewed,
+                Routes = new[] { "/p1/quests/map-viewed" }
             }
         };
 
@@ -207,6 +225,9 @@ namespace NguMach.Client.Core.Handshake
             if (gate == GateAlphaBoss) return capability.AlphaBossEnabled;
             if (gate == GateInventoryV2) return capability.AlphaInventoryV2Enabled;
             if (gate == GateDeathReturn) return capability.DeathReturnEnabled;
+            if (gate == GateQuestTalk) return capability.QuestTalkEnabled;
+            if (gate == GatePortal) return capability.PortalEnabled;
+            if (gate == GateMapViewed) return capability.MapViewedEnabled;
             return false;
         }
 

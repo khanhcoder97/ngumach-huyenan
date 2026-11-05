@@ -18,6 +18,9 @@ namespace NguMach.Client.Core.Handshake
         public bool AlphaBossEnabled { get; set; }
         public bool AlphaInventoryV2Enabled { get; set; }
         public bool DeathReturnEnabled { get; set; }
+        public bool QuestTalkEnabled { get; set; }
+        public bool PortalEnabled { get; set; }
+        public bool MapViewedEnabled { get; set; }
         public List<string> ServerEnabledRoutes { get; set; } = new List<string>();
         public string SourceVersion { get; set; } = "unknown";
 
@@ -29,6 +32,9 @@ namespace NguMach.Client.Core.Handshake
                 AlphaBossEnabled = false,
                 AlphaInventoryV2Enabled = false,
                 DeathReturnEnabled = false,
+                QuestTalkEnabled = false,
+                PortalEnabled = false,
+                MapViewedEnabled = false,
                 ServerEnabledRoutes = new List<string>(),
                 SourceVersion = "unknown"
             };
@@ -37,7 +43,10 @@ namespace NguMach.Client.Core.Handshake
         public static DeploymentProfile PrivateAlpha(
             bool encounterEnabled,
             bool inventoryV2Enabled = false,
-            bool deathReturnEnabled = false)
+            bool deathReturnEnabled = false,
+            bool questTalkEnabled = false,
+            bool portalEnabled = false,
+            bool mapViewedEnabled = false)
         {
             // Core P1 routes are part of the private-alpha deployment itself; the
             // alpha gates below are additive opt-ins, never a replacement.
@@ -59,12 +68,18 @@ namespace NguMach.Client.Core.Handshake
                 routes.Add("/p1/inventory/v2/unequip");
             }
             if (deathReturnEnabled) routes.Add("/p1/actor/death-return");
+            if (questTalkEnabled) routes.Add("/p1/quests/talk");
+            if (portalEnabled) routes.Add("/p1/world/portal");
+            if (mapViewedEnabled) routes.Add("/p1/quests/map-viewed");
             return new DeploymentProfile
             {
                 ProfileId = "private-alpha",
                 AlphaBossEnabled = encounterEnabled,
                 AlphaInventoryV2Enabled = inventoryV2Enabled,
                 DeathReturnEnabled = deathReturnEnabled,
+                QuestTalkEnabled = questTalkEnabled,
+                PortalEnabled = portalEnabled,
+                MapViewedEnabled = mapViewedEnabled,
                 ServerEnabledRoutes = routes,
                 SourceVersion = "private-alpha"
             };
@@ -73,11 +88,11 @@ namespace NguMach.Client.Core.Handshake
 
     public sealed class ClientCapability
     {
-        public string ClientCoreVersion { get; set; } = "opc-15-0.2";
+        public string ClientCoreVersion { get; set; } = "opc-15-0.3";
         public string ContractVersion { get; set; } = "v2";
         public string TargetFramework { get; set; } = "net8.0";
         public string DeploymentProfileId { get; set; } = "production-off";
-        public string ServerSourceVersion { get; set; } = "unknown";
+        public string ServerSourceVersion { get; set; } = "eb79389";
         public List<string> SupportedClasses { get; set; } = new List<string> { "CLASS_MINH_KIEM" };
 
         // Routes this client implementation knows how to speak. This is NOT a claim
@@ -89,7 +104,8 @@ namespace NguMach.Client.Core.Handshake
             "/p1/v2/world/{id}", "/p1/v2/combat", "/p1/v2/events/{id}",
             "/p1/encounters/current", "/p1/encounters/{id}",
             "/p1/inventory/v2/{id}", "/p1/inventory/v2/equip", "/p1/inventory/v2/unequip",
-            "/p1/actor/death-return"
+            "/p1/actor/death-return",
+            "/p1/quests/talk", "/p1/world/portal", "/p1/quests/map-viewed"
         };
 
         // Routes the deployment profile says the server actually exposes.
@@ -99,6 +115,9 @@ namespace NguMach.Client.Core.Handshake
         public bool AlphaBossEnabled { get; set; }
         public bool AlphaInventoryV2Enabled { get; set; }
         public bool DeathReturnEnabled { get; set; }
+        public bool QuestTalkEnabled { get; set; }
+        public bool PortalEnabled { get; set; }
+        public bool MapViewedEnabled { get; set; }
 
         public bool IsEncounterUsable =>
             AlphaBossEnabled &&
@@ -115,6 +134,18 @@ namespace NguMach.Client.Core.Handshake
             DeathReturnEnabled &&
             CapabilityHandshake.IsRouteEnabled(this, "/p1/actor/death-return");
 
+        public bool IsTalkUsable =>
+            QuestTalkEnabled &&
+            CapabilityHandshake.IsRouteEnabled(this, "/p1/quests/talk");
+
+        public bool IsPortalUsable =>
+            PortalEnabled &&
+            CapabilityHandshake.IsRouteEnabled(this, "/p1/world/portal");
+
+        public bool IsMapViewedUsable =>
+            MapViewedEnabled &&
+            CapabilityHandshake.IsRouteEnabled(this, "/p1/quests/map-viewed");
+
         public static ClientCapability FromProfile(DeploymentProfile profile)
         {
             if (profile == null) profile = DeploymentProfile.ProductionOff();
@@ -126,6 +157,9 @@ namespace NguMach.Client.Core.Handshake
                 AlphaBossEnabled = profile.AlphaBossEnabled,
                 AlphaInventoryV2Enabled = profile.AlphaInventoryV2Enabled,
                 DeathReturnEnabled = profile.DeathReturnEnabled,
+                QuestTalkEnabled = profile.QuestTalkEnabled,
+                PortalEnabled = profile.PortalEnabled,
+                MapViewedEnabled = profile.MapViewedEnabled,
                 ServerEnabledRoutes = new List<string>(profile.ServerEnabledRoutes ?? new List<string>())
             };
         }
@@ -167,6 +201,24 @@ namespace NguMach.Client.Core.Handshake
         {
             if (cap == null || !cap.DeathReturnEnabled) return false;
             return IsRouteEnabled(cap, "/p1/actor/death-return");
+        }
+
+        public static bool IsTalkUsable(ClientCapability cap)
+        {
+            if (cap == null || !cap.QuestTalkEnabled) return false;
+            return IsRouteEnabled(cap, "/p1/quests/talk");
+        }
+
+        public static bool IsPortalUsable(ClientCapability cap)
+        {
+            if (cap == null || !cap.PortalEnabled) return false;
+            return IsRouteEnabled(cap, "/p1/world/portal");
+        }
+
+        public static bool IsMapViewedUsable(ClientCapability cap)
+        {
+            if (cap == null || !cap.MapViewedEnabled) return false;
+            return IsRouteEnabled(cap, "/p1/quests/map-viewed");
         }
 
         public static bool IsClassSupported(ClientCapability cap, string classId)
