@@ -106,6 +106,144 @@ public static class ServiceSelfCheck
             !combatSkills.TryGet("SK-MK-06", out _),
             "MK-04..06 stay out: no stated prepare time, and MK-06 spends Kiem Y the server does not model");
 
+        // Work order 29 Q4 also names "passive", and the only machine-readable source is
+        // docs/production/Class_Passive_Production_Data_vi.csv - which the server never
+        // read before this loader existed. Loading is not applying: the catalogue is
+        // inert, and the damage oracle below (basic 19, MK03 8/10/17) is the proof that
+        // no passive changes a hit yet, because those numbers would move if one did.
+        var passives = services.GetRequiredService<ClassPassiveCatalog>();
+        Check(
+            "passive.catalog_forty_rows_across_the_five_classes",
+            passives.Count == 40 &&
+            passives.SupportedClassIds.All(classId => passives.CountForClass(classId) == 8),
+            $"count={passives.Count}");
+
+        Check(
+            "passive.catalog_two_branches_of_four_tiers_per_class",
+            passives.Rows
+                .GroupBy(passive => (passive.ClassId, passive.BranchId))
+                .Count() == 10 &&
+            passives.Rows
+                .GroupBy(passive => (passive.ClassId, passive.BranchId))
+                .All(branch => branch.Select(passive => passive.NodeTier).Order().SequenceEqual([1, 2, 3, 4])) &&
+            passives.Rows.All(passive => passive.UnlockLevel == passive.NodeTier * 20),
+            $"branches={passives.Rows.GroupBy(p => (p.ClassId, p.BranchId)).Count()}");
+
+        passives.TryGet("PAS-MINH_KIEM-KIEM_Y-T4", out var kiemYChainTop);
+        Check(
+            "passive.catalog_prerequisite_chain_walks_one_branch",
+            kiemYChainTop.PrerequisitePassiveId == "PAS-MINH_KIEM-KIEM_Y-T3" &&
+            passives.Rows.Where(passive => passive.NodeTier == 1)
+                .All(passive => passive.PrerequisitePassiveId is null) &&
+            passives.Rows.Where(passive => passive.NodeTier > 1)
+                .All(passive => passives.TryGet(passive.PrerequisitePassiveId!, out var parent) &&
+                                 parent.ClassId == passive.ClassId &&
+                                 parent.BranchId == passive.BranchId &&
+                                 parent.NodeTier == passive.NodeTier - 1),
+            kiemYChainTop.PrerequisitePassiveId ?? "none");
+
+        // Four of the numbers the Content Bible quotes in prose are here as data, and
+        // pinned: this is what let me withdraw "no source" for the Huyen But low-HP
+        // ally shield bonus that the skill spec had referenced as "theo bảng nội tại".
+        Check(
+            "passive.catalog_carries_the_numbers_the_bible_quotes",
+            passives.TryGet("PAS-MINH_KIEM-PHAN_CONG-T2", out var thuNhat) &&
+            thuNhat.EffectKey == "self_shield_pct" && thuNhat.EffectValue == 4 && thuNhat.EffectUnit == "percent" &&
+            passives.TryGet("PAS-HUYEN_BUT-HOI_DONG-T2", out var tinhThuy) &&
+            tinhThuy.EffectKey == "low_hp_ally_shield_pct" && tinhThuy.EffectValue == 5 &&
+            passives.TryGet("PAS-THACH_CHUY-THE-T1", out var cotThach) &&
+            cotThach.EffectKey == "constitution_pct" && cotThach.EffectValue == 3 &&
+            passives.TryGet("PAS-HUYEN_BUT-HOI_DONG-T1", out var chiaDong) &&
+            chiaDong.EffectKey == "rain_heal_target_bonus" && chiaDong.EffectUnit == "target" &&
+            chiaDong.Caps.Count(cap => cap.Kind == PassiveCapKind.HardCap) == 1,
+            $"rows={passives.Count}");
+
+        Check(
+            "passive.catalog_cap_tokens_classify_and_report_the_rest",
+            passives.Rows.SelectMany(passive => passive.Caps).Count() == 37 &&
+            passives.Rows.SelectMany(passive => passive.UnparsedCaps).Count() == 10 &&
+            passives.Rows.SelectMany(passive => passive.Caps)
+                .Count(cap => cap.Kind == PassiveCapKind.ProcRate) == 8 &&
+            passives.Rows.SelectMany(passive => passive.Caps)
+                .Count(cap => cap.Kind == PassiveCapKind.PvpZero) == 3 &&
+            passives.Rows.SelectMany(passive => passive.UnparsedCaps)
+                .Any(cap => cap.Equals("không xóa target lock", StringComparison.Ordinal)),
+            $"classified={passives.Rows.SelectMany(p => p.Caps).Count()} " +
+            $"unparsed={passives.Rows.SelectMany(p => p.UnparsedCaps).Count()}");
+
+        // Rejection fixtures: copy the shipped CSV to a temp docs tree and break one
+        // line at a time. The loader must refuse a broken branch chain, an unknown
+        // effect unit, and a passive whose approval status is not BASELINE - the last
+        // one matters most, because a playtest-balanced number must not load into a
+        // server that reports itself as shipped.
+        string? PassiveLoadFailure(string linePrefix, string from, string to)
+        {
+            var root = Path.Combine(Path.GetTempPath(), "p1-passive-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var directory = Path.Combine(root, "docs", "production");
+                Directory.CreateDirectory(directory);
+                var source = File.ReadAllLines(Path.Combine(
+                    ClassPassiveCatalogLoader.DiscoverDirectory(AppContext.BaseDirectory),
+                    ClassPassiveCatalogLoader.RelativePath));
+                var mutated = false;
+                for (var line = 0; line < source.Length; line++)
+                {
+                    if (!source[line].StartsWith(linePrefix, StringComparison.Ordinal) ||
+                        !source[line].Contains(from, StringComparison.Ordinal))
+                    {
+                        continue;
+                    }
+
+                    source[line] = source[line].Replace(from, to, StringComparison.Ordinal);
+                    mutated = true;
+                    break;
+                }
+
+                if (!mutated)
+                {
+                    return "FIXTURE_ANCHOR_MISSING";
+                }
+
+                File.WriteAllLines(
+                    Path.Combine(directory, Path.GetFileName(ClassPassiveCatalogLoader.RelativePath)),
+                    source);
+
+                try
+                {
+                    ClassPassiveCatalogLoader.Load(root);
+                    return "LOADED";
+                }
+                catch (InvalidOperationException exception)
+                {
+                    return exception.Message;
+                }
+            }
+            finally
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+
+        var brokenChain = PassiveLoadFailure(
+            "PAS-MINH_KIEM-KIEM_Y-T4", "PAS-MINH_KIEM-KIEM_Y-T3", "PAS-MINH_KIEM-PHAN_CONG-T1");
+        var unknownUnit = PassiveLoadFailure(
+            "PAS-HUYEN_BUT-HOI_DONG-T2", "percent", "aura");
+        var unapprovedStatus = PassiveLoadFailure(
+            "PAS-MINH_KIEM-KIEM_Y-T1", "BASELINE", "PLAYTEST_BALANCED");
+        Check(
+            "passive.catalog_rejects_a_broken_chain",
+            brokenChain is not null && brokenChain.Contains("prerequisite", StringComparison.Ordinal),
+            brokenChain ?? "none");
+        Check(
+            "passive.catalog_rejects_an_unknown_effect_unit",
+            unknownUnit is not null && unknownUnit.Contains("effect_unit", StringComparison.Ordinal),
+            unknownUnit ?? "none");
+        Check(
+            "passive.catalog_rejects_a_passive_that_is_not_baseline",
+            unapprovedStatus is not null && unapprovedStatus.Contains("status", StringComparison.Ordinal),
+            unapprovedStatus ?? "none");
+
         var combatActor = NewPlayer("CHR_SELFCHECK_COMBAT");
         var badSkill = combat.Resolve(
             combatActor, new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-99" });

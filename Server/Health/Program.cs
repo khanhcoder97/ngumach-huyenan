@@ -108,6 +108,12 @@ builder.Services.AddSingleton(serviceProvider =>
     return ItemCatalog.Load(
         ItemCatalogDiscovery.DiscoverDirectory(environment.ContentRootPath));
 });
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return ClassPassiveCatalogLoader.Load(
+        ClassPassiveCatalogLoader.DiscoverDirectory(environment.ContentRootPath));
+});
 builder.Services.AddSingleton<NarrativeFlagStore>();
 builder.Services.AddSingleton<NarrativeService>();
 builder.Services.AddSingleton(serviceProvider =>
@@ -323,6 +329,13 @@ app.Logger.LogInformation("Loaded quest definitions: {QuestCount}.", quests.Coun
 
 var itemCatalog = app.Services.GetRequiredService<ItemCatalog>();
 app.Logger.LogInformation("Loaded item catalogue: {ItemCount} items.", itemCatalog.Count);
+
+var classPassives = app.Services.GetRequiredService<ClassPassiveCatalog>();
+app.Logger.LogInformation(
+    "Loaded class passive catalogue: {PassiveCount} passives across {ClassCount} classes " +
+    "(data only - no passive is applied to combat yet).",
+    classPassives.Count,
+    classPassives.SupportedClassIds.Count);
 
 var narrativeNodes = app.Services.GetRequiredService<NarrativeNodeCatalog>();
 app.Logger.LogInformation(
