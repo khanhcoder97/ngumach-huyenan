@@ -849,6 +849,26 @@ def wait_for_ticks(max_ticks, probe, session_id, observed=None):
         time.sleep(0.05)
 
 
+def advance_ticks(want_ticks, session_id, observed=None):
+    """Wait until the authoritative server tick has advanced by `want_ticks`.
+
+    This is the pacing primitive a stopwatch cannot provide: when the thing being
+    waited for is a simulation frame - the training hazard commits its impact 24 ticks
+    after the windup starts - the correct pause is that many ticks, read from the
+    server, not 0,7 s of sleep guessed to be long enough. It returns the ticks it
+    actually saw, so the caller can print the margin instead of assuming it.
+    """
+    start = v2_snapshot(session_id)[3]
+    while True:
+        now = v2_snapshot(session_id)[3]
+        spent = now - start
+        if observed is not None:
+            observed["ticks"] = spent
+        if spent >= want_ticks:
+            return spent
+        time.sleep(0.025)
+
+
 def walk_to(session_id, character_id, sequence, target_x, target_y,
             axes=("y", "x")):
     """Walk 1,5-WU steps to a grid-aligned target, one axis at a time (the
@@ -2098,6 +2118,7 @@ def alpha_p00_profile():
 
     attempts = 0
     dodge_walk_failures = []
+    hazard_ticks = []
     while attempts < 6 and not wait_for_ticks(8, wave_trial_credited, session):
         attempts += 1
         sequence, _, _ = alpha_approach(session, character, sequence, dip_x, 0.0,
@@ -2106,7 +2127,10 @@ def alpha_p00_profile():
         sequence, _, _ = alpha_approach(session, character, sequence, escape_x, 0.0,
                                        within=1.0, pace=0.15,
                                        failures=dodge_walk_failures)
-        time.sleep(0.7)
+        # The pause is the hazard's own windup, read from the server, instead of 0,7 s
+        # of sleep chosen to be "probably long enough": 24 ticks at 20 Hz is when the
+        # impact frame commits, and dipping in and out before it is the whole objective.
+        hazard_ticks.append(advance_ticks(24, session))
 
     # One bound, sourced: the hazard credits on the impact frame, 24 ticks after the
     # windup starts, so a single windup is the floor and 400 ticks (16 windups) is the
@@ -2114,7 +2138,8 @@ def alpha_p00_profile():
     wave_trial_ticks = {}
     credited = wait_for_ticks(400, wave_trial_credited, session, wave_trial_ticks)
     print(f"P00-03 wave trial credited after {wave_trial_ticks.get('ticks')} ticks of "
-          f"the 400 allowed (one windup is 24 ticks) over {attempts} in/out attempts")
+          f"the 400 allowed (one windup is 24 ticks) over {attempts} in/out attempts, "
+          f"each followed by {hazard_ticks} ticks of windup waited for")
     smoke_p1.check(
         credited is not None and not dodge_walk_failures,
         f"the training-wave dodge never credited OBJ_P00_03_WAVE_TRIAL over HTTP "
