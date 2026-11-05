@@ -8432,6 +8432,82 @@ public static class ServiceSelfCheck
                     outcome?.Failure?.Code ??
                     $"{outcome?.Snapshot?.InventoryRevision}")));
 
+        // ─── QOD-24 Q4: equipment metadata is never an effective stat ────
+
+        // Work order 29 asks for this as a property of the product, so it is tested as
+        // one. First the wire half: none of the labels the gear aggregator uses may
+        // appear as a property on any contract type. Actor numbers that really are live
+        // (Hp/MaxHp/Mp/MaxMp) are deliberately absent from the deny list - the claim is
+        // that *catalogue metadata* has no wire home, not that stats are unspeakable. If
+        // someone later surfaces "attack" or "armor" on a snapshot, this fails here
+        // rather than in a client that assumed the number was resolved.
+        var gearStatVocabulary = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "WeaponPower", "WeaponAttack", "Armor", "PrimaryStat", "PrimaryValue",
+            "SecondaryStat", "SecondaryValue", "Strength", "Vitality", "FlatMaxHp",
+            "FlatMaxMp", "HpMax", "MpMax", "PhysicalAttack", "Attack", "Defense",
+            "EffectiveStats"
+        };
+        var gearStatPropsOnWire = typeof(InventorySnapshot).Assembly
+            .GetTypes()
+            .Where(type => type.IsPublic &&
+                           type.Namespace == "Server.Health.Contracts")
+            .SelectMany(type => type.GetProperties(
+                System.Reflection.BindingFlags.Public |
+                System.Reflection.BindingFlags.Instance))
+            .Where(property => gearStatVocabulary.Contains(property.Name))
+            .Select(property => property.DeclaringType?.Name + "." + property.Name)
+            .OrderBy(name => name, StringComparer.Ordinal)
+            .ToArray();
+        Check(
+            "equipment.gear_stat_labels_have_no_wire_field",
+            gearStatPropsOnWire.Length == 0,
+            $"found={string.Join("|", gearStatPropsOnWire)}");
+
+        // Then the runtime half, which is the stronger claim: wearing a hat the catalogue
+        // prices at +14 max HP must not move the actor's own numbers by one point. The
+        // aggregation is still asked for that item, so the check would go red the day
+        // gear is applied *without* the matching decision, in either direction.
+        itemCatalog.TryGet("EQ-MK-HAT-T1-R-COMMON", out var wornHatEntry);
+        var hatWorth = PlayerStatAggregation.Derive(
+            [PlayerStatAggregation.Resolve(wornHatEntry!)]);
+        var statProbeSeed = inventory.Apply(equipmentActor, new InventoryMutation
+        {
+            AddItems =
+            [
+                new ItemGrant
+                {
+                    TemplateId = "EQ-MK-HAT-T1-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag
+                }
+            ]
+        });
+        var statProbeHat = statProbeSeed.Snapshot!.Items
+            .Single(item => item.TemplateId == "EQ-MK-HAT-T1-R-COMMON");
+        var statsBeforeWearing = (
+            equipmentActor.Hp, equipmentActor.MaxHp, equipmentActor.Mp, equipmentActor.MaxMp);
+        var wearHat = equipment.Equip(
+            equipmentActor, statProbeHat.InstanceId,
+            statProbeSeed.Snapshot.InventoryRevision, NewKey());
+        var statsAfterWearing = (
+            equipmentActor.Hp, equipmentActor.MaxHp, equipmentActor.Mp, equipmentActor.MaxMp);
+        Check(
+            "equipment.wearing_the_hat_moves_no_actor_stat",
+            wearHat.Accepted &&
+            // The catalogue row for this hat states durability 100, and a grant that
+            // names no durability takes the source - measured here because guessing it
+            // is how a "7" got written into this check first.
+            statProbeHat.Durability == 100 && wornHatEntry!.Durability == 100 &&
+            hatWorth.HpMax == 212 &&
+            statsAfterWearing == statsBeforeWearing &&
+            inventory.GetSnapshot(equipmentActor.CharacterId)
+                .Items.Single(item => item.InstanceId == statProbeHat.InstanceId)
+                .Location == InventoryLocations.Equipped,
+            $"equip={wearHat.Failure?.Code ?? "OK"} hat.hp={hatWorth.HpMax} " +
+            $"hat.durability={statProbeHat.Durability} " +
+            $"before={statsBeforeWearing} after={statsAfterWearing}");
+
         // ─── QOD-21 Q3: the v2 twelve-slot handler ────
 
         // Same store, same aggregate revision, second vocabulary: these checks pin
