@@ -60,6 +60,35 @@ which `appsettings.json` keys change route mapping or fixture state between thos
 boots, and to make the suite report one number regardless of the directory it is run from.
 
 
+## 1c. Correction to §1b, measured at `c324df6` (same day)
+
+The claim in §1b - that the same Release build reports 358 smoke checks from
+`Server/Health` and 453 from the repository root - **does not reproduce** and is
+retracted. Re-run with the same five gates:
+
+```
+smoke, server from repo root:     PASS: 358 smoke checks
+smoke, server from Server/Health: PASS: 358 smoke checks
+```
+
+Both candidate explanations were eliminated with measurements rather than argument:
+
+- configuration: every value in `appsettings.json` equals the C# default it falls back to
+  (`QuestAccept/Interact/QuestTurnIn MaxInteractionDistanceWu = 5`,
+  `AssumedProfessionLevel = 1`, `MobBehavior 6/12/1.2/2/2/0.45/0.5`,
+  `CombatEventStream 512/200`, and the ten `Enabled = false` gates whose code defaults are
+  also false - the only `Enabled = true` literals in the tree are self-check fixtures);
+- content loading: six boots (three per directory) printed identical counts every time -
+  7 combat skills, 44 world entities, 352 world records.
+
+The 453 figures came from an unpinned working state earlier in the session, when I was
+building and editing the tree between runs and never recorded which binary answered. The
+correction is procedural, not just numerical: a published total has to name the commit and
+the artefact that produced it, because otherwise a difference in my own process becomes a
+"finding" about the server. §1b stays in this file as written, including the two things it
+correctly ruled out at the time.
+
+
 ## 2. What the two approved sources say about the same ids
 
 Every `item_template_id` in the pet table exists in `Item_Master_Catalog_vi.csv`. Both
