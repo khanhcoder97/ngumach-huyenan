@@ -96,3 +96,43 @@ Ràng buộc server-side, tái dùng máy đã có thay vì viết mới:
 ## 5. Trạng thái hiện tại
 
 Chưa có schema, DTO, route, handler hay gate nào cho TALK. Không có gì trong `appsettings.json` bị bật. Chuỗi `P00-01 → P00-05` hiện đã chạy được tới bước cuối trong CI (`e2e-alpha-p00`, 95 checks), và profile assert đúng điểm dừng này thay vì giả bộ hoàn thành.
+
+## Bổ sung 2026-11-06 (head `1d2d2be`): packet này thiếu một chặn thật, và nó không phải chuyện wire
+
+Khi kiểm tra lại các nguồn mà server chưa đọc, tôi tìm ra rằng câu hỏi "TALK route hình
+dạng thế nào" **chưa phải** thứ chặn item 4. Chặn trước đó là dữ liệu spawn tự mâu thuẫn:
+
+- `World_Spawn_Gathering_Manifest_vi.csv` dòng `MAN-BM-NPC_CLASS_TRIAL`: `NPC_CLASS_TRIAL`
+  ở `(188,0)` `MAP_BEN_MUA`, điều kiện hiện **"Hiện sau khi hoàn tất P00-05"**, persistent,
+  spawn theo map/quest state.
+- `Map_Production_Atlas_vi.md:68`: `NPC_CLASS_TRIAL | (188,0) | xuất hiện sau boss, menu chọn lớp`.
+- `World_Spawn_Gathering_Manifest_vi.csv` dòng `MAN-TL-NPC_CLASS_TRIAL`: cùng NPC ở
+  `(186,0)` `MAP_THANH_LAC`, **"Sau P00-05; xác nhận lựa chọn môn phái"**.
+- `NPC_Actor_Production_Registry_vi.csv`: `NPC_CLASS_TRIAL` mang
+  `interaction_service_id = SERVICE_CLASS_SELECTION` và `dialogue_bank_id = DLG_NPC_CLASS_TRIAL`
+  (toàn bộ 64 NPC khác là `NONE`; chỉ 15 NPC có service token).
+- `Production_Rules_Complete_v1_vi.md:66` giữ `TALK` trong danh sách step type được duyệt;
+  `Development_Execution_Board_vi.md:39` nêu `talk` trong exit slice `P00-01..05`.
+
+Mâu thuẫn: khách quan cuối của `P00-05` là `OBJ_P00_05_CLASS_CONFIRM`, loại `TALK`, đích
+`NPC_CLASS_TRIAL` — nhưng theo cả hai dòng manifest và atlas, NPC đó **chỉ xuất hiện sau khi
+`P00-05` hoàn tất**. Không có cách nào hoàn tất khách quan bằng đúng NPC mà điều kiện hiện của
+nó là khách quan đã xong. Server hiện ghi `talk=NO_HTTP_ROUTE`; phát hiện chính xác hơn phải là
+`talk=NPC_NOT_YET_PRESENT`.
+
+Tôi **không** tự sửa: docs/production không thuộc quyền của tôi, và đây là quyết định thứ tự
+quest, không phải tuning. Ba lựa chọn, chủ dự án chốt:
+
+1. Sửa điều kiện hiện của `MAN-BM-NPC_CLASS_TRIAL` thành "xuất hiện sau khi boss Mãng Cốt bị
+   hạ (objective `DEFEND`/`BOSS_PHASE` xong)" — lúc đó `TALK` nằm ngoài chu kỳ và server chỉ
+   cần đọc quest state, không đổi wire shape nào khác.
+2. Giữ điều kiện hiện, đổi khách quan `CLASS_CONFIRM` sang một NPC đã có mặt (ví dụ `NPC_LYAN`
+   hoặc `NPC_TA_VAN_KHANH`) — nhưng hai NPC này mang `interaction_service_id = NONE`, nên cần
+   cấp token cho họ trong registry, tức sửa dữ liệu NPC.
+3. Cho phép `CLASS_CONFIRM` hoàn thành qua menu chọn lớp (không qua TALK) — hợp với chữ
+   "menu chọn lớp" trong atlas, nhưng đổi loại step so với `Production_Rules_Complete_v1_vi.md:66`
+   nên cần ghi quyết định mới vào register.
+
+Wire packet (schema/`P1:Dialogue` gate OFF/idempotency) vẫn còn nguyên và vẫn chờ **duyệt**;
+chỉ có điều là dù được duyệt, nó cũng chưa chạy được cho tới khi một trong ba lựa chọn trên
+được chốt.
