@@ -262,8 +262,30 @@ def default_profile():
         smoke_p1.call("GET", f"/p1/inventory/{session_id}")[0] == 200,
         "inventory read must stay available with gates OFF")
 
+    # The rest of the gated surface. Work order 29 freezes "Feature chưa đủ vẫn
+    # OFF trong cấu hình phát hành", so the invariant is asserted for every route a
+    # gate can hide, not just the five POSTs above. These paths match no read
+    # template at any arity, so an unmapped handler answers a literal 404 rather than
+    # the 405 the single-segment routes get - which is what makes the two groups
+    # separate assertions instead of one blanket "not 200".
+    for method, path, label in (
+        ("POST", "/p1/v2/combat", "combat_v2_write"),
+        ("GET", f"/p1/v2/world/{session_id}", "combat_v2_world"),
+        ("GET", f"/p1/v2/events/{session_id}", "combat_v2_events"),
+        ("GET", "/p1/encounters/current", "encounter_current"),
+        ("GET", "/p1/encounters/" + "c" * 32, "encounter_by_id"),
+        ("GET", f"/p1/inventory/v2/{session_id}", "inventory_v2_read"),
+        ("POST", "/p1/inventory/v2/equip", "inventory_v2_equip"),
+        ("POST", "/p1/inventory/v2/unequip", "inventory_v2_unequip"),
+    ):
+        status, _, body = smoke_p1.call(method, path, None, {"X-Session-ID": session_id})
+        smoke_p1.check(
+            status == 404,
+            f"{label} expected 404 (gate OFF), got {status}: {str(body)[:200]}")
+
     print("profile=default expected_blocked_output=OK "
-          "(gated POST handlers unmapped, HTTP 405 via read-route match)")
+          "(gated POST handlers unmapped: 405 where a read template matches the path, "
+          "404 for the v2/encounter/inventory-v2 surface)")
 
 
 def dev_profile():
