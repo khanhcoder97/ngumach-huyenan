@@ -1,6 +1,6 @@
 {
  "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
- "checkpoint": "MEDIA-02 checkpoint 25 - campaign video batch (Goi 30 item 7): animated takes for the remaining 13 campaign scenes (CIN_003, CIN_007, CIN_008, CIN_010-CIN_019), 3 storyboard keyframes + 18 s Ken Burns clip each; all 20 scenes now carry video; P0 animatic v3 + audio/timing unchanged from checkpoint 24",
+ "checkpoint": "MEDIA-02 checkpoint 27 - prologue film CIN_000 registered under a separate 'prologue' key (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "campaignTotals": {
@@ -20,7 +20,8 @@
   "CIN_006 animated take (checkpoint 22, Goi 30 item 7): the scene leaves PENDING_PANELS_NO_STORYBOARD with 3 storyboard keyframes (Art_Source/Cinematics/Campaign/CIN_006/keyframes_16x9/, CIN006_keyframes_manifest_v1.json) + 18 s Ken Burns clip. NPC_HA_MAC / NPC_SAM_CHU_QUY have NO approved character lock: faces/costumes are storyboard placeholders, cinematic-only staging per DEC-MEDIA-P0 Q4. Known defects: S02 composition (oversized blurred glove + pale face-like shape at frame right) and cross-shot lighting drift, recorded per shot for the final-picture revision pass.",
   "CIN_009 animated take (checkpoint 23, Goi 30 item 7): first Chapter 2 campaign scene with video -- 18 s / 3 shots, slow Ken Burns camera moves on 3 storyboard keyframes (Art_Source/Cinematics/Campaign/CIN_009/keyframes_16x9/, CIN009_keyframes_manifest_v1.json). Pack character list is empty, so no character lock is involved; the S02 workers are unnamed generation-invented figures. Animatic-level motion, NOT a final pose-animated take; no audio track in the clip (VO/music/ambience added separately in editing); no baked subtitles. Known defects: S01 carries an invented white hooded figure not in the prompt and reads darker than a daylight payoff; S03 is not strictly top-down and adds a shrine not in the prompt.",
   "CIN_020 animated take (checkpoint 24, Goi 30 item 7): the closing campaign scene -- 18 s / 3 shots, slow Ken Burns camera moves on 3 storyboard keyframes (Art_Source/Cinematics/Campaign/CIN_020/keyframes_16x9/, CIN020_keyframes_manifest_v1.json). Pack character list is empty, so no character lock is involved; the villager is an unnamed figure. Animatic-level motion, NOT a final pose-animated take; no audio track in the clip; no baked subtitles. Known defects: the same villager wears three different outfits/headgear across the shots (continuity drift) and S02 is an interior medium shot instead of a detail close view. Also fixed in this checkpoint: the CIN_009 keyframe manifest carried CIN_006's title ('Con dau qua pho') since checkpoint 23 -- corrected to 'Tieng rung duoc dap' in the manifest and its builder.",
-  "Campaign video batch (checkpoint 25, Goi 30 item 7): the remaining 13 campaign scenes (CIN_003, CIN_007, CIN_008, CIN_010, CIN_011, CIN_012, CIN_013, CIN_014, CIN_015, CIN_016, CIN_017, CIN_018, CIN_019) each gained an 18 s animated take -- slow Ken Burns camera moves on 3 storyboard keyframes per scene, generated in parallel staging runs from the pack shot prompts verbatim (Art_Source/Cinematics/Campaign/<scene>/keyframes_16x9/ + per-scene keyframe manifests; builder build_campaign_batch_video.py). All 20 scenes now carry video. Every batch scene has named characters on screen with NO approved cinematic character lock, so all batch faces/costumes are storyboard placeholders and final picture per shot stays blocked on the lock; animatic-level motion, NOT final pose-animated takes; no audio track in the clips; no baked subtitles. Headline recorded defects (full per-shot records in the keyframe manifests): CIN_012_S03 carries a baked-in game choice UI bar with legible English buttons (hard clean-frame violation); CIN_017_S02 misses its subject entirely (no crystal core, no serpent; invented robed man); CIN_015_S02 is a dry above-water courtyard instead of the drowned ruin, with an invented mascot figure (the same white hooded mascot-like intrusion also appears in CIN_012_S01); CIN_011 invents a design-consistent teal-robed woman in S01 and S03 who is in no prompt; CIN_010's environment collapses after S01 (desert -> bamboo grove -> scrub) and its Sam is a slim young man, not the stocky middle-aged merchant of the brief; CIN_008_S03's bandage reads on the character's right forearm while canon places it on the LEFT; CIN_018 has two dialogue cues and its S03 VO draft still overruns its window by +0.280 s (owner decision 2026-11-06: window kept as-is, Codex decides at PR review)."
+  "Campaign video batch (checkpoint 25, Goi 30 item 7): the remaining 13 campaign scenes (CIN_003, CIN_007, CIN_008, CIN_010, CIN_011, CIN_012, CIN_013, CIN_014, CIN_015, CIN_016, CIN_017, CIN_018, CIN_019) each gained an 18 s animated take -- slow Ken Burns camera moves on 3 storyboard keyframes per scene, generated in parallel staging runs from the pack shot prompts verbatim (Art_Source/Cinematics/Campaign/<scene>/keyframes_16x9/ + per-scene keyframe manifests; builder build_campaign_batch_video.py). All 20 scenes now carry video. Every batch scene has named characters on screen with NO approved cinematic character lock, so all batch faces/costumes are storyboard placeholders and final picture per shot stays blocked on the lock; animatic-level motion, NOT final pose-animated takes; no audio track in the clips; no baked subtitles. Headline recorded defects (full per-shot records in the keyframe manifests): CIN_012_S03 carries a baked-in game choice UI bar with legible English buttons (hard clean-frame violation); CIN_017_S02 misses its subject entirely (no crystal core, no serpent; invented robed man); CIN_015_S02 is a dry above-water courtyard instead of the drowned ruin, with an invented mascot figure (the same white hooded mascot-like intrusion also appears in CIN_012_S01); CIN_011 invents a design-consistent teal-robed woman in S01 and S03 who is in no prompt; CIN_010's environment collapses after S01 (desert -> bamboo grove -> scrub) and its Sam is a slim young man, not the stocky middle-aged merchant of the brief; CIN_008_S03's bandage reads on the character's right forearm while canon places it on the LEFT; CIN_018 has two dialogue cues and its S03 VO draft still overruns its window by +0.280 s (owner decision 2026-11-06: window kept as-is, Codex decides at PR review).",
+  "Prologue film CIN_000 (checkpoint 27): a standalone 87.367 s pre-game lore film (owner-ordered; narration script approved in main chat 2026-11-06), registered under the separate 'prologue' key -- it is NOT one of the 20 campaign scenes and is not counted in campaignTotals. Unlike the campaign clips it CARRIES its mixed soundtrack (narration + composed theme + ambience) embedded in the MP4/OGV. Picture: 11 painterly cinematic panels + a code-rendered title card (poster = the title card). Canon guardrails: no avatar origin/face/bloodline, no naming of Co Vo Tuong / the hop mach mechanism / Ta Van Khanh's responsibility (reveal table), the traveler is an unnamed back-view silhouette, and the film ends on the checkpoint 04 CIN_001_S05 line (reused take) so it hands off into CIN_001. Recorded defects include the S01/S03 mechanism design drift and S11's ambiguous arrival direction (full per-shot records in CIN000_keyframes_manifest_v1.json). Wiring the prologue into the post-character-creation flow is Codex's presentation-adapter work."
  ],
  "animatic": [
   {
@@ -1013,6 +1014,35 @@
    }
   }
  ],
+ "prologue": {
+  "sceneId": "CIN_000",
+  "title": "Trước khi tới Bến Mưa",
+  "durationSeconds": 87.3667,
+  "videoStatus": "VIDEO_PROLOGUE_FILM_WITH_MIXED_AUDIO",
+  "hasAudioTrack": true,
+  "mp4": {
+   "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.mp4",
+   "sha256": "8804931743e31d21c46c269f86b3deb65800668e3ec9c3e7c38d6a73057c2806",
+   "sizeBytes": 12249759,
+   "durationSeconds": 87.2667
+  },
+  "ogv": {
+   "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.ogv",
+   "sha256": "f7323bcf0ec35a81357e2cfc80ba029f55df09b4a16492cf9001273f19c2cb4d",
+   "sizeBytes": 25267547,
+   "durationSeconds": 87.2667
+  },
+  "poster": {
+   "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_poster.png",
+   "sha256": "ad4effe96b9be78aff447e70401b6b714dd8d7914d80353cacb7eb43f2b8367e",
+   "sizeBytes": 32609,
+   "rule": "poster is the title-card keyframe (CIN_000_S12), a documented choice for this standalone film"
+  },
+  "timingFile": "assets/cinematics/CIN_000/CIN_000_timing_v1.json",
+  "timingSha256": "bcd17d90578852b3f1bfdf2f372a767daa286cf5bffd8d893525f175ac15d350",
+  "srtFile": "assets/cinematics/CIN_000/CIN_000_vi.srt",
+  "srtSha256": "0bc4151acff93982acbed8f82192aae6a820653611451a15c436d99f20af1af0"
+ },
  "scenes": [
   {
    "sceneId": "CIN_001",

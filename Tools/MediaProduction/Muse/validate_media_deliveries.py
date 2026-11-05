@@ -193,6 +193,13 @@ def check_timing_srt():
     srt_cues = 0
     base = ROOT / "Implementation/Content/Narrative/Deliveries"
     for scene_dir in sorted(base.glob("CIN_*")):
+        if scene_dir.name == "CIN_000":
+            # Checkpoint 27: the prologue is a standalone film with
+            # narration-driven variable shot lengths and crossfade
+            # overlaps; it does not follow the campaign pack's
+            # uniform 6 s shot contract. check_prologue() verifies
+            # it against its own contract.
+            continue
         timing_path = scene_dir / f"{scene_dir.name}_timing_v1.json"
         if not timing_path.exists():
             err(f"TIMING: missing {timing_path.relative_to(ROOT)}")
@@ -1213,6 +1220,201 @@ def check_campaign_keyframes_batch():
          f"keyframe scenes")
 
 
+def check_prologue():
+    """Checkpoint 27: standalone prologue film CIN_000 (owner-ordered,
+    script approved 2026-11-06). Verifies the timing/SRT pair, the
+    narration VO manifest (+ the reused CP04 final line), the
+    keyframe manifest against the staging WebPs, the film + mix
+    manifests, and the runtime delivery (film files WITH an embedded
+    audio stream + the runtime manifests' prologue registrations).
+    The prologue is NOT part of the 20-scene campaign totals."""
+    import subprocess as sp
+    checked = 0
+    staging = (Path.home() / "workspace/goals/ng-m-ch-continuous-"
+               "development/hidden_files/prologue_keyframes_staging")
+    # --- timing + SRT ---
+    tpath = (ROOT / "Implementation/Content/Narrative/Deliveries"
+             / "CIN_000/CIN_000_timing_v1.json")
+    spath = (ROOT / "Implementation/Content/Narrative/Deliveries"
+             / "CIN_000/CIN_000_vi.srt")
+    timing = json.loads(tpath.read_text(encoding="utf-8"))
+    if timing.get("sceneId") != "CIN_000":
+        err("PROLOGUE: timing sceneId != CIN_000")
+    shots = timing.get("shots", [])
+    if len(shots) != 12:
+        err(f"PROLOGUE: timing shots {len(shots)} != 12")
+    if shots and abs(shots[-1]["endSeconds"]
+                     - timing["durationSeconds"]) > 0.01:
+        err("PROLOGUE: last shot end != durationSeconds")
+    cues = parse_srt(spath.read_text(encoding="utf-8"))
+    if cues is None:
+        err("PROLOGUE: unparseable SRT")
+        cues = []
+    if len(cues) != 6:
+        err(f"PROLOGUE: SRT cues {len(cues)} != 6")
+    flat = []
+    for sh in shots:
+        for d in sh.get("dialogue", []):
+            flat.append(d)
+    if len(flat) != len(cues):
+        err(f"PROLOGUE: timing dialogues {len(flat)} != SRT cues "
+            f"{len(cues)}")
+    for d, c in zip(flat, cues):
+        if d["text"] != c["text"]:
+            err(f"PROLOGUE: dialogue text drift vs SRT: {d['text'][:30]}")
+        if abs(d["startSeconds"] - c["start"]) > 0.01 or \
+                abs(d["endSeconds"] - c["end"]) > 0.01:
+            err(f"PROLOGUE: dialogue window drift vs SRT: "
+                f"{d.get('takeId')}")
+    checked += 2
+    # --- VO manifest + reused final line ---
+    vman = json.loads((ROOT / "Art_Source/Audio/Muse/VO"
+                       / "PROLOGUE_VO_manifest_v1.json").read_text(
+                           encoding="utf-8"))
+    if len(vman.get("segments", [])) != 5:
+        err("PROLOGUE: VO segments != 5")
+    for seg in vman.get("segments", []):
+        src = (ROOT / "Art_Source/Audio/Muse/VO/PROLOGUE_DRAFT"
+               / seg["file"])
+        rt = (ROOT / "ClientGodot/assets/audio/vo/prologue"
+              / seg["file"])
+        for p, lbl in ((src, "source"), (rt, "runtime")):
+            if not p.exists():
+                err(f"PROLOGUE VO {seg['takeId']}: missing {lbl}")
+                continue
+            if sha256_of(p) != seg["sha256"]:
+                err(f"PROLOGUE VO {seg['takeId']}: sha drift ({lbl})")
+            pr = probe(p)
+            if pr and abs(pr["duration"]
+                          - seg["durationSeconds"]) > 0.02:
+                err(f"PROLOGUE VO {seg['takeId']}: duration drift")
+            checked += 1
+    lyan = (ROOT / "Art_Source/Audio/Muse/VO/P0_DRAFT"
+            / "VO_CIN001_S05_LYAN_draft_v1.wav")
+    if sha256_of(lyan) != vman["finalLine"]["sha256"]:
+        err("PROLOGUE: final-line reuse sha != CP04 take on disk")
+    checked += 1
+    # --- keyframes vs staging ---
+    kman = json.loads((ROOT / "Art_Source/Cinematics/Prologue"
+                       / "CIN000_keyframes_manifest_v1.json").read_text(
+                           encoding="utf-8"))
+    if len(kman.get("frames", [])) != 12:
+        err("PROLOGUE: keyframe frames != 12")
+    for fr in kman.get("frames", []):
+        png = ROOT / fr["keyframePng"]
+        if not png.exists():
+            err(f"PROLOGUE KF {fr['shotId']}: png missing")
+            continue
+        if sha256_of(png) != fr["keyframeSha256"]:
+            err(f"PROLOGUE KF {fr['shotId']}: png sha drift")
+        if png_dims(png) != (640, 360):
+            err(f"PROLOGUE KF {fr['shotId']}: dims != 640x360")
+        checked += 1
+        st = fr.get("staging", {})
+        if st.get("file"):
+            sf = staging / st["file"]
+            if not sf.exists():
+                err(f"PROLOGUE KF {fr['shotId']}: staging missing")
+            elif sha256_of(sf) != st["sha256"]:
+                err(f"PROLOGUE KF {fr['shotId']}: staging sha drift")
+            else:
+                checked += 1
+    # --- mix + film manifests ---
+    mman = json.loads((ROOT / "Art_Source/Audio/Muse/MIX"
+                       / "PROLOGUE_DRAFT/PROLOGUE_mix_manifest_v1.json"
+                       ).read_text(encoding="utf-8"))
+    mix = (ROOT / "Art_Source/Audio/Muse/MIX/PROLOGUE_DRAFT"
+           / "PROLOGUE_mix_v1.wav")
+    if sha256_of(mix) != mman["sha256"]:
+        err("PROLOGUE: mix sha drift")
+    pr = probe(mix)
+    if pr and abs(pr["duration"] - mman["durationSeconds"]) > 0.02:
+        err("PROLOGUE: mix duration drift")
+    checked += 1
+    fman = json.loads((ROOT / "Art_Source/Cinematics/Prologue"
+                       / "CIN000_film_manifest_v1.json").read_text(
+                           encoding="utf-8"))
+    if fman.get("mixSha256") != mman["sha256"]:
+        err("PROLOGUE: film manifest mix sha != mix manifest")
+    if fman.get("timingSha256") != sha256_of(tpath):
+        err("PROLOGUE: film manifest timing sha drift")
+    if fman.get("srtSha256") != sha256_of(spath):
+        err("PROLOGUE: film manifest srt sha drift")
+    # --- runtime film files ---
+    exp = json.loads((ROOT / "ClientGodot/assets/cinematics/CIN_000"
+                      / "scene_export_manifest_v1.json").read_text(
+                          encoding="utf-8"))
+    if exp.get("videoStatus") != "VIDEO_PROLOGUE_FILM_WITH_MIXED_AUDIO":
+        err("PROLOGUE: unexpected videoStatus")
+    if exp.get("hasAudioTrack") is not True:
+        err("PROLOGUE: export manifest hasAudioTrack != true")
+    for key in ("mp4", "ogv"):
+        f = exp[key]
+        p = ROOT / f["path"]
+        if not p.exists():
+            err(f"PROLOGUE {key}: missing {f['path']}")
+            continue
+        if sha256_of(p) != f["sha256"]:
+            err(f"PROLOGUE {key}: sha drift")
+        out = sp.run(["ffprobe", "-v", "error", "-show_format",
+                      "-show_streams", "-of", "json", str(p)],
+                     capture_output=True, text=True).stdout
+        pr2 = json.loads(out)
+        kinds = [s["codec_type"] for s in pr2["streams"]]
+        if "audio" not in kinds or "video" not in kinds:
+            err(f"PROLOGUE {key}: streams {kinds} (audio required)")
+        dur = float(pr2["streams"][0].get("duration")
+                    or pr2["format"]["duration"])
+        if abs(dur - f["durationSeconds"]) > 0.05:
+            err(f"PROLOGUE {key}: duration drift {dur}")
+        checked += 1
+    poster = ROOT / exp["poster"]["path"]
+    title_png = (ROOT / "Art_Source/Cinematics/Prologue"
+                 / "keyframes_16x9/keyframe_CIN_000_S12.png")
+    if sha256_of(poster) != exp["poster"]["sha256"] or \
+            sha256_of(poster) != sha256_of(title_png):
+        err("PROLOGUE: poster != title-card keyframe")
+    checked += 1
+    for f in ("CIN_000_timing_v1.json", "CIN_000_vi.srt"):
+        src = ROOT / "Implementation/Content/Narrative/Deliveries" \
+            / "CIN_000" / f
+        rt = ROOT / "ClientGodot/assets/cinematics/CIN_000" / f
+        if sha256_of(rt) != sha256_of(src):
+            err(f"PROLOGUE: runtime {f} != Deliveries source")
+        checked += 1
+    # --- runtime manifest registrations ---
+    cm = json.loads((ROOT / "ClientGodot/assets/cinematics"
+                     / "RUNTIME_CINEMATICS_manifest_v1.json").read_text(
+                         encoding="utf-8"))
+    pro = cm.get("prologue")
+    if not pro:
+        err("PROLOGUE: runtime cinematics manifest lacks 'prologue'")
+    elif pro.get("mp4", {}).get("sha256") != exp["mp4"]["sha256"]:
+        err("PROLOGUE: runtime manifest prologue sha != export")
+    if cm.get("campaignTotals", {}).get("scenes") != 20:
+        err("PROLOGUE: campaign totals changed (must stay 20)")
+    am = json.loads((ROOT / "ClientGodot/assets/audio"
+                     / "RUNTIME_AUDIO_manifest_v1.json").read_text(
+                         encoding="utf-8"))
+    vo_n = sum(1 for e in am["files"]
+               if e.get("runtimePath", "").startswith(
+                   "assets/audio/vo/prologue/"))
+    mix_n = sum(1 for e in am["files"]
+                if e.get("cueKey") == "MIX/CIN_000_PROLOGUE")
+    if vo_n != 5 or mix_n != 1:
+        err(f"PROLOGUE: runtime audio registrations vo={vo_n} "
+            f"mix={mix_n} (want 5/1)")
+    if am.get("totalFiles") != 589:
+        err(f"PROLOGUE: runtime audio total {am.get('totalFiles')}"
+            f" != 589")
+    COUNTS["prologue_files_checked"] = checked
+    COUNTS["audio_files_checked"] = \
+        COUNTS.get("audio_files_checked", 0) + 6
+    note("Prologue CIN_000 (checkpoint 27): standalone pre-game film, "
+         "87.367 s, narration derived from measured VO durations; "
+         "final line reuses the CP04 take; campaign totals unchanged.")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=None)
@@ -1232,8 +1434,9 @@ def main():
     check_cin006_vo()
     check_p0_mix()
     check_scene_clips()
+    check_prologue()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 26 (original composed music + cinema stingers: 13 cues from one leitmotif system, Goi 30 item 7; composed-pack checker added; runtime delivery revised)",
+        "checkpoint": "MEDIA-02 checkpoint 27 (prologue film CIN_000: standalone pre-game lore film, 11 generated panels + title card, narration VO + embedded draft mix; prologue checker added; runtime delivery revised)",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -1257,6 +1460,7 @@ def main():
             "Checkpoint 25 batch keyframes are STORYBOARD level: every batch scene has named characters on screen with no approved cinematic character lock, so all faces/costumes are placeholders and final picture per shot stays blocked on the lock. Headline defects are recorded per shot in the keyframe manifests; the worst are CIN_012_S03's baked-in choice UI bar with legible English buttons, CIN_017_S02's missing subject (no core, no serpent), CIN_015_S02's dry-courtyard setting failure with an invented mascot figure, and CIN_011's invented teal-robed woman in S01/S03.",
             "All campaign clip motion (checkpoints 21-25) is animatic-level Ken Burns on still keyframes, not final pose-animated takes.",
             "Composed pack (checkpoint 26, Goi 30 item 7): 13 ORIGINAL cues composed by Muse (9 music + 4 SFX/CINEMA stingers) from one leitmotif system; loudness measured from real bytes by the composer (music -22.0 LUFS target, stingers -25.0), this check re-verifies bytes/SHA/duration only. Loop seams are recorded per cue in the delivery manifest: wrapJump after a disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it; no ear audition. The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; composed cues are parallel candidates whose adoption is Codex's presentation-adapter decision.",
+            "Prologue CIN_000 (checkpoint 27): a standalone pre-game film, NOT a campaign scene; its narration is DRAFT TTS (narrator casting is a director decision), its mix is DRAFT_MIX_NOT_FINAL, and no ear audition has been done. Identity checks inside the film builder use crop-compensated diffs (full-res < 20, 160x90 structure < 8) because the render path resamples twice; a brute-force fit on S01 confirmed the designed zooms (1.015/1.035/1.055) at zero offset with a 4.2-6.5 structure floor. Headline picture defects: S01/S03 mechanism design drift and S11's ambiguous arrival direction, recorded per shot in CIN000_keyframes_manifest_v1.json.",
         ],
     }
     print(f"counts: {json.dumps(COUNTS, indent=1)}")

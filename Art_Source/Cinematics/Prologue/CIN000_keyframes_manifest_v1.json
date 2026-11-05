@@ -1,0 +1,246 @@
+{
+ "manifestId": "NGM_CIN000_KEYFRAMES_V1",
+ "sceneId": "CIN_000",
+ "title": "Trước khi tới Bến Mưa",
+ "checkpoint": "MEDIA-02 checkpoint 27",
+ "level": "CINEMATIC_PANELS_NOT_FINAL_PICTURE",
+ "frames": [
+  {
+   "shotId": "CIN_000_S01",
+   "camera": "WIDE_AERIAL",
+   "motion": "in",
+   "keyframePng": "Art_Source/Cinematics/Prologue/keyframes_16x9/keyframe_CIN_000_S01.png",
+   "keyframeSha256": "2db1708184969d23dee3f4907103365f09db35a4238ea7e332a80862da207092",
+   "staging": {
+    "file": "prologue_s01.webp",
+    "sha256": "efdff4496062be4d5ca97618600390a0ad7eaa2c1adcf8b0da4a4eb071f98dd6",
+    "snapshotId": "97b3ba22-6d56-40be-adb6-310d417226e9:ixmbb6",
+    "handoverNote": "prologue_keyframes_handover_a_20261106.md",
+    "transform": "center-crop to 16:9 + resize 2048x1152 by the staging agent (some natives were 3:2 / 2:1); builder downscales to 640x360"
+   },
+   "prompt": "Painterly cinematic concept art, watercolor-and-ink, muted teal and ochre palette, soft volumetric light, no text, no watermark: an ancient stylized landmass seen from high above like a living map, five great rivers of faintly luminous water flowing beneath and across the land, converging and exchanging currents around a central stone-and-bronze ring mechanism, fertile valleys, dawn mist, serene and mythic mood, 16:9 composition.",
+   "knownDefects": [
+    "The five rivers are not cleanly countable (many tributaries feed the ring): reads as many currents, one ring.",
+    "Palette warmer/more ochre than the muted-teal brief.",
+    "The ring reads partly as a circular dam/weir."
+   ]
+  },
+  {
+   "shotId": "CIN_000_S02",
+   "camera": "WIDE_PANORAMA",
+   "motion": "out",
+   "keyframePng": "Art_Source/Cinematics/Prologue/keyframes_16x9/keyframe_CIN_000_S02.png",
+   "keyframeSha256": "05cabf37a521987a67a74d3e38559cdcf05c338cad97cf0dc294d997302976da",
+   "staging": {
+    "file": "prologue_s02.webp",
+    "sha256": "31b2189acbf3c441302dfd885bda2ddab544215e03b1039ab2d21f93f80c592f",
+    "snapshotId": "1098f158-e00d-4616-91a9-c5d63b9cb8ed:n6ztxw",
+    "handoverNote": "prologue_keyframes_handover_a_20261106.md",
+    "transform": "center-crop to 16:9 + resize 2048x1152 by the staging agent (some natives were 3:2 / 2:1); builder downscales to 640x360"
+   },
+   "prompt": "Painterly cinematic concept art, watercolor-and-ink, muted teal and ochre palette, soft volumetric light, no text, no watermark: five distinct watchtowers standing in five different landscapes of one realm — river delta, pine forest, dry furnace hills, mountain pass, sunken coast — connected by streams of gently glowing water flowing between them, golden morning, harmony and balance, wide panoramic composition, 16:9.",
+   "knownDefects": [
+    "The five landscapes blend into one continuous valley; regions are suggested, not five separated zones.",
+    "Tower designs are similar to one another, not strongly region-differentiated.",
+    "16:9 center-crop trims the far-left marsh and far-right coast slightly."
+   ]
+  },
+  {
+   "shotId": "CIN_000_S03",
+   "camera": "WIDE",
+   "motion": "in",
+   "keyframePng": "Art_Source/Cinematics/Prologue/keyframes_16x9/keyframe_CIN_000_S03.png",
+   "keyframeSha256": "a7e56474ae1954bb6dec4991f9b26e5ee869dc5ae2a0b62abc7fe60020655059",
+   "staging": {
+    "file": "prologue_s03.webp",
+    "sha256": "c3b13eb688f0a775e0bc780e699e1eee74600bc9164a33d15b7038403f00394b",
+    "snapshotId": "7c413a31-2129-4cbd-a23c-67f7c3c89b1a:klgp0g",
+    "handoverNote": "prologue_keyframes_handover_a_20261106.md",
+    "transform": "center-crop to 16:9 + resize 2048x1152 by the staging agent (some natives were 3:2 / 2:1); builder downscales to 640x360"
+   },
+   "prompt": "Painterly cinematic concept art, watercolor-and-ink, muted slate and ochre palette, dramatic light, no text, no watermark: the moment of a great earthquake in an old river land, ground cracking in dark fissures, a monumental stone-and-bronze ring mechanism tilting and fracturing, watchtowers trembling in the distance, dust and startled birds, no people in close view, no gore, wide 16:9 composition.",
+   "knownDefects": [
+    "DESIGN DRIFT vs S01: the mechanism is a tall vertical arch with bronze gears, not S01's flat circular ring; a final-picture pass should unify the mechanism design.",
+    "Decorative geometric glyph carvings on the arch blocks (abstract, illegible; not readable text)."
+   ]
+  },
+  {
+   "shotId": "CIN_000_S04",
+   "camera": "WIDE",
+   "motion": "in",
+   "keyframePng": "Art_Source/Cinematics/Prologue/keyframes_16x9/keyframe_CIN_000_S04.png",
+   "keyframeSha256": "c25f6f3a6a8840563f17e6e79c7c6a1abe2b6ba507a9e3e038646814472e73ed",
+   "staging": {
+    "file": "prologue_s04.webp",
+    "sha256": "f9b9a34a1e818a3b16fe7710f6497eb689647ecb7ce52a8a2d8245c12ca3d860",
+    "snapshotId": "37d6ac99-8535-4dad-9568-897d63998e69:nvkf4g",
+    "handoverNote": "prologue_keyframes_handover_a_20261106.md",
+    "transform": "center-crop to 16:9 + resize 2048x1152 by the staging agent (some natives were 3:2 / 2:1); builder downscales to 640x360"
+   },
+   "prompt": "Painterly cinematic concept art, watercolor-and-ink, muted grey-teal palette, cold fog, no readable text, no watermark: five watchtowers now separated by fog, dams and closed gates, each hoarding its own pool of still water, a stone ledger tablet with rows of illegible carved strokes standing by a tower gate, lonely possessive mood, wide 16:9 composition.",
+   "knownDefects": [
+    "The ledger tablet's carvings are pseudo-script glyphs resembling letterform rows at a glance -- illegible, no readable words, but the closest any panel comes to text.",
+    "All five towers share one identical grey design (region identity from S02 lost).",
+    "The tablet stands by the central pool, not at a tower gate."
+   ]
+  },
+  {
+   "shotId": "CIN_000_S05",
+   "camera": "WIDE",
+   "motion": "out",
+   "keyframePng": "Art_Source/Cinematics/Prologue/keyframes_16x9/keyframe_CIN_000_S05.png",
+   "keyframeSha256": "7606a75ef4fb3248513189f5a6f6dcdf271ca051382e0e2b0321f96c4d0ba555",
+   "staging": {
+    "file": "prologue_s05.webp",
+    "sha256": "8beac29424aad6ddf40093b9ba0767e6c5c7c59f1f5bce220e755a227452748b",
+    "snapshotId": "f37fdff5-fbb8-445f-b806-739f7d8687e1:wlo8we",
+    "handoverNote": "prologue_keyframes_handover_b_20261106.md",
+    "transform": "center-crop to 16:9 + resize 2048x1152 by the staging agent (some natives were 3:2 / 2:1); builder downscales to 640x360"
+   },
+   "prompt": "Painterly cinematic concept art, watercolor-and-ink, muted ochre and slate palette, harsh divided light, no text, no watermark: a split landscape of disaster — on one side cracked dry earth and an empty riverbed under a white sun, on the other side flood water rising over rice fields and rooftops under black rain clouds, a village caught between drought and flood, wide 16:9 composition.",
+   "knownDefects": [
+    "The empty riverbed reads as a dry cracked valley floor rather than a carved riverbed channel.",
+    "The sun is a stylised starburst, slightly graphic-novel against the watercolor elsewhere."
+   ]
+  },
+  {
+   "shotId": "CIN_000_S06",
+   "camera": "WIDE",
+   "motion": "in",
+   "keyframePng": "Art_Source/Cinematics/Prologue/keyframes_16x9/keyframe_CIN_000_S06.png",
+   "keyframeSha256": "03afd40cf1bb025597f2464b1e696e9a4670665cfb7478247c424b31de023627",
+   "staging": {
+    "file": "prologue_s06.webp",
+    "sha256": "e41da4eda624b1a05d3eda3bc7aa17a964df9414e1f402d140bbf35a18722639",
+    "snapshotId": "2ac16685-f9ba-4e8e-b149-cca287dce122:d3sqiu",
+    "handoverNote": "prologue_keyframes_handover_b_20261106.md",
+    "transform": "center-crop to 16:9 + resize 2048x1152 by the staging agent (some natives were 3:2 / 2:1); builder downscales to 640x360"
+   },
+   "prompt": "Painterly cinematic concept art, watercolor-and-ink, deep teal and dusk-gold palette, melancholic light, no text, no watermark: a city quarter slowly sinking into still water at dusk, tiled rooftops and a bell frame emerging from the surface, small wooden boats moving between roofs carrying silhouetted people to safety, no faces in close view, quiet tragedy, wide 16:9 composition.",
+   "knownDefects": [
+    "Two or three blocky multi-storey buildings in the far hazy skyline read more modern than the setting (distant, fog-softened).",
+    "The quarter reads as already flooded rather than actively sinking; the bell sits in a full tower, not a bare frame."
+   ]
+  },
+  {
+   "shotId": "CIN_000_S07",
+   "camera": "DETAIL",
+   "motion": "in",
+   "keyframePng": "Art_Source/Cinematics/Prologue/keyframes_16x9/keyframe_CIN_000_S07.png",
+   "keyframeSha256": "c2aba17c8029dd19061d7f67d8b020f4c42b0a5c9acd5063d3057f361dbefb3c",
+   "staging": {
+    "file": "prologue_s07.webp",
+    "sha256": "e3284870a275eb80712b0591e8dc7542c91fde293be07b7634d470d8fb195b71",
+    "snapshotId": "c29fe943-551c-4736-a944-8c00820fba17:x1t463",
+    "handoverNote": "prologue_keyframes_handover_b_20261106.md",
+    "transform": "center-crop to 16:9 + resize 2048x1152 by the staging agent (some natives were 3:2 / 2:1); builder downscales to 640x360"
+   },
+   "prompt": "Painterly cinematic concept art, watercolor-and-ink, warm candlelight against dark teal shadow, no readable text, no watermark: extreme close view of a hand in a dark sleeve signing a paper order with a brush pen by candlelight, a wax seal stamp pressed beside illegible calligraphy strokes, the signer's face completely out of frame, heavy fateful mood, 16:9 composition.",
+   "knownDefects": [
+    "Script flavour drift: decorative pseudo-calligraphy leans Western cursive, and the wax seal carries a European heraldic shield-and-wreath crest instead of an East Asian seal impression (illegible; no letters; signer's face fully out of frame as required).",
+    "The pen shaft reads slightly glossy/metallic, like a fountain pen, though the tip at the page is brush-like."
+   ]
+  },
+  {
+   "shotId": "CIN_000_S08",
+   "camera": "WIDE",
+   "motion": "out",
+   "keyframePng": "Art_Source/Cinematics/Prologue/keyframes_16x9/keyframe_CIN_000_S08.png",
+   "keyframeSha256": "f3b5a3d8d371b4639aa2a3609261050e84b5cff22cedbfffff03408fa579af0b",
+   "staging": {
+    "file": "prologue_s08.webp",
+    "sha256": "085e9ad36d2e4f2ac6c8669cf9e4dccc781a37b9ddf36accc34f4c8988f0c23a",
+    "snapshotId": "62d51751-8a79-4e01-81b9-7f1989298b1c:xkar1t",
+    "handoverNote": "prologue_keyframes_handover_b_20261106.md",
+    "transform": "center-crop to 16:9 + resize 2048x1152 by the staging agent (some natives were 3:2 / 2:1); builder downscales to 640x360"
+   },
+   "prompt": "Painterly cinematic concept art, watercolor-and-ink, dusty amber and grey palette, dim archive light, no readable text, no watermark: a dim archive room of wooden shelves and bound ledgers, some ledger pages with rows of names faded, scratched out and washed away into illegible pale strokes, dust motes in a shaft of light, an empty space on a shelf where a volume is missing, mood of deliberate forgetting, 16:9 composition.",
+   "knownDefects": [
+    "The missing-volume beat is weak/ambiguous (a dark recessed bay may or may not read as the gap).",
+    "Erased names register only as faint ruled lines (safely text-free, but the beat leans on narration).",
+    "Palette leans greyer than the dusty-amber brief."
+   ]
+  },
+  {
+   "shotId": "CIN_000_S09",
+   "camera": "DETAIL",
+   "motion": "in",
+   "keyframePng": "Art_Source/Cinematics/Prologue/keyframes_16x9/keyframe_CIN_000_S09.png",
+   "keyframeSha256": "e92c548e45b98faa57eee2e72909522d90ae392d4df68adde668a30b2d5b3c1e",
+   "staging": {
+    "file": "prologue_s09.webp",
+    "sha256": "371ad8c832cd387b8fee3374559aa453ee364495b1ef852ceae374c1ca91dd03",
+    "snapshotId": "6554cd9a-9848-4a64-993d-cd31a721c2d2:0iozcw",
+    "handoverNote": "prologue_keyframes_handover_c_20261106.md",
+    "transform": "center-crop to 16:9 + resize 2048x1152 by the staging agent (some natives were 3:2 / 2:1); builder downscales to 640x360"
+   },
+   "prompt": "Painterly cinematic concept art, watercolor-and-ink, dark teal water palette, soft rain light, no text, no watermark: a rain-pocked dark water surface at a wooden dock, in the reflection beneath the water appears the clear contour of a large hanging bell — but above the surface there is only empty air and rain, no bell and no tower, one ripple breaking the reflected contour, mysterious and quiet, 16:9 composition.",
+   "knownDefects": [
+    "Hard constraint PASS: no bell and no tower above the water.",
+    "The reflected bell is rendered very solidly (modeled volume, visible clapper); can read as a submerged physical bell rather than a pure reflection.",
+    "An unexplained dark blob at lower-center-left (broken reflection fragment or submerged stone), not in the prompt."
+   ]
+  },
+  {
+   "shotId": "CIN_000_S10",
+   "camera": "DETAIL",
+   "motion": "in",
+   "keyframePng": "Art_Source/Cinematics/Prologue/keyframes_16x9/keyframe_CIN_000_S10.png",
+   "keyframeSha256": "d633767fe755451648e74029dcc41fb74f226ebdd0ad279fe581e05d85a74e08",
+   "staging": {
+    "file": "prologue_s10.webp",
+    "sha256": "16b63306c5c5a681d77471eb06c8c6e3f491cc3a58283dbaff75f90f8ebb6d2f",
+    "snapshotId": "244e362b-a43d-4992-a5a5-11dcbacedd24:n1kgzg",
+    "handoverNote": "prologue_keyframes_handover_c_20261106.md",
+    "transform": "center-crop to 16:9 + resize 2048x1152 by the staging agent (some natives were 3:2 / 2:1); builder downscales to 640x360"
+   },
+   "prompt": "Painterly cinematic concept art, watercolor-and-ink, warm wood and rain-grey palette, gentle light, no readable text, no watermark: close view inside a small wooden cargo boat in the rain — woven parcels and a letter wrapped in oilcloth sealed with dark wax bearing five fine groove lines, rope and a bamboo basket beside it, river water and reeds beyond the gunwale, the letter is the clear subject, 16:9 composition.",
+   "knownDefects": [
+    "The wax seal's groove count is ambiguous (roughly 4-5 stacked lines, not crisply five) -- an exact five-groove canon read cannot be certified from this render.",
+    "The letter reads as a bulky cloth-wrapped parcel rather than a slim letter packet."
+   ]
+  },
+  {
+   "shotId": "CIN_000_S11",
+   "camera": "WIDE",
+   "motion": "out",
+   "keyframePng": "Art_Source/Cinematics/Prologue/keyframes_16x9/keyframe_CIN_000_S11.png",
+   "keyframeSha256": "0063df9dc1865b22ffbf7289be632496f7df2fb43a5f375a26bca1f557719841",
+   "staging": {
+    "file": "prologue_s11.webp",
+    "sha256": "c098f5d1d11eaca4447148b1e282d35e65e6256557f9ad985e1634fae42acef8",
+    "snapshotId": "f5e5585a-e777-4f0d-9c9b-c76adddaef69:drrgyj",
+    "handoverNote": "prologue_keyframes_handover_c_20261106.md",
+    "transform": "center-crop to 16:9 + resize 2048x1152 by the staging agent (some natives were 3:2 / 2:1); builder downscales to 640x360"
+   },
+   "prompt": "Painterly cinematic concept art, watercolor-and-ink, rain-teal and lantern-amber palette, soft volumetric rain light, no text, no watermark: wide view of a rainy ferry landing in a Vietnamese river village — wet wooden dock, warehouse with tiled roof, mooring posts, a small boat just arrived, and a lone traveler seen strictly from behind in a plain hooded travelling cloak with no visible weapon, stepping onto the wet planks carrying a simple bag, rain falling steadily, lantern light reflecting on wet wood, cinematic arrival mood, 16:9 composition.",
+   "knownDefects": [
+    "Hard constraints PASS: traveler strictly from behind, hood up, no face, no weapon.",
+    "MAIN DEFECT: arrival direction is ambiguous -- the pose can read as BOARDING the boat rather than stepping off onto the dock. First candidate for the revision pass.",
+    "Two or three tiny background figures in distant moored boats (not requested, do not compete)."
+   ]
+  },
+  {
+   "shotId": "CIN_000_S12",
+   "camera": "TITLE_CARD",
+   "motion": "static",
+   "keyframePng": "Art_Source/Cinematics/Prologue/keyframes_16x9/keyframe_CIN_000_S12.png",
+   "keyframeSha256": "ad4effe96b9be78aff447e70401b6b714dd8d7914d80353cacb7eb43f2b8367e",
+   "staging": {
+    "file": null,
+    "sha256": null,
+    "snapshotId": null,
+    "handoverNote": null,
+    "transform": "rendered in code with PIL (DejaVu Sans Bold); no generation"
+   },
+   "prompt": null,
+   "knownDefects": [
+    "Title typography uses DejaVu Sans Bold, a placeholder until a game display font is locked (the project has no locked Vietnamese pixel/display font yet)."
+   ]
+  }
+ ],
+ "notes": [
+  "Panels are painterly cinematic art (not pixel-art sprites); the prologue is a pre-game film, so it does not use the 20 PPU sprite standard.",
+  "Cross-shot mechanism drift (S01 flat ring vs S03 vertical arch) and S11's ambiguous arrival direction are the headline revision-pass items."
+ ]
+}

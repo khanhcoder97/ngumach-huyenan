@@ -114,6 +114,21 @@ def ffprobe_duration_s(path: Path):
     return float(out.stdout.strip())
 
 
+def ffprobe_first_stream_duration_s(path: Path):
+    """Duration of the first stream (the video stream for film
+    files) -- the quantity verify_runtime_delivery measures. For
+    the checkpoint 27 prologue this differs from the format
+    duration by 0.1 s (xfade frame rounding; see the film
+    builder)."""
+    out = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_streams", "-show_format",
+         "-of", "json", str(path)],
+        capture_output=True, text=True, check=True)
+    data = json.loads(out.stdout)
+    return float(data["streams"][0].get("duration")
+                 or data["format"]["duration"])
+
+
 SRT_TIME_RE = re.compile(
     r"^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d$")
 
@@ -457,12 +472,62 @@ def main():
         audio_entries.append(entry)
         counts["composed"] += 1
 
+    # --- 3f. Prologue CIN_000 narration VO + film mix (checkpoint 27) ---
+    # The prologue is a standalone pre-game film (owner-ordered,
+    # script approved in main chat 2026-11-06), NOT part of the
+    # 20-scene campaign. Its 5 narration takes and its embedded film
+    # mix register here; the film itself registers in the
+    # cinematics manifest under a separate "prologue" key (section
+    # 6b), never inside the campaign totals.
+    provo = json.loads((ROOT / "Art_Source/Audio/Muse/VO"
+                        / "PROLOGUE_VO_manifest_v1.json").read_text(
+                            encoding="utf-8"))
+    for take in provo["segments"]:
+        src_rel = f"Art_Source/Audio/Muse/VO/PROLOGUE_DRAFT/{take['file']}"
+        dest_rel = f"vo/prologue/{take['file']}"
+        entry = copy_verified_audio(
+            src_rel, dest_rel, take["sha256"],
+            (ROOT / src_rel).stat().st_size, take["durationSeconds"],
+            f"prologue VO {take['takeId']}")
+        if entry is None:
+            continue
+        entry.update({"cueKey": f"VO/{take['takeId']}",
+                      "category": "vo", "sceneId": "CIN_000",
+                      "codec": "pcm_s16le", "sampleRateHz": 48000,
+                      "channels": 1,
+                      "integratedLufs": take["integratedLufs"],
+                      "truePeakDbtp": take["truePeakDbtp"],
+                      "assetState": "DRAFT_NOT_FINAL_VO",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["vo"] += 1
+    pmix27 = json.loads((ROOT / "Art_Source/Audio/Muse/MIX"
+                         / "PROLOGUE_DRAFT/PROLOGUE_mix_manifest_v1.json"
+                         ).read_text(encoding="utf-8"))
+    entry = copy_verified_audio(
+        "Art_Source/Audio/Muse/MIX/PROLOGUE_DRAFT/PROLOGUE_mix_v1.wav",
+        "mix/prologue/PROLOGUE_mix_v1.wav", pmix27["sha256"],
+        pmix27["sizeBytes"], pmix27["durationSeconds"],
+        "prologue film mix")
+    if entry is not None:
+        entry.update({"cueKey": "MIX/CIN_000_PROLOGUE",
+                      "category": "mix", "sceneId": "CIN_000",
+                      "codec": "pcm_s16le", "sampleRateHz": 48000,
+                      "channels": 2,
+                      "integratedLufs": pmix27["integratedLufs"],
+                      "truePeakDbtp": pmix27["truePeakDbtp"],
+                      "assetState": "DRAFT_MIX_NOT_FINAL",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["mix"] += 1
+
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 checkpoint 26 - M6 runtime delivery "
-                       "revised: original composed music + cinema "
-                       "stingers (9 music + 4 stingers, checkpoint 26) "
-                       "registered alongside the ported packs"),
+        "checkpoint": ("MEDIA-02 checkpoint 27 - M6 runtime delivery "
+                       "revised: prologue CIN_000 narration VO (5 "
+                       "takes) + prologue film mix registered; "
+                       "composed music (checkpoint 26) and the "
+                       "ported packs unchanged"),
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "counts": counts,
@@ -508,6 +573,15 @@ def main():
             "checkpoints 07/08) or their bindings; adoption is "
             "Codex's presentation-adapter decision. Loudness is "
             "measured from real bytes; no ear audition.",
+            "Prologue CIN_000 (checkpoint 27): 5 narration draft "
+            "takes (fictional TTS narrator, DRAFT casting) + the "
+            "film's draft mix (narration + checkpoint 26 composed "
+            "Ben Mua theme + ported rain/river ambience, sidechain "
+            "ducked; the mix is also embedded in the film files). "
+            "The final line of the film reuses the checkpoint 04 "
+            "CIN_001_S05 take and is NOT re-registered here (it is "
+            "already counted with the P0 VO). DRAFT states only; no "
+            "ear audition.",
         ],
         "files": audio_entries,
     }
@@ -659,9 +733,70 @@ def main():
           f"expected 20 per-scene clip exports, got "
           f"{len(scene_clip_entries)}")
 
+    # --- 6b. Prologue film CIN_000 (checkpoint 27) ---
+    # Standalone pre-game film; verified in place against its own
+    # scene export manifest and registered under a separate
+    # "prologue" key -- never inside sceneClips / campaignTotals.
+    pro_exp_path = (CINE_DEST / "CIN_000"
+                    / "scene_export_manifest_v1.json")
+    check(pro_exp_path.exists(), "prologue export manifest missing")
+    prologue_entry = None
+    if pro_exp_path.exists():
+        pexp = json.loads(pro_exp_path.read_text(encoding="utf-8"))
+        check(pexp.get("sceneId") == "CIN_000",
+              "prologue export manifest sceneId mismatch")
+        check(pexp.get("hasAudioTrack") is True,
+              "prologue export must declare an embedded audio track")
+        for key in ("mp4", "ogv", "poster"):
+            f = pexp[key]
+            p = ROOT / f["path"]
+            check(p.exists(), f"prologue file missing: {f['path']}")
+            if not p.exists():
+                continue
+            check(not is_lfs_pointer(p),
+                  f"prologue file is LFS pointer: {f['path']}")
+            check(sha256(p) == f["sha256"],
+                  f"prologue sha mismatch: {f['path']}")
+            check(p.stat().st_size == f["sizeBytes"],
+                  f"prologue size mismatch: {f['path']}")
+            if key in ("mp4", "ogv"):
+                got_dur = ffprobe_first_stream_duration_s(p)
+                check(abs(got_dur - f["durationSeconds"]) <=
+                      DUR_TOL_S,
+                      f"prologue {key} duration {got_dur} != "
+                      f"{f['durationSeconds']}")
+                pr = json.loads(subprocess.run(
+                    ["ffprobe", "-v", "error", "-show_streams",
+                     "-of", "json", str(p)],
+                    capture_output=True, text=True).stdout)
+                kinds = [s["codec_type"] for s in pr["streams"]]
+                check("audio" in kinds,
+                      f"prologue {key} has NO audio stream")
+        for key, sha_key in (("timingFile", "timingSha256"),
+                             ("srtFile", "srtSha256")):
+            p = CINE_DEST / "CIN_000" / pexp[key]
+            check(p.exists(), f"prologue {key} missing in runtime")
+            if p.exists():
+                check(sha256(p) == pexp[sha_key],
+                      f"prologue {key} sha mismatch")
+        prologue_entry = {
+            "sceneId": "CIN_000",
+            "title": pexp["title"],
+            "durationSeconds": pexp["durationSeconds"],
+            "videoStatus": pexp["videoStatus"],
+            "hasAudioTrack": True,
+            "mp4": pexp["mp4"], "ogv": pexp["ogv"],
+            "poster": pexp["poster"],
+            "timingFile": "assets/cinematics/CIN_000/"
+                          "CIN_000_timing_v1.json",
+            "timingSha256": pexp["timingSha256"],
+            "srtFile": "assets/cinematics/CIN_000/CIN_000_vi.srt",
+            "srtSha256": pexp["srtSha256"],
+        }
+
     cine_manifest = {
         "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
-        "checkpoint": "MEDIA-02 checkpoint 25 - campaign video batch (Goi 30 item 7): animated takes for the remaining 13 campaign scenes (CIN_003, CIN_007, CIN_008, CIN_010-CIN_019), 3 storyboard keyframes + 18 s Ken Burns clip each; all 20 scenes now carry video; P0 animatic v3 + audio/timing unchanged from checkpoint 24",
+        "checkpoint": "MEDIA-02 checkpoint 27 - prologue film CIN_000 registered under a separate 'prologue' key (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "campaignTotals": {"scenes": 20, "shots": 63, "seconds": 378,
@@ -776,9 +911,31 @@ def main():
             "still overruns its window by +0.280 s (owner decision "
             "2026-11-06: window kept as-is, Codex decides at PR "
             "review).",
+            "Prologue film CIN_000 (checkpoint 27): a standalone "
+            "87.367 s pre-game lore film (owner-ordered; narration "
+            "script approved in main chat 2026-11-06), registered "
+            "under the separate 'prologue' key -- it is NOT one of "
+            "the 20 campaign scenes and is not counted in "
+            "campaignTotals. Unlike the campaign clips it CARRIES "
+            "its mixed soundtrack (narration + composed theme + "
+            "ambience) embedded in the MP4/OGV. Picture: 11 "
+            "painterly cinematic panels + a code-rendered title "
+            "card (poster = the title card). Canon guardrails: no "
+            "avatar origin/face/bloodline, no naming of Co Vo "
+            "Tuong / the hop mach mechanism / Ta Van Khanh's "
+            "responsibility (reveal table), the traveler is an "
+            "unnamed back-view silhouette, and the film ends on "
+            "the checkpoint 04 CIN_001_S05 line (reused take) so "
+            "it hands off into CIN_001. Recorded defects include "
+            "the S01/S03 mechanism design drift and S11's "
+            "ambiguous arrival direction (full per-shot records in "
+            "CIN000_keyframes_manifest_v1.json). Wiring the "
+            "prologue into the post-character-creation flow is "
+            "Codex's presentation-adapter work.",
         ],
         "animatic": cine_files,
         "sceneClips": scene_clip_entries,
+        "prologue": prologue_entry,
         "scenes": scene_entries,
     }
     (CINE_DEST / "RUNTIME_CINEMATICS_manifest_v1.json").write_text(
