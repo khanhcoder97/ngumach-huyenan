@@ -93,8 +93,9 @@ Chạy lại nguyên vẹn tool checkpoint 09
 ## Trạng thái repo
 
 - Nhánh media: head `7a94037` trước checkpoint này; commit checkpoint 12
-  ĐÃ PUSH (xem SHA trong nhật ký chạy; scope audit 0 violations,
-  base integration HEAD `f383233`).
+  `a242af3` ĐÃ PUSH (ls-remote xác nhận; scope audit 691 paths,
+  0 violations, base integration HEAD `f383233`). PR #119 nay có
+  16 commit.
 - PR #119 vẫn OPEN, chưa merge; ACK comment checkpoint 12 trên issue
   #116: CẦN thẻ duyệt của chủ dự án qua GitHub connector — ghi rõ để
   luồng chính xử lý, lượt chạy này không treo chờ.
