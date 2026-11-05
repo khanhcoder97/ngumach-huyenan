@@ -83,9 +83,11 @@ fails on anything else.
             still real, and the cast the route still accepts resolves into no
             event naming that mob.
 
-Usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client|alpha-p00|audience-gateoff>
+Usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client|alpha-p00|audience-gateoff|death-return|gate-one>
+       (gate-one also reads the E2E_GATE environment variable for the leg name)
 """
 
+import os
 import sys
 import threading
 import time
@@ -286,6 +288,124 @@ def default_profile():
     print("profile=default expected_blocked_output=OK "
           "(gated POST handlers unmapped: 405 where a read template matches the path, "
           "404 for the v2/encounter/inventory-v2 surface)")
+
+
+# Every route a P1 feature gate can hide, with the status it answers when the handler
+# is not mapped: 405 where the path still matches a GET read template, 404 where it
+# matches nothing. This table is a literal so the check count of a leg never depends on
+# server state - the point of the profile is "exactly these routes, exactly this way".
+GATED_ROUTES = (
+    ("POST", "/p1/quests/accept", 405),
+    ("POST", "/p1/world/interact", 405),
+    ("POST", "/p1/quests/turnin", 405),
+    ("POST", "/p1/inventory/equip", 405),
+    ("POST", "/p1/inventory/unequip", 405),
+    ("POST", "/p1/v2/combat", 404),
+    ("GET", "/p1/v2/world/{sid}", 404),
+    ("GET", "/p1/v2/events/{sid}", 404),
+    ("GET", "/p1/encounters/current", 404),
+    ("GET", "/p1/inventory/v2/{sid}", 404),
+    ("POST", "/p1/inventory/v2/equip", 404),
+    ("POST", "/p1/inventory/v2/unequip", 404),
+    ("POST", "/p1/actor/death-return", 404),
+)
+
+# Which routes a gate maps, and how a route that is mapped should answer this probe
+# (a malformed body proves the handler exists without mutating anything; 200 proves a
+# read works; "mapped404" is the encounter route's own not-found, which is how it is told
+# apart from an unmapped path since both are bare 404s on the wire).
+GATE_ROUTES = {
+    "QuestAccept": {("POST", "/p1/quests/accept"): 400},
+    "Interact": {("POST", "/p1/world/interact"): 400},
+    "QuestTurnIn": {("POST", "/p1/quests/turnin"): 400},
+    "Equipment": {
+        ("POST", "/p1/inventory/equip"): 400,
+        ("POST", "/p1/inventory/unequip"): 400,
+    },
+    "CombatV2": {
+        ("POST", "/p1/v2/combat"): 400,
+        ("GET", "/p1/v2/world/{sid}"): 200,
+        ("GET", "/p1/v2/events/{sid}"): 200,
+    },
+    "AlphaProfile": {
+        ("GET", "/p1/encounters/current"): "mapped404",
+        ("GET", "/p1/inventory/v2/{sid}"): 200,
+        ("POST", "/p1/inventory/v2/equip"): 400,
+        ("POST", "/p1/inventory/v2/unequip"): 400,
+    },
+    # DeathReturn alone maps nothing: P1Endpoints only maps /p1/actor/death-return
+    # when P1:AlphaProfile AND P1:DeathReturn are on, so the route belongs to the
+    # pairing leg below, not to either gate on its own.
+    "DeathReturn": {},
+    # Neither damage gate maps a route of its own: they only change what an already
+    # mapped route resolves. Keeping them as empty legs is what stops a future edit
+    # from quietly attaching a route to them.
+    "CombatDamage": {},
+    "MobBehavior": {},
+}
+
+# Routes a leg maps only because of a gate combination. The death-return 404 is the
+# shape DEC-DEATH-RETURN-20261105 freezes for a gated-off read, so the profile has to
+# distinguish "unmapped" from "mapped but refused" the same way the design does.
+LEG_EXTRA_ROUTES = {
+    "DeathReturnAlpha": {("POST", "/p1/actor/death-return"): 400},
+}
+
+# Leg name -> the gates that leg turns on. Every gated route not owned by those gates
+# has to stay unmapped, so a leg asserts both directions at once.
+LEGS = {
+    "QuestAccept": ("QuestAccept",),
+    "Interact": ("Interact",),
+    "QuestTurnIn": ("QuestTurnIn",),
+    "Equipment": ("Equipment",),
+    "CombatV2": ("CombatV2",),
+    "AlphaProfile": ("AlphaProfile",),
+    "DeathReturn": ("DeathReturn",),
+    "CombatDamage": ("CombatDamage",),
+    "MobBehavior": ("MobBehavior",),
+    "DeathReturnAlpha": ("DeathReturn", "AlphaProfile"),
+}
+
+
+def gate_one_profile():
+    gate = os.environ.get("E2E_GATE", "")
+    if gate not in LEGS:
+        smoke_p1.fail(f"unknown E2E_GATE '{gate}'; expected one of {sorted(LEGS)}")
+    expectations = {}
+    for enabled_gate in LEGS[gate]:
+        expectations.update(GATE_ROUTES[enabled_gate])
+    expectations.update(LEG_EXTRA_ROUTES.get(gate, {}))
+
+    smoke_p1.check(
+        smoke_p1.call("GET", "/health")[0] == 200, f"[{gate}] health check failed")
+
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/sessions", {"characterId": f"CHR_E2E_GATE_{gate.upper()}"})
+    smoke_p1.check(status == 201, f"[{gate}] session returned {status}: {body}")
+    session_id = body.get("sessionId")
+    headers = {"X-Session-ID": session_id}
+
+    # The ungated reads must stay readable whichever single gate is on.
+    smoke_p1.check(
+        smoke_p1.call("GET", f"/p1/quests/{session_id}", headers=headers)[0] == 200,
+        f"[{gate}] quest read broke with this gate on")
+
+    for method, path, blocked_status in GATED_ROUTES:
+        key = (method, path)
+        probe = path.replace("{sid}", session_id)
+        status, _, body = smoke_p1.call(method, probe, {}, headers)
+        wanted = expectations.get(key, blocked_status)
+        if wanted == "mapped404":
+            smoke_p1.check(
+                status == 404 and (body.get("error") or {}).get("code") == "encounter_not_found",
+                f"[{gate}] {method} {path} expected mapped 404 encounter_not_found, "
+                f"got {status}: {str(body)[:160]}")
+            continue
+        smoke_p1.check(
+            status == wanted,
+            f"[{gate}] {method} {path} expected {wanted}, got {status}: {str(body)[:160]}")
+
+    print(f"profile=gate-one gate={gate} routes_probed={len(GATED_ROUTES)}")
 
 
 def dev_profile():
@@ -2158,6 +2278,8 @@ def main():
     mode = sys.argv[2]
     if mode == "default":
         default_profile()
+    elif mode == "gate-one":
+        gate_one_profile()
     elif mode == "dev":
         dev_profile()
     elif mode == "mob-combat":

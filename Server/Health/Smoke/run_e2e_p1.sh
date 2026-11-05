@@ -17,6 +17,10 @@
 #                                                  # die to mob damage, return
 #                                                  # to the design anchor, replay
 #                                                  # as a pure read, 5 negatives
+#   ./Server/Health/Smoke/run_e2e_p1.sh gate-one    # E2E_GATE names ONE gate; the
+#                                                  # profile then asserts which routes
+#                                                  # that gate maps and that every other
+#                                                  # gated route stays unmapped
 #   ./Server/Health/Smoke/run_e2e_p1.sh audience-gateoff
 #                                                  # the issue #96 shape: v2 world
 #                                                  # and mob AI ON, P1:CombatDamage
@@ -120,6 +124,27 @@ elif [ "${PROFILE}" = "audience-gateoff" ]; then
   P1__CombatV2__Enabled=true \
   P1__MobBehavior__Enabled=true \
     dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
+elif [ "${PROFILE}" = "gate-one" ]; then
+  # One gate at a time, so that "enabling a feature cannot light up another
+  # feature's route" is measured rather than assumed. The legs with no mapped
+  # route (DeathReturn alone, CombatDamage, MobBehavior) are the pairing proof:
+  # /p1/actor/death-return needs AlphaProfile AND DeathReturn, and the two damage
+  # gates never map a route of their own.
+  case "${E2E_GATE:-none}" in
+    QuestAccept) GATE_ENV="P1__QuestAccept__Enabled=true" ;;
+    Interact) GATE_ENV="P1__Interact__Enabled=true" ;;
+    QuestTurnIn) GATE_ENV="P1__QuestTurnIn__Enabled=true" ;;
+    Equipment) GATE_ENV="P1__Equipment__Enabled=true" ;;
+    CombatV2) GATE_ENV="P1__CombatV2__Enabled=true" ;;
+    AlphaProfile) GATE_ENV="P1__AlphaProfile__Enabled=true" ;;
+    DeathReturn) GATE_ENV="P1__DeathReturn__Enabled=true" ;;
+    CombatDamage) GATE_ENV="P1__CombatDamage__Enabled=true" ;;
+    MobBehavior) GATE_ENV="P1__MobBehavior__Enabled=true" ;;
+    DeathReturnAlpha) GATE_ENV="P1__DeathReturn__Enabled=true P1__AlphaProfile__Enabled=true" ;;
+    *) echo "==> unknown E2E_GATE=${E2E_GATE:-unset}" >&2; exit 2 ;;
+  esac
+  # shellcheck disable=SC2086
+  env ${GATE_ENV} dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
 else
   dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
 fi

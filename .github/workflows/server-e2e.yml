@@ -112,3 +112,39 @@ jobs:
           python-version: "3.12"
       - name: Run the damage-gate-off audience E2E scenario
         run: bash Server/Health/Smoke/run_e2e_p1.sh audience-gateoff
+  # Work order 29 Q8 (regression HTTP): the gate matrix. Each leg boots the server with
+  # exactly one P1 gate on and asserts which routes that gate maps and that every other
+  # gated route stays unmapped, so "enabling a feature cannot light up another feature's
+  # route" is measured per gate instead of assumed from the all-gates-on profiles.
+  # DeathReturnAlpha is the pairing proof: /p1/actor/death-return is mapped only when
+  # P1:AlphaProfile AND P1:DeathReturn are both on.
+  e2e-gate-one:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        gate:
+          - QuestAccept
+          - Interact
+          - QuestTurnIn
+          - Equipment
+          - CombatV2
+          - AlphaProfile
+          - DeathReturn
+          - CombatDamage
+          - MobBehavior
+          - DeathReturnAlpha
+    name: e2e-gate-one (${{ matrix.gate }})
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run the single-gate E2E leg
+        env:
+          E2E_GATE: ${{ matrix.gate }}
+        run: bash Server/Health/Smoke/run_e2e_p1.sh gate-one
