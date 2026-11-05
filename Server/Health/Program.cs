@@ -126,6 +126,12 @@ builder.Services.AddSingleton(serviceProvider =>
     return LifeSimCatalogLoader.Load(
         LifeSimCatalogLoader.DiscoverDirectory(environment.ContentRootPath));
 });
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return WeeklyBossRotationCatalogLoader.Load(
+        WeeklyBossRotationCatalogLoader.DiscoverDirectory(environment.ContentRootPath));
+});
 builder.Services.AddSingleton<NarrativeFlagStore>();
 builder.Services.AddSingleton<NarrativeService>();
 builder.Services.AddSingleton(serviceProvider =>
@@ -341,6 +347,11 @@ app.Logger.LogInformation("Loaded quest definitions: {QuestCount}.", quests.Coun
 
 var itemCatalog = app.Services.GetRequiredService<ItemCatalog>();
 app.Logger.LogInformation("Loaded item catalogue: {ItemCount} items.", itemCatalog.Count);
+
+var weeklyRotation = app.Services.GetRequiredService<WeeklyBossRotationCatalog>();
+app.Logger.LogInformation(
+    "Loaded weekly boss rotation: {SlotCount} slots (data only - no scheduler, rank or reward contract exists yet).",
+    weeklyRotation.Count);
 
 var lifeSim = app.Services.GetRequiredService<LifeSimCatalog>();
 app.Logger.LogInformation(

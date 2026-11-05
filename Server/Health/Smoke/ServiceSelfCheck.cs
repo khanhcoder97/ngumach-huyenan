@@ -460,6 +460,79 @@ public static class ServiceSelfCheck
             badType is not null && badType.Contains("content_type", StringComparison.Ordinal),
             $"weights='{Cut(badWeightTotal)}' type='{Cut(badType)}'");
 
+        // Q7 names weekly arena, rank and reward, and the rotation table already exists in
+        // production form. Loading it surfaces what a scheduler would still need - and the
+        // first finding is that five of the six bosses have no resolved stats at all.
+        var weeklyRotation = services.GetRequiredService<WeeklyBossRotationCatalog>();
+        Check(
+            "weekly.rotation_six_slots_one_cycle_each",
+            weeklyRotation.Count == 6 &&
+            weeklyRotation.Rows.Select(slot => slot.CycleIndex).Order().SequenceEqual([1, 2, 3, 4, 5, 6]) &&
+            weeklyRotation.Rows.Select(slot => slot.RotationRule).Distinct().Count() == 1 &&
+            weeklyRotation.Rows.First().RotationRule.Contains("season_offset", StringComparison.Ordinal),
+            $"slots={weeklyRotation.Count}");
+
+        var recordEntityIds = services.GetRequiredService<WorldRecordCatalog>().All
+            .SelectMany(record => record.EntityIds)
+            .ToHashSet(StringComparer.Ordinal);
+        // Every rotation boss must at least exist as a world record, or the scheduler
+        // would spawn a name with nothing behind it. Note the deliberate limit of this
+        // check: only BOSS_MANG_COT has resolved stats in combat_mob_stats_v1.json today,
+        // so the other five would meet the audience's "cannot resolve stats" rule - that
+        // gap is reported as a question, not asserted from a gated bundle here.
+        Check(
+            "weekly.rotation_bosses_exist_as_world_records",
+            weeklyRotation.Rows.All(slot => recordEntityIds.Contains(slot.SourceBossId)),
+            $"records={weeklyRotation.Rows.Count(slot => recordEntityIds.Contains(slot.SourceBossId))}/" +
+            $"{weeklyRotation.Count}");
+
+        Check(
+            "weekly.rotation_multipliers_and_caps_are_uniform",
+            weeklyRotation.Rows.All(slot => slot.HpMultiplier == 1.35 && slot.DamageMultiplier == 1.1) &&
+            weeklyRotation.Rows.Select(slot => slot.WeeklyRewardCap).Distinct().Count() == 1 &&
+            weeklyRotation.Rows.All(slot => slot.WeeklyRewardCap == "1/character/week") &&
+            weeklyRotation.Rows.All(slot => slot.SpawnXWu == 180 && slot.SpawnYWu == 0) &&
+            weeklyRotation.Rows.All(slot => mapBoundsCatalog.TryResolve(slot.SpawnMapId, out _)),
+            $"multipliers uniform across {weeklyRotation.Count} slots");
+
+        string? WeeklyLoadFailure(string from, string to)
+        {
+            var root = Path.Combine(Path.GetTempPath(), "p1-weekly-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var directory = Path.Combine(root, "docs", "production");
+                Directory.CreateDirectory(directory);
+                var source = File.ReadAllLines(Path.Combine(
+                    WeeklyBossRotationCatalogLoader.DiscoverDirectory(AppContext.BaseDirectory),
+                    WeeklyBossRotationCatalogLoader.RelativePath));
+                File.WriteAllLines(
+                    Path.Combine(directory, Path.GetFileName(WeeklyBossRotationCatalogLoader.RelativePath)),
+                    source.Select(line => line.Replace(from, to, StringComparison.Ordinal)).ToArray());
+
+                try
+                {
+                    WeeklyBossRotationCatalogLoader.Load(root);
+                    return "LOADED";
+                }
+                catch (InvalidOperationException exception)
+                {
+                    return exception.Message;
+                }
+            }
+            finally
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+
+        var duplicateCycle = WeeklyLoadFailure("TOWER_WK_02,2,", "TOWER_WK_02,1,");
+        var badSlotId = WeeklyLoadFailure("TOWER_WK_03,", "tower_wk_03,");
+        Check(
+            "weekly.rotation_rejects_a_duplicate_cycle_and_a_lowercase_slot",
+            duplicateCycle is not null && duplicateCycle.Contains("cycle_index", StringComparison.Ordinal) &&
+            badSlotId is not null && badSlotId.Contains("rotation_slot_id", StringComparison.Ordinal),
+            $"cycle='{Cut(duplicateCycle)}' slot='{Cut(badSlotId)}'");
+
         var combatActor = NewPlayer("CHR_SELFCHECK_COMBAT");
         var badSkill = combat.Resolve(
             combatActor, new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-MK-99" });
