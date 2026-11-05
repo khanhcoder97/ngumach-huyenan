@@ -32,7 +32,21 @@ public sealed record ItemCatalogEntry(
     // no durability (every blank row in both catalogs is a consumable), which is
     // deliberately null rather than 0: 0 is a value an item can have, and the
     // grant path must not read a missing cell as "broken".
-    int? Durability);
+    int? Durability,
+    // DEC-023 `Runtime_State_and_Catalog_Precision_vi.md` §2: these six columns are the
+    // stat source, and `weapon_power`/`armor` overlap the `primary_stat` pair by design.
+    // The value cells stay raw text on purpose. 90 variant rows carry a fractional
+    // `weapon_power` (101.4), 635 a fractional `armor`, and 1628/1565 put a modifier
+    // string in `primary_value`/`secondary_value` ("0.5%", "+10% / 20 phút", "+100 XP")
+    // - §6 leaves the rounding/precision rule open, so a loader that parsed these into
+    // numbers would either crash the server or round a decision nobody has made. The
+    // aggregation classifies them, and refuses to invent a value.
+    string? WeaponPower,
+    string? Armor,
+    string? PrimaryStat,
+    string? PrimaryValue,
+    string? SecondaryStat,
+    string? SecondaryValue);
 
 public sealed class ItemCatalog
 {
@@ -181,6 +195,19 @@ public sealed class ItemCatalog
                 durability = parsedDurability;
             }
 
+            string? ReadRawCell(string column)
+            {
+                var cell = Cell(column);
+                return cell.Length == 0 ? null : cell;
+            }
+
+            var weaponPower = ReadRawCell("weapon_power");
+            var armorValue = ReadRawCell("armor");
+            var primaryStat = ReadRawCell("primary_stat");
+            var primaryValue = ReadRawCell("primary_value");
+            var secondaryStat = ReadRawCell("secondary_stat");
+            var secondaryValue = ReadRawCell("secondary_value");
+
             var category = Cell("category");
             var slotLabel = Cell("slot");
             string? slotToken = null;
@@ -212,7 +239,13 @@ public sealed class ItemCatalog
                 requiredLevel,
                 Cell("rarity_pool"),
                 stackLimit,
-                durability);
+                durability,
+                weaponPower,
+                armorValue,
+                primaryStat,
+                primaryValue,
+                secondaryStat,
+                secondaryValue);
 
             // The variant file repeats the 135 non-equipment rows verbatim;
             // identical duplicates are fine, but two different definitions of

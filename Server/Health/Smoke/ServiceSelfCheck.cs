@@ -4911,6 +4911,84 @@ public static class ServiceSelfCheck
                 (durabilityGrant.Snapshot?.Items ?? []).Select(item =>
                     $"{item.TemplateId}:{item.Durability}")));
 
+        // DEC-023 §2 publishes a four-number no-gear oracle and two one-item oracles.
+        // The aggregation is deliberately not wired into combat - an accepted equip
+        // still moves only the inventory - but the rules land now, so the day gear does
+        // apply cannot quietly count weapon_power twice, invent a key for an unknown
+        // label, or heal somebody by changing a maximum.
+        var noGear = PlayerStatAggregation.Derive([]);
+        Check(
+            "stats.dec023_level_one_no_gear_oracle",
+            noGear.HpMax == 198 && noGear.MpMax == 102 &&
+            noGear.PhysicalAttack == 20 && noGear.Armor == 10,
+            $"hp={noGear.HpMax} mp={noGear.MpMax} attack={noGear.PhysicalAttack} armor={noGear.Armor}");
+
+        itemCatalog.TryGet("EQ-MK-WEAPON-T1-R-COMMON", out var oracleSword);
+        itemCatalog.TryGet("EQ-MK-HAT-T1-R-COMMON", out var oracleHat);
+        var sword = PlayerStatAggregation.Resolve(oracleSword);
+        var hat = PlayerStatAggregation.Resolve(oracleHat);
+        var swordOnly = PlayerStatAggregation.Derive([sword]);
+        var hatOnly = PlayerStatAggregation.Derive([hat]);
+        Check(
+            "stats.dec023_one_item_oracles_are_38_and_14_not_50_and_16",
+            sword.WeaponAttack == 12 && sword.Strength == 2 &&
+            sword.Conflicts.Count == 0 && sword.UnsupportedLabels.Count == 0 &&
+            swordOnly.PhysicalAttack == 38 &&
+            hat.Armor == 2 && hat.Vitality == 1 && hat.Conflicts.Count == 0 &&
+            hatOnly.Armor == 14 && hatOnly.HpMax == 212,
+            $"sword.attack={swordOnly.PhysicalAttack} hat.hp={hatOnly.HpMax} hat.armor={hatOnly.Armor}");
+
+        // The alias rule gets a teeth test: two disagreeing columns contribute nothing
+        // and name the row, instead of summing (the 50 §2 rejects), taking max, or
+        // dropping whichever column is less convenient.
+        var conflicting = PlayerStatAggregation.Resolve(new ItemCatalogEntry(
+            "EQ-TEST-CONFLICT", ItemCatalog.WeaponCategory, "WEAPON", "Kiếm", "CLASS_MINH_KIEM",
+            1, "Thường", 1, null, "12", null, StatLabels.WeaponPowerPhysical, "9", null, null));
+        Check(
+            "stats.alias_conflict_contributes_nothing_and_names_the_row",
+            conflicting.WeaponAttack == 0 &&
+            conflicting.Conflicts.Count == 1 &&
+            conflicting.Conflicts[0].Contains("EQ-TEST-CONFLICT", StringComparison.Ordinal) &&
+            conflicting.Conflicts[0].Contains("weapon_power/primary_stat", StringComparison.Ordinal) &&
+            conflicting.UnsupportedLabels.Count == 0 &&
+            conflicting.UnsupportedValues.Count == 0,
+            string.Join(" / ", conflicting.Conflicts));
+
+        var unknownLabel = PlayerStatAggregation.Resolve(new ItemCatalogEntry(
+            "EQ-TEST-UNKNOWN", ItemCatalog.ArmorCategory, "CHEST", "Áo", "CLASS_MINH_KIEM",
+            1, "Thường", 1, null, null, null, "Chí mạng", "5", null, null));
+        Check(
+            "stats.unknown_stat_label_is_reported_not_invented",
+            unknownLabel.UnsupportedLabels.SequenceEqual(["Chí mạng"]) &&
+            unknownLabel.IsEmpty &&
+            unknownLabel.Conflicts.Count == 0,
+            string.Join(" / ", unknownLabel.UnsupportedLabels));
+
+        // §6 leaves the rounding rule for fractional and percentage gear open, and the
+        // shipped catalog is full of them (90 fractional weapon_power, 635 fractional
+        // armor, 1628/1565 modifier strings). Refusing is the only honest reading until
+        // somebody rules on it, so a fractional row must contribute zero and say so.
+        var fractional = PlayerStatAggregation.Resolve(new ItemCatalogEntry(
+            "EQ-TEST-FRACTION", ItemCatalog.ArmorCategory, "CHEST", "Áo", "CLASS_MINH_KIEM",
+            1, "Tinh", 1, null, null, "1.1", StatLabels.ArmorLabel, "1.1", "HP hồi", "0.5%"));
+        Check(
+            "stats.fraction_and_percent_cells_are_refused_not_rounded",
+            fractional.Armor == 0 &&
+            fractional.IsEmpty &&
+            fractional.Conflicts.Count == 0 &&
+            fractional.UnsupportedValues.Count == 2 &&
+            fractional.UnsupportedValues[0].Contains("1.1", StringComparison.Ordinal) &&
+            fractional.UnsupportedLabels.SequenceEqual(["HP hồi"]),
+            string.Join(" / ", fractional.UnsupportedValues));
+
+        Check(
+            "stats.max_change_clamps_and_never_heals",
+            PlayerStatAggregation.ClampAfterMaxChange(210, 198) == 198 &&
+            PlayerStatAggregation.ClampAfterMaxChange(198, 216) == 198 &&
+            PlayerStatAggregation.ClampAfterMaxChange(0, 216) == 0 &&
+            PlayerStatAggregation.ClampAfterMaxChange(150, 198) == 150,
+            "210/216 losing an +18 hat -> 198/198, putting it back keeps 198, a dead actor stays at 0");
+
         var equipped = inventory.Apply(inventoryActor, new InventoryMutation
         {
             ExpectedRevision = 1,
