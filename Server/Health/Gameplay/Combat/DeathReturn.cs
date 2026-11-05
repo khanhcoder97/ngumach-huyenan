@@ -110,11 +110,31 @@ public sealed record DeathReturnResult(
 
 public sealed class DeathReturnService
 {
-    // Bounded so a long-lived process cannot grow the ledger with session count;
-    // a key older than the window is a fresh request, which is acceptable because
-    // the return itself is idempotent on actor state (an already-returned actor is
-    // no longer downed and gets NotDowned rather than a second move).
+    // Retention rule (work order 30 item 1). A receipt is reclaimed only when the life it
+    // closed has itself been superseded: the character has since died again and been
+    // returned, so the recorded answer belongs to an earlier life than the one it is
+    // living now and cannot be replayed as a live return. While the head of the queue is
+    // still owed, the ledger grows past this bound and reports it through
+    // ReceiptsHeldPastBound instead of dropping a receipt - a dropped receipt turns the
+    // same key into a fresh action, which is the double-apply the key exists to prevent.
+    // Reclaiming on a real expiry rule needs persistence, and that is the published scope
+    // of the QODER Remote Server/Persistence track, not a rule this service may invent.
     public const int LedgerCapacity = 256;
+
+    private int _receiptsHeldPastBound;
+
+    // How many times a receipt had to be kept past the bound. Exposed so the growth is an
+    // observation with a number attached rather than an invisible leak.
+    public int ReceiptsHeldPastBound
+    {
+        get
+        {
+            lock (_ledgerSync)
+            {
+                return _receiptsHeldPastBound;
+            }
+        }
+    }
 
     private readonly ISessionStore _sessions;
     private readonly MapBoundsCatalog _bounds;
@@ -238,6 +258,19 @@ public sealed class DeathReturnService
             _ledgerOrder.Enqueue(idempotencyKey);
             while (_ledgerOrder.Count > LedgerCapacity && _ledgerOrder.TryDequeue(out var oldest))
             {
+                if (_ledger.TryGetValue(oldest, out var held) &&
+                    _lives.LifeVersion(held.CharacterId) <= held.Result.NewLifeVersion)
+                {
+                    // The returned life is still the one this character is living, so the
+                    // receipt is what keeps a replay of that key from acting twice. Reclaim
+                    // only in arrival order, so an owed head keeps the ledger whole and the
+                    // growth is reported rather than worked around by dropping newer
+                    // receipts out of order.
+                    _ledgerOrder.Enqueue(oldest);
+                    _receiptsHeldPastBound++;
+                    break;
+                }
+
                 _ledger.Remove(oldest!);
             }
 

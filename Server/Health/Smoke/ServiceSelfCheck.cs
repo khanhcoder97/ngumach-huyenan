@@ -4239,18 +4239,28 @@ public static class ServiceSelfCheck
             $"{refilledReturn.Hp}/{secondKeyReturn.ErrorCode}");
 
         var ledgerService = NewDeathReturn(0);
+        string ledgerFirstSession = string.Empty;
+        string ledgerFirstKey = string.Empty;
         for (var ledgerIndex = 0; ledgerIndex < 300; ledgerIndex++)
         {
             var ledgerHero = NewPlayer("CHR_SELFCHECK_RETURN_" + ledgerIndex, hp: 0);
             returnSessions.Add(ledgerHero);
             ledgerService.ReturnToAnchor(
                 ledgerHero.SessionId, ledgerIndex.ToString("x32"));
+            if (ledgerIndex == 0)
+            {
+                ledgerFirstSession = ledgerHero.SessionId;
+                ledgerFirstKey = ledgerIndex.ToString("x32");
+            }
         }
 
         Check(
-            "death_return_ledger_is_bounded",
-            ledgerService.LedgerCount == DeathReturnService.LedgerCapacity,
-            $"count={ledgerService.LedgerCount}");
+            "death_return_keeps_every_receipt_whose_life_is_still_current",
+            ledgerService.LedgerCount == 300 &&
+            ledgerService.ReceiptsHeldPastBound == 44 &&
+            ledgerService.ReturnToAnchor(ledgerFirstSession, ledgerFirstKey)
+                is { Applied: false, Replayed: true },
+            $"count={ledgerService.LedgerCount} held={ledgerService.ReceiptsHeldPastBound}");
 
         // DEC-DEATH-RETURN-20261105 answers the six packet questions, and the
         // approved shape is owned by three numbers the fixture does not have: the
