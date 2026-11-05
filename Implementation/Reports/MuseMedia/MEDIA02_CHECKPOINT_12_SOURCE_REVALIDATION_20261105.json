@@ -1,0 +1,28 @@
+{
+ "checkpoint": "MEDIA-02 checkpoint 09 (M7/V4 validation)",
+ "base_integration": "cf17178",
+ "branch": "muse/media-production-20261104",
+ "counts": {
+  "audio_files_checked": 1093,
+  "audio_music_ambience_cues": 22,
+  "audio_sfx_ui_cues": 173,
+  "p0_stem_pool_files": 11,
+  "timing_scenes_checked": 20,
+  "timing_dialogues": 21,
+  "srt_cues": 21,
+  "animatic_panels_checked": 12,
+  "animatic_panels_listed": 12,
+  "vo_takes_checked": 3
+ },
+ "mismatches": [],
+ "notes": [
+  "P0 stem pool cues validated as files: ['AMBIENCE/rain_heavy', 'AMBIENCE/rain_light', 'AMBIENCE/river_shore', 'AMBIENCE/underwater', 'MUSIC/ben_mua', 'MUSIC/boss_mang_cot', 'MUSIC/quiet_discovery', 'SFX/CINEMA/resolve_v01', 'SFX/CINEMA/reveal_v01', 'SFX/CINEMA/tension_v01', 'SFX/CINEMA/transition_v01']",
+  "ANIMATIC P0_animatic_640x360_30fps.ogv: avg_frame_rate 0/0 (expected 30/1)"
+ ],
+ "verdict": "PASS",
+ "limits": [
+  "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08, measured from real bytes.",
+  "No ear audition of loop seams or VO takes in this validation.",
+  "Campaign dialogue windows remain PROPOSED except CIN_001_S05 (DECIDED); this check verifies SRT==timing consistency, not directorial approval."
+ ]
+}
