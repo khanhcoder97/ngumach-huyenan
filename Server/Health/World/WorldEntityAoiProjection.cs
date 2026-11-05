@@ -7,10 +7,11 @@ namespace Server.Health.World;
 // QOD-16 phase 2 audience policy (owner decision Q6): the v2 snapshot exposes
 // MOB/BOSS/NPC/GATHER_NODE/INTERACTABLE after an AOI filter — enter 40 WU,
 // leave at 48 WU (8 WU hysteresis) from Online_Persistence_Release_Complete
-// §2 — within the same map instance/floor/phase. The internal projection sees
-// all 27 candidates; a client only receives its visible subset. Phase and
-// instance are labelled DEV placeholders until encounter phases (QOD-19) and
-// multi-instance maps exist.
+// §2 — within the same map instance/floor/phase. The internal read model sees every
+// candidate the registry holds; a client receives only the visible subset. The instance
+// label is always mapId + "#1" and the phase is the constant OPEN_WORLD, so nothing in
+// this filter is encounter-aware - the Mãng Cốt fight scopes by its own quest-attempt
+// instance rather than through these two constants.
 public static class WorldAudience
 {
     public const double AoiEnterWu = 40;
