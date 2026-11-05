@@ -8632,7 +8632,7 @@ public static class ServiceSelfCheck
             consumableByItem["POT-HP-02"].RequiredLevel == 16,
             $"hp={string.Join("|", consumables.Where(entry => entry.Restores == ConsumableCatalog.Hp).Select(entry => entry.Percent))}");
 
-        string? ConsumableLoadFailure(string from, string to)
+        string ConsumableLoadFailure(string from, string to)
         {
             var root = Path.Combine(
                 Path.GetTempPath(), "p1-consumable-" + Guid.NewGuid().ToString("N"));
@@ -8957,7 +8957,7 @@ public static class ServiceSelfCheck
             npcDefinitions.Count(npc => npc.RoleProfile == "QUEST_GIVER") == 15,
             $"services={string.Join("|", serviceTokens.OrderBy(pair => pair.Key).Select(pair => $"{pair.Key}={pair.Value}"))}");
 
-        string? NpcRegistryTargetableFailure()
+        string NpcRegistryTargetableFailure()
         {
             var root = Path.Combine(
                 Path.GetTempPath(), "p1-npc-target-" + Guid.NewGuid().ToString("N"));
