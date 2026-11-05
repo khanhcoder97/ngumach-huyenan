@@ -215,7 +215,11 @@ builder.Services.AddSingleton(serviceProvider => new WorldEntityRegistry(
     serviceProvider.GetRequiredService<WorldEntityCatalog>(),
     serviceProvider.GetRequiredService<IServerClock>()));
 builder.Services.AddSingleton<IInventoryStateStore, InMemoryInventoryStateStore>();
-builder.Services.AddSingleton<IInventoryService, InMemoryInventoryService>();
+// The catalog is passed in so a grant that does not name a durability takes the
+// canonical CSV value instead of silently storing 0.
+builder.Services.AddSingleton<IInventoryService>(serviceProvider => new InMemoryInventoryService(
+    serviceProvider.GetRequiredService<IInventoryStateStore>(),
+    serviceProvider.GetRequiredService<ItemCatalog>()));
 builder.Services.Configure<EquipmentOptions>(
     builder.Configuration.GetSection(EquipmentOptions.SectionName));
 builder.Services.AddSingleton(serviceProvider =>

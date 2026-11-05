@@ -31,7 +31,11 @@ public sealed class ItemGrant
     public int Stack { get; init; }
     public required string Location { get; init; }
     public string? Slot { get; init; }
-    public int Durability { get; init; }
+
+    // Null means "the caller did not say", which is not the same statement as 0:
+    // an unspecified grant takes the canonical catalog's durability, while an
+    // explicit number is honored as given.
+    public int? Durability { get; init; }
 }
 
 public sealed class ItemRemoval

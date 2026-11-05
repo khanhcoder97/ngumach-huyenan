@@ -4504,6 +4504,66 @@ public static class ServiceSelfCheck
             granted.Snapshot.Currencies.Single().Amount == 20,
             granted.ErrorCode ?? $"revision={granted.Snapshot?.InventoryRevision}");
 
+        // Q5 audit (owner ask on #87): the reward coat serialized durability 0.
+        // The canonical catalog states a durability for every equipment row
+        // (`Item_Rarity_Variant_Catalog_vi.csv`, column `durability` = 100 for
+        // EQ-MK-CHEST-T1-R-COMMON) and leaves the cell blank only for consumables,
+        // so 0 was an uninitialized field, not "non-durable". A grant that names no
+        // durability now takes the source; an explicit number still wins; a blank
+        // source cell stays 0 because that is what the row says, not a default.
+        var durabilityActor = NewPlayer("CHR_SELFCHECK_DURABILITY");
+        var durabilityGrant = inventory.Apply(durabilityActor, new InventoryMutation
+        {
+            AddItems =
+            [
+                new ItemGrant
+                {
+                    TemplateId = "EQ-MK-CHEST-T1-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag
+                },
+                new ItemGrant
+                {
+                    TemplateId = "POT-HP-01",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag
+                },
+                new ItemGrant
+                {
+                    TemplateId = "EQ-MK-HAT-T1-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag,
+                    Durability = 7
+                },
+                new ItemGrant
+                {
+                    TemplateId = "UNKNOWN_TEMPLATE_X",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag
+                }
+            ]
+        });
+        Check(
+            "inventory.grant_durability_comes_from_the_catalog",
+            durabilityGrant.IsSuccess &&
+            durabilityGrant.Snapshot!.Items.Single(item =>
+                item.TemplateId == "EQ-MK-CHEST-T1-R-COMMON").Durability == 100 &&
+            durabilityGrant.Snapshot.Items.Single(item =>
+                item.TemplateId == "POT-HP-01").Durability == 0 &&
+            durabilityGrant.Snapshot.Items.Single(item =>
+                item.TemplateId == "EQ-MK-HAT-T1-R-COMMON").Durability == 7 &&
+            durabilityGrant.Snapshot.Items.Single(item =>
+                item.TemplateId == "UNKNOWN_TEMPLATE_X").Durability == 0 &&
+            itemCatalog.TryGet("EQ-MK-CHEST-T1-R-COMMON", out var chestEntry) &&
+            chestEntry.Durability == 100 &&
+            itemCatalog.TryGet("POT-HP-01", out var potionEntry) &&
+            potionEntry.Durability is null,
+            $"grant={durabilityGrant.ErrorCode} items=" +
+            string.Join(
+                "|",
+                (durabilityGrant.Snapshot?.Items ?? []).Select(item =>
+                    $"{item.TemplateId}:{item.Durability}")));
+
         var equipped = inventory.Apply(inventoryActor, new InventoryMutation
         {
             ExpectedRevision = 1,

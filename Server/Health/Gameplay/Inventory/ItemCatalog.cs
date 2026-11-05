@@ -27,7 +27,12 @@ public sealed record ItemCatalogEntry(
     string? ClassId,
     int RequiredLevel,
     string RarityPool,
-    int StackLimit);
+    int StackLimit,
+    // The canonical catalog's `durability` column. Blank means the source states
+    // no durability (every blank row in both catalogs is a consumable), which is
+    // deliberately null rather than 0: 0 is a value an item can have, and the
+    // grant path must not read a missing cell as "broken".
+    int? Durability);
 
 public sealed class ItemCatalog
 {
@@ -122,7 +127,7 @@ public sealed class ItemCatalog
         foreach (var required in new[]
                  {
                      "item_id", "category", "slot", "class_id", "required_level",
-                     "rarity_pool", "stack_limit"
+                     "rarity_pool", "stack_limit", "durability"
                  })
         {
             if (!index.ContainsKey(required))
@@ -161,6 +166,21 @@ public sealed class ItemCatalog
                     $"{path}:{line + 1}: invalid stack_limit for '{itemId}'.");
             }
 
+            var durabilityCell = Cell("durability");
+            int? durability = null;
+            if (durabilityCell.Length > 0)
+            {
+                if (!int.TryParse(durabilityCell, out var parsedDurability) ||
+                    parsedDurability < 0)
+                {
+                    throw new InvalidOperationException(
+                        $"{path}:{line + 1}: invalid durability '{durabilityCell}' for " +
+                        $"'{itemId}'; a blank cell means the source states none.");
+                }
+
+                durability = parsedDurability;
+            }
+
             var category = Cell("category");
             var slotLabel = Cell("slot");
             string? slotToken = null;
@@ -191,7 +211,8 @@ public sealed class ItemCatalog
                 string.IsNullOrEmpty(Cell("class_id")) ? null : Cell("class_id"),
                 requiredLevel,
                 Cell("rarity_pool"),
-                stackLimit);
+                stackLimit,
+                durability);
 
             // The variant file repeats the 135 non-equipment rows verbatim;
             // identical duplicates are fine, but two different definitions of
