@@ -1,0 +1,714 @@
+{
+  "checkpoint": "MEDIA-02 checkpoint 17 - campaign VO drafts (17 lines)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "d1Approval": "D1 APPROVED draft VO production only for the 21 dialogue windows; no canon changes, no voice speed-up to fit.",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_NOT_FINAL_VO",
+  "campaignSeconds": 378.0,
+  "fits": 15,
+  "overruns": [
+    "CIN_005_S03",
+    "CIN_018_S03"
+  ],
+  "notes": [
+    "Fictional system voices only; no real-voice cloning, no unlicensed samples.",
+    "All 17 windows are PROPOSED_ANIMATIC_PLACEMENT (checkpoint 06); none is DECIDED except by D1 for draft VO production.",
+    "All takes synthesized at speed 100 (D1: no voice speed-up to fit). An OVERRUN take is delivered unchanged and flagged; the director decides whether to widen its window or trim its line.",
+    "Male characters share one production voice (Helio) in this draft; they are NOT voice-distinct. Distinct casting is a director decision.",
+    "PLAYER take is a timing-only placeholder (VOICE_GUIDE assigns the player no spoken voice); CIN_020 uses placeholder role voice VOICE_LETTER_RECIPIENT.",
+    "Per-take loudness only, NOT a mix PASS; stems stay separate.",
+    "Timeline is VO-only draft assembly; no music/ambience mixed in."
+  ],
+  "takes": [
+    {
+      "key": "CIN003_S03",
+      "shotId": "CIN_003_S03",
+      "sceneId": "CIN_003",
+      "speaker": "NPC_LYAN",
+      "speakerDisplay": "Ly An",
+      "onscreen": true,
+      "voice": "avocado_v2:MAI_01",
+      "voiceLabel": "Aria (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN003_S03.mp3",
+      "wav": "VO_CIN_003_S03_LYAN_draft_v1.wav",
+      "text": "Có thể họ đã đứng ở hai chỗ khác nhau. Cứ để họ kể.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 54.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "e493ca6264f8733ccf3d764e4969765d9d4d7de09bf0295c09fd523fb0e96176",
+      "rawMp3": "CIN003_S03_tts_raw.mp3",
+      "rawMp3Sha256": "6836c45207f9a3bdb1fa869c5eda4a742657d91d048604fcdb4360c20f60a2d2",
+      "durationSeconds": 4.032,
+      "windowSeconds": 5.0,
+      "slackSeconds": 0.968,
+      "fit": "FITS",
+      "timelineStartSeconds": 66.5,
+      "loudness": {
+        "integratedLUFS": "-19.32",
+        "truePeakDBTP": "-4.36",
+        "loudnessRangeLU": "0.60",
+        "thresholdLUFS": "-29.72"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 387172
+      }
+    },
+    {
+      "key": "CIN005_S03",
+      "shotId": "CIN_005_S03",
+      "sceneId": "CIN_005",
+      "speaker": "NPC_LYAN",
+      "speakerDisplay": "Ly An",
+      "onscreen": null,
+      "voice": "avocado_v2:MAI_01",
+      "voiceLabel": "Aria (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN005_S03.mp3",
+      "wav": "VO_CIN_005_S03_LYAN_draft_v1.wav",
+      "text": "Ở đây ai cũng nói mình giữ bình yên. Hãy nghe xem họ đang giữ cho ai.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 90.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "6e01c87f309cf1dacf5e552297b91cf8d6297ab8d59e606da5b85acd566ab7b2",
+      "rawMp3": "CIN005_S03_tts_raw.mp3",
+      "rawMp3Sha256": "19a51981286d14fc3336fa048906c7cde59f66d0f57e17636c4a8385208415e4",
+      "durationSeconds": 5.16,
+      "windowSeconds": 5.0,
+      "slackSeconds": -0.16,
+      "fit": "OVERRUN",
+      "timelineStartSeconds": 102.5,
+      "loudness": {
+        "integratedLUFS": "-20.50",
+        "truePeakDBTP": "-6.31",
+        "loudnessRangeLU": "1.50",
+        "thresholdLUFS": "-30.73"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 495460
+      }
+    },
+    {
+      "key": "CIN007_S03",
+      "shotId": "CIN_007_S03",
+      "sceneId": "CIN_007",
+      "speaker": "NPC_LYAN",
+      "speakerDisplay": "Ly An",
+      "onscreen": true,
+      "voice": "avocado_v2:MAI_01",
+      "voiceLabel": "Aria (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN007_S03.mp3",
+      "wav": "VO_CIN_007_S03_LYAN_draft_v1.wav",
+      "text": "Trong sổ người ấy đã mất. Ở đây vẫn có người gọi tên.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 126.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "e2897902bc706a430dd97fda1fc7fd965ebb01599d056e337ce91ff04d84823c",
+      "rawMp3": "CIN007_S03_tts_raw.mp3",
+      "rawMp3Sha256": "98879ec4b22e3a9992c420a48f08c6273fc171046b79a75e6a86c609c6138a08",
+      "durationSeconds": 3.912,
+      "windowSeconds": 5.0,
+      "slackSeconds": 1.088,
+      "fit": "FITS",
+      "timelineStartSeconds": 138.5,
+      "loudness": {
+        "integratedLUFS": "-18.10",
+        "truePeakDBTP": "-1.38",
+        "loudnessRangeLU": "0.30",
+        "thresholdLUFS": "-28.51"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 375652
+      }
+    },
+    {
+      "key": "CIN008_S03",
+      "shotId": "CIN_008_S03",
+      "sceneId": "CIN_008",
+      "speaker": "NPC_TA_VAN_KHANH",
+      "speakerDisplay": "Tạ Vân Khanh",
+      "onscreen": true,
+      "voice": "avocado_v2:MAI_03",
+      "voiceLabel": "Helio (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN008_S03.mp3",
+      "wav": "VO_CIN_008_S03_TAVANKHANH_draft_v1.wav",
+      "text": "Không ai ép tay ta ký. Đó mới là điều khó nói.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 144.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "11ac4a8284f27275b90cc7180d0e86cb533ffcc2747521c55ebd3d6d3c9da68d",
+      "rawMp3": "CIN008_S03_tts_raw.mp3",
+      "rawMp3Sha256": "f069b560fd0598aa6ebadf608c28926fad982a6d2c421e3270234a67ca9df352",
+      "durationSeconds": 3.552,
+      "windowSeconds": 5.0,
+      "slackSeconds": 1.448,
+      "fit": "FITS",
+      "timelineStartSeconds": 156.5,
+      "loudness": {
+        "integratedLUFS": "-23.10",
+        "truePeakDBTP": "-1.94",
+        "loudnessRangeLU": "0.30",
+        "thresholdLUFS": "-33.10"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 341092
+      }
+    },
+    {
+      "key": "CIN009_S03",
+      "shotId": "CIN_009_S03",
+      "sceneId": "CIN_009",
+      "speaker": "NPC_LYAN",
+      "speakerDisplay": "Ly An",
+      "onscreen": null,
+      "voice": "avocado_v2:MAI_01",
+      "voiceLabel": "Aria (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN009_S03.mp3",
+      "wav": "VO_CIN_009_S03_LYAN_draft_v1.wav",
+      "text": "Có tiếng đã được trả lời. Có tiếng mình còn chưa biết gọi thế nào.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 162.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "5573f563ee79aacc1fd4d746e813f00a5d6fa3452e0d73dcd8925bee72eff1ba",
+      "rawMp3": "CIN009_S03_tts_raw.mp3",
+      "rawMp3Sha256": "3c2bd3d28a20947e5ffb21f14cad1f1a99d60790004c4b20dfdfa9ae77fd572c",
+      "durationSeconds": 4.08,
+      "windowSeconds": 5.0,
+      "slackSeconds": 0.92,
+      "fit": "FITS",
+      "timelineStartSeconds": 174.5,
+      "loudness": {
+        "integratedLUFS": "-17.23",
+        "truePeakDBTP": "-3.13",
+        "loudnessRangeLU": "0.30",
+        "thresholdLUFS": "-27.23"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 391780
+      }
+    },
+    {
+      "key": "CIN010_S03",
+      "shotId": "CIN_010_S03",
+      "sceneId": "CIN_010",
+      "speaker": "NPC_SAM_CHU_QUY",
+      "speakerDisplay": "Sầm Chủ Quỹ",
+      "onscreen": true,
+      "voice": "avocado_v2:MAI_03",
+      "voiceLabel": "Helio (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN010_S03.mp3",
+      "wav": "VO_CIN_010_S03_SAMCHUQUY_draft_v1.wav",
+      "text": "Đường ngắn thì đỡ khát. Nếu xe qua được.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 180.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "f92937a8b2e960c928b0df8433b20b67f2eb1df2bb1176abbaf78ae07a605f8d",
+      "rawMp3": "CIN010_S03_tts_raw.mp3",
+      "rawMp3Sha256": "7e5ede594bb18a42753b1ee07c476e29e926ce9e07922efc034458d02a42e8d5",
+      "durationSeconds": 2.808,
+      "windowSeconds": 5.0,
+      "slackSeconds": 2.192,
+      "fit": "FITS",
+      "timelineStartSeconds": 192.5,
+      "loudness": {
+        "integratedLUFS": "-22.01",
+        "truePeakDBTP": "-4.71",
+        "loudnessRangeLU": "0.00",
+        "thresholdLUFS": "-32.01"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 269668
+      }
+    },
+    {
+      "key": "CIN011_S03",
+      "shotId": "CIN_011_S03",
+      "sceneId": "CIN_011",
+      "speaker": "NPC_HA_MAC",
+      "speakerDisplay": "Hạ Mặc",
+      "onscreen": true,
+      "voice": "avocado_v2:MAI_03",
+      "voiceLabel": "Helio (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN011_S03.mp3",
+      "wav": "VO_CIN_011_S03_HAMAC_draft_v1.wav",
+      "text": "Nét sau không xóa được điều tốt trước đó. Cũng không được dùng điều tốt để xóa nét sau.",
+      "windowSceneSeconds": [
+        12.2,
+        17.8
+      ],
+      "sceneOffsetSeconds": 198.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "d51f2eb6edb630694cd280a620048565fabeb54277de224f44f973eef4cfa370",
+      "rawMp3": "CIN011_S03_tts_raw.mp3",
+      "rawMp3Sha256": "d3088f470996b4274a2cf4efbf8566bcdcaee2a4c0faa04c9d32cc36dc99223b",
+      "durationSeconds": 5.592,
+      "windowSeconds": 5.600000000000001,
+      "slackSeconds": 0.008,
+      "fit": "FITS",
+      "timelineStartSeconds": 210.2,
+      "loudness": {
+        "integratedLUFS": "-21.50",
+        "truePeakDBTP": "-3.42",
+        "loudnessRangeLU": "0.50",
+        "thresholdLUFS": "-31.55"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 536932
+      }
+    },
+    {
+      "key": "CIN012_S03",
+      "shotId": "CIN_012_S03",
+      "sceneId": "CIN_012",
+      "speaker": "NPC_HA_MAC",
+      "speakerDisplay": "Hạ Mặc",
+      "onscreen": true,
+      "voice": "avocado_v2:MAI_03",
+      "voiceLabel": "Helio (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN012_S03.mp3",
+      "wav": "VO_CIN_012_S03_HAMAC_draft_v1.wav",
+      "text": "Có thể đưa chuyện này ra ánh sáng mà không đẩy người làm chứng vào lửa.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 216.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "87f9ecfacd5da329fbf14397dad88e0b3c8a76880a57c24be70b00d186cda9e5",
+      "rawMp3": "CIN012_S03_tts_raw.mp3",
+      "rawMp3Sha256": "cc179ca055b72890a9958d0461537a814613eae04a9d64c7ecfd8a8dbb0eea5c",
+      "durationSeconds": 4.32,
+      "windowSeconds": 5.0,
+      "slackSeconds": 0.68,
+      "fit": "FITS",
+      "timelineStartSeconds": 228.5,
+      "loudness": {
+        "integratedLUFS": "-25.38",
+        "truePeakDBTP": "-5.33",
+        "loudnessRangeLU": "1.00",
+        "thresholdLUFS": "-35.38"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 414820
+      }
+    },
+    {
+      "key": "CIN013_S03",
+      "shotId": "CIN_013_S03",
+      "sceneId": "CIN_013",
+      "speaker": "NPC_REFUGEE_LEADER",
+      "speakerDisplay": "Trưởng đoàn",
+      "onscreen": true,
+      "voice": "avocado_v2:MAI_03",
+      "voiceLabel": "Helio (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN013_S03.mp3",
+      "wav": "VO_CIN_013_S03_REFUGEELEADER_draft_v1.wav",
+      "text": "Chưa đóng cổng. Còn một người đi sau.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 234.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "21bf362fe3d3f9dc4062d467f33e3fbed4dc0f09786c8530df4427ee0b6f8eff",
+      "rawMp3": "CIN013_S03_tts_raw.mp3",
+      "rawMp3Sha256": "13bdcdd11e01ec01d8cb1d3b0b00ef9b26d19055029cc09bff0ca85482522e93",
+      "durationSeconds": 2.472,
+      "windowSeconds": 5.0,
+      "slackSeconds": 2.528,
+      "fit": "FITS",
+      "timelineStartSeconds": 246.5,
+      "loudness": {
+        "integratedLUFS": "-22.51",
+        "truePeakDBTP": "-5.33",
+        "loudnessRangeLU": "0.00",
+        "thresholdLUFS": "-32.72"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 237412
+      }
+    },
+    {
+      "key": "CIN014_S03",
+      "shotId": "CIN_014_S03",
+      "sceneId": "CIN_014",
+      "speaker": "NPC_TONG_BANH",
+      "speakerDisplay": "Tống Bành",
+      "onscreen": true,
+      "voice": "avocado_v2:MAI_03",
+      "voiceLabel": "Helio (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN014_S03.mp3",
+      "wav": "VO_CIN_014_S03_TONGBANH_draft_v1.wav",
+      "text": "Ta biết lệnh ấy là giả. Ta vẫn cho đóng dấu.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 252.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "71195d946417c4978d865d2be4d066b520da09c96b8e511a1c332d27e36101dc",
+      "rawMp3": "CIN014_S03_tts_raw.mp3",
+      "rawMp3Sha256": "54121100077a7f9b229fbff66cc43ee7079045e3fe3f3b392dc37d079e083ec3",
+      "durationSeconds": 3.072,
+      "windowSeconds": 5.0,
+      "slackSeconds": 1.928,
+      "fit": "FITS",
+      "timelineStartSeconds": 264.5,
+      "loudness": {
+        "integratedLUFS": "-22.05",
+        "truePeakDBTP": "-2.01",
+        "loudnessRangeLU": "0.30",
+        "thresholdLUFS": "-32.05"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 295012
+      }
+    },
+    {
+      "key": "CIN015_S03",
+      "shotId": "CIN_015_S03",
+      "sceneId": "CIN_015",
+      "speaker": "NPC_DIVER_LEAD",
+      "speakerDisplay": "Đội trưởng thợ lặn",
+      "onscreen": true,
+      "voice": "avocado_v2:MAI_03",
+      "voiceLabel": "Helio (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN015_S03.mp3",
+      "wav": "VO_CIN_015_S03_DIVERLEAD_draft_v1.wav",
+      "text": "Lần trước có người đã buộc dây này cho chúng ta.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 270.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "988d767631e150f0ac618e5e7db4c8d7b42cda6887471d9a49921573e4d8c733",
+      "rawMp3": "CIN015_S03_tts_raw.mp3",
+      "rawMp3Sha256": "b94974eb54f5a889ea062df8efc0471b44a21a3b14f144623972ad36adf68fda",
+      "durationSeconds": 2.88,
+      "windowSeconds": 5.0,
+      "slackSeconds": 2.12,
+      "fit": "FITS",
+      "timelineStartSeconds": 282.5,
+      "loudness": {
+        "integratedLUFS": "-23.27",
+        "truePeakDBTP": "-4.01",
+        "loudnessRangeLU": "0.00",
+        "thresholdLUFS": "-33.27"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 276580
+      }
+    },
+    {
+      "key": "CIN016_S03",
+      "shotId": "CIN_016_S03",
+      "sceneId": "CIN_016",
+      "speaker": "NPC_HA_MAC",
+      "speakerDisplay": "Hạ Mặc",
+      "onscreen": true,
+      "voice": "avocado_v2:MAI_03",
+      "voiceLabel": "Helio (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN016_S03.mp3",
+      "wav": "VO_CIN_016_S03_HAMAC_draft_v1.wav",
+      "text": "Tôi có thể ghi lại phần ông muốn kể không?",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 288.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "ba1b23820bd63811c59279c9d5d95cbf74b9adcb362ce9e4ec6c0f73e611fa4c",
+      "rawMp3": "CIN016_S03_tts_raw.mp3",
+      "rawMp3Sha256": "ca761d105764d749cedb0b751d1fa63499755b3614e1532334d4d1759646f947",
+      "durationSeconds": 2.472,
+      "windowSeconds": 5.0,
+      "slackSeconds": 2.528,
+      "fit": "FITS",
+      "timelineStartSeconds": 300.5,
+      "loudness": {
+        "integratedLUFS": "-21.92",
+        "truePeakDBTP": "-4.40",
+        "loudnessRangeLU": "0.00",
+        "thresholdLUFS": "-31.92"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 237412
+      }
+    },
+    {
+      "key": "CIN017_S03",
+      "shotId": "CIN_017_S03",
+      "sceneId": "CIN_017",
+      "speaker": "NPC_DIVER_LEAD",
+      "speakerDisplay": "Đội trưởng thợ lặn",
+      "onscreen": null,
+      "voice": "avocado_v2:MAI_03",
+      "voiceLabel": "Helio (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN017_S03.mp3",
+      "wav": "VO_CIN_017_S03_DIVERLEAD_draft_v1.wav",
+      "text": "Mang lõi đi thì phải giữ đường nước còn lại.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 306.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "af353ca2e88fdbeff15645a2becff0c6e78cd8dac5d42a8ec2528211b5fd7989",
+      "rawMp3": "CIN017_S03_tts_raw.mp3",
+      "rawMp3Sha256": "78400c11769bd05f9f9fa78f8c210e23310a43e5246afa900ec6f2ade2e524fb",
+      "durationSeconds": 3.168,
+      "windowSeconds": 5.0,
+      "slackSeconds": 1.832,
+      "fit": "FITS",
+      "timelineStartSeconds": 318.5,
+      "loudness": {
+        "integratedLUFS": "-22.33",
+        "truePeakDBTP": "-2.63",
+        "loudnessRangeLU": "0.10",
+        "thresholdLUFS": "-32.40"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 304228
+      }
+    },
+    {
+      "key": "CIN018_S02",
+      "shotId": "CIN_018_S02",
+      "sceneId": "CIN_018",
+      "speaker": "NPC_CO_VO_TUONG",
+      "speakerDisplay": "Cơ Vô Tướng",
+      "onscreen": true,
+      "voice": "avocado_v2:MAI_03",
+      "voiceLabel": "Helio (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN018_S02.mp3",
+      "wav": "VO_CIN_018_S02_COVOTUONG_draft_v1.wav",
+      "text": "Ta không còn chấp nhận phần ta không biết.",
+      "windowSceneSeconds": [
+        6.5,
+        11.5
+      ],
+      "sceneOffsetSeconds": 324.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "3b6113fc6fa81467ae23c16320cf84c030ca7bed6cde1df666f7c96dbd5f7754",
+      "rawMp3": "CIN018_S02_tts_raw.mp3",
+      "rawMp3Sha256": "998f102a5194261823f45307c0d46d8b1742b131fcb46e7505a5784f4e964400",
+      "durationSeconds": 2.88,
+      "windowSeconds": 5.0,
+      "slackSeconds": 2.12,
+      "fit": "FITS",
+      "timelineStartSeconds": 330.5,
+      "loudness": {
+        "integratedLUFS": "-23.77",
+        "truePeakDBTP": "-2.35",
+        "loudnessRangeLU": "0.00",
+        "thresholdLUFS": "-33.77"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 276580
+      }
+    },
+    {
+      "key": "CIN018_S03",
+      "shotId": "CIN_018_S03",
+      "sceneId": "CIN_018",
+      "speaker": "PLAYER",
+      "speakerDisplay": "Người chơi",
+      "onscreen": null,
+      "voice": "avocado_v2:MAI_03",
+      "voiceLabel": "Helio (fictional system voice)",
+      "roleNote": "VOICE_PLACEHOLDER_ONLY: VOICE_GUIDE assigns the player no spoken voice or gender; timing-only placeholder, director must replace or drop it.",
+      "mp3": "CIN018_S03.mp3",
+      "wav": "VO_CIN_018_S03_PLAYER_draft_v1.wav",
+      "text": "Ở Sa Hỏa ông đã cho nước. Ở nơi khác, người ta không được hỏi vì sao nước mất.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 324.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "ad02b698377113b11bae412a25d464b9b161c1405b97c4be90e6f40a146b6590",
+      "rawMp3": "CIN018_S03_tts_raw.mp3",
+      "rawMp3Sha256": "939e3a39d0ec758b8e4a60921f22d750350fa5455f2ae2100de368a16855411b",
+      "durationSeconds": 5.28,
+      "windowSeconds": 5.0,
+      "slackSeconds": -0.28,
+      "fit": "OVERRUN",
+      "timelineStartSeconds": 336.5,
+      "loudness": {
+        "integratedLUFS": "-22.54",
+        "truePeakDBTP": "-3.91",
+        "loudnessRangeLU": "0.40",
+        "thresholdLUFS": "-32.60"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 506980
+      }
+    },
+    {
+      "key": "CIN019_S03",
+      "shotId": "CIN_019_S03",
+      "sceneId": "CIN_019",
+      "speaker": "NPC_LYAN",
+      "speakerDisplay": "Ly An",
+      "onscreen": true,
+      "voice": "avocado_v2:MAI_01",
+      "voiceLabel": "Aria (fictional system voice)",
+      "roleNote": null,
+      "mp3": "CIN019_S03.mp3",
+      "wav": "VO_CIN_019_S03_LYAN_draft_v1.wav",
+      "text": "Lần này không ai giữ hết năm con đường.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 342.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "511cd1e9713adceae80c0d7eaf31f1f801e76a44c369ef5d28680b42fb40208f",
+      "rawMp3": "CIN019_S03_tts_raw.mp3",
+      "rawMp3Sha256": "fd12dd5527f44a3762f13c8ff4971dfaa5e8eb58c8b5a725bef564c8ad55c4a8",
+      "durationSeconds": 2.88,
+      "windowSeconds": 5.0,
+      "slackSeconds": 2.12,
+      "fit": "FITS",
+      "timelineStartSeconds": 354.5,
+      "loudness": {
+        "integratedLUFS": "-25.52",
+        "truePeakDBTP": "-8.76",
+        "loudnessRangeLU": "0.00",
+        "thresholdLUFS": "-35.52"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 276580
+      }
+    },
+    {
+      "key": "CIN020_S03",
+      "shotId": "CIN_020_S03",
+      "sceneId": "CIN_020",
+      "speaker": null,
+      "speakerDisplay": "Người nhận thư",
+      "onscreen": null,
+      "voice": "avocado_v2:MAI_01",
+      "voiceLabel": "Aria (fictional system voice)",
+      "roleNote": "VOICE_LETTER_RECIPIENT: placeholder role voice; recipient identity/gender undecided.",
+      "mp3": "CIN020_S03.mp3",
+      "wav": "VO_CIN_020_S03_LETTERRECIPIENT_draft_v1.wav",
+      "text": "Chờ một chút. Tôi muốn gửi lại vài lời.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "sceneOffsetSeconds": 360.0,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "wavSha256": "3b9007c5b86fa0d67f4560a161553e87c9ebaee03a850e09c43ac7fb333ba232",
+      "rawMp3": "CIN020_S03_tts_raw.mp3",
+      "rawMp3Sha256": "6f490b599b3a1e33864d3eb84ec7020c495b5879edb56a2232256da3fb379d38",
+      "durationSeconds": 3.0,
+      "windowSeconds": 5.0,
+      "slackSeconds": 2.0,
+      "fit": "FITS",
+      "timelineStartSeconds": 372.5,
+      "loudness": {
+        "integratedLUFS": "-19.59",
+        "truePeakDBTP": "-5.29",
+        "loudnessRangeLU": "0.10",
+        "thresholdLUFS": "-30.00"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 288100
+      }
+    }
+  ],
+  "timeline": {
+    "file": "CAMPAIGN_VO_timeline_draft_v1.wav",
+    "sha256": "7221d12d058e6fc680e4e54b8246c6e31fa5cd674f8b86502b58cd2313f0fe57",
+    "durationSeconds": 378.0,
+    "format": {
+      "codec": "pcm_s16le",
+      "sampleRateHz": 48000,
+      "channels": 1
+    }
+  }
+}

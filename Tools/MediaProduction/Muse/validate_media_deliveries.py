@@ -5,7 +5,7 @@ real bytes on disk. This tool does NOT re-measure loudness (checkpoints 02/04/
 packs describe are still the same bytes: existence, LFS-pointer detection,
 size, sha256, and ffprobe codec/sample-rate/channels/duration. Timing JSONs
 are cross-checked against their SRT files (UTF-8 strict + NFC + cue text and
-window equality), and the P0 animatic + P0 VO drafts are probed.
+window equality), and the P0 animatic + P0/campaign VO drafts are probed.
 
 Usage: python3 validate_media_deliveries.py [--out <json>]
 Exit code 0 = no mismatches; 1 = at least one mismatch (details in JSON).
@@ -398,6 +398,84 @@ def check_keyframes():
          f"4 checkpoint-13 panels; 7 v1 sheet crops re-verified for framing)")
 
 
+WINDOW_FIT_OVERRUNS = []
+
+
+def check_campaign_vo():
+    """Checkpoint 17: campaign VO drafts (17 takes + 378 s timeline).
+
+    Byte-level checks are strict (existence, SHA, duration, 48 kHz mono
+    pcm_s16le, take text char-exact in the scene SRT). Window fit is
+    reported as a finding, NOT a byte mismatch: D1 forbids speeding the
+    voice up to fit, so an OVERRUN take is delivered unchanged and its
+    window/line decision belongs to the director. Overruns are listed in
+    WINDOW_FIT_OVERRUNS and in the result's windowFit section.
+    """
+    vo_dir = ROOT / "Art_Source/Audio/Muse/VO/CAMPAIGN_DRAFT"
+    manifest_path = vo_dir / "CAMPAIGN_VO_manifest_v1.json"
+    if not manifest_path.exists():
+        err("CAMPAIGN VO: missing CAMPAIGN_VO_manifest_v1.json")
+        return
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    takes = manifest.get("takes", [])
+    if len(takes) != 17:
+        err(f"CAMPAIGN VO: {len(takes)}/17 takes in manifest")
+    checked = 0
+    fits = 0
+    for take in takes:
+        wav = vo_dir / take["wav"]
+        if not wav.exists():
+            err(f"CAMPAIGN VO {take['key']}: missing {take['wav']}")
+            continue
+        if is_lfs_pointer(wav):
+            err(f"CAMPAIGN VO {take['key']}: wav is an LFS pointer")
+            continue
+        if sha256_of(wav) != take["wavSha256"]:
+            err(f"CAMPAIGN VO {take['key']}: wav sha mismatch")
+        p = probe(wav)
+        if p and abs(p["duration"] - take["durationSeconds"]) > 0.02:
+            err(f"CAMPAIGN VO {take['key']}: duration {p['duration']} "
+                f"!= manifest {take['durationSeconds']}")
+        if p:
+            if (p.get("codec") != "pcm_s16le"
+                    or p.get("sample_rate") != 48000
+                    or p.get("channels") != 1):
+                err(f"CAMPAIGN VO {take['key']}: format "
+                    f"{p.get('codec')}/{p.get('sample_rate')}/"
+                    f"{p.get('channels')} != pcm_s16le/48000/1")
+        # Text char-exact in the scene SRT (independent re-check).
+        srt_path = (ROOT / "Implementation/Content/Narrative/Deliveries"
+                    / take["sceneId"] / f"{take['sceneId']}_vi.srt")
+        srt = unicodedata.normalize(
+            "NFC", srt_path.read_text(encoding="utf-8"))
+        if unicodedata.normalize("NFC", take["text"]) not in srt:
+            err(f"CAMPAIGN VO {take['key']}: text not in scene SRT")
+        if take["fit"] == "FITS":
+            fits += 1
+        else:
+            WINDOW_FIT_OVERRUNS.append(
+                {"shotId": take["shotId"],
+                 "slackSeconds": take["slackSeconds"]})
+        checked += 1
+    timeline = vo_dir / "CAMPAIGN_VO_timeline_draft_v1.wav"
+    if timeline.exists():
+        if is_lfs_pointer(timeline):
+            err("CAMPAIGN VO: timeline is an LFS pointer")
+        p = probe(timeline)
+        if p and abs(p["duration"] - 378.0) > 0.1:
+            err(f"CAMPAIGN VO timeline duration {p['duration']} != 378.0")
+    else:
+        err("CAMPAIGN VO: missing CAMPAIGN_VO_timeline_draft_v1.wav")
+    COUNTS["vo_campaign_takes_checked"] = checked
+    COUNTS["vo_campaign_fits"] = fits
+    COUNTS["vo_campaign_overruns"] = len(WINDOW_FIT_OVERRUNS)
+    note(f"Campaign VO checked: {checked}/17 takes, {fits} FITS, "
+         f"{len(WINDOW_FIT_OVERRUNS)} OVERRUN "
+         f"({[o['shotId'] for o in WINDOW_FIT_OVERRUNS] or 'none'}); "
+         f"overruns are director findings (D1: no voice speed-up to fit), "
+         f"not byte mismatches")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=None)
@@ -407,18 +485,22 @@ def main():
     check_runtime_cine_manifest()
     check_animatic_vo()
     check_keyframes()
+    check_campaign_vo()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 16 (Gói 30 fix (c): CIN_002_S02 corrected keyframe + separate 16:9 keyframes, animatic v3, re-baseline integration f0859d0)",
+        "checkpoint": "MEDIA-02 checkpoint 17 (campaign VO drafts: 17 takes + 378 s timeline, runtime delivery revised, re-baseline integration f0859d0)",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
+        "windowFit": {"fits": COUNTS.get("vo_campaign_fits", 0),
+                      "overruns": WINDOW_FIT_OVERRUNS},
         "mismatches": ERRORS,
         "notes": NOTES,
         "verdict": "PASS" if not ERRORS else "MISMATCHES_FOUND",
         "limits": [
-            "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08, measured from real bytes.",
+            "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08/17, measured from real bytes.",
             "No ear audition of loop seams or VO takes in this validation.",
             "Campaign dialogue windows remain PROPOSED except CIN_001_S05 (DECIDED); this check verifies SRT==timing consistency, not directorial approval.",
+            "Campaign VO window overruns (if any) are director findings, not byte mismatches; see windowFit.",
         ],
     }
     print(f"counts: {json.dumps(COUNTS, indent=1)}")

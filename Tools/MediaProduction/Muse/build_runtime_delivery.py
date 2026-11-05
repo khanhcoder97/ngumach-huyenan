@@ -13,6 +13,8 @@ Sources (all already measured from real bytes in checkpoints 01-09):
     (173 cues x 3 variants: runtime WAV under Client/Assets/Audio/PackV1/)
   - Art_Source/Audio/Muse/VO/P0_DRAFT/P0_VO_manifest_v1.json
     (3 P0 VO draft takes + 72 s VO timeline WAV)
+  - Art_Source/Audio/Muse/VO/CAMPAIGN_DRAFT/CAMPAIGN_VO_manifest_v1.json
+    (17 campaign VO draft takes + 378 s VO timeline WAV, checkpoint 17)
   - Implementation/Content/Narrative/Deliveries/{P0,CAMPAIGN}_timing_manifest_v1.json
     + CIN_006/CIN_006_timing_manifest_v1.json (20 scenes timing JSON + SRT)
 
@@ -46,6 +48,7 @@ AUDIO_DEST = ROOT / "ClientGodot" / "assets" / "audio"
 CINE_DEST = ROOT / "ClientGodot" / "assets" / "cinematics"
 PACK_PREFIX = "Client/Assets/Audio/PackV1/"
 VO_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "VO" / "P0_DRAFT"
+CAMPAIGN_VO_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "VO" / "CAMPAIGN_DRAFT"
 DUR_TOL_S = 0.02
 
 # P0 animatic files delivered in checkpoint 03, revised in checkpoint 13
@@ -242,9 +245,56 @@ def main():
         audio_entries.append(entry)
         counts["vo"] += 1
 
+    # --- 3b. Campaign VO drafts (checkpoint 17) ---
+    cvo = json.loads((CAMPAIGN_VO_SRC / "CAMPAIGN_VO_manifest_v1.json")
+                     .read_text(encoding="utf-8"))
+    for take in cvo["takes"]:
+        src_rel = f"Art_Source/Audio/Muse/VO/CAMPAIGN_DRAFT/{take['wav']}"
+        dest_rel = f"vo/campaign/{take['wav']}"
+        entry = copy_verified_audio(
+            src_rel, dest_rel, take["wavSha256"],
+            take["format"]["bytes"], take["durationSeconds"],
+            f"VO {take['key']}")
+        if entry is None:
+            continue
+        entry.update({"cueKey": f"VO/{take['key']}",
+                      "category": "vo", "speaker": take["speaker"],
+                      "shotId": take["shotId"],
+                      "windowSceneSeconds": take["windowSceneSeconds"],
+                      "windowStatus": take["status"],
+                      "fit": take["fit"],
+                      "slackSeconds": take["slackSeconds"],
+                      "codec": take["format"]["codec"],
+                      "sampleRateHz": take["format"]["sampleRateHz"],
+                      "channels": take["format"]["channels"],
+                      "integratedLufs": float(
+                          take["loudness"]["integratedLUFS"]),
+                      "truePeakDbtp": float(
+                          take["loudness"]["truePeakDBTP"]),
+                      "assetState": "DRAFT_NOT_FINAL_VO",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["vo"] += 1
+    ctl = cvo["timeline"]
+    entry = copy_verified_audio(
+        f"Art_Source/Audio/Muse/VO/CAMPAIGN_DRAFT/{ctl['file']}",
+        f"vo/campaign/{ctl['file']}", ctl["sha256"],
+        (CAMPAIGN_VO_SRC / ctl["file"]).stat().st_size,
+        ctl.get("durationSeconds", 378.0), "VO campaign timeline")
+    if entry is not None:
+        entry.update({"cueKey": "VO/CAMPAIGN_TIMELINE", "category": "vo",
+                      "codec": "pcm_s16le", "sampleRateHz": 48000,
+                      "channels": 1,
+                      "assetState": "DRAFT_NOT_FINAL_VO",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["vo"] += 1
+
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": "MEDIA-02 checkpoint 10 - M6 runtime delivery",
+        "checkpoint": ("MEDIA-02 checkpoint 17 - M6 runtime delivery "
+                       "revised: campaign VO drafts (17 takes + 378 s "
+                       "timeline) added"),
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "counts": counts,
@@ -261,6 +311,13 @@ def main():
             "ducking was measured here.",
             "CIN_002/CIN_004 VO windows remain PROPOSED; only CIN_001_S05 "
             "is DECIDED (24.8-28.5 s).",
+            "Campaign VO (checkpoint 17): 17 draft takes, 15 FITS / 2 "
+            "OVERRUN at natural speed (CIN_005_S03 -0.16 s, CIN_018_S03 "
+            "-0.28 s; D1 forbids voice speed-up to fit, so the overruns "
+            "stand as director findings). All 17 campaign windows are "
+            "PROPOSED_ANIMATIC_PLACEMENT. PLAYER take is a timing-only "
+            "placeholder voice; CIN_020 uses placeholder role voice "
+            "VOICE_LETTER_RECIPIENT.",
         ],
         "files": audio_entries,
     }
