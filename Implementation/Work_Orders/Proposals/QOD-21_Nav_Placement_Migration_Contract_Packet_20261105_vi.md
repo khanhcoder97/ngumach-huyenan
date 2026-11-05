@@ -120,4 +120,44 @@ Không có mục nào trong §6 bật flag production nào, và không mục nà
 
 ## 7. Một giới hạn của chính packet này
 
-Packet này mô tả **khung** bundle và migration; nó không thể cung cấp **bản đồ** 2D. Nói chính xác hơn (đã kiểm lại ở `1bf3304`+): repo **có** toạ độ 2D lẻ tẻ — `Life_Sim_Content_Data_vi.csv` đặt `LIFE_FISH_CA_RE` ở **(158, −3)** trên `MAP_LAM_TRIEU` (một mình nó là hàng `y != 0` trong 11 hàng), và overlay alpha đã dùng `y=±3` cho ripple/villager — nhưng **không có nguồn nào mô tả layout cả bản đồ**: không polygon đi được, không đường nhánh, không vị trí 2D cho 349 hàng manifest. Nên phần còn thiếu không phải "một vài toạ độ" mà là nguồn layout được duyệt (§5.1–.5.4, §4). Nếu owner cần "map 2D chạy được" chứ không phải "khung để review map 2D", thì phần thiếu nằm ở art/design (A2 staging chưa phải server map — đúng như lệnh gốc nói), không phải ở code server, và tôi cần một nguồn toạ độ được duyệt trước khi viết bất kỳ số nào vào bundle.
+Packet này mô tả **khung** bundle và migration; nó không thể cung cấp **bản đồ** 2D. Nói chính xác hơn (đã kiểm lại ở `1bf3304`+): repo **có** toạ độ 2D lẻ tẻ — `Life_Sim_Content_Data_vi.csv` đặt `LIFE_FISH_CA_RE` ở **(158, −3)** trên `MAP_LAM_TRIEU` (một mình nó là hàng `y != 0` trong 11 hàng), và overlay alpha đã dùng `y=±3` cho ripple/villager — nhưng **không có nguồn nào mô tả layout cả bản đồ**: không polygon đi được, không đường nhánh, không vị trí 2D cho 349 hàng manifest. Nên phần còn thiếu không phải "một vài toạ độ" mà là nguồn layout được duyệt (§5.1–.5.4, §4). **Đọc thêm §8 — tôi đã tự sửa câu này: có một nguồn lưới tile đã duyệt cho dải sông (306+37 ô, có toạ độ WU), nhưng nó không phải layout cả bản đồ và nó nằm ở PR đã đóng nên chưa branch nào chứa.** Nếu owner cần "map 2D chạy được" chứ không phải "khung để review map 2D", thì phần thiếu nằm ở art/design (A2 staging chưa phải server map — đúng như lệnh gốc nói), không phải ở code server, và tôi cần một nguồn toạ độ được duyệt trước khi viết bất kỳ số nào vào bundle.
+## 8. Ràng buộc mới ngày 05/11 — camera rộng, quyết định nước 306/37, và phép đối chiếu tôi đã chạy
+
+Ba tài liệu Codex/owner push hôm nay thay đổi **đầu vào** của packet này. Không cái nào cho phép tôi dịch toạ độ, và một cái đưa ra **nghĩa vụ đối chiếu** mà packet này là chỗ nó được thực hiện.
+
+| nguồn | dòng | nội dung ràng buộc server |
+|---|---|---|
+| `docs/production/TopDown_Wide_Camera_20261105_vi.md` | 11, 13 | Vùng thế giới mặc định **64×36 WU**, tuỳ chọn gọn **48×27 WU** (thay default 32×18 và giới hạn hub 48×27). |
+| `TopDown_Wide_Camera_20261105_vi.md` (tiếp) | 35 | "Bản staging **chỉ đổi camera, không đổi server AOI**, reveal, interaction/attack ranges, aggro hay grants. Client chỉ vẽ entity được server cấp. Competitive instance phải dùng một profile thống nhất 64×36 WU cho mọi người, không dùng màn rộng để tăng vùng thấy... **Không tự nới AOI từ 32 lên 64 bằng client-only patch.**" |
+| `TopDown_Wide_Camera_20261105_vi.md` (mục 5) | 29 | "**Không dịch NPC/portal/quái/node hoặc sửa nav chỉ vì thay hình.** Mọi migration geometry/canonical placements phải bàn giao **bundle đồng bộ và hash**, giữ quyết định 306 ô nước/37 ô bờ hiện hành." |
+| `docs/production/Visual_Reboot_And_Muse_Scope_20261104_vi.md` | 34 | "Map mới vẫn **đối chiếu tọa độ/nav version/hash với Qoder**. Decision chặn 306 ô nước/giữ 37 ô bờ còn hiệu lực ở dữ liệu, không dùng art reboot để thay map geometry." → nghĩa vụ này thuộc packet này (§3 đã có `navVersion` + `contentSha256`). |
+| `docs/production/Integration_Reference_And_Water_Decisions_20261104_vi.md` | 13, 15 | "**Duyệt triển khai chặn đúng 306 ô** theo toạ độ trong evidence, giữ **37 ô bờ đi được** và giữ nguyên sàn cầu/path. Tổng blocked mục tiêu 5.069→5.375. **Không chặn cả hàng, không thêm ô thứ 307, không sửa canonical 349 placements hoặc nâng topology lên REVIEWED.**" |
+
+### 8.1 AOI không cần đổi cho camera mới — đã đo, và đã ghim bằng self-check
+
+Góc của hộp nhìn 64×36 là `sqrt(32² + 18²) = 36,72` WU; hộp gọn 48×27 là `27,54` WU. cả hai **đều nằm trong** bán kính vào-đối-tượng 40 WU của `WorldAudience` (`WorldEntityAoiProjection.cs:17`), và vòng rời 48 WU nằm ngoài hộp nhìn. Nghĩa là không có "client thấy mà server không cấp", và quyết định "không đổi AOI" là **nhất quán với code đang chạy**, không phải may mắn. Hai check mới trong `--self-check` ghim số đó để một lần thu hẹp bán kính sau này không đi qua lặng lẽ: `aoi.covers_the_sourced_wide_camera_window`, `aoi.hysteresis_keeps_the_whole_view_box` (self-check **534**, đo hai lần liên tiếp tại head này).
+
+### 8.2 Phép đối chiếu 306/37 với placement của server: **0 xung đột**
+
+Tôi trích 306 ô nước + 37 ô bờ từ chính evidence pack (`water_block_evidence_pack_20261104.json`, mỗi ô có `wu_x`/`wu_y` dạng `[start, end]`), rồi kiểm từng hàng runtime xem hình chiếu 1×1 WU của nó có chồng ô nào không:
+
+| tập | số hàng | trùng 306 ô nước | trùng 37 ô bờ | số hàng có `yWu` trong dải `[-8,8; -4,0)` |
+|---|---|---|---|---|
+| `Implementation/Content/Runtime/world_records.json` | 352 | **0** | **0** | 0 (343 hàng ở `yWu = 0,0`; phần còn lại ở `y = ±3..8`) |
+| `world_entities_bm.json` | 44 | **0** | **0** | 0 (tất cả `yWu = 0`) |
+| `npc_anchors.json` | 104 | **0** | **0** | 0 |
+
+Dải nước đã duyệt chiếm `x ∈ [64,0; 153,6]`, `y ∈ [−8,8; −4,0)`; hàng gần nhất của server là **một** record ở `yWu = −3,0`, tức 1 WU **phía bắc** mép dải. Kết luận cho packet: quyết định 306/37 **không đòi server sửa toạ độ nào**, và ngược lại placement canonical của server chưa bao giờ chiếm sông. Bundle `nav_ben_mua_v1.json` (§3) vì thế có thể mang 306/37 như **dữ liệu client-collision** mà không đụng `approvedXY` — đúng điều khoản "không sửa canonical 349 placements".
+
+### 8.3 Nhưng nguồn toạ độ đó **không nằm trên branch nào** — đây là câu hỏi mới cho owner
+
+Evidence pack chỉ tồn tại ở head của **PR #111 đã đóng và không merge** (`headRefOid 765a0d6`, `mergedAt: null`, closed `2026-11-04T14:49:39Z`, head branch `muse/ben-mua-playable-alpha-20261103`):
+
+```
+git ls-tree -r --name-only 765a0d6 | grep -c evidence_water   # -> 6
+git ls-tree -r --name-only origin/codex/benmua-combat-visuals-20261105 | grep -c evidence_water   # -> 0
+```
+
+Nghĩa là quyết định "chặn đúng 306 ô theo toạ độ trong evidence" hiện **không có nhà canonical trong repo**: không file nào trên main/codex/qoder branch để validator đọc, và tôi **không được phép** sửa hay copy vào `ClientGodot/**`. Câu hỏi §5 mới:
+- **Q10** — cho phép tôiimport `water_block_evidence_pack_20261104.json` (343 ô: 306 nước + 37 bờ, kèm `grid` 450×60, `cell 0,8 WU`, `origin Y 36,0`) thành `Implementation/Content/Canonical/` như **dữ liệu đã duyệt do owner ký**, hay owner/Codex tự cherry-pick từ PR #111? Mặc định của tôi: **chờ**, vì packet này không có quyền tự quyết nguồn của agent khác; và không tự đánh số lại ô nào.
+- **Q11** — `cell = 0,8 WU` (= 1,6 m theo `1 WU = 0,5 m`) là đơn vị ô lưới mà bundle topology phải dùng, hay bundle dùng ô 1×1 WU như placement hiện tại? Hai lưới này lệch nhau 1,25×; chọn một trước khi viết `bounds`.

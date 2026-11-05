@@ -1431,6 +1431,31 @@ public static class ServiceSelfCheck
                 MaxHp: 0
             });
 
+        // CAM-TOPDOWN-WIDE-20261105 (docs/production/TopDown_Wide_Camera_20261105_vi.md:11,13)
+        // makes 64x36 WU the default world view and 48x27 the compact option, while :35
+        // forbids touching the server side to match: "the staging build only changes the
+        // camera, not the server AOI, reveal, interaction/attack ranges, aggro or grants"
+        // and a competitive instance must run one profile for everyone rather than buy
+        // vision with a wider screen. That fairness rule only holds while the audience
+        // radius already covers the widest box a client can be configured with, so the
+        // margin is arithmetic here instead of an assumption someone has to re-derive.
+        var wideCornerWu = Math.Sqrt(Math.Pow(64 / 2d, 2) + Math.Pow(36 / 2d, 2));
+        var compactCornerWu = Math.Sqrt(Math.Pow(48 / 2d, 2) + Math.Pow(27 / 2d, 2));
+        Check(
+            "aoi.covers_the_sourced_wide_camera_window",
+            wideCornerWu <= WorldAudience.AoiEnterWu &&
+            compactCornerWu <= WorldAudience.AoiEnterWu,
+            $"wide={wideCornerWu:F3} compact={compactCornerWu:F3} " +
+            $"enter={WorldAudience.AoiEnterWu}");
+        // The leave ring sits outside the view box, so an entity that is on screen is
+        // never dropped while it is still on screen: hysteresis cannot cut a visible
+        // actor out of the snapshot.
+        Check(
+            "aoi.hysteresis_keeps_the_whole_view_box",
+            WorldAudience.AoiEnterWu < WorldAudience.AoiLeaveWu &&
+            wideCornerWu < WorldAudience.AoiLeaveWu,
+            $"leave={WorldAudience.AoiLeaveWu} wide={wideCornerWu:F3}");
+
         // QOD-16 ph2 v2 combat accept path: cast id, cost/cooldown state and
         // only the events that already occurred (no future impacts).
         var combatV2Store = new CombatEventStore(new CombatEventStreamOptions
