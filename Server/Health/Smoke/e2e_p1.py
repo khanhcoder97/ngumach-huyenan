@@ -1539,13 +1539,31 @@ def alpha_kill(session_id, character_id, sequence, entity_id, pace=0.12):
     """
     accepted = 0
     refused = {}
-    for _ in range(1200):
+    # The bound comes from the fight, not from the clock. A fixed iteration count with a
+    # wall-clock sleep makes a leg fail whenever the server spends more time per tick, and
+    # that is exactly how one extra log line per impact starved the boss leg on CI: 57
+    # casts had landed for 18 each against 1200 HP and the loop simply ran out. So the
+    # loop now keeps casting while the target's HP is moving and stops only after 60 casts
+    # with no HP movement at all, under a ceiling of maxHp + 200 casts - the worst case of
+    # one damage per hit, which is arithmetic from the shipped row rather than a stopwatch.
+    hp_seen = None
+    hard_cap = 0
+    stall = 0
+    casts = 0
+    while True:
         _, self_state, entities, _ = v2_snapshot(session_id)
         target = entities.get(entity_id)
         if target is None or self_state.get("hp", 0) <= 0:
             return sequence, accepted, refused, False
         if target.get("state") == "DEAD":
             return sequence, accepted, refused, True
+        hp_now = target.get("hp", 0)
+        if hp_seen is None:
+            hard_cap = int(target.get("maxHp") or 0) + 200
+            no_progress = False
+        else:
+            no_progress = hp_now >= hp_seen
+        hp_seen = hp_now
         me_x = self_state.get("x", 0.0)
         me_y = self_state.get("y", 0.0)
         gap_x = target.get("x", me_x) - me_x
@@ -1573,8 +1591,15 @@ def alpha_kill(session_id, character_id, sequence, entity_id, pace=0.12):
         else:
             code = (body.get("error") or {}).get("code") or str(status)
             refused[code] = refused.get(code, 0) + 1
+        casts += 1
+        stall = stall + 1 if no_progress else 0
+        if stall > 60 or casts > hard_cap:
+            # The fight is not resolving: no HP movement for 60 casts, or more casts than
+            # the target's own HP at one damage per hit. Give up and let the leg's own
+            # assertion report it, instead of looping on a clock.
+            return sequence, accepted, refused, False
         time.sleep(pace)
-    return sequence, accepted, refused, False
+    # unreachable: the loop exits through the returns above
 
 
 ALPHA_REVIVES = {"count": 0}
@@ -1628,6 +1653,12 @@ def alpha_kill_watched(session, character, sequence, pool, wanted, label):
             attempts += 1
             _, _, entities, _ = v2_snapshot(session)
             if (entities.get(entity_id) or {}).get("state") == "DEAD":
+                # A row that is present and DEAD is a death this run can witness:
+                # skipping it without counting is what made wave B report 2 of 3
+                # while all three rows read DEAD, and is the same shape as the
+                # review's 0 of 3. An ABSENT row stays uncounted - a respawned group
+                # makes absence ambiguous, so only presence plus DEAD credits.
+                deaths += 1
                 continue
             sequence, _, _ = alpha_approach(
                 session, character, sequence, anchor_x, anchor_y, within=3.0,
