@@ -604,6 +604,72 @@ def check_cin006_keyframes():
          f"staging SHA-verified)")
 
 
+def check_cin009_keyframes():
+    """Checkpoint 23: CIN_009 storyboard keyframes (3, one per shot).
+
+    Verifies the keyframe manifest: 3 entries, each file exists under
+    Art_Source/Cinematics/Campaign/CIN_009/, is 640x360, is real image
+    bytes (not an LFS pointer), and matches the recorded SHA. Provenance
+    is tied back to the staged generation: the staging WebP must still
+    exist at its recorded path with the recorded SHA, and each entry
+    must carry framing + known-defects notes. Shot IDs are cross-checked
+    against the CIN_009 timing JSON. CIN_009 has an empty pack
+    character list, so no character lock is involved; the S02 workers
+    are unnamed generation-invented figures.
+    """
+    manifest_path = (ROOT / "Art_Source/Cinematics/Campaign/CIN_009"
+                     / "CIN009_keyframes_manifest_v1.json")
+    if not manifest_path.exists():
+        err("CIN009-KEYFRAMES: missing CIN009_keyframes_manifest_v1.json")
+        return
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    timing = json.loads((ROOT / "Implementation/Content/Narrative"
+                         / "Deliveries/CIN_009/CIN_009_timing_v1.json")
+                        .read_text(encoding="utf-8"))
+    timing_ids = {s["shotId"] for s in timing.get("shots", [])}
+    staging_root = Path("/home/hatch/workspace/goals"
+                        "/ng-m-ch-continuous-development/hidden_files"
+                        "/cin009_keyframes_staging")
+    checked = 0
+    for entry in manifest.get("keyframes", []):
+        sid = entry["shotId"]
+        if sid not in timing_ids:
+            err(f"CIN009-KEYFRAMES {sid}: not in CIN_009 timing shots")
+            continue
+        kf = ROOT / "Art_Source/Cinematics/Campaign/CIN_009" / entry["file"]
+        if not kf.exists():
+            err(f"CIN009-KEYFRAMES {sid}: missing {entry['file']}")
+            continue
+        if is_lfs_pointer(kf):
+            err(f"CIN009-KEYFRAMES {sid}: file is an LFS pointer")
+            continue
+        if png_dims(kf) != (640, 360):
+            err(f"CIN009-KEYFRAMES {sid}: dims {png_dims(kf)} != 640x360")
+        if sha256_of(kf) != entry["sha256"]:
+            err(f"CIN009-KEYFRAMES {sid}: sha mismatch")
+        staged = staging_root / entry["sourceStagingFile"]
+        if not staged.exists():
+            err(f"CIN009-KEYFRAMES {sid}: staging source missing "
+                f"{entry['sourceStagingFile']}")
+        elif sha256_of(staged) != entry["sourceStagingSha256"]:
+            err(f"CIN009-KEYFRAMES {sid}: staging source sha mismatch")
+        if not entry.get("framing"):
+            err(f"CIN009-KEYFRAMES {sid}: no framing note")
+        if not entry.get("knownDefects"):
+            err(f"CIN009-KEYFRAMES {sid}: no known-defects note")
+        checked += 1
+    if checked != 3:
+        err(f"CIN009-KEYFRAMES: {checked}/3 keyframes checked")
+    if {e["shotId"] for e in manifest.get("keyframes", [])} != timing_ids:
+        err("CIN009-KEYFRAMES: keyframe shot set != timing shot set")
+    if manifest.get("status") != "STORYBOARD":
+        err(f"CIN009-KEYFRAMES: status {manifest.get('status')!r} "
+            f"!= STORYBOARD")
+    COUNTS["cin009_keyframes_checked"] = checked
+    note(f"CIN_009 keyframes checked: {checked}/3 (storyboard level, "
+         f"staging SHA-verified)")
+
+
 def check_cin006_vo():
     """Checkpoint 19: CIN_006 VO drafts (canonical + alternate take).
 
@@ -790,10 +856,11 @@ def check_scene_clips():
                          .read_text(encoding="utf-8"))
     runtime_clips = {c["sceneId"]: c
                      for c in runtime.get("sceneClips", [])}
-    if len(runtime_clips) != 5:
+    if len(runtime_clips) != 6:
         err(f"SCENE-CLIPS: runtime manifest has {len(runtime_clips)} "
-            f"sceneClips, expected 5")
-    for scene_id in ("CIN_001", "CIN_002", "CIN_004", "CIN_006", "CIN_005"):
+            f"sceneClips, expected 6")
+    for scene_id in ("CIN_001", "CIN_002", "CIN_004", "CIN_006", "CIN_005",
+                     "CIN_009"):
         exp_path = cine / scene_id / "scene_export_manifest_v1.json"
         if not exp_path.exists():
             err(f"SCENE-CLIPS {scene_id}: missing export manifest")
@@ -931,8 +998,8 @@ def check_scene_clips():
             f"expected 72.0")
     COUNTS["scene_clips_checked"] = checked
     COUNTS["scene_clips_with_video"] = video_scenes
-    note(f"Per-scene clips checked: {checked}/5 ({video_scenes} with "
-         f"video: P0 x3 panel-hold + CIN_005/CIN_006 animated "
+    note(f"Per-scene clips checked: {checked}/6 ({video_scenes} with "
+         f"video: P0 x3 panel-hold + CIN_005/CIN_006/CIN_009 animated "
          f"takes); reel tiled 0-72 exactly")
 
 
@@ -947,12 +1014,13 @@ def main():
     check_keyframes()
     check_cin005_keyframes()
     check_cin006_keyframes()
+    check_cin009_keyframes()
     check_campaign_vo()
     check_cin006_vo()
     check_p0_mix()
     check_scene_clips()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 22 (CIN_006 animated take: 3 storyboard keyframes + 18 s Ken Burns clip, MP4 + OGV + poster + timing/SRT; CIN_006 leaves PENDING_PANELS_NO_STORYBOARD; runtime delivery revised)",
+        "checkpoint": "MEDIA-02 checkpoint 23 (CIN_009 animated take: 3 storyboard keyframes + 18 s Ken Burns clip, MP4 + OGV + poster + timing/SRT; first Chapter 2 campaign scene with video; runtime delivery revised)",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -970,6 +1038,8 @@ def main():
             "CIN_006 alternate take CIN_006_ALT_T01 has no dialogue window by design (DEC-MEDIA-P0 Q3); its absence from the SRT and from the scene timeline is verified, not an omission.",
             "P0 mixes are DRAFT_MIX_NOT_FINAL: this check verifies bytes, durations and the recorded ducking/loop evidence, not the audible balance; no ear audition has been done.",
             "CIN_005 clip motion is animatic-level Ken Burns on still keyframes, not a final pose-animated take; S02 roof palette drifts from S01 (blue-grey vs red), recorded as a known defect for art-direction lock.",
+            "CIN_009 keyframes are STORYBOARD level: the pack character list is empty, so no character lock is involved; the S02 workers are unnamed generation-invented figures, and S01 carries an invented white hooded figure not in the prompt, recorded as a defect for the final-picture revision pass.",
+            "CIN_009 clip motion is animatic-level Ken Burns on still keyframes, not a final pose-animated take; S03 is not strictly top-down and adds a shrine not in the prompt.",
         ],
     }
     print(f"counts: {json.dumps(COUNTS, indent=1)}")

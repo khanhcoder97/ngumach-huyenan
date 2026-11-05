@@ -1,6 +1,6 @@
 {
  "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
- "checkpoint": "MEDIA-02 checkpoint 22 - CIN_006 animated take (Goi 30 item 7): CIN_006 storyboard panels + 18 s Ken Burns clip; all 5 exported scenes now carry video; P0 animatic v3 + audio/timing unchanged from checkpoint 21",
+ "checkpoint": "MEDIA-02 checkpoint 23 - CIN_009 animated take (Goi 30 item 7): 3 storyboard keyframes + 18 s Ken Burns clip; all 6 exported scenes now carry video; P0 animatic v3 + audio/timing unchanged from checkpoint 22",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "campaignTotals": {
@@ -17,7 +17,8 @@
   "No final picture: animatic is storyboard level (revision v3 fixes all 5 recorded panel defects, not final picture); character keyframes still await lock for locked shots.",
   "Per-scene clips (checkpoint 18, Goi 30 item 6): CIN_001 (36 s), CIN_002 (18 s) and CIN_004 (18 s) each exported as its own MP4 + OGV + poster + SRT + timing + hash manifest under assets/cinematics/<SCENE>/. The 72 s reel stays review/gallery only, NOT auto-run as opening.",
   "CIN_005 animated take (checkpoint 21, Goi 30 item 7): first campaign video with real motion -- 18 s / 3 shots, slow Ken Burns camera moves on 3 storyboard keyframes (Art_Source/Cinematics/Campaign/CIN_005/keyframes_16x9/, CIN005_keyframes_manifest_v1.json). Animatic-level motion, NOT a final pose-animated take; no audio track in the clip (VO/music/ambience added separately in editing); no baked subtitles. Known defect: S02 roof palette drifts from S01.",
-  "CIN_006 animated take (checkpoint 22, Goi 30 item 7): the scene leaves PENDING_PANELS_NO_STORYBOARD with 3 storyboard keyframes (Art_Source/Cinematics/Campaign/CIN_006/keyframes_16x9/, CIN006_keyframes_manifest_v1.json) + 18 s Ken Burns clip. NPC_HA_MAC / NPC_SAM_CHU_QUY have NO approved character lock: faces/costumes are storyboard placeholders, cinematic-only staging per DEC-MEDIA-P0 Q4. Known defects: S02 composition (oversized blurred glove + pale face-like shape at frame right) and cross-shot lighting drift, recorded per shot for the final-picture revision pass."
+  "CIN_006 animated take (checkpoint 22, Goi 30 item 7): the scene leaves PENDING_PANELS_NO_STORYBOARD with 3 storyboard keyframes (Art_Source/Cinematics/Campaign/CIN_006/keyframes_16x9/, CIN006_keyframes_manifest_v1.json) + 18 s Ken Burns clip. NPC_HA_MAC / NPC_SAM_CHU_QUY have NO approved character lock: faces/costumes are storyboard placeholders, cinematic-only staging per DEC-MEDIA-P0 Q4. Known defects: S02 composition (oversized blurred glove + pale face-like shape at frame right) and cross-shot lighting drift, recorded per shot for the final-picture revision pass.",
+  "CIN_009 animated take (checkpoint 23, Goi 30 item 7): first Chapter 2 campaign scene with video -- 18 s / 3 shots, slow Ken Burns camera moves on 3 storyboard keyframes (Art_Source/Cinematics/Campaign/CIN_009/keyframes_16x9/, CIN009_keyframes_manifest_v1.json). Pack character list is empty, so no character lock is involved; the S02 workers are unnamed generation-invented figures. Animatic-level motion, NOT a final pose-animated take; no audio track in the clip (VO/music/ambience added separately in editing); no baked subtitles. Known defects: S01 carries an invented white hooded figure not in the prompt and reads darker than a daylight payoff; S03 is not strictly top-down and adds a shrine not in the prompt."
  ],
  "animatic": [
   {
@@ -285,6 +286,54 @@
      "path": "assets/cinematics/CIN_005/CIN_005_vi.srt",
      "sha256": "1f3443dd74d1cd92a008358eb1156d3fc984d4a89057dc4658f2e077df33be5e",
      "sizeBytes": 119,
+     "status": "DRAFT"
+    }
+   }
+  },
+  {
+   "sceneId": "CIN_009",
+   "durationSeconds": 18.0,
+   "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+   "reelOffsetSeconds": null,
+   "dialogueCues": 1,
+   "files": {
+    "mp4": {
+     "path": "assets/cinematics/CIN_009/CIN_009_640x360_30fps.mp4",
+     "sha256": "c67ffcfdfd526bdc10c7c5c4ba8bfcee93d485b039f90ed5f3e9aabbe0fe6c43",
+     "sizeBytes": 1490541,
+     "codec": "h264",
+     "width": 640,
+     "height": 360,
+     "fps": 30,
+     "durationSeconds": 18.0,
+     "frames": 540
+    },
+    "ogv": {
+     "path": "assets/cinematics/CIN_009/CIN_009_640x360_30fps.ogv",
+     "sha256": "4997e04f4a5de1bcd3e17d6578dcd9800c0f8cf1d264648d925011ab402d4bbe",
+     "sizeBytes": 459402,
+     "codec": "theora",
+     "width": 640,
+     "height": 360,
+     "fps": 30,
+     "durationSeconds": 18.0,
+     "storedFrames": 495
+    },
+    "poster": {
+     "path": "assets/cinematics/CIN_009/CIN_009_poster.png",
+     "sha256": "d38c7ad8e4ef7c667494f57b5fc51a70c647f19b94d6b3b6f87c0c02e9b9cd07",
+     "sizeBytes": 410897,
+     "sourceKeyframe": "keyframe_CIN_009_S01.png"
+    },
+    "timing": {
+     "path": "assets/cinematics/CIN_009/CIN_009_timing_v1.json",
+     "sha256": "0f49fc20b67ff947823701a8cbeece79b20ad6951d1f64f6743cfb20c34ddca9",
+     "sizeBytes": 2381
+    },
+    "srt": {
+     "path": "assets/cinematics/CIN_009/CIN_009_vi.srt",
+     "sha256": "a0147ac421b78dfd705fdf6ece0aed6bf212b8d17550f5c3b4182bad44da2a24",
+     "sizeBytes": 125,
      "status": "DRAFT"
     }
    }
