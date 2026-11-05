@@ -649,6 +649,14 @@ The flag boots the DI container and canonical content, then runs 556 assertions 
 | 26 | Gather `ENT_MAN_BM_NODE_BM_ORE_01` within 5 WU | `200`, `outcome: gathered`, `yield` granted in `/p1/inventory` |
 | 27 | Any request | Response always has `X-Correlation-ID` |
 
+## Map atlas reconciliation (QOD-21 Q3)
+
+`docs/production/Map_Production_Atlas_vi.md` is a layout source with numbers: section 3 gives Bến Mưa as eight x-bands with named props, six NPC positions, seven spawn centres, quest trigger positions, escort checkpoints, the boss ring (tâm x=178, đường kính 22) and the portal/respawn anchors. `Implementation/Tools/reconcile_map_atlas.py` parses those positions and compares them to what the server actually loads (`world_records.json`, `npc_anchors.json`) plus the approved alpha overlay, and it runs in CI (`content-validation`). Measured at this head: **27 atlas rows = 16 exact matches, 6 listed deltas, 5 listed absences, 0 unreviewed**.
+
+The 16 matches are the whole gameplay skeleton the server already runs on: `NPC_LYAN (42,0)`, `NPC_TA_VAN_KHANH (64,0)`, `NPC_CLASS_TRIAL (188,0)`, `NPC_FISHER_01 (112,0)`, `NPC_MEDIC_BEN (30,0)`, `NPC_BOAT_KEEPER (343,0)`, the three P00-01 packages at 36/44/52, all seven `SPAWN_BM_01..07` centres (84/116/143/160/178/270/303 — `SPAWN_BM_05` ships as `SPAWN_BM_05_QUEST`) and both escort checkpoints at x=80/x=120. So the placements the e2e profiles walk to are the atlas's own numbers, not a parallel invention.
+
+Six positions are **reviewed deltas, listed in the tool with both values**, and they split into two decisions that are not mine: the ripples and villagers come from `DESIGN-BM-ALPHA-20261103` (approved for implementation) at `(70,3)/(86,-3)/(104,3)` and `(138,3)/(146,3)` while the atlas states `(122,-1)/(132,-1)/(142,-1)` and `(135,0)/(148,0)` — note the atlas puts the ripples inside the đầm nông water patch (36×9 centred at 132) and the alpha design puts them at x=70..104, which is dry ground on the same map; and `SP_BM` respawn is `(24,0)` in the atlas against `(18,0)` from DEC-DEATH-RETURN-20261105 / `P1World:SpawnX=18`. Five rows (`TP_BM_HUB`, `TP_BM_THANH_LAC`, `TP_BM_THANG_LONG`, `TP_BM_DAM_CHUONG`, `OBJ_BM_SEAL`) are listed as **absent because the feature does not exist yet** — four portals (the portal packet's coordinates, including the `mở sau C1-06` condition) and the ring seal. The tool fails if a new delta appears, if a listed delta stops being true, or if a listed absence arrives, so closing any of these out requires editing the list on purpose.
+
 ## Headless E2E scenario (QOD-15)
 
 One command builds the server, starts it and drives the whole gameplay loop:
