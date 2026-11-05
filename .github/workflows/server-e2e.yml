@@ -83,11 +83,14 @@ jobs:
 
   # Work order 30 item 2: the revival the escort chain relies on, exercised on its
   # own - a downed actor brought back by the public route, then able to act again.
-  # OBSERVATIONAL, NOT GATING: the profile measures PASS locally (7 checks) and its first
-  # ubuntu run reached no scenario total, i.e. the leg never got as far as an assertion.
-  # Kept visible and non-blocking until that runner difference is understood.
+  # This ran continue-on-error while its ubuntu failure was unexplained (three CI runs
+  # and two wrong explanations of mine, both retracted). The cause turned out to be in
+  # the very first job log: run_e2e_p1.sh line 206 said "r: command not found" eleven
+  # times, because my patch wrote each env assignment as `VALUE \<backslash><r>`, so the
+  # gates never reached dotnet and the boot had no gated route to read. Fixed at
+  # b374c11, where this job and e2e-alpha-p00 are green on ubuntu and the same two
+  # profiles pass here through run_e2e_p1.sh itself - so it gates again.
   e2e-alpha-revive:
-    continue-on-error: true
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
