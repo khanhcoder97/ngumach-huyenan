@@ -9,6 +9,7 @@ public partial class FrameProfile : Node
 {
     public string OutputPath="";
     public bool Walk;
+    public Action? Completed;
     private int _keyDirection=-1;
     private Vector2? _lastPosition;
     private double _distance;
@@ -29,6 +30,6 @@ public partial class FrameProfile : Node
             nodes=Performance.GetMonitor(Performance.Monitor.ObjectNodeCount)};
         System.IO.File.WriteAllText(OutputPath,JsonSerializer.Serialize(result,new JsonSerializerOptions{WriteIndented=true}));
         GetViewport().GetTexture().GetImage().SavePng(OutputPath+".png");
-        GD.Print("FRAME_PROFILE "+JsonSerializer.Serialize(result));GetTree().Quit();
+        GD.Print("FRAME_PROFILE "+JsonSerializer.Serialize(result));SetProcess(false);if(Completed!=null)Completed();else GetTree().Quit();
     }
 }

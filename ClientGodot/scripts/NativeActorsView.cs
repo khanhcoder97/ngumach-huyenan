@@ -20,6 +20,10 @@ public partial class NativeActorsView : Node2D
         public Label Health=null!;
         public Polygon2D Bar=null!,Track=null!;
         public string SpriteKey="";
+        public Rect2 HitBounds;
+        public readonly AuthoritativeMotion Motion=new();
+        public long LifeId=-1;
+        public double HitFlash;
     }
 
     private readonly Dictionary<string,ActorVisual> _actors=new(StringComparer.Ordinal);
@@ -35,11 +39,23 @@ public partial class NativeActorsView : Node2D
     private int _lastRipplePhase=-1;
     private string? _targetId;
     private Vector2 _self;
+    private (string Session,string Instance,string Floor,string Phase)? _context;
+    private long _revision=-1;
+    private long _selectedLife=-1;
+    public event Action? TargetChanged;
+    public int VisualCount=>_actors.Count;
 
     public string? TargetId
     {
         get=>_targetId;
-        set{_targetId=value;QueueRedraw();}
+        set
+        {
+            if(value!=null&&!_entities.Any(e=>e.entityId==value&&Selectable(e)))value=null;
+            if(_targetId==value)return;_targetId=value;
+            _selectedLife=value!=null&&_v2.TryGetValue(value,out var life)?life.lifeId:-1;
+            foreach(var entity in _entities)if(_actors.TryGetValue(entity.entityId,out var visual))ApplyAppearance(entity,visual);
+            DeclutterLabels();QueueRedraw();TargetChanged?.Invoke();
+        }
     }
     public Vector2[] OcclusionFocus {get;private set;}=Array.Empty<Vector2>();
 
@@ -86,6 +102,11 @@ public partial class NativeActorsView : Node2D
     public void UpdateFrame(NativeOnlineFrame frame)
     {
         if(!_ready)return;
+        var world=frame.WorldV2;
+        var context=(frame.SessionId,world?.mapInstanceId??frame.World?.mapId??"",world?.floorId??"",world?.phase??"");
+        if(_context!=context){ResetActors();_context=context;_revision=-1;}
+        if(world!=null&&world.revision<_revision)return;
+        if(world!=null)_revision=world.revision;
         var self=frame.World?.self??frame.WorldV2?.self;
         if(self!=null)_self=new Vector2((float)self.x,(float)self.y);
         _entities=frame.World?.entities??frame.WorldV2?.entities.Select(e=>new P1Entity{
@@ -101,7 +122,7 @@ public partial class NativeActorsView : Node2D
         {
             _actors[id].Root.QueueFree();_actors.Remove(id);
         }
-        if(_targetId!=null&&!present.Contains(_targetId))_targetId=null;
+        if(_targetId!=null&&!present.Contains(_targetId))TargetId=null;
         foreach(var entity in _entities)
         {
             if(!_actors.TryGetValue(entity.entityId,out var visual))
@@ -109,11 +130,59 @@ public partial class NativeActorsView : Node2D
                 visual=CreateVisual(entity.entityId);
                 _actors.Add(entity.entityId,visual);
             }
-            visual.Root.Position=RenderPoint(entity.x,entity.y);
+            bool newLife=_v2.TryGetValue(entity.entityId,out var life)&&visual.LifeId!=life.lifeId;
+            bool first=visual.SpriteKey.Length==0;
+            bool warp=visual.Root.Position.DistanceTo(RenderPoint(entity.x,entity.y))>240;
+            visual.Motion.Push(RenderPoint(entity.x,entity.y),frame.SampleTime>0?frame.SampleTime:AuthoritativeMotion.Now,first||newLife||warp);
+            if(first||newLife||warp){visual.Root.Position=RenderPoint(entity.x,entity.y);visual.Root.ResetPhysicsInterpolation();visual.HitFlash=0;visual.Body.Modulate=Colors.White;}
+            if(life!=null)visual.LifeId=life.lifeId;
             ApplyAppearance(entity,visual);
         }
-        QueueRedraw();
+        if(_targetId!=null&&(!_entities.Any(e=>e.entityId==_targetId&&Selectable(e))||
+            (_selectedLife>=0&&(!_v2.TryGetValue(_targetId,out var selected)||selected.lifeId!=_selectedLife))))TargetId=null;
+        DeclutterLabels();QueueRedraw();
     }
+
+    private void DeclutterLabels()
+    {
+        var occupied=new List<Rect2>();
+        Vector2? selected=_targetId!=null&&_actors.TryGetValue(_targetId,out var picked)?picked.Root.Position:null;
+        foreach(var e in _entities.OrderBy(e=>e.entityId==_targetId?0:e.kind=="NPC"&&DistanceSquared(e,_self)<=25?1:2).ThenBy(e=>DistanceSquared(e,_self)).ThenBy(e=>e.entityId,StringComparer.Ordinal))
+        {
+            if(!_actors.TryGetValue(e.entityId,out var visual))continue;
+            if(e.entityId!=_targetId&&selected is {} foot&&e.kind is "MOB" or "BOSS"&&visual.Root.Position.DistanceSquaredTo(foot)<32*32)
+            {visual.Bar.Visible=false;visual.Track.Visible=false;}
+            if(!visual.Name.Visible)continue;
+            float width=Math.Min(220,visual.Name.Text.Length*9+12);
+            var rect=new Rect2(visual.Root.Position+new Vector2(-width/2,visual.Name.Position.Y),new Vector2(width,22));
+            if(e.entityId!=_targetId&&occupied.Any(r=>r.Intersects(rect))){visual.Name.Visible=false;continue;}
+            occupied.Add(rect.Grow(3));
+            if(e.entityId==_targetId)occupied.Add(new Rect2(visual.Root.Position+visual.Health.Position,new Vector2(140,20)));
+        }
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        bool moved=false;double now=AuthoritativeMotion.Now;
+        foreach(var visual in _actors.Values)
+        {
+            var previous=visual.Root.Position;var position=visual.Motion.Sample(now,previous);
+            if(position.DistanceSquaredTo(previous)>.000001f){visual.Root.Position=position;moved=true;}
+            if(visual.HitFlash>0){visual.HitFlash=Math.Max(0,visual.HitFlash-delta);if(visual.HitFlash<=0)visual.Body.Modulate=Colors.White;}
+        }
+        // Stationary actors and rings keep their cached draw commands.
+        if(moved)QueueRedraw();
+    }
+
+    private void ResetActors()
+    {
+        foreach(var visual in _actors.Values)visual.Root.QueueFree();
+        _actors.Clear();_entities=Array.Empty<P1Entity>();_v2.Clear();TargetId=null;OcclusionFocus=Array.Empty<Vector2>();
+    }
+
+    public P1EntityV2? EntityLife(string id)=>_v2.TryGetValue(id,out var life)?life:null;
+    public Vector2 VisualPosition(string id)=>_actors.TryGetValue(id,out var visual)?visual.Root.Position:Vector2.Zero;
+    public void FlashImpact(string id){if(_actors.TryGetValue(id,out var visual)){visual.HitFlash=.13;visual.Body.Modulate=new Color(1,.57f,.68f);}}
 
     private ActorVisual CreateVisual(string id)
     {
@@ -223,6 +292,7 @@ public partial class NativeActorsView : Node2D
             visual.Body.Offset=-new Vector2(pivot[0].GetSingle(),pivot[1].GetSingle());
             visual.Body.Scale=Vector2.One*scale;
             visual.Body.Visible=true;
+            visual.HitBounds=new Rect2((new Vector2(bounds[0].GetSingle(),bounds[1].GetSingle())+visual.Body.Offset)*scale,new Vector2(w,h)*scale).Grow(5);
             float bodyHeight=h*scale;
             visual.Name.Position=new Vector2(-120,-bodyHeight-(hostile?39:25));
             visual.Health.Position=new Vector2(-70,-bodyHeight-22);
@@ -289,9 +359,42 @@ public partial class NativeActorsView : Node2D
             .Where(e=>e.state!="DEPLETED"&&e.availability!="COOLDOWN"&&DistanceSquared(e,canonicalSelf)<=maxWu*maxWu)
             .OrderBy(e=>DistanceSquared(e,canonicalSelf)).FirstOrDefault();
 
+    private bool Selectable(P1Entity e)=>e.kind is "MOB" or "BOSS"&&e.targetable==true&&e.healthState=="ALIVE"&&e.hp>0&&
+        _actors.TryGetValue(e.entityId,out var visual)&&visual.Body.Visible;
+    private bool VisibleIn(P1Entity e,Rect2 view)=>_actors.TryGetValue(e.entityId,out var visual)&&
+        view.Intersects(new Rect2(visual.Root.Position+visual.HitBounds.Position,visual.HitBounds.Size));
     public P1Entity? NearestTargetable(Vector2 canonicalSelf)=>
-        _entities.Where(e=>e.targetable==true&&e.healthState=="ALIVE"&&e.hp>0)
-            .OrderBy(e=>DistanceSquared(e,canonicalSelf)).FirstOrDefault();
+        _entities.Where(Selectable).OrderBy(e=>DistanceSquared(e,canonicalSelf)).ThenBy(e=>e.entityId,StringComparer.Ordinal).FirstOrDefault();
+    public P1Entity? CombatTarget(Rect2 view)
+    {
+        var selected=_entities.FirstOrDefault(e=>e.entityId==_targetId&&Selectable(e));
+        if(selected!=null)return selected;
+        var nearest=_entities.Where(e=>Selectable(e)&&VisibleIn(e,view)).OrderBy(e=>DistanceSquared(e,_self)).ThenBy(e=>e.entityId,StringComparer.Ordinal).FirstOrDefault();
+        TargetId=nearest?.entityId;return nearest;
+    }
+    public bool SelectAt(Vector2 point,Rect2 view)
+    {
+        var hit=_entities.Where(e=>Selectable(e)&&VisibleIn(e,view)&&_actors[e.entityId].HitBounds.HasPoint(point-_actors[e.entityId].Root.Position))
+            .OrderBy(e=>(point-_actors[e.entityId].Root.Position-_actors[e.entityId].HitBounds.GetCenter()).LengthSquared())
+            .ThenBy(e=>e.entityId,StringComparer.Ordinal).FirstOrDefault();
+        if(hit==null)return false;TargetId=hit.entityId;return true;
+    }
+    public void CycleTarget(Rect2 view,bool reverse=false)
+    {
+        var candidates=_entities.Where(e=>Selectable(e)&&VisibleIn(e,view)).OrderBy(e=>DistanceSquared(e,_self)).ThenBy(e=>e.entityId,StringComparer.Ordinal).ToArray();
+        if(candidates.Length==0){TargetId=null;return;}
+        int current=Array.FindIndex(candidates,e=>e.entityId==_targetId);
+        int next=current<0?(reverse?candidates.Length-1:0):(current+(reverse?-1:1)+candidates.Length)%candidates.Length;
+        TargetId=candidates[next].entityId;
+    }
+    public CombatTargetInfo? TargetInfo
+    {
+        get
+        {
+            var e=_entities.FirstOrDefault(e=>e.entityId==_targetId&&Selectable(e));if(e==null)return null;
+            return new CombatTargetInfo(e.entityId,_selectedLife,_actors[e.entityId].Name.Text,e.kind,e.hp,e.maxHp,Math.Sqrt(DistanceSquared(e,_self)),e.state);
+        }
+    }
 
     public override void _Draw()
     {
@@ -299,7 +402,7 @@ public partial class NativeActorsView : Node2D
         {
             bool selected=e.entityId==_targetId;
             if(!selected&&e.kind!="NPC"&&e.kind!="INTERACTABLE")continue;
-            var at=RenderPoint(e.x,e.y);
+            var at=_actors.TryGetValue(e.entityId,out var visual)?visual.Root.Position:RenderPoint(e.x,e.y);
             var color=selected?Color.FromHtml("#f3c66b"):new Color(.57f,.77f,.64f,.35f);
             DrawArc(at,selected?14:10,0,Mathf.Tau,32,color,selected?2:1);
         }

@@ -12,6 +12,7 @@ public partial class MoonMapView : Control
 {
     public NativeOnlineFrame? Frame;
     public bool Overview;
+    public string? TargetId;
     public Vector2 Facing=Vector2.Up;
     private JsonDocument? _layout;
     public override void _Ready(){ClipContents=true;MouseFilter=MouseFilterEnum.Ignore;_layout=JsonDocument.Parse(FileAccess.GetFileAsString("res://assets/ben_mua_v3/layout.json"));QueueRedraw();}
@@ -56,6 +57,7 @@ public partial class MoonMapView : Control
             else if(e.kind=="INTERACTABLE"&&e.state!="DEPLETED")
                 DrawPolyline(new[]{at+new Vector2(0,-4),at+new Vector2(3,0),at+new Vector2(0,4),at+new Vector2(-3,0),at+new Vector2(0,-4)},MoonGlassTheme.Violet,1.2f);
             else if(e.targetable==true)DrawCircle(at,2,Color.FromHtml("#ee8ba4"));
+            if(e.entityId==TargetId)DrawPolyline(new[]{at+new Vector2(0,-6),at+new Vector2(5,0),at+new Vector2(0,6),at+new Vector2(-5,0),at+new Vector2(0,-6)},MoonGlassTheme.Gold,1.4f,true);
         }
         var player=self!=null?Point(new Vector2((float)self.x,(float)self.y)):Point(new Vector2(36,0));
         DrawCircle(player,7,new Color(.65f,.8f,1,.15f));DrawCircle(player,3.1f,Colors.White);

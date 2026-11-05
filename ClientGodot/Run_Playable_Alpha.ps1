@@ -3,6 +3,7 @@ param(
     [switch]$UiTest,
     [switch]$UiGallery,
     [switch]$MotionTest,
+    [switch]$CombatTest,
     [int]$Port = 0,
     [string]$GodotPath,
     [string]$Dotnet8Path,
@@ -10,6 +11,8 @@ param(
     [string]$EvidenceDirectory
 )
 $ErrorActionPreference = 'Stop'
+if($CombatTest -and ($UiTest -or $UiGallery -or $MotionTest)){throw 'CombatTest uses its own acceptance session; run separately from quest UI tests.'}
+if($CombatTest){$Test=$true}
 if ($UiGallery -or $MotionTest) { $UiTest = $true }
 if ($UiTest) { $Test = $true }
 $clientRoot = $PSScriptRoot
@@ -31,11 +34,11 @@ if (-not $EvidenceDirectory) {
 }
 $EvidenceDirectory = [IO.Path]::GetFullPath($EvidenceDirectory)
 New-Item -ItemType Directory -Path $EvidenceDirectory -Force | Out-Null
-$prefix = if ($UiTest) { 'ui.' } else { '' }
+$prefix = if ($CombatTest) { 'combat.' } elseif ($UiTest) { 'ui.' } else { '' }
 $serverOut = Join-Path $EvidenceDirectory ($prefix+'server.stdout.log')
 $serverErr = Join-Path $EvidenceDirectory ($prefix+'server.stderr.log')
 $gameLog = Join-Path $EvidenceDirectory ($prefix+'godot.stdout.log')
-$captureName = if ($UiTest) { 'native_ui_p00_01_inventory.png' } else { 'native_p00_01_inventory.png' }
+$captureName = if ($CombatTest) { 'native_combat_target.png' } elseif ($UiTest) { 'native_ui_p00_01_inventory.png' } else { 'native_p00_01_inventory.png' }
 $capturePath = Join-Path $EvidenceDirectory $captureName
 $priorPath = $env:PATH
 $priorDotnet = $env:DOTNET_ROOT
@@ -105,7 +108,7 @@ try {
     $env:PATH = $env:DOTNET_ROOT + ';' + $priorPath
     $env:P1_BASE_URL = $baseUrl
     if ($Test) {
-        $testFlag = if ($UiTest) { '--online-ui-self-test' } else { '--online-self-test' }
+        $testFlag = if ($CombatTest) { '--combat-online-test' } elseif ($UiTest) { '--online-ui-self-test' } else { '--online-self-test' }
         $gameArgs = @('--path',$clientRoot,'--',$testFlag)
         if ($UiGallery) { $gameArgs += '--ui-gallery' }
         if ($MotionTest) { $gameArgs += '--motion-online-test' }
@@ -119,12 +122,12 @@ try {
     $gameExit = $LASTEXITCODE
     if ($gameExit -ne 0) { throw "Godot exited with $gameExit; see $gameLog" }
     if ($Test) {
-        $pattern = if ($UiTest) { 'NATIVE_UI_P00_01_PASS assertions=(\d+)' } else { 'NATIVE_P00_01_PASS assertions=(\d+)' }
+        $pattern = if ($CombatTest) { 'NATIVE_COMBAT_PASS assertions=(\d+)' } elseif ($UiTest) { 'NATIVE_UI_P00_01_PASS assertions=(\d+)' } else { 'NATIVE_P00_01_PASS assertions=(\d+)' }
         $marker = Select-String -LiteralPath $gameLog -Pattern $pattern | Select-Object -Last 1
         if (-not $marker -or [int]$marker.Matches[0].Groups[1].Value -le 0) { throw 'No nonzero real native quest assertion marker.' }
         if (-not (Test-Path -LiteralPath $capturePath)) { throw 'Native renderer did not create its capture.' }
         [ordered]@{
-            status=$(if ($UiTest) { 'PASS_NATIVE_UI_P00_01' } else { 'PASS_NATIVE_P00_01' })
+            status=$(if ($CombatTest) { 'PASS_NATIVE_COMBAT' } elseif ($UiTest) { 'PASS_NATIVE_UI_P00_01' } else { 'PASS_NATIVE_P00_01' })
             assertions=[int]$marker.Matches[0].Groups[1].Value
             serverService=$health.service
             serverPid=$serverProcess.Id

@@ -14,6 +14,8 @@ public partial class SkillVfxPlayer : Node2D
         public double Time;
     }
     private readonly List<Playing> _playing=new();
+    private readonly List<(Node2D Node,Tween Tween)> _transient=new();
+    public int FeedbackCount=>_transient.Count;
     private readonly HashSet<string> _seen=new();
     private readonly Queue<string> _seenOrder=new();
     private JsonDocument _manifest=null!;
@@ -49,7 +51,33 @@ public partial class SkillVfxPlayer : Node2D
         if(!_seen.Add("guard:"+castToken))return;
         _seenOrder.Enqueue("guard:"+castToken);while(_seenOrder.Count>256)_seen.Remove(_seenOrder.Dequeue());
         var sprite=new Sprite2D{Texture=MoonGlassIcons.Get("Guild"),Position=foot+new Vector2(0,-25),Scale=Vector2.One*.65f,Modulate=MoonGlassTheme.Blue};
-        AddChild(sprite);var tween=CreateTween();tween.SetParallel();tween.TweenProperty(sprite,"position:y",sprite.Position.Y-8,.4);tween.TweenProperty(sprite,"modulate:a",0,.4);tween.Chain().TweenCallback(Callable.From(()=>sprite.QueueFree()));
+        AddChild(sprite);var tween=CreateTween();TrackTransient(sprite,tween);tween.SetParallel();
+        tween.TweenProperty(sprite,"position:y",sprite.Position.Y-8,.4);tween.TweenProperty(sprite,"modulate:a",0,.4);
+        tween.Chain().TweenCallback(Callable.From(()=>ReleaseTransient(sprite)));
+    }
+    private void TrackTransient(Node2D node,Tween tween)
+    {
+        while(_transient.Count>=(LowFx?8:24)){var oldest=_transient[0];oldest.Tween.Kill();oldest.Node.QueueFree();_transient.RemoveAt(0);}
+        _transient.Add((node,tween));
+    }
+    private void ReleaseTransient(Node2D node)
+    {_transient.RemoveAll(x=>x.Node==node);if(GodotObject.IsInstanceValid(node))node.QueueFree();}
+    public void Impact(NguMach.Client.P1.P1ImpactResultV2 result,Vector2 foot)
+    {
+        var root=new Node2D{Position=foot};AddChild(root);
+        string text=result.immune?"Miễn nhiễm":!result.hit?"Trượt":result.hpDamage>0?(result.crit?"Chí mạng ":"")+result.hpDamage:
+            result.absorbed>0?"Hấp thụ "+result.absorbed:"0";
+        var label=new Label{Text=text,Position=new Vector2(-85,-55),Size=new Vector2(170,24),HorizontalAlignment=HorizontalAlignment.Center,MouseFilter=Control.MouseFilterEnum.Ignore};
+        label.AddThemeFontSizeOverride("font_size",result.crit?19:16);
+        label.AddThemeColorOverride("font_color",result.crit?MoonGlassTheme.Gold:result.immune?MoonGlassTheme.Blue:result.hit?MoonGlassTheme.Ink:MoonGlassTheme.Muted);
+        label.AddThemeColorOverride("font_outline_color",new Color(.04f,.05f,.12f,.95f));label.AddThemeConstantOverride("outline_size",3);root.AddChild(label);
+        if(result.hit&&!result.immune&&result.hpDamage>0&&!LowFx)
+        {
+            var points=new Vector2[25];for(int i=0;i<points.Length;i++)points[i]=Vector2.FromAngle(i*Mathf.Tau/24)*14;
+            root.AddChild(new Line2D{Points=points,Width=1.5f,DefaultColor=result.crit?MoonGlassTheme.Gold:MoonGlassTheme.Hp});
+        }
+        var tween=CreateTween();TrackTransient(root,tween);tween.SetParallel();tween.TweenProperty(label,"position:y",-80,.65);
+        tween.TweenProperty(root,"modulate:a",0,.65);tween.Chain().TweenCallback(Callable.From(()=>ReleaseTransient(root)));
     }
     public override void _Process(double delta)
     {
@@ -76,6 +104,8 @@ public partial class SkillVfxPlayer : Node2D
     {
         foreach(var p in _playing)p.Sprite.QueueFree();
         _playing.Clear();
+        foreach(var item in _transient){item.Tween.Kill();if(GodotObject.IsInstanceValid(item.Node))item.Node.QueueFree();}
+        _transient.Clear();
     }
     public override void _ExitTree(){_manifest?.Dispose();}
 }

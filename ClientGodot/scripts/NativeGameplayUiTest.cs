@@ -180,6 +180,7 @@ public partial class NativeGameplayUiTest : Node
             {
                 Stage("native_pointer_guard_and_feedback");await Press("×");
                 var hud=Descendants(GetTree().Root).OfType<PreviewHud>().Single();
+                await WaitFor(()=>hud.IsVisibleInTree(),5);
                 async Task Click(int slot)
                 {
                     var position=PreviewHud.SkillCenters()[slot];
