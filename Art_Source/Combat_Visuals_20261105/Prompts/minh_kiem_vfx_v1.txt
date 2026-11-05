@@ -1,0 +1,11 @@
+Use case: stylized-concept
+Asset type: transparent pixel-art VFX ANIMATION atlas for six metal/sword skills in an overhead Vietnamese fantasy RPG.
+Square canvas, EXACT6columns x6rows of equal square cells,36cells. NO gridlines/text/labels/characters/weapon sprites/scenery. Alpha0 outside effects, NOT a black rectangle or painted checkerboard. Each effect fully within its cell with at least18% blank margin, no bleed into neighbor. Crisp chunky intentional pixel clusters, dark outline only where needed, limited ivory/silver/palegold with cyan accents, no smooth gradients or volumetric smoke/bloom. Clear hollow centers, readable over busy green terrain, no screen-filling flash. All directed effects face EAST (right) so renderer can rotate them.
+Columns are6DISTINCT consecutive animation phases left→right: emerging, expanding, peak, breaking, fading, last sparse fragments.
+Row1 PHAN QUANG: thin palegold hexagonal crescent guard arc facingright; sharp small counter spark on its right edge atpeak; breakup into4littlechips, nofullwhitecircle.
+Row2 TAM LONG: narrow horizontal ivory-silver dash/sword trail with gold core; elongated pointed righttip, three short parallel wisps behind; small diamond impact atpeak, thenwisps disappear.
+Row3 KIEM TRAN: three staggered crescent sword arcs, first diagonalup, second low, third wider; silver-white edges/palegold cores, gaps staytransparent, stagger shapes across6frames.
+Row4 THIET Y: hollow thin cyan-silver hexagonal shield ring with6restrained nodes, center fullytransparent; ring forms thensettles thenfractures intochips inlast2frames.
+Row5 BACH HONG: slim white-cyan horizontal movement slip trail,2faintbrokenlines and tiny dust flecks, noexplosion/impact; alwaystransparentcenterlinegaps.
+Row6 VAN TUONG QUY NHAT: gold/ivory energy converges into a small pointed star then a VERYLONG NARROW horizontal swordbeam facingright, strongstraightcore and taperedtips, becomes broken lightstrands, no fullscreensunburst.
+Every row visuallyconsistent over time; do not include captions, borders, people or interface icons. Professional top-down pixelgame effects sheet made tobe played by engine.

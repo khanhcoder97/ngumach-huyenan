@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "stage": "STRUCTURE_CHECKED_NOT_FINAL_ART",
+  "mapId": "ART_BM_STAGING_A1",
+  "projection": "orthographic_2d_topdown",
+  "pixelsPerWU": 20,
+  "defaultVisibleWU": [
+    64,
+    36
+  ],
+  "heroFrames": [
+    {
+      "direction": "N",
+      "rect": [
+        0,
+        0,
+        444,
+        444
+      ],
+      "pivot": [
+        220.5,
+        403
+      ],
+      "alphaBounds": [
+        132,
+        34,
+        309,
+        403
+      ]
+    },
+    {
+      "direction": "NE",
+      "rect": [
+        444,
+        0,
+        443,
+        444
+      ],
+      "pivot": [
+        203.0,
+        403
+      ],
+      "alphaBounds": [
+        109,
+        34,
+        297,
+        403
+      ]
+    },
+    {
+      "direction": "E",
+      "rect": [
+        887,
+        0,
+        443,
+        444
+      ],
+      "pivot": [
+        201.0,
+        403
+      ],
+      "alphaBounds": [
+        112,
+        34,
+        290,
+        403
+      ]
+    },
+    {
+      "direction": "SE",
+      "rect": [
+        1330,
+        0,
+        444,
+        444
+      ],
+      "pivot": [
+        194.0,
+        403
+      ],
+      "alphaBounds": [
+        93,
+        34,
+        295,
+        403
+      ]
+    },
+    {
+      "direction": "S",
+      "rect": [
+        0,
+        444,
+        444,
+        443
+      ],
+      "pivot": [
+        220.5,
+        405
+      ],
+      "alphaBounds": [
+        133,
+        33,
+        308,
+        405
+      ]
+    },
+    {
+      "direction": "SW",
+      "rect": [
+        444,
+        444,
+        443,
+        443
+      ],
+      "pivot": [
+        236.5,
+        405
+      ],
+      "alphaBounds": [
+        140,
+        33,
+        333,
+        405
+      ]
+    },
+    {
+      "direction": "W",
+      "rect": [
+        887,
+        444,
+        443,
+        443
+      ],
+      "pivot": [
+        236.0,
+        405
+      ],
+      "alphaBounds": [
+        152,
+        33,
+        320,
+        405
+      ]
+    },
+    {
+      "direction": "NW",
+      "rect": [
+        1330,
+        444,
+        444,
+        443
+      ],
+      "pivot": [
+        239.5,
+        405
+      ],
+      "alphaBounds": [
+        148,
+        35,
+        331,
+        405
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "hero_idle_body.png",
+      "sha256": "d2264cf219a69c836867fcc0d5f13915ac6b6cd39f8bd4699a7bd4cd51c57b1d",
+      "dimensions": [
+        1774,
+        887
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "terrain.png",
+      "sha256": "5c02f66f99baf794506cdb7682aebd5d715256554a18e40c2f09a1e6a0b32039",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "props.png",
+      "sha256": "2c892a8a78bf90e94c0afc51a9412c527a5feb4b80e794ccecfd46be544c2379",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA"
+    }
+  ]
+}

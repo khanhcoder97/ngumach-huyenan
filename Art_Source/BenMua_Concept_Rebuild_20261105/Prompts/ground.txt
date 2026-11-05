@@ -1,0 +1,10 @@
+Use case: stylized-concept
+Asset type: top-down RPG TERRAIN TEXTURE atlas, NOT map, NOT illustration.
+1536x1024 canvas,3columns2rows, SIX512x512 square texture samples abutting precisely, no border/no gutter/no dividers/no text/no vignette. Each tile is a seamless repeatable fully-filled flat ground surface viewed exactly vertically overhead. Match the reference Vietnamese fantasy pixel art village palette and handplaced cluster style. IMPORTANT: use readable compact pixel clusters roughly8–16sourcepixels wide with quiet lowcontrast base areas, not photograph, no micro grain, not smooth vector. These tiles will render128pixels square, so cluster sizes should stay clear at quarter scale. No houses, tree sprites, big stones, horizon, castshadows or perspective.
+ROW1col1: lush olive ricegreen meadow with subtle small grass blade clusters unevenly distributed, patches of slightly lighter green, quiet open areas, sparse tiny warm flowers, no obvious diagonal pattern.
+ROW1col2: sunlit compacted ochre earth walkway, organic clay patches, light scatter of tiny embedded pebbles, no grass and no square pavement.
+ROW1col3: weathered warm sandstone cobbled village street, irregular rounded rectangles in varied sizes fitted together, buff cream/ochre, dark thin earthy grout, organic nonuniform pattern not modern bricks.
+ROW2col1: rich jade turquoise river water with darker patches and sparse short broken horizontal cyan/ivory ripple streaks, no foam perimeter, no objects.
+ROW2col2: slightly dark damp mossgrass meadow, olive/jade, lowcontrast tufts and tiny irregular earth flecks, coherent with tile1.
+ROW2col3: strawgold rice field viewed above, tight little sheaves planted in imperfect rows over ochre moist earth, subtle dark irrigation channels, flat overhead.
+Strictly six filled SQUARE textures, no visible tile separators, shared lighting, no gradients representing a whole scene. Pixel artwork not a photograph.

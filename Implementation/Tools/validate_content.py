@@ -885,8 +885,31 @@ def check_definition_references(
         graph_id = example.get("graphId")
         if graph_id not in graph_ids:
             errors.append(f"{label}: graphId '{graph_id}' does not resolve")
+        activation = example.get("activation")
+        blocked_steps = example.get("blockedSteps") or []
+        if activation == "ACTIVE" and "turnInNpcId" not in example:
+            errors.append(f"{label}: an ACTIVE quest needs turnInNpcId")
+        if activation == "BLOCKED":
+            if not blocked_steps:
+                errors.append(f"{label}: a BLOCKED quest must name its gaps")
+            if "turnInNpcId" not in example and not any(
+                step.get("missingField") == "turnInNpcId"
+                for step in blocked_steps
+            ):
+                errors.append(
+                    f"{label}: missing turnInNpcId is not named as a blocked step"
+                )
+        for step in blocked_steps:
+            source = step.get("source") or ""
+            if ".md" not in source and ".csv" not in source:
+                errors.append(
+                    f"{label}: blocked step '{step.get('designStep')}' must "
+                    "point its source at a .md or .csv document"
+                )
         for npc_key in ("startNpcId", "turnInNpcId"):
             npc_id = example.get(npc_key)
+            if npc_id is None:
+                continue
             if npc_id not in npc_ids:
                 errors.append(
                     f"{label}: {npc_key} '{npc_id}' does not resolve"

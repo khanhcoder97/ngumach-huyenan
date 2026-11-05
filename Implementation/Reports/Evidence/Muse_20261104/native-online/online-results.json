@@ -1,0 +1,26 @@
+[
+  {
+    "suite": "NETTEST",
+    "exit": 0,
+    "timeout": false,
+    "pass": true,
+    "seconds": 3.06,
+    "markers": [
+      "PASS"
+    ],
+    "log": "D:\\Project\\NGUMACHHUYENAN-tools\\dispatch\\muse-complete-20261104\\native-online\\nettest.log",
+    "server_pid": 13456
+  },
+  {
+    "suite": "ONLINETEST",
+    "exit": 1,
+    "timeout": false,
+    "pass": false,
+    "seconds": 12.92,
+    "markers": [
+      "FAIL"
+    ],
+    "log": "D:\\Project\\NGUMACHHUYENAN-tools\\dispatch\\muse-complete-20261104\\native-online\\onlinetest.log",
+    "server_pid": 13456
+  }
+]

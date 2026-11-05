@@ -1,0 +1,118 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+TILEMAP layer GroundLayer: 16879 cells
+TILEMAP layer WaterLayer: 4960 cells
+TILEMAP layer PathLayer: 5161 cells
+TILEMAP collision tile polygons: 1
+TILEMAP built: 450x60, tiles=47, blocked=5069
+TILEMAP detail layers on: under z=5, over z=15 (7200x960)
+  PASS anh_dao_library_40
+  PASS anh_dao_frames
+  PASS anh_dao_fps
+  PASS anh_dao_attack1_plays
+  PASS anh_dao_attack1_autoclears
+WARNING: DirectionalAnimator2D: ActionId 4 not available for class anh_dao
+   at: void DirectionalAnimator2D.PlayAction(int) (res://scripts/DirectionalAnimator2D.cs:129)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushWarning(string) (/root/godot/modules/mono/glue/GodotSharp/GodotSharp/Core/GD.cs:396)
+       [1] void DirectionalAnimator2D.PlayAction(int) (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\DirectionalAnimator2D.cs:129)
+       [2] void ClassTest+<RunTest>d__6.MoveNext() (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\ClassTest.cs:64)
+       [3] void System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, object)
+       [4] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1.MoveNext(System.Threading.Thread)
+       [5] void System.Threading.Tasks.AwaitTaskContinuation.RunCallback(System.Threading.ContextCallback, object, System.Threading.Tasks.Task&)
+       [6] void System.Threading.Tasks.Task.RunContinuations(object)
+       [7] bool System.Threading.Tasks.Task`1.TrySetResult(TResult)
+       [8] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.SetExistingTaskResult(System.Threading.Tasks.Task`1[TResult], TResult)
+       [9] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder.SetResult()
+       [10] void ClassTest+<Frames>d__4.MoveNext() (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\ClassTest.cs:31)
+       [11] void System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, object)
+       [12] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1.MoveNext(System.Threading.Thread)
+       [13] void Godot.SignalAwaiter.SignalCallback(nint, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_bool*) (/root/godot/modules/mono/glue/GodotSharp/GodotSharp/Core/SignalAwaiter.cs:65)
+  PASS anh_dao_missing_action_ignored
+  PASS anh_dao_death_holds
+  PASS anh_dao_death_clears
+  PASS anh_dao_run_fallback_walkE_1.6x
+  PASS anh_dao_back_to_idle
+  PASS huyen_but_library_40
+  PASS huyen_but_frames
+  PASS huyen_but_fps
+  PASS huyen_but_attack1_plays
+  PASS huyen_but_attack1_autoclears
+WARNING: DirectionalAnimator2D: ActionId 4 not available for class huyen_but
+   at: void DirectionalAnimator2D.PlayAction(int) (res://scripts/DirectionalAnimator2D.cs:129)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushWarning(string) (/root/godot/modules/mono/glue/GodotSharp/GodotSharp/Core/GD.cs:396)
+       [1] void DirectionalAnimator2D.PlayAction(int) (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\DirectionalAnimator2D.cs:129)
+       [2] void ClassTest+<RunTest>d__6.MoveNext() (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\ClassTest.cs:64)
+       [3] void System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, object)
+       [4] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1.MoveNext(System.Threading.Thread)
+       [5] void System.Threading.Tasks.AwaitTaskContinuation.RunCallback(System.Threading.ContextCallback, object, System.Threading.Tasks.Task&)
+       [6] void System.Threading.Tasks.Task.RunContinuations(object)
+       [7] bool System.Threading.Tasks.Task`1.TrySetResult(TResult)
+       [8] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.SetExistingTaskResult(System.Threading.Tasks.Task`1[TResult], TResult)
+       [9] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder.SetResult()
+       [10] void ClassTest+<Frames>d__4.MoveNext() (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\ClassTest.cs:31)
+       [11] void System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, object)
+       [12] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1.MoveNext(System.Threading.Thread)
+       [13] void Godot.SignalAwaiter.SignalCallback(nint, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_bool*) (/root/godot/modules/mono/glue/GodotSharp/GodotSharp/Core/SignalAwaiter.cs:65)
+  PASS huyen_but_missing_action_ignored
+  PASS huyen_but_death_holds
+  PASS huyen_but_death_clears
+  PASS huyen_but_run_fallback_walkE_1.6x
+  PASS huyen_but_back_to_idle
+  PASS thach_chuy_library_40
+  PASS thach_chuy_frames
+  PASS thach_chuy_fps
+  PASS thach_chuy_attack1_plays
+  PASS thach_chuy_attack1_autoclears
+WARNING: DirectionalAnimator2D: ActionId 4 not available for class thach_chuy
+   at: void DirectionalAnimator2D.PlayAction(int) (res://scripts/DirectionalAnimator2D.cs:129)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushWarning(string) (/root/godot/modules/mono/glue/GodotSharp/GodotSharp/Core/GD.cs:396)
+       [1] void DirectionalAnimator2D.PlayAction(int) (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\DirectionalAnimator2D.cs:129)
+       [2] void ClassTest+<RunTest>d__6.MoveNext() (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\ClassTest.cs:64)
+       [3] void System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, object)
+       [4] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1.MoveNext(System.Threading.Thread)
+       [5] void System.Threading.Tasks.AwaitTaskContinuation.RunCallback(System.Threading.ContextCallback, object, System.Threading.Tasks.Task&)
+       [6] void System.Threading.Tasks.Task.RunContinuations(object)
+       [7] bool System.Threading.Tasks.Task`1.TrySetResult(TResult)
+       [8] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.SetExistingTaskResult(System.Threading.Tasks.Task`1[TResult], TResult)
+       [9] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder.SetResult()
+       [10] void ClassTest+<Frames>d__4.MoveNext() (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\ClassTest.cs:31)
+       [11] void System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, object)
+       [12] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1.MoveNext(System.Threading.Thread)
+       [13] void Godot.SignalAwaiter.SignalCallback(nint, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_bool*) (/root/godot/modules/mono/glue/GodotSharp/GodotSharp/Core/SignalAwaiter.cs:65)
+  PASS thach_chuy_missing_action_ignored
+  PASS thach_chuy_death_holds
+  PASS thach_chuy_death_clears
+  PASS thach_chuy_run_fallback_walkE_1.6x
+  PASS thach_chuy_back_to_idle
+  PASS linh_cung_library_40
+  PASS linh_cung_frames
+  PASS linh_cung_fps
+  PASS linh_cung_attack1_plays
+  PASS linh_cung_attack1_autoclears
+WARNING: DirectionalAnimator2D: ActionId 4 not available for class linh_cung
+   at: void DirectionalAnimator2D.PlayAction(int) (res://scripts/DirectionalAnimator2D.cs:129)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushWarning(string) (/root/godot/modules/mono/glue/GodotSharp/GodotSharp/Core/GD.cs:396)
+       [1] void DirectionalAnimator2D.PlayAction(int) (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\DirectionalAnimator2D.cs:129)
+       [2] void ClassTest+<RunTest>d__6.MoveNext() (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\ClassTest.cs:64)
+       [3] void System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, object)
+       [4] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1.MoveNext(System.Threading.Thread)
+       [5] void System.Threading.Tasks.AwaitTaskContinuation.RunCallback(System.Threading.ContextCallback, object, System.Threading.Tasks.Task&)
+       [6] void System.Threading.Tasks.Task.RunContinuations(object)
+       [7] bool System.Threading.Tasks.Task`1.TrySetResult(TResult)
+       [8] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.SetExistingTaskResult(System.Threading.Tasks.Task`1[TResult], TResult)
+       [9] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder.SetResult()
+       [10] void ClassTest+<Frames>d__4.MoveNext() (D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\ClassTest.cs:31)
+       [11] void System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, object)
+       [12] void System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1.MoveNext(System.Threading.Thread)
+       [13] void Godot.SignalAwaiter.SignalCallback(nint, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_bool*) (/root/godot/modules/mono/glue/GodotSharp/GodotSharp/Core/SignalAwaiter.cs:65)
+  PASS linh_cung_missing_action_ignored
+  PASS linh_cung_death_holds
+  PASS linh_cung_death_clears
+  PASS linh_cung_run_fallback_walkE_1.6x
+  PASS linh_cung_back_to_idle
+CLASSTEST: 40 passed, 0 failed
+CLASSTEST RESULT: PASS

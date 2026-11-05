@@ -1,0 +1,38 @@
+name: narrative-workshop
+on:
+  pull_request:
+    paths:
+      - 'Tools/NarrativeWorkshop/**'
+      - 'docs/narrative/workshop/**'
+      - '.agents/skills/ngumach-narrative/**'
+      - '.github/workflows/narrative-workshop.yml'
+      - 'docs/production/Narrative_Depth_and_Discovery_vi.md'
+      - 'docs/production/Quest_and_Narrative_Production_Spec_vi.md'
+      - 'docs/production/Quest_Dialogue_Production_Data_vi.csv'
+      - 'docs/production/NPC_Actor_Production_Registry_vi.csv'
+      - 'Implementation/Content/Narrative/Cinema_Production_Pack_v1.json'
+  push:
+    branches: [main]
+    paths:
+      - 'Tools/NarrativeWorkshop/**'
+      - 'docs/narrative/workshop/**'
+      - '.agents/skills/ngumach-narrative/**'
+      - '.github/workflows/narrative-workshop.yml'
+permissions:
+  contents: read
+jobs:
+  ink-and-canon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: Tools/NarrativeWorkshop/package-lock.json
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+        working-directory: Tools/NarrativeWorkshop
+      - run: npm run check
+        working-directory: Tools/NarrativeWorkshop
+      - run: git diff --exit-code

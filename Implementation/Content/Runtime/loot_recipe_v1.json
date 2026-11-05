@@ -1,0 +1,2061 @@
+{
+  "schemaVersion": 1,
+  "bundleId": "LOOT_RECIPE_V1",
+  "activation": "DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION",
+  "grantEnabled": false,
+  "grantBlockedReason": "COIN_BAND_MISSING",
+  "sourceRef": "docs/production/Loot_Recipe_Reward_Production_Data_vi.csv",
+  "rng": {
+    "seedVersion": "loot-rng-v1",
+    "groupRoll": "ONE_ROLL_PER_GROUP",
+    "selection": "WEIGHTED_SELECT_ONE"
+  },
+  "mobTemplateToSource": [
+    {
+      "mobTemplateId": "MOB_CARPLING",
+      "sourceId": "LT_MOB_CARPLING",
+      "provenance": "MANIFEST_SPAWN_BM_01_02_04_ESCORT_A"
+    },
+    {
+      "mobTemplateId": "MOB_WATERROOT",
+      "sourceId": "LT_MOB_WATERROOT",
+      "provenance": "MANIFEST_SPAWN_BM_03_04_ESCORT_B"
+    },
+    {
+      "mobTemplateId": "MOB_SHORE_STALKER",
+      "sourceId": "LT_MOB_SHORE_STALKER",
+      "provenance": "MANIFEST_SPAWN_BM_06"
+    },
+    {
+      "mobTemplateId": "MOB_SHORE_STALKER_ELITE",
+      "sourceId": "LT_MOB_SHORE_STALKER_ELITE",
+      "provenance": "MANIFEST_SPAWN_BM_07_ELITE"
+    },
+    {
+      "mobTemplateId": "BOSS_MANG_COT",
+      "sourceId": "LT_BOSS_MANG_COT_QUEST",
+      "provenance": "QUEST_PLACEMENT_P00_05",
+      "bossBlocked": true
+    }
+  ],
+  "sources": [
+    {
+      "sourceId": "BOSS_ANCIENT_TREE",
+      "groups": [
+        {
+          "groupId": "WEEKLY_BONUS",
+          "mode": "SELECT_ONE",
+          "chanceBps": 2000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_WEEKLY_BOSS_ANCIENT_TREE_MAT-RELIC-01",
+              "itemId": "MAT-RELIC-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "groupId": "WEEKLY_GUARANTEE",
+          "mode": "ALL",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_WEEKLY_BOSS_ANCIENT_TREE_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "BOSS_FLAME_SENTINEL",
+      "groups": [
+        {
+          "groupId": "WEEKLY_BONUS",
+          "mode": "SELECT_ONE",
+          "chanceBps": 2000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_WEEKLY_BOSS_FLAME_SENTINEL_MAT-RELIC-01",
+              "itemId": "MAT-RELIC-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "groupId": "WEEKLY_GUARANTEE",
+          "mode": "ALL",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_WEEKLY_BOSS_FLAME_SENTINEL_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "BOSS_FURNACE",
+      "groups": [
+        {
+          "groupId": "WEEKLY_BONUS",
+          "mode": "SELECT_ONE",
+          "chanceBps": 2000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_WEEKLY_BOSS_FURNACE_MAT-RELIC-01",
+              "itemId": "MAT-RELIC-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "groupId": "WEEKLY_GUARANTEE",
+          "mode": "ALL",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_WEEKLY_BOSS_FURNACE_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "BOSS_MANG_COT",
+      "groups": [
+        {
+          "groupId": "WEEKLY_BONUS",
+          "mode": "SELECT_ONE",
+          "chanceBps": 2000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_WEEKLY_BOSS_MANG_COT_MAT-RELIC-01",
+              "itemId": "MAT-RELIC-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "groupId": "WEEKLY_GUARANTEE",
+          "mode": "ALL",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_WEEKLY_BOSS_MANG_COT_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "BOSS_TIDE_SERPENT",
+      "groups": [
+        {
+          "groupId": "WEEKLY_BONUS",
+          "mode": "SELECT_ONE",
+          "chanceBps": 2000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_WEEKLY_BOSS_TIDE_SERPENT_MAT-RELIC-01",
+              "itemId": "MAT-RELIC-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "groupId": "WEEKLY_GUARANTEE",
+          "mode": "ALL",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_WEEKLY_BOSS_TIDE_SERPENT_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "BOSS_TONG_BANH",
+      "groups": [
+        {
+          "groupId": "WEEKLY_BONUS",
+          "mode": "SELECT_ONE",
+          "chanceBps": 2000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_WEEKLY_BOSS_TONG_BANH_MAT-RELIC-01",
+              "itemId": "MAT-RELIC-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "groupId": "WEEKLY_GUARANTEE",
+          "mode": "ALL",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_WEEKLY_BOSS_TONG_BANH_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_ANCIENT_TREE",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_ANCIENT_TREE_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_ANCIENT_TREE_MAT-HERB-06",
+              "itemId": "MAT-HERB-06",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_ANCIENT_TREE_MAT-WOOD-04",
+              "itemId": "MAT-WOOD-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_ANCIENT_TREE_QUEST",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_ANCIENT_TREE_QUEST_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_ANCIENT_TREE_QUEST_MAT-HERB-02",
+              "itemId": "MAT-HERB-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_ANCIENT_TREE_QUEST_MAT-WOOD-02",
+              "itemId": "MAT-WOOD-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_ANCIENT_TREE_WORLD",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_ANCIENT_TREE_WORLD_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_ANCIENT_TREE_WORLD_MAT-HERB-02",
+              "itemId": "MAT-HERB-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_ANCIENT_TREE_WORLD_MAT-WOOD-02",
+              "itemId": "MAT-WOOD-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_ASH_FURNACE",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_ASH_FURNACE_MAT-GUARD-01",
+              "itemId": "MAT-GUARD-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_ASH_FURNACE_MAT-ORE-04",
+              "itemId": "MAT-ORE-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_ASH_FURNACE_MAT-SOUL-01",
+              "itemId": "MAT-SOUL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_COSM_CAMPAIGN",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_COSM_CAMPAIGN_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_COSM_CAMPAIGN_MAT-ORE-07",
+              "itemId": "MAT-ORE-07",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_COSM_CAMPAIGN_MAT-RELIC-01",
+              "itemId": "MAT-RELIC-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_COSM_RAID",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_COSM_RAID_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_COSM_RAID_MAT-ORE-07",
+              "itemId": "MAT-ORE-07",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_COSM_RAID_MAT-RELIC-01",
+              "itemId": "MAT-RELIC-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_FLAME_SENTINEL_QUEST",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_FLAME_SENTINEL_QUEST_MAT-GUARD-01",
+              "itemId": "MAT-GUARD-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_FLAME_SENTINEL_QUEST_MAT-ORE-02",
+              "itemId": "MAT-ORE-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_FLAME_SENTINEL_WORLD",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_FLAME_SENTINEL_WORLD_MAT-GUARD-01",
+              "itemId": "MAT-GUARD-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_FLAME_SENTINEL_WORLD_MAT-ORE-02",
+              "itemId": "MAT-ORE-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_FURNACE",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_FURNACE_MAT-ASH-01",
+              "itemId": "MAT-ASH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_FURNACE_MAT-ORE-08",
+              "itemId": "MAT-ORE-08",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_FURNACE_MAT-SOUL-01",
+              "itemId": "MAT-SOUL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_FURNACE_QUEST",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_FURNACE_QUEST_MAT-GUARD-01",
+              "itemId": "MAT-GUARD-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_FURNACE_QUEST_MAT-ORE-04",
+              "itemId": "MAT-ORE-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_FURNACE_QUEST_MAT-SOUL-01",
+              "itemId": "MAT-SOUL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_FURNACE_WORLD",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_FURNACE_WORLD_MAT-GUARD-01",
+              "itemId": "MAT-GUARD-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_FURNACE_WORLD_MAT-ORE-04",
+              "itemId": "MAT-ORE-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_FURNACE_WORLD_MAT-SOUL-01",
+              "itemId": "MAT-SOUL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_MANG_COT_QUEST",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_MANG_COT_QUEST_MAT-FISH-01",
+              "itemId": "MAT-FISH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_MANG_COT_QUEST_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_MANG_COT_WORLD",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_MANG_COT_WORLD_MAT-FISH-01",
+              "itemId": "MAT-FISH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_MANG_COT_WORLD_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_PRESSURE_HEART",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_PRESSURE_HEART_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_PRESSURE_HEART_MAT-RELIC-01",
+              "itemId": "MAT-RELIC-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_PRESSURE_HEART_MAT-SOUL-02",
+              "itemId": "MAT-SOUL-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_SIEGE_ENGINE",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_SIEGE_ENGINE_MAT-CLOTH-01",
+              "itemId": "MAT-CLOTH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_SIEGE_ENGINE_MAT-GUARD-01",
+              "itemId": "MAT-GUARD-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_SIEGE_ENGINE_MAT-ORE-05",
+              "itemId": "MAT-ORE-05",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_TIDE_SERPENT",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_TIDE_SERPENT_MAT-HERB-06",
+              "itemId": "MAT-HERB-06",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_TIDE_SERPENT_MAT-SCALE-01",
+              "itemId": "MAT-SCALE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_TIDE_SERPENT_MAT-SOUL-02",
+              "itemId": "MAT-SOUL-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_TIDE_SERPENT_QUEST",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_TIDE_SERPENT_QUEST_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_TIDE_SERPENT_QUEST_MAT-SCALE-01",
+              "itemId": "MAT-SCALE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_TIDE_SERPENT_QUEST_MAT-SOUL-02",
+              "itemId": "MAT-SOUL-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_TIDE_SERPENT_WORLD",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_TIDE_SERPENT_WORLD_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_TIDE_SERPENT_WORLD_MAT-SCALE-01",
+              "itemId": "MAT-SCALE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_TIDE_SERPENT_WORLD_MAT-SOUL-02",
+              "itemId": "MAT-SOUL-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_TONG_BANH",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_TONG_BANH_MAT-ORE-08",
+              "itemId": "MAT-ORE-08",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_TONG_BANH_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_TONG_BANH_MAT-WOOD-04",
+              "itemId": "MAT-WOOD-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_TONG_BANH_QUEST",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_TONG_BANH_QUEST_MAT-GUARD-01",
+              "itemId": "MAT-GUARD-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_TONG_BANH_QUEST_MAT-ORE-05",
+              "itemId": "MAT-ORE-05",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_TONG_BANH_QUEST_MAT-WOOD-03",
+              "itemId": "MAT-WOOD-03",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_TONG_BANH_WORLD",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_TONG_BANH_WORLD_MAT-GUARD-01",
+              "itemId": "MAT-GUARD-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_TONG_BANH_WORLD_MAT-ORE-05",
+              "itemId": "MAT-ORE-05",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_TONG_BANH_WORLD_MAT-WOOD-03",
+              "itemId": "MAT-WOOD-03",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_YOUNG_SERPENT",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_YOUNG_SERPENT_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_YOUNG_SERPENT_MAT-HERB-04",
+              "itemId": "MAT-HERB-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_YOUNG_SERPENT_MAT-ORE-06",
+              "itemId": "MAT-ORE-06",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_YOUNG_SERPENT_MAT-SCALE-01",
+              "itemId": "MAT-SCALE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_BOSS_YOUNG_TREE",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_BOSS_YOUNG_TREE_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_YOUNG_TREE_MAT-HERB-02",
+              "itemId": "MAT-HERB-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_BOSS_YOUNG_TREE_MAT-WOOD-02",
+              "itemId": "MAT-WOOD-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_AMBUSH_TROOPER",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_AMBUSH_TROOPER_MAT-CLOTH-01",
+              "itemId": "MAT-CLOTH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_AMBUSH_TROOPER_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_AMBUSH_TROOPER_MAT-ORE-05",
+              "itemId": "MAT-ORE-05",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_AMBUSH_TROOPER_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_ASH_RAIDER",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_ASH_RAIDER_MAT-ASH-01",
+              "itemId": "MAT-ASH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_ASH_RAIDER_MAT-CLOTH-01",
+              "itemId": "MAT-CLOTH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_ASH_RAIDER_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_ASH_RAIDER_MAT-ORE-04",
+              "itemId": "MAT-ORE-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_ASH_RAIDER_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_ASH_RAIDER_MAT-SOUL-01",
+              "itemId": "MAT-SOUL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_BOSS_ADD",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_BOSS_ADD_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_BOSS_ADD_MAT-ORE-07",
+              "itemId": "MAT-ORE-07",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_BOSS_ADD_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_BOSS_ADD_MAT-SOUL-02",
+              "itemId": "MAT-SOUL-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_CARPLING",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_CARPLING_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_CARPLING_MAT-FISH-01",
+              "itemId": "MAT-FISH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_CARPLING_MAT-HERB-01",
+              "itemId": "MAT-HERB-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_CARPLING_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_CARPLING_MAT-WATER-01",
+              "itemId": "MAT-WATER-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_DREAM_ROOT",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_DREAM_ROOT_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_DREAM_ROOT_MAT-HERB-02",
+              "itemId": "MAT-HERB-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_DREAM_ROOT_MAT-HERB-06",
+              "itemId": "MAT-HERB-06",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_DREAM_ROOT_MAT-LEATHER-01",
+              "itemId": "MAT-LEATHER-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_DREAM_ROOT_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_DREAM_ROOT_MAT-WOOD-02",
+              "itemId": "MAT-WOOD-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_DREAM_ROOT_MAT-WOOD-04",
+              "itemId": "MAT-WOOD-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_DREAM_ROOT_ELITE",
+      "groups": [
+        {
+          "groupId": "RECIPE_CACHE",
+          "mode": "SELECT_ONE",
+          "chanceBps": 500,
+          "entries": [
+            {
+              "entryId": "LT_MOB_DREAM_ROOT_ELITE_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_DREAM_ROOT_ELITE_MAT-HERB-02",
+              "itemId": "MAT-HERB-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_DREAM_ROOT_ELITE_MAT-WOOD-02",
+              "itemId": "MAT-WOOD-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_DROWNED_EXILE",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_DROWNED_EXILE_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_DROWNED_EXILE_MAT-HERB-04",
+              "itemId": "MAT-HERB-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_DROWNED_EXILE_MAT-ORE-06",
+              "itemId": "MAT-ORE-06",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_DROWNED_EXILE_MAT-SCALE-01",
+              "itemId": "MAT-SCALE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_DROWNED_EXILE_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_DROWNED_EXILE_MAT-SOUL-02",
+              "itemId": "MAT-SOUL-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_FALSE_SIGIL",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_FALSE_SIGIL_MAT-PAPER-01",
+              "itemId": "MAT-PAPER-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_FALSE_SIGIL_ELITE",
+      "groups": [
+        {
+          "groupId": "RECIPE_CACHE",
+          "mode": "SELECT_ONE",
+          "chanceBps": 500,
+          "entries": [
+            {
+              "entryId": "LT_MOB_FALSE_SIGIL_ELITE_MAT-PAPER-01",
+              "itemId": "MAT-PAPER-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_FALSE_SIGIL_ELITE_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_FALSE_SOLDIER",
+      "groups": [
+        {
+          "groupId": "RECIPE_CACHE",
+          "mode": "SELECT_ONE",
+          "chanceBps": 500,
+          "entries": [
+            {
+              "entryId": "LT_MOB_FALSE_SOLDIER_MAT-CLOTH-01",
+              "itemId": "MAT-CLOTH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_FALSE_SOLDIER_MAT-GUARD-01",
+              "itemId": "MAT-GUARD-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_FALSE_SOLDIER_MAT-ORE-05",
+              "itemId": "MAT-ORE-05",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_FURNACE_WARDEN",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_FURNACE_WARDEN_MAT-ASH-01",
+              "itemId": "MAT-ASH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_FURNACE_WARDEN_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_FURNACE_WARDEN_MAT-ORE-04",
+              "itemId": "MAT-ORE-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_FURNACE_WARDEN_MAT-ORE-08",
+              "itemId": "MAT-ORE-08",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_FURNACE_WARDEN_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_FURNACE_WARDEN_MAT-SOUL-01",
+              "itemId": "MAT-SOUL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_FURNACE_WARDEN_ELITE",
+      "groups": [
+        {
+          "groupId": "RECIPE_CACHE",
+          "mode": "SELECT_ONE",
+          "chanceBps": 500,
+          "entries": [
+            {
+              "entryId": "LT_MOB_FURNACE_WARDEN_ELITE_MAT-ASH-01",
+              "itemId": "MAT-ASH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_FURNACE_WARDEN_ELITE_MAT-ORE-04",
+              "itemId": "MAT-ORE-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_FURNACE_WARDEN_ELITE_MAT-SOUL-01",
+              "itemId": "MAT-SOUL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_MACHINIST",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_MACHINIST_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_MACHINIST_MAT-ORE-07",
+              "itemId": "MAT-ORE-07",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_MACHINIST_MAT-RELIC-01",
+              "itemId": "MAT-RELIC-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_MACHINIST_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_MIRRORFISH",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_MIRRORFISH_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_MIRRORFISH_MAT-HERB-04",
+              "itemId": "MAT-HERB-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_MIRRORFISH_MAT-HERB-06",
+              "itemId": "MAT-HERB-06",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_MIRRORFISH_MAT-ORE-06",
+              "itemId": "MAT-ORE-06",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_MIRRORFISH_MAT-SCALE-01",
+              "itemId": "MAT-SCALE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_MIRRORFISH_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_MIRRORFISH_MAT-SOUL-02",
+              "itemId": "MAT-SOUL-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_MOSS_BEAST",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_MOSS_BEAST_MAT-HERB-02",
+              "itemId": "MAT-HERB-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_MOSS_BEAST_MAT-WOOD-02",
+              "itemId": "MAT-WOOD-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_PRESSURE_GUARD",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_PRESSURE_GUARD_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_PRESSURE_GUARD_MAT-HERB-04",
+              "itemId": "MAT-HERB-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_PRESSURE_GUARD_MAT-HERB-06",
+              "itemId": "MAT-HERB-06",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_PRESSURE_GUARD_MAT-ORE-06",
+              "itemId": "MAT-ORE-06",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_PRESSURE_GUARD_MAT-SCALE-01",
+              "itemId": "MAT-SCALE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_PRESSURE_GUARD_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_PRESSURE_GUARD_MAT-SOUL-02",
+              "itemId": "MAT-SOUL-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_RIFT_HUNTER",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_RIFT_HUNTER_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_RIFT_HUNTER_MAT-ORE-07",
+              "itemId": "MAT-ORE-07",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_RIFT_HUNTER_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_RIFT_HUNTER_ELITE",
+      "groups": [
+        {
+          "groupId": "RECIPE_CACHE",
+          "mode": "SELECT_ONE",
+          "chanceBps": 500,
+          "entries": [
+            {
+              "entryId": "LT_MOB_RIFT_HUNTER_ELITE_MAT-ORE-07",
+              "itemId": "MAT-ORE-07",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_RIFT_HUNTER_ELITE_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_SAND_BEETLE",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_SAND_BEETLE_MAT-ASH-01",
+              "itemId": "MAT-ASH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_SAND_BEETLE_MAT-CLOTH-01",
+              "itemId": "MAT-CLOTH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_SAND_BEETLE_MAT-ORE-04",
+              "itemId": "MAT-ORE-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_SHORE_STALKER",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_SHORE_STALKER_MAT-FISH-01",
+              "itemId": "MAT-FISH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_SHORE_STALKER_MAT-ORE-01",
+              "itemId": "MAT-ORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_SHORE_STALKER_ELITE",
+      "groups": [
+        {
+          "groupId": "RECIPE_CACHE",
+          "mode": "SELECT_ONE",
+          "chanceBps": 500,
+          "entries": [
+            {
+              "entryId": "LT_MOB_SHORE_STALKER_ELITE_MAT-FISH-01",
+              "itemId": "MAT-FISH-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_SHORE_STALKER_ELITE_MAT-ORE-01",
+              "itemId": "MAT-ORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_SMALL_STATUE",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_SMALL_STATUE_MAT-ORE-02",
+              "itemId": "MAT-ORE-02",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_SMALL_STATUE_MAT-ORE-08",
+              "itemId": "MAT-ORE-08",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_SMALL_STATUE_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_SMALL_STATUE_MAT-WOOD-04",
+              "itemId": "MAT-WOOD-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_STONE_AUTOMATON",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_STONE_AUTOMATON_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_STONE_AUTOMATON_MAT-ORE-05",
+              "itemId": "MAT-ORE-05",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_STONE_AUTOMATON_MAT-ORE-08",
+              "itemId": "MAT-ORE-08",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_STONE_AUTOMATON_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_STONE_AUTOMATON_MAT-SOUL-01",
+              "itemId": "MAT-SOUL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_STONE_AUTOMATON_MAT-WOOD-04",
+              "itemId": "MAT-WOOD-04",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_MOB_WATERROOT",
+      "groups": [
+        {
+          "groupId": "MATERIAL_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 1200,
+          "entries": [
+            {
+              "entryId": "LT_MOB_WATERROOT_MAT-HERB-01",
+              "itemId": "MAT-HERB-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_MOB_WATERROOT_MAT-WOOD-01",
+              "itemId": "MAT-WOOD-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_TOWER_F10",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_F10_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_TOWER_F10_MAT-RELIC-01",
+              "itemId": "MAT-RELIC-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_TOWER_F10_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_TOWER_F15",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_F15_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_TOWER_F15_MAT-RELIC-01",
+              "itemId": "MAT-RELIC-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_TOWER_F15_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_TOWER_F20",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_F20_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_TOWER_F20_MAT-RELIC-01",
+              "itemId": "MAT-RELIC-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_TOWER_F20_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "LT_TOWER_F25",
+      "groups": [
+        {
+          "groupId": "BASE_POOL",
+          "mode": "SELECT_ONE",
+          "chanceBps": 10000,
+          "entries": [
+            {
+              "entryId": "LT_TOWER_F25_MAT-CORE-01",
+              "itemId": "MAT-CORE-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_TOWER_F25_MAT-RELIC-01",
+              "itemId": "MAT-RELIC-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            },
+            {
+              "entryId": "LT_TOWER_F25_MAT-SEAL-01",
+              "itemId": "MAT-SEAL-01",
+              "quantityMin": 1,
+              "quantityMax": 1,
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "unsupported": {
+    "mobCoinBand": "MISSING_SOURCE",
+    "bossLoot": "BOSSDATA_BLOCKED_UNTIL_QOD_19"
+  }
+}
