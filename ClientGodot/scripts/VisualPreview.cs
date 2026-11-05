@@ -30,12 +30,13 @@ public partial class VisualPreview : Node2D
     private bool _onlineTest,_onlineUiTest,_visualTest,_vfxReview,_questArtReview,_reviewStarted,_scenarioCapture;
     private string _lastSession="";
     private readonly HashSet<string> _impactIds=new();
+    private bool _uiGallery;
 
     private int _frames;
     private bool _selfTest;
     private string? _capture;
     private bool _captureStarted;
-    private bool _cleanCapture;
+    private bool _cleanCapture,_hudHidden;
     private bool _focused=true, _awaitMovementRelease;
 
     public override void _Ready()
@@ -47,6 +48,7 @@ public partial class VisualPreview : Node2D
         _visualTest=args.Contains("--visual-self-test");
         _vfxReview=args.Contains("--vfx-review");
         _questArtReview=args.Contains("--quest-art-review");
+        _uiGallery=args.Contains("--ui-gallery");
         _cleanCapture = args.Contains("--clean-capture");
         for (int i = 0; i < args.Length - 1; i++)
             if (args[i] == "--capture") _capture = args[i + 1];
@@ -81,6 +83,12 @@ public partial class VisualPreview : Node2D
         _hud.InteractPressed+=InteractNearest;
         _hud.JournalPressed+=OpenJournal;
         _hud.RetryPressed+=()=>_online?.Command("RETRY");
+        _hud.MenuPressed+=OpenMenu;
+        _dialog=new NativeDialoguePanel();AddChild(_dialog);
+        _dialog.CommandRequested+=(kind,target,quest)=>_online?.Command(kind,target,quest);
+        _dialog.Closed+=()=>_online?.SetMove(Vector2.Zero);
+        _dialog.DisplaySettingsChanged+=(low,compact)=>{_vfx.LowFx=low;_hud.LowFx=low;_camera.SetCompact(compact);};
+        if(!args.Any(a=>a.Contains("test",StringComparison.Ordinal))&&_capture==null)_dialog.ApplySavedPreferences();
         var url=OS.GetEnvironment("P1_BASE_URL");
         if((_onlineTest||_onlineUiTest)&&(!Uri.TryCreate(url,UriKind.Absolute,out var testUri)||!testUri.IsLoopback))
         {GD.PushError("Online acceptance requires the launcher's private loopback server.");GetTree().Quit(2);return;}
@@ -90,10 +98,7 @@ public partial class VisualPreview : Node2D
             var bounds=new Rect2(NativeActorsView.RenderOrigin+new Vector2(0,-1440),new Vector2(7200,1680));
             _camera.ConfigureBounds(bounds);_environment.ExtendOnlineBackdrop(bounds);
             _liveActors=new NativeActorsView();actors.AddChild(_liveActors);
-            _dialog=new NativeDialoguePanel();AddChild(_dialog);
             _online=new NativeOnlineSession();AddChild(_online);
-            _dialog.CommandRequested+=(kind,target,quest)=>_online.Command(kind,target,quest);
-            _dialog.Closed+=()=>_online.SetMove(Vector2.Zero);
             _online.FrameReady+=ApplyOnlineFrame;
             _online.ScenarioPassed+=count=>
             {
@@ -110,13 +115,16 @@ public partial class VisualPreview : Node2D
                 test.Configure(_online,_dialog,InteractNearest,OpenInventory,count=>
                 {
                     GD.Print("GODOT_UI_FIRST_QUEST_COMPLETE assertions="+count);
-                    if(_capture!=null){_scenarioCapture=true;_frames=0;}
+                    if(_uiGallery)CaptureUiGallery();
+                    else if(_capture!=null){_scenarioCapture=true;_frames=0;}
                     else GetTree().Quit();
                 },error=>{GD.PushError(error);GetTree().Quit(1);});
             }
         }
         else if(_onlineTest||_onlineUiTest){GD.PushError("P1_BASE_URL is required for online test.");GetTree().Quit(2);return;}
         if(args.Contains("--quest-ui-self-test"))QuestPresentationSelfTest.Run(this);
+        int screen=Array.IndexOf(args,"--ui-screen");
+        if(screen>=0&&screen+1<args.Length)OpenMenu(args[screen+1]);
         if(_visualTest) RunVisualTests();
         if (_selfTest) RunCameraTests();
         else if(args.Contains("--scene-self-test")) RunSceneTests();
@@ -132,6 +140,10 @@ public partial class VisualPreview : Node2D
         }
         if(key.Keycode==Key.I){OpenInventory();return;}
         if(key.Keycode==Key.J){OpenJournal();return;}
+        if(key.Keycode==Key.C){OpenMenu("Character");return;}
+        if(key.Keycode==Key.K){OpenMenu("Skills");return;}
+        if(key.Keycode==Key.M){OpenMenu("WorldMap");return;}
+        if(key.Keycode==Key.F10){OpenMenu("Settings");return;}
         if(_dialog?.IsOpen==true)return;
         int slot=(int)key.Keycode-(int)Key.Key1;
         if(slot>=0&&slot<6){UseSkill(slot);return;}
@@ -145,7 +157,7 @@ public partial class VisualPreview : Node2D
         }
         if(key.Keycode==Key.F2)_camera.SetCompact(!_camera.Compact);
         if(key.Keycode==Key.F6){_vfx.LowFx=!_vfx.LowFx;_hud.LowFx=_vfx.LowFx;}
-        if(key.Keycode==Key.H)_hud.Visible=!_hud.Visible;
+        if(key.Keycode==Key.H)_hudHidden=!_hudHidden;
     }
 
     public override void _Notification(int what)
@@ -188,6 +200,7 @@ public partial class VisualPreview : Node2D
         _environment.UpdateOcclusion(_hero.Position,_liveActors?.OcclusionFocus);
         _camera.Follow(_hero.Position);
         _hud.Coordinates = _online!=null?NativeActorsView.WorldPoint(_hero.Position):_hero.Position/TopDownCamera.PixelsPerWorldUnit;
+        _hud.Facing=_facing;
         _hud.Compact = _camera.Compact;
         _hud.QueueRedraw();
     }
@@ -206,6 +219,7 @@ public partial class VisualPreview : Node2D
     public override void _Process(double delta)
     {
         _frames++;
+        _hud.Visible=!_cleanCapture&&!_hudHidden&&_dialog?.IsOpen!=true;
         if((_vfxReview||_questArtReview)&&!_reviewStarted&&_frames>3)
         {_reviewStarted=true;if(_questArtReview)ShowQuestArtReview();else ShowVfxReview();}
         if (_capture != null && _frames >= 20 && !_captureStarted && (_online==null||_scenarioCapture))
@@ -221,6 +235,27 @@ public partial class VisualPreview : Node2D
         var error = GetViewport().GetTexture().GetImage().SavePng(_capture!);
         GD.Print("CAPTURE " + error + " " + _capture);
         GetTree().Quit(error == Error.Ok ? 0 : 1);
+    }
+    private async void CaptureUiGallery()
+    {
+        _captureStarted=true;
+        try
+        {
+            string directory=System.IO.Path.GetDirectoryName(_capture!)!;
+            async System.Threading.Tasks.Task Capture(string name)
+            {
+                for(int i=0;i<4;i++)await ToSignal(GetTree(),SceneTree.SignalName.PhysicsFrame);
+                await ToSignal(RenderingServer.Singleton,RenderingServer.SignalName.FramePostDraw);
+                var result=GetViewport().GetTexture().GetImage().SavePng(System.IO.Path.Combine(directory,name));
+                if(result!=Error.Ok)throw new InvalidOperationException("Gallery capture: "+result);
+            }
+            _dialog!.HidePanel();await Capture("moonglass_hud.png");
+            foreach(var section in NativeDialoguePanel.Sections)
+            {_dialog.ShowMenu(section.Id,_online!.Frame);await Capture("moonglass_"+section.Id.ToLowerInvariant()+".png");_dialog.AuditWorkspaceBounds();}
+            _dialog.ShowInventory(_online!.Frame);await Capture(System.IO.Path.GetFileName(_capture!));
+            GD.Print("MOONGLASS_GALLERY PASS sections="+NativeDialoguePanel.Sections.Length);GetTree().Quit();
+        }
+        catch(Exception ex){GD.PushError("MOONGLASS_GALLERY FAIL "+ex);GetTree().Quit(1);}
     }
 
     private void RunCameraTests()
@@ -277,7 +312,8 @@ public partial class VisualPreview : Node2D
         void Check(bool ok,string message){assertions++;if(!ok)throw new InvalidOperationException(message);}
         void KeyState(Key key,bool pressed)=>Input.ParseInputEvent(new InputEventKey{Keycode=key,PhysicalKeycode=key,Pressed=pressed});
         async System.Threading.Tasks.Task Frames(int count)
-        {for(int i=0;i<count;i++)await ToSignal(GetTree(),SceneTree.SignalName.PhysicsFrame);}
+        // Observe completed physics ticks, including buffered synthetic input on headless catch-up frames.
+        {for(int i=0;i<count;i++){await ToSignal(GetTree(),SceneTree.SignalName.PhysicsFrame);await ToSignal(GetTree(),SceneTree.SignalName.ProcessFrame);}}
         var original=_hero.Position;
         try
         {
@@ -380,15 +416,20 @@ public partial class VisualPreview : Node2D
     }
     private void OpenInventory()
     {
-        if(_onlineFrame==null||_dialog==null){_hud.StatusText="Túi đồ sẽ mở khi vào bản online local.";return;}
+        if(_dialog==null)return;
         if(_dialog.IsOpen){_dialog.HidePanel();return;}
-        _online?.SetMove(Vector2.Zero);_online?.Command("REFRESH");_dialog.ShowInventory(_onlineFrame);
+        _online?.SetMove(Vector2.Zero);_online?.Command("REFRESH");_dialog.ShowInventory(_onlineFrame??new NativeOnlineFrame());
     }
     private void OpenJournal()
     {
-        if(_onlineFrame==null||_dialog==null){_hud.StatusText="Nhật ký sẽ mở khi vào bản online local.";return;}
+        if(_dialog==null)return;
         if(_dialog.IsOpen){_dialog.HidePanel();return;}
-        _online?.SetMove(Vector2.Zero);_online?.Command("REFRESH");_dialog.ShowJournal(_onlineFrame);
+        _online?.SetMove(Vector2.Zero);_online?.Command("REFRESH");_dialog.ShowJournal(_onlineFrame??new NativeOnlineFrame());
+    }
+    private void OpenMenu(string section)
+    {
+        if(_dialog==null)return;
+        _online?.SetMove(Vector2.Zero);_dialog.ShowMenu(section,_onlineFrame??new NativeOnlineFrame());
     }
     private void Attack()
     {

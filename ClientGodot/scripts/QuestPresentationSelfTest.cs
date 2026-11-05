@@ -47,6 +47,23 @@ public static class QuestPresentationSelfTest
             Check(!Text().Contains(NativeQuestCatalog.Find("P00-03")!.Title,StringComparison.Ordinal),"locked future chapter title is hidden");
             Check(Text().Contains("Đã hoàn thành",StringComparison.Ordinal),"journal preserves completed history");
             Check(commands==1,"journal emits no mutation");
+            // Read-only menu navigation must not turn a source fixture into gameplay grants.
+            foreach(var section in NativeDialoguePanel.Sections)
+            {
+                panel.ShowMenu(section.Id,frame);await Frames();panel.AuditWorkspaceBounds();
+                Check(panel.CurrentSection==section.Id,"menu opens and keeps selected navigation visible: "+section.Id);
+            }
+            panel.ShowMenu("Character",frame);await Frames();
+            var gear=Button("Trang bị");Check(gear!=null,"character equipment tab exists");
+            gear!.EmitSignal(Godot.Button.SignalName.Pressed);await Frames();
+            Check(Text().Contains("Nhẫn trái",StringComparison.Ordinal)&&Text().Contains("Ngọc bội",StringComparison.Ordinal),"equipment tab has named presentation slots");
+            panel.ShowInventory(frame);await Frames();
+            var material=Button("Nguyên liệu");Check(material!=null,"bag category filter exists");
+            material!.EmitSignal(Godot.Button.SignalName.Pressed);await Frames();
+            var search=Nodes(panel).OfType<LineEdit>().First(e=>e.IsVisibleInTree());
+            search.EmitSignal(LineEdit.SignalName.TextSubmitted,"không có trong túi");await Frames();
+            Check(Text().Contains("0 vật phẩm",StringComparison.Ordinal),"empty filtered bag stays empty");
+            Check(commands==1&&q2.state=="ACTIVE"&&frame.Inventory==null,"menu navigation and search emit no gameplay mutation");
             GD.Print("QUEST_PRESENTATION_SELF_TEST PASS assertions="+checks);host.GetTree().Quit();
         }
         catch(Exception ex){GD.PushError("QUEST_PRESENTATION_SELF_TEST FAIL "+ex);host.GetTree().Quit(1);}

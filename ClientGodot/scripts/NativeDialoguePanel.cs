@@ -21,7 +21,7 @@ public partial class NativeDialoguePanel : CanvasLayer
     private readonly List<Npc> _npcs=new();
     private readonly Dictionary<string,string> _itemNames=new(StringComparer.Ordinal);
     private readonly Dictionary<string,Texture2D> _icons=new(StringComparer.Ordinal);
-    private Control _root=null!;
+    private Control _root=null!,_pageNavigation=null!;
     private PanelContainer _panel=null!;
     private VBoxContainer _content=null!,_inventoryRows=null!,_replyButtons=null!;
     private RichTextLabel _body=null!;
@@ -96,95 +96,54 @@ public partial class NativeDialoguePanel : CanvasLayer
 
     private void BuildUi()
     {
-        _root=new Control{MouseFilter=Control.MouseFilterEnum.Stop};
+        _root=new Control{MouseFilter=Control.MouseFilterEnum.Stop,Theme=MoonGlassTheme.Create()};
         AddChild(_root);_root.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-        var backdrop=new ColorRect{Color=new Color(.015f,.025f,.025f,.78f),MouseFilter=Control.MouseFilterEnum.Stop};
+        var backdrop=new ColorRect{Color=new Color(.055f,.065f,.15f,.22f),MouseFilter=Control.MouseFilterEnum.Stop};
         _root.AddChild(backdrop);backdrop.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         _panel=new PanelContainer{MouseFilter=Control.MouseFilterEnum.Stop};
-        _panel.AddThemeStyleboxOverride("panel",Box(Color.FromHtml("#152320"),Color.FromHtml("#ba9559"),2,12,18));
+        _panel.AddThemeStyleboxOverride("panel",MoonGlassTheme.Box(new Color(.17f,.18f,.31f,.84f),new Color(.69f,.73f,.94f,.58f),12,18));
         _root.AddChild(_panel);
-        _content=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
-        _content.AddThemeConstantOverride("separation",9);
-        _panel.AddChild(_content);
-        var header=new HBoxContainer();
-        _title=new Label{Text="Hội thoại",SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,
-            AutowrapMode=TextServer.AutowrapMode.WordSmart};
-        _title.AddThemeFontSizeOverride("font_size",20);
-        _title.AddThemeColorOverride("font_color",Color.FromHtml("#e7c783"));
-        header.AddChild(_title);
-        var close=Button("×",48);close.Pressed+=HidePanel;header.AddChild(close);
-        _content.AddChild(header);
-        _status=new Label{AutowrapMode=TextServer.AutowrapMode.WordSmart};
-        _status.AddThemeFontSizeOverride("font_size",14);
-        _status.AddThemeColorOverride("font_color",Color.FromHtml("#b7c4b4"));
-        _content.AddChild(_status);
-        _scroll=new ScrollContainer{SizeFlagsVertical=Control.SizeFlags.ExpandFill,
-            HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled,CustomMinimumSize=new Vector2(0,150)};
-        _content.AddChild(_scroll);
-        var scrollContent=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
-        _scroll.AddChild(scrollContent);
-        _body=new RichTextLabel{BbcodeEnabled=false,FitContent=true,ScrollActive=false,
-            SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,CustomMinimumSize=new Vector2(0,120)};
-        _body.AddThemeFontSizeOverride("normal_font_size",18);
-        _body.AddThemeColorOverride("default_color",Color.FromHtml("#f0ead8"));
-        scrollContent.AddChild(_body);
-        _inventoryRows=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
-        _inventoryRows.AddThemeConstantOverride("separation",12);
-        scrollContent.AddChild(_inventoryRows);
-        _replyButtons=new VBoxContainer();
-        _replyButtons.AddThemeConstantOverride("separation",5);
-        _content.AddChild(_replyButtons);
-        var nav=new HBoxContainer();
-        nav.AddThemeConstantOverride("separation",8);
+        _content=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};_content.AddThemeConstantOverride("separation",10);_panel.AddChild(_content);
+        var header=new HBoxContainer();header.AddThemeConstantOverride("separation",12);
+        _headerIcon=MoonGlassTheme.Image(MoonGlassIcons.Get("Journal"),new Vector2(30,30),false);_headerIcon.SizeFlagsHorizontal=Control.SizeFlags.ShrinkBegin;header.AddChild(_headerIcon);
+        _title=new Label{Text="Hội thoại",SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,AutowrapMode=TextServer.AutowrapMode.WordSmart};
+        _title.AddThemeFontSizeOverride("font_size",23);_title.AddThemeColorOverride("font_color",MoonGlassTheme.Ink);header.AddChild(_title);
+        var close=Button("×",40);close.TooltipText="Đóng · Esc";close.Pressed+=HidePanel;header.AddChild(close);_content.AddChild(header);
+        _status=MoonGlassTheme.Label("",12,MoonGlassTheme.Muted);_content.AddChild(_status);
+        var line=new HSeparator();line.AddThemeStyleboxOverride("separator",new StyleBoxLine{Color=new Color(.65f,.7f,.9f,.28f),Thickness=1});_content.AddChild(line);
+        var main=new HBoxContainer{SizeFlagsVertical=Control.SizeFlags.ExpandFill};main.AddThemeConstantOverride("separation",18);_content.AddChild(main);
+        _sidebarScroll=new ScrollContainer{CustomMinimumSize=new Vector2(157,0),HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled,SizeFlagsVertical=Control.SizeFlags.ExpandFill};main.AddChild(_sidebarScroll);
+        _sidebar=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};_sidebar.AddThemeConstantOverride("separation",5);_sidebarScroll.AddChild(_sidebar);BuildNavigation();
+        _speakerArt=new VBoxContainer{CustomMinimumSize=new Vector2(126,0)};
+        _speakerPortrait=MoonGlassTheme.Image(MoonGlassTheme.Hero(),new Vector2(120,170));_speakerArt.AddChild(_speakerPortrait);main.AddChild(_speakerArt);
+        _scroll=new ScrollContainer{SizeFlagsVertical=Control.SizeFlags.ExpandFill,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,
+            HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled,CustomMinimumSize=new Vector2(0,120)};main.AddChild(_scroll);
+        var scrollContent=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};_scroll.AddChild(scrollContent);
+        _body=new RichTextLabel{BbcodeEnabled=false,FitContent=true,ScrollActive=false,SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,CustomMinimumSize=new Vector2(0,110)};
+        _body.AddThemeFontSizeOverride("normal_font_size",18);_body.AddThemeColorOverride("default_color",MoonGlassTheme.Ink);scrollContent.AddChild(_body);
+        _inventoryRows=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};_inventoryRows.AddThemeConstantOverride("separation",12);scrollContent.AddChild(_inventoryRows);
+        _replyButtons=new VBoxContainer();_replyButtons.AddThemeConstantOverride("separation",5);_content.AddChild(_replyButtons);
+        var nav=new HBoxContainer();_pageNavigation=nav;nav.AddThemeConstantOverride("separation",8);
         _back=Button("Trước",90);_back.Pressed+=Back;nav.AddChild(_back);
-        _pageInfo=new Label{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,HorizontalAlignment=HorizontalAlignment.Center,
-            VerticalAlignment=VerticalAlignment.Center};
-        _pageInfo.AddThemeFontSizeOverride("font_size",14);nav.AddChild(_pageInfo);
+        _pageInfo=new Label{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,HorizontalAlignment=HorizontalAlignment.Center,VerticalAlignment=VerticalAlignment.Center};
+        _pageInfo.AddThemeFontSizeOverride("font_size",13);_pageInfo.AddThemeColorOverride("font_color",MoonGlassTheme.Muted);nav.AddChild(_pageInfo);
         _next=Button("Tiếp",90);_next.Pressed+=Next;nav.AddChild(_next);
-        _action=Button("Đóng hội thoại",180);_action.Pressed+=FinalAction;nav.AddChild(_action);
-        _content.AddChild(nav);
+        _action=MoonGlassTheme.Button("Đóng hội thoại",180,true);_action.Pressed+=FinalAction;nav.AddChild(_action);_content.AddChild(nav);
         var network=new HBoxContainer();network.AddThemeConstantOverride("separation",8);
-        _refresh=Button("Làm mới",110);
-        _refresh.Pressed+=()=>
-        {
-            if(_frame.ConnectionState==P1ConnectionState.Ready)_waitingKind=null;
-            CommandRequested?.Invoke("REFRESH","","");Render();
-        };
-        network.AddChild(_refresh);
-        _retry=Button("Thử lại thao tác",190);
-        _retry.Pressed+=()=>CommandRequested?.Invoke("RETRY","","");
-        network.AddChild(_retry);
-        var spacer=new Control{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};network.AddChild(spacer);
-        var leave=Button("Rời đi",100);leave.Pressed+=HidePanel;network.AddChild(leave);
-        _content.AddChild(network);
+        _refresh=Button("Làm mới",100);_refresh.Pressed+=()=>{if(_frame.ConnectionState==P1ConnectionState.Ready)_waitingKind=null;CommandRequested?.Invoke("REFRESH","","");Render();};network.AddChild(_refresh);
+        _retry=MoonGlassTheme.Button("Thử lại thao tác",170,true);_retry.Pressed+=()=>CommandRequested?.Invoke("RETRY","","");network.AddChild(_retry);
+        network.AddChild(new Control{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill});
+        var leave=Button("Rời đi",100);leave.Pressed+=HidePanel;network.AddChild(leave);_content.AddChild(network);
     }
 
-    private static StyleBoxFlat Box(Color fill,Color border,int thickness,int radius,int margin=8)=>new()
-    {
-        BgColor=fill,BorderColor=border,BorderWidthLeft=thickness,BorderWidthRight=thickness,
-        BorderWidthTop=thickness,BorderWidthBottom=thickness,CornerRadiusTopLeft=radius,
-        CornerRadiusTopRight=radius,CornerRadiusBottomLeft=radius,CornerRadiusBottomRight=radius,
-        ContentMarginLeft=margin,ContentMarginRight=margin,ContentMarginTop=margin,ContentMarginBottom=margin
-    };
-    private static Button Button(string text,float width)
-    {
-        var button=new Button{Text=text,CustomMinimumSize=new Vector2(width,40)};
-        button.AddThemeFontSizeOverride("font_size",17);
-        button.AddThemeColorOverride("font_color",Color.FromHtml("#eee4c9"));
-        button.AddThemeColorOverride("font_disabled_color",Color.FromHtml("#7f8e87"));
-        button.AddThemeStyleboxOverride("normal",Box(Color.FromHtml("#25372e"),Color.FromHtml("#9a7e49"),1,6));
-        button.AddThemeStyleboxOverride("hover",Box(Color.FromHtml("#3b4c37"),Color.FromHtml("#ddc284"),2,6));
-        button.AddThemeStyleboxOverride("pressed",Box(Color.FromHtml("#485a40"),Color.FromHtml("#e8cc88"),2,6));
-        button.AddThemeStyleboxOverride("disabled",Box(Color.FromHtml("#1b2724"),Color.FromHtml("#53604e"),1,6));
-        return button;
-    }
+    private static Button Button(string text,float width)=>MoonGlassTheme.Button(text,width);
 
     private void ResizePanel()
     {
         if(_panel==null)return;
         var size=GetViewport().GetVisibleRect().Size;
-        float w=Math.Min(700,Math.Max(280,size.X-40));
-        float h=Math.Min(660,Math.Max(280,size.Y-40));
+        float w=Math.Min(_inventory?1120:880,Math.Max(300,size.X-48));
+        float h=Math.Min(_inventory?620:510,Math.Max(300,size.Y-48));
         _panel.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.Center);
         _panel.OffsetLeft=-w/2;_panel.OffsetRight=w/2;
         _panel.OffsetTop=-h/2;_panel.OffsetBottom=h/2;
@@ -203,14 +162,14 @@ public partial class NativeDialoguePanel : CanvasLayer
     public void ShowInventory(NativeOnlineFrame frame)
     {
         if(!_ready)return;
-        _frame=frame;_inventory=true;_journal=false;_entry=null;_waitingKind=null;_replyOpen=false;
+        _section="Inventory";_frame=frame;_inventory=true;_journal=false;_entry=null;_waitingKind=null;_replyOpen=false;
         IsOpen=true;_root.Visible=true;ResizePanel();Render();
     }
 
     public void ShowJournal(NativeOnlineFrame frame)
     {
         if(!_ready)return;
-        _frame=frame;_inventory=true;_journal=true;_entry=null;_waitingKind=null;_replyOpen=false;
+        _section="Journal";_frame=frame;_inventory=true;_journal=true;_entry=null;_waitingKind=null;_replyOpen=false;
         IsOpen=true;_root.Visible=true;ResizePanel();Render();
     }
 
@@ -249,6 +208,7 @@ public partial class NativeDialoguePanel : CanvasLayer
     public void ApplyFrame(NativeOnlineFrame frame)
     {
         _frame=frame;
+        UpdateLiveWorkspace();
         if(!IsOpen||!_ready)return;
         if(!_inventory&&_entry!=null)
         {
@@ -266,7 +226,7 @@ public partial class NativeDialoguePanel : CanvasLayer
         if(fingerprint!=_fingerprint)Render();
     }
 
-    private string Fingerprint()=>string.Join("|",_inventory,_journal,_npcId,_entry?.Id,_committed,_page,_replyOpen,
+    private string Fingerprint()=>string.Join("|",_section,_inventory,_journal,_npcId,_entry?.Id,_committed,_page,_replyOpen,
         _waitingKind,_frame.ConnectionState,_frame.Message,_frame.Inventory?.inventoryRevision,
         string.Join(";",_frame.Quests.Select(q=>q.questId+":"+q.state+":"+q.revision+":"+
             string.Join(",",q.objectiveCounters.OrderBy(p=>p.Key,StringComparer.Ordinal).Select(p=>p.Key+"="+p.Value)))),NpcInRange());
@@ -286,14 +246,17 @@ public partial class NativeDialoguePanel : CanvasLayer
     private void Render()
     {
         _fingerprint=Fingerprint();
-        _status.Text=_waitingKind!=null?"Đang chờ máy chủ xác nhận… "+_frame.Message:_frame.Message;
+        _status.Text=_waitingKind!=null?"Đang xác nhận thao tác…":_frame.ConnectionState==P1ConnectionState.Ready?"Hành trình được đồng bộ với nhân vật của bạn.":"Kết nối để đồng bộ dữ liệu nhân vật.";
+        _sidebarScroll.Visible=_inventory;_speakerArt.Visible=!_inventory;_pageNavigation.Visible=!_inventory;
         _refresh.Disabled=string.IsNullOrEmpty(_frame.SessionId);
         _retry.Visible=_frame.ConnectionState==P1ConnectionState.UncertainMutation;
         _retry.Disabled=string.IsNullOrEmpty(_frame.SessionId);
         _body.Visible=!_inventory;_inventoryRows.Visible=_inventory;
         foreach(var child in _replyButtons.GetChildren()){_replyButtons.RemoveChild(child);child.QueueFree();}
-        if(_inventory){if(_journal)RenderJournal();else RenderInventory();return;}
+        if(_inventory){RenderWorkspace();return;}
         string name=_npcs.FirstOrDefault(n=>n.NpcId==_npcId)?.Name??_npcId;
+        _headerIcon.Texture=MoonGlassIcons.Get("Journal");
+        _speakerPortrait.Texture=_icons.TryGetValue(_npcId,out var art)?art:MoonGlassTheme.Hero();
         _title.Text=name+(_entry==null?"":" · "+_entry.Title);
         if(_entry==null)
         {
@@ -357,57 +320,25 @@ public partial class NativeDialoguePanel : CanvasLayer
         foreach(var card in NativeQuestCatalog.All)
         {
             var q=_frame.Quests.FirstOrDefault(q=>q.questId==card.Id);
-            var panel=new PanelContainer();panel.AddThemeStyleboxOverride("panel",Box(Color.FromHtml("#1b2d27"),Color.FromHtml("#756444"),1,5,12));
+            var panel=MoonGlassTheme.Card(new Color(.29f,.3f,.47f,.48f));
             var column=new VBoxContainer();column.AddThemeConstantOverride("separation",6);panel.AddChild(column);
             void Line(string text,int size,Color color)
             {var label=new Label{Text=text,AutowrapMode=TextServer.AutowrapMode.WordSmart};label.AddThemeFontSizeOverride("font_size",size);label.AddThemeColorOverride("font_color",color);column.AddChild(label);}
             bool locked=q==null||q.state=="LOCKED";
-            Line(locked?"Chặng chưa mở":card.Title,18,Color.FromHtml("#e4c480"));
-            Line(NativeQuestCatalog.StateLabel(q?.state),14,Color.FromHtml("#adbcab"));
-            if(locked)Line("Chặng này chưa mở trong phiên hiện tại.",15,Color.FromHtml("#adbcab"));
+            Line(locked?"Chặng chưa mở":card.Title,18,Color.FromHtml("#e5cda9"));
+            Line(NativeQuestCatalog.StateLabel(q?.state),14,Color.FromHtml("#bdc5e5"));
+            if(locked)Line("Chặng này chưa mở trong phiên hiện tại.",15,Color.FromHtml("#bdc5e5"));
             else
             {
                 string excerpt=q!.state=="COMPLETED"?card.Completed:q.state=="AVAILABLE"?card.Offer:card.Clue;
-                Line(excerpt,15,Color.FromHtml("#e8e2cf"));
+                Line(excerpt,15,Color.FromHtml("#f3f3ff"));
                 foreach(var obj in card.Objectives)
-                {q.objectiveCounters.TryGetValue(obj.Id,out int count);Line(obj.Label+": "+count+" / "+obj.Count,14,Color.FromHtml("#c4d5bd"));}
+                {q.objectiveCounters.TryGetValue(obj.Id,out int count);Line(obj.Label+": "+count+" / "+obj.Count,14,Color.FromHtml("#b8c7f3"));}
                 foreach(var extra in q.objectiveCounters.Where(p=>!card.Objectives.Any(o=>o.Id==p.Key)))
-                    Line("Tiến độ bổ sung: "+extra.Value,14,Color.FromHtml("#c4d5bd"));
+                    Line("Tiến độ bổ sung: "+extra.Value,14,Color.FromHtml("#b8c7f3"));
             }
             _inventoryRows.AddChild(panel);
         }
-    }
-
-    private void RenderInventory()
-    {
-        _title.Text="Túi đồ";
-        _back.Visible=false;_next.Visible=false;_action.Visible=false;_pageInfo.Text="";
-        foreach(var child in _inventoryRows.GetChildren()){_inventoryRows.RemoveChild(child);child.QueueFree();}
-        var inventory=_frame.Inventory;
-        if(inventory==null){InventoryRow("Chưa có dữ liệu túi đồ. Chọn Làm mới để đọc lại.","");return;}
-        foreach(var currency in inventory.currencies)InventoryRow(ItemName(currency.currencyId)+"  "+currency.amount,currency.currencyId);
-        if(inventory.items.Length==0)InventoryRow("Túi đồ đang trống.","");
-        foreach(var item in inventory.items)
-        {
-            string location=item.location switch{"BAG"=>"Trong túi","EQUIPPED"=>"Đang mặc","BANK"=>"Trong kho",_=>item.location};
-            InventoryRow(ItemName(item.templateId)+"  ×"+item.stack+"\n"+location+" · Độ bền "+item.durability,item.templateId);
-        }
-    }
-
-    private void InventoryRow(string text,string iconKey)
-    {
-        var row=new HBoxContainer();row.AddThemeConstantOverride("separation",12);
-        if(_icons.TryGetValue(iconKey,out var texture))
-        {
-            row.AddChild(new TextureRect{Texture=texture,CustomMinimumSize=new Vector2(48,48),
-                ExpandMode=TextureRect.ExpandModeEnum.IgnoreSize,StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered,
-                TextureFilter=Control.TextureFilterEnum.Nearest,MouseFilter=Control.MouseFilterEnum.Ignore});
-        }
-        var label=new Label{Text=text,AutowrapMode=TextServer.AutowrapMode.WordSmart,
-            SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};
-        label.AddThemeFontSizeOverride("font_size",18);
-        label.AddThemeColorOverride("font_color",Color.FromHtml("#ece4ce"));
-        row.AddChild(label);_inventoryRows.AddChild(row);
     }
 
     public override void _UnhandledKeyInput(InputEvent @event)
@@ -421,6 +352,6 @@ public partial class NativeDialoguePanel : CanvasLayer
     {
         _ready=false;
         if(GetViewport()!=null)GetViewport().SizeChanged-=ResizePanel;
-        CommandRequested=null;Closed=null;
+        CommandRequested=null;Closed=null;DisplaySettingsChanged=null;
     }
 }
