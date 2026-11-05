@@ -10,6 +10,7 @@ namespace Ngumach.VisualReboot;
 public sealed class NativeOnlineFrame
 {
     public string SessionId { get; init; } = "";
+    public double SampleTime {get;init;}
     public P1ConnectionState ConnectionState { get; init; } = P1ConnectionState.Disconnected;
     public string Message { get; init; } = "";
     public P1World? World { get; init; }
@@ -20,6 +21,10 @@ public sealed class NativeOnlineFrame
     // Edge notifications: cleared for the next poll/frame, never held as state.
     public string? AcceptedAction { get; init; }
     public string? AcceptedSkill { get; init; }
+    public string? RejectedAction {get;init;}
+    public string? RejectedSkill {get;init;}
+    public string? ActionError {get;init;}
+    public System.Collections.Generic.Dictionary<string,string> CooldownEnds {get;init;}=new();
     public bool ScenarioComplete { get; init; }
     public int Assertions { get; init; }
 }

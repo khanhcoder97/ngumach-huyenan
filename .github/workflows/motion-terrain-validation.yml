@@ -1,0 +1,33 @@
+name: Authored movement and terrain
+on:
+  pull_request:
+    paths:
+      - 'Server/Health/**'
+      - 'ClientGodot/assets/ben_mua_v3/layout.json'
+      - 'ClientGodot/assets/ben_mua_v3/terrain.json'
+      - 'Implementation/Content/Maps/BenMua/**'
+      - 'Tools/ArtProduction/export_ben_mua_terrain.py'
+      - 'Tools/Coordination/verify_authored_terrain_http.py'
+      - '.github/workflows/motion-terrain-validation.yml'
+permissions:
+  contents: read
+jobs:
+  terrain-http:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python Tools/ArtProduction/export_ben_mua_terrain.py --check
+      - run: dotnet build Server/Health/Health.csproj -c Release --nologo
+      - run: dotnet Server/Health/bin/Release/net10.0/Health.dll --terrain-self-check Implementation/Content/Maps/BenMua/terrain.json
+      - run: python Tools/Coordination/verify_authored_terrain_http.py --dotnet $(which dotnet) --output _terrain_evidence
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: authored-terrain-http
+          path: _terrain_evidence

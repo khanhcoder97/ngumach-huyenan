@@ -8,7 +8,7 @@ namespace Ngumach.VisualReboot;
 
 /// <summary>Hand-authored district from the approved concept. Every building is placed by ID.
 /// Terrain is layered geometry + standalone textures, not a flattened concept image.
-/// This staging layout does not migrate canonical server navigation or NPC coordinates.</summary>
+/// Client and local game server consume the same exported collision; NPC coordinates stay canonical.</summary>
 public partial class BenMuaEnvironment : Node2D
 {
     private const string Root = "res://assets/ben_mua_v3/";
@@ -22,7 +22,9 @@ public partial class BenMuaEnvironment : Node2D
     private readonly List<(Sprite2D Sprite,Rect2 Bounds,Vector2 Foot)> _occluders = new();
     private JsonDocument _layout = null!, _assets = null!;
     private Vector2[] _upper = null!, _lower = null!, _water = null!;
-    private Node2D _actors = null!, _shadows = null!;
+    private Node2D _actors = null!, _shadows = null!,_groundSource=null!;
+    private readonly List<StaticBody2D> _boundaries=new();
+    private Rect2 _movementBounds=new(Vector2.Zero,new Vector2(2560,1920));
     public int AuthoredPlacementCount { get; private set; }
     public int ShoreDetailCount { get; private set; }
     public Vector2[] WaterPolygon => _water;
@@ -34,44 +36,37 @@ public partial class BenMuaEnvironment : Node2D
         _actors=actors;
         _layout=JsonDocument.Parse(FileAccess.GetFileAsString(Root+"layout.json"));
         _assets=JsonDocument.Parse(FileAccess.GetFileAsString(Root+"asset_manifest.json"));
-        _upper=Smooth(ReadPoints(_layout.RootElement.GetProperty("river").GetProperty("upper")),12);
-        _lower=Smooth(ReadPoints(_layout.RootElement.GetProperty("river").GetProperty("lower")),12);
+        using var terrain=JsonDocument.Parse(FileAccess.GetFileAsString(Root+"terrain.json"));
+        Vector2[] Bank(string name)=>terrain.RootElement.GetProperty(name).EnumerateArray().Select(p=>NativeActorsView.RenderPoint(p[0].GetDouble(),p[1].GetDouble())).ToArray();
+        _upper=Bank("upper");_lower=Bank("lower");
         _water=_upper.Concat(_lower.Reverse()).ToArray();
+        Rect2 TerrainRect(JsonElement r)=>new(NativeActorsView.RenderPoint(r[0].GetDouble(),r[1].GetDouble()+r[3].GetDouble()),new Vector2(r[2].GetSingle()*20,r[3].GetSingle()*20));
+        foreach(var item in terrain.RootElement.GetProperty("solids").EnumerateArray())
+        {var footprint=TerrainRect(item.GetProperty("rect"));SolidFootprints.Add(footprint);AddRectangleBody(footprint);}
+        foreach(var item in terrain.RootElement.GetProperty("decks").EnumerateArray())Piers.Add(TerrainRect(item.GetProperty("rect")));
+        _groundSource=new Node2D{Name="StaticGroundSource"};AddChild(_groundSource);
         _shadows=new Node2D{Name="GroundShadows",ZIndex=-1};
-        AddChild(_shadows);
+        _groundSource.AddChild(_shadows);
         BuildGround();
         foreach(var item in _layout.RootElement.GetProperty("placements").EnumerateArray())
         {
             var at=ReadVector(item.GetProperty("at"));
             string key=item.GetProperty("asset").GetString()!;
             float width=item.GetProperty("width").GetSingle();
-            bool solid=item.TryGetProperty("solid",out var s)&&s.GetBoolean();
             bool pier=item.TryGetProperty("pier",out var p)&&p.GetBoolean();
             float? height=item.TryGetProperty("height",out var h)?h.GetSingle():null;
             var sprite=Place(key,World(at),width,item.GetProperty("id").GetString()!,height);
             if(item.TryGetProperty("rotation",out var rotation)) sprite.Rotation=rotation.GetSingle();
-            if(solid||pier)
-            {
-                var footprint=item.TryGetProperty("footprint",out var fp)
-                    ?new Rect2(fp[0].GetSingle(),fp[1].GetSingle(),fp[2].GetSingle(),fp[3].GetSingle())
-                    :new Rect2(-width*.34f,-width*.24f,width*.68f,width*.22f);
-                footprint.Position+=World(at);
-                if(pier) Piers.Add(footprint);
-                else {SolidFootprints.Add(footprint);AddRectangleBody(footprint);}
-            }
-            if(key is "banyan" or "canopy" or "willow" or "bamboo")
-            {
-                var trunk=new Rect2(World(at)+new Vector2(-5,-8),new Vector2(10,8));
-                SolidFootprints.Add(trunk);AddRectangleBody(trunk);
-            }
+            if(pier)sprite.ZIndex=-2;
             AuthoredPlacementCount++;
         }
         BuildShoreDetails();
         BuildWaterCollision();
-        AddRectangleBody(new Rect2(-20,-20,20,MapPixels.Y+40));
-        AddRectangleBody(new Rect2(MapPixels.X,-20,20,MapPixels.Y+40));
-        AddRectangleBody(new Rect2(0,-20,MapPixels.X,20));
-        AddRectangleBody(new Rect2(0,MapPixels.Y,MapPixels.X,20));
+        BakeGround();
+        AddRectangleBody(new Rect2(-20,-20,20,MapPixels.Y+40),true);
+        AddRectangleBody(new Rect2(MapPixels.X,-20,20,MapPixels.Y+40),true);
+        AddRectangleBody(new Rect2(0,-20,MapPixels.X,20),true);
+        AddRectangleBody(new Rect2(0,MapPixels.Y,MapPixels.X,20),true);
     }
 
     private Texture2D Texture(string file)
@@ -97,7 +92,7 @@ public partial class BenMuaEnvironment : Node2D
     private void Surface(Vector2[] polygon,int tile,string name)
     {
         var surface=new Polygon2D{Name=name,Polygon=polygon,Material=GroundMaterial(tile)};
-        AddChild(surface);
+        _groundSource.AddChild(surface);
         // Ground stays behind the shadow and actor layers regardless of creation order.
         surface.ZIndex=-10;
     }
@@ -110,7 +105,7 @@ public partial class BenMuaEnvironment : Node2D
         var tiles=new TileSet{TileSize=new Vector2I(512,512)};tiles.AddSource(source,0);
         var ground=new TileMapLayer{Name="BaseGrassTiles",TileSet=tiles,Scale=Vector2.One*.25f,
             Material=GroundMaterial(0),ZIndex=-20};
-        AddChild(ground);
+        _groundSource.AddChild(ground);
         for(int y=0;y<15;y++)for(int x=0;x<20;x++)ground.SetCell(new Vector2I(x,y),0,Vector2I.Zero);
         // Subtle damp meadow patches beneath the tree clusters.
         foreach(var item in _layout.RootElement.GetProperty("placements").EnumerateArray())
@@ -246,7 +241,7 @@ public partial class BenMuaEnvironment : Node2D
                 var at=new Vector2(x,y+(side==0?5:-2));
                 if(Piers.Any(r=>r.Grow(27).HasPoint(at)))continue;
                 var rock=Place("rocks",at,57+(i*13%43),"ART_SHORE_"+side+"_"+i);
-                rock.FlipH=(i%2)==0;
+                rock.FlipH=(i%2)==0;rock.Reparent(_groundSource);
                 ShoreDetailCount++;
                 if(i%3!=1)
                 {
@@ -258,10 +253,10 @@ public partial class BenMuaEnvironment : Node2D
         }
     }
 
-    private void AddRectangleBody(Rect2 rect)
+    private void AddRectangleBody(Rect2 rect,bool boundary=false)
     {
         var body=new StaticBody2D{Position=rect.GetCenter(),CollisionLayer=1};
-        body.AddChild(new CollisionShape2D{Shape=new RectangleShape2D{Size=rect.Size}});AddChild(body);
+        body.AddChild(new CollisionShape2D{Shape=new RectangleShape2D{Size=rect.Size}});AddChild(body);if(boundary)_boundaries.Add(body);
     }
 
     private void BuildWaterCollision()
@@ -281,7 +276,7 @@ public partial class BenMuaEnvironment : Node2D
 
     public bool IsWalkable(Vector2 point)
     {
-        if(point.X<6||point.Y<6||point.X>MapPixels.X-6||point.Y>MapPixels.Y-6)return false;
+        if(!_movementBounds.Grow(-6).HasPoint(point))return false;
         if(SolidFootprints.Any(r=>r.Grow(5).HasPoint(point)))return false;
         bool WaterAt(Vector2 p)=>Geometry2D.IsPointInPolygon(p,_water)&&!Piers.Any(r=>r.HasPoint(p));
         return !WaterAt(point)&&!WaterAt(point+new Vector2(5,0))&&!WaterAt(point-new Vector2(5,0))
@@ -310,19 +305,22 @@ public partial class BenMuaEnvironment : Node2D
 
 
     /// <summary>Backdrop coverage only. Online navigation always belongs to the server.
-    /// Authored district A2 is not promoted to canonical nav by this extension.</summary>
+    /// This extension changes backdrop/boundaries only; authored collision is loaded separately from shared terrain.json.</summary>
     public void ExtendOnlineBackdrop(Rect2 bounds)
     {
-        var source=new TileSetAtlasSource{Texture=Texture("ground.png"),TextureRegionSize=new Vector2I(512,512)};
-        source.CreateTile(Vector2I.Zero);
-        var tiles=new TileSet{TileSize=new Vector2I(512,512)};tiles.AddSource(source,0);
-        var layer=new TileMapLayer{Name="OnlineBoundsBackdrop",TileSet=tiles,Scale=Vector2.One*.25f,
-            Material=GroundMaterial(0),ZIndex=-30};
-        AddChild(layer);
-        int minX=Mathf.FloorToInt(bounds.Position.X/128),minY=Mathf.FloorToInt(bounds.Position.Y/128);
-        int maxX=Mathf.CeilToInt(bounds.End.X/128),maxY=Mathf.CeilToInt(bounds.End.Y/128);
-        for(int y=minY;y<maxY;y++)for(int x=minX;x<maxX;x++)layer.SetCell(new Vector2I(x,y),0,Vector2I.Zero);
+        foreach(var boundary in _boundaries)boundary.CollisionLayer=0;_boundaries.Clear();_movementBounds=bounds;
+        AddRectangleBody(new Rect2(bounds.Position-new Vector2(20,0),new Vector2(20,bounds.Size.Y)),true);
+        AddRectangleBody(new Rect2(new Vector2(bounds.End.X,bounds.Position.Y),new Vector2(20,bounds.Size.Y)),true);
+        AddRectangleBody(new Rect2(bounds.Position-new Vector2(0,20),new Vector2(bounds.Size.X,20)),true);
+        AddRectangleBody(new Rect2(new Vector2(bounds.Position.X,bounds.End.Y),new Vector2(bounds.Size.X,20)),true);
+        var backdrop=new Polygon2D{Name="OnlineBoundsBackdrop",Polygon=new[]{bounds.Position,new Vector2(bounds.End.X,bounds.Position.Y),bounds.End,new Vector2(bounds.Position.X,bounds.End.Y)},Material=GroundMaterial(0),ZIndex=-30};AddChild(backdrop);
     }
 
+    private void BakeGround()
+    {
+        var viewport=new SubViewport{Size=new Vector2I((int)MapPixels.X,(int)MapPixels.Y),TransparentBg=true,Disable3D=true,World2D=new World2D(),RenderTargetUpdateMode=SubViewport.UpdateMode.Once};AddChild(viewport);
+        _groundSource.Reparent(viewport);
+        AddChild(new Sprite2D{Name="CachedStaticGround",Texture=viewport.GetTexture(),Centered=false,ZIndex=-10,TextureFilter=TextureFilterEnum.Nearest});
+    }
     public override void _ExitTree(){_layout?.Dispose();_assets?.Dispose();}
 }

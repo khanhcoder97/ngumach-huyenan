@@ -15,6 +15,10 @@ window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 window/stretch/scale_mode="integer"
 
+[physics]
+common/physics_ticks_per_second=60
+common/physics_interpolation=true
+
 [dotnet]
 project/assembly_name="VisualReboot"
 

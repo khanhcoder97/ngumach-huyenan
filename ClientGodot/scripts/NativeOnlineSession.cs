@@ -45,6 +45,7 @@ public partial class NativeOnlineSession : Node
         public readonly ConcurrentQueue<Intent> Commands = new();
         public readonly Stopwatch Clock = Stopwatch.StartNew();
         public Task? Pump;
+        public Intent? PendingIntent;
         public string Message = "Đang kết nối máy chủ...";
         public int Assertions;
         public bool Complete;
@@ -207,7 +208,7 @@ public partial class NativeOnlineSession : Node
                     Publish(run);
                     nextEvents=run.Clock.ElapsedMilliseconds+300;
                 }
-                await Task.Delay(100,run.Token).ConfigureAwait(false);
+                await Task.Delay(50,run.Token).ConfigureAwait(false);
             }
         }
         catch(OperationCanceledException) when(run.Token.IsCancellationRequested){}
@@ -240,7 +241,7 @@ public partial class NativeOnlineSession : Node
             case "TURNIN": result=await c.TurnInQuestAsync(intent.QuestId,intent.Target,run.Token).ConfigureAwait(false);break;
             case "RETRY": result=await c.RetryPendingAsync(run.Token).ConfigureAwait(false);break;
             case "BASIC_ATTACK":result=await c.BasicAttackAsync(intent.Target,intent.AimX,intent.AimY,run.Token).ConfigureAwait(false);break;
-            case "CAST":result=await c.CastAsync(intent.Skill,intent.Target,intent.AimX,intent.AimY,run.Token).ConfigureAwait(false);break;
+            case "CAST":result=await c.CastAsync(intent.Skill,string.IsNullOrEmpty(intent.Target)?null!:intent.Target,intent.AimX,intent.AimY,run.Token).ConfigureAwait(false);break;
             case "REFRESH":
                 if(await RefreshAsync(run,false).ConfigureAwait(false))run.Message="Đã đồng bộ thế giới, nhiệm vụ và túi đồ.";
                 Publish(run);return;
@@ -250,7 +251,11 @@ public partial class NativeOnlineSession : Node
         }
         run.Message=result.Success?"Máy chủ đã xác nhận: "+intent.Kind:Failure(intent.Kind,result);
         // Only this publication carries an action edge. Polls never re-emit it.
-        Publish(run,result.Success?intent.Kind:null,result.Success&&intent.Kind=="CAST"?intent.Skill:null);
+        var resolved=intent.Kind=="RETRY"&&run.PendingIntent!=null?run.PendingIntent:intent;
+        if(c.HasPendingMutation&&intent.Kind!="RETRY")run.PendingIntent=intent;
+        if(result.Success)run.PendingIntent=null;
+        Publish(run,result.Success?resolved.Kind:null,result.Success&&resolved.Kind=="CAST"?resolved.Skill:null,
+            rejectedAction:result.Success?null:resolved.Kind,rejectedSkill:result.Success?null:resolved.Skill,actionError:result.Success?null:result.Code);
         await RefreshAsync(run,false).ConfigureAwait(false);
         Publish(run);
         }
@@ -281,13 +286,14 @@ public partial class NativeOnlineSession : Node
         return okay;
     }
 
-    private void Publish(Run run,string? action=null,string? skill=null,string? failed=null,bool passed=false)
+    private void Publish(Run run,string? action=null,string? skill=null,string? failed=null,bool passed=false,string? rejectedAction=null,string? rejectedSkill=null,string? actionError=null)
     {
         // All reads/clones run on the sole client worker, never concurrently with a mutation.
         run.PendingForHost=run.Client.HasPendingMutation;
         var frame=new NativeOnlineFrame
         {
             SessionId=run.Client.SessionId??"",
+            SampleTime=AuthoritativeMotion.Now,
             ConnectionState=run.Client.State,
             Message=run.Message,
             World=Clone(run.Client.World),
@@ -296,6 +302,8 @@ public partial class NativeOnlineSession : Node
             Inventory=Clone(run.Client.Inventory),
             Events=Clone(run.Client.DrainPresentationEvents())??Array.Empty<P1EventV2>(),
             AcceptedAction=action,AcceptedSkill=skill,
+            RejectedAction=rejectedAction,RejectedSkill=rejectedSkill,ActionError=actionError,
+            CooldownEnds=run.Client.CooldownEndsAtUtc.ToDictionary(p=>p.Key,p=>p.Value,StringComparer.Ordinal),
             ScenarioComplete=run.Complete,Assertions=run.Assertions
         };
         Callable.From(()=>

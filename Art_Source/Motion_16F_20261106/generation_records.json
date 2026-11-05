@@ -1,0 +1,142 @@
+[
+  {
+    "name": "attack_n",
+    "generator": "built-in image_gen",
+    "source": "attack_n_v2.png",
+    "runtime": "attack_n.png",
+    "prompt": "Prompts/attack_n_v2.txt"
+  },
+  {
+    "name": "attack_ne",
+    "generator": "built-in image_gen",
+    "source": "attack_ne.png",
+    "runtime": "attack_ne.png",
+    "prompt": "Prompts/attack_ne.txt"
+  },
+  {
+    "name": "attack_e",
+    "generator": "built-in image_gen",
+    "source": "attack_e.png",
+    "runtime": "attack_e.png",
+    "prompt": "Prompts/attack_e.txt"
+  },
+  {
+    "name": "attack_se",
+    "generator": "built-in image_gen",
+    "source": "attack_se.png",
+    "runtime": "attack_se.png",
+    "prompt": "Prompts/attack_se.txt"
+  },
+  {
+    "name": "attack_s",
+    "generator": "built-in image_gen",
+    "source": "attack_s.png",
+    "runtime": "attack_s.png",
+    "prompt": "Prompts/attack_s.txt"
+  },
+  {
+    "name": "cast_n",
+    "generator": "built-in image_gen",
+    "source": "cast_n.png",
+    "runtime": "cast_n.png",
+    "prompt": "Prompts/cast_n.txt"
+  },
+  {
+    "name": "cast_ne",
+    "generator": "built-in image_gen",
+    "source": "cast_ne.png",
+    "runtime": "cast_ne.png",
+    "prompt": "Prompts/cast_ne.txt"
+  },
+  {
+    "name": "cast_e",
+    "generator": "built-in image_gen",
+    "source": "cast_e.png",
+    "runtime": "cast_e.png",
+    "prompt": "Prompts/cast_e.txt"
+  },
+  {
+    "name": "cast_se",
+    "generator": "built-in image_gen",
+    "source": "cast_se.png",
+    "runtime": "cast_se.png",
+    "prompt": "Prompts/cast_se.txt"
+  },
+  {
+    "name": "cast_s",
+    "generator": "built-in image_gen",
+    "source": "cast_s.png",
+    "runtime": "cast_s.png",
+    "prompt": "Prompts/cast_s.txt"
+  },
+  {
+    "name": "idle_n",
+    "generator": "built-in image_gen",
+    "source": "idle_n.png",
+    "runtime": "idle_n.png",
+    "prompt": "Prompts/idle_n.txt"
+  },
+  {
+    "name": "idle_ne",
+    "generator": "built-in image_gen",
+    "source": "idle_ne_v2.png",
+    "runtime": "idle_ne.png",
+    "prompt": "Prompts/idle_ne_v2.txt"
+  },
+  {
+    "name": "idle_e",
+    "generator": "built-in image_gen",
+    "source": "idle_e.png",
+    "runtime": "idle_e.png",
+    "prompt": "Prompts/idle_e.txt"
+  },
+  {
+    "name": "idle_se",
+    "generator": "built-in image_gen",
+    "source": "idle_se.png",
+    "runtime": "idle_se.png",
+    "prompt": "Prompts/idle_se.txt"
+  },
+  {
+    "name": "idle_s",
+    "generator": "built-in image_gen",
+    "source": "idle_s.png",
+    "runtime": "idle_s.png",
+    "prompt": "Prompts/idle_s.txt"
+  },
+  {
+    "name": "walk_ne",
+    "generator": "built-in image_gen",
+    "source": "walk_ne_v2.png",
+    "runtime": "walk_ne.png",
+    "prompt": "Prompts/walk_ne_v2.txt"
+  },
+  {
+    "name": "walk_n",
+    "generator": "built-in image_gen",
+    "source": "walk_n.png",
+    "runtime": "walk_n.png",
+    "prompt": "Prompts/walk_n.txt"
+  },
+  {
+    "name": "walk_e",
+    "generator": "built-in image_gen",
+    "source": "walk_e.png",
+    "runtime": "walk_e.png",
+    "prompt": "Prompts/walk_e.txt"
+  },
+  {
+    "name": "walk_se",
+    "generator": "built-in image_gen",
+    "source": "walk_se.png",
+    "runtime": "walk_se.png",
+    "prompt": "Prompts/walk_se.txt"
+  },
+  {
+    "name": "walk_s",
+    "generator": "built-in image_gen",
+    "source": "walk_s.png",
+    "runtime": "walk_s.png",
+    "prompt": "Prompts/walk_s.txt"
+  }
+]
