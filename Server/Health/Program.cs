@@ -141,6 +141,18 @@ builder.Services.AddSingleton(serviceProvider =>
 builder.Services.AddSingleton<IConsumableService>(serviceProvider => new ConsumableService(
     serviceProvider.GetRequiredService<IInventoryService>(),
     serviceProvider.GetRequiredService<IReadOnlyList<ConsumableEntry>>()));
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return MobEliteVariantCatalog.Load(ProductionTableDiscovery.DiscoverDirectory(
+        environment.ContentRootPath, MobEliteVariantCatalog.RelativePath));
+});
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return NpcActorRegistry.Load(ProductionTableDiscovery.DiscoverDirectory(
+        environment.ContentRootPath, NpcActorRegistry.RelativePath));
+});
 builder.Services.AddSingleton<NarrativeFlagStore>();
 builder.Services.AddSingleton<NarrativeService>();
 builder.Services.AddSingleton(serviceProvider =>
@@ -368,6 +380,21 @@ app.Logger.LogInformation(
     lifeSim.Count,
     lifeSim.CountOfType("CROP"),
     lifeSim.CountOfType("FISH"));
+
+var eliteVariants = app.Services.GetRequiredService<IReadOnlyList<MobEliteVariant>>();
+app.Logger.LogInformation(
+    "Loaded elite variant table: {RowCount} elites across {Profiles} profiles (hp {MinHp}–{MaxHp}x, pvp allowed: {Pvp}) - the runtime mob-stat bundle still uses its own multipliers, which the self-check compares.",
+    eliteVariants.Count,
+    eliteVariants.Select(elite => elite.VariantProfileId).Distinct().Count(),
+    eliteVariants.Min(elite => elite.HpMultiplier),
+    eliteVariants.Max(elite => elite.HpMultiplier),
+    eliteVariants.Any(elite => elite.PvpAllowed) ? "yes somewhere" : "never");
+
+var npcActors = app.Services.GetRequiredService<IReadOnlyList<NpcActorDefinition>>();
+app.Logger.LogInformation(
+    "Loaded NPC actor registry: {RowCount} NPCs, {ServiceCount} carrying a service token, none combat-targetable - service availability is data, not a route.",
+    npcActors.Count,
+    npcActors.Count(actor => actor.InteractionServiceId != "NONE"));
 
 var consumableRules = app.Services.GetRequiredService<IReadOnlyList<ConsumableEntry>>();
 app.Logger.LogInformation(

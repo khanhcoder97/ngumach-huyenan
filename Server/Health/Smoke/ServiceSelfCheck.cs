@@ -8769,6 +8769,144 @@ public static class ServiceSelfCheck
             $"stacks={inventory.GetSnapshot(barrierActor.CharacterId)
                 .Items.Single(item => item.InstanceId == barrierPotion).Stack} hp={barrierActor.Hp}");
 
+        // ─── QOD-24 Q4/Q6: two approved production tables the server had never read ────
+
+        var elites = services.GetRequiredService<IReadOnlyList<MobEliteVariant>>();
+        var eliteProfiles = elites.Select(elite => elite.VariantProfileId)
+            .Distinct(StringComparer.Ordinal)
+            .OrderBy(profile => profile, StringComparer.Ordinal)
+            .ToArray();
+        var multiplierSets = elites
+            .Select(elite => (elite.HpMultiplier, elite.DamageMultiplier, elite.MoveSpeedMultiplier))
+            .Distinct()
+            .ToArray();
+        Check(
+            "elite.table_is_nine_rows_three_profiles_and_three_multiplier_sets",
+            elites.Count == 9 && eliteProfiles.Length == 3 && multiplierSets.Length == 3 &&
+            elites.All(elite => elite.LevelDelta == 2) &&
+            elites.All(elite => elite.RespawnDeltaSeconds == 0) &&
+            elites.All(elite => elite.BehaviorOverride.Length > 0) &&
+            elites.All(elite => elite.LootDelta.Contains("%", StringComparison.Ordinal)) &&
+            // Two of the three profiles name a telegraph duration in prose (1.5s and
+            // 2.0s); elite_v3 names an area hazard with a safe lane and no telegraph
+            // at all, so "elite telegraph timing" is not one sourced number.
+            elites.Count(elite => elite.BehaviorOverride.Contains(
+                "telegraph", StringComparison.Ordinal)) == 6 &&
+            elites.Count(elite => elite.BehaviorOverride.Contains(
+                "1.5s", StringComparison.Ordinal)) == 3 &&
+            elites.Count(elite => elite.BehaviorOverride.Contains(
+                "2.0s", StringComparison.Ordinal)) == 3 &&
+            elites.Count(elite => elite.BehaviorOverride.Contains(
+                "safe lane", StringComparison.Ordinal)) == 3,
+            $"rows={elites.Count} profiles={string.Join("|", eliteProfiles)} " +
+            $"sets={multiplierSets.Length} lvl2={elites.All(e => e.LevelDelta == 2)} " +
+            $"respawn0={elites.All(e => e.RespawnDeltaSeconds == 0)} " +
+            $"telegraphRows={elites.Count(e => e.BehaviorOverride.Contains("telegraph", StringComparison.Ordinal))} " +
+            $"lootPct={elites.All(e => e.LootDelta.Contains("%", StringComparison.Ordinal))}");
+
+        Check(
+            "elite.no_variant_in_the_source_is_pvp_eligible",
+            elites.All(elite => !elite.PvpAllowed) &&
+            elites.All(elite => elite.LootTableId.StartsWith("LT_", StringComparison.Ordinal)) &&
+            elites.Select(elite => elite.BaseEntityId).Distinct().Count() == 9,
+            $"pvp_allowed_anywhere={elites.Any(elite => elite.PvpAllowed)}");
+
+        // The conflict work order 29 asks me to name rather than resolve. The damage path
+        // scales elites from the runtime bundle (hp 6.0x, attack 1.6x, defense 1.8x), while
+        // the approved elite table states 1.65x / 1.8x / 2.0x hp per profile and a +2 level
+        // delta instead. Both numbers are printed so a fix is a decision, not a silent
+        // edit of whichever constant was nearer to hand: at the reference level the bundle
+        // ships 1152 hp on a base of 1152 / 6.0 = 192, and that same base at the table's
+        // largest hp multiplier is 192 * 2.0 = 384. This is the bundle's reference row,
+        // not the spawn the report in QOD-24_skill_catalog_coverage names: the shore
+        // stalker there carries base 216, so 216 gives 1296 against 388.8. Same conflict,
+        // different row - which is why the numbers are printed instead of averaged.
+        var tableMaxHpMultiplier = elites.Max(elite => elite.HpMultiplier);
+        var bundleReferenceEliteHp = 1152.0;
+        var tableDerivedEliteHp = bundleReferenceEliteHp / mobStats.Elite.Hp * tableMaxHpMultiplier;
+        Check(
+            "elite_the_runtime_bundle_and_the_approved_table_disagree_named",
+            mobStats.Elite.Hp == 6.0 && tableMaxHpMultiplier == 2.0 &&
+            !elites.Any(elite => Math.Abs(elite.HpMultiplier - mobStats.Elite.Hp) < 0.0001) &&
+            Math.Abs(tableDerivedEliteHp - 384.0) < 0.0001,
+            $"bundle={mobStats.Elite.Hp}x -> {bundleReferenceEliteHp} hp; " +
+            $"table max={tableMaxHpMultiplier}x -> {tableDerivedEliteHp} hp");
+
+        var npcDefinitions = services.GetRequiredService<IReadOnlyList<NpcActorDefinition>>();
+        var registryIds = npcDefinitions.Select(npc => npc.NpcId).ToHashSet(StringComparer.Ordinal);
+        var anchoredIds = npcAnchors.All.Select(anchor => anchor.NpcId)
+            .ToHashSet(StringComparer.Ordinal);
+        Check(
+            "npc.registry_and_the_anchor_catalog_are_the_same_83_ids_both_ways",
+            npcDefinitions.Count == 83 && registryIds.Count == 83 &&
+            anchoredIds.Count == 83 && registryIds.SetEquals(anchoredIds) &&
+            npcDefinitions.All(npc => !npc.CombatTargetable) &&
+            npcDefinitions.All(npc => npc.SourceMapId.StartsWith("MAP_", StringComparison.Ordinal)),
+            $"registry={registryIds.Count} anchors={anchoredIds.Count} " +
+            $"onlyInRegistry={registryIds.Except(anchoredIds).Count()} " +
+            $"onlyInAnchors={anchoredIds.Except(registryIds).Count()}");
+
+        // Service availability (Q6) has a source, and it is not a quest or a flag: it is a
+        // named service on the NPC. Loading it means the shop/forge/guild/arena packets can
+        // cite the token that exists instead of inventing an endpoint nobody approved.
+        var serviceTokens = npcDefinitions
+            .Where(npc => npc.InteractionServiceId != "NONE")
+            .GroupBy(npc => npc.InteractionServiceId, StringComparer.Ordinal)
+            .ToDictionary(group => group.Key, group => group.Count(), StringComparer.Ordinal);
+        Check(
+            "npc.service_tokens_are_the_source_vocabulary_and_none_of_them_has_a_route",
+            serviceTokens.Count == 14 &&
+            serviceTokens["SERVICE_FORGE"] == 2 && serviceTokens["SERVICE_SHOP"] == 2 &&
+            serviceTokens["SERVICE_SHOP_POTION"] == 1 && serviceTokens["SERVICE_TRAVEL"] == 4 &&
+            serviceTokens["SERVICE_PVP_QUEUE"] == 1 && serviceTokens["SERVICE_GUILD"] == 1 &&
+            serviceTokens["SERVICE_CLASS_SELECTION"] == 1 &&
+            npcDefinitions.Count(npc => npc.RoleProfile == "QUEST_GIVER") == 15,
+            $"services={string.Join("|", serviceTokens.OrderBy(pair => pair.Key).Select(pair => $"{pair.Key}={pair.Value}"))}");
+
+        string? NpcRegistryTargetableFailure()
+        {
+            var root = Path.Combine(
+                Path.GetTempPath(), "p1-npc-target-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var production = Path.Combine(root, "docs", "production");
+                Directory.CreateDirectory(production);
+                var sourceRoot = ProductionTableDiscovery.DiscoverDirectory(
+                    AppContext.BaseDirectory, NpcActorRegistry.RelativePath);
+                foreach (var relative in new[]
+                {
+                    NpcActorRegistry.RelativePath, MobEliteVariantCatalog.RelativePath
+                })
+                {
+                    var lines = File.ReadAllLines(Path.Combine(sourceRoot, relative));
+                    File.WriteAllLines(
+                        Path.Combine(root, relative),
+                        lines.Select(line => line.Replace(
+                            ",false,1.0,", ",true,1.0,", StringComparison.Ordinal)).ToArray());
+                }
+
+                try
+                {
+                    NpcActorRegistry.Load(root);
+                    return "LOADED";
+                }
+                catch (InvalidOperationException exception)
+                {
+                    return exception.Message;
+                }
+            }
+            finally
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+
+        var targetableNpcRefused = NpcRegistryTargetableFailure();
+        Check(
+            "npc_the_loader_refuses_a_registry_row_the_audience_policy_cannot_express",
+            targetableNpcRefused.Contains("combat_targetable=true", StringComparison.Ordinal),
+            $"refused={Cut(targetableNpcRefused)}");
+
         // ─── QOD-21 Q3: the v2 twelve-slot handler ────
 
         // Same store, same aggregate revision, second vocabulary: these checks pin

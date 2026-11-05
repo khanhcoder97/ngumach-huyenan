@@ -89,6 +89,11 @@ Loại: **A** = thiếu telegraph điểm; **B** = server chưa có subsystem; *
 
 Không phải double-count: bundle **không** có archetype riêng cho id `_ELITE` (ba archetype: CARPLING / WATERROOT / SHORE_STALKER), nên mỗi elite chỉ nhân một lần. Xung đột thật nằm ở **trị số** — elite mà người chơi đang đánh ở alpha dày HP gấp **3,3 lần** so với bảng production CSV.
 
+**Cập nhật cùng ngày:** nguồn B **đã được nạp thành data** — `Server/Health/Gameplay/Combat/ProductionTables.cs` (`MobEliteVariantCatalog`: 9 hàng, 3 profile, 3 bộ số nhân) — và self-check in **cả hai** số trên cùng một dòng, nên xung đột không còn là một claim trong report mà là một check fail nếu ai đó âm thầm sửa một phía: `elite_the_runtime_bundle_and_the_approved_table_disagree_named` (bundle 6,0x → 1152 hp trên base 192; bảng 2,0x → 384 hp cho **cùng base đó**). Lưu ý đây là **hàng reference của bundle**, không phải hàng `MOB_SHORE_STALKER_ELITE` base 216 ở bảng trên: 1296/388.8 và 1152/384 là hai hàng khác nhau của cùng một xung đột, ghi rõ để không đọc thành mâu thuẫn thứ hai.
+
+Hai sự kiện mới lấy từ chính bảng, server chưa từng nói ở đâu: **`pvp_allowed` = false trên cả 9 hàng** (elite không được vào PvP — `elite.no_variant_in_the_source_is_pvp_eligible`), và **chỉ 2/3 profile có telegraph** (elite_v1 "1.5s telegraph", elite_v2 "2.0s telegraph", elite_v3 chỉ nói area hazard + safe lane, **không có telegraph**) — 3+3+3 hàng được đếm riêng trong `elite.table_is_nine_rows_three_profiles_and_three_multiplier_sets`. Nghĩa là "thời gian chuẩn bị của elite" vẫn không phải một số có nguồn, kể cả khi Codex đã chốt bộ số nhân.
+
+
 Ba chỗ hai nguồn không nói cùng điều:
 
 1. CSV cho `move_speed_multiplier` và `level_delta` theo từng entity; bundle chỉ có một cấp tham chiếu (L5) và speed lấy từ archetype, không có đường nào để nhân.
