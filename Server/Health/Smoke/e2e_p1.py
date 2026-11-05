@@ -816,20 +816,6 @@ def v2_events(session_id, cursor):
     return status, (page.get("events") or []), page.get("nextCursor", cursor)
 
 
-def wait_for(deadline_seconds, probe):
-    """Conditional wait: the first truthy probe result, or None after the
-    deadline. It records no check per iteration on purpose — the caller asserts
-    once on the outcome, so the reported check total cannot drift with timing."""
-    deadline = time.monotonic() + deadline_seconds
-    while True:
-        outcome = probe()
-        if outcome:
-            return outcome
-        if time.monotonic() >= deadline:
-            return None
-        time.sleep(0.05)
-
-
 def wait_for_ticks(max_ticks, probe, session_id, observed=None):
     """Conditional wait bounded by the server's own tick, reporting how many it spent.
 
