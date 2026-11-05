@@ -183,7 +183,16 @@ elif [ "${PROFILE}" = "alpha-p00" ]; then
   # Endurance pools are enlarged so one actor can stand in the Mãng Cốt ring
   # and live through 1200 HP of boss; damage numbers still come from the
   # shipped formula, so the run proves the chain, not a tuning claim.
+  # 4000 is arithmetic, not a guess: CI job 127505239461 measured the actor dying at
+  # 20 of 2000 HP with the boss on 224 of 1200, i.e. ~7.6 incoming HP per second of
+  # fighting (server line `IMPACT B:DOWN phase 3 bossHp 224 damage 32 (20 -> 0)`).
+  # A kill needs ceil(1200 / 18) = 67 accepted casts, and the observed cadence is 57
+  # accepted casts per 260 s, so the fight is ~307 s and the boss answers with ~2333
+  # HP. 2000 was short of its own sourced fight, which is why this leg passed or failed
+  # on runner speed rather than on behaviour. P1:DeathReturn is on so the pre-fight
+  # alpha_ensure_alive call has the route the approved decision maps it behind.
   P1__AlphaProfile__Enabled=true \
+  P1__DeathReturn__Enabled=true \
   P1__QuestAccept__Enabled=true \
   P1__Interact__Enabled=true \
   P1__QuestTurnIn__Enabled=true \
@@ -192,8 +201,8 @@ elif [ "${PROFILE}" = "alpha-p00" ]; then
   P1__CombatDamage__Enabled=true \
   P1__MobBehavior__Enabled=true \
   P1__AlphaLoot__GrantEnabled=true \
-  P1World__StartingHp=2000 \
-  P1World__StartingMaxHp=2000 \
+  P1World__StartingHp=4000 \
+  P1World__StartingMaxHp=4000 \
   P1World__StartingMp=500 \
   P1World__StartingMaxMp=500 \
     dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
@@ -203,18 +212,19 @@ elif [ "${PROFILE}" = "alpha-p00" ]; then
 # handful of CARPLING hits, so the death is the shipped damage path, and the return
 # answers max(1, ceil(60 * 0.5)) = 30 under the approved alpha rule.
 elif [ "${PROFILE}" = "alpha-revive" ]; then
-  P1__AlphaProfile__Enabled=true \r
-  P1__DeathReturn__Enabled=true \r
-  P1__CombatV2__Enabled=true \r
-  P1__CombatDamage__Enabled=true \r
-  P1__MobBehavior__Enabled=true \r
-  P1__QuestAccept__Enabled=true \r
-  P1__Interact__Enabled=true \r
-  P1World__StartingHp=60 \r
-  P1World__StartingMaxHp=60 \r
-  P1World__StartingMp=500 \r
-  P1World__StartingMaxMp=500 \r
-    dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
+  # env ONE argument list, the same form the gate-one branch has run green in CI with:
+  # the first ubuntu run of this profile wrote each assignment as `VALUE \<letter r>`,
+  # so bash ran a command called "r" eleven times and booted the server with no gates
+  # at all - the log said `run_e2e_p1.sh: line 206: r: command not found`, and /p1/v2
+  # answered a bare 404 because P1:CombatV2 had never reached the process.
+  REVIVE_ENV="P1__AlphaProfile__Enabled=true P1__DeathReturn__Enabled=true"
+  REVIVE_ENV="${REVIVE_ENV} P1__CombatV2__Enabled=true P1__CombatDamage__Enabled=true"
+  REVIVE_ENV="${REVIVE_ENV} P1__MobBehavior__Enabled=true P1__QuestAccept__Enabled=true"
+  REVIVE_ENV="${REVIVE_ENV} P1__Interact__Enabled=true"
+  REVIVE_ENV="${REVIVE_ENV} P1World__StartingHp=60 P1World__StartingMaxHp=60"
+  REVIVE_ENV="${REVIVE_ENV} P1World__StartingMp=500 P1World__StartingMaxMp=500"
+  # shellcheck disable=SC2086
+  env ${REVIVE_ENV} dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
 elif [ "${PROFILE}" = "mob-combat" ]; then
   # Combat gates only. The starting pools are enlarged purely so one actor can
   # walk, escape, take hits, guard and then die inside a single run; every

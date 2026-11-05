@@ -1530,15 +1530,35 @@ def alpha_turnin(session_id, character_id, quest_id, npc_id):
     return status, body
 
 
-def alpha_kill(session_id, character_id, sequence, entity_id, pace=0.12):
+def alpha_kill(session_id, character_id, sequence, entity_id, pace=0.12, outcome=None):
     """Cast the basic attack at one entity, staying in reach, until the snapshot
     reports that life DEAD. Returns (nextSequence, acceptedCasts, refusedCodes,
     witnessedDeath) — a cast that merely stopped seeing the entity is NOT counted
     as a kill, because the group respawn makes an absent row ambiguous and the
     quest counter must be compared against deaths the run actually observed.
+
+    `outcome`, when given, is filled with why the loop stopped and the two HP rows
+    at that moment. Without it a give-up reads identically whether the actor died,
+    the target row left the audience, the target stopped taking damage or the cast
+    ceiling was reached - and CI job 127505239461 proved that costs a round trip:
+    the boss leg's "never died" was the actor dying at 20 HP with 224 boss HP left.
     """
     accepted = 0
     refused = {}
+
+    def note(reason, self_state, target):
+        if outcome is None:
+            return
+        outcome.update({
+            "reason": reason,
+            "casts": casts,
+            "accepted": accepted,
+            "actorHp": (self_state or {}).get("hp"),
+            "actorMaxHp": (self_state or {}).get("maxHp"),
+            "targetHp": (target or {}).get("hp"),
+            "targetMaxHp": (target or {}).get("maxHp"),
+            "targetState": (target or {}).get("state"),
+        })
     # The bound comes from the fight, not from the clock. A fixed iteration count with a
     # wall-clock sleep makes a leg fail whenever the server spends more time per tick, and
     # that is exactly how one extra log line per impact starved the boss leg on CI: 57
@@ -1554,8 +1574,11 @@ def alpha_kill(session_id, character_id, sequence, entity_id, pace=0.12):
         _, self_state, entities, _ = v2_snapshot(session_id)
         target = entities.get(entity_id)
         if target is None or self_state.get("hp", 0) <= 0:
+            note("actor-down" if self_state.get("hp", 0) <= 0
+                 else "target-row-left-the-audience", self_state, target)
             return sequence, accepted, refused, False
         if target.get("state") == "DEAD":
+            note("witnessed-dead", self_state, target)
             return sequence, accepted, refused, True
         hp_now = target.get("hp", 0)
         if hp_seen is None:
@@ -1597,6 +1620,8 @@ def alpha_kill(session_id, character_id, sequence, entity_id, pace=0.12):
             # The fight is not resolving: no HP movement for 60 casts, or more casts than
             # the target's own HP at one damage per hit. Give up and let the leg's own
             # assertion report it, instead of looping on a clock.
+            note("cast-ceiling-no-hp-movement" if stall > 60 else "cast-ceiling-hard-cap",
+                 self_state, target)
             return sequence, accepted, refused, False
         time.sleep(pace)
     # unreachable: the loop exits through the returns above
@@ -1626,11 +1651,18 @@ def alpha_revive_profile():
     probe_status, _, probe_body = smoke_p1.call(
         "GET", f"/p1/v2/world/{session}", headers={"X-Session-ID": session})
     _, self_state, _, _ = v2_snapshot(session)
+    probe_code = (probe_body.get("error") or {}).get("code")
+    # A 404 with an error code is the handler answering (unknown session). A 404 with
+    # no body is the route not being mapped at all, which can only mean the boot never
+    # received its gates - and that is the distinction that took three CI round trips
+    # to reach, because the boot was healthy either way.
+    probe_why = ("route unmapped: the boot had no gates"
+                 if probe_status == 404 and probe_code is None
+                 else f"handler answered {probe_code}")
     smoke_p1.check(
         self_state.get("hp", 0) > 0,
         "the revive fixture did not start alive "
-        f"(first read {probe_status}, error "
-        f"{(probe_body.get('error') or {}).get('code')}, actor row "
+        f"(first read {probe_status} - {probe_why}, actor row "
         f"hp={self_state.get('hp')} maxHp={self_state.get('maxHp')} "
         f"at ({self_state.get('x')},{self_state.get('y')}))")
 
@@ -2171,13 +2203,18 @@ def alpha_p00_profile():
         f"targetable={boss_row.get('targetable')} healthState={boss_row.get('healthState')}")
     sequence, _ = alpha_ensure_alive(
         session, character, sequence, "P00-05 before the boss")
+    boss_outcome = {}
     sequence, accepted, refused, boss_died = alpha_kill(
-        session, character, sequence, ALPHA_BOSS_ENTITY)
+        session, character, sequence, ALPHA_BOSS_ENTITY, outcome=boss_outcome)
     smoke_p1.check(
         accepted > 20 and boss_died,
         f"the quest boss never died for this owner: {accepted} casts accepted, "
         f"witnessed death {boss_died} (revives so far: {ALPHA_REVIVES['count']}, "
-        f"refusals {refused})")
+        f"refusals {refused}, the fight stopped because "
+        f"{boss_outcome.get('reason')} with actor "
+        f"{boss_outcome.get('actorHp')}/{boss_outcome.get('actorMaxHp')} and boss "
+        f"{boss_outcome.get('targetHp')}/{boss_outcome.get('targetMaxHp')} "
+        f"state={boss_outcome.get('targetState')})")
     _, _, dead_rows, _ = v2_snapshot(session)
     dead_row = dead_rows.get(ALPHA_BOSS_ENTITY) or {}
     smoke_p1.check(
