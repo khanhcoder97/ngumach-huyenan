@@ -72,7 +72,30 @@ public sealed class WorldTickBackgroundService : BackgroundService
             var tick = _clock.Tick;
 
             _entities.Update();
-            _combat.Tick(tick);
+            // The engine already returns the events its tick resolved, and until now this
+            // loop dropped them: the server logged every mob->player hit and produced no
+            // line at all for the casts going the other way. That asymmetry is why the
+            // review's failed escort run reads "witnessed 0 of 3 deaths, refusals {}" with
+            // no way to tell whether the player's hits landed. This is the symmetric half -
+            // one line per impact, miss or death the engine resolved, and nothing about
+            // combat changes.
+            foreach (var resolved in _combat.Tick(tick))
+            {
+                if (resolved.Type is CombatEventTypesV2.Impact
+                    or CombatEventTypesV2.Miss
+                    or CombatEventTypesV2.Death)
+                {
+                    _logger.LogInformation(
+                        "player {EventType} {ActorId} on {TargetId} hit {HitIndex}: " +
+                        "amount {Amount}, hpDamage {HpDamage}, absorbed {Absorbed}, " +
+                        "target life {TargetLifeId}, tick {ServerTick}",
+                        resolved.Type, resolved.ActorId, resolved.TargetId ?? "-",
+                        resolved.HitIndex, resolved.Result?.Amount ?? 0,
+                        resolved.Result?.HpDamage ?? 0, resolved.Result?.Absorbed ?? 0,
+                        resolved.TargetLifeId, resolved.ServerTick);
+                }
+            }
+
             _groups.Tick();
 
             if (_mobOptions.Enabled || _alphaOptions.Enabled)
