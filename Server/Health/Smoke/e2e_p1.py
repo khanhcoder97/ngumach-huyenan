@@ -56,7 +56,9 @@ fails on anything else.
             packages, ripples, CARPLING kills, a villager rescue, WATERROOT
             kills, the training-wave dodge, the P00-04 escort to both
             checkpoints with both waves cleared, the quest boss killed through
-            the ordinary cast path, the fragment claim — and then the finale's
+            the ordinary cast path, the fragment claim, a PAID loot kill (coin inside
+            the sourced band, exactly one mutation per death) and the v2 twelve-slot
+            equip/unequip surface over HTTP — and then the finale's
             TALK objective, for which P1 has no route, so the profile asserts
             the campaign stops there (P00-05 stays ACTIVE, C1-01 stays LOCKED)
             instead of faking a completion. A second client proves the same
@@ -1105,6 +1107,9 @@ ALPHA_VILLAGERS = (
 ALPHA_WAVE_RECT = (140.0, -2.0, 148.0, 2.0)  # minX, minY, maxX, maxY (design)
 ALPHA_FRAGMENT = ("ALPHA_OBJ_BM_FRAGMENT", 178.0, 0.0)
 ALPHA_BOSS_ENTITY = "ENT_MAN_BM_SPAWN_BM_05_QUEST"
+ALPHA_CARPLING_COIN_MIN = 5   # design.lootAlphaOnly mobLevel..2*mobLevel, CARPLING is level 5
+ALPHA_CARPLING_COIN_MAX = 10
+
 # Each candidate carries the spawn record's own atlas position, because a mob the
 # audience cannot see yet (more than 40 WU away) has no row to read x/y from — the
 # runner has to walk to the group first, then fight what it finds there.
@@ -1347,6 +1352,132 @@ def alpha_kill_watched(session, character, sequence, pool, wanted, label):
     return sequence, deaths, refused
 
 
+def alpha_v2_equip_envelope(instance_id, expected_revision, character_id):
+    return {
+        "schemaVersion": 2,
+        "requestId": alpha_key(0xe1),
+        "idempotencyKey": alpha_key(0xe2),
+        "sentAtUtc": smoke_p1.sent_at_utc(),
+        "characterId": character_id,
+        "payload": {"itemInstanceId": instance_id, "expectedRevision": expected_revision},
+    }
+
+
+def alpha_v2_unequip_envelope(slot_id, expected_revision, character_id, key=None):
+    return {
+        "schemaVersion": 2,
+        "requestId": alpha_key(0xe3),
+        "idempotencyKey": key or alpha_key(0xe4),
+        "sentAtUtc": smoke_p1.sent_at_utc(),
+        "characterId": character_id,
+        "payload": {"slotId": slot_id, "expectedRevision": expected_revision},
+    }
+
+
+def alpha_inventory(session_id):
+    status, _, body = smoke_p1.call("GET", f"/p1/inventory/{session_id}")
+    smoke_p1.check(status == 200, f"v1 inventory read returned {status}: {body}")
+    return body.get("result") or {}
+
+
+def alpha_inventory_v2(session_id):
+    status, _, body = smoke_p1.call("GET", f"/p1/inventory/v2/{session_id}")
+    smoke_p1.check(status == 200, f"v2 inventory read returned {status}: {body}")
+    return body.get("result") or {}
+
+
+def alpha_coin(snapshot):
+    return sum(entry.get("amount", 0) for entry in (snapshot.get("currencies") or [])
+               if entry.get("currencyId") == "COIN")
+
+
+def alpha_v2_surface(session, character):
+    """The twelve-slot surface exercised over HTTP on a real reward, next to the v1
+    read of the same inventory. The dev profile only proves v1 equip and the
+    self-check only proves the handler, so this is the route-level proof."""
+    v1 = alpha_inventory(session)
+    revision = v1.get("inventoryRevision", 0)
+    chest = next((item for item in (v1.get("items") or [])
+                  if item.get("location") == "BAG"), None)
+    smoke_p1.check(chest is not None, f"no BAG item to equip for the v2 leg: {v1}")
+
+    before = alpha_inventory_v2(session)
+    smoke_p1.check(
+        len(before.get("slots") or []) == 12 and
+        before.get("bagSlots") == 100 and
+        before.get("slotSpec") == "V2_SIDE_BY_SIDE_KEEP_V1_FIVE_SLOT_CONTRACT" and
+        all(entry.get("item") is None for entry in (before.get("slots") or [])) and
+        before.get("inventoryRevision") == revision and
+        before.get("unsupported") == [],
+        f"v2 read before the equip is not twelve empty slots: "
+        f"slots={len(before.get('slots') or [])} bagSlots={before.get('bagSlots')} "
+        f"spec={before.get('slotSpec')} rev={before.get('inventoryRevision')}")
+
+    equip_request = alpha_v2_equip_envelope(chest.get("instanceId"), revision, character)
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/inventory/v2/equip", equip_request, {"X-Session-ID": session})
+    equipped = body.get("result") or {}
+    chest_slot = next((entry for entry in (equipped.get("slots") or [])
+                       if entry.get("slotId") == "CHEST"), {})
+    smoke_p1.check(
+        status == 200 and
+        (chest_slot.get("item") or {}).get("instanceId") == chest.get("instanceId") and
+        equipped.get("inventoryRevision") == revision + 1,
+        f"v2 equip {status}: {(body.get('error') or equipped)}")
+
+    v1_after = alpha_inventory(session)
+    smoke_p1.check(
+        any(item.get("location") == "EQUIPPED" and item.get("slot") == "CHEST"
+            and item.get("instanceId") == chest.get("instanceId")
+            for item in (v1_after.get("items") or [])) and
+        v1_after.get("inventoryRevision") == revision + 1,
+        f"v1 does not see the v2 equip in its own vocabulary: {v1_after}")
+
+    # Same key, same payload: the recorded answer, and no second move.
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/inventory/v2/equip", equip_request, {"X-Session-ID": session})
+    smoke_p1.check(
+        status == 200 and
+        (body.get("result") or {}).get("inventoryRevision") == revision + 1 and
+        alpha_inventory(session).get("inventoryRevision") == revision + 1,
+        f"v2 equip replay moved the item again: {status} "
+        f"{(body.get('result') or {}).get('inventoryRevision')}")
+
+    # Same key, different payload is a conflict, not a second opinion.
+    conflicting = alpha_v2_equip_envelope(chest.get("instanceId"), revision + 5, character)
+    conflicting["idempotencyKey"] = equip_request["idempotencyKey"]
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/inventory/v2/equip", conflicting, {"X-Session-ID": session})
+    smoke_p1.check(
+        status == 409 and
+        (body.get("error") or {}).get("code") == "idempotency_conflict",
+        f"v2 accepted a same-key different-payload equip: {status} "
+        f"{(body.get('error') or {})}")
+
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/inventory/v2/unequip",
+        alpha_v2_unequip_envelope("CHEST", revision + 1, character),
+        {"X-Session-ID": session})
+    back = body.get("result") or {}
+    smoke_p1.check(
+        status == 200 and
+        all(entry.get("item") is None for entry in (back.get("slots") or [])) and
+        any(item.get("instanceId") == chest.get("instanceId")
+            for item in (back.get("bag") or [])) and
+        back.get("inventoryRevision") == revision + 2,
+        f"v2 unequip {status}: {(body.get('error') or back)}")
+
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/inventory/v2/unequip",
+        alpha_v2_unequip_envelope("ACCESSORY", revision + 2, character),
+        {"X-Session-ID": session})
+    smoke_p1.check(
+        status == 400 and
+        (body.get("error") or {}).get("code") == "invalid_payload" and
+        "payload.slotId" in ((body.get("error") or {}).get("fieldErrors") or []),
+        f"v2 accepted the v1 ACCESSORY token: {status} {(body.get('error') or {})}")
+
+
 def alpha_p00_profile():
     """QOD-21 Q4: the whole private-alpha opening, over real HTTP, on one actor.
 
@@ -1405,6 +1536,7 @@ def alpha_p00_profile():
     quests = alpha_quests(session)
     smoke_p1.check(quests["P00-02"].get("state") == "AVAILABLE",
                    f"P00-02 after P00-01 is {quests['P00-02'].get('state')}")
+    alpha_v2_surface(session, character)
 
     # ── P00-02: water ripples (overlay records) + four CARPLING kills ──
     status, body = alpha_accept(session, character, "P00-02", "NPC_TA_VAN_KHANH")
@@ -1419,8 +1551,25 @@ def alpha_p00_profile():
             updates[0].get("objectiveCounters", {}).get("OBJ_P00_02_RIPPLES") == index,
             f"ripple {entity_id} {status}: {updates or (body.get('error') or {})}")
 
+    # Loot ON under the alpha profile means every paid death is one inventory
+    # mutation: coin in the sourced mobLevel..2*mobLevel band (CARPLING is level 5,
+    # so 5..10 each) plus the recipe item, in the SAME Apply. Four paid deaths must
+    # therefore move the inventory revision exactly four times - a double payment
+    # shows up as a bigger revision, a missing one as a smaller one.
+    loot_before = alpha_inventory(session)
+    coin_before = alpha_coin(loot_before)
+    revision_before = loot_before.get("inventoryRevision", 0)
     sequence, carpling_kills, _ = alpha_kill_watched(
         session, character, sequence, ALPHA_CARPLING_GROUP, 4, "P00-02 CARPLING")
+    loot_after = alpha_inventory(session)
+    coin_delta = alpha_coin(loot_after) - coin_before
+    revision_delta = loot_after.get("inventoryRevision", 0) - revision_before
+    smoke_p1.check(
+        4 * ALPHA_CARPLING_COIN_MIN <= coin_delta <= 4 * ALPHA_CARPLING_COIN_MAX and
+        revision_delta == 4,
+        f"paid loot over HTTP: coin delta {coin_delta} outside "
+        f"[{4 * ALPHA_CARPLING_COIN_MIN}, {4 * ALPHA_CARPLING_COIN_MAX}] and revision "
+        f"moved {revision_delta} times for 4 kills")
     quests = alpha_quests(session)
     smoke_p1.check(
         alpha_counter(quests, "P00-02", "OBJ_P00_02_CARPLING") >= 4,
@@ -1635,7 +1784,7 @@ def alpha_p00_profile():
 
     print(
         "profile=alpha-p00 chain=P00-01..P00-05 "
-        f"boss=KILLED fragment=OK wave_trial=OK escort=A+B "
+        f"boss=KILLED fragment=OK wave_trial=OK escort=A+B loot=PAID v2_inventory=OK "
         f"talk=NO_HTTP_ROUTE c1_01=LOCKED second_client=ISOLATED")
 
 

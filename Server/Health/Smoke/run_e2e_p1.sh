@@ -54,10 +54,12 @@ elif [ "${PROFILE}" = "two-client" ]; then
     dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
 elif [ "${PROFILE}" = "alpha-p00" ]; then
   # The private-alpha tutorial chain over real HTTP: every gate the opening
-  # P00-01..P00-05 + C1-01 loop touches, with the alpha profile on. Endurance
-  # pools are enlarged so one actor can stand in the Mãng Cốt ring and live
-  # through 1200 HP of boss; damage numbers still come from the shipped
-  # formula, so the run proves the chain, not a tuning claim.
+  # P00-01..P00-05 + C1-01 loop touches, with the alpha profile on, and
+  # P1__AlphaLoot__GrantEnabled so a mob death actually pays (the profile is
+  # what makes the coin band exist, and appsettings keeps both flags OFF).
+  # Endurance pools are enlarged so one actor can stand in the Mãng Cốt ring
+  # and live through 1200 HP of boss; damage numbers still come from the
+  # shipped formula, so the run proves the chain, not a tuning claim.
   P1__AlphaProfile__Enabled=true \
   P1__QuestAccept__Enabled=true \
   P1__Interact__Enabled=true \
@@ -66,6 +68,7 @@ elif [ "${PROFILE}" = "alpha-p00" ]; then
   P1__CombatV2__Enabled=true \
   P1__CombatDamage__Enabled=true \
   P1__MobBehavior__Enabled=true \
+  P1__AlphaLoot__GrantEnabled=true \
   P1World__StartingHp=2000 \
   P1World__StartingMaxHp=2000 \
   P1World__StartingMp=500 \
