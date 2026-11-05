@@ -51,17 +51,20 @@ public sealed class MobAttackService
     private readonly CombatDamageFeature _combat;
     private readonly MobBehaviorOptions _options;
     private readonly GuardDefenseService _guards;
+    private readonly PlayerLifeLedger _lives;
 
     public MobAttackService(
         WorldEntityRegistry entities,
         CombatDamageFeature combat,
         MobBehaviorOptions options,
-        GuardDefenseService guards)
+        GuardDefenseService guards,
+        PlayerLifeLedger lives)
     {
         _entities = entities;
         _combat = combat;
         _options = options;
         _guards = guards;
+        _lives = lives;
     }
 
     // Resolves every impact frame emitted by one mob AI tick. Blocked impacts
@@ -191,6 +194,11 @@ public sealed class MobAttackService
             // HP is part of the session aggregate, so the revision the client
             // reconciles against has to move with it (design resolution §3).
             target.Revision++;
+            // DEC-DEATH-RETURN-20261105: the life ends in this same critical
+            // section, so the death record carries the revision the client will
+            // read, and no separate commit can be missed or duplicated.
+            _lives.RecordDamageCommit(
+                target.CharacterId, hpBefore, hpAfter, target.Revision, atUtc);
 
             // DEC-022 §3: survival is decided from the damage just committed,
             // and only a front direct-melee hit in an open guard window pays.

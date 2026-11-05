@@ -51,17 +51,21 @@ public sealed class AlphaWaveTrialService
     private readonly int _rawDamage;
     private readonly IQuestService _quests;
     private readonly CombatDamageFeature _combat;
+    private readonly PlayerLifeLedger _lives;
     private readonly object _sync = new();
     private readonly Dictionary<string, Cycle> _cycles = new(StringComparer.Ordinal);
 
     public AlphaWaveTrialService(
         AlphaDesign design,
         IQuestService quests,
-        CombatDamageFeature combat)
+        CombatDamageFeature combat,
+        PlayerLifeLedger lives)
     {
         ArgumentNullException.ThrowIfNull(design);
         ArgumentNullException.ThrowIfNull(quests);
         ArgumentNullException.ThrowIfNull(combat);
+        ArgumentNullException.ThrowIfNull(lives);
+        _lives = lives;
         _hazard = design.OverlayRecords.FirstOrDefault(
             record => string.Equals(record.Kind, "QUEST_HAZARD", StringComparison.Ordinal));
         _mapId = design.Scope.MapId;
@@ -228,6 +232,9 @@ public sealed class AlphaWaveTrialService
                     hpAfter = Math.Max(0, hpBefore - _rawDamage);
                     player.Hp = hpAfter;
                     player.Revision++;
+                    _lives.RecordDamageCommit(
+                        player.CharacterId, hpBefore, hpAfter, player.Revision,
+                        DateTimeOffset.UtcNow);
                     damage = hpBefore - hpAfter;
                     outcome = WaveTrialOutcomes.Hit;
                 }

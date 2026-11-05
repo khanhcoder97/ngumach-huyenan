@@ -1,4 +1,15 @@
-# Packet hợp đồng Death-Return (QOD-21 Q4) — **CHỜ DUYỆT — chưa wire, chưa handler**
+# Packet hợp đồng Death-Return (QOD-21 Q4) — **ĐÃ DUYỆT: DEC-DEATH-RETURN-20261105** (#87, 2026-11-04T20:57:58Z; nguồn máy đọc `Implementation/Content/DesignBaselines/death_return_decisions_20261105.json`)
+
+Sáu câu hỏi §5 đã có trả lời và được implement theo đúng quyết định, không hỏi lại:
+
+- **Q1 = option 2**: `PlayerLifeLedger` (internal, không thêm `CombatEventV2` type/field). `lifeVersion` bắt đầu 1; `deathEventId = PDEATH_ + sha256 lowercase của canonical JSON `[characterId, lifeVersion, deathRevision]`; một transition dương→0 sinh đúng một record; mọi đường damage (mob, boss encounter, training wave) commit qua cùng một lock/revision; mỗi lần 0→dương đã commit nâng lifeVersion đúng một lần, replay không nâng; state theo character, không theo session nên sống qua reconnect.
+- **Q2**: replay trả 200 kèm đúng snapshot đã commit (`applied: false`, `replayed: true`), không hồi/không dịch chuyển/không gia hạn cooldown; thứ tự là validate request+owner → receipt lookup → committed replay → rồi mới `not_downed`/cooldown; key mới khi đang sống vẫn là 409 `not_downed`.
+- **Q3**: cooldown 3 s = 60 tick @20 Hz, tính từ tick apply thành công; từ chối/replay không kéo dài; 422 `death_return_cooldown`, `retryable: true`, và `nextReturnAllowedAtTick` được đóng băng vị trí trong schema (`result.nextReturnAllowedAtTick` luôn có, `error.nextReturnAllowedAtTick` mang deadline cho chính lỗi 422 này).
+- **Q4**: đúng hai gate — route chỉ map khi `P1:AlphaProfile:Enabled` **và** `P1:DeathReturn:Enabled`; OFF thì 404 vì không có route; `AlphaProfile` on + `RestoreHpFixture > 0` là startup failure; `hp = max(1, ceil(effectiveMaxHp*0.5))`, MP giữ absolute rồi clamp, anchor `[18,0]` đọc từ design (không mượn `P1World`), ba penalty bằng 0.
+- **Q5**: **không** chặn return khi actor đang có encounter ACTIVE; không reset boss, không ảnh hưởng owner khác, không grant/abandon/re-register, `attemptId` giữ nguyên, vẫn chạy các quy tắc wipe/no-target owner-scoped sẵn có, và không teleport vào arena.
+- **Q6**: client dùng HP authoritative `<= 0`; không thêm field `downed` vào world đã đóng băng.
+
+Phần còn lại của packet (§1, §2, §3) là contract đã được duyệt và giờ là spec của `DeathReturnRequest`/`DeathReturnResponse` + handler.
 
 Gửi Codex (review) + owner (#87) + Antigravity #85 / Muse #1 (client).
 Nguồn duy nhất: `DESIGN-BM-ALPHA-20261103` (`Implementation/Content/DesignBaselines/ben_mua_alpha_20261103.json`), nhánh `deathReturn`. Packet này **không** áp dụng schema nào và **không** map route nào; handler chỉ land sau khi owner trả lời đủ §5.

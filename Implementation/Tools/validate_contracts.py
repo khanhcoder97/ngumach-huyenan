@@ -573,6 +573,49 @@ def check_encounter_snapshot_v1(example, label, errors):
                 f"{label}.safePads[{index}].applies: pads only apply from phase 3")
 
 
+def check_death_return_request(example, label, errors):
+    if example:
+        errors.append(
+            f"{label}: DEC-DEATH-RETURN-20261105 freezes an empty intent payload; a "
+            "request that names a map, coordinate or anchor is invalid_payload"
+        )
+
+
+def check_death_return_response(example, label, errors):
+    result = example.get("result")
+    if not isinstance(result, dict):
+        return
+    if result.get("applied") and result.get("replayed"):
+        errors.append(f"{label}.result: a commit cannot also be a replay")
+    for low_key, high_key in (("hp", "maxHp"), ("mp", "maxMp")):
+        low = result.get(low_key)
+        high = result.get(high_key)
+        if isinstance(low, int) and isinstance(high, int) and low > high:
+            errors.append(f"{label}.result.{low_key}: exceeds {high_key}")
+    penalties = result.get("penalties")
+    if isinstance(penalties, dict):
+        for key in ("xp", "currency", "durability"):
+            if penalties.get(key) != 0:
+                errors.append(
+                    f"{label}.result.penalties.{key}: the approved decision sets every "
+                    "penalty to zero, so a non-zero value needs a new decision"
+                )
+    cleared = result.get("cleared")
+    if isinstance(cleared, dict):
+        for key in ("inflightCasts", "reservedCounters"):
+            value = cleared.get(key)
+            if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+                errors.append(
+                    f"{label}.result.cleared.{key}: must be a non-negative count of "
+                    "things this return actually cleared"
+                )
+        if result.get("applied") and cleared.get("movementWindowReset") is not True:
+            errors.append(
+                f"{label}.result.cleared.movementWindowReset: a committed return always "
+                "restarts the movement window"
+            )
+
+
 def check_example_semantics(name, example, map_config, errors):
     label = f"{name}{EXAMPLE_SUFFIX}"
     check_map_bounds(example, map_config, label, errors)
@@ -600,6 +643,10 @@ def check_example_semantics(name, example, map_config, errors):
         result = example.get("result")
         if isinstance(result, dict):
             check_inventory(result, f"{label}.result", errors)
+    elif name == "DeathReturnRequest":
+        check_death_return_request(example, label, errors)
+    elif name == "DeathReturnResponse":
+        check_death_return_response(example, label, errors)
 
 
 def write_report(

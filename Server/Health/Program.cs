@@ -254,6 +254,10 @@ builder.Services.AddSingleton<InMemoryCombatV2Service>();
 builder.Services.AddSingleton<MobCombatStateStore>();
 builder.Services.AddSingleton<ICombatRollSource, CombatRngRollSource>();
 builder.Services.AddSingleton<GuardWindowStore>();
+// DEC-DEATH-RETURN-20261105: every player-damage path commits its life/death
+// record through this ledger, so it is a single instance for the process and is
+// keyed by character, never by session.
+builder.Services.AddSingleton<PlayerLifeLedger>();
 builder.Services.AddSingleton<GuardDefenseService>();
 builder.Services.AddSingleton<DashMovementService>();
 builder.Services.AddSingleton<CombatStatusProjection>();
@@ -262,7 +266,21 @@ builder.Services.Configure<DeathReturnOptions>(
     builder.Configuration.GetSection(DeathReturnOptions.SectionName));
 builder.Services.AddSingleton(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<DeathReturnOptions>>().Value);
-builder.Services.AddSingleton<DeathReturnService>();
+// The approved alpha rules decide the anchor, the HP formula and the cooldown;
+// without that profile the service falls back to the labelled DEV fixture shape
+// it has always had (spawn anchor, no restore, no cooldown) and no route exists.
+builder.Services.AddSingleton(serviceProvider => new DeathReturnService(
+    serviceProvider.GetRequiredService<ISessionStore>(),
+    serviceProvider.GetRequiredService<MapBoundsCatalog>(),
+    serviceProvider.GetRequiredService<P1WorldOptions>(),
+    serviceProvider.GetRequiredService<DeathReturnOptions>(),
+    serviceProvider.GetRequiredService<GuardWindowStore>(),
+    serviceProvider.GetRequiredService<CombatTickEngine>(),
+    serviceProvider.GetRequiredService<PlayerLifeLedger>(),
+    serviceProvider.GetRequiredService<IServerClock>(),
+    serviceProvider.GetRequiredService<AlphaProfileOptions>().Enabled
+        ? serviceProvider.GetRequiredService<AlphaDesign>().DeathReturn
+        : null));
 builder.Services.AddSingleton<CombatTickEngine>();
 builder.Services.AddSingleton<LootReceiptLedger>();
 builder.Services.AddSingleton<LootGrantLedger>();
@@ -351,7 +369,10 @@ if (combatV2.Enabled)
 }
 
 var deathReturn = app.Services.GetRequiredService<DeathReturnOptions>();
-DeathReturnOptionsValidator.Validate(deathReturn, worldOptions);
+DeathReturnOptionsValidator.Validate(
+    deathReturn,
+    worldOptions,
+    app.Services.GetRequiredService<AlphaProfileOptions>().Enabled);
 if (deathReturn.Enabled)
 {
     app.Logger.LogWarning(

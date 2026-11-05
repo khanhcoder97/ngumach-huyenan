@@ -2332,7 +2332,8 @@ public static class ServiceSelfCheck
         };
         MobAttackService NewMobAttacks(WorldEntityRegistry registry, CombatDamageFeature feature) =>
             new(registry, feature, mobOptions, new GuardDefenseService(
-                new GuardWindowStore(), feature, new CombatEventStore(new CombatEventStreamOptions())));
+                new GuardWindowStore(), feature, new CombatEventStore(new CombatEventStreamOptions())),
+                new PlayerLifeLedger());
         MobLifecycleEvent Impact(string entityId, string targetCharacterId) =>
             new(entityId, MobBehaviorStates.Telegraph, MobBehaviorStates.Attack,
                 mobClock.UtcNow, targetCharacterId);
@@ -2757,7 +2758,7 @@ public static class ServiceSelfCheck
         });
         var guardDefense = new GuardDefenseService(guardWindows, enabledCombat, guardEvents);
         var guardAttacks = new MobAttackService(
-            guardRegistry, enabledCombat, mobOptions, guardDefense);
+            guardRegistry, enabledCombat, mobOptions, guardDefense, new PlayerLifeLedger());
         var guardStates = new MobCombatStateStore();
         var guardEngine = new CombatTickEngine(
             guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
@@ -3111,7 +3112,7 @@ public static class ServiceSelfCheck
         });
         var lateDefense = new GuardDefenseService(lateWindows, enabledCombat, lateEvents);
         var lateAttacks = new MobAttackService(
-            lateRegistry, enabledCombat, mobOptions, lateDefense);
+            lateRegistry, enabledCombat, mobOptions, lateDefense, new PlayerLifeLedger());
         var lateStates = new MobCombatStateStore();
         var lateEngine = new CombatTickEngine(
             lateRegistry, enabledCombat, combatSkills, lateEvents, lateStates,
@@ -3224,7 +3225,8 @@ public static class ServiceSelfCheck
             raceWindows, geometry, NewDashes(geometry), new ServerClock());
         var raceAttacks = new MobAttackService(
             raceRegistry, enabledCombat, mobOptions,
-            new GuardDefenseService(raceWindows, enabledCombat, raceEvents));
+            new GuardDefenseService(raceWindows, enabledCombat, raceEvents),
+            new PlayerLifeLedger());
         var raceHero = NewGuardHero("RACE");
         var raceResolutions = new System.Collections.Concurrent.ConcurrentBag<MobAttackResolution>();
         RunBarrierParallel(8, index =>
@@ -3416,7 +3418,8 @@ public static class ServiceSelfCheck
             statusWindows, statusCommands, statusDashes);
         var statusAttacks = new MobAttackService(
             guardRegistry, enabledCombat, mobOptions,
-            new GuardDefenseService(statusWindows, enabledCombat, guardEvents));
+            new GuardDefenseService(statusWindows, enabledCombat, guardEvents),
+            new PlayerLifeLedger());
         var statusAccept = statusCommands.Resolve(
             statusHero, statusHero.SessionId,
             new CombatV2Intent(CombatV2Actions.Skill, "SK-MK-01", null, 1, 1, 0, null),
@@ -3503,13 +3506,21 @@ public static class ServiceSelfCheck
             guardRegistry, enabledCombat, combatSkills, returnEvents, returnStates,
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
             returnWindows, geometry, NewDashes(geometry), new ServerClock());
+        // One ledger for the whole return fixture: the mob attack that ends the
+        // life and the return that starts the next one have to look at the same
+        // per-character state, which is how the composition root wires it. The
+        // clock is manual because the approved cooldown is measured in ticks.
+        var returnLives = new PlayerLifeLedger();
+        var returnClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 30, 3, 0, 0, TimeSpan.Zero));
         var returnAttacks = new MobAttackService(
             guardRegistry, enabledCombat, mobOptions,
-            new GuardDefenseService(returnWindows, enabledCombat, returnEvents));
+            new GuardDefenseService(returnWindows, enabledCombat, returnEvents),
+            returnLives);
         DeathReturnService NewDeathReturn(int restoreHp) => new(
             returnSessions, maps, options,
             new DeathReturnOptions { Enabled = true, RestoreHpFixture = restoreHp },
-            returnWindows, returnEngine);
+            returnWindows, returnEngine, returnLives, returnClock, null);
         var deathReturnService = NewDeathReturn(0);
         var downHero = NewGuardHero("RETURN");
         returnSessions.Add(downHero);
@@ -3541,7 +3552,8 @@ public static class ServiceSelfCheck
             badKeyReturn.ErrorCode == DeathReturnErrorCodes.InvalidKey &&
             downHero.X == 40 && downHero.Y == 0 &&
             downHero.Revision == revisionBeforeReturn &&
-            disabledReturn.CancelledEventCount == 0 && aliveReturn.CancelledEventCount == 0,
+            disabledReturn is { InflightCastsCancelled: 0, ReservedCountersCancelled: 0 } &&
+            aliveReturn is { InflightCastsCancelled: 0, ReservedCountersCancelled: 0 },
             $"{disabledReturn.ErrorCode}/{aliveReturn.ErrorCode}/{badKeyReturn.ErrorCode}");
 
         var unknownMapHero = NewGuardHero("RETURN_NOMAP");
@@ -3568,7 +3580,7 @@ public static class ServiceSelfCheck
         Check(
             "death_return.clears_cast_window_and_counter_once",
             firstReturn is { Applied: true, Replayed: false, ErrorCode: null, Hp: 0 } &&
-            firstReturn.CancelledEventCount == 3 &&
+            firstReturn is { InflightCastsCancelled: 1, ReservedCountersCancelled: 1 } &&
             firstReturn.SessionId == downHero.SessionId &&
             firstReturn.Revision == revisionBeforeReturn + 1 &&
             firstReturn.X == options.SpawnX && firstReturn.Y == options.SpawnY &&
@@ -3581,7 +3593,8 @@ public static class ServiceSelfCheck
             afterReturnEvents.Count(stored => stored.Type == CombatEventTypesV2.Cancel) == 2 &&
             afterReturnEvents.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
             lateTickEvents.Count == 0,
-            $"{firstReturn.ErrorCode}/{firstReturn.CancelledEventCount}/{lateTickEvents.Count}");
+            $"{firstReturn.ErrorCode}/{firstReturn.InflightCastsCancelled}/" +
+            $"{firstReturn.ReservedCountersCancelled}/{lateTickEvents.Count}");
 
         var replayReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, deathKey);
         var otherHero = NewGuardHero("RETURN_OTHER");
@@ -3651,6 +3664,213 @@ public static class ServiceSelfCheck
             "death_return_ledger_is_bounded",
             ledgerService.LedgerCount == DeathReturnService.LedgerCapacity,
             $"count={ledgerService.LedgerCount}");
+
+        // DEC-DEATH-RETURN-20261105 answers the six packet questions, and the
+        // approved shape is owned by three numbers the fixture does not have: the
+        // anchor and the HP formula and the cooldown all come from the design, and
+        // the receipt answers a death the damage path actually recorded.
+        var returnAlphaRules = services.GetRequiredService<AlphaDesign>().DeathReturn;
+        var alphaReturnService = new DeathReturnService(
+            returnSessions, maps, options,
+            new DeathReturnOptions { Enabled = true },
+            returnWindows, returnEngine, returnLives, returnClock, returnAlphaRules);
+        var alphaHero = NewGuardHero("RETURN_ALPHA");
+        returnSessions.Add(alphaHero);
+        var alphaLifeBefore = returnLives.LifeVersion(alphaHero.CharacterId);
+        var alphaRevisionBefore = alphaHero.Revision;
+        var alphaMpBefore = alphaHero.Mp;
+        // One reference hit does not end a 100-HP life, so the fixture drops the
+        // actor to the edge and lets the shipped damage commit cross it: the
+        // point under test is that the death record comes from that commit.
+        alphaHero.Hp = 1;
+        returnAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB2", alphaHero)], [alphaHero], tick: 3);
+        var alphaDeath = returnLives.LatestDeath(alphaHero.CharacterId);
+        Check(
+            "death_return.damage_path_records_the_death_it_answers",
+            alphaHero.Hp == 0 &&
+            alphaDeath is not null &&
+            alphaDeath.CharacterId == alphaHero.CharacterId &&
+            alphaDeath.LifeVersion == alphaLifeBefore &&
+            alphaDeath.DeathRevision == alphaHero.Revision &&
+            alphaHero.Revision == alphaRevisionBefore + 1 &&
+            alphaDeath.DeathEventId == PlayerLifeLedger.DeathEventIdFor(
+                alphaHero.CharacterId, alphaLifeBefore, alphaHero.Revision),
+            $"death={alphaDeath?.DeathEventId} life={alphaLifeBefore} " +
+            $"revision={alphaRevisionBefore}->{alphaHero.Revision}");
+
+        var alphaDeathId = alphaDeath!.DeathEventId;
+        var alphaReturn = alphaReturnService.ReturnToAnchor(
+            alphaHero.SessionId, new string('9', 31) + "1");
+        Check(
+            "death_return.alpha_shape_uses_the_design_anchor_formula_and_clock",
+            returnAlphaRules is
+            {
+                MapId: "MAP_BEN_MUA", AnchorX: 18, AnchorY: 0,
+                NewDeathReturnCooldownSeconds: 3, XpPenalty: 0, CurrencyPenalty: 0,
+                DurabilityPenalty: 0
+            } &&
+            alphaReturnService.CooldownTicks == 60 &&
+            alphaReturn is { Applied: true, Replayed: false, ErrorCode: null } &&
+            alphaReturn.X == returnAlphaRules.AnchorX &&
+            alphaReturn.Y == returnAlphaRules.AnchorY &&
+            alphaHero.X == returnAlphaRules.AnchorX &&
+            // max(1, ceil(currentEffectiveMaxHp * 0.5)) with the fixture's 100.
+            alphaReturn.Hp == 50 && alphaHero.Hp == 50 &&
+            // restoreMp keeps the absolute value: nothing refills MP.
+            alphaReturn.Mp == alphaMpBefore && alphaHero.Mp == alphaMpBefore &&
+            alphaReturn.MaxHp == alphaHero.MaxHp &&
+            alphaReturn.DeathEventId == alphaDeathId &&
+            alphaReturn.NewLifeVersion == alphaLifeBefore + 1 &&
+            returnLives.LifeVersion(alphaHero.CharacterId) == alphaLifeBefore + 1 &&
+            alphaReturn.NextReturnAllowedAtTick == returnClock.Tick + 60,
+            $"hp={alphaReturn.Hp}/{alphaReturn.MaxHp} mp={alphaReturn.Mp} " +
+            $"x={alphaReturn.X},{alphaReturn.Y} life={alphaReturn.NewLifeVersion} " +
+            $"until={alphaReturn.NextReturnAllowedAtTick}");
+
+        // A second death inside the window is refused, and a committed replay of
+        // the first key still answers whatever the actor looks like now.
+        var alphaCooldownStartTick = returnClock.Tick;
+        // The first return moved the actor to the anchor, out of the mob's
+        // attack reach, so walk them back before ending the next life.
+        alphaHero.X = 40;
+        alphaHero.Y = 0;
+        alphaHero.Hp = 1;
+        returnAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB2", alphaHero)], [alphaHero], tick: 4);
+        var alphaSecondDeath = returnLives.LatestDeath(alphaHero.CharacterId);
+        var cooldownPosition = alphaHero.X;
+        var cooldownReturn = alphaReturnService.ReturnToAnchor(
+            alphaHero.SessionId, new string('9', 31) + "2");
+        var replayInCooldown = alphaReturnService.ReturnToAnchor(
+            alphaHero.SessionId, new string('9', 31) + "1");
+        Check(
+            "death_return.cooldown_refuses_a_new_death_and_replay_answers_first",
+            alphaSecondDeath is { LifeVersion: 2 } &&
+            alphaSecondDeath!.DeathEventId != alphaDeathId &&
+            cooldownReturn is
+            {
+                Applied: false,
+                Replayed: false,
+                ErrorCode: DeathReturnErrorCodes.Cooldown
+            } &&
+            cooldownReturn.NextReturnAllowedAtTick == alphaCooldownStartTick + 60 &&
+            cooldownReturn.Hp == 0 &&
+            alphaHero.X == cooldownPosition &&
+            replayInCooldown is { Applied: true, Replayed: true } &&
+            replayInCooldown.Hp == alphaReturn.Hp &&
+            replayInCooldown.X == alphaReturn.X &&
+            replayInCooldown.NextReturnAllowedAtTick ==
+                alphaReturn.NextReturnAllowedAtTick &&
+            alphaHero.Revision == alphaSecondDeath!.DeathRevision,
+            $"code={cooldownReturn.ErrorCode} life={alphaSecondDeath?.LifeVersion} " +
+            $"replay={replayInCooldown.Replayed}@{replayInCooldown.Hp}");
+
+        returnClock.Advance(TimeSpan.FromSeconds(3.05));
+        var afterCooldownReturn = alphaReturnService.ReturnToAnchor(
+            alphaHero.SessionId, new string('9', 31) + "3");
+        Check(
+            "death_return.cooldown_expires_on_the_server_tick",
+            afterCooldownReturn is { Applied: true, Replayed: false, Hp: 50 } &&
+            afterCooldownReturn.DeathEventId == alphaSecondDeath!.DeathEventId &&
+            afterCooldownReturn.NewLifeVersion == 3 &&
+            afterCooldownReturn.NextReturnAllowedAtTick == returnClock.Tick + 60,
+            $"code={afterCooldownReturn.ErrorCode} " +
+            $"life={afterCooldownReturn.NewLifeVersion}");
+
+        // Reconnect retention: the decision says the life state belongs to the
+        // character, never to the session, so a fresh session for the same actor
+        // continues the same numbering instead of starting at 1.
+        var reconnectHero = NewGuardHero("RETURN_ALPHA");
+        returnSessions.Add(reconnectHero);
+        var reconnectReturn = alphaReturnService.ReturnToAnchor(
+            reconnectHero.SessionId, new string('9', 31) + "4");
+        Check(
+            "death_return.life_state_follows_the_character_not_the_session",
+            reconnectHero.CharacterId == alphaHero.CharacterId &&
+            reconnectHero.SessionId != alphaHero.SessionId &&
+            reconnectReturn.SessionId == reconnectHero.SessionId &&
+            reconnectReturn.NewLifeVersion == 3 &&
+            reconnectReturn.DeathEventId == alphaSecondDeath!.DeathEventId &&
+            reconnectReturn.ErrorCode == DeathReturnErrorCodes.NotDowned &&
+            returnLives.LifeVersion(reconnectHero.CharacterId) ==
+                reconnectReturn.NewLifeVersion,
+            $"sessions={reconnectHero.SessionId != alphaHero.SessionId} " +
+            $"life={reconnectReturn.NewLifeVersion}");
+
+        var validatorAlphaFixture = false;
+        var validatorAlphaZero = false;
+        var validatorFixtureWithoutAlpha = false;
+        try
+        {
+            DeathReturnOptionsValidator.Validate(
+                new DeathReturnOptions { Enabled = true, RestoreHpFixture = 50 },
+                options, alphaProfileEnabled: true);
+        }
+        catch (InvalidOperationException)
+        {
+            validatorAlphaFixture = true;
+        }
+
+        try
+        {
+            DeathReturnOptionsValidator.Validate(
+                new DeathReturnOptions { Enabled = true, RestoreHpFixture = 0 },
+                options, alphaProfileEnabled: true);
+            validatorAlphaZero = true;
+        }
+        catch (InvalidOperationException)
+        {
+        }
+
+        try
+        {
+            DeathReturnOptionsValidator.Validate(
+                new DeathReturnOptions { Enabled = true, RestoreHpFixture = 50 },
+                options, alphaProfileEnabled: false);
+            validatorFixtureWithoutAlpha = true;
+        }
+        catch (InvalidOperationException)
+        {
+        }
+
+        Check(
+            "death_return.validator_refuses_a_fixture_under_the_alpha_profile",
+            validatorAlphaFixture && validatorAlphaZero && validatorFixtureWithoutAlpha,
+            $"alphaFixture={validatorAlphaFixture} alphaZero={validatorAlphaZero} " +
+            $"fixtureWithoutAlpha={validatorFixtureWithoutAlpha}");
+
+        var idA = PlayerLifeLedger.DeathEventIdFor("CHR_X", 1, 12);
+        var idSameLife = PlayerLifeLedger.DeathEventIdFor("CHR_X", 2, 12);
+        var idSameRevision = PlayerLifeLedger.DeathEventIdFor("CHR_X", 1, 13);
+        var idOtherCharacter = PlayerLifeLedger.DeathEventIdFor("CHR_Y", 1, 12);
+        Check(
+            "player_life.death_event_id_is_canonical_and_derived",
+            System.Text.RegularExpressions.Regex.IsMatch(idA, @"^PDEATH_[0-9a-f]{64}$") &&
+            idA == PlayerLifeLedger.DeathEventIdFor("CHR_X", 1, 12) &&
+            idA != idSameLife && idA != idSameRevision && idA != idOtherCharacter &&
+            idSameLife != idSameRevision,
+            $"id={idA.Length}");
+
+        var ledgerNoDoubleRecord = new PlayerLifeLedger();
+        var repeatAt = returnClock.UtcNow;
+        var repeatFirst = ledgerNoDoubleRecord.RecordDamageCommit(
+            "CHR_REPEAT", 10, 0, 7, repeatAt);
+        var repeatSecond = ledgerNoDoubleRecord.RecordDamageCommit(
+            "CHR_REPEAT", 0, 0, 8, repeatAt);
+        var repeatHeal = ledgerNoDoubleRecord.RecordResurrectionCommit(
+            "CHR_REPEAT", 0, 50);
+        var repeatAfterHeal = ledgerNoDoubleRecord.RecordDamageCommit(
+            "CHR_REPEAT", 50, 0, 9, repeatAt);
+        Check(
+            "player_life.one_transition_one_record_and_one_life_advance",
+            repeatFirst is { LifeVersion: 1, DeathRevision: 7 } &&
+            repeatSecond is null &&
+            repeatHeal == 2 &&
+            ledgerNoDoubleRecord.LifeVersion("CHR_REPEAT") == 2 &&
+            repeatAfterHeal is { LifeVersion: 2, DeathRevision: 9 } &&
+            repeatAfterHeal!.DeathEventId != repeatFirst!.DeathEventId,
+            $"first={repeatFirst?.DeathEventId} second={repeatSecond?.DeathEventId}");
 
         // The non-death half of the same rule: a window belongs to the instance it
         // opened on, so an actor who changes map with no hit and no cast in
@@ -5334,9 +5554,10 @@ public static class ServiceSelfCheck
             new P1CombatDamageOptions { Enabled = false },
             services.GetRequiredService<IConfiguration>(),
             services.GetRequiredService<IHostEnvironment>());
-        var waveTrial = new AlphaWaveTrialService(alphaDesign, waveRecording, waveCombatOn);
+        var waveTrial = new AlphaWaveTrialService(
+            alphaDesign, waveRecording, waveCombatOn, new PlayerLifeLedger());
         var waveTrialNoDamage = new AlphaWaveTrialService(
-            alphaDesign, waveRecording, waveCombatOff);
+            alphaDesign, waveRecording, waveCombatOff, new PlayerLifeLedger());
 
         // Enter at tick 1000 (cycle opens, impact 1024), leave during the
         // warning, and be outside at the impact frame: one dodge credit.
@@ -5499,7 +5720,7 @@ public static class ServiceSelfCheck
                 .ToArray()
         };
         var waveInert = new AlphaWaveTrialService(
-            waveNoHazardDesign, waveRecording, waveCombatOn);
+            waveNoHazardDesign, waveRecording, waveCombatOn, new PlayerLifeLedger());
         var waveInertActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_INERT");
         waveInertActor.X = 144;
         waveInertActor.Y = 0;
@@ -6469,7 +6690,8 @@ public static class ServiceSelfCheck
                 new GuardDefenseService(
                     new GuardWindowStore(),
                     feature,
-                    new CombatEventStore(new CombatEventStreamOptions())));
+                    new CombatEventStore(new CombatEventStreamOptions())),
+                new PlayerLifeLedger());
             return (service, stub, questBoss, eventBoss);
         }
 
@@ -6770,7 +6992,8 @@ public static class ServiceSelfCheck
             new GuardDefenseService(
                 new GuardWindowStore(),
                 enabledCombat,
-                new CombatEventStore(new CombatEventStreamOptions())));
+                new CombatEventStore(new CombatEventStreamOptions())),
+            new PlayerLifeLedger());
         var bossIntEngine = new CombatTickEngine(
             bossIntRegistry,
             enabledCombat,
@@ -7018,7 +7241,8 @@ public static class ServiceSelfCheck
             new GuardDefenseService(
                 new GuardWindowStore(),
                 enabledCombat,
-                new CombatEventStore(new CombatEventStreamOptions())));
+                new CombatEventStore(new CombatEventStreamOptions())),
+            new PlayerLifeLedger());
         var audienceProjection = new WorldAoiProjectionService(
             audienceRegistry,
             new MobLifecycleService(

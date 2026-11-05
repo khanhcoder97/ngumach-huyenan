@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/contracts/p1/DeathReturnRequest.schema.json",
+  "title": "P1 death-return request payload",
+  "description": "Payload of POST /p1/actor/death-return (DEC-DEATH-RETURN-20261105). The envelope keeps the shared Envelope shape and the payload is deliberately empty: the caller may only express the intent to return. No map, coordinate, anchor record or destination field exists here, and a request that adds one is rejected as invalid_payload, so a client can never choose where the server puts it. The route is mapped only while P1:AlphaProfile:Enabled and P1:DeathReturn:Enabled are both true; otherwise the path does not exist and the request answers 404.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [],
+  "properties": {}
+}

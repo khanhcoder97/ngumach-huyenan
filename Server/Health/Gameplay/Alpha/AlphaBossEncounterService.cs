@@ -100,6 +100,7 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
     private readonly WorldEntityRegistry _entities;
     private readonly CombatDamageFeature _combat;
     private readonly GuardDefenseService _guards;
+    private readonly PlayerLifeLedger _lives;
     private readonly double _phaseNpcX;
     private readonly double _phaseNpcY;
     private readonly string _phaseNpcId;
@@ -113,13 +114,16 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
         IQuestService quests,
         WorldEntityRegistry entities,
         CombatDamageFeature combat,
-        GuardDefenseService guards)
+        GuardDefenseService guards,
+        PlayerLifeLedger lives)
     {
         ArgumentNullException.ThrowIfNull(design);
         ArgumentNullException.ThrowIfNull(quests);
         ArgumentNullException.ThrowIfNull(entities);
         ArgumentNullException.ThrowIfNull(combat);
         ArgumentNullException.ThrowIfNull(guards);
+        ArgumentNullException.ThrowIfNull(lives);
+        _lives = lives;
         var boss = design.Boss;
         _mapId = design.Scope.MapId;
         _bossRecordId = design.QuestRules.P00_05_BossRecordId;
@@ -717,6 +721,9 @@ public sealed class AlphaBossEncounterService : ICombatBossBridge
                     hpAfter = Math.Max(0, hpBefore - damage);
                     owner.Hp = hpAfter;
                     owner.Revision++;
+                    _lives.RecordDamageCommit(
+                        owner.CharacterId, hpBefore, hpAfter, owner.Revision,
+                        DateTimeOffset.UtcNow);
                     _guards.CommitConfirmation(
                         owner.CharacterId, incoming.WindowCastId, boss, tick,
                         DateTimeOffset.UtcNow, hpAfter > 0);
