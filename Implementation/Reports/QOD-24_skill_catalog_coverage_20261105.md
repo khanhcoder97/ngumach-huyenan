@@ -92,7 +92,7 @@ Không phải double-count: bundle **không** có archetype riêng cho id `_ELIT
 Ba chỗ hai nguồn không nói cùng điều:
 
 1. CSV cho `move_speed_multiplier` và `level_delta` theo từng entity; bundle chỉ có một cấp tham chiếu (L5) và speed lấy từ archetype, không có đường nào để nhân.
-2. CSV **không có cột defense multiplier** ⇒ nếu chuyển sang CSV thì defense elite = 4.8 (bằng base), tức giảm ~43% so với đang chạy.
+2. CSV **không có cột defense multiplier** ⇒ nếu chuyển sang CSV thì defense elite = 4.8 (bằng base), tức giảm 44,4% so với đang chạy ((8,64-4,8)/8,64).
 3. CSV khai `loot_table_id` (`LT_MOB_*_ELITE`), `loot_delta "100% one pool material; 5% recipe/cache where explicitly configured"`, `respawn_delta_seconds 0`, `pvp_allowed false`. Các `LT_*` đã có trong `loot_recipe_v1.json` (đã nạp); `loot_delta` và `pvp_allowed` thì không nơi nào dùng.
 
 **Đây là quyết định cân bằng, không phải thứ tôi tự sửa được.** Chọn CSV nghĩa là đổi toàn bộ số mà mob-combat e2e và các oracle (`elite shore stalker 33`, `counter 34`) đang chốt; chọn `P1_Design_Resolution` nghĩa là bảng 9 dòng kia chỉ đúng cho giai đoạn sau P1. Tôi cần một trong hai, kèm: **elite có tính theo `level_delta` không**, và **defense elite lấy từ đâu**.
