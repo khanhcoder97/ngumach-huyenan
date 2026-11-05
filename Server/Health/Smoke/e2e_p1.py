@@ -826,6 +826,29 @@ def wait_for(deadline_seconds, probe):
         time.sleep(0.05)
 
 
+def wait_for_ticks(max_ticks, probe, session_id, observed=None):
+    """Conditional wait bounded by the server's own tick, reporting how many it spent.
+
+    ServerClock.TicksPerSecond is 20 and the tick is computed from
+    Stopwatch.GetElapsedTime, so a tick bound and a wall-clock bound measure the same
+    physical time. The point of naming it in ticks is that the number has to come from
+    the simulation (HP divided by the swing, over the attack cooldown, at the declared
+    rate) instead of being typed as a comfortable seconds literal - and that a give-up
+    then says how far from its own bound it was.
+    """
+    start = v2_snapshot(session_id)[3]
+    while True:
+        outcome = probe()
+        now = v2_snapshot(session_id)[3]
+        if observed is not None:
+            observed["ticks"] = now - start
+        if outcome:
+            return outcome
+        if now - start >= max_ticks:
+            return None
+        time.sleep(0.05)
+
+
 def walk_to(session_id, character_id, sequence, target_x, target_y,
             axes=("y", "x")):
     """Walk 1,5-WU steps to a grid-aligned target, one axis at a time (the
@@ -1667,6 +1690,7 @@ def alpha_revive_profile():
         f"at ({self_state.get('x')},{self_state.get('y')}))")
 
     walk_failures = []
+    death_ticks = {}
     for _ in range(40):
         _, live_state, _, _ = v2_snapshot(session)
         if (live_state.get("hp") or 0) <= 0:
@@ -1679,8 +1703,22 @@ def alpha_revive_profile():
     # `hp` must be compared directly: writing `state.get("hp") or 1` turns a real 0 into
     # a 1 and makes "is the actor down?" unanswerable, which is exactly how this leg
     # reported "never ended the actor's life" while the actor lay at hp 0.
-    downed = wait_for(150.0, lambda: v2_snapshot(session)[1].get("hp") == 0)
+    downed = wait_for_ticks(
+        # Sourced bound, then widened so a shared runner cannot manufacture a give-up:
+        # 60 starting HP under DESIGN-BM-ALPHA-20261103 divided by the CARPLING
+        # swing this configuration produces (10 per hit, the same number the mob-combat
+        # profile pins) is 6 swings, and the group's attack cooldown is 2 s = 40 ticks at
+        # the declared 20 Hz. Six swings over three mobs in one group is ~80 ticks of
+        # pure damage; 2400 ticks (120 s) is the ceiling the leg allows, and it reports
+        # how many it actually used rather than silently trusting the stopwatch.
+        2400, lambda: v2_snapshot(session)[1].get("hp") == 0, session, death_ticks)
     _, end_state, end_entities, _ = v2_snapshot(session)
+    # Printed, never asserted: the margin between the bound this leg allowed and the
+    # ticks the shipped damage actually needed is the number a future reader needs to
+    # know whether 2400 is generous or barely enough, and it must not become a check
+    # whose total drifts with runner speed.
+    print(f"alpha-revive: downed after {death_ticks.get('ticks')} ticks of the "
+          f"2400 allowed (actor hp {end_state.get('hp')} of {end_state.get('maxHp')})")
     mob = end_entities.get("ENT_MAN_BM_SPAWN_BM_01") or {}
     smoke_p1.check(downed is not None,
                    "the road group never ended the actor's life "
@@ -1688,6 +1726,7 @@ def alpha_revive_profile():
                    f"hp {end_state.get('hp')} of {end_state.get('maxHp')}; "
                    f"group row state={mob.get('state')} hp={mob.get('hp')} "
                    f"at ({mob.get('x')},{mob.get('y')}); "
+                   f"waited {death_ticks.get('ticks')} of 2400 allowed ticks; "
                    f"walk notes {walk_failures[-2:]})")
 
     sequence, revived = alpha_ensure_alive(session, character, sequence,
