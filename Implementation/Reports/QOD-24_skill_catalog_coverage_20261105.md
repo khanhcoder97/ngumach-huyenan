@@ -77,6 +77,26 @@ Loại: **A** = thiếu telegraph điểm; **B** = server chưa có subsystem; *
 5. **Party/guild.** `spec:89` ("không hồi mục tiêu ngoài party/guild"), `spec:95` ("chỉ party trong cùng encounter") chặn HB-03/HB-04/HB-06 ở phía *điều kiện*, không chặn row. Server chưa có route party nào (Q7) → tôi để nguyên, không giả danh sách party.
 6. **Schema không biểu diễn được hình học.** Options cho `rangeWu` đơn: thêm `effectRadiusWu` + `castRangeWu`, thêm `durationSeconds` cho trap/zone, thêm mảng `hits[]` cho multi-hit. Đây là đổi schema đã đóng băng → chỉ làm khi được duyệt, và tôi sẽ viết packet trước khi động vào file.
 
+## 4b. Elite: hai nguồn **xung đột về số**, và tôi không tự chọn
+
+Đo lúc `c4fbe79`, không suy diễn:
+
+| cái gì | nguồn A (đang chạy) | nguồn B (chưa được đọc) |
+|---|---|---|
+| where | `Implementation/Content/Runtime/combat_mob_stats_v1.json` → `elite: {hp 6.0, attack 1.6, defense 1.8}`, cite `P1_Design_Resolution_20261029_vi.md:29` ("Cá Linh elite (override, không ID mới) = 1152 / 24 / 7,56") | `docs/production/Elite_Variant_Data_vi.csv` — **9 dòng**, 3 profile (`elite_v1/v2/v3`): `hp_multiplier 1.65–2.0`, `damage_multiplier 1.2–1.3`, `move_speed_multiplier 1.0–1.08`, `level_delta 2` |
+| cách áp dụng | `CombatTickEngine.cs:914-926` và `MobAttackService.cs:233-234`: id kết thúc `_ELITE` ⇒ archetype = id bỏ hậu tố, rồi nhân **một bộ số nhân toàn cục** | không có loader nào đọc file này |
+| kết quả cho elite **đang spawn thật ở Bến Mưa** (`MOB_SHORE_STALKER_ELITE`, base L5 hp 216 / attack 23 / defense 4.8) | hp **1296**, attack **36.8**, defense **8.64** | hp **388.8**, attack **28.75**, defense **4.8**, và **cấp +2** (base phải lấy ở L7, còn bundle đang theo `levelPolicy: REFERENCE_L5`) |
+
+Không phải double-count: bundle **không** có archetype riêng cho id `_ELITE` (ba archetype: CARPLING / WATERROOT / SHORE_STALKER), nên mỗi elite chỉ nhân một lần. Xung đột thật nằm ở **trị số** — elite mà người chơi đang đánh ở alpha dày HP gấp **3,3 lần** so với bảng production CSV.
+
+Ba chỗ hai nguồn không nói cùng điều:
+
+1. CSV cho `move_speed_multiplier` và `level_delta` theo từng entity; bundle chỉ có một cấp tham chiếu (L5) và speed lấy từ archetype, không có đường nào để nhân.
+2. CSV **không có cột defense multiplier** ⇒ nếu chuyển sang CSV thì defense elite = 4.8 (bằng base), tức giảm ~43% so với đang chạy.
+3. CSV khai `loot_table_id` (`LT_MOB_*_ELITE`), `loot_delta "100% one pool material; 5% recipe/cache where explicitly configured"`, `respawn_delta_seconds 0`, `pvp_allowed false`. Các `LT_*` đã có trong `loot_recipe_v1.json` (đã nạp); `loot_delta` và `pvp_allowed` thì không nơi nào dùng.
+
+**Đây là quyết định cân bằng, không phải thứ tôi tự sửa được.** Chọn CSV nghĩa là đổi toàn bộ số mà mob-combat e2e và các oracle (`elite shore stalker 33`, `counter 34`) đang chốt; chọn `P1_Design_Resolution` nghĩa là bảng 9 dòng kia chỉ đúng cho giai đoạn sau P1. Tôi cần một trong hai, kèm: **elite có tính theo `level_delta` không**, và **defense elite lấy từ đâu**.
+
 ## 5. Việc kế tiếp trong Q4, không cần chờ ai
 
 Thứ tự tôi sẽ đi nếu không có trả lời mới: (a) tách vocabulary loader/wire thành hai contract test có tên rõ (đã xong một phần); (b) nạp tiếp các row **chỉ thiếu** telegraph khi câu 1 có trả lời; (c) `status_immunity_v1.json` + loader + validator nếu câu 2 được duyệt, vì nó mở khoá cả TC-04/HB-02/AD-04; (d) phần combat/AI còn lại của Q4 không phụ thuộc số: respawn, group credit, loot authoritative đã có đường đi và đang đo được.
