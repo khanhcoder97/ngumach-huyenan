@@ -7,7 +7,7 @@ Sửa finding 2 (LF/CRLF) và finding 4 (22 binary raw → LFS) của review PR 
 24 file binary từng lưu raw nay là LFS pointer; text delivery đã LF từ trước
 (renormalize là no-op về nội dung); manifest tái sinh, kiểm chứng lại PASS.
 
-## Trạng thái GitHub (đọc qua public API + connector read-only, 2026-11-05 21:xx JST)
+## Trạng thái GitHub (đọc qua public API + connector read-only, 2026-11-05 20:45 JST)
 
 - Issue #116: vẫn OPEN, nay 9 comment. MỚI: comment `6656610885`
   (2026-11-05 11:16:36Z, khanhcoder97) — **PR #120 đã merge vào integration
@@ -178,8 +178,12 @@ Khắc phục, không giấu lỗi:
   `.gitattributes` vì ngoài scope. Ai clone riêng nhánh media sẽ thấy OGV
   là pointer text cho tới khi PR #119 merge. Sau merge, attribute có hiệu
   lực và OGV resolve bình thường (đã chứng minh bằng test-merge + pull).
-- **Fresh clone toàn bộ từ GitHub (remote) chưa chạy ở lượt này** — cần sau
-  push, khi 24 object LFS mới đã lên server. Ghi vào report commit sau push.
+- Fresh clone toàn bộ từ GitHub (remote) ĐÃ CHẠY sau push (xem mục báo cáo
+  checkpoint 15 bên dưới): clone mới `68d6e52` từ github.com, LFS 1713/1713
+  object tải về (275,7 MB); lần chạy đầu runtime verifier chỉ 1 mismatch duy
+  nhất là OGV còn pointer (đúng caveat pre-merge); sau khi đặt byte OGV tải
+  từ server vào worktree: runtime verifier PASS 0 mismatch, source validator
+  PASS 0 mismatch.
 - **Chưa sửa finding 3 (CIN_002_S02):** tay băng chạm nước + crop cắt
   đầu/mặt, và yêu cầu keyframe 16:9 riêng từng shot — khối tiếp theo
   (Gói 30 item 3).
@@ -193,6 +197,35 @@ Khắc phục, không giấu lỗi:
   làm opening. Loudness/true-peak không đo lại lượt này (lấy CP02/04/07/08).
   Không mix PASS, không nghe thử bằng tai (D2). Cửa sổ campaign vẫn
   PROPOSED cho final (D1 chỉ mở VO nháp).
+
+## Trạng thái repo
+
+- Nhánh media: commit fix `68d6e52` ĐÃ PUSH (ls-remote xác nhận; scope audit
+  707 paths, 0 violations, base integration HEAD `a84ce590`). PR #119 nay có
+  22 commit.
+- Chỉ 32 file trong commit này: 24 conversion + 3 script nhãn + manifest
+  cine tái sinh + 2 JSON kiểm chứng + 2 file báo cáo checkpoint 15. Không
+  đụng audio, timing, SRT, panel hay animatic (nội dung byte-identical).
+
+## Kiểm chứng remote sau push (fresh clone từ github.com)
+
+- Clone mới nhánh media tại `68d6e52`, `git lfs install` local,
+  `reset --hard`: LFS tải 1713/1713 object (275,7 MB). OGV ngay sau checkout
+  vẫn là pointer text (đúng caveat: nhánh media chưa có quy tắc `*.ogv`);
+  panel PNG + MP4 là byte thật.
+- `git lfs fetch --include` cho OGV: object `7498a8f1…` (1.852.526 byte) CÓ
+  trên server, tải về store thành công; smudge tay ra đúng SHA. `git lfs pull`
+  không tự resolve OGV vì git-lfs không quản file này khi thiếu attribute —
+  đây là hành vi đúng của pre-merge, không phải object thiếu.
+- Runtime verifier trên remote clone: lần đầu đúng 1 mismatch (OGV pointer);
+  sau khi đặt byte OGV tải từ server vào worktree: **PASS, 0 mismatch**
+  (545 audio, 3 animatic, 20 scene, 20 timing, 20 SRT).
+- Source validator trên remote clone: **PASS, 0 mismatch** (1093 audio,
+  20 scene, 21 cue, 12 panel, 3 VO take).
+- Clone kiểm chứng đã xóa sau khi xong (`/home/hatch/.cp15-fresh-remote`).
+  Lưu ý môi trường: `/tmp` (tmpfs 512 MB) đã đầy trong lần thử clone đầu
+  (lỗi "no space left on device" khi smudge) — đã dọn các clone cũ và
+  chuyển sang đĩa `/home/hatch` (130 GB trống) để kiểm chứng.
 
 ## Khối tiếp theo
 
