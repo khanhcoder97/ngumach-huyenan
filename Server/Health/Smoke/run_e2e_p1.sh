@@ -21,6 +21,10 @@
 #                                                  # profile then asserts which routes
 #                                                  # that gate maps and that every other
 #                                                  # gated route stays unmapped
+#   ./Server/Health/Smoke/run_e2e_p1.sh restart     # work order 29 Q8 restart HTTP
+#                                                  # proof: loop in process #1, stop the
+#                                                  # owned PID, assert nothing survived
+#                                                  # in process #2 on the same port
 #   ./Server/Health/Smoke/run_e2e_p1.sh audience-gateoff
 #                                                  # the issue #96 shape: v2 world
 #                                                  # and mob AI ON, P1:CombatDamage
@@ -45,11 +49,114 @@ cleanup() {
     kill "$(cat "${PID_FILE}")" 2>/dev/null || true
     wait "$(cat "${PID_FILE}")" 2>/dev/null || true
   fi
+  if [ -n "${E2E_EVIDENCE:-}" ] && [ -f "${E2E_EVIDENCE}" ]; then
+    rm -f "${E2E_EVIDENCE}"
+  fi
 }
 trap cleanup EXIT
 
+# Stop the process this runner started and prove the port is really free before the
+# next boot: a restart proof that races a still-listening socket proves nothing.
+stop_owned_pid() {
+  local pid="$1"
+  kill "${pid}" 2>/dev/null || true
+  for _ in $(seq 1 15); do
+    curl --silent --fail "${BASE_URL}/health" > /dev/null 2>&1 || return 0
+    sleep 1
+  done
+  # On Windows the bash job id is not the socket owner's pid, so resolve whatever is
+  # still answering on the port this runner chose and stop that. The port was free
+  # before the boot above, so the listener can only be the server this runner started.
+  if command -v taskkill > /dev/null 2>&1 && command -v netstat > /dev/null 2>&1; then
+    local listener
+    listener="$(netstat -ano -p tcp 2>/dev/null |
+      awk -v port=":${PORT}" '$2 ~ port"$" && $4 == "LISTENING" { print $5; exit }')"
+    if [ -n "${listener}" ]; then
+      echo "==> stopping socket owner ${listener} on port ${PORT}"
+      taskkill //PID "${listener}" //F > /dev/null 2>&1 || true
+    fi
+  fi
+  for _ in $(seq 1 15); do
+    curl --silent --fail "${BASE_URL}/health" > /dev/null 2>&1 || return 0
+    sleep 1
+  done
+  echo "==> port ${PORT} still answering after stopping owned PID ${pid}" >&2
+  return 1
+}
+
+wait_healthy() {
+  for attempt in $(seq 1 60); do
+    if curl --silent --fail "${BASE_URL}/health" > /dev/null 2>&1; then
+      echo "==> Server healthy after ${attempt}s"
+      return 0
+    fi
+    if ! kill -0 "$1" 2>/dev/null; then
+      echo "==> Server exited during startup"
+      cat "${LOG_FILE}"
+      return 1
+    fi
+    sleep 1
+  done
+  echo "==> Server did not become healthy within 60s"
+  cat "${LOG_FILE}"
+  return 1
+}
+
+# Work order 29 Q8: "Phải có restart HTTP proof trước khi gọi Health durable". Two
+# successive processes on one port, and the runner owns and stops both PIDs, so the
+# pair is a real process restart rather than a second session. The gate set is dev's:
+# the loop has to write quest state, currency, an item and an equipped slot before the
+# process dies, because those are exactly the stores the persistence proposal names.
+run_restart_proof() {
+  E2E_EVIDENCE="$(mktemp)"
+  export E2E_EVIDENCE
+
+  echo "==> Starting server #1 (restart proof)"
+  P1__QuestAccept__Enabled=true \
+  P1__Interact__Enabled=true \
+  P1__QuestTurnIn__Enabled=true \
+  P1__Equipment__Enabled=true \
+    dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
+  PID1=$!
+  echo "${PID1}" > "${PID_FILE}"
+  wait_healthy "${PID1}" || exit 1
+
+  python3 "${SCRIPT_DIR}/e2e_p1.py" "${BASE_URL}" restart-before || exit 1
+
+  echo "==> Stopping owned PID ${PID1}"
+  stop_owned_pid "${PID1}" || exit 1
+  wait "${PID1}" 2>/dev/null || true
+
+  echo "==> Starting server #2 (same port, fresh process)"
+  P1__QuestAccept__Enabled=true \
+  P1__Interact__Enabled=true \
+  P1__QuestTurnIn__Enabled=true \
+  P1__Equipment__Enabled=true \
+    dotnet "${HEALTH_BIN}" --urls "${BASE_URL}" > "${LOG_FILE}" 2>&1 &
+  PID2=$!
+  echo "${PID2}" > "${PID_FILE}"
+  wait_healthy "${PID2}" || exit 1
+
+  if [ "${PID1}" = "${PID2}" ]; then
+    echo "==> restart proof needs two distinct processes (got PID ${PID1})" >&2
+    exit 1
+  fi
+
+  python3 "${SCRIPT_DIR}/e2e_p1.py" "${BASE_URL}" restart-after || {
+    echo "==> restart-after failed; server #2 log tail:"
+    tail -n 40 "${LOG_FILE}"
+    exit 1
+  }
+  echo "==> E2E PASS (profile=restart pid1=${PID1} pid2=${PID2})"
+  exit 0
+}
+
 echo "==> Building server"
 dotnet build "${ROOT}/Server/Health/Health.csproj" --configuration Release || exit 1
+
+if [ "${PROFILE}" = "restart" ]; then
+  run_restart_proof
+fi
 
 echo "==> Starting server (profile=${PROFILE}, port=${PORT})"
 if [ "${PROFILE}" = "dev" ]; then

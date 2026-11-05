@@ -148,3 +148,20 @@ jobs:
         env:
           E2E_GATE: ${{ matrix.gate }}
         run: bash Server/Health/Smoke/run_e2e_p1.sh gate-one
+  # Work order 29 Q8: "Phải có restart HTTP proof trước khi gọi Health durable". One job,
+  # two successive server processes on one port: the runner owns and stops the first PID,
+  # waits for the port to stop answering, boots a second process and hands it the evidence
+  # file. Nothing in the suite proved this before - README only claimed "lost on restart".
+  e2e-restart:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run the two-process restart HTTP proof
+        run: bash Server/Health/Smoke/run_e2e_p1.sh restart

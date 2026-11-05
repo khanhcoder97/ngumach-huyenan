@@ -83,10 +83,23 @@ fails on anything else.
             still real, and the cast the route still accepts resolves into no
             event naming that mob.
 
-Usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client|alpha-p00|audience-gateoff|death-return|gate-one>
-       (gate-one also reads the E2E_GATE environment variable for the leg name)
+  restart-before / restart-after — the restart HTTP proof work order 29 Q8
+            requires before this server may be called durable. `run_e2e_p1.sh restart`
+            boots a process, runs the whole P00-01 loop in it (accept, three package
+            claims, turn-in reward, equip), stops the PID it owns, boots a second process
+            on the same port and hands the evidence file to this phase. The old session
+            ids must be unknown, the same character must read exactly as a cold account,
+            and a replayed idempotency key must be re-evaluated against fresh state
+            rather than returning the stored receipt — and the loop must still run from
+            the cold store, so "nothing survived" is not confused with "broken".
+
+Usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client|alpha-p00|audience-gateoff|death-return|gate-one|restart-before|restart-after>
+       (gate-one also reads the E2E_GATE environment variable for the leg name;
+       restart-before/restart-after read E2E_EVIDENCE for the file that carries what
+       the first process proved to the second one)
 """
 
+import json
 import os
 import sys
 import threading
@@ -2269,11 +2282,253 @@ def audience_gateoff_profile():
         f"cast=accepted_but_unresolved npc=INVULNERABLE node=AVAILABLE")
 
 
+# Work order 29 Q8 freezes "Phải có restart HTTP proof trước khi gọi Health durable":
+# before this server may be called durable, the wire has to show what a restart actually
+# costs. Nothing in the suite proved it - README only asserted "lost on restart" in
+# prose. `run_e2e_p1.sh restart` runs the two phases below against two successive
+# processes on one port and stops the PID it owns between them, so the pair is a real
+# process restart, not a new session.
+RESTART_CHARACTER = "CHR_E2E_RESTART"
+RESTART_TURN_IN_REQUEST = "b1" * 16
+RESTART_TURN_IN_KEY = "b2" * 16
+RESTART_EQUIP_REQUEST = "b3" * 16
+RESTART_EQUIP_KEY = "b4" * 16
+# The cold-start shape, pinned as a literal (the same values the runtime smoke checks
+# read at lines asserting revision 0 / 1). Comparing a restart against a measured
+# baseline would only prove the server agrees with itself.
+COLD_QUEST_ROW = ["P00-01", "AVAILABLE", 1, "STEP_P00_01_PACKAGES",
+                  {"OBJ_P00_01_PACKAGES": 0}]
+COLD_INVENTORY = {"inventoryRevision": 0, "items": [], "currencies": []}
+
+
+def quest_rows(session_id):
+    status, _, body = smoke_p1.call("GET", f"/p1/quests/{session_id}")
+    smoke_p1.check(status == 200, f"quests read returned {status}: {body}")
+    return [[row.get("questId"), row.get("state"), row.get("revision"),
+             row.get("stepId"), row.get("objectiveCounters")]
+            for row in (body.get("result") or [])]
+
+
+def inventory_rows(session_id):
+    status, _, body = smoke_p1.call("GET", f"/p1/inventory/{session_id}")
+    smoke_p1.check(status == 200, f"inventory read returned {status}: {body}")
+    snapshot = body.get("result") or {}
+    # `instanceId` is deliberately left out of the compared shape: ids are minted per
+    # process, so a counter-based id could come back equal without anything surviving.
+    # Everything that would have to be persisted *is* compared.
+    return {
+        "inventoryRevision": snapshot.get("inventoryRevision"),
+        "items": sorted(
+            [item.get("templateId"), item.get("stack"), item.get("location"),
+             item.get("slot"), item.get("durability"), item.get("version")]
+            for item in (snapshot.get("items") or [])),
+        "currencies": sorted(
+            [row.get("currencyId"), row.get("amount")]
+            for row in (snapshot.get("currencies") or [])),
+    }
+
+
+def restart_evidence_path():
+    path = os.environ.get("E2E_EVIDENCE", "")
+    if not path:
+        fail("restart phases need E2E_EVIDENCE pointing at the evidence file")
+    return path
+
+
+def restart_before_profile():
+    path = restart_evidence_path()
+    smoke_p1.check(
+        smoke_p1.call("GET", "/health")[0] == 200, "health check failed")
+
+    # The whole P00-01 loop, so every store the persistence proposal wants to make
+    # durable is actually written while this process is alive.
+    session, sequence = prepare_ready_actor(RESTART_CHARACTER)
+    smoke_p1.check(quest_rows(session)[0] != COLD_QUEST_ROW,
+                   "the loop did not write quest state; the restart proof would be vacuous")
+    # Package 3 sits past the blocked rect x in [45,46]; on the shipped
+    # SYNTHETIC_TEST_ONLY bundle the walk crosses it. If a REVIEWED bundle lands, this
+    # walk fails with the offending step named instead of quietly routing around it.
+    sequence, _ = walk_east(session, RESTART_CHARACTER, sequence, 47.5)
+    collect_package(session, RESTART_CHARACTER, sequence, "ENT_MAN_BM_OBJ_BM_PACKAGE_03",
+                    "10" * 16, "11" * 16, 3, "READY_TO_TURN_IN", 5)
+    sequence, _ = walk_east(session, RESTART_CHARACTER, sequence, TURN_IN_NPC_X)
+
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/quests/turnin",
+        smoke_p1.turnin_envelope("P00-01", "NPC_TA_VAN_KHANH",
+                                 character_id=RESTART_CHARACTER,
+                                 request_id=RESTART_TURN_IN_REQUEST,
+                                 idempotency_key=RESTART_TURN_IN_KEY),
+        {"X-Session-ID": session})
+    smoke_p1.check(status == 200, f"turn-in returned {status}: {body}")
+    turn_in = body.get("result") or {}
+    smoke_p1.check(
+        (turn_in.get("questState") or {}).get("state") == "COMPLETED" and
+        turn_in.get("unlocks") == ["P00-02"],
+        f"turn-in result {str(turn_in)[:200]}")
+
+    before = inventory_rows(session)
+    smoke_p1.check(
+        before["currencies"] == [["COIN", 20]] and len(before["items"]) == 1,
+        f"turn-in rewards not on the read model: {before}")
+
+    status, _, body = smoke_p1.call("GET", f"/p1/inventory/{session}")
+    smoke_p1.check(status == 200, f"inventory read returned {status}: {body}")
+    chest = ((body.get("result") or {}).get("items") or [{}])[0]
+    revision = (body.get("result") or {}).get("inventoryRevision")
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/inventory/equip",
+        smoke_p1.equip_envelope(chest.get("instanceId"), revision,
+                                character_id=RESTART_CHARACTER,
+                                request_id=RESTART_EQUIP_REQUEST,
+                                idempotency_key=RESTART_EQUIP_KEY),
+        {"X-Session-ID": session})
+    smoke_p1.check(status == 200, f"equip returned {status}: {body}")
+
+    after = inventory_rows(session)
+    mutated = quest_rows(session)
+    smoke_p1.check(
+        after != before and mutated[0] != COLD_QUEST_ROW and
+        mutated[0][1] == "COMPLETED" and after["items"][0][2] == "EQUIPPED",
+        f"the pre-restart state is not the mutated state: {mutated[0]} {after}")
+
+    with open(path, "w", encoding="utf-8") as handle:
+        json.dump({
+            "characterId": RESTART_CHARACTER,
+            "sessionId": session,
+            "turnInRequestId": RESTART_TURN_IN_REQUEST,
+            "turnInKey": RESTART_TURN_IN_KEY,
+            "equipRequestId": RESTART_EQUIP_REQUEST,
+            "equipKey": RESTART_EQUIP_KEY,
+            "chestInstanceId": chest.get("instanceId"),
+            "quests": mutated,
+            "inventory": after,
+        }, handle)
+
+    print(f"profile=restart-before session={session} quest_row={mutated[0][:3]} "
+          f"inventory={after} evidence={path}")
+
+
+def restart_after_profile():
+    path = restart_evidence_path()
+    with open(path, encoding="utf-8") as handle:
+        evidence = json.load(handle)
+    old_session = evidence["sessionId"]
+
+    smoke_p1.check(
+        smoke_p1.call("GET", "/health")[0] == 200, "health check failed after restart")
+
+    # (1) The process is a different one: every session id it minted is unknown here.
+    # Reads, writes and the header path all answer the same way.
+    status, _, body = smoke_p1.call("GET", f"/p1/quests/{old_session}")
+    smoke_p1.check(
+        status == 404 and (body.get("error") or {}).get("code") == "session_not_found",
+        f"old quest session survived the restart: {status} {body}")
+    status, _, body = smoke_p1.call("GET", f"/p1/inventory/{old_session}")
+    smoke_p1.check(
+        status == 404 and (body.get("error") or {}).get("code") == "session_not_found",
+        f"old inventory session survived the restart: {status} {body}")
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/world/interact",
+        smoke_p1.interact_envelope("ENT_MAN_BM_OBJ_BM_PACKAGE_01",
+                                   character_id=RESTART_CHARACTER),
+        {"X-Session-ID": old_session})
+    smoke_p1.check(
+        status == 404 and (body.get("error") or {}).get("code") == "session_not_found",
+        f"a write with the old session header survived the restart: {status} {body}")
+
+    # (2) The same character reads exactly as a cold account, so quest progress,
+    # currency, items and the equipped slot are all gone.
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/sessions", {"characterId": RESTART_CHARACTER})
+    smoke_p1.check(status == 201, f"new session returned {status}: {body}")
+    session = body.get("sessionId")
+    smoke_p1.check(session != old_session, f"session id was reused: {session}")
+
+    rows = quest_rows(session)
+    smoke_p1.check(
+        len(rows) == 5 and rows[0] == COLD_QUEST_ROW and
+        all(row[1] == "LOCKED" for row in rows[1:]),
+        f"quest state survived the restart: {rows}")
+    inventory = inventory_rows(session)
+    smoke_p1.check(
+        inventory == COLD_INVENTORY,
+        f"inventory survived the restart: {inventory} (was {evidence['inventory']})")
+
+    # (3) The equip key from process #1 is no longer a replay: the ledger died with the
+    # process, so the request re-executes the domain path. Measured, it never reaches the
+    # instance lookup - EquipmentStatus checks `snapshot.InventoryRevision !=
+    # expectedRevision` first, and the cold store sits at revision 0 while
+    # P1Validation.ValidateEquipEnvelope refuses expectedRevision < 1 on the wire. So a
+    # client cannot even name a cold store: the recorded payload is refused as
+    # revision_conflict before the dead instance is consulted. That ordering is the
+    # durability finding: replay safety today comes from the ledger *and* the store's
+    # revision, and a restart removes both at once.
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/inventory/equip",
+        smoke_p1.equip_envelope(evidence["chestInstanceId"], 1,
+                                character_id=RESTART_CHARACTER,
+                                request_id=evidence["equipRequestId"],
+                                idempotency_key=evidence["equipKey"]),
+        {"X-Session-ID": session})
+    smoke_p1.check(
+        status == 409 and (body.get("error") or {}).get("code") == "revision_conflict" and
+        "EQUIPPED" not in str(body),
+        f"the recorded equip key did not re-execute against the cold store: "
+        f"{status} {str(body)[:200]}")
+    equip_refusal = (body.get("error") or {}).get("code")
+
+    # (4) The loop is re-runnable from the cold store and lands on the same numbers, so
+    # "nothing survived" is not the same thing as "the server is broken": the accept
+    # returns revision 2 again and the package claim credits counter 1 at revision 3,
+    # exactly as they did in the first process.
+    sequence, _ = walk_east(session, RESTART_CHARACTER, 1, 37.5)
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/quests/accept",
+        smoke_p1.quest_accept_envelope("P00-01", "NPC_LYAN",
+                                       character_id=RESTART_CHARACTER,
+                                       request_id="a" * 32, idempotency_key="b" * 32),
+        {"X-Session-ID": session})
+    smoke_p1.check(
+        status == 200 and (body.get("result") or {}).get("revision") == 2,
+        f"re-accept after restart returned {status}: {body}")
+    collect_package(session, RESTART_CHARACTER, sequence, "ENT_MAN_BM_OBJ_BM_PACKAGE_01",
+                    "c" * 32, "d" * 32, 1, "ACTIVE", 3)
+
+    # (5) The turn-in replay is walked in front of the turn-in NPC so it reaches the
+    # quest-state guard rather than the range guard (measured: from the spawn point the
+    # same key answers 422 out_of_range first). This is the finding the persistence
+    # proposal needs: the recorded key no longer returns the stored COMPLETED receipt,
+    # it is re-evaluated, and what stops the 20 COIN plus chest from being paid a second
+    # time is the quest guard - not the ledger. A durable store has to persist both, or
+    # replaying a paid key against surviving state would re-grant.
+    sequence, _ = walk_east(session, RESTART_CHARACTER, sequence, TURN_IN_NPC_X)
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/quests/turnin",
+        smoke_p1.turnin_envelope("P00-01", "NPC_TA_VAN_KHANH",
+                                 character_id=RESTART_CHARACTER,
+                                 request_id=evidence["turnInRequestId"],
+                                 idempotency_key=evidence["turnInKey"]),
+        {"X-Session-ID": session})
+    smoke_p1.check(
+        status == 409 and (body.get("error") or {}).get("code") == "invalid_transition" and
+        "COMPLETED" not in str(body),
+        f"the recorded turn-in key was not re-evaluated against fresh state: "
+        f"{status} {str(body)[:200]}")
+    smoke_p1.check(
+        inventory_rows(session) == COLD_INVENTORY,
+        "the replayed turn-in key paid a second reward")
+
+    print(f"profile=restart-after old_session=404/session_not_found "
+          f"quests={COLD_QUEST_ROW[:3]} inventory=cold equip_replay=409/{equip_refusal} "
+          f"turnin_replay=409/invalid_transition loop_replay=deterministic")
+
+
 def main():
     if len(sys.argv) < 3:
         fail("usage: e2e_p1.py <base_url> "
              "<default|dev|mob-combat|two-client|alpha-p00|audience-gateoff|"
-             "death-return>")
+             "death-return|gate-one|restart-before|restart-after>")
     smoke_p1.BASE_URL = sys.argv[1].rstrip("/")
     mode = sys.argv[2]
     if mode == "default":
@@ -2292,10 +2547,14 @@ def main():
         audience_gateoff_profile()
     elif mode == "death-return":
         death_return_profile()
+    elif mode == "restart-before":
+        restart_before_profile()
+    elif mode == "restart-after":
+        restart_after_profile()
     else:
         fail(f"unknown mode '{mode}' "
              "(expected default|dev|mob-combat|two-client|alpha-p00|"
-             "audience-gateoff|death-return)")
+             "audience-gateoff|death-return|gate-one|restart-before|restart-after)")
 
     print(f"PASS: e2e_p1 ({mode}) {smoke_p1.CHECKS} checks against {smoke_p1.BASE_URL}")
 
