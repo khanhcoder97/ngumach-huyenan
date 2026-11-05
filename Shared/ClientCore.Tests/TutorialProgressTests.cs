@@ -160,5 +160,82 @@ namespace NguMach.Client.Core.Tests
                 Assert.False(steps[i].IsAvailable);
             }
         }
+
+        [Fact]
+        public void AllFiveCompleted_ChainComplete_NoActionable()
+        {
+            var chain = OpeningChain();
+            for (int i = 0; i < chain.Length; i++)
+            {
+                chain[i].state = "COMPLETED";
+                chain[i].stepId = "STEP_P00_0" + (i + 1) + "_DONE";
+                chain[i].revision = i + 1;
+            }
+
+            var progress = TutorialProgress.FromServer(chain);
+
+            Assert.True(progress.IsChainComplete);
+            Assert.True(progress.IsAuthoritative);
+            Assert.Null(progress.NextActionable);
+            Assert.Null(progress.FirstIncomplete);
+            Assert.False(progress.CanAccept("P00-01"));
+            Assert.False(progress.CanAccept("P00-05"));
+            foreach (var step in progress.Steps)
+                Assert.True(step.IsCompleted);
+        }
+
+        [Fact]
+        public void FailedQuest_DoesNotBlockNextActionableCheck()
+        {
+            var chain = OpeningChain();
+            chain[0].state = "FAILED";
+            chain[1].state = "AVAILABLE";
+
+            var progress = TutorialProgress.FromServer(chain);
+
+            Assert.True(progress.Steps[0].IsFailed);
+            Assert.True(progress.Steps[1].IsAvailable);
+            Assert.Equal("P00-02", progress.NextActionable.QuestId);
+            Assert.False(progress.CanAccept("P00-01"));
+        }
+
+        [Fact]
+        public void QuestIdLookup_IsCaseSensitive()
+        {
+            var progress = TutorialProgress.FromServer(OpeningChain());
+
+            Assert.True(progress.CanAccept("P00-01"));
+            Assert.False(progress.CanAccept("p00-01"));
+            Assert.False(progress.CanTurnIn("p00-02"));
+            Assert.Null(progress.Find("p00-01"));
+            Assert.NotNull(progress.Find("P00-01"));
+        }
+
+        [Fact]
+        public void TurnIn_OnlyOnReadyToTurnIn()
+        {
+            var chain = OpeningChain();
+            chain[1].state = "ACTIVE";
+            chain[1].objectiveCounters["OBJ_P00_02_CARPLING"] = 4;
+
+            var progress = TutorialProgress.FromServer(chain);
+
+            // Active but not ReadyToTurnIn -> cannot turn in.
+            Assert.False(progress.CanTurnIn("P00-02"));
+
+            chain[1].state = "READY_TO_TURN_IN";
+            progress = TutorialProgress.FromServer(chain);
+            Assert.True(progress.CanTurnIn("P00-02"));
+        }
+
+        [Fact]
+        public void Find_ReturnsNullForMissingQuest()
+        {
+            var progress = TutorialProgress.FromServer(OpeningChain());
+
+            Assert.Null(progress.Find("P00-99"));
+            Assert.Null(progress.Find(null));
+            Assert.Null(progress.Find(""));
+        }
     }
 }

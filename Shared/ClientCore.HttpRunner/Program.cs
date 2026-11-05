@@ -224,6 +224,21 @@ namespace ClientCoreHttpRunner
                 Check(sessionB.Client.World.self.characterId != sessionA.Client.World.self.characterId, "A/B different characters");
                 Check((await sessionB.Client.ReadQuestsAsync(CancellationToken.None)).Success, "B read quests");
                 Check(sessionB.Client.Quests.All(q => q == null || q.questId != "P00-01" || q.state != "COMPLETED"), "B quest not completed by A");
+
+                // ---------- B: tutorial chain, two-owner isolation ----------
+                Check((await sessionB.Client.ReadQuestsAsync(CancellationToken.None)).Success, "B tutorial quests read");
+                var tutorialB = TutorialProgress.FromServer(sessionB.Client.Quests);
+                Check(tutorialB.IsAuthoritative, "B tutorial chain authoritative");
+                Check(tutorialB.Steps.Count == 5 && tutorialB.Steps[0].QuestId == "P00-01",
+                    "B tutorial chain P00-01..05");
+                Check(tutorialB.Steps[0].IsAvailable, "B P00-01 available");
+                Check(tutorialB.Steps.Skip(1).All(s => s.IsLocked), "B P00-02..05 locked by source");
+                Check(tutorialB.NextActionable != null && tutorialB.NextActionable.QuestId == "P00-01",
+                    "B next actionable P00-01");
+                // B cannot activate P00-02 even though A's turn-in unlocked it on server.
+                var bBlocked = await sessionB.Client.AcceptQuestAsync("P00-02", "NPC_TA_VAN_KHANH", CancellationToken.None);
+                Check(!bBlocked.Success && bBlocked.Code == "prerequisite_not_met", "B P00-02 blocked by activation");
+                Check(!sessionB.Client.HasPendingMutation, "B blocked accept clears pending");
                 Check((await sessionB.Client.ReadInventoryAsync(CancellationToken.None)).Success, "B inv pre");
                 Check(sessionB.Client.Inventory.currencies.Where(c => c.currencyId == "COIN").Sum(c => c.amount) == 0, "B pre coin 0");
 
