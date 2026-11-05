@@ -15,12 +15,17 @@ Sources (all already measured from real bytes in checkpoints 01-09):
     (3 P0 VO draft takes + 72 s VO timeline WAV)
   - Art_Source/Audio/Muse/VO/CAMPAIGN_DRAFT/CAMPAIGN_VO_manifest_v1.json
     (17 campaign VO draft takes + 378 s VO timeline WAV, checkpoint 17)
+  - Art_Source/Audio/Muse/VO/CIN006_DRAFT/CIN006_VO_manifest_v1.json
+    (CIN_006 canonical take + alternate take + 18 s VO timeline WAV,
+    checkpoint 19)
   - Implementation/Content/Narrative/Deliveries/{P0,CAMPAIGN}_timing_manifest_v1.json
     + CIN_006/CIN_006_timing_manifest_v1.json (20 scenes timing JSON + SRT)
 
 Destinations (policy-allowed media roots):
   - ClientGodot/assets/audio/<relpath under PackV1/>   (541 files)
   - ClientGodot/assets/audio/vo/p0/                     (4 files)
+  - ClientGodot/assets/audio/vo/campaign/               (18 files)
+  - ClientGodot/assets/audio/vo/cin006/                 (3 files)
   - ClientGodot/assets/cinematics/timing/               (40 files)
   - ClientGodot/assets/cinematics/P0_animatic_*         (already there
     since checkpoint 03, revised in checkpoint 13; verified here, not re-copied)
@@ -49,6 +54,7 @@ CINE_DEST = ROOT / "ClientGodot" / "assets" / "cinematics"
 PACK_PREFIX = "Client/Assets/Audio/PackV1/"
 VO_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "VO" / "P0_DRAFT"
 CAMPAIGN_VO_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "VO" / "CAMPAIGN_DRAFT"
+CIN006_VO_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "VO" / "CIN006_DRAFT"
 DUR_TOL_S = 0.02
 
 # P0 animatic files delivered in checkpoint 03, revised in checkpoint 13
@@ -290,11 +296,61 @@ def main():
         audio_entries.append(entry)
         counts["vo"] += 1
 
+    # --- 3c. CIN_006 VO drafts (checkpoint 19) ---
+    c6vo = json.loads((CIN006_VO_SRC / "CIN006_VO_manifest_v1.json")
+                      .read_text(encoding="utf-8"))
+    for take in c6vo["takes"]:
+        src_rel = f"Art_Source/Audio/Muse/VO/CIN006_DRAFT/{take['wav']}"
+        dest_rel = f"vo/cin006/{take['wav']}"
+        entry = copy_verified_audio(
+            src_rel, dest_rel, take["wavSha256"],
+            take["format"]["bytes"], take["durationSeconds"],
+            f"VO {take['key']}")
+        if entry is None:
+            continue
+        entry.update({"cueKey": f"VO/{take['key']}",
+                      "category": "vo", "speaker": take["speaker"],
+                      "shotId": take["shotId"],
+                      "takeKind": take["takeKind"],
+                      "windowSceneSeconds": take["windowSceneSeconds"],
+                      "windowStatus": take["status"],
+                      "fit": take["fit"],
+                      "slackSeconds": take["slackSeconds"],
+                      "codec": take["format"]["codec"],
+                      "sampleRateHz": take["format"]["sampleRateHz"],
+                      "channels": take["format"]["channels"],
+                      "integratedLufs": float(
+                          take["loudness"]["integratedLUFS"]),
+                      "truePeakDbtp": float(
+                          take["loudness"]["truePeakDBTP"]),
+                      "assetState": "DRAFT_NOT_FINAL_VO",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        if take.get("takeId"):
+            entry.update({"takeId": take["takeId"],
+                          "version": take["version"]})
+        audio_entries.append(entry)
+        counts["vo"] += 1
+    c6tl = c6vo["timeline"]
+    entry = copy_verified_audio(
+        f"Art_Source/Audio/Muse/VO/CIN006_DRAFT/{c6tl['file']}",
+        f"vo/cin006/{c6tl['file']}", c6tl["sha256"],
+        (CIN006_VO_SRC / c6tl["file"]).stat().st_size,
+        c6tl.get("durationSeconds", 18.0), "VO CIN_006 timeline")
+    if entry is not None:
+        entry.update({"cueKey": "VO/CIN006_TIMELINE", "category": "vo",
+                      "codec": "pcm_s16le", "sampleRateHz": 48000,
+                      "channels": 1,
+                      "assetState": "DRAFT_NOT_FINAL_VO",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["vo"] += 1
+
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 checkpoint 17 - M6 runtime delivery "
-                       "revised: campaign VO drafts (17 takes + 378 s "
-                       "timeline) added"),
+        "checkpoint": ("MEDIA-02 checkpoint 19 - M6 runtime delivery "
+                       "revised: CIN_006 VO drafts (canonical take + "
+                       "alternate take + 18 s timeline) added; 21/21 "
+                       "dialogue windows now have draft VO"),
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "counts": counts,
@@ -318,6 +374,12 @@ def main():
             "PROPOSED_ANIMATIC_PLACEMENT. PLAYER take is a timing-only "
             "placeholder voice; CIN_020 uses placeholder role voice "
             "VOICE_LETTER_RECIPIENT.",
+            "CIN_006 VO (checkpoint 19): canonical take CIN_006_S03 "
+            "(window 12.5-17.5 s PROPOSED, D1 draft only) + alternate "
+            "take CIN_006_ALT_T01 v1-alt kept separate per DEC-MEDIA-P0 "
+            "Q3 (no window assigned, not in the SRT, not on the scene "
+            "timeline, does not replace canonical). With this delivery "
+            "all 21 D1-approved dialogue windows have a draft VO take.",
         ],
         "files": audio_entries,
     }

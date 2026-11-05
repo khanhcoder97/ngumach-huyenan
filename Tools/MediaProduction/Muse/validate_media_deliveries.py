@@ -476,6 +476,88 @@ def check_campaign_vo():
          f"not byte mismatches")
 
 
+def check_cin006_vo():
+    """Checkpoint 19: CIN_006 VO drafts (canonical + alternate take).
+
+    Closes the 21st D1-approved dialogue window (checkpoints 04 + 17
+    covered the other 20). Byte checks are strict (existence, not an
+    LFS pointer, SHA, duration, 48 kHz mono pcm_s16le). The canonical
+    text must be char-exact in the scene SRT; the alternate take text
+    must NOT be in the SRT and must carry no window (DEC-MEDIA-P0 Q3:
+    own takeId/version, never merged with canonical). Canonical window
+    fit is a finding, not a byte mismatch (D1: no speed-up to fit).
+    """
+    vo_dir = ROOT / "Art_Source/Audio/Muse/VO/CIN006_DRAFT"
+    manifest_path = vo_dir / "CIN006_VO_manifest_v1.json"
+    if not manifest_path.exists():
+        err("CIN006 VO: missing CIN006_VO_manifest_v1.json")
+        return
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    takes = manifest.get("takes", [])
+    if len(takes) != 2:
+        err(f"CIN006 VO: {len(takes)}/2 takes in manifest")
+    srt_path = (ROOT / "Implementation/Content/Narrative/Deliveries"
+                / "CIN_006" / "CIN_006_vi.srt")
+    srt = unicodedata.normalize(
+        "NFC", srt_path.read_text(encoding="utf-8"))
+    checked = 0
+    canon_fit = None
+    for take in takes:
+        wav = vo_dir / take["wav"]
+        if not wav.exists():
+            err(f"CIN006 VO {take['key']}: missing {take['wav']}")
+            continue
+        if is_lfs_pointer(wav):
+            err(f"CIN006 VO {take['key']}: wav is an LFS pointer")
+            continue
+        if sha256_of(wav) != take["wavSha256"]:
+            err(f"CIN006 VO {take['key']}: wav sha mismatch")
+        p = probe(wav)
+        if p and abs(p["duration"] - take["durationSeconds"]) > 0.02:
+            err(f"CIN006 VO {take['key']}: duration {p['duration']} "
+                f"!= manifest {take['durationSeconds']}")
+        if p:
+            if (p.get("codec") != "pcm_s16le"
+                    or p.get("sample_rate") != 48000
+                    or p.get("channels") != 1):
+                err(f"CIN006 VO {take['key']}: format "
+                    f"{p.get('codec')}/{p.get('sample_rate')}/"
+                    f"{p.get('channels')} != pcm_s16le/48000/1")
+        text_nfc = unicodedata.normalize("NFC", take["text"])
+        if take["takeKind"] == "CANONICAL":
+            if text_nfc not in srt:
+                err(f"CIN006 VO {take['key']}: canonical text not in SRT")
+            canon_fit = take["fit"]
+            if take["fit"] != "FITS":
+                WINDOW_FIT_OVERRUNS.append(
+                    {"shotId": take["shotId"],
+                     "slackSeconds": take["slackSeconds"]})
+        else:
+            if text_nfc in srt:
+                err(f"CIN006 VO {take['key']}: alt text leaked into SRT")
+            if take.get("windowSceneSeconds") is not None:
+                err(f"CIN006 VO {take['key']}: alt take has a window")
+            if take.get("takeId") != "CIN_006_ALT_T01":
+                err(f"CIN006 VO {take['key']}: bad takeId "
+                    f"{take.get('takeId')}")
+        checked += 1
+    timeline = vo_dir / "CIN006_VO_timeline_draft_v1.wav"
+    if timeline.exists():
+        if is_lfs_pointer(timeline):
+            err("CIN006 VO: timeline is an LFS pointer")
+        p = probe(timeline)
+        want = manifest.get("timeline", {}).get("durationSeconds")
+        if p and want and abs(p["duration"] - want) > 0.1:
+            err(f"CIN006 VO timeline duration {p['duration']} "
+                f"!= manifest {want}")
+    else:
+        err("CIN006 VO: missing CIN006_VO_timeline_draft_v1.wav")
+    COUNTS["vo_cin006_takes_checked"] = checked
+    COUNTS["vo_cin006_canonical_fit"] = canon_fit
+    note(f"CIN_006 VO checked: {checked}/2 takes (canonical fit "
+         f"{canon_fit}); 21/21 dialogue windows now have draft VO")
+
+
 def check_scene_clips():
     """Checkpoint 18 (Goi 30 item 6): per-scene clip exports.
 
@@ -642,9 +724,10 @@ def main():
     check_animatic_vo()
     check_keyframes()
     check_campaign_vo()
+    check_cin006_vo()
     check_scene_clips()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 18 (per-scene clip export: CIN_001/CIN_002/CIN_004 video clips + CIN_006 timing/SRT only, runtime delivery revised, re-baseline integration f0859d0)",
+        "checkpoint": "MEDIA-02 checkpoint 19 (CIN_006 VO drafts: canonical take + alternate take + 18 s timeline; 21/21 dialogue windows covered; runtime delivery revised)",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -654,11 +737,12 @@ def main():
         "notes": NOTES,
         "verdict": "PASS" if not ERRORS else "MISMATCHES_FOUND",
         "limits": [
-            "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08/17, measured from real bytes.",
+            "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08/17/19, measured from real bytes.",
             "No ear audition of loop seams or VO takes in this validation.",
             "Campaign dialogue windows remain PROPOSED except CIN_001_S05 (DECIDED); this check verifies SRT==timing consistency, not directorial approval.",
             "Campaign VO window overruns (if any) are director findings, not byte mismatches; see windowFit.",
             "CIN_006 has no per-scene video clip yet (no storyboard panels); its export is timing + SRT only, and the validator accepts that state explicitly.",
+            "CIN_006 alternate take CIN_006_ALT_T01 has no dialogue window by design (DEC-MEDIA-P0 Q3); its absence from the SRT and from the scene timeline is verified, not an omission.",
         ],
     }
     print(f"counts: {json.dumps(COUNTS, indent=1)}")

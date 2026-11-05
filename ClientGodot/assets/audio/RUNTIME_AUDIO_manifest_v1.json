@@ -1,20 +1,21 @@
 {
  "manifestId": "NGM_RUNTIME_AUDIO_V1",
- "checkpoint": "MEDIA-02 checkpoint 17 - M6 runtime delivery revised: campaign VO drafts (17 takes + 378 s timeline) added",
+ "checkpoint": "MEDIA-02 checkpoint 19 - M6 runtime delivery revised: CIN_006 VO drafts (canonical take + alternate take + 18 s timeline) added; 21/21 dialogue windows now have draft VO",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "counts": {
   "music_ambience": 22,
   "sfx_ui_variants": 519,
-  "vo": 22
+  "vo": 25
  },
- "totalFiles": 563,
+ "totalFiles": 566,
  "notes": [
   "Every file copied from real bytes and verified: sha256 + size + ffprobe duration against the checkpoint 04/07/08 pack records. LFS pointers fail the copy.",
   "All cues remain RENDERED_CANDIDATE / DRAFT_NOT_FINAL_VO. Files are delivered into the runtime tree; wiring them into Godot scenes/code is Codex's presentation adapter work (Muse writes no .gd/.tscn/.cs).",
   "Per-cue loudness only, NOT a mix PASS; no combined mix, no ducking was measured here.",
   "CIN_002/CIN_004 VO windows remain PROPOSED; only CIN_001_S05 is DECIDED (24.8-28.5 s).",
-  "Campaign VO (checkpoint 17): 17 draft takes, 15 FITS / 2 OVERRUN at natural speed (CIN_005_S03 -0.16 s, CIN_018_S03 -0.28 s; D1 forbids voice speed-up to fit, so the overruns stand as director findings). All 17 campaign windows are PROPOSED_ANIMATIC_PLACEMENT. PLAYER take is a timing-only placeholder voice; CIN_020 uses placeholder role voice VOICE_LETTER_RECIPIENT."
+  "Campaign VO (checkpoint 17): 17 draft takes, 15 FITS / 2 OVERRUN at natural speed (CIN_005_S03 -0.16 s, CIN_018_S03 -0.28 s; D1 forbids voice speed-up to fit, so the overruns stand as director findings). All 17 campaign windows are PROPOSED_ANIMATIC_PLACEMENT. PLAYER take is a timing-only placeholder voice; CIN_020 uses placeholder role voice VOICE_LETTER_RECIPIENT.",
+  "CIN_006 VO (checkpoint 19): canonical take CIN_006_S03 (window 12.5-17.5 s PROPOSED, D1 draft only) + alternate take CIN_006_ALT_T01 v1-alt kept separate per DEC-MEDIA-P0 Q3 (no window assigned, not in the SRT, not on the scene timeline, does not replace canonical). With this delivery all 21 D1-approved dialogue windows have a draft VO take."
  ],
  "files": [
   {
@@ -11330,6 +11331,71 @@
    "sizeBytes": 36288100,
    "durationSeconds": 378.0,
    "cueKey": "VO/CAMPAIGN_TIMELINE",
+   "category": "vo",
+   "codec": "pcm_s16le",
+   "sampleRateHz": 48000,
+   "channels": 1,
+   "assetState": "DRAFT_NOT_FINAL_VO",
+   "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"
+  },
+  {
+   "runtimePath": "assets/audio/vo/cin006/VO_CIN_006_S03_HAMAC_draft_v1.wav",
+   "sourcePath": "Art_Source/Audio/Muse/VO/CIN006_DRAFT/VO_CIN_006_S03_HAMAC_draft_v1.wav",
+   "sha256": "41d7c11df3c230cfff6bbb4dbbb382d855c813a08612f1142e8144cf9d298245",
+   "sizeBytes": 530020,
+   "durationSeconds": 5.52,
+   "cueKey": "VO/CIN006_S03",
+   "category": "vo",
+   "speaker": "NPC_HA_MAC",
+   "shotId": "CIN_006_S03",
+   "takeKind": "CANONICAL",
+   "windowSceneSeconds": [
+    12.5,
+    17.5
+   ],
+   "windowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+   "fit": "OVERRUN",
+   "slackSeconds": -0.52,
+   "codec": "pcm_s16le",
+   "sampleRateHz": 48000,
+   "channels": 1,
+   "integratedLufs": -21.96,
+   "truePeakDbtp": -3.42,
+   "assetState": "DRAFT_NOT_FINAL_VO",
+   "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"
+  },
+  {
+   "runtimePath": "assets/audio/vo/cin006/VO_CIN_006_ALT_T01_HAMAC_draft_v1-alt.wav",
+   "sourcePath": "Art_Source/Audio/Muse/VO/CIN006_DRAFT/VO_CIN_006_ALT_T01_HAMAC_draft_v1-alt.wav",
+   "sha256": "619da3e6016ef3bb163554819f17ff216745affc7289c5829ea9aab287bbc073",
+   "sizeBytes": 288100,
+   "durationSeconds": 3.0,
+   "cueKey": "VO/CIN006_ALT_T01",
+   "category": "vo",
+   "speaker": "NPC_HA_MAC",
+   "shotId": null,
+   "takeKind": "ALTERNATE_TAKE_DOES_NOT_REPLACE_CANONICAL",
+   "windowSceneSeconds": null,
+   "windowStatus": "ALTERNATE_TAKE_DOES_NOT_REPLACE_CANONICAL",
+   "fit": "NO_WINDOW_ASSIGNED",
+   "slackSeconds": null,
+   "codec": "pcm_s16le",
+   "sampleRateHz": 48000,
+   "channels": 1,
+   "integratedLufs": -22.37,
+   "truePeakDbtp": -5.54,
+   "assetState": "DRAFT_NOT_FINAL_VO",
+   "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER",
+   "takeId": "CIN_006_ALT_T01",
+   "version": "v1-alt"
+  },
+  {
+   "runtimePath": "assets/audio/vo/cin006/CIN006_VO_timeline_draft_v1.wav",
+   "sourcePath": "Art_Source/Audio/Muse/VO/CIN006_DRAFT/CIN006_VO_timeline_draft_v1.wav",
+   "sha256": "d147836c3be90be2d5c5ee8274b20b2a32f0bd5da78476ebb11f1cda4b237025",
+   "sizeBytes": 1730020,
+   "durationSeconds": 18.02,
+   "cueKey": "VO/CIN006_TIMELINE",
    "category": "vo",
    "codec": "pcm_s16le",
    "sampleRateHz": 48000,
