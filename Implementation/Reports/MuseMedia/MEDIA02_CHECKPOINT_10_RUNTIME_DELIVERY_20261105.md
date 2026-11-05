@@ -65,7 +65,13 @@ khớp `duration_s` (±0,02 s). Kết quả: **0 lỗi**.
 - Issue #116 vẫn 7 comment, không có chỉ đạo mới từ chủ dự án/Codex kể từ
   comment 6649909991 (ACK cp03–07 + PR #119).
 - Integration HEAD không đổi: `cf17178`. Nhánh media: head `e3e9800`
-  trước checkpoint này; commit checkpoint 10 + scope audit xem mục dưới.
+  trước checkpoint này; commit checkpoint 10 `e1e558b` ĐÃ PUSH
+  (ls-remote xác nhận; scope audit 682 paths, 0 violations;
+  chỉ 4 object LFS mới upload — 7,7 MB — vì phần lớn blob audio đã có
+  trên remote từ nguồn PackV1). PR #119 nay có 12 commit.
+- ACK comment checkpoint 10 trên issue #116 + cập nhật PR: CẦN thẻ duyệt
+  của chủ dự án qua GitHub connector — ghi rõ để luồng chính xử lý,
+  lượt chạy này không treo chờ.
 
 ## Khối tiếp theo
 
