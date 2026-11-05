@@ -81,6 +81,21 @@ jobs:
       - name: Run the alpha P00-01..P00-05 + C1-01 tutorial E2E scenario
         run: bash Server/Health/Smoke/run_e2e_p1.sh alpha-p00
 
+  # The approved death-return route, driven end to end over HTTP.
+  e2e-death-return:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run the death-return E2E scenario
+        run: bash Server/Health/Smoke/run_e2e_p1.sh death-return
+
   # The audience shape issue #96 was reported against (v2 world + mob AI ON,
   # P1:CombatDamage OFF) is one short walk plus one cast, so it is cheap to keep
   # in CI — and no other job in this workflow boots that combination.
