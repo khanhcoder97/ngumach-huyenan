@@ -65,11 +65,12 @@ public sealed record EscortResolution(
 // Wave members are shared world spawns — the content ships one group per wave —
 // so a group is only re-spawned when no other instance holds that wave active:
 // one owner's wipe or late arrival must not reset another owner's generation.
-public sealed class AlphaEscortService : ICombatKillSink
+public sealed class AlphaEscortService : ICombatKillSink, INpcEscortPositionSource
 {
     private const string QuestId = "P00-04";
 
     private readonly string _mapId;
+    private readonly string _actorId;
     private readonly double _speedPerTick;
     private readonly double _followRange;
     private readonly IReadOnlyList<AlphaPoint> _waypoints;
@@ -95,6 +96,7 @@ public sealed class AlphaEscortService : ICombatKillSink
         ArgumentNullException.ThrowIfNull(entities);
         var rules = design.QuestRules;
         _mapId = design.Scope.MapId;
+        _actorId = rules.P00_04_ActorId;
         _speedPerTick = rules.P00_04_SpeedWuPerSecond / ServerClock.TicksPerSecond;
         _followRange = rules.P00_04_FollowRangeWu;
         _waypoints = rules.P00_04_Waypoints;
@@ -291,6 +293,36 @@ public sealed class AlphaEscortService : ICombatKillSink
         x = 0;
         y = 0;
         return false;
+    }
+
+    // The read-model half of the same state (work order 30 item 3). The design names the
+    // escorted actor by NPC id (`P00_04_ActorId`), not by world entity id, so the entity is
+    // resolved from the shipped registry by the record that carries that id: a hardcoded
+    // ENT_ string here would be a number nobody approved. Anything but exactly one match
+    // answers false, which leaves the anchor canonical instead of moving the wrong actor.
+    public bool TryGetEscortPosition(
+        string characterId, out string npcEntityId, out double x, out double y)
+    {
+        if (!TryGetNpcPosition(characterId, out x, out y))
+        {
+            npcEntityId = string.Empty;
+            return false;
+        }
+
+        var matches = _entities.All
+            .Where(entity => string.Equals(entity.Kind, "NPC", StringComparison.Ordinal) &&
+                             entity.RecordId.EndsWith(_actorId, StringComparison.Ordinal))
+            .Select(entity => entity.EntityId)
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+        if (matches.Length != 1)
+        {
+            npcEntityId = string.Empty;
+            return false;
+        }
+
+        npcEntityId = matches[0];
+        return true;
     }
 
     private void Advance(

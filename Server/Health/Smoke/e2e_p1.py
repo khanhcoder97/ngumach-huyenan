@@ -1948,8 +1948,35 @@ def alpha_p00_profile():
         alive_a is not None,
         f"the P00-04 escort never activated wave A (walked {walked_a} paced steps "
         f"to x={x_after_a}; observed {wave_states})")
+
+    # Work order 30 item 3: the escorted actor's position has to come out of the domain
+    # through the read model. If the world snapshot still reported the static anchor, a
+    # client would have to infer the path itself, so this reads the NPC the escort owns
+    # over HTTP and requires it to have moved.
+    def escorted_npc_x():
+        _, _, entities, _ = v2_snapshot(session)
+        for entity_id, entry in entities.items():
+            if entry.get("kind") == "NPC" and "LYAN" in entity_id:
+                return entity_id, entry.get("x")
+        return None, None
+
+    npc_entity_id, npc_x_before = escorted_npc_x()
+    smoke_p1.check(
+        npc_entity_id is not None and npc_x_before is not None,
+        f"the escorted NPC is not in the v2 audience at all (looked for kind NPC with "
+        f"LYAN in the id over {len(ALPHA_WAVE_A)} wave members and the rest)")
     sequence, wave_a_deaths, _ = alpha_kill_watched(
         session, character, sequence, ALPHA_WAVE_A, 3, "P00-04 wave A")
+
+    # The NPC walks at the sourced 3 wu/s, so after wave A is cleared and the escort
+    # resumes, at least one WU of ground has to show up in the audience read.
+    time.sleep(8.0)
+    _, npc_x_after = escorted_npc_x()
+    smoke_p1.check(
+        npc_x_after is not None and npc_x_after > npc_x_before,
+        f"the escorted NPC never moved in the read model "
+        f"({npc_entity_id}: x {npc_x_before} -> {npc_x_after}); the domain reports the "
+        f"walk but the audience projection would still be serving the anchor")
 
     _, self_state, _, _ = v2_snapshot(session)
     walked_b, x_after_b = accompany_until(122.0, self_state.get("x", 82.0))

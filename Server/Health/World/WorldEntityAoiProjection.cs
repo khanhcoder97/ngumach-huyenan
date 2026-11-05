@@ -61,6 +61,7 @@ public sealed class WorldAoiProjectionService
     private readonly GatherClaimStore _claims;
     private readonly MobCombatStateStore _states;
     private readonly ICombatBossBridge? _bosses;
+    private readonly INpcEscortPositionSource? _npcPositions;
     private readonly ConcurrentDictionary<string, SessionVisibility> _visibility =
         new(StringComparer.Ordinal);
 
@@ -70,7 +71,8 @@ public sealed class WorldAoiProjectionService
         CombatDamageFeature combat,
         GatherClaimStore claims,
         MobCombatStateStore states,
-        ICombatBossBridge? bosses = null)
+        ICombatBossBridge? bosses = null,
+        INpcEscortPositionSource? npcPositions = null)
     {
         _entities = entities;
         _mobs = mobs;
@@ -78,6 +80,24 @@ public sealed class WorldAoiProjectionService
         _claims = claims;
         _states = states;
         _bosses = bosses;
+        _npcPositions = npcPositions;
+    }
+
+    // The position an audience member is shown for an NPC: the escort domain's live
+    // position when this viewer is the one escorting that actor, otherwise the canonical
+    // anchor. Both the AOI distance test and the projected coordinates go through here, so
+    // a walking NPC cannot be visible at its anchor while being reported somewhere else.
+    private (double X, double Y) EscortPosition(WorldEntityInstance entity, PlayerSession viewer)
+    {
+        if (_npcPositions is { } positions &&
+            positions.TryGetEscortPosition(
+                viewer.CharacterId, out var escortedEntityId, out var x, out var y) &&
+            string.Equals(entity.EntityId, escortedEntityId, StringComparison.Ordinal))
+        {
+            return (x, y);
+        }
+
+        return (entity.X, entity.Y);
     }
 
     public int SessionCount => _visibility.Count;
@@ -106,7 +126,8 @@ public sealed class WorldAoiProjectionService
                 var limit = session.Visible.Contains(entity.EntityId)
                     ? WorldAudience.AoiLeaveWu
                     : WorldAudience.AoiEnterWu;
-                if (Distance(entity.X, entity.Y, viewer.X, viewer.Y) > limit)
+                var (positionX, positionY) = EscortPosition(entity, viewer);
+                if (Distance(positionX, positionY, viewer.X, viewer.Y) > limit)
                 {
                     continue;
                 }
@@ -217,8 +238,8 @@ public sealed class WorldAoiProjectionService
             mapInstanceId,
             entity.FloorId,
             WorldAudience.Phase,
-            entity.X,
-            entity.Y,
+            EscortPosition(entity, viewer).X,
+            EscortPosition(entity, viewer).Y,
             state,
             healthState,
             targetable,

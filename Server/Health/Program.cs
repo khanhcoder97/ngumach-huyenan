@@ -349,7 +349,19 @@ builder.Services.AddSingleton<ILootGrantPolicy>(serviceProvider => new AlphaLoot
 builder.Services.AddSingleton<LootGrantService>();
 builder.Services.AddSingleton<MobSpawnGroupService>();
 builder.Services.AddSingleton<WorldEntityProjectionService>();
-builder.Services.AddSingleton<WorldAoiProjectionService>();
+// The escort position source reaches the read model only under the alpha profile: with
+// the gate off the projection keeps every NPC at its canonical anchor, which is the
+// production behaviour nothing here changes.
+builder.Services.AddSingleton(sp => new WorldAoiProjectionService(
+    sp.GetRequiredService<WorldEntityRegistry>(),
+    sp.GetRequiredService<MobLifecycleService>(),
+    sp.GetRequiredService<CombatDamageFeature>(),
+    sp.GetRequiredService<GatherClaimStore>(),
+    sp.GetRequiredService<MobCombatStateStore>(),
+    sp.GetRequiredService<ICombatBossBridge>(),
+    sp.GetRequiredService<AlphaProfileOptions>().Enabled
+        ? sp.GetRequiredService<AlphaEscortService>()
+        : null));
 builder.Services.AddSingleton<AlphaWaveTrialService>();
 builder.Services.AddSingleton<AlphaEscortService>();
 builder.Services.AddSingleton<AlphaBossEncounterService>();
