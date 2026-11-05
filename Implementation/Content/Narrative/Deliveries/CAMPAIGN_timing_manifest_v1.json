@@ -1,0 +1,491 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "MEDIA-02 checkpoint 06 - M3 campaign timing pack (16 scenes)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "campaignTotals": {
+    "scenesDeliveredHere": 16,
+    "shots": 48,
+    "durationSeconds": 288,
+    "dialogueCues": 17,
+    "fullCampaign": {
+      "scenes": 20,
+      "shots": 63,
+      "durationSeconds": 378
+    },
+    "previouslyDelivered": [
+      "CIN_001",
+      "CIN_002",
+      "CIN_004",
+      "CIN_006"
+    ],
+    "previouslyDeliveredSeconds": 90
+  },
+  "placementRule": "Single line -> S03 12.5-17.5s. CIN_011 widened to 12.2-17.8s for rate. CIN_018 split S02 6.5-11.5s + S03 12.5-17.5s. All windows PROPOSED_ANIMATIC_PLACEMENT.",
+  "sourceHashes": {
+    "Cinema_Production_Pack_v1.json": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+    "game_audio_v1.json": "39e9ff6574650c385344e32271ccb6430618cdab21d07e3df86682754693efd9"
+  },
+  "scenes": [
+    {
+      "sceneId": "CIN_003",
+      "questId": "P00-03",
+      "title": "Hai người, hai bóng",
+      "revealTier": "OPENING",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_003/CIN_003_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_003/CIN_003_vi.srt",
+      "srtSha256": "c98244a4892e768bd73e676e1f0a74569957e869b704921813edc0969dc5c363",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Ly An",
+          "speakerId": "NPC_LYAN",
+          "shotId": "CIN_003_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 51,
+          "charsPerSecond": 10.2,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "PACK_CHARACTERS_AS_LISTED_NO_SPAWN_CLAIM"
+    },
+    {
+      "sceneId": "CIN_005",
+      "questId": "C1-01",
+      "title": "Một thành phố vẫn sống",
+      "revealTier": "CHAPTER_1",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_005/CIN_005_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_005/CIN_005_vi.srt",
+      "srtSha256": "1f3443dd74d1cd92a008358eb1156d3fc984d4a89057dc4658f2e077df33be5e",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Ly An",
+          "speakerId": "NPC_LYAN",
+          "shotId": "CIN_005_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 69,
+          "charsPerSecond": 13.8,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "PACK_CHARACTERS_AS_LISTED_NO_SPAWN_CLAIM"
+    },
+    {
+      "sceneId": "CIN_007",
+      "questId": "C2-02",
+      "title": "Tên trong vỏ cây",
+      "revealTier": "CHAPTER_2",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_007/CIN_007_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_007/CIN_007_vi.srt",
+      "srtSha256": "ce95f8d4351ebdc83641d2d5f7896dab4131f0f024c18f212253a83792ddfbb6",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Ly An",
+          "speakerId": "NPC_LYAN",
+          "shotId": "CIN_007_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 53,
+          "charsPerSecond": 10.6,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "PACK_CHARACTERS_AS_LISTED_NO_SPAWN_CLAIM"
+    },
+    {
+      "sceneId": "CIN_008",
+      "questId": "C2-04",
+      "title": "Bàn tay đã ký",
+      "revealTier": "CHAPTER_2",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_008/CIN_008_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_008/CIN_008_vi.srt",
+      "srtSha256": "8f223c20a6dd532a6dbee3d32617b4bd403ae69bebddb6061d7f07f634cd86aa",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Tạ Vân Khanh",
+          "speakerId": "NPC_TA_VAN_KHANH",
+          "shotId": "CIN_008_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 46,
+          "charsPerSecond": 9.2,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "PACK_CHARACTERS_AS_LISTED_NO_SPAWN_CLAIM"
+    },
+    {
+      "sceneId": "CIN_009",
+      "questId": "C2-05",
+      "title": "Tiếng rừng được đáp",
+      "revealTier": "CHAPTER_2",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_009/CIN_009_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_009/CIN_009_vi.srt",
+      "srtSha256": "a0147ac421b78dfd705fdf6ece0aed6bf212b8d17550f5c3b4182bad44da2a24",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Ly An",
+          "speakerId": "NPC_LYAN",
+          "shotId": "CIN_009_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 66,
+          "charsPerSecond": 13.2,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "PACK_CHARACTERS_AS_LISTED_NO_SPAWN_CLAIM"
+    },
+    {
+      "sceneId": "CIN_010",
+      "questId": "C3-01",
+      "title": "Bình nước cuối xe",
+      "revealTier": "CHAPTER_3",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_010/CIN_010_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_010/CIN_010_vi.srt",
+      "srtSha256": "8905b67970f5304bc0746f157633fde77479526f242a3a5400503e1d9568c336",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Sầm Chủ Quỹ",
+          "speakerId": "NPC_SAM_CHU_QUY",
+          "shotId": "CIN_010_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 40,
+          "charsPerSecond": 8.0,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "CINEMATIC_ONLY_NO_PERSISTENT_ID_DUPLICATION_NO_SPAWN_MOVE"
+    },
+    {
+      "sceneId": "CIN_011",
+      "questId": "C3-03",
+      "title": "Chữ khắc bị sửa",
+      "revealTier": "CHAPTER_3",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_011/CIN_011_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_011/CIN_011_vi.srt",
+      "srtSha256": "f1ae820579e17490df1a192491a14ea6b17666021de5323057a7a95974461617",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Hạ Mặc",
+          "speakerId": "NPC_HA_MAC",
+          "shotId": "CIN_011_S03",
+          "windowSeconds": [
+            12.2,
+            17.8
+          ],
+          "chars": 87,
+          "charsPerSecond": 15.54,
+          "widenedForRate": true
+        }
+      ],
+      "staging": "CINEMATIC_ONLY_NO_PERSISTENT_ID_DUPLICATION_NO_SPAWN_MOVE"
+    },
+    {
+      "sceneId": "CIN_012",
+      "questId": "C3-05",
+      "title": "Giữ tên người sống",
+      "revealTier": "CHAPTER_3",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_012/CIN_012_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_012/CIN_012_vi.srt",
+      "srtSha256": "d85efc72a41ae3e3c080d2c0d35260bd10370ecd04f197b5818499223c812166",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Hạ Mặc",
+          "speakerId": "NPC_HA_MAC",
+          "shotId": "CIN_012_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 71,
+          "charsPerSecond": 14.2,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "CINEMATIC_ONLY_NO_PERSISTENT_ID_DUPLICATION_NO_SPAWN_MOVE"
+    },
+    {
+      "sceneId": "CIN_013",
+      "questId": "C4-01",
+      "title": "Qua cổng, còn người đợi",
+      "revealTier": "CHAPTER_4",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_013/CIN_013_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_013/CIN_013_vi.srt",
+      "srtSha256": "3fb6f94ed2eec13cff377b5123c0bd31c56468b64fa4ea11234b103a243bdb12",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Trưởng đoàn",
+          "speakerId": "NPC_REFUGEE_LEADER",
+          "shotId": "CIN_013_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 37,
+          "charsPerSecond": 7.4,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "PACK_CHARACTERS_AS_LISTED_NO_SPAWN_CLAIM"
+    },
+    {
+      "sceneId": "CIN_014",
+      "questId": "C4-05",
+      "title": "Dấu lệnh đặt xuống",
+      "revealTier": "CHAPTER_4",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_014/CIN_014_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_014/CIN_014_vi.srt",
+      "srtSha256": "90e98813bd52a39df38a0ff2c8f4d511396a86864b5b892221aceff6c81fd044",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Tống Bành",
+          "speakerId": "NPC_TONG_BANH",
+          "shotId": "CIN_014_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 44,
+          "charsPerSecond": 8.8,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "PACK_CHARACTERS_AS_LISTED_NO_SPAWN_CLAIM"
+    },
+    {
+      "sceneId": "CIN_015",
+      "questId": "C5-01",
+      "title": "Thành phố dưới nước",
+      "revealTier": "CHAPTER_5",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_015/CIN_015_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_015/CIN_015_vi.srt",
+      "srtSha256": "c12278572991353372b3a95d389b43afa574364ebe58552bf3ebaba20a3cf387",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Đội trưởng thợ lặn",
+          "speakerId": "NPC_DIVER_LEAD",
+          "shotId": "CIN_015_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 48,
+          "charsPerSecond": 9.6,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "PACK_CHARACTERS_AS_LISTED_NO_SPAWN_CLAIM"
+    },
+    {
+      "sceneId": "CIN_016",
+      "questId": "C5-03",
+      "title": "Quyền được kể lại",
+      "revealTier": "CHAPTER_5",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_016/CIN_016_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_016/CIN_016_vi.srt",
+      "srtSha256": "ad5c7158558bf96544fc77ab83a01160a3e5898690e6d30521675eab943da2dc",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Hạ Mặc",
+          "speakerId": "NPC_HA_MAC",
+          "shotId": "CIN_016_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 42,
+          "charsPerSecond": 8.4,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "CINEMATIC_ONLY_NO_PERSISTENT_ID_DUPLICATION_NO_SPAWN_MOVE"
+    },
+    {
+      "sceneId": "CIN_017",
+      "questId": "C5-05",
+      "title": "Lõi và dòng triều",
+      "revealTier": "CHAPTER_5",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_017/CIN_017_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_017/CIN_017_vi.srt",
+      "srtSha256": "559a0c0c36e764d68545a32f9989b54f7fb8edc6e50a62558a9c784077063704",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Đội trưởng thợ lặn",
+          "speakerId": "NPC_DIVER_LEAD",
+          "shotId": "CIN_017_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 44,
+          "charsPerSecond": 8.8,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "PACK_CHARACTERS_AS_LISTED_NO_SPAWN_CLAIM"
+    },
+    {
+      "sceneId": "CIN_018",
+      "questId": "C6-04",
+      "title": "Điều ông không cho ai từ chối",
+      "revealTier": "CHAPTER_6",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_018/CIN_018_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_018/CIN_018_vi.srt",
+      "srtSha256": "75bf61547475c528c65c3590f87420ee2c055bae715921a6e1d3f20db95a1371",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Cơ Vô Tướng",
+          "speakerId": "NPC_CO_VO_TUONG",
+          "shotId": "CIN_018_S02",
+          "windowSeconds": [
+            6.5,
+            11.5
+          ],
+          "chars": 42,
+          "charsPerSecond": 8.4,
+          "widenedForRate": false
+        },
+        {
+          "speakerDisplay": "Người chơi",
+          "speakerId": "PLAYER",
+          "shotId": "CIN_018_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 78,
+          "charsPerSecond": 15.6,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "PACK_CHARACTERS_AS_LISTED_NO_SPAWN_CLAIM"
+    },
+    {
+      "sceneId": "CIN_019",
+      "questId": "C6-05",
+      "title": "Năm mạch, không một chủ nhân",
+      "revealTier": "ENDING",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_019/CIN_019_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_019/CIN_019_vi.srt",
+      "srtSha256": "faac38b559210e82b467320e228e50a6a5c47b1b09e510df052830f2aa6b0668",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Ly An",
+          "speakerId": "NPC_LYAN",
+          "shotId": "CIN_019_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 39,
+          "charsPerSecond": 7.8,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "PACK_CHARACTERS_AS_LISTED_NO_SPAWN_CLAIM"
+    },
+    {
+      "sceneId": "CIN_020",
+      "questId": "SQ-DM-05",
+      "title": "Thư có hồi âm",
+      "revealTier": "EPILOGUE",
+      "durationSeconds": 18,
+      "shots": 3,
+      "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_020/CIN_020_timing_v1.json",
+      "srtFile": "Implementation/Content/Narrative/Deliveries/CIN_020/CIN_020_vi.srt",
+      "srtSha256": "7f27d6672e5a7b55f87162d636a0802cbaaafb9bc7116e9330f9cfc731e27dcc",
+      "srtStatus": "DRAFT",
+      "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+      "cues": [
+        {
+          "speakerDisplay": "Người nhận thư",
+          "speakerId": null,
+          "shotId": "CIN_020_S03",
+          "windowSeconds": [
+            12.5,
+            17.5
+          ],
+          "chars": 39,
+          "charsPerSecond": 7.8,
+          "widenedForRate": false
+        }
+      ],
+      "staging": "PACK_CHARACTERS_AS_LISTED_NO_SPAWN_CLAIM"
+    }
+  ]
+}
