@@ -56,6 +56,7 @@ public sealed class ItemCatalog
     public const string ArmorCategory = "Trang bị / giáp";
     public const string WeaponCategory = "Trang bị / vũ khí";
     public const string AccessoryCategory = "Trang bị / phụ kiện";
+    public const string ConsumableCategory = "Tiêu hao";
 
     private static readonly Dictionary<string, string> SlotTokens = new(StringComparer.Ordinal)
     {
@@ -96,6 +97,13 @@ public sealed class ItemCatalog
     // any consumer re-reading the CSV or guessing from item ids.
     public IEnumerable<ItemCatalogEntry> EquipmentEntries =>
         _items.Values.Where(entry => IsEquipmentCategory(entry.Category));
+
+    // Consumable rows, for the same reason EquipmentEntries exists: a consumer that
+    // wants the `Tiêu hao` vocabulary should read the loaded catalogue rather than
+    // re-parse the CSV or infer a category from an item id.
+    public IEnumerable<ItemCatalogEntry> ConsumableEntries =>
+        _items.Values.Where(entry =>
+            string.Equals(entry.Category, ConsumableCategory, StringComparison.Ordinal));
 
     public static bool IsEquipmentCategory(string? category) =>
         string.Equals(category, ArmorCategory, StringComparison.Ordinal) ||
@@ -234,7 +242,12 @@ public sealed class ItemCatalog
                 itemId,
                 category,
                 slotToken,
-                IsEquipmentCategory(category) ? slotLabel : null,
+                // The raw `slot` cell is the source's own wording for every row, not
+                // only for gear: a consumable states what it is ("Potion HP", "Hồi
+                // sinh"), and that label is the only place the revive framing exists.
+                // Keeping it cannot make a non-equipment row equippable, because
+                // InventoryV2Slots.TryResolveLabel requires an equipment category.
+                slotLabel,
                 string.IsNullOrEmpty(Cell("class_id")) ? null : Cell("class_id"),
                 requiredLevel,
                 Cell("rarity_pool"),

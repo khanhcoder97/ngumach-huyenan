@@ -132,6 +132,15 @@ builder.Services.AddSingleton(serviceProvider =>
     return WeeklyBossRotationCatalogLoader.Load(
         WeeklyBossRotationCatalogLoader.DiscoverDirectory(environment.ContentRootPath));
 });
+// Work order 29 Q5: the `Tiêu hao` rows are classified at boot, so a source cell that
+// stops parsing (a new stat label, a percentage outside the wording this loader accepts)
+// fails startup instead of silently healing nobody. Loading is not applying: no route
+// consumes this yet, because what a client may ask for is a contract decision.
+builder.Services.AddSingleton(serviceProvider =>
+    ConsumableCatalog.Load(serviceProvider.GetRequiredService<ItemCatalog>()));
+builder.Services.AddSingleton<IConsumableService>(serviceProvider => new ConsumableService(
+    serviceProvider.GetRequiredService<IInventoryService>(),
+    serviceProvider.GetRequiredService<IReadOnlyList<ConsumableEntry>>()));
 builder.Services.AddSingleton<NarrativeFlagStore>();
 builder.Services.AddSingleton<NarrativeService>();
 builder.Services.AddSingleton(serviceProvider =>
@@ -359,6 +368,14 @@ app.Logger.LogInformation(
     lifeSim.Count,
     lifeSim.CountOfType("CROP"),
     lifeSim.CountOfType("FISH"));
+
+var consumableRules = app.Services.GetRequiredService<IReadOnlyList<ConsumableEntry>>();
+app.Logger.LogInformation(
+    "Loaded consumable catalogue: {RowCount} rows ({Sourced} percentage rules, {Unsupported} effects with no subsystem here, {Revive} framed as a revive) - domain only, no use route.",
+    consumableRules.Count,
+    consumableRules.Count(entry => entry.Kind == ConsumableEffectKind.RestorePercent),
+    consumableRules.Count(entry => entry.Kind == ConsumableEffectKind.Unsupported),
+    consumableRules.Count(entry => entry.ReviveRequired));
 
 var currencies = app.Services.GetRequiredService<CurrencyCatalog>();
 app.Logger.LogInformation(

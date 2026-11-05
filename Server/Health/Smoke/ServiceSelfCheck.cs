@@ -8508,6 +8508,267 @@ public static class ServiceSelfCheck
             $"hat.durability={statProbeHat.Durability} " +
             $"before={statsBeforeWearing} after={statsAfterWearing}");
 
+        // ─── QOD-24 Q5: consumables, loaded from the source and applied only where the
+        // source states a rule ────
+
+        var consumables = ConsumableCatalog.Load(itemCatalog);
+        var restoreRows = consumables.Where(entry =>
+            entry.Kind == ConsumableEffectKind.RestorePercent).ToArray();
+        var unsupportedRows = consumables.Where(entry =>
+            entry.Kind == ConsumableEffectKind.Unsupported).ToArray();
+        Check(
+            "consumable.catalog_shape_is_fourteen_rows_seven_rules_and_seven_effects_this_server_cannot_perform",
+            consumables.Count == 14 && restoreRows.Length == 7 &&
+            unsupportedRows.Length == 7,
+            $"rows={consumables.Count} restore={restoreRows.Length} " +
+            $"unsupported={string.Join("|", unsupportedRows.Select(entry => entry.EffectStatLabel))}");
+
+        var consumableByItem = consumables.ToDictionary(
+            entry => entry.ItemId, StringComparer.Ordinal);
+        Check(
+            "consumable.catalog_percents_are_exactly_the_source_cells",
+            consumableByItem["POT-HP-01"] is { Percent: 25, Restores: ConsumableCatalog.Hp, ReviveRequired: false } &&
+            consumableByItem["POT-HP-02"].Percent == 35 &&
+            consumableByItem["POT-HP-03"].Percent == 45 &&
+            consumableByItem["POT-MP-01"] is { Percent: 20, Restores: ConsumableCatalog.Mp } &&
+            consumableByItem["POT-MP-02"].Percent == 30 &&
+            consumableByItem["POT-MP-03"].Percent == 40 &&
+            consumableByItem["POT-REVIVE-01"] is { Percent: 15, ReviveRequired: true } &&
+            consumableByItem["POT-HP-01"].StackLimit == 99 &&
+            consumableByItem["POT-HP-02"].RequiredLevel == 16,
+            $"hp={string.Join("|", consumables.Where(entry => entry.Restores == ConsumableCatalog.Hp).Select(entry => entry.Percent))}");
+
+        string? ConsumableLoadFailure(string from, string to)
+        {
+            var root = Path.Combine(
+                Path.GetTempPath(), "p1-consumable-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var directory = Path.Combine(root, "docs", "production");
+                Directory.CreateDirectory(directory);
+                var sourceDirectory =
+                    ItemCatalogDiscovery.DiscoverDirectory(AppContext.BaseDirectory);
+                foreach (var relative in new[]
+                {
+                    ItemCatalog.RelativePath, ItemCatalog.VariantRelativePath
+                })
+                {
+                    var lines = File.ReadAllLines(Path.Combine(sourceDirectory, relative));
+                    File.WriteAllLines(
+                        Path.Combine(directory, Path.GetFileName(relative)),
+                        lines.Select(line =>
+                            line.Replace(from, to, StringComparison.Ordinal)).ToArray());
+                }
+
+                try
+                {
+                    ConsumableCatalog.Load(ItemCatalog.Load(root));
+                    return "LOADED";
+                }
+                catch (InvalidOperationException exception)
+                {
+                    return exception.Message;
+                }
+            }
+            finally
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+
+        var unparsableRestoreCell = ConsumableLoadFailure("25% HP tối đa", "25 HP");
+        var mismatchedRestoreStat = ConsumableLoadFailure(
+            "\"25% HP tối đa\"", "\"30% MP tối đa\"");
+        var unknownSlotLabel = ConsumableLoadFailure("Potion MP", "Nước uống");
+        Check(
+            "consumable.catalog_refuses_a_cell_it_cannot_parse_and_a_slot_label_it_does_not_know",
+            unparsableRestoreCell.Contains("not '<percent>% HP|MP tối đa'", StringComparison.Ordinal) &&
+            mismatchedRestoreStat.Contains("pairs stat label", StringComparison.Ordinal) &&
+            unknownSlotLabel.Contains("unknown slot label", StringComparison.Ordinal),
+            $"cell={Cut(unparsableRestoreCell)} stat={Cut(mismatchedRestoreStat)} slot={Cut(unknownSlotLabel)}");
+
+        var consumableActor = NewPlayer("CHR_SELFCHECK_CONSUMABLE");
+        var consumableSeed = inventory.Apply(consumableActor, new InventoryMutation
+        {
+            AddItems =
+            [
+                new ItemGrant { TemplateId = "POT-HP-01", Stack = 3, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "POT-MP-01", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "POT-HP-02", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "POT-REVIVE-01", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "FOOD-ATK-01", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-MK-CHEST-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag }
+            ]
+        });
+        var consumableItems = consumableSeed.Snapshot!.Items;
+        string ConsumableInstance(string templateId) => consumableItems
+            .Single(item => item.TemplateId == templateId).InstanceId;
+        var hpPotion = ConsumableInstance("POT-HP-01");
+        var mpPotion = ConsumableInstance("POT-MP-01");
+        var gatedPotion = ConsumableInstance("POT-HP-02");
+        var revivePotion = ConsumableInstance("POT-REVIVE-01");
+        var foodPotion = ConsumableInstance("FOOD-ATK-01");
+        var gearInstance = ConsumableInstance("EQ-MK-CHEST-T1-R-COMMON");
+        string ConsumeKey(string prefix) => prefix + new string('0', 32 - prefix.Length);
+        var consumableService = new ConsumableService(inventory, consumables);
+        var consumableRevision = consumableSeed.Snapshot.InventoryRevision;
+        consumableActor.Hp = 60;
+        consumableActor.Mp = 10;
+
+        var hpDrink = consumableService.Consume(
+            consumableActor, hpPotion, consumableRevision, ConsumeKey("ca"));
+        Check(
+            "consumable.hp_drink_restores_a_quarter_of_max_and_spends_one_stack",
+            hpDrink.Accepted && hpDrink.HpRestored == 25 && hpDrink.HpAfter == 85 &&
+            hpDrink.MpRestored == 0 && hpDrink.Snapshot!.InventoryRevision == consumableRevision + 1 &&
+            hpDrink.Snapshot.Items.Single(item => item.InstanceId == hpPotion).Stack == 2,
+            $"restored={hpDrink.HpRestored} hp={hpDrink.HpAfter} fail={hpDrink.Failure?.Code}");
+
+        var mpDrink = consumableService.Consume(
+            consumableActor, mpPotion, consumableRevision + 1, ConsumeKey("cb"));
+        Check(
+            "consumable.mp_drink_moves_only_its_own_pool_and_empties_the_instance",
+            mpDrink.Accepted && mpDrink.MpRestored == 10 && mpDrink.MpAfter == 20 &&
+            mpDrink.HpRestored == 0 && mpDrink.HpAfter == 85 &&
+            !mpDrink.Snapshot!.Items.Any(item => item.InstanceId == mpPotion),
+            $"mp={mpDrink.MpRestored} hp={mpDrink.HpAfter} fail={mpDrink.Failure?.Code}");
+
+        var replayDrink = consumableService.Consume(
+            consumableActor, hpPotion, consumableRevision, ConsumeKey("ca"));
+        Check(
+            "consumable.replayed_key_returns_the_recorded_result_without_a_second_spend",
+            replayDrink.Accepted && replayDrink.HpRestored == 25 &&
+            inventory.GetSnapshot(consumableActor.CharacterId)
+                .Items.Single(item => item.InstanceId == hpPotion).Stack == 2 &&
+            consumableActor.Hp == 85,
+            $"restored={replayDrink.HpRestored} hp={consumableActor.Hp}");
+
+        var conflictDrink = consumableService.Consume(
+            consumableActor, hpPotion, consumableRevision + 5, ConsumeKey("ca"));
+        Check(
+            "consumable.same_key_with_a_different_payload_is_a_conflict",
+            conflictDrink.Failure?.Code == ConsumableErrorCodes.IdempotencyConflict,
+            conflictDrink.Failure?.Code);
+
+        consumableActor.Hp = 90;
+        var clampDrink = consumableService.Consume(
+            consumableActor, hpPotion, consumableRevision + 2, ConsumeKey("cc"));
+        Check(
+            "consumable.heal_clamps_at_max_hp_and_reports_only_the_points_gained",
+            clampDrink.Accepted && clampDrink.HpRestored == 10 && clampDrink.HpAfter == 100 &&
+            inventory.GetSnapshot(consumableActor.CharacterId).InventoryRevision ==
+                consumableRevision + 3,
+            $"restored={clampDrink.HpRestored} hp={clampDrink.HpAfter}");
+
+        var fullDrink = consumableService.Consume(
+            consumableActor, hpPotion, consumableRevision + 3, ConsumeKey("cd"));
+        Check(
+            "consumable.a_drink_with_nothing_to_restore_is_refused_and_the_stack_survives",
+            fullDrink.Failure?.Code == ConsumableErrorCodes.NoEffect &&
+            inventory.GetSnapshot(consumableActor.CharacterId)
+                .Items.Single(item => item.InstanceId == hpPotion).Stack == 1 &&
+            inventory.GetSnapshot(consumableActor.CharacterId).InventoryRevision ==
+                consumableRevision + 3 &&
+            consumableActor.Hp == 100,
+            $"fail={fullDrink.Failure?.Code}");
+
+        // The rounding the source never states, made visible instead of buried: floor of
+        // 25% of a 3-point maximum is zero, and zero is not a reason to spend an item.
+        consumableActor.MaxHp = 3;
+        consumableActor.Hp = 0;
+        var tinyDrink = consumableService.Consume(
+            consumableActor, hpPotion, consumableRevision + 3, ConsumeKey("ce"));
+        Check(
+            "consumable.floor_rounding_at_a_three_point_maximum_spends_nothing",
+            tinyDrink.Failure?.Code == ConsumableErrorCodes.NoEffect &&
+            consumableActor.Hp == 0 &&
+            inventory.GetSnapshot(consumableActor.CharacterId)
+                .Items.Single(item => item.InstanceId == hpPotion).Stack == 1,
+            $"fail={tinyDrink.Failure?.Code} hp={consumableActor.Hp}");
+        consumableActor.MaxHp = 101;
+        var floorDrink = consumableService.Consume(
+            consumableActor, hpPotion, consumableRevision + 3, ConsumeKey("cf"));
+        Check(
+            "consumable.floor_is_the_ruleset_value_convention_not_round_half_up",
+            floorDrink.Accepted && floorDrink.HpRestored == 25 && floorDrink.HpAfter == 25,
+            $"restored={floorDrink.HpRestored} (101 * 25 / 100 = 25,25)");
+
+        var consumableLevelGate = consumableService.Consume(
+            consumableActor, gatedPotion, consumableRevision + 4, ConsumeKey("d0"));
+        var consumableReviveGate = consumableService.Consume(
+            consumableActor, revivePotion, consumableRevision + 4, ConsumeKey("d1"));
+        var consumableEffectGate = consumableService.Consume(
+            consumableActor, foodPotion, consumableRevision + 4, ConsumeKey("d2"));
+        var consumableGearGate = consumableService.Consume(
+            consumableActor, gearInstance, consumableRevision + 4, ConsumeKey("d3"));
+        Check(
+            "consumable.level_revive_effect_and_category_refusals_all_name_their_row",
+            consumableLevelGate.Failure?.Code == ConsumableErrorCodes.LevelRequired &&
+            consumableReviveGate.Failure?.Code == ConsumableErrorCodes.ReviveNotModelled &&
+            consumableEffectGate.Failure?.Code == ConsumableErrorCodes.EffectUnsupported &&
+            consumableByItem["FOOD-ATK-01"].EffectStatLabel == "Damage PvE" &&
+            consumableByItem["FOOD-ATK-01"].EffectValueCell == "+2% / 20 phút" &&
+            consumableGearGate.Failure?.Code == ConsumableErrorCodes.NotConsumable,
+            $"level={consumableLevelGate.Failure?.Code} revive={consumableReviveGate.Failure?.Code} " +
+            $"effect={consumableEffectGate.Failure?.Code} gear={consumableGearGate.Failure?.Code}");
+
+        var consumableStaleRevision = consumableService.Consume(
+            consumableActor, hpPotion, 1, ConsumeKey("d4"));
+        var consumableUnknownInstance = consumableService.Consume(
+            consumableActor, "ITM_NEVER_MINTED", consumableRevision + 4, ConsumeKey("d5"));
+        Check(
+            "consumable.stale_revision_and_unknown_instance_move_nothing",
+            consumableStaleRevision.Failure is { Code: ConsumableErrorCodes.RevisionConflict, Retryable: true } &&
+            consumableUnknownInstance.Failure?.Code == ConsumableErrorCodes.ItemNotFound &&
+            inventory.GetSnapshot(consumableActor.CharacterId).InventoryRevision ==
+                consumableRevision + 4,
+            $"stale={consumableStaleRevision.Failure?.Code} unknown={consumableUnknownInstance.Failure?.Code}");
+
+        var barrierActor = NewPlayer("CHR_SELFCHECK_CONSUMABLE_RACE");
+        var barrierSeed = inventory.Apply(barrierActor, new InventoryMutation
+        {
+            AddItems = [new ItemGrant
+            {
+                TemplateId = "POT-HP-01", Stack = 5, Location = InventoryLocations.Bag
+            }]
+        });
+        var barrierPotion = barrierSeed.Snapshot!.Items.Single().InstanceId;
+        barrierActor.Hp = 0;
+        var consumeRaceKey = ConsumeKey("d6");
+        var consumeRaceBarrier = new Barrier(4);
+        var consumeRaceOutcomes = new ConsumableOutcome?[4];
+        var consumeRaceThreads = new Thread[4];
+        for (var index = 0; index < consumeRaceThreads.Length; index++)
+        {
+            var outcomeSlot = index;
+            consumeRaceThreads[outcomeSlot] = new Thread(() =>
+            {
+                consumeRaceBarrier.SignalAndWait();
+                consumeRaceOutcomes[outcomeSlot] = consumableService.Consume(
+                    barrierActor, barrierPotion, barrierSeed.Snapshot!.InventoryRevision, consumeRaceKey);
+            });
+        }
+
+        foreach (var thread in consumeRaceThreads)
+        {
+            thread.Start();
+        }
+
+        foreach (var thread in consumeRaceThreads)
+        {
+            thread.Join();
+        }
+
+        Check(
+            "consumable.four_threads_on_one_key_spend_exactly_one_stack",
+            consumeRaceOutcomes.All(outcome => outcome is { Accepted: true, HpRestored: 25 }) &&
+            inventory.GetSnapshot(barrierActor.CharacterId)
+                .Items.Single(item => item.InstanceId == barrierPotion).Stack == 4 &&
+            barrierActor.Hp == 25 &&
+            consumableService.LedgerCount >= 1,
+            $"stacks={inventory.GetSnapshot(barrierActor.CharacterId)
+                .Items.Single(item => item.InstanceId == barrierPotion).Stack} hp={barrierActor.Hp}");
+
         // ─── QOD-21 Q3: the v2 twelve-slot handler ────
 
         // Same store, same aggregate revision, second vocabulary: these checks pin
