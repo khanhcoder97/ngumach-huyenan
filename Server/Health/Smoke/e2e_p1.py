@@ -64,7 +64,16 @@ fails on anything else.
             instead of faking a completion. A second client proves the same
             build keeps progress per character.
 
-Usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client|alpha-p00>
+  audience-gateoff — the shape issue #96 reported: P1:CombatV2 and
+            P1:MobBehavior ON with P1:CombatDamage OFF, so no mob stat bundle
+            exists. No other profile boots it, which is how a MOB audience row
+            reached a client as ALIVE/targetable at hp 0. Asserts the row is
+            BLOCKED/not targetable/0-0 while the behaviour state still travels,
+            the NPC and claimable policies are untouched, the actor's own hp is
+            still real, and the cast the route still accepts resolves into no
+            event naming that mob.
+
+Usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client|alpha-p00|audience-gateoff>
 """
 
 import sys
@@ -536,6 +545,10 @@ ESCAPE_X = 91.5
 CARPLING_DAMAGE = 10
 CARPLING_MAX_HP = 192
 AGGRO_STATES = ("AGGRO", "CHASE", "TELEGRAPH", "ATTACK", "RECOVER")
+# The mob cycle as the frozen WorldSnapshotV2 schema enumerates it.
+MOB_LIFECYCLE_STATES = frozenset({
+    "IDLE", "AGGRO", "CHASE", "TELEGRAPH", "ATTACK", "RECOVER", "RETURN", "DEAD",
+})
 
 
 def v2_snapshot(session_id):
@@ -1790,9 +1803,141 @@ def alpha_p00_profile():
         f"talk=NO_HTTP_ROUTE c1_01=LOCKED second_client=ISOLATED")
 
 
+def audience_gateoff_profile():
+    """The #96 report shape over real HTTP: P1:CombatV2 and P1:MobBehavior ON
+    with P1:CombatDamage OFF.
+
+    No other profile boots that combination — `default`, `dev` and `two-client`
+    never enable the v2 route, while `mob-combat` and `alpha-p00` both enable the
+    damage gate — so the audience policy for a MOB whose stats cannot be resolved
+    was only ever covered in-process, and a row that told a client
+    `ALIVE`/`targetable:true` at `hp: 0` reached a real consumer undetected.
+    Asserted here: the health claim is `BLOCKED` and not targetable, the
+    behaviour state still travels because it is real, the other kinds keep their
+    own policy, the actor's own numbers stay real, and the cast the route still
+    accepts at such a mob never resolves into an event naming it.
+    """
+    character = "CHR_QOD21_AUDIENCE_GATEOFF"
+    session, sequence = alpha_session(character)
+
+    status, self_state, entities, _ = v2_snapshot(session)
+    smoke_p1.check(
+        status == 200,
+        f"v2 world read with the damage gate off returned {status}")
+    smoke_p1.check(
+        self_state.get("maxHp", 0) >= 1 and
+        self_state.get("hp") == self_state.get("maxHp"),
+        f"the actor's own numbers stopped being real: {self_state}")
+
+    npc = entities.get("ENT_MAN_BM_NPC_LYAN") or {}
+    smoke_p1.check(
+        npc.get("kind") == "NPC" and
+        npc.get("healthState") == "INVULNERABLE" and
+        npc.get("targetable") is False and
+        npc.get("hp") == 0,
+        f"the NPC audience policy changed: {npc}")
+
+    node = entities.get("ENT_MAN_BM_NODE_BM_ORE_01") or {}
+    smoke_p1.check(
+        node.get("kind") == "GATHER_NODE" and
+        node.get("availability") == "AVAILABLE",
+        f"the claimable availability policy changed: {node}")
+
+    # The spawn audience has no mob inside 40 WU, so walk east to the first
+    # CARPLING group (x=84 in the shipped world-entity records).
+    failures = []
+    sequence, _, _ = alpha_approach(
+        session, character, sequence, 80.0, 0.0, within=6.0, failures=failures)
+    smoke_p1.check(not failures, f"walk to the CARPLING group failed: {failures}")
+
+    status, _, entities, _ = v2_snapshot(session)
+    mobs = {entity_id: row
+            for entity_id, row in entities.items()
+            if row.get("kind") == "MOB"}
+    smoke_p1.check(
+        status == 200 and len(mobs) >= 1 and
+        any(entity_id in MOB_GROUP for entity_id in mobs),
+        f"the CARPLING group never reached the audience near x=80 "
+        f"(status={status} mobs={sorted(mobs)[:3]})")
+
+    unhealthy = [(entity_id, row.get("healthState"), row.get("targetable"),
+                  row.get("hp"), row.get("maxHp"))
+                 for entity_id, row in mobs.items()
+                 if row.get("healthState") != "BLOCKED" or
+                 row.get("targetable") is not False or
+                 row.get("hp") != 0 or row.get("maxHp") != 0]
+    smoke_p1.check(
+        not unhealthy,
+        f"damage-gate-off mob rows still advertise a fightable target: "
+        f"{unhealthy[:3]}")
+
+    misbehaving = [(entity_id, row.get("state"))
+                   for entity_id, row in mobs.items()
+                   if row.get("state") not in MOB_LIFECYCLE_STATES]
+    smoke_p1.check(
+        not misbehaving,
+        f"mob behaviour state stopped travelling: {misbehaving[:3]}")
+
+    # A cast is still *accepted* by the route — acceptance never looks at the
+    # target's stats — so the proof the client needs is that it resolves nothing:
+    # no event on the session stream ever names this mob. Standing inside the
+    # basic attack's 4,4-WU cone makes that a real statement rather than a
+    # range artefact, and the mob-combat profile is its mirror image: with
+    # P1:CombatDamage ON, the same swing produces IMPACT/MISS events naming the
+    # very same entity ids.
+    entity_id = sorted(mobs)[0]
+    failures = []
+    close = mobs[entity_id]
+    sequence, _, _ = alpha_approach(
+        session, character, sequence, close.get("x", 0.0), close.get("y", 0.0),
+        within=2.5, failures=failures)
+    smoke_p1.check(not failures, f"close approach to {entity_id} failed: {failures}")
+
+    _, self_state, entities, _ = v2_snapshot(session)
+    target = entities.get(entity_id) or {}
+    gap_x = target.get("x", 0.0) - self_state.get("x", 0.0)
+    gap_y = target.get("y", 0.0) - self_state.get("y", 0.0)
+    distance = max((gap_x * gap_x + gap_y * gap_y) ** 0.5, 1e-9)
+    sequence += 1
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/v2/combat",
+        smoke_p1.combat_v2_envelope(
+            "BASIC_ATTACK", sequence, character_id=character,
+            target_id=entity_id, aim_x=round(gap_x / distance, 4),
+            aim_y=round(gap_y / distance, 4),
+            request_id=alpha_key(0xd1), idempotency_key=alpha_key(0xd2)),
+        {"X-Session-ID": session})
+    smoke_p1.check(
+        status == 200 and distance <= 4.4,
+        f"cast at a blocked mob: status={status} distance={round(distance, 2)} "
+        f"error={(body.get('error') or {})}")
+
+    # Past the windup and the impact tick, then one read of the whole stream.
+    time.sleep(1.5)
+    status, events, _ = v2_events(session, 0)
+    naming = [(event.get("type"), event.get("targetId"))
+              for event in events if event.get("targetId") == entity_id]
+    smoke_p1.check(
+        status == 200 and not naming,
+        f"the engine resolved something for a mob it cannot score: {naming[:3]}")
+
+    _, _, entities, _ = v2_snapshot(session)
+    row = entities.get(entity_id) or {}
+    smoke_p1.check(
+        row.get("healthState") == "BLOCKED" and row.get("hp") == 0,
+        f"the accepted cast changed the blocked mob row: {row}")
+
+    print(
+        f"profile=audience-gateoff mobs={len(mobs)} health=BLOCKED "
+        f"targetable=false hp=0/0 behaviour_states="
+        f"{sorted({value.get('state') for value in mobs.values()})} "
+        f"cast=accepted_but_unresolved npc=INVULNERABLE node=AVAILABLE")
+
+
 def main():
     if len(sys.argv) < 3:
-        fail("usage: e2e_p1.py <base_url> <default|dev|mob-combat|two-client|alpha-p00>")
+        fail("usage: e2e_p1.py <base_url> "
+             "<default|dev|mob-combat|two-client|alpha-p00|audience-gateoff>")
     smoke_p1.BASE_URL = sys.argv[1].rstrip("/")
     mode = sys.argv[2]
     if mode == "default":
@@ -1805,9 +1950,12 @@ def main():
         two_client_profile()
     elif mode == "alpha-p00":
         alpha_p00_profile()
+    elif mode == "audience-gateoff":
+        audience_gateoff_profile()
     else:
         fail(f"unknown mode '{mode}' "
-             "(expected default|dev|mob-combat|two-client|alpha-p00)")
+             "(expected default|dev|mob-combat|two-client|alpha-p00|"
+             "audience-gateoff)")
 
     print(f"PASS: e2e_p1 ({mode}) {smoke_p1.CHECKS} checks against {smoke_p1.BASE_URL}")
 

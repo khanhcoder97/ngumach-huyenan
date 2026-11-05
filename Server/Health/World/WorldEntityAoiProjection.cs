@@ -163,11 +163,21 @@ public sealed class WorldAoiProjectionService
             var stats = ResolveMobStats(entity);
             var dead = string.Equals(entity.State, WorldEntityStates.Dead, StringComparison.Ordinal) ||
                        string.Equals(state, MobBehaviorStates.Dead, StringComparison.Ordinal);
-            healthState = dead ? WorldHealthStates.Dead : WorldHealthStates.Alive;
-            targetable = !dead;
+            var knownMaxHp = stats?.Hp ?? 0;
+            // A mob the audience cannot resolve stats for is not "alive at 0 HP":
+            // ResolveHit skips any target whose max HP is unknown, so a cast
+            // accepted at it produces no event at all. Report BLOCKED and not
+            // targetable, the same policy the boss branch uses, instead of
+            // advertising a target the engine will silently not resolve. The
+            // behaviour state (IDLE/CHASE/TELEGRAPH …) still travels untouched —
+            // it is real, it is only the health numbers that are unavailable.
+            healthState = dead
+                ? WorldHealthStates.Dead
+                : knownMaxHp > 0 ? WorldHealthStates.Alive : WorldHealthStates.Blocked;
+            targetable = !dead && knownMaxHp > 0;
             var lifeState = _states.TryGet(entity.EntityId, entity.LifeId);
-            hp = dead ? 0 : lifeState?.Hp ?? stats?.Hp ?? 0;
-            maxHp = stats?.Hp ?? 0;
+            hp = dead || knownMaxHp <= 0 ? 0 : lifeState?.Hp ?? knownMaxHp;
+            maxHp = knownMaxHp;
         }
         else if (isBoss)
         {

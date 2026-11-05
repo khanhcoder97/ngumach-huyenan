@@ -877,6 +877,55 @@ public static class ServiceSelfCheck
             aoiRegistry.Count == 8 && aoiPageB.Count == 5,
             $"candidates={aoiRegistry.Count} visible={aoiPageB.Count}");
 
+        // The production shape the integration thread reported: P1:CombatV2 and
+        // P1:MobBehavior ON with P1:CombatDamage OFF, so no mob stat bundle
+        // exists. ResolveHit skips any target whose max HP it cannot resolve —
+        // the cast is accepted and then produces no impact, no miss and no
+        // death for that entity — so a row claiming ALIVE/targetable at hp 0
+        // advertised a fight the engine silently refuses to resolve. It now
+        // follows the boss rule; the behaviour state is unaffected because it is
+        // real, and a DEAD mob stays DEAD rather than becoming merely blocked.
+        var gateOffMob = MakeAoiEntity(
+            "ENT_SELFCHECK_AOI_GATEOFF_MOB", WorldEntityKinds.Mob, "MOB_CARPLING", 10);
+        var gateOffDeadMob = MakeAoiEntity(
+            "ENT_SELFCHECK_AOI_GATEOFF_DEAD", WorldEntityKinds.Mob, "MOB_CARPLING", 11);
+        gateOffDeadMob.Remove(aoiClock.UtcNow);
+        var gateOffProjection = new WorldAoiProjectionService(
+            new WorldEntityRegistry(
+                new WorldEntityCatalog([], [gateOffMob, gateOffDeadMob]), aoiClock),
+            aoiMobs,
+            combatDamage,
+            new GatherClaimStore(aoiClock),
+            new MobCombatStateStore());
+        var gateOffViewer = NewPlayer("CHR_SELFCHECK_AOI_GATEOFF");
+        gateOffViewer.X = 0;
+        gateOffViewer.Y = 0;
+        var gateOffById = gateOffProjection.Project(gateOffViewer).ToDictionary(
+            entity => entity.EntityId, StringComparer.Ordinal);
+        Check(
+            "aoi.mob_blocked_when_damage_gate_off",
+            gateOffById["ENT_SELFCHECK_AOI_GATEOFF_MOB"] is
+            {
+                Kind: WorldEntityKinds.Mob,
+                State: MobBehaviorStates.Idle,
+                HealthState: WorldHealthStates.Blocked,
+                Targetable: false,
+                Hp: 0,
+                MaxHp: 0
+            },
+            $"state={gateOffById["ENT_SELFCHECK_AOI_GATEOFF_MOB"].State} " +
+            $"health={gateOffById["ENT_SELFCHECK_AOI_GATEOFF_MOB"].HealthState} " +
+            $"targetable={gateOffById["ENT_SELFCHECK_AOI_GATEOFF_MOB"].Targetable}");
+        Check(
+            "aoi.dead_mob_stays_dead_with_unknown_stats",
+            gateOffById["ENT_SELFCHECK_AOI_GATEOFF_DEAD"] is
+            {
+                HealthState: WorldHealthStates.Dead,
+                Targetable: false,
+                Hp: 0,
+                MaxHp: 0
+            });
+
         // QOD-16 ph2 v2 combat accept path: cast id, cost/cooldown state and
         // only the events that already occurred (no future impacts).
         var combatV2Store = new CombatEventStore(new CombatEventStreamOptions
