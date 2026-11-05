@@ -1009,6 +1009,98 @@ def check_p0_mix_v2():
          f"mix PASS")
 
 
+
+def check_p0_mix_v3():
+    """Checkpoint 31: P0 draft mixes v3 from fully composed stems.
+
+    Mirrors check_p0_mix_v2() for MIX/P0_DRAFT_V3/ + P0_MIX_V3_
+    manifest_v1.json, plus the v3-specific assertion: EVERY stem
+    (music, stinger AND ambience) must carry ORIGINAL_COMPOSED_BY_
+    MUSE provenance -- no ported stem remains in the P0 mixes.
+    The mix itself is a DRAFT (see the manifest mixVerdict); nothing
+    here is a mix PASS.
+    """
+    mix_dir = ROOT / "Art_Source/Audio/Muse/MIX/P0_DRAFT_V3"
+    manifest_path = mix_dir / "P0_MIX_V3_manifest_v1.json"
+    if not manifest_path.exists():
+        err("P0 MIX V3: missing P0_MIX_V3_manifest_v1.json")
+        return
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("mixVersion") != "v3_fully_composed":
+        err(f"P0 MIX V3: mixVersion "
+            f"{manifest.get('mixVersion')} != v3_fully_composed")
+    scenes = manifest.get("scenes", [])
+    if len(scenes) != 3:
+        err(f"P0 MIX V3: {len(scenes)}/3 scenes in manifest")
+    checked = 0
+    for scene in scenes:
+        mx = scene["mix"]
+        wav = mix_dir / mx["file"]
+        if not wav.exists():
+            err(f"P0 MIX V3 {scene['sceneId']}: missing {mx['file']}")
+            continue
+        if is_lfs_pointer(wav):
+            err(f"P0 MIX V3 {scene['sceneId']}: wav is an LFS pointer")
+            continue
+        if sha256_of(wav) != mx["sha256"]:
+            err(f"P0 MIX V3 {scene['sceneId']}: wav sha mismatch")
+        p = probe(wav)
+        if p and abs(p["duration"] - mx["durationSeconds"]) > 0.02:
+            err(f"P0 MIX V3 {scene['sceneId']}: duration {p['duration']} "
+                f"!= manifest {mx['durationSeconds']}")
+        if p:
+            if (p.get("codec") != "pcm_s16le"
+                    or p.get("sample_rate") != 48000
+                    or p.get("channels") != 2):
+                err(f"P0 MIX V3 {scene['sceneId']}: format "
+                    f"{p.get('codec')}/{p.get('sample_rate')}/"
+                    f"{p.get('channels')} != pcm_s16le/48000/2")
+        if abs(mx["durationSeconds"] - scene["seconds"]) > 0.05:
+            err(f"P0 MIX V3 {scene['sceneId']}: mix duration "
+                f"{mx['durationSeconds']} != scene {scene['seconds']}")
+        for st in scene["stems"]:
+            prov = st.get("provenance", "")
+            if "ORIGINAL_COMPOSED_BY_MUSE" not in prov:
+                err(f"P0 MIX V3 {scene['sceneId']}: {st['role']} stem "
+                    f"{st['cue']} provenance is not composed: {prov}")
+            if "PORTED_CODEX_PACKV1" in prov:
+                err(f"P0 MIX V3 {scene['sceneId']}: {st['role']} stem "
+                    f"{st['cue']} still uses a ported stem")
+        for ev in scene["ducking"]["evidence"]:
+            if ev["depthInWindowDb"] >= 0:
+                err(f"P0 MIX V3 {scene['sceneId']}: ducking depth in "
+                    f"window {ev['depthInWindowDb']} >= 0 on "
+                    f"{ev['bus']} bus")
+            if ev["depthOutsideWindowDb"] != 0:
+                err(f"P0 MIX V3 {scene['sceneId']}: ducking depth "
+                    f"outside window {ev['depthOutsideWindowDb']} "
+                    f"!= 0 on {ev['bus']} bus")
+        for lq in scene["loopQA"]:
+            for join in lq["joins"]:
+                if join.get("ratioToP999") is None:
+                    err(f"P0 MIX V3 {scene['sceneId']}: loop join "
+                        f"{lq['cue']} @{join['atSeconds']} has no "
+                        f"QA ratio")
+        checked += 1
+    rmx = manifest.get("reviewMix", {})
+    review = mix_dir / rmx.get("file", "")
+    if not review.exists():
+        err("P0 MIX V3: missing review mix wav")
+    else:
+        if is_lfs_pointer(review):
+            err("P0 MIX V3: review mix is an LFS pointer")
+        if sha256_of(review) != rmx["sha256"]:
+            err("P0 MIX V3: review mix sha mismatch")
+        p = probe(review)
+        if p and abs(p["duration"] - 72.0) > 0.05:
+            err(f"P0 MIX V3 review duration {p['duration']} != 72.0")
+        checked += 1
+    COUNTS["p0_mix_v3_files_checked"] = checked
+    note(f"P0 draft mixes v3 checked: {checked}/4 files (3 scenes + "
+         f"72 s review, fully composed stems); DRAFT_MIX_NOT_FINAL, "
+         f"not a mix PASS")
+
+
 def check_scene_clips():
     """Checkpoint 18 (Goi 30 item 6): per-scene clip exports.
 
@@ -1608,10 +1700,10 @@ def check_prologue():
     if vo_n != 5 or mix_n != 1:
         err(f"PROLOGUE: runtime audio registrations vo={vo_n} "
             f"mix={mix_n} (want 5/1)")
-    # Checkpoint 30: 593 + 13 composed ambience cues = 606.
-    if am.get("totalFiles") != 606:
+    # Checkpoint 31: 606 + 4 P0 mix v3 files = 610.
+    if am.get("totalFiles") != 610:
         err(f"PROLOGUE: runtime audio total {am.get('totalFiles')}"
-            f" != 606")
+            f" != 610")
     COUNTS["prologue_files_checked"] = checked
     COUNTS["audio_files_checked"] = \
         COUNTS.get("audio_files_checked", 0) + 6
@@ -1645,10 +1737,11 @@ def main():
     check_cin006_vo()
     check_p0_mix()
     check_p0_mix_v2()
+    check_p0_mix_v3()
     check_scene_clips()
     check_prologue()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 30 (original composed ambience: all 13 AMBIENCE/* cues, filtered-noise beds + sparse deterministic events, delivered in parallel under assets/audio/composed/ambience/; ambience checker added; runtime delivery revised, total 606)",
+        "checkpoint": "MEDIA-02 checkpoint 31 (P0 draft mixes v3 from fully composed stems: checkpoint-26 music/stingers + checkpoint-30 ambience, 3 scenes + 72 s review under mix/p0_v3/, parallel to untouched v1/v2; mix v3 checker added; runtime delivery revised, total 610)",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -1658,13 +1751,13 @@ def main():
         "notes": NOTES,
         "verdict": "PASS" if not ERRORS else "MISMATCHES_FOUND",
         "limits": [
-            "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08/17/19/20/26/29/30, measured from real bytes.",
+            "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08/17/19/20/26/29/30/31, measured from real bytes.",
             "No ear audition of loop seams or VO takes in this validation.",
             "Campaign dialogue windows remain PROPOSED except CIN_001_S05 (DECIDED); this check verifies SRT==timing consistency, not directorial approval.",
             "Campaign VO window overruns (if any) are director findings, not byte mismatches; see windowFit.",
             "CIN_006 keyframes are STORYBOARD level: NPC_HA_MAC / NPC_SAM_CHU_QUY have no approved character lock, so faces/costumes are placeholders; S02 carries a recorded composition defect for the final-picture revision pass.",
             "CIN_006 alternate take CIN_006_ALT_T01 has no dialogue window by design (DEC-MEDIA-P0 Q3); its absence from the SRT and from the scene timeline is verified, not an omission.",
-            "P0 mixes (v1 checkpoint 20 and v2 checkpoint 29) are DRAFT_MIX_NOT_FINAL: this check verifies bytes, durations and the recorded ducking/loop evidence, not the audible balance; no ear audition has been done. v2 re-mixes the same scenes from the checkpoint-26 composed music/stingers (ported ambience + CP04 VO unchanged) and is delivered in parallel; adoption is Codex's decision.",
+            "P0 mixes (v1 checkpoint 20, v2 checkpoint 29 and v3 checkpoint 31) are DRAFT_MIX_NOT_FINAL: this check verifies bytes, durations and the recorded ducking/loop evidence, not the audible balance; no ear audition has been done. v2 re-mixes the same scenes from the checkpoint-26 composed music/stingers (ported ambience + CP04 VO unchanged); v3 re-mixes them from fully composed stems (checkpoint-26 music/stingers + checkpoint-30 ambience, no ported stem remains). All three versions are delivered in parallel; adoption is Codex's decision.",
             "CIN_005 clip motion is animatic-level Ken Burns on still keyframes, not a final pose-animated take; S02 roof palette drifts from S01 (blue-grey vs red), recorded as a known defect for art-direction lock.",
             "CIN_009 keyframes are STORYBOARD level: the pack character list is empty, so no character lock is involved; the S02 workers are unnamed generation-invented figures, and S01 carries an invented white hooded figure not in the prompt, recorded as a defect for the final-picture revision pass.",
             "CIN_020 keyframes are STORYBOARD level: the unnamed villager's appearance drifts across the three shots (three outfits/headgear) and S02 is an interior medium shot instead of a detail close view; both recorded for the final-picture revision pass.",
