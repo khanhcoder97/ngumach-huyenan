@@ -47,10 +47,28 @@ namespace ClientCoreSample
 
             using (session)
             {
+                var vfx = new EncounterVfxBinder();
                 session.EncounterUpdated += update =>
                 {
-                    if (update.IsCleared) Console.WriteLine("encounter cleared");
-                    else if (update.IsNewCast) Console.WriteLine("new cast: " + update.CastId);
+                    if (update.IsCleared || update.IsNewLife || update.IsNewEncounter) vfx.Reset();
+                    if (update.IsCleared)
+                    {
+                        Console.WriteLine("encounter cleared");
+                    }
+                    else if (update.IsNewCast)
+                    {
+                        EncounterVfxPayload payload;
+                        if (vfx.TryBind(update, session.Encounter.Snapshot, out payload))
+                        {
+                            // Start the engine VFX here; commit only after it started.
+                            Console.WriteLine("vfx bind: cast=" + payload.CastId +
+                                              " shape=" + payload.Shape.Kind +
+                                              " ticks=" + payload.TicksRemaining +
+                                              " endsAt=" + payload.StateEndsAtTick);
+                            session.Encounter.CommitCast();
+                            vfx.Commit();
+                        }
+                    }
                 };
 
                 var res = await session.ConnectAsync();
@@ -66,7 +84,7 @@ namespace ClientCoreSample
                 if (current.Success)
                 {
                     Console.WriteLine("boss life=" + current.State.BossLifeId + " revision=" + current.State.BossRevision);
-                    session.Encounter.CommitCast();
+                    // The EncounterUpdated handler binds and commits any new-cast VFX.
                 }
 
                 var detail = await session.ReadEncounterAsync("ENC-0123456789ABCDEF01234567");

@@ -41,6 +41,7 @@
     <Compile Include="DeathReturnTests.cs" />
     <Compile Include="V2PresentersTests.cs" />
     <Compile Include="TutorialProgressTests.cs" />
+    <Compile Include="EncounterVfxBinderTests.cs" />
     <Compile Include="LocalizationAndCatalogPhysicalTests.cs" />
   </ItemGroup>
 

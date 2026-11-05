@@ -6,7 +6,17 @@
     <Nullable>disable</Nullable>
     <RootNamespace>NguMach.Client.Core</RootNamespace>
     <AssemblyName>NguMach.Client.Core</AssemblyName>
-    <IsPackable>false</IsPackable>
+    <IsPackable>true</IsPackable>
+    <PackageId>NguMach.Client.Core</PackageId>
+    <Version>0.2.0-alpha.1</Version>
+    <Authors>NguMach</Authors>
+    <Company>NguMach</Company>
+    <Description>Engine-agnostic P1 client core for the Godot client (session composition, typed contracts, presenters). Production gates remain OFF.</Description>
+    <PackageTags>ngumach;godot;p1;client-core</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/khanhcoder97/ngumach-huyenan.git</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>false</IncludeSymbols>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>

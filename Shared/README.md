@@ -76,7 +76,20 @@ var session = ClientSessionFactory.CreateHttp("http://127.0.0.1:15085",
     characterId: "CHR_...", requestTimeout: TimeSpan.FromSeconds(10),
     dispatcher: godotDispatcher); // implements IMainThreadDispatcher
 
-session.EncounterUpdated += update => { /* dispatch to main thread, render VFX */ };
+var vfx = new EncounterVfxBinder();
+session.EncounterUpdated += update =>
+{
+    if (update.IsCleared || update.IsNewLife || update.IsNewEncounter) vfx.Reset();
+    if (!update.IsNewCast) return;
+
+    EncounterVfxPayload payload;
+    if (!vfx.TryBind(update, session.Encounter.Snapshot, out payload)) return;
+
+    // payload.CastId / Shape / StateEndsAtTick are authoritative and immutable.
+    // Start the engine VFX here, then commit exactly once.
+    session.Encounter.CommitCast();
+    vfx.Commit();
+};
 
 var connected = await session.ConnectAsync();
 if (!connected.Success) { /* show localized error */ }
@@ -86,9 +99,12 @@ if (current.Outcome == EncounterReadOutcome.Success)
 {
     var state = current.State;          // immutable typed projection
     // current.Update: IsNewEncounter/IsNewCast/IsNewLife/PhaseChanged/IsTerminal
-    // call session.Encounter.CommitCast() after the cast VFX starts
 }
 ```
+`EncounterVfxBinder` emits at most one payload per cast even if the same
+snapshot is polled again; `Commit()` is idempotent and only becomes meaningful
+after the effect was actually started. `CancelPending()` allows a retry when
+starting failed; a committed cast never replays.
 Capability is explicit: check `CapabilityHandshake.IsRouteEnabled` (server-enabled)
 before enabling encounter UI; `IsRouteSupported` only says the client knows the
 route. `IsEncounterUsable` requires the alpha gate and both current/detail routes.
