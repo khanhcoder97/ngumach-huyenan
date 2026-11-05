@@ -73,3 +73,23 @@ first time the claim is backed by a measurement instead of by my reading of the 
    it on the server for economy endpoints.
 4. Whether `AUTH_EXPIRED` and `CHARACTER_NOT_FOUND` belong to this slice at all, given
    section 2 places OAuth and platform credentials at the auth edge, outside it.
+
+## 6. Correction to the retention sentence, found by re-running the tool at `02bd7b2`
+
+The version of this report above, and the CI step it added, both said the idempotency
+ledgers are "bounded to 256 entries per character". Re-running the tool to check whether
+its numbers still described the build showed that sentence was wrong for three of the
+nine bounded stores: `CombatDash` and `LootGrant` declare 512 and `NarrativeNodes`
+declares 128. The original observation - that these ledgers are in-memory, bounded per
+character, and lost on restart, so the doc's 30-day retention and 10,000-replay
+baseline are unreachable today - still stands and is the finding. What was wrong was the
+one number I typed into a print statement instead of reading from the source.
+
+The tool now derives the capacities from the declaring constants and prints them grouped
+by value, so the line cannot rot silently again; the same run prints
+
+    128 (1: NarrativeNodes), 256 (6: AlphaChapterUnlocks, ConsumableCatalog, DeathReturn,
+    Equipment, EquipmentV2, PlayerLifeLedger), 512 (2: CombatDash, LootGrant)
+
+Measured at `02bd7b2` with `python Implementation/Tools/reconcile_technical_contract.py`,
+exit 0, and the CI step that runs it stayed green at that head.

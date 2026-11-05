@@ -182,10 +182,24 @@ def main() -> int:
           f"{'at least ' + retention.group(1) + ' days' if retention else 'NOT STATED'}")
     print(f"doc replay acceptance baseline: "
           f"{replay.group(1) + ' replayed idempotent commands' if replay else 'NOT STATED'}")
-    print("server side: the idempotency ledgers are in-memory and bounded to 256 entries "
-          "per character and are lost on restart, and no rate limiting exists on any "
-          "endpoint, so both numbers above are unreachable today (section 5 and section 6 "
-          "of the contract)")
+    # Read from the source, not from a sentence: the first version of this line hardcoded
+    # "256 entries", which stopped being true for two of the bounded stores (CombatDash and
+    # LootGrant are 512) and this tool is exactly the kind of claim that must rot loudly
+    # rather than quietly. Every capacity is now taken from the constants themselves.
+    ledger_capacity = re.compile(r"const int (?:Capacity|LedgerCapacity) = (\d+);")
+    by_capacity: dict[int, list[str]] = {}
+    for path in sorted(SERVER_DIR.rglob("*.cs")):
+        for found in ledger_capacity.finditer(
+                path.read_text(encoding="utf-8", errors="ignore")):
+            by_capacity.setdefault(int(found.group(1)), []).append(path.stem)
+    print("server side: the idempotency ledgers are in-memory, bounded per character, "
+          "with capacities read from the declaring constants - "
+          + ", ".join(f"{capacity} ({len(sorted(set(names)))}: "
+                      f"{', '.join(sorted(set(names)))})"
+                      for capacity, names in sorted(by_capacity.items()))
+          + " - and are lost on restart, and no rate limiting exists on any endpoint, so "
+          "both numbers above are unreachable today (section 5 and section 6 of the "
+          "contract)")
     if RATE_LIMIT_SENTENCE in doc_text.lower() and not any(
         "ratelimit" in path.name.lower() or "rate_limit" in path.name.lower()
         for path in SERVER_DIR.rglob("*.cs")
