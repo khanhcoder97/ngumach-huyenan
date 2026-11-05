@@ -44,6 +44,13 @@ public partial class SkillVfxPlayer : Node2D
             TextureFilter=TextureFilterEnum.Nearest,Modulate=new Color(1,1,1,LowFx ? .65f : 1f)};
         AddChild(sprite);_playing.Add(new Playing{Sprite=sprite,Skill=skill});Frame(_playing[^1]);return true;
     }
+    public void GuardCue(Vector2 foot,string castToken)
+    {
+        if(!_seen.Add("guard:"+castToken))return;
+        _seenOrder.Enqueue("guard:"+castToken);while(_seenOrder.Count>256)_seen.Remove(_seenOrder.Dequeue());
+        var sprite=new Sprite2D{Texture=MoonGlassIcons.Get("Guild"),Position=foot+new Vector2(0,-25),Scale=Vector2.One*.65f,Modulate=MoonGlassTheme.Blue};
+        AddChild(sprite);var tween=CreateTween();tween.SetParallel();tween.TweenProperty(sprite,"position:y",sprite.Position.Y-8,.4);tween.TweenProperty(sprite,"modulate:a",0,.4);tween.Chain().TweenCallback(Callable.From(()=>sprite.QueueFree()));
+    }
     public override void _Process(double delta)
     {
         for(int i=_playing.Count-1;i>=0;i--)

@@ -47,3 +47,15 @@ Khi chơi tay, launcher giảm log HTTP polling xuống Warning trong đúng ti�
 Màu xanh tím than/tím khói bán trong suốt theo ảnh tham khảo2–3, viền bạc, nhấn champagne. Avatar/HP/MP, bảng nhiệm vụ, minimap và sáu kỹ năng vòng cung đã đổi cùng theme13mục. Mở panel ẩn HUD phía sau; sidebar và nội dung cuộn riêng. C mở nhân vật, K kỹ năng, M bản đồ, F10 cài đặt; J và I như cũ. Cài đặt camera/VFX/âm lượng lưu tại user://moonglass_ui.cfg. Các mục chưa có backend hiện empty/disabled state, không giả giao dịch.
 
 Run_Playable_Alpha.ps1 -UiGallery chạy kiểm UI nhiệm vụ thật và xuất ảnh HUD+13mục. --ui-screen Inventory (hoặc Character/Settings/...) --capture <absolute.png> chụp giao diện offline, không có dữ liệu server. Quy chuẩn trong docs/production/MoonGlass_UI_UX_vi.md; ảnh nguồn/avatar mới và prompt ở Art_Source/MoonGlass_UI_20261105.
+
+## Sửa chuyển động và địa hình — Motion16
+
+Launcher chơi local đặt tốc độ server3,2WU/s (64pixel/s), nhịp gửi di chuyển tối đa20Hz. Client nội suy các vị trí đã nhận với bộ đệm100ms, không dự đoán hay ngoại suy vị trí chưa xác nhận; bật physics interpolation60Hz và reset khi teleport. Camera vẫn góc rộng64×36. Màn hình60Hz dùng VSync làm bộ giới hạn duy nhất; màn hình khác có trần60FPS.
+
+Nhà, nền vườn, chum, hàng rào, gốc cây, đá ven sông và nước/cầu tàu cùng dùng terrain.json xuất từ layout authored. File client/server được kiểm cùng nguồn, server kiểm quét đường đi và bán kính nhân vật; launcher tự bật nguồn này. Các server legacy không truyền Content:BenMuaTerrainPath vẫn dùng topology riêng. Không đổi tọa độ NPC hoặc bounds canonical360×84. Cầu tàu vẽ ở lớp dưới nhân vật.
+
+Minh Kiếm có16pose cho mỗi hướng của4hành động idle/walk/attack/cast. Có320pose nguồn mới,512tham chiếu khi tính các hướng đối xứng; SW/W/NW của cả4hành động dùng lật SE/E/NE được khai báo rõ. Không nhân4pose cũ thành16. Số pose không phải FPS render. NPC/quái và các hành động tương lai chưa được coi là có bộ16pose này.
+
+HUD dùng cache và chỉ composite vùng có nội dung; nền và đá tĩnh được bake lúc chạy, giữ nearest pixel. Bấm chuột/phím có flash, thông báo kết quả và cooldown từ server. Skill tự thân gửi target null; Phản Quang chỉ hiện cue phòng thủ lúc cast, không giả đòn phản kích. Online hiện hỗ trợ3skill; ô4–6 báo chưa mở.
+
+Kiểm: Run_Playable_Alpha.ps1 -MotionTest -UiGallery; --motion-self-test (fixture physics/pointer/pose, không HTTP); --motion-art-review --capture <absolute.png> (ảnh128pose/hành động tĩnh, không FPS demo); --performance-profile <absolute.json> --profile-walk (đo bằng Stopwatch, warmup3s+lấy mẫu12s, kèm PNG).

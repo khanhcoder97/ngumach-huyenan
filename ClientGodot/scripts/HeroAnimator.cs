@@ -1,62 +1,79 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 namespace Ngumach.VisualReboot;
 
-/// <summary>Only full-body frames. The foot pivot, not image bounds, anchors the actor.</summary>
+/// <summary>Sixteen authored poses per direction/action. Never expands a four-frame loop by duplication.</summary>
 public partial class HeroAnimator : Sprite2D
 {
-    private JsonDocument _clips=null!,_idle=null!;
-    private Texture2D _idleTexture=null!,_walkTexture=null!,_attackTexture=null!;
-    private int _direction=4;
-    private bool _moving,_attacking;
-    private double _clock,_attackClock;
-    public int DisplayedFrame {get;private set;}
-    public bool IsAttacking=>_attacking;
+    private sealed record PoseFrame(Texture2D Texture,Rect2 Rect,Vector2 Pivot,bool Flip);
+    private sealed record Clip(double Duration,float Height,PoseFrame[] Frames);
+    private readonly Dictionary<string,Clip[]> _clips=new();
+    private readonly Dictionary<string,Texture2D> _textures=new();
+    private int _direction=4,_actionDirection=4;
+    private PoseFrame? _shown;
+    private bool _moving;
+    private string _action="";
+    private double _clock,_actionClock;
+    private (string Action,int Direction,int PoseFrame)? _review;
+    public int DisplayedFrame{get;private set;}
+    public int AnimationFrameCount=>16;
+    public bool IsAttacking=>_action.Length>0;
+    public string CurrentAction=>_review?.Action??(_action.Length>0?_action:_moving?"walk":"idle");
     public override void _Ready()
     {
         RegionEnabled=true;Centered=false;TextureFilter=TextureFilterEnum.Nearest;
-        _clips=JsonDocument.Parse(FileAccess.GetFileAsString("res://assets/combat_v1/manifest.json"));
-        _idle=JsonDocument.Parse(FileAccess.GetFileAsString("res://assets/reboot/manifest.json"));
-        _idleTexture=GD.Load<Texture2D>("res://assets/reboot/hero_idle_body.png");
-        _walkTexture=GD.Load<Texture2D>("res://assets/combat_v1/minh_kiem_walk.png");
-        _attackTexture=GD.Load<Texture2D>("res://assets/combat_v1/minh_kiem_attack.png");
+        using var json=JsonDocument.Parse(FileAccess.GetFileAsString("res://assets/motion16/manifest.json"));
+        foreach(var action in json.RootElement.GetProperty("clips").EnumerateObject())
+        {
+            var directions=new List<Clip>();
+            foreach(var clip in action.Value.EnumerateArray())
+            {
+                var frames=new List<PoseFrame>();
+                foreach(var f in clip.GetProperty("frames").EnumerateArray())
+                {
+                    string file=f.GetProperty("file").GetString()!;
+                    if(!_textures.TryGetValue(file,out var texture)){texture=GD.Load<Texture2D>("res://assets/motion16/"+file);_textures[file]=texture;}
+                    var r=f.GetProperty("rect");var p=f.GetProperty("pivot");
+                    frames.Add(new PoseFrame(texture,new Rect2(r[0].GetSingle(),r[1].GetSingle(),r[2].GetSingle(),r[3].GetSingle()),new Vector2(p[0].GetSingle(),p[1].GetSingle()),f.GetProperty("flip").GetBoolean()));
+                }
+                if(frames.Count!=16)throw new InvalidOperationException("Motion clip must contain16 authored poses");
+                directions.Add(new Clip(clip.GetProperty("duration").GetDouble(),clip.GetProperty("sourceHeight").GetSingle(),frames.ToArray()));
+            }
+            if(directions.Count!=8)throw new InvalidOperationException("Motion clip must cover8directions");
+            _clips[action.Name]=directions.ToArray();
+        }
         RenderFrame();
     }
     public void SetFacing(int direction)=>_direction=((direction%8)+8)%8;
-    public void SetMoving(bool moving)=>_moving=moving;
-    public void Attack(){_attacking=true;_attackClock=0;}
+    public void SetMoving(bool moving){if(moving!=_moving)_clock=0;_moving=moving;}
+    private void StartAction(string action)
+    {
+        if(_action==action&&_actionClock<.32)return;
+        _action=action;_actionClock=0;_actionDirection=_direction;RenderFrame();
+    }
+    public void Attack()=>StartAction("attack");
+    public void Cast()=>StartAction("cast");
+    public void ReviewPose(string action,int direction,int frame){_review=(action,direction,frame);RenderFrame();}
+    public void ClearReview(){_review=null;_action="";_clock=0;RenderFrame();}
     public override void _Process(double delta)
     {
+        if(_review!=null)return;
         _clock+=delta;
-        if(_attacking){_attackClock+=delta;if(_attackClock>=.48)_attacking=false;}
+        if(_action.Length>0){_actionClock+=delta;if(_actionClock>=_clips[_action][_actionDirection].Duration)_action="";}
         RenderFrame();
     }
     private void RenderFrame()
     {
-        if(_clips==null)return;
-        JsonElement frame;float scale;
-        if(_attacking)
-        {
-            DisplayedFrame=Math.Min(3,(int)(_attackClock/.12));
-            frame=_clips.RootElement.GetProperty("attack")[DisplayedFrame*8+_direction];
-            Texture=_attackTexture;scale=36f/112f;
-        }
-        else if(_moving)
-        {
-            DisplayedFrame=(int)(_clock*8)%4;
-            frame=_clips.RootElement.GetProperty("walk")[DisplayedFrame*8+_direction];
-            Texture=_walkTexture;scale=36f/208f;
-        }
-        else
-        {
-            DisplayedFrame=0;
-            frame=_idle.RootElement.GetProperty("heroFrames")[_direction];
-            Texture=_idleTexture;scale=36f/372f;
-        }
-        var r=frame.GetProperty("rect");var p=frame.GetProperty("pivot");
-        RegionRect=new Rect2(r[0].GetSingle(),r[1].GetSingle(),r[2].GetSingle(),r[3].GetSingle());
-        Offset=-new Vector2(p[0].GetSingle(),p[1].GetSingle());Scale=Vector2.One*scale;
+        if(_clips.Count==0)return;
+        string action=CurrentAction;int direction=_review?.Direction??(_action.Length>0?_actionDirection:_direction);
+        var clip=_clips[action][direction];
+        int phase=_review?.PoseFrame??(_action.Length>0?Math.Min(15,(int)(_actionClock/clip.Duration*16)):(int)(_clock/clip.Duration*16)%16);
+        var frame=clip.Frames[phase];DisplayedFrame=phase;
+        if(ReferenceEquals(_shown,frame))return;_shown=frame;
+        Texture=frame.Texture;RegionRect=frame.Rect;FlipH=frame.Flip;
+        var pivot=frame.Pivot;if(frame.Flip)pivot.X=frame.Rect.Size.X-pivot.X;
+        Offset=-pivot;Scale=Vector2.One*(36f/clip.Height);
     }
-    public override void _ExitTree(){_clips?.Dispose();_idle?.Dispose();}
 }

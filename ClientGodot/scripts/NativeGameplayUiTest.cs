@@ -176,6 +176,32 @@ public partial class NativeGameplayUiTest : Node
             Check(_session.Frame.Inventory!.items.Count(i=>i.templateId==CoatId)==1,"actual server inventory has one coat instance");
             Check(Coins()==20&&Coats()==1,"opening inventory does not duplicate grant");
             _session.SetMove(Vector2.Zero);
+            if(OS.GetCmdlineUserArgs().Contains("--motion-online-test",StringComparer.Ordinal))
+            {
+                Stage("native_pointer_guard_and_feedback");await Press("×");
+                var hud=Descendants(GetTree().Root).OfType<PreviewHud>().Single();
+                async Task Click(int slot)
+                {
+                    var position=PreviewHud.SkillCenters()[slot];
+                    GetViewport().PushInput(new InputEventMouseButton{ButtonIndex=MouseButton.Left,Position=position,Pressed=true},true);await Frames(1);
+                    GetViewport().PushInput(new InputEventMouseButton{ButtonIndex=MouseButton.Left,Position=position,Pressed=false},true);await Frames(1);
+                }
+                await Click(0);
+                await WaitFor(()=>_session.Frame.CooldownEnds.ContainsKey("SK-MK-01")&&_session.Frame.World!.self.mp==38,10);
+                Check(_session.Frame.World!.self.mp==38,"real guard pointer action consumes12MP once");
+                Check(hud.Cooldown(0)>0,"HUD binds actual server cooldown");
+                Check(!hud.CombatHint.Contains("Không",StringComparison.Ordinal),"self skill with no target is accepted");
+                await CaptureWorldIfRequested("native_combat_guard.png");
+                string cooldown=_session.Frame.CooldownEnds["SK-MK-01"];
+                await Click(0);await Frames(4);
+                Check(_session.Frame.World!.self.mp==38&&_session.Frame.CooldownEnds["SK-MK-01"]==cooldown,"cooldown pointer press grants no second cast");
+                Check(hud.CombatHint.Contains("Đang hồi",StringComparison.Ordinal),"cooldown rejection is visible immediately");
+                await Click(5);
+                Check(hud.CombatHint.Contains("chưa được mở",StringComparison.Ordinal),"unsupported skill has explicit feedback: "+hud.CombatHint);
+                Check(Coins()==20&&Coats()==1,"combat feedback leaves authoritative quest rewards unchanged");
+                _openInventory();await Frames(2);
+                GD.Print("NATIVE_MOTION_COMBAT PASS pointer_event_injection=true");
+            }
             GD.Print("NATIVE_UI_P00_01_PASS assertions="+_assertions);
             _passed(_assertions);
         }

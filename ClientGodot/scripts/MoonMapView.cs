@@ -15,7 +15,8 @@ public partial class MoonMapView : Control
     public Vector2 Facing=Vector2.Up;
     private JsonDocument? _layout;
     public override void _Ready(){ClipContents=true;MouseFilter=MouseFilterEnum.Ignore;_layout=JsonDocument.Parse(FileAccess.GetFileAsString("res://assets/ben_mua_v3/layout.json"));QueueRedraw();}
-    public override void _Process(double delta)=>QueueRedraw();
+    private double _refresh;
+    public override void _Process(double delta){_refresh+=delta;if(_refresh>=.2){_refresh=0;QueueRedraw();}}
     public override void _Draw()
     {
         DrawRect(new Rect2(Vector2.Zero,Size),new Color(.13f,.16f,.28f,.94f));

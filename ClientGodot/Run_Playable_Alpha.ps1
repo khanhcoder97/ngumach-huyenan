@@ -2,6 +2,7 @@ param(
     [switch]$Test,
     [switch]$UiTest,
     [switch]$UiGallery,
+    [switch]$MotionTest,
     [int]$Port = 0,
     [string]$GodotPath,
     [string]$Dotnet8Path,
@@ -9,7 +10,7 @@ param(
     [string]$EvidenceDirectory
 )
 $ErrorActionPreference = 'Stop'
-if ($UiGallery) { $UiTest = $true }
+if ($UiGallery -or $MotionTest) { $UiTest = $true }
 if ($UiTest) { $Test = $true }
 $clientRoot = $PSScriptRoot
 $repoRoot = Split-Path $clientRoot -Parent
@@ -64,6 +65,9 @@ try {
     $serverDll = Join-Path $repoRoot 'Server/Health/bin/Release/net10.0/Health.dll'
     $serverSettings = @{
         'DOTNET_ROOT' = (Split-Path $Dotnet10Path -Parent)
+        'Content__BenMuaTerrainPath' = (Join-Path $repoRoot 'Implementation/Content/Maps/BenMua/terrain.json')
+        'P1World__MoveSpeedWuPerSecond' = '3.2'
+        'P1World__MaxStepSeconds' = '0.10'
         'P1__QuestAccept__Enabled' = 'true'
         'P1__Interact__Enabled' = 'true'
         'P1__QuestTurnIn__Enabled' = 'true'
@@ -102,8 +106,11 @@ try {
     $env:P1_BASE_URL = $baseUrl
     if ($Test) {
         $testFlag = if ($UiTest) { '--online-ui-self-test' } else { '--online-self-test' }
-        if ($UiGallery) { & $GodotPath --path $clientRoot -- $testFlag --ui-gallery --capture $capturePath 2>&1 | Tee-Object -FilePath $gameLog }
-        else { & $GodotPath --path $clientRoot -- $testFlag --capture $capturePath 2>&1 | Tee-Object -FilePath $gameLog }
+        $gameArgs = @('--path',$clientRoot,'--',$testFlag)
+        if ($UiGallery) { $gameArgs += '--ui-gallery' }
+        if ($MotionTest) { $gameArgs += '--motion-online-test' }
+        $gameArgs += @('--capture',$capturePath)
+        & $GodotPath @gameArgs 2>&1 | Tee-Object -FilePath $gameLog
     } else {
         Write-Output 'Online local: WASD move, E talk/collect, I inventory, Space attack, 1-3 skills, Esc close.'
         Write-Output ("Session logs: "+$EvidenceDirectory)

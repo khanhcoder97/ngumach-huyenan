@@ -9,6 +9,8 @@ using Server.Health.Gameplay.Teleport;
 using Server.Health.Smoke;
 using Server.Health.World;
 
+int terrainCheck=Array.IndexOf(args,"--terrain-self-check");
+if(terrainCheck>=0){Environment.ExitCode=AuthoredTerrainSelfCheck.Run(args[terrainCheck+1]);return;}
 var selfCheck = args.Contains("--self-check", StringComparer.Ordinal);
 var builder = WebApplication.CreateBuilder(
     selfCheck
@@ -109,7 +111,12 @@ builder.Services.AddSingleton(serviceProvider =>
     var maps = serviceProvider.GetRequiredService<MapBoundsCatalog>();
     return MapTopologyLoader.Load(directory, maps);
 });
-builder.Services.AddSingleton<IWorldGeometryService, WorldGeometryService>();
+builder.Services.AddSingleton<IWorldGeometryService>(services=>
+{
+    var geometry=new WorldGeometryService(services.GetRequiredService<WorldGeometryCatalog>());
+    var path=services.GetRequiredService<IConfiguration>()["Content:BenMuaTerrainPath"];
+    return string.IsNullOrWhiteSpace(path)?geometry:new AuthoredWorldGeometry(geometry,new AuthoredTerrain(path));
+});
 builder.Services.AddSingleton(serviceProvider =>
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
