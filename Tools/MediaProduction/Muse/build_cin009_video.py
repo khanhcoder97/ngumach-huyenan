@@ -283,7 +283,7 @@ def _main(tmp: Path) -> int:
         "branch": "muse/media-production-20261104",
         "baseSha": BASE_SHA,
         "sceneId": "CIN_009",
-        "title": "Con dấu qua phố",
+        "title": "Tiếng rừng được đáp",
         "packSha256": pack_sha,
         "status": "STORYBOARD",
         "statusNote": ("Storyboard-level keyframes generated from the pack "

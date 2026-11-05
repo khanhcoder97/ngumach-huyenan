@@ -165,8 +165,8 @@ def check_cinematics_manifest():
     COUNTS["srt_files_checked"] = srt
     COUNTS["scene_clips_checked"] = clips
     COUNTS["scene_clip_files_checked"] = clip_files
-    if clips != 6:
-        err(f"CINEMATICS manifest sceneClips {clips} != 6")
+    if clips != 7:
+        err(f"CINEMATICS manifest sceneClips {clips} != 7")
     totals = manifest.get("campaignTotals", {})
     if totals.get("scenes") != scenes:
         err(f"CINEMATICS manifest scenes {totals.get('scenes')} != checked {scenes}")
@@ -180,10 +180,10 @@ def main():
     check_audio_manifest()
     check_cinematics_manifest()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 23 (CIN_009 animated take delivery) - runtime re-verification",
+        "checkpoint": "MEDIA-02 checkpoint 24 (CIN_020 animated take delivery) - runtime re-verification",
         "base_integration": "f0859d0",
         "branch": "muse/media-production-20261104",
-        "verifies": "checkpoint 10 runtime delivery as revised by checkpoint 13 (animatic v2), checkpoint 14 (dialogueCues fix), checkpoint 15 (LF + LFS fix), checkpoint 16 (animatic v3: CIN_002_S02 corrected keyframe + 16:9 keyframes), checkpoint 17 (campaign VO: 17 takes + 378 s timeline), checkpoint 18 (per-scene clips: CIN_001/CIN_002/CIN_004 video + CIN_006 timing/SRT only) checkpoint 19 (CIN_006 VO: canonical + alternate takes + 18 s timeline), checkpoint 20 (P0 draft mixes: 3 scenes + 72 s review) checkpoint 21 (CIN_005 animated take: 3 keyframes + 18 s clip), checkpoint 22 (CIN_006 animated take: 3 keyframes + 18 s clip; CIN_006 leaves PENDING_PANELS_NO_STORYBOARD) and checkpoint 23 (CIN_009 animated take: 3 keyframes + 18 s clip; first Chapter 2 campaign scene with video) (RUNTIME_AUDIO_manifest_v1.json + RUNTIME_CINEMATICS_manifest_v1.json)",
+        "verifies": "checkpoint 10 runtime delivery as revised by checkpoint 13 (animatic v2), checkpoint 14 (dialogueCues fix), checkpoint 15 (LF + LFS fix), checkpoint 16 (animatic v3: CIN_002_S02 corrected keyframe + 16:9 keyframes), checkpoint 17 (campaign VO: 17 takes + 378 s timeline), checkpoint 18 (per-scene clips: CIN_001/CIN_002/CIN_004 video + CIN_006 timing/SRT only) checkpoint 19 (CIN_006 VO: canonical + alternate takes + 18 s timeline), checkpoint 20 (P0 draft mixes: 3 scenes + 72 s review) checkpoint 21 (CIN_005 animated take: 3 keyframes + 18 s clip), checkpoint 22 (CIN_006 animated take: 3 keyframes + 18 s clip; CIN_006 leaves PENDING_PANELS_NO_STORYBOARD) checkpoint 23 (CIN_009 animated take: 3 keyframes + 18 s clip; first Chapter 2 campaign scene with video) and checkpoint 24 (CIN_020 animated take: 3 keyframes + 18 s clip; closing campaign scene with video; CIN_009 keyframe manifest title corrected) (RUNTIME_AUDIO_manifest_v1.json + RUNTIME_CINEMATICS_manifest_v1.json)",
         "counts": COUNTS,
         "mismatches": ERRORS,
         "notes": NOTES,

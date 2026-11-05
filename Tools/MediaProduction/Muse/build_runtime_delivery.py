@@ -27,8 +27,11 @@ Sources (all already measured from real bytes in checkpoints 01-09):
     (3 storyboard keyframes 640x360 + scene export manifest with the
     18 s animated take MP4/OGV/poster, checkpoint 22)
   - Art_Source/Cinematics/Campaign/CIN_009/
-    (3 storyboard keyframes 640x360 + keyframes manifest, and the
+    (3 storyboard keyframes 640x360 + scene export manifest with the
     18 s animated take MP4/OGV/poster, checkpoint 23)
+  - Art_Source/Cinematics/Campaign/CIN_020/
+    (3 storyboard keyframes 640x360 + scene export manifest with the
+    18 s animated take MP4/OGV/poster, checkpoint 24)
   - Implementation/Content/Narrative/Deliveries/{P0,CAMPAIGN}_timing_manifest_v1.json
     + CIN_006/CIN_006_timing_manifest_v1.json (20 scenes timing JSON + SRT)
 
@@ -538,14 +541,15 @@ def main():
 
     # --- 6. Per-scene clips (checkpoint 18, Goi 30 item 6; CIN_005
     # animated take added in checkpoint 21, CIN_006 in checkpoint 22,
-    # CIN_009 in checkpoint 23, Goi 30 item 7) ---
+    # CIN_009 in checkpoint 23, CIN_020 in checkpoint 24, Goi 30
+    # item 7) ---
     # Each scene folder holds its own MP4/OGV/poster/SRT/timing + export
-    # manifest; all six scenes carry video (CIN_009 joined in
-    # checkpoint 23 with its own storyboard keyframes + animated take).
+    # manifest; all seven scenes carry video (CIN_020 joined in
+    # checkpoint 24 with its own storyboard keyframes + animated take).
     # Verified here against the export manifests, not trusted blindly.
     scene_clip_entries = []
     for scene_id in ("CIN_001", "CIN_002", "CIN_004", "CIN_006", "CIN_005",
-                     "CIN_009"):
+                     "CIN_009", "CIN_020"):
         exp_path = CINE_DEST / scene_id / "scene_export_manifest_v1.json"
         check(exp_path.exists(),
               f"scene clip manifest missing: {scene_id}")
@@ -583,13 +587,13 @@ def main():
             "dialogueCues": exp["dialogueCues"],
             "files": exp["files"],
         })
-    check(len(scene_clip_entries) == 6,
-          f"expected 6 per-scene clip exports, got "
+    check(len(scene_clip_entries) == 7,
+          f"expected 7 per-scene clip exports, got "
           f"{len(scene_clip_entries)}")
 
     cine_manifest = {
         "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
-        "checkpoint": "MEDIA-02 checkpoint 23 - CIN_009 animated take (Goi 30 item 7): 3 storyboard keyframes + 18 s Ken Burns clip; all 6 exported scenes now carry video; P0 animatic v3 + audio/timing unchanged from checkpoint 22",
+        "checkpoint": "MEDIA-02 checkpoint 24 - CIN_020 animated take (Goi 30 item 7): closing campaign scene, 3 storyboard keyframes + 18 s Ken Burns clip; all 7 exported scenes now carry video; P0 animatic v3 + audio/timing unchanged from checkpoint 23",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "campaignTotals": {"scenes": 20, "shots": 63, "seconds": 378,
@@ -655,6 +659,21 @@ def main():
             "white hooded figure not in the prompt and reads darker than "
             "a daylight payoff; S03 is not strictly top-down and adds a "
             "shrine not in the prompt.",
+            "CIN_020 animated take (checkpoint 24, Goi 30 item 7): the "
+            "closing campaign scene -- 18 s / 3 shots, slow Ken Burns "
+            "camera moves on 3 storyboard keyframes "
+            "(Art_Source/Cinematics/Campaign/CIN_020/keyframes_16x9/, "
+            "CIN020_keyframes_manifest_v1.json). Pack character list is "
+            "empty, so no character lock is involved; the villager is "
+            "an unnamed figure. Animatic-level motion, NOT a final "
+            "pose-animated take; no audio track in the clip; no baked "
+            "subtitles. Known defects: the same villager wears three "
+            "different outfits/headgear across the shots (continuity "
+            "drift) and S02 is an interior medium shot instead of a "
+            "detail close view. Also fixed in this checkpoint: the "
+            "CIN_009 keyframe manifest carried CIN_006's title "
+            "('Con dau qua pho') since checkpoint 23 -- corrected to "
+            "'Tieng rung duoc dap' in the manifest and its builder.",
         ],
         "animatic": cine_files,
         "sceneClips": scene_clip_entries,
