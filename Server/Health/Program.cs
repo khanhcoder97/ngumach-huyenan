@@ -420,11 +420,18 @@ app.Logger.LogInformation(
     npcActors.Count(actor => actor.InteractionServiceId != "NONE"));
 
 var companions = app.Services.GetRequiredService<IReadOnlyList<CompanionEntry>>();
+// Distinct sets, not the first row's scalars: the boot line claims something about the
+// whole table, so it has to read the whole table. All five companions do agree today
+// (leash 8 WU, feed 12 h), which is exactly the kind of fact a First() call hides - a
+// future row with a different leash would keep printing a half-truth, the same class of
+// defect the contract reconciliation step just lost its hardcoded capacity to.
 app.Logger.LogInformation(
     "Loaded pet and mount table: {CompanionCount} companions (leash {RangeWu} WU, fed every {FeedHours}h for cosmetics only) and {MountCount} cosmetic mounts (no combat) - the item catalogue names a different creature for every one of these ids, which the self-check pins; there is no companion route.",
     companions.Count(entry => entry.IsCompanion),
-    companions.First(entry => entry.IsCompanion).OwnerRangeWu,
-    companions.First(entry => entry.IsCompanion).FeedCooldownHours,
+    string.Join("/", companions.Where(entry => entry.IsCompanion)
+        .Select(entry => entry.OwnerRangeWu).Distinct().Order()),
+    string.Join("/", companions.Where(entry => entry.IsCompanion)
+        .Select(entry => entry.FeedCooldownHours).Distinct().Order()),
     companions.Count(entry => !entry.IsCompanion));
 
 var consumableRules = app.Services.GetRequiredService<IReadOnlyList<ConsumableEntry>>();
