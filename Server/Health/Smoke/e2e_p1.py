@@ -1618,9 +1618,21 @@ def alpha_revive_profile():
     """
     character = "CHR_QOD21_REVIVE"
     session, sequence = alpha_session(character)
+    # Report the HTTP shape rather than only the conclusion: the first ubuntu run of this
+    # profile failed with "did not start alive" and the job log the API returns is a
+    # truncated tail, so nothing in it said whether the route answered, the session was
+    # unknown or the actor really was at 0. Status, error code and the actor's own row are
+    # now part of the message, the way the escort leg reports its pool.
+    probe_status, _, probe_body = smoke_p1.call(
+        "GET", f"/p1/v2/world/{session}", headers={"X-Session-ID": session})
     _, self_state, _, _ = v2_snapshot(session)
-    smoke_p1.check(self_state.get("hp", 0) > 0,
-                   "the revive fixture did not start alive")
+    smoke_p1.check(
+        self_state.get("hp", 0) > 0,
+        "the revive fixture did not start alive "
+        f"(first read {probe_status}, error "
+        f"{(probe_body.get('error') or {}).get('code')}, actor row "
+        f"hp={self_state.get('hp')} maxHp={self_state.get('maxHp')} "
+        f"at ({self_state.get('x')},{self_state.get('y')}))")
 
     walk_failures = []
     for _ in range(40):
