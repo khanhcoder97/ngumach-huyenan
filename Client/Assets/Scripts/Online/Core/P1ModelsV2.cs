@@ -163,4 +163,53 @@ namespace NguMach.Client.P1
     {
         [JsonProperty(Required = Required.Always)] public int xp, currency, durability;
     }
+
+    // P1/QuestTalkRequest.schema.json — NPC dialogue node intent.
+    // Gate: P1:QuestTalk:Enabled + AlphaProfile (default OFF).
+    [Serializable] public sealed class P1QuestTalkIntent
+    {
+        [JsonProperty(Required = Required.Always)] public string npcId;
+        [JsonProperty(Required = Required.Always)] public string nodeId;
+    }
+
+    // P1/QuestTalkResponse.schema.json — narrative credit, no XP/turn-in/chapter.
+    [Serializable] public sealed class P1QuestTalkResult
+    {
+        [JsonProperty(Required = Required.Always)] public bool applied;
+        [JsonProperty(Required = Required.Always)] public string[] appliedFlags;
+        [JsonProperty(Required = Required.Always)] public string questId;
+        [JsonProperty(Required = Required.Always)] public string stepId;
+        [JsonProperty(Required = Required.Always)] public long revision;
+    }
+
+    // P1/WorldPortalRequest.schema.json — portal intent, server-owned destination.
+    // Gate: P1:Portal:Enabled + AlphaProfile (default OFF).
+    [Serializable] public sealed class P1WorldPortalIntent
+    {
+        [JsonProperty(Required = Required.Always)] public string portalId;
+    }
+
+    // P1/WorldPortalResponse.schema.json — server-owned destination and arrival.
+    [Serializable] public sealed class P1WorldPortalResult
+    {
+        [JsonProperty(Required = Required.Always)] public string portalId;
+        [JsonProperty(Required = Required.Always)] public string destinationMapId;
+        [JsonProperty(Required = Required.Always)] public double destinationXWu, destinationYWu;
+        [JsonProperty(Required = Required.Always)] public long serverTick, revision;
+    }
+
+    // P1/QuestMapViewedRequest.schema.json — player viewed map intent.
+    // Gate: private-alpha (default OFF).
+    [Serializable] public sealed class P1QuestMapViewedIntent
+    {
+        [JsonProperty(Required = Required.Always)] public string questId;
+    }
+
+    // P1/QuestMapViewedResponse.schema.json — server acknowledgement.
+    [Serializable] public sealed class P1QuestMapViewedResult
+    {
+        [JsonProperty(Required = Required.Always)] public string questId;
+        [JsonProperty(Required = Required.Always)] public bool acknowledged;
+        [JsonProperty(Required = Required.Always)] public long serverTick, revision;
+    }
 }

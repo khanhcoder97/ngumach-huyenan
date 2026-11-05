@@ -27,4 +27,11 @@ namespace NguMach.Client.Presentation
         long? NextReturnAllowedAtTick { get; }
         Task<P1Result> ReturnFromDeathAsync(CancellationToken ct);
     }
+
+    public interface IP1TalkAdapter
+    {
+        Task<P1Result> TalkAsync(string npcId, string nodeId, CancellationToken ct);
+        Task<P1Result> PortalAsync(string portalId, CancellationToken ct);
+        Task<P1Result> MapViewedAsync(string questId, CancellationToken ct);
+    }
 }

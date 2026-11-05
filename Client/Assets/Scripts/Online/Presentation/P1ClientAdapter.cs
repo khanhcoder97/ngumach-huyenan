@@ -13,7 +13,7 @@ namespace NguMach.Client.Presentation
     /// Wraps a live <see cref="P1Client"/> and exposes the UI surface.
     /// Does NOT cache inventory/quest data locally beyond what P1Client already holds.
     /// </summary>
-    public sealed class P1ClientAdapter : IP1UIAdapter, IP1InventoryV2Adapter, IP1DeathReturnAdapter
+    public sealed class P1ClientAdapter : IP1UIAdapter, IP1InventoryV2Adapter, IP1DeathReturnAdapter, IP1TalkAdapter
     {
         private readonly P1Client _client;
 
@@ -47,6 +47,9 @@ namespace NguMach.Client.Presentation
         public Task<P1Result> ReturnFromDeathAsync(CancellationToken ct) => _client.ReturnFromDeathAsync(ct);
         public Task<P1Result> AcceptQuestAsync(string questId, string npcId, CancellationToken ct) => _client.AcceptQuestAsync(questId, npcId, ct);
         public Task<P1Result> RetryPendingAsync(CancellationToken ct) => _client.RetryPendingAsync(ct);
+        public Task<P1Result> TalkAsync(string npcId, string nodeId, CancellationToken ct) => _client.TalkAsync(npcId, nodeId, ct);
+        public Task<P1Result> PortalAsync(string portalId, CancellationToken ct) => _client.PortalAsync(portalId, ct);
+        public Task<P1Result> MapViewedAsync(string questId, CancellationToken ct) => _client.MapViewedAsync(questId, ct);
 
         public Task<P1Result> InteractAsync(string targetId, CancellationToken ct)
             => _client.InteractAsync(targetId, ct);

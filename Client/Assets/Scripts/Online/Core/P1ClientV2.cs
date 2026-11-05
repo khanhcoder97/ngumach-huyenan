@@ -291,6 +291,51 @@ namespace NguMach.Client.P1
             finally { lane.Release(); }
         }
 
+        // ── Quest talk (TALK, gate P1:QuestTalk:Enabled + AlphaProfile) ──
+        public async Task<P1Result> TalkAsync(string npcId, string nodeId, CancellationToken ct)
+        {
+            await lane.WaitAsync(ct);
+            try
+            {
+                if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
+                if (string.IsNullOrWhiteSpace(npcId) || string.IsNullOrWhiteSpace(nodeId)) return Fail("invalid_input");
+                pending = Command("/p1/quests/talk", new P1QuestTalkIntent { npcId = npcId, nodeId = nodeId });
+                pendingKind = PendingKind.Talk;
+                return await SubmitPending(ct);
+            }
+            finally { lane.Release(); }
+        }
+
+        // ── World portal (gate P1:Portal:Enabled + AlphaProfile) ──
+        public async Task<P1Result> PortalAsync(string portalId, CancellationToken ct)
+        {
+            await lane.WaitAsync(ct);
+            try
+            {
+                if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
+                if (string.IsNullOrWhiteSpace(portalId)) return Fail("invalid_input");
+                pending = Command("/p1/world/portal", new P1WorldPortalIntent { portalId = portalId });
+                pendingKind = PendingKind.Portal;
+                return await SubmitPending(ct);
+            }
+            finally { lane.Release(); }
+        }
+
+        // ── Quest map-viewed (gate private-alpha) ──
+        public async Task<P1Result> MapViewedAsync(string questId, CancellationToken ct)
+        {
+            await lane.WaitAsync(ct);
+            try
+            {
+                if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
+                if (string.IsNullOrWhiteSpace(questId)) return Fail("invalid_input");
+                pending = Command("/p1/quests/map-viewed", new P1QuestMapViewedIntent { questId = questId });
+                pendingKind = PendingKind.MapViewed;
+                return await SubmitPending(ct);
+            }
+            finally { lane.Release(); }
+        }
+
         private async Task<P1Result> ApplyDeathReturn(P1HttpReply reply, CancellationToken ct)
         {
             var r = Parse<P1DeathReturnResultV1>(reply);
@@ -344,6 +389,42 @@ namespace NguMach.Client.P1
         { return (h.StatusCode == 404 || h.StatusCode == 405) && r == null; }
         private P1Result RejectPending(string reason)
         { pending = null; State = P1ConnectionState.Ready; return Fail(reason); }
+
+        private async Task<P1Result> ApplyTalk(P1HttpReply reply, CancellationToken ct)
+        {
+            var r = Parse<P1QuestTalkResult>(reply);
+            if (IsExpired(r)) return Expire();
+            if (MissingRoute(reply, r)) return RejectPending("feature_unavailable");
+            if (Ambiguous(reply, r)) return Uncertain(reply.CorrelationId);
+            if (!Good(reply, r) || r.sessionId != SessionId || r.requestId != pending.CorrelationId ||
+                r.result == null || string.IsNullOrWhiteSpace(r.result.questId)) return Uncertain(reply.CorrelationId);
+            pending = null; State = P1ConnectionState.NeedsResync;
+            return P1Result.Ok();
+        }
+
+        private async Task<P1Result> ApplyPortal(P1HttpReply reply, CancellationToken ct)
+        {
+            var r = Parse<P1WorldPortalResult>(reply);
+            if (IsExpired(r)) return Expire();
+            if (MissingRoute(reply, r)) return RejectPending("feature_unavailable");
+            if (Ambiguous(reply, r)) return Uncertain(reply.CorrelationId);
+            if (!Good(reply, r) || r.sessionId != SessionId || r.requestId != pending.CorrelationId ||
+                r.result == null || string.IsNullOrWhiteSpace(r.result.portalId)) return Uncertain(reply.CorrelationId);
+            pending = null; State = P1ConnectionState.NeedsResync;
+            return P1Result.Ok();
+        }
+
+        private async Task<P1Result> ApplyMapViewed(P1HttpReply reply, CancellationToken ct)
+        {
+            var r = Parse<P1QuestMapViewedResult>(reply);
+            if (IsExpired(r)) return Expire();
+            if (MissingRoute(reply, r)) return RejectPending("feature_unavailable");
+            if (Ambiguous(reply, r)) return Uncertain(reply.CorrelationId);
+            if (!Good(reply, r) || r.sessionId != SessionId || r.requestId != pending.CorrelationId ||
+                r.result == null || string.IsNullOrWhiteSpace(r.result.questId)) return Uncertain(reply.CorrelationId);
+            pending = null; State = P1ConnectionState.NeedsResync;
+            return P1Result.Ok();
+        }
 
         // ── Inventory v2 (Qoder 77bc3a6: twelve closed slots beside frozen v1) ──
         private static readonly string[] InventoryV2SlotOrder =
