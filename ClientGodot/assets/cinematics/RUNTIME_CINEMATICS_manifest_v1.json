@@ -1,6 +1,6 @@
 {
  "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
- "checkpoint": "MEDIA-02 checkpoint 32 - Goi 31 item 2 shot-content fixes (14 revised keyframes across 8 scenes, re-exported video, before/after contact sheets) + status phrasing corrected (all 21 dialogue windows approved for DRAFT VO per Goi 30 D1, PR #120; only CIN_001_S05 DECIDED); prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
+ "checkpoint": "MEDIA-02 checkpoint 34 - Goi 31 item 4 minimal runtime pack (prologue + CIN_001/002/004/006: P0 mixes v3 and CIN_006 mix v1 embedded in the runtime OGV + review MP4; poster + SRT + timing per scene; baked-subtitle variant stays review-only); checkpoint 32 shot fixes + status phrasing (all 21 dialogue windows approved for DRAFT VO per Goi 30 D1, PR #120; only CIN_001_S05 DECIDED) otherwise unchanged; prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "campaignTotals": {
@@ -57,25 +57,51 @@
    "files": {
     "mp4": {
      "path": "assets/cinematics/CIN_001/CIN_001_640x360_30fps.mp4",
-     "sha256": "fb9cbaf4c707615c72cfa05707757a9a817fcb98795cd14d2c08cda7c82dfa27",
-     "sizeBytes": 330742,
+     "sha256": "9ffdf366bbca3ced5f614501651d8f832ba1ee5db1d67ad19e84ce030d2e4e25",
+     "sizeBytes": 1224004,
      "codec": "h264",
      "width": 640,
      "height": 360,
      "fps": 30,
      "durationSeconds": 36.0,
-     "frames": 1080
+     "frames": 1080,
+     "audio": {
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateKbps": 192,
+      "sourceMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_001_mix_draft_v3.wav",
+      "sourceMixSha256": "1463ce02d64fa35ba785c0911afdd6193fdafb697b6a3c4d52552516aa1e3320",
+      "mixVersion": "v3_fully_composed",
+      "integratedLUFS": "-21.04",
+      "truePeakDBTP": "-1.65",
+      "durationSeconds": 36.0,
+      "videoStoredFrames": 1080
+     }
     },
     "ogv": {
      "path": "assets/cinematics/CIN_001/CIN_001_640x360_30fps.ogv",
-     "sha256": "020d3b693497604c1b98f4dad42aebafdcc97793e684c51f7373d65e0ef5ed5a",
-     "sizeBytes": 915569,
+     "sha256": "af60880a3776f0f3564a9bd167de912db8f9727697f460257fd1a28471609917",
+     "sizeBytes": 1483364,
      "codec": "theora",
      "width": 640,
      "height": 360,
      "fps": 30,
      "durationSeconds": 36.0,
-     "storedFrames": 171
+     "storedFrames": 171,
+     "audio": {
+      "codec": "vorbis",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateKbps": 160,
+      "sourceMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_001_mix_draft_v3.wav",
+      "sourceMixSha256": "1463ce02d64fa35ba785c0911afdd6193fdafb697b6a3c4d52552516aa1e3320",
+      "mixVersion": "v3_fully_composed",
+      "integratedLUFS": "-20.90",
+      "truePeakDBTP": "-1.70",
+      "durationSeconds": 36.0,
+      "videoStoredFrames": 171
+     }
     },
     "poster": {
      "path": "assets/cinematics/CIN_001/CIN_001_poster.png",
@@ -108,25 +134,51 @@
    "files": {
     "mp4": {
      "path": "assets/cinematics/CIN_002/CIN_002_640x360_30fps.mp4",
-     "sha256": "5eca0abd958c6578df9a8622e78998f03b2ce7826105a55759e087189f813178",
-     "sizeBytes": 156427,
+     "sha256": "e09f1302db1f408917986f4db1e0857946ebf6a61dada2cab1f318c516d0d7a7",
+     "sizeBytes": 603413,
      "codec": "h264",
      "width": 640,
      "height": 360,
      "fps": 30,
      "durationSeconds": 18.0,
-     "frames": 540
+     "frames": 540,
+     "audio": {
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateKbps": 192,
+      "sourceMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_002_mix_draft_v3.wav",
+      "sourceMixSha256": "0dc438137976772a214e3a434c045c06caa4217d31b5ddc49475a5016107fe0c",
+      "mixVersion": "v3_fully_composed",
+      "integratedLUFS": "-22.50",
+      "truePeakDBTP": "-4.27",
+      "durationSeconds": 18.0,
+      "videoStoredFrames": 540
+     }
     },
     "ogv": {
      "path": "assets/cinematics/CIN_002/CIN_002_640x360_30fps.ogv",
-     "sha256": "209e062c8278381118b9e7d13cc372957a67170d45178aaaeb236e0c6e616e6b",
-     "sizeBytes": 465574,
+     "sha256": "d4388b2f41ecaadc20d18613c259a57083790a69a7f8cd0e5966dcfaa47505bf",
+     "sizeBytes": 749277,
      "codec": "theora",
      "width": 640,
      "height": 360,
      "fps": 30,
      "durationSeconds": 18.0,
-     "storedFrames": 61
+     "storedFrames": 61,
+     "audio": {
+      "codec": "vorbis",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateKbps": 160,
+      "sourceMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_002_mix_draft_v3.wav",
+      "sourceMixSha256": "0dc438137976772a214e3a434c045c06caa4217d31b5ddc49475a5016107fe0c",
+      "mixVersion": "v3_fully_composed",
+      "integratedLUFS": "-22.43",
+      "truePeakDBTP": "-4.46",
+      "durationSeconds": 18.0,
+      "videoStoredFrames": 61
+     }
     },
     "poster": {
      "path": "assets/cinematics/CIN_002/CIN_002_poster.png",
@@ -159,25 +211,51 @@
    "files": {
     "mp4": {
      "path": "assets/cinematics/CIN_004/CIN_004_640x360_30fps.mp4",
-     "sha256": "f491a39c625a7a0717cbb3f43ab5de72f04bd9ca14b123dbd522bf2461146b50",
-     "sizeBytes": 209135,
+     "sha256": "65e5104fe7444067df4df5e52aeadf9078a9a12e2455805384751d1b2bab7891",
+     "sizeBytes": 655887,
      "codec": "h264",
      "width": 640,
      "height": 360,
      "fps": 30,
      "durationSeconds": 18.0,
-     "frames": 540
+     "frames": 540,
+     "audio": {
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateKbps": 192,
+      "sourceMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_004_mix_draft_v3.wav",
+      "sourceMixSha256": "8e3bc4e2908412ca78048b42c2012a05ddf22ca59442dd008a8277f311db84cc",
+      "mixVersion": "v3_fully_composed",
+      "integratedLUFS": "-26.79",
+      "truePeakDBTP": "-8.28",
+      "durationSeconds": 18.0,
+      "videoStoredFrames": 540
+     }
     },
     "ogv": {
      "path": "assets/cinematics/CIN_004/CIN_004_640x360_30fps.ogv",
-     "sha256": "82d226ce5b0cf66c4d9be1c2a9973b5db980a9f9716934e866d07fecb733a960",
-     "sizeBytes": 485991,
+     "sha256": "457780fa7431719d9018257e0f0a132c603bb3b2aba542ad1ec42fb51b7de590",
+     "sizeBytes": 768058,
      "codec": "theora",
      "width": 640,
      "height": 360,
      "fps": 30,
      "durationSeconds": 18.0,
-     "storedFrames": 45
+     "storedFrames": 45,
+     "audio": {
+      "codec": "vorbis",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateKbps": 160,
+      "sourceMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_004_mix_draft_v3.wav",
+      "sourceMixSha256": "8e3bc4e2908412ca78048b42c2012a05ddf22ca59442dd008a8277f311db84cc",
+      "mixVersion": "v3_fully_composed",
+      "integratedLUFS": "-26.73",
+      "truePeakDBTP": "-8.29",
+      "durationSeconds": 18.0,
+      "videoStoredFrames": 45
+     }
     },
     "poster": {
      "path": "assets/cinematics/CIN_004/CIN_004_poster.png",
@@ -207,25 +285,51 @@
    "files": {
     "mp4": {
      "path": "assets/cinematics/CIN_006/CIN_006_640x360_30fps.mp4",
-     "sha256": "a8225efbccfa185354379a68be34e9d590dc59db137d801574dbc124f543b575",
-     "sizeBytes": 1484476,
+     "sha256": "e551b9ad2d7b76330a9e1d2adb4e417edeeba25358d37aa6705575d75d832321",
+     "sizeBytes": 1934291,
      "codec": "h264",
      "width": 640,
      "height": 360,
      "fps": 30,
      "durationSeconds": 18.0,
-     "frames": 540
+     "frames": 540,
+     "audio": {
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateKbps": 192,
+      "sourceMix": "Art_Source/Audio/Muse/MIX/CIN006_DRAFT_V1/CIN_006_mix_draft_v1.wav",
+      "sourceMixSha256": "a71a38f006f4a8511c051173bbffb1609f46b8dba14e9141fda4143d1173dda6",
+      "mixVersion": "v1_cin006_proposed",
+      "integratedLUFS": "-22.04",
+      "truePeakDBTP": "-3.40",
+      "durationSeconds": 18.0,
+      "videoStoredFrames": 540
+     }
     },
     "ogv": {
      "path": "assets/cinematics/CIN_006/CIN_006_640x360_30fps.ogv",
-     "sha256": "fa183c1990822849e6e7f55eb133cbe2484d57b6f34878f988530da14a412964",
-     "sizeBytes": 496800,
+     "sha256": "25c0b69e38bd93fbcf8e638027bdb0540caa35402eea0f0d9bba5d8bee666346",
+     "sizeBytes": 777786,
      "codec": "theora",
      "width": 640,
      "height": 360,
      "fps": 30,
      "durationSeconds": 18.0,
-     "storedFrames": 480
+     "storedFrames": 480,
+     "audio": {
+      "codec": "vorbis",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateKbps": 160,
+      "sourceMix": "Art_Source/Audio/Muse/MIX/CIN006_DRAFT_V1/CIN_006_mix_draft_v1.wav",
+      "sourceMixSha256": "a71a38f006f4a8511c051173bbffb1609f46b8dba14e9141fda4143d1173dda6",
+      "mixVersion": "v1_cin006_proposed",
+      "integratedLUFS": "-22.04",
+      "truePeakDBTP": "-3.43",
+      "durationSeconds": 18.0,
+      "videoStoredFrames": 480
+     }
     },
     "poster": {
      "path": "assets/cinematics/CIN_006/CIN_006_poster.png",

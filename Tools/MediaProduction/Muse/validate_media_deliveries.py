@@ -1101,6 +1101,95 @@ def check_p0_mix_v3():
          f"not a mix PASS")
 
 
+def check_cin006_mix():
+    """Checkpoint 34 (Goi 31 item 4): CIN_006 draft mix v1.
+
+    Mirrors check_p0_mix_v3() for MIX/CIN006_DRAFT_V1/ +
+    CIN006_MIX_V1_manifest_v1.json (single scene, no review mix):
+    every stem must carry ORIGINAL_COMPOSED_BY_MUSE provenance, the
+    mix WAV must match the manifest sha/duration/format, ducking
+    evidence must show a real in-window cut with no out-of-window
+    change, and loop joins must carry QA ratios. The mix itself is
+    a DRAFT (see the manifest mixVerdict); nothing here is a mix
+    PASS. The stem assignment is NEW and PROPOSED_CANDIDATE; the
+    +0.52 s VO overrun is kept (window unchanged, 0.02 s tail trim
+    at the scene edge, recorded in the manifest).
+    """
+    mix_dir = ROOT / "Art_Source/Audio/Muse/MIX/CIN006_DRAFT_V1"
+    manifest_path = mix_dir / "CIN006_MIX_V1_manifest_v1.json"
+    if not manifest_path.exists():
+        err("CIN006 MIX V1: missing CIN006_MIX_V1_manifest_v1.json")
+        return
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("mixVersion") != "v1_cin006_proposed":
+        err(f"CIN006 MIX V1: mixVersion "
+            f"{manifest.get('mixVersion')} != v1_cin006_proposed")
+    scenes = manifest.get("scenes", [])
+    if len(scenes) != 1:
+        err(f"CIN006 MIX V1: {len(scenes)}/1 scenes in manifest")
+    checked = 0
+    for scene in scenes:
+        mx = scene["mix"]
+        wav = mix_dir / mx["file"]
+        if not wav.exists():
+            err(f"CIN006 MIX V1 {scene['sceneId']}: missing {mx['file']}")
+            continue
+        if is_lfs_pointer(wav):
+            err(f"CIN006 MIX V1 {scene['sceneId']}: wav is an LFS pointer")
+            continue
+        if sha256_of(wav) != mx["sha256"]:
+            err(f"CIN006 MIX V1 {scene['sceneId']}: wav sha mismatch")
+        p = probe(wav)
+        if p and abs(p["duration"] - mx["durationSeconds"]) > 0.02:
+            err(f"CIN006 MIX V1 {scene['sceneId']}: duration "
+                f"{p['duration']} != manifest {mx['durationSeconds']}")
+        if p:
+            if (p.get("codec") != "pcm_s16le"
+                    or p.get("sample_rate") != 48000
+                    or p.get("channels") != 2):
+                err(f"CIN006 MIX V1 {scene['sceneId']}: format "
+                    f"{p.get('codec')}/{p.get('sample_rate')}/"
+                    f"{p.get('channels')} != pcm_s16le/48000/2")
+        if abs(mx["durationSeconds"] - scene["seconds"]) > 0.05:
+            err(f"CIN006 MIX V1 {scene['sceneId']}: mix duration "
+                f"{mx['durationSeconds']} != scene {scene['seconds']}")
+        for st in scene["stems"]:
+            prov = st.get("provenance", "")
+            if "ORIGINAL_COMPOSED_BY_MUSE" not in prov:
+                err(f"CIN006 MIX V1 {scene['sceneId']}: {st['role']} "
+                    f"stem {st['cue']} provenance is not composed: {prov}")
+            if "PORTED_CODEX_PACKV1" in prov:
+                err(f"CIN006 MIX V1 {scene['sceneId']}: {st['role']} "
+                    f"stem {st['cue']} still uses a ported stem")
+        for ev in scene["ducking"]["evidence"]:
+            if ev["depthInWindowDb"] >= 0:
+                err(f"CIN006 MIX V1 {scene['sceneId']}: ducking depth "
+                    f"in window {ev['depthInWindowDb']} >= 0 on "
+                    f"{ev['bus']} bus")
+            if ev["depthOutsideWindowDb"] != 0:
+                err(f"CIN006 MIX V1 {scene['sceneId']}: ducking depth "
+                    f"outside window {ev['depthOutsideWindowDb']} "
+                    f"!= 0 on {ev['bus']} bus")
+        for lq in scene["loopQA"]:
+            for join in lq["joins"]:
+                if join.get("ratioToP999") is None:
+                    err(f"CIN006 MIX V1 {scene['sceneId']}: loop join "
+                        f"{lq['cue']} @{join['atSeconds']} has no "
+                        f"QA ratio")
+        vo = scene.get("vo", {})
+        if vo.get("tailTrimmedAtSceneEdgeSeconds", 0) != 0.02:
+            err(f"CIN006 MIX V1 {scene['sceneId']}: recorded VO tail "
+                f"trim {vo.get('tailTrimmedAtSceneEdgeSeconds')} != 0.02")
+        if vo.get("overrunVsWindowSeconds", 0) != 0.52:
+            err(f"CIN006 MIX V1 {scene['sceneId']}: recorded VO "
+                f"overrun {vo.get('overrunVsWindowSeconds')} != 0.52")
+        checked += 1
+    COUNTS["cin006_mix_v1_files_checked"] = checked
+    note(f"CIN_006 draft mix v1 checked: {checked}/1 file (18 s, "
+         f"fully composed stems, PROPOSED assignment); "
+         f"DRAFT_MIX_NOT_FINAL, not a mix PASS")
+
+
 def check_ab_shortlist():
     """Checkpoint 33 (Goi 31 item 3): A/B review shortlist.
 
@@ -1925,10 +2014,10 @@ def check_prologue():
     if vo_n != 5 or mix_n != 1:
         err(f"PROLOGUE: runtime audio registrations vo={vo_n} "
             f"mix={mix_n} (want 5/1)")
-    # Checkpoint 31: 606 + 4 P0 mix v3 files = 610.
-    if am.get("totalFiles") != 610:
+    # Checkpoint 34: 610 + 1 CIN_006 mix v1 file = 611.
+    if am.get("totalFiles") != 611:
         err(f"PROLOGUE: runtime audio total {am.get('totalFiles')}"
-            f" != 610")
+            f" != 611")
     COUNTS["prologue_files_checked"] = checked
     COUNTS["audio_files_checked"] = \
         COUNTS.get("audio_files_checked", 0) + 6
@@ -1963,11 +2052,12 @@ def main():
     check_p0_mix()
     check_p0_mix_v2()
     check_p0_mix_v3()
+    check_cin006_mix()
     check_ab_shortlist()
     check_scene_clips()
     check_prologue()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 33 (Goi 31 item 3: A/B review shortlist -- P0 mixes v1/v2/v3, composed music/ambience vs ported, draft VO pronunciation/proper names, loop seams; 6 M3U playlists + defect table; audition status NOT_AUDITIONED, no listening PASS)",
+        "checkpoint": "MEDIA-02 checkpoint 34 (Goi 31 item 4: minimal runtime pack -- prologue + CIN_001/002/004/006 with embedded draft mix audio in the runtime OGV + review MP4, poster + SRT + timing per scene; CIN_006 draft mix v1 from fully composed stems, PROPOSED assignment)",
         "base_integration": "6f2b465",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -1994,6 +2084,7 @@ def main():
             "Composed ambience pack (checkpoint 30): 13 ORIGINAL cues composed by Muse (all AMBIENCE/* cues, 16.0 s each) from filtered-noise beds with slow gust/swell envelopes and sparse deterministic events; loudness targets are the ported cues' checkpoint-07 measured LUFS, this check re-verifies bytes/SHA/duration only. Loop seams are recorded per cue in the delivery manifest with the same disclosed 0.25 s end-landing construction; no ear audition. Crowd beds are filtered noise only (no voices, no words). The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; composed cues are parallel candidates whose adoption is Codex's presentation-adapter decision.",
             "A/B review shortlist (checkpoint 33, Goi 31 item 3): 12 P0 mix cells, 9 composed music + 4 stingers, 13 composed + 13 ported ambience, 21 canonical VO takes + 1 alternate, 44 seam rows, 6 M3U playlists (72 entries). This check verifies bytes/SHA/duration and playlist resolution only; loudness/true-peak/seam numbers in the shortlist JSON were measured from real bytes by build_ab_shortlist_goi31.py at build time and are NOT re-measured here. Audition status is NOT_AUDITIONED: no human listening has happened, and the defect table (D-01..D-12) is open for the listener/director. The alternate take CIN_006_ALT_T01 is verified to live in its own playlist only. New finding recorded by the shortlist: the same character is spelled 'Tạ Văn Khánh' in the P0 VO manifest and 'Tạ Vân Khanh' in the campaign VO manifest (D-12, director to resolve).",
             "Prologue CIN_000 (checkpoint 27): a standalone pre-game film, NOT a campaign scene; its narration is DRAFT TTS (narrator casting is a director decision), its mix is DRAFT_MIX_NOT_FINAL, and no ear audition has been done. Identity checks inside the film builder use crop-compensated diffs (full-res < 20, 160x90 structure < 8) because the render path resamples twice; a brute-force fit on S01 confirmed the designed zooms (1.015/1.035/1.055) at zero offset with a 4.2-6.5 structure floor. Headline picture defects: S01/S03 mechanism design drift and S11's ambiguous arrival direction, recorded per shot in CIN000_keyframes_manifest_v1.json.",
+            "CIN_006 draft mix v1 (checkpoint 34, Goi 31 item 4): first scene mix for CIN_006, built with the P0 v3 recipe (music thang_long + ambience thang_long_crowd + reveal stinger at 6.0 s + CP19 draft VO at 12.5 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_006 and the scene timing manifest lists only the reveal stinger as a candidate stem. The +0.52 s VO overrun window is kept as-is per the owner decision; the take tail is trimmed 0.02 s at the 18.00 s scene edge (recorded, not hidden). The alternate take CIN_006_ALT_T01 is NOT in the mix or the pack (DEC-MEDIA-P0 Q3). The minimal runtime pack embeds v3 mixes in the P0 scene OGV/MP4 and the CIN_006 v1 mix in CIN_006's OGV/MP4 (video streams copied bit-for-bit, verified by stored-frame counts); the prologue film is verified unchanged. Runtime playback is clean OGV + sidecar SRT overlay; the baked-subtitle MP4 is review-only. No ear audition has been done (NOT_AUDITIONED).",
             "Prologue subtitled variant (checkpoint 28, owner request): a VIEWING variant only -- the canonical MP4/OGV keep the checkpoint 27 mix at its measured level (-20.81 LUFS) and the canonical SRT keeps its 6 cues. The variant's +5 dB is a flat presentation gain (no dynamics change, measured -15.83 LUFS / -4.09 dBTP on the variant file), and its readable SRT is a presentation split whose concatenated text is verified identical to the canonical SRT. Burned-in subtitle font is DejaVu Sans (the project has no locked Vietnamese display font, same placeholder status as the title card). No OGV subtitled variant: in-engine subtitle display is the presentation adapter's concern (Codex).",
         ],
     }

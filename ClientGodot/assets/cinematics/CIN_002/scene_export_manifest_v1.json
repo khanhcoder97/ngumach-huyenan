@@ -1,95 +1,122 @@
 {
- "schemaVersion": 1,
- "checkpoint": "MEDIA-02 checkpoint 18 - per-scene clip export (Goi 30 item 6): CIN_001/CIN_002/CIN_004 video clips + CIN_006 timing/SRT only (no panels yet)",
- "decisionId": "DEC-MEDIA-P0-20261105",
- "branch": "muse/media-production-20261104",
- "baseSha": "f0859d0",
- "sceneId": "CIN_002",
- "title": "Âm cuối dưới nước",
- "durationSeconds": 18,
- "dialogueCues": 1,
- "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
- "files": {
-  "mp4": {
-   "path": "assets/cinematics/CIN_002/CIN_002_640x360_30fps.mp4",
-   "sha256": "5eca0abd958c6578df9a8622e78998f03b2ce7826105a55759e087189f813178",
-   "sizeBytes": 156427,
-   "codec": "h264",
-   "width": 640,
-   "height": 360,
-   "fps": 30,
-   "durationSeconds": 18.0,
-   "frames": 540
+  "schemaVersion": 1,
+  "checkpoint": "MEDIA-02 checkpoint 34 - Goi 31 item 4: embedded draft mix audio in the runtime OGV + review MP4 (video streams bit-identical); poster/SRT/timing unchanged",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "baseSha": "f0859d0",
+  "sceneId": "CIN_002",
+  "title": "Âm cuối dưới nước",
+  "durationSeconds": 18,
+  "dialogueCues": 1,
+  "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+  "files": {
+    "mp4": {
+      "path": "assets/cinematics/CIN_002/CIN_002_640x360_30fps.mp4",
+      "sha256": "e09f1302db1f408917986f4db1e0857946ebf6a61dada2cab1f318c516d0d7a7",
+      "sizeBytes": 603413,
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "frames": 540,
+      "audio": {
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 192,
+        "sourceMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_002_mix_draft_v3.wav",
+        "sourceMixSha256": "0dc438137976772a214e3a434c045c06caa4217d31b5ddc49475a5016107fe0c",
+        "mixVersion": "v3_fully_composed",
+        "integratedLUFS": "-22.50",
+        "truePeakDBTP": "-4.27",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 540
+      }
+    },
+    "ogv": {
+      "path": "assets/cinematics/CIN_002/CIN_002_640x360_30fps.ogv",
+      "sha256": "d4388b2f41ecaadc20d18613c259a57083790a69a7f8cd0e5966dcfaa47505bf",
+      "sizeBytes": 749277,
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "storedFrames": 61,
+      "audio": {
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 160,
+        "sourceMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_002_mix_draft_v3.wav",
+        "sourceMixSha256": "0dc438137976772a214e3a434c045c06caa4217d31b5ddc49475a5016107fe0c",
+        "mixVersion": "v3_fully_composed",
+        "integratedLUFS": "-22.43",
+        "truePeakDBTP": "-4.46",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 61
+      }
+    },
+    "poster": {
+      "path": "assets/cinematics/CIN_002/CIN_002_poster.png",
+      "sha256": "3553e28e24322bbea33affabfd900d5d2360a132c5a492355a7fe3a173906fb3",
+      "sizeBytes": 271088,
+      "sourcePanel": "panel_CIN_002_S01.png"
+    },
+    "timing": {
+      "path": "assets/cinematics/CIN_002/CIN_002_timing_v1.json",
+      "sha256": "bc0578cd80ee0f7584fec695e97be34e356899df9ae7e5d9919a9b665fc70c0c",
+      "sizeBytes": 1708
+    },
+    "srt": {
+      "path": "assets/cinematics/CIN_002/CIN_002_vi.srt",
+      "sha256": "466a5051eb04f99af62497ecc2a36eec96fb08416ef3511055f8cc932b55dbbd",
+      "sizeBytes": 105,
+      "status": "DRAFT"
+    }
   },
-  "ogv": {
-   "path": "assets/cinematics/CIN_002/CIN_002_640x360_30fps.ogv",
-   "sha256": "209e062c8278381118b9e7d13cc372957a67170d45178aaaeb236e0c6e616e6b",
-   "sizeBytes": 465574,
-   "codec": "theora",
-   "width": 640,
-   "height": 360,
-   "fps": 30,
-   "durationSeconds": 18.0,
-   "storedFrames": 61
+  "notes": [
+    "Scene-local time starts at 0; shot list is rebased from reel time. The copied SRT is already scene-local.",
+    "The 72 s P0 reel is review/gallery only, NOT auto-run as opening; this per-scene clip is the runtime unit (Goi 30 item 6)."
+  ],
+  "reelOffsetSeconds": {
+    "start": 36.0,
+    "end": 54.0
   },
-  "poster": {
-   "path": "assets/cinematics/CIN_002/CIN_002_poster.png",
-   "sha256": "3553e28e24322bbea33affabfd900d5d2360a132c5a492355a7fe3a173906fb3",
-   "sizeBytes": 271088,
-   "sourcePanel": "panel_CIN_002_S01.png"
+  "reelTotalSeconds": 72.0,
+  "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+  "frameCheck": {
+    "first": {
+      "panel": "panel_CIN_002_S01.png",
+      "meanAbsChannelDiff": 1.841,
+      "maxAllowed": 10.0
+    },
+    "last": {
+      "panel": "panel_CIN_002_S03.png",
+      "meanAbsChannelDiff": 2.089,
+      "maxAllowed": 10.0
+    }
   },
-  "timing": {
-   "path": "assets/cinematics/CIN_002/CIN_002_timing_v1.json",
-   "sha256": "bc0578cd80ee0f7584fec695e97be34e356899df9ae7e5d9919a9b665fc70c0c",
-   "sizeBytes": 1708
-  },
-  "srt": {
-   "path": "assets/cinematics/CIN_002/CIN_002_vi.srt",
-   "sha256": "466a5051eb04f99af62497ecc2a36eec96fb08416ef3511055f8cc932b55dbbd",
-   "sizeBytes": 105,
-   "status": "DRAFT"
-  }
- },
- "notes": [
-  "Scene-local time starts at 0; shot list is rebased from reel time. The copied SRT is already scene-local.",
-  "The 72 s P0 reel is review/gallery only, NOT auto-run as opening; this per-scene clip is the runtime unit (Goi 30 item 6)."
- ],
- "reelOffsetSeconds": {
-  "start": 36.0,
-  "end": 54.0
- },
- "reelTotalSeconds": 72.0,
- "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
- "frameCheck": {
-  "first": {
-   "panel": "panel_CIN_002_S01.png",
-   "meanAbsChannelDiff": 1.841,
-   "maxAllowed": 10.0
-  },
-  "last": {
-   "panel": "panel_CIN_002_S03.png",
-   "meanAbsChannelDiff": 2.089,
-   "maxAllowed": 10.0
-  }
- },
- "shots": [
-  {
-   "shotId": "CIN_002_S01",
-   "startSeconds": 0.0,
-   "endSeconds": 6.0,
-   "panel": "panel_CIN_002_S01.png"
-  },
-  {
-   "shotId": "CIN_002_S02",
-   "startSeconds": 6.0,
-   "endSeconds": 12.0,
-   "panel": "panel_CIN_002_S02.png"
-  },
-  {
-   "shotId": "CIN_002_S03",
-   "startSeconds": 12.0,
-   "endSeconds": 18.0,
-   "panel": "panel_CIN_002_S03.png"
-  }
- ]
+  "shots": [
+    {
+      "shotId": "CIN_002_S01",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "panel": "panel_CIN_002_S01.png"
+    },
+    {
+      "shotId": "CIN_002_S02",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "panel": "panel_CIN_002_S02.png"
+    },
+    {
+      "shotId": "CIN_002_S03",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "panel": "panel_CIN_002_S03.png"
+    }
+  ],
+  "hasAudioTrack": true
 }
