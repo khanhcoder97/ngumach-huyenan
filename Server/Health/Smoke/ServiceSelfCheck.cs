@@ -7178,6 +7178,126 @@ public static class ServiceSelfCheck
             escortBx == 42,
             $"a={escortTwoA.Count} b={escortTwoB.Count} bx={escortBx}");
 
+        // ─── QOD-21 Q4: two owners in the audience, and losing the row ────
+
+        // The escort read model above is the only place a client can see the NPC at
+        // all, and the content ships ONE canonical Lyan for every owner, so two
+        // owners on the same road must be served two different positions from one
+        // entity. The anchor here is deliberately off the waypoint path (30,0 while
+        // the path starts at 42,0): a projection that ignored its per-owner source
+        // would answer 30 to both viewers, which is what makes this a wiring test
+        // instead of a restatement of the domain check above. Owner B stands 32 WU
+        // from its own NPC — inside the 40 WU enter radius but far outside the
+        // sourced 12 WU follow range — so its NPC has never left 42.
+        var escortAudNpc = new WorldEntityInstance
+        {
+            EntityId = "ENT_SELFCHECK_ESCORT_NPC_LYAN",
+            RecordId = alphaDesign.QuestRules.P00_04_ActorId,
+            Kind = WorldEntityKinds.Npc,
+            TemplateIds = new[] { alphaDesign.QuestRules.P00_04_ActorId },
+            MapId = options.DefaultMapId,
+            FloorId = "OVERWORLD",
+            X = 30,
+            Y = 0,
+            Quantity = 1,
+            RespawnSeconds = 0
+        };
+        escortAudNpc.Initialize();
+        var escortAudRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [
+                    escortAudNpc,
+                    escortWaveA1, escortWaveA2, escortWaveA3,
+                    escortWaveB1, escortWaveB2, escortWaveB3
+                ]),
+            escortClock);
+        var escortAudStub = new EscortQuestStub();
+        escortAudStub.Set("CHR_SELFCHECK_ESCORT_AUD_A", QuestStates.Active);
+        escortAudStub.Set("CHR_SELFCHECK_ESCORT_AUD_B", QuestStates.Active);
+        var escortAud = new AlphaEscortService(alphaDesign, escortAudStub, escortAudRegistry);
+        var escortAudOwnerA = NewPlayer("CHR_SELFCHECK_ESCORT_AUD_A");
+        var escortAudOwnerB = NewPlayer("CHR_SELFCHECK_ESCORT_AUD_B");
+        escortAudOwnerB.X = 10;
+        escortAudOwnerB.Y = 0;
+        // 100 ticks at the sourced 3 wu/s = 0,15 WU per tick, so the walked distance
+        // is bounded by 100 * 0,15 = 15 WU. The measured value is 99 steps, not 100:
+        // the first tick only opens the instance (STARTED) and does not call Advance,
+        // so 42 + 99 * 0,15 = 56,85 is what the domain actually reports and the bound
+        // below is stated around that, not around a predicted 57.
+        for (var t = 5000; t < 5100; t++)
+        {
+            escortAud.Tick([escortAudOwnerA, escortAudOwnerB], t);
+            if (escortAud.TryGetNpcPosition(escortAudOwnerA.CharacterId, out var audWalkX, out _))
+            {
+                escortAudOwnerA.X = audWalkX;
+            }
+        }
+
+        var escortAudFoundA = escortAud.TryGetNpcPosition(
+            "CHR_SELFCHECK_ESCORT_AUD_A", out double audDomainX, out _);
+        var escortAudFoundB = escortAud.TryGetNpcPosition(
+            "CHR_SELFCHECK_ESCORT_AUD_B", out double audDomainBx, out _);
+        var escortAudProjection = new WorldAoiProjectionService(
+            escortAudRegistry,
+            new MobLifecycleService(
+                escortAudRegistry,
+                services.GetRequiredService<IWorldGeometryService>(),
+                aoiMobOptions,
+                escortClock),
+            enabledCombat,
+            new GatherClaimStore(escortClock),
+            new MobCombatStateStore(),
+            npcPositions: escortAud);
+        var escortAudRowA = escortAudProjection
+            .Project(escortAudOwnerA)
+            .Single(entity => entity.EntityId == "ENT_SELFCHECK_ESCORT_NPC_LYAN");
+        var escortAudRowB = escortAudProjection
+            .Project(escortAudOwnerB)
+            .Single(entity => entity.EntityId == "ENT_SELFCHECK_ESCORT_NPC_LYAN");
+        Check(
+            "alpha.escort_audience_position_is_per_owner",
+            escortAudFoundA && escortAudFoundB &&
+            audDomainX > 50 && audDomainX <= 57 && audDomainBx == 42 &&
+            escortAudRowA.X == audDomainX &&
+            escortAudRowB.X == audDomainBx &&
+            escortAudRowA.X != escortAudRowB.X &&
+            escortAudRowA.X != 30 && escortAudRowB.X != 30,
+            $"a={escortAudRowA.X} (domain {audDomainX}) b={escortAudRowB.X} " +
+            $"(domain {audDomainBx}) anchor=30");
+
+        // Losing AOI is the same distance test, not a separate policy: 60 WU away is
+        // past the 48 WU leave radius, so the row disappears — and the walk stops
+        // too, because 60 is far past the sourced 12 WU follow range. Coming back
+        // must return the row at the position the NPC was frozen at, which is the
+        // only way this leg can show that a client which walked away cannot make the
+        // escort advance behind its back.
+        escortAudOwnerA.X = audDomainX + 60;
+        var escortAudFarIds = escortAudProjection
+            .Project(escortAudOwnerA)
+            .Select(entity => entity.EntityId)
+            .ToHashSet(StringComparer.Ordinal);
+        for (var t = 5100; t < 5200; t++)
+        {
+            escortAud.Tick([escortAudOwnerA, escortAudOwnerB], t);
+        }
+
+        var escortAudFrozenX = escortAud.TryGetNpcPosition(
+            "CHR_SELFCHECK_ESCORT_AUD_A", out double audAfterFarX, out _)
+            ? audAfterFarX
+            : double.NaN;
+        escortAudOwnerA.X = audDomainX;
+        var escortAudBackRow = escortAudProjection
+            .Project(escortAudOwnerA)
+            .Single(entity => entity.EntityId == "ENT_SELFCHECK_ESCORT_NPC_LYAN");
+        Check(
+            "alpha.escort_audience_row_leaves_and_the_npc_freezes_with_it",
+            !escortAudFarIds.Contains("ENT_SELFCHECK_ESCORT_NPC_LYAN") &&
+            double.IsFinite(escortAudFrozenX) && escortAudFrozenX == audDomainX &&
+            escortAudBackRow.X == audDomainX,
+            $"far={escortAudFarIds.Contains("ENT_SELFCHECK_ESCORT_NPC_LYAN")} " +
+            $"frozen={escortAudFrozenX} at domain {audDomainX} back={escortAudBackRow.X}");
+
         // Without the wave entities in the registry the machine reaches the first
         // checkpoint and then stops: activation fails with a diagnostic naming the
         // wave and how many actors it ships, and the escort neither fabricates a
