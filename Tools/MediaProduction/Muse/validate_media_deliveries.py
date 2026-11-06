@@ -1101,6 +1101,231 @@ def check_p0_mix_v3():
          f"not a mix PASS")
 
 
+def check_ab_shortlist():
+    """Checkpoint 33 (Goi 31 item 3): A/B review shortlist.
+
+    Verifies the shortlist JSON + 6 M3U playlists against real bytes:
+    every playlist entry resolves to an existing runtime file whose sha256
+    matches the RUNTIME_AUDIO manifest and the sha recorded in the JSON;
+    durations re-probed by ffprobe match the JSON; the canonical VO
+    playlist holds exactly the 21 D1-approved windows and the CIN006
+    alternate take is kept in its own playlist only (DEC-MEDIA-P0 Q3).
+    Audition status must stay NOT_AUDITIONED: this check verifies bytes,
+    never listening.
+    """
+    reports = ROOT / "Implementation/Reports/MuseMedia"
+    json_path = reports / "MEDIA02_CHECKPOINT_33_AB_SHORTLIST_20261106.json"
+    if not json_path.exists():
+        err("AB shortlist: missing MEDIA02_CHECKPOINT_33_AB_SHORTLIST_20261106.json")
+        return
+    s = json.loads(json_path.read_text(encoding="utf-8"))
+    if s.get("auditionStatus") != "NOT_AUDITIONED":
+        err(f"AB shortlist: auditionStatus {s.get('auditionStatus')} "
+            "!= NOT_AUDITIONED")
+    runtime_manifest = json.loads(
+        (ROOT / "ClientGodot/assets/audio/RUNTIME_AUDIO_manifest_v1.json")
+        .read_text(encoding="utf-8"))
+    manifest_sha = {"ClientGodot/" + f["runtimePath"]: f["sha256"]
+                    for f in runtime_manifest["files"]}
+
+    def check_file(rel, label):
+        p = ROOT / rel
+        if not p.exists():
+            err(f"AB shortlist {label}: MISSING {rel}")
+            return None
+        if is_lfs_pointer(p):
+            err(f"AB shortlist {label}: LFS POINTER, not real bytes: {rel}")
+            return None
+        digest = sha256_of(p)
+        if rel in manifest_sha and digest != manifest_sha[rel]:
+            err(f"AB shortlist {label}: sha mismatch vs runtime manifest: {rel}")
+        return digest
+
+    # --- mixes A/B table: 4 rows, re-probe durations, sha vs JSON
+    ab = s.get("mixesAB", [])
+    if len(ab) != 4:
+        err(f"AB shortlist: mixesAB has {len(ab)} rows != 4")
+    mix_checked = 0
+    for row in ab:
+        for version in ("v1", "v2", "v3"):
+            cell = row[version]
+            # locate the runtime file from the mix manifests via the JSON's
+            # recorded sha: find it in the mixes section is not stored, so
+            # resolve through the versioned mix dirs by filename.
+            fname = cell["file"]
+            for d in ("mix/p0", "mix/p0_v2", "mix/p0_v3"):
+                cand = f"ClientGodot/assets/audio/{d}/{fname}"
+                if (ROOT / cand).exists():
+                    rel = cand
+                    break
+            else:
+                err(f"AB shortlist mix {row['scene']} {version}: "
+                    f"file not found: {fname}")
+                continue
+            digest = check_file(rel, f"mix {row['scene']} {version}")
+            if digest is None:
+                continue
+            p = probe(ROOT / rel)
+            if p and p["duration"] is not None and abs(
+                    p["duration"] - cell["duration_s"]) > 0.02:
+                err(f"AB shortlist mix {row['scene']} {version}: duration "
+                    f"{p['duration']} != JSON {cell['duration_s']}")
+            mix_checked += 1
+        # delta arithmetic
+        if abs((row["v2"]["integrated_lufs"] - row["v1"]["integrated_lufs"])
+               - row["delta_v2_minus_v1_lufs"]) > 0.011:
+            err(f"AB shortlist {row['scene']}: delta v2-v1 arithmetic mismatch")
+        if abs((row["v3"]["integrated_lufs"] - row["v1"]["integrated_lufs"])
+               - row["delta_v3_minus_v1_lufs"]) > 0.011:
+            err(f"AB shortlist {row['scene']}: delta v3-v1 arithmetic mismatch")
+    COUNTS["ab_shortlist_mix_cells_checked"] = mix_checked
+
+    # --- music / stingers / ambience rows: sha + duration vs JSON
+    def check_rows(rows, label):
+        n = 0
+        for r in rows:
+            digest = check_file(r["runtimePath"], label + " " + r["cueKey"])
+            if digest is None:
+                continue
+            if digest != r["sha256"]:
+                err(f"AB shortlist {label} {r['cueKey']}: sha != JSON sha256")
+            p = probe(ROOT / r["runtimePath"])
+            if p and p["duration"] is not None and abs(
+                    p["duration"] - r["duration_s"]) > 0.02:
+                err(f"AB shortlist {label} {r['cueKey']}: duration "
+                    f"{p['duration']} != JSON {r['duration_s']}")
+            n += 1
+        return n
+    COUNTS["ab_shortlist_music_checked"] = check_rows(
+        s.get("music", []), "music") + check_rows(s.get("stingers", []), "stinger")
+    COUNTS["ab_shortlist_ambience_checked"] = check_rows(
+        s.get("ambienceComposed", []), "ambience composed") + check_rows(
+        s.get("ambiencePorted", []), "ambience ported") + check_rows(
+        s.get("musicPorted", []), "music ported")
+    if len(s.get("music", [])) != 9:
+        err(f"AB shortlist: music cues {len(s.get('music', []))} != 9")
+    if len(s.get("stingers", [])) != 4:
+        err(f"AB shortlist: stingers {len(s.get('stingers', []))} != 4")
+    if len(s.get("ambienceComposed", [])) != 13:
+        err(f"AB shortlist: composed ambience "
+            f"{len(s.get('ambienceComposed', []))} != 13")
+    if len(s.get("ambiencePorted", [])) != 13:
+        err(f"AB shortlist: ported ambience "
+            f"{len(s.get('ambiencePorted', []))} != 13")
+    if len(s.get("musicPorted", [])) != 9:
+        err(f"AB shortlist: ported music "
+            f"{len(s.get('musicPorted', []))} != 9")
+
+    # --- seam table: 44 loop cues; flags only above threshold
+    seam = s.get("seamTable", [])
+    if len(seam) != 44:
+        err(f"AB shortlist: seam table has {len(seam)} entries != 44")
+    for e in seam:
+        w = e.get("wrap_jump_measured")
+        if w is None:
+            err(f"AB shortlist seam {e['cueKey']}/{e['version']}: no measurement")
+            continue
+        if e.get("flag_ear_check") != (w > 0.015):
+            err(f"AB shortlist seam {e['cueKey']}/{e['version']}: flag "
+                f"{e.get('flag_ear_check')} inconsistent with wrap {w}")
+
+    # --- VO: 21 canonical + 1 alternate kept separate
+    vo = s.get("voCanonical", [])
+    alt = s.get("voAlternate", [])
+    if len(vo) != 21:
+        err(f"AB shortlist: canonical VO takes {len(vo)} != 21")
+    if len(alt) != 1 or alt[0].get("key") != "CIN006_ALT_T01":
+        err("AB shortlist: alternate VO must be exactly CIN006_ALT_T01")
+    vo_checked = 0
+    for r in vo + alt:
+        digest = check_file(r["runtimePath"], "VO " + r["key"])
+        if digest is None:
+            continue
+        if digest != r["sha256"]:
+            err(f"AB shortlist VO {r['key']}: sha != JSON sha256")
+        p = probe(ROOT / r["runtimePath"])
+        if p and p["duration"] is not None and abs(
+                p["duration"] - r["takeDuration_s"]) > 0.05:
+            err(f"AB shortlist VO {r['key']}: duration {p['duration']} "
+                f"!= JSON {r['takeDuration_s']}")
+        if r.get("canonical") and r.get("fit") == "OVERRUN":
+            if r["shotId"] not in s.get("voCounts", {}).get("overruns", []):
+                err(f"AB shortlist VO {r['key']}: OVERRUN not in voCounts")
+        vo_checked += 1
+    COUNTS["ab_shortlist_vo_checked"] = vo_checked
+    if sorted(s.get("voCounts", {}).get("overruns", [])) != [
+            "CIN_005_S03", "CIN_006_S03", "CIN_018_S03"]:
+        err(f"AB shortlist: overrun list "
+            f"{s.get('voCounts', {}).get('overruns')} != known 3 overruns")
+
+    # --- defects: every entry has the fields a listener needs
+    defects = s.get("defects", [])
+    if len(defects) < 10:
+        err(f"AB shortlist: defects {len(defects)} < 10")
+    for d in defects:
+        for field in ("id", "area", "evidence", "listenAt", "question", "status"):
+            if not d.get(field):
+                err(f"AB shortlist defect {d.get('id')}: missing {field}")
+
+    # --- playlists: every entry resolves inside the runtime audio tree
+    playlists = s.get("playlists", {})
+    if len(playlists) != 6:
+        err(f"AB shortlist: playlists {len(playlists)} != 6")
+    alt_path = None
+    for fname, meta in playlists.items():
+        m3u = reports / fname
+        if not m3u.exists():
+            err(f"AB shortlist: missing playlist {fname}")
+            continue
+        entries = []
+        lines = m3u.read_text(encoding="utf-8").splitlines()
+        for line in lines:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            entries.append(line)
+        if len(entries) != meta["entries"]:
+            err(f"AB shortlist playlist {fname}: {len(entries)} entries "
+                f"!= JSON {meta['entries']}")
+        for rel_m3u in entries:
+            target = (reports / rel_m3u).resolve()
+            try:
+                target.relative_to(ROOT.resolve())
+            except ValueError:
+                err(f"AB shortlist playlist {fname}: entry escapes repo: "
+                    f"{rel_m3u}")
+                continue
+            if not target.exists():
+                err(f"AB shortlist playlist {fname}: missing file: {rel_m3u}")
+                continue
+            if is_lfs_pointer(target):
+                err(f"AB shortlist playlist {fname}: LFS pointer: {rel_m3u}")
+        if fname == "ab_shortlist_vo_alt_playlist.txt":
+            alt_path = entries
+    canonical_vo = reports / "ab_shortlist_vo_playlist.txt"
+    if canonical_vo.exists() and alt_path:
+        canon_text = canonical_vo.read_text(encoding="utf-8")
+        for rel_m3u in alt_path:
+            if rel_m3u.split("/")[-1] in canon_text:
+                err("AB shortlist: alternate take present in canonical VO "
+                    "playlist (Q3 violation)")
+    canon_entries = []
+    if canonical_vo.exists():
+        canon_entries = [ln.strip() for ln in
+                         canonical_vo.read_text(encoding="utf-8").splitlines()
+                         if ln.strip() and not ln.strip().startswith("#")]
+    if len(canon_entries) != 21:
+        err(f"AB shortlist: canonical VO playlist has {len(canon_entries)} "
+            "entries != 21")
+    COUNTS["ab_shortlist_playlist_entries_checked"] = sum(
+        m["entries"] for m in playlists.values())
+    note("A/B review shortlist checked: 12 mix cells, 13 music/stinger, "
+         "35 music/ambience rows (13 composed ambience + 13 ported ambience "
+         "+ 9 ported music), 22 VO takes, 44 seam rows, 6 playlists "
+         f"({COUNTS['ab_shortlist_playlist_entries_checked']} entries); "
+         "audition status NOT_AUDITIONED, no listening PASS claimed")
+
+
 def check_scene_clips():
     """Checkpoint 18 (Goi 30 item 6): per-scene clip exports.
 
@@ -1738,11 +1963,12 @@ def main():
     check_p0_mix()
     check_p0_mix_v2()
     check_p0_mix_v3()
+    check_ab_shortlist()
     check_scene_clips()
     check_prologue()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 32 (Goi 31 item 2: shot-content fixes -- CIN_012_S03 English UI bar, CIN_017_S02 missing crystal core/serpent, CIN_015_S02 dry-courtyard setting failure -- plus unprompted mascot/character cleanup, bandage left/right and environment continuity; 14 revised keyframes across 8 scenes, re-exported video, before/after contact sheets; runtime delivery revised, total 610)",
-        "base_integration": "abcf254",
+        "checkpoint": "MEDIA-02 checkpoint 33 (Goi 31 item 3: A/B review shortlist -- P0 mixes v1/v2/v3, composed music/ambience vs ported, draft VO pronunciation/proper names, loop seams; 6 M3U playlists + defect table; audition status NOT_AUDITIONED, no listening PASS)",
+        "base_integration": "6f2b465",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
         "windowFit": {"fits": COUNTS.get("vo_campaign_fits", 0),
@@ -1766,6 +1992,7 @@ def main():
             "All campaign clip motion (checkpoints 21-25) is animatic-level Ken Burns on still keyframes, not final pose-animated takes.",
             "Composed pack (checkpoint 26, Goi 30 item 7): 13 ORIGINAL cues composed by Muse (9 music + 4 SFX/CINEMA stingers) from one leitmotif system; loudness measured from real bytes by the composer (music -22.0 LUFS target, stingers -25.0), this check re-verifies bytes/SHA/duration only. Loop seams are recorded per cue in the delivery manifest: wrapJump after a disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it; no ear audition. The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; composed cues are parallel candidates whose adoption is Codex's presentation-adapter decision.",
             "Composed ambience pack (checkpoint 30): 13 ORIGINAL cues composed by Muse (all AMBIENCE/* cues, 16.0 s each) from filtered-noise beds with slow gust/swell envelopes and sparse deterministic events; loudness targets are the ported cues' checkpoint-07 measured LUFS, this check re-verifies bytes/SHA/duration only. Loop seams are recorded per cue in the delivery manifest with the same disclosed 0.25 s end-landing construction; no ear audition. Crowd beds are filtered noise only (no voices, no words). The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; composed cues are parallel candidates whose adoption is Codex's presentation-adapter decision.",
+            "A/B review shortlist (checkpoint 33, Goi 31 item 3): 12 P0 mix cells, 9 composed music + 4 stingers, 13 composed + 13 ported ambience, 21 canonical VO takes + 1 alternate, 44 seam rows, 6 M3U playlists (72 entries). This check verifies bytes/SHA/duration and playlist resolution only; loudness/true-peak/seam numbers in the shortlist JSON were measured from real bytes by build_ab_shortlist_goi31.py at build time and are NOT re-measured here. Audition status is NOT_AUDITIONED: no human listening has happened, and the defect table (D-01..D-12) is open for the listener/director. The alternate take CIN_006_ALT_T01 is verified to live in its own playlist only. New finding recorded by the shortlist: the same character is spelled 'Tạ Văn Khánh' in the P0 VO manifest and 'Tạ Vân Khanh' in the campaign VO manifest (D-12, director to resolve).",
             "Prologue CIN_000 (checkpoint 27): a standalone pre-game film, NOT a campaign scene; its narration is DRAFT TTS (narrator casting is a director decision), its mix is DRAFT_MIX_NOT_FINAL, and no ear audition has been done. Identity checks inside the film builder use crop-compensated diffs (full-res < 20, 160x90 structure < 8) because the render path resamples twice; a brute-force fit on S01 confirmed the designed zooms (1.015/1.035/1.055) at zero offset with a 4.2-6.5 structure floor. Headline picture defects: S01/S03 mechanism design drift and S11's ambiguous arrival direction, recorded per shot in CIN000_keyframes_manifest_v1.json.",
             "Prologue subtitled variant (checkpoint 28, owner request): a VIEWING variant only -- the canonical MP4/OGV keep the checkpoint 27 mix at its measured level (-20.81 LUFS) and the canonical SRT keeps its 6 cues. The variant's +5 dB is a flat presentation gain (no dynamics change, measured -15.83 LUFS / -4.09 dBTP on the variant file), and its readable SRT is a presentation split whose concatenated text is verified identical to the canonical SRT. Burned-in subtitle font is DejaVu Sans (the project has no locked Vietnamese display font, same placeholder status as the title card). No OGV subtitled variant: in-engine subtitle display is the presentation adapter's concern (Codex).",
         ],

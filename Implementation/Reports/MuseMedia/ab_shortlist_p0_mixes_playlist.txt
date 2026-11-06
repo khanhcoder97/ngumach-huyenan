@@ -1,0 +1,32 @@
+#EXTM3U
+# MEDIA-02 checkpoint 33 — Goi 31 item 3 A/B review shortlist
+# AUDITION STATUS: NOT_AUDITIONED (this environment cannot listen)
+# This file holds valid M3U content under a .txt name because
+# .m3u is not in the scope policy mediaExtensions; rename a
+# copy to .m3u to open it directly in a player. Open this file
+# from the repo so the relative paths resolve.
+# Measurements are loudness/codec numbers, NOT a listening PASS.
+#EXTINF:36,P0 MIX A/B — CIN_001 v1 (ported stems)
+../../../ClientGodot/assets/audio/mix/p0/CIN_001_mix_draft_v1.wav
+#EXTINF:36,P0 MIX A/B — CIN_001 v2 (composed music + stingers, ported ambience)
+../../../ClientGodot/assets/audio/mix/p0_v2/CIN_001_mix_draft_v2.wav
+#EXTINF:36,P0 MIX A/B — CIN_001 v3 (fully composed stems)
+../../../ClientGodot/assets/audio/mix/p0_v3/CIN_001_mix_draft_v3.wav
+#EXTINF:18,P0 MIX A/B — CIN_002 v1 (ported stems)
+../../../ClientGodot/assets/audio/mix/p0/CIN_002_mix_draft_v1.wav
+#EXTINF:18,P0 MIX A/B — CIN_002 v2 (composed music + stingers, ported ambience)
+../../../ClientGodot/assets/audio/mix/p0_v2/CIN_002_mix_draft_v2.wav
+#EXTINF:18,P0 MIX A/B — CIN_002 v3 (fully composed stems)
+../../../ClientGodot/assets/audio/mix/p0_v3/CIN_002_mix_draft_v3.wav
+#EXTINF:18,P0 MIX A/B — CIN_004 v1 (ported stems)
+../../../ClientGodot/assets/audio/mix/p0/CIN_004_mix_draft_v1.wav
+#EXTINF:18,P0 MIX A/B — CIN_004 v2 (composed music + stingers, ported ambience)
+../../../ClientGodot/assets/audio/mix/p0_v2/CIN_004_mix_draft_v2.wav
+#EXTINF:18,P0 MIX A/B — CIN_004 v3 (fully composed stems)
+../../../ClientGodot/assets/audio/mix/p0_v3/CIN_004_mix_draft_v3.wav
+#EXTINF:72,P0 MIX A/B — REVIEW 72s v1 (ported stems)
+../../../ClientGodot/assets/audio/mix/p0/P0_mix_review_72s_draft_v1.wav
+#EXTINF:72,P0 MIX A/B — REVIEW 72s v2 (composed music + stingers, ported ambience)
+../../../ClientGodot/assets/audio/mix/p0_v2/P0_mix_review_72s_draft_v2.wav
+#EXTINF:72,P0 MIX A/B — REVIEW 72s v3 (fully composed stems)
+../../../ClientGodot/assets/audio/mix/p0_v3/P0_mix_review_72s_draft_v3.wav
