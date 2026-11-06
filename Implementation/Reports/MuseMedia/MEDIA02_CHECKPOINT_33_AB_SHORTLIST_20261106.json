@@ -2098,7 +2098,7 @@
       "key": "CIN002_S02",
       "shotId": "CIN_002_S02",
       "speaker": "NPC_TA_VAN_KHANH",
-      "speakerDisplay": "Tạ Văn Khánh",
+      "speakerDisplay": "Tạ Vân Khanh",
       "voice": "Helio (fictional system voice)",
       "text": "Trên bờ chỉ nghe nửa tiếng. Phần còn lại ở dưới ấy.",
       "windowSceneSeconds": [
@@ -2115,7 +2115,7 @@
       "measured_dbtp": -4.24,
       "status": "PROPOSED_ANIMATIC_PLACEMENT",
       "properNamesInText": [],
-      "listenFor": "Giọng đóng vai Tạ Văn Khánh — kiểm tra độ hợp vai",
+      "listenFor": "Giọng đóng vai Tạ Vân Khanh — kiểm tra độ hợp vai",
       "sha256": "4439578bfb58f5a29cd4d5177c6e53474621ec516b527c08b0802193d407bdcc",
       "canonical": true
     },
@@ -2654,7 +2654,7 @@
       "area": "VO male voices not distinct",
       "evidence": "Mọi nhân vật nam dùng chung một production voice Helio trong bản nháp (ghi trong VO manifest CP17/CP19).",
       "listenAt": "ab_shortlist_vo_playlist.txt — CIN_008_S03, CIN_010_S03, CIN_011_S03, CIN_012_S03, CIN_014_S03, CIN_016_S03",
-      "question": "Có phân biệt được Tạ Văn Khánh / Sầm / Hạ Mặc / Tống Bành qua giọng không, hay nghe như một người?",
+      "question": "Có phân biệt được Tạ Vân Khanh / Sầm / Hạ Mặc / Tống Bành qua giọng không, hay nghe như một người?",
       "status": "OPEN_FOR_DIRECTOR"
     },
     {
@@ -2716,7 +2716,7 @@
     {
       "id": "D-10",
       "area": "VO proper-name pronunciation",
-      "evidence": "Tên riêng nói ra trong câu thoại: Sa Hỏa — chỉ 'Sa Hỏa' (CIN_018_S03). Tên người nói mà mỗi giọng phải đóng vai: Cơ Vô Tướng, Hạ Mặc, Ly An, Người chơi, Người nhận thư, Sầm Chủ Quỹ, Trưởng đoàn, Tạ Vân Khanh, Tạ Văn Khánh, Tống Bành, Đội trưởng thợ lặn. TTS hư cấu, chưa nghe tai.",
+      "evidence": "Tên riêng nói ra trong câu thoại: Sa Hỏa — chỉ 'Sa Hỏa' (CIN_018_S03). Tên người nói mà mỗi giọng phải đóng vai: Cơ Vô Tướng, Hạ Mặc, Ly An, Người chơi, Người nhận thư, Sầm Chủ Quỹ, Trưởng đoàn, Tạ Vân Khanh, Tống Bành, Đội trưởng thợ lặn. TTS hư cấu, chưa nghe tai.",
       "listenAt": "ab_shortlist_vo_playlist.txt — toàn bộ 21 take",
       "question": "Tên riêng có phát âm đúng và thống nhất qua các take không? Giọng có hợp với nhân vật mình đóng vai không? Ghi lại tên nào nghe sai.",
       "status": "OPEN_FOR_LISTENER"
@@ -2731,11 +2731,11 @@
     },
     {
       "id": "D-12",
-      "area": "Tên nhân vật viết không thống nhất",
-      "evidence": "Cùng một nhân vật nhưng P0 manifest ghi 'Tạ Văn Khánh' (CIN_002_S02, speaker NPC_TA_VAN_KHANH) trong khi campaign manifest ghi 'Tạ Vân Khanh' (CIN_008_S03) — khớp cách viết trong questkit PR #118. Hai cách viết khác nhau trong cùng bộ VO nháp.",
+      "area": "Tên nhân vật viết không thống nhất — ĐÃ CHỐT",
+      "evidence": "Chủ dự án chốt 2026-11-07: cách viết canonical là 'Tạ Vân Khanh' — khớp docs/production (176 lần; 'Văn Khánh' 0 lần), campaign VO manifest (CIN_008_S03), Cinema Production Pack và questkit PR #118. Cách viết sai 'Tạ Văn Khánh' không nằm trong manifest nào: P0 VO manifest chỉ lưu speaker ID NPC_TA_VAN_KHANH, nhãn hiển thị của take CIN_002_S02 do ánh xạ SPEAKER_DISPLAY dự phòng trong chính tool shortlist này sinh ra. Đã sửa ánh xạ và sinh lại nhãn tại checkpoint 36. Không thu lại VO: cả hai câu thoại đều không đọc tên nhân vật.",
       "listenAt": "ab_shortlist_vo_playlist.txt — CIN_002_S02 vs CIN_008_S03",
-      "question": "Chốt một cách viết canonical cho tên nhân vật này (Văn hay Vân)? Sửa manifest/VO label cho thống nhất trước khi thu VO final.",
-      "status": "OPEN_FOR_DIRECTOR"
+      "question": "Đã chốt — không còn câu hỏi mở về cách viết. Khi nghe hai take, kiểm tra giọng có đọc như cùng một nhân vật không (xem thêm D-02).",
+      "status": "RESOLVED_OWNER_DECISION_20261107"
     }
   ],
   "playlists": {

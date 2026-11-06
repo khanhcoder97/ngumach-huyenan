@@ -18,6 +18,13 @@ Audition status is NOT_AUDITIONED throughout: this environment cannot listen.
 Loudness/codec numbers are measurements, never a listening PASS.
 The alternate take CIN_006_ALT_T01 keeps its own takeId/version and is never
 placed in the canonical VO playlist (DEC-MEDIA-P0 Q3).
+
+Label fix (checkpoint 36, 2026-11-07): the owner decided the canonical
+spelling of NPC_TA_VAN_KHANH is "Tạ Vân Khanh" (D-12). The wrong spelling
+"Tạ Văn Khánh" came from this tool's SPEAKER_DISPLAY fallback -- the P0 VO
+manifest stores the speaker id only, no manifest ever carried the wrong
+spelling. SPEAKER_DISPLAY / PROPER_NAMES corrected and the CP33 outputs
+regenerated; measurements are unchanged.
 """
 import hashlib
 import json
@@ -58,7 +65,7 @@ VO_MANIFESTS = [
 
 # Proper names a listener must check by ear (spelling as written in each text).
 PROPER_NAMES = [
-    "Ly An", "Tạ Văn Khánh", "Tạ Vân Khanh", "Hạ Mặc", "Sầm", "Chu Quý",
+    "Ly An", "Tạ Vân Khanh", "Hạ Mặc", "Sầm", "Chu Quý",
     "Mãng Cốt", "Bến Mưa", "Thăng Long", "Lạc Châu", "Sa Hỏa", "Sa Hoa",
     "Trần Sơn", "Lâm Triều", "Bách Uyên", "Ngũ Mạch", "Tống Bành",
     "Cô Vô Tướng", "Cơ Vô Tướng",
@@ -66,7 +73,7 @@ PROPER_NAMES = [
 ]
 
 # P0 VO manifest stores the speaker id only; map it to the display name.
-SPEAKER_DISPLAY = {"NPC_LYAN": "Ly An", "NPC_TA_VAN_KHANH": "Tạ Văn Khánh",
+SPEAKER_DISPLAY = {"NPC_LYAN": "Ly An", "NPC_TA_VAN_KHANH": "Tạ Vân Khanh",
                    "NPC_HA_MAC": "Hạ Mặc", "NPC_SAM_CHU_QUY": "Sầm Chủ Quỹ"}
 
 ERRORS = []
@@ -570,7 +577,7 @@ def main():
                      "Helio trong bản nháp (ghi trong VO manifest CP17/CP19).",
          "listenAt": "ab_shortlist_vo_playlist.txt — CIN_008_S03, CIN_010_S03, "
                      "CIN_011_S03, CIN_012_S03, CIN_014_S03, CIN_016_S03",
-         "question": "Có phân biệt được Tạ Văn Khánh / Sầm / Hạ Mặc / "
+         "question": "Có phân biệt được Tạ Vân Khanh / Sầm / Hạ Mặc / "
                      "Tống Bành qua giọng không, hay nghe như một người?",
          "status": "OPEN_FOR_DIRECTOR"},
         {"id": "D-03", "area": "P0 VO loudness imbalance",
@@ -660,17 +667,23 @@ def main():
          "question": "Giọng placeholder có chấp nhận được cho bản nháp không, "
                      "hay cần casting riêng?",
          "status": "OPEN_FOR_DIRECTOR"},
-        {"id": "D-12", "area": "Tên nhân vật viết không thống nhất",
-         "evidence": ("Cùng một nhân vật nhưng P0 manifest ghi 'Tạ Văn "
-                      "Khánh' (CIN_002_S02, speaker NPC_TA_VAN_KHANH) trong "
-                      "khi campaign manifest ghi 'Tạ Vân Khanh' (CIN_008_S03) "
-                      "— khớp cách viết trong questkit PR #118. Hai cách viết "
-                      "khác nhau trong cùng bộ VO nháp."),
+        {"id": "D-12", "area": "Tên nhân vật viết không thống nhất — ĐÃ CHỐT",
+         "evidence": ("Chủ dự án chốt 2026-11-07: cách viết canonical là "
+                      "'Tạ Vân Khanh' — khớp docs/production (176 lần; "
+                      "'Văn Khánh' 0 lần), campaign VO manifest (CIN_008_S03), "
+                      "Cinema Production Pack và questkit PR #118. Cách viết "
+                      "sai 'Tạ Văn Khánh' không nằm trong manifest nào: P0 VO "
+                      "manifest chỉ lưu speaker ID NPC_TA_VAN_KHANH, nhãn "
+                      "hiển thị của take CIN_002_S02 do ánh xạ SPEAKER_DISPLAY "
+                      "dự phòng trong chính tool shortlist này sinh ra. Đã "
+                      "sửa ánh xạ và sinh lại nhãn tại checkpoint 36. Không "
+                      "thu lại VO: cả hai câu thoại đều không đọc tên nhân "
+                      "vật."),
          "listenAt": "ab_shortlist_vo_playlist.txt — CIN_002_S02 vs CIN_008_S03",
-         "question": "Chốt một cách viết canonical cho tên nhân vật này "
-                     "(Văn hay Vân)? Sửa manifest/VO label cho thống nhất "
-                     "trước khi thu VO final.",
-         "status": "OPEN_FOR_DIRECTOR"},
+         "question": "Đã chốt — không còn câu hỏi mở về cách viết. Khi nghe "
+                     "hai take, kiểm tra giọng có đọc như cùng một nhân vật "
+                     "không (xem thêm D-02).",
+         "status": "RESOLVED_OWNER_DECISION_20261107"},
     ]
 
     # ------------------------------------------------------------------ JSON
