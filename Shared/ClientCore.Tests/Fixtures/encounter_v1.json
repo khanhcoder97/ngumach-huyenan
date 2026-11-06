@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "encounterId": "enc-fixture-001",
+  "bossLifeId": 7,
+  "status": "OPEN",
+  "phase": 1,
+  "serverTick": 100,
+  "bossHp": 1200,
+  "bossMaxHp": 1200,
+  "bossRevision": 3,
+  "activeMove": {
+    "moveId": "boss_cone",
+    "castId": "cast-fixture-001",
+    "state": "TELEGRAPH",
+    "stateEndsAtTick": 120,
+    "shape": {
+      "kind": "cone",
+      "rangeWu": 8,
+      "angleDegrees": 60,
+      "facingX": 0.8660254,
+      "facingY": 0.5
+    }
+  },
+  "deadlineTick": 120,
+  "ticksRemaining": 20,
+  "registration": {
+    "registeredCharacterIds": ["char_test"],
+    "ownerCharacterId": "char_test"
+  },
+  "npcId": "NPC_TA_VAN_KHANH"
+}

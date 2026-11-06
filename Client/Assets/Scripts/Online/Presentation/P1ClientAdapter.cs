@@ -3,6 +3,7 @@
 // Owner: Antigravity Remote — Issue #80.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using NguMach.Client.P1;
@@ -13,7 +14,7 @@ namespace NguMach.Client.Presentation
     /// Wraps a live <see cref="P1Client"/> and exposes the UI surface.
     /// Does NOT cache inventory/quest data locally beyond what P1Client already holds.
     /// </summary>
-    public sealed class P1ClientAdapter : IP1UIAdapter
+    public sealed class P1ClientAdapter : IP1UIAdapter, IP1InventoryV2Adapter, IP1DeathReturnAdapter, IP1TalkAdapter, IP1CombatHudAdapter
     {
         private readonly P1Client _client;
 
@@ -28,14 +29,38 @@ namespace NguMach.Client.Presentation
         public P1Self Self => _client.World?.self;
         public P1World World => _client.UseWorldV2 ? null : _client.World;
         public P1WorldV2 WorldV2 => _client.UseWorldV2 ? _client.WorldV2 : null;
+        public bool UseWorldV2 => _client.UseWorldV2;
 
         public P1Quest[] Quests => _client.Quests;
         public P1Inventory Inventory => _client.Inventory;
 
+        // V2 surface kept off IP1UIAdapter so existing fake adapters stay valid.
+        public P1InventorySnapshotV2 InventoryV2 => _client.InventoryV2;
+        public P1DeathReturnResultV1 LastDeathReturn => _client.LastDeathReturn;
+        public long? NextReturnAllowedAtTick => _client.NextReturnAllowedAtTick;
+
         public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => _client.ReadQuestsAsync(ct);
         public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => _client.ReadInventoryAsync(ct);
+        public Task<P1Result> ReadInventoryV2Async(CancellationToken ct) => _client.ReadInventoryV2Async(ct);
+        public Task<P1Result> EquipV2Async(string itemInstanceId, long expectedRevision, CancellationToken ct)
+            => _client.EquipV2Async(itemInstanceId, expectedRevision, ct);
+        public Task<P1Result> UnequipV2Async(string slotId, long expectedRevision, CancellationToken ct)
+            => _client.UnequipV2Async(slotId, expectedRevision, ct);
+        public Task<P1Result> ReturnFromDeathAsync(CancellationToken ct) => _client.ReturnFromDeathAsync(ct);
         public Task<P1Result> AcceptQuestAsync(string questId, string npcId, CancellationToken ct) => _client.AcceptQuestAsync(questId, npcId, ct);
         public Task<P1Result> RetryPendingAsync(CancellationToken ct) => _client.RetryPendingAsync(ct);
+        public Task<P1Result> TalkAsync(string npcId, string nodeId, CancellationToken ct) => _client.TalkAsync(npcId, nodeId, ct);
+        public Task<P1Result> PortalAsync(string portalId, CancellationToken ct) => _client.PortalAsync(portalId, ct);
+        public Task<P1Result> MapViewedAsync(string questId, CancellationToken ct) => _client.MapViewedAsync(questId, ct);
+        public P1QuestTalkResult LastTalk => _client.LastTalk;
+        public P1WorldPortalResult LastPortal => _client.LastPortal;
+        public P1QuestMapViewedResult LastMapViewed => _client.LastMapViewed;
+
+        public IReadOnlyDictionary<string, string> CooldownEndsAtUtc => _client.CooldownEndsAtUtc;
+        public Task<P1Result> BasicAttackAsync(string targetId, double aimX, double aimY, CancellationToken ct)
+            => _client.BasicAttackAsync(targetId, aimX, aimY, ct);
+        public Task<P1Result> CastAsync(string skillId, string targetId, double aimX, double aimY, CancellationToken ct)
+            => _client.CastAsync(skillId, targetId, aimX, aimY, ct);
 
         public Task<P1Result> InteractAsync(string targetId, CancellationToken ct)
             => _client.InteractAsync(targetId, ct);

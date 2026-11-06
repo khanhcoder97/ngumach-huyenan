@@ -25,6 +25,7 @@
     <Compile Include="..\..\Assets\Scripts\Online\Core\P1ModelsV2.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Core\P1Wire.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\IP1UIAdapter.cs" />
+    <Compile Include="..\..\Assets\Scripts\Online\Presentation\IP1V2UIAdapter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\P1ClientAdapter.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\P1UIState.cs" />
     <Compile Include="..\..\Assets\Scripts\Online\Presentation\PanelRouter.cs" />

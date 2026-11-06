@@ -17,10 +17,11 @@ namespace NguMach.Client.P1
         private readonly IP1Transport transport;
         private readonly SemaphoreSlim lane = new SemaphoreSlim(1, 1);
         private readonly Func<DateTimeOffset> utcNow;
+        private readonly string requestedCharacterId;
         private int sequence;
         private P1Request pending;
         private bool pendingCombat;
-        private enum PendingKind { Legacy, Interact, TurnIn, CombatV2 }
+        private enum PendingKind { Legacy, Interact, TurnIn, CombatV2, InventoryV2, DeathReturn, Talk, Portal, MapViewed }
         private PendingKind pendingKind;
         private readonly HashSet<string> seenEvents = new HashSet<string>(StringComparer.Ordinal);
         private readonly Queue<string> seenEventOrder = new Queue<string>();
@@ -42,8 +43,13 @@ namespace NguMach.Client.P1
         public bool HasPendingMutation { get { return pending != null; } }
         public IReadOnlyDictionary<string, string> CooldownEndsAtUtc { get { return cooldowns; } }
         public bool UseWorldV2 { get; private set; }
-        public P1Client(IP1Transport transport, Func<DateTimeOffset> clock = null, bool useWorldV2 = false)
-        { this.transport = transport ?? throw new ArgumentNullException(nameof(transport)); utcNow = clock ?? (() => DateTimeOffset.UtcNow); UseWorldV2 = useWorldV2; }
+        public P1Client(IP1Transport transport, Func<DateTimeOffset> clock = null, bool useWorldV2 = false, string characterId = null)
+        {
+            this.transport = transport ?? throw new ArgumentNullException(nameof(transport));
+            utcNow = clock ?? (() => DateTimeOffset.UtcNow);
+            UseWorldV2 = useWorldV2;
+            requestedCharacterId = string.IsNullOrWhiteSpace(characterId) ? null : characterId;
+        }
 
         public async Task<P1Result> ConnectAsync(CancellationToken ct)
         {
@@ -53,7 +59,7 @@ namespace NguMach.Client.P1
                 // An explicit new session never silently discards an ambiguous grant/cast.
                 if (pending != null) return Fail("pending_mutation");
                 State = P1ConnectionState.Connecting;
-                var request = new P1Request("POST", "/p1/sessions", P1Wire.Encode(new P1SessionRequest()), null, Id());
+                var request = new P1Request("POST", "/p1/sessions", P1Wire.Encode(new P1SessionRequest { characterId = requestedCharacterId }), null, Id());
                 var reply = await Send(request, ct);
                 var response = Parse<P1World>(reply);
                 if (response == null || reply.StatusCode != 201 || response.error != null ||
@@ -135,7 +141,11 @@ namespace NguMach.Client.P1
             await lane.WaitAsync(ct);
             try
             {
-                if (State != P1ConnectionState.Ready) return Fail("resync_required");
+                // Movement is not a mutation. After relogin an unresolved turn-in can
+                // still require walking back into range before the same-key retry.
+                if (State != P1ConnectionState.Ready &&
+                    !(State == P1ConnectionState.UncertainMutation && pending != null))
+                    return Fail("resync_required");
                 if (!P1Wire.Finite(x) || !P1Wire.Finite(y) || Math.Abs(x) > 1 || Math.Abs(y) > 1) return Fail("invalid_input");
                 double length = Math.Sqrt(x * x + y * y);
                 if (length > 1) { x /= length; y /= length; }
@@ -189,21 +199,51 @@ namespace NguMach.Client.P1
             }
             finally { lane.Release(); }
         }
+        // Composition routes (e.g. typed encounter reads) bypass the P1Client lane.
+        // When one of them observes session_not_found, the client state must still
+        // become Expired/Uncertain so the UI requests a relogin instead of staying Ready.
+        public P1Result MarkSessionExpired()
+        {
+            return Expire();
+        }
+
         public async Task<P1Result> RetryPendingAsync(CancellationToken ct)
         {
             await lane.WaitAsync(ct);
-            try { return pending == null ? Fail("no_pending_mutation") : await SubmitPending(ct); }
+            try
+            {
+                if (pending == null) return Fail("no_pending_mutation");
+                // An expired session cannot carry the retry. The composition layer must
+                // relogin first; it rebinds the same request/key to the new session.
+                if (SessionId == null) return Fail("not_connected");
+                return await SubmitPending(ct, SessionId);
+            }
             finally { lane.Release(); }
         }
 
-        private async Task<P1Result> SubmitPending(CancellationToken ct)
+        private async Task<P1Result> SubmitPending(CancellationToken ct, string expectedSessionId = null)
         {
             // Cancellation after send is also ambiguous; never leave new input enabled.
             State = P1ConnectionState.UncertainMutation;
             var reply = await Send(pending, ct);
+
+            // Guard cancellation/session lifetime inside Core immediately after the
+            // transport await and BEFORE ClearPendingMutation, receipt/cooldown/world
+            // apply. If the session was disposed/relogined or the caller cancelled,
+            // surface stale and leave the pending mutation (body+key) intact for retry.
+            ct.ThrowIfCancellationRequested();
+            if (expectedSessionId != null &&
+                !string.Equals(SessionId, expectedSessionId, StringComparison.Ordinal))
+                return P1Result.Fail("stale_session");
+
             if (pendingKind == PendingKind.Interact) return await ApplyInteraction(reply, ct);
             if (pendingKind == PendingKind.TurnIn) return await ApplyTurnIn(reply, ct);
             if (pendingKind == PendingKind.CombatV2) return await ApplyCombatV2(reply, ct);
+            if (pendingKind == PendingKind.InventoryV2) return await ApplyInventoryV2(reply);
+            if (pendingKind == PendingKind.DeathReturn) return await ApplyDeathReturn(reply, ct);
+            if (pendingKind == PendingKind.Talk) return await ApplyTalk(reply, ct);
+            if (pendingKind == PendingKind.Portal) return await ApplyPortal(reply, ct);
+            if (pendingKind == PendingKind.MapViewed) return await ApplyMapViewed(reply, ct);
             if (pendingCombat)
             {
                 var r = Parse<P1CombatEvent>(reply);
@@ -274,7 +314,11 @@ namespace NguMach.Client.P1
             try
             {
                 var r = P1Wire.Decode<P1Response<T>>(reply.Body);
-                return r != null && r.schemaVersion == schemaVersion && P1Wire.Hex32(r.requestId) ? r : null;
+                // Error envelopes are schemaVersion 1 even for v2 routes; they must still
+                // reach IsExpired/Error mapping instead of becoming "invalid_response".
+                bool versionOk = r != null && (r.schemaVersion == schemaVersion ||
+                    (r.error != null && r.schemaVersion == 1));
+                return versionOk && P1Wire.Hex32(r.requestId) ? r : null;
             }
             catch (Newtonsoft.Json.JsonException) { return null; }
         }
@@ -314,8 +358,19 @@ namespace NguMach.Client.P1
         { State = P1ConnectionState.UncertainMutation; return Fail("mutation_outcome_unknown", correlation); }
         private P1Result Fail(string error, string correlation = null)
         { LastError = error; LastCorrelationId = correlation; return P1Result.Fail(error, correlation); }
-        private void ClearSession(P1ConnectionState state)
-        { SessionId = null; World = null; Quests = new P1Quest[0]; Inventory = null; pending = null; LastCombatEvent = null; cooldowns.Clear(); ClearAudioNotices(); ResetV2(); State = state; }
-        private P1Result Expire() { ClearSession(P1ConnectionState.Expired); return Fail("session_not_found"); }
+        private void ClearSession(P1ConnectionState state, bool preservePending = false)
+        {
+            SessionId = null; World = null; Quests = new P1Quest[0]; Inventory = null;
+            if (!preservePending) pending = null;
+            LastCombatEvent = null; cooldowns.Clear(); ClearAudioNotices(); ResetV2(); State = state;
+        }
+        private P1Result Expire()
+        {
+            // A mutation whose response says session_not_found may still be retried under
+            // the same key after relogin. Never silently drop it or mint a new key.
+            bool hadPending = pending != null;
+            ClearSession(hadPending ? P1ConnectionState.UncertainMutation : P1ConnectionState.Expired, hadPending);
+            return hadPending ? Uncertain(null) : Fail("session_not_found");
+        }
     }
 }
