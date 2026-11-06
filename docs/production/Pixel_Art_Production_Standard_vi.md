@@ -49,3 +49,34 @@ REQUESTED → GENERATED → STRUCTURE_PASS → VISUAL_REVIEW → ENGINE_IMPORTED
 Codex phụ trách asset, UI/UX, VFX, sprite và animation. Muse chỉ làm video/cinematic/âm thanh theo quyết định hiện hành; quy trình giao Muse làm sprite/ghép atlas trước đây hết hiệu lực.
 
 Catalogue và hàng đợi đầy đủ ở Art_Source/Actor_Library_20261107; ảnh sinh có thể chỉ là ứng viên. Công cụ Godot ActorLibrary là scene review riêng, không chứng nhận toàn bộ game hoặc mở khóa class/skill backend chưa triển khai.
+
+
+## Khối chính sách cho công cụ audit
+
+Khối dưới là hợp đồng máy đọc theo DEC-024. `cellWidth/Height` chỉ phục vụ kiểm các sheet legacy theo grid; ảnh trim mới dùng rect/pivot/referenceHeight trong manifest. `walkFrames / walkDurationSeconds = 20` là nhịp đổi pose mẫu, **không phải FPS render**. Audit cũ không được lấy quy định walk6frame để thay quyết định hiện hành.
+
+<!-- actor-animation-policy -->
+```json
+{
+  "pixelsPerUnit": 20,
+  "cellWidth": 48,
+  "cellHeight": 64,
+  "cellIsNominalLegacyGrid": true,
+  "framesPerDirectionMin": 16,
+  "framesPerDirectionMax": 20,
+  "walkFrames": 16,
+  "walkDurationSeconds": 0.8,
+  "renderTargetFps": 60,
+  "physicsHz": 60,
+  "directions": [
+    "N",
+    "NE",
+    "E",
+    "SE",
+    "S",
+    "SW",
+    "W",
+    "NW"
+  ]
+}
+```

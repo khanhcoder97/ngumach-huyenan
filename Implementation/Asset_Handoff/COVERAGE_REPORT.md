@@ -8,8 +8,8 @@
 > python Implementation/Asset_Handoff/coverage_audit.py --check
 > ```
 
-- **Source commit:** `dd50ec6fa62b4391b68e727ad692e095ee571178` — last commit touching the evidence files (not the report commit).
-- **Evidence digest:** `ae2bd87410eb2974752475dcafc7c18beb05860b6107a576c4da492d84b838df` over 42 files (SHA256 per file in §8).
+- **Source commit:** `2ff5656fe52b11c9b701f7193b1febcaaae58f0d` — last commit touching the evidence files (not the report commit).
+- **Evidence digest:** `3aff209ab124027277f77cb6f16983c3d3a87dfbf47a97a7a2866459df53776b` over 42 files (SHA256 per file in §8).
 - **Phạm vi:** chỉ đọc nguồn; không sửa schema, manifest, asset, `.meta`, server hay gameplay numeric.
 
 ## 1. Kết luận
@@ -57,13 +57,15 @@
 
 ## 3. Asset Minh Kiếm — manifest, PNG và import metadata
 
+Chuẩn hiện hành: 16–20 pose nguồn/clip/hướng; render 60 FPS. Bảng này kiểm handoff Unity lịch sử, không chứng nhận thư viện Godot mới. Cell48×64 chỉ là grid tham chiếu legacy; atlas trim dùng frame rect/pivot riêng.
+
 ### 3.1 `CHR_MINH_KIEM_WALK` (sprite_sheet, status `draft`)
 
 | Kiểm tra | Manifest / chuẩn | Đo được | Kết quả |
 |---|---|---|---|
 | PNG IHDR | 288×512 | 288×512 (RGBA, 8-bit) | ✅ |
 | Hướng | 8 hướng theo thứ tự chuẩn | 8 hướng | ✅ |
-| Walk | 6 frame/hướng @ 8 fps | 6 frame @ 8 fps | ✅ |
+| Walk nguồn | 16–20 frame/hướng; mẫu16/0.8s | 6 frame @ 8 fps | ❌ |
 | Cell suy ra | 48×64 | 288/6 = 48 × 512/8 = 64 | ✅ |
 | Preview | tồn tại, bội số nguyên của sheet | 1152×2048 | ✅ |
 
@@ -101,7 +103,7 @@
 | Static import metadata — advisory | **advisory** | META_MESH_TYPE |
 | PNG header `CHR_MINH_KIEM_WALK` | **verified** | 288×512, 8-bit RGBA |
 | PNG pixel-level audit | **not performed** | PNG signature + IHDR parsed with struct; pixel decode not performed |
-| Unity engine playback | **not_verified** | No Unity/.NET runtime in this environment |
+| Unity engine playback | **not_verified** | Historical Unity handoff audit only; this script does not execute an engine. Godot actor-library evidence is separate. |
 | Runtime content | **not_verified** | No authoritative server runtime here; only catalogue rows and definition examples |
 
 ## 4. Độ phủ definition so với catalogue
@@ -204,7 +206,7 @@ File text được hash ở dạng **LF chuẩn hoá** để Windows và Linux c
 | `Implementation/Content/Schemas/SkillDefinition.schema.json` | 2486 | `41828ae02441ac28a1d8c8593cc8c7544e392ec4a25765fb53cd3af4077e79b1` |
 | `Implementation/Content/Schemas/SpawnDefinition.schema.json` | 2767 | `5eb263a1e9d0b574eddfd3c6421df546d312d05625ee26ad36d59ea2c53801ea` |
 | `docs/production/Class_Passive_Production_Data_vi.csv` | 14134 | `ff7eb9a6050af44376219b9b96bc8f44434bc163b4b237e8bab04a743e2d91e8` |
-| `docs/production/Combat_Skills_VFX_Animation_Spec_vi.md` | 25133 | `9c9e074f4383d1a86aa827238eb7dfff997f62242c51a9809a88917c3790763d` |
+| `docs/production/Combat_Skills_VFX_Animation_Spec_vi.md` | 25448 | `28b723145b9abe69928bd9ee8430e78a1ad7edc2cead4933f114325568296dee` |
 | `docs/production/Currency_Production_Data_vi.csv` | 4268 | `d99f6fff5c435526a1cc30e8675dc4aa34dadec7f553ff2b85184713ecfad7dc` |
 | `docs/production/Elite_Variant_Data_vi.csv` | 3412 | `adceffb77ddfdb7d5198436e8fff1bd7a834001b1c3e61abd43ade6f670c52c4` |
 | `docs/production/Item_Master_Catalog_vi.csv` | 316960 | `77e1405963fab1e915c56a8b738e347bd60809c6cf1fb78bee5831202e67065c` |
@@ -214,9 +216,9 @@ File text được hash ở dạng **LF chuẩn hoá** để Windows và Linux c
 | `docs/production/NPC_Actor_Production_Registry_vi.csv` | 32835 | `d9743b8148620e00dd0762eca2bfd1b733b7a8808583725a381262fd004cd52a` |
 | `docs/production/Online_Persistence_Release_Complete_vi.md` | 9433 | `14ec979208e5d563882ab184115f34683791973180888d6b6c089c6b81855f2e` |
 | `docs/production/Pet_Mount_Production_Data_vi.csv` | 5100 | `383a40438f741931a26a5e3e19fa6d2b5527ffaa6c69bb45875ef162e6bf2d73` |
-| `docs/production/Pixel_Art_Production_Standard_vi.md` | 10510 | `76ece1bfdc07d794bfa7957053cf98869ef0db0fc25432f3a72635ff995dacb0` |
+| `docs/production/Pixel_Art_Production_Standard_vi.md` | 7986 | `041343d4adaaa2ca69ad869c3f0a4a8d721735df818aa12620e42c0a87c70182` |
 | `docs/production/Quest_Dialogue_Production_Data_vi.csv` | 118934 | `241593fe9ba87ad0441a4292b602602729d6a14493c07869cb0bba0e1c9c2fab` |
 | `docs/production/Weekly_Boss_Rotation_Data_vi.csv` | 3201 | `940214ce7a34978487403520c50ffef825da7da94210eeb3b1841d46f4e372e2` |
 | `docs/production/World_Spawn_Gathering_Manifest_vi.csv` | 198229 | `7fe2d4d5229e2fb7a93eb8c0fd452b741cb5f050c49a9c72bee30f8eff06c457` |
 
-**Evidence digest:** `ae2bd87410eb2974752475dcafc7c18beb05860b6107a576c4da492d84b838df`
+**Evidence digest:** `3aff209ab124027277f77cb6f16983c3d3a87dfbf47a97a7a2866459df53776b`

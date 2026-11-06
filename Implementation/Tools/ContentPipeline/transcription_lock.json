@@ -3,10 +3,10 @@
   "purpose": "Reviewed source transcription checkpoint; update only with reviewed graph/numeric changes",
   "schemaVersion": 1,
   "sources": {
-    "ART_BIBLE": "sha256:047904ef0d03773fe69bdf55b5b7e6de08516684e647e068cf4ba05021e9f754",
+    "ART_BIBLE": "sha256:0b831a270e2018553e3b0f0d51f412380ca92f472490cb5e4ba2d08af2204717",
     "CLASS_EXAMPLE_MINH_KIEM": "sha256:4ccf673b833afcd0e911c29b2a40af432c401fe979906b698d0de6a511e8aabd",
     "COMPLETION_V1": "sha256:fb1f2bf9d13c8d1569c463200f60f3acdc3a5bf5ea45f2bf95dc9d309dcb6545",
-    "DECISIONS": "sha256:e3a5282a674f6e8ec0b6c4f58219b238caac2f9a7242bc57c1de5f2f1142fdfe",
+    "DECISIONS": "sha256:29976ceddc82439f8b498b449d1ada1ea3865a936b2b8b03d73c9bd19d16697b",
     "ITEM_MASTER": "sha256:77e1405963fab1e915c56a8b738e347bd60809c6cf1fb78bee5831202e67065c",
     "ITEM_RARITY": "sha256:7979ba05bd06403b02190d7f51698891549d886ef27957f9d5e079070627b27c",
     "ITEM_SCHEMA": "sha256:9b2b678953f4f2deeed79fd5fe7f3e8baa30e5f6ceb6e848c758a887ab5999c5",
@@ -28,5 +28,17 @@
     "SKILL_EXAMPLE_SK_03": "sha256:b83d8238a1dfd0e4f9ba74ef0f9b2297136d3e87f6204638656e2b307c69a64a",
     "SPAWN_EXAMPLE_BM_04": "sha256:507d6717bcaa2e538a0de3a8731a238a7acbc4f8b329b3bc168f512b00be2395",
     "SPAWN_MANIFEST": "sha256:7fe2d4d5229e2fb7a93eb8c0fd452b741cb5f050c49a9c72bee30f8eff06c457"
-  }
+  },
+  "reviews": [
+    {
+      "date": "2026-11-07",
+      "decision": "DEC-024",
+      "sourceIds": [
+        "ART_BIBLE",
+        "DECISIONS"
+      ],
+      "verified": "Art Bible tables byte-equivalent after LF normalization; existing DEC-001..023 text unchanged; DEC-024 appends animation policy. Candidate definitions/status/activation must remain identical after rebuild.",
+      "scope": "Visual/camera policy and provenance; no numeric/gameplay transcription changed."
+    }
+  ]
 }

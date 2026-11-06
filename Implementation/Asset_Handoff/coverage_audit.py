@@ -218,27 +218,33 @@ def git_last_commit(root: Path, paths: list[str]) -> str | None:
 # source parsers
 # --------------------------------------------------------------------------- #
 def parse_art_standard(text: str) -> dict:
-    ppu = first_match(r"Pixels Per Unit\s*\|\s*(\d+)\s*px/WU", text, int)
-    cell = re.search(r"cell\s*(\d+)\s*[×x]\s*(\d+)\s*source px", text)
-    walk = re.search(r"Walk:\s*(\d+)\s*frame/hướng ở\s*(\d+)\s*fps", text)
-    order = re.search(r"thứ tự hàng `([NSEW,\s]+)`", text)
-    if not (ppu and cell and walk and order):
-        raise ValueError(
-            "Could not parse the locked art convention from " + ART_STANDARD
-        )
-    directions = [part.strip() for part in order.group(1).split(",") if part.strip()]
+    match = re.search(r"<!-- actor-animation-policy -->\s*```json\s*(.*?)\s*```", text, re.S)
+    if not match:
+        raise ValueError("Missing current machine-readable actor policy in " + ART_STANDARD)
+    policy = json.loads(match.group(1))
+    integer_fields = ["pixelsPerUnit", "cellWidth", "cellHeight", "framesPerDirectionMin",
+                      "framesPerDirectionMax", "walkFrames", "renderTargetFps", "physicsHz"]
+    if any(type(policy.get(key)) is not int or policy[key] <= 0 for key in integer_fields):
+        raise ValueError("Actor policy requires positive integer dimensions/counts/FPS")
+    if (policy["framesPerDirectionMin"], policy["framesPerDirectionMax"], policy["renderTargetFps"]) != (16, 20, 60):
+        raise ValueError("Actor policy must preserve owner decision:16–20source frames,60render FPS")
+    if not 16 <= policy["walkFrames"] <= 20:
+        raise ValueError("Walk source frames must be16–20")
+    duration = policy.get("walkDurationSeconds")
+    if type(duration) not in (int, float) or duration <= 0:
+        raise ValueError("Walk duration must be positive seconds, independent of render FPS")
+    directions = policy.get("directions")
+    if directions != ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]:
+        raise ValueError("Actor policy requires the canonical eight-direction order")
     return {
-        "pixelsPerUnit": ppu,
-        "cellWidth": int(cell.group(1)),
-        "cellHeight": int(cell.group(2)),
-        "walkFrames": int(walk.group(1)),
-        "walkFps": int(walk.group(2)),
+        **policy,
+        "walkFps": policy["walkFrames"] / duration,
         "directions": directions,
         "source": ART_STANDARD,
         "quote": {
-            "cell": cell.group(0),
-            "walk": walk.group(0),
-            "directions": order.group(1),
+            "cell": "Nominal legacy grid only; new trimmed pages use explicit frame rects/pivots",
+            "walk": f"{policy['walkFrames']} source poses over {duration}s; renderer{policy['renderTargetFps']}FPS",
+            "directions": ", ".join(directions),
         },
     }
 
@@ -543,6 +549,11 @@ def build_report(root: Path, source_commit: str | None = None) -> dict:
                 and geometry["frameWidth"] == standard["cellWidth"]
                 and geometry["frameHeight"] == standard["cellHeight"]
             ),
+            "animationPolicyCompliant": bool(animations) and all(
+                type(a.get("framesPerDirection")) is int
+                and standard["framesPerDirectionMin"] <= a["framesPerDirection"] <= standard["framesPerDirectionMax"]
+                for a in animations
+            ),
             "meta": {
                 "guid": meta["guid"],
                 "spriteMode": meta["spriteMode"],
@@ -701,8 +712,8 @@ def build_report(root: Path, source_commit: str | None = None) -> dict:
         },
         "enginePlayback": {
             "status": "not_verified",
-            "reason": "No Unity/.NET runtime in this environment",
-            "requiredEvidence": "Unity import log + PlayMode capture tied to an exact commit",
+            "reason": "Historical Unity handoff audit only; this script does not execute an engine. Godot actor-library evidence is separate.",
+            "requiredEvidence": "Native evidence for the engine/art package actually being integrated, tied to source hashes/commit",
         },
         "runtimeContent": {
             "status": "not_verified",
@@ -1136,6 +1147,8 @@ def render_markdown(report: dict) -> str:
     # --- 3. asset ---------------------------------------------------------- #
     add("## 3. Asset Minh Kiếm — manifest, PNG và import metadata")
     add("")
+    add(f"Chuẩn hiện hành: {standard['framesPerDirectionMin']}–{standard['framesPerDirectionMax']} pose nguồn/clip/hướng; render {standard['renderTargetFps']} FPS. Bảng này kiểm handoff Unity lịch sử, không chứng nhận thư viện Godot mới. Cell48×64 chỉ là grid tham chiếu legacy; atlas trim dùng frame rect/pivot riêng.")
+    add("")
     for index, asset in enumerate(assets, start=1):
         geo = asset["geometry"]
         add(f"### 3.{index} `{asset['assetId']}` ({asset['kind']}, status `{asset['status']}`)")
@@ -1154,9 +1167,9 @@ def render_markdown(report: dict) -> str:
         )
         animation = asset["manifest"]["animations"][0] if asset["manifest"]["animations"] else {}
         add(
-            f"| Walk | {standard['walkFrames']} frame/hướng @ {standard['walkFps']} fps | "
+            f"| Walk nguồn | {standard['framesPerDirectionMin']}–{standard['framesPerDirectionMax']} frame/hướng; mẫu{standard['walkFrames']}/{standard['walkDurationSeconds']}s | "
             f"{animation.get('framesPerDirection')} frame @ {animation.get('fps')} fps | "
-            f"{'✅' if animation.get('framesPerDirection') == standard['walkFrames'] and animation.get('fps') == standard['walkFps'] else '❌'} |"
+            f"{'✅' if asset['animationPolicyCompliant'] else '❌'} |"
         )
         if geo:
             add(

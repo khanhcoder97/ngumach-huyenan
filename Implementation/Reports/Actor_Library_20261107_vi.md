@@ -27,3 +27,8 @@ Chưa đủ bộ hành động cho bất kỳ class mới, quái/boss/NPC; chưa
 Asset mới **chưa nối gameplay**. HeroAnimator/NativeActorsView/SkillVfxPlayer và gameplay online vẫn dùng baseline đã bàn giao; Mob AI/death-return tiếp tục OFF,3skill Minh Kiếm có backend. Thư viện không tự mở khóa class/skill/giao dịch hay cấp damage/thưởng.
 
 Tiếp theo: sửa4atlas bị chặn; nghiệm thu đủ16pose/chuyển state5class; hoàn thành bộ Bến Mưa; các roster còn lại; chỉ bind actor đủ clip qua gate. Gói nguồn/prompt/hướng dẫn ở Art_Source/Actor_Library_20261107/README_vi.md. Mở ClientGodot/Xem_Thu_Vien_Asset.cmd để xem trực tiếp. Dùng imagegen tích hợp, khôngCLI/API; không dùngPython chỉnh bitmap.
+
+
+## Tương thích pipeline sau cập nhật chuẩn
+
+CI phát hiện audit lịch sử còn parse cứng Walk6frame và khóa source cũ. Đã chuyển bộ đọc sang khối JSON chính sách trong chuẩn pixel, phân biệt16–20pose nguồn/renderer60FPS; giữ cell48×64 chỉ là reference legacy, không áp cho atlas trim. Sáu regression test kiểm chuẩn thực, chấp nhận20pose, từ chối6pose/thiếu policy/sai hướng/nhầm FPS. 28test compiler qua. Đã đối chiếu bảng Art Bible và DEC-001..023 không đổi, review lại hai source lock rồi tái xuất candidate/audit. Bằng chứng21candidate giữ nguyên definition, ID, status, activation và blocker; chỉ provenance/sourceVersion/digest cập nhật. Các thiếu hụt gameplay vẫn bị chặn, không bật runtime.

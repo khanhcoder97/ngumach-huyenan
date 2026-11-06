@@ -1,0 +1,23 @@
+{
+  "reviewDate": "2026-11-07",
+  "baseline": "2ff5656fe52b11c9b701f7193b1febcaaae58f0d",
+  "candidateCount": 21,
+  "unchanged": [
+    "all candidate definitions, IDs, kinds, schemas and statuses",
+    "unresolved paths/reasons/states (sourceVersion metadata updated)",
+    "bundle activation, summary and status"
+  ],
+  "changedSourceMetadata": [
+    "ART_BIBLE",
+    "DECISIONS"
+  ],
+  "unresolvedSourceVersionUpdates": 10,
+  "activation": {
+    "blockedByUnresolved": true,
+    "eligible": false,
+    "reason": "Blocked by 60 unresolved field(s) across 17 candidate(s); the compiler never activates runtime data.",
+    "requiresReview": true,
+    "runtimeActivationAllowed": false
+  },
+  "note": "Art Bible tables unchanged; DEC-001..023 text unchanged; DEC-024 and visual-policy prose only. New compiled bytes change provenance/digests, not gameplay values."
+}

@@ -16,7 +16,7 @@
 - Actor thường dùng sprite sheet 512²–1024² chia page theo state; boss 1024²–2048²/page theo phase/layer. Không ép mọi frame thành cùng ô nếu trim metadata/pivot vẫn chính xác.
 - Quái thường 512²; elite 512²–1024²; boss/environment 1024²–2048²/page. Lossless, no mipmap, point filter, không nén mất dữ liệu; giữ PPU 20.
 - Icon item 32²–64²; skill/UI 32²–48²; portrait 64²–96² source pixel. Chỉ tăng khi detail gameplay cần và phải chỉ rõ scale nguyên tại viewport1280×720.
-- Gameplay top-down XY dùng8hướng N/NE/E/SE/S/SW/W/NW theo DEC-015/016; sheet actor48×64native, pivot chân. Menu/model sheet front/back/side chỉ là tham chiếu tạo hình, không thay8hướng runtime.
+- Gameplay top-down XY dùng8hướng N/NE/E/SE/S/SW/W/NW theo DEC-015/016; sheet theo frame rect/pivot; grid48×64 chỉ là tham chiếu legacy, không ép atlas trim mới. Menu/model sheet front/back/side chỉ là tham chiếu tạo hình, không thay8hướng runtime.
 - Outline actor 1–2 source px; team/target outline là pixel overlay có shape rõ, không shader làm mềm.
 - Tạo test sáng/tối và color-blind/pattern cho item/quái; màu luôn đi cùng shape/icon.
 - VFX pixel sprite trên lớp actor; weather/parallax có pattern riêng; telegraph boss luôn nằm trên actor/weather và dùng silhouette/shape tương phản.
