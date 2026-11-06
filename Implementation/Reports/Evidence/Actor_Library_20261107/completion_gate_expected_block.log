@@ -1,0 +1,9 @@
+{"actors": 130, "requiredPages": 1008, "structurePassed": 35, "boundRequiredPages": 32, "legacyClips": 3, "rejected": [{"id": "sk_mk_03_vfx", "reason": "rows expected 4, got 5"}, {"id": "class_thach_chuy_basic_attack", "reason": "clipped/overlapping frame row7 col1"}, {"id": "mob_shore_stalker_idle", "reason": "columns expected 8, got 7"}, {"id": "mob_waterroot_idle", "reason": "rows expected 10, got 9"}], "pendingPages": 976, "productionApprovedPages": 3, "visualHoldPages": 15, "structureComplete": false, "complete": false, "warning": "Structure pass is not visual/animation/native approval. Mirrored directions are frame references, not separately authored poses."}
+Traceback (most recent call last):
+  File "D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Tools\ArtProduction\inspect_actor_library.py", line 118, in <module>
+    p=argparse.ArgumentParser();p.add_argument('--export',action='store_true');p.add_argument('--check',action='store_true');p.add_argument('--require-complete',action='store_true');a=p.parse_args();main(a.export,a.require_complete,a.check)
+                                                                                                                                                                                                       ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\Tools\ArtProduction\inspect_actor_library.py", line 116, in main
+    if require_complete:assert coverage['complete'],'actor/VFX library remains incomplete'
+                               ~~~~~~~~^^^^^^^^^^^^
+AssertionError: actor/VFX library remains incomplete

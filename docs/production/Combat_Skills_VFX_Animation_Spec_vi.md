@@ -1,4 +1,6 @@
 # ĐẶC TẢ CHIẾN ĐẤU, KỸ NĂNG VÀ HIỆU ỨNG
+
+> **Chốt chủ dự án 07/11/2026:** áp dụng [Chuẩn 16–20 frame/60 FPS](Actor_Animation_16_20F_60FPS_20261107_vi.md), ưu tiên hơn các số frame/FPS/camera blockout cũ phía dưới. Mỗi clip/hướng mới phải có16–20frame nguồn thực.
 ## Ngũ Mạch: Huyền Ấn — bản sản xuất v1.0
 
 > DEC-016 (2026-10-28): áp dụng `Top_Down_Gameplay_World_Spec_vi.md`. Các bảng kích thước/placement cũ là blockout chưa nghiệm thu top-down. Y luôn là Bắc–Nam trên mặt đất. “Platform” là bệ/cầu/vùng an toàn có đường đi hoặc floor link, không yêu cầu nhảy; chiều cao silhouette/capsule cũ không dùng làm collider. ID được giữ; không tự chuyển tọa độ cũ thành độ cao.
@@ -8,7 +10,7 @@
 
 Tài liệu này chốt biểu hiện hình ảnh, hoạt ảnh, vùng va chạm và tín hiệu đọc được cho 30 kỹ năng chủ động của năm môn phái. Số liệu cân bằng cấp 1 kế thừa Content Bible; giá trị cuối cùng phải lấy từ bảng cấu hình server, không hardcode trong animation hoặc VFX. Kỹ năng không sao chép tên, nhân vật, hiệu ứng nhận diện hay nội dung cốt truyện của KPAH.
 
-Game dùng đồ họa pixel art 2D nhìn từ trên theo `Pixel_Art_Production_Standard_vi.md`: 640×360 logical, 20 PPU, frame-based spritesheets, point filter và integer scale. 1 WU=0,5m; nhân vật dùng cell 48×64 px, footprint theo DEC-016. Hoạt ảnh có thể hiển thị 6–12 fps bằng frame hold trong khi client chạy 60 FPS; gameplay vẫn do server mô phỏng tick 20 Hz. Thời điểm gây sát thương do server xác nhận, không khóa vào nhịp frame art.
+Game dùng đồ họa pixel art 2D nhìn từ trên theo `Pixel_Art_Production_Standard_vi.md`: 1280×720 viewport, camera64×36WU (F2:48×27), 20 PPU, frame-based spritesheets, point filter và integer scale. 1 WU=0,5m; nhân vật dùng cell 48×64 px, footprint theo DEC-016. Mỗi hoạt ảnh/hướng có16–20frame nguồn thực, timeline riêng trong khi client render mục tiêu60FPS; gameplay vẫn do server mô phỏng tick 20 Hz. Thời điểm gây sát thương do server xác nhận, không khóa vào nhịp frame art.
 
 ### Nguyên tắc chung cho người dựng
 

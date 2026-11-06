@@ -1,0 +1,16 @@
+{
+  "scene": "ActorLibrary",
+  "actor": "CLASS_ANH_DAO",
+  "clip": "walk",
+  "viewport": "(1280, 720)",
+  "gpu": "GeForce 820M",
+  "display": "Windows",
+  "targetFps": 60,
+  "warmupSeconds": 2,
+  "measurementSeconds": 12.002301,
+  "samples": 721,
+  "medianMs": 16.648,
+  "p95Ms": 18.365,
+  "meanFps": 60.058679245503036,
+  "note": "Eight-direction art review scene only; not gameplay/combat/load acceptance."
+}
