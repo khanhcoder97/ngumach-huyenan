@@ -239,6 +239,14 @@ builder.Services.Configure<QuestTalkOptions>(
 builder.Services.AddSingleton(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<QuestTalkOptions>>().Value);
 builder.Services.AddSingleton<QuestTalkService>();
+// DEC-TUTORIAL-TRANSPORT-20261106 pairs the portal route with the alpha profile the
+// same way, and the registry it serves is the two-entry atlas pair only. The switch
+// ships OFF; the domain is reachable in this build but no route is mapped to it yet.
+builder.Services.Configure<PortalOptions>(
+    builder.Configuration.GetSection(PortalOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<PortalOptions>>().Value);
+builder.Services.AddSingleton<PortalService>();
 builder.Services.AddSingleton<RewardLedgerStore>();
 // P00-05's chapter consequence is written inside the turn-in transaction and
 // revoked if a later step of that transaction rolls back. The store records

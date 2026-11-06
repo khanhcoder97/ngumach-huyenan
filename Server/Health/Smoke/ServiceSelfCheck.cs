@@ -7178,6 +7178,141 @@ public static class ServiceSelfCheck
             escortBx == 42,
             $"a={escortTwoA.Count} b={escortTwoB.Count} bx={escortBx}");
 
+        // ─── QOD-21 Q3: the alpha portal registry and route guards (work order 31 Q3) ────
+
+        // DEC-TUTORIAL-TRANSPORT-20261106 approved the registry pair and the route, and
+        // lists the cases it wants tested: wrong map/floor, range, dead, locked, owner
+        // and two owners. Everything here runs against the shipped transition service
+        // rather than a stand-in, because the destination's map bounds are exactly the
+        // kind of thing a fixture would hide.
+        var portalStore = new ChapterUnlockStore(new AlphaProfileOptions { Enabled = true });
+        var portalService = new PortalService(
+            services.GetRequiredService<ITeleportService>(),
+            portalStore,
+            services.GetRequiredService<GuardWindowStore>(),
+            services.GetRequiredService<CombatTickEngine>(),
+            services.GetRequiredService<ServerClock>(),
+            new PortalOptions { Enabled = true });
+        var portalActor = NewPlayer("CHR_SELFCHECK_PORTAL_OWNER");
+        portalActor.MapId = "MAP_BEN_MUA";
+        portalActor.X = 348;
+        portalActor.Y = 0;
+        var portalOther = NewPlayer("CHR_SELFCHECK_PORTAL_OTHER");
+        portalOther.MapId = "MAP_BEN_MUA";
+        portalOther.X = 348;
+        portalOther.Y = 0;
+
+        Check(
+            "alpha.portal_registry_is_the_approved_pair_only",
+            AlphaPortalRegistry.All.Count == 2 &&
+            AlphaPortalRegistry.Find("TP_BM_THANH_LAC") is { SourceMapId: "MAP_BEN_MUA", DestinationMapId: "MAP_THANH_LAC", DestinationXWu: 8 } &&
+            AlphaPortalRegistry.Find("TP_TL_BEN_MUA") is { SourceMapId: "MAP_THANH_LAC", SourceXWu: 20, DestinationMapId: "MAP_BEN_MUA", DestinationXWu: 348 } &&
+            AlphaPortalRegistry.Find("TP_BM_THANG_LONG") is null,
+            $"entries={AlphaPortalRegistry.All.Count} " +
+            $"thangLong={AlphaPortalRegistry.Find("TP_BM_THANG_LONG") is not null}");
+
+        var portalUnknown = portalService.Move(portalActor, "TP_BM_THANG_LONG", "1" + new string('0', 31));
+        Check(
+            "alpha.portal_refuses_an_id_the_registry_does_not_publish",
+            !portalUnknown.Accepted &&
+            portalUnknown.Code == PortalErrorCodes.NotFound &&
+            portalUnknown.FieldErrors.SequenceEqual(["payload.portalId"]) &&
+            portalActor.MapId == "MAP_BEN_MUA",
+            $"code={portalUnknown.Code} map={portalActor.MapId}");
+
+        var portalLocked = portalService.Move(portalActor, "TP_BM_THANH_LAC", "2" + new string('0', 31));
+        var portalGranted = portalStore.OnQuestCompleted(portalActor.CharacterId, "P00-05");
+        var portalMoved = portalService.Move(portalActor, "TP_BM_THANH_LAC", "3" + new string('0', 31));
+        Check(
+            "alpha.portal_locked_before_the_chapter_grant_and_open_after_it",
+            !portalLocked.Accepted &&
+            portalLocked.Code == PortalErrorCodes.Locked &&
+            portalLocked.FieldErrors.SequenceEqual(["chapterPermission"]) &&
+            portalGranted &&
+            portalMoved.Accepted &&
+            portalMoved.Result!.DestinationMapId == "MAP_THANH_LAC" &&
+            portalMoved.Result.DestinationXWu == 8 &&
+            portalMoved.Result.Applied &&
+            !portalMoved.Result.Replayed &&
+            portalActor.MapId == "MAP_THANH_LAC" && portalActor.X == 8 && portalActor.Y == 0,
+            $"locked={portalLocked.Code} moved={portalMoved.Accepted}/{portalMoved.Code} " +
+            $"now=({portalActor.X},{portalActor.Y}) on {portalActor.MapId} " +
+            $"revision={portalMoved.Result?.Revision}");
+
+        // The same key again must answer the stored receipt and must NOT move anybody:
+        // the decision's rule is that a replayed command returns history rather than
+        // dragging a character who has travelled on back to an old destination. The
+        // actor is walked off the arrival point first so a silent re-teleport cannot
+        // pass as "position happens to match".
+        portalActor.X = 60;
+        portalActor.Y = 12;
+        var portalReplay = portalService.Move(portalActor, "TP_BM_THANH_LAC", "3" + new string('0', 31));
+        Check(
+            "alpha.portal_replay_returns_history_without_moving_the_actor",
+            portalReplay.Accepted &&
+            portalReplay.Result!.Replayed &&
+            portalReplay.Result.DestinationMapId == "MAP_THANH_LAC" &&
+            portalReplay.Result.DestinationXWu == 8 &&
+            portalActor.X == 60 && portalActor.Y == 12,
+            $"replayed={portalReplay.Result?.Replayed} applied={portalReplay.Result?.Applied} " +
+            $"pos=({portalActor.X},{portalActor.Y})");
+
+        var portalConflict = portalService.Move(portalActor, "TP_TL_BEN_MUA", "3" + new string('0', 31));
+        Check(
+            "alpha.portal_same_key_different_payload_is_a_conflict",
+            !portalConflict.Accepted &&
+            portalConflict.Code == PortalErrorCodes.IdempotencyConflict &&
+            portalActor.MapId == "MAP_THANH_LAC",
+            $"code={portalConflict.Code} map={portalActor.MapId}");
+
+        // Permission is per character, so a second owner standing at the same portal is
+        // still locked while the first one travels. This is the "two owners" case, and
+        // it is the shape that would break if the grant were ever made global.
+        var portalSecondLocked = portalService.Move(portalOther, "TP_BM_THANH_LAC", "4" + new string('0', 31));
+        Check(
+            "alpha.portal_permission_is_per_character_not_global",
+            !portalSecondLocked.Accepted &&
+            portalSecondLocked.Code == PortalErrorCodes.Locked &&
+            portalOther.MapId == "MAP_BEN_MUA" &&
+            portalStore.HasFlag(portalActor.CharacterId, AlphaChapterUnlockRules.Flag) &&
+            !portalStore.HasFlag(portalOther.CharacterId, AlphaChapterUnlockRules.Flag),
+            $"code={portalSecondLocked.Code} otherMap={portalOther.MapId}");
+
+        var portalFar = NewPlayer("CHR_SELFCHECK_PORTAL_FAR");
+        portalFar.MapId = "MAP_BEN_MUA";
+        portalFar.X = 300;
+        portalFar.Y = 0;
+        _ = portalStore.OnQuestCompleted(portalFar.CharacterId, "P00-05");
+        var portalRange = portalService.Move(portalFar, "TP_BM_THANH_LAC", "5" + new string('0', 31));
+        // portalOther is standing in Bến Mưa and asks for the Thanh Lạc portal, whose
+        // source side is the other map: this is the wrong-map case, and it is refused
+        // before the permission check, so a character cannot probe a portal it has no
+        // business reaching.
+        var portalWrongMap = portalService.Move(portalOther, "TP_TL_BEN_MUA", "6" + new string('0', 31));
+        Check(
+            "alpha.portal_requires_standing_at_it_on_its_own_map",
+            !portalRange.Accepted &&
+            portalRange.Code == PortalErrorCodes.OutOfRange &&
+            portalFar.MapId == "MAP_BEN_MUA" &&
+            !portalWrongMap.Accepted &&
+            portalWrongMap.Code == PortalErrorCodes.OutOfRange &&
+            portalOther.MapId == "MAP_BEN_MUA",
+            $"far={portalRange.Code} wrongMap={portalWrongMap.Code} " +
+            $"farPos=({portalFar.X},{portalFar.Y}) otherMap={portalOther.MapId}");
+
+        var portalDown = NewPlayer("CHR_SELFCHECK_PORTAL_DOWN", hp: 0);
+        portalDown.MapId = "MAP_BEN_MUA";
+        portalDown.X = 348;
+        portalDown.Y = 0;
+        _ = portalStore.OnQuestCompleted(portalDown.CharacterId, "P00-05");
+        var portalDead = portalService.Move(portalDown, "TP_BM_THANH_LAC", "7" + new string('0', 31));
+        Check(
+            "alpha.portal_refuses_a_downed_actor",
+            !portalDead.Accepted &&
+            portalDead.Code == PortalErrorCodes.NotAlive &&
+            portalDown.MapId == "MAP_BEN_MUA",
+            $"code={portalDead.Code} map={portalDown.MapId}");
+
         // ─── QOD-21 Q2: the TALK route's guards (work order 31 Q2) ────
 
         // DEC-TUTORIAL-TRANSPORT-20261106 approved the verb with these rules, and the
