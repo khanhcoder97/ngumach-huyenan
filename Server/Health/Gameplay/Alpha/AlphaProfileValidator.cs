@@ -329,7 +329,9 @@ public static class AlphaProfileValidator
 
         if (rules.P00_05_OrderedObjectives.Count != 3 ||
             !rules.P00_05_TrialNpcConditionOverride.Contains("NPC_CLASS_TRIAL", StringComparison.Ordinal) ||
+            !rules.P00_05_TrialNpcConditionOverride.Contains("before P00-05 COMPLETED", StringComparison.Ordinal) ||
             !rules.P00_05_OrderedObjectives[2].Contains("NPC_CLASS_TRIAL", StringComparison.Ordinal) ||
+            !rules.P00_05_OrderedObjectives[2].Contains("TALK", StringComparison.Ordinal) ||
             !maps.TryResolve(design.Scope.MapId, out var mapBounds) ||
             !mapBounds.Contains(rules.P00_05_PhaseNpcX, rules.P00_05_PhaseNpcY))
         {
