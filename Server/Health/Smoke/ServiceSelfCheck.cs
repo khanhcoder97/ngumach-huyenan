@@ -4506,12 +4506,11 @@ public static class ServiceSelfCheck
             $"firstLife={churnLedger.LifeVersion("CHR_CHURN_FIRST")} " +
             $"idKept={churnSurvived?.DeathEventId == churnFirstDeath?.DeathEventId}");
 
-        // The other half of the rule: reclaiming happens only where nothing is owed. Once
-        // 46 of those lives are closed by a committed return, the next character is
-        // absorbed by reclaiming one closed entry, the tracked count stops growing, and
-        // the overflow counter stays where it was. Pinned lands on 257, not on the bound:
-        // the newcomer is itself a downed character, so one closed entry left and one
-        // pinned entry arrived in the same insert.
+        // The other half, rewritten for work order 31 Q1. Under the old rule these 46
+        // committed returns made those entries reclaimable and the bound "held" only by
+        // dropping identities; now a character that ever died is never evicted, so the
+        // newcomer is absorbed by growing, and every closed life still answers its own
+        // death. Pinned equals tracked because nothing in this ledger is obligation-free.
         for (var churnIndex = 0; churnIndex < 46; churnIndex++)
         {
             churnLedger.RecordResurrectionCommit($"CHR_CHURN_{churnIndex:D3}", 0, 100);
@@ -4520,17 +4519,63 @@ public static class ServiceSelfCheck
         churnLedger.RecordDamageCommit(
             "CHR_CHURN_NEWCOMER", 100, 0, 999, DateTimeOffset.UnixEpoch);
         Check(
-            "lifecycle.only_a_closed_life_is_reclaimable_so_the_bound_holds_again",
-            churnLedger.TrackedCharacters == 302 &&
-            churnLedger.PinnedCharacters == 257 &&
-            churnLedger.CapacityExceededBy == 46 &&
-            churnLedger.LatestDeath("CHR_CHURN_000") is null &&
+            "lifecycle.nothing_owed_is_reclaimable_so_returned_deaths_survive_churn",
+            churnLedger.TrackedCharacters == 303 &&
+            churnLedger.PinnedCharacters == 303 &&
+            churnLedger.CapacityExceededBy == 47 &&
+            churnLedger.LatestDeath("CHR_CHURN_000") is { } churnZeroDeath &&
+            churnZeroDeath.LifeVersion == 1 &&
+            churnLedger.LifeVersion("CHR_CHURN_000") == 2 &&
             churnLedger.LatestDeath("CHR_CHURN_045") is not null &&
             churnLedger.LatestDeath("CHR_CHURN_NEWCOMER") is not null,
             $"tracked={churnLedger.TrackedCharacters} pinned={churnLedger.PinnedCharacters} " +
             $"exceeded={churnLedger.CapacityExceededBy} " +
-            $"reclaimedOldestClosed={churnLedger.LatestDeath("CHR_CHURN_000") is null} " +
-            $"newestClosedKept={churnLedger.LatestDeath("CHR_CHURN_045") is not null}");
+            $"returnedDeathKept={churnLedger.LatestDeath("CHR_CHURN_000") is not null} " +
+            $"lifeAfterReturn={churnLedger.LifeVersion("CHR_CHURN_000")}");
+
+        // The exact shape Codex measured in Evidence/qod-life.txt, through the public API:
+        // a character dies, is returned to a second life, then 256 unrelated characters die.
+        // Its death identity and its life number both have to survive, because the receipt
+        // for that death is what stops an old key from being re-run as a fresh command on
+        // the life after it - so dropping it was never a capacity decision, it was an
+        // accounting one.
+        var q1Ledger = new PlayerLifeLedger();
+        var q1FirstDeath = q1Ledger.RecordDamageCommit(
+            "CHR_Q1_SURVIVOR", 100, 0, 7, DateTimeOffset.UnixEpoch);
+        q1Ledger.RecordResurrectionCommit("CHR_Q1_SURVIVOR", 0, 50);
+        var q1BeforeChurn = q1Ledger.TrackedCharacters;
+        for (var q1Index = 0; q1Index < 256; q1Index++)
+        {
+            q1Ledger.RecordDamageCommit(
+                $"CHR_Q1_OTHER_{q1Index:D3}", 100, 0, q1Index + 1000,
+                DateTimeOffset.UnixEpoch);
+        }
+
+        var q1AfterChurn = q1Ledger.LatestDeath("CHR_Q1_SURVIVOR");
+        // Supersession must not renumber. LifeVersion advances at the return, not at the
+        // death - measured here, because my first expectation of 3 was arithmetic about the
+        // wrong event - so the survivor's next death belongs to life 2 with a fresh derived
+        // id, while the life-1 death stays readable as the receipt that old key refers to.
+        var q1ThirdDeath = q1Ledger.RecordDamageCommit(
+            "CHR_Q1_SURVIVOR", 100, 0, 7777, DateTimeOffset.UnixEpoch);
+        Check(
+            "lifecycle.an_alive_returned_character_keeps_its_death_identity_through_churn",
+            q1FirstDeath is not null && q1AfterChurn is not null &&
+            q1BeforeChurn == 1 &&
+            q1AfterChurn.DeathEventId == q1FirstDeath.DeathEventId &&
+            q1AfterChurn.LifeVersion == 1 &&
+            q1Ledger.LifeVersion("CHR_Q1_SURVIVOR") == 2 &&
+            q1ThirdDeath is { LifeVersion: 2 } &&
+            q1ThirdDeath!.DeathEventId != q1FirstDeath.DeathEventId &&
+            q1Ledger.LatestDeath("CHR_Q1_SURVIVOR")!.DeathEventId ==
+                q1ThirdDeath.DeathEventId &&
+            q1Ledger.TrackedCharacters == 257 &&
+            q1Ledger.PinnedCharacters == 257 &&
+            q1Ledger.CapacityExceededBy == 1,
+            $"before={q1BeforeChurn} tracked={q1Ledger.TrackedCharacters} " +
+            $"pinned={q1Ledger.PinnedCharacters} exceeded={q1Ledger.CapacityExceededBy} " +
+            $"idKept={q1AfterChurn?.DeathEventId == q1FirstDeath?.DeathEventId} " +
+            $"lifeAfterReturn={q1Ledger.LifeVersion("CHR_Q1_SURVIVOR")}");
 
         var ledgerNoDoubleRecord = new PlayerLifeLedger();
         var repeatAt = returnClock.UtcNow;

@@ -207,7 +207,17 @@ public sealed class PlayerLifeLedger
     // A life is reclaimable when nothing is owed on it: either the character never died in
     // this ledger, or the death on record belongs to a life it has already left.
     private static bool IsClosable(LifeState state) =>
-        state.LastDeath is not { } death || death.LifeVersion < state.LifeVersion;
+        // Work order 31 Q1. The old rule treated a character whose death belonged to an
+        // earlier life (died, then came back) as closed, so 256 unrelated deaths evicted a
+        // living, returned character and dropped the death identity that keeps an old
+        // receipt from turning into a fresh command on its next life. Codex measured it:
+        // before_churn=2, after_256_other_deaths=1, old_death_retained=False.
+        //
+        // The only state that provably carries no obligation is one that never died.
+        // DEC-TUTORIAL-TRANSPORT-20261106 says the same thing from the other side: without
+        // durability there is no expiry to claim, so nothing owed may be evicted because of
+        // unrelated churn - the ledger grows instead and reports by how far.
+        state.LastDeath is null;
 
     private sealed class LifeState
     {
