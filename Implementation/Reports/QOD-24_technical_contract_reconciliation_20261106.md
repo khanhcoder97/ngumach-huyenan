@@ -101,3 +101,16 @@ grouping on Linux:
 All 26 checks were green at `02eaaba`. Until that commit the CI step printed the
 hardcoded sentence, so every run since the step existed published the stale number -
 which is the reason it reads constants now instead of a sentence.
+
+## 7. Count update at `34b8c18` (work order 31 Q2)
+
+The table above says the doc's envelope and event fields "appear in the 31 wire schemas".
+That was the measured count when this report was written and it is left as it was. Since
+`34b8c18` the shipped surface is **33 schemas / 33 examples**: `TalkRequest` and
+`TalkResponse`, approved by `DEC-TUTORIAL-TRANSPORT-20261106` as additive messages for the
+TALK route, with their validator rules proven by mutation before the commit and the
+reconciliation expectation deliberately moved 31 -> 33 rather than allowed to drift.
+
+Neither new message appears in `Production_Technical_Contracts_vi.md`, so the tool now
+reports two shipped schemas that the frozen doc does not list. That is the honest state:
+the doc is owned elsewhere and this report does not edit it.
