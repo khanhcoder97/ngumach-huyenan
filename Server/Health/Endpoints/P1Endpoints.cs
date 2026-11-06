@@ -98,8 +98,115 @@ public static class P1Endpoints
             app.MapPost("/p1/actor/death-return", DeathReturnAsync);
         }
 
+        // DEC-TUTORIAL-TRANSPORT-20261106: the TALK route is mapped only while
+        // P1:AlphaProfile AND P1:QuestTalk are on, the same pairing the return route
+        // uses. With either off the path matches no template, so the answer is a real
+        // 404 rather than a status the server invented - and the gate-one matrix
+        // measures exactly that per configuration.
+        var questTalkGates = app.ServiceProvider
+            .GetRequiredService<IOptions<QuestTalkOptions>>()
+            .Value;
+        if (alphaProfile.Enabled && questTalkGates.Enabled)
+        {
+            app.MapPost("/p1/quests/talk", TalkAsync);
+        }
+
         return app;
     }
+
+    private static async Task<IResult> TalkAsync(
+        HttpContext context,
+        ISessionStore sessions,
+        QuestTalkService talk,
+        ServerClock clock)
+    {
+        var requestId = NewRequestId();
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge || string.IsNullOrWhiteSpace(body) ||
+            !context.Request.HasJsonContentType())
+        {
+            return P1Results.TalkError(
+                context, clock, requestId, sessionId: string.Empty,
+                tooLarge ? StatusCodes.Status413PayloadTooLarge
+                         : StatusCodes.Status400BadRequest,
+                P1ErrorCodes.InvalidPayload, ["body"], retryable: false);
+        }
+
+        TalkEnvelope? envelope;
+        try
+        {
+            envelope = JsonSerializer.Deserialize<TalkEnvelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.TalkError(
+                context, clock, requestId, sessionId: string.Empty,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        var fieldErrors = P1Validation.ValidateTalkEnvelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.TalkError(
+                context, clock, requestId, sessionId: string.Empty,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                fieldErrors, retryable: false);
+        }
+
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return P1Results.TalkError(
+                context, clock, requestId, sessionId: string.Empty,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        var session = sessions.Find(sessionId);
+        if (session is null)
+        {
+            return P1Results.TalkError(
+                context, clock, requestId, sessionId: string.Empty,
+                StatusCodes.Status404NotFound, P1ErrorCodes.SessionNotFound,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        if (!string.Equals(envelope!.CharacterId, session.CharacterId, StringComparison.Ordinal))
+        {
+            return P1Results.TalkError(
+                context, clock, requestId, session.SessionId,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["characterId"], retryable: false);
+        }
+
+        var outcome = talk.Talk(
+            session,
+            envelope.Payload!.NpcId!,
+            envelope.Payload.NodeId!,
+            envelope.IdempotencyKey!);
+        if (outcome.Accepted && outcome.Result is { } result)
+        {
+            return P1Results.TalkSuccess(requestId, session.SessionId, clock, result);
+        }
+
+        return P1Results.TalkError(
+            context, clock, requestId, session.SessionId,
+            TalkStatus(outcome.Code), outcome.Code ?? P1ErrorCodes.InvalidPayload,
+            outcome.FieldErrors, outcome.Retryable);
+    }
+
+    // The status is chosen per code, and the decision's own line is what pins the
+    // important one: a reveal gate that has not opened is 409 invalid_transition,
+    // never 404 - the quest exists and the character simply has not earned the line.
+    private static int TalkStatus(string? code) => code switch
+    {
+        TalkErrorCodes.UnknownNode or TalkErrorCodes.QuestNotFound =>
+            StatusCodes.Status404NotFound,
+        TalkErrorCodes.NotRevealed or TalkErrorCodes.IdempotencyConflict =>
+            StatusCodes.Status409Conflict,
+        _ => StatusCodes.Status422UnprocessableEntity
+    };
 
     // The approved return: an empty intent, a session, and nothing the client may
     // choose. Status mapping lives here rather than in the domain so the domain

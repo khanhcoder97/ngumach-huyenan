@@ -93,6 +93,46 @@ public sealed class TurnInIntent
     public string? NpcId { get; init; }
 }
 
+// DEC-TUTORIAL-TRANSPORT-20261106: a talk request names the speaker and the line and
+// nothing else. There is no questId field because the quest is derived from the node,
+// and no coordinates, map or choice - a client may not pick which quest a line
+// advances, where it is spoken, or which branch of a CHOICE node it wants.
+public sealed class TalkEnvelope
+{
+    public int? SchemaVersion { get; init; }
+    public string? RequestId { get; init; }
+    public string? IdempotencyKey { get; init; }
+    public string? SentAtUtc { get; init; }
+    public string? CharacterId { get; init; }
+    public TalkIntent? Payload { get; init; }
+}
+
+public sealed class TalkIntent
+{
+    public string? NpcId { get; init; }
+    public string? NodeId { get; init; }
+}
+
+public sealed class P1TalkResponse
+{
+    public int SchemaVersion { get; init; } = 1;
+    public required string RequestId { get; init; }
+
+    // Omitted, not blank, when the request was rejected before a session resolved:
+    // TalkResponse.schema.json says so, and a `""` where the pattern is
+    // `^[0-9a-f]{32}$` would be a response that violates the contract it answers.
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? SessionId { get; init; }
+
+    public required string ServerTimeUtc { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Server.Health.Gameplay.Quests.TalkResult? Result { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public P1Error? Error { get; init; }
+}
+
 public sealed class EquipEnvelope
 {
     public int? SchemaVersion { get; init; }

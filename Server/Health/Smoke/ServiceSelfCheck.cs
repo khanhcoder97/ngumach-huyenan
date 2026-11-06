@@ -7178,6 +7178,132 @@ public static class ServiceSelfCheck
             escortBx == 42,
             $"a={escortTwoA.Count} b={escortTwoB.Count} bx={escortBx}");
 
+        // ─── QOD-21 Q2: the TALK route's guards (work order 31 Q2) ────
+
+        // DEC-TUTORIAL-TRANSPORT-20261106 approved the verb with these rules, and the
+        // happy path is still blocked by content (#134: no narrative node is spoken by
+        // NPC_CLASS_TRIAL), so what CAN be pinned today is every way the route must
+        // refuse. Each check below names a mutation that has to trip it.
+        var talkNodes = services.GetRequiredService<NarrativeNodeCatalog>();
+        var talkService = services.GetRequiredService<QuestTalkService>();
+        var talkActor = NewPlayer("CHR_SELFCHECK_TALK_ACTOR");
+        TalkEnvelope TalkCase(string npcId, string nodeId) => new()
+        {
+            SchemaVersion = 1,
+            RequestId = new string('a', 32),
+            IdempotencyKey = new string('b', 32),
+            SentAtUtc = "2026-11-07T00:00:00Z",
+            CharacterId = talkActor.CharacterId,
+            Payload = new TalkIntent { NpcId = npcId, NodeId = nodeId }
+        };
+        var talkPlain = TalkCase("NPC_LYAN", "DLG_SELFCHECK_UNUSED");
+        var talkPlainErrors = P1Validation.ValidateTalkEnvelope(talkPlain);
+        var talkNoPayload = P1Validation.ValidateTalkEnvelope(new TalkEnvelope
+        {
+            SchemaVersion = 1,
+            RequestId = new string('a', 32),
+            IdempotencyKey = new string('b', 32),
+            SentAtUtc = "2026-11-07T00:00:00Z",
+            CharacterId = talkActor.CharacterId
+        });
+        var talkLowerNode = P1Validation.ValidateTalkEnvelope(
+            TalkCase("NPC_LYAN", "dlg_c1_01_open"));
+        var talkForeignSpeaker = P1Validation.ValidateTalkEnvelope(
+            TalkCase("NPC_LYAN;DROP", "DLG_OKAY"));
+        Check(
+            "contracts.talk_envelope_refuses_a_missing_or_malformed_payload",
+            talkPlainErrors.Count == 0 &&
+            talkNoPayload.SequenceEqual(["payload"]) &&
+            talkLowerNode.SequenceEqual(["payload.nodeId"]) &&
+            talkForeignSpeaker.SequenceEqual(["payload.npcId"]) &&
+            P1Validation.ValidateTalkEnvelope(null).SequenceEqual(["body"]),
+            $"valid={talkPlainErrors.Count} noPayload=[{string.Join(",", talkNoPayload)}] " +
+            $"lowercaseNode=[{string.Join(",", talkLowerNode)}] " +
+            $"badNpc=[{string.Join(",", talkForeignSpeaker)}]");
+
+        var talkUnknown = talkService.Talk(talkActor, "NPC_LYAN", "DLG_SELFCHECK_NEVER_SHIPPED", "c" + new string('0', 31));
+        Check(
+            "contracts.talk_refuses_a_node_the_catalog_does_not_publish",
+            !talkUnknown.Accepted &&
+            talkUnknown.Code == TalkErrorCodes.UnknownNode &&
+            talkUnknown.FieldErrors.SequenceEqual(["payload.nodeId"]),
+            $"code={talkUnknown.Code} fields=[{string.Join(",", talkUnknown.FieldErrors)}]");
+
+        // Both of the claims below read a node out of the shipped catalog instead of a
+        // fixture, so a content change that renames a speaker or adds a branch moves
+        // the measurement rather than silently passing.
+        var talkCatalogNodes = talkNodes.ForQuest("C1-01");
+        var talkForeignSpeakerNode = talkCatalogNodes.FirstOrDefault(node => node.Choices.Count == 0);
+        var talkWrongSpeaker = talkForeignSpeakerNode is null
+            ? TalkOutcome.Rejected("no_shipped_node", false)
+            : talkService.Talk(
+                talkActor,
+                "NPC_SELFCHECK_NOT_THE_SPEAKER",
+                talkForeignSpeakerNode.NodeId,
+                "d" + new string('0', 31));
+        Check(
+            "contracts.talk_refuses_a_line_spoken_by_another_npc",
+            talkForeignSpeakerNode is not null &&
+            !talkWrongSpeaker.Accepted &&
+            talkWrongSpeaker.Code == TalkErrorCodes.WrongSpeaker &&
+            talkWrongSpeaker.FieldErrors.SequenceEqual(["payload.npcId"]),
+            $"node={talkForeignSpeakerNode?.NodeId} speaker={talkForeignSpeakerNode?.SpeakerNpcId} " +
+            $"code={talkWrongSpeaker.Code}");
+
+        // Measured from the shipped bundle at this head, not assumed: `narrative_nodes_v1.json`
+        // carries 229 nodes and exactly ONE of them has choices - DLG_C3_05_CHOICE,
+        // quest C3-05, speaker NPC_FORGE_MASTER. My first two attempts named a quest
+        // that ships no branch (C1-01, then SQ-VN-05 read out of a grep window rather
+        // than the nodes array) and the check failed with `node=` empty, which is the
+        // shape a vacuous test has when the data does not back it.
+        var talkChoiceNode = talkNodes.ForQuest("C3-05")
+            .FirstOrDefault(node => node.Choices.Count > 0);
+        var talkChoiceRefused = talkChoiceNode is null
+            ? TalkOutcome.Rejected(TalkErrorCodes.ChoiceRequired, false)
+            : talkService.Talk(
+                talkActor, talkChoiceNode.SpeakerNpcId, talkChoiceNode.NodeId, "e" + new string('0', 31));
+        Check(
+            "contracts.talk_refuses_a_choice_node_instead_of_picking_a_branch",
+            talkChoiceNode is not null &&
+            !talkChoiceRefused.Accepted &&
+            talkChoiceRefused.Code == TalkErrorCodes.ChoiceRequired,
+            $"node={talkChoiceNode?.NodeId} choices={talkChoiceNode?.Choices.Count} " +
+            $"code={talkChoiceRefused.Code}");
+
+        // The quest is derived from the node and never taken from the client. With the
+        // alpha quest pack not merged (this container runs the release gates OFF), the
+        // node's own quest is not a quest the runtime ships, so the route must answer
+        // quest_not_found for the NODE rather than crediting a quest nobody loaded.
+        var talkUnloadedQuest = talkForeignSpeakerNode is null
+            ? TalkOutcome.Rejected("no_shipped_node", false)
+            : talkService.Talk(
+                talkActor,
+                talkForeignSpeakerNode.SpeakerNpcId,
+                talkForeignSpeakerNode.NodeId,
+                "f" + new string('0', 31));
+        Check(
+            "contracts.talk_does_not_credit_a_quest_the_running_catalog_does_not_ship",
+            talkForeignSpeakerNode is not null &&
+            talkUnloadedQuest.Accepted == false &&
+            talkUnloadedQuest.Code == TalkErrorCodes.QuestNotFound,
+            $"node={talkForeignSpeakerNode?.NodeId} quest={talkForeignSpeakerNode?.QuestId} " +
+            $"code={talkUnloadedQuest.Code}");
+
+        var talkBadDistance = false;
+        try
+        {
+            QuestTalkOptionsValidator.Validate(new QuestTalkOptions { MaxInteractionDistanceWu = 0 });
+        }
+        catch (InvalidOperationException)
+        {
+            talkBadDistance = true;
+        }
+
+        Check(
+            "contracts.talk_options_refuse_a_non_positive_distance",
+            talkBadDistance && new QuestTalkOptions().MaxInteractionDistanceWu == 5,
+            $"refused={talkBadDistance}");
+
         // ─── QOD-21 Q4: two owners in the audience, and losing the row ────
 
         // The escort read model above is the only place a client can see the NPC at

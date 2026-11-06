@@ -388,6 +388,47 @@ public static class P1Validation
         return errors;
     }
 
+    private static readonly Regex NodeIdPattern = new(
+        @"^[A-Z][A-Z0-9_]{2,63}$", RegexOptions.CultureInvariant);
+
+    // A narrative node id is the catalog's own vocabulary (DLG_*): upper case, at
+    // least three characters, no separators beyond underscore. Pinned to
+    // TalkRequest.schema.json so the wire and this validator cannot drift.
+    public static bool IsNodeId(string? value) =>
+        value is not null && NodeIdPattern.IsMatch(value);
+
+    public static List<string> ValidateTalkEnvelope(TalkEnvelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        ValidateEnvelopeHeader(
+            errors, envelope.SchemaVersion, envelope.RequestId, envelope.IdempotencyKey,
+            envelope.SentAtUtc, envelope.CharacterId);
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+            return errors;
+        }
+
+        if (!IsNpcId(envelope.Payload.NpcId))
+        {
+            errors.Add("payload.npcId");
+        }
+
+        if (!IsNodeId(envelope.Payload.NodeId))
+        {
+            errors.Add("payload.nodeId");
+        }
+
+        return errors;
+    }
+
     public static List<string> ValidateTurnInEnvelope(TurnInEnvelope? envelope)
     {
         var errors = new List<string>();

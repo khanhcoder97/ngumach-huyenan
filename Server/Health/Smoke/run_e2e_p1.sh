@@ -191,11 +191,15 @@ elif [ "${PROFILE}" = "alpha-p00" ]; then
   # HP. 2000 was short of its own sourced fight, which is why this leg passed or failed
   # on runner speed rather than on behaviour. P1:DeathReturn is on so the pre-fight
   # alpha_ensure_alive call has the route the approved decision maps it behind.
+  # P1__QuestTalk__Enabled is here because work order 31 Q2 put the TALK refusals in
+  # this profile: the route exists only with AlphaProfile AND QuestTalk both on, and
+  # the gate stays OFF in appsettings exactly like every other P1 switch.
   P1__AlphaProfile__Enabled=true \
   P1__DeathReturn__Enabled=true \
   P1__QuestAccept__Enabled=true \
   P1__Interact__Enabled=true \
   P1__QuestTurnIn__Enabled=true \
+  P1__QuestTalk__Enabled=true \
   P1__Equipment__Enabled=true \
   P1__CombatV2__Enabled=true \
   P1__CombatDamage__Enabled=true \
@@ -284,6 +288,8 @@ elif [ "${PROFILE}" = "gate-one" ]; then
     AlphaLootAlpha) GATE_ENV="P1__AlphaLoot__GrantEnabled=true P1__AlphaProfile__Enabled=true" ;;
     DeathReturnFixture) GATE_ENV="P1__AlphaProfile__Enabled=true P1__DeathReturn__RestoreHpFixture=5" ;;
     DeathReturnAlpha) GATE_ENV="P1__DeathReturn__Enabled=true P1__AlphaProfile__Enabled=true" ;;
+    QuestTalk) GATE_ENV="P1__QuestTalk__Enabled=true" ;;
+    QuestTalkAlpha) GATE_ENV="P1__QuestTalk__Enabled=true P1__AlphaProfile__Enabled=true" ;;
     *) echo "==> unknown E2E_GATE=${E2E_GATE:-unset}" >&2; exit 2 ;;
   esac
   # A refusal leg boots the same way but must never reach a healthy listener: the

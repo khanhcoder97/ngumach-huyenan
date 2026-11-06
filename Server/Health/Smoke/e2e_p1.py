@@ -320,6 +320,9 @@ GATED_ROUTES = (
     ("POST", "/p1/quests/accept", 405),
     ("POST", "/p1/world/interact", 405),
     ("POST", "/p1/quests/turnin", 405),
+    # A POST under /p1/quests/ matches the GET /p1/quests/{sessionId} read template,
+    # so an unmapped talk handler answers 405 exactly like accept and turn-in do.
+    ("POST", "/p1/quests/talk", 405),
     ("POST", "/p1/inventory/equip", 405),
     ("POST", "/p1/inventory/unequip", 405),
     ("POST", "/p1/v2/combat", 404),
@@ -359,6 +362,10 @@ GATE_ROUTES = {
     # when P1:AlphaProfile AND P1:DeathReturn are on, so the route belongs to the
     # pairing leg below, not to either gate on its own.
     "DeathReturn": {},
+    # QuestTalk is the eleventh switch and the second pairing case: P1Endpoints maps
+    # /p1/quests/talk only while P1:AlphaProfile AND P1:QuestTalk are both on, so this
+    # leg must map nothing on its own and the route must appear in the pairing leg.
+    "QuestTalk": {},
     # Neither damage gate maps a route of its own: they only change what an already
     # mapped route resolves. Keeping them as empty legs is what stops a future edit
     # from quietly attaching a route to them.
@@ -377,6 +384,7 @@ GATE_ROUTES = {
 # distinguish "unmapped" from "mapped but refused" the same way the design does.
 LEG_EXTRA_ROUTES = {
     "DeathReturnAlpha": {("POST", "/p1/actor/death-return"): 400},
+    "QuestTalkAlpha": {("POST", "/p1/quests/talk"): 400},
 }
 
 # Leg name -> the gates that leg turns on. Every gated route not owned by those gates
@@ -394,6 +402,8 @@ LEGS = {
     # The two pairing legs. DeathReturn needs a partner before its route exists;
     # AlphaLoot must not add one even with its partner on.
     "DeathReturnAlpha": ("DeathReturn", "AlphaProfile"),
+    "QuestTalkAlpha": ("QuestTalk", "AlphaProfile"),
+    "QuestTalk": ("QuestTalk",),
     "AlphaLootAlpha": ("AlphaLoot", "AlphaProfile"),
 }
 
@@ -2175,6 +2185,54 @@ def alpha_p00_profile():
         == "COMPLETED",
         f"turnin P00-03 {status}: {(body.get('error') or {})}")
 
+    # ── work order 31 Q2: the TALK route is live, and the content is what is missing ──
+    # The actor is standing at Ly An's anchor (the turn-in above required <= 5 WU), so
+    # this is the one place in the profile where a talk request can reach the reveal
+    # gate instead of the distance guard. Three refusals, each with an id read out of
+    # the shipped narrative bundle rather than invented:
+    #   DLG_C1_01_OFFER is spoken by NPC_LYAN and wants QUEST_AVAILABLE, while C1-01 is
+    #   LOCKED for this character - so the answer must be 409 invalid_transition naming
+    #   revealGate, which is the exact rule DEC-TUTORIAL-TRANSPORT-20261106 wrote, and
+    #   it must NOT be quest_not_found pretending the quest does not exist.
+    # Naming a different speaker on the same node must be refused as npc_mismatch, and
+    # a node the catalog never published must be refused by id before anything else.
+    talk_cases = (
+        ("reveal gate", "NPC_LYAN", "DLG_C1_01_OFFER", 409,
+         "invalid_transition", "revealGate"),
+        ("wrong speaker", "NPC_TA_VAN_KHANH", "DLG_C1_01_OFFER", 422,
+         "npc_mismatch", "payload.npcId"),
+        ("unpublished node", "NPC_LYAN", "DLG_SELFCHECK_NOT_IN_BUNDLE", 404,
+         "narrative_unknown_node", "payload.nodeId"),
+    )
+    for label, talk_npc, talk_node, want_status, want_code, want_field in talk_cases:
+        talk_status, _, talk_body = smoke_p1.call(
+            "POST", "/p1/quests/talk",
+            {"schemaVersion": 1, "requestId": alpha_key(0xb1),
+             "idempotencyKey": alpha_key(0xb2),
+             "sentAtUtc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+             "characterId": character,
+             "payload": {"npcId": talk_npc, "nodeId": talk_node}},
+            {"X-Session-ID": session})
+        talk_error = (talk_body.get("error") or {})
+        smoke_p1.check(
+            talk_status == want_status and
+            talk_error.get("code") == want_code and
+            want_field in (talk_error.get("fieldErrors") or []) and
+            talk_body.get("result") is None,
+            f"talk {label} ({talk_npc}/{talk_node}) expected {want_status} "
+            f"{want_code} naming {want_field}, got {talk_status}: "
+            f"{talk_error or (talk_body.get('result') or {})}")
+
+    # And nothing about a refused line of dialogue may move the campaign: the finale
+    # still has the fragment unclaimed and the class-confirm counter at zero.
+    quests_after_talk = alpha_quests(session)
+    smoke_p1.check(
+        alpha_counter(quests_after_talk, "P00-05", "OBJ_P00_05_CLASS_CONFIRM") == 0 and
+        (quests_after_talk.get("C1-01") or {}).get("state") != "AVAILABLE",
+        f"a refused TALK call changed the campaign: counter="
+        f"{alpha_counter(quests_after_talk, 'P00-05', 'OBJ_P00_05_CLASS_CONFIRM')} "
+        f"C1-01={(quests_after_talk.get('C1-01') or {}).get('state')}")
+
     # ── P00-04: walk the escort to both checkpoints and clear each wave ──
     # Ta Van Khanh gives the quest, Ly An is the actor being escorted, so the
     # leg starts by accepting at x=64 and then walks back to the NPC's own
@@ -2379,6 +2437,40 @@ def alpha_p00_profile():
     status, body = alpha_accept(session, character, "P00-05", "NPC_TA_VAN_KHANH")
     smoke_p1.check(status == 200, f"accept P00-05 {status}: {(body.get('error') or {})}")
 
+    # Work order 31 Q2, the accepting side: the bundle DOES publish a line for this
+    # quest (`DLG_P00_05_CLUE`, speaker NPC_TA_VAN_KHANH, condition QUEST_ACTIVE), and
+    # the actor is standing at that anchor because it just accepted there, so this is
+    # the one talk request in the run that can clear every guard. What is asserted here
+    # is the part the decision forbids rather than the part it allows: the receipt must
+    # answer for P00-05, must echo the node, and must carry NO xp, reward, unlock,
+    # chapter or destination key - TALK cannot hand out any of those, and a response
+    # that grew one would be visible here as an unexpected key. Whether it credits the
+    # class-confirm objective is measured and printed, not asserted: that objective
+    # names NPC_CLASS_TRIAL, which no node speaks (issue #134), so a credit here would
+    # belong to a different objective of the same quest or to none.
+    talk_credit_status, _, talk_credit_body = smoke_p1.call(
+        "POST", "/p1/quests/talk",
+        {"schemaVersion": 1, "requestId": alpha_key(0xc1),
+         "idempotencyKey": alpha_key(0xc2),
+         "sentAtUtc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+         "characterId": character,
+         "payload": {"npcId": "NPC_TA_VAN_KHANH", "nodeId": "DLG_P00_05_CLUE"}},
+        {"X-Session-ID": session})
+    talk_credit_result = talk_credit_body.get("result") or {}
+    smoke_p1.check(
+        talk_credit_status == 200 and
+        talk_credit_result.get("questId") == "P00-05" and
+        talk_credit_result.get("nodeId") == "DLG_P00_05_CLUE" and
+        not {"xp", "rewards", "currency", "unlocks", "chapterUnlock",
+             "destination"} & set(talk_credit_result),
+        f"talk DLG_P00_05_CLUE expected 200 with a grant-free receipt, got "
+        f"{talk_credit_status}: "
+        f"{(talk_credit_body.get('error') or talk_credit_result)}")
+    print(f"P00-05 talk: credited={talk_credit_result.get('credited')} "
+          f"objective={talk_credit_result.get('objectiveId')} "
+          f"appliedFlag={talk_credit_result.get('appliedFlag')} "
+          f"eventId={(talk_credit_result.get('eventId') or '')[:16]}")
+
     # Registration is physical: the owner has to stand inside the sourced ring
     # (circle (178,0) r 11) before any cast reaches the quest boss.
     sequence, _, _ = alpha_approach(session, character, sequence, 178.0, 0.0, within=3.0)
@@ -2471,7 +2563,7 @@ def alpha_p00_profile():
     print(
         "profile=alpha-p00 chain=P00-01..P00-05 "
         f"boss=KILLED fragment=OK wave_trial=OK escort=A+B loot=PAID v2_inventory=OK "
-        f"talk=NO_HTTP_ROUTE c1_01=LOCKED second_client=ISOLATED")
+        f"talk=ROUTE_LIVE_NO_NODE_FOR_TRIAL_NPC c1_01=LOCKED second_client=ISOLATED")
 
 
 def death_return_envelope(character, key, payload=None, schema_version=1,

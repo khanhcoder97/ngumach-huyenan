@@ -159,6 +159,8 @@ jobs:
           - MobBehavior
           - AlphaLoot
           - DeathReturnAlpha
+          - QuestTalk
+          - QuestTalkAlpha
           - AlphaLootAlpha
           - DeathReturnFixture
     name: e2e-gate-one (${{ matrix.gate }})

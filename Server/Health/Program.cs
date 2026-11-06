@@ -231,6 +231,14 @@ builder.Services.Configure<QuestTurnInOptions>(
     builder.Configuration.GetSection(QuestTurnInOptions.SectionName));
 builder.Services.AddSingleton(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
+// DEC-TUTORIAL-TRANSPORT-20261106: TALK gets its own switch. It is deliberately not
+// reusing P1:QuestTurnIn - a reward verb must not be the hidden gate for a line of
+// dialogue, and the route exists only while this gate AND the alpha profile are on.
+builder.Services.Configure<QuestTalkOptions>(
+    builder.Configuration.GetSection(QuestTalkOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<QuestTalkOptions>>().Value);
+builder.Services.AddSingleton<QuestTalkService>();
 builder.Services.AddSingleton<RewardLedgerStore>();
 // P00-05's chapter consequence is written inside the turn-in transaction and
 // revoked if a later step of that transaction rolls back. The store records
@@ -627,6 +635,18 @@ if (questAcceptOptions.Enabled)
 
 var questTurnInOptions = app.Services.GetRequiredService<QuestTurnInOptions>();
 QuestTurnInOptionsValidator.Validate(questTurnInOptions);
+var questTalkOptions = app.Services.GetRequiredService<QuestTalkOptions>();
+QuestTalkOptionsValidator.Validate(questTalkOptions);
+if (questTalkOptions.Enabled && !app.Services
+        .GetRequiredService<IOptions<AlphaProfileOptions>>().Value.Enabled)
+{
+    // The decision pairs this route with the alpha profile the way death-return is
+    // paired: the switch alone maps nothing, and a profile-less talk verb would be a
+    // dialogue surface over content the release build does not ship.
+    app.Logger.LogWarning(
+        "P1:QuestTalk is enabled without P1:AlphaProfile; /p1/quests/talk stays " +
+        "unmapped because the narrative nodes it reads belong to the alpha pack.");
+}
 if (questTurnInOptions.Enabled)
 {
     app.Logger.LogWarning(
