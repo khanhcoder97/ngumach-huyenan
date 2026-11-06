@@ -2272,8 +2272,81 @@ def alpha_p00_profile():
         f"({npc_entity_id}: x {npc_x_before} -> {npc_x_after}); the domain reports the "
         f"walk but the audience projection would still be serving the anchor")
 
+    # Work order 31 Q4: losing the escorted NPC over HTTP. The audience radius is
+    # the server's own (40 WU enter / 48 WU leave), so the only way to show that a
+    # client which walks away really stops being served the escort is to walk away
+    # and read. The walk goes north, because every mob group on this map stands on
+    # y=0 and a y-walk therefore leaves the escort without crossing anything.
+    # Whether that line is open is measured here rather than assumed: an unshipped
+    # blocker shows up as a refused step named in the failure message. (A probe on
+    # the no-gate boot measured y=0 to y=+60 at x=120 and the road from spawn to
+    # x=120 at y=0 as fully accepted, and the southern limit there is the map's own
+    # YMin clamp at y=-12 rather than a wall.)
+    aoi_failures = []
+    _, npc_x_before_aoi = escorted_npc_x()
+    sequence, _ = alpha_ensure_alive(session, character, sequence, "P00-04 AOI leg")
+    # Everything below is keyed off the NPC's reported position, not the actor's: a
+    # death between here and the walk returns the actor to the approved anchor at
+    # (18,0), which is 67 WU from the escort, and a leg written against the actor's
+    # coordinates would then "walk 60 WU away" from somewhere it was never beside.
+    # Standing next to the NPC first makes both distances mean what they say, and
+    # costs no steps when the actor is already there.
+    if npc_x_before_aoi is not None:
+        sequence, _, _ = alpha_approach(
+            session, character, sequence, npc_x_before_aoi, 0.0,
+            within=2.0, failures=aoi_failures)
+    sequence, aoi_x, aoi_y = alpha_approach(
+        session, character, sequence, npc_x_before_aoi or 82.0, 60.0,
+        within=1.0, failures=aoi_failures)
+    smoke_p1.check(
+        not aoi_failures,
+        f"the walk that leaves the escort 60 WU north had failing moves: "
+        f"{aoi_failures}")
+    _, _, far_entities, _ = v2_snapshot(session)
+    far_rows = {entity_id: entry.get("x") for entity_id, entry in far_entities.items()
+                if entry.get("kind") == "NPC" and "LYAN" in entity_id}
+    smoke_p1.check(
+        not far_rows,
+        f"the escorted NPC was still in the audience 60 WU away: {far_rows} "
+        f"(actor at {aoi_x},{aoi_y}, NPC left at x={npc_x_before_aoi})")
+
+    # ...and it comes back. The NPC froze while nobody could see it — the audience
+    # hides the very row that would report the freeze, so the frozen value itself
+    # is pinned in the self-check (`alpha.escort_audience_row_leaves_and_the_npc_
+    # freezes_with_it`), where the domain is readable. What HTTP can prove is that
+    # the row re-enters, and that it re-enters as an escorted position on the road
+    # rather than as the canonical anchor.
+    # ...and it comes back. The NPC froze while nobody could see it: the audience is
+    # what hid it, so no HTTP read can report the frozen value. That claim is pinned
+    # in the self-check (`alpha.escort_audience_row_leaves_and_the_npc_freezes_with_
+    # it`), where the domain is readable. What HTTP can prove is that the row
+    # re-enters, and that it re-enters as an escorted position on the road.
+    _, npc_x_moved = escorted_npc_x()
+    sequence, back_x, back_y = alpha_approach(
+        session, character, sequence,
+        npc_x_moved if npc_x_moved is not None else npc_x_before_aoi or 82.0,
+        0.0, within=2.0, failures=aoi_failures)
+    smoke_p1.check(
+        not aoi_failures,
+        f"the walk back to the escort had failing moves: {aoi_failures}")
+    _, npc_x_back = escorted_npc_x()
+    smoke_p1.check(
+        npc_x_back is not None and 42.0 < npc_x_back <= 120.0,
+        f"the escorted NPC did not return to the audience after walking back to "
+        f"{back_x},{back_y} (left at x={npc_x_before_aoi}, returned x={npc_x_back}); 42 "
+        f"is the canonical anchor, so a row reading 42 here would be the projection "
+        f"serving the world record instead of this owner's escort, and anything past "
+        f"120 is a position the sourced waypoint path never reaches")
+    # Printed, never asserted: the three coordinates are the whole story of this leg
+    # for whoever has to read it next, and the margin between the distance walked and
+    # the 48-WU leave radius is the number that says whether the leg is testing the
+    # boundary or just clearing it comfortably.
+    print(f"P00-04 AOI: row left at x={npc_x_before_aoi}, absent at "
+          f"{aoi_x},{aoi_y}, returned x={npc_x_back}")
+
     _, self_state, _, _ = v2_snapshot(session)
     walked_b, x_after_b = accompany_until(122.0, self_state.get("x", 82.0))
+
     # Wave B is the second checkpoint: x=82 to x=122 is 40 WU at the same sourced 3
     # wu/s = 267 ticks, and the leg allows 1500 ticks.
     wave_b_ticks = {}
