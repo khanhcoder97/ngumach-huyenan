@@ -616,6 +616,41 @@ def check_death_return_response(example, label, errors):
             )
 
 
+def check_talk_request(example, label, errors):
+    # DEC-TUTORIAL-TRANSPORT-20261106 approves a payload that names the speaker and the
+    # narrative node and nothing else. The schema's additionalProperties already refuses
+    # more; this rule keeps the *semantics* named, so a future edit that "just adds
+    # questId" is reported as the contract break it is rather than accepted silently.
+    for forbidden in ("questId", "objectiveId", "mapId", "xWu", "yWu", "flag", "reason"):
+        if forbidden in example:
+            errors.append(
+                f"{label}: '{forbidden}' is not the client's to choose; TALK takes npcId "
+                "and nodeId only"
+            )
+
+
+def check_talk_response(example, label, errors):
+    result = example.get("result")
+    if not isinstance(result, dict):
+        return
+    if result.get("credited") is True and result.get("eventId") is None:
+        errors.append(
+            f"{label}.result: a credit always mints a deterministic eventId over "
+            "character, quest attempt, objective and node"
+        )
+    if result.get("credited") is False and result.get("objectiveId") is not None:
+        errors.append(
+            f"{label}.result.objectiveId: nothing was credited, so no objective may be "
+            "named"
+        )
+    for grant in ("xp", "currency", "rewards", "unlocks", "chapterUnlock", "destination"):
+        if grant in result:
+            errors.append(
+                f"{label}.result.{grant}: TALK grants no XP, no turn-in, no chapter "
+                "unlock and no map movement (DEC-TUTORIAL-TRANSPORT-20261106)"
+            )
+
+
 def check_example_semantics(name, example, map_config, errors):
     label = f"{name}{EXAMPLE_SUFFIX}"
     check_map_bounds(example, map_config, label, errors)
@@ -647,6 +682,10 @@ def check_example_semantics(name, example, map_config, errors):
         check_death_return_request(example, label, errors)
     elif name == "DeathReturnResponse":
         check_death_return_response(example, label, errors)
+    elif name == "TalkRequest":
+        check_talk_request(example, label, errors)
+    elif name == "TalkResponse":
+        check_talk_response(example, label, errors)
 
 
 def write_report(

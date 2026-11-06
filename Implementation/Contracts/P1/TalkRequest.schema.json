@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/contracts/p1/TalkRequest.schema.json",
+  "title": "P1 quest talk request payload",
+  "description": "DEC-TUTORIAL-TRANSPORT-20261106 approves POST /p1/quests/talk as an additive message, mapped only while P1:AlphaProfile and P1:QuestTalk are both on. The payload names the NPC and the narrative node and nothing else: the server never picks a first node on the client's behalf, and it derives the quest, the attempt, the objective and the speaker from its own state, so a request that names a questId, coordinates, a map or a flag is invalid_payload.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "npcId",
+    "nodeId"
+  ],
+  "properties": {
+    "npcId": {
+      "type": "string",
+      "pattern": "^NPC_[A-Z0-9_]+$",
+      "description": "The speaker the actor is standing in front of. The server checks it against the node's own SpeakerNpcId; a mismatch is not a credit."
+    },
+    "nodeId": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]{2,63}$",
+      "description": "An id from the narrative catalog pinned to the same content version. Unknown ids are refused before any quest state is touched."
+    }
+  }
+}

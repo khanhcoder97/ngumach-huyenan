@@ -38,7 +38,12 @@ EXPECTED = {
     "response_envelope": 4,
     "event_fields": 7,
     "canonical_errors": 13,
-    "wire_schemas": 31,
+    # 31 -> 33 on 2026-11-06 for TalkRequest and TalkResponse, approved by
+    # DEC-TUTORIAL-TRANSPORT-20261106 (work order 31 Q2). Deliberate, as the header says:
+    # the contract doc lists 6 request envelope fields and 7 event fields, and neither new
+    # message appears there yet, so the divergence this tool prints for "shipped but not
+    # listed in the doc" is the honest state until the doc is updated by its owner.
+    "wire_schemas": 33,
 }
 
 ENVELOPE_BLOCK = re.compile(r"## 1\..*?\n```json\n(.*?)```", re.DOTALL)
