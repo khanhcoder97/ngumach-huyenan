@@ -247,6 +247,71 @@ namespace NguMach.Client.Core.Tests
                 Assert.True(alpha.Availability.CanCall("inventory-v2"));
             }
         }
+
+        [Fact]
+        public void TalkPortalMapViewed_ProductionOff_Disabled()
+        {
+            var cap = ClientCapability.FromProfile(DeploymentProfile.ProductionOff());
+            var availability = ServiceAvailabilityPolicy.Evaluate(cap);
+
+            Assert.Equal(ServiceAvailabilityState.Disabled, availability.Get("quest-talk").State);
+            Assert.Equal(ServiceAvailabilityState.Disabled, availability.Get("portal").State);
+            Assert.Equal(ServiceAvailabilityState.Disabled, availability.Get("map-viewed").State);
+            Assert.False(availability.CanCall("quest-talk"));
+            Assert.False(availability.CanCall("portal"));
+            Assert.False(availability.CanCall("map-viewed"));
+        }
+
+        [Fact]
+        public void TalkPortalMapViewed_PrivateAlpha_AllGatesEnabled()
+        {
+            var cap = ClientCapability.FromProfile(
+                DeploymentProfile.PrivateAlpha(false, false, false, true, true, true));
+            var availability = ServiceAvailabilityPolicy.Evaluate(cap);
+
+            Assert.True(availability.CanCall("quest-talk"));
+            Assert.True(availability.CanCall("portal"));
+            Assert.True(availability.CanCall("map-viewed"));
+            Assert.Equal(ServiceAvailabilityState.Available, availability.Get("quest-talk").State);
+            Assert.Equal(ServiceAvailabilityState.Available, availability.Get("portal").State);
+            Assert.Equal(ServiceAvailabilityState.Available, availability.Get("map-viewed").State);
+        }
+
+        [Fact]
+        public void TalkPortalMapViewed_MissingRoute_DisablesService()
+        {
+            var cap = ClientCapability.FromProfile(
+                DeploymentProfile.PrivateAlpha(false, false, false, true, true, true));
+            cap.ServerEnabledRoutes.Remove("/p1/quests/talk");
+
+            var availability = ServiceAvailabilityPolicy.Evaluate(cap);
+
+            Assert.Equal(ServiceAvailabilityState.Disabled, availability.Get("quest-talk").State);
+            Assert.Equal("route_not_advertised", availability.Get("quest-talk").ReasonCode);
+            // Other gated services unaffected
+            Assert.Equal(ServiceAvailabilityState.Available, availability.Get("portal").State);
+        }
+
+        [Fact]
+        public void TalkPortalMapViewed_ClientCapabilityUsabilityChecks()
+        {
+            var off = ClientCapability.FromProfile(DeploymentProfile.ProductionOff());
+            Assert.False(off.IsTalkUsable);
+            Assert.False(off.IsPortalUsable);
+            Assert.False(off.IsMapViewedUsable);
+            Assert.False(CapabilityHandshake.IsTalkUsable(off));
+            Assert.False(CapabilityHandshake.IsPortalUsable(off));
+            Assert.False(CapabilityHandshake.IsMapViewedUsable(off));
+
+            var on = ClientCapability.FromProfile(
+                DeploymentProfile.PrivateAlpha(false, false, false, true, true, true));
+            Assert.True(on.IsTalkUsable);
+            Assert.True(on.IsPortalUsable);
+            Assert.True(on.IsMapViewedUsable);
+            Assert.True(CapabilityHandshake.IsTalkUsable(on));
+            Assert.True(CapabilityHandshake.IsPortalUsable(on));
+            Assert.True(CapabilityHandshake.IsMapViewedUsable(on));
+        }
     }
 
     public class FileProviderTests
