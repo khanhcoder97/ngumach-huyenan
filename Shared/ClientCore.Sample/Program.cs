@@ -47,29 +47,48 @@ namespace ClientCoreSample
 
             using (session)
             {
-                var vfx = new EncounterVfxBinder();
+                var vfx = new EncounterVfxBinder { ReducedMotion = true };
                 session.EncounterUpdated += update =>
                 {
-                    if (update.IsCleared || update.IsNewLife || update.IsNewEncounter) vfx.Reset();
+                    if (update.IsCleared || update.IsNewLife || update.IsNewEncounter)
+                        vfx.ClearForLifecycle(EncounterVfxLifecycleChange.EncounterEnded);
                     if (update.IsCleared)
                     {
                         Console.WriteLine("encounter cleared");
                     }
                     else if (update.IsNewCast)
                     {
+                        var snapshot = session.Encounter.Snapshot;
+                        if (snapshot != null && vfx.ExpirePending(snapshot.ServerTick))
+                            Console.WriteLine("vfx late impact dropped before start");
+
                         EncounterVfxPayload payload;
-                        if (vfx.TryBind(update, session.Encounter.Snapshot, out payload))
+                        if (snapshot != null && vfx.TryBind(update, snapshot, out payload))
                         {
                             // Start the engine VFX here; commit only after it started.
-                            Console.WriteLine("vfx bind: cast=" + payload.CastId +
-                                              " shape=" + payload.Shape.Kind +
-                                              " ticks=" + payload.TicksRemaining +
-                                              " endsAt=" + payload.StateEndsAtTick);
-                            session.Encounter.CommitCast();
-                            vfx.Commit();
+                            // A deadline that passed before start drops the payload.
+                            if (vfx.ExpirePending(snapshot.ServerTick))
+                            {
+                                Console.WriteLine("vfx late impact dropped");
+                            }
+                            else
+                            {
+                                Console.WriteLine("vfx bind: cast=" + payload.CastId +
+                                                  " shape=" + payload.Shape.Kind +
+                                                  " ticks=" + payload.TicksRemaining +
+                                                  " endsAt=" + payload.StateEndsAtTick +
+                                                  " reducedMotion=" + payload.ReducedMotion);
+                                session.Encounter.CommitCast();
+                                vfx.Commit();
+                            }
                         }
                     }
                 };
+
+                var availability = ServiceAvailabilityPolicy.Evaluate(cap);
+                Console.WriteLine("shop service: " + availability.Get("shop").State + " / " +
+                                  availability.Get("shop").ReasonCode);
+                Console.WriteLine("unsupported services: " + availability.UnsupportedServiceIds.Count);
 
                 var res = await session.ConnectAsync();
                 Console.WriteLine("connect: " + res.Success + " session=" + session.Client.SessionId);

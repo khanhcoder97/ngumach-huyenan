@@ -47,21 +47,31 @@ namespace NguMach.Client.Core.Handshake
         public IReadOnlyDictionary<string, ServiceAvailabilityEntry> Services { get; }
         public IReadOnlyList<string> AvailableServiceIds { get; }
         public IReadOnlyList<string> DisabledServiceIds { get; }
+        public IReadOnlyList<string> UnsupportedServiceIds { get; }
+        public IReadOnlyList<string> UnknownServiceIds { get; }
 
         internal ServiceAvailability(IReadOnlyDictionary<string, ServiceAvailabilityEntry> services)
         {
             Services = services;
             var available = new List<string>();
             var disabled = new List<string>();
+            var unsupported = new List<string>();
+            var unknown = new List<string>();
             foreach (var pair in services)
             {
                 if (pair.Value.IsAvailable) available.Add(pair.Key);
                 else if (pair.Value.State == ServiceAvailabilityState.Disabled) disabled.Add(pair.Key);
+                else if (pair.Value.State == ServiceAvailabilityState.Unsupported) unsupported.Add(pair.Key);
+                else unknown.Add(pair.Key);
             }
             available.Sort(StringComparer.Ordinal);
             disabled.Sort(StringComparer.Ordinal);
+            unsupported.Sort(StringComparer.Ordinal);
+            unknown.Sort(StringComparer.Ordinal);
             AvailableServiceIds = new ReadOnlyCollection<string>(available);
             DisabledServiceIds = new ReadOnlyCollection<string>(disabled);
+            UnsupportedServiceIds = new ReadOnlyCollection<string>(unsupported);
+            UnknownServiceIds = new ReadOnlyCollection<string>(unknown);
         }
 
         public ServiceAvailabilityEntry Get(string serviceId)
@@ -91,6 +101,9 @@ namespace NguMach.Client.Core.Handshake
             public string DisplayVi;
             public string Gate;
             public string[] Routes;
+            // O5: services whose contract/route the portable client has not been
+            // given yet. They are not invented here and always report Unsupported.
+            public bool ContractAvailable = true;
         }
 
         private static readonly Definition[] Definitions =
@@ -133,7 +146,25 @@ namespace NguMach.Client.Core.Handshake
             {
                 Id = "map-viewed", DisplayVi = "Đánh dấu bản đồ", Gate = GateMapViewed,
                 Routes = new[] { "/p1/quests/map-viewed" }
-            }
+            },
+
+            // O5 — MMORPG services with no approved portable route yet. They are
+            // listed so the UI can say "unsupported" explicitly, never so a fake
+            // backend or a 404-to-available conversion can appear.
+            new Definition { Id = "shop", DisplayVi = "Cửa hàng", ContractAvailable = false },
+            new Definition { Id = "storage", DisplayVi = "Kho", ContractAvailable = false },
+            new Definition { Id = "forge", DisplayVi = "Rèn", ContractAvailable = false },
+            new Definition { Id = "craft", DisplayVi = "Chế tạo", ContractAvailable = false },
+            new Definition { Id = "gather", DisplayVi = "Thu thập", ContractAvailable = false },
+            new Definition { Id = "party", DisplayVi = "Tổ đội", ContractAvailable = false },
+            new Definition { Id = "guild", DisplayVi = "Bang hội", ContractAvailable = false },
+            new Definition { Id = "social", DisplayVi = "Xã hội", ContractAvailable = false },
+            new Definition { Id = "mail", DisplayVi = "Thư", ContractAvailable = false },
+            new Definition { Id = "trade", DisplayVi = "Giao dịch", ContractAvailable = false },
+            new Definition { Id = "codex", DisplayVi = "Codex", ContractAvailable = false },
+            new Definition { Id = "cosmetic", DisplayVi = "Trang trí", ContractAvailable = false },
+            new Definition { Id = "buff", DisplayVi = "Hiệu ứng", ContractAvailable = false },
+            new Definition { Id = "activity", DisplayVi = "Hoạt động", ContractAvailable = false }
         };
 
         public static ServiceAvailability Evaluate(ClientCapability capability)
@@ -159,6 +190,14 @@ namespace NguMach.Client.Core.Handshake
 
         private static ServiceAvailabilityEntry Evaluate(ClientCapability capability, Definition definition)
         {
+            if (!definition.ContractAvailable)
+            {
+                return new ServiceAvailabilityEntry(definition.Id, definition.DisplayVi,
+                    ServiceAvailabilityState.Unsupported, definition.Gate,
+                    "route_not_implemented",
+                    "Client chưa có hợp đồng route cho dịch vụ này; chưa thể gọi máy chủ.");
+            }
+
             for (int i = 0; i < definition.Routes.Length; i++)
             {
                 if (!CapabilityHandshake.IsRouteSupported(capability, definition.Routes[i]))

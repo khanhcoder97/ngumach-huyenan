@@ -1184,6 +1184,9 @@ namespace NguMach.Client.Core.Tests
             Assert.True(P1Wire.Hex32(body.requestId));
             Assert.True(P1Wire.Hex32(body.idempotencyKey));
             Assert.False(client.HasPendingMutation);
+            Assert.Equal("P00-01", client.LastTalk.questId);
+            Assert.Equal("STEP_P00_01_TALK", client.LastTalk.stepId);
+            Assert.True(client.LastTalk.applied);
         }
 
         [Fact]
@@ -1284,6 +1287,8 @@ namespace NguMach.Client.Core.Tests
             Assert.True(P1Wire.Hex32(body.requestId));
             Assert.True(P1Wire.Hex32(body.idempotencyKey));
             Assert.False(client.HasPendingMutation);
+            Assert.Equal("TP_BM_THANH_LAC", client.LastPortal.portalId);
+            Assert.Equal("MAP_THANH_LAC", client.LastPortal.destinationMapId);
         }
 
         [Fact]
@@ -1336,6 +1341,8 @@ namespace NguMach.Client.Core.Tests
             Assert.True(P1Wire.Hex32(body.requestId));
             Assert.True(P1Wire.Hex32(body.idempotencyKey));
             Assert.False(client.HasPendingMutation);
+            Assert.Equal("P00-01", client.LastMapViewed.questId);
+            Assert.True(client.LastMapViewed.acknowledged);
         }
 
         [Fact]

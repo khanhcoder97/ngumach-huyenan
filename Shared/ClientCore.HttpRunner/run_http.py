@@ -19,6 +19,11 @@ import urllib.request
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 DOTNET = os.environ.get("DOTNET", "dotnet")
+# O7: the portable client builds with SDK 8, the Health server with SDK 10.
+# A single DOTNET remains a valid fallback for machines that only have one SDK.
+DOTNET_CLIENT = os.environ.get("DOTNET_CLIENT", DOTNET)
+DOTNET_SERVER = os.environ.get("DOTNET_SERVER", DOTNET)
+RUNNER_TIMEOUT_SECONDS = int(os.environ.get("RUNNER_TIMEOUT_SECONDS", "600"))
 ARTIFACTS = os.path.join(ROOT, "TestResults", "clientcore-http")
 SERVER_LOG = os.path.join(ARTIFACTS, "server.log")
 RUNNER_LOG = os.path.join(ARTIFACTS, "runner.log")
@@ -49,6 +54,12 @@ def free_port():
 def run(cmd, **kwargs):
     print("+ " + " ".join(cmd), flush=True)
     return subprocess.run(cmd, **kwargs)
+
+
+def decode_capture(value):
+    if value is None:
+        return ""
+    return value if isinstance(value, str) else value.decode("utf-8", "replace")
 
 
 def wait_healthy(base_url, process, timeout_seconds=90):
@@ -87,14 +98,17 @@ def main():
     with open(ASSERTIONS_FILE, "w", encoding="utf-8") as f:
         f.write("0\n")
 
-    build = run([DOTNET, "build", HEALTH_CSPROJ, "-c", "Release", "--nologo"], cwd=ROOT)
+    build = run([DOTNET_SERVER, "build", HEALTH_CSPROJ, "-c", "Release", "--nologo"], cwd=ROOT)
     if build.returncode != 0:
         print("ERROR: server build failed", file=sys.stderr)
         return 1
-    rbuild = run([DOTNET, "build", RUNNER_CSPROJ, "-c", "Release", "--nologo"], cwd=ROOT)
+    rbuild = run([DOTNET_CLIENT, "build", RUNNER_CSPROJ, "-c", "Release", "--nologo"], cwd=ROOT)
     if rbuild.returncode != 0:
         print("ERROR: runner build failed", file=sys.stderr)
         return 1
+
+    print("==> client dotnet: " + DOTNET_CLIENT, flush=True)
+    print("==> server dotnet: " + DOTNET_SERVER, flush=True)
 
     port = int(os.environ.get("E2E_PORT") or free_port())
     base_url = "http://127.0.0.1:{}".format(port)
@@ -106,7 +120,7 @@ def main():
     print("==> starting private server at " + base_url, flush=True)
     server_log = open(SERVER_LOG, "w", encoding="utf-8", errors="replace")
     process = subprocess.Popen(
-        [DOTNET, HEALTH_DLL, "--urls", base_url],
+        [DOTNET_SERVER, HEALTH_DLL, "--urls", base_url],
         cwd=ROOT, env=env, stdout=server_log, stderr=subprocess.STDOUT)
     try:
         if not wait_healthy(base_url, process):
@@ -116,9 +130,18 @@ def main():
 
         env["P1_BASE_URL"] = base_url
         print("==> running portable HTTP runner (mandatory)", flush=True)
-        result = subprocess.run(
-            [DOTNET, "run", "--project", RUNNER_CSPROJ, "-c", "Release"],
-            cwd=ROOT, env=env, capture_output=True, text=True)
+        try:
+            result = subprocess.run(
+                [DOTNET_CLIENT, "run", "--project", RUNNER_CSPROJ, "-c", "Release"],
+                cwd=ROOT, env=env, capture_output=True, text=True,
+                timeout=RUNNER_TIMEOUT_SECONDS)
+        except subprocess.TimeoutExpired as timeout:
+            with open(RUNNER_LOG, "w", encoding="utf-8") as log:
+                log.write(decode_capture(timeout.output))
+                log.write(decode_capture(timeout.stderr))
+                log.write("\nERROR: runner exceeded {} seconds\n".format(RUNNER_TIMEOUT_SECONDS))
+            print("ERROR: runner exceeded " + str(RUNNER_TIMEOUT_SECONDS) + " seconds", file=sys.stderr)
+            return 1
         with open(RUNNER_LOG, "w", encoding="utf-8") as log:
             log.write(result.stdout or "")
             log.write(result.stderr or "")

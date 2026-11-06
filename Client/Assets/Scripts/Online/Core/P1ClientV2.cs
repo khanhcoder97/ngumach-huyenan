@@ -13,6 +13,12 @@ namespace NguMach.Client.P1
         public P1DeathReturnResultV1 LastDeathReturn { get; private set; }
         public long? NextReturnAllowedAtTick { get; private set; }
         public P1TurnInResult LastTurnIn { get; private set; }
+        // OPC-16 O4 — last validated receipts for read-model presenters. These are
+        // historical wire results, not current world state: after a talk/portal/
+        // map-viewed the client needs a fresh read before rebuilding authoritative UI.
+        public P1QuestTalkResult LastTalk { get; private set; }
+        public P1WorldPortalResult LastPortal { get; private set; }
+        public P1QuestMapViewedResult LastMapViewed { get; private set; }
         public long EventCursor { get; private set; }
         public int EventResyncCount { get; private set; }
         private readonly Queue<P1EventV2> presentationEvents = new Queue<P1EventV2>();
@@ -22,6 +28,7 @@ namespace NguMach.Client.P1
         {
             WorldV2 = null; InventoryV2 = null; LastDeathReturn = null; NextReturnAllowedAtTick = null;
             LastTurnIn = null; EventCursor = 0; EventResyncCount = 0;
+            LastTalk = null; LastPortal = null; LastMapViewed = null;
             lock (presentationEvents) presentationEvents.Clear();
         }
         private static bool Timestamp(string value)
@@ -399,6 +406,7 @@ namespace NguMach.Client.P1
             if (!Good(reply, r) || r.sessionId != SessionId || r.requestId != pending.CorrelationId ||
                 r.result == null || string.IsNullOrWhiteSpace(r.result.questId)) return Uncertain(reply.CorrelationId);
             pending = null; State = P1ConnectionState.NeedsResync;
+            LastTalk = r.result;
             return P1Result.Ok();
         }
 
@@ -411,6 +419,7 @@ namespace NguMach.Client.P1
             if (!Good(reply, r) || r.sessionId != SessionId || r.requestId != pending.CorrelationId ||
                 r.result == null || string.IsNullOrWhiteSpace(r.result.portalId)) return Uncertain(reply.CorrelationId);
             pending = null; State = P1ConnectionState.NeedsResync;
+            LastPortal = r.result;
             return P1Result.Ok();
         }
 
@@ -423,6 +432,7 @@ namespace NguMach.Client.P1
             if (!Good(reply, r) || r.sessionId != SessionId || r.requestId != pending.CorrelationId ||
                 r.result == null || string.IsNullOrWhiteSpace(r.result.questId)) return Uncertain(reply.CorrelationId);
             pending = null; State = P1ConnectionState.NeedsResync;
+            LastMapViewed = r.result;
             return P1Result.Ok();
         }
 
