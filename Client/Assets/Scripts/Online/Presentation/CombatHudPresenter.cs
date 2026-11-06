@@ -143,6 +143,12 @@ namespace NguMach.Client.Presentation
 
     public sealed class CombatHudPresenter
     {
+        // Cooldown key canonicalization: the server reports basic-attack cooldown
+        // under action key "BASIC_ATTACK" (CombatV2Actions.BasicAttack) while the
+        // v2 wire carries skillId=null for a basic swing. The client therefore
+        // stores/reads the basic-attack deadline under "BASIC_ATTACK" (not skillId)
+        // in P1ClientV2.ApplyCombatV2, and this presenter reads the same key.
+        // Skills use their own skillId as the cooldown key on both sides.
         public const string BasicAttackId = "BASIC_ATTACK";
         public const string SkillOne = "SK-MK-01";
         public const string SkillTwo = "SK-MK-02";

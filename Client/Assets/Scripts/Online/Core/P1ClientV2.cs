@@ -149,6 +149,9 @@ namespace NguMach.Client.P1
                 !Timestamp(result.cooldownEndUtc) || result.acceptedInputSequence != sent.inputSequence || result.events == null || result.events.Length == 0 ||
                 !ValidEvents(result.events, -1)) return Uncertain(reply.CorrelationId);
             foreach (var e in result.events) if (e.castId != result.castId || e.actorId != World.self.characterId) return Uncertain(reply.CorrelationId);
+            // Basic attack uses the canonical action key "BASIC_ATTACK" (matches
+            // server CombatV2Actions.BasicAttack); the wire carries skillId=null
+            // for a basic swing so skillId must not be used as the cooldown key.
             cooldowns[sent.actionKind == "BASIC_ATTACK" ? "BASIC_ATTACK" : sent.skillId] = result.cooldownEndUtc;
             sequence = Math.Max(sequence, result.acceptedInputSequence);
             foreach (var e in result.events) Present(e);
