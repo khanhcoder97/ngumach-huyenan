@@ -2486,6 +2486,47 @@ def alpha_p00_profile():
           f"appliedFlag={talk_credit_result.get('appliedFlag')} "
           f"eventId={(talk_credit_result.get('eventId') or '')[:16]}")
 
+    # Work order 31 Q3 over the same wire: the portal route is mapped under this gate
+    # set, and the actor is nowhere near (348,0), so the answer must be the distance
+    # guard rather than a lock or a made-up status. The chapter grant is the thing no
+    # HTTP run can reach yet (it needs the P00-05 turn-in, which needs the
+    # NPC_CLASS_TRIAL narrative row), so `portal_locked` stays pinned in the
+    # self-check - this leg proves the route exists and refuses on position, which is
+    # the half that is reachable today.
+    portal_state_before = v2_snapshot(session)[1]
+    portal_before_x = portal_state_before.get("x")
+    portal_before_y = portal_state_before.get("y")
+    portal_status, _, portal_body = smoke_p1.call(
+        "POST", "/p1/world/portal",
+        {"schemaVersion": 1, "requestId": alpha_key(0xd1),
+         "idempotencyKey": alpha_key(0xd2),
+         "sentAtUtc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+         "characterId": character,
+         "payload": {"portalId": "TP_BM_THANH_LAC"}},
+        {"X-Session-ID": session})
+    portal_error = (portal_body.get("error") or {})
+    portal_self = v2_snapshot(session)[1]
+    portal_gap = ((portal_self.get("x", 0.0) - 348.0) ** 2 +
+                  (portal_self.get("y", 0.0)) ** 2) ** 0.5
+    smoke_p1.check(
+        portal_status == 422 and portal_error.get("code") == "out_of_range" and
+        portal_body.get("result") is None,
+        f"portal far from its anchor expected 422 out_of_range with no result, got "
+        f"{portal_status}: {portal_error or (portal_body.get('result') or {})}")
+    # The refusal must be a refusal: nobody is standing in Thanh Lạc because a request
+    # was answered 422. Position is read from the server again rather than trusted from
+    # the error body, so a handler that moved first and refused afterwards would fail
+    # here instead of passing on the status code alone.
+    smoke_p1.check(
+        portal_self.get("x") == portal_before_x and
+        portal_self.get("y") == portal_before_y,
+        f"a refused portal transition moved the actor: "
+        f"({portal_before_x},{portal_before_y}) -> "
+        f"({portal_self.get('x')},{portal_self.get('y')})")
+    print(f"portal: 422 {portal_error.get('code')} naming "
+          f"{portal_error.get('fieldErrors')} from {portal_gap:.1f} WU away from "
+          f"TP_BM_THANH_LAC at (348,0)")
+
     # Registration is physical: the owner has to stand inside the sourced ring
     # (circle (178,0) r 11) before any cast reaches the quest boss.
     sequence, _, _ = alpha_approach(session, character, sequence, 178.0, 0.0, within=3.0)

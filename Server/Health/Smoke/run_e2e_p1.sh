@@ -200,6 +200,7 @@ elif [ "${PROFILE}" = "alpha-p00" ]; then
   P1__Interact__Enabled=true \
   P1__QuestTurnIn__Enabled=true \
   P1__QuestTalk__Enabled=true \
+  P1__Portal__Enabled=true \
   P1__Equipment__Enabled=true \
   P1__CombatV2__Enabled=true \
   P1__CombatDamage__Enabled=true \
