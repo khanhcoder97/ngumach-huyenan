@@ -252,6 +252,13 @@ def default_profile():
         # to the GET /p1/inventory/{sessionId} template and answers 405.
         ("/p1/inventory/equip", "inventory_equip"),
         ("/p1/inventory/unequip", "inventory_unequip"),
+        # The two routes added by work order 31 belong in the same list: the release
+        # configuration keeps them unmapped, and their paths match the quest/world read
+        # templates, so a probe answers 405 rather than 404. This is the invariant
+        # ("unfinished features stay OFF in the release configuration") applied to the
+        # newest switches instead of only to the five that existed when it was written.
+        ("/p1/quests/talk", "quest_talk"),
+        ("/p1/world/portal", "world_portal"),
     ]:
         status, _, body = smoke_p1.call(
             "POST", path,
