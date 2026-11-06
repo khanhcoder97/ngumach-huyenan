@@ -5759,6 +5759,33 @@ public static class ServiceSelfCheck
             }),
             "anchor 0 must fail");
 
+        // Teeth for the boot enforcement added at f0d8cee. Each half alone re-creates the
+        // deadlock the baseline line 207 exists to remove: naming NPC_CLASS_TRIAL is not
+        // enough if the window moves to after completion, and keeping the window is not
+        // enough if the final TALK step points at somebody else.
+        Check(
+            "alpha.rejects_trial_npc_condition_decoupled_from_class_trial",
+            AlphaRejects(alphaDesign with
+            {
+                QuestRules = alphaDesign.QuestRules with
+                {
+                    P00_05_TrialNpcConditionOverride =
+                        "NPC_CLASS_TRIAL visible after P00-05 COMPLETED"
+                }
+            }) && AlphaRejects(alphaDesign with
+            {
+                QuestRules = alphaDesign.QuestRules with
+                {
+                    P00_05_OrderedObjectives = new[]
+                    {
+                        "BOSS_MANG_COT kill committed",
+                        "ALPHA_OBJ_BM_FRAGMENT interact committed",
+                        "NPC_LYAN TALK committed"
+                    }
+                }
+            }),
+            "the window and the final TALK target must both stay as approved");
+
         Check(
             "alpha.rejects_unapproved_status",
             AlphaRejects(alphaDesign with { Status = "DRAFT" }),
