@@ -136,3 +136,40 @@ quest, không phải tuning. Ba lựa chọn, chủ dự án chốt:
 Wire packet (schema/`P1:Dialogue` gate OFF/idempotency) vẫn còn nguyên và vẫn chờ **duyệt**;
 chỉ có điều là dù được duyệt, nó cũng chưa chạy được cho tới khi một trong ba lựa chọn trên
 được chốt.
+
+## Rút lại mục "Bổ sung 20261106" ở trên — chính tôi vừa viết nó cách đây ~20 phút, và nó sai
+
+Kết luận "item 4 bị chặn bởi dữ liệu spawn, không phải wire" là **sai ở tiền đề**. Nguồn
+authoritative mà server *thực sự nạp* đã giải quyết vòng lặp đó rồi, và tôi đã không đọc nó
+trước khi kết luận:
+
+`Implementation/Content/DesignBaselines/ben_mua_alpha_20261103.json:207`
+
+    "trialNpcConditionOverride": "NPC_CLASS_TRIAL visible after boss kill AND fragment,
+     before P00-05 COMPLETED (fix circular dependency)"
+
+kèm `acceptance.P00-05.orderedObjectives` (dòng 209-213): `BOSS_MANG_COT kill committed` →
+`ALPHA_OBJ_BM_FRAGMENT interact committed` → `NPC_CLASS_TRIAL TALK committed`.
+
+Nghĩa là điều tôi tìm ("manifest điều kiện hiện NPC sau khi hoàn tất P00-05") không phải
+một quyết định còn thiếu; quyết định **đã có** trong alpha baseline được duyệt, và manifest
+là tầng chưa được cập nhật theo. Cái còn thiếu thật, đo được:
+
+- Server **không đọc** `trialNpcConditionOverride` cũng không đọc `orderedObjectives` — grep
+  toàn bộ `Server/Health` cho `trialNpcConditionOverride` chỉ khớp binary, không có nguồn
+  nào; field được nạp duy nhất liên quan là `C1_01_TrialRegistrationNpcId`
+  (`AlphaProfile.cs:180`, `:418`, dùng ở `AlphaProfileValidator.cs:249`).
+- Server cũng chưa có cơ chế "NPC chỉ hiện theo quest state" cho `NPC_CLASS_TRIAL`, nên
+  không có gì để áp điều kiện đó, kể cả khi nó được đọc.
+- Và vẫn chưa có route TALK.
+
+Nên phạm vi quyết định thực tế cho item 4, xếp lại:
+
+1. Chốt cách hiện thực hoá `trialNpcConditionOverride` đã được duyệt: thêm điều kiện
+   visibility theo quest state cho `NPC_CLASS_TRIAL` (cần wire/read-model mới để client thấy),
+   hay chỉ là dẫn chứng để sửa manifest.
+2. Wire shape của TALK (packet cũ vẫn còn nguyên giá trị).
+
+Bài học tôi ghi lại cho chính mình: tôi đã công bố một blocker dựa trên việc đọc manifest và
+atlas, trong khi file mà server nạp — và tôi đã viết loader cho nó — chứa lời giải ngay trong
+dòng 207. Kiểm tra nguồn mà code thực đọc, không phải nguồn gần nhất.
