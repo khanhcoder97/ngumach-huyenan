@@ -651,6 +651,77 @@ def check_talk_response(example, label, errors):
             )
 
 
+def check_portal_request(example, label, errors):
+    payload = example.get("payload")
+    if not isinstance(payload, dict):
+        return
+    # DEC-TUTORIAL-TRANSPORT-20261106: the route accepts portalId and nothing else.
+    # A request that can name a map, a coordinate, a floor, a reason or a destination
+    # is an arbitrary teleport wearing a portal id, which is exactly what the decision
+    # closes ("server-owned destination, no arbitrary teleport").
+    for forbidden in (
+        "mapId", "xWu", "yWu", "floorId", "reason", "destination", "targetMapId",
+        "questId"
+    ):
+        if forbidden in payload:
+            errors.append(
+                f"{label}.payload.{forbidden}: the client may not name a destination; "
+                "portalId is the only field the route accepts "
+                "(DEC-TUTORIAL-TRANSPORT-20261106)"
+            )
+    if payload.get("portalId") == "TP_BM_THANG_LONG":
+        errors.append(
+            f"{label}.payload.portalId: TP_BM_THANG_LONG is an atlas selector, not an "
+            "alpha route; Thang Long stays behind C1-06"
+        )
+
+
+def check_portal_response(example, label, errors):
+    result = example.get("result")
+    if not isinstance(result, dict):
+        return
+    # The registry pair, copied from the atlas lines the portal packet cites. Two
+    # rules come out of this: a portal must arrive somewhere other than where it
+    # stands, and the two directions must keep their own numbers. The arrival point in
+    # Thanh Lac is x=8 while the return portal stands at x=20; a receipt that merged
+    # them (either 8 used for both, or 20 arriving at 20) is the failure the decision
+    # calls out by name, and it cannot be caught by a shape check.
+    pair = {
+        "TP_BM_THANH_LAC": ("MAP_BEN_MUA", "MAP_THANH_LAC", 8.0, 0.0),
+        "TP_TL_BEN_MUA": ("MAP_THANH_LAC", "MAP_BEN_MUA", 348.0, 0.0),
+    }
+    portal_id = result.get("portalId")
+    if portal_id not in pair:
+        errors.append(
+            f"{label}.result.portalId: {portal_id!r} is not one of the two approved "
+            "alpha routes"
+        )
+        return
+    _source, destination, dest_x, dest_y = pair[portal_id]
+    if result.get("mapId") != destination:
+        errors.append(
+            f"{label}.result.mapId: {portal_id} arrives at {destination}, not "
+            f"{result.get('mapId')!r}"
+        )
+    if float(result.get("xWu", 0.0)) != dest_x or float(result.get("yWu", 0.0)) != dest_y:
+        errors.append(
+            f"{label}.result.xWu/yWu: {portal_id} arrives at ({dest_x},{dest_y}); "
+            f"({result.get('xWu')},{result.get('yWu')}) merges the Thanh Lac arrival 8 "
+            "with the return portal 20, which the decision keeps apart"
+        )
+    if not str(result.get("eventId", "")).startswith("P1PORTAL_"):
+        errors.append(
+            f"{label}.result.eventId: a transition receipt always carries the "
+            "deterministic portal event id"
+        )
+    for grant in ("xp", "currency", "rewards", "unlocks", "chapterUnlock"):
+        if grant in result:
+            errors.append(
+                f"{label}.result.{grant}: a portal moves a character and clears combat "
+                f"state; it grants nothing else ({grant})"
+            )
+
+
 def check_example_semantics(name, example, map_config, errors):
     label = f"{name}{EXAMPLE_SUFFIX}"
     check_map_bounds(example, map_config, label, errors)
@@ -686,6 +757,10 @@ def check_example_semantics(name, example, map_config, errors):
         check_talk_request(example, label, errors)
     elif name == "TalkResponse":
         check_talk_response(example, label, errors)
+    elif name == "PortalRequest":
+        check_portal_request(example, label, errors)
+    elif name == "PortalResponse":
+        check_portal_response(example, label, errors)
 
 
 def write_report(

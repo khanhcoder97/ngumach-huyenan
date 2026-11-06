@@ -43,7 +43,7 @@ EXPECTED = {
     # the contract doc lists 6 request envelope fields and 7 event fields, and neither new
     # message appears there yet, so the divergence this tool prints for "shipped but not
     # listed in the doc" is the honest state until the doc is updated by its owner.
-    "wire_schemas": 33,
+    "wire_schemas": 35,
 }
 
 ENVELOPE_BLOCK = re.compile(r"## 1\..*?\n```json\n(.*?)```", re.DOTALL)

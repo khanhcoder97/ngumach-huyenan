@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/contracts/p1/PortalRequest.schema.json",
+  "title": "P1 world portal request",
+  "description": "DEC-TUTORIAL-TRANSPORT-20261106 approves POST /p1/world/portal with exactly one client field: portalId. The destination is whatever the server registry says it is, so mapId, x, y, floor, reason and target coordinates have no place here - a client that could name them could teleport anywhere. additionalProperties is false for the same reason the quest verb does not accept a client-chosen questId.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "requestId",
+    "idempotencyKey",
+    "sentAtUtc",
+    "characterId",
+    "payload"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "requestId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "idempotencyKey": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "sentAtUtc": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "characterId": {
+      "type": "string",
+      "pattern": "^CHR_[A-Z0-9_]+$"
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["portalId"],
+      "properties": {
+        "portalId": {
+          "type": "string",
+          "enum": [
+            "TP_BM_THANH_LAC",
+            "TP_TL_BEN_MUA"
+          ],
+          "description": "Server-published route ids only, taken from the alpha registry built from docs/production/Map_Production_Atlas_vi.md. TP_BM_THANG_LONG is deliberately absent: Thang Long stays behind C1-06 and is not opened by the alpha chapter grant."
+        }
+      }
+    }
+  }
+}
