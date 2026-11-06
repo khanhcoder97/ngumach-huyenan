@@ -113,6 +113,46 @@ public sealed class TalkIntent
     public string? NodeId { get; init; }
 }
 
+// DEC-TUTORIAL-TRANSPORT-20261106: a portal request names one published route and
+// nothing else. There is no mapId, no coordinate, no floor and no reason field,
+// because a client that could name any of those would hold an arbitrary teleport and
+// call it a door.
+public sealed class PortalEnvelope
+{
+    public int? SchemaVersion { get; init; }
+    public string? RequestId { get; init; }
+    public string? IdempotencyKey { get; init; }
+    public string? SentAtUtc { get; init; }
+    public string? CharacterId { get; init; }
+    public PortalIntent? Payload { get; init; }
+}
+
+public sealed class PortalIntent
+{
+    public string? PortalId { get; init; }
+}
+
+public sealed class P1PortalResponse
+{
+    public int SchemaVersion { get; init; } = 1;
+    public required string RequestId { get; init; }
+
+    // Same rule the talk contract already states: a rejection that happens before the
+    // session resolves omits sessionId rather than answering with a blank string that
+    // cannot match ^[0-9a-f]{32}$. I shipped that defect once in TalkError and the
+    // gate-one leg found it; the portal DTO starts on the right side of it.
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? SessionId { get; init; }
+
+    public required string ServerTimeUtc { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Server.Health.Gameplay.Alpha.PortalResult? Result { get; init; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public P1Error? Error { get; init; }
+}
+
 public sealed class P1TalkResponse
 {
     public int SchemaVersion { get; init; } = 1;

@@ -280,6 +280,43 @@ internal static class P1Results
             P1Json.Options,
             statusCode: statusCode);
 
+    public static IResult PortalSuccess(
+        string requestId,
+        string sessionId,
+        ServerClock clock,
+        Server.Health.Gameplay.Alpha.PortalResult result) =>
+        Results.Json(new P1PortalResponse
+        {
+            RequestId = requestId,
+            SessionId = sessionId,
+            ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+            Result = result
+        });
+
+    public static IResult PortalError(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        string? sessionId,
+        int statusCode,
+        string code,
+        IReadOnlyList<string>? fieldErrors,
+        bool retryable) =>
+        Results.Json(new P1PortalResponse
+        {
+            RequestId = requestId,
+            SessionId = string.IsNullOrEmpty(sessionId) ? null : sessionId,
+            ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+            Error = new P1Error
+            {
+                Code = code,
+                MessageKey = $"P1.ERROR.{code.ToUpperInvariant()}",
+                Retryable = retryable,
+                FieldErrors = fieldErrors ?? Array.Empty<string>(),
+                CorrelationId = context.TraceIdentifier
+            }
+        }, statusCode: statusCode);
+
     public static IResult TalkSuccess(
         string requestId,
         string sessionId,

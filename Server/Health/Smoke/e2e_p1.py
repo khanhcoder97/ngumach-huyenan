@@ -323,6 +323,9 @@ GATED_ROUTES = (
     # A POST under /p1/quests/ matches the GET /p1/quests/{sessionId} read template,
     # so an unmapped talk handler answers 405 exactly like accept and turn-in do.
     ("POST", "/p1/quests/talk", 405),
+    # Same template story as talk: /p1/world/portal still matches the GET
+    # /p1/world/{sessionId} read, so an unmapped handler answers 405, not 404.
+    ("POST", "/p1/world/portal", 405),
     ("POST", "/p1/inventory/equip", 405),
     ("POST", "/p1/inventory/unequip", 405),
     ("POST", "/p1/v2/combat", 404),
@@ -366,6 +369,8 @@ GATE_ROUTES = {
     # /p1/quests/talk only while P1:AlphaProfile AND P1:QuestTalk are both on, so this
     # leg must map nothing on its own and the route must appear in the pairing leg.
     "QuestTalk": {},
+    # Portal is the third pairing case: the switch alone maps nothing.
+    "Portal": {},
     # Neither damage gate maps a route of its own: they only change what an already
     # mapped route resolves. Keeping them as empty legs is what stops a future edit
     # from quietly attaching a route to them.
@@ -385,6 +390,7 @@ GATE_ROUTES = {
 LEG_EXTRA_ROUTES = {
     "DeathReturnAlpha": {("POST", "/p1/actor/death-return"): 400},
     "QuestTalkAlpha": {("POST", "/p1/quests/talk"): 400},
+    "PortalAlpha": {("POST", "/p1/world/portal"): 400},
 }
 
 # Leg name -> the gates that leg turns on. Every gated route not owned by those gates
@@ -404,6 +410,8 @@ LEGS = {
     "DeathReturnAlpha": ("DeathReturn", "AlphaProfile"),
     "QuestTalkAlpha": ("QuestTalk", "AlphaProfile"),
     "QuestTalk": ("QuestTalk",),
+    "Portal": ("Portal",),
+    "PortalAlpha": ("Portal", "AlphaProfile"),
     "AlphaLootAlpha": ("AlphaLoot", "AlphaProfile"),
 }
 

@@ -161,6 +161,8 @@ jobs:
           - DeathReturnAlpha
           - QuestTalk
           - QuestTalkAlpha
+          - Portal
+          - PortalAlpha
           - AlphaLootAlpha
           - DeathReturnFixture
     name: e2e-gate-one (${{ matrix.gate }})

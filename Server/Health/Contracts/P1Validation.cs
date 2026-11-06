@@ -397,6 +397,40 @@ public static class P1Validation
     public static bool IsNodeId(string? value) =>
         value is not null && NodeIdPattern.IsMatch(value);
 
+    // The two alpha route ids are the enum in PortalRequest.schema.json, and this is
+    // the same list kept in one place on the server side: the registry is the source
+    // of truth and an id it does not publish is refused as payload.portalId before any
+    // state is read. TP_BM_THANG_LONG is absent on purpose.
+    public static bool IsPortalId(string? value) =>
+        Server.Health.Gameplay.Alpha.AlphaPortalRegistry.Find(value ?? string.Empty) is not null;
+
+    public static List<string> ValidatePortalEnvelope(PortalEnvelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        ValidateEnvelopeHeader(
+            errors, envelope.SchemaVersion, envelope.RequestId, envelope.IdempotencyKey,
+            envelope.SentAtUtc, envelope.CharacterId);
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+            return errors;
+        }
+
+        if (!IsPortalId(envelope.Payload.PortalId))
+        {
+            errors.Add("payload.portalId");
+        }
+
+        return errors;
+    }
+
     public static List<string> ValidateTalkEnvelope(TalkEnvelope? envelope)
     {
         var errors = new List<string>();

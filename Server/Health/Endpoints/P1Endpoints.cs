@@ -111,8 +111,115 @@ public static class P1Endpoints
             app.MapPost("/p1/quests/talk", TalkAsync);
         }
 
+        // DEC-TUTORIAL-TRANSPORT-20261106 pairs the portal the same way: this gate
+        // alone maps nothing. The route also answers 405 rather than 404 when
+        // unmapped, because /p1/world/portal still matches the GET
+        // /p1/world/{sessionId} read template - the gate-one legs measure exactly
+        // that difference, so "no handler" can never be confused with "handler
+        // refused".
+        var portalGates = app.ServiceProvider
+            .GetRequiredService<IOptions<PortalOptions>>()
+            .Value;
+        if (alphaProfile.Enabled && portalGates.Enabled)
+        {
+            app.MapPost("/p1/world/portal", PortalAsync);
+        }
+
         return app;
     }
+
+    private static async Task<IResult> PortalAsync(
+        HttpContext context,
+        ISessionStore sessions,
+        PortalService portals,
+        ServerClock clock)
+    {
+        var requestId = NewRequestId();
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge || string.IsNullOrWhiteSpace(body) ||
+            !context.Request.HasJsonContentType())
+        {
+            return P1Results.PortalError(
+                context, clock, requestId, sessionId: null,
+                tooLarge ? StatusCodes.Status413PayloadTooLarge
+                         : StatusCodes.Status400BadRequest,
+                P1ErrorCodes.InvalidPayload, ["body"], retryable: false);
+        }
+
+        PortalEnvelope? envelope;
+        try
+        {
+            envelope = JsonSerializer.Deserialize<PortalEnvelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.PortalError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        var fieldErrors = P1Validation.ValidatePortalEnvelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.PortalError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                fieldErrors, retryable: false);
+        }
+
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return P1Results.PortalError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        var session = sessions.Find(sessionId);
+        if (session is null)
+        {
+            return P1Results.PortalError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status404NotFound, P1ErrorCodes.SessionNotFound,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        if (!string.Equals(envelope!.CharacterId, session.CharacterId, StringComparison.Ordinal))
+        {
+            return P1Results.PortalError(
+                context, clock, requestId, session.SessionId,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["characterId"], retryable: false);
+        }
+
+        var outcome = portals.Move(session, envelope.Payload!.PortalId!, envelope.IdempotencyKey!);
+        if (outcome.Accepted && outcome.Result is { } result)
+        {
+            return P1Results.PortalSuccess(requestId, session.SessionId, clock, result);
+        }
+
+        return P1Results.PortalError(
+            context, clock, requestId, session.SessionId,
+            PortalStatus(outcome.Code), outcome.Code ?? P1ErrorCodes.InvalidPayload,
+            outcome.FieldErrors, outcome.Retryable);
+    }
+
+    // portal_locked is 422 rather than 403: this server has no auth layer to answer
+    // 403 with, and the same "not earned yet" shape already answers 422 as
+    // prerequisite_not_met on the accept route. actor_not_alive keeps the 409 the cast
+    // path uses for the identical condition, so one situation never carries two
+    // statuses depending on which route noticed it.
+    private static int PortalStatus(string? code) => code switch
+    {
+        Server.Health.Gameplay.Alpha.PortalErrorCodes.NotFound =>
+            StatusCodes.Status404NotFound,
+        Server.Health.Gameplay.Alpha.PortalErrorCodes.IdempotencyConflict or
+        Server.Health.Gameplay.Alpha.PortalErrorCodes.NotAlive =>
+            StatusCodes.Status409Conflict,
+        _ => StatusCodes.Status422UnprocessableEntity
+    };
 
     private static async Task<IResult> TalkAsync(
         HttpContext context,

@@ -290,6 +290,8 @@ elif [ "${PROFILE}" = "gate-one" ]; then
     DeathReturnAlpha) GATE_ENV="P1__DeathReturn__Enabled=true P1__AlphaProfile__Enabled=true" ;;
     QuestTalk) GATE_ENV="P1__QuestTalk__Enabled=true" ;;
     QuestTalkAlpha) GATE_ENV="P1__QuestTalk__Enabled=true P1__AlphaProfile__Enabled=true" ;;
+    Portal) GATE_ENV="P1__Portal__Enabled=true" ;;
+    PortalAlpha) GATE_ENV="P1__Portal__Enabled=true P1__AlphaProfile__Enabled=true" ;;
     *) echo "==> unknown E2E_GATE=${E2E_GATE:-unset}" >&2; exit 2 ;;
   esac
   # A refusal leg boots the same way but must never reach a healthy listener: the
