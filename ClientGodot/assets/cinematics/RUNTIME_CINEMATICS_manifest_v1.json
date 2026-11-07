@@ -1,6 +1,6 @@
 {
  "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
- "checkpoint": "MEDIA-02 checkpoint 41 - Goi 31 item 4 extended (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009: P0 mixes v3, CIN_006 mix v1, CIN_003 mix v1, CIN_005 mix v1, CIN_007 mix v1, CIN_008 mix v1 and CIN_009 mix v1 embedded in the runtime OGV + review MP4; poster + SRT + timing per scene; baked-subtitle variant stays review-only); checkpoint 32 shot fixes + status phrasing (all 21 dialogue windows approved for DRAFT VO per Goi 30 D1, PR #120; only CIN_001_S05 DECIDED) otherwise unchanged; prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
+ "checkpoint": "MEDIA-02 checkpoint 42 - Goi 31 item 4 extended (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010: P0 mixes v3, CIN_006 mix v1, CIN_003 mix v1, CIN_005 mix v1, CIN_007 mix v1, CIN_008 mix v1, CIN_009 mix v1 and CIN_010 mix v1 embedded in the runtime OGV + review MP4; poster + SRT + timing per scene; baked-subtitle variant stays review-only); checkpoint 32 shot fixes + status phrasing (all 21 dialogue windows approved for DRAFT VO per Goi 30 D1, PR #120; only CIN_001_S05 DECIDED) otherwise unchanged; prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "campaignTotals": {
@@ -777,25 +777,51 @@
    "files": {
     "mp4": {
      "path": "assets/cinematics/CIN_010/CIN_010_640x360_30fps.mp4",
-     "sha256": "6408d511258177a3e7ce15fbf5ba197a403e208c25e0bc5e1241d577ef306337",
-     "sizeBytes": 1551179,
+     "sha256": "d717e5f665e9a9ef3a9f31e69bd7b85ffa3ac313cba092bcf4d8626e9a070f56",
+     "sizeBytes": 1999645,
      "codec": "h264",
      "width": 640,
      "height": 360,
      "fps": 30,
      "durationSeconds": 18.0,
-     "frames": 540
+     "frames": 540,
+     "audio": {
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateKbps": 192,
+      "sourceMix": "Art_Source/Audio/Muse/MIX/CIN010_DRAFT_V1/CIN_010_mix_draft_v1.wav",
+      "sourceMixSha256": "6a3f9d21bd61bb2c43d2f55356f0ca743006931ffbac53568e7f17c0ff6b4bb2",
+      "mixVersion": "v1_cin010_proposed",
+      "integratedLUFS": "-24.62",
+      "truePeakDBTP": "-4.97",
+      "durationSeconds": 18.0,
+      "videoStoredFrames": 540
+     }
     },
     "ogv": {
      "path": "assets/cinematics/CIN_010/CIN_010_640x360_30fps.ogv",
-     "sha256": "bcc9618eb02b7645f618a9848b13e43603a8ab44de1ec0a46cc283525aef7519",
-     "sizeBytes": 494142,
+     "sha256": "f1de5a5937783dfa0b4837986b987969f710291926d68448286e14e5c38a9e9b",
+     "sizeBytes": 769038,
      "codec": "theora",
      "width": 640,
      "height": 360,
      "fps": 30,
      "durationSeconds": 18.0,
-     "storedFrames": 376
+     "storedFrames": 376,
+     "audio": {
+      "codec": "vorbis",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateKbps": 160,
+      "sourceMix": "Art_Source/Audio/Muse/MIX/CIN010_DRAFT_V1/CIN_010_mix_draft_v1.wav",
+      "sourceMixSha256": "6a3f9d21bd61bb2c43d2f55356f0ca743006931ffbac53568e7f17c0ff6b4bb2",
+      "mixVersion": "v1_cin010_proposed",
+      "integratedLUFS": "-24.63",
+      "truePeakDBTP": "-5.42",
+      "durationSeconds": 18.0,
+      "videoStoredFrames": 376
+     }
     },
     "poster": {
      "path": "assets/cinematics/CIN_010/CIN_010_poster.png",

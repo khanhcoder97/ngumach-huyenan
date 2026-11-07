@@ -21,6 +21,10 @@ Checkpoint 41 extends it with CIN_009 (draft mix v1, same recipe);
 the CP34/CP37/CP38/CP39/CP40 scenes are verified unchanged on re-run,
 never re-muxed.
 
+Checkpoint 42 extends it with CIN_010 (draft mix v1, same recipe);
+the CP34/CP37/CP38/CP39/CP40/CP41 scenes are verified unchanged on
+re-run, never re-muxed.
+
 Turns the per-scene clips for the prologue + CIN_001/002/004/006 into
 a playable runtime pack:
 
@@ -68,6 +72,7 @@ MIX_CIN005 = ROOT / "Art_Source/Audio/Muse/MIX/CIN005_DRAFT_V1"
 MIX_CIN007 = ROOT / "Art_Source/Audio/Muse/MIX/CIN007_DRAFT_V1"
 MIX_CIN008 = ROOT / "Art_Source/Audio/Muse/MIX/CIN008_DRAFT_V1"
 MIX_CIN009 = ROOT / "Art_Source/Audio/Muse/MIX/CIN009_DRAFT_V1"
+MIX_CIN010 = ROOT / "Art_Source/Audio/Muse/MIX/CIN010_DRAFT_V1"
 FAILURES = []
 
 
@@ -371,6 +376,8 @@ def main() -> None:
                     "v1_cin008_proposed"),
         "CIN_009": (MIX_CIN009 / "CIN_009_mix_draft_v1.wav",
                     "v1_cin009_proposed"),
+        "CIN_010": (MIX_CIN010 / "CIN_010_mix_draft_v1.wav",
+                    "v1_cin010_proposed"),
     }
     mix_manifest_shas = {}
     v3_manifest = json.loads(
@@ -408,6 +415,11 @@ def main() -> None:
         .read_text(encoding="utf-8"))
     mix_manifest_shas["CIN_009"] = \
         cin009_manifest["scenes"][0]["mix"]["sha256"]
+    cin010_manifest = json.loads(
+        (MIX_CIN010 / "CIN010_MIX_V1_manifest_v1.json")
+        .read_text(encoding="utf-8"))
+    mix_manifest_shas["CIN_010"] = \
+        cin010_manifest["scenes"][0]["mix"]["sha256"]
 
     pack_scenes = []
     for scene_id, (mix_wav, mix_version) in scenes.items():
@@ -430,7 +442,8 @@ def main() -> None:
         else:
             audio = mux(scene_id, mix_wav, mix_version,
                         mix_manifest_shas[scene_id], work,
-                        checkpoint_label=("CP41" if scene_id == "CIN_009"
+                        checkpoint_label=("CP42" if scene_id == "CIN_010"
+                                          else "CP41" if scene_id == "CIN_009"
                                           else "CP40" if scene_id == "CIN_008"
                                           else "CP39" if scene_id == "CIN_007"
                                           else "CP38" if scene_id == "CIN_005"
@@ -461,6 +474,11 @@ def main() -> None:
                     "poster/SRT/timing unchanged")
         if scene_id == "CIN_009":
             note = ("MEDIA-02 checkpoint 41 - CIN_009 draft mix v1: "
+                    "embedded draft mix audio in the runtime OGV "
+                    "+ review MP4 (video streams bit-identical); "
+                    "poster/SRT/timing unchanged")
+        if scene_id == "CIN_010":
+            note = ("MEDIA-02 checkpoint 42 - CIN_010 draft mix v1: "
                     "embedded draft mix audio in the runtime OGV "
                     "+ review MP4 (video streams bit-identical); "
                     "poster/SRT/timing unchanged")
@@ -553,7 +571,7 @@ def main() -> None:
 
     pack = {
         "manifestId": "NGM_RUNTIME_PACK_GOI31_V1",
-        "checkpoint": "MEDIA-02 checkpoint 41 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40 scenes verified unchanged)",
+        "checkpoint": "MEDIA-02 checkpoint 42 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41 scenes verified unchanged)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "status": "DRAFT_NOT_FINAL",
@@ -577,7 +595,8 @@ def main() -> None:
             "Embedded mixes are DRAFT_MIX_NOT_FINAL; P0 scenes embed "
             "v3 (fully composed), CIN_006 embeds its v1, CIN_003 "
             "embeds its v1, CIN_005 embeds its v1, CIN_007 embeds "
-            "its v1, CIN_008 embeds its v1 and CIN_009 embeds its "
+            "its v1, CIN_008 embeds its v1, CIN_009 embeds its v1 "
+            "and CIN_010 embeds its "
             "v1; v1/v2 P0 mixes "
             "stay as separate files and "
             "Codex's adapter chooses the mix version at PR review -- "
@@ -609,6 +628,20 @@ def main() -> None:
             "(-17.84 LUFS) because the CP17 VO take itself is hot "
             "(-17.23 LUFS); VO is kept at unity per the recipe, not "
             "normalized.",
+            "CIN_010 stem assignment (sa_hoa music + "
+            "desert_wind ambience + reveal at 6.0 s) is "
+            "PROPOSED_CANDIDATE; the CP17 draft VO take fits inside "
+            "its 12.5-17.5 s window (ends 15.308 s, no overrun, no "
+            "tail trim). sa_hoa is the composed set's desert form "
+            "('Sa Hoa -- Lo va cat', kiln and sand: A minor "
+            "pentatonic, dry bright plucks, 110 BPM), matching the "
+            "scene's ash-gold caravan rest and last-water-flask "
+            "image (S01 caravan + barrel, S02 flask poured into the "
+            "barrel, S03 flask set on the map cloth); desert_wind "
+            "is the desert wind bed for the dunes running through "
+            "all three shots. The mix measures -24.60 LUFS because "
+            "the CP17 VO take itself is quiet (-22.01 LUFS); VO is "
+            "kept at unity per the recipe, not normalized.",
             "CIN_003 stem assignment (ben_mua music + river_shore "
             "ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the "
             "CP17 draft VO take fits inside its 12.5-17.5 s window "
