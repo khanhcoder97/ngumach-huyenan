@@ -1,0 +1,82 @@
+{
+ "checkpoint": "MEDIA-02 checkpoint 25 (campaign video batch: animated takes for the remaining 13 campaign scenes, 3 storyboard keyframes + 18 s Ken Burns clip each, MP4 + OGV + poster + timing/SRT; all 20 scenes now carry video; generic batch keyframe checker added with title cross-check for all 17 campaign keyframe scenes; runtime delivery revised)",
+ "base_integration": "f0859d0",
+ "branch": "muse/media-production-20261104",
+ "counts": {
+  "audio_files_checked": 1093,
+  "audio_music_ambience_cues": 22,
+  "audio_sfx_ui_cues": 173,
+  "p0_stem_pool_files": 11,
+  "timing_scenes_checked": 20,
+  "timing_dialogues": 21,
+  "srt_cues": 21,
+  "runtime_cine_scenes_checked": 20,
+  "runtime_dialogue_cues_total": 21,
+  "animatic_panels_checked": 12,
+  "animatic_panels_listed": 12,
+  "vo_takes_checked": 3,
+  "keyframes_checked": 12,
+  "cin005_keyframes_checked": 3,
+  "cin006_keyframes_checked": 3,
+  "cin009_keyframes_checked": 3,
+  "cin020_keyframes_checked": 3,
+  "campaign_batch_keyframes_checked": 39,
+  "vo_campaign_takes_checked": 17,
+  "vo_campaign_fits": 15,
+  "vo_campaign_overruns": 2,
+  "vo_cin006_takes_checked": 2,
+  "vo_cin006_canonical_fit": "OVERRUN",
+  "p0_mix_files_checked": 4,
+  "scene_clips_checked": 20,
+  "scene_clips_with_video": 20
+ },
+ "windowFit": {
+  "fits": 15,
+  "overruns": [
+   {
+    "shotId": "CIN_005_S03",
+    "slackSeconds": -0.16
+   },
+   {
+    "shotId": "CIN_018_S03",
+    "slackSeconds": -0.28
+   },
+   {
+    "shotId": "CIN_006_S03",
+    "slackSeconds": -0.52
+   }
+  ]
+ },
+ "mismatches": [],
+ "notes": [
+  "P0 stem pool cues validated as files: ['AMBIENCE/rain_heavy', 'AMBIENCE/rain_light', 'AMBIENCE/river_shore', 'AMBIENCE/underwater', 'MUSIC/ben_mua', 'MUSIC/boss_mang_cot', 'MUSIC/quiet_discovery', 'SFX/CINEMA/resolve_v01', 'SFX/CINEMA/reveal_v01', 'SFX/CINEMA/tension_v01', 'SFX/CINEMA/transition_v01']",
+  "Runtime cinematics dialogue cues cross-checked: 20 scenes, 21 cues (timing == SRT == runtime manifest)",
+  "ANIMATIC P0_animatic_640x360_30fps.ogv: avg_frame_rate 0/0 (expected 30/1)",
+  "Keyframes 16:9 checked: 12/12 (S02 generated checkpoint 16; 4 checkpoint-13 panels; 7 v1 sheet crops re-verified for framing)",
+  "CIN_005 keyframes checked: 3/3 (storyboard level, staging SHA-verified)",
+  "CIN_006 keyframes checked: 3/3 (storyboard level, staging SHA-verified)",
+  "CIN_009 keyframes checked: 3/3 (storyboard level, staging SHA-verified)",
+  "CIN_020 keyframes checked: 3/3 (storyboard level, staging SHA-verified)",
+  "Campaign batch keyframes checked: 39/39 across 13 scenes (storyboard level, staging SHA-verified); keyframe manifest titles cross-checked vs timing for all 17 campaign keyframe scenes",
+  "Campaign VO checked: 17/17 takes, 15 FITS, 2 OVERRUN (['CIN_005_S03', 'CIN_018_S03']); overruns are director findings (D1: no voice speed-up to fit), not byte mismatches",
+  "CIN_006 VO checked: 2/2 takes (canonical fit OVERRUN); 21/21 dialogue windows now have draft VO",
+  "P0 draft mixes checked: 4/4 files (3 scenes + 72 s review); DRAFT_MIX_NOT_FINAL, not a mix PASS",
+  "Per-scene clips checked: 20/20 (20 with video: P0 x3 panel-hold + 17 campaign animated takes); reel tiled 0-72 exactly"
+ ],
+ "verdict": "PASS",
+ "limits": [
+  "Loudness/true-peak values are NOT re-measured here; they come from checkpoints 02/04/07/08/17/19/20, measured from real bytes.",
+  "No ear audition of loop seams or VO takes in this validation.",
+  "Campaign dialogue windows remain PROPOSED except CIN_001_S05 (DECIDED); this check verifies SRT==timing consistency, not directorial approval.",
+  "Campaign VO window overruns (if any) are director findings, not byte mismatches; see windowFit.",
+  "CIN_006 keyframes are STORYBOARD level: NPC_HA_MAC / NPC_SAM_CHU_QUY have no approved character lock, so faces/costumes are placeholders; S02 carries a recorded composition defect for the final-picture revision pass.",
+  "CIN_006 alternate take CIN_006_ALT_T01 has no dialogue window by design (DEC-MEDIA-P0 Q3); its absence from the SRT and from the scene timeline is verified, not an omission.",
+  "P0 mixes are DRAFT_MIX_NOT_FINAL: this check verifies bytes, durations and the recorded ducking/loop evidence, not the audible balance; no ear audition has been done.",
+  "CIN_005 clip motion is animatic-level Ken Burns on still keyframes, not a final pose-animated take; S02 roof palette drifts from S01 (blue-grey vs red), recorded as a known defect for art-direction lock.",
+  "CIN_009 keyframes are STORYBOARD level: the pack character list is empty, so no character lock is involved; the S02 workers are unnamed generation-invented figures, and S01 carries an invented white hooded figure not in the prompt, recorded as a defect for the final-picture revision pass.",
+  "CIN_020 keyframes are STORYBOARD level: the unnamed villager's appearance drifts across the three shots (three outfits/headgear) and S02 is an interior medium shot instead of a detail close view; both recorded for the final-picture revision pass.",
+  "CIN_009 clip motion is animatic-level Ken Burns on still keyframes, not a final pose-animated take; S03 is not strictly top-down and adds a shrine not in the prompt.",
+  "Checkpoint 25 batch keyframes are STORYBOARD level: every batch scene has named characters on screen with no approved cinematic character lock, so all faces/costumes are placeholders and final picture per shot stays blocked on the lock. Headline defects are recorded per shot in the keyframe manifests; the worst are CIN_012_S03's baked-in choice UI bar with legible English buttons, CIN_017_S02's missing subject (no core, no serpent), CIN_015_S02's dry-courtyard setting failure with an invented mascot figure, and CIN_011's invented teal-robed woman in S01/S03.",
+  "All campaign clip motion (checkpoints 21-25) is animatic-level Ken Burns on still keyframes, not final pose-animated takes."
+ ]
+}

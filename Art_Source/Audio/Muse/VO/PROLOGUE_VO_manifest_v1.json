@@ -1,0 +1,106 @@
+{
+ "manifestId": "NGM_PROLOGUE_VO_V1",
+ "checkpoint": "MEDIA-02 checkpoint 27 - prologue CIN_000 narration VO drafts",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "scriptApproval": "Owner approved the narration script in main chat 2026-11-06 (option 'Duyệt kịch bản — sản xuất luôn')",
+ "canonGuardrails": [
+  "No avatar origin/name/face; no secret bloodline (STORY_DECISIONS_V3).",
+  "No naming of Co Vo Tuong, the hop mach mechanism, or Ta Van Khanh's responsibility (reveal table, Narrative Depth section 3).",
+  "Final line is the canonical CIN_001_S05 version B line, reused from checkpoint 04."
+ ],
+ "segments": [
+  {
+   "takeId": "VO_CIN000_SEG01",
+   "speaker": "NARRATOR",
+   "voice": "avocado_v2:MAI_03",
+   "castingStatus": "DRAFT_CASTING_DIRECTOR_DECISION_PENDING",
+   "text": "Xưa, Lạc Châu sống nhờ năm dòng mạch chảy dưới lòng đất và mặt nước. Năm mạch trao nhau dòng chảy qua một cơ chế điều hòa gọi là Huyền Ấn — và năm ngọn tháp canh giữ sự trao đổi ấy, để không vùng nào thừa nước, không vùng nào cạn khô.",
+   "file": "VO_CIN000_SEG01_NARRATOR.wav",
+   "rawMp3": "VO_CIN000_SEG01_NARRATOR_raw.mp3",
+   "runtimePath": "assets/audio/vo/prologue/VO_CIN000_SEG01_NARRATOR.wav",
+   "durationSeconds": 16.512,
+   "integratedLufs": -21.72,
+   "truePeakDbtp": -1.12,
+   "sha256": "66d66345c9919fbe4af30dafd2933bee56ad9aef44233420786e98eb3c71d6a5",
+   "assetState": "DRAFT_NOT_FINAL_VO"
+  },
+  {
+   "takeId": "VO_CIN000_SEG02",
+   "speaker": "NARRATOR",
+   "voice": "avocado_v2:MAI_03",
+   "castingStatus": "DRAFT_CASTING_DIRECTOR_DECISION_PENDING",
+   "text": "Ba trăm năm trước, một cơn địa chấn phá vỡ cơ chế điều hòa. Để ngăn thảm họa, người ta tách năm tháp ra khỏi nhau. Thảm họa qua đi — nhưng từ đó, điều tiết dần biến thành sở hữu. Mỗi tháp giữ mạch của mình, và giữ cả những danh sách ghi tên người sống dưới mạch ấy.",
+   "file": "VO_CIN000_SEG02_NARRATOR.wav",
+   "rawMp3": "VO_CIN000_SEG02_NARRATOR_raw.mp3",
+   "runtimePath": "assets/audio/vo/prologue/VO_CIN000_SEG02_NARRATOR.wav",
+   "durationSeconds": 15.528,
+   "integratedLufs": -22.31,
+   "truePeakDbtp": -2.07,
+   "sha256": "12419c46408bf9524e3bb861a36b2b8d2570eadf12a6fa6bb2c176df00df0f8f",
+   "assetState": "DRAFT_NOT_FINAL_VO"
+  },
+  {
+   "takeId": "VO_CIN000_SEG03",
+   "speaker": "NARRATOR",
+   "voice": "avocado_v2:MAI_03",
+   "castingStatus": "DRAFT_CASTING_DIRECTOR_DECISION_PENDING",
+   "text": "Ba mươi năm trước, hạn hán và lũ lụt nối nhau tràn qua một vùng quê. Trong cơn tuyệt vọng, người ta thử nối các mạch lại làm một. Thí nghiệm vỡ. Một phần thành phố chìm xuống nước — và nhiều người còn sống bị ghi vào sổ là đã chết. Một lệnh phong tỏa được ký. Rồi hồ sơ bị xóa dần, như thể chưa từng có ai ở đó.",
+   "file": "VO_CIN000_SEG03_NARRATOR.wav",
+   "rawMp3": "VO_CIN000_SEG03_NARRATOR_raw.mp3",
+   "runtimePath": "assets/audio/vo/prologue/VO_CIN000_SEG03_NARRATOR.wav",
+   "durationSeconds": 19.752,
+   "integratedLufs": -22.49,
+   "truePeakDbtp": -0.26,
+   "sha256": "61687706a3556d8219d8bc520b6b150d1f268e0fbd631fcf7923decc539ddfe4",
+   "assetState": "DRAFT_NOT_FINAL_VO"
+  },
+  {
+   "takeId": "VO_CIN000_SEG04",
+   "speaker": "NARRATOR",
+   "voice": "avocado_v2:MAI_03",
+   "castingStatus": "DRAFT_CASTING_DIRECTOR_DECISION_PENDING",
+   "text": "Ngày nay, dòng chảy ở Lạc Châu không còn đi đúng đường. Có tiếng chuông ngân dưới mặt nước, ở nơi không hề treo chuông. Có những cái tên bị mất khỏi danh sách. Và vẫn còn những lá thư — niêm sáp năm vạch — đi qua các tuyến đường thủy, chờ người nhận chịu mở.",
+   "file": "VO_CIN000_SEG04_NARRATOR.wav",
+   "rawMp3": "VO_CIN000_SEG04_NARRATOR_raw.mp3",
+   "runtimePath": "assets/audio/vo/prologue/VO_CIN000_SEG04_NARRATOR.wav",
+   "durationSeconds": 14.928,
+   "integratedLufs": -21.8,
+   "truePeakDbtp": -2.2,
+   "sha256": "86b4252335c268c53925d001ee3c5fd998ee5e6f722e548009f76e7a4420eadc",
+   "assetState": "DRAFT_NOT_FINAL_VO"
+  },
+  {
+   "takeId": "VO_CIN000_SEG05",
+   "speaker": "NARRATOR",
+   "voice": "avocado_v2:MAI_03",
+   "castingStatus": "DRAFT_CASTING_DIRECTOR_DECISION_PENDING",
+   "text": "Bến Mưa là một bến đò nhỏ nơi các tuyến ấy giao nhau. Mưa không ngớt. Và hôm nay, một người khách lạ vừa bước lên bến...",
+   "file": "VO_CIN000_SEG05_NARRATOR.wav",
+   "rawMp3": "VO_CIN000_SEG05_NARRATOR_raw.mp3",
+   "runtimePath": "assets/audio/vo/prologue/VO_CIN000_SEG05_NARRATOR.wav",
+   "durationSeconds": 8.04,
+   "integratedLufs": -22.33,
+   "truePeakDbtp": -2.71,
+   "sha256": "293acb5bb397cbb611bd712ca58cdd689259eab07b11d9c629f67a035fa647cd",
+   "assetState": "DRAFT_NOT_FINAL_VO"
+  }
+ ],
+ "finalLine": {
+  "takeId": "VO_CIN001_S05_LYAN (reused)",
+  "speaker": "NPC_LYAN",
+  "voice": "avocado_v2:MAI_01",
+  "text": "Đầu kia! Giữ giúp tôi đầu kia!",
+  "reuse": "Byte-identical reuse of the checkpoint 04 canonical take (CIN_001_S05, version B, DEC-MEDIA-P0 Q1); the prologue ends on the same voice the game opens with. Source: Art_Source/Audio/Muse/VO/P0_DRAFT/VO_CIN001_S05_LYAN_draft_v1.wav",
+  "durationSeconds": 2.568,
+  "integratedLufs": -16.01,
+  "truePeakDbtp": -1.85,
+  "sha256": "51fc65de235916c3c8b4a002564db7a6e484298f11567af803ff0437b4c1d113",
+  "assetState": "DRAFT_NOT_FINAL_VO"
+ },
+ "narrationTotalSeconds": 74.76,
+ "notes": [
+  "Draft VO only: fictional TTS voices, no ear audition, pronunciation not yet reviewed by a native listener.",
+  "Segment durations are measured from real bytes; the film builder derives shot windows from them."
+ ]
+}

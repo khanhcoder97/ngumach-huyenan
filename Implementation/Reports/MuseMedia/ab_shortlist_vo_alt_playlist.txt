@@ -1,0 +1,10 @@
+#EXTM3U
+# MEDIA-02 checkpoint 33 — Goi 31 item 3 A/B review shortlist
+# AUDITION STATUS: NOT_AUDITIONED (this environment cannot listen)
+# This file holds valid M3U content under a .txt name because
+# .m3u is not in the scope policy mediaExtensions; rename a
+# copy to .m3u to open it directly in a player. Open this file
+# from the repo so the relative paths resolve.
+# Measurements are loudness/codec numbers, NOT a listening PASS.
+#EXTINF:3,VO ALTERNATE (NOT canonical) — None Hạ Mặc takeId=CIN_006_ALT_T01 version=v1-alt — Tới đây ta theo được. Chỗ trống này giữ nguyên.
+../../../ClientGodot/assets/audio/vo/cin006/VO_CIN_006_ALT_T01_HAMAC_draft_v1-alt.wav

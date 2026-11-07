@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN019_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 25 - CIN_019 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_019",
+ "title": "Năm mạch, không một chủ nhân",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_LYAN, NPC_CO_VO_TUONG) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "keyframes": [
+  {
+   "shotId": "CIN_019_S01",
+   "camera": "WIDE_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_019_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "95d4ee945f24a7fdccdfd2286edb5f1a4b9b033c4ca26c6a6cf891847fa92fbd",
+   "sourceStagingFile": "media-generation-keyframe-cin-019-s01-0-7fb791da-032c-49b4-8a9a-808267ad3e05.webp",
+   "sourceStagingSha256": "0f8fdf8701231f343927027b7e50f3c64229608ebb70197db46fe9f64e35c50e",
+   "sourceSnapshotId": "1733632a-a5b7-4eb3-8ce4-a06e6836c61e:w2ivqg",
+   "framing": "Wide three-quarter view of a mountaintop stone platform at dusk: five elemental pillars (grey metal, wave-crested blue water, bamboo wood, flaming red fire, brown earth) stand around an empty central medallion, with colored spark channels running laterally along the ground between neighboring pillars.",
+   "knownDefects": "Minor: the earth pillar reads as a half-collapsed rubble stack rather than a clean geometric earth motif, and the wood pillar's motif is plain bamboo scaffolding; otherwise the ring arrangement, lateral energy flow, and no-central-avatar rule all hold, with no legible text."
+  },
+  {
+   "shotId": "CIN_019_S02",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_019_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "f7683d11f17783495863c91e851cf404f75891a6a97806fe038a493b046664e5",
+   "sourceStagingFile": "media-generation-keyframe-cin-019-s02-0-4272c04b-1a17-4610-bc86-964ab88c22a2.webp",
+   "sourceStagingSha256": "23ba5d7405f6e6311bcd5fe3eb9fe3eee6fc8aa3ff8fc1103e8e7defbae6e216",
+   "sourceSnapshotId": "fe689492-685d-4a08-9941-59f9289815a5:ozxrih",
+   "framing": "Medium interior shot of a machinery hall: a young warden strains against a large sparking wall lever at frame left, a second warden works a bank of levers on a control console at center, and a grey-bearded elder in dark blue robes supervises with folded arms at frame right.",
+   "knownDefects": "Only one additional warden works the surrounding controls (the prompt says 'other wardens'; the third figure supervises instead); the failing lever throws heavy sparks and debris, reading closer to an exploding mechanism than a jammed lever being braced. No crown/worship imagery and no harm to anyone, as required; panel marks are illegible ticks, not readable text."
+  },
+  {
+   "shotId": "CIN_019_S03",
+   "camera": "WIDE_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_019_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "02622ebd570568a7906b37c3bf588dfe92539db2cc110d4e7cc8596fab8a8016",
+   "sourceStagingFile": "media-generation-keyframe-cin-019-s03-0-3ae1b415-d4d9-4bd1-ab7a-ff1745508a2d.webp",
+   "sourceStagingSha256": "201e54d5eb9c7806fedb662c93fead54a9292cf6a8f7758efa1915e701c66990",
+   "sourceSnapshotId": "6fbaf789-1fd1-4146-9557-cc9a228024d4:u2tclz",
+   "framing": "Wide dawn view of a riverside village under reconstruction: water cascades through a stepped, stone-repaired channel in the foreground while small groups of workers carry logs and baskets among patchwork-roofed houses and unfinished timber scaffolds.",
+   "knownDefects": "Ly An (the S03 dialogue speaker, marked onscreen in the timing) is not individually identifiable among the small distant figures, and couriers are not distinguishable from general workers; the channel flow reads fully established over finished-looking stone weirs rather than a first trickle through freshly repaired channels. Dawn light, patchwork roofs, and unfinished scaffolds all match the prompt; no legible text."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Recorded keyframe defects: S03's Ly An is not individually identifiable among the small distant figures and its channel flow reads fully established over finished-looking stone weirs rather than a first trickle through freshly repaired channels; S02 has only one additional warden at the controls where the prompt says 'other wardens', and its failing lever throws heavy sparks and debris, reading closer to an exploding mechanism than a jammed lever being braced; S01's earth pillar reads as a half-collapsed rubble stack and its wood pillar as plain bamboo scaffolding. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+ ]
+}

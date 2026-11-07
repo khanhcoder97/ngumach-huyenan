@@ -1,0 +1,47 @@
+{
+ "manifestId": "NGM_PROLOGUE_MIX_V1",
+ "checkpoint": "MEDIA-02 checkpoint 27",
+ "file": "PROLOGUE_mix_v1.wav",
+ "sha256": "f026ed3e10499b42ea4fcc39ada9a1b42e0b5b749d16ab77208afd54016ffb54",
+ "sizeBytes": 16774542,
+ "durationSeconds": 87.3667,
+ "integratedLufs": -20.81,
+ "truePeakDbtp": -9.08,
+ "assetState": "DRAFT_MIX_NOT_FINAL",
+ "stems": [
+  {
+   "role": "narration",
+   "source": "PROLOGUE_VO_manifest_v1.json (checkpoint 27 draft TTS)",
+   "provenance": "NEW_DRAFT_VO"
+  },
+  {
+   "role": "final line",
+   "source": "VO_CIN001_S05_LYAN_draft_v1.wav (checkpoint 04 take, reused bytes)",
+   "provenance": "REUSED_CP04"
+  },
+  {
+   "role": "music bed",
+   "source": "MUSIC/ben_mua composed runtime OGG (checkpoint 26)",
+   "gainDb": -9.07,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE_CP26"
+  },
+  {
+   "role": "ambience",
+   "source": "AMBIENCE/rain_light + AMBIENCE/river_shore runtime OGGs (checkpoint 07 pack)",
+   "gainDb": [
+    -8.52,
+    -8.47
+   ],
+   "provenance": "PORTED_CODEX_PACKV1"
+  },
+  {
+   "role": "title stinger",
+   "source": "SFX/CINEMA/resolve composed runtime OGG (checkpoint 26)",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE_CP26"
+  }
+ ],
+ "ducking": "sidechaincompress on the music+ambience bed, keyed by the VO bus: threshold 0.03, ratio 4, attack 15 ms, release 350 ms (checkpoint 20 settled values); peak guard trims the whole mix only above -1.0 dBTP",
+ "notes": [
+  "DRAFT_MIX_NOT_FINAL: formula gain staging, no ear audition; narration pronunciation not yet reviewed by a native listener."
+ ]
+}

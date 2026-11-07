@@ -1,0 +1,113 @@
+{
+  "checkpoint": "MEDIA-02 checkpoint 19 - CIN_006 VO drafts (canonical cue + alternate take)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "d1Approval": "D1 APPROVED draft VO production only for the 21 dialogue windows; no canon changes, no voice speed-up to fit.",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_NOT_FINAL_VO",
+  "sceneId": "CIN_006",
+  "sceneSeconds": 18.0,
+  "dialogueWindowsCovered": "21/21 (this checkpoint closes the last one, CIN_006_S03)",
+  "notes": [
+    "Fictional system voices only; no real-voice cloning, no unlicensed samples.",
+    "Canonical window 12.5-17.5 s is PROPOSED_ANIMATIC_PLACEMENT in the timing JSON, approved by D1 for draft VO production only; it is not a picture/mix lock.",
+    "Alternate take CIN_006_ALT_T01 (v1-alt) has its own takeId/version per DEC-MEDIA-P0 Q3; it does NOT replace the canonical dialogue, is NOT in the SRT and is NOT placed on the scene timeline.",
+    "All takes synthesized at speed 100 (D1: no voice speed-up to fit). An OVERRUN canonical take is delivered unchanged and flagged; the director decides whether to widen its window or trim its line.",
+    "Male characters share one production voice (Helio) in this draft; they are NOT voice-distinct. Distinct casting is a director decision.",
+    "Per-take loudness only, NOT a mix PASS; stems stay separate.",
+    "Timeline is VO-only draft assembly (canonical take only); no music/ambience mixed in.",
+    "If the canonical take overruns past the 18 s scene end, the timeline extends by exactly the overrun tail so the take is delivered untruncated; see timeline.sceneSeconds vs timeline.durationSeconds and the take's slackSeconds. The director decides: widen the window/scene, trim the line, or accept the bleed."
+  ],
+  "takes": [
+    {
+      "key": "CIN006_S03",
+      "shotId": "CIN_006_S03",
+      "sceneId": "CIN_006",
+      "speaker": "NPC_HA_MAC",
+      "onscreen": true,
+      "voice": "avocado_v2:MAI_03",
+      "voiceLabel": "Helio (fictional system voice)",
+      "mp3": "CIN006_S03.mp3",
+      "wav": "VO_CIN_006_S03_HAMAC_draft_v1.wav",
+      "text": "Ba thứ cùng đi qua một tuyến. Chưa có thứ nào bảo người bán biết mình đang chở gì.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "takeKind": "CANONICAL",
+      "wavSha256": "41d7c11df3c230cfff6bbb4dbbb382d855c813a08612f1142e8144cf9d298245",
+      "rawMp3": "CIN006_S03_tts_raw.mp3",
+      "rawMp3Sha256": "6149a9389a99addc7a99bc449eaaf74604c9c2aa3aa032fecbd931902746d0c3",
+      "durationSeconds": 5.52,
+      "windowSeconds": 5.0,
+      "slackSeconds": -0.52,
+      "fit": "OVERRUN",
+      "timelineStartSeconds": 12.5,
+      "loudness": {
+        "integratedLUFS": "-21.96",
+        "truePeakDBTP": "-3.42",
+        "loudnessRangeLU": "1.00",
+        "thresholdLUFS": "-32.07"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 530020
+      }
+    },
+    {
+      "key": "CIN006_ALT_T01",
+      "takeId": "CIN_006_ALT_T01",
+      "version": "v1-alt",
+      "shotId": null,
+      "sceneId": "CIN_006",
+      "speaker": "NPC_HA_MAC",
+      "speakerNote": "The source direction assigns the S03 beat to Ha Mac and does not cast the alternate reading separately; read with the same draft voice as a draft assumption, not a casting decision.",
+      "onscreen": true,
+      "voice": "avocado_v2:MAI_03",
+      "voiceLabel": "Helio (fictional system voice)",
+      "mp3": "CIN006_ALT_T01.mp3",
+      "wav": "VO_CIN_006_ALT_T01_HAMAC_draft_v1-alt.wav",
+      "text": "Tới đây ta theo được. Chỗ trống này giữ nguyên.",
+      "windowSceneSeconds": null,
+      "status": "ALTERNATE_TAKE_DOES_NOT_REPLACE_CANONICAL",
+      "takeKind": "ALTERNATE_TAKE_DOES_NOT_REPLACE_CANONICAL",
+      "wavSha256": "619da3e6016ef3bb163554819f17ff216745affc7289c5829ea9aab287bbc073",
+      "rawMp3": "CIN006_ALT_T01_tts_raw.mp3",
+      "rawMp3Sha256": "969117c732b9370b7870db02001736235e863b08d9f7bbb51d5daa817f76e515",
+      "durationSeconds": 3.0,
+      "windowSeconds": null,
+      "slackSeconds": null,
+      "fit": "NO_WINDOW_ASSIGNED",
+      "timelineStartSeconds": null,
+      "loudness": {
+        "integratedLUFS": "-22.37",
+        "truePeakDBTP": "-5.54",
+        "loudnessRangeLU": "0.10",
+        "thresholdLUFS": "-32.61"
+      },
+      "format": {
+        "codec": "pcm_s16le",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "bytes": 288100
+      }
+    }
+  ],
+  "timeline": {
+    "file": "CIN006_VO_timeline_draft_v1.wav",
+    "sha256": "d147836c3be90be2d5c5ee8274b20b2a32f0bd5da78476ebb11f1cda4b237025",
+    "durationSeconds": 18.02,
+    "sceneSeconds": 18.0,
+    "overrunTailSeconds": 0.02,
+    "containsTakes": [
+      "CIN006_S03"
+    ],
+    "format": {
+      "codec": "pcm_s16le",
+      "sampleRateHz": 48000,
+      "channels": 1
+    }
+  }
+}

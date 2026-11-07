@@ -1,0 +1,57 @@
+{
+  "sceneId": "CIN_014",
+  "questId": "C4-05",
+  "title": "Dấu lệnh đặt xuống",
+  "durationSeconds": 18,
+  "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+  "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+  "revealTier": "CHAPTER_4",
+  "charactersOnScreen": [
+    "NPC_TONG_BANH"
+  ],
+  "staging": "PACK_CHARACTERS_AS_LISTED_NO_SPAWN_CLAIM",
+  "stagingNote": "No staging claim beyond the pack character list; no persistent ID is duplicated and no spawn is moved.",
+  "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+  "candidateStems": [
+    "SFX/CINEMA/reveal"
+  ],
+  "stemStatus": "CANDIDATE_POOL_NOT_LOCKED",
+  "stemNote": "Only the manifest-bound stinger is listed. No per-scene ambience/music stem is assigned for this scene; none is invented from the P0 stem pool.",
+  "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+  "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+  "dialogueWindowNote": "Pack assigns no shot/timecode to these lines. Windows follow the uniform campaign rule in build_campaign_timing.py; director/Codex confirmation required before SRT final.",
+  "shots": [
+    {
+      "shotId": "CIN_014_S01",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "camera": "MEDIUM_STATIC",
+      "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design"
+    },
+    {
+      "shotId": "CIN_014_S02",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "camera": "DETAIL_LOCKED",
+      "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design"
+    },
+    {
+      "shotId": "CIN_014_S03",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "camera": "WIDE_STATIC",
+      "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+      "dialogue": {
+        "speaker": "NPC_TONG_BANH",
+        "speakerDisplay": "Tống Bành",
+        "onscreen": true,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "status": "PROPOSED_ANIMATIC_PLACEMENT",
+        "text": "Ta biết lệnh ấy là giả. Ta vẫn cho đóng dấu."
+      }
+    }
+  ]
+}

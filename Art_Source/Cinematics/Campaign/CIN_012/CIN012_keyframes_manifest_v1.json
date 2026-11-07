@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN012_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_012 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "abcf254",
+ "sceneId": "CIN_012",
+ "title": "Giữ tên người sống",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_HA_MAC) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock. Checkpoint 32 (Goi 31 item 2) revises CIN_012_S01, CIN_012_S03; all other shots unchanged.",
+ "keyframes": [
+  {
+   "shotId": "CIN_012_S01",
+   "camera": "WIDE_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_012_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "489eb56b85cd3480628ae8ab0265b69086df0bcb562d8ff4e15f98bfd8982cb2",
+   "sourceStagingFile": "media-generation-keyframe-cin-012-s01-0-b55063cb-5cce-4cf7-8b13-4ac9ac0655da.webp",
+   "sourceStagingSha256": "90426e1d6dd3fe617bbdc3a89beecb69faa3d5ddb8ab7ad52805f763b828df7b",
+   "sourceSnapshotId": "bc176ef2-9f79-45fe-8087-6927974b5c7f:ljumwi",
+   "framing": "Wide shot of a large stone furnace at center; two workers sit on the wooden platform before it facing the furnace, removed dust masks lying on the planks; charcoal, bamboo baskets and smithing tools at both sides; warm orange light covers the whole scene.",
+   "knownDefects": "Composition differs from the old frame (furnace centered, workers seated lower); the right worker wears a ponytail and the left worker no longer wears a conical hat -- staging detail, no prompt violation. No mascot, exactly two workers, stepped orange heat palette."
+  },
+  {
+   "shotId": "CIN_012_S02",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_012_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "069d26835f3e4d8b89a2aa31f15d7a9afa3f13a1c41f9ec56e3870ddb04a9777",
+   "sourceStagingFile": "media-generation-keyframe-cin-012-s02-0-bc292f4e-600a-483b-8993-f140333f4a97.webp",
+   "sourceStagingSha256": "3a356ecd3b891f8d2c7beb51ef49a5a40db5986ca7e55a8566d0aed3a42c0732",
+   "sourceSnapshotId": "577e8010-8d43-4b7a-b0f9-99ec7feae8b1:dyjob1",
+   "framing": "Ha Mac sits at an archive desk laying a narrow paper strip across a line of the open recovered journal, a public-copy sheet at frame left and a string-tied sealed archive folder at frame right, scroll shelves behind him.",
+   "knownDefects": "Framing drift: a medium shot of Ha Mac at the desk instead of the detail close view of the journal and papers the camera asks for. The journal and copy sheet carry illegible dashed pseudo-writing (abstract, not readable). His dark solid robe and dark hair bow here differ from S03's layered teal-over-cream robe with blue ribbon — the placeholder appearance is inconsistent within the scene."
+  },
+  {
+   "shotId": "CIN_012_S03",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_012_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "848370053c2f6768a1f13597db84fea6e3ed27c4a3f14dcd423f012d552230a0",
+   "sourceStagingFile": "media-generation-keyframe-cin-012-s03-0-fd71e60f-5995-4941-8cc9-4617b3a5e0c2.webp",
+   "sourceStagingSha256": "0783f1f67852620088a0195ef03c634bb534f9eba53d2374f741125285c3ddb2",
+   "sourceSnapshotId": "5ba69691-e94e-4602-863f-94c948985dd5:bjh9hm",
+   "framing": "Ha Mac in a dark blue robe, hair in a topknot, stands behind a long wooden table looking offscreen right; two blank white papers lie equally lit on the table; lantern-lit hall with lanterns at both sides, mountains and pines through a large window behind; the lower third of the frame is empty wooden table and floor.",
+   "knownDefects": "Ha Mac's hands are hidden behind the table so their withdrawn position at the table edge is not clearly visible (hands not on the papers, as 'withdrawn' requires, but not clearly seen); the framing is a tighter medium shot than the old frame; face/costume remain placeholders without a character lock. No UI bar, no buttons, no text anywhere."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Checkpoint 32 (Goi 31 item 2) revises S01/S03: S03's baked-in English choice UI bar is removed -- the frame is clean for the game's own choice overlay; S01's white hooded mascot is removed and the stepped orange heat palette is restored. S02 unchanged from checkpoint 25."
+ ]
+}

@@ -1,0 +1,127 @@
+{
+ "sceneId": "CIN_000",
+ "title": "Trước khi tới Bến Mưa",
+ "checkpoint": "MEDIA-02 checkpoint 27",
+ "videoStatus": "VIDEO_PROLOGUE_FILM_WITH_MIXED_AUDIO",
+ "hasAudioTrack": true,
+ "durationSeconds": 87.3667,
+ "mp4": {
+  "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.mp4",
+  "sha256": "8804931743e31d21c46c269f86b3deb65800668e3ec9c3e7c38d6a73057c2806",
+  "sizeBytes": 12249759,
+  "durationSeconds": 87.2667
+ },
+ "ogv": {
+  "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.ogv",
+  "sha256": "f7323bcf0ec35a81357e2cfc80ba029f55df09b4a16492cf9001273f19c2cb4d",
+  "sizeBytes": 25267547,
+  "durationSeconds": 87.2667
+ },
+ "poster": {
+  "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_poster.png",
+  "sha256": "ad4effe96b9be78aff447e70401b6b714dd8d7914d80353cacb7eb43f2b8367e",
+  "sizeBytes": 32609,
+  "rule": "poster is the title-card keyframe (CIN_000_S12), a documented choice for this standalone film"
+ },
+ "timingFile": "CIN_000_timing_v1.json",
+ "timingSha256": "bcd17d90578852b3f1bfdf2f372a767daa286cf5bffd8d893525f175ac15d350",
+ "srtFile": "CIN_000_vi.srt",
+ "srtSha256": "0bc4151acff93982acbed8f82192aae6a820653611451a15c436d99f20af1af0",
+ "identityDiffs": {
+  "CIN_000_S01": {
+   "fullRes": 12.682,
+   "structure160x90": 4.942
+  },
+  "CIN_000_S02": {
+   "fullRes": 12.077,
+   "structure160x90": 5.214
+  },
+  "CIN_000_S03": {
+   "fullRes": 15.266,
+   "structure160x90": 6.472
+  },
+  "CIN_000_S04": {
+   "fullRes": 8.582,
+   "structure160x90": 4.002
+  },
+  "CIN_000_S05": {
+   "fullRes": 14.438,
+   "structure160x90": 5.366
+  },
+  "CIN_000_S06": {
+   "fullRes": 10.135,
+   "structure160x90": 4.198
+  },
+  "CIN_000_S07": {
+   "fullRes": 9.253,
+   "structure160x90": 4.312
+  },
+  "CIN_000_S08": {
+   "fullRes": 8.265,
+   "structure160x90": 3.896
+  },
+  "CIN_000_S09": {
+   "fullRes": 9.031,
+   "structure160x90": 3.675
+  },
+  "CIN_000_S10": {
+   "fullRes": 13.715,
+   "structure160x90": 5.697
+  },
+  "CIN_000_S11": {
+   "fullRes": 13.067,
+   "structure160x90": 5.536
+  }
+ },
+ "motionDiffs": {
+  "CIN_000_S01": 21.267,
+  "CIN_000_S02": 16.567,
+  "CIN_000_S03": 24.342,
+  "CIN_000_S04": 12.022,
+  "CIN_000_S05": 22.279,
+  "CIN_000_S06": 18.698,
+  "CIN_000_S07": 23.896,
+  "CIN_000_S08": 18.057,
+  "CIN_000_S09": 16.822,
+  "CIN_000_S10": 21.8,
+  "CIN_000_S11": 16.068
+ },
+ "notes": [
+  "Standalone pre-game prologue; NOT part of the 20-scene campaign pack or its totals.",
+  "Picture is cinematic panels with Ken Burns motion; character/spoiler guardrails per the timing JSON staging note.",
+  "Checkpoint 28 adds mp4SubVi: a subtitled viewing variant (burned-in + embedded readable subtitles, narration at +5 dB presentation gain). Canonical files unchanged."
+ ],
+ "mp4SubVi": {
+  "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps_sub_vi.mp4",
+  "sha256": "2aae25e418c5c264efc494ac117a1416c555e8bb09efe0f55a4fb63f9d0ba25b",
+  "sizeBytes": 11918592,
+  "durationSeconds": 87.2667,
+  "streams": [
+   "video:h264",
+   "audio:aac",
+   "subtitle:mov_text"
+  ],
+  "subtitles": {
+   "burnedIn": true,
+   "embeddedTrack": "mov_text, language vie, default",
+   "renderer": "libass subtitles filter, DejaVu Sans bold 16, white on semi-transparent black box",
+   "sourceFile": "CIN_000_vi_readable.srt",
+   "chunks": 26
+  },
+  "audio": {
+   "source": "checkpoint 27 embedded mix of the canonical MP4 (mix file itself unchanged)",
+   "presentationGainDb": 5.0,
+   "loudnessLufs": -15.83,
+   "truePeakDbtp": -4.09
+  },
+  "note": "Owner-requested viewing variant (2026-11-06): on-screen Vietnamese subtitles + clearly audible narration. Canonical MP4 / OGV / SRT unchanged."
+ },
+ "readableSrt": {
+  "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_vi_readable.srt",
+  "sha256": "762b86690b0b7ac925a17080f67fdde046403b56c8129365e7e10f373ef7d508",
+  "sizeBytes": 2526,
+  "cues": 26,
+  "derivedFrom": "CIN_000_vi.srt (canonical 6 cues, unchanged)",
+  "method": "sentence then clause split at <=82 chars; timing proportional to character count inside each canonical cue window, with a 1.2 s minimum display per chunk redistributed inside the cue; concatenated text identical to canonical (whitespace-normalized); sequence kept monotonic across the one canonical overlap (cue 3/4) by a +0.336 s shift of cue 4 chunks"
+ }
+}

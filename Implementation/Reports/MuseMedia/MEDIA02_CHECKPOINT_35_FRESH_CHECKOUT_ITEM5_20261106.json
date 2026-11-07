@@ -1,0 +1,81 @@
+{
+  "tool": "verify_fresh_checkout_item5.py",
+  "tool_version": "1.0.0",
+  "checkout": "/tmp/ngumach-fresh-item5",
+  "checkout_head": "ea1a3eec34bd5a23cb75c86c0afcab0788fca44d",
+  "checked_at_utc": "2026-11-06T04:45:17.586748+00:00",
+  "policy_source": "integration codex/story-gameplay-integration-20261031 @ 6f2b465",
+  "attributes_file_present": true,
+  "checks": {
+    "policy_ogv_lfs": {
+      "passed": false,
+      "expected": "*.ogv filter=lfs diff=lfs merge=lfs -text",
+      "present": false
+    },
+    "policy_lf_rules": {
+      "passed": false,
+      "expected_count": 7,
+      "missing": [
+        "Art_Source/Cinematics/**/*.json text eol=lf",
+        "Art_Source/Audio/Muse/**/*.json text eol=lf",
+        "Implementation/Content/Narrative/Deliveries/**/*.json text eol=lf",
+        "Implementation/Content/Narrative/Deliveries/**/*.srt text eol=lf",
+        "ClientGodot/assets/cinematics/**/*.json text eol=lf",
+        "ClientGodot/assets/cinematics/**/*.srt text eol=lf",
+        "ClientGodot/assets/audio/**/*.json text eol=lf"
+      ]
+    },
+    "ogv_real_bytes": {
+      "passed": false,
+      "real_bytes": 0,
+      "lfs_pointers": 22,
+      "other": [],
+      "pointer_files": [
+        "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_001/CIN_001_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_002/CIN_002_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_003/CIN_003_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_004/CIN_004_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_005/CIN_005_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_006/CIN_006_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_007/CIN_007_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_008/CIN_008_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_009/CIN_009_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_010/CIN_010_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_011/CIN_011_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_012/CIN_012_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_013/CIN_013_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_014/CIN_014_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_015/CIN_015_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_016/CIN_016_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_017/CIN_017_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_018/CIN_018_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_019/CIN_019_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/CIN_020/CIN_020_640x360_30fps.ogv",
+        "ClientGodot/assets/cinematics/P0_animatic_640x360_30fps.ogv"
+      ]
+    },
+    "text_lf_endings": {
+      "passed": true,
+      "files_checked": 253,
+      "files_with_cr": [],
+      "note": "Linux-only evidence: a Linux checkout keeps LF even without the policy; the LF rules matter for Windows checkouts. A PASS here never proves the policy is present."
+    },
+    "policy_matches_reference": {
+      "passed": false,
+      "reference": "/tmp/item5_reference_gitattributes_6f2b465.txt",
+      "reference_rules": 27,
+      "missing": [
+        "*.ogv filter=lfs diff=lfs merge=lfs -text",
+        "Art_Source/Cinematics/**/*.json text eol=lf",
+        "Art_Source/Audio/Muse/**/*.json text eol=lf",
+        "Implementation/Content/Narrative/Deliveries/**/*.json text eol=lf",
+        "Implementation/Content/Narrative/Deliveries/**/*.srt text eol=lf",
+        "ClientGodot/assets/cinematics/**/*.json text eol=lf",
+        "ClientGodot/assets/cinematics/**/*.srt text eol=lf",
+        "ClientGodot/assets/audio/**/*.json text eol=lf"
+      ]
+    }
+  },
+  "verdict": "FAIL"
+}

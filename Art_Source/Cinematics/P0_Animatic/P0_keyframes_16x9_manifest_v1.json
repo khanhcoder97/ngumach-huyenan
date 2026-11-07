@@ -1,0 +1,166 @@
+{
+  "manifestId": "NGM_P0_KEYFRAMES_16X9_V1",
+  "checkpoint": "MEDIA-02 checkpoint 16 (Gói 30 fix (c): CIN_002_S02 corrected keyframe + separate 16:9 keyframes per shot)",
+  "decisionRefs": [
+    "DEC-MEDIA-P0-20261105 (CIN_001_S05 version B, 24.8-28.5 s; CIN_004 Ly An off-screen)",
+    "Review Muse_PR119.md finding 3 (CIN_002_S02: good hand stops before water; no center-crop clipping)",
+    "Owner issue #116 comment 6657227288 (fix the 5th panel; keep full head/face in the 16:9 frame)",
+    "Review Muse_PR119_67f_followup.md (4 CP13 panels accepted at storyboard level; S02 unchanged until this checkpoint)"
+  ],
+  "baseIntegration": "f0859d0",
+  "branch": "muse/media-production-20261104",
+  "generatedSourceSha256": "75b9f190c524e5c989088ebeb21859772de2d137a4c80e6a6ff6b95bd5fecfa4",
+  "framingVerified": "Contact sheet of all 12 keyframes (640x360 each) viewed directly 2026-11-05 (checkpoint 16); every subject/head fully in frame; CIN_002_S02 also viewed full-frame + hand zoom: bare good hand hovers above water with a visible gap, bandaged forearm rests on the pier, whole head in frame with headroom.",
+  "notes": [
+    "12 separate 16:9 keyframes, one per P0 shot, 640x360 each.",
+    "Only CIN_002_S02 is a newly generated picture in this checkpoint; the other 11 keyframes are the v2 panels (4 independently generated in checkpoint 13, 7 v1 sheet crops re-verified for framing).",
+    "The animatic panel for a shot is derived from the storyboard sheet (sheet box -> center-crop -> 640x360), so a rebuilt panel SHA may differ from the keyframe SHA by resampling; panel SHAs live in P0_animatic_outputs_v3.json.",
+    "Still STORYBOARD_ONLY: final animated takes and final-picture approval remain with Codex review."
+  ],
+  "shots": [
+    {
+      "shotId": "CIN_001_S01",
+      "sceneId": "CIN_001",
+      "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S01.png",
+      "sha256": "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8",
+      "size": "640x360",
+      "aspectRatio": "16:9",
+      "source": "panel-sheet-crop-v1",
+      "sourceDetail": "v1 sheet-crop panel (center-crop 16:9 from storyboard sheet v1); framing re-verified on the checkpoint-16 contact sheet. STORYBOARD level only — NOT an independently generated final frame.",
+      "framingNote": "Wide rainy pier with lanterns and baskets; no person; full pier and water in frame.",
+      "finalPictureStatus": "STORYBOARD_ONLY"
+    },
+    {
+      "shotId": "CIN_001_S02",
+      "sceneId": "CIN_001",
+      "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S02.png",
+      "sha256": "b09dfb68f439b034ecbc102f5df6b52f4d8e6babe14b89fce38d1fd66dbf343e",
+      "size": "640x360",
+      "aspectRatio": "16:9",
+      "source": "panel-sheet-crop-v1",
+      "sourceDetail": "v1 sheet-crop panel (center-crop 16:9 from storyboard sheet v1); framing re-verified on the checkpoint-16 contact sheet. STORYBOARD level only — NOT an independently generated final frame.",
+      "framingNote": "Sealed parcel on the pier edge over water; parcel whole, rope and post in frame.",
+      "finalPictureStatus": "STORYBOARD_ONLY"
+    },
+    {
+      "shotId": "CIN_001_S03",
+      "sceneId": "CIN_001",
+      "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S03.png",
+      "sha256": "c07ddc98665021894c4cd92099dd24faac3a6f18f10610d3d67f81d34f1467bb",
+      "size": "640x360",
+      "aspectRatio": "16:9",
+      "source": "panel-16x9-checkpoint-13",
+      "sourceDetail": "Independently generated 16:9 panel (checkpoint 13, D4 fix), pasted into storyboard sheet v2.",
+      "framingNote": "Bell reflection only on the water under the pier (checkpoint 13 fix); no solid bell; ripple interrupts the reflection.",
+      "finalPictureStatus": "STORYBOARD_ONLY"
+    },
+    {
+      "shotId": "CIN_001_S04",
+      "sceneId": "CIN_001",
+      "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S04.png",
+      "sha256": "0722da26101620a15e622f9bf54237ad929f10cc65ddf0555447c582299aa741",
+      "size": "640x360",
+      "aspectRatio": "16:9",
+      "source": "panel-sheet-crop-v1",
+      "sourceDetail": "v1 sheet-crop panel (center-crop 16:9 from storyboard sheet v1); framing re-verified on the checkpoint-16 contact sheet. STORYBOARD level only — NOT an independently generated final frame.",
+      "framingNote": "Sealed letter close-up on the pier boards; whole letter and wax seal in frame.",
+      "finalPictureStatus": "STORYBOARD_ONLY"
+    },
+    {
+      "shotId": "CIN_001_S05",
+      "sceneId": "CIN_001",
+      "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S05.png",
+      "sha256": "0d48a6283d82aec6b1e5b77051d80c0e0714b12b86c4ef48d153d129ba098656",
+      "size": "640x360",
+      "aspectRatio": "16:9",
+      "source": "panel-sheet-crop-v1",
+      "sourceDetail": "v1 sheet-crop panel (center-crop 16:9 from storyboard sheet v1); framing re-verified on the checkpoint-16 contact sheet. STORYBOARD level only — NOT an independently generated final frame.",
+      "framingNote": "Ly An crouching with the parcel at the pier edge; full figure in frame (DECIDED dialogue window 24.8-28.5 s).",
+      "finalPictureStatus": "STORYBOARD_ONLY"
+    },
+    {
+      "shotId": "CIN_001_S06",
+      "sceneId": "CIN_001",
+      "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S06.png",
+      "sha256": "0678aa59b4c856b724ba53981132bcf27ff33bdee44bf64130b0296d34184278",
+      "size": "640x360",
+      "aspectRatio": "16:9",
+      "source": "panel-16x9-checkpoint-13",
+      "sourceDetail": "Independently generated 16:9 panel (checkpoint 13, D4 fix), pasted into storyboard sheet v2.",
+      "framingNote": "Ly An standing on the pier (checkpoint 13 fix, per questkit); full figure in frame.",
+      "finalPictureStatus": "STORYBOARD_ONLY"
+    },
+    {
+      "shotId": "CIN_002_S01",
+      "sceneId": "CIN_002",
+      "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_002_S01.png",
+      "sha256": "3553e28e24322bbea33affabfd900d5d2360a132c5a492355a7fe3a173906fb3",
+      "size": "640x360",
+      "aspectRatio": "16:9",
+      "source": "panel-sheet-crop-v1",
+      "sourceDetail": "v1 sheet-crop panel (center-crop 16:9 from storyboard sheet v1); framing re-verified on the checkpoint-16 contact sheet. STORYBOARD level only — NOT an independently generated final frame.",
+      "framingNote": "Ripples drifting toward the submerged stone channel; no person; full channel in frame.",
+      "finalPictureStatus": "STORYBOARD_ONLY"
+    },
+    {
+      "shotId": "CIN_002_S02",
+      "sceneId": "CIN_002",
+      "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_002_S02.png",
+      "sha256": "4c5b7b3523c59efa4d7e4a081fc936b0781b21b0f9f16c595360430212c0cafa",
+      "size": "640x360",
+      "aspectRatio": "16:9",
+      "source": "generated-16x9-checkpoint-16",
+      "sourceDetail": "Independently generated 16:9 keyframe (checkpoint 16), corrected per review finding 3 + owner comment 6657227288; generated source sha256 75b9f190c524e5c989088ebeb21859772de2d137a4c80e6a6ff6b95bd5fecfa4.",
+      "framingNote": "Ta Van Khanh leaning on the pier: BARE good hand lowered toward the water and STOPPING above it (visible gap, no touch, no contact ripples); BANDAGED forearm resting back on the pier; whole head and face in frame with headroom; broken sword hilt on his back.",
+      "finalPictureStatus": "STORYBOARD_ONLY"
+    },
+    {
+      "shotId": "CIN_002_S03",
+      "sceneId": "CIN_002",
+      "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_002_S03.png",
+      "sha256": "71d1a25239eb8c7720243e96e1be9195859b801409f97952d37cd037db39e3d6",
+      "size": "640x360",
+      "aspectRatio": "16:9",
+      "source": "panel-sheet-crop-v1",
+      "sourceDetail": "v1 sheet-crop panel (center-crop 16:9 from storyboard sheet v1); framing re-verified on the checkpoint-16 contact sheet. STORYBOARD level only — NOT an independently generated final frame.",
+      "framingNote": "Strict top-down reed bank and stone channel; hairline crack readable; no person.",
+      "finalPictureStatus": "STORYBOARD_ONLY"
+    },
+    {
+      "shotId": "CIN_004_S01",
+      "sceneId": "CIN_004",
+      "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_004_S01.png",
+      "sha256": "e43df4ff0178dcc2dc390ee907bd1d05e35632cdbc9e8672b2310eb535d54829",
+      "size": "640x360",
+      "aspectRatio": "16:9",
+      "source": "panel-16x9-checkpoint-13",
+      "sourceDetail": "Independently generated 16:9 panel (checkpoint 13, D4 fix), pasted into storyboard sheet v2.",
+      "framingNote": "Boss Mang Cot head rising: exactly ONE broken horn (short jagged stump) and one whole curved horn (checkpoint 13 fix, canon: 1 broken horn).",
+      "finalPictureStatus": "STORYBOARD_ONLY"
+    },
+    {
+      "shotId": "CIN_004_S02",
+      "sceneId": "CIN_004",
+      "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_004_S02.png",
+      "sha256": "fc0450bf902e9020dd2d1548168712653e20566ba1f437de80a9a26f09615cf5",
+      "size": "640x360",
+      "aspectRatio": "16:9",
+      "source": "panel-sheet-crop-v1",
+      "sourceDetail": "v1 sheet-crop panel (center-crop 16:9 from storyboard sheet v1); framing re-verified on the checkpoint-16 contact sheet. STORYBOARD level only — NOT an independently generated final frame.",
+      "framingNote": "Serpent coiling in the whirlpool; whole head and body arc in frame.",
+      "finalPictureStatus": "STORYBOARD_ONLY"
+    },
+    {
+      "shotId": "CIN_004_S03",
+      "sceneId": "CIN_004",
+      "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_004_S03.png",
+      "sha256": "e7493991a21827df7dc5a5d4e115d3aa12ebf986c5301e6ea183bdea662cf59b",
+      "size": "640x360",
+      "aspectRatio": "16:9",
+      "source": "panel-16x9-checkpoint-13",
+      "sourceDetail": "Independently generated 16:9 panel (checkpoint 13, D4 fix), pasted into storyboard sheet v2.",
+      "framingNote": "Strict top-down arena (checkpoint 13 fix); serpent withdrawing north, southern arrival clear, wooden landing at the south edge.",
+      "finalPictureStatus": "STORYBOARD_ONLY"
+    }
+  ]
+}

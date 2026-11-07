@@ -1,0 +1,130 @@
+{
+ "schemaVersion": 1,
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_012 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "abcf254",
+ "sceneId": "CIN_012",
+ "title": "Giữ tên người sống",
+ "durationSeconds": 18.0,
+ "dialogueCues": 1,
+ "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+ "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+ "motionModel": {
+  "kind": "ANIMATIC_MOTION_KEN_BURNS",
+  "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
+  "shots": {
+   "CIN_012_S01": "push-in centered",
+   "CIN_012_S02": "push-in centered",
+   "CIN_012_S03": "push-in centered"
+  }
+ },
+ "reelOffsetSeconds": null,
+ "reelTotalSeconds": null,
+ "files": {
+  "mp4": {
+   "path": "assets/cinematics/CIN_012/CIN_012_640x360_30fps.mp4",
+   "sha256": "e2a1833eb01937ac36adf3796afcc4fd0ca0165129b7988bf3a472fcc72e3c19",
+   "sizeBytes": 1062663,
+   "codec": "h264",
+   "width": 640,
+   "height": 360,
+   "fps": 30,
+   "durationSeconds": 18.0,
+   "frames": 540
+  },
+  "ogv": {
+   "path": "assets/cinematics/CIN_012/CIN_012_640x360_30fps.ogv",
+   "sha256": "943fab250fab991fa33b298e7b2df417a85477b446b092a18e5a78536ccbd0f2",
+   "sizeBytes": 460161,
+   "codec": "theora",
+   "width": 640,
+   "height": 360,
+   "fps": 30,
+   "durationSeconds": 18.0,
+   "storedFrames": 521
+  },
+  "poster": {
+   "path": "assets/cinematics/CIN_012/CIN_012_poster.png",
+   "sha256": "489eb56b85cd3480628ae8ab0265b69086df0bcb562d8ff4e15f98bfd8982cb2",
+   "sizeBytes": 386196,
+   "sourceKeyframe": "keyframe_CIN_012_S01.png"
+  },
+  "timing": {
+   "path": "assets/cinematics/CIN_012/CIN_012_timing_v1.json",
+   "sha256": "803902a6a0ee23ec8f14b7e383fa91d94e65c47a158b55745ccf48c20e24f06b",
+   "sizeBytes": 2423
+  },
+  "srt": {
+   "path": "assets/cinematics/CIN_012/CIN_012_vi.srt",
+   "sha256": "d85efc72a41ae3e3c080d2c0d35260bd10370ecd04f197b5818499223c812166",
+   "sizeBytes": 128,
+   "status": "DRAFT"
+  }
+ },
+ "frameCheck": {
+  "CIN_012_S01": {
+   "identitySeconds": 0.0,
+   "identityMeanAbsChannelDiff": 5.474,
+   "identityMaxAllowed": 10.0,
+   "motionSeconds": 5.9,
+   "motionMeanAbsChannelDiff": 33.486,
+   "motionMinRequired": 1.5,
+   "continuousMotionMeanAbsChannelDiff": 29.133,
+   "continuousMinRequired": 0.5
+  },
+  "CIN_012_S02": {
+   "identitySeconds": 6.0,
+   "identityMeanAbsChannelDiff": 3.075,
+   "identityMaxAllowed": 10.0,
+   "motionSeconds": 11.9,
+   "motionMeanAbsChannelDiff": 21.829,
+   "motionMinRequired": 1.5,
+   "continuousMotionMeanAbsChannelDiff": 19.421,
+   "continuousMinRequired": 0.5
+  },
+  "CIN_012_S03": {
+   "identitySeconds": 12.0,
+   "identityMeanAbsChannelDiff": 2.989,
+   "identityMaxAllowed": 10.0,
+   "motionSeconds": 17.9,
+   "motionMeanAbsChannelDiff": 24.129,
+   "motionMinRequired": 1.5,
+   "continuousMotionMeanAbsChannelDiff": 18.574,
+   "continuousMinRequired": 0.5
+  }
+ },
+ "shots": [
+  {
+   "shotId": "CIN_012_S01",
+   "startSeconds": 0.0,
+   "endSeconds": 6.0,
+   "camera": "WIDE_STATIC",
+   "keyframe": "keyframe_CIN_012_S01.png",
+   "motion": "push-in centered"
+  },
+  {
+   "shotId": "CIN_012_S02",
+   "startSeconds": 6.0,
+   "endSeconds": 12.0,
+   "camera": "DETAIL_LOCKED",
+   "keyframe": "keyframe_CIN_012_S02.png",
+   "motion": "push-in centered"
+  },
+  {
+   "shotId": "CIN_012_S03",
+   "startSeconds": 12.0,
+   "endSeconds": 18.0,
+   "camera": "MEDIUM_STATIC",
+   "keyframe": "keyframe_CIN_012_S03.png",
+   "motion": "push-in centered"
+  }
+ ],
+ "notes": [
+  "Campaign revised take (Goi 31 item 2, checkpoint 32): shot-content fixes, real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+  "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
+  "CIN_012 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
+  "Scene SRT carries 1 cue (Ha Mac, CIN_012_S03 at 12.5-17.5 s). Dialogue window status in the campaign manifest: PROPOSED_ANIMATIC_PLACEMENT, approved for DRAFT VO production only by the checkpoint-14 D1 decision. The checkpoint 17 VO draft for this cue measures 4.320 s at natural speed (windowFit FITS, not sped up).",
+  "Checkpoint 32 (Goi 31 item 2) revises S01/S03: S03's baked-in English choice UI bar is removed -- the frame is clean for the game's own choice overlay; S01's white hooded mascot is removed and the stepped orange heat palette is restored. S02 unchanged from checkpoint 25."
+ ]
+}

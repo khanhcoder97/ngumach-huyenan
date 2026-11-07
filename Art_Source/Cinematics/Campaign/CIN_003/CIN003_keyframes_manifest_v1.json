@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN003_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 25 - CIN_003 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_003",
+ "title": "Hai người, hai bóng",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_LYAN) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "keyframes": [
+  {
+   "shotId": "CIN_003_S01",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_003_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "aeffda939892e64c76c62b06a9af66b3a4e4cb1300cd26a6e34fc791085d8d39",
+   "sourceStagingFile": "media-generation-keyframe-cin-003-s01-0-75f842d2-2074-43e9-933f-7f8ca01c983b.webp",
+   "sourceStagingSha256": "a792032b901bb205fe537c9f1693bf860dadd4b046c204ab60c9fb18ca892200",
+   "sourceSnapshotId": "893de506-d830-4681-b286-79c59997b56e:3womgx",
+   "framing": "Two fishers sit apart under a thatched shelter flanking a misty lotus pool — the conical-hat fisher at left mends a net in profile while the headband fisher at right sits with back turned, paddle across the lap, both gazing out at the water from opposite angles.",
+   "knownDefects": "The net reads intact rather than visibly torn, and the second fisher (back to camera) reads youthful, so 'two adult fishers' is only loosely matched; no text anywhere, as required."
+  },
+  {
+   "shotId": "CIN_003_S02",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_003_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "8ab2b85b34316a7f1acb0fdccbfced27a8aebcd4c8bed57efbf6e66c4fae9f07",
+   "sourceStagingFile": "media-generation-keyframe-cin-003-s02-0-cdf9ab38-872d-428f-bacb-0a0b91a88b25.webp",
+   "sourceStagingSha256": "715940f1484be1ee53ae2068f40adb2304e88ba127c0e530c8db915cc4ab05d3",
+   "sourceSnapshotId": "688e87f2-6a1f-4a69-8c98-61914b5ffeea:rj3lhp",
+   "framing": "A reed-lined stream at dusk holds two dark, fragmenting silhouettes standing in the shallows, their broken reflections dissolving into the rippled surface with no faces discernible.",
+   "knownDefects": "Scale/framing drift: the water reads as a stream or pond rather than a shallow puddle, and the silhouettes stand as full figures above the waterline instead of reflections held in the puddle; palette is markedly darker and bluer (dusk) than the daylight of S01/S03 — cross-shot lighting drift."
+  },
+  {
+   "shotId": "CIN_003_S03",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_003_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "41a134445e1d13efac489472fd40532ada546199052ae4f9017d9fb3cf915750",
+   "sourceStagingFile": "media-generation-keyframe-cin-003-s03-0-0e7ab93d-90a1-40f0-9416-cd9bc8ec53df.webp",
+   "sourceStagingSha256": "a4493f398ddfa22676beb758a44eb72ad7f4a0cdec47b34c02a1d2f78e38b68b",
+   "sourceSnapshotId": "27d5173b-a1f1-4865-9f71-bd4f5dae40a5:fdv8wy",
+   "framing": "Ly An kneels at center on a wooden dock between two conical-hat fishers, her hands just leaving a sealed envelope resting on a cloth spread on the planks, a boat bow and thatched hut framing the group.",
+   "knownDefects": "Cross-shot inconsistency: both fishers wear conical hats here and read as two older, heavier men, whereas S01 pairs one conical-hat fisher with a youthful headband-wearing figure; Ly An is staged front-facing and portrait-like rather than caught mid-gesture listening."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Recorded keyframe defects: S01's net reads intact rather than visibly torn and the back-turned fisher reads youthful; S02's water reads as a stream rather than a shallow puddle and its palette is dusk-dark against the daylight of S01/S03; S03's two fishers both wear conical hats and read older/heavier than S01's pair, and Ly An is staged front-facing rather than mid-gesture. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+ ]
+}

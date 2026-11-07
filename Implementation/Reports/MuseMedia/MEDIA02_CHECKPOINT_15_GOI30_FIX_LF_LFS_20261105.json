@@ -1,0 +1,51 @@
+{
+ "base_integration": "a84ce590",
+ "branch": "muse/media-production-20261104",
+ "checkpoint": "MEDIA-02 checkpoint 15 - Gói 30 fix (b): LF + LFS",
+ "d1": "APPROVED for rough VO production only, 21 windows per DEC-MEDIA-DRAFT-WINDOWS-20261105 (CIN_001_S05 24.8-28.5s; CIN_002 7-11s; CIN_004 7.5-9.5s off-screen; CIN_006 12.5-17.5s; CIN_020 VOICE_LETTER_RECIPIENT, cinematic voice role only, no gameplay NPC)",
+ "date": "2026-11-05",
+ "fix": "24 raw binaries to LFS pointers via renormalize with integration a84ce590 .gitattributes rules (applied locally through .git/info/attributes; .gitattributes itself NOT committed on media branch - out of scope, lives in integration); text already LF (0 CRLF), renormalize content no-op; builder/validator labels updated to checkpoint 15 / base a84ce590; manifests regenerated",
+ "fresh_checkout": {
+  "linux_test_merge": "fresh file:// clone of local test-merge 2f0f605 (media checkpoint 15 into a84ce590): targeted git lfs pull resolves OGV (OggS/theora, sha 7498a8f1...) and panel PNG (sha ea9d4228...); full lfs pull fails on some older objects missing from the local clone store - full remote clone check pending after push",
+  "test_merge_commit": "2f0f605 (branch tmp/merge-check-20261105 deleted after verification)",
+  "windows_simulated": "fresh clone with core.autocrlf=true: 633 files i/lf w/lf; 0/85 delivery text files contain CR; timing LF-SHA 21/21; runtime manifest timing/SRT SHA 40/40",
+  "remote_clone_github": "fresh clone of pushed 68d6e52 from github.com: LFS 1713/1713 objects (275.7 MB); OGV pointer on plain checkout (pre-merge caveat, no *.ogv rule on media branch); OGV object 7498a8f1... present on server and smudges to correct SHA; runtime verifier first run exactly 1 mismatch (OGV pointer), after placing server bytes: PASS 0 mismatches (545 audio, 3 animatic, 20 scenes, 20 timing, 20 SRT); source validator PASS 0 mismatches (1093 audio, 20 scenes, 21 cues, 12 panels, 3 VO takes)",
+  "remote_clone_note": "/tmp tmpfs (512 MB) filled during first attempt (no space left on device); verification moved to /home/hatch disk; scratch clone deleted after verification"
+ },
+ "goi30_comment": 6655412688,
+ "honest_counts": "541/545 runtime audio files are unchanged ports of pre-existing Codex PackV1; only 4 VO files are new. Campaign has timing/SRT, not 20 completed videos. Only video is the 72s twelve-still review reel, not an opening autoplay asset.",
+ "incident_recovery": "Branch switch under GIT_LFS_SKIP_SMUDGE=1 replaced the 24 converted files' worktree bytes with pointers; first builder run after the label edit FAILED (exit 1, 21 errors) and overwrote 4 runtime VO + 3 animatic files with pointer text and rewrote RUNTIME_AUDIO_manifest_v1.json as vo=0/totalFiles=541. Recovered with explicit git lfs checkout of 28 files (30 MB) from the local object store, re-ran builder (ALL VERIFIED, vo=4/totalFiles=545, audio manifest byte-identical to CP14) and both validators (PASS, 0 mismatches). Fix commit amended before push to include the full clean state.",
+ "integration_head": "a84ce590",
+ "lf": {
+  "crlf_files_before": 0,
+  "renormalize_text_content_change": "none - all delivery text already LF",
+  "timing_lf_sha_vs_owner_decisions": "21/21 match DEC-MEDIA-DRAFT-WINDOWS-20261105 sourceSha256LF"
+ },
+ "lfs": {
+  "converted_raw_to_pointers": 24,
+  "count_reconciliation": "review counted 22 at 3f34f0d (7 VO + sheet v1 + 12 panels + MP4 + poster; OGV excluded, no pattern then); CP13 added sheet v2 = 23rd pattern file; OGV = 24th after PR #120 added *.ogv pattern",
+  "lfs_files_in_index_after": 1714,
+  "lfs_files_in_index_before": 1690,
+  "ogv_pointer_oid": "7498a8f14970ad352869fda516fd42a188620fcab7cd6856c6a5001e77dc8d72",
+  "pre_merge_caveat": "OGV checks out as pointer text on the media branch alone (no *.ogv rule there); resolves after PR #119 merges into integration a84ce590"
+ },
+ "next_blocks": [
+  "Gói 30 fix (c): CIN_002_S02 keyframe (good hand stops before water, no head/face crop) + separate 16:9 keyframes per shot",
+  "Campaign draft VO, 17 cues (D1 open; CIN020 VOICE_LETTER_RECIPIENT)",
+  "Per-scene clip exports + PR #119 description rewrite per actual counts (needs owner approval card)"
+ ],
+ "open_goi30_items": [
+  "fix (c) CIN_002_S02 + 16:9 keyframes",
+  "per-scene exports (item 6)",
+  "PR #119 description rewrite (item 8, needs approval card)",
+  "ACK comment checkpoint 15 on issue #116 (needs approval card)"
+ ],
+ "owner_comment_new": 6656610885,
+ "pr119_review": "Implementation/Reports/Review_20261105/Muse_PR119.md now present on integration via PR #120 (pinned 3f34f0d, HOLD, 5 findings, D1 rough VO only)",
+ "pr119_state": "open, head 67f0d92 before this checkpoint, 21 commits, 703 changed files (API base sha still shows f383233; base branch now at a84ce590)",
+ "runtime_cine_manifest_sha256_prefix": "see RUNTIME_CINEMATICS_manifest_v1.json (checkpoint field now checkpoint 15; all content SHAs unchanged)",
+ "runtime_reverify": "MEDIA02_CHECKPOINT_15_RUNTIME_REVERIFY_20261105.json sha256 prefix 2f679c8dcd6b1a6e: 545 audio, 3 animatic, 20 scenes, 20 timing, 20 SRT, 0 mismatches, PASS",
+ "scope_audit": "707 changed paths, 0 violations (base a84ce590)",
+ "source_revalidation": "MEDIA02_CHECKPOINT_15_SOURCE_REVALIDATION_20261105.json sha256 prefix e3ec424fe654cce8: 1093 audio files, 20 scenes, 21 dialogues == 21 SRT cues == 21 runtime cues, 12 panels, 3 VO takes, 0 mismatches, PASS",
+ "pushed_sha": "68d6e52"
+}

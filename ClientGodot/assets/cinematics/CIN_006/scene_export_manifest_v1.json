@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "MEDIA-02 checkpoint 34 - Goi 31 item 4: embedded draft mix audio in the runtime OGV + review MP4 (video streams bit-identical); poster/SRT/timing unchanged",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "baseSha": "abcf254",
+  "sceneId": "CIN_006",
+  "title": "Con dấu qua phố",
+  "durationSeconds": 18.0,
+  "dialogueCues": 1,
+  "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+  "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+  "motionModel": {
+    "kind": "ANIMATIC_MOTION_KEN_BURNS",
+    "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
+    "shots": {
+      "CIN_006_S01": "push-in centered",
+      "CIN_006_S02": "push-in centered on the seal die",
+      "CIN_006_S03": "zoom-out centered"
+    }
+  },
+  "reelOffsetSeconds": null,
+  "reelTotalSeconds": null,
+  "files": {
+    "mp4": {
+      "path": "assets/cinematics/CIN_006/CIN_006_640x360_30fps.mp4",
+      "sha256": "e551b9ad2d7b76330a9e1d2adb4e417edeeba25358d37aa6705575d75d832321",
+      "sizeBytes": 1934291,
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "frames": 540,
+      "audio": {
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 192,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN006_DRAFT_V1/CIN_006_mix_draft_v1.wav",
+        "sourceMixSha256": "a71a38f006f4a8511c051173bbffb1609f46b8dba14e9141fda4143d1173dda6",
+        "mixVersion": "v1_cin006_proposed",
+        "integratedLUFS": "-22.04",
+        "truePeakDBTP": "-3.40",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 540
+      }
+    },
+    "ogv": {
+      "path": "assets/cinematics/CIN_006/CIN_006_640x360_30fps.ogv",
+      "sha256": "25c0b69e38bd93fbcf8e638027bdb0540caa35402eea0f0d9bba5d8bee666346",
+      "sizeBytes": 777786,
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "storedFrames": 480,
+      "audio": {
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 160,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN006_DRAFT_V1/CIN_006_mix_draft_v1.wav",
+        "sourceMixSha256": "a71a38f006f4a8511c051173bbffb1609f46b8dba14e9141fda4143d1173dda6",
+        "mixVersion": "v1_cin006_proposed",
+        "integratedLUFS": "-22.04",
+        "truePeakDBTP": "-3.43",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 480
+      }
+    },
+    "poster": {
+      "path": "assets/cinematics/CIN_006/CIN_006_poster.png",
+      "sha256": "53859a1946cb9ac6ea3609cb67de7c74be2efda5c9187587e5ca9a741c7fe830",
+      "sizeBytes": 437339,
+      "sourceKeyframe": "keyframe_CIN_006_S01.png"
+    },
+    "timing": {
+      "path": "assets/cinematics/CIN_006/CIN_006_timing_v1.json",
+      "sha256": "4c237f04195989b6b113a8800d114320ca05079bb8163fa0c9d3871988402955",
+      "sizeBytes": 2704
+    },
+    "srt": {
+      "path": "assets/cinematics/CIN_006/CIN_006_vi.srt",
+      "sha256": "cf43595db5e0a88fa687ee934ca953f19aa4e8e614af39bc27a9af01a164f708",
+      "sizeBytes": 141,
+      "status": "DRAFT"
+    }
+  },
+  "frameCheck": {
+    "CIN_006_S01": {
+      "identitySeconds": 0.0,
+      "identityMeanAbsChannelDiff": 5.637,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 5.9,
+      "motionMeanAbsChannelDiff": 38.23,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 33.212,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_006_S02": {
+      "identitySeconds": 6.0,
+      "identityMeanAbsChannelDiff": 3.669,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 11.9,
+      "motionMeanAbsChannelDiff": 41.352,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 32.925,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_006_S03": {
+      "identitySeconds": 17.9667,
+      "identityMeanAbsChannelDiff": 7.041,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 12.0,
+      "motionMeanAbsChannelDiff": 43.119,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 36.531,
+      "continuousMinRequired": 0.5
+    }
+  },
+  "shots": [
+    {
+      "shotId": "CIN_006_S01",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "camera": "MEDIUM_STATIC",
+      "keyframe": "keyframe_CIN_006_S01.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_006_S02",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "camera": "DETAIL_LOCKED",
+      "keyframe": "keyframe_CIN_006_S02.png",
+      "motion": "push-in centered on the seal die"
+    },
+    {
+      "shotId": "CIN_006_S03",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "camera": "MEDIUM_STATIC",
+      "keyframe": "keyframe_CIN_006_S03.png",
+      "motion": "zoom-out centered"
+    }
+  ],
+  "notes": [
+    "Campaign revised take (Goi 31 item 2, checkpoint 32): shot-content fixes, real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+    "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
+    "CIN_006 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
+    "Canonical dialogue window 12.5-17.5 s stays PROPOSED_ANIMATIC_PLACEMENT. Its VO draft (checkpoint 19) overruns the window by +0.520 s at natural speed; owner verdict 2026-11-06: keep the window unchanged and let Codex decide at PR #119 review (the clip carries no audio).",
+    "Checkpoint 32 (Goi 31 item 2) revises S02: the oversized blurred gloved hand and pale face-like intrusion from frame right are removed; the green resin now reads as a fiber trapped inside the rough paper. S01/S03 unchanged from checkpoint 22."
+  ],
+  "hasAudioTrack": true
+}

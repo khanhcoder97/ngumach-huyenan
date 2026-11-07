@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN009_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_009 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "abcf254",
+ "sceneId": "CIN_009",
+ "title": "Tiếng rừng được đáp",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. CIN_009 has an empty pack character list, so no named character lock blocks these pictures; the three workers in S02 are unnamed generation-invented figures, not canon designs. Checkpoint 32 (Goi 31 item 2) revises CIN_009_S01; all other shots unchanged.",
+ "keyframes": [
+  {
+   "shotId": "CIN_009_S01",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_009_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "5d64d3e203105788591923c9e416e50f876e3ec4e8896ac602ca3212b29080d7",
+   "sourceStagingFile": "media-generation-s01-original-vietnamese-inspir-0-fe4280cc-174f-44c9-9331-8a7533af89c7.webp",
+   "sourceStagingSha256": "2b80ea8d5599a73c7a11b30f38132c648a0210370fa0b3f9e8d6c6ad7374597d",
+   "sourceSnapshotId": "c28b0c75-8646-4428-a4d9-817f01c84f2b:jxe5wt",
+   "framing": "A teal spring flows down the middle of the frame between two large moss-covered split root banks left and right; small stones in the stream bed; small warm light flecks detach from bark and drift along the water; bamboo, ferns and bright green canopy behind.",
+   "knownDefects": "The composition reads as a wide stream channel between two root banks rather than a single narrow split-root cleft; light flecks are still small square glows; some background bushes and stones are generic generation detail. No person, no hooded figure, no mascot; bright daylight."
+  },
+  {
+   "shotId": "CIN_009_S02",
+   "camera": "WIDE_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_009_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "fd0051fc7904de9c9f26c33c0f97cd4029f06ba72009459c258ac152d3d46581",
+   "sourceStagingFile": "media-generation-keyframe-cin-009-s02-0-bf708c66-36fb-4928-9de5-7c099a52063b.webp",
+   "sourceStagingSha256": "ae4022d04d39f622a4556018755232e4c5cc4e8293d832386d11652a9b09d616",
+   "sourceSnapshotId": "da9bab05-d827-4470-9fbe-2d927acb472f:flgauy",
+   "framing": "Wide shot of a forest clearing brightening: three conical-hat workers (two men with shoulder pole and axe, one woman with a basket) listening toward the light at center-right; one large dark quiet tree dominates frame right.",
+   "knownDefects": "The three workers are generic generation-invented figures (unnamed, no lock needed: the pack character list is empty); the dark tree crowds the right third of the frame."
+  },
+  {
+   "shotId": "CIN_009_S03",
+   "camera": "TOPDOWN_MATCH",
+   "file": "keyframes_16x9/keyframe_CIN_009_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "d3abc86cd30bc7f4f30fefb9cae467e5e3e1e85bb3dfbc861b800885d3851966",
+   "sourceStagingFile": "media-generation-keyframe-cin-009-s03-0-72ec3e27-1fbc-4c6a-8f7e-1dea2b9ea7e2.webp",
+   "sourceStagingSha256": "92c363090c1c67a79a3a622b025f72ae8534141c168916efcb7863dbecc52f3c",
+   "sourceSnapshotId": "590a7419-c9fe-4721-a546-3ebc9a6b4ce9:xd2eat",
+   "framing": "Top-down view of the safe spring path: a stone-lined channel carries the water from the north falls toward the southern exit; a gnarled unlit root mass sits off to the lower-left side as the discovery cue.",
+   "knownDefects": "Not strictly top-down (slight 3/4 angle on the rocks and the small shrine at left); the shrine building at frame left is not in the prompt."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Checkpoint 32 (Goi 31 item 2) revises S01: the invented white hooded figure is removed; the spring reads as a bright daylight payoff. S02/S03 unchanged from checkpoint 23."
+ ]
+}
