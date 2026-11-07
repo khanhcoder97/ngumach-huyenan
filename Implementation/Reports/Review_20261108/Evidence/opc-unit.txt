@@ -1,0 +1,25 @@
+  Determining projects to restore...
+  Restored D:\Project\NGUMACHHUYENAN-review-opc-20261108\Shared\ClientCore\ClientCore.csproj (in 14,44 sec).
+  Restored D:\Project\NGUMACHHUYENAN-review-opc-20261108\Shared\ClientCore.Tests\ClientCore.Tests.csproj (in 14,8 sec).
+D:\Project\NGUMACHHUYENAN-review-opc-20261108\Client\Assets\Scripts\Online\Core\P1ClientV2.cs(403,38): warning CS1998: This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread. [D:\Project\NGUMACHHUYENAN-review-opc-20261108\Shared\ClientCore\ClientCore.csproj]
+D:\Project\NGUMACHHUYENAN-review-opc-20261108\Client\Assets\Scripts\Online\Core\P1ClientV2.cs(416,38): warning CS1998: This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread. [D:\Project\NGUMACHHUYENAN-review-opc-20261108\Shared\ClientCore\ClientCore.csproj]
+D:\Project\NGUMACHHUYENAN-review-opc-20261108\Client\Assets\Scripts\Online\Core\P1ClientV2.cs(429,38): warning CS1998: This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread. [D:\Project\NGUMACHHUYENAN-review-opc-20261108\Shared\ClientCore\ClientCore.csproj]
+D:\Project\NGUMACHHUYENAN-review-opc-20261108\Client\Assets\Scripts\Online\Core\P1ClientV2.cs(503,38): warning CS1998: This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread. [D:\Project\NGUMACHHUYENAN-review-opc-20261108\Shared\ClientCore\ClientCore.csproj]
+  ClientCore -> D:\Project\NGUMACHHUYENAN-review-opc-20261108\Shared\ClientCore\bin\Release\net8.0\NguMach.Client.Core.dll
+  ClientCore.Tests -> D:\Project\NGUMACHHUYENAN-review-opc-20261108\Shared\ClientCore.Tests\bin\Release\net8.0\NguMach.Client.Core.Tests.dll
+Test run for D:\Project\NGUMACHHUYENAN-review-opc-20261108\Shared\ClientCore.Tests\bin\Release\net8.0\NguMach.Client.Core.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:14.56]     NguMach.Client.Core.Tests.TimeoutTransportTests.IgnoringInner_TimesOutOnDeadlineWithinBudget [FAIL]
+  Failed NguMach.Client.Core.Tests.TimeoutTransportTests.IgnoringInner_TimesOutOnDeadlineWithinBudget [2 s]
+  Error Message:
+   caller must complete in deadline, took 1219ms
+  Stack Trace:
+     at NguMach.Client.Core.Tests.TimeoutTransportTests.IgnoringInner_TimesOutOnDeadlineWithinBudget() in D:\Project\NGUMACHHUYENAN-review-opc-20261108\Shared\ClientCore.Tests\TimeoutTransportTests.cs:line 90
+--- End of stack trace from previous location ---
+Data collector 'Blame' message: All tests finished running, Sequence file will not be generated.
+Results File: D:\Project\NGUMACHHUYENAN-tools\handoff-20261108\evidence\client-core.trx
+
+Failed!  - Failed:     1, Passed:   270, Skipped:     0, Total:   271, Duration: 24 s - NguMach.Client.Core.Tests.dll (net8.0)
