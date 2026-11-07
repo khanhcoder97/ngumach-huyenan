@@ -15,9 +15,13 @@ public partial class ModularCharacterRenderer : Node2D
     private IReadOnlyList<DrawCommand> _draw=Array.Empty<DrawCommand>();
     private int _lastFrame=-1;
     public Session Animation=>_session;
+    public bool PlaybackPaused {get;set;}
+    internal bool SeekReviewFrame(int frame){if(!_session.SeekFrame(frame))return false;Refresh();return true;}
     public override void _Ready(){YSortEnabled=false;TextureFilter=TextureFilterEnum.Nearest;}
-    public bool TryApply(Look look,out string reason)
-    {Dictionary<string,Texture2D>? staged=null;if(!_session.TryApply(look,false,p=>PrepareTextures(p,out staged),out reason))return false;_textures=staged!;Refresh();return true;}
+    public bool TryApply(Look look,out string reason)=>Apply(look,false,out reason);
+    internal bool TryApplyForReview(Look look,out string reason)=>Apply(look,true,out reason);
+    private bool Apply(Look look,bool reviewMode,out string reason)
+    {Dictionary<string,Texture2D>? staged=null;if(!_session.TryApply(look,reviewMode,p=>PrepareTextures(p,out staged),out reason))return false;_textures=staged!;Refresh();return true;}
     public bool TryPlay(string key,bool preservePhase=false)
     {Dictionary<string,Texture2D>? staged=null;if(!_session.TryPlay(key,p=>PrepareTextures(p,out staged),preservePhase))return false;if(staged!=null)_textures=staged;Refresh();return true;}
     private bool PrepareTextures(ClipPlan plan,out Dictionary<string,Texture2D>? prepared)
@@ -37,11 +41,11 @@ public partial class ModularCharacterRenderer : Node2D
         prepared=next;return true;
     }
     private void Refresh(){_draw=_session.Commands;_lastFrame=_session.FrameIndex;QueueRedraw();}
-    public override void _Process(double delta){_session.Advance(delta);if(_lastFrame!=_session.FrameIndex)Refresh();}
+    public override void _Process(double delta){if(!PlaybackPaused)_session.Advance(delta);if(_lastFrame!=_session.FrameIndex)Refresh();}
     public override void _Draw()
     {
         foreach(var c in _draw)
-        {if(!_textures.TryGetValue(c.Texture,out var texture))continue;DrawTextureRectRegion(texture,new Rect2(c.Position.X,c.Position.Y,c.Region.Width,c.Region.Height),new Rect2(c.Region.X,c.Region.Y,c.Region.Width,c.Region.Height));}
+        {if(!_textures.TryGetValue(c.Texture,out var texture))continue;DrawTextureRectRegion(texture,new Rect2(c.Position.X,c.Position.Y,(float)c.Region.Width/c.SourcePixelsPerUnit,(float)c.Region.Height/c.SourcePixelsPerUnit),new Rect2(c.Region.X,c.Region.Y,c.Region.Width,c.Region.Height));}
     }
     // Godot resources may be shared by other avatars. Never Dispose a shared texture here.
     public override void _ExitTree(){_textures.Clear();_draw=Array.Empty<DrawCommand>();}

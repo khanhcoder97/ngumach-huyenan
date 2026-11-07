@@ -11,15 +11,15 @@ public static class ModularCharacterModel
     public readonly record struct Pixel(int X,int Y)
     {public static Pixel operator +(Pixel a,Pixel b)=>new(a.X+b.X,a.Y+b.Y);public static Pixel operator -(Pixel a,Pixel b)=>new(a.X-b.X,a.Y-b.Y);}
     public readonly record struct Region(int X,int Y,int Width,int Height);
-    public sealed record Slice(string Texture,Region Region,Pixel Offset,string? Anchor=null,bool Hidden=false);
+    public sealed record Slice(string Texture,Region Region,Pixel Offset,string? Anchor=null,bool Hidden=false,int SourcePixelsPerUnit=0);
     public sealed record Pose(string Fingerprint,IReadOnlyDictionary<string,Pixel> Anchors,IReadOnlyDictionary<string,Slice> Skin,string[] PaintOrder);
     public sealed record Clip(string Key,string PoseSet,double Seconds,bool Loop,Pose[] Poses);
-    public sealed record BodyPack(string Id,string ClassId,string RigId,string WeaponFamily,Pixel Canvas,Pixel Origin,bool Approved,IReadOnlyDictionary<string,Clip> Clips);
+    public sealed record BodyPack(string Id,string ClassId,string RigId,string WeaponFamily,Pixel Canvas,Pixel Origin,bool Approved,IReadOnlyDictionary<string,Clip> Clips,int SourcePixelsPerUnit=1);
     public enum PartMode {Deformable,AnchoredRigid}
     public sealed record Binding(string PoseSet,Slice[] Frames,string[] ExpectedBodyPoses);
     public sealed record Part(string Id,string Slot,string RigId,string? WeaponFamily,PartMode Mode,bool Approved,string[] Hides,IReadOnlyDictionary<string,Binding> Bindings);
     public sealed record Look(long Revision,BodyPack Body,Part[] Parts);
-    public readonly record struct DrawCommand(string PartId,string Texture,Region Region,Pixel Position);
+    public readonly record struct DrawCommand(string PartId,string Texture,Region Region,Pixel Position,int SourcePixelsPerUnit=1);
     public sealed record ClipPlan(double Seconds,bool Loop,IReadOnlyList<IReadOnlyList<DrawCommand>> Frames);
     public sealed class PreparedLook
     {
@@ -44,6 +44,8 @@ public static class ModularCharacterModel
             Require(body.RigId is "RIG_HUMAN_M_V1" or "RIG_HUMAN_F_V1","unknown body rig");
             Require(body.Canvas==new Pixel(96,96)&&body.Origin==new Pixel(48,72),"master canvas/origin mismatch");
             Require(reviewMode||body.Approved,"body is not production approved");
+            Require(body.SourcePixelsPerUnit>=1&&body.SourcePixelsPerUnit<=16,"invalid source pixel scale");
+            Require(reviewMode||body.SourcePixelsPerUnit==1,"production requires native pixel master");
             Require(body.Clips.Count>0,"body has no clips");
             if(!reviewMode)foreach(string action in RequiredActions)foreach(string direction in Directions)
                 Require(body.Clips.ContainsKey(action+"/"+direction),"missing production body clip "+action+"/"+direction);
@@ -95,11 +97,14 @@ public static class ModularCharacterModel
                         if(!slices.TryGetValue(slot,out var slice)||slice.Hidden||hidden.Contains(slot))continue;
                         Require(slice.Region.X>=0&&slice.Region.Y>=0&&slice.Region.Width>0&&slice.Region.Height>0,"invalid source rect");
                         Require(reviewMode||slice.Texture.StartsWith("res://assets/modular_character_v1/",StringComparison.Ordinal),"unapproved asset root");
+                        int sourceScale=slice.SourcePixelsPerUnit==0?body.SourcePixelsPerUnit:slice.SourcePixelsPerUnit;
+                        Require(sourceScale>=1&&sourceScale<=16,"invalid layer source scale");
+                        Require(reviewMode||sourceScale==1,"production layer requires native pixel master");
                         Pixel position=slice.Offset;
                         if(slice.Anchor!=null)
                         {Require(pose.Anchors.TryGetValue(slice.Anchor,out var anchor),"missing anchor: "+slice.Anchor);position+=anchor;}
-                        Require(position.X>=0&&position.Y>=0&&position.X+slice.Region.Width<=body.Canvas.X&&position.Y+slice.Region.Height<=body.Canvas.Y,"layer outside shared canvas");
-                        commands.Add(new DrawCommand(slot,slice.Texture,slice.Region,position-body.Origin));
+                        Require(position.X>=0&&position.Y>=0&&position.X+(int)Math.Ceiling((double)slice.Region.Width/sourceScale)<=body.Canvas.X&&position.Y+(int)Math.Ceiling((double)slice.Region.Height/sourceScale)<=body.Canvas.Y,"layer outside shared canvas");
+                        commands.Add(new DrawCommand(slot,slice.Texture,slice.Region,position-body.Origin,sourceScale));
                     }
                     frames[i]=Array.AsReadOnly(commands.ToArray());
                 }
@@ -141,6 +146,8 @@ public static class ModularCharacterModel
             double phase=preservePhase?Elapsed/Current.Clips[ClipKey].Seconds:0;
             ClipKey=key;Elapsed=phase*next.Seconds;return true;
         }
+        public bool SeekFrame(int frame)
+        {if(Current==null)return false;var clip=Current.Clips[ClipKey];if(frame<0||frame>=clip.Frames.Count)return false;Elapsed=(frame+.25)/clip.Frames.Count*clip.Seconds;return true;}
         public void Advance(double delta)
         {if(!double.IsFinite(delta)||delta<0)throw new ArgumentOutOfRangeException(nameof(delta));if(Current==null)return;var clip=Current.Clips[ClipKey];Elapsed=clip.Loop?(Elapsed+delta)%clip.Seconds:Math.Min(Elapsed+delta,clip.Seconds);}
         private static int Index(ClipPlan clip,double elapsed)=>Math.Clamp((int)(elapsed/clip.Seconds*clip.Frames.Count),0,clip.Frames.Count-1);

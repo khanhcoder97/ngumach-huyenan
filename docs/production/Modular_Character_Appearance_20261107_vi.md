@@ -176,3 +176,7 @@ Test logic dùng fixture metadata, không chứng nhận hình đẹp, đủ pos
 - ClientGodot/scripts/ModularCharacterModel.cs, ModularCharacterRenderer.cs, ModularCharacterSelfTest.cs.
 - ClientGodot/ModularCharacterTest.tscn:chỉ chạy test contract, không tạo account hoặc equip item.
 - Các job class full-body baked trong queue trước chuyển HOLD_MODULAR_MIGRATION; source cũ giữ tham khảo và fallback. Quái/NPC/VFX không thuộc yêu cầu thay đồ người chơi vẫn theo pipeline của chúng.
+
+## 12. Phòng thử authoring đã triển khai
+
+PaperDollLab.tscn đã có preview ghép lớp thật, chọn base nam/nữ, thử 16 phần tĩnh và chỉnh/lưu fit draft theo pose. Đường review cho phép hiệu chuẩn nguồn cố định theo atlas; đường production vẫn bắt buộc native pixel scale=1. Công cụ chưa hoàn thành pilot 8 hướng/action hoặc tạo nhân vật online. Chi tiết: [PaperDoll_Fit_Lab_20261107_vi.md](PaperDoll_Fit_Lab_20261107_vi.md).
