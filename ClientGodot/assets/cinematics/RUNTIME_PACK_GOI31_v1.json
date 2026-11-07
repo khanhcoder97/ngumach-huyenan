@@ -1,6 +1,6 @@
 {
   "manifestId": "NGM_RUNTIME_PACK_GOI31_V1",
-  "checkpoint": "MEDIA-02 checkpoint 37 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 draft mix v1 embedded in the runtime OGV + review MP4; CP34 scenes verified unchanged)",
+  "checkpoint": "MEDIA-02 checkpoint 38 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37 scenes verified unchanged)",
   "decisionId": "DEC-MEDIA-P0-20261105",
   "branch": "muse/media-production-20261104",
   "status": "DRAFT_NOT_FINAL",
@@ -14,9 +14,10 @@
   "contract": [
     "Runtime playback uses the clean OGV + the sidecar SRT overlay; no baked subtitles in any runtime file.",
     "CIN_000_640x360_30fps_sub_vi.mp4 (burned-in + embedded subtitles) is a review-only viewing variant, NOT part of the runtime pack.",
-    "Embedded mixes are DRAFT_MIX_NOT_FINAL; P0 scenes embed v3 (fully composed), CIN_006 embeds its v1 and CIN_003 embeds its v1; v1/v2 P0 mixes stay as separate files and Codex's adapter chooses the mix version at PR review -- swapping the embedded mix is a re-mux only, no picture change.",
+    "Embedded mixes are DRAFT_MIX_NOT_FINAL; P0 scenes embed v3 (fully composed), CIN_006 embeds its v1, CIN_003 embeds its v1 and CIN_005 embeds its v1; v1/v2 P0 mixes stay as separate files and Codex's adapter chooses the mix version at PR review -- swapping the embedded mix is a re-mux only, no picture change.",
     "CIN_006 stem assignment (thang_long music + thang_long_crowd ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the alternate take CIN_006_ALT_T01 is NOT in the pack (DEC-MEDIA-P0 Q3).",
     "CIN_003 stem assignment (ben_mua music + river_shore ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 16.532 s, no overrun, no tail trim).",
+    "CIN_005 stem assignment (thang_long music + thang_long_crowd ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take overruns its 12.5-17.5 s window by 0.160 s and the overrun is KEPT per the owner verdict (Goi 30 D1); no tail trim.",
     "Final picture per shot stays blocked on the character lock; these clips are animatic-level Ken Burns on storyboard keyframes, NOT final pose animation.",
     "No ear audition has been done (NOT_AUDITIONED); loudness figures here are measured from the encoded bytes."
   ],
@@ -352,6 +353,64 @@
         "timing": {
           "path": "assets/cinematics/CIN_003/CIN_003_timing_v1.json",
           "sha256": "0e6452a072ec1e87205116e7b9de4ea51e1cb5046eb5bda9fa8b41d4d2baa726",
+          "sizeBytes": 2377
+        }
+      }
+    },
+    {
+      "sceneId": "CIN_005",
+      "durationSeconds": 18.0,
+      "embeddedMixVersion": "v1_cin005_proposed",
+      "files": {
+        "ogv": {
+          "codec": "vorbis",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bitRateKbps": 160,
+          "sourceMix": "Art_Source/Audio/Muse/MIX/CIN005_DRAFT_V1/CIN_005_mix_draft_v1.wav",
+          "sourceMixSha256": "40db6c4b41ad1a3da697c9dba18a2dbf0d358edaf11a8324178349fcfb2e0988",
+          "mixVersion": "v1_cin005_proposed",
+          "integratedLUFS": "-20.99",
+          "truePeakDBTP": "-6.17",
+          "durationSeconds": 18.0,
+          "videoStoredFrames": 371,
+          "path": "assets/cinematics/CIN_005/CIN_005_640x360_30fps.ogv",
+          "sha256": "ed427be3c06b3b8d7e7095309e6c5d3953a07cf5e049c5719491cce75dbcd160",
+          "sizeBytes": 777591
+        },
+        "mp4": {
+          "codec": "aac",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bitRateKbps": 192,
+          "sourceMix": "Art_Source/Audio/Muse/MIX/CIN005_DRAFT_V1/CIN_005_mix_draft_v1.wav",
+          "sourceMixSha256": "40db6c4b41ad1a3da697c9dba18a2dbf0d358edaf11a8324178349fcfb2e0988",
+          "mixVersion": "v1_cin005_proposed",
+          "integratedLUFS": "-21.05",
+          "truePeakDBTP": "-6.16",
+          "durationSeconds": 18.0,
+          "videoStoredFrames": 540,
+          "path": "assets/cinematics/CIN_005/CIN_005_640x360_30fps.mp4",
+          "sha256": "223f5801032e50ad4d4a05cad2a39f3cb32f71d4f1ce3c6add5b71ceacd64210",
+          "sizeBytes": 2259124
+        },
+        "poster": {
+          "sha256": "949c7f07cbbafeddf1e5f6fefd46db8c2531964e31c7ca879786d3a970d32e88",
+          "sizeBytes": 451999,
+          "width": 640,
+          "height": 360,
+          "path": "assets/cinematics/CIN_005/CIN_005_poster.png"
+        },
+        "srt": {
+          "cues": 1,
+          "sha256": "1f3443dd74d1cd92a008358eb1156d3fc984d4a89057dc4658f2e077df33be5e",
+          "sizeBytes": 119,
+          "encoding": "UTF-8/NFC",
+          "path": "assets/cinematics/CIN_005/CIN_005_vi.srt"
+        },
+        "timing": {
+          "path": "assets/cinematics/CIN_005/CIN_005_timing_v1.json",
+          "sha256": "b82b2582f238abf1dd0da3b241258dd08f9a6664bc3cc3996042d5b028e0f618",
           "sizeBytes": 2377
         }
       }

@@ -1280,6 +1280,97 @@ def check_cin003_mix():
          f"inside its window); DRAFT_MIX_NOT_FINAL, not a mix PASS")
 
 
+def check_cin005_mix():
+    """Checkpoint 38: CIN_005 draft mix v1.
+
+    Mirrors check_cin003_mix() for MIX/CIN005_DRAFT_V1/ +
+    CIN005_MIX_V1_manifest_v1.json (single scene, no review mix):
+    every stem must carry ORIGINAL_COMPOSED_BY_MUSE provenance, the
+    mix WAV must match the manifest sha/duration/format, ducking
+    evidence must show a real in-window cut with no out-of-window
+    change, and loop joins must carry QA ratios. The mix itself is
+    a DRAFT (see the manifest mixVerdict); nothing here is a mix
+    PASS. The stem assignment is NEW and PROPOSED_CANDIDATE. Like
+    CIN_006, the CP17 draft VO take OVERRUNS its window by 0.160 s
+    (5.160 s, 12.5-17.660 s) and the overrun is KEPT per the owner
+    verdict (Goi 30 D1); the tail trim at the scene edge is 0.0.
+    """
+    mix_dir = ROOT / "Art_Source/Audio/Muse/MIX/CIN005_DRAFT_V1"
+    manifest_path = mix_dir / "CIN005_MIX_V1_manifest_v1.json"
+    if not manifest_path.exists():
+        err("CIN005 MIX V1: missing CIN005_MIX_V1_manifest_v1.json")
+        return
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("mixVersion") != "v1_cin005_proposed":
+        err(f"CIN005 MIX V1: mixVersion "
+            f"{manifest.get('mixVersion')} != v1_cin005_proposed")
+    scenes = manifest.get("scenes", [])
+    if len(scenes) != 1:
+        err(f"CIN005 MIX V1: {len(scenes)}/1 scenes in manifest")
+    checked = 0
+    for scene in scenes:
+        mx = scene["mix"]
+        wav = mix_dir / mx["file"]
+        if not wav.exists():
+            err(f"CIN005 MIX V1 {scene['sceneId']}: missing {mx['file']}")
+            continue
+        if is_lfs_pointer(wav):
+            err(f"CIN005 MIX V1 {scene['sceneId']}: wav is an LFS pointer")
+            continue
+        if sha256_of(wav) != mx["sha256"]:
+            err(f"CIN005 MIX V1 {scene['sceneId']}: wav sha mismatch")
+        p = probe(wav)
+        if p and abs(p["duration"] - mx["durationSeconds"]) > 0.02:
+            err(f"CIN005 MIX V1 {scene['sceneId']}: duration "
+                f"{p['duration']} != manifest {mx['durationSeconds']}")
+        if p:
+            if (p.get("codec") != "pcm_s16le"
+                    or p.get("sample_rate") != 48000
+                    or p.get("channels") != 2):
+                err(f"CIN005 MIX V1 {scene['sceneId']}: format "
+                    f"{p.get('codec')}/{p.get('sample_rate')}/"
+                    f"{p.get('channels')} != pcm_s16le/48000/2")
+        if abs(mx["durationSeconds"] - scene["seconds"]) > 0.05:
+            err(f"CIN005 MIX V1 {scene['sceneId']}: mix duration "
+                f"{mx['durationSeconds']} != scene {scene['seconds']}")
+        for st in scene["stems"]:
+            prov = st.get("provenance", "")
+            if "ORIGINAL_COMPOSED_BY_MUSE" not in prov:
+                err(f"CIN005 MIX V1 {scene['sceneId']}: {st['role']} "
+                    f"stem {st['cue']} provenance is not composed: {prov}")
+            if "PORTED_CODEX_PACKV1" in prov:
+                err(f"CIN005 MIX V1 {scene['sceneId']}: {st['role']} "
+                    f"stem {st['cue']} still uses a ported stem")
+        for ev in scene["ducking"]["evidence"]:
+            if ev["depthInWindowDb"] >= 0:
+                err(f"CIN005 MIX V1 {scene['sceneId']}: ducking depth "
+                    f"in window {ev['depthInWindowDb']} >= 0 on "
+                    f"{ev['bus']} bus")
+            if ev["depthOutsideWindowDb"] != 0:
+                err(f"CIN005 MIX V1 {scene['sceneId']}: ducking depth "
+                    f"outside window {ev['depthOutsideWindowDb']} "
+                    f"!= 0 on {ev['bus']} bus")
+        for lq in scene["loopQA"]:
+            for join in lq["joins"]:
+                if join.get("ratioToP999") is None:
+                    err(f"CIN005 MIX V1 {scene['sceneId']}: loop join "
+                        f"{lq['cue']} @{join['atSeconds']} has no "
+                        f"QA ratio")
+        vo = scene.get("vo", {})
+        if vo.get("tailTrimmedAtSceneEdgeSeconds", 0) != 0.0:
+            err(f"CIN005 MIX V1 {scene['sceneId']}: recorded VO tail "
+                f"trim {vo.get('tailTrimmedAtSceneEdgeSeconds')} != 0.0")
+        if vo.get("overrunVsWindowSeconds", 0) != 0.16:
+            err(f"CIN005 MIX V1 {scene['sceneId']}: recorded VO "
+                f"overrun {vo.get('overrunVsWindowSeconds')} != 0.16")
+        checked += 1
+    COUNTS["cin005_mix_v1_files_checked"] = checked
+    note(f"CIN_005 draft mix v1 checked: {checked}/1 file (18 s, "
+         f"fully composed stems, PROPOSED assignment, VO overrun "
+         f"+0.160 s KEPT per owner verdict); DRAFT_MIX_NOT_FINAL, "
+         f"not a mix PASS")
+
+
 def check_ab_shortlist():
     """Checkpoint 33 (Goi 31 item 3): A/B review shortlist.
 
@@ -2104,10 +2195,10 @@ def check_prologue():
     if vo_n != 5 or mix_n != 1:
         err(f"PROLOGUE: runtime audio registrations vo={vo_n} "
             f"mix={mix_n} (want 5/1)")
-    # Checkpoint 37: 611 + 1 CIN_003 mix v1 file = 612.
-    if am.get("totalFiles") != 612:
+    # Checkpoint 38: 612 + 1 CIN_005 mix v1 file = 613.
+    if am.get("totalFiles") != 613:
         err(f"PROLOGUE: runtime audio total {am.get('totalFiles')}"
-            f" != 612")
+            f" != 613")
     COUNTS["prologue_files_checked"] = checked
     COUNTS["audio_files_checked"] = \
         COUNTS.get("audio_files_checked", 0) + 6
@@ -2144,11 +2235,12 @@ def main():
     check_p0_mix_v3()
     check_cin006_mix()
     check_cin003_mix()
+    check_cin005_mix()
     check_ab_shortlist()
     check_scene_clips()
     check_prologue()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 37 (CIN_003 draft mix v1: second scene mix after CIN_006 v1, same P0 v3 recipe, fully composed Ben Mua stems; CP17 draft VO take fits inside its window, no overrun, no tail trim; runtime audio manifest total 611 -> 612, mix 14 -> 15)",
+        "checkpoint": "MEDIA-02 checkpoint 38 (CIN_005 draft mix v1: third scene mix after CIN_006 v1 and CIN_003 v1, same P0 v3 recipe, fully composed Thanh Lac stems; CP17 draft VO take overruns its window by 0.160 s, overrun KEPT per owner verdict, no tail trim; runtime audio manifest total 612 -> 613, mix 15 -> 16)",
         "base_integration": "6f2b465",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -2177,6 +2269,7 @@ def main():
             "Prologue CIN_000 (checkpoint 27): a standalone pre-game film, NOT a campaign scene; its narration is DRAFT TTS (narrator casting is a director decision), its mix is DRAFT_MIX_NOT_FINAL, and no ear audition has been done. Identity checks inside the film builder use crop-compensated diffs (full-res < 20, 160x90 structure < 8) because the render path resamples twice; a brute-force fit on S01 confirmed the designed zooms (1.015/1.035/1.055) at zero offset with a 4.2-6.5 structure floor. Headline picture defects: S01/S03 mechanism design drift and S11's ambiguous arrival direction, recorded per shot in CIN000_keyframes_manifest_v1.json.",
             "CIN_006 draft mix v1 (checkpoint 34, Goi 31 item 4): first scene mix for CIN_006, built with the P0 v3 recipe (music thang_long + ambience thang_long_crowd + reveal stinger at 6.0 s + CP19 draft VO at 12.5 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_006 and the scene timing manifest lists only the reveal stinger as a candidate stem. The +0.52 s VO overrun window is kept as-is per the owner decision; the take tail is trimmed 0.02 s at the 18.00 s scene edge (recorded, not hidden). The alternate take CIN_006_ALT_T01 is NOT in the mix or the pack (DEC-MEDIA-P0 Q3). The minimal runtime pack embeds v3 mixes in the P0 scene OGV/MP4 and the CIN_006 v1 mix in CIN_006's OGV/MP4 (video streams copied bit-for-bit, verified by stored-frame counts); the prologue film is verified unchanged. Runtime playback is clean OGV + sidecar SRT overlay; the baked-subtitle MP4 is review-only. No ear audition has been done (NOT_AUDITIONED).",
             "CIN_003 draft mix v1 (checkpoint 37): second scene mix after CIN_006 v1, same P0 v3 recipe (music ben_mua + ambience river_shore + reveal stinger at 6.0 s + CP17 draft VO at 12.5 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_003 and the scene timing manifest lists only the reveal stinger as a candidate stem. Unlike CIN_006, the CP17 draft VO take FITS inside its 12.5-17.5 s window (4.032 s, ends 16.532 s): no overrun, no tail trim. The v1 mix is embedded in CIN_003's runtime OGV + review MP4 (video streams copied bit-for-bit, verified by stored-frame counts). DRAFT_MIX_NOT_FINAL, no ear audition (NOT_AUDITIONED); adoption is Codex's adapter decision.",
+            "CIN_005 draft mix v1 (checkpoint 38): third scene mix after CIN_006 v1 and CIN_003 v1, same P0 v3 recipe (music thang_long + ambience thang_long_crowd + reveal stinger at 6.0 s + CP17 draft VO at 12.5 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_005 and the scene timing manifest lists only the reveal stinger as a candidate stem; thang_long/thang_long_crowd are the Thanh Lac city cues for this late-morning courtyard scene (pack shot prompts S01/S02: merchants, tea stall, five faction flags in one breeze). Like CIN_006, the CP17 draft VO take OVERRUNS its 12.5-17.5 s window by 0.160 s (5.160 s, ends 17.660 s) and the overrun is KEPT per the owner verdict (Goi 30 D1); no tail trim at the 18.00 s scene edge. The v1 mix is embedded in CIN_005's runtime OGV + review MP4 (video streams copied bit-for-bit, verified by stored-frame counts). DRAFT_MIX_NOT_FINAL, no ear audition (NOT_AUDITIONED); adoption is Codex's adapter decision.",
             "Prologue subtitled variant (checkpoint 28, owner request): a VIEWING variant only -- the canonical MP4/OGV keep the checkpoint 27 mix at its measured level (-20.81 LUFS) and the canonical SRT keeps its 6 cues. The variant's +5 dB is a flat presentation gain (no dynamics change, measured -15.83 LUFS / -4.09 dBTP on the variant file), and its readable SRT is a presentation split whose concatenated text is verified identical to the canonical SRT. Burned-in subtitle font is DejaVu Sans (the project has no locked Vietnamese display font, same placeholder status as the title card). No OGV subtitled variant: in-engine subtitle display is the presentation adapter's concern (Codex).",
         ],
     }
