@@ -13,6 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 EXAMPLES = "Implementation/Content/Examples/ClassDefinition"
+SKILL_EXAMPLES = "Implementation/Content/Examples/SkillDefinition"
 SOURCES = {
     "bible": "docs/production/Content_Bible_Ngu_Mach_Huyen_An_vi.md",
     "rules": "docs/production/Production_Rules_Complete_v1_vi.md",
@@ -20,7 +21,36 @@ SOURCES = {
     "currency": "docs/production/Currency_Production_Data_vi.csv",
     "classes": "docs/production/Character_Equipment_Inventory_Spec_vi.md",
     "example": f"{EXAMPLES}/CLASS_MINH_KIEM.json",
+    "skills": "docs/production/Combat_Skills_VFX_Animation_Spec_vi.md",
 }
+SKILL_PINS = {
+    "Minh Kiếm": ("MK", [
+        ("Phản Quang", 10, 12), ("Tầm Long", 8, 16), ("Kiếm Trận", 10, 22),
+        ("Thiết Y", 16, 24), ("Bạch Hồng (cơ động)", 9, 10),
+        ("Vạn Tượng Quy Nhất (tuyệt kỹ)", 60, 40),
+    ]),
+    "Ảnh Đao": ("AD", [
+        ("Huyết Nguyệt", 8, 14), ("Tàn Hỏa", 12, 18), ("Xích Ảnh", 10, 20),
+        ("Tước Mạch", 14, 22), ("Ảnh Bộ (cơ động)", 8, 10),
+        ("Tử Diệm (tuyệt kỹ)", 60, 35),
+    ]),
+    "Huyền Bút": ("HB", [
+        ("Mực Triều", 6, 12), ("Hàn Châm", 12, 18), ("Thủy Kính", 16, 22),
+        ("Mưa Tinh", 18, 28), ("Lưu Thủy Bộ (cơ động)", 10, 10),
+        ("Long Mạch Hồi Nguyên (tuyệt kỹ)", 70, 45),
+    ]),
+    "Thạch Chùy": ("TC", [
+        ("Trấn Sơn", 8, 14), ("Chấn Địa", 14, 20), ("Thiết Bích", 18, 24),
+        ("Khiêu Chiến", 20, 16), ("Phá Nham (cơ động)", 10, 12),
+        ("Sơn Thần Giáng Thế (tuyệt kỹ)", 70, 40),
+    ]),
+    "Linh Cung": ("LC", [
+        ("Khóa Mạch", 10, 16), ("Dây Gai", 14, 18), ("Liên Châu", 8, 18),
+        ("Tán Hoa", 12, 20), ("Phi Diệp (cơ động)", 9, 12),
+        ("Bách Tiễn Quy Tông (tuyệt kỹ)", 65, 40),
+    ]),
+}
+SHIPPED_SKILL_IDS = {"SK-MK-01", "SK-MK-02", "SK-MK-03", "SK-HB-02", "SK-HB-04", "SK-TC-01", "SK-TC-05"}
 CLASS_IDS = {
     "Minh Kiếm": "CLASS_MINH_KIEM",
     "Ảnh Đao": "CLASS_ANH_DAO",
@@ -176,6 +206,7 @@ def fragment(lines: list[tuple[int, str]], pattern: str, alias: str, name: str) 
 def load_sources() -> dict[str, str]:
     paths = set(SOURCES.values())
     paths.update(p.relative_to(ROOT).as_posix() for p in (ROOT / EXAMPLES).glob("*.json"))
+    paths.update(p.relative_to(ROOT).as_posix() for p in (ROOT / SKILL_EXAMPLES).glob("*.json"))
     sources = {}
     for path in sorted(paths):
         try:
@@ -183,6 +214,59 @@ def load_sources() -> dict[str, str]:
         except (OSError, UnicodeError) as exc:
             raise Drift(f"source.{path}", str(exc)) from exc
     return sources
+
+
+def extract_skills(sources: dict[str, str], bible_skills: dict[str, dict]) -> dict[str, dict]:
+    library = section(sources, "skills", "## Thư viện 30 kỹ năng", "skills.library")
+    class_headings = [raw for _, raw in library if raw.startswith("### ")]
+    pin(sorted(h.split(" — ", 1)[0][4:] for h in class_headings), sorted(SKILL_PINS), "skills.spec.classes")
+    records = {}
+    for class_name, (prefix, baseline) in SKILL_PINS.items():
+        heading = unique([raw for raw in class_headings if raw.startswith(f"### {class_name} — ")],
+                         f"skills.spec.{class_name}.section")
+        lines = section(sources, "skills", heading, f"skills.spec.{class_name}.section")
+        headers = [(index, header_match.group(1), header_match.group(2)) for index, (_, raw) in enumerate(lines)
+                   if (header_match := re.fullmatch(r"\*\*(SK-[A-Z0-9]+-[A-Z0-9]+) — (.+)\*\*\s*", raw))]
+        expected = {f"SK-{prefix}-{index:02}": name for index, (name, _, _) in enumerate(baseline, 1)}
+        pin(sorted(sid for _, sid, _ in headers), sorted(expected), f"skills.spec.{CLASS_IDS[class_name]}.ids")
+        for position, (index, sid, name) in enumerate(headers):
+            pin(name, expected[sid], f"skills.spec.{sid}.name")
+            end = headers[position + 1][0] if position + 1 < len(headers) else len(lines)
+            body = [(line, raw) for line, raw in lines[index + 1:end] if raw.strip()]
+            require(bool(body), f"skills.spec.{sid}.body", "missing mechanics text")
+            raw = "\n".join(value for _, value in body)
+            cost = match(r"CD (\d+)s[,;] (\d+) MP", raw, f"skills.spec.{sid}.cost")
+            parsed = (int(cost.group(1)), int(cost.group(2)))
+            bible = bible_skills[sid]
+            pin(parsed, (bible["cooldownSeconds"], bible["mpCost"]), f"skills.spec.{sid}.cost")
+            records[sid] = {**bible, "rawSpecMechanics": raw, "rawSpecHeading": lines[index][1],
+                            "sourceRefs": [ref("skills", lines[index][0]), ref("skills", body[0][0]), *bible["sourceRefs"]],
+                            "exampleSourceRef": None}
+    examples = set()
+    for path in sorted(p for p in sources if p.startswith(f"{SKILL_EXAMPLES}/")):
+        def pairs(values):
+            keys = [key for key, _ in values]
+            require(len(set(keys)) == len(keys), "skills.example.keys", f"duplicate key in {path}")
+            return dict(values)
+        try:
+            data = json.loads(sources[path], object_pairs_hook=pairs)
+        except ValueError as exc:
+            raise Drift("skills.example.json", f"{path}: {exc}") from exc
+        require(isinstance(data, dict), "skills.example.json", f"not an object: {path}")
+        sid = data.get("skillId")
+        require(isinstance(sid, str) and sid in records, "skills.example.id", f"unknown skillId {sid!r}")
+        require(sid not in examples, "skills.example.id", f"duplicate skillId {sid}")
+        pin(Path(path).stem, sid, f"skills.example.{sid}.filename")
+        record = records[sid]
+        pin(data.get("classId"), record["classId"], f"skills.example.{sid}.classId")
+        pin(data.get("cooldownSeconds"), record["cooldownSeconds"], f"skills.example.{sid}.cooldownSeconds")
+        pin(data.get("resourceCost"), {"resource": "MP", "amount": record["mpCost"]}, f"skills.example.{sid}.resourceCost")
+        line = unique([i for i, raw in enumerate(sources[path].splitlines(), 1)
+                       if re.search(r'"skillId"\s*:', raw)], f"skills.example.{sid}.line")
+        record["exampleSourceRef"] = ref(path, line)
+        examples.add(sid)
+    require(SHIPPED_SKILL_IDS <= examples, "skills.example.required", f"missing shipped skills: {sorted(SHIPPED_SKILL_IDS - examples)}")
+    return records
 
 
 def extract(sources: dict[str, str]) -> dict:
@@ -210,6 +294,7 @@ def extract(sources: dict[str, str]) -> dict:
     pin(json.loads(text(sources, "example")).get("classId"), "CLASS_MINH_KIEM", "classes.example.minh_kiem")
 
     resources = []
+    bible_skills = {}
     for class_name, (resource_name, gain_pin, skill_pins) in RESOURCE_PINS.items():
         class_id = CLASS_IDS[class_name]
         identity = selected(class_rows, class_id, f"classes.{class_id}.row")
@@ -223,6 +308,19 @@ def extract(sources: dict[str, str]) -> dict:
         pin(high, 5, f"resource.{class_id}.max")
         lines = section(sources, "bible", heading, f"resource.{class_id}.header")
         skill_rows = table(lines, ["Kỹ năng", "CD / MP", "Hiệu lực cấp 1"], f"resource.{class_id}.skills")
+        prefix, baseline = SKILL_PINS[class_name]
+        pin(sorted(row["cells"][0] for row in skill_rows), sorted(name for name, _, _ in baseline),
+            f"skills.bible.{class_id}.names")
+        for index, (skill_name, cooldown, mp_cost) in enumerate(baseline, 1):
+            sid = f"SK-{prefix}-{index:02}"
+            row = selected(skill_rows, skill_name, f"skills.bible.{sid}.row")
+            cost = match(r"^(\d+)s / (\d+)$", row["cells"][1], f"skills.bible.{sid}.cost")
+            parsed_cd, parsed_mp = int(cost.group(1)), int(cost.group(2))
+            pin((parsed_cd, parsed_mp), (cooldown, mp_cost), f"skills.bible.{sid}.cost")
+            bible_skills[sid] = {"skillId": sid, "classId": class_id, "name": skill_name,
+                                 "cooldownSeconds": parsed_cd, "mpCost": parsed_mp,
+                                 "rawBibleCost": row["cells"][1], "rawBibleMechanics": row["cells"][2],
+                                 "sourceRefs": [ref("bible", row["line"]), ref("classes", identity["line"])]}
         first_table = next(i for i, (_, raw) in enumerate(lines) if raw.startswith("|"))
         gain_line, gain = unique([(i, raw) for i, raw in lines[:first_table] if raw.strip()], f"resource.{class_id}.gain")
         pin(gain, gain_pin, f"resource.{class_id}.gain")
@@ -336,7 +434,8 @@ def extract(sources: dict[str, str]) -> dict:
     pin(row["notes"], CONTRIBUTION_NOTES, "contribution.notes")
     return {"resources": resources, "resourceRule": rule, "status": status,
             "creation": creation, "donation": donation, "treasury": treasury,
-            "contribution": contribution, "examples": examples}
+            "contribution": contribution, "examples": examples,
+            "skills": extract_skills(sources, bible_skills)}
 
 
 def compact(value: object) -> str:
@@ -388,13 +487,25 @@ def report(data: dict) -> None:
     print(f"named-divergences={len(divergences)} (no precedence applied)")
     for name, value in divergences.items():
         print(f"DIVERGENCE {name}: {value}")
+    skills = data["skills"]
+    missing_skills = sorted(sid for sid, skill in skills.items() if skill["exampleSourceRef"] is None)
+    example_count = sum(skill["exampleSourceRef"] is not None for skill in skills.values())
+    print(f"skill-source-coverage: canonical={len(skills)} classes={len({s['classId'] for s in skills.values()})} "
+          f"examples={example_count} absent={len(missing_skills)}; checked ID/name/class/CD/MP only, not runtime mechanics")
+    for sid, skill in skills.items():
+        print(f"skill {sid} class={skill['classId']} CD={skill['cooldownSeconds']} MP={skill['mpCost']} "
+              f"sourceRefs={refs(skill)} example={skill['exampleSourceRef'] or 'ABSENT'}")
+        print(f"  rawBibleMechanics={compact(skill['rawBibleMechanics'])}")
+        print(f"  rawSpecMechanics={compact(skill['rawSpecMechanics'])}")
+    print(f"UNRESOLVED skill-definition-examples: {','.join(missing_skills)}")
     print("UNRESOLVED badge-ID and treasury/currency mappings: no inferred mapping")
-    print("UNSUPPORTED runtime application: inert source reconciliation only; no MP resourceCost, status/guild service or wire; runtime enablement not established")
+    print("UNSUPPORTED runtime application: source reconciliation does not implement skill mechanics or status/guild services, "
+          "change MP costs, authorize startingSkillIds or widen wire; raw mechanics are retained, not normalized or fully pinned")
     print("OK: current pinned disagreements preserved; no source drift")
 
 
 def self_test(sources: dict[str, str]) -> int:
-    extract(sources)
+    baseline = extract(sources)
     cases = [
         ("resource-max-5-to-4", "bible", "Kiếm Ý 0–5", "Kiếm Ý 0–4", "resource.CLASS_MINH_KIEM.max"),
         ("rules-resource-cap-5-to-4", "rules", "Resource lớp cap5", "Resource lớp cap4", "resource.rules.cap"),
@@ -419,12 +530,40 @@ def self_test(sources: dict[str, str]) -> int:
         ("remove-status-header", "bible", header, "", "status.bible.table.header"),
         ("duplicate-status-header", "bible", header, header + header, "status.bible.table.header"),
     ])
+    for sid, skill in baseline["skills"].items():
+        heading = skill["rawSpecHeading"] + "\n"
+        raw = skill["rawSpecMechanics"]
+        cooldown, mp = skill["cooldownSeconds"], skill["mpCost"]
+        cost = match(r"CD \d+s[,;] \d+ MP", raw, f"self-test.{sid}.cost").group(0)
+        bible_row = f"| {skill['name']} | {skill['rawBibleCost']} | {skill['rawBibleMechanics']} |\n"
+        cases.extend([
+            (f"remove-spec-{sid}", "skills", heading, "", f"skills.spec.{skill['classId']}.ids"),
+            (f"duplicate-spec-{sid}", "skills", heading, heading + heading, f"skills.spec.{skill['classId']}.ids"),
+            (f"unknown-id-{sid}", "skills", heading, heading.replace(sid, sid[:-2] + "99"), f"skills.spec.{skill['classId']}.ids"),
+            (f"rename-spec-{sid}", "skills", heading, heading.replace(skill["name"], "UNSOURCED"), f"skills.spec.{sid}.name"),
+            (f"spec-cd-{sid}", "skills", raw, raw.replace(cost, cost.replace(f"{cooldown}s", f"{cooldown + 1}s")), f"skills.spec.{sid}.cost"),
+            (f"spec-mp-{sid}", "skills", raw, raw.replace(cost, cost.replace(f"{mp} MP", f"{mp + 1} MP")), f"skills.spec.{sid}.cost"),
+            (f"remove-bible-{sid}", "bible", bible_row, "", f"skills.bible.{skill['classId']}.names"),
+            (f"duplicate-bible-{sid}", "bible", bible_row, bible_row + bible_row, f"skills.bible.{skill['classId']}.names"),
+            (f"bible-cd-{sid}", "bible", bible_row, bible_row.replace(skill["rawBibleCost"], f"{cooldown + 1}s / {mp}"), f"skills.bible.{sid}.cost"),
+            (f"bible-mp-{sid}", "bible", bible_row, bible_row.replace(skill["rawBibleCost"], f"{cooldown}s / {mp + 1}"), f"skills.bible.{sid}.cost"),
+        ])
+        if skill["exampleSourceRef"] is not None:
+            path = skill["exampleSourceRef"].rsplit(":", 1)[0]
+            current = text(sources, path)
+            for key, value in (("classId", "CLASS_UNSOURCED"), ("cooldownSeconds", cooldown + 1),
+                               ("resourceCost", {"resource": "MP", "amount": mp + 1}),
+                               ("resourceCost", {"resource": "HEAT", "amount": mp})):
+                changed_example = json.loads(current)
+                changed_example[key] = value
+                cases.append((f"example-{sid}-{key}-{value}", path, current, compact(changed_example), f"skills.example.{sid}.{key}"))
+            cases.append((f"duplicate-json-key-{sid}", path, '"skillId":', f'"skillId": "{sid}", "skillId":', "skills.example.keys"))
     passed = []
     for label, alias, old, new, diagnostic in cases:
         current = text(sources, alias)
         require(current.count(old) == 1, f"self-test.{label}.fixture", "mutation must select exactly one source span")
         changed = dict(sources)
-        changed[SOURCES[alias]] = current.replace(old, new, 1)
+        changed[SOURCES.get(alias, alias)] = current.replace(old, new, 1)
         try:
             extract(changed)
         except Drift as exc:
@@ -433,16 +572,19 @@ def self_test(sources: dict[str, str]) -> int:
             raise Drift(f"self-test.{label}", f"mutation passed; expected {diagnostic}")
         passed.append(label)
         print(f"PASS {label} -> {diagnostic}")
-    changed = dict(sources)
-    del changed[SOURCES["bible"]]
-    try:
-        extract(changed)
-    except Drift as exc:
-        pin(exc.name, "source.bible", "self-test.missing-source.diagnostic")
-    else:
-        raise Drift("self-test.missing-source", "missing source passed")
-    passed.append("missing-source")
-    print("PASS missing-source -> source.bible")
+    missing_cases = [(SOURCES[alias], f"source.{alias}") for alias in ("bible", "skills")]
+    missing_cases.extend((f"{SKILL_EXAMPLES}/{sid}.json", "skills.example.required") for sid in sorted(SHIPPED_SKILL_IDS))
+    for path, diagnostic in missing_cases:
+        changed = dict(sources)
+        del changed[path]
+        try:
+            extract(changed)
+        except Drift as exc:
+            pin(exc.name, diagnostic, f"self-test.missing-{path}.diagnostic")
+        else:
+            raise Drift(f"self-test.missing-{path}", "missing source passed")
+        passed.append(f"missing-{path}")
+        print(f"PASS missing-{path} -> {diagnostic}")
     extract(sources)
     print(f"SELF-TEST OK: {len(passed)} independent drift cases rejected; restored current sources pass; in-memory only")
     return 0

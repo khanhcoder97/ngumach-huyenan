@@ -105,3 +105,34 @@ Ba chỗ hai nguồn không nói cùng điều:
 ## 5. Việc kế tiếp trong Q4, không cần chờ ai
 
 Thứ tự tôi sẽ đi nếu không có trả lời mới: (a) tách vocabulary loader/wire thành hai contract test có tên rõ (đã xong một phần); (b) nạp tiếp các row **chỉ thiếu** telegraph khi câu 1 có trả lời; (c) `status_immunity_v1.json` + loader + validator nếu câu 2 được duyệt, vì nó mở khoá cả TC-04/HB-02/AD-04; (d) phần combat/AI còn lại của Q4 không phụ thuộc số: respawn, group credit, loot authoritative đã có đường đi và đang đo được.
+
+## 6. Đối chiếu nguồn có kiểm thử — 2026-11-07, tiếp work order 31 mục 6
+
+Đây là delta source-only trên `e6f396f3f561d8dedbd25410619a237e48a880e5`, không phải thay gói 29/30/31 bằng tăng catalogue. `Implementation/Tools/reconcile_combat_social_sources.py` nay đọc toàn thư viện skill của Combat Spec, nối ID/tên/lớp với từng bảng Bible và kiểm CD/MP của các SkillDefinition hiện có. ID/name/CD/MP được pin theo nguồn; xóa/trùng/đổi ID, đổi tên, sửa CD/MP đều bị từ chối. Bảy file đã ship là nghĩa vụ tối thiểu, không bị bỏ qua nếu mất file. JSON trùng key bị từ chối. Số lượng trong output lấy từ collection vừa parse, không phải số in cố định.
+
+Output thực sau chạy:
+
+```text
+skill-source-coverage: canonical=30 classes=5 examples=7 absent=23; checked ID/name/class/CD/MP only, not runtime mechanics
+SELF-TEST OK: 364 independent drift cases rejected; restored current sources pass; in-memory only
+```
+
+Mỗi skill in sourceRefs có số dòng và nguyên văn mechanics từ cả hai tài liệu. Phần nguyên văn này **không được normalize hoặc pin toàn bộ**: PASS không khẳng định timing, PvP/boss, multi-hit, duration, radius/cast-range, class-resource hay trạng thái đã đủ hoặc đã được triển khai. 364 là số case của script nguồn, không phải số self-check server. Bảy khác biệt status/social của checkpoint trước vẫn được giữ; script không chọn precedence/cân bằng.
+
+Lệnh đã chạy tại worktree này:
+
+```sh
+python Implementation/Tools/reconcile_combat_social_sources.py
+python Implementation/Tools/reconcile_combat_social_sources.py --self-test
+python -m py_compile Implementation/Tools/reconcile_combat_social_sources.py
+python Implementation/Tools/validate_contracts.py
+```
+
+Toàn bộ lệnh trong `.github/workflows/content-validation.yml` cũng được chạy lại, kể cả rebuild năm bundle và `git diff --exit-code` trên đúng năm output: PASS, không đổi bundle. Contract validator: 35 schema / 35 example, reference set `class=1, skill=7`. Workflow đã gọi script/default+self-test từ checkpoint trước; delta này không sửa workflow. Không đổi Server, Shared, ClientCore, ClientGodot, docs/production, wire/schema, gate hay runtime examples. CI của **commit chứa delta này** sẽ được công bố theo SHA sau push, không dùng 30/30 của parent làm bằng chứng cho delta.
+
+**Đính chính hai cách đọc mục 2/3 lịch sử:**
+
+- Câu “một row MK là skill client gọi được ngay” ở mục 2 không đúng với wire hiện tại: `Server/Health/Contracts/P1Validation.cs:49-50,108-109` vẫn chỉ nhận `^SK-MK-0[1-3]$`. Nạp data không mở MK-04..06 hay bất kỳ lớp khác. Không có thay đổi wire trong delta này.
+- “shipped” ở bảng mục 3 chỉ nghĩa là file catalogue đã nạp, **không** có nghĩa các hiệu ứng của HB-02/HB-04/TC-01/TC-05 đã chạy qua HTTP. C1/slot-level và `startingSkillIds` cũng không được suy ra bằng cách sao chép ba skill đầu từ Minh Kiếm; nguồn chỉ có lịch mở slot 1/4/8/12/16/30, bốn ClassDefinition còn thiếu.
+
+Các câu hỏi approval và runtime của mục 4 vẫn mở. Tuyến boss+fragment→class-confirm→turn-in→chapter→portal→C1 arrival còn thiếu node `NPC_CLASS_TRIAL` và các quyết định riêng đã packet; source PASS không khép tuyến này hoặc toàn work order. Không tự merge.
