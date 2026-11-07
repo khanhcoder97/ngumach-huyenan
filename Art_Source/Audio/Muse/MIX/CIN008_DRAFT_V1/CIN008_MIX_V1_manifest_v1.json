@@ -1,0 +1,149 @@
+{
+  "checkpoint": "MEDIA-02 checkpoint 40 - CIN_008 draft mix v1 (fifth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1 and CIN_007 v1, same recipe as P0 v3)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_MIX_NOT_FINAL",
+  "mixVersion": "v1_cin008_proposed",
+  "mixVerdict": "DRAFT_MIX_FOR_REVIEW: fifth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1 and CIN_007 v1, built with the P0 v3 recipe (same gain targets, ducking params, peak guard, loop joins). Stem assignment is NEW and PROPOSED_CANDIDATE (the CP02 stem table assigns nothing to CIN_008; the scene timing manifest lists only the reveal stinger as a candidate stem). VO take is the CP17 draft; the take FITS its window (3.552 s, 12.5-16.052 s): no overrun, no tail trim at the scene edge. NOT a mix PASS: no ear audition, stem table not locked, stinger placement PROPOSED pending picture lock. Adoption is Codex's adapter decision.",
+  "stemAssignment": {
+    "status": "PROPOSED_CANDIDATE_NEW",
+    "source": "No CP02 assignment exists for CIN_008; tran_son music + river_shore ambience are the gate-and-pool cues (composed, CP26/CP30) for this quiet signing-memory scene (S01: a brush hand signs a paper order in indigo; S02: a tall wooden double gate stands nearly shut, lantern-lit, a robed adult waiting with a clay water vessel; S03: Ta Van Khanh confesses beside a bamboo forest pool; pack shot prompts, CIN_008 S01/S02/S03). tran_son is the composed set's bell-led gate form, matching the scene's central gate image; river_shore is the water-edge bed for the pool. and the reveal stinger is the scene's only manifest-listed candidate stem (CIN_008_timing_v1.json).",
+    "alternateTakeExcluded": "N/A: CIN_008 has no alternate take."
+  },
+  "gainStaging": {
+    "vo": "unity (anchor; take as delivered)",
+    "musicTargetLUFS": -30.0,
+    "ambiencePrimaryTargetLUFS": -36.0,
+    "stingers": "unity",
+    "peakCeilingDBTP": -1.0
+  },
+  "notes": [
+    "VO window 12.5-17.5 s is PROPOSED_ANIMATIC_PLACEMENT (only CIN_001_S05 is DECIDED); all 21 windows are approved for DRAFT VO per Goi 30 D1.",
+    "VO take runs 12.5-16.052 s: 3.552 s, ending 1.448 s BEFORE the 17.5 s window end -- the take FITS inside its window (no overrun, unlike CIN_005/CIN_006). The take ends 1.948 s before the 18.00 s scene end, so no tail trim at the scene edge. The window, the take and the timing are unchanged.",
+    "Ducking depth is measured on the ducked bus against its unducked render (RMS over the full VO window vs a 2 s reference before the window). The full-window method from checkpoint 39 is retained so the depth is comparable across the CIN_003/CIN_005/CIN_007/CIN_008 mixes (a 2 s slice can understate the cut on cues whose window opening is quiet).",
+    "Ambience loop join uses a 1 s acrossfade; loopQA reports the max sample jump at the join against the bed's own 99.9th-percentile jump.",
+    "Stinger placement at 6.0 s (S02 start) is PROPOSED pending picture lock, mirroring the CIN_004 reveal at 6.0 s."
+  ],
+  "scenes": [
+    {
+      "sceneId": "CIN_008",
+      "seconds": 18.0,
+      "vo": {
+        "take": "VO_CIN_008_S03_TAVANKHANH_draft_v1.wav",
+        "windowSeconds": [
+          12.5,
+          16.052
+        ],
+        "takeDurationSeconds": 3.552,
+        "takeEndSeconds": 16.052,
+        "tailTrimmedAtSceneEdgeSeconds": 0.0,
+        "overrunVsWindowSeconds": -1.448,
+        "gainDb": 0.0
+      },
+      "stems": [
+        {
+          "cue": "MUSIC/tran_son",
+          "role": "music",
+          "source": "ClientGodot/assets/audio/composed/music/tran_son.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -30.0,
+          "packMeasuredLUFS": -21.95,
+          "remeasuredLUFS": -21.95,
+          "gainDb": -8.05,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/river_shore",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -36.0,
+          "packMeasuredLUFS": -29.69,
+          "remeasuredLUFS": -29.69,
+          "gainDb": -6.31,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/reveal",
+          "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "atSeconds": 6.0,
+          "gainDb": 0.0,
+          "packMeasuredLUFS": -24.96,
+          "remeasuredLUFS": -24.96,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "music",
+            "windowSeconds": [
+              12.5,
+              16.052
+            ],
+            "referenceSeconds": [
+              10.0,
+              12.0
+            ],
+            "depthInWindowDb": -7.22,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/reveal",
+        "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+        "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+        "atSeconds": 6.0,
+        "gainDb": 0.0,
+        "packMeasuredLUFS": -24.96,
+        "remeasuredLUFS": -24.96,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00154,
+              "bedP999Jump": 0.00266,
+              "ratioToP999": 0.58
+            }
+          ]
+        }
+      ],
+      "mix": {
+        "file": "CIN_008_mix_draft_v1.wav",
+        "sha256": "eaaaf4a17c518f11b2fc36f53b159d86013ed2c38db69350e9331dc0bc155f96",
+        "durationSeconds": 18.0,
+        "integratedLUFS": "-24.58",
+        "truePeakDBTP": "-1.61",
+        "loudnessRangeLU": "10.50",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 3456100
+        }
+      }
+    }
+  ]
+}

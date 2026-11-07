@@ -1,6 +1,6 @@
 {
   "manifestId": "NGM_RUNTIME_PACK_GOI31_V1",
-  "checkpoint": "MEDIA-02 checkpoint 39 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38 scenes verified unchanged)",
+  "checkpoint": "MEDIA-02 checkpoint 40 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39 scenes verified unchanged)",
   "decisionId": "DEC-MEDIA-P0-20261105",
   "branch": "muse/media-production-20261104",
   "status": "DRAFT_NOT_FINAL",
@@ -14,8 +14,9 @@
   "contract": [
     "Runtime playback uses the clean OGV + the sidecar SRT overlay; no baked subtitles in any runtime file.",
     "CIN_000_640x360_30fps_sub_vi.mp4 (burned-in + embedded subtitles) is a review-only viewing variant, NOT part of the runtime pack.",
-    "Embedded mixes are DRAFT_MIX_NOT_FINAL; P0 scenes embed v3 (fully composed), CIN_006 embeds its v1, CIN_003 embeds its v1, CIN_005 embeds its v1 and CIN_007 embeds its v1; v1/v2 P0 mixes stay as separate files and Codex's adapter chooses the mix version at PR review -- swapping the embedded mix is a re-mux only, no picture change.",
+    "Embedded mixes are DRAFT_MIX_NOT_FINAL; P0 scenes embed v3 (fully composed), CIN_006 embeds its v1, CIN_003 embeds its v1, CIN_005 embeds its v1, CIN_007 embeds its v1 and CIN_008 embeds its v1; v1/v2 P0 mixes stay as separate files and Codex's adapter chooses the mix version at PR review -- swapping the embedded mix is a re-mux only, no picture change.",
     "CIN_006 stem assignment (thang_long music + thang_long_crowd ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the alternate take CIN_006_ALT_T01 is NOT in the pack (DEC-MEDIA-P0 Q3).",
+    "CIN_008 stem assignment (tran_son music + river_shore ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 16.052 s, no overrun, no tail trim). tran_son is the composed set's bell-led gate form, matching the scene's central gate image (S02); river_shore is the water-edge bed for the bamboo forest pool (S03).",
     "CIN_003 stem assignment (ben_mua music + river_shore ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 16.532 s, no overrun, no tail trim).",
     "CIN_005 stem assignment (thang_long music + thang_long_crowd ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take overruns its 12.5-17.5 s window by 0.160 s and the overrun is KEPT per the owner verdict (Goi 30 D1); no tail trim.",
     "CIN_007 stem assignment (quiet_discovery music + wind_canopy ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 16.412 s, no overrun, no tail trim). Ducking evidence is measured over the full VO window because quiet_discovery is sparse by design (the first 2 s of the window are near-silence).",
@@ -471,6 +472,64 @@
           "path": "assets/cinematics/CIN_007/CIN_007_timing_v1.json",
           "sha256": "df7827c416ffe61f83f2a081a5b503d19789d2739e630d32b11d1c93bb298bfd",
           "sizeBytes": 2375
+        }
+      }
+    },
+    {
+      "sceneId": "CIN_008",
+      "durationSeconds": 18.0,
+      "embeddedMixVersion": "v1_cin008_proposed",
+      "files": {
+        "ogv": {
+          "codec": "vorbis",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bitRateKbps": 160,
+          "sourceMix": "Art_Source/Audio/Muse/MIX/CIN008_DRAFT_V1/CIN_008_mix_draft_v1.wav",
+          "sourceMixSha256": "eaaaf4a17c518f11b2fc36f53b159d86013ed2c38db69350e9331dc0bc155f96",
+          "mixVersion": "v1_cin008_proposed",
+          "integratedLUFS": "-24.61",
+          "truePeakDBTP": "-1.85",
+          "durationSeconds": 18.0,
+          "videoStoredFrames": 509,
+          "path": "assets/cinematics/CIN_008/CIN_008_640x360_30fps.ogv",
+          "sha256": "6b91357c270bb212c4d2909bf83c9a114a6adec1c7dce2dba97bee0c77d62478",
+          "sizeBytes": 735239
+        },
+        "mp4": {
+          "codec": "aac",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bitRateKbps": 192,
+          "sourceMix": "Art_Source/Audio/Muse/MIX/CIN008_DRAFT_V1/CIN_008_mix_draft_v1.wav",
+          "sourceMixSha256": "eaaaf4a17c518f11b2fc36f53b159d86013ed2c38db69350e9331dc0bc155f96",
+          "mixVersion": "v1_cin008_proposed",
+          "integratedLUFS": "-24.58",
+          "truePeakDBTP": "-1.53",
+          "durationSeconds": 18.0,
+          "videoStoredFrames": 540,
+          "path": "assets/cinematics/CIN_008/CIN_008_640x360_30fps.mp4",
+          "sha256": "cc8654acd7f4ff6657676f9d9796a9f420dc54f21f2622e2656d2877800f2fee",
+          "sizeBytes": 1406373
+        },
+        "poster": {
+          "sha256": "65bc88c32426d7122d246be724c247b264a3410d69884523e095b8fb3bfc8d16",
+          "sizeBytes": 282993,
+          "width": 640,
+          "height": 360,
+          "path": "assets/cinematics/CIN_008/CIN_008_poster.png"
+        },
+        "srt": {
+          "cues": 1,
+          "sha256": "8f223c20a6dd532a6dbee3d32617b4bd403ae69bebddb6061d7f07f634cd86aa",
+          "sizeBytes": 92,
+          "encoding": "UTF-8/NFC",
+          "path": "assets/cinematics/CIN_008/CIN_008_vi.srt"
+        },
+        "timing": {
+          "path": "assets/cinematics/CIN_008/CIN_008_timing_v1.json",
+          "sha256": "3a8e90942678e78ad5614cbb5798b179ae91079382769f4e683d5cfef729a754",
+          "sizeBytes": 2380
         }
       }
     }
