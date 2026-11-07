@@ -82,6 +82,7 @@ P0_MIX_V3_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "P0_DRAFT_V3"
 CIN006_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN006_DRAFT_V1"
 CIN003_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN003_DRAFT_V1"
 CIN005_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN005_DRAFT_V1"
+CIN007_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN007_DRAFT_V1"
 DUR_TOL_S = 0.02
 
 # P0 animatic files delivered in checkpoint 03, revised in checkpoint 13
@@ -616,6 +617,42 @@ def main():
         audio_entries.append(entry)
         counts["mix"] += 1
 
+    # --- 3k3. CIN_007 draft mix v1 (checkpoint 39) ---
+    # Fourth scene mix after CIN_006 v1, CIN_003 v1 and CIN_005 v1
+    # (same recipe as P0 v3; stem assignment PROPOSED_CANDIDATE, see
+    # CIN007_MIX_V1_manifest_v1.json). The CP17 draft VO take FITS
+    # inside its 12.5-17.5 s window (3.912 s, ends 16.412 s): no
+    # overrun, no tail trim at the 18.00 s scene edge. Ducking
+    # evidence is measured over the full VO window because
+    # quiet_discovery is sparse by design (the first 2 s of the
+    # window are near-silence). Delivered under mix/cin007_v1/; the
+    # P0 v1/v2/v3, CIN_006 v1, CIN_003 v1 and CIN_005 v1 mixes are
+    # byte-identical to before. Adoption is Codex's decision.
+    cin007_mix = json.loads((CIN007_MIX_V1_SRC
+                             / "CIN007_MIX_V1_manifest_v1.json")
+                            .read_text(encoding="utf-8"))
+    for scene in cin007_mix["scenes"]:
+        mx = scene["mix"]
+        src_rel = f"Art_Source/Audio/Muse/MIX/CIN007_DRAFT_V1/{mx['file']}"
+        dest_rel = f"mix/cin007_v1/{mx['file']}"
+        entry = copy_verified_audio(
+            src_rel, dest_rel, mx["sha256"], mx["format"]["bytes"],
+            mx["durationSeconds"], f"CIN_007 mix v1 {scene['sceneId']}")
+        if entry is None:
+            continue
+        entry.update({"cueKey": f"MIX/V1/{scene['sceneId']}",
+                      "category": "mix", "sceneId": scene["sceneId"],
+                      "mixVersion": "v1_cin007_proposed",
+                      "codec": mx["format"]["codec"],
+                      "sampleRateHz": mx["format"]["sampleRateHz"],
+                      "channels": mx["format"]["channels"],
+                      "integratedLufs": float(mx["integratedLUFS"]),
+                      "truePeakDbtp": float(mx["truePeakDBTP"]),
+                      "assetState": "DRAFT_MIX_NOT_FINAL",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["mix"] += 1
+
     # --- 3e. Composed music + cinema stingers (checkpoint 26) ---
     # The composer (build_composed_music.py) already rendered the
     # runtime OGGs into ClientGodot/assets/audio/composed/; this
@@ -764,14 +801,15 @@ def main():
 
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 checkpoint 38 - M6 runtime delivery "
-                       "revised: CIN_005 draft mix v1 added (total 612 -> "
-                       "613, mix 15 -> 16); status phrasing corrected "
+        "checkpoint": ("MEDIA-02 checkpoint 39 - M6 runtime delivery "
+                       "revised: CIN_007 draft mix v1 added (total 613 -> "
+                       "614, mix 16 -> 17); status phrasing corrected "
                        "(all 21 dialogue windows approved for DRAFT VO "
                        "production per the Goi 30 D1 decision, PR #120; "
                        "only CIN_001_S05 is DECIDED); P0 draft mixes v3 "
                        "(checkpoint 31), CIN_006 mix v1 (checkpoint 34), "
-                       "CIN_003 mix v1 (checkpoint 37), prologue "
+                       "CIN_003 mix v1 (checkpoint 37), CIN_005 mix v1 "
+                       "(checkpoint 38), prologue "
                        "(checkpoint 27/28), composed music "
                        "(checkpoint 26) and composed ambience "
                        "(checkpoint 30) unchanged"),
@@ -1145,7 +1183,7 @@ def main():
 
     cine_manifest = {
         "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
-        "checkpoint": "MEDIA-02 checkpoint 38 - Goi 31 item 4 extended (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005: P0 mixes v3, CIN_006 mix v1, CIN_003 mix v1 and CIN_005 mix v1 embedded in the runtime OGV + review MP4; poster + SRT + timing per scene; baked-subtitle variant stays review-only); checkpoint 32 shot fixes + status phrasing (all 21 dialogue windows approved for DRAFT VO per Goi 30 D1, PR #120; only CIN_001_S05 DECIDED) otherwise unchanged; prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
+        "checkpoint": "MEDIA-02 checkpoint 39 - Goi 31 item 4 extended (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007: P0 mixes v3, CIN_006 mix v1, CIN_003 mix v1, CIN_005 mix v1 and CIN_007 mix v1 embedded in the runtime OGV + review MP4; poster + SRT + timing per scene; baked-subtitle variant stays review-only); checkpoint 32 shot fixes + status phrasing (all 21 dialogue windows approved for DRAFT VO per Goi 30 D1, PR #120; only CIN_001_S05 DECIDED) otherwise unchanged; prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "campaignTotals": {"scenes": 20, "shots": 63, "seconds": 378,

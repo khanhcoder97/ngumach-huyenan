@@ -9,6 +9,10 @@ Checkpoint 38 extends it with CIN_005 (draft mix v1, same recipe);
 the CP34/CP37 scenes are verified unchanged on re-run, never
 re-muxed.
 
+Checkpoint 39 extends it with CIN_007 (draft mix v1, same recipe);
+the CP34/CP37/CP38 scenes are verified unchanged on re-run, never
+re-muxed.
+
 Turns the per-scene clips for the prologue + CIN_001/002/004/006 into
 a playable runtime pack:
 
@@ -53,6 +57,7 @@ MIX_V3 = ROOT / "ClientGodot/assets/audio/mix/p0_v3"
 MIX_CIN006 = ROOT / "Art_Source/Audio/Muse/MIX/CIN006_DRAFT_V1"
 MIX_CIN003 = ROOT / "Art_Source/Audio/Muse/MIX/CIN003_DRAFT_V1"
 MIX_CIN005 = ROOT / "Art_Source/Audio/Muse/MIX/CIN005_DRAFT_V1"
+MIX_CIN007 = ROOT / "Art_Source/Audio/Muse/MIX/CIN007_DRAFT_V1"
 FAILURES = []
 
 
@@ -350,6 +355,8 @@ def main() -> None:
                     "v1_cin003_proposed"),
         "CIN_005": (MIX_CIN005 / "CIN_005_mix_draft_v1.wav",
                     "v1_cin005_proposed"),
+        "CIN_007": (MIX_CIN007 / "CIN_007_mix_draft_v1.wav",
+                    "v1_cin007_proposed"),
     }
     mix_manifest_shas = {}
     v3_manifest = json.loads(
@@ -372,6 +379,11 @@ def main() -> None:
         .read_text(encoding="utf-8"))
     mix_manifest_shas["CIN_005"] = \
         cin005_manifest["scenes"][0]["mix"]["sha256"]
+    cin007_manifest = json.loads(
+        (MIX_CIN007 / "CIN007_MIX_V1_manifest_v1.json")
+        .read_text(encoding="utf-8"))
+    mix_manifest_shas["CIN_007"] = \
+        cin007_manifest["scenes"][0]["mix"]["sha256"]
 
     pack_scenes = []
     for scene_id, (mix_wav, mix_version) in scenes.items():
@@ -394,7 +406,8 @@ def main() -> None:
         else:
             audio = mux(scene_id, mix_wav, mix_version,
                         mix_manifest_shas[scene_id], work,
-                        checkpoint_label=("CP38" if scene_id == "CIN_005"
+                        checkpoint_label=("CP39" if scene_id == "CIN_007"
+                                          else "CP38" if scene_id == "CIN_005"
                                           else "CP37" if scene_id == "CIN_003"
                                           else "CP34"))
         if audio is None:
@@ -407,6 +420,11 @@ def main() -> None:
                     "poster/SRT/timing unchanged")
         if scene_id == "CIN_005":
             note = ("MEDIA-02 checkpoint 38 - CIN_005 draft mix v1: "
+                    "embedded draft mix audio in the runtime OGV "
+                    "+ review MP4 (video streams bit-identical); "
+                    "poster/SRT/timing unchanged")
+        if scene_id == "CIN_007":
+            note = ("MEDIA-02 checkpoint 39 - CIN_007 draft mix v1: "
                     "embedded draft mix audio in the runtime OGV "
                     "+ review MP4 (video streams bit-identical); "
                     "poster/SRT/timing unchanged")
@@ -499,7 +517,7 @@ def main() -> None:
 
     pack = {
         "manifestId": "NGM_RUNTIME_PACK_GOI31_V1",
-        "checkpoint": "MEDIA-02 checkpoint 38 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37 scenes verified unchanged)",
+        "checkpoint": "MEDIA-02 checkpoint 39 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38 scenes verified unchanged)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "status": "DRAFT_NOT_FINAL",
@@ -522,7 +540,8 @@ def main() -> None:
             "of the runtime pack.",
             "Embedded mixes are DRAFT_MIX_NOT_FINAL; P0 scenes embed "
             "v3 (fully composed), CIN_006 embeds its v1, CIN_003 "
-            "embeds its v1 and CIN_005 embeds its v1; v1/v2 P0 mixes "
+            "embeds its v1, CIN_005 embeds its v1 and CIN_007 embeds "
+            "its v1; v1/v2 P0 mixes "
             "stay as separate files and "
             "Codex's adapter chooses the mix version at PR review -- "
             "swapping the embedded mix is a re-mux only, no picture "
@@ -540,6 +559,13 @@ def main() -> None:
             "PROPOSED_CANDIDATE; the CP17 draft VO take overruns "
             "its 12.5-17.5 s window by 0.160 s and the overrun is "
             "KEPT per the owner verdict (Goi 30 D1); no tail trim.",
+            "CIN_007 stem assignment (quiet_discovery music + "
+            "wind_canopy ambience + reveal at 6.0 s) is "
+            "PROPOSED_CANDIDATE; the CP17 draft VO take fits inside "
+            "its 12.5-17.5 s window (ends 16.412 s, no overrun, no "
+            "tail trim). Ducking evidence is measured over the full "
+            "VO window because quiet_discovery is sparse by design "
+            "(the first 2 s of the window are near-silence).",
             "Final picture per shot stays blocked on the character "
             "lock; these clips are animatic-level Ken Burns on "
             "storyboard keyframes, NOT final pose animation.",
