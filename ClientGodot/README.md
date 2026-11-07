@@ -72,3 +72,10 @@ Kiểm riêng: Run_Playable_Alpha.ps1 -CombatTest -EvidenceDirectory <thư mục
 ## Thư viện asset16–20khung — 07/11/2026
 
 Nhấp Xem_Thu_Vien_Asset.cmd hoặc chạy Run_Actor_Library.ps1; -Test kiểm native, cổng ảnh chưa duyệt, loop/one-shot và tua khung. ActorLibrary.tscn riêng cho review class/quái/boss/NPC/VFX, có8hướng, timeline16–20khung và nhãn nguồn/lật/thiếu/HOLD. Ảnh ứng viên chưa tự thay gameplay. Nguồn PNG/prompt và tình trạng ở Art_Source/Actor_Library_20261107/README_vi.md; chuẩn ở docs/production/Actor_Animation_16_20F_60FPS_20261107_vi.md.
+
+
+## Prototype nhân vật ghép lớp —07/11/2026
+
+Đặc tả và nghiên cứu trong docs/production/Modular_Character_Appearance_20261107_vi.md. Hai rig dùng chung cho10profile class/giới tính; có hai ứng viên base nam/nữ hướngS trong Art_Source/Modular_Characters_20261107. Chúng chưa đủ8hướng/layer fit; không thay hero online.
+
+Sau build, chạy Godot --headless --path ClientGodot ModularCharacterTest.tscn để kiểm hợp đồng ghép lớp. Test fixture metadata kiểm clock, origin, poseSet, che tóc/mặt, thứ tự tay/vũ khí, stale revision và atomic swap; không chứng nhận hình đẹp/GPU/đăng nhập/tạo nhân vật server. Renderer prototype chưa gắn vào main scene. Job vẽ mới class đã liền trang bị chuyển HOLD_MODULAR_MIGRATION.

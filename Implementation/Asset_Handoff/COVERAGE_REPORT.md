@@ -8,8 +8,8 @@
 > python Implementation/Asset_Handoff/coverage_audit.py --check
 > ```
 
-- **Source commit:** `2ff5656fe52b11c9b701f7193b1febcaaae58f0d` — last commit touching the evidence files (not the report commit).
-- **Evidence digest:** `3aff209ab124027277f77cb6f16983c3d3a87dfbf47a97a7a2866459df53776b` over 42 files (SHA256 per file in §8).
+- **Source commit:** `e597e452e9bcc08bd8316ba35ece79431b6588ce` — last commit touching the evidence files (not the report commit).
+- **Evidence digest:** `756ba1db8a9e471bcdbdf3bad1a0d111f56db284feafd9c46ede04902c7413b5` over 42 files (SHA256 per file in §8).
 - **Phạm vi:** chỉ đọc nguồn; không sửa schema, manifest, asset, `.meta`, server hay gameplay numeric.
 
 ## 1. Kết luận
@@ -216,9 +216,9 @@ File text được hash ở dạng **LF chuẩn hoá** để Windows và Linux c
 | `docs/production/NPC_Actor_Production_Registry_vi.csv` | 32835 | `d9743b8148620e00dd0762eca2bfd1b733b7a8808583725a381262fd004cd52a` |
 | `docs/production/Online_Persistence_Release_Complete_vi.md` | 9433 | `14ec979208e5d563882ab184115f34683791973180888d6b6c089c6b81855f2e` |
 | `docs/production/Pet_Mount_Production_Data_vi.csv` | 5100 | `383a40438f741931a26a5e3e19fa6d2b5527ffaa6c69bb45875ef162e6bf2d73` |
-| `docs/production/Pixel_Art_Production_Standard_vi.md` | 7986 | `041343d4adaaa2ca69ad869c3f0a4a8d721735df818aa12620e42c0a87c70182` |
+| `docs/production/Pixel_Art_Production_Standard_vi.md` | 8435 | `865ee5ae8ac533b496ff0ef74a3f898ee75c5dc35159709d9e1451edb3d535e4` |
 | `docs/production/Quest_Dialogue_Production_Data_vi.csv` | 118934 | `241593fe9ba87ad0441a4292b602602729d6a14493c07869cb0bba0e1c9c2fab` |
 | `docs/production/Weekly_Boss_Rotation_Data_vi.csv` | 3201 | `940214ce7a34978487403520c50ffef825da7da94210eeb3b1841d46f4e372e2` |
 | `docs/production/World_Spawn_Gathering_Manifest_vi.csv` | 198229 | `7fe2d4d5229e2fb7a93eb8c0fd452b741cb5f050c49a9c72bee30f8eff06c457` |
 
-**Evidence digest:** `3aff209ab124027277f77cb6f16983c3d3a87dfbf47a97a7a2866459df53776b`
+**Evidence digest:** `756ba1db8a9e471bcdbdf3bad1a0d111f56db284feafd9c46ede04902c7413b5`

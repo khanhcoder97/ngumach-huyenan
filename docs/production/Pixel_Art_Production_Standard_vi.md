@@ -1,5 +1,7 @@
 # Chuẩn sản xuất đồ họa pixel art hiện hành
 
+> Quyết định chủ dự án07/11/2026: nhân vật người chơi chuyển sang base nam/nữ + bộ phận trang phục/vũ khí/diện mạo tách lớp. Xem [pipeline modular](Modular_Character_Appearance_20261107_vi.md). Mười profile class/giới tính dùng chung hai rig khi tương thích; các sprite class đã vẽ liền đồ chỉ còn reference/fallback. Chuẩn16–20pose thực/clip/hướng và render60FPS giữ nguyên.
+
 Cập nhật 07/11/2026 theo quyết định trực tiếp của chủ dự án. Chuẩn này áp dụng cho asset mới và thay mới, cùng [Chuẩn animation 16–20 khung / 60 FPS](Actor_Animation_16_20F_60FPS_20261107_vi.md). Các mức idle4–6, walk6–8, hit2–4, skill5–10 khung trước đây đã hết hiệu lực nghiệm thu. File cũ trong Git vẫn là lịch sử, không tự trở thành asset đạt chuẩn.
 
 ## Engine, góc nhìn và tỷ lệ

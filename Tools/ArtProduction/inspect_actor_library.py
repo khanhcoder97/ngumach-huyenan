@@ -24,8 +24,8 @@ def locate(values,expected,maximum_gap):
         if len(found)==expected and min(b-a for a,b in found)>=len(values)/expected*.2:return found
     return bands(occupied,maximum_gap)
 
-def inspect(record):
-    path=ART/record['source']
+def inspect(record, art_root=None):
+    path=(art_root or ART)/record['source']
     with Image.open(path) as im:
         assert im.mode=='RGBA','PNG must retain RGBA'
         w,h=im.size;a=im.getchannel('A');assert a.getextrema()[0]==0,'opaque fake background'
@@ -90,6 +90,10 @@ def main(export,require_complete,check=False):
         page['productionApproved']=bool(page.get('legacy') or page['id'] in approved)
         page['visualState']='EXISTING_NATIVE_APPROVED' if page.get('legacy') else 'APPROVED' if page['id'] in approved else 'HOLD' if page['id'] in holds else 'AWAITING_VISUAL_REVIEW'
         page['visualNotes']=holds.get(page['id'],'')
+        if page['id'].startswith('class_') and not page.get('legacy'):
+            page['productionApproved']=False
+            page['visualState']='REFERENCE_ONLY_MODULAR_MIGRATION'
+            page['visualNotes']='New player art uses modular bodies/parts. Keep this baked sheet as reference only. '+page['visualNotes']
     def save(path,value):
         rendered=json.dumps(value,ensure_ascii=False,indent=2)+'\n'
         if check:assert path.read_text(encoding='utf8')==rendered,'stale metadata: '+str(path)
@@ -109,7 +113,7 @@ def main(export,require_complete,check=False):
     pending=[j['id'] for j in jobs if j['id'] not in passed]
     ready={p['id'] for p in accepted if p['productionApproved']}
     coverage=dict(actors=len(catalog['actors']),requiredPages=len(jobs),structurePassed=len(accepted),boundRequiredPages=sum(j['id'] in passed for j in jobs),legacyClips=3,rejected=rejected,pendingPages=len(pending),pendingIds=pending,
-        productionApprovedPages=sum(j['id'] in ready for j in jobs),visualHoldPages=sum(p['visualState']=='HOLD' for p in accepted),structureComplete=not pending and not rejected,
+        productionApprovedPages=sum(j['id'] in ready for j in jobs),visualHoldPages=sum(p['visualState']=='HOLD' for p in accepted),modularMigrationReferencePages=sum(p['visualState']=='REFERENCE_ONLY_MODULAR_MIGRATION' for p in accepted),structureComplete=not pending and not rejected,
         complete=all(j['id'] in ready for j in jobs) and not rejected,warning='Structure pass is not visual/animation/native approval. Mirrored directions are frame references, not separately authored poses.')
     save(ART/'coverage.json',coverage)
     print(json.dumps({k:v for k,v in coverage.items() if k!='pendingIds'},ensure_ascii=False))

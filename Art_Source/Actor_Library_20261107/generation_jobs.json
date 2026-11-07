@@ -14,7 +14,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": null,
     "prompt": "Subject CLASS_MINH_KIEM — Minh Kiếm. Identity: young martial swordsman, dark high topknot with gold clasp, ivory crossed tunic, short dark teal coat and gunmetal shoulder guards edged in muted gold, dark trousers and boots, slim straight jian sword. Animation: calm16-pose breathing/blink/cloth or fin settle loop, seamless16to0, no walking. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -33,7 +33,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_minh_kiem_idle",
     "prompt": "Subject CLASS_MINH_KIEM — Minh Kiếm. Identity: young martial swordsman, dark high topknot with gold clasp, ivory crossed tunic, short dark teal coat and gunmetal shoulder guards edged in muted gold, dark trousers and boots, slim straight jian sword. Animation: 16-pose walk cycle: left contact0, acceptance1-3, passing4, right swing5-7, right contact8, acceptance9-11, passing12, left swing13-15; natural opposite arms and seamless loop. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -52,7 +52,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_minh_kiem_idle",
     "prompt": "Subject CLASS_MINH_KIEM — Minh Kiếm. Identity: young martial swordsman, dark high topknot with gold clasp, ivory crossed tunic, short dark teal coat and gunmetal shoulder guards edged in muted gold, dark trousers and boots, slim straight jian sword. Animation: 16-pose physical weapon strike: ready0-2, windup3-6, release7-10, follow-through11-13, recover14-15; clear hips, shoulders and weapon grip, no magical VFX. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -71,7 +71,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_minh_kiem_idle",
     "prompt": "Subject CLASS_MINH_KIEM — Minh Kiếm. Identity: young martial swordsman, dark high topknot with gold clasp, ivory crossed tunic, short dark teal coat and gunmetal shoulder guards edged in muted gold, dark trousers and boots, slim straight jian sword. Animation: Sixteen-pose body/weapon casting choreography for Phản Quang. Canonical description: Vai trò: đỡ phản công. CD 10s, 12 MP. Nhấn tạo thế thủ 0,4s, giảm 70% sát thương; nếu đòn cận chiến trúng trong cửa đỡ, phản 180% sát thương vũ khí và nhận 2 Kiếm Ý. Nếu không có đòn chạm, kết thúc với giảm sát thương hụt 20%. Hoạt ảnh: hạ trọng tâm, đưa kiếm chéo trước ngực; 6 frame đầu viền bạc mảnh báo thế đỡ. Khi đỡ thành công, kiếm phát một vòng cung lục giác màu vàng nhạt, âm thanh kim loại khô; không tạo flash màn hình. Boss không bị choáng, người chơi nhận thông báo “Đỡ chuẩn” cạnh thanh tài nguyên. Vùng đỡ 120 độ phía trước, cự ly 2,2m. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -90,7 +90,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_minh_kiem_idle",
     "prompt": "Subject CLASS_MINH_KIEM — Minh Kiếm. Identity: young martial swordsman, dark high topknot with gold clasp, ivory crossed tunic, short dark teal coat and gunmetal shoulder guards edged in muted gold, dark trousers and boots, slim straight jian sword. Animation: Sixteen-pose body/weapon casting choreography for Tầm Long. Canonical description: Vai trò: áp sát/đánh mục tiêu đầu. CD 8s, 16 MP, lao 5,5m, 150%, +1 Kiếm Ý. Chuẩn bị 0,15s, lướt 0,20s, hồi 0,24s. Mũi kiếm kéo vệt trắng bạc có lõi vàng; nhân vật không biến mất. Hit là một hình thoi mảnh trước người, không xuyên tường; nếu va chướng ngại thì dừng ở mép. Tạo vạch bụi nhỏ ở điểm dừng. Quái thường bị lùi 0,25m, boss tích Choáng Mạch. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -109,7 +109,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_minh_kiem_idle",
     "prompt": "Subject CLASS_MINH_KIEM — Minh Kiếm. Identity: young martial swordsman, dark high topknot with gold clasp, ivory crossed tunic, short dark teal coat and gunmetal shoulder guards edged in muted gold, dark trousers and boots, slim straight jian sword. Animation: Sixteen-pose body/weapon casting choreography for Kiếm Trận. Canonical description: Vai trò: quét nhóm. CD 10s, 22 MP, hình quạt 100 độ, tổng 190%, tối đa 5 mục tiêu. Ba nhát có nhịp 0,10/0,12/0,14s: ngang, chéo lên, chém xuống; trọng số sát thương 45/55/90%. VFX ba cung kiếm vàng trắng lệch nhau, cung thứ ba dày nhất; mỗi cung tồn tại dưới 0,22s. Đánh trúng nhiều mục tiêu có số sát thương tách riêng, không cộng dồn một con số che mục tiêu. Ưu tiên trúng địch gần nhất trong quạt. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -128,7 +128,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_minh_kiem_idle",
     "prompt": "Subject CLASS_MINH_KIEM — Minh Kiếm. Identity: young martial swordsman, dark high topknot with gold clasp, ivory crossed tunic, short dark teal coat and gunmetal shoulder guards edged in muted gold, dark trousers and boots, slim straight jian sword. Animation: Sixteen-pose body/weapon casting choreography for Thiết Y. Canonical description: Vai trò: phòng thủ cá nhân. CD 16s, 24 MP, khiên bằng 12% HP tối đa trong 4s, không cộng dồn. Động tác cắm kiếm cạnh thân rồi kéo vòng sáng kim loại mờ quanh vai và ngực. Khiên hiển thị một viền lục giác xanh bạc ở chân thanh HP, không phủ toàn thân. Khi bị đánh, viền nứt theo lượng khiên mất; hết thời gian tự tan thành bụi sáng. Nội tại Thủ Nhất cộng thêm 4% giá trị khiên theo quy tắc Bible. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -147,7 +147,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_minh_kiem_idle",
     "prompt": "Subject CLASS_MINH_KIEM — Minh Kiếm. Identity: young martial swordsman, dark high topknot with gold clasp, ivory crossed tunic, short dark teal coat and gunmetal shoulder guards edged in muted gold, dark trousers and boots, slim straight jian sword. Animation: Sixteen-pose body/weapon casting choreography for Bạch Hồng (cơ động). Canonical description: Vai trò: vượt ngang, xóa chậm. CD 9s, 10 MP, lướt 6m ngang, không gây sát thương. Vệt kiếm mảnh trắng xanh chạy sau nhân vật trong 0,16s; nhân vật luôn thấy rõ tại đầu/cuối pha. Xóa trạng thái Chậm khi khởi động, không xóa choáng, trói, độc hoặc vùng khóa. Không cho đi xuyên tường/địch lớn; va chạm dừng lướt. Không có hitbox sát thương. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -166,7 +166,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_minh_kiem_idle",
     "prompt": "Subject CLASS_MINH_KIEM — Minh Kiếm. Identity: young martial swordsman, dark high topknot with gold clasp, ivory crossed tunic, short dark teal coat and gunmetal shoulder guards edged in muted gold, dark trousers and boots, slim straight jian sword. Animation: Sixteen-pose body/weapon casting choreography for Vạn Tượng Quy Nhất (tuyệt kỹ). Canonical description: Vai trò: đường kiếm dồn sát thương. CD 60s, 40 MP. Tấn công đường thẳng 7m, 260% + 60% mỗi Kiếm Ý, tối đa 5 mục tiêu; tiêu Kiếm Ý khi server chấp nhận. 0,70s kết tụ: các nét kim loại nhỏ hội về mũi kiếm, nhân vật giữ dáng ngang vững. Sau báo trước là đường chém ngang rộng 0,8m, vệt vàng trắng phân lớp, tồn tại 0,35s. Camera rung tối đa 0,12s tại hit, không cắt cảnh; số Kiếm Ý được hiển thị thành năm vạch sáng tắt theo số đã dùng. Boss nhận sát thương và Choáng Mạch, không bị đứng im. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -185,7 +185,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_minh_kiem_idle",
     "prompt": "Subject CLASS_MINH_KIEM — Minh Kiếm. Identity: young martial swordsman, dark high topknot with gold clasp, ivory crossed tunic, short dark teal coat and gunmetal shoulder guards edged in muted gold, dark trousers and boots, slim straight jian sword. Animation: ONE16-pose non-gory hit reaction per direction: first row frames0-7 ONLY braces then builds recoil to the maximum at7; second row frames8-15 ONLY gradually recovers from that same recoil to neutral. Never start a second flinch in the second row. No repeated8-frame loop, travel or scenery. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -204,7 +204,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_minh_kiem_idle",
     "prompt": "Subject CLASS_MINH_KIEM — Minh Kiếm. Identity: young martial swordsman, dark high topknot with gold clasp, ivory crossed tunic, short dark teal coat and gunmetal shoulder guards edged in muted gold, dark trousers and boots, slim straight jian sword. Animation: ONE16-pose non-gory defeat per direction: FIRST row frames0-7 starts upright then staggers and bends both knees; SECOND row frames8-15 continues that SAME fall, puts hand down8-9, collapses10-11, settles12-15. Last frame lies down and NEVER returns upright. Never restart the fall in the second row. No disappearing sprite. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -223,7 +223,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_minh_kiem_idle",
     "prompt": "Subject CLASS_MINH_KIEM — Minh Kiếm. Identity: young martial swordsman, dark high topknot with gold clasp, ivory crossed tunic, short dark teal coat and gunmetal shoulder guards edged in muted gold, dark trousers and boots, slim straight jian sword. Animation: 16-pose ground evasive step: coil0-3, low lateral motion4-9, regain footing10-13, finish14-15; no teleport, effects or ground translation. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -242,7 +242,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": null,
     "prompt": "Subject CLASS_ANH_DAO — Ảnh Đao. Identity: agile martial artist, swept dark hair with copper streak, charcoal and crimson short crossed coat, ochre belt, dark fitted trousers and boots, curved short dao in dark hip scabbard. Animation: calm16-pose breathing/blink/cloth or fin settle loop, seamless16to0, no walking. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -261,7 +261,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_anh_dao_idle",
     "prompt": "Subject CLASS_ANH_DAO — Ảnh Đao. Identity: agile martial artist, swept dark hair with copper streak, charcoal and crimson short crossed coat, ochre belt, dark fitted trousers and boots, curved short dao in dark hip scabbard. Animation: 16-pose walk cycle: left contact0, acceptance1-3, passing4, right swing5-7, right contact8, acceptance9-11, passing12, left swing13-15; natural opposite arms and seamless loop. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -280,7 +280,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_anh_dao_idle",
     "prompt": "Subject CLASS_ANH_DAO — Ảnh Đao. Identity: agile martial artist, swept dark hair with copper streak, charcoal and crimson short crossed coat, ochre belt, dark fitted trousers and boots, curved short dao in dark hip scabbard. Animation: 16-pose physical weapon strike: ready0-2, windup3-6, release7-10, follow-through11-13, recover14-15; clear hips, shoulders and weapon grip, no magical VFX. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -299,7 +299,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_anh_dao_idle",
     "prompt": "Subject CLASS_ANH_DAO — Ảnh Đao. Identity: agile martial artist, swept dark hair with copper streak, charcoal and crimson short crossed coat, ochre belt, dark fitted trousers and boots, curved short dao in dark hip scabbard. Animation: Sixteen-pose body/weapon casting choreography for Huyết Nguyệt. Canonical description: Vai trò: chảy máu đơn mục tiêu. CD 8s, 14 MP, đòn 140% và chảy máu 3 lần ×25% trong 4s. Chém vòng cung đỏ sẫm, rìa cam chỉ sáng lúc cắt; tránh máu bắn hoặc hình ảnh bạo lực. Dấu chảy máu là ba vệt đỏ nhỏ chạy dọc viền thanh máu mục tiêu, mỗi tick có âm thanh rất nhẹ. Nhận Nhiệt theo quy tắc lớp: đòn trúng cho 1 Nhiệt tối đa một lần mỗi 1,5s. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -318,7 +318,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_anh_dao_idle",
     "prompt": "Subject CLASS_ANH_DAO — Ảnh Đao. Identity: agile martial artist, swept dark hair with copper streak, charcoal and crimson short crossed coat, ochre belt, dark fitted trousers and boots, curved short dao in dark hip scabbard. Animation: Sixteen-pose body/weapon casting choreography for Tàn Hỏa. Canonical description: Vai trò: gài nổ. CD 12s, 18 MP. Gắn dấu 5s; đòn tiếp theo của người chơi lên mục tiêu kích nổ 120% vùng nhỏ, hoặc 180% nếu có đủ 5 Nhiệt tại lúc kích hoạt. Dấu là một vòng than đỏ quanh chân địch với năm khe sáng; đồng đội nhìn thấy biểu tượng nhỏ, không phải vòng sàn. Nổ bán kính 1,5m, VFX bụi than hướng ra ngoài và tia lửa ngắn. Nếu dấu hết hạn thì tắt, không tự nổ. Mỗi mục tiêu chỉ mang một dấu từ cùng người chơi. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -337,7 +337,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_anh_dao_idle",
     "prompt": "Subject CLASS_ANH_DAO — Ảnh Đao. Identity: agile martial artist, swept dark hair with copper streak, charcoal and crimson short crossed coat, ochre belt, dark fitted trousers and boots, curved short dao in dark hip scabbard. Animation: Sixteen-pose body/weapon casting choreography for Xích Ảnh. Canonical description: Vai trò: hai nhát, thưởng vị trí sau lưng quái. CD 10s, 20 MP, hai hit ×85%. Nhát đầu lướt chéo ngắn 1m, nhát sau đảo cổ tay chém ngược. Mỗi nhát có cửa hitbox riêng 0,10s, tổng góc 80 độ. Nếu nhát hai chạm phía sau quái thường, tăng theo nội tại Bóng Sát (+8%); boss dùng hướng vị trí của người chơi khi lệnh được xác nhận. Vệt lửa tối, không dùng ảnh phân thân gây nhầm với nhân vật thật. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -356,7 +356,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_anh_dao_idle",
     "prompt": "Subject CLASS_ANH_DAO — Ảnh Đao. Identity: agile martial artist, swept dark hair with copper streak, charcoal and crimson short crossed coat, ochre belt, dark fitted trousers and boots, curved short dao in dark hip scabbard. Animation: Sixteen-pose body/weapon casting choreography for Tước Mạch. Canonical description: Vai trò: làm chậm/tích Choáng Mạch. CD 14s, 22 MP, 160%, chậm 25% trong 2,5s; boss nhận Choáng Mạch thay hiệu ứng khống chế. Hoạt ảnh chém dọc từ vai xuống, thanh lửa mỏng dừng ở vị trí hit. Quái thường có dấu ba vệt xích đỏ trên chân; boss có biểu tượng mạch bị nứt cạnh tên hiệu ứng. Không khóa hoạt ảnh mục tiêu; không cộng dồn thời gian làm chậm. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -375,7 +375,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_anh_dao_idle",
     "prompt": "Subject CLASS_ANH_DAO — Ảnh Đao. Identity: agile martial artist, swept dark hair with copper streak, charcoal and crimson short crossed coat, ochre belt, dark fitted trousers and boots, curved short dao in dark hip scabbard. Animation: Sixteen-pose body/weapon casting choreography for Ảnh Bộ (cơ động). Canonical description: Vai trò: đổi vị trí. CD 8s, 10 MP, lướt 6m, xóa khóa mục tiêu của quái thường; không tàng hình. Nhân vật thu thấp người và trượt qua làn khói than trong 0,22s; silhouette được viền màu cam để đồng đội không mất dấu. Khóa mục tiêu boss không bị xóa. Không tạo ảo ảnh có thể bị nhắm. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -394,7 +394,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_anh_dao_idle",
     "prompt": "Subject CLASS_ANH_DAO — Ảnh Đao. Identity: agile martial artist, swept dark hair with copper streak, charcoal and crimson short crossed coat, ochre belt, dark fitted trousers and boots, curved short dao in dark hip scabbard. Animation: Sixteen-pose body/weapon casting choreography for Tử Diệm (tuyệt kỹ). Canonical description: Vai trò: nổ diện nhỏ, tiêu Nhiệt. CD 60s, 35 MP, 230% vùng nhỏ +45% mỗi Nhiệt, tiêu sạch Nhiệt. 0,55s tích lực: lưỡi đao hút các hạt than vào sống đao; vòng cảnh báo cá nhân 1,7m tông đỏ đen chỉ báo vùng gây sát thương, không phải vùng nguy hiểm cho chính người chơi. Chém xoay một vòng thấp, lửa bùng 0,25s, tắt nhanh để thấy boss. Mỗi tầng Nhiệt thêm một vòng nhỏ ở điểm hit, tối đa 5 vòng; số vòng đồng bộ biểu tượng Nhiệt. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -413,7 +413,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_anh_dao_idle",
     "prompt": "Subject CLASS_ANH_DAO — Ảnh Đao. Identity: agile martial artist, swept dark hair with copper streak, charcoal and crimson short crossed coat, ochre belt, dark fitted trousers and boots, curved short dao in dark hip scabbard. Animation: ONE16-pose non-gory hit reaction per direction: first row frames0-7 ONLY braces then builds recoil to the maximum at7; second row frames8-15 ONLY gradually recovers from that same recoil to neutral. Never start a second flinch in the second row. No repeated8-frame loop, travel or scenery. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -432,7 +432,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_anh_dao_idle",
     "prompt": "Subject CLASS_ANH_DAO — Ảnh Đao. Identity: agile martial artist, swept dark hair with copper streak, charcoal and crimson short crossed coat, ochre belt, dark fitted trousers and boots, curved short dao in dark hip scabbard. Animation: ONE16-pose non-gory defeat per direction: FIRST row frames0-7 starts upright then staggers and bends both knees; SECOND row frames8-15 continues that SAME fall, puts hand down8-9, collapses10-11, settles12-15. Last frame lies down and NEVER returns upright. Never restart the fall in the second row. No disappearing sprite. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -451,7 +451,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_anh_dao_idle",
     "prompt": "Subject CLASS_ANH_DAO — Ảnh Đao. Identity: agile martial artist, swept dark hair with copper streak, charcoal and crimson short crossed coat, ochre belt, dark fitted trousers and boots, curved short dao in dark hip scabbard. Animation: 16-pose ground evasive step: coil0-3, low lateral motion4-9, regain footing10-13, finish14-15; no teleport, effects or ground translation. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -470,7 +470,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": null,
     "prompt": "Subject CLASS_HUYEN_BUT — Huyền Bút. Identity: young ink sorceress, neat black braid and jade clasp, ivory and ink-blue scholarly crossed robe, restrained cyan stole, practical navy boots, closed ink pot and large bamboo calligraphy brush. Animation: calm16-pose breathing/blink/cloth or fin settle loop, seamless16to0, no walking. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -489,7 +489,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_huyen_but_idle",
     "prompt": "Subject CLASS_HUYEN_BUT — Huyền Bút. Identity: young ink sorceress, neat black braid and jade clasp, ivory and ink-blue scholarly crossed robe, restrained cyan stole, practical navy boots, closed ink pot and large bamboo calligraphy brush. Animation: 16-pose walk cycle: left contact0, acceptance1-3, passing4, right swing5-7, right contact8, acceptance9-11, passing12, left swing13-15; natural opposite arms and seamless loop. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -508,7 +508,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_huyen_but_idle",
     "prompt": "Subject CLASS_HUYEN_BUT — Huyền Bút. Identity: young ink sorceress, neat black braid and jade clasp, ivory and ink-blue scholarly crossed robe, restrained cyan stole, practical navy boots, closed ink pot and large bamboo calligraphy brush. Animation: 16-pose physical calligraphy brush sweep: prepare0-3, lift4-7, draw one invisible ink stroke8-10, follow-through11-13, recover14-15. No detached VFX.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -527,7 +527,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_huyen_but_idle",
     "prompt": "Subject CLASS_HUYEN_BUT — Huyền Bút. Identity: young ink sorceress, neat black braid and jade clasp, ivory and ink-blue scholarly crossed robe, restrained cyan stole, practical navy boots, closed ink pot and large bamboo calligraphy brush. Animation: Sixteen-pose body/weapon casting choreography for Mực Triều. Canonical description: Vai trò: đạn sóng xuyên quái thường. CD 6s, 12 MP, 130%, đường thẳng 5m, xuyên tối đa 3 quái thường. Vẽ nét ngang bằng bút; nét mực xanh lam chuyển thành sóng có rìa giấy loang, không giống đạn phép tròn. Đầu sóng cao 0,8m, bay 0,25s; mỗi mục tiêu trúng có dấu chấm mực nhỏ. Boss chặn đường đạn; không xuyên tường. Nội tại Nét Mực giảm 1s CD sau tổng ba lần trúng hợp lệ. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -546,7 +546,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_huyen_but_idle",
     "prompt": "Subject CLASS_HUYEN_BUT — Huyền Bút. Identity: young ink sorceress, neat black braid and jade clasp, ivory and ink-blue scholarly crossed robe, restrained cyan stole, practical navy boots, closed ink pot and large bamboo calligraphy brush. Animation: Sixteen-pose body/weapon casting choreography for Hàn Châm. Canonical description: Vai trò: làm chậm/khống chế nhẹ. CD 12s, 18 MP, 110%, chậm 35% trong 2s; quái nhỏ đóng băng 0,6s. Bút chấm ba điểm sáng xanh trước khi một kim băng mảnh bay đi. Trúng tạo hình băng dạng cánh hoa trên chân, không phủ thân. Boss nhận làm chậm theo giới hạn PvE hoặc tích Choáng Mạch tùy bảng kháng; không đóng băng boss. Cửa báo trước 0,18s, tốc độ đạn đủ để đọc và né ở cự ly xa. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -565,7 +565,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_huyen_but_idle",
     "prompt": "Subject CLASS_HUYEN_BUT — Huyền Bút. Identity: young ink sorceress, neat black braid and jade clasp, ivory and ink-blue scholarly crossed robe, restrained cyan stole, practical navy boots, closed ink pot and large bamboo calligraphy brush. Animation: Sixteen-pose body/weapon casting choreography for Thủy Kính. Canonical description: Vai trò: khiên đồng đội. CD 16s, 22 MP, khiên 10% HP tối đa trong 4s; chỉ giữ khiên lớn nhất. Chọn mục tiêu đồng minh theo hướng con trỏ/joystick hỗ trợ: ưu tiên đồng minh gần tâm nút, nếu không chọn thì người gần nhất trong 6m có HP thấp nhất. Một nét tròn xanh ngọc khép quanh mục tiêu, mặt kính mỏng nghiêng 15 độ; khiên không che nhân vật. Nội tại Tĩnh Thủy thêm phần khiên theo bảng nội tại khi mục tiêu thấp HP; quy tắc không cộng dồn bắt buộc. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -584,7 +584,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_huyen_but_idle",
     "prompt": "Subject CLASS_HUYEN_BUT — Huyền Bút. Identity: young ink sorceress, neat black braid and jade clasp, ivory and ink-blue scholarly crossed robe, restrained cyan stole, practical navy boots, closed ink pot and large bamboo calligraphy brush. Animation: Sixteen-pose body/weapon casting choreography for Mưa Tinh. Canonical description: Vai trò: hồi máu vùng. CD 18s, 28 MP, bán kính 3m; hồi 8% HP +2% mỗi giây trong 3s; tiêu 2 Thủy Ấn tăng tổng hồi 30%. Vẽ một vòng tròn xanh nhạt trên mặt đất, báo trước 0,45s; giọt sáng rơi thẳng trong vùng, không làm giảm tương phản nền. Hồi tick ở 0/1/2/3s; người rời vùng sau khi nhận tick vẫn giữ lượng đã hồi. Tối đa 5 người theo nội tại Chia Dòng; thứ tự ưu tiên: người chơi, thành viên nhóm trong vùng theo % HP thấp nhất. Không hồi mục tiêu ngoài party/guild. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -603,7 +603,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_huyen_but_idle",
     "prompt": "Subject CLASS_HUYEN_BUT — Huyền Bút. Identity: young ink sorceress, neat black braid and jade clasp, ivory and ink-blue scholarly crossed robe, restrained cyan stole, practical navy boots, closed ink pot and large bamboo calligraphy brush. Animation: Sixteen-pose body/weapon casting choreography for Lưu Thủy Bộ (cơ động). Canonical description: Vai trò: lùi giữ khoảng cách. CD 10s, 10 MP, lùi 4m và tăng 20% tốc chạy trong 1,5s. Nhân vật xoay vai, bước trượt ngược, để lại hai nét nước mỏng. Hướng lùi theo vector ngược hướng mặt; có thể chỉnh bằng joystick, không xuyên địch/tường. Vệt nước không gây sát thương và tan sau 0,3s. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -622,7 +622,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_huyen_but_idle",
     "prompt": "Subject CLASS_HUYEN_BUT — Huyền Bút. Identity: young ink sorceress, neat black braid and jade clasp, ivory and ink-blue scholarly crossed robe, restrained cyan stole, practical navy boots, closed ink pot and large bamboo calligraphy brush. Animation: Sixteen-pose body/weapon casting choreography for Long Mạch Hồi Nguyên (tuyệt kỹ). Canonical description: Vai trò: hồi nhóm và giải trạng thái. CD 70s, 45 MP; hồi 12% HP cho nhóm và giải một Chậm hoặc Độc, chịu giới hạn raid. Nhân vật viết một vòng ấn lớn dưới chân; nét chữ cách điệu là hình học hư cấu, không dùng ký tự giả Hán sai nghĩa. Sóng xanh lam tràn ra bán kính 8m trong 0,45s, đồng minh nhận một dải sáng từ chân lên vai. Chỉ mục tiêu party trong cùng encounter được hồi; raid áp dụng hệ số cấu hình (mặc định 70% từ ngoài party), tránh vượt ngân sách hồi. Không xóa stun/khóa cơ chế boss. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -641,7 +641,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_huyen_but_idle",
     "prompt": "Subject CLASS_HUYEN_BUT — Huyền Bút. Identity: young ink sorceress, neat black braid and jade clasp, ivory and ink-blue scholarly crossed robe, restrained cyan stole, practical navy boots, closed ink pot and large bamboo calligraphy brush. Animation: ONE16-pose non-gory hit reaction per direction: first row frames0-7 ONLY braces then builds recoil to the maximum at7; second row frames8-15 ONLY gradually recovers from that same recoil to neutral. Never start a second flinch in the second row. No repeated8-frame loop, travel or scenery. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -660,7 +660,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_huyen_but_idle",
     "prompt": "Subject CLASS_HUYEN_BUT — Huyền Bút. Identity: young ink sorceress, neat black braid and jade clasp, ivory and ink-blue scholarly crossed robe, restrained cyan stole, practical navy boots, closed ink pot and large bamboo calligraphy brush. Animation: ONE16-pose non-gory defeat per direction: FIRST row frames0-7 starts upright then staggers and bends both knees; SECOND row frames8-15 continues that SAME fall, puts hand down8-9, collapses10-11, settles12-15. Last frame lies down and NEVER returns upright. Never restart the fall in the second row. No disappearing sprite. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -679,7 +679,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_huyen_but_idle",
     "prompt": "Subject CLASS_HUYEN_BUT — Huyền Bút. Identity: young ink sorceress, neat black braid and jade clasp, ivory and ink-blue scholarly crossed robe, restrained cyan stole, practical navy boots, closed ink pot and large bamboo calligraphy brush. Animation: 16-pose ground evasive step: coil0-3, low lateral motion4-9, regain footing10-13, finish14-15; no teleport, effects or ground translation. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -698,7 +698,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": null,
     "prompt": "Subject CLASS_THACH_CHUY — Thạch Chùy. Identity: sturdy stocky guardian, medium tan skin, dark short hair and bronze headband, ochre and stone-grey quilted armour, squared shoulder plates, brown boots, rust sash and broad square stone hammer. Animation: calm16-pose breathing/blink/cloth or fin settle loop, seamless16to0, no walking. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -717,7 +717,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_thach_chuy_idle",
     "prompt": "Subject CLASS_THACH_CHUY — Thạch Chùy. Identity: sturdy stocky guardian, medium tan skin, dark short hair and bronze headband, ochre and stone-grey quilted armour, squared shoulder plates, brown boots, rust sash and broad square stone hammer. Animation: 16-pose walk cycle: left contact0, acceptance1-3, passing4, right swing5-7, right contact8, acceptance9-11, passing12, left swing13-15; natural opposite arms and seamless loop. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -736,7 +736,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_thach_chuy_idle",
     "prompt": "Subject CLASS_THACH_CHUY — Thạch Chùy. Identity: sturdy stocky guardian, medium tan skin, dark short hair and bronze headband, ochre and stone-grey quilted armour, squared shoulder plates, brown boots, rust sash and broad square stone hammer. Animation: 16-pose weighty square stone-hammer downswing: ready0-2, both hands raise shaft3-7, drive downward8-10, follow-through11-13, recover14-15.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -755,7 +755,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_thach_chuy_idle",
     "prompt": "Subject CLASS_THACH_CHUY — Thạch Chùy. Identity: sturdy stocky guardian, medium tan skin, dark short hair and bronze headband, ochre and stone-grey quilted armour, squared shoulder plates, brown boots, rust sash and broad square stone hammer. Animation: Sixteen-pose body/weapon casting choreography for Trấn Sơn. Canonical description: Vai trò: đánh đơn mục tiêu, giảm tốc. CD 8s, 14 MP, 170%, giảm tốc 20% trong 2s. Nâng chùy qua vai, nện chéo xuống; chuẩn bị 0,25s cho tiếng rít đá. Hitbox hình quạt 60 độ, sâu 2,6m. Vết nứt đất chỉ là decal ngắn 0,35s, không tồn tại như chướng ngại. Quái hiện bụi vàng xám ở chân; boss nhận Choáng Mạch. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -774,7 +774,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_thach_chuy_idle",
     "prompt": "Subject CLASS_THACH_CHUY — Thạch Chùy. Identity: sturdy stocky guardian, medium tan skin, dark short hair and bronze headband, ochre and stone-grey quilted armour, squared shoulder plates, brown boots, rust sash and broad square stone hammer. Animation: Sixteen-pose body/weapon casting choreography for Chấn Địa. Canonical description: Vai trò: sát thương quanh thân/hất quái nhỏ. CD 14s, 20 MP, vòng bán kính 3m gây 120%; quái thường hất 0,5s. Nâng chùy thẳng, vòng bụi mỏng hiện trên đất 0,35s, sau đó sóng đá thấp lan ra. Đường kính tối đa 6m; mép ngoài dùng mảnh đá nhỏ, không dựng khối có thể hiểu là platform. Boss không hất, có thanh tích lũy Choáng Mạch. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -793,7 +793,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_thach_chuy_idle",
     "prompt": "Subject CLASS_THACH_CHUY — Thạch Chùy. Identity: sturdy stocky guardian, medium tan skin, dark short hair and bronze headband, ochre and stone-grey quilted armour, squared shoulder plates, brown boots, rust sash and broad square stone hammer. Animation: Sixteen-pose body/weapon casting choreography for Thiết Bích. Canonical description: Vai trò: giảm sát thương nhận. CD 18s, 24 MP, giảm 25% sát thương trong 4s; tiêu 2 Thế tăng lên 35%. Hạ chùy làm trụ, hiện ba mảng giáp đá trên vai/lưng/đầu gối, không biến nhân vật thành khối đá. Viền buff màu đất sáng quanh thanh HP; khi bị đánh, mảng nứt theo thời gian còn lại. Không cộng dồn, lần dùng mới chỉ làm mới thời lượng. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -812,7 +812,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_thach_chuy_idle",
     "prompt": "Subject CLASS_THACH_CHUY — Thạch Chùy. Identity: sturdy stocky guardian, medium tan skin, dark short hair and bronze headband, ochre and stone-grey quilted armour, squared shoulder plates, brown boots, rust sash and broad square stone hammer. Animation: Sixteen-pose body/weapon casting choreography for Khiêu Chiến. Canonical description: Vai trò: điều hướng quái thường. CD 20s, 16 MP; quái thường trong 6m ưu tiên tấn công người dùng trong 4s; boss không bị ép đổi mục tiêu. Nhân vật gõ chùy xuống đất, phát vòng âm thanh dạng đường gợn màu đất. Quái thường có mũi tên nhỏ hướng về người chơi, chỉ hiển thị trong 0,7s; biểu tượng khiêu chiến cạnh tên quái giữ 4s. Thủ lĩnh có miễn nhiễm nhưng vẫn nhận sát thương nếu kỹ năng có cấu hình sát thương riêng (mặc định không gây damage). Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -831,7 +831,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_thach_chuy_idle",
     "prompt": "Subject CLASS_THACH_CHUY — Thạch Chùy. Identity: sturdy stocky guardian, medium tan skin, dark short hair and bronze headband, ochre and stone-grey quilted armour, squared shoulder plates, brown boots, rust sash and broad square stone hammer. Animation: Sixteen-pose body/weapon casting choreography for Phá Nham (cơ động). Canonical description: Vai trò: lao ngắn/ngắt hoạt ảnh quái nhỏ. CD 10s, 12 MP, lao 4m gây 100%, ngắt hoạt ảnh quái thường. Chuẩn bị 0,22s, người chơi ghì vai sau chùy, sau đó lao thẳng với một dải bụi sát mặt đất. Va mục tiêu thường tạo vòng đá nhỏ và ngắt động tác không phải boss; không xuyên tường. Boss không bị interrupt, chỉ nhận sát thương và Choáng Mạch. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -850,7 +850,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_thach_chuy_idle",
     "prompt": "Subject CLASS_THACH_CHUY — Thạch Chùy. Identity: sturdy stocky guardian, medium tan skin, dark short hair and bronze headband, ochre and stone-grey quilted armour, squared shoulder plates, brown boots, rust sash and broad square stone hammer. Animation: Sixteen-pose body/weapon casting choreography for Sơn Thần Giáng Thế (tuyệt kỹ). Canonical description: Vai trò: vùng chắn ngắn và sát thương. CD 70s, 40 MP, vùng 4m tồn tại 5s, gây 180%; tiêu Thế tăng tối đa 2s. Cắm chùy, tạo một vòng chắn bằng các phiến đá thấp cao 0,55m; khoảng mở hướng camera giúp người chơi nhìn thấy bên trong. Vùng tấn công đánh một lần khi tạo, sau đó không tick damage. Đá mờ dần từ giây cuối; không chặn di chuyển đồng minh, đạn đồng minh hoặc telegraph boss. Mỗi Thế làm một phiến sáng và thêm tối đa 2s. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -869,7 +869,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_thach_chuy_idle",
     "prompt": "Subject CLASS_THACH_CHUY — Thạch Chùy. Identity: sturdy stocky guardian, medium tan skin, dark short hair and bronze headband, ochre and stone-grey quilted armour, squared shoulder plates, brown boots, rust sash and broad square stone hammer. Animation: ONE16-pose non-gory hit reaction per direction: first row frames0-7 ONLY braces then builds recoil to the maximum at7; second row frames8-15 ONLY gradually recovers from that same recoil to neutral. Never start a second flinch in the second row. No repeated8-frame loop, travel or scenery. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -888,7 +888,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_thach_chuy_idle",
     "prompt": "Subject CLASS_THACH_CHUY — Thạch Chùy. Identity: sturdy stocky guardian, medium tan skin, dark short hair and bronze headband, ochre and stone-grey quilted armour, squared shoulder plates, brown boots, rust sash and broad square stone hammer. Animation: ONE16-pose non-gory defeat per direction: FIRST row frames0-7 starts upright then staggers and bends both knees; SECOND row frames8-15 continues that SAME fall, puts hand down8-9, collapses10-11, settles12-15. Last frame lies down and NEVER returns upright. Never restart the fall in the second row. No disappearing sprite. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -907,7 +907,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_thach_chuy_idle",
     "prompt": "Subject CLASS_THACH_CHUY — Thạch Chùy. Identity: sturdy stocky guardian, medium tan skin, dark short hair and bronze headband, ochre and stone-grey quilted armour, squared shoulder plates, brown boots, rust sash and broad square stone hammer. Animation: 16-pose ground evasive step: coil0-3, low lateral motion4-9, regain footing10-13, finish14-15; no teleport, effects or ground translation. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -926,7 +926,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": null,
     "prompt": "Subject CLASS_LINH_CUNG — Linh Cung. Identity: lean woodland archer, dark high ponytail, moss-green crossed tunic, short jade-and-oat layered shoulder cape, ochre wrist wraps, forest trousers, soft boots, compact bent wooden leaf-tip bow and short quiver. Animation: calm16-pose breathing/blink/cloth or fin settle loop, seamless16to0, no walking. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -945,7 +945,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_linh_cung_idle",
     "prompt": "Subject CLASS_LINH_CUNG — Linh Cung. Identity: lean woodland archer, dark high ponytail, moss-green crossed tunic, short jade-and-oat layered shoulder cape, ochre wrist wraps, forest trousers, soft boots, compact bent wooden leaf-tip bow and short quiver. Animation: 16-pose walk cycle: left contact0, acceptance1-3, passing4, right swing5-7, right contact8, acceptance9-11, passing12, left swing13-15; natural opposite arms and seamless loop. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -964,7 +964,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_linh_cung_idle",
     "prompt": "Subject CLASS_LINH_CUNG — Linh Cung. Identity: lean woodland archer, dark high ponytail, moss-green crossed tunic, short jade-and-oat layered shoulder cape, ochre wrist wraps, forest trousers, soft boots, compact bent wooden leaf-tip bow and short quiver. Animation: 16-pose bow draw and release: nock0-3, draw4-7, aim8, release9-10, follow-through11-13, recover14-15. Never swing the bow like a sword.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -983,7 +983,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_linh_cung_idle",
     "prompt": "Subject CLASS_LINH_CUNG — Linh Cung. Identity: lean woodland archer, dark high ponytail, moss-green crossed tunic, short jade-and-oat layered shoulder cape, ochre wrist wraps, forest trousers, soft boots, compact bent wooden leaf-tip bow and short quiver. Animation: Sixteen-pose body/weapon casting choreography for Khóa Mạch. Canonical description: Vai trò: đánh dấu tăng sát thương nhóm. CD 10s, 16 MP, 130%, dấu 5s khiến nhóm gây thêm 3%, không cộng dồn. Bắn một mũi tên lá dài, quỹ đạo dễ đọc; khi trúng hiện dây rễ xanh ngọc nhỏ quấn quanh viền mục tiêu. Biểu tượng dấu hiện cạnh HP quái; nếu nhiều cung thủ, ưu tiên dấu có thời lượng còn lại dài nhất hoặc từ người chơi có đóng góp gần nhất theo cấu hình, không cộng nhiều buff. Nội tại Ghim Dấu tăng thời lượng 1s. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -1002,7 +1002,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_linh_cung_idle",
     "prompt": "Subject CLASS_LINH_CUNG — Linh Cung. Identity: lean woodland archer, dark high ponytail, moss-green crossed tunic, short jade-and-oat layered shoulder cape, ochre wrist wraps, forest trousers, soft boots, compact bent wooden leaf-tip bow and short quiver. Animation: Sixteen-pose body/weapon casting choreography for Dây Gai. Canonical description: Vai trò: bẫy làm chậm. CD 14s, 18 MP, bán kính 2m gây 90%, làm chậm quái thường 40% trong 2,5s. Bắn hạt giống xuống điểm chọn, vòng rễ xanh lục hiện 0,45s báo vùng; dây gai mọc thấp từ đất. Bẫy tồn tại tối đa 4s nếu không trúng; chỉ kích hoạt một lần. Boss không bị root/chậm nếu có kháng, vẫn có thể tích Choáng Mạch. VFX không che texture đất cảnh báo. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -1021,7 +1021,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_linh_cung_idle",
     "prompt": "Subject CLASS_LINH_CUNG — Linh Cung. Identity: lean woodland archer, dark high ponytail, moss-green crossed tunic, short jade-and-oat layered shoulder cape, ochre wrist wraps, forest trousers, soft boots, compact bent wooden leaf-tip bow and short quiver. Animation: Sixteen-pose body/weapon casting choreography for Liên Châu. Canonical description: Vai trò: sát thương nhiều hit. CD 8s, 18 MP, 5 mũi ×45%, tối đa 3 mũi trên cùng một mục tiêu. Loạt tên bắn trong 0,55s với khoảng 0,11s; độ lệch quạt tối đa 12 độ; mục tiêu khóa gần con trỏ đầu tiên. Mỗi tên có trail lá 0,12s và va chạm riêng để đọc số hit. Hệ thống mục tiêu giới hạn 3 tên vào một mục tiêu nhằm giữ vai trò đa mục tiêu, không cho bắn tự động nhân damage lên boss. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -1040,7 +1040,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_linh_cung_idle",
     "prompt": "Subject CLASS_LINH_CUNG — Linh Cung. Identity: lean woodland archer, dark high ponytail, moss-green crossed tunic, short jade-and-oat layered shoulder cape, ochre wrist wraps, forest trousers, soft boots, compact bent wooden leaf-tip bow and short quiver. Animation: Sixteen-pose body/weapon casting choreography for Tán Hoa. Canonical description: Vai trò: hình nón gần. CD 12s, 20 MP, góc 100 độ, tổng 150%, giảm 30% nếu mục tiêu ở quá gần. Bắn loạt cánh gỗ/hoa mảnh theo hình quạt, không phát nổ. Ranh giới gần là 0,8m; mục tiêu trong đó nhận 70% tổng hệ số để tránh chồng hitbox cận cảnh. Tông xanh non/vàng kem, không dùng cánh quá lớn. Có số lượng 5–7 cánh chính và hạt phụ giới hạn. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -1059,7 +1059,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_linh_cung_idle",
     "prompt": "Subject CLASS_LINH_CUNG — Linh Cung. Identity: lean woodland archer, dark high ponytail, moss-green crossed tunic, short jade-and-oat layered shoulder cape, ochre wrist wraps, forest trousers, soft boots, compact bent wooden leaf-tip bow and short quiver. Animation: Sixteen-pose body/weapon casting choreography for Phi Diệp (cơ động). Canonical description: Vai trò: lùi đồng thời phản kích. CD 9s, 12 MP, lùi 5m và bắn 80%. Hoạt ảnh kéo cung trong lúc trượt lùi, hitbox tên đi sau 0,12s; nếu lùi bị vật cản thì dừng và vẫn bắn theo hướng ban đầu. Vệt lá chỉ theo đường bay, không tạo hit nếu phát bắn bị server từ chối. Dùng cho điều khiển chuột và joystick; không tự tìm đường vòng. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -1078,7 +1078,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_linh_cung_idle",
     "prompt": "Subject CLASS_LINH_CUNG — Linh Cung. Identity: lean woodland archer, dark high ponytail, moss-green crossed tunic, short jade-and-oat layered shoulder cape, ochre wrist wraps, forest trousers, soft boots, compact bent wooden leaf-tip bow and short quiver. Animation: Sixteen-pose body/weapon casting choreography for Bách Tiễn Quy Tông (tuyệt kỹ). Canonical description: Vai trò: vùng sát thương có báo trước. CD 65s, 40 MP; báo vùng 1,2s, mưa tên bán kính 6m tổng 300%; tiêu 3 Mộc Tiêu tăng 20%. Người chơi chọn điểm trong tầm 12m; hình tròn xanh rêu viền vàng hiện đủ 1,2s, tâm có ba vòng mũi tên để người chơi phân biệt mình tạo và boss cảnh báo. Mưa tên rơi theo 4 đợt trong 0,8s, tổng 300% chia đều; tối đa 8 mục tiêu thường, boss nhận damage theo hệ số. Khi tiêu 3 Mộc Tiêu, vòng tâm sáng thêm ba vạch, không thay đổi vùng/timing để tránh nhầm telegraph. Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -1097,7 +1097,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_linh_cung_idle",
     "prompt": "Subject CLASS_LINH_CUNG — Linh Cung. Identity: lean woodland archer, dark high ponytail, moss-green crossed tunic, short jade-and-oat layered shoulder cape, ochre wrist wraps, forest trousers, soft boots, compact bent wooden leaf-tip bow and short quiver. Animation: ONE16-pose non-gory hit reaction per direction: first row frames0-7 ONLY braces then builds recoil to the maximum at7; second row frames8-15 ONLY gradually recovers from that same recoil to neutral. Never start a second flinch in the second row. No repeated8-frame loop, travel or scenery. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -1116,7 +1116,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_linh_cung_idle",
     "prompt": "Subject CLASS_LINH_CUNG — Linh Cung. Identity: lean woodland archer, dark high ponytail, moss-green crossed tunic, short jade-and-oat layered shoulder cape, ochre wrist wraps, forest trousers, soft boots, compact bent wooden leaf-tip bow and short quiver. Animation: ONE16-pose non-gory defeat per direction: FIRST row frames0-7 starts upright then staggers and bends both knees; SECOND row frames8-15 continues that SAME fall, puts hand down8-9, collapses10-11, settles12-15. Last frame lies down and NEVER returns upright. Never restart the fall in the second row. No disappearing sprite. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
@@ -1135,7 +1135,7 @@
       "SE",
       "S"
     ],
-    "status": "REQUESTED",
+    "status": "HOLD_MODULAR_MIGRATION",
     "referenceJob": "class_linh_cung_idle",
     "prompt": "Subject CLASS_LINH_CUNG — Linh Cung. Identity: lean woodland archer, dark high ponytail, moss-green crossed tunic, short jade-and-oat layered shoulder cape, ochre wrist wraps, forest trousers, soft boots, compact bent wooden leaf-tip bow and short quiver. Animation: 16-pose ground evasive step: coil0-3, low lateral motion4-9, regain footing10-13, finish14-15; no teleport, effects or ground translation. ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop."
   },
