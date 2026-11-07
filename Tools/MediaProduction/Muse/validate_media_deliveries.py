@@ -1830,6 +1830,256 @@ def check_playback_metadata():
          f"WO32 item 4; not an ear audition")
 
 
+def _silence_head_tail(path, duration):
+    """Head/tail silence via silencedetect at -60 dBFS (min 0.05 s)."""
+    try:
+        out = subprocess.run(
+            ["ffmpeg", "-i", str(path), "-af",
+             "silencedetect=noise=-60dB:d=0.05", "-f", "null", "-"],
+            capture_output=True, text=True, timeout=120)
+    except Exception as exc:
+        err(f"silencedetect failed for {path}: {exc}")
+        return None, None
+    starts, ends = [], []
+    for line in out.stderr.splitlines():
+        m = re.search(r"silence_start: ([0-9.]+)", line)
+        if m:
+            starts.append(float(m.group(1)))
+        m = re.search(r"silence_end: ([0-9.]+)", line)
+        if m:
+            ends.append(float(m.group(1)))
+    head = tail = 0.0
+    for s, e in zip(starts, ends):
+        if s <= 0.01:
+            head = round(e, 3)
+        if e >= duration - 0.01:
+            tail = round(duration - s, 3)
+    if len(starts) > len(ends) and starts[-1] <= 0.01:
+        head = round(duration, 3)
+    return head, tail
+
+
+def _wrap_jump(path):
+    """CP07/CP33 seam method: mono 48 kHz f32; wrap = |last - first|."""
+    import array
+    try:
+        raw = subprocess.check_output(
+            ["ffmpeg", "-v", "error", "-i", str(path), "-ac", "1",
+             "-ar", "48000", "-f", "f32le", "-"], timeout=120)
+    except Exception as exc:
+        err(f"seam decode failed for {path}: {exc}")
+        return None
+    a = array.array("f")
+    a.frombytes(raw)
+    if len(a) < 9600:
+        err(f"seam decode too short for {path}")
+        return None
+    return round(abs(a[-1] - a[0]), 6)
+
+
+def _find_vo_wav(filename):
+    for sub in ("P0_DRAFT", "CAMPAIGN_DRAFT", "CIN006_DRAFT", "PROLOGUE_DRAFT"):
+        p = ROOT / "Art_Source/Audio/Muse/VO" / sub / filename
+        if p.exists():
+            return p
+    if filename.startswith("VO_CIN000_SEG"):
+        p = ROOT / "Art_Source/Audio/Muse/VO/PROLOGUE_DRAFT" / filename
+        if p.exists():
+            return p
+    return None
+
+
+def check_pronunciation_table():
+    """Checkpoint 44 (Codex WO32 item 3): pronunciation/proper-name table
+    + gap/head-tail/ducking/seam cues + fallback playback.
+
+    Verifies Implementation/Content/Audio/Deliveries/PRONUNCIATION_TABLE_v1.json
+    against real bytes and real sources: 16 names (4 spoken in current
+    audio, 1 DECIDED spelling), 17 playback cue rows (11 embedded mixes +
+    6 P0 v1/v2 alternates), 19 seam rows, 21 fallback rows. Head/tail
+    silence is re-measured here by silencedetect and wrap jumps are
+    re-measured by f32 decode; ducking depths and loop joins are checked
+    against the mix manifests; fallback files are checked for existence
+    (mix WAV sha256 vs manifest for embedded scenes). Loudness is NOT
+    re-measured (WO32 item 3 rule) and nothing here is an ear audition:
+    auditionStatus must stay NOT_AUDITIONED.
+    """
+    path = ROOT / ("Implementation/Content/Audio/Deliveries"
+                   "/PRONUNCIATION_TABLE_v1.json")
+    if not path.exists():
+        err("pronunciation table: missing PRONUNCIATION_TABLE_v1.json")
+        return
+    d = json.loads(path.read_text(encoding="utf-8"))
+    if d.get("manifestId") != "NGM_PRONUNCIATION_TABLE_V1":
+        err(f"pronunciation table: manifestId {d.get('manifestId')} "
+            f"!= NGM_PRONUNCIATION_TABLE_V1")
+    if d.get("auditionStatus") != "NOT_AUDITIONED":
+        err(f"pronunciation table: auditionStatus {d.get('auditionStatus')} "
+            f"!= NOT_AUDITIONED")
+    counts = d.get("counts", {})
+    if counts.get("names") != 16:
+        err(f"pronunciation table: names {counts.get('names')} != 16")
+    if counts.get("namesSpokenInAudio") != 4:
+        err(f"pronunciation table: spoken {counts.get('namesSpokenInAudio')} != 4")
+    if counts.get("playbackCueRows") != 17:
+        err(f"pronunciation table: cue rows {counts.get('playbackCueRows')} != 17")
+    if counts.get("seamRows") != 19:
+        err(f"pronunciation table: seam rows {counts.get('seamRows')} != 19")
+    if counts.get("fallbackScenes") != 21:
+        err(f"pronunciation table: fallback scenes {counts.get('fallbackScenes')} != 21")
+    # --- names
+    names = d.get("names", [])
+    spoken = {n["name"] for n in names if n.get("spokenInAudio")}
+    if spoken != {"Lạc Châu", "Huyền Ấn", "Bến Mưa", "Sa Hỏa"}:
+        err(f"pronunciation table: spoken set {sorted(spoken)} "
+            f"!= expected 4 names")
+    decided = [n["name"] for n in names if n.get("status") == "DECIDED"]
+    if decided != ["Tạ Vân Khanh"]:
+        err(f"pronunciation table: DECIDED names {decided} "
+            f"!= ['Tạ Vân Khanh']")
+    srt = (ROOT / "Implementation/Content/Narrative/Deliveries/CIN_000"
+           / "CIN_000_vi.srt").read_text(encoding="utf-8")
+    vo_texts = []
+    for mp in ("Art_Source/Audio/Muse/VO/P0_DRAFT/P0_VO_manifest_v1.json",
+               "Art_Source/Audio/Muse/VO/CAMPAIGN_DRAFT/CAMPAIGN_VO_manifest_v1.json",
+               "Art_Source/Audio/Muse/VO/CIN006_DRAFT/CIN006_VO_manifest_v1.json"):
+        man = json.loads((ROOT / mp).read_text(encoding="utf-8"))
+        vo_texts += [t["text"] for t in man["takes"]]
+    for nm in ("Lạc Châu", "Huyền Ấn", "Bến Mưa"):
+        if nm not in srt:
+            err(f"pronunciation table: {nm} claimed spoken in prologue but absent from SRT")
+    if "Sa Hỏa" not in " ".join(vo_texts):
+        err("pronunciation table: Sa Hỏa claimed spoken in dialogue but absent from take texts")
+    all_audio_text = srt + " " + " ".join(vo_texts)
+    for n in names:
+        if not unicodedata.is_normalized("NFC", n["name"]):
+            err(f"pronunciation table: name not NFC: {n['name']}")
+        if n["name"] not in ("Lạc Châu", "Huyền Ấn", "Bến Mưa", "Sa Hỏa"):
+            if n["name"] in all_audio_text:
+                err(f"pronunciation table: {n['name']} unexpectedly spoken in audio")
+        for t in n.get("takes", []):
+            if not _find_vo_wav(t["wav"]):
+                err(f"pronunciation table: take wav missing for {n['name']}: {t['wav']}")
+    docs = {"Tạ Vân Khanh": 0, "Tạ Văn Khánh": 0}
+    for p in (ROOT / "docs/production").rglob("*.md"):
+        try:
+            t = p.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        for k in docs:
+            docs[k] += t.count(k)
+    if docs["Tạ Vân Khanh"] < 10:
+        err(f"pronunciation table: Tạ Vân Khanh docs count {docs['Tạ Vân Khanh']} < 10")
+    if docs["Tạ Văn Khánh"] != 0:
+        err(f"pronunciation table: wrong spelling Tạ Văn Khánh in docs: {docs['Tạ Văn Khánh']}")
+    # --- playback cues
+    for row in d.get("playbackCues", []):
+        src = ROOT / row["sourceMix"]
+        rt = ROOT / row["runtimeMix"]
+        if not src.exists():
+            err(f"pronunciation table cue {row['sceneId']} {row['mixVersion']}: source mix missing")
+            continue
+        if not rt.exists():
+            err(f"pronunciation table cue {row['sceneId']} {row['mixVersion']}: runtime mix missing")
+            continue
+        pr = probe(src)
+        if pr and pr.get("duration") is not None:
+            if abs(pr["duration"] - row["durationSeconds"]) > 0.02:
+                err(f"pronunciation table cue {row['sceneId']} {row['mixVersion']}: duration {pr['duration']} != {row['durationSeconds']}")
+        head, tail = _silence_head_tail(src, row["durationSeconds"])
+        if head is not None and abs(head - row["headSilenceSeconds"]) > 0.05:
+            err(f"pronunciation table cue {row['sceneId']} {row['mixVersion']}: head silence {head} != {row['headSilenceSeconds']}")
+        if tail is not None and abs(tail - row["tailSilenceSeconds"]) > 0.05:
+            err(f"pronunciation table cue {row['sceneId']} {row['mixVersion']}: tail silence {tail} != {row['tailSilenceSeconds']}")
+        mans = list(src.parent.glob("*manifest*.json"))
+        if not mans:
+            err(f"pronunciation table cue {row['sceneId']} {row['mixVersion']}: no mix manifest beside source mix")
+            continue
+        man = json.loads(mans[0].read_text(encoding="utf-8"))
+        entry = None
+        if "scenes" in man:
+            for s in man["scenes"]:
+                if s["sceneId"] == row["sceneId"]:
+                    entry = s
+        elif row["sceneId"] == "CIN_000":
+            entry = man
+        if entry is None:
+            err(f"pronunciation table cue {row['sceneId']}: scene missing from mix manifest")
+            continue
+        mix_info = entry.get("mix", {})
+        if mix_info.get("sha256") and sha256_of(src) != mix_info["sha256"]:
+            err(f"pronunciation table cue {row['sceneId']} {row['mixVersion']}: source mix sha mismatch")
+        if mix_info.get("sha256") and sha256_of(rt) != mix_info["sha256"]:
+            err(f"pronunciation table cue {row['sceneId']} {row['mixVersion']}: runtime mix sha mismatch")
+        dk = entry.get("ducking")
+        if isinstance(dk, dict) and dk.get("evidence"):
+            ev = dk["evidence"][0]
+            tev = (row.get("duckingEvidence_manifest") or [{}])[0]
+            if tev.get("depthInWindowDb") != ev.get("depthInWindowDb"):
+                err(f"pronunciation table cue {row['sceneId']} {row['mixVersion']}: ducking {tev.get('depthInWindowDb')} != manifest {ev.get('depthInWindowDb')}")
+        elif isinstance(dk, str):
+            if not row.get("duckingNote_manifest"):
+                err(f"pronunciation table cue {row['sceneId']}: prologue ducking note missing")
+        if row["sceneId"] != "CIN_000":
+            man_joins = {}
+            for lj in entry.get("loopQA", []):
+                man_joins[lj["cue"]] = sorted(j["atSeconds"] for j in lj["joins"])
+            tab_joins = {}
+            for lj in row.get("loopJoins", []):
+                tab_joins[lj["cue"]] = sorted(j["atSeconds"] for j in lj["joins"])
+            if man_joins != tab_joins:
+                err(f"pronunciation table cue {row['sceneId']} {row['mixVersion']}: loop joins {tab_joins} != manifest {man_joins}")
+    # --- seam table
+    for r in d.get("seamTable", []):
+        p = ROOT / r["measuredFrom"]
+        if not p.exists():
+            err(f"pronunciation table seam {r['cueKey']}: bed missing {r['measuredFrom']}")
+            continue
+        w = _wrap_jump(p)
+        if w is not None and abs(w - r["wrapJumpMeasured"]) > 0.002:
+            err(f"pronunciation table seam {r['cueKey']} {r['version']}: wrap {w} != {r['wrapJumpMeasured']}")
+        if r.get("flagEarCheck") != bool(r["wrapJumpMeasured"] > 0.015):
+            err(f"pronunciation table seam {r['cueKey']}: flagEarCheck mismatch")
+    # --- fallback table
+    pb = json.loads((ROOT / "ClientGodot/assets/cinematics/PLAYBACK_METADATA_v1.json").read_text(encoding="utf-8"))
+    pb_scenes = {s["sceneId"]: s for s in pb["scenes"]}
+    for f in d.get("fallbackTable", []):
+        sid = f["sceneId"]
+        for key in ("ogv", "mp4"):
+            if not (ROOT / f[key]).exists():
+                err(f"pronunciation table fallback {sid}: {key} missing {f[key]}")
+        srt_p = f["fallbackSrtOnly"].get("srt")
+        if not srt_p or not (ROOT / srt_p).exists():
+            err(f"pronunciation table fallback {sid}: SRT missing {srt_p}")
+        if f["hasEmbeddedSoundtrack"]:
+            fw = f.get("fallbackMixWav") or {}
+            if not fw.get("path") or not (ROOT / fw["path"]).exists():
+                err(f"pronunciation table fallback {sid}: fallback mix missing {fw.get('path')}")
+            if (pb_scenes.get(sid, {}).get("embeddedMix") or {}).get("mixVersion") != fw.get("mixVersion"):
+                err(f"pronunciation table fallback {sid}: mixVersion {fw.get('mixVersion')} != playback metadata")
+            f2 = f.get("fallbackStemsAndVo") or {}
+            for st in f2.get("stems", []):
+                if st.get("source") and not (ROOT / st["source"]).exists():
+                    err(f"pronunciation table fallback {sid}: stem missing {st['source']}")
+            for w in f2.get("voTakes", []):
+                if not _find_vo_wav(w):
+                    err(f"pronunciation table fallback {sid}: VO take missing {w}")
+        else:
+            if f.get("fallbackMixWav") is not None or f.get("fallbackStemsAndVo") is not None or f.get("fallbackVoAndSrt") is not None:
+                err(f"pronunciation table fallback {sid}: silent scene carries an audio fallback")
+    COUNTS["pronunciation_names"] = len(names)
+    COUNTS["pronunciation_names_spoken"] = len(spoken)
+    COUNTS["pronunciation_cue_rows"] = len(d.get("playbackCues", []))
+    COUNTS["pronunciation_seam_rows"] = len(d.get("seamTable", []))
+    COUNTS["pronunciation_seam_flagged"] = sum(1 for r in d.get("seamTable", []) if r.get("flagEarCheck"))
+    COUNTS["pronunciation_fallback_scenes"] = len(d.get("fallbackTable", []))
+    COUNTS["pronunciation_fallback_files"] = counts.get("fallbackFilesVerified", 0)
+    note("Pronunciation table (checkpoint 44, Codex WO32 item 3): 16 names "
+         "(4 spoken in current audio, 1 DECIDED spelling), 17 playback cue "
+         "rows, 19 seam rows (1 flagged for ear check), 21 fallback rows; "
+         "NOT_AUDITIONED; loudness not re-measured.")
+
+
 def check_ab_shortlist():
     """Checkpoint 33 (Goi 31 item 3): A/B review shortlist.
 
@@ -2700,11 +2950,12 @@ def main():
     check_cin009_mix()
     check_cin010_mix()
     check_playback_metadata()
+    check_pronunciation_table()
     check_ab_shortlist()
     check_scene_clips()
     check_prologue()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 43 (playback metadata for embedded mixes, Codex WO32 item 4: PLAYBACK_METADATA_v1.json covers all 21 runtime cinematics — 11 with embedded soundtracks (prologue CIN_000 + CIN_001/002/003/004/005/006/007/008/009/010) and 10 silent scenes — with embeddedMix/voice/subtitle source and audio ownership per scene, every claim verified against real bytes by build_playback_metadata_v1.py; no runtime media files added or changed; runtime audio manifest total stays 617)",
+        "checkpoint": "MEDIA-02 checkpoint 44 (pronunciation/proper-name table + gap/head-tail/ducking/seam cues + fallback playback, Codex WO32 item 3: PRONUNCIATION_TABLE_v1.json covers 16 names (4 spoken in current audio, 1 DECIDED spelling 'Tạ Vân Khanh'), 17 playback cue rows (11 embedded mixes + 6 P0 v1/v2 alternates), 19 seam rows (1 flagged for ear check), 21 fallback rows; every claim verified against real bytes by build_pronunciation_table_v1.py; no runtime media files added or changed; runtime audio manifest total stays 617)",
         "base_integration": "6f2b465",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -2739,6 +2990,7 @@ def main():
             "CIN_009 draft mix v1 (checkpoint 41): sixth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1 and CIN_008 v1, same P0 v3 recipe (music lam_trieu + ambience waterfall + reveal stinger at 6.0 s + CP17 draft VO at 12.5 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_009 and the scene timing manifest lists only the reveal stinger as a candidate stem; lam_trieu is the composed set's G-major transposition with ornamented flute, carrying the forest's answering voice of the scene title 'Tieng rung duoc dap', and waterfall is the water bed for the stream running through all three shots. Unlike CIN_005/CIN_006, the CP17 draft VO take FITS inside its 12.5-17.5 s window (4.080 s, ends 16.580 s): no overrun, no tail trim. Ducking evidence is measured over the full VO window (the CP39 method, retained for comparability). The mix measures -17.84 LUFS / -2.91 dBTP, hotter than the CIN_008 mix because the CP17 take itself is hotter (-17.23 LUFS per checkpoint 17); VO stays at unity per the recipe, no gain change was made. The v1 mix is embedded in CIN_009's runtime OGV + review MP4 (video streams copied bit-for-bit, verified by stored-frame counts). DRAFT_MIX_NOT_FINAL, no ear audition (NOT_AUDITIONED); adoption is Codex's adapter decision.",
             "CIN_010 draft mix v1 (checkpoint 42): seventh scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1 and CIN_009 v1, same P0 v3 recipe (music sa_hoa + ambience desert_wind + reveal stinger at 6.0 s + CP17 draft VO at 12.5 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_010 and the scene timing manifest lists only the reveal stinger as a candidate stem; sa_hoa is the composed set's desert form ('Sa Hoa -- Lo va cat', kiln and sand: A minor pentatonic, dry bright plucks, 110 BPM), matching the scene's ash-gold caravan rest and last-water-flask image, and desert_wind is the desert wind bed for the dunes running through all three shots. Unlike CIN_005/CIN_006, the CP17 draft VO take FITS inside its 12.5-17.5 s window (2.808 s, ends 15.308 s): no overrun, no tail trim. Ducking evidence is measured over the full VO window (the CP39 method, retained for comparability). The mix measures -24.60 LUFS / -4.86 dBTP, quieter than the CIN_009 mix because the CP17 take itself is quieter (-22.01 LUFS per checkpoint 17, re-verified from real bytes this run); VO stays at unity per the recipe, no gain change was made. The v1 mix is embedded in CIN_010's runtime OGV + review MP4 (video streams copied bit-for-bit, verified by stored-frame counts). DRAFT_MIX_NOT_FINAL, no ear audition (NOT_AUDITIONED); adoption is Codex's adapter decision.",
             "Playback metadata (checkpoint 43, Codex WO32 item 4): PLAYBACK_METADATA_v1.json records, for every runtime cinematic, whether a soundtrack is embedded, which mix (version + source WAV + sha256 + stems + VO take/window) and which subtitle source, plus the audio-ownership rules the presentation adapter must honour (embedded soundtrack only; standalone mix files and VO takes are alternates/components, never simultaneous layers; runtime subtitles are overlay SRT, burned variants review-only; rewatch/skip/seen/fallback grant no quest). All byte-level evidence (stream layout, embedded loudness vs source mix and pack record, file sha256, SRT cue counts) was measured by build_playback_metadata_v1.py at build time with a 0.40 LUFS tolerance; this check verifies structure, cross-manifest consistency and source-mix hashes. The metadata is a delivery FOR Codex's adapter; Muse does not wire playback. All mixes remain DRAFT_MIX_NOT_FINAL and NOT_AUDITIONED; final audible approval is pending per WO32.",
+            "Pronunciation table (checkpoint 44, Codex WO32 item 3): PRONUNCIATION_TABLE_v1.json records 16 proper names with syllable + tone + approximate Northern Vietnamese IPA guidance (only 4 are actually spoken in current audio: Lạc Châu, Huyền Ấn, Bến Mưa in the prologue narration and Sa Hỏa in CIN_018_S03; the 10 speaker/role names are never spoken in their own lines, so the listener checks voice fit, not name pronunciation), 17 playback cue rows with head/tail silence re-measured by silencedetect, VO take lead/tail silence, window slack and manifest ducking/loop-join evidence, 19 seam rows with wrap jumps re-measured from the runtime OGG beds (1 flagged: MUSIC/sa_hoa composed, 0.016015), and a 21-scene fallback chain (embedded -> standalone mix -> stems+VO -> VO+SRT -> SRT only; silent scenes have no audio fallback). Loudness is NOT re-measured in this checkpoint (WO32 item 3 rule); mix loudness figures are cited from their mix manifests only. NOT_AUDITIONED.",
             "Prologue subtitled variant (checkpoint 28, owner request): a VIEWING variant only -- the canonical MP4/OGV keep the checkpoint 27 mix at its measured level (-20.81 LUFS) and the canonical SRT keeps its 6 cues. The variant's +5 dB is a flat presentation gain (no dynamics change, measured -15.83 LUFS / -4.09 dBTP on the variant file), and its readable SRT is a presentation split whose concatenated text is verified identical to the canonical SRT. Burned-in subtitle font is DejaVu Sans (the project has no locked Vietnamese display font, same placeholder status as the title card). No OGV subtitled variant: in-engine subtitle display is the presentation adapter's concern (Codex).",
         ],
     }

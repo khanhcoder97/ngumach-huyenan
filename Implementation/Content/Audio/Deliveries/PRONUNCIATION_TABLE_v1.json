@@ -1,0 +1,3007 @@
+{
+ "manifestId": "NGM_PRONUNCIATION_TABLE_V1",
+ "checkpoint": "MEDIA-02 checkpoint 44 - pronunciation/proper-name table + gap/head-tail/ducking/seam cues + fallback playback (Codex WO32 item 3)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "workOrderRef": "Work Order 32 (PR #128) item 3; issue #116 comment 6713518554",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "6f2b4659b1935dc739df688942b5142a13dde770",
+ "status": "DRAFT_NOT_FINAL",
+ "auditionStatus": "NOT_AUDITIONED",
+ "auditionNote": "This environment cannot listen. Pronunciation guidance is syllable + tone + approximate IPA for a Northern listener to check against the draft takes; it is not a listening PASS. All gap/head-tail/seam numbers are measurements from real bytes. Loudness is not re-measured here; mix loudness figures are cited from their mix manifests only.",
+ "counts": {
+  "names": 16,
+  "namesSpokenInAudio": 4,
+  "namesDecided": 1,
+  "playbackCueRows": 17,
+  "seamRows": 19,
+  "seamRowsFlaggedEarCheck": 1,
+  "fallbackScenes": 21,
+  "fallbackFilesVerified": 125
+ },
+ "docsProductionOccurrences": {
+  "Tạ Vân Khanh": 37,
+  "Tạ Văn Khánh": 0,
+  "Mãng Cốt": 34,
+  "Ngũ Mạch": 68,
+  "Lạc Châu": 8,
+  "Bến Mưa": 101,
+  "Sa Hỏa": 52,
+  "Huyền Ấn": 54
+ },
+ "names": [
+  {
+   "name": "Lạc Châu",
+   "kind": "PLACE",
+   "speakerId": null,
+   "voice": null,
+   "status": "PROPOSED",
+   "source": "Prologue SRT cue 1 + cue 4 (spoken narration); docs/production",
+   "syllables": [
+    {
+     "syllable": "Lạc",
+     "tone": "nặng"
+    },
+    {
+     "syllable": "Châu",
+     "tone": "ngang"
+    }
+   ],
+   "ipaApprox": "/laːk˨˩ʔ tɕəw˧/",
+   "spokenInAudio": true,
+   "spokenOccurrences": [
+    {
+     "source": "prologue SRT",
+     "cue": 1,
+     "spanSeconds": [
+      1.4,
+      17.912
+     ]
+    },
+    {
+     "source": "prologue SRT",
+     "cue": 4,
+     "spanSeconds": [
+      55.133,
+      70.061
+     ]
+    }
+   ],
+   "takes": [],
+   "takeCount": 0,
+   "listenFor": "“Lạc” nặng phải dứt khoát, không đọc thành “Lạc” sắc; “Châu” ngang giữ nguyên, không lên giọng ở cuối câu.",
+   "docsProductionOccurrences": 8
+  },
+  {
+   "name": "Huyền Ấn",
+   "kind": "CONCEPT",
+   "speakerId": null,
+   "voice": null,
+   "status": "PROPOSED",
+   "source": "Prologue SRT cue 1 (spoken narration); docs/production",
+   "syllables": [
+    {
+     "syllable": "Huyền",
+     "tone": "huyền"
+    },
+    {
+     "syllable": "Ấn",
+     "tone": "nặng"
+    }
+   ],
+   "ipaApprox": "/hwiən˨˩ ʔən˨˩ʔ/",
+   "spokenInAudio": true,
+   "spokenOccurrences": [
+    {
+     "source": "prologue SRT",
+     "cue": 1,
+     "spanSeconds": [
+      1.4,
+      17.912
+     ]
+    }
+   ],
+   "takes": [],
+   "takeCount": 0,
+   "listenFor": "“Huyền” huyền trầm xuống; “Ấn” nặng ngắt gọn — cả hai đều trầm, không đọc “Ấn” thành sắc.",
+   "docsProductionOccurrences": 54
+  },
+  {
+   "name": "Bến Mưa",
+   "kind": "PLACE",
+   "speakerId": null,
+   "voice": null,
+   "status": "PROPOSED",
+   "source": "Prologue SRT cue 5 (spoken narration); docs/production",
+   "syllables": [
+    {
+     "syllable": "Bến",
+     "tone": "nặng"
+    },
+    {
+     "syllable": "Mưa",
+     "tone": "ngang"
+    }
+   ],
+   "ipaApprox": "/ɓen˨˩ʔ mɯə˧/",
+   "spokenInAudio": true,
+   "spokenOccurrences": [
+    {
+     "source": "prologue SRT",
+     "cue": 5,
+     "spanSeconds": [
+      71.167,
+      79.207
+     ]
+    }
+   ],
+   "takes": [],
+   "takeCount": 0,
+   "listenFor": "“Bến” nặng ngắt; “Mưa” ngang kéo nhẹ — tên bến là mốc địa danh của cả campaign, phải đọc thống nhất với mọi lần nhắc sau.",
+   "docsProductionOccurrences": 101
+  },
+  {
+   "name": "Sa Hỏa",
+   "kind": "PLACE",
+   "speakerId": null,
+   "voice": null,
+   "status": "PROPOSED",
+   "source": "CIN_018_S03 dialogue text (spoken); scene setting Sa Hỏa",
+   "syllables": [
+    {
+     "syllable": "Sa",
+     "tone": "ngang"
+    },
+    {
+     "syllable": "Hỏa",
+     "tone": "hỏi"
+    }
+   ],
+   "ipaApprox": "/sa˧ hwa˧˩˧/",
+   "spokenInAudio": true,
+   "spokenOccurrences": [
+    {
+     "source": "dialogue take",
+     "key": "CIN018_S03",
+     "shotId": "CIN_018_S03",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ]
+    }
+   ],
+   "takes": [],
+   "takeCount": 0,
+   "listenFor": "“Hỏa” hỏi phải có chỗ luyến xuống rồi lên — đây là tên riêng duy nhất được nói ra trong 21 cửa sổ thoại campaign; nghe tại CIN_018_S03 (D-10).",
+   "docsProductionOccurrences": 52
+  },
+  {
+   "name": "Ly An",
+   "kind": "CHARACTER",
+   "speakerId": "NPC_LYAN",
+   "voice": "Aria (fictional system voice)",
+   "status": "PROPOSED",
+   "source": "VO manifests (7 takes, speaker NPC_LYAN)",
+   "syllables": [
+    {
+     "syllable": "Ly",
+     "tone": "ngang"
+    },
+    {
+     "syllable": "An",
+     "tone": "ngang"
+    }
+   ],
+   "ipaApprox": "/li˧ ʔan˧/",
+   "spokenInAudio": false,
+   "spokenOccurrences": [],
+   "takes": [
+    {
+     "key": "CIN001_S05",
+     "shotId": "CIN_001_S05",
+     "wav": "VO_CIN001_S05_LYAN_draft_v1.wav",
+     "windowSeconds": [
+      24.8,
+      28.5
+     ],
+     "durationSeconds": 2.568,
+     "voice": "Aria (fictional system voice)"
+    },
+    {
+     "key": "CIN004_S02",
+     "shotId": "CIN_004_S02",
+     "wav": "VO_CIN004_S02_LYAN_OFFSCREEN_draft_v1.wav",
+     "windowSeconds": [
+      7.5,
+      9.5
+     ],
+     "durationSeconds": 1.752,
+     "voice": "Aria (fictional system voice)"
+    },
+    {
+     "key": "CIN003_S03",
+     "shotId": "CIN_003_S03",
+     "wav": "VO_CIN_003_S03_LYAN_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 4.032,
+     "voice": "Aria (fictional system voice)"
+    },
+    {
+     "key": "CIN005_S03",
+     "shotId": "CIN_005_S03",
+     "wav": "VO_CIN_005_S03_LYAN_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 5.16,
+     "voice": "Aria (fictional system voice)"
+    },
+    {
+     "key": "CIN007_S03",
+     "shotId": "CIN_007_S03",
+     "wav": "VO_CIN_007_S03_LYAN_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 3.912,
+     "voice": "Aria (fictional system voice)"
+    },
+    {
+     "key": "CIN009_S03",
+     "shotId": "CIN_009_S03",
+     "wav": "VO_CIN_009_S03_LYAN_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 4.08,
+     "voice": "Aria (fictional system voice)"
+    },
+    {
+     "key": "CIN019_S03",
+     "shotId": "CIN_019_S03",
+     "wav": "VO_CIN_019_S03_LYAN_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 2.88,
+     "voice": "Aria (fictional system voice)"
+    }
+   ],
+   "takeCount": 7,
+   "listenFor": "Tên nhân vật KHÔNG được nói ra trong bất kỳ câu thoại nào — kiểm tra giọng Aria có đọc như cùng một nhân vật qua 7 take (D-02/D-10), không kiểm tra phát âm tên.",
+   "docsProductionOccurrences": null
+  },
+  {
+   "name": "Tạ Vân Khanh",
+   "kind": "CHARACTER",
+   "speakerId": "NPC_TA_VAN_KHANH",
+   "voice": "Helio (fictional system voice)",
+   "status": "DECIDED",
+   "source": "Owner decision 2026-11-07 (D-12 RESOLVED): canonical spelling; docs/production count verified by this builder",
+   "syllables": [
+    {
+     "syllable": "Tạ",
+     "tone": "nặng"
+    },
+    {
+     "syllable": "Vân",
+     "tone": "huyền"
+    },
+    {
+     "syllable": "Khanh",
+     "tone": "ngang"
+    }
+   ],
+   "ipaApprox": "/taː˨˩ʔ vən˨˩ xajŋ˧/",
+   "spokenInAudio": false,
+   "spokenOccurrences": [],
+   "takes": [
+    {
+     "key": "CIN002_S02",
+     "shotId": "CIN_002_S02",
+     "wav": "VO_CIN002_S02_TAVANKHANH_draft_v1.wav",
+     "windowSeconds": [
+      7.0,
+      11.0
+     ],
+     "durationSeconds": 3.792,
+     "voice": "Helio (fictional system voice)"
+    },
+    {
+     "key": "CIN008_S03",
+     "shotId": "CIN_008_S03",
+     "wav": "VO_CIN_008_S03_TAVANKHANH_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 3.552,
+     "voice": "Helio (fictional system voice)"
+    }
+   ],
+   "takeCount": 2,
+   "listenFor": "Cách viết ĐÃ CHỐT — “Tạ Vân Khanh”, không phải “Tạ Văn Khánh”. Tên KHÔNG được nói ra trong cả hai câu thoại — kiểm tra giọng Helio có đọc như cùng một nhân vật ở CIN_002_S02 và CIN_008_S03 (D-12/D-02).",
+   "docsProductionOccurrences": 37
+  },
+  {
+   "name": "Hạ Mặc",
+   "kind": "CHARACTER",
+   "speakerId": "NPC_HA_MAC",
+   "voice": "Helio (fictional system voice)",
+   "status": "PROPOSED",
+   "source": "VO manifests (4 takes, speaker NPC_HA_MAC); DEC-MEDIA-P0 Q4 cinematic-only staging",
+   "syllables": [
+    {
+     "syllable": "Hạ",
+     "tone": "nặng"
+    },
+    {
+     "syllable": "Mặc",
+     "tone": "nặng"
+    }
+   ],
+   "ipaApprox": "/haː˨˩ʔ măk˨˩ʔ/",
+   "spokenInAudio": false,
+   "spokenOccurrences": [],
+   "takes": [
+    {
+     "key": "CIN011_S03",
+     "shotId": "CIN_011_S03",
+     "wav": "VO_CIN_011_S03_HAMAC_draft_v1.wav",
+     "windowSeconds": [
+      12.2,
+      17.8
+     ],
+     "durationSeconds": 5.592,
+     "voice": "Helio (fictional system voice)"
+    },
+    {
+     "key": "CIN012_S03",
+     "shotId": "CIN_012_S03",
+     "wav": "VO_CIN_012_S03_HAMAC_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 4.32,
+     "voice": "Helio (fictional system voice)"
+    },
+    {
+     "key": "CIN016_S03",
+     "shotId": "CIN_016_S03",
+     "wav": "VO_CIN_016_S03_HAMAC_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 2.472,
+     "voice": "Helio (fictional system voice)"
+    },
+    {
+     "key": "CIN006_S03",
+     "shotId": "CIN_006_S03",
+     "wav": "VO_CIN_006_S03_HAMAC_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 5.52,
+     "voice": "Helio (fictional system voice)"
+    },
+    {
+     "key": "CIN006_ALT_T01",
+     "shotId": null,
+     "wav": "VO_CIN_006_ALT_T01_HAMAC_draft_v1-alt.wav",
+     "windowSeconds": null,
+     "durationSeconds": 3.0,
+     "voice": "Helio (fictional system voice)"
+    }
+   ],
+   "takeCount": 5,
+   "listenFor": "Tên KHÔNG được nói ra trong câu thoại — kiểm tra giọng có hợp vai qua 4 take (CIN_006_S03, CIN_011_S03, CIN_012_S03, CIN_016_S03); cả hai âm tiết đều nặng, không đọc “Mặc” thành “Mạc” sắc.",
+   "docsProductionOccurrences": null
+  },
+  {
+   "name": "Sầm Chủ Quỹ",
+   "kind": "CHARACTER",
+   "speakerId": "NPC_SAM_CHU_QUY",
+   "voice": "Helio (fictional system voice)",
+   "status": "PROPOSED",
+   "source": "VO manifest (1 take, speaker NPC_SAM_CHU_QUY); DEC-MEDIA-P0 Q4 cinematic-only staging",
+   "syllables": [
+    {
+     "syllable": "Sầm",
+     "tone": "huyền"
+    },
+    {
+     "syllable": "Chủ",
+     "tone": "hỏi"
+    },
+    {
+     "syllable": "Quỹ",
+     "tone": "ngã"
+    }
+   ],
+   "ipaApprox": "/səm˨˩ cu˧˩˧ kwi˧˥ˀ/",
+   "spokenInAudio": false,
+   "spokenOccurrences": [],
+   "takes": [
+    {
+     "key": "CIN010_S03",
+     "shotId": "CIN_010_S03",
+     "wav": "VO_CIN_010_S03_SAMCHUQUY_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 2.808,
+     "voice": "Helio (fictional system voice)"
+    }
+   ],
+   "takeCount": 1,
+   "listenFor": "Tên KHÔNG được nói ra trong câu thoại — kiểm tra giọng hợp vai tại CIN_010_S03; “Quỹ” ngã phải có độ nghẹn đặc trưng, không đọc thành “Quỷ” hỏi.",
+   "docsProductionOccurrences": null
+  },
+  {
+   "name": "Tống Bành",
+   "kind": "CHARACTER",
+   "speakerId": "NPC_TONG_BANH",
+   "voice": "Helio (fictional system voice)",
+   "status": "PROPOSED",
+   "source": "VO manifest (1 take, speaker NPC_TONG_BANH)",
+   "syllables": [
+    {
+     "syllable": "Tống",
+     "tone": "nặng"
+    },
+    {
+     "syllable": "Bành",
+     "tone": "huyền"
+    }
+   ],
+   "ipaApprox": "/toŋ˨˩ʔ ɓaɲ˨˩/",
+   "spokenInAudio": false,
+   "spokenOccurrences": [],
+   "takes": [
+    {
+     "key": "CIN014_S03",
+     "shotId": "CIN_014_S03",
+     "wav": "VO_CIN_014_S03_TONGBANH_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 3.072,
+     "voice": "Helio (fictional system voice)"
+    }
+   ],
+   "takeCount": 1,
+   "listenFor": "Tên KHÔNG được nói ra trong câu thoại — kiểm tra giọng hợp vai tại CIN_014_S03; “Tống” nặng ngắt, “Bành” huyền trầm.",
+   "docsProductionOccurrences": null
+  },
+  {
+   "name": "Cơ Vô Tướng",
+   "kind": "CHARACTER",
+   "speakerId": "NPC_CO_VO_TUONG",
+   "voice": "Helio (fictional system voice)",
+   "status": "PROPOSED",
+   "source": "VO manifest (1 take, speaker NPC_CO_VO_TUONG)",
+   "syllables": [
+    {
+     "syllable": "Cơ",
+     "tone": "ngang"
+    },
+    {
+     "syllable": "Vô",
+     "tone": "huyền"
+    },
+    {
+     "syllable": "Tướng",
+     "tone": "ngã"
+    }
+   ],
+   "ipaApprox": "/kɤ˧ vo˨˩ tɯəŋ˧˥ˀ/",
+   "spokenInAudio": false,
+   "spokenOccurrences": [],
+   "takes": [
+    {
+     "key": "CIN018_S02",
+     "shotId": "CIN_018_S02",
+     "wav": "VO_CIN_018_S02_COVOTUONG_draft_v1.wav",
+     "windowSeconds": [
+      6.5,
+      11.5
+     ],
+     "durationSeconds": 2.88,
+     "voice": "Helio (fictional system voice)"
+    }
+   ],
+   "takeCount": 1,
+   "listenFor": "Tên KHÔNG được nói ra trong câu thoại — kiểm tra giọng hợp vai tại CIN_018_S02; “Tướng” ngã, không đọc thành “Tưởng” hỏi.",
+   "docsProductionOccurrences": null
+  },
+  {
+   "name": "Trưởng đoàn",
+   "kind": "ROLE",
+   "speakerId": "NPC_REFUGEE_LEADER",
+   "voice": "Helio (fictional system voice)",
+   "status": "PROPOSED",
+   "source": "VO manifest (1 take, speaker NPC_REFUGEE_LEADER, display “Trưởng đoàn”)",
+   "syllables": [
+    {
+     "syllable": "Trưởng",
+     "tone": "hỏi"
+    },
+    {
+     "syllable": "đoàn",
+     "tone": "huyền"
+    }
+   ],
+   "ipaApprox": "/tʂɯəŋ˧˩˧ ɗwaːn˨˩/",
+   "spokenInAudio": false,
+   "spokenOccurrences": [],
+   "takes": [
+    {
+     "key": "CIN013_S03",
+     "shotId": "CIN_013_S03",
+     "wav": "VO_CIN_013_S03_REFUGEELEADER_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 2.472,
+     "voice": "Helio (fictional system voice)"
+    }
+   ],
+   "takeCount": 1,
+   "listenFor": "Chức danh, không phải tên riêng — kiểm tra giọng hợp vai tại CIN_013_S03; “Trưởng” hỏi có chỗ luyến.",
+   "docsProductionOccurrences": null
+  },
+  {
+   "name": "Đội trưởng thợ lặn",
+   "kind": "ROLE",
+   "speakerId": "NPC_DIVER_LEAD",
+   "voice": "Helio (fictional system voice)",
+   "status": "PROPOSED",
+   "source": "VO manifests (2 takes, speaker NPC_DIVER_LEAD, display “Đội trưởng thợ lặn”)",
+   "syllables": [
+    {
+     "syllable": "Đội",
+     "tone": "nặng"
+    },
+    {
+     "syllable": "trưởng",
+     "tone": "hỏi"
+    },
+    {
+     "syllable": "thợ",
+     "tone": "hỏi"
+    },
+    {
+     "syllable": "lặn",
+     "tone": "nặng"
+    }
+   ],
+   "ipaApprox": "/ɗoːj˨˩ʔ tʂɯəŋ˧˩˧ tʰɤ˧˩˧ lăn˨˩ʔ/",
+   "spokenInAudio": false,
+   "spokenOccurrences": [],
+   "takes": [
+    {
+     "key": "CIN015_S03",
+     "shotId": "CIN_015_S03",
+     "wav": "VO_CIN_015_S03_DIVERLEAD_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 2.88,
+     "voice": "Helio (fictional system voice)"
+    },
+    {
+     "key": "CIN017_S03",
+     "shotId": "CIN_017_S03",
+     "wav": "VO_CIN_017_S03_DIVERLEAD_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 3.168,
+     "voice": "Helio (fictional system voice)"
+    }
+   ],
+   "takeCount": 2,
+   "listenFor": "Chức danh — kiểm tra giọng có đọc như cùng một nhân vật ở CIN_015_S03 và CIN_017_S03 (D-02).",
+   "docsProductionOccurrences": null
+  },
+  {
+   "name": "Người chơi",
+   "kind": "ROLE",
+   "speakerId": "PLAYER",
+   "voice": "Helio (fictional system voice, timing-only placeholder)",
+   "status": "PROPOSED",
+   "source": "VO manifest (1 take, speaker PLAYER); VOICE_GUIDE assigns the player no spoken voice",
+   "syllables": [
+    {
+     "syllable": "Người",
+     "tone": "huyền"
+    },
+    {
+     "syllable": "chơi",
+     "tone": "ngang"
+    }
+   ],
+   "ipaApprox": "/ŋɯəj˨˩ tɕɤj˧/",
+   "spokenInAudio": false,
+   "spokenOccurrences": [],
+   "takes": [
+    {
+     "key": "CIN018_S03",
+     "shotId": "CIN_018_S03",
+     "wav": "VO_CIN_018_S03_PLAYER_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 5.28,
+     "voice": "Helio (fictional system voice)"
+    }
+   ],
+   "takeCount": 1,
+   "listenFor": "Vai placeholder chỉ để canh timing (CIN_018_S03) — VOICE_GUIDE không gán giọng nói cho người chơi; không dùng take này làm chuẩn phát âm hay chuẩn giọng.",
+   "docsProductionOccurrences": null
+  },
+  {
+   "name": "Người nhận thư",
+   "kind": "ROLE",
+   "speakerId": null,
+   "voice": "Aria (fictional system voice, placeholder role voice)",
+   "status": "PROPOSED",
+   "source": "VO manifest (1 take, speaker null, display “Người nhận thư”)",
+   "syllables": [
+    {
+     "syllable": "Người",
+     "tone": "huyền"
+    },
+    {
+     "syllable": "nhận",
+     "tone": "nặng"
+    },
+    {
+     "syllable": "thư",
+     "tone": "ngang"
+    }
+   ],
+   "ipaApprox": "/ŋɯəj˨˩ ɲən˨˩ʔ tʰɯ˧/",
+   "spokenInAudio": false,
+   "spokenOccurrences": [],
+   "takes": [
+    {
+     "key": "CIN020_S03",
+     "shotId": "CIN_020_S03",
+     "wav": "VO_CIN_020_S03_LETTERRECIPIENT_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      17.5
+     ],
+     "durationSeconds": 3.0,
+     "voice": "Aria (fictional system voice)"
+    }
+   ],
+   "takeCount": 1,
+   "listenFor": "Vai placeholder (CIN_020_S03) — kiểm tra giọng hợp vai trò, không phải tên riêng của một nhân vật cố định.",
+   "docsProductionOccurrences": null
+  },
+  {
+   "name": "Mãng Cốt",
+   "kind": "BOSS",
+   "speakerId": "BOSS_MANG_COT",
+   "voice": null,
+   "status": "PROPOSED",
+   "source": "CIN_004 timing charactersOnScreen [BOSS_MANG_COT]; docs/production; MUSIC/boss_mang_cot cue",
+   "syllables": [
+    {
+     "syllable": "Mãng",
+     "tone": "ngã"
+    },
+    {
+     "syllable": "Cốt",
+     "tone": "nặng"
+    }
+   ],
+   "ipaApprox": "/maːŋ˧˥ˀ kot˨˩ʔ/",
+   "spokenInAudio": false,
+   "spokenOccurrences": [],
+   "takes": [],
+   "takeCount": 0,
+   "listenFor": "Boss không có câu thoại — tên chỉ xuất hiện trong danh sách nhân vật và cue nhạc; “Mãng” ngã, “Cốt” nặng, không đọc “Mãng” thành “Mang” ngang.",
+   "docsProductionOccurrences": 34
+  },
+  {
+   "name": "Ngũ Mạch",
+   "kind": "CONCEPT",
+   "speakerId": null,
+   "voice": null,
+   "status": "PROPOSED",
+   "source": "Game title; docs/production",
+   "syllables": [
+    {
+     "syllable": "Ngũ",
+     "tone": "ngã"
+    },
+    {
+     "syllable": "Mạch",
+     "tone": "nặng"
+    }
+   ],
+   "ipaApprox": "/ŋu˧˥ˀ maːk˨˩ʔ/",
+   "spokenInAudio": false,
+   "spokenOccurrences": [],
+   "takes": [],
+   "takeCount": 0,
+   "listenFor": "Tên game — không được nói ra trong audio hiện tại; ghi để thống nhất nếu narration sau này nhắc tới.",
+   "docsProductionOccurrences": 68
+  }
+ ],
+ "playbackCues": [
+  {
+   "sceneId": "CIN_000",
+   "mixVersion": "prologue_mix_v1",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/PROLOGUE_DRAFT/PROLOGUE_mix_v1.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/prologue/PROLOGUE_mix_v1.wav",
+   "durationSeconds": 87.367,
+   "mixIntegratedLUFS_manifest": null,
+   "mixTruePeakDBTP_manifest": null,
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.0,
+   "voSpan": {
+    "srtCues": [
+     {
+      "cue": 1,
+      "spanSeconds": [
+       1.4,
+       17.912
+      ],
+      "text": "Xưa, Lạc Châu sống nhờ năm dòng mạch chảy dưới lòng đất và mặt nước. Năm mạch trao nhau dòng chảy qua một cơ chế điều hòa gọi là Huyền Ấn — và năm ngọn tháp canh giữ sự trao đổi ấy, để không vùng nào thừa nước, không vùng nào cạn khô."
+     },
+     {
+      "cue": 2,
+      "spanSeconds": [
+       19.033,
+       34.561
+      ],
+      "text": "Ba trăm năm trước, một cơn địa chấn phá vỡ cơ chế điều hòa. Để ngăn thảm họa, người ta tách năm tháp ra khỏi nhau. Thảm họa qua đi — nhưng từ đó, điều tiết dần biến thành sở hữu. Mỗi tháp giữ mạch của mình, và giữ cả những danh sách ghi tên người sống dưới mạch ấy."
+     },
+     {
+      "cue": 3,
+      "spanSeconds": [
+       35.667,
+       55.419
+      ],
+      "text": "Ba mươi năm trước, hạn hán và lũ lụt nối nhau tràn qua một vùng quê. Trong cơn tuyệt vọng, người ta thử nối các mạch lại làm một. Thí nghiệm vỡ. Một phần thành phố chìm xuống nước — và nhiều người còn sống bị ghi vào sổ là đã chết. Một lệnh phong tỏa được ký. Rồi hồ sơ bị xóa dần, như thể chưa từng có ai ở đó."
+     },
+     {
+      "cue": 4,
+      "spanSeconds": [
+       55.133,
+       70.061
+      ],
+      "text": "Ngày nay, dòng chảy ở Lạc Châu không còn đi đúng đường. Có tiếng chuông ngân dưới mặt nước, ở nơi không hề treo chuông. Có những cái tên bị mất khỏi danh sách. Và vẫn còn những lá thư — niêm sáp năm vạch — đi qua các tuyến đường thủy, chờ người nhận chịu mở."
+     },
+     {
+      "cue": 5,
+      "spanSeconds": [
+       71.167,
+       79.207
+      ],
+      "text": "Bến Mưa là một bến đò nhỏ nơi các tuyến ấy giao nhau. Mưa không ngớt. Và hôm nay, một người khách lạ vừa bước lên bến..."
+     },
+     {
+      "cue": 6,
+      "spanSeconds": [
+       80.907,
+       83.475
+      ],
+      "text": "Đầu kia! Giữ giúp tôi đầu kia!"
+     }
+    ],
+    "narrationTakes": [
+     {
+      "takeId": "VO_CIN000_SEG01",
+      "file": "VO_CIN000_SEG01_NARRATOR.wav",
+      "durationSeconds": 16.512,
+      "leadSilenceSeconds": 0.176,
+      "tailSilenceSeconds": 0.0,
+      "speaker": "NARRATOR",
+      "voice": "avocado_v2:MAI_03"
+     },
+     {
+      "takeId": "VO_CIN000_SEG02",
+      "file": "VO_CIN000_SEG02_NARRATOR.wav",
+      "durationSeconds": 15.528,
+      "leadSilenceSeconds": 0.167,
+      "tailSilenceSeconds": 0.063,
+      "speaker": "NARRATOR",
+      "voice": "avocado_v2:MAI_03"
+     },
+     {
+      "takeId": "VO_CIN000_SEG03",
+      "file": "VO_CIN000_SEG03_NARRATOR.wav",
+      "durationSeconds": 19.752,
+      "leadSilenceSeconds": 0.185,
+      "tailSilenceSeconds": 0.129,
+      "speaker": "NARRATOR",
+      "voice": "avocado_v2:MAI_03"
+     },
+     {
+      "takeId": "VO_CIN000_SEG04",
+      "file": "VO_CIN000_SEG04_NARRATOR.wav",
+      "durationSeconds": 14.928,
+      "leadSilenceSeconds": 0.157,
+      "tailSilenceSeconds": 0.0,
+      "speaker": "NARRATOR",
+      "voice": "avocado_v2:MAI_03"
+     },
+     {
+      "takeId": "VO_CIN000_SEG05",
+      "file": "VO_CIN000_SEG05_NARRATOR.wav",
+      "durationSeconds": 8.04,
+      "leadSilenceSeconds": 0.422,
+      "tailSilenceSeconds": 0.387,
+      "speaker": "NARRATOR",
+      "voice": "avocado_v2:MAI_03"
+     }
+    ],
+    "finalLineTake": "VO_CIN001_S05_LYAN_draft_v1.wav",
+    "finalLineTakeNote": "voTakeLeadSilenceSeconds / voTakeTailSilenceSeconds below belong to this reused CP04 take; narration takes carry their own lead/tail above."
+   },
+   "voTakeLeadSilenceSeconds": 0.423,
+   "voTakeTailSilenceSeconds": 0.0,
+   "voWindowSlackSeconds": null,
+   "duckingEvidence_manifest": null,
+   "duckingNote_manifest": "sidechaincompress on the music+ambience bed, keyed by the VO bus: threshold 0.03, ratio 4, attack 15 ms, release 350 ms (checkpoint 20 settled values); peak guard trims the whole mix only above -1.0 dBTP",
+   "loopJoins": [
+    {
+     "cue": "MUSIC/ben_mua",
+     "joinType": "hard loop, no crossfade",
+     "joinAtSeconds": [
+      56.667
+     ],
+     "note": "ben_mua OGG looped once (-stream_loop 1); one hard join inside the 87.367 s film"
+    },
+    {
+     "cue": "AMBIENCE/rain_light",
+     "joinType": "hard loop, no crossfade",
+     "joinAtSeconds": [
+      16.0,
+      32.0,
+      48.0,
+      64.0,
+      80.0
+     ],
+     "note": "ported OGG looped infinitely (-stream_loop -1); period 16.0 s"
+    },
+    {
+     "cue": "AMBIENCE/river_shore",
+     "joinType": "hard loop, no crossfade",
+     "joinAtSeconds": [
+      16.0,
+      32.0,
+      48.0,
+      64.0,
+      80.0
+     ],
+     "note": "ported OGG looped infinitely (-stream_loop -1); period 16.0 s"
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_001",
+   "mixVersion": "v1",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/P0_DRAFT/CIN_001_mix_draft_v1.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/p0/CIN_001_mix_draft_v1.wav",
+   "durationSeconds": 36.0,
+   "mixIntegratedLUFS_manifest": "-22.46",
+   "mixTruePeakDBTP_manifest": "-1.46",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.055,
+   "voSpan": {
+    "windowSeconds": [
+     24.8,
+     28.5
+    ],
+    "takeSpanSeconds": [
+     24.8,
+     27.368
+    ],
+    "takeDurationSeconds": 2.568
+   },
+   "voTakeLeadSilenceSeconds": 0.423,
+   "voTakeTailSilenceSeconds": 0.0,
+   "voWindowSlackSeconds": 1.132,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      24.8,
+      27.368
+     ],
+     "referenceSeconds": [
+      22.3,
+      24.3
+     ],
+     "depthInWindowDb": -14.32,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00543,
+       "bedP999Jump": 0.00775,
+       "ratioToP999": 0.701
+      },
+      {
+       "atSeconds": 30.5,
+       "maxJump": 0.00543,
+       "bedP999Jump": 0.00775,
+       "ratioToP999": 0.701
+      }
+     ]
+    },
+    {
+     "cue": "AMBIENCE/rain_light",
+     "joins": []
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_002",
+   "mixVersion": "v1",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/P0_DRAFT/CIN_002_mix_draft_v1.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/p0/CIN_002_mix_draft_v1.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-21.55",
+   "mixTruePeakDBTP_manifest": "-3.98",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.165,
+   "voSpan": {
+    "windowSeconds": [
+     7.0,
+     11.0
+    ],
+    "takeSpanSeconds": [
+     7.0,
+     10.792
+    ],
+    "takeDurationSeconds": 3.792
+   },
+   "voTakeLeadSilenceSeconds": 0.18,
+   "voTakeTailSilenceSeconds": 0.166,
+   "voWindowSlackSeconds": 0.208,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "ambience",
+     "windowSeconds": [
+      7.0,
+      10.792
+     ],
+     "referenceSeconds": [
+      4.5,
+      6.5
+     ],
+     "depthInWindowDb": -6.48,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00543,
+       "bedP999Jump": 0.00783,
+       "ratioToP999": 0.694
+      }
+     ]
+    },
+    {
+     "cue": "AMBIENCE/underwater",
+     "joins": []
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_004",
+   "mixVersion": "v1",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/P0_DRAFT/CIN_004_mix_draft_v1.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/p0/CIN_004_mix_draft_v1.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-25.51",
+   "mixTruePeakDBTP_manifest": "-7.94",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.0,
+   "voSpan": {
+    "windowSeconds": [
+     7.5,
+     9.5
+    ],
+    "takeSpanSeconds": [
+     7.5,
+     9.252
+    ],
+    "takeDurationSeconds": 1.752
+   },
+   "voTakeLeadSilenceSeconds": 0.07,
+   "voTakeTailSilenceSeconds": 0.0,
+   "voWindowSlackSeconds": 0.248,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      7.5,
+      9.252
+     ],
+     "referenceSeconds": [
+      5.0,
+      7.0
+     ],
+     "depthInWindowDb": -4.99,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00543,
+       "bedP999Jump": 0.00783,
+       "ratioToP999": 0.694
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_001",
+   "mixVersion": "v2",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V2/CIN_001_mix_draft_v2.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/p0_v2/CIN_001_mix_draft_v2.wav",
+   "durationSeconds": 36.0,
+   "mixIntegratedLUFS_manifest": "-21.24",
+   "mixTruePeakDBTP_manifest": "-1.51",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.055,
+   "voSpan": {
+    "windowSeconds": [
+     24.8,
+     28.5
+    ],
+    "takeSpanSeconds": [
+     24.8,
+     27.368
+    ],
+    "takeDurationSeconds": 2.568
+   },
+   "voTakeLeadSilenceSeconds": 0.423,
+   "voTakeTailSilenceSeconds": 0.0,
+   "voWindowSlackSeconds": 1.132,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      24.8,
+      27.368
+     ],
+     "referenceSeconds": [
+      22.3,
+      24.3
+     ],
+     "depthInWindowDb": -3.92,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00543,
+       "bedP999Jump": 0.00775,
+       "ratioToP999": 0.701
+      },
+      {
+       "atSeconds": 30.5,
+       "maxJump": 0.00543,
+       "bedP999Jump": 0.00775,
+       "ratioToP999": 0.701
+      }
+     ]
+    },
+    {
+     "cue": "AMBIENCE/rain_light",
+     "joins": []
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_002",
+   "mixVersion": "v2",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V2/CIN_002_mix_draft_v2.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/p0_v2/CIN_002_mix_draft_v2.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-22.81",
+   "mixTruePeakDBTP_manifest": "-4.26",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.06,
+   "voSpan": {
+    "windowSeconds": [
+     7.0,
+     11.0
+    ],
+    "takeSpanSeconds": [
+     7.0,
+     10.792
+    ],
+    "takeDurationSeconds": 3.792
+   },
+   "voTakeLeadSilenceSeconds": 0.18,
+   "voTakeTailSilenceSeconds": 0.166,
+   "voWindowSlackSeconds": 0.208,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "ambience",
+     "windowSeconds": [
+      7.0,
+      10.792
+     ],
+     "referenceSeconds": [
+      4.5,
+      6.5
+     ],
+     "depthInWindowDb": -6.48,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00543,
+       "bedP999Jump": 0.00783,
+       "ratioToP999": 0.694
+      }
+     ]
+    },
+    {
+     "cue": "AMBIENCE/underwater",
+     "joins": []
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_004",
+   "mixVersion": "v2",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V2/CIN_004_mix_draft_v2.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/p0_v2/CIN_004_mix_draft_v2.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-26.62",
+   "mixTruePeakDBTP_manifest": "-8.33",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.0,
+   "voSpan": {
+    "windowSeconds": [
+     7.5,
+     9.5
+    ],
+    "takeSpanSeconds": [
+     7.5,
+     9.252
+    ],
+    "takeDurationSeconds": 1.752
+   },
+   "voTakeLeadSilenceSeconds": 0.07,
+   "voTakeTailSilenceSeconds": 0.0,
+   "voWindowSlackSeconds": 0.248,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      7.5,
+      9.252
+     ],
+     "referenceSeconds": [
+      5.0,
+      7.0
+     ],
+     "depthInWindowDb": -5.16,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00543,
+       "bedP999Jump": 0.00783,
+       "ratioToP999": 0.694
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_001",
+   "mixVersion": "v3",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V3/CIN_001_mix_draft_v3.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_001_mix_draft_v3.wav",
+   "durationSeconds": 36.0,
+   "mixIntegratedLUFS_manifest": "-21.06",
+   "mixTruePeakDBTP_manifest": "-1.66",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.059,
+   "voSpan": {
+    "windowSeconds": [
+     24.8,
+     28.5
+    ],
+    "takeSpanSeconds": [
+     24.8,
+     27.368
+    ],
+    "takeDurationSeconds": 2.568
+   },
+   "voTakeLeadSilenceSeconds": 0.423,
+   "voTakeTailSilenceSeconds": 0.0,
+   "voWindowSlackSeconds": 1.132,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      24.8,
+      27.368
+     ],
+     "referenceSeconds": [
+      22.3,
+      24.3
+     ],
+     "depthInWindowDb": -3.92,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00154,
+       "bedP999Jump": 0.00256,
+       "ratioToP999": 0.601
+      },
+      {
+       "atSeconds": 30.5,
+       "maxJump": 0.00154,
+       "bedP999Jump": 0.00256,
+       "ratioToP999": 0.601
+      }
+     ]
+    },
+    {
+     "cue": "AMBIENCE/rain_light",
+     "joins": []
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_002",
+   "mixVersion": "v3",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V3/CIN_002_mix_draft_v3.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_002_mix_draft_v3.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-22.67",
+   "mixTruePeakDBTP_manifest": "-4.25",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.057,
+   "voSpan": {
+    "windowSeconds": [
+     7.0,
+     11.0
+    ],
+    "takeSpanSeconds": [
+     7.0,
+     10.792
+    ],
+    "takeDurationSeconds": 3.792
+   },
+   "voTakeLeadSilenceSeconds": 0.18,
+   "voTakeTailSilenceSeconds": 0.166,
+   "voWindowSlackSeconds": 0.208,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "ambience",
+     "windowSeconds": [
+      7.0,
+      10.792
+     ],
+     "referenceSeconds": [
+      4.5,
+      6.5
+     ],
+     "depthInWindowDb": -7.32,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00154,
+       "bedP999Jump": 0.00266,
+       "ratioToP999": 0.58
+      }
+     ]
+    },
+    {
+     "cue": "AMBIENCE/underwater",
+     "joins": []
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_004",
+   "mixVersion": "v3",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V3/CIN_004_mix_draft_v3.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_004_mix_draft_v3.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-26.78",
+   "mixTruePeakDBTP_manifest": "-8.27",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.0,
+   "voSpan": {
+    "windowSeconds": [
+     7.5,
+     9.5
+    ],
+    "takeSpanSeconds": [
+     7.5,
+     9.252
+    ],
+    "takeDurationSeconds": 1.752
+   },
+   "voTakeLeadSilenceSeconds": 0.07,
+   "voTakeTailSilenceSeconds": 0.0,
+   "voWindowSlackSeconds": 0.248,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      7.5,
+      9.252
+     ],
+     "referenceSeconds": [
+      5.0,
+      7.0
+     ],
+     "depthInWindowDb": -5.16,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00154,
+       "bedP999Jump": 0.00266,
+       "ratioToP999": 0.58
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_003",
+   "mixVersion": "v1_cin003_proposed",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/CIN003_DRAFT_V1/CIN_003_mix_draft_v1.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/cin003_v1/CIN_003_mix_draft_v1.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-21.16",
+   "mixTruePeakDBTP_manifest": "-4.63",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.0,
+   "voSpan": {
+    "windowSeconds": [
+     12.5,
+     17.5
+    ],
+    "takeSpanSeconds": [
+     12.5,
+     16.532
+    ],
+    "takeDurationSeconds": 4.032
+   },
+   "voTakeLeadSilenceSeconds": 0.07,
+   "voTakeTailSilenceSeconds": 0.0,
+   "voWindowSlackSeconds": 0.968,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      12.5,
+      16.532
+     ],
+     "referenceSeconds": [
+      10.0,
+      12.0
+     ],
+     "depthInWindowDb": -10.42,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00154,
+       "bedP999Jump": 0.00266,
+       "ratioToP999": 0.58
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_005",
+   "mixVersion": "v1_cin005_proposed",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/CIN005_DRAFT_V1/CIN_005_mix_draft_v1.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/cin005_v1/CIN_005_mix_draft_v1.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-21.03",
+   "mixTruePeakDBTP_manifest": "-6.11",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.0,
+   "voSpan": {
+    "windowSeconds": [
+     12.5,
+     17.5
+    ],
+    "takeSpanSeconds": [
+     12.5,
+     17.66
+    ],
+    "takeDurationSeconds": 5.16
+   },
+   "voTakeLeadSilenceSeconds": 0.183,
+   "voTakeTailSilenceSeconds": 0.0,
+   "voWindowSlackSeconds": -0.16,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      12.5,
+      17.66
+     ],
+     "referenceSeconds": [
+      10.0,
+      12.0
+     ],
+     "depthInWindowDb": -7.89,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/thang_long_crowd",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00293,
+       "bedP999Jump": 0.00432,
+       "ratioToP999": 0.678
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_006",
+   "mixVersion": "v1_cin006_proposed",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/CIN006_DRAFT_V1/CIN_006_mix_draft_v1.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/cin006_v1/CIN_006_mix_draft_v1.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-22.01",
+   "mixTruePeakDBTP_manifest": "-3.39",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.0,
+   "voSpan": {
+    "windowSeconds": [
+     12.5,
+     17.5
+    ],
+    "takeSpanSeconds": [
+     12.5,
+     18.0
+    ],
+    "takeDurationSeconds": 5.52
+   },
+   "voTakeLeadSilenceSeconds": 0.183,
+   "voTakeTailSilenceSeconds": 0.171,
+   "voWindowSlackSeconds": -0.52,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      12.5,
+      18.0
+     ],
+     "referenceSeconds": [
+      10.0,
+      12.0
+     ],
+     "depthInWindowDb": -7.86,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/thang_long_crowd",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00293,
+       "bedP999Jump": 0.00432,
+       "ratioToP999": 0.678
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_007",
+   "mixVersion": "v1_cin007_proposed",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/CIN007_DRAFT_V1/CIN_007_mix_draft_v1.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/cin007_v1/CIN_007_mix_draft_v1.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-18.05",
+   "mixTruePeakDBTP_manifest": "-1.43",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.0,
+   "voSpan": {
+    "windowSeconds": [
+     12.5,
+     17.5
+    ],
+    "takeSpanSeconds": [
+     12.5,
+     16.412
+    ],
+    "takeDurationSeconds": 3.912
+   },
+   "voTakeLeadSilenceSeconds": 0.07,
+   "voTakeTailSilenceSeconds": 0.0,
+   "voWindowSlackSeconds": 1.088,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      12.5,
+      16.412
+     ],
+     "referenceSeconds": [
+      10.0,
+      12.0
+     ],
+     "depthInWindowDb": -9.43,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/wind_canopy",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00458,
+       "bedP999Jump": 0.00598,
+       "ratioToP999": 0.765
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_008",
+   "mixVersion": "v1_cin008_proposed",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/CIN008_DRAFT_V1/CIN_008_mix_draft_v1.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/cin008_v1/CIN_008_mix_draft_v1.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-24.58",
+   "mixTruePeakDBTP_manifest": "-1.61",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.0,
+   "voSpan": {
+    "windowSeconds": [
+     12.5,
+     17.5
+    ],
+    "takeSpanSeconds": [
+     12.5,
+     16.052
+    ],
+    "takeDurationSeconds": 3.552
+   },
+   "voTakeLeadSilenceSeconds": 0.187,
+   "voTakeTailSilenceSeconds": 0.151,
+   "voWindowSlackSeconds": 1.448,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      12.5,
+      16.052
+     ],
+     "referenceSeconds": [
+      10.0,
+      12.0
+     ],
+     "depthInWindowDb": -7.22,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00154,
+       "bedP999Jump": 0.00266,
+       "ratioToP999": 0.58
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_009",
+   "mixVersion": "v1_cin009_proposed",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/CIN009_DRAFT_V1/CIN_009_mix_draft_v1.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/cin009_v1/CIN_009_mix_draft_v1.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-17.84",
+   "mixTruePeakDBTP_manifest": "-2.91",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.0,
+   "voSpan": {
+    "windowSeconds": [
+     12.5,
+     17.5
+    ],
+    "takeSpanSeconds": [
+     12.5,
+     16.58
+    ],
+    "takeDurationSeconds": 4.08
+   },
+   "voTakeLeadSilenceSeconds": 0.07,
+   "voTakeTailSilenceSeconds": 0.053,
+   "voWindowSlackSeconds": 0.92,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      12.5,
+      16.58
+     ],
+     "referenceSeconds": [
+      10.0,
+      12.0
+     ],
+     "depthInWindowDb": -9.13,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/waterfall",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00763,
+       "bedP999Jump": 0.01018,
+       "ratioToP999": 0.75
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "sceneId": "CIN_010",
+   "mixVersion": "v1_cin010_proposed",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/CIN010_DRAFT_V1/CIN_010_mix_draft_v1.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/cin010_v1/CIN_010_mix_draft_v1.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-24.60",
+   "mixTruePeakDBTP_manifest": "-4.86",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.0,
+   "voSpan": {
+    "windowSeconds": [
+     12.5,
+     17.5
+    ],
+    "takeSpanSeconds": [
+     12.5,
+     15.308
+    ],
+    "takeDurationSeconds": 2.808
+   },
+   "voTakeLeadSilenceSeconds": 0.167,
+   "voTakeTailSilenceSeconds": 0.199,
+   "voWindowSlackSeconds": 2.192,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      12.5,
+      15.308
+     ],
+     "referenceSeconds": [
+      10.0,
+      12.0
+     ],
+     "depthInWindowDb": -7.94,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/desert_wind",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.0029,
+       "bedP999Jump": 0.00481,
+       "ratioToP999": 0.603
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "playbackCueNotes": {
+  "silenceThreshold": "-60 dBFS (silencedetect, min 0.05 s)",
+  "headSilence": "Silence from 0.0 s to first sound above threshold; use for fade-in / trim decisions.",
+  "tailSilence": "Silence from last sound above threshold to file end; use for fade-out / trim decisions.",
+  "voTakeLeadTail": "Leading/trailing silence INSIDE the VO take file; the take's true speech onset is window start + lead.",
+  "voWindowSlack": "Window end minus take end; negative = overrun kept per owner verdict (3 campaign overruns untouched for Codex).",
+  "ducking": "Music-bus depth from the mix manifest evidence (measured at mix build from the ducked vs unducked bus); NOT re-measured from the bounced mix, where VO energy and bed cannot be separated.",
+  "loopJoins": "Ambience bed loop 16.0 s with 1.0 s crossfade: join centres at 15.5 s (18 s scenes) and 15.5/31.5 s (36 s scenes). Prologue beds hard-loop (no crossfade) at their periods.",
+  "seamFlag": "wrap jump > 0.015 flags an ear check; it is an indicator, not a seamlessness PASS (CP07/CP33 method)."
+ },
+ "seamTable": [
+  {
+   "cueKey": "AMBIENCE/desert_wind",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/ambience/desert_wind.ogg",
+   "wrapJumpMeasured": 0.000514,
+   "cp33WrapJumpMeasured": 0.000514,
+   "cp33PostLandingRecorded": 5e-06,
+   "headRms100ms": 0.027434,
+   "tailRms100ms": 0.027568,
+   "seamBasis": "runtime OGG (CP30)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "AMBIENCE/rain_light",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/ambience/rain_light.ogg",
+   "wrapJumpMeasured": 0.000181,
+   "cp33WrapJumpMeasured": 0.000181,
+   "cp33PostLandingRecorded": 2e-06,
+   "headRms100ms": 0.038544,
+   "tailRms100ms": 0.010084,
+   "seamBasis": "runtime OGG (CP30)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "AMBIENCE/rain_light",
+   "version": "ported",
+   "measuredFrom": "ClientGodot/assets/audio/ambience/rain_light.ogg",
+   "wrapJumpMeasured": 0.005862,
+   "cp33WrapJumpMeasured": 0.005862,
+   "cp33PostLandingRecorded": 0.005862,
+   "headRms100ms": 0.031792,
+   "tailRms100ms": 0.031344,
+   "seamBasis": "runtime OGG (CP07)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "AMBIENCE/river_shore",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+   "wrapJumpMeasured": 0.000188,
+   "cp33WrapJumpMeasured": 0.000188,
+   "cp33PostLandingRecorded": 3e-06,
+   "headRms100ms": 0.04053,
+   "tailRms100ms": 0.019256,
+   "seamBasis": "runtime OGG (CP30)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "AMBIENCE/river_shore",
+   "version": "ported",
+   "measuredFrom": "ClientGodot/assets/audio/ambience/river_shore.ogg",
+   "wrapJumpMeasured": 0.004403,
+   "cp33WrapJumpMeasured": 0.004403,
+   "cp33PostLandingRecorded": 0.004403,
+   "headRms100ms": 0.033217,
+   "tailRms100ms": 0.029538,
+   "seamBasis": "runtime OGG (CP07)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "AMBIENCE/thang_long_crowd",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/ambience/thang_long_crowd.ogg",
+   "wrapJumpMeasured": 0.000286,
+   "cp33WrapJumpMeasured": 0.000286,
+   "cp33PostLandingRecorded": 1e-06,
+   "headRms100ms": 0.02844,
+   "tailRms100ms": 0.005555,
+   "seamBasis": "runtime OGG (CP30)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "AMBIENCE/underwater",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/ambience/underwater.ogg",
+   "wrapJumpMeasured": 9e-06,
+   "cp33WrapJumpMeasured": 9e-06,
+   "cp33PostLandingRecorded": 1e-06,
+   "headRms100ms": 0.027835,
+   "tailRms100ms": 0.003825,
+   "seamBasis": "runtime OGG (CP30)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "AMBIENCE/underwater",
+   "version": "ported",
+   "measuredFrom": "ClientGodot/assets/audio/ambience/underwater.ogg",
+   "wrapJumpMeasured": 0.002945,
+   "cp33WrapJumpMeasured": 0.002945,
+   "cp33PostLandingRecorded": 0.002945,
+   "headRms100ms": 0.022451,
+   "tailRms100ms": 0.031513,
+   "seamBasis": "runtime OGG (CP07)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "AMBIENCE/waterfall",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/ambience/waterfall.ogg",
+   "wrapJumpMeasured": 0.002209,
+   "cp33WrapJumpMeasured": 0.002209,
+   "cp33PostLandingRecorded": 0.0,
+   "headRms100ms": 0.037102,
+   "tailRms100ms": 0.002681,
+   "seamBasis": "runtime OGG (CP30)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "AMBIENCE/wind_canopy",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/ambience/wind_canopy.ogg",
+   "wrapJumpMeasured": 0.000222,
+   "cp33WrapJumpMeasured": 0.000222,
+   "cp33PostLandingRecorded": 1e-06,
+   "headRms100ms": 0.036025,
+   "tailRms100ms": 0.004199,
+   "seamBasis": "runtime OGG (CP30)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "MUSIC/ben_mua",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/music/ben_mua.ogg",
+   "wrapJumpMeasured": 0.00144,
+   "cp33WrapJumpMeasured": 0.00144,
+   "cp33PostLandingRecorded": 4e-06,
+   "headRms100ms": 0.14241,
+   "tailRms100ms": 0.021511,
+   "seamBasis": "master WAV (CP26, post-landing)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "MUSIC/boss_mang_cot",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/music/boss_mang_cot.ogg",
+   "wrapJumpMeasured": 0.002311,
+   "cp33WrapJumpMeasured": 0.002311,
+   "cp33PostLandingRecorded": 2e-06,
+   "headRms100ms": 0.122097,
+   "tailRms100ms": 0.010641,
+   "seamBasis": "master WAV (CP26, post-landing)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "MUSIC/boss_mang_cot",
+   "version": "ported",
+   "measuredFrom": "ClientGodot/assets/audio/music/boss_mang_cot.ogg",
+   "wrapJumpMeasured": 0.000533,
+   "cp33WrapJumpMeasured": 0.000533,
+   "cp33PostLandingRecorded": 0.000533,
+   "headRms100ms": 0.166777,
+   "tailRms100ms": 0.024913,
+   "seamBasis": "runtime OGG (CP07)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "MUSIC/lam_trieu",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/music/lam_trieu.ogg",
+   "wrapJumpMeasured": 5.9e-05,
+   "cp33WrapJumpMeasured": 5.9e-05,
+   "cp33PostLandingRecorded": 1e-06,
+   "headRms100ms": 0.114683,
+   "tailRms100ms": 0.008271,
+   "seamBasis": "master WAV (CP26, post-landing)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "MUSIC/quiet_discovery",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/music/quiet_discovery.ogg",
+   "wrapJumpMeasured": 0.000194,
+   "cp33WrapJumpMeasured": 0.000194,
+   "cp33PostLandingRecorded": 3e-06,
+   "headRms100ms": 0.101169,
+   "tailRms100ms": 0.020017,
+   "seamBasis": "master WAV (CP26, post-landing)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "MUSIC/quiet_discovery",
+   "version": "ported",
+   "measuredFrom": "ClientGodot/assets/audio/music/quiet_discovery.ogg",
+   "wrapJumpMeasured": 0.000724,
+   "cp33WrapJumpMeasured": 0.000724,
+   "cp33PostLandingRecorded": 0.000724,
+   "headRms100ms": 0.184677,
+   "tailRms100ms": 0.025944,
+   "seamBasis": "runtime OGG (CP07)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "MUSIC/sa_hoa",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/music/sa_hoa.ogg",
+   "wrapJumpMeasured": 0.016015,
+   "cp33WrapJumpMeasured": 0.016015,
+   "cp33PostLandingRecorded": 0.0,
+   "headRms100ms": 0.17957,
+   "tailRms100ms": 0.001963,
+   "seamBasis": "master WAV (CP26, post-landing)",
+   "flagEarCheck": true
+  },
+  {
+   "cueKey": "MUSIC/thang_long",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/music/thang_long.ogg",
+   "wrapJumpMeasured": 0.00141,
+   "cp33WrapJumpMeasured": 0.00141,
+   "cp33PostLandingRecorded": 4e-06,
+   "headRms100ms": 0.135989,
+   "tailRms100ms": 0.022329,
+   "seamBasis": "master WAV (CP26, post-landing)",
+   "flagEarCheck": false
+  },
+  {
+   "cueKey": "MUSIC/tran_son",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/music/tran_son.ogg",
+   "wrapJumpMeasured": 0.008203,
+   "cp33WrapJumpMeasured": 0.008203,
+   "cp33PostLandingRecorded": 2.1e-05,
+   "headRms100ms": 0.184817,
+   "tailRms100ms": 0.11995,
+   "seamBasis": "master WAV (CP26, post-landing)",
+   "flagEarCheck": false
+  }
+ ],
+ "fallbackRules": [
+  {
+   "id": "FB-0",
+   "rule": "Never play the embedded soundtrack and any external mix/VO at the same time. EmbeddedMix, standalone mix WAVs and VO takes are the SAME mix delivered three ways, not layers (PLAYBACK_METADATA_v1.json audioOwnershipPolicy)."
+  },
+  {
+   "id": "FB-1",
+   "rule": "If the embedded audio stream is missing or corrupt in the OGV/MP4, fall back to the standalone mix WAV (same mixVersion, same sha256 as the mix manifest). Video stays the same file."
+  },
+  {
+   "id": "FB-2",
+   "rule": "If the standalone mix WAV is missing, re-assemble from stems + VO take per the mix manifest (same cues, gains and ducking recipe; adapter rebuilds, Muse does not re-render here)."
+  },
+  {
+   "id": "FB-3",
+   "rule": "If stems are missing, play the VO take + SRT overlay only (bed dropped). Never substitute another scene's bed."
+  },
+  {
+   "id": "FB-4",
+   "rule": "If all audio is missing, play silent video + SRT overlay. Subtitles carry the scene."
+  },
+  {
+   "id": "FB-5",
+   "rule": "If the SRT is missing, show no captions. Never burn captions from VO text and never use the review-only burned-subtitle variant as runtime."
+  },
+  {
+   "id": "FB-6",
+   "rule": "Scenes with no mix yet (CIN_011-020) play silent video + SRT only. The adapter must not improvise a mix from stems or play a VO take over silent video."
+  },
+  {
+   "id": "FB-7",
+   "rule": "Rewatch, skip, seen-state and any fallback step never grant quest progress (WO32 item 4; enforcement is the Codex runtime's job)."
+  }
+ ],
+ "fallbackTable": [
+  {
+   "sceneId": "CIN_000",
+   "kind": "prologue",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
+   "primary": {
+    "mode": "EMBEDDED_SOUNDTRACK",
+    "mixVersion": "prologue_mix_v1 (checkpoint 27)"
+   },
+   "fallbackMixWav": {
+    "path": "ClientGodot/assets/audio/mix/prologue/PROLOGUE_mix_v1.wav",
+    "sha256": null,
+    "mixVersion": "prologue_mix_v1 (checkpoint 27)"
+   },
+   "fallbackStemsAndVo": {
+    "stems": [
+     {
+      "cue": "MUSIC/ben_mua",
+      "role": "music bed",
+      "source": "ClientGodot/assets/audio/composed/music/ben_mua.ogg"
+     },
+     {
+      "cue": "AMBIENCE/rain_light",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/ambience/rain_light.ogg"
+     },
+     {
+      "cue": "AMBIENCE/river_shore",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/ambience/river_shore.ogg"
+     },
+     {
+      "cue": "SFX/CINEMA/resolve",
+      "role": "title stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/resolve.ogg"
+     }
+    ],
+    "voTakes": [
+     "VO_CIN000_SEG01_NARRATOR.wav",
+     "VO_CIN000_SEG02_NARRATOR.wav",
+     "VO_CIN000_SEG03_NARRATOR.wav",
+     "VO_CIN000_SEG04_NARRATOR.wav",
+     "VO_CIN000_SEG05_NARRATOR.wav",
+     "VO_CIN001_S05_LYAN_draft_v1.wav"
+    ]
+   },
+   "fallbackVoAndSrt": {
+    "voTakes": [
+     "VO_CIN000_SEG01_NARRATOR.wav",
+     "VO_CIN000_SEG02_NARRATOR.wav",
+     "VO_CIN000_SEG03_NARRATOR.wav",
+     "VO_CIN000_SEG04_NARRATOR.wav",
+     "VO_CIN000_SEG05_NARRATOR.wav",
+     "VO_CIN001_S05_LYAN_draft_v1.wav"
+    ],
+    "srt": "ClientGodot/assets/cinematics/CIN_000/CIN_000_vi.srt"
+   },
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_000/CIN_000_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.mp4"
+  },
+  {
+   "sceneId": "CIN_001",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
+   "primary": {
+    "mode": "EMBEDDED_SOUNDTRACK",
+    "mixVersion": "v3_fully_composed"
+   },
+   "fallbackMixWav": {
+    "path": "ClientGodot/assets/audio/mix/p0_v3/CIN_001_mix_draft_v3.wav",
+    "sha256": "1463ce02d64fa35ba785c0911afdd6193fdafb697b6a3c4d52552516aa1e3320",
+    "mixVersion": "v3_fully_composed"
+   },
+   "fallbackStemsAndVo": {
+    "stems": [
+     {
+      "cue": "MUSIC/quiet_discovery",
+      "role": "music",
+      "source": "ClientGodot/assets/audio/composed/music/quiet_discovery.ogg",
+      "segmentSceneSeconds": [
+       6.0,
+       30.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "AMBIENCE/river_shore",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       36.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "AMBIENCE/rain_light",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/rain_light.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       6.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+      "segmentSceneSeconds": null,
+      "atSeconds": 30.0
+     }
+    ],
+    "voTakes": [
+     "VO_CIN001_S05_LYAN_draft_v1.wav"
+    ]
+   },
+   "fallbackVoAndSrt": {
+    "voTakes": [
+     "VO_CIN001_S05_LYAN_draft_v1.wav"
+    ],
+    "srt": "ClientGodot/assets/cinematics/CIN_001/CIN_001_vi.srt"
+   },
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_001/CIN_001_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_001/CIN_001_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_001/CIN_001_640x360_30fps.mp4"
+  },
+  {
+   "sceneId": "CIN_002",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
+   "primary": {
+    "mode": "EMBEDDED_SOUNDTRACK",
+    "mixVersion": "v3_fully_composed"
+   },
+   "fallbackMixWav": {
+    "path": "ClientGodot/assets/audio/mix/p0_v3/CIN_002_mix_draft_v3.wav",
+    "sha256": "0dc438137976772a214e3a434c045c06caa4217d31b5ddc49475a5016107fe0c",
+    "mixVersion": "v3_fully_composed"
+   },
+   "fallbackStemsAndVo": {
+    "stems": [
+     {
+      "cue": "AMBIENCE/river_shore",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "AMBIENCE/underwater",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/underwater.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       6.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "SFX/CINEMA/tension",
+      "role": "stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/tension.ogg",
+      "segmentSceneSeconds": null,
+      "atSeconds": 6.0
+     }
+    ],
+    "voTakes": [
+     "VO_CIN002_S02_TAVANKHANH_draft_v1.wav"
+    ]
+   },
+   "fallbackVoAndSrt": {
+    "voTakes": [
+     "VO_CIN002_S02_TAVANKHANH_draft_v1.wav"
+    ],
+    "srt": "ClientGodot/assets/cinematics/CIN_002/CIN_002_vi.srt"
+   },
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_002/CIN_002_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_002/CIN_002_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_002/CIN_002_640x360_30fps.mp4"
+  },
+  {
+   "sceneId": "CIN_003",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
+   "primary": {
+    "mode": "EMBEDDED_SOUNDTRACK",
+    "mixVersion": "v1_cin003_proposed"
+   },
+   "fallbackMixWav": {
+    "path": "ClientGodot/assets/audio/mix/cin003_v1/CIN_003_mix_draft_v1.wav",
+    "sha256": "35def4f0f2135991130aa03832a4bd817de7edfa25796b6c5e14af5a31d4fad4",
+    "mixVersion": "v1_cin003_proposed"
+   },
+   "fallbackStemsAndVo": {
+    "stems": [
+     {
+      "cue": "MUSIC/ben_mua",
+      "role": "music",
+      "source": "ClientGodot/assets/audio/composed/music/ben_mua.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "AMBIENCE/river_shore",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+      "segmentSceneSeconds": null,
+      "atSeconds": 6.0
+     }
+    ],
+    "voTakes": [
+     "VO_CIN_003_S03_LYAN_draft_v1.wav"
+    ]
+   },
+   "fallbackVoAndSrt": {
+    "voTakes": [
+     "VO_CIN_003_S03_LYAN_draft_v1.wav"
+    ],
+    "srt": "ClientGodot/assets/cinematics/CIN_003/CIN_003_vi.srt"
+   },
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_003/CIN_003_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_003/CIN_003_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_003/CIN_003_640x360_30fps.mp4"
+  },
+  {
+   "sceneId": "CIN_004",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
+   "primary": {
+    "mode": "EMBEDDED_SOUNDTRACK",
+    "mixVersion": "v3_fully_composed"
+   },
+   "fallbackMixWav": {
+    "path": "ClientGodot/assets/audio/mix/p0_v3/CIN_004_mix_draft_v3.wav",
+    "sha256": "8e3bc4e2908412ca78048b42c2012a05ddf22ca59442dd008a8277f311db84cc",
+    "mixVersion": "v3_fully_composed"
+   },
+   "fallbackStemsAndVo": {
+    "stems": [
+     {
+      "cue": "MUSIC/boss_mang_cot",
+      "role": "music",
+      "source": "ClientGodot/assets/audio/composed/music/boss_mang_cot.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       12.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "AMBIENCE/river_shore",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+      "segmentSceneSeconds": null,
+      "atSeconds": 6.0
+     }
+    ],
+    "voTakes": [
+     "VO_CIN004_S02_LYAN_OFFSCREEN_draft_v1.wav"
+    ]
+   },
+   "fallbackVoAndSrt": {
+    "voTakes": [
+     "VO_CIN004_S02_LYAN_OFFSCREEN_draft_v1.wav"
+    ],
+    "srt": "ClientGodot/assets/cinematics/CIN_004/CIN_004_vi.srt"
+   },
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_004/CIN_004_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_004/CIN_004_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_004/CIN_004_640x360_30fps.mp4"
+  },
+  {
+   "sceneId": "CIN_005",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
+   "primary": {
+    "mode": "EMBEDDED_SOUNDTRACK",
+    "mixVersion": "v1_cin005_proposed"
+   },
+   "fallbackMixWav": {
+    "path": "ClientGodot/assets/audio/mix/cin005_v1/CIN_005_mix_draft_v1.wav",
+    "sha256": "40db6c4b41ad1a3da697c9dba18a2dbf0d358edaf11a8324178349fcfb2e0988",
+    "mixVersion": "v1_cin005_proposed"
+   },
+   "fallbackStemsAndVo": {
+    "stems": [
+     {
+      "cue": "MUSIC/thang_long",
+      "role": "music",
+      "source": "ClientGodot/assets/audio/composed/music/thang_long.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "AMBIENCE/thang_long_crowd",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/thang_long_crowd.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+      "segmentSceneSeconds": null,
+      "atSeconds": 6.0
+     }
+    ],
+    "voTakes": [
+     "VO_CIN_005_S03_LYAN_draft_v1.wav"
+    ]
+   },
+   "fallbackVoAndSrt": {
+    "voTakes": [
+     "VO_CIN_005_S03_LYAN_draft_v1.wav"
+    ],
+    "srt": "ClientGodot/assets/cinematics/CIN_005/CIN_005_vi.srt"
+   },
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_005/CIN_005_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_005/CIN_005_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_005/CIN_005_640x360_30fps.mp4"
+  },
+  {
+   "sceneId": "CIN_006",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
+   "primary": {
+    "mode": "EMBEDDED_SOUNDTRACK",
+    "mixVersion": "v1_cin006_proposed"
+   },
+   "fallbackMixWav": {
+    "path": "ClientGodot/assets/audio/mix/cin006_v1/CIN_006_mix_draft_v1.wav",
+    "sha256": "a71a38f006f4a8511c051173bbffb1609f46b8dba14e9141fda4143d1173dda6",
+    "mixVersion": "v1_cin006_proposed"
+   },
+   "fallbackStemsAndVo": {
+    "stems": [
+     {
+      "cue": "MUSIC/thang_long",
+      "role": "music",
+      "source": "ClientGodot/assets/audio/composed/music/thang_long.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "AMBIENCE/thang_long_crowd",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/thang_long_crowd.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+      "segmentSceneSeconds": null,
+      "atSeconds": 6.0
+     }
+    ],
+    "voTakes": [
+     "VO_CIN_006_S03_HAMAC_draft_v1.wav"
+    ]
+   },
+   "fallbackVoAndSrt": {
+    "voTakes": [
+     "VO_CIN_006_S03_HAMAC_draft_v1.wav"
+    ],
+    "srt": "ClientGodot/assets/cinematics/CIN_006/CIN_006_vi.srt"
+   },
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_006/CIN_006_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_006/CIN_006_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_006/CIN_006_640x360_30fps.mp4"
+  },
+  {
+   "sceneId": "CIN_007",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
+   "primary": {
+    "mode": "EMBEDDED_SOUNDTRACK",
+    "mixVersion": "v1_cin007_proposed"
+   },
+   "fallbackMixWav": {
+    "path": "ClientGodot/assets/audio/mix/cin007_v1/CIN_007_mix_draft_v1.wav",
+    "sha256": "ee9f4c0aed0549878ba2d62c2f387aecb87488097809e7427fc82eae950aa03a",
+    "mixVersion": "v1_cin007_proposed"
+   },
+   "fallbackStemsAndVo": {
+    "stems": [
+     {
+      "cue": "MUSIC/quiet_discovery",
+      "role": "music",
+      "source": "ClientGodot/assets/audio/composed/music/quiet_discovery.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "AMBIENCE/wind_canopy",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/wind_canopy.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+      "segmentSceneSeconds": null,
+      "atSeconds": 6.0
+     }
+    ],
+    "voTakes": [
+     "VO_CIN_007_S03_LYAN_draft_v1.wav"
+    ]
+   },
+   "fallbackVoAndSrt": {
+    "voTakes": [
+     "VO_CIN_007_S03_LYAN_draft_v1.wav"
+    ],
+    "srt": "ClientGodot/assets/cinematics/CIN_007/CIN_007_vi.srt"
+   },
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_007/CIN_007_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_007/CIN_007_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_007/CIN_007_640x360_30fps.mp4"
+  },
+  {
+   "sceneId": "CIN_008",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
+   "primary": {
+    "mode": "EMBEDDED_SOUNDTRACK",
+    "mixVersion": "v1_cin008_proposed"
+   },
+   "fallbackMixWav": {
+    "path": "ClientGodot/assets/audio/mix/cin008_v1/CIN_008_mix_draft_v1.wav",
+    "sha256": "eaaaf4a17c518f11b2fc36f53b159d86013ed2c38db69350e9331dc0bc155f96",
+    "mixVersion": "v1_cin008_proposed"
+   },
+   "fallbackStemsAndVo": {
+    "stems": [
+     {
+      "cue": "MUSIC/tran_son",
+      "role": "music",
+      "source": "ClientGodot/assets/audio/composed/music/tran_son.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "AMBIENCE/river_shore",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+      "segmentSceneSeconds": null,
+      "atSeconds": 6.0
+     }
+    ],
+    "voTakes": [
+     "VO_CIN_008_S03_TAVANKHANH_draft_v1.wav"
+    ]
+   },
+   "fallbackVoAndSrt": {
+    "voTakes": [
+     "VO_CIN_008_S03_TAVANKHANH_draft_v1.wav"
+    ],
+    "srt": "ClientGodot/assets/cinematics/CIN_008/CIN_008_vi.srt"
+   },
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_008/CIN_008_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_008/CIN_008_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_008/CIN_008_640x360_30fps.mp4"
+  },
+  {
+   "sceneId": "CIN_009",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
+   "primary": {
+    "mode": "EMBEDDED_SOUNDTRACK",
+    "mixVersion": "v1_cin009_proposed"
+   },
+   "fallbackMixWav": {
+    "path": "ClientGodot/assets/audio/mix/cin009_v1/CIN_009_mix_draft_v1.wav",
+    "sha256": "196994e8162b41e9964cf1e2ddc4ad7bf94efd938f153b15c9ab5fe1f76809e4",
+    "mixVersion": "v1_cin009_proposed"
+   },
+   "fallbackStemsAndVo": {
+    "stems": [
+     {
+      "cue": "MUSIC/lam_trieu",
+      "role": "music",
+      "source": "ClientGodot/assets/audio/composed/music/lam_trieu.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "AMBIENCE/waterfall",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/waterfall.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+      "segmentSceneSeconds": null,
+      "atSeconds": 6.0
+     }
+    ],
+    "voTakes": [
+     "VO_CIN_009_S03_LYAN_draft_v1.wav"
+    ]
+   },
+   "fallbackVoAndSrt": {
+    "voTakes": [
+     "VO_CIN_009_S03_LYAN_draft_v1.wav"
+    ],
+    "srt": "ClientGodot/assets/cinematics/CIN_009/CIN_009_vi.srt"
+   },
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_009/CIN_009_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_009/CIN_009_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_009/CIN_009_640x360_30fps.mp4"
+  },
+  {
+   "sceneId": "CIN_010",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
+   "primary": {
+    "mode": "EMBEDDED_SOUNDTRACK",
+    "mixVersion": "v1_cin010_proposed"
+   },
+   "fallbackMixWav": {
+    "path": "ClientGodot/assets/audio/mix/cin010_v1/CIN_010_mix_draft_v1.wav",
+    "sha256": "6a3f9d21bd61bb2c43d2f55356f0ca743006931ffbac53568e7f17c0ff6b4bb2",
+    "mixVersion": "v1_cin010_proposed"
+   },
+   "fallbackStemsAndVo": {
+    "stems": [
+     {
+      "cue": "MUSIC/sa_hoa",
+      "role": "music",
+      "source": "ClientGodot/assets/audio/composed/music/sa_hoa.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "AMBIENCE/desert_wind",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/desert_wind.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+      "segmentSceneSeconds": null,
+      "atSeconds": 6.0
+     }
+    ],
+    "voTakes": [
+     "VO_CIN_010_S03_SAMCHUQUY_draft_v1.wav"
+    ]
+   },
+   "fallbackVoAndSrt": {
+    "voTakes": [
+     "VO_CIN_010_S03_SAMCHUQUY_draft_v1.wav"
+    ],
+    "srt": "ClientGodot/assets/cinematics/CIN_010/CIN_010_vi.srt"
+   },
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_010/CIN_010_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_010/CIN_010_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_010/CIN_010_640x360_30fps.mp4"
+  },
+  {
+   "sceneId": "CIN_011",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": false,
+   "audioOwnership": "NO_EMBEDDED_SOUNDTRACK",
+   "primary": {
+    "mode": "SILENT_VIDEO_PLUS_SRT_OVERLAY",
+    "note": "No scene mix delivered yet; adapter must not improvise one (FB-6)."
+   },
+   "fallbackMixWav": null,
+   "fallbackStemsAndVo": null,
+   "fallbackVoAndSrt": null,
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_011/CIN_011_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_011/CIN_011_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_011/CIN_011_640x360_30fps.mp4",
+   "silentNote": {
+    "voDraftsExist": [
+     "VO_CIN_011_S03_HAMAC_draft_v1.wav"
+    ],
+    "reason": "VO drafts exist for later mixing only; they are NOT a playback fallback over silent video."
+   }
+  },
+  {
+   "sceneId": "CIN_012",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": false,
+   "audioOwnership": "NO_EMBEDDED_SOUNDTRACK",
+   "primary": {
+    "mode": "SILENT_VIDEO_PLUS_SRT_OVERLAY",
+    "note": "No scene mix delivered yet; adapter must not improvise one (FB-6)."
+   },
+   "fallbackMixWav": null,
+   "fallbackStemsAndVo": null,
+   "fallbackVoAndSrt": null,
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_012/CIN_012_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_012/CIN_012_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_012/CIN_012_640x360_30fps.mp4",
+   "silentNote": {
+    "voDraftsExist": [
+     "VO_CIN_012_S03_HAMAC_draft_v1.wav"
+    ],
+    "reason": "VO drafts exist for later mixing only; they are NOT a playback fallback over silent video."
+   }
+  },
+  {
+   "sceneId": "CIN_013",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": false,
+   "audioOwnership": "NO_EMBEDDED_SOUNDTRACK",
+   "primary": {
+    "mode": "SILENT_VIDEO_PLUS_SRT_OVERLAY",
+    "note": "No scene mix delivered yet; adapter must not improvise one (FB-6)."
+   },
+   "fallbackMixWav": null,
+   "fallbackStemsAndVo": null,
+   "fallbackVoAndSrt": null,
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_013/CIN_013_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_013/CIN_013_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_013/CIN_013_640x360_30fps.mp4",
+   "silentNote": {
+    "voDraftsExist": [
+     "VO_CIN_013_S03_REFUGEELEADER_draft_v1.wav"
+    ],
+    "reason": "VO drafts exist for later mixing only; they are NOT a playback fallback over silent video."
+   }
+  },
+  {
+   "sceneId": "CIN_014",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": false,
+   "audioOwnership": "NO_EMBEDDED_SOUNDTRACK",
+   "primary": {
+    "mode": "SILENT_VIDEO_PLUS_SRT_OVERLAY",
+    "note": "No scene mix delivered yet; adapter must not improvise one (FB-6)."
+   },
+   "fallbackMixWav": null,
+   "fallbackStemsAndVo": null,
+   "fallbackVoAndSrt": null,
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_014/CIN_014_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_014/CIN_014_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_014/CIN_014_640x360_30fps.mp4",
+   "silentNote": {
+    "voDraftsExist": [
+     "VO_CIN_014_S03_TONGBANH_draft_v1.wav"
+    ],
+    "reason": "VO drafts exist for later mixing only; they are NOT a playback fallback over silent video."
+   }
+  },
+  {
+   "sceneId": "CIN_015",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": false,
+   "audioOwnership": "NO_EMBEDDED_SOUNDTRACK",
+   "primary": {
+    "mode": "SILENT_VIDEO_PLUS_SRT_OVERLAY",
+    "note": "No scene mix delivered yet; adapter must not improvise one (FB-6)."
+   },
+   "fallbackMixWav": null,
+   "fallbackStemsAndVo": null,
+   "fallbackVoAndSrt": null,
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_015/CIN_015_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_015/CIN_015_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_015/CIN_015_640x360_30fps.mp4",
+   "silentNote": {
+    "voDraftsExist": [
+     "VO_CIN_015_S03_DIVERLEAD_draft_v1.wav"
+    ],
+    "reason": "VO drafts exist for later mixing only; they are NOT a playback fallback over silent video."
+   }
+  },
+  {
+   "sceneId": "CIN_016",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": false,
+   "audioOwnership": "NO_EMBEDDED_SOUNDTRACK",
+   "primary": {
+    "mode": "SILENT_VIDEO_PLUS_SRT_OVERLAY",
+    "note": "No scene mix delivered yet; adapter must not improvise one (FB-6)."
+   },
+   "fallbackMixWav": null,
+   "fallbackStemsAndVo": null,
+   "fallbackVoAndSrt": null,
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_016/CIN_016_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_016/CIN_016_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_016/CIN_016_640x360_30fps.mp4",
+   "silentNote": {
+    "voDraftsExist": [
+     "VO_CIN_016_S03_HAMAC_draft_v1.wav"
+    ],
+    "reason": "VO drafts exist for later mixing only; they are NOT a playback fallback over silent video."
+   }
+  },
+  {
+   "sceneId": "CIN_017",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": false,
+   "audioOwnership": "NO_EMBEDDED_SOUNDTRACK",
+   "primary": {
+    "mode": "SILENT_VIDEO_PLUS_SRT_OVERLAY",
+    "note": "No scene mix delivered yet; adapter must not improvise one (FB-6)."
+   },
+   "fallbackMixWav": null,
+   "fallbackStemsAndVo": null,
+   "fallbackVoAndSrt": null,
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_017/CIN_017_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_017/CIN_017_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_017/CIN_017_640x360_30fps.mp4",
+   "silentNote": {
+    "voDraftsExist": [
+     "VO_CIN_017_S03_DIVERLEAD_draft_v1.wav"
+    ],
+    "reason": "VO drafts exist for later mixing only; they are NOT a playback fallback over silent video."
+   }
+  },
+  {
+   "sceneId": "CIN_018",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": false,
+   "audioOwnership": "NO_EMBEDDED_SOUNDTRACK",
+   "primary": {
+    "mode": "SILENT_VIDEO_PLUS_SRT_OVERLAY",
+    "note": "No scene mix delivered yet; adapter must not improvise one (FB-6)."
+   },
+   "fallbackMixWav": null,
+   "fallbackStemsAndVo": null,
+   "fallbackVoAndSrt": null,
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_018/CIN_018_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_018/CIN_018_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_018/CIN_018_640x360_30fps.mp4",
+   "silentNote": {
+    "voDraftsExist": [
+     "VO_CIN_018_S02_COVOTUONG_draft_v1.wav",
+     "VO_CIN_018_S03_PLAYER_draft_v1.wav"
+    ],
+    "reason": "VO drafts exist for later mixing only; they are NOT a playback fallback over silent video."
+   }
+  },
+  {
+   "sceneId": "CIN_019",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": false,
+   "audioOwnership": "NO_EMBEDDED_SOUNDTRACK",
+   "primary": {
+    "mode": "SILENT_VIDEO_PLUS_SRT_OVERLAY",
+    "note": "No scene mix delivered yet; adapter must not improvise one (FB-6)."
+   },
+   "fallbackMixWav": null,
+   "fallbackStemsAndVo": null,
+   "fallbackVoAndSrt": null,
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_019/CIN_019_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_019/CIN_019_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_019/CIN_019_640x360_30fps.mp4",
+   "silentNote": {
+    "voDraftsExist": [
+     "VO_CIN_019_S03_LYAN_draft_v1.wav"
+    ],
+    "reason": "VO drafts exist for later mixing only; they are NOT a playback fallback over silent video."
+   }
+  },
+  {
+   "sceneId": "CIN_020",
+   "kind": "campaign",
+   "hasEmbeddedSoundtrack": false,
+   "audioOwnership": "NO_EMBEDDED_SOUNDTRACK",
+   "primary": {
+    "mode": "SILENT_VIDEO_PLUS_SRT_OVERLAY",
+    "note": "No scene mix delivered yet; adapter must not improvise one (FB-6)."
+   },
+   "fallbackMixWav": null,
+   "fallbackStemsAndVo": null,
+   "fallbackVoAndSrt": null,
+   "fallbackSrtOnly": {
+    "srt": "ClientGodot/assets/cinematics/CIN_020/CIN_020_vi.srt"
+   },
+   "ogv": "ClientGodot/assets/cinematics/CIN_020/CIN_020_640x360_30fps.ogv",
+   "mp4": "ClientGodot/assets/cinematics/CIN_020/CIN_020_640x360_30fps.mp4",
+   "silentNote": {
+    "voDraftsExist": [
+     "VO_CIN_020_S03_LETTERRECIPIENT_draft_v1.wav"
+    ],
+    "reason": "VO drafts exist for later mixing only; they are NOT a playback fallback over silent video."
+   }
+  }
+ ],
+ "verification": {
+  "namesVerifiedAgainstVoManifests": true,
+  "spokenNamesVerifiedAgainstSrtAndTakeTexts": true,
+  "mixSha256VerifiedAgainstManifests": true,
+  "seamWrapJumpReMeasuredAndMatchedCp33Within": 0.002,
+  "fallbackFilesExistenceChecked": 125
+ }
+}
