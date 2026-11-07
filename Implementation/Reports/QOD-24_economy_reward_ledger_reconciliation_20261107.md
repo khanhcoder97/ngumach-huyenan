@@ -109,3 +109,51 @@ item_or_currency_id → exit 1; cả ba không ghi output. Bundle tái sinh byte
 sha256 `1790ef911a43d538c81aac21fef75c820aa8a85ce0ad27ab5bdac541fa7f584d` hai lần liên tiếp.
 Kết quả và CI đúng commit được công bố trên #87/#41/PR106. Delta chỉ gồm builder + bundle
 tái sinh + báo cáo này; không đổi hành vi loader, không đổi gate, không merge.
+
+## 7. Phụ lục — đọc trọn Activities_Economy_PvP_Production_Spec_vi.md (207 dòng)
+
+Sau khi công bố §1–6 ở commit `c744464`, đọc trọn spec master lần đầu dưới góc độ server
+(không tool/server nào tham chiếu file này — grep `Activities_Economy_PvP` trong
+`Implementation/Tools` + `Server` = 0). Ba mục bổ sung/cải chính, giữ nguyên claim cũ:
+
+### 7.1 Cải chính §2: mốc reset hàng NGÀY có trong spec, chỉ thiếu trong CSV
+
+§2 dòng 57–58 viết "spec chỉ chốt reset tuần thứ Hai 05:00" — **chưa đủ**. Mục §9 của
+spec master (dòng 188) chốt rõ hàng ngày: "3 nhiệm vụ vùng, 3 lượt mini game, 2 cache
+dungeon; 3 reward cache BG10 | **05:00 Asia/Ho_Chi_Minh**". Vậy mốc reset ngày cho REP
+(`daily_cap=200`) tồn tại trong prose §9; khoảng trống đúng là **CSV không có cột
+daily-reset có cấu trúc**, không phải spec thiếu mốc. Cải chính này không đổi kết luận: cap ngày
+REP vẫn chưa enforce được vì loader không có mốc reset ngày để neo.
+
+### 7.2 Mâu thuẫn ủy quyền ngay trong chuỗi canonical (dòng 160)
+
+Dòng 160 spec master: "Registry chuẩn, ownership, **cap/reset** và faucet/sink nằm trong
+`Currency_Production_Data_vi.csv`". Nhưng chính cột `daily_cap=60` của registry cho
+TOWER_MERIT mâu thuẫn với prose §7 dòng 156 của spec master ("trần **60/tuần**/tài khoản").
+Nghĩa là nguồn được spec ủy quyền làm canonical (registry CSV) lại disagree với spec ủy
+quyền. Đây là gốc của mâu thuẫn TOWER_MERIT §2: không thể chọn nguồn thắng bằng cách đọc
+thêm — owner phải quyết định cột `daily_cap` là cap tuần đặt nhầm cột, hay prose §7 sai.
+Bốn nguồn cùng ghi "tuần" (master §7 dòng 156, notes registry, 4 row reward `cap_scope`,
+Tower spec) chỉ chống lại một cột `daily_cap`; cán cân nghiêng về tuần nhưng quyền ghi đè
+nguồn vẫn là quyết định owner, server không tự sửa.
+
+### 7.3 Lệnh Truy Mạch / Thí Luyện Hồi Ức (§4 dòng 95–103): data có, service không
+
+Subsystem vé đánh lại boss tính điểm. Đo bằng grep trên data ship:
+- `TICKET-BOSS-01` **có** trong `Item_Master_Catalog_vi.csv` + `Item_Rarity_Variant_Catalog_vi.csv`
+  (item data tồn tại: account-bound, không giao dịch, stack 3).
+- `NPC_RAID_KEEPER` **có** trong `NPC_Actor_Production_Registry_vi.csv`, manifest, và đã
+  load vào `Implementation/Content/Runtime/npc_anchors.json` + `world_records.json`.
+- `TICKET-BOSS-01` trong `Server/` = **0 file**: không runtime nào tiêu vé, tạo arena ký
+  ức 20 phút, scale HP/damage nhóm 1–5, hay reuse quota cache. Cap 3 vé/account/tuần,
+  reset thứ Hai 05:00, điều kiện cấp 81+ / đã mở `MAP_VUC_NGHICH_MACH` / đã gặp boss —
+  không ledger nào enforce. Cùng pattern guild: data/anchor có, service vắng.
+- `TICKET-TIDE-01` là **item vé**, không phải currency ví (dòng 158) — đúng khi không có
+  row trong currency registry; không phải khoảng trống.
+
+Bốn boss dungeon/raid có canonical ID riêng (§2 dòng 57, §3 dòng 69): `BOSS_YOUNG_TREE`,
+`BOSS_ASH_FURNACE`, `BOSS_SIEGE_ENGINE`, `BOSS_YOUNG_SERPENT`, `BOSS_PRESSURE_HEART` —
+không dùng chung ID với boss thế giới cùng họ hình ảnh. Đây là encounter lane (QOD-19/20),
+không thuộc economy delta; ghi nhận để không nhầm khi đối chiếu manifest sau này.
+
+Không mở route/gate/wire; phụ lục chỉ đọc nguồn và đo grep, không sửa `docs/production/**`.
