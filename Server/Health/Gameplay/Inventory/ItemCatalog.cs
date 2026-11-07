@@ -14,14 +14,39 @@ namespace Server.Health.Gameplay.Inventory;
 // `not_equippable` rather than guessed into a neighbouring slot. Any *other*
 // equipment label without a token fails the loader, so a new source slot can
 // never slip through silently.
+//
+// The v2 contract (QOD-21 Q3) does name all twelve, so the raw canonical label
+// is kept on the entry next to the v1 token: `InventoryV2Slots` resolves it
+// without any consumer having to re-read the CSV or guess from an item id. The
+// v1 token stays exactly as it was, so v1 behaviour is untouched.
 public sealed record ItemCatalogEntry(
     string ItemId,
     string Category,
     string? SlotToken,
+    string? SlotLabel,
     string? ClassId,
     int RequiredLevel,
     string RarityPool,
-    int StackLimit);
+    int StackLimit,
+    // The canonical catalog's `durability` column. Blank means the source states
+    // no durability (every blank row in both catalogs is a consumable), which is
+    // deliberately null rather than 0: 0 is a value an item can have, and the
+    // grant path must not read a missing cell as "broken".
+    int? Durability,
+    // DEC-023 `Runtime_State_and_Catalog_Precision_vi.md` §2: these six columns are the
+    // stat source, and `weapon_power`/`armor` overlap the `primary_stat` pair by design.
+    // The value cells stay raw text on purpose. 90 variant rows carry a fractional
+    // `weapon_power` (101.4), 635 a fractional `armor`, and 1628/1565 put a modifier
+    // string in `primary_value`/`secondary_value` ("0.5%", "+10% / 20 phút", "+100 XP")
+    // - §6 leaves the rounding/precision rule open, so a loader that parsed these into
+    // numbers would either crash the server or round a decision nobody has made. The
+    // aggregation classifies them, and refuses to invent a value.
+    string? WeaponPower,
+    string? Armor,
+    string? PrimaryStat,
+    string? PrimaryValue,
+    string? SecondaryStat,
+    string? SecondaryValue);
 
 public sealed class ItemCatalog
 {
@@ -31,6 +56,7 @@ public sealed class ItemCatalog
     public const string ArmorCategory = "Trang bị / giáp";
     public const string WeaponCategory = "Trang bị / vũ khí";
     public const string AccessoryCategory = "Trang bị / phụ kiện";
+    public const string ConsumableCategory = "Tiêu hao";
 
     private static readonly Dictionary<string, string> SlotTokens = new(StringComparer.Ordinal)
     {
@@ -66,6 +92,18 @@ public sealed class ItemCatalog
 
     public bool TryGet(string itemId, out ItemCatalogEntry entry) =>
         _items.TryGetValue(itemId, out entry!);
+
+    // Equipment rows only, so a vocabulary check can walk every gear label without
+    // any consumer re-reading the CSV or guessing from item ids.
+    public IEnumerable<ItemCatalogEntry> EquipmentEntries =>
+        _items.Values.Where(entry => IsEquipmentCategory(entry.Category));
+
+    // Consumable rows, for the same reason EquipmentEntries exists: a consumer that
+    // wants the `Tiêu hao` vocabulary should read the loaded catalogue rather than
+    // re-parse the CSV or infer a category from an item id.
+    public IEnumerable<ItemCatalogEntry> ConsumableEntries =>
+        _items.Values.Where(entry =>
+            string.Equals(entry.Category, ConsumableCategory, StringComparison.Ordinal));
 
     public static bool IsEquipmentCategory(string? category) =>
         string.Equals(category, ArmorCategory, StringComparison.Ordinal) ||
@@ -111,7 +149,7 @@ public sealed class ItemCatalog
         foreach (var required in new[]
                  {
                      "item_id", "category", "slot", "class_id", "required_level",
-                     "rarity_pool", "stack_limit"
+                     "rarity_pool", "stack_limit", "durability"
                  })
         {
             if (!index.ContainsKey(required))
@@ -150,6 +188,34 @@ public sealed class ItemCatalog
                     $"{path}:{line + 1}: invalid stack_limit for '{itemId}'.");
             }
 
+            var durabilityCell = Cell("durability");
+            int? durability = null;
+            if (durabilityCell.Length > 0)
+            {
+                if (!int.TryParse(durabilityCell, out var parsedDurability) ||
+                    parsedDurability < 0)
+                {
+                    throw new InvalidOperationException(
+                        $"{path}:{line + 1}: invalid durability '{durabilityCell}' for " +
+                        $"'{itemId}'; a blank cell means the source states none.");
+                }
+
+                durability = parsedDurability;
+            }
+
+            string? ReadRawCell(string column)
+            {
+                var cell = Cell(column);
+                return cell.Length == 0 ? null : cell;
+            }
+
+            var weaponPower = ReadRawCell("weapon_power");
+            var armorValue = ReadRawCell("armor");
+            var primaryStat = ReadRawCell("primary_stat");
+            var primaryValue = ReadRawCell("primary_value");
+            var secondaryStat = ReadRawCell("secondary_stat");
+            var secondaryValue = ReadRawCell("secondary_value");
+
             var category = Cell("category");
             var slotLabel = Cell("slot");
             string? slotToken = null;
@@ -161,7 +227,8 @@ public sealed class ItemCatalog
                     throw new InvalidOperationException(
                         $"{path}:{line + 1}: equipment item '{itemId}' has slot " +
                         $"'{slotLabel}' with no approved wire token; extend the " +
-                        "EquipRequest/UnequipRequest slot enum first.");
+                        "EquipRequest/UnequipRequest slot enum first. If the label is " +
+                        "one of the v2 twelve, add it to InventoryV2Slots.LabelToSlot.");
                 }
 
                 if (string.IsNullOrEmpty(Cell("class_id")))
@@ -175,10 +242,23 @@ public sealed class ItemCatalog
                 itemId,
                 category,
                 slotToken,
+                // The raw `slot` cell is the source's own wording for every row, not
+                // only for gear: a consumable states what it is ("Potion HP", "Hồi
+                // sinh"), and that label is the only place the revive framing exists.
+                // Keeping it cannot make a non-equipment row equippable, because
+                // InventoryV2Slots.TryResolveLabel requires an equipment category.
+                slotLabel,
                 string.IsNullOrEmpty(Cell("class_id")) ? null : Cell("class_id"),
                 requiredLevel,
                 Cell("rarity_pool"),
-                stackLimit);
+                stackLimit,
+                durability,
+                weaponPower,
+                armorValue,
+                primaryStat,
+                primaryValue,
+                secondaryStat,
+                secondaryValue);
 
             // The variant file repeats the 135 non-equipment rows verbatim;
             // identical duplicates are fine, but two different definitions of

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "questId": "C1-01",
+  "titleKey": "QUEST.C1-01.TITLE",
+  "graphId": "GRAPH_C1_01",
+  "questType": "MAIN",
+  "activation": "ACTIVE",
+  "levelBand": {
+    "min": 11,
+    "max": 20
+  },
+  "startNpcId": "NPC_LYAN",
+  "turnInNpcId": "NPC_LYAN",
+  "prerequisiteQuestIds": [
+    "P00-05"
+  ],
+  "objectives": [
+    {
+      "objectiveId": "OBJ_C1_01_REPRESENTATIVES",
+      "type": "TALK",
+      "targetIds": [
+        "NPC_GUARD_CAPTAIN",
+        "NPC_HA_MAC",
+        "NPC_MASTER_MINH_KIEM"
+      ],
+      "count": 3,
+      "mapId": "MAP_THANH_LAC"
+    },
+    {
+      "objectiveId": "OBJ_C1_01_TRIAL_REGISTRATION",
+      "type": "TALK",
+      "targetIds": [
+        "NPC_CLASS_TRIAL"
+      ],
+      "count": 1,
+      "mapId": "MAP_THANH_LAC"
+    }
+  ],
+  "rewards": {
+    "currency": [
+      {
+        "currencyId": "COIN",
+        "amount": 80
+      }
+    ],
+    "itemIds": [],
+    "xpRule": "LEVEL_BAND_BASE"
+  },
+  "unlocks": [],
+  "sourceRef": "DESIGN-BM-ALPHA-20261103 questRules.C1-01; Quest_and_Narrative_Production_Spec_vi.md#C1-01 (chapter I level band 11-20)"
+}

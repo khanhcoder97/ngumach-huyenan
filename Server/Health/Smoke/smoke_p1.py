@@ -33,6 +33,8 @@ def call(method, path, body=None, headers=None):
             return response.status, response.headers, json.loads(response.read() or b"{}")
     except urllib.error.HTTPError as error:
         return error.code, error.headers, json.loads(error.read() or b"{}")
+    except TimeoutError as error:
+        raise AssertionError(f"HTTP timeout: {method} {path}") from error
 
 
 def sent_at_utc():
@@ -367,6 +369,21 @@ def main():
           f"payload.skillId missing from {error.get('fieldErrors')}")
     expect_correlation(headers, "smoke-combat-bad-skill")
 
+    # The catalogue now loads source-backed rows for four classes the alpha cannot
+    # reach. Loading them must not make them nameable: the wire vocabulary is the
+    # alpha subset, so a foreign-class id and an outside-the-enum id are refused the
+    # same way, before the catalogue is consulted.
+    for catalogued_id in ("SK-TC-01", "SK-HB-02"):
+        status, headers, body = call(
+            "POST", "/p1/combat", combat_envelope(4, catalogued_id),
+            {"X-Session-ID": session_id,
+             "X-Correlation-ID": f"smoke-combat-catalogued-{catalogued_id}"})
+        check(status == 400, f"{catalogued_id} returned {status}: {body}")
+        error = body.get("error") or {}
+        check(error.get("code") == "invalid_payload", f"{catalogued_id} error {error.get('code')}")
+        check("payload.skillId" in (error.get("fieldErrors") or []),
+              f"payload.skillId missing for {catalogued_id}: {error.get('fieldErrors')}")
+
     status, headers, body = call(
         "POST", "/p1/combat",
         combat_envelope(4, "SK-MK-02", idempotency_key="7" * 32),
@@ -451,15 +468,22 @@ def main():
         headers={"X-Correlation-ID": "smoke-walk-start"})
     check(status == 200, f"world before accept returned {status}: {body}")
     walker_x = ((body.get("result") or {}).get("self") or {}).get("x", 0)
+    # A check inside a walk loop runs a different number of times per run (how many
+    # moves the tick budget allows varies with wall-clock), so the reported total
+    # would stop meaning "these checks all ran". Failures are collected and asserted
+    # once, outside the loop.
+    walk_failures = []
     while walker_x < 37.5:
         sequence += 1
         time.sleep(0.3)
         status, headers, body = call(
             "POST", "/p1/move", move_envelope(sequence, 1, 0),
             {"X-Session-ID": session_id, "X-Correlation-ID": f"smoke-walk-{sequence}"})
-        check(status == 200, f"walk move {sequence} returned {status}: {body}")
+        if status != 200:
+            walk_failures.append((sequence, status, str(body)[:120]))
         walker_x = ((body.get("result") or {}).get("self") or {}).get("x", walker_x)
 
+    check(not walk_failures, f"pre-accept walk moves failed: {walk_failures}")
     check(walker_x >= 37.5, f"walker stopped at {walker_x}")
 
     status, headers, body = call(
@@ -703,14 +727,18 @@ def main():
     check(error.get("code") == "session_not_found", f"unexpected error {error.get('code')}")
     expect_correlation(headers, "smoke-interact-unknown-session")
 
+    pkg2_failures = []
     while walker_x < 39.5:
         sequence += 1
         time.sleep(0.3)
         status, headers, body = call(
             "POST", "/p1/move", move_envelope(sequence, 1, 0),
             {"X-Session-ID": session_id, "X-Correlation-ID": f"smoke-walk-pkg2-{sequence}"})
-        check(status == 200, f"walk pkg2 move {sequence} returned {status}: {body}")
+        if status != 200:
+            pkg2_failures.append((sequence, status, str(body)[:120]))
         walker_x = ((body.get("result") or {}).get("self") or {}).get("x", walker_x)
+
+    check(not pkg2_failures, f"package 2 walk moves failed: {pkg2_failures}")
 
     status, headers, body = call(
         "POST", "/p1/world/interact",
@@ -727,14 +755,18 @@ def main():
           f"package 2 counters {second_update.get('objectiveCounters')}")
     expect_correlation(headers, "smoke-interact-package-2")
 
+    pkg3_failures = []
     while walker_x < 47.5:
         sequence += 1
         time.sleep(0.3)
         status, headers, body = call(
             "POST", "/p1/move", move_envelope(sequence, 1, 0),
             {"X-Session-ID": session_id, "X-Correlation-ID": f"smoke-walk-pkg3-{sequence}"})
-        check(status == 200, f"walk pkg3 move {sequence} returned {status}: {body}")
+        if status != 200:
+            pkg3_failures.append((sequence, status, str(body)[:120]))
         walker_x = ((body.get("result") or {}).get("self") or {}).get("x", walker_x)
+
+    check(not pkg3_failures, f"package 3 walk moves failed: {pkg3_failures}")
 
     status, headers, body = call(
         "POST", "/p1/world/interact",
@@ -839,14 +871,18 @@ def main():
 
     # ─── turn-in ────────────────────────────────────────────
 
+    turnin_failures = []
     while walker_x < 64:
         sequence += 1
         time.sleep(0.3)
         status, headers, body = call(
             "POST", "/p1/move", move_envelope(sequence, 1, 0),
             {"X-Session-ID": session_id, "X-Correlation-ID": f"smoke-walk-turnin-{sequence}"})
-        check(status == 200, f"walk turnin move {sequence} returned {status}: {body}")
+        if status != 200:
+            turnin_failures.append((sequence, status, str(body)[:120]))
         walker_x = ((body.get("result") or {}).get("self") or {}).get("x", walker_x)
+
+    check(not turnin_failures, f"turn-in walk moves failed: {turnin_failures}")
 
     status, headers, body = call(
         "POST", "/p1/quests/turnin",
@@ -952,13 +988,21 @@ def main():
     node = by_id.get("ENT_MAN_BM_NODE_BM_ORE_01")
     check(node is not None and node.get("availability") == "AVAILABLE",
           f"v2 node availability {node and node.get('availability')}")
-    for entity in world_entities:
+    # The audience set is AOI-filtered, so per-entity assertions are collected into
+    # one check: a run that sees a different number of entities must still report
+    # the same total.
+    missing_fields = [
+        (entity.get("entityId"), key)
+        for entity in world_entities
         for key in ("entityId", "kind", "mapInstanceId", "floorId", "phase", "state",
-                    "healthState", "targetable", "revision", "lifeId"):
-            check(key in entity, f"v2 entity missing {key}: {entity}")
+                    "healthState", "targetable", "revision", "lifeId")
+        if key not in entity
+    ]
+    check(not missing_fields, f"v2 entity missing fields: {missing_fields}")
     expect_correlation(headers, "smoke-v2-world")
 
     v2_sequence = 1
+    v2_walk_failures = []
     walker_x = ((world.get("self") or {}).get("x"))
     while walker_x < 45:
         v2_sequence += 1
@@ -967,8 +1011,11 @@ def main():
             "POST", "/p1/move",
             move_envelope(v2_sequence, 1, 0, character_id=v2_character),
             {"X-Session-ID": v2_session})
-        check(status == 200, f"v2 walk {v2_sequence} returned {status}: {body}")
+        if status != 200:
+            v2_walk_failures.append((v2_sequence, status, str(body)[:120]))
         walker_x = ((body.get("result") or {}).get("self") or {}).get("x", walker_x)
+
+    check(not v2_walk_failures, f"v2 walk moves failed: {v2_walk_failures}")
 
     status, headers, body = call(
         "GET", f"/p1/v2/world/{v2_session}",

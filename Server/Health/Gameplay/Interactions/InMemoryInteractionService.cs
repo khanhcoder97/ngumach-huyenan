@@ -57,7 +57,7 @@ public sealed class InMemoryInteractionService : IInteractionService
                 P1ErrorCodes.InvalidPayload, retryable: false, "characterId");
         }
 
-        if (!P1Validation.IsEntityId(targetId))
+        if (!P1Validation.IsInteractTargetId(targetId))
         {
             return InteractionOutcome.Rejected(
                 P1ErrorCodes.InvalidPayload, retryable: false, "payload.targetId");

@@ -19,7 +19,9 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
     private readonly IWorldGeometryService _geometry;
     private readonly RewardLedgerStore _ledger;
     private readonly ExperienceService _experience;
+    private readonly QuestXpSnapshotStore _xpSnapshots;
     private readonly QuestTurnInOptions _options;
+    private readonly IChapterUnlockSink? _chapterUnlocks;
     private readonly ConcurrentDictionary<(string CharacterId, string Key), TurnInIdempotencyEntry>
         _entries = new();
 
@@ -31,7 +33,9 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
         IWorldGeometryService geometry,
         RewardLedgerStore ledger,
         ExperienceService experience,
-        QuestTurnInOptions options)
+        QuestXpSnapshotStore xpSnapshots,
+        QuestTurnInOptions options,
+        IChapterUnlockSink? chapterUnlocks = null)
     {
         _catalog = catalog;
         _quests = quests;
@@ -40,7 +44,9 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
         _geometry = geometry;
         _ledger = ledger;
         _experience = experience;
+        _xpSnapshots = xpSnapshots;
         _options = options;
+        _chapterUnlocks = chapterUnlocks;
     }
 
     public TurnInOutcome TurnIn(
@@ -156,11 +162,26 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
                     flipped.Failure?.FieldErrors.ToArray() ?? ["state"]);
             }
 
+            // The chapter consequence of a completion belongs to the same
+            // transaction: it is written only after the flip accepted, and revoked
+            // below if the ledger step fails. A quest with no consequence never
+            // reaches the sink.
+            var chapterGranted = _chapterUnlocks?.OnQuestCompleted(
+                actor.CharacterId, questId) ?? false;
+
             // XP belongs to the same transaction as the items and currency: it
             // commits only when the rule has a source, and it is restored if a
-            // later step (ledger) fails.
+            // later step (ledger) fails. The amount is valued at the level the
+            // quest was accepted at, never at the level it is handed in at.
+            var hasSnapshot = _xpSnapshots.TryGetAcceptedLevel(
+                actor.CharacterId, questId, out var acceptedLevel);
+            var xpRequest = new QuestXpRequest(
+                definition.Rewards.XpRule,
+                hasSnapshot ? acceptedLevel : 0,
+                definition.Objectives.Any(objective =>
+                    string.Equals(objective.Type, QuestObjectiveTypes.Boss, StringComparison.Ordinal)));
             var xpApplied = _experience.TryApply(
-                actor, definition.Rewards.XpRule, out var xpGrant, out _);
+                actor, xpRequest, out var xpGrant, out _);
             var rewardSnapshot = BuildRewards(definition, mutation, xpApplied);
             var result = new TurnInResult
             {
@@ -171,6 +192,11 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
 
             if (!_ledger.TryRecord(actor.CharacterId, questId, result))
             {
+                if (chapterGranted)
+                {
+                    _chapterUnlocks!.Revoke(actor.CharacterId, questId);
+                }
+
                 if (xpGrant is not null)
                 {
                     _experience.Restore(actor, xpGrant);

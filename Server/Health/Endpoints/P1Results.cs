@@ -211,7 +211,151 @@ internal static class P1Results
             },
             statusCode: statusCode);
 
-    public static IResult TurnInSuccess(        string requestId,
+    // The v2 inventory answers carry schemaVersion 2 and the twelve-slot snapshot as
+    // `result`, so a client never has to infer which vocabulary it is being served.
+    // The death-return envelope carries one member the shared P1 error does not:
+    // the tick a cooldown refusal may be retried at. It is declared on this
+    // route's own error type so no other route's frozen error shape changes.
+    public static IResult DeathReturn(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        string? sessionId,
+        int statusCode,
+        DeathReturnResultV1? result = null,
+        string? code = null,
+        IReadOnlyList<string>? fieldErrors = null,
+        bool retryable = false,
+        long? nextReturnAllowedAtTick = null) =>
+        Results.Json(
+            new P1DeathReturnResponse
+            {
+                RequestId = requestId,
+                SessionId = sessionId,
+                ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+                Result = result,
+                Error = code is null
+                    ? null
+                    : new DeathReturnErrorV1
+                    {
+                        Code = code,
+                        MessageKey = $"P1.ERROR.{code.ToUpperInvariant()}",
+                        Retryable = retryable,
+                        FieldErrors = fieldErrors ?? Array.Empty<string>(),
+                        CorrelationId = context.TraceIdentifier,
+                        NextReturnAllowedAtTick = nextReturnAllowedAtTick
+                    }
+            },
+            P1Json.Options,
+            statusCode: statusCode);
+
+    public static IResult InventoryV2(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        string? sessionId,
+        int statusCode,
+        InventorySnapshotV2? result = null,
+        string? code = null,
+        IReadOnlyList<string>? fieldErrors = null,
+        bool retryable = false) =>
+        Results.Json(
+            new P1InventoryV2Response
+            {
+                RequestId = requestId,
+                SessionId = sessionId,
+                ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+                Result = result,
+                Error = code is null
+                    ? null
+                    : new P1Error
+                    {
+                        Code = code,
+                        MessageKey = $"P1.ERROR.{code.ToUpperInvariant()}",
+                        Retryable = retryable,
+                        FieldErrors = fieldErrors ?? Array.Empty<string>(),
+                        CorrelationId = context.TraceIdentifier
+                    }
+            },
+            P1Json.Options,
+            statusCode: statusCode);
+
+    public static IResult PortalSuccess(
+        string requestId,
+        string sessionId,
+        ServerClock clock,
+        Server.Health.Gameplay.Alpha.PortalResult result) =>
+        Results.Json(new P1PortalResponse
+        {
+            RequestId = requestId,
+            SessionId = sessionId,
+            ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+            Result = result
+        });
+
+    public static IResult PortalError(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        string? sessionId,
+        int statusCode,
+        string code,
+        IReadOnlyList<string>? fieldErrors,
+        bool retryable) =>
+        Results.Json(new P1PortalResponse
+        {
+            RequestId = requestId,
+            SessionId = string.IsNullOrEmpty(sessionId) ? null : sessionId,
+            ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+            Error = new P1Error
+            {
+                Code = code,
+                MessageKey = $"P1.ERROR.{code.ToUpperInvariant()}",
+                Retryable = retryable,
+                FieldErrors = fieldErrors ?? Array.Empty<string>(),
+                CorrelationId = context.TraceIdentifier
+            }
+        }, statusCode: statusCode);
+
+    public static IResult TalkSuccess(
+        string requestId,
+        string sessionId,
+        ServerClock clock,
+        Server.Health.Gameplay.Quests.TalkResult result) =>
+        Results.Json(new P1TalkResponse
+        {
+            RequestId = requestId,
+            SessionId = sessionId,
+            ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+            Result = result
+        });
+
+    public static IResult TalkError(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        string? sessionId,
+        int statusCode,
+        string code,
+        IReadOnlyList<string>? fieldErrors,
+        bool retryable) =>
+        Results.Json(new P1TalkResponse
+        {
+            RequestId = requestId,
+            SessionId = string.IsNullOrEmpty(sessionId) ? null : sessionId,
+            ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+            Error = new P1Error
+            {
+                Code = code,
+                MessageKey = $"P1.ERROR.{code.ToUpperInvariant()}",
+                Retryable = retryable,
+                FieldErrors = fieldErrors ?? Array.Empty<string>(),
+                CorrelationId = context.TraceIdentifier
+            }
+        }, statusCode: statusCode);
+
+    public static IResult TurnInSuccess(
+        string requestId,
         string sessionId,
         ServerClock clock,
         TurnInResult result) =>

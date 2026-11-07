@@ -64,3 +64,134 @@ jobs:
           python-version: "3.12"
       - name: Run two-client isolation E2E scenario
         run: bash Server/Health/Smoke/run_e2e_p1.sh two-client
+
+  # The private-alpha tutorial chain walks 160 WU of road, fights fourteen mobs
+  # and a 1200 HP encounter over real HTTP, so it gets the longest budget.
+  e2e-alpha-p00:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run the alpha P00-01..P00-05 + C1-01 tutorial E2E scenario
+        run: bash Server/Health/Smoke/run_e2e_p1.sh alpha-p00
+
+  # Work order 30 item 2: the revival the escort chain relies on, exercised on its
+  # own - a downed actor brought back by the public route, then able to act again.
+  # This ran continue-on-error while its ubuntu failure was unexplained (three CI runs
+  # and two wrong explanations of mine, both retracted). The cause turned out to be in
+  # the very first job log: run_e2e_p1.sh line 206 said "r: command not found" eleven
+  # times, because my patch wrote each env assignment as `VALUE \<backslash><r>`, so the
+  # gates never reached dotnet and the boot had no gated route to read. Fixed at
+  # b374c11, where this job and e2e-alpha-p00 are green on ubuntu and the same two
+  # profiles pass here through run_e2e_p1.sh itself - so it gates again.
+  e2e-alpha-revive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run the alpha revival E2E scenario
+        run: bash Server/Health/Smoke/run_e2e_p1.sh alpha-revive
+
+  # The approved death-return route, driven end to end over HTTP.
+  e2e-death-return:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run the death-return E2E scenario
+        run: bash Server/Health/Smoke/run_e2e_p1.sh death-return
+
+  # The audience shape issue #96 was reported against (v2 world + mob AI ON,
+  # P1:CombatDamage OFF) is one short walk plus one cast, so it is cheap to keep
+  # in CI — and no other job in this workflow boots that combination.
+  e2e-audience-gateoff:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run the damage-gate-off audience E2E scenario
+        run: bash Server/Health/Smoke/run_e2e_p1.sh audience-gateoff
+  # Work order 29 Q8 (regression HTTP): the gate matrix. Each leg boots the server with
+  # exactly one P1 gate on and asserts which routes that gate maps and that every other
+  # gated route stays unmapped, so "enabling a feature cannot light up another feature's
+  # route" is measured per gate instead of assumed from the all-gates-on profiles.
+  # DeathReturnAlpha is the pairing proof: /p1/actor/death-return is mapped only when
+  # P1:AlphaProfile AND P1:DeathReturn are both on.
+  e2e-gate-one:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        gate:
+          - QuestAccept
+          - Interact
+          - QuestTurnIn
+          - Equipment
+          - CombatV2
+          - AlphaProfile
+          - DeathReturn
+          - CombatDamage
+          - MobBehavior
+          - AlphaLoot
+          - DeathReturnAlpha
+          - QuestTalk
+          - QuestTalkAlpha
+          - Portal
+          - PortalAlpha
+          - AlphaLootAlpha
+          - DeathReturnFixture
+    name: e2e-gate-one (${{ matrix.gate }})
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run the single-gate E2E leg
+        env:
+          E2E_GATE: ${{ matrix.gate }}
+        run: bash Server/Health/Smoke/run_e2e_p1.sh gate-one
+  # Work order 29 Q8: "Phải có restart HTTP proof trước khi gọi Health durable". One job,
+  # two successive server processes on one port: the runner owns and stops the first PID,
+  # waits for the port to stop answering, boots a second process and hands it the evidence
+  # file. Nothing in the suite proved this before - README only claimed "lost on restart".
+  e2e-restart:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run the two-process restart HTTP proof
+        run: bash Server/Health/Smoke/run_e2e_p1.sh restart

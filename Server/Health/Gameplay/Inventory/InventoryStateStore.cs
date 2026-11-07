@@ -78,7 +78,18 @@ internal sealed class InventoryItemEntry
     public required string Location { get; set; }
     public required int Durability { get; init; }
     public int Stack { get; set; }
+
+    // The slot in the vocabulary the write used: a v1 equip names one of the five
+    // frozen tokens, a v2 equip names the collapsed v1 token of its twelve-slot pair
+    // (or nothing, for LEGS and GLOVES, which v1 has no word for). Kept separate from
+    // SlotV2 so the v1 wire payload stays exactly the five-token document it is.
     public string? Slot { get; set; }
+
+    // Server-side only: the precise twelve-slot token a v2 write placed this item in.
+    // It is never part of the v1 snapshot, so no v1 payload grows a field, and it is
+    // what makes two accessories (a necklace and a left ring) two occupants instead
+    // of one fighting over ACCESSORY.
+    public string? SlotV2 { get; set; }
     public int Version { get; set; } = 1;
 }
 

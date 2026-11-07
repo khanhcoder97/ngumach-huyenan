@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
 using Server.Health.Contracts;
+using Server.Health.Gameplay.Alpha;
 using Server.Health.Gameplay.Combat;
 using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
@@ -67,7 +68,469 @@ public static class P1Endpoints
             app.MapGet("/p1/v2/events/{sessionId}", GetCombatEventsV2);
         }
 
+        // The alpha encounter read model. With the gate OFF neither route is
+        // mapped, so the real pipeline answers 404 (the literal `current` segment is
+        // matched before the id parameter, so an owner never has to guess the id).
+        var alphaProfile = app.ServiceProvider
+            .GetRequiredService<IOptions<AlphaProfileOptions>>()
+            .Value;
+        if (alphaProfile.Enabled)
+        {
+            app.MapGet("/p1/encounters/current", GetEncounterCurrent);
+            app.MapGet("/p1/encounters/{encounterId}", GetEncounterById);
+            // The twelve-slot inventory surface (QOD-21 Q3). Same reason as above:
+            // with the gate off these three are unmapped and answer 404, and the v1
+            // routes are never touched by either vocabulary.
+            app.MapGet("/p1/inventory/v2/{sessionId}", GetInventoryV2);
+            app.MapPost("/p1/inventory/v2/equip", EquipV2Async);
+            app.MapPost("/p1/inventory/v2/unequip", UnequipV2Async);
+        }
+
+        // DEC-DEATH-RETURN-20261105 gates.mapRouteOnlyWhen: the return route exists
+        // only while P1:AlphaProfile AND P1:DeathReturn are both on. Turning one
+        // flag alone therefore changes nothing on the wire, and the answer for an
+        // unmapped path is a real 404 rather than a status the server invented.
+        var deathReturnGates = app.ServiceProvider
+            .GetRequiredService<IOptions<DeathReturnOptions>>()
+            .Value;
+        if (alphaProfile.Enabled && deathReturnGates.Enabled)
+        {
+            app.MapPost("/p1/actor/death-return", DeathReturnAsync);
+        }
+
+        // DEC-TUTORIAL-TRANSPORT-20261106: the TALK route is mapped only while
+        // P1:AlphaProfile AND P1:QuestTalk are on, the same pairing the return route
+        // uses. With either off the path matches no template, so the answer is a real
+        // 404 rather than a status the server invented - and the gate-one matrix
+        // measures exactly that per configuration.
+        var questTalkGates = app.ServiceProvider
+            .GetRequiredService<IOptions<QuestTalkOptions>>()
+            .Value;
+        if (alphaProfile.Enabled && questTalkGates.Enabled)
+        {
+            app.MapPost("/p1/quests/talk", TalkAsync);
+        }
+
+        // DEC-TUTORIAL-TRANSPORT-20261106 pairs the portal the same way: this gate
+        // alone maps nothing. The route also answers 405 rather than 404 when
+        // unmapped, because /p1/world/portal still matches the GET
+        // /p1/world/{sessionId} read template - the gate-one legs measure exactly
+        // that difference, so "no handler" can never be confused with "handler
+        // refused".
+        var portalGates = app.ServiceProvider
+            .GetRequiredService<IOptions<PortalOptions>>()
+            .Value;
+        if (alphaProfile.Enabled && portalGates.Enabled)
+        {
+            app.MapPost("/p1/world/portal", PortalAsync);
+        }
+
         return app;
+    }
+
+    private static async Task<IResult> PortalAsync(
+        HttpContext context,
+        ISessionStore sessions,
+        PortalService portals,
+        ServerClock clock)
+    {
+        var requestId = NewRequestId();
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge || string.IsNullOrWhiteSpace(body) ||
+            !context.Request.HasJsonContentType())
+        {
+            return P1Results.PortalError(
+                context, clock, requestId, sessionId: null,
+                tooLarge ? StatusCodes.Status413PayloadTooLarge
+                         : StatusCodes.Status400BadRequest,
+                P1ErrorCodes.InvalidPayload, ["body"], retryable: false);
+        }
+
+        PortalEnvelope? envelope;
+        try
+        {
+            envelope = JsonSerializer.Deserialize<PortalEnvelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.PortalError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        var fieldErrors = P1Validation.ValidatePortalEnvelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.PortalError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                fieldErrors, retryable: false);
+        }
+
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return P1Results.PortalError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        var session = sessions.Find(sessionId);
+        if (session is null)
+        {
+            return P1Results.PortalError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status404NotFound, P1ErrorCodes.SessionNotFound,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        if (!string.Equals(envelope!.CharacterId, session.CharacterId, StringComparison.Ordinal))
+        {
+            return P1Results.PortalError(
+                context, clock, requestId, session.SessionId,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["characterId"], retryable: false);
+        }
+
+        var outcome = portals.Move(session, envelope.Payload!.PortalId!, envelope.IdempotencyKey!);
+        if (outcome.Accepted && outcome.Result is { } result)
+        {
+            return P1Results.PortalSuccess(requestId, session.SessionId, clock, result);
+        }
+
+        return P1Results.PortalError(
+            context, clock, requestId, session.SessionId,
+            PortalStatus(outcome.Code), outcome.Code ?? P1ErrorCodes.InvalidPayload,
+            outcome.FieldErrors, outcome.Retryable);
+    }
+
+    // portal_locked is 422 rather than 403: this server has no auth layer to answer
+    // 403 with, and the same "not earned yet" shape already answers 422 as
+    // prerequisite_not_met on the accept route. actor_not_alive keeps the 409 the cast
+    // path uses for the identical condition, so one situation never carries two
+    // statuses depending on which route noticed it.
+    private static int PortalStatus(string? code) => code switch
+    {
+        Server.Health.Gameplay.Alpha.PortalErrorCodes.NotFound =>
+            StatusCodes.Status404NotFound,
+        Server.Health.Gameplay.Alpha.PortalErrorCodes.IdempotencyConflict or
+        Server.Health.Gameplay.Alpha.PortalErrorCodes.NotAlive =>
+            StatusCodes.Status409Conflict,
+        _ => StatusCodes.Status422UnprocessableEntity
+    };
+
+    private static async Task<IResult> TalkAsync(
+        HttpContext context,
+        ISessionStore sessions,
+        QuestTalkService talk,
+        ServerClock clock)
+    {
+        var requestId = NewRequestId();
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge || string.IsNullOrWhiteSpace(body) ||
+            !context.Request.HasJsonContentType())
+        {
+            return P1Results.TalkError(
+                context, clock, requestId, sessionId: string.Empty,
+                tooLarge ? StatusCodes.Status413PayloadTooLarge
+                         : StatusCodes.Status400BadRequest,
+                P1ErrorCodes.InvalidPayload, ["body"], retryable: false);
+        }
+
+        TalkEnvelope? envelope;
+        try
+        {
+            envelope = JsonSerializer.Deserialize<TalkEnvelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.TalkError(
+                context, clock, requestId, sessionId: string.Empty,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        var fieldErrors = P1Validation.ValidateTalkEnvelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.TalkError(
+                context, clock, requestId, sessionId: string.Empty,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                fieldErrors, retryable: false);
+        }
+
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return P1Results.TalkError(
+                context, clock, requestId, sessionId: string.Empty,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        var session = sessions.Find(sessionId);
+        if (session is null)
+        {
+            return P1Results.TalkError(
+                context, clock, requestId, sessionId: string.Empty,
+                StatusCodes.Status404NotFound, P1ErrorCodes.SessionNotFound,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        if (!string.Equals(envelope!.CharacterId, session.CharacterId, StringComparison.Ordinal))
+        {
+            return P1Results.TalkError(
+                context, clock, requestId, session.SessionId,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["characterId"], retryable: false);
+        }
+
+        var outcome = talk.Talk(
+            session,
+            envelope.Payload!.NpcId!,
+            envelope.Payload.NodeId!,
+            envelope.IdempotencyKey!);
+        if (outcome.Accepted && outcome.Result is { } result)
+        {
+            return P1Results.TalkSuccess(requestId, session.SessionId, clock, result);
+        }
+
+        return P1Results.TalkError(
+            context, clock, requestId, session.SessionId,
+            TalkStatus(outcome.Code), outcome.Code ?? P1ErrorCodes.InvalidPayload,
+            outcome.FieldErrors, outcome.Retryable);
+    }
+
+    // The status is chosen per code, and the decision's own line is what pins the
+    // important one: a reveal gate that has not opened is 409 invalid_transition,
+    // never 404 - the quest exists and the character simply has not earned the line.
+    private static int TalkStatus(string? code) => code switch
+    {
+        TalkErrorCodes.UnknownNode or TalkErrorCodes.QuestNotFound =>
+            StatusCodes.Status404NotFound,
+        TalkErrorCodes.NotRevealed or TalkErrorCodes.IdempotencyConflict =>
+            StatusCodes.Status409Conflict,
+        _ => StatusCodes.Status422UnprocessableEntity
+    };
+
+    // The approved return: an empty intent, a session, and nothing the client may
+    // choose. Status mapping lives here rather than in the domain so the domain
+    // answer stays one shape for every caller (self-check, tick engine, HTTP).
+    private static async Task<IResult> DeathReturnAsync(
+        HttpContext context,
+        ISessionStore sessions,
+        DeathReturnService returns,
+        ServerClock clock)
+    {
+        var requestId = NewRequestId();
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge || string.IsNullOrWhiteSpace(body) ||
+            !context.Request.HasJsonContentType())
+        {
+            return P1Results.DeathReturn(
+                context, clock, requestId, sessionId: null,
+                tooLarge ? StatusCodes.Status413PayloadTooLarge
+                         : StatusCodes.Status400BadRequest,
+                code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["body"], retryable: false);
+        }
+
+        DeathReturnEnvelope? envelope;
+        try
+        {
+            envelope = JsonSerializer.Deserialize<DeathReturnEnvelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.DeathReturn(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["body"], retryable: false);
+        }
+
+        if (envelope?.RequestId is { } incomingRequestId &&
+            P1Validation.IsHex32(incomingRequestId))
+        {
+            requestId = incomingRequestId;
+        }
+
+        // Validate the request and its owner first, exactly as the decision orders
+        // it, so a key that already committed is answered from the receipt and
+        // never re-runs the state guards.
+        var fieldErrors = P1Validation.ValidateDeathReturnEnvelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.DeathReturn(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: fieldErrors, retryable: false);
+        }
+
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return P1Results.DeathReturn(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["X-Session-ID"], retryable: false);
+        }
+
+        var actor = sessions.Find(sessionId);
+        if (actor is null)
+        {
+            return P1Results.DeathReturn(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status404NotFound, code: P1ErrorCodes.SessionNotFound,
+                fieldErrors: ["X-Session-ID"], retryable: false);
+        }
+
+        if (!string.Equals(envelope!.CharacterId, actor.CharacterId,
+                StringComparison.Ordinal))
+        {
+            return P1Results.DeathReturn(
+                context, clock, requestId, actor.SessionId,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["characterId"], retryable: false);
+        }
+
+        var outcome = returns.ReturnToAnchor(sessionId, envelope.IdempotencyKey);
+        if (outcome.ErrorCode is { } errorCode)
+        {
+            var (status, retryable, isPayload) = errorCode switch
+            {
+                DeathReturnErrorCodes.UnknownSession =>
+                    (StatusCodes.Status404NotFound, false, false),
+                DeathReturnErrorCodes.InvalidKey =>
+                    (StatusCodes.Status400BadRequest, false, true),
+                DeathReturnErrorCodes.NotDowned =>
+                    (StatusCodes.Status409Conflict, false, false),
+                DeathReturnErrorCodes.UnknownMap =>
+                    (StatusCodes.Status409Conflict, false, false),
+                DeathReturnErrorCodes.KeyConflict =>
+                    (StatusCodes.Status409Conflict, false, false),
+                DeathReturnErrorCodes.Cooldown =>
+                    (StatusCodes.Status422UnprocessableEntity, true, false),
+                DeathReturnErrorCodes.Disabled =>
+                    (StatusCodes.Status503ServiceUnavailable, false, false),
+                _ => (StatusCodes.Status400BadRequest, false, true)
+            };
+            var wireCode = errorCode switch
+            {
+                DeathReturnErrorCodes.UnknownSession => P1ErrorCodes.SessionNotFound,
+                DeathReturnErrorCodes.InvalidKey => P1ErrorCodes.InvalidPayload,
+                // KeyConflict is already the wire vocabulary ("idempotency_conflict"),
+                // so it needs no translation.
+                _ => errorCode
+            };
+            return P1Results.DeathReturn(
+                context, clock, requestId,
+                wireCode == P1ErrorCodes.SessionNotFound ? null : actor.SessionId,
+                status,
+                code: wireCode,
+                fieldErrors: isPayload
+                    ? new[] { "idempotencyKey" }
+                    : Array.Empty<string>(),
+                retryable: retryable,
+                nextReturnAllowedAtTick: outcome.NextReturnAllowedAtTick);
+        }
+
+        return P1Results.DeathReturn(
+            context, clock, requestId, actor.SessionId,
+            StatusCodes.Status200OK,
+            result: new DeathReturnResultV1
+            {
+                Applied = outcome.Applied,
+                Replayed = outcome.Replayed,
+                MapId = outcome.MapId!,
+                XWu = outcome.X,
+                YWu = outcome.Y,
+                Hp = outcome.Hp,
+                MaxHp = outcome.MaxHp,
+                Mp = outcome.Mp,
+                MaxMp = outcome.MaxMp,
+                ServerTick = outcome.ServerTick,
+                Revision = outcome.Revision,
+                Cleared = new DeathReturnClearedV1
+                {
+                    InflightCasts = outcome.InflightCastsCancelled,
+                    ReservedCounters = outcome.ReservedCountersCancelled,
+                    GuardWindowClosed = outcome.GuardWindowClosed,
+                    MovementWindowReset = outcome.MovementTimingReset
+                },
+                // Echoed from the decision: every penalty is zero, and the schema
+                // pins each at const 0, so a future penalty needs a new decision
+                // instead of a silent widening of this response.
+                Penalties = new DeathReturnPenaltiesV1
+                {
+                    Xp = 0,
+                    Currency = 0,
+                    Durability = 0
+                },
+                NextReturnAllowedAtTick = outcome.NextReturnAllowedAtTick
+            });
+    }
+
+    private static IResult GetEncounterCurrent(
+        HttpContext context,
+        ISessionStore sessions,
+        AlphaBossEncounterService encounters,
+        ServerClock clock) =>
+        EncounterResult(context, sessions, encounters, clock, encounterId: null);
+
+    private static IResult GetEncounterById(
+        HttpContext context,
+        string encounterId,
+        ISessionStore sessions,
+        AlphaBossEncounterService encounters,
+        ServerClock clock) =>
+        EncounterResult(context, sessions, encounters, clock, encounterId.Trim());
+
+    // Owner-only by construction: the snapshot is read for the character this
+    // session belongs to, and any other id (including another player's live
+    // encounter) answers the same not-found as an unknown one, so nothing here
+    // discloses that someone else is fighting.
+    private static IResult EncounterResult(
+        HttpContext context,
+        ISessionStore sessions,
+        AlphaBossEncounterService encounters,
+        ServerClock clock,
+        string? encounterId)
+    {
+        var requestId = NewRequestId();
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status400BadRequest,
+                P1ErrorCodes.InvalidPayload, ["X-Session-ID"]);
+        }
+
+        var session = sessions.Find(sessionId);
+        if (session is null)
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status404NotFound,
+                P1ErrorCodes.SessionNotFound, ["X-Session-ID"]);
+        }
+
+        if (!encounters.TryGetSnapshot(session.CharacterId, clock.Tick, out var snapshot) ||
+            (encounterId is not null &&
+             !string.Equals(encounterId, snapshot.EncounterId, StringComparison.Ordinal)))
+        {
+            return P1Results.Error(
+                context, clock, requestId, StatusCodes.Status404NotFound,
+                EncounterErrorCodes.EncounterNotFound, ["encounterId"]);
+        }
+
+        return Results.Json(new P1EncounterResponse
+        {
+            RequestId = requestId,
+            SessionId = session.SessionId,
+            ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
+            Result = snapshot
+        }, P1Json.Options);
     }
 
     private static async Task<IResult> CreateSessionAsync(
@@ -259,7 +722,6 @@ public static class P1Endpoints
         }
 
         var payload = envelope.Payload!;
-        var now = clock.UtcNow;
         WorldSnapshot snapshot;
         double finalX;
         double finalY;
@@ -282,6 +744,7 @@ public static class P1Endpoints
                     P1ErrorCodes.StaleSequence, ["payload.inputSequence"], session.Revision);
             }
 
+            var now = clock.UtcNow;
             var elapsedSeconds = Math.Clamp(
                 (now - session.LastMoveAtUtc).TotalSeconds, 0, options.MaxStepSeconds);
             var distance = options.MoveSpeedWuPerSecond * elapsedSeconds;
@@ -475,34 +938,7 @@ public static class P1Endpoints
                 P1ErrorCodes.SessionNotFound, ["sessionId"]);
         }
 
-        WorldSnapshotV2 snapshot;
-        lock (session.SyncRoot)
-        {
-            snapshot = new WorldSnapshotV2
-            {
-                MapId = session.MapId,
-                MapInstanceId = session.MapId + WorldAudience.MapInstanceSuffix,
-                FloorId = session.FloorId,
-                Phase = WorldAudience.Phase,
-                ServerTick = clock.Tick,
-                Revision = session.Revision,
-                ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
-                Audience = new WorldAudienceV2(),
-                Self = new WorldSnapshotV2Self
-                {
-                    CharacterId = session.CharacterId,
-                    ClassId = session.ClassId,
-                    X = session.X,
-                    Y = session.Y,
-                    Hp = session.Hp,
-                    MaxHp = session.MaxHp,
-                    Mp = session.Mp,
-                    MaxMp = session.MaxMp,
-                    SwordIntent = session.SwordIntent
-                },
-                Entities = projection.Project(session).Select(MapEntityV2).ToArray()
-            };
-        }
+        var snapshot = WorldSnapshotFactory.CreateV2(session, projection, clock);
 
         return Results.Json(new P1WorldV2Response
         {
@@ -513,25 +949,6 @@ public static class P1Endpoints
             Result = snapshot
         });
     }
-
-    private static WorldEntityV2 MapEntityV2(ProjectedEntityV2 entity) => new()
-    {
-        EntityId = entity.EntityId,
-        Kind = entity.Kind,
-        MapInstanceId = entity.MapInstanceId,
-        FloorId = entity.FloorId,
-        Phase = entity.Phase,
-        X = entity.X,
-        Y = entity.Y,
-        State = entity.State,
-        HealthState = entity.HealthState,
-        Targetable = entity.Targetable,
-        Availability = entity.Availability,
-        Hp = entity.Hp,
-        MaxHp = entity.MaxHp,
-        Revision = entity.Revision,
-        LifeId = entity.LifeId
-    };
 
     private static async Task<IResult> CombatV2Async(
         HttpContext context,
@@ -608,7 +1025,8 @@ public static class P1Endpoints
         }
 
         var payload = envelope.Payload!;
-        var outcome = combat.Resolve(
+        var outcome = engine.AcceptAndSchedule(
+            combat,
             session,
             session.SessionId,
             new CombatV2Intent(
@@ -624,21 +1042,6 @@ public static class P1Endpoints
         var logger = loggerFactory.CreateLogger("P1.CombatV2");
         if (outcome.Accepted && outcome.Result is { } result)
         {
-            // Cached receipts remain replays even after the scheduler removed
-            // the completed cast. Never schedule a second effect for that receipt.
-            if (!outcome.Replayed)
-            {
-                engine.Schedule(
-                    session,
-                    session.SessionId,
-                    result.CastId,
-                    result.ActionKind,
-                    result.SkillId,
-                    payload.AimX!.Value,
-                    payload.AimY!.Value,
-                    clock.Tick);
-            }
-
             logger.LogDebug(
                 "Accepted {ActionKind} cast {CastId} sequence {Sequence} for {SessionId}",
                 result.ActionKind, result.CastId, result.NextInputSequence, session.SessionId);
@@ -1403,6 +1806,224 @@ public static class P1Endpoints
             failure.FieldErrors, failure.Retryable, outcome.Snapshot);
     }
 
+    // QOD-21 Q3: the v2 inventory surface, mapped only while P1:AlphaProfile is on.
+    // The slot a v2 request lands in is never taken from the request — the catalog
+    // label decides — so these handlers accept an instance or a token and let the
+    // service resolve everything else from source data.
+    private static IResult GetInventoryV2(
+        HttpContext context,
+        string sessionId,
+        ISessionStore sessions,
+        IEquipmentV2Service equipment,
+        ServerClock clock)
+    {
+        var requestId = NewRequestId();
+        var session = sessions.Find(sessionId.Trim());
+        if (session is null)
+        {
+            return P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status404NotFound,
+                code: P1ErrorCodes.SessionNotFound,
+                fieldErrors: ["sessionId"], retryable: false);
+        }
+
+        var outcome = equipment.Read(session);
+        return P1Results.InventoryV2(
+            context, clock, requestId, session.SessionId,
+            StatusCodes.Status200OK, result: outcome.Snapshot);
+    }
+
+    private static async Task<IResult> EquipV2Async(
+        HttpContext context,
+        ISessionStore sessions,
+        IEquipmentV2Service equipment,
+        ServerClock clock,
+        ILoggerFactory loggerFactory)
+    {
+        var requestId = NewRequestId();
+        EquipV2Envelope? envelope;
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge || string.IsNullOrWhiteSpace(body) || !context.Request.HasJsonContentType())
+        {
+            return P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                tooLarge ? StatusCodes.Status413PayloadTooLarge
+                         : StatusCodes.Status400BadRequest,
+                code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["body"], retryable: false);
+        }
+
+        try
+        {
+            envelope = JsonSerializer.Deserialize<EquipV2Envelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["body"], retryable: false);
+        }
+
+        if (envelope?.RequestId is { } incomingRequestId && P1Validation.IsHex32(incomingRequestId))
+        {
+            requestId = incomingRequestId;
+        }
+
+        var fieldErrors = P1Validation.ValidateEquipV2Envelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: fieldErrors, retryable: false);
+        }
+
+        var sessionOutcome = ResolveInventorySession(
+            context, clock, requestId, sessions, envelope!.CharacterId);
+        if (sessionOutcome.Session is null)
+        {
+            return sessionOutcome.Result!;
+        }
+
+        var outcome = equipment.Equip(
+            sessionOutcome.Session,
+            envelope.Payload!.ItemInstanceId!,
+            envelope.Payload.ExpectedRevision!.Value,
+            envelope.IdempotencyKey!);
+        return InventoryV2Result(
+            context, clock, requestId, sessionOutcome.Session, outcome, "equip", loggerFactory);
+    }
+
+    private static async Task<IResult> UnequipV2Async(
+        HttpContext context,
+        ISessionStore sessions,
+        IEquipmentV2Service equipment,
+        ServerClock clock,
+        ILoggerFactory loggerFactory)
+    {
+        var requestId = NewRequestId();
+        UnequipV2Envelope? envelope;
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge || string.IsNullOrWhiteSpace(body) || !context.Request.HasJsonContentType())
+        {
+            return P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                tooLarge ? StatusCodes.Status413PayloadTooLarge
+                         : StatusCodes.Status400BadRequest,
+                code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["body"], retryable: false);
+        }
+
+        try
+        {
+            envelope = JsonSerializer.Deserialize<UnequipV2Envelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["body"], retryable: false);
+        }
+
+        if (envelope?.RequestId is { } incomingRequestId && P1Validation.IsHex32(incomingRequestId))
+        {
+            requestId = incomingRequestId;
+        }
+
+        var fieldErrors = P1Validation.ValidateUnequipV2Envelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: fieldErrors, retryable: false);
+        }
+
+        var sessionOutcome = ResolveInventorySession(
+            context, clock, requestId, sessions, envelope!.CharacterId);
+        if (sessionOutcome.Session is null)
+        {
+            return sessionOutcome.Result!;
+        }
+
+        var outcome = equipment.Unequip(
+            sessionOutcome.Session,
+            envelope.Payload!.SlotId!,
+            envelope.Payload.ExpectedRevision!.Value,
+            envelope.IdempotencyKey!);
+        return InventoryV2Result(
+            context, clock, requestId, sessionOutcome.Session, outcome, "unequip", loggerFactory);
+    }
+
+    private static (PlayerSession? Session, IResult? Result) ResolveInventorySession(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        ISessionStore sessions,
+        string? characterId)
+    {
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return (null, P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["X-Session-ID"], retryable: false));
+        }
+
+        var session = sessions.Find(sessionId);
+        if (session is null)
+        {
+            return (null, P1Results.InventoryV2(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status404NotFound, code: P1ErrorCodes.SessionNotFound,
+                fieldErrors: ["X-Session-ID"], retryable: false));
+        }
+
+        if (!string.Equals(characterId, session.CharacterId, StringComparison.Ordinal))
+        {
+            return (null, P1Results.InventoryV2(
+                context, clock, requestId, session.SessionId,
+                StatusCodes.Status400BadRequest, code: P1ErrorCodes.InvalidPayload,
+                fieldErrors: ["characterId"], retryable: false));
+        }
+
+        return (session, null);
+    }
+
+    private static IResult InventoryV2Result(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        PlayerSession session,
+        EquipmentV2Outcome outcome,
+        string operation,
+        ILoggerFactory loggerFactory)
+    {
+        var logger = loggerFactory.CreateLogger("P1.EquipmentV2");
+        if (outcome.Accepted && outcome.Snapshot is { } snapshot)
+        {
+            logger.LogDebug(
+                "Accepted v2 inventory {Operation} for {SessionId} at revision {Revision}",
+                operation, session.SessionId, snapshot.InventoryRevision);
+            return P1Results.InventoryV2(
+                context, clock, requestId, session.SessionId, StatusCodes.Status200OK,
+                result: snapshot);
+        }
+
+        var failure = outcome.Failure!;
+        logger.LogDebug(
+            "Rejected v2 inventory {Operation} for {SessionId}: {Code}",
+            operation, session.SessionId, failure.Code);
+        return P1Results.InventoryV2(
+            context, clock, requestId, session.SessionId, EquipmentStatus(failure.Code),
+            code: failure.Code, fieldErrors: failure.FieldErrors,
+            retryable: failure.Retryable, result: outcome.Snapshot);
+    }
+
     private static int EquipmentStatus(string code) => code switch
     {
         P1ErrorCodes.InvalidPayload => StatusCodes.Status400BadRequest,
@@ -1462,7 +2083,7 @@ public static class P1Endpoints
         var states = new List<QuestState>();
         foreach (var questId in catalog.QuestIds)
         {
-            if (quests.GetState(session.CharacterId, questId).State is { } state)
+            if (quests.GetState(session, questId).State is { } state)
             {
                 states.Add(state);
             }

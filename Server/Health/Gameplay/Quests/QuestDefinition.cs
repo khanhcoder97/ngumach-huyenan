@@ -73,7 +73,11 @@ public sealed record QuestDefinition(
     QuestRewards Rewards,
     IReadOnlyList<string> Unlocks,
     string Activation = QuestActivations.Active,
-    IReadOnlyList<QuestBlockedStep>? BlockedSteps = null)
+    IReadOnlyList<QuestBlockedStep>? BlockedSteps = null,
+    // P00-05 (alpha DESIGN-BM-ALPHA-20261103 orderedObjectives): an objective
+    // after the first uncompleted one accepts no progress, so the boss must be
+    // down before the fragment can be collected.
+    bool OrderedObjectives = false)
 {
     public IReadOnlyList<QuestBlockedStep> Blocked =>
         BlockedSteps ?? Array.Empty<QuestBlockedStep>();

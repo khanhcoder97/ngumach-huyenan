@@ -130,6 +130,25 @@ public sealed class BossEncounter
 
     public long? DefeatedLifeId => _defeatedLifeId;
 
+    // Snapshot read model: how many ticks until this move can be chosen again,
+    // and how long the phase guard still blocks any move. Both are pure reads of
+    // state the machine already owns, so a snapshot never invents a countdown.
+    public int CooldownRemainingTicks(string moveId, int tick)
+    {
+        if (!_moves.TryGetValue(moveId, out var move))
+        {
+            throw new ArgumentException($"Unknown move '{moveId}'.", nameof(moveId));
+        }
+
+        var cooldownUntil = _cooldownUntilTick.GetValueOrDefault(move.MoveId);
+        return Math.Max(0, cooldownUntil - tick);
+    }
+
+    public int PhaseGuardRemainingTicks(int tick) =>
+        _status == BossEncounterStatus.PhaseGuard
+            ? Math.Max(0, _phaseGuardUntilTick - tick)
+            : 0;
+
     public BossEngageOutcome Engage(long lifeId, int tick)
     {
         if (_status is BossEncounterStatus.Active or BossEncounterStatus.PhaseGuard)

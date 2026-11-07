@@ -1,9 +1,13 @@
 ﻿using System.Threading;
+using System.Text.Json;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Server.Health.Contracts;
+using Server.Health.Gameplay.Alpha;
 using Server.Health.Gameplay.Combat;
 using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
+using Server.Health.Gameplay.Pets;
 using Server.Health.Gameplay.Progress;
 using Server.Health.Gameplay.Quests;
 using Server.Health.Gameplay.Teleport;
@@ -55,7 +59,480 @@ public static class ServiceSelfCheck
                 options.StartingMaxMp,
                 DateTimeOffset.UtcNow);
 
-        Check("combat.catalog", combatSkills.Count == 3, $"count={combatSkills.Count}");
+        // Work order 29 Q4: the catalogue now carries sourced rows for classes the
+        // alpha cannot reach. A row is data plus a `sourceRef`, not an executable
+        // claim: the engine implements only SELF/DASH/CONE targeting and `/p1/sessions`
+        // refuses every class but Minh Kiem, so the castable surface stays exactly the
+        // three MK rows asserted further down.
+        Check(
+            "combat.catalog",
+            combatSkills.Count == 7,
+            $"count={combatSkills.Count}");
+
+        combatSkills.TryGet("SK-HB-02", out var hb02);
+        combatSkills.TryGet("SK-HB-04", out var hb04);
+        combatSkills.TryGet("SK-TC-01", out var tc01);
+        combatSkills.TryGet("SK-TC-05", out var tc05);
+        Check(
+            "combat.catalog_foreign_rows_carry_source_numbers",
+            hb02 is { ClassId: "CLASS_HUYEN_BUT", CooldownSeconds: 12, ResourceCost: 18, MaxTargets: 1 } &&
+            hb04 is { ClassId: "CLASS_HUYEN_BUT", CooldownSeconds: 18, ResourceCost: 28, MaxTargets: 5 } &&
+            tc01 is { ClassId: "CLASS_THACH_CHUY", CooldownSeconds: 8, ResourceCost: 14, MaxTargets: 1 } &&
+            tc05 is { ClassId: "CLASS_THACH_CHUY", CooldownSeconds: 10, ResourceCost: 12, MaxTargets: 1 },
+            "spec:83/89/100/112 CD, MP and target caps");
+
+        Check(
+            "combat.catalog_metres_become_wu_at_two_per_unit",
+            hb04.RangeWu == 6.0 && tc01.RangeWu == 5.2 && tc05.RangeWu == 8.0 &&
+            hb02.RangeWu is null && tc01.AngleDegrees == 60 &&
+            hb02.TelegraphSeconds == 0.18 && hb04.TelegraphSeconds == 0.45 &&
+            tc01.TelegraphSeconds == 0.25 && tc05.TelegraphSeconds == 0.22,
+            "3 m->6 WU, 2,6 m->5,2 WU, 4 m->8 WU; Hanh Cham declares no cast range because source gives none");
+
+        Check(
+            "combat.catalog_pvp_is_the_one_sourced_cross_mode_coefficient",
+            hb02.Coefficients.Pvp == 0.65 && hb04.Coefficients.Pvp == 0.65 &&
+            tc01.Coefficients.Pvp == 0.65 && tc05.Coefficients.Pvp == 0.65 &&
+            hb02.Coefficients.Pve == 1.1 && tc01.Coefficients.Pve == 1.7 &&
+            tc05.Coefficients.Pve == 1.0 && hb04.Coefficients.Pve == 0.0,
+            "GDD:155 fixes PvP at 0,65 server-side; Mua Tinh heals, so it carries no damage coefficient");
+
+        Check(
+            "combat.catalog_minh_kiem_surface_unchanged",
+            combatSkills.TryGet("SK-MK-01", out _) &&
+            combatSkills.TryGet("SK-MK-02", out _) &&
+            combatSkills.TryGet("SK-MK-03", out _) &&
+            !combatSkills.TryGet("SK-MK-04", out _) &&
+            !combatSkills.TryGet("SK-MK-05", out _) &&
+            !combatSkills.TryGet("SK-MK-06", out _),
+            "MK-04..06 stay out: no stated prepare time, and MK-06 spends Kiem Y the server does not model");
+
+        // Work order 29 Q4 also names "passive", and the only machine-readable source is
+        // docs/production/Class_Passive_Production_Data_vi.csv - which the server never
+        // read before this loader existed. Loading is not applying: the catalogue is
+        // inert, and the damage oracle below (basic 19, MK03 8/10/17) is the proof that
+        // no passive changes a hit yet, because those numbers would move if one did.
+        var passives = services.GetRequiredService<ClassPassiveCatalog>();
+        Check(
+            "passive.catalog_forty_rows_across_the_five_classes",
+            passives.Count == 40 &&
+            passives.SupportedClassIds.All(classId => passives.CountForClass(classId) == 8),
+            $"count={passives.Count}");
+
+        Check(
+            "passive.catalog_two_branches_of_four_tiers_per_class",
+            passives.Rows
+                .GroupBy(passive => (passive.ClassId, passive.BranchId))
+                .Count() == 10 &&
+            passives.Rows
+                .GroupBy(passive => (passive.ClassId, passive.BranchId))
+                .All(branch => branch.Select(passive => passive.NodeTier).Order().SequenceEqual([1, 2, 3, 4])) &&
+            passives.Rows.All(passive => passive.UnlockLevel == passive.NodeTier * 20),
+            $"branches={passives.Rows.GroupBy(p => (p.ClassId, p.BranchId)).Count()}");
+
+        passives.TryGet("PAS-MINH_KIEM-KIEM_Y-T4", out var kiemYChainTop);
+        Check(
+            "passive.catalog_prerequisite_chain_walks_one_branch",
+            kiemYChainTop.PrerequisitePassiveId == "PAS-MINH_KIEM-KIEM_Y-T3" &&
+            passives.Rows.Where(passive => passive.NodeTier == 1)
+                .All(passive => passive.PrerequisitePassiveId is null) &&
+            passives.Rows.Where(passive => passive.NodeTier > 1)
+                .All(passive => passives.TryGet(passive.PrerequisitePassiveId!, out var parent) &&
+                                 parent.ClassId == passive.ClassId &&
+                                 parent.BranchId == passive.BranchId &&
+                                 parent.NodeTier == passive.NodeTier - 1),
+            kiemYChainTop.PrerequisitePassiveId ?? "none");
+
+        // Four of the numbers the Content Bible quotes in prose are here as data, and
+        // pinned: this is what let me withdraw "no source" for the Huyen But low-HP
+        // ally shield bonus that the skill spec had referenced as "theo bảng nội tại".
+        Check(
+            "passive.catalog_carries_the_numbers_the_bible_quotes",
+            passives.TryGet("PAS-MINH_KIEM-PHAN_CONG-T2", out var thuNhat) &&
+            thuNhat.EffectKey == "self_shield_pct" && thuNhat.EffectValue == 4 && thuNhat.EffectUnit == "percent" &&
+            passives.TryGet("PAS-HUYEN_BUT-HOI_DONG-T2", out var tinhThuy) &&
+            tinhThuy.EffectKey == "low_hp_ally_shield_pct" && tinhThuy.EffectValue == 5 &&
+            passives.TryGet("PAS-THACH_CHUY-THE-T1", out var cotThach) &&
+            cotThach.EffectKey == "constitution_pct" && cotThach.EffectValue == 3 &&
+            passives.TryGet("PAS-HUYEN_BUT-HOI_DONG-T1", out var chiaDong) &&
+            chiaDong.EffectKey == "rain_heal_target_bonus" && chiaDong.EffectUnit == "target" &&
+            chiaDong.Caps.Count(cap => cap.Kind == PassiveCapKind.HardCap) == 1,
+            $"rows={passives.Count}");
+
+        Check(
+            "passive.catalog_cap_tokens_classify_and_report_the_rest",
+            passives.Rows.SelectMany(passive => passive.Caps).Count() == 37 &&
+            passives.Rows.SelectMany(passive => passive.UnparsedCaps).Count() == 10 &&
+            passives.Rows.SelectMany(passive => passive.Caps)
+                .Count(cap => cap.Kind == PassiveCapKind.ProcRate) == 8 &&
+            passives.Rows.SelectMany(passive => passive.Caps)
+                .Count(cap => cap.Kind == PassiveCapKind.PvpZero) == 3 &&
+            passives.Rows.SelectMany(passive => passive.UnparsedCaps)
+                .Any(cap => cap.Equals("không xóa target lock", StringComparison.Ordinal)),
+            $"classified={passives.Rows.SelectMany(p => p.Caps).Count()} " +
+            $"unparsed={passives.Rows.SelectMany(p => p.UnparsedCaps).Count()}");
+
+        // Rejection fixtures: copy the shipped CSV to a temp docs tree and break one
+        // line at a time. The loader must refuse a broken branch chain, an unknown
+        // effect unit, and a passive whose approval status is not BASELINE - the last
+        // one matters most, because a playtest-balanced number must not load into a
+        // server that reports itself as shipped.
+        string? PassiveLoadFailure(string linePrefix, string from, string to)
+        {
+            var root = Path.Combine(Path.GetTempPath(), "p1-passive-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var directory = Path.Combine(root, "docs", "production");
+                Directory.CreateDirectory(directory);
+                var source = File.ReadAllLines(Path.Combine(
+                    ClassPassiveCatalogLoader.DiscoverDirectory(AppContext.BaseDirectory),
+                    ClassPassiveCatalogLoader.RelativePath));
+                var mutated = false;
+                for (var line = 0; line < source.Length; line++)
+                {
+                    if (!source[line].StartsWith(linePrefix, StringComparison.Ordinal) ||
+                        !source[line].Contains(from, StringComparison.Ordinal))
+                    {
+                        continue;
+                    }
+
+                    source[line] = source[line].Replace(from, to, StringComparison.Ordinal);
+                    mutated = true;
+                    break;
+                }
+
+                if (!mutated)
+                {
+                    return "FIXTURE_ANCHOR_MISSING";
+                }
+
+                File.WriteAllLines(
+                    Path.Combine(directory, Path.GetFileName(ClassPassiveCatalogLoader.RelativePath)),
+                    source);
+
+                try
+                {
+                    ClassPassiveCatalogLoader.Load(root);
+                    return "LOADED";
+                }
+                catch (InvalidOperationException exception)
+                {
+                    return exception.Message;
+                }
+            }
+            finally
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+
+        var brokenChain = PassiveLoadFailure(
+            "PAS-MINH_KIEM-KIEM_Y-T4", "PAS-MINH_KIEM-KIEM_Y-T3", "PAS-MINH_KIEM-PHAN_CONG-T1");
+        var unknownUnit = PassiveLoadFailure(
+            "PAS-HUYEN_BUT-HOI_DONG-T2", "percent", "aura");
+        var unapprovedStatus = PassiveLoadFailure(
+            "PAS-MINH_KIEM-KIEM_Y-T1", "BASELINE", "PLAYTEST_BALANCED");
+        Check(
+            "passive.catalog_rejects_a_broken_chain",
+            brokenChain is not null && brokenChain.Contains("prerequisite", StringComparison.Ordinal),
+            brokenChain ?? "none");
+        Check(
+            "passive.catalog_rejects_an_unknown_effect_unit",
+            unknownUnit is not null && unknownUnit.Contains("effect_unit", StringComparison.Ordinal),
+            unknownUnit ?? "none");
+        Check(
+            "passive.catalog_rejects_a_passive_that_is_not_baseline",
+            unapprovedStatus is not null && unapprovedStatus.Contains("status", StringComparison.Ordinal),
+            unapprovedStatus ?? "none");
+
+        // Q5 names currency, and docs/production/Currency_Production_Data_vi.csv is its
+        // canonical table. The server hard-coded the one id it grants and only guarded
+        // arithmetic overflow, so the caps, the character/account split and the fact that
+        // nothing is tradeable were all unwritten rules. Loading is not enforcing: turning
+        // balance_cap into a refusal needs an error code on the wire, so the catalogue is
+        // data plus these structural checks.
+        var currencies = services.GetRequiredService<CurrencyCatalog>();
+        Check(
+            "currency.catalog_sixteen_rows",
+            currencies.Count == 16 &&
+            currencies.Rows.Select(currency => currency.CurrencyType).Distinct().Count() == 7,
+            $"count={currencies.Count}");
+
+        currencies.TryGet("COIN", out var coin);
+        Check(
+            "currency.catalog_coin_row_matches_the_source",
+            coin is { CurrencyType: "SOFT", Tradeable: false, StorageScope: "character", BalanceCap: 2_000_000_000 } &&
+            coin.DailyCap.Kind == DailyCapKind.None &&
+            coin.WeeklyReset == "none" &&
+            coin.Notes.Contains("client never submits balances", StringComparison.Ordinal),
+            $"coin={coin?.BalanceCap} daily={coin?.DailyCap.Kind}");
+
+        Check(
+            "currency.catalog_no_shipped_currency_is_tradeable",
+            currencies.CountWhere(currency => currency.Tradeable) == 0,
+            $"tradeable={currencies.CountWhere(c => c.Tradeable)}");
+
+        // The eight account-scoped currencies (all five regional reputations, both merit
+        // currencies, the Long Mon medal) cannot be held per character, and the server has
+        // no account concept at all - this is the count, recorded rather than invented.
+        Check(
+            "currency.catalog_scope_split_names_the_missing_account_concept",
+            currencies.CountWhere(currency => currency.StorageScope == "character") == 8 &&
+            currencies.CountWhere(currency => currency.StorageScope == "account") == 8 &&
+            currencies.Rows
+                .Where(currency => currency.CurrencyType == "REGIONAL_REPUTATION")
+                .All(currency => currency.StorageScope == "account" && currency.BalanceCap == 10_000 &&
+                                 currency.DailyCap.Kind == DailyCapKind.Amount && currency.DailyCap.Amount == 200),
+            $"character={currencies.CountWhere(c => c.StorageScope == "character")}");
+
+        Check(
+            "currency.catalog_keeps_an_unscheduled_cap_visible_instead_of_rounding_it",
+            currencies.CountWhere(currency => currency.DailyCap.Kind == DailyCapKind.Amount) == 8 &&
+            currencies.CountWhere(currency => currency.DailyCap.Kind == DailyCapKind.None) == 7 &&
+            currencies.CountWhere(currency => currency.DailyCap.Kind == DailyCapKind.Unscheduled) == 1 &&
+            currencies.Rows
+                .Single(currency => currency.DailyCap.Kind == DailyCapKind.Unscheduled)
+                .DailyCap.Raw == "per scheduled match",
+            $"amount={currencies.CountWhere(c => c.DailyCap.Kind == DailyCapKind.Amount)} " +
+            $"none={currencies.CountWhere(c => c.DailyCap.Kind == DailyCapKind.None)}");
+
+        // Every currency the shipped quest rewards pay out has to exist in the table, so a
+        // quest cannot name an id that no cap, scope or display name covers.
+        var shippedQuests = services.GetRequiredService<IQuestCatalog>();
+        var rewardCurrencyIds = shippedQuests.QuestIds
+            .Select(questId => shippedQuests.TryGet(questId, out var questDefinition) ? questDefinition : null)
+            .Where(questDefinition => questDefinition is not null)
+            .SelectMany(questDefinition => questDefinition!.Rewards.Currency)
+            .Select(reward => reward.CurrencyId)
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        Check(
+            "currency.every_reward_currency_id_exists_in_the_catalog",
+            rewardCurrencyIds.Count > 0 &&
+            rewardCurrencyIds.All(currencyId => currencies.TryGet(currencyId, out _)) &&
+            currencies.TryGet(LootCurrencyIds.Coin, out _),
+            $"rewards={string.Join("|", rewardCurrencyIds)}");
+
+        var balanceBearingRequests = typeof(InventoryItem).Assembly
+            .GetTypes()
+            .Where(type => type.Name.EndsWith("Request", StringComparison.Ordinal))
+            .SelectMany(type => type.GetProperties(System.Reflection.BindingFlags.Public |
+                                                   System.Reflection.BindingFlags.Instance))
+            .Where(property => property.Name.Contains("Balance", StringComparison.OrdinalIgnoreCase))
+            .Select(property => property.DeclaringType?.Name + "." + property.Name)
+            .ToArray();
+        Check(
+            "currency.no_request_dto_accepts_a_client_submitted_balance",
+            balanceBearingRequests.Length == 0,
+            string.Join("|", balanceBearingRequests));
+
+        static string Cut(string? message) =>
+            message is null ? "none" : message[..Math.Min(90, message.Length)];
+
+        string? CurrencyLoadFailure(string from, string to)
+        {
+            var root = Path.Combine(Path.GetTempPath(), "p1-currency-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var directory = Path.Combine(root, "docs", "production");
+                Directory.CreateDirectory(directory);
+                var source = File.ReadAllLines(Path.Combine(
+                    CurrencyCatalogLoader.DiscoverDirectory(AppContext.BaseDirectory),
+                    CurrencyCatalogLoader.RelativePath));
+                File.WriteAllLines(
+                    Path.Combine(directory, Path.GetFileName(CurrencyCatalogLoader.RelativePath)),
+                    source.Select(line => line.Replace(from, to, StringComparison.Ordinal)).ToArray());
+
+                try
+                {
+                    CurrencyCatalogLoader.Load(root);
+                    return "LOADED";
+                }
+                catch (InvalidOperationException exception)
+                {
+                    return exception.Message;
+                }
+            }
+            finally
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+
+        var badCurrencyType = CurrencyLoadFailure(",SOFT,", ",GOLD,");
+        var badBalanceCap = CurrencyLoadFailure("2000000000", "none");
+        Check(
+            "currency.catalog_rejects_an_unknown_type_and_a_non_numeric_cap",
+            badCurrencyType is not null && badCurrencyType.Contains("currency_type", StringComparison.Ordinal) &&
+            badBalanceCap is not null && badBalanceCap.Contains("balance_cap", StringComparison.Ordinal),
+            $"type='{Cut(badCurrencyType)}' cap='{Cut(badBalanceCap)}'");
+
+        // Q5's gather/craft half lives in docs/production/Life_Sim_Content_Data_vi.csv:
+        // five crop plots and six fishing waters with their seed or bait, yield range,
+        // grow time, daily cap, season, tool, quality weights, failure rule and the
+        // minigame the client must present. Nothing here runs it - the server has no
+        // gather loop for it - but the references stop being unverifiable prose.
+        var lifeSim = services.GetRequiredService<LifeSimCatalog>();
+        Check(
+            "lifesim.catalog_eleven_rows",
+            lifeSim.Count == 11 && lifeSim.CountOfType("CROP") == 5 && lifeSim.CountOfType("FISH") == 6,
+            $"count={lifeSim.Count}");
+
+        var mapBoundsCatalog = services.GetRequiredService<MapBoundsCatalog>();
+        var referencedItemIds = lifeSim.Rows
+            .SelectMany(entry => new[] { entry.InputItemId, entry.OutputItemId, entry.ToolId }
+                .Concat(entry.BaitItemId is null ? [] : [entry.BaitItemId]))
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        Check(
+            "lifesim.catalog_references_resolve_in_shipped_content",
+            referencedItemIds.Count == 14 &&
+            referencedItemIds.All(itemId => itemCatalog.TryGet(itemId, out _)) &&
+            lifeSim.Rows.All(entry => mapBoundsCatalog.TryResolve(entry.MapId, out _)),
+            $"items={referencedItemIds.Count}");
+
+        Check(
+            "lifesim.catalog_quality_weights_are_a_full_basis",
+            lifeSim.Rows.All(entry => entry.QualityWeights.Sum(weight => weight.Weight) == 10000) &&
+            lifeSim.Rows.All(entry => entry.QualityWeights.Count >= 1) &&
+            lifeSim.Rows.SelectMany(entry => entry.QualityWeights)
+                .Select(weight => weight.Rarity)
+                .Distinct(StringComparer.Ordinal)
+                .Count() == 3,
+            $"weights ok for {lifeSim.Count} rows");
+
+        // The Q3 packet argues the single-lane assumption is provisional. This row is the
+        // proof that an approved production table already places content off the lane.
+        lifeSim.TryGet("LIFE_FISH_CA_RE", out var offLane);
+        Check(
+            "lifesim.catalog_keeps_the_one_off_lane_row_off_lane",
+            offLane is { XWu: 158, YWu: -3 } &&
+            lifeSim.Rows.Count(entry => entry.YWu != 0) == 1,
+            $"off-lane y!=0 count={lifeSim.Rows.Count(entry => entry.YWu != 0)}");
+
+        Check(
+            "lifesim.catalog_timings_and_daily_caps_follow_their_own_columns",
+            lifeSim.Rows.Where(entry => entry.ContentType == "CROP")
+                .OrderBy(entry => entry.LevelRequired)
+                .Select(entry => entry.ProcessSeconds)
+                .SequenceEqual([3600, 7200, 10800, 14400, 21600]) &&
+            lifeSim.Rows.Where(entry => entry.ContentType == "CROP")
+                .All(entry => entry.InteractionSeconds == 2 && entry.DailyCap == 12) &&
+            lifeSim.Rows.Where(entry => entry.ContentType == "FISH")
+                .All(entry => entry.InteractionSeconds == 4 && entry.DailyCap == 20 &&
+                               entry.ProcessSeconds is >= 30 and <= 90),
+            $"crop grow times are monotone in level; fish always 4s and 20/day");
+
+        string? LifeSimLoadFailure(string from, string to)
+        {
+            var root = Path.Combine(Path.GetTempPath(), "p1-lifesim-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var directory = Path.Combine(root, "docs", "production");
+                Directory.CreateDirectory(directory);
+                var source = File.ReadAllLines(Path.Combine(
+                    LifeSimCatalogLoader.DiscoverDirectory(AppContext.BaseDirectory),
+                    LifeSimCatalogLoader.RelativePath));
+                File.WriteAllLines(
+                    Path.Combine(directory, Path.GetFileName(LifeSimCatalogLoader.RelativePath)),
+                    source.Select(line => line.Replace(from, to, StringComparison.Ordinal)).ToArray());
+
+                try
+                {
+                    LifeSimCatalogLoader.Load(root);
+                    return "LOADED";
+                }
+                catch (InvalidOperationException exception)
+                {
+                    return exception.Message;
+                }
+            }
+            finally
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+
+        var badWeightTotal = LifeSimLoadFailure("COMMON:8000", "COMMON:7000");
+        var badType = LifeSimLoadFailure(",CROP,", ",MINE,");
+        Check(
+            "lifesim.catalog_rejects_a_partial_weight_set_and_an_unknown_type",
+            badWeightTotal is not null && badWeightTotal.Contains("quality_weights", StringComparison.Ordinal) &&
+            badType is not null && badType.Contains("content_type", StringComparison.Ordinal),
+            $"weights='{Cut(badWeightTotal)}' type='{Cut(badType)}'");
+
+        // Q7 names weekly arena, rank and reward, and the rotation table already exists in
+        // production form. Loading it surfaces what a scheduler would still need - and the
+        // first finding is that five of the six bosses have no resolved stats at all.
+        var weeklyRotation = services.GetRequiredService<WeeklyBossRotationCatalog>();
+        Check(
+            "weekly.rotation_six_slots_one_cycle_each",
+            weeklyRotation.Count == 6 &&
+            weeklyRotation.Rows.Select(slot => slot.CycleIndex).Order().SequenceEqual([1, 2, 3, 4, 5, 6]) &&
+            weeklyRotation.Rows.Select(slot => slot.RotationRule).Distinct().Count() == 1 &&
+            weeklyRotation.Rows.First().RotationRule.Contains("season_offset", StringComparison.Ordinal),
+            $"slots={weeklyRotation.Count}");
+
+        var recordEntityIds = services.GetRequiredService<WorldRecordCatalog>().All
+            .SelectMany(record => record.EntityIds)
+            .ToHashSet(StringComparer.Ordinal);
+        // Every rotation boss must at least exist as a world record, or the scheduler
+        // would spawn a name with nothing behind it. Note the deliberate limit of this
+        // check: only BOSS_MANG_COT has resolved stats in combat_mob_stats_v1.json today,
+        // so the other five would meet the audience's "cannot resolve stats" rule - that
+        // gap is reported as a question, not asserted from a gated bundle here.
+        Check(
+            "weekly.rotation_bosses_exist_as_world_records",
+            weeklyRotation.Rows.All(slot => recordEntityIds.Contains(slot.SourceBossId)),
+            $"records={weeklyRotation.Rows.Count(slot => recordEntityIds.Contains(slot.SourceBossId))}/" +
+            $"{weeklyRotation.Count}");
+
+        Check(
+            "weekly.rotation_multipliers_and_caps_are_uniform",
+            weeklyRotation.Rows.All(slot => slot.HpMultiplier == 1.35 && slot.DamageMultiplier == 1.1) &&
+            weeklyRotation.Rows.Select(slot => slot.WeeklyRewardCap).Distinct().Count() == 1 &&
+            weeklyRotation.Rows.All(slot => slot.WeeklyRewardCap == "1/character/week") &&
+            weeklyRotation.Rows.All(slot => slot.SpawnXWu == 180 && slot.SpawnYWu == 0) &&
+            weeklyRotation.Rows.All(slot => mapBoundsCatalog.TryResolve(slot.SpawnMapId, out _)),
+            $"multipliers uniform across {weeklyRotation.Count} slots");
+
+        string? WeeklyLoadFailure(string from, string to)
+        {
+            var root = Path.Combine(Path.GetTempPath(), "p1-weekly-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var directory = Path.Combine(root, "docs", "production");
+                Directory.CreateDirectory(directory);
+                var source = File.ReadAllLines(Path.Combine(
+                    WeeklyBossRotationCatalogLoader.DiscoverDirectory(AppContext.BaseDirectory),
+                    WeeklyBossRotationCatalogLoader.RelativePath));
+                File.WriteAllLines(
+                    Path.Combine(directory, Path.GetFileName(WeeklyBossRotationCatalogLoader.RelativePath)),
+                    source.Select(line => line.Replace(from, to, StringComparison.Ordinal)).ToArray());
+
+                try
+                {
+                    WeeklyBossRotationCatalogLoader.Load(root);
+                    return "LOADED";
+                }
+                catch (InvalidOperationException exception)
+                {
+                    return exception.Message;
+                }
+            }
+            finally
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+
+        var duplicateCycle = WeeklyLoadFailure("TOWER_WK_02,2,", "TOWER_WK_02,1,");
+        var badSlotId = WeeklyLoadFailure("TOWER_WK_03,", "tower_wk_03,");
+        Check(
+            "weekly.rotation_rejects_a_duplicate_cycle_and_a_lowercase_slot",
+            duplicateCycle is not null && duplicateCycle.Contains("cycle_index", StringComparison.Ordinal) &&
+            badSlotId is not null && badSlotId.Contains("rotation_slot_id", StringComparison.Ordinal),
+            $"cycle='{Cut(duplicateCycle)}' slot='{Cut(badSlotId)}'");
 
         var combatActor = NewPlayer("CHR_SELFCHECK_COMBAT");
         var badSkill = combat.Resolve(
@@ -73,6 +550,38 @@ public static class ServiceSelfCheck
             "combat.class_gate",
             wrongClassCast.Failure?.Code == CombatErrorCodes.SkillNotAvailable,
             wrongClassCast.Failure?.Code);
+
+        // A loaded row for a class no session can hold must still refuse to cast, so
+        // "present in the catalogue" never reads as "available in the alpha".
+        // The wire vocabulary is deliberately narrower than the content vocabulary,
+        // and loading a row must not move it: a client still cannot name a skill
+        // outside the alpha subset at all.
+        Check(
+            "contracts.skill_id_wire_vocabulary_still_alpha_only",
+            P1Validation.IsSkillId("SK-MK-01") &&
+            P1Validation.IsSkillId("SK-MK-02") &&
+            P1Validation.IsSkillId("SK-MK-03") &&
+            !P1Validation.IsSkillId("SK-TC-01") &&
+            !P1Validation.IsSkillId("SK-HB-02") &&
+            !P1Validation.IsSkillId("SK-MK-04") &&
+            !P1Validation.IsSkillId("SK-MK-07") &&
+            !P1Validation.IsSkillId("sk-MK-01") &&
+            !P1Validation.IsSkillId(null),
+            "content rows load for four more classes; the request vocabulary is untouched");
+
+        // A loaded row for a class no session can hold is refused before the catalogue is
+        // even consulted: v1 validates the id against the alpha wire vocabulary first, so
+        // growing the catalogue cannot widen what a client may name. The class gate behind
+        // it is the second layer, already proven by combat.class_gate below.
+        var foreignSkillActor = NewPlayer("CHR_SELFCHECK_FOREIGN_SKILL");
+        var foreignSkillCast = combat.Resolve(
+            foreignSkillActor,
+            new CombatCommand { AimX = 0, AimY = 0, InputSequence = 1, SkillId = "SK-TC-01" });
+        Check(
+            "combat.catalog_foreign_class_cast_refused",
+            foreignSkillCast.Failure?.Code == P1ErrorCodes.InvalidPayload &&
+            foreignSkillCast.Failure?.FieldErrors.Contains("skillId") is true,
+            $"{foreignSkillCast.Failure?.Code}/{foreignSkillCast.Failure?.FieldErrors.Count}");
 
         var staleActor = NewPlayer("CHR_SELFCHECK_STALE");
         staleActor.LastInputSequence = 1;
@@ -874,6 +1383,80 @@ public static class ServiceSelfCheck
             aoiRegistry.Count == 8 && aoiPageB.Count == 5,
             $"candidates={aoiRegistry.Count} visible={aoiPageB.Count}");
 
+        // The production shape the integration thread reported: P1:CombatV2 and
+        // P1:MobBehavior ON with P1:CombatDamage OFF, so no mob stat bundle
+        // exists. ResolveHit skips any target whose max HP it cannot resolve —
+        // the cast is accepted and then produces no impact, no miss and no
+        // death for that entity — so a row claiming ALIVE/targetable at hp 0
+        // advertised a fight the engine silently refuses to resolve. It now
+        // follows the boss rule; the behaviour state is unaffected because it is
+        // real, and a DEAD mob stays DEAD rather than becoming merely blocked.
+        var gateOffMob = MakeAoiEntity(
+            "ENT_SELFCHECK_AOI_GATEOFF_MOB", WorldEntityKinds.Mob, "MOB_CARPLING", 10);
+        var gateOffDeadMob = MakeAoiEntity(
+            "ENT_SELFCHECK_AOI_GATEOFF_DEAD", WorldEntityKinds.Mob, "MOB_CARPLING", 11);
+        gateOffDeadMob.Remove(aoiClock.UtcNow);
+        var gateOffProjection = new WorldAoiProjectionService(
+            new WorldEntityRegistry(
+                new WorldEntityCatalog([], [gateOffMob, gateOffDeadMob]), aoiClock),
+            aoiMobs,
+            combatDamage,
+            new GatherClaimStore(aoiClock),
+            new MobCombatStateStore());
+        var gateOffViewer = NewPlayer("CHR_SELFCHECK_AOI_GATEOFF");
+        gateOffViewer.X = 0;
+        gateOffViewer.Y = 0;
+        var gateOffById = gateOffProjection.Project(gateOffViewer).ToDictionary(
+            entity => entity.EntityId, StringComparer.Ordinal);
+        Check(
+            "aoi.mob_blocked_when_damage_gate_off",
+            gateOffById["ENT_SELFCHECK_AOI_GATEOFF_MOB"] is
+            {
+                Kind: WorldEntityKinds.Mob,
+                State: MobBehaviorStates.Idle,
+                HealthState: WorldHealthStates.Blocked,
+                Targetable: false,
+                Hp: 0,
+                MaxHp: 0
+            },
+            $"state={gateOffById["ENT_SELFCHECK_AOI_GATEOFF_MOB"].State} " +
+            $"health={gateOffById["ENT_SELFCHECK_AOI_GATEOFF_MOB"].HealthState} " +
+            $"targetable={gateOffById["ENT_SELFCHECK_AOI_GATEOFF_MOB"].Targetable}");
+        Check(
+            "aoi.dead_mob_stays_dead_with_unknown_stats",
+            gateOffById["ENT_SELFCHECK_AOI_GATEOFF_DEAD"] is
+            {
+                HealthState: WorldHealthStates.Dead,
+                Targetable: false,
+                Hp: 0,
+                MaxHp: 0
+            });
+
+        // CAM-TOPDOWN-WIDE-20261105 (docs/production/TopDown_Wide_Camera_20261105_vi.md:11,13)
+        // makes 64x36 WU the default world view and 48x27 the compact option, while :35
+        // forbids touching the server side to match: "the staging build only changes the
+        // camera, not the server AOI, reveal, interaction/attack ranges, aggro or grants"
+        // and a competitive instance must run one profile for everyone rather than buy
+        // vision with a wider screen. That fairness rule only holds while the audience
+        // radius already covers the widest box a client can be configured with, so the
+        // margin is arithmetic here instead of an assumption someone has to re-derive.
+        var wideCornerWu = Math.Sqrt(Math.Pow(64 / 2d, 2) + Math.Pow(36 / 2d, 2));
+        var compactCornerWu = Math.Sqrt(Math.Pow(48 / 2d, 2) + Math.Pow(27 / 2d, 2));
+        Check(
+            "aoi.covers_the_sourced_wide_camera_window",
+            wideCornerWu <= WorldAudience.AoiEnterWu &&
+            compactCornerWu <= WorldAudience.AoiEnterWu,
+            $"wide={wideCornerWu:F3} compact={compactCornerWu:F3} " +
+            $"enter={WorldAudience.AoiEnterWu}");
+        // The leave ring sits outside the view box, so an entity that is on screen is
+        // never dropped while it is still on screen: hysteresis cannot cut a visible
+        // actor out of the snapshot.
+        Check(
+            "aoi.hysteresis_keeps_the_whole_view_box",
+            WorldAudience.AoiEnterWu < WorldAudience.AoiLeaveWu &&
+            wideCornerWu < WorldAudience.AoiLeaveWu,
+            $"leave={WorldAudience.AoiLeaveWu} wide={wideCornerWu:F3}");
+
         // QOD-16 ph2 v2 combat accept path: cast id, cost/cooldown state and
         // only the events that already occurred (no future impacts).
         var combatV2Store = new CombatEventStore(new CombatEventStreamOptions
@@ -1162,6 +1745,62 @@ public static class ServiceSelfCheck
             (tickStateStore.TryGet("ENT_SELFCHECK_TICK_MOB", 1)?.Hp ?? 0) == 138,
             $"{mk03Hit1.Result?.Amount}/{mk03Hit2.Result?.Amount}/{mk03Hit3.Result?.Amount}");
 
+        // Work order 29 freezes "VFX không quyết định hit". The runtime form of that
+        // sentence is two catalogues that differ in exactly one field - the VFX key -
+        // resolving the same SK-MK-03 cast into the same three impacts on the same
+        // ticks. A grep would only prove nobody reads the key today; this proves the
+        // resolution cannot depend on it.
+        var variantDefs = new Dictionary<string, CombatSkillDefinition>(StringComparer.Ordinal);
+        foreach (var variantId in new[] { "SK-MK-01", "SK-MK-02", "SK-MK-03" })
+        {
+            combatSkills.TryGet(variantId, out var shippedDefinition);
+            variantDefs[variantId] = shippedDefinition with { VfxKey = "VFX/Skill/SK-MK-99" };
+        }
+
+        var vfxActor = NewPlayer("CHR_SELFCHECK_VFX_ONLY");
+        vfxActor.X = 0;
+        vfxActor.Y = 0;
+        var vfxQuests = new InMemoryQuestService(
+            TickCatalog(), new InMemoryQuestStateStore(), tickRecords, tickClock);
+        vfxQuests.Accept(vfxActor, "TEST-TICK-01");
+        var vfxRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_VFX_MOB", 3)]), tickClock);
+        var vfxEventStore = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var vfxStateStore = new MobCombatStateStore();
+        var vfxEngine = new CombatTickEngine(
+            vfxRegistry,
+            enabledCombat,
+            new CombatSkillCatalog(variantDefs),
+            vfxEventStore,
+            vfxStateStore,
+            vfxQuests,
+            new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(),
+            tickGeometry,
+            NewDashes(tickGeometry),
+            new ServerClock());
+
+        vfxEngine.Schedule(
+            vfxActor, vfxActor.SessionId, new string('f', 32),
+            CombatV2Actions.Skill, "SK-MK-03", 1, 0, 300);
+        var vfxHit1 = vfxEngine.Tick(302)
+            .Single(combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        var vfxHit2 = vfxEngine.Tick(305)
+            .Single(combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        var vfxHit3 = vfxEngine.Tick(308)
+            .Single(combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        Check(
+            "tick.vfx_key_cannot_change_the_hit",
+            vfxHit1.HitIndex == 0 && vfxHit1.Result?.Amount == 8 &&
+            vfxHit2.HitIndex == 1 && vfxHit2.Result?.Amount == 10 &&
+            vfxHit3.HitIndex == 2 && vfxHit3.Result?.Amount == 17 &&
+            (vfxStateStore.TryGet("ENT_SELFCHECK_VFX_MOB", 1)?.Hp ?? 0) == 157,
+            $"{vfxHit1.Result?.Amount}/{vfxHit2.Result?.Amount}/{vfxHit3.Result?.Amount}");
+
         foreach (var cancelReason in new[] { "DEAD", "MAP", "FLOOR" })
         {
             var cancelledSource = NewPlayer("CHR_CANCEL_" + cancelReason);
@@ -1251,13 +1890,16 @@ public static class ServiceSelfCheck
         var deathQuests = new InMemoryQuestService(
             TickCatalog(), new InMemoryQuestStateStore(), tickRecords, tickClock);
         deathQuests.Accept(deathActor, "TEST-TICK-01");
+        var deathKills = new RecordingKillSink();
         var deathEngine = new CombatTickEngine(
             deathRegistry, enabledCombat, combatSkills,
             new CombatEventStore(new CombatEventStreamOptions()), deathStore,
             deathQuests, new FixedCombatRolls(hit: true, crit: false),
-            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock());
+            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock(),
+            kills: deathKills);
 
         var deathCount = 0;
+        var deathEventIds = new List<string>();
         for (var castIndex = 0; castIndex < 6; castIndex++)
         {
             var startTick = 1000 + (castIndex * 20);
@@ -1266,8 +1908,16 @@ public static class ServiceSelfCheck
                 CombatV2Actions.Skill, "SK-MK-03", 1, 0, startTick);
             for (var tick = startTick; tick <= startTick + 10; tick++)
             {
-                deathCount += deathEngine.Tick(tick)
-                    .Count(combatEvent => combatEvent.Type == CombatEventTypesV2.Death);
+                foreach (var combatEvent in deathEngine.Tick(tick))
+                {
+                    if (combatEvent.Type != CombatEventTypesV2.Death)
+                    {
+                        continue;
+                    }
+
+                    deathCount++;
+                    deathEventIds.Add(combatEvent.EventId);
+                }
             }
         }
 
@@ -1300,8 +1950,26 @@ public static class ServiceSelfCheck
             tickRespawnedMob.State == WorldEntityStates.Alive &&
             respawnImpact is { TargetLifeId: 2, HitIndex: 0 } &&
             (deathStore.TryGet("ENT_SELFCHECK_TICK_MOB", 2)?.Hp ?? 0) == 173 &&
-            killStateAfterRespawn.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL") == 1,
+            killStateAfterRespawn?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL") == 1,
             $"life={tickRespawnedMob.LifeId} hp={deathStore.TryGet("ENT_SELFCHECK_TICK_MOB", 2)?.Hp}");
+
+        // QOD-21 Q2: the quest machines get their credit from this notification, so
+        // it must carry exactly the death the engine resolved — one report per
+        // resolved kill, the killer the engine charged, the life that ended, and the
+        // same event id the killer's combat stream shows. A respawned life that is
+        // only hit (not killed) reports nothing.
+        Check(
+            "tick.kill_sink_reports_authoritative_death",
+            deathKills.Kills.Count == 1 &&
+            deathEventIds.Count == 1 &&
+            deathKills.Kills[0].KillerCharacterId == deathActor.CharacterId &&
+            deathKills.Kills[0].EntityId == "ENT_SELFCHECK_TICK_MOB" &&
+            deathKills.Kills[0].RecordId == "MAN-TEST-ENT_SELFCHECK_TICK_MOB" &&
+            deathKills.Kills[0].LifeId == 1 &&
+            deathKills.Kills[0].DeathEventId == deathEventIds[0],
+            $"kills={deathKills.Kills.Count} " +
+            $"first={deathKills.Kills.FirstOrDefault().EntityId}/" +
+            $"{deathKills.Kills.FirstOrDefault().LifeId}");
 
         // QOD-17 loot: versioned CSV export, one roll per group then weighted
         // SELECT_ONE, deterministic server RNG and dry-run receipts (grant OFF
@@ -1635,7 +2303,7 @@ public static class ServiceSelfCheck
             string.Join(",", questCatalog.QuestIds));
 
         var questActor = NewPlayer("CHR_SELFCHECK_QUEST");
-        var questInitial = quests.GetState(questActor.CharacterId, "P00-01");
+        var questInitial = quests.GetState(questActor, "P00-01");
         Check(
             "quest.initial_available",
             questInitial.State?.State == QuestStates.Available,
@@ -1881,12 +2549,14 @@ public static class ServiceSelfCheck
         var xpTable = services.GetRequiredService<LevelProgressionTable>();
         var scriptedXp = new ExperienceService(xpTable, new FixedQuestXpRule(400));
         var xpActor = NewPlayer("CHR_SELFCHECK_XP");
-        var xpApplied = scriptedXp.TryApply(xpActor, "TEST_RULE", out var xpGrant, out _);
+        var xpApplied = scriptedXp.TryApply(
+            xpActor, new QuestXpRequest("TEST_RULE", 1, false), out var xpGrant, out _);
         var hugeXp = new ExperienceService(xpTable, new FixedQuestXpRule(50_000_000));
         var cappedActor = NewPlayer("CHR_SELFCHECK_XP_CAP");
-        hugeXp.TryApply(cappedActor, "TEST_RULE", out _, out _);
+        hugeXp.TryApply(cappedActor, new QuestXpRequest("TEST_RULE", 1, false), out _, out _);
         var unresolved = new ExperienceService(xpTable, new UnresolvedQuestXpRules())
-            .TryApply(xpActor, "LEVEL_BAND_BASE", out _, out var unresolvedRule);
+            .TryApply(
+                xpActor, new QuestXpRequest("LEVEL_BAND_BASE", 1, false), out _, out var unresolvedRule);
         Check(
             "xp.transaction_levels_and_caps",
             xpApplied && xpTable.At(1).XpToNext == 175 &&
@@ -2249,7 +2919,8 @@ public static class ServiceSelfCheck
         };
         MobAttackService NewMobAttacks(WorldEntityRegistry registry, CombatDamageFeature feature) =>
             new(registry, feature, mobOptions, new GuardDefenseService(
-                new GuardWindowStore(), feature, new CombatEventStore(new CombatEventStreamOptions())));
+                new GuardWindowStore(), feature, new CombatEventStore(new CombatEventStreamOptions())),
+                new PlayerLifeLedger());
         MobLifecycleEvent Impact(string entityId, string targetCharacterId) =>
             new(entityId, MobBehaviorStates.Telegraph, MobBehaviorStates.Attack,
                 mobClock.UtcNow, targetCharacterId);
@@ -2674,7 +3345,7 @@ public static class ServiceSelfCheck
         });
         var guardDefense = new GuardDefenseService(guardWindows, enabledCombat, guardEvents);
         var guardAttacks = new MobAttackService(
-            guardRegistry, enabledCombat, mobOptions, guardDefense);
+            guardRegistry, enabledCombat, mobOptions, guardDefense, new PlayerLifeLedger());
         var guardStates = new MobCombatStateStore();
         var guardEngine = new CombatTickEngine(
             guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
@@ -3028,7 +3699,7 @@ public static class ServiceSelfCheck
         });
         var lateDefense = new GuardDefenseService(lateWindows, enabledCombat, lateEvents);
         var lateAttacks = new MobAttackService(
-            lateRegistry, enabledCombat, mobOptions, lateDefense);
+            lateRegistry, enabledCombat, mobOptions, lateDefense, new PlayerLifeLedger());
         var lateStates = new MobCombatStateStore();
         var lateEngine = new CombatTickEngine(
             lateRegistry, enabledCombat, combatSkills, lateEvents, lateStates,
@@ -3141,7 +3812,8 @@ public static class ServiceSelfCheck
             raceWindows, geometry, NewDashes(geometry), new ServerClock());
         var raceAttacks = new MobAttackService(
             raceRegistry, enabledCombat, mobOptions,
-            new GuardDefenseService(raceWindows, enabledCombat, raceEvents));
+            new GuardDefenseService(raceWindows, enabledCombat, raceEvents),
+            new PlayerLifeLedger());
         var raceHero = NewGuardHero("RACE");
         var raceResolutions = new System.Collections.Concurrent.ConcurrentBag<MobAttackResolution>();
         RunBarrierParallel(8, index =>
@@ -3263,7 +3935,7 @@ public static class ServiceSelfCheck
             secondDash is not null &&
             secondDash.AchievedWu < 0.05 &&
             secondDash.StopReason is DashStopReasons.ZeroDistance or DashStopReasons.BlockedByGeometry &&
-            wallDashHero.X == wallDash.X &&
+            wallDashHero.X == wallDash?.X &&
             wallDashHero.Revision == revisionBeforeSecond,
             secondDash is null ? "no resolution" : $"{secondDash.AchievedWu}/{secondDash.StopReason}");
 
@@ -3333,7 +4005,8 @@ public static class ServiceSelfCheck
             statusWindows, statusCommands, statusDashes);
         var statusAttacks = new MobAttackService(
             guardRegistry, enabledCombat, mobOptions,
-            new GuardDefenseService(statusWindows, enabledCombat, guardEvents));
+            new GuardDefenseService(statusWindows, enabledCombat, guardEvents),
+            new PlayerLifeLedger());
         var statusAccept = statusCommands.Resolve(
             statusHero, statusHero.SessionId,
             new CombatV2Intent(CombatV2Actions.Skill, "SK-MK-01", null, 1, 1, 0, null),
@@ -3420,13 +4093,21 @@ public static class ServiceSelfCheck
             guardRegistry, enabledCombat, combatSkills, returnEvents, returnStates,
             tickQuests, new FixedCombatRolls(hit: true, crit: false),
             returnWindows, geometry, NewDashes(geometry), new ServerClock());
+        // One ledger for the whole return fixture: the mob attack that ends the
+        // life and the return that starts the next one have to look at the same
+        // per-character state, which is how the composition root wires it. The
+        // clock is manual because the approved cooldown is measured in ticks.
+        var returnLives = new PlayerLifeLedger();
+        var returnClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 30, 3, 0, 0, TimeSpan.Zero));
         var returnAttacks = new MobAttackService(
             guardRegistry, enabledCombat, mobOptions,
-            new GuardDefenseService(returnWindows, enabledCombat, returnEvents));
+            new GuardDefenseService(returnWindows, enabledCombat, returnEvents),
+            returnLives);
         DeathReturnService NewDeathReturn(int restoreHp) => new(
             returnSessions, maps, options,
             new DeathReturnOptions { Enabled = true, RestoreHpFixture = restoreHp },
-            returnWindows, returnEngine);
+            returnWindows, returnEngine, returnLives, returnClock, null);
         var deathReturnService = NewDeathReturn(0);
         var downHero = NewGuardHero("RETURN");
         returnSessions.Add(downHero);
@@ -3458,7 +4139,8 @@ public static class ServiceSelfCheck
             badKeyReturn.ErrorCode == DeathReturnErrorCodes.InvalidKey &&
             downHero.X == 40 && downHero.Y == 0 &&
             downHero.Revision == revisionBeforeReturn &&
-            disabledReturn.CancelledEventCount == 0 && aliveReturn.CancelledEventCount == 0,
+            disabledReturn is { InflightCastsCancelled: 0, ReservedCountersCancelled: 0 } &&
+            aliveReturn is { InflightCastsCancelled: 0, ReservedCountersCancelled: 0 },
             $"{disabledReturn.ErrorCode}/{aliveReturn.ErrorCode}/{badKeyReturn.ErrorCode}");
 
         var unknownMapHero = NewGuardHero("RETURN_NOMAP");
@@ -3485,7 +4167,7 @@ public static class ServiceSelfCheck
         Check(
             "death_return.clears_cast_window_and_counter_once",
             firstReturn is { Applied: true, Replayed: false, ErrorCode: null, Hp: 0 } &&
-            firstReturn.CancelledEventCount == 3 &&
+            firstReturn is { InflightCastsCancelled: 1, ReservedCountersCancelled: 1 } &&
             firstReturn.SessionId == downHero.SessionId &&
             firstReturn.Revision == revisionBeforeReturn + 1 &&
             firstReturn.X == options.SpawnX && firstReturn.Y == options.SpawnY &&
@@ -3498,7 +4180,8 @@ public static class ServiceSelfCheck
             afterReturnEvents.Count(stored => stored.Type == CombatEventTypesV2.Cancel) == 2 &&
             afterReturnEvents.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
             lateTickEvents.Count == 0,
-            $"{firstReturn.ErrorCode}/{firstReturn.CancelledEventCount}/{lateTickEvents.Count}");
+            $"{firstReturn.ErrorCode}/{firstReturn.InflightCastsCancelled}/" +
+            $"{firstReturn.ReservedCountersCancelled}/{lateTickEvents.Count}");
 
         var replayReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, deathKey);
         var otherHero = NewGuardHero("RETURN_OTHER");
@@ -3508,7 +4191,7 @@ public static class ServiceSelfCheck
         var eventsAfterReplay = returnEvents.Read(downHero.SessionId, 0, 256).Events.Count;
         Check(
             "death_return_replays_the_recorded_answer",
-            replayReturn is { Applied: true, Replayed: true } &&
+            replayReturn is { Applied: false, Replayed: true } &&
             replayReturn.Revision == firstReturn.Revision &&
             replayReturn.X == firstReturn.X && replayReturn.Y == firstReturn.Y &&
             downHero.Revision == firstReturn.Revision &&
@@ -3518,6 +4201,30 @@ public static class ServiceSelfCheck
             otherHero.X == 40 && otherHero.Y == 0 &&
             returnEvents.Read(downHero.SessionId, 0, 256).Events.Count == eventsAfterReplay,
             $"{replayReturn.Replayed}/{stolenKeyReturn.ErrorCode}");
+
+        // Reconnect case (work order 30 item 1): the receipt follows the character, not
+        // the session. A second session for the same character that presents the key the
+        // first one committed gets the recorded snapshot back and moves nobody - the new
+        // actor stays exactly where it is, which is why the decision tells a client to
+        // fresh-read the world instead of reading a receipt as current state.
+        var reconnectService = NewDeathReturn(0);
+        var reconnectFirst = NewPlayer("CHR_SELFCHECK_RETURN_RECONNECT", hp: 0);
+        returnSessions.Add(reconnectFirst);
+        var reconnectApplied = reconnectService.ReturnToAnchor(
+            reconnectFirst.SessionId, "c" + new string('0', 31));
+        var reconnectSecond = NewPlayer("CHR_SELFCHECK_RETURN_RECONNECT", hp: 0);
+        returnSessions.Add(reconnectSecond);
+        var reconnectSecondX = reconnectSecond.X;
+        var reconnectReplay = reconnectService.ReturnToAnchor(
+            reconnectSecond.SessionId, "c" + new string('0', 31));
+        Check(
+            "death_return.a_reconnected_session_replaying_the_old_key_gets_the_receipt",
+            reconnectApplied is { Applied: true } &&
+            reconnectReplay is { Applied: false, Replayed: true } &&
+            reconnectReplay.Hp == reconnectApplied.Hp &&
+            reconnectSecond.Hp == 0 &&
+            reconnectSecond.X == reconnectSecondX,
+            $"applied={reconnectApplied.Applied}/{reconnectApplied.Hp} replay={reconnectReplay.Applied}/{reconnectReplay.Replayed}/{reconnectReplay.Hp} newActor={reconnectSecond.Hp}@{reconnectSecond.X}");
 
         // Two clients racing one key must produce one return, not two moves and
         // two revision bumps.
@@ -3556,18 +4263,432 @@ public static class ServiceSelfCheck
             $"{refilledReturn.Hp}/{secondKeyReturn.ErrorCode}");
 
         var ledgerService = NewDeathReturn(0);
+        string ledgerFirstSession = string.Empty;
+        string ledgerFirstKey = string.Empty;
         for (var ledgerIndex = 0; ledgerIndex < 300; ledgerIndex++)
         {
             var ledgerHero = NewPlayer("CHR_SELFCHECK_RETURN_" + ledgerIndex, hp: 0);
             returnSessions.Add(ledgerHero);
             ledgerService.ReturnToAnchor(
                 ledgerHero.SessionId, ledgerIndex.ToString("x32"));
+            if (ledgerIndex == 0)
+            {
+                ledgerFirstSession = ledgerHero.SessionId;
+                ledgerFirstKey = ledgerIndex.ToString("x32");
+            }
         }
 
         Check(
-            "death_return_ledger_is_bounded",
-            ledgerService.LedgerCount == DeathReturnService.LedgerCapacity,
-            $"count={ledgerService.LedgerCount}");
+            "death_return_keeps_every_receipt_whose_life_is_still_current",
+            ledgerService.LedgerCount == 300 &&
+            ledgerService.ReceiptsHeldPastBound == 44 &&
+            ledgerService.ReturnToAnchor(ledgerFirstSession, ledgerFirstKey)
+                is { Applied: false, Replayed: true },
+            $"count={ledgerService.LedgerCount} held={ledgerService.ReceiptsHeldPastBound}");
+
+        var supersededClock = new ManualServerClock(returnClock.UtcNow);
+        var supersededLives = new PlayerLifeLedger();
+        var supersededService = new DeathReturnService(
+            returnSessions, maps, options, new DeathReturnOptions { Enabled = true },
+            returnWindows, returnEngine, supersededLives, supersededClock,
+            services.GetRequiredService<AlphaDesign>().DeathReturn);
+        var supersededHero = NewPlayer("CHR_SELFCHECK_RETURN_SUPERSEDED", hp: 0);
+        returnSessions.Add(supersededHero);
+        supersededLives.RecordDamageCommit(
+            supersededHero.CharacterId, 1, 0, supersededHero.Revision, supersededClock.UtcNow);
+        var supersededKey = "d0" + new string('0', 30);
+        var supersededFirst = supersededService.ReturnToAnchor(supersededHero.SessionId, supersededKey);
+        supersededHero.Hp = 0;
+        supersededHero.Revision++;
+        supersededLives.RecordDamageCommit(
+            supersededHero.CharacterId, supersededFirst.Hp, 0,
+            supersededHero.Revision, supersededClock.UtcNow);
+        var supersededCooldown = TimeSpan.FromSeconds(
+            (double)supersededService.CooldownTicks / ServerClock.TicksPerSecond);
+        supersededClock.Advance(supersededCooldown);
+        var supersededSecond = supersededService.ReturnToAnchor(
+            supersededHero.SessionId, "d1" + new string('0', 30));
+        var supersededChurn = Enumerable.Range(0, 303).Select(index =>
+        {
+            var hero = NewPlayer("CHR_SELFCHECK_RETURN_SUPERSEDED_CHURN_" + index, hp: 0);
+            returnSessions.Add(hero);
+            supersededLives.RecordDamageCommit(
+                hero.CharacterId, 1, 0, hero.Revision, supersededClock.UtcNow);
+            return supersededService.ReturnToAnchor(hero.SessionId, index.ToString("x32"));
+        }).ToArray();
+        var cooldownChurnHero = returnSessions.Find(supersededChurn[0].SessionId!)!;
+        var cooldownChurnHp = cooldownChurnHero.Hp;
+        cooldownChurnHero.Hp = 0;
+        cooldownChurnHero.Revision++;
+        var cooldownChurnRevision = cooldownChurnHero.Revision;
+        supersededLives.RecordDamageCommit(
+            cooldownChurnHero.CharacterId, cooldownChurnHp, 0,
+            cooldownChurnRevision, supersededClock.UtcNow);
+        var cooldownChurnReturn = supersededService.ReturnToAnchor(
+            cooldownChurnHero.SessionId, "e0" + new string('0', 30));
+        Check(
+            "death_return.cooldown_survives_more_than_300_other_returns",
+            cooldownChurnReturn is { Applied: false, Replayed: false, ErrorCode: DeathReturnErrorCodes.Cooldown } &&
+            cooldownChurnReturn.NextReturnAllowedAtTick == supersededChurn[0].NextReturnAllowedAtTick &&
+            cooldownChurnHero.Hp == 0 && cooldownChurnHero.Revision == cooldownChurnRevision &&
+            supersededLives.LifeVersion(cooldownChurnHero.CharacterId) == 2,
+            $"code={cooldownChurnReturn.ErrorCode} hp={cooldownChurnHero.Hp} " +
+            $"tick={supersededClock.Tick} until={cooldownChurnReturn.NextReturnAllowedAtTick}");
+        supersededHero.Hp = 0;
+        supersededHero.Revision++;
+        supersededHero.X = 40;
+        var supersededDeath = supersededLives.RecordDamageCommit(
+            supersededHero.CharacterId, supersededSecond.Hp, 0,
+            supersededHero.Revision, supersededClock.UtcNow);
+        supersededClock.Advance(supersededCooldown);
+        var supersededRevision = supersededHero.Revision;
+        var supersededReplay = supersededService.ReturnToAnchor(supersededHero.SessionId, supersededKey);
+        Check(
+            "death_return.superseded_life_receipt_survives_more_than_300_returns",
+            supersededFirst.Applied && supersededSecond is { Applied: true, NewLifeVersion: 3 } &&
+            supersededChurn.All(result => result.Applied) &&
+            supersededService.LedgerCount == supersededChurn.Length + 2 &&
+            supersededReplay == supersededFirst with { Applied = false, Replayed = true } &&
+            supersededHero.Hp == 0 && supersededHero.X == 40 &&
+            supersededHero.Revision == supersededRevision &&
+            supersededLives.LifeVersion(supersededHero.CharacterId) == 3 &&
+            supersededLives.LatestDeath(supersededHero.CharacterId) == supersededDeath,
+            $"churn={supersededChurn.Length} count={supersededService.LedgerCount} " +
+            $"replayed={supersededReplay.Replayed} hp={supersededHero.Hp} " +
+            $"life={supersededLives.LifeVersion(supersededHero.CharacterId)}");
+        var supersededForeign = NewPlayer("CHR_SELFCHECK_RETURN_SUPERSEDED_FOREIGN", hp: 0);
+        returnSessions.Add(supersededForeign);
+        var supersededForeignRevision = supersededForeign.Revision;
+        var supersededConflict = supersededService.ReturnToAnchor(supersededForeign.SessionId, supersededKey);
+        Check(
+            "death_return.superseded_receipt_still_refuses_another_owner",
+            supersededConflict.ErrorCode == DeathReturnErrorCodes.KeyConflict &&
+            !supersededConflict.Applied && supersededForeign.Hp == 0 &&
+            supersededForeign.Revision == supersededForeignRevision,
+            $"code={supersededConflict.ErrorCode} hp={supersededForeign.Hp}");
+        var supersededReconnect = NewPlayer(supersededHero.CharacterId, hp: 0);
+        returnSessions.Add(supersededReconnect);
+        var supersededReconnectRevision = supersededReconnect.Revision;
+        var supersededReconnectReplay = supersededService.ReturnToAnchor(
+            supersededReconnect.SessionId, supersededKey);
+        Check(
+            "death_return.superseded_receipt_replays_history_after_reconnect",
+            supersededReconnectReplay == supersededFirst with { Applied = false, Replayed = true } &&
+            supersededReconnect.Hp == 0 && supersededReconnect.Revision == supersededReconnectRevision &&
+            supersededLives.LifeVersion(supersededReconnect.CharacterId) == 3,
+            $"replayed={supersededReconnectReplay.Replayed} hp={supersededReconnect.Hp} " +
+            $"life={supersededLives.LifeVersion(supersededReconnect.CharacterId)}");
+
+        // DEC-DEATH-RETURN-20261105 answers the six packet questions, and the
+        // approved shape is owned by three numbers the fixture does not have: the
+        // anchor and the HP formula and the cooldown all come from the design, and
+        // the receipt answers a death the damage path actually recorded.
+        var returnAlphaRules = services.GetRequiredService<AlphaDesign>().DeathReturn;
+        var alphaReturnService = new DeathReturnService(
+            returnSessions, maps, options,
+            new DeathReturnOptions { Enabled = true },
+            returnWindows, returnEngine, returnLives, returnClock, returnAlphaRules);
+        var alphaHero = NewGuardHero("RETURN_ALPHA");
+        returnSessions.Add(alphaHero);
+        var alphaLifeBefore = returnLives.LifeVersion(alphaHero.CharacterId);
+        var alphaRevisionBefore = alphaHero.Revision;
+        var alphaMpBefore = alphaHero.Mp;
+        // One reference hit does not end a 100-HP life, so the fixture drops the
+        // actor to the edge and lets the shipped damage commit cross it: the
+        // point under test is that the death record comes from that commit.
+        alphaHero.Hp = 1;
+        returnAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB2", alphaHero)], [alphaHero], tick: 3);
+        var alphaDeath = returnLives.LatestDeath(alphaHero.CharacterId);
+        Check(
+            "death_return.damage_path_records_the_death_it_answers",
+            alphaHero.Hp == 0 &&
+            alphaDeath is not null &&
+            alphaDeath.CharacterId == alphaHero.CharacterId &&
+            alphaDeath.LifeVersion == alphaLifeBefore &&
+            alphaDeath.DeathRevision == alphaHero.Revision &&
+            alphaHero.Revision == alphaRevisionBefore + 1 &&
+            alphaDeath.DeathEventId == PlayerLifeLedger.DeathEventIdFor(
+                alphaHero.CharacterId, alphaLifeBefore, alphaHero.Revision),
+            $"death={alphaDeath?.DeathEventId} life={alphaLifeBefore} " +
+            $"revision={alphaRevisionBefore}->{alphaHero.Revision}");
+
+        var alphaDeathId = alphaDeath!.DeathEventId;
+        var alphaReturn = alphaReturnService.ReturnToAnchor(
+            alphaHero.SessionId, new string('9', 31) + "1");
+        Check(
+            "death_return.alpha_shape_uses_the_design_anchor_formula_and_clock",
+            returnAlphaRules is
+            {
+                MapId: "MAP_BEN_MUA", AnchorX: 18, AnchorY: 0,
+                NewDeathReturnCooldownSeconds: 3, XpPenalty: 0, CurrencyPenalty: 0,
+                DurabilityPenalty: 0
+            } &&
+            alphaReturnService.CooldownTicks == 60 &&
+            alphaReturn is { Applied: true, Replayed: false, ErrorCode: null } &&
+            alphaReturn.X == returnAlphaRules.AnchorX &&
+            alphaReturn.Y == returnAlphaRules.AnchorY &&
+            alphaHero.X == returnAlphaRules.AnchorX &&
+            // max(1, ceil(currentEffectiveMaxHp * 0.5)) with the fixture's 100.
+            alphaReturn.Hp == 50 && alphaHero.Hp == 50 &&
+            // restoreMp keeps the absolute value: nothing refills MP.
+            alphaReturn.Mp == alphaMpBefore && alphaHero.Mp == alphaMpBefore &&
+            alphaReturn.MaxHp == alphaHero.MaxHp &&
+            alphaReturn.DeathEventId == alphaDeathId &&
+            alphaReturn.NewLifeVersion == alphaLifeBefore + 1 &&
+            returnLives.LifeVersion(alphaHero.CharacterId) == alphaLifeBefore + 1 &&
+            alphaReturn.NextReturnAllowedAtTick == returnClock.Tick + 60,
+            $"hp={alphaReturn.Hp}/{alphaReturn.MaxHp} mp={alphaReturn.Mp} " +
+            $"x={alphaReturn.X},{alphaReturn.Y} life={alphaReturn.NewLifeVersion} " +
+            $"until={alphaReturn.NextReturnAllowedAtTick}");
+
+        // A second death inside the window is refused, and a committed replay of
+        // the first key still answers whatever the actor looks like now.
+        var alphaCooldownStartTick = returnClock.Tick;
+        // The first return moved the actor to the anchor, out of the mob's
+        // attack reach, so walk them back before ending the next life.
+        alphaHero.X = 40;
+        alphaHero.Y = 0;
+        alphaHero.Hp = 1;
+        returnAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB2", alphaHero)], [alphaHero], tick: 4);
+        var alphaSecondDeath = returnLives.LatestDeath(alphaHero.CharacterId);
+        var cooldownPosition = alphaHero.X;
+        var cooldownReturn = alphaReturnService.ReturnToAnchor(
+            alphaHero.SessionId, new string('9', 31) + "2");
+        var replayInCooldown = alphaReturnService.ReturnToAnchor(
+            alphaHero.SessionId, new string('9', 31) + "1");
+        Check(
+            "death_return.cooldown_refuses_a_new_death_and_replay_answers_first",
+            alphaSecondDeath is { LifeVersion: 2 } &&
+            alphaSecondDeath!.DeathEventId != alphaDeathId &&
+            cooldownReturn is
+            {
+                Applied: false,
+                Replayed: false,
+                ErrorCode: DeathReturnErrorCodes.Cooldown
+            } &&
+            cooldownReturn.NextReturnAllowedAtTick == alphaCooldownStartTick + 60 &&
+            cooldownReturn.Hp == 0 &&
+            alphaHero.X == cooldownPosition &&
+            replayInCooldown is { Applied: false, Replayed: true } &&
+            replayInCooldown.Hp == alphaReturn.Hp &&
+            replayInCooldown.X == alphaReturn.X &&
+            replayInCooldown.NextReturnAllowedAtTick ==
+                alphaReturn.NextReturnAllowedAtTick &&
+            alphaHero.Revision == alphaSecondDeath!.DeathRevision,
+            $"code={cooldownReturn.ErrorCode} life={alphaSecondDeath?.LifeVersion} " +
+            $"replay={replayInCooldown.Replayed}@{replayInCooldown.Hp}");
+
+        returnClock.Advance(TimeSpan.FromSeconds(3.05));
+        var afterCooldownReturn = alphaReturnService.ReturnToAnchor(
+            alphaHero.SessionId, new string('9', 31) + "3");
+        Check(
+            "death_return.cooldown_expires_on_the_server_tick",
+            afterCooldownReturn is { Applied: true, Replayed: false, Hp: 50 } &&
+            afterCooldownReturn.DeathEventId == alphaSecondDeath!.DeathEventId &&
+            afterCooldownReturn.NewLifeVersion == 3 &&
+            afterCooldownReturn.NextReturnAllowedAtTick == returnClock.Tick + 60,
+            $"code={afterCooldownReturn.ErrorCode} " +
+            $"life={afterCooldownReturn.NewLifeVersion}");
+
+        // Reconnect retention: the decision says the life state belongs to the
+        // character, never to the session, so a fresh session for the same actor
+        // continues the same numbering instead of starting at 1.
+        var reconnectHero = NewGuardHero("RETURN_ALPHA");
+        returnSessions.Add(reconnectHero);
+        var reconnectReturn = alphaReturnService.ReturnToAnchor(
+            reconnectHero.SessionId, new string('9', 31) + "4");
+        Check(
+            "death_return.life_state_follows_the_character_not_the_session",
+            reconnectHero.CharacterId == alphaHero.CharacterId &&
+            reconnectHero.SessionId != alphaHero.SessionId &&
+            reconnectReturn.SessionId == reconnectHero.SessionId &&
+            reconnectReturn.NewLifeVersion == 3 &&
+            reconnectReturn.DeathEventId == alphaSecondDeath!.DeathEventId &&
+            reconnectReturn.ErrorCode == DeathReturnErrorCodes.NotDowned &&
+            returnLives.LifeVersion(reconnectHero.CharacterId) ==
+                reconnectReturn.NewLifeVersion,
+            $"sessions={reconnectHero.SessionId != alphaHero.SessionId} " +
+            $"life={reconnectReturn.NewLifeVersion}");
+
+        var validatorAlphaFixture = false;
+        var validatorAlphaZero = false;
+        var validatorFixtureWithoutAlpha = false;
+        try
+        {
+            DeathReturnOptionsValidator.Validate(
+                new DeathReturnOptions { Enabled = true, RestoreHpFixture = 50 },
+                options, alphaProfileEnabled: true);
+        }
+        catch (InvalidOperationException)
+        {
+            validatorAlphaFixture = true;
+        }
+
+        try
+        {
+            DeathReturnOptionsValidator.Validate(
+                new DeathReturnOptions { Enabled = true, RestoreHpFixture = 0 },
+                options, alphaProfileEnabled: true);
+            validatorAlphaZero = true;
+        }
+        catch (InvalidOperationException)
+        {
+        }
+
+        try
+        {
+            DeathReturnOptionsValidator.Validate(
+                new DeathReturnOptions { Enabled = true, RestoreHpFixture = 50 },
+                options, alphaProfileEnabled: false);
+            validatorFixtureWithoutAlpha = true;
+        }
+        catch (InvalidOperationException)
+        {
+        }
+
+        Check(
+            "death_return.validator_refuses_a_fixture_under_the_alpha_profile",
+            validatorAlphaFixture && validatorAlphaZero && validatorFixtureWithoutAlpha,
+            $"alphaFixture={validatorAlphaFixture} alphaZero={validatorAlphaZero} " +
+            $"fixtureWithoutAlpha={validatorFixtureWithoutAlpha}");
+
+        var idA = PlayerLifeLedger.DeathEventIdFor("CHR_X", 1, 12);
+        var idSameLife = PlayerLifeLedger.DeathEventIdFor("CHR_X", 2, 12);
+        var idSameRevision = PlayerLifeLedger.DeathEventIdFor("CHR_X", 1, 13);
+        var idOtherCharacter = PlayerLifeLedger.DeathEventIdFor("CHR_Y", 1, 12);
+        Check(
+            "player_life.death_event_id_is_canonical_and_derived",
+            System.Text.RegularExpressions.Regex.IsMatch(idA, @"^PDEATH_[0-9a-f]{64}$") &&
+            idA == PlayerLifeLedger.DeathEventIdFor("CHR_X", 1, 12) &&
+            idA != idSameLife && idA != idSameRevision && idA != idOtherCharacter &&
+            idSameLife != idSameRevision,
+            $"id={idA.Length}");
+
+        // Work order 30 item 1: churn of unrelated deaths must not cost a live character
+        // its life identity. 300 characters die and none is returned; the two first
+        // tracked still have to answer their own death with the same derived id and the
+        // same life number, and the ledger has to report how far past the bound it grew
+        // instead of silently dropping them (the old rule renumbered an evicted character
+        // at 1, so its next death minted a fresh identity for the same life).
+        var churnLedger = new PlayerLifeLedger();
+        var churnFirstDeath = churnLedger.RecordDamageCommit(
+            "CHR_CHURN_FIRST", 100, 0, 11, DateTimeOffset.UnixEpoch);
+        var churnSecondDeath = churnLedger.RecordDamageCommit(
+            "CHR_CHURN_SECOND", 100, 0, 12, DateTimeOffset.UnixEpoch);
+        for (var churnIndex = 0; churnIndex < 300; churnIndex++)
+        {
+            churnLedger.RecordDamageCommit(
+                $"CHR_CHURN_{churnIndex:D3}", 100, 0, churnIndex + 100, DateTimeOffset.UnixEpoch);
+        }
+
+        var churnSurvived = churnLedger.LatestDeath("CHR_CHURN_FIRST");
+        Check(
+            "lifecycle.churn_of_300_other_deaths_keeps_a_downed_characters_death_identity",
+            churnFirstDeath is not null && churnSecondDeath is not null &&
+            churnSurvived is not null &&
+            churnSurvived.DeathEventId == churnFirstDeath.DeathEventId &&
+            churnLedger.LifeVersion("CHR_CHURN_FIRST") == 1 &&
+            churnLedger.LifeVersion("CHR_CHURN_SECOND") == 1 &&
+            churnLedger.TrackedCharacters == 302 &&
+            churnLedger.PinnedCharacters == 302 &&
+            churnLedger.CapacityExceededBy == 46,
+            $"tracked={churnLedger.TrackedCharacters} pinned={churnLedger.PinnedCharacters} " +
+            $"exceeded={churnLedger.CapacityExceededBy} " +
+            $"firstLife={churnLedger.LifeVersion("CHR_CHURN_FIRST")} " +
+            $"idKept={churnSurvived?.DeathEventId == churnFirstDeath?.DeathEventId}");
+
+        // The other half, rewritten for work order 31 Q1. Under the old rule these 46
+        // committed returns made those entries reclaimable and the bound "held" only by
+        // dropping identities; now a character that ever died is never evicted, so the
+        // newcomer is absorbed by growing, and every closed life still answers its own
+        // death. Pinned equals tracked because nothing in this ledger is obligation-free.
+        for (var churnIndex = 0; churnIndex < 46; churnIndex++)
+        {
+            churnLedger.RecordResurrectionCommit($"CHR_CHURN_{churnIndex:D3}", 0, 100);
+        }
+
+        churnLedger.RecordDamageCommit(
+            "CHR_CHURN_NEWCOMER", 100, 0, 999, DateTimeOffset.UnixEpoch);
+        Check(
+            "lifecycle.nothing_owed_is_reclaimable_so_returned_deaths_survive_churn",
+            churnLedger.TrackedCharacters == 303 &&
+            churnLedger.PinnedCharacters == 303 &&
+            churnLedger.CapacityExceededBy == 47 &&
+            churnLedger.LatestDeath("CHR_CHURN_000") is { } churnZeroDeath &&
+            churnZeroDeath.LifeVersion == 1 &&
+            churnLedger.LifeVersion("CHR_CHURN_000") == 2 &&
+            churnLedger.LatestDeath("CHR_CHURN_045") is not null &&
+            churnLedger.LatestDeath("CHR_CHURN_NEWCOMER") is not null,
+            $"tracked={churnLedger.TrackedCharacters} pinned={churnLedger.PinnedCharacters} " +
+            $"exceeded={churnLedger.CapacityExceededBy} " +
+            $"returnedDeathKept={churnLedger.LatestDeath("CHR_CHURN_000") is not null} " +
+            $"lifeAfterReturn={churnLedger.LifeVersion("CHR_CHURN_000")}");
+
+        // The exact shape Codex measured in Evidence/qod-life.txt, through the public API:
+        // a character dies, is returned to a second life, then 256 unrelated characters die.
+        // Its death identity and its life number both have to survive, because the receipt
+        // for that death is what stops an old key from being re-run as a fresh command on
+        // the life after it - so dropping it was never a capacity decision, it was an
+        // accounting one.
+        var q1Ledger = new PlayerLifeLedger();
+        var q1FirstDeath = q1Ledger.RecordDamageCommit(
+            "CHR_Q1_SURVIVOR", 100, 0, 7, DateTimeOffset.UnixEpoch);
+        q1Ledger.RecordResurrectionCommit("CHR_Q1_SURVIVOR", 0, 50);
+        var q1BeforeChurn = q1Ledger.TrackedCharacters;
+        for (var q1Index = 0; q1Index < 256; q1Index++)
+        {
+            q1Ledger.RecordDamageCommit(
+                $"CHR_Q1_OTHER_{q1Index:D3}", 100, 0, q1Index + 1000,
+                DateTimeOffset.UnixEpoch);
+        }
+
+        var q1AfterChurn = q1Ledger.LatestDeath("CHR_Q1_SURVIVOR");
+        // Supersession must not renumber. LifeVersion advances at the return, not at the
+        // death - measured here, because my first expectation of 3 was arithmetic about the
+        // wrong event - so the survivor's next death belongs to life 2 with a fresh derived
+        // id, while the life-1 death stays readable as the receipt that old key refers to.
+        var q1ThirdDeath = q1Ledger.RecordDamageCommit(
+            "CHR_Q1_SURVIVOR", 100, 0, 7777, DateTimeOffset.UnixEpoch);
+        Check(
+            "lifecycle.an_alive_returned_character_keeps_its_death_identity_through_churn",
+            q1FirstDeath is not null && q1AfterChurn is not null &&
+            q1BeforeChurn == 1 &&
+            q1AfterChurn.DeathEventId == q1FirstDeath.DeathEventId &&
+            q1AfterChurn.LifeVersion == 1 &&
+            q1Ledger.LifeVersion("CHR_Q1_SURVIVOR") == 2 &&
+            q1ThirdDeath is { LifeVersion: 2 } &&
+            q1ThirdDeath!.DeathEventId != q1FirstDeath.DeathEventId &&
+            q1Ledger.LatestDeath("CHR_Q1_SURVIVOR")!.DeathEventId ==
+                q1ThirdDeath.DeathEventId &&
+            q1Ledger.TrackedCharacters == 257 &&
+            q1Ledger.PinnedCharacters == 257 &&
+            q1Ledger.CapacityExceededBy == 1,
+            $"before={q1BeforeChurn} tracked={q1Ledger.TrackedCharacters} " +
+            $"pinned={q1Ledger.PinnedCharacters} exceeded={q1Ledger.CapacityExceededBy} " +
+            $"idKept={q1AfterChurn?.DeathEventId == q1FirstDeath?.DeathEventId} " +
+            $"lifeAfterReturn={q1Ledger.LifeVersion("CHR_Q1_SURVIVOR")}");
+
+        var ledgerNoDoubleRecord = new PlayerLifeLedger();
+        var repeatAt = returnClock.UtcNow;
+        var repeatFirst = ledgerNoDoubleRecord.RecordDamageCommit(
+            "CHR_REPEAT", 10, 0, 7, repeatAt);
+        var repeatSecond = ledgerNoDoubleRecord.RecordDamageCommit(
+            "CHR_REPEAT", 0, 0, 8, repeatAt);
+        var repeatHeal = ledgerNoDoubleRecord.RecordResurrectionCommit(
+            "CHR_REPEAT", 0, 50);
+        var repeatAfterHeal = ledgerNoDoubleRecord.RecordDamageCommit(
+            "CHR_REPEAT", 50, 0, 9, repeatAt);
+        Check(
+            "player_life.one_transition_one_record_and_one_life_advance",
+            repeatFirst is { LifeVersion: 1, DeathRevision: 7 } &&
+            repeatSecond is null &&
+            repeatHeal == 2 &&
+            ledgerNoDoubleRecord.LifeVersion("CHR_REPEAT") == 2 &&
+            repeatAfterHeal is { LifeVersion: 2, DeathRevision: 9 } &&
+            repeatAfterHeal!.DeathEventId != repeatFirst!.DeathEventId,
+            $"first={repeatFirst?.DeathEventId} second={repeatSecond?.DeathEventId}");
 
         // The non-death half of the same rule: a window belongs to the instance it
         // opened on, so an actor who changes map with no hit and no cast in
@@ -3606,7 +4727,8 @@ public static class ServiceSelfCheck
 
         var losAccept = new InMemoryQuestAcceptService(
             questCatalog, quests, npcAnchors, geometry,
-            services.GetRequiredService<QuestAcceptOptions>());
+            services.GetRequiredService<QuestAcceptOptions>(),
+            services.GetRequiredService<QuestXpSnapshotStore>());
 
         var blockedActor = NewPlayer("CHR_SELFCHECK_LOS_BLOCKED");
         blockedActor.X = 46.5;
@@ -4055,8 +5177,8 @@ public static class ServiceSelfCheck
         Check(
             "quest.dedupe_duplicate_event",
             duplicateEvent.Count == 0 &&
-            duplicateState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_A") == 1 &&
-            duplicateState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_B") == 1,
+            duplicateState?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_A") == 1 &&
+            duplicateState?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_B") == 1,
             $"updates={duplicateEvent.Count}");
 
         syntheticQuests.RecordVerifiedEvent(
@@ -4102,8 +5224,8 @@ public static class ServiceSelfCheck
             dedupeScopeActor.CharacterId, "TEST-KILL-01").State;
         Check(
             "quest.dedupe_kill_event_scope",
-            killFirst.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_A") == 1 &&
-            killFirst.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_B") == 1 &&
+            killFirst?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_A") == 1 &&
+            killFirst?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_B") == 1 &&
             killReplay.Count == 0 &&
             killSecond is { State: QuestStates.ReadyToTurnIn } &&
             killSecond.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_A") == 2 &&
@@ -4469,6 +5591,144 @@ public static class ServiceSelfCheck
             granted.Snapshot.Currencies.Single().Amount == 20,
             granted.ErrorCode ?? $"revision={granted.Snapshot?.InventoryRevision}");
 
+        // Q5 audit (owner ask on #87): the reward coat serialized durability 0.
+        // The canonical catalog states a durability for every equipment row
+        // (`Item_Rarity_Variant_Catalog_vi.csv`, column `durability` = 100 for
+        // EQ-MK-CHEST-T1-R-COMMON) and leaves the cell blank only for consumables,
+        // so 0 was an uninitialized field, not "non-durable". A grant that names no
+        // durability now takes the source; an explicit number still wins; a blank
+        // source cell stays 0 because that is what the row says, not a default.
+        var durabilityActor = NewPlayer("CHR_SELFCHECK_DURABILITY");
+        var durabilityGrant = inventory.Apply(durabilityActor, new InventoryMutation
+        {
+            AddItems =
+            [
+                new ItemGrant
+                {
+                    TemplateId = "EQ-MK-CHEST-T1-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag
+                },
+                new ItemGrant
+                {
+                    TemplateId = "POT-HP-01",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag
+                },
+                new ItemGrant
+                {
+                    TemplateId = "EQ-MK-HAT-T1-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag,
+                    Durability = 7
+                },
+                new ItemGrant
+                {
+                    TemplateId = "UNKNOWN_TEMPLATE_X",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag
+                }
+            ]
+        });
+        Check(
+            "inventory.grant_durability_comes_from_the_catalog",
+            durabilityGrant.IsSuccess &&
+            durabilityGrant.Snapshot!.Items.Single(item =>
+                item.TemplateId == "EQ-MK-CHEST-T1-R-COMMON").Durability == 100 &&
+            durabilityGrant.Snapshot.Items.Single(item =>
+                item.TemplateId == "POT-HP-01").Durability == 0 &&
+            durabilityGrant.Snapshot.Items.Single(item =>
+                item.TemplateId == "EQ-MK-HAT-T1-R-COMMON").Durability == 7 &&
+            durabilityGrant.Snapshot.Items.Single(item =>
+                item.TemplateId == "UNKNOWN_TEMPLATE_X").Durability == 0 &&
+            itemCatalog.TryGet("EQ-MK-CHEST-T1-R-COMMON", out var chestEntry) &&
+            chestEntry.Durability == 100 &&
+            itemCatalog.TryGet("POT-HP-01", out var potionEntry) &&
+            potionEntry.Durability is null,
+            $"grant={durabilityGrant.ErrorCode} items=" +
+            string.Join(
+                "|",
+                (durabilityGrant.Snapshot?.Items ?? []).Select(item =>
+                    $"{item.TemplateId}:{item.Durability}")));
+
+        // DEC-023 §2 publishes a four-number no-gear oracle and two one-item oracles.
+        // The aggregation is deliberately not wired into combat - an accepted equip
+        // still moves only the inventory - but the rules land now, so the day gear does
+        // apply cannot quietly count weapon_power twice, invent a key for an unknown
+        // label, or heal somebody by changing a maximum.
+        var noGear = PlayerStatAggregation.Derive([]);
+        Check(
+            "stats.dec023_level_one_no_gear_oracle",
+            noGear.HpMax == 198 && noGear.MpMax == 102 &&
+            noGear.PhysicalAttack == 20 && noGear.Armor == 10,
+            $"hp={noGear.HpMax} mp={noGear.MpMax} attack={noGear.PhysicalAttack} armor={noGear.Armor}");
+
+        itemCatalog.TryGet("EQ-MK-WEAPON-T1-R-COMMON", out var oracleSword);
+        itemCatalog.TryGet("EQ-MK-HAT-T1-R-COMMON", out var oracleHat);
+        var sword = PlayerStatAggregation.Resolve(oracleSword);
+        var hat = PlayerStatAggregation.Resolve(oracleHat);
+        var swordOnly = PlayerStatAggregation.Derive([sword]);
+        var hatOnly = PlayerStatAggregation.Derive([hat]);
+        Check(
+            "stats.dec023_one_item_oracles_are_38_and_14_not_50_and_16",
+            sword.WeaponAttack == 12 && sword.Strength == 2 &&
+            sword.Conflicts.Count == 0 && sword.UnsupportedLabels.Count == 0 &&
+            swordOnly.PhysicalAttack == 38 &&
+            hat.Armor == 2 && hat.Vitality == 1 && hat.Conflicts.Count == 0 &&
+            hatOnly.Armor == 14 && hatOnly.HpMax == 212,
+            $"sword.attack={swordOnly.PhysicalAttack} hat.hp={hatOnly.HpMax} hat.armor={hatOnly.Armor}");
+
+        // The alias rule gets a teeth test: two disagreeing columns contribute nothing
+        // and name the row, instead of summing (the 50 §2 rejects), taking max, or
+        // dropping whichever column is less convenient.
+        var conflicting = PlayerStatAggregation.Resolve(new ItemCatalogEntry(
+            "EQ-TEST-CONFLICT", ItemCatalog.WeaponCategory, "WEAPON", "Kiếm", "CLASS_MINH_KIEM",
+            1, "Thường", 1, null, "12", null, StatLabels.WeaponPowerPhysical, "9", null, null));
+        Check(
+            "stats.alias_conflict_contributes_nothing_and_names_the_row",
+            conflicting.WeaponAttack == 0 &&
+            conflicting.Conflicts.Count == 1 &&
+            conflicting.Conflicts[0].Contains("EQ-TEST-CONFLICT", StringComparison.Ordinal) &&
+            conflicting.Conflicts[0].Contains("weapon_power/primary_stat", StringComparison.Ordinal) &&
+            conflicting.UnsupportedLabels.Count == 0 &&
+            conflicting.UnsupportedValues.Count == 0,
+            string.Join(" / ", conflicting.Conflicts));
+
+        var unknownLabel = PlayerStatAggregation.Resolve(new ItemCatalogEntry(
+            "EQ-TEST-UNKNOWN", ItemCatalog.ArmorCategory, "CHEST", "Áo", "CLASS_MINH_KIEM",
+            1, "Thường", 1, null, null, null, "Chí mạng", "5", null, null));
+        Check(
+            "stats.unknown_stat_label_is_reported_not_invented",
+            unknownLabel.UnsupportedLabels.SequenceEqual(["Chí mạng"]) &&
+            unknownLabel.IsEmpty &&
+            unknownLabel.Conflicts.Count == 0,
+            string.Join(" / ", unknownLabel.UnsupportedLabels));
+
+        // §6 leaves the rounding rule for fractional and percentage gear open, and the
+        // shipped catalog is full of them (90 fractional weapon_power, 635 fractional
+        // armor, 1628/1565 modifier strings). Refusing is the only honest reading until
+        // somebody rules on it, so a fractional row must contribute zero and say so.
+        var fractional = PlayerStatAggregation.Resolve(new ItemCatalogEntry(
+            "EQ-TEST-FRACTION", ItemCatalog.ArmorCategory, "CHEST", "Áo", "CLASS_MINH_KIEM",
+            1, "Tinh", 1, null, null, "1.1", StatLabels.ArmorLabel, "1.1", "HP hồi", "0.5%"));
+        Check(
+            "stats.fraction_and_percent_cells_are_refused_not_rounded",
+            fractional.Armor == 0 &&
+            fractional.IsEmpty &&
+            fractional.Conflicts.Count == 0 &&
+            fractional.UnsupportedValues.Count == 2 &&
+            fractional.UnsupportedValues[0].Contains("1.1", StringComparison.Ordinal) &&
+            fractional.UnsupportedLabels.SequenceEqual(["HP hồi"]),
+            string.Join(" / ", fractional.UnsupportedValues));
+
+        Check(
+            "stats.max_change_clamps_and_never_heals",
+            PlayerStatAggregation.ClampAfterMaxChange(210, 198) == 198 &&
+            PlayerStatAggregation.ClampAfterMaxChange(198, 216) == 198 &&
+            PlayerStatAggregation.ClampAfterMaxChange(0, 216) == 0 &&
+            PlayerStatAggregation.ClampAfterMaxChange(150, 198) == 150,
+            "210/216 losing an +18 hat -> 198/198, putting it back keeps 198, a dead actor stays at 0");
+
         var equipped = inventory.Apply(inventoryActor, new InventoryMutation
         {
             ExpectedRevision = 1,
@@ -4556,6 +5816,3466 @@ public static class ServiceSelfCheck
             removed.Snapshot!.Items.Count == 1 &&
             removed.Snapshot.InventoryRevision == 3,
             removed.ErrorCode ?? $"revision={removed.Snapshot?.InventoryRevision}");
+
+        // ─── QOD-21 Q1a: approved alpha profile ingest ────────
+
+        var alphaRecords = services.GetRequiredService<WorldRecordCatalog>();
+        var alphaDesign = services.GetRequiredService<AlphaDesign>();
+        var alphaOptions = services.GetRequiredService<AlphaProfileOptions>();
+
+        Check(
+            "alpha.profile_loaded",
+            alphaDesign.DecisionId == "DESIGN-BM-ALPHA-20261103" &&
+            alphaDesign.Status.StartsWith(
+                "APPROVED_FOR_IMPLEMENTATION", StringComparison.Ordinal) &&
+            !alphaDesign.DefaultEnabled &&
+            !alphaOptions.Enabled &&
+            alphaDesign.OverlayRecords.Count == 7 &&
+            alphaDesign.Inventory.BagSlots == 100 &&
+            alphaDesign.Inventory.EquipmentSlots.Count == 12 &&
+            alphaDesign.Boss.MaxHp == 1200 &&
+            alphaDesign.Boss.Moves.Count == 3 &&
+            alphaDesign.DeathReturn.AnchorX == 18 &&
+            alphaDesign.DeathReturn.AnchorY == 0,
+            $"{alphaDesign.DecisionId} overlays={alphaDesign.OverlayRecords.Count} " +
+            $"enabled={alphaOptions.Enabled}");
+
+        Check(
+            "alpha.overlay_bounds",
+            maps.TryResolve(alphaDesign.Scope.MapId, out var alphaBounds) &&
+            alphaDesign.OverlayRecords.All(record =>
+                alphaBounds.Contains(record.X, record.Y)),
+            alphaDesign.Scope.MapId);
+
+        bool AlphaRejects(AlphaDesign mutated)
+        {
+            try
+            {
+                AlphaProfileValidator.Validate(mutated, maps, npcAnchors, alphaRecords);
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+                return true;
+            }
+        }
+
+        var badOverlay = new[] { alphaDesign.OverlayRecords[0] with { X = 9999 } }
+            .Concat(alphaDesign.OverlayRecords.Skip(1))
+            .ToArray();
+        Check(
+            "alpha.rejects_out_of_bounds_overlay",
+            AlphaRejects(alphaDesign with { OverlayRecords = badOverlay }),
+            "x=9999 must fail");
+
+        Check(
+            "alpha.rejects_wrong_bag",
+            AlphaRejects(alphaDesign with
+            {
+                Inventory = alphaDesign.Inventory with { BagSlots = 99 }
+            }),
+            "bag 99 must fail");
+
+        Check(
+            "alpha.rejects_missing_boss_move",
+            AlphaRejects(alphaDesign with
+            {
+                Boss = alphaDesign.Boss with
+                {
+                    Moves = alphaDesign.Boss.Moves
+                        .Where(move => move.Id != "C")
+                        .ToArray()
+                }
+            }),
+            "A+B only must fail");
+
+        Check(
+            "alpha.rejects_wrong_death_anchor",
+            AlphaRejects(alphaDesign with
+            {
+                DeathReturn = alphaDesign.DeathReturn with { AnchorX = 0 }
+            }),
+            "anchor 0 must fail");
+
+        // Teeth for the boot enforcement added at f0d8cee. Each half alone re-creates the
+        // deadlock the baseline line 207 exists to remove: naming NPC_CLASS_TRIAL is not
+        // enough if the window moves to after completion, and keeping the window is not
+        // enough if the final TALK step points at somebody else.
+        Check(
+            "alpha.rejects_trial_npc_condition_decoupled_from_class_trial",
+            AlphaRejects(alphaDesign with
+            {
+                QuestRules = alphaDesign.QuestRules with
+                {
+                    P00_05_TrialNpcConditionOverride =
+                        "NPC_CLASS_TRIAL visible after P00-05 COMPLETED"
+                }
+            }) && AlphaRejects(alphaDesign with
+            {
+                QuestRules = alphaDesign.QuestRules with
+                {
+                    P00_05_OrderedObjectives = new[]
+                    {
+                        "BOSS_MANG_COT kill committed",
+                        "ALPHA_OBJ_BM_FRAGMENT interact committed",
+                        "NPC_LYAN TALK committed"
+                    }
+                }
+            }),
+            "the window and the final TALK target must both stay as approved");
+
+        Check(
+            "alpha.rejects_unapproved_status",
+            AlphaRejects(alphaDesign with { Status = "DRAFT" }),
+            "DRAFT must fail");
+
+        Check(
+            "alpha.rejects_default_enabled",
+            AlphaRejects(alphaDesign with { DefaultEnabled = true }),
+            "defaultEnabled=true must fail");
+
+        // ─── QOD-21 Q1b: alpha overlay merge into the runtime catalogs ────
+
+        var alphaBaseEntities = services.GetRequiredService<WorldEntityCatalog>();
+        Check(
+            "alpha.overlay_gate_off_records",
+            alphaRecords.Count == 352 &&
+            alphaDesign.OverlayRecords.All(overlay => !alphaRecords.TryGet(overlay.RecordId, out _)),
+            $"base={alphaRecords.Count}");
+        Check(
+            "alpha.overlay_gate_off_entities",
+            alphaBaseEntities.Count == 44 &&
+            alphaDesign.OverlayRecords.All(overlay =>
+                alphaBaseEntities.Entities.All(entity =>
+                    !string.Equals(entity.EntityId, overlay.EntityId, StringComparison.Ordinal))),
+            $"base={alphaBaseEntities.Count}");
+
+        var alphaMergedRecords = AlphaOverlayMerger.MergeRecords(
+            alphaRecords, alphaDesign, maps);
+        var alphaMergedEntities = AlphaOverlayMerger.MergeEntities(
+            alphaBaseEntities, alphaDesign, maps);
+
+        Check(
+            "alpha.overlay_merge_records",
+            alphaMergedRecords.Count == 359 &&
+            alphaDesign.OverlayRecords.All(overlay =>
+                alphaMergedRecords.TryGet(overlay.RecordId, out var record) &&
+                record.MapId == "MAP_BEN_MUA" &&
+                record.X == overlay.X &&
+                record.Y == overlay.Y &&
+                record.EntityIds.Count == 1 &&
+                record.EntityIds[0] == overlay.EntityId &&
+                record.RespawnSeconds == 0 &&
+                record.Gather is null &&
+                record.DesignState == $"ALPHA_OVERLAY:{alphaDesign.DecisionId}"),
+            $"merged={alphaMergedRecords.Count}");
+
+        var alphaRippleRecord = alphaMergedRecords.TryGet(
+            "ALPHA-BM-RIPPLE-01", out var ripple01) ? ripple01 : null;
+        var alphaVillagerRecord = alphaMergedRecords.TryGet(
+            "ALPHA-BM-VILLAGER-01", out var villager01) ? villager01 : null;
+        var alphaWaveRecord = alphaMergedRecords.TryGet(
+            "ALPHA-BM-WAVE-TRAINING", out var wave01) ? wave01 : null;
+        var alphaFragmentRecord = alphaMergedRecords.TryGet(
+            "ALPHA-BM-FRAGMENT", out var fragment01) ? fragment01 : null;
+        Check(
+            "alpha.overlay_merge_record_kinds",
+            alphaRippleRecord?.RecordType == "INTERACTABLE" &&
+            alphaVillagerRecord?.RecordType == "RESCUE_INTERACTABLE" &&
+            alphaWaveRecord?.RecordType == "QUEST_HAZARD" &&
+            alphaFragmentRecord?.Condition.Contains(
+                "boss kill committed", StringComparison.Ordinal) == true,
+            $"ripple={alphaRippleRecord?.RecordType} " +
+            $"villager={alphaVillagerRecord?.RecordType} " +
+            $"wave={alphaWaveRecord?.RecordType}");
+
+        var alphaResolvedRipple = alphaMergedRecords.TryResolveTarget(
+            "ALPHA_OBJ_BM_RIPPLE_02", "MAP_BEN_MUA", out var resolvedRipple)
+            ? resolvedRipple
+            : null;
+        Check(
+            "alpha.overlay_merge_resolve",
+            alphaResolvedRipple?.RecordId == "ALPHA-BM-RIPPLE-02" &&
+            !alphaMergedRecords.TryResolveTarget(
+                "ALPHA_OBJ_BM_RIPPLE_02", "MAP_THANH_LAC", out _),
+            alphaResolvedRipple?.RecordId ?? "unresolved");
+
+        Check(
+            "alpha.overlay_merge_entities",
+            alphaMergedEntities.Count == 50 &&
+            alphaMergedEntities.Templates.Count == 28 &&
+            alphaDesign.OverlayRecords
+                .Where(overlay => AlphaOverlayMerger.HasRuntimeEntity(overlay.Kind))
+                .All(overlay =>
+                {
+                    var entity = alphaMergedEntities.Entities.SingleOrDefault(candidate =>
+                        string.Equals(candidate.EntityId, overlay.EntityId, StringComparison.Ordinal));
+                    return entity is
+                    {
+                        Kind: WorldEntityKinds.Interactable,
+                        MapId: "MAP_BEN_MUA",
+                        FloorId: "OVERWORLD",
+                        Quantity: 1,
+                        RespawnSeconds: 0,
+                        ClaimPolicy: WorldEntityClaimPolicies.PerCharacter,
+                        State: WorldEntityStates.Available,
+                        Revision: 1,
+                        LifeId: 1
+                    } &&
+                    entity.RecordId == overlay.RecordId &&
+                    entity.X == overlay.X &&
+                    entity.Y == overlay.Y &&
+                    entity.TemplateIds.Count == 1 &&
+                    entity.TemplateIds[0] == overlay.EntityId &&
+                    alphaMergedEntities.Templates.Any(template =>
+                        template.TemplateId == overlay.EntityId &&
+                        template.Kind == WorldEntityKinds.Interactable);
+                }) &&
+            alphaMergedEntities.Entities.All(entity =>
+                !string.Equals(entity.EntityId, "ALPHA_WAVE_BM_TRAINING", StringComparison.Ordinal)),
+            $"entities={alphaMergedEntities.Count} templates={alphaMergedEntities.Templates.Count}");
+
+        var alphaMergedRegistry = new WorldEntityRegistry(
+            alphaMergedEntities, services.GetRequiredService<IServerClock>());
+        var alphaFragmentEntity = alphaMergedRegistry.TryGet(
+            "ALPHA_OBJ_BM_FRAGMENT", out var fragmentEntity) ? fragmentEntity : null;
+        Check(
+            "alpha.overlay_registry_ready",
+            alphaFragmentEntity is { State: WorldEntityStates.Available } &&
+            !alphaMergedRegistry.TryGet("ALPHA_WAVE_BM_TRAINING", out _),
+            alphaFragmentEntity?.State ?? "missing");
+
+        bool AlphaOverlayRecordRejects(AlphaDesign mutated)
+        {
+            try
+            {
+                AlphaOverlayMerger.MergeRecords(alphaRecords, mutated, maps);
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+                return true;
+            }
+        }
+
+        bool AlphaOverlayEntityRejects(AlphaDesign mutated)
+        {
+            try
+            {
+                AlphaOverlayMerger.MergeEntities(alphaBaseEntities, mutated, maps);
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+                return true;
+            }
+        }
+
+        Check(
+            "alpha.overlay_rejects_base_entity_collision",
+            AlphaOverlayEntityRejects(alphaDesign with
+            {
+                OverlayRecords = new[] { alphaDesign.OverlayRecords[0] with
+                {
+                    EntityId = "ENT_MAN_BM_FISHING_LINH"
+                } }.Concat(alphaDesign.OverlayRecords.Skip(1)).ToArray()
+            }),
+            "entityId must not collide with a world entity");
+
+        Check(
+            "alpha.overlay_rejects_non_alpha_record_prefix",
+            AlphaOverlayRecordRejects(alphaDesign with
+            {
+                OverlayRecords = new[] { alphaDesign.OverlayRecords[0] with
+                {
+                    RecordId = "BM-RIPPLE-01"
+                } }.Concat(alphaDesign.OverlayRecords.Skip(1)).ToArray()
+            }),
+            "recordId must keep the ALPHA- prefix");
+
+        Check(
+            "alpha.overlay_rejects_bad_kind",
+            AlphaOverlayRecordRejects(alphaDesign with
+            {
+                OverlayRecords = new[] { alphaDesign.OverlayRecords[0] with
+                {
+                    Kind = "NPC"
+                } }.Concat(alphaDesign.OverlayRecords.Skip(1)).ToArray()
+            }),
+            "kind NPC must fail");
+
+        Check(
+            "alpha.overlay_rejects_duplicate_record",
+            AlphaOverlayRecordRejects(alphaDesign with
+            {
+                OverlayRecords = new[] { alphaDesign.OverlayRecords[0],
+                    alphaDesign.OverlayRecords[0] with { EntityId = "ALPHA_OBJ_BM_RIPPLE_99" } }
+                    .Concat(alphaDesign.OverlayRecords.Skip(1)).ToArray()
+            }),
+            "duplicate recordId must fail");
+
+        // ─── QOD-21 Q1c: alpha quest pack merge ────────
+
+        var alphaEnvironment = services.GetRequiredService<IHostEnvironment>();
+        var alphaOverlayQuests = QuestCatalogLoader.Load(
+            AlphaQuestCatalogMerger.DiscoverOverlayDirectory(
+                alphaEnvironment.ContentRootPath));
+        var alphaMergedQuests = AlphaQuestCatalogMerger.Merge(
+            questCatalog, alphaOverlayQuests);
+
+        Check(
+            "alpha.quest_gate_off_catalog",
+            questCatalog.Count == 5 &&
+            !questCatalog.TryGet("C1-01", out _),
+            $"base={questCatalog.Count}");
+
+        Check(
+            "alpha.quest_merge_catalog",
+            alphaMergedQuests.Count == 6 &&
+            alphaMergedQuests.QuestIds.SequenceEqual(
+                new[] { "C1-01", "P00-01", "P00-02", "P00-03", "P00-04", "P00-05" },
+                StringComparer.Ordinal),
+            $"merged={alphaMergedQuests.Count}");
+
+        var alphaP00_02 = alphaMergedQuests.TryGet("P00-02", out var alphaP2)
+            ? alphaP2
+            : null;
+        Check(
+            "alpha.quest_p00_02",
+            alphaP00_02 is
+            {
+                IsBlocked: false,
+                StartNpcId: "NPC_TA_VAN_KHANH",
+                TurnInNpcId: "NPC_TA_VAN_KHANH",
+                MinLevel: 1,
+                MaxLevel: 10
+            } &&
+            alphaP00_02.Objectives.Count == 2 &&
+            alphaP00_02.Objectives[0].Type == QuestObjectiveTypes.Interact &&
+            alphaP00_02.Objectives[0].Count == 3 &&
+            alphaP00_02.Objectives[0].TargetIds.SequenceEqual(
+                new[] { "ALPHA-BM-RIPPLE-01", "ALPHA-BM-RIPPLE-02", "ALPHA-BM-RIPPLE-03" },
+                StringComparer.Ordinal) &&
+            alphaP00_02.Objectives[1].Type == QuestObjectiveTypes.Kill &&
+            alphaP00_02.Objectives[1].Count == 4 &&
+            alphaP00_02.Objectives[1].TargetIds.SequenceEqual(
+                new[] { "MOB_CARPLING" }, StringComparer.Ordinal) &&
+            alphaP00_02.Unlocks.SequenceEqual(new[] { "P00-03" }, StringComparer.Ordinal) &&
+            alphaP00_02.Rewards.ItemIds.SequenceEqual(
+                new[] { "POT-HP-01" }, StringComparer.Ordinal),
+            $"activation={alphaP00_02?.Activation}");
+
+        var alphaP00_03 = alphaMergedQuests.TryGet("P00-03", out var alphaP3)
+            ? alphaP3
+            : null;
+        Check(
+            "alpha.quest_p00_03",
+            alphaP00_03 is
+            {
+                IsBlocked: false,
+                StartNpcId: "NPC_LYAN",
+                TurnInNpcId: "NPC_LYAN"
+            } &&
+            alphaP00_03.Objectives.Count == 3 &&
+            alphaP00_03.Objectives[0].Type == QuestObjectiveTypes.Interact &&
+            alphaP00_03.Objectives[0].Count == 2 &&
+            alphaP00_03.Objectives[0].TargetIds.SequenceEqual(
+                new[] { "ALPHA-BM-VILLAGER-01", "ALPHA-BM-VILLAGER-02" },
+                StringComparer.Ordinal) &&
+            alphaP00_03.Objectives[1].Type == QuestObjectiveTypes.Kill &&
+            alphaP00_03.Objectives[1].Count == 3 &&
+            alphaP00_03.Objectives[1].TargetIds.SequenceEqual(
+                new[] { "MOB_WATERROOT" }, StringComparer.Ordinal) &&
+            alphaP00_03.Objectives[2].Type == QuestObjectiveTypes.Interact &&
+            alphaP00_03.Objectives[2].Count == 1 &&
+            alphaP00_03.Objectives[2].TargetIds.SequenceEqual(
+                new[] { "ALPHA-BM-WAVE-TRAINING" }, StringComparer.Ordinal) &&
+            alphaP00_03.Unlocks.SequenceEqual(new[] { "P00-04" }, StringComparer.Ordinal),
+            $"objectives={alphaP00_03?.Objectives.Count}");
+
+        var alphaP00_04 = alphaMergedQuests.TryGet("P00-04", out var alphaP4)
+            ? alphaP4
+            : null;
+        Check(
+            "alpha.quest_p00_04",
+            alphaP00_04 is
+            {
+                IsBlocked: false,
+                StartNpcId: "NPC_TA_VAN_KHANH",
+                TurnInNpcId: "NPC_TA_VAN_KHANH"
+            } &&
+            alphaP00_04.Objectives.Count == 2 &&
+            alphaP00_04.Objectives.All(objective =>
+                objective.Type == QuestObjectiveTypes.Kill && objective.Count == 3) &&
+            alphaP00_04.Objectives[0].TargetIds.SequenceEqual(
+                new[] { "MAN-BM-WAVE_BM_ESCORT_A" }, StringComparer.Ordinal) &&
+            alphaP00_04.Objectives[1].TargetIds.SequenceEqual(
+                new[] { "MAN-BM-WAVE_BM_ESCORT_B" }, StringComparer.Ordinal) &&
+            alphaP00_04.Rewards.Currency.Count == 1 &&
+            alphaP00_04.Rewards.Currency[0].CurrencyId == "COIN" &&
+            alphaP00_04.Rewards.Currency[0].Amount == 30,
+            $"objectives={alphaP00_04?.Objectives.Count}");
+
+        var alphaP00_05 = alphaMergedQuests.TryGet("P00-05", out var alphaP5)
+            ? alphaP5
+            : null;
+        Check(
+            "alpha.quest_p00_05",
+            alphaP00_05 is
+            {
+                IsBlocked: false,
+                StartNpcId: "NPC_TA_VAN_KHANH",
+                TurnInNpcId: "NPC_TA_VAN_KHANH"
+            } &&
+            alphaP00_05.OrderedObjectives &&
+            alphaP00_05.Objectives.Count == 3 &&
+            alphaP00_05.Objectives[0].Type == QuestObjectiveTypes.Boss &&
+            alphaP00_05.Objectives[0].TargetIds.SequenceEqual(
+                new[] { "MAN-BM-SPAWN_BM_05_QUEST" }, StringComparer.Ordinal) &&
+            alphaP00_05.Objectives[1].Type == QuestObjectiveTypes.Interact &&
+            alphaP00_05.Objectives[1].TargetIds.SequenceEqual(
+                new[] { "ALPHA-BM-FRAGMENT" }, StringComparer.Ordinal) &&
+            alphaP00_05.Objectives[2].Type == QuestObjectiveTypes.Talk &&
+            alphaP00_05.Objectives[2].TargetIds.SequenceEqual(
+                new[] { "NPC_CLASS_TRIAL" }, StringComparer.Ordinal) &&
+            alphaP00_05.Unlocks.SequenceEqual(new[] { "C1-01" }, StringComparer.Ordinal) &&
+            alphaP00_05.Rewards.ItemIds.SequenceEqual(
+                new[] { "EQ-MK-WEAPON-T1-R-COMMON" }, StringComparer.Ordinal),
+            $"ordered={alphaP00_05?.OrderedObjectives}");
+
+        var alphaC1_01 = alphaMergedQuests.TryGet("C1-01", out var alphaC1)
+            ? alphaC1
+            : null;
+        Check(
+            "alpha.quest_c1_01",
+            alphaC1_01 is
+            {
+                IsBlocked: false,
+                QuestType: QuestTypes.Main,
+                StartNpcId: "NPC_LYAN",
+                TurnInNpcId: "NPC_LYAN",
+                MinLevel: 11,
+                MaxLevel: 20
+            } &&
+            alphaC1_01.PrerequisiteQuestIds.SequenceEqual(
+                new[] { "P00-05" }, StringComparer.Ordinal) &&
+            alphaC1_01.Objectives.Count == 2 &&
+            alphaC1_01.Objectives[0].Type == QuestObjectiveTypes.Talk &&
+            alphaC1_01.Objectives[0].Count == 3 &&
+            alphaC1_01.Objectives[0].MapId == "MAP_THANH_LAC" &&
+            alphaC1_01.Objectives[0].TargetIds.SequenceEqual(
+                new[] { "NPC_GUARD_CAPTAIN", "NPC_HA_MAC", "NPC_MASTER_MINH_KIEM" },
+                StringComparer.Ordinal) &&
+            alphaC1_01.Objectives[1].Type == QuestObjectiveTypes.Talk &&
+            alphaC1_01.Objectives[1].TargetIds.SequenceEqual(
+                new[] { "NPC_CLASS_TRIAL" }, StringComparer.Ordinal) &&
+            alphaC1_01.Rewards.Currency.Count == 1 &&
+            alphaC1_01.Rewards.Currency[0].CurrencyId == "COIN" &&
+            alphaC1_01.Rewards.Currency[0].Amount == 80 &&
+            alphaC1_01.Unlocks.Count == 0,
+            $"band={alphaC1_01?.MinLevel}..{alphaC1_01?.MaxLevel}");
+
+        var levelStates = new InMemoryQuestStateStore();
+        var levelClock = services.GetRequiredService<IServerClock>();
+        var levelQuests = new InMemoryQuestService(
+            alphaMergedQuests, levelStates, alphaMergedRecords, levelClock);
+        var levelAccept = new InMemoryQuestAcceptService(
+            alphaMergedQuests, levelQuests, npcAnchors, geometry,
+            services.GetRequiredService<QuestAcceptOptions>(), new QuestXpSnapshotStore());
+        var levelDefinition = alphaC1_01!;
+        var levelAnchor = npcAnchors.All.Single(anchor =>
+            anchor.NpcId == levelDefinition.StartNpcId && anchor.MapId == options.DefaultMapId);
+        void CompleteLevelPrerequisite(PlayerSession actor)
+        {
+            var prerequisite = levelStates.GetOrAdd(actor.CharacterId, "P00-05", () => new PlayerQuestState(
+                actor.CharacterId, "P00-05", QuestStates.Completed, alphaP00_05!.InitialStepId,
+                alphaP00_05.Objectives.Select(objective => objective.ObjectiveId), levelClock.UtcNow));
+            lock (prerequisite.SyncRoot)
+            {
+                prerequisite.State = QuestStates.Completed;
+            }
+        }
+        PlayerSession LevelActor(string suffix, int level)
+        {
+            var actor = NewPlayer("CHR_SELFCHECK_C1_LEVEL_" + suffix);
+            actor.Level = level;
+            actor.MapId = levelAnchor.MapId;
+            actor.FloorId = levelAnchor.FloorId;
+            actor.X = levelAnchor.X;
+            actor.Y = levelAnchor.Y;
+            return actor;
+        }
+        var levelLow = LevelActor("LOW", levelDefinition.MinLevel - 1);
+        var levelLowBefore = levelQuests.GetState(levelLow, levelDefinition.QuestId).State;
+        var levelLowRefused = levelAccept.Accept(
+            levelLow, levelDefinition.QuestId, levelDefinition.StartNpcId, "f0" + new string('0', 30));
+        Check(
+            "alpha.c1_level_reason_precedes_missing_prerequisite",
+            levelLowBefore?.State == QuestStates.Locked && !levelLowRefused.Accepted &&
+            levelLowRefused.Failure is { Code: QuestAcceptErrorCodes.PrerequisiteNotMet, Retryable: false } &&
+            levelLowRefused.Failure.FieldErrors.SequenceEqual(["level"]),
+            $"level={levelLow.Level} state={levelLowBefore?.State} fields={string.Join(',', levelLowRefused.Failure?.FieldErrors ?? [])}");
+        CompleteLevelPrerequisite(levelLow);
+        var levelLowAfter = levelQuests.GetState(levelLow, levelDefinition.QuestId).State;
+        var levelLowAgain = levelQuests.GetState(levelLow, levelDefinition.QuestId).State;
+        var levelLowCompletedRefused = levelAccept.Accept(
+            levelLow, levelDefinition.QuestId, levelDefinition.StartNpcId, "f1" + new string('0', 30));
+        Check(
+            "alpha.c1_completed_tutorial_does_not_bypass_level",
+            levelStates.Find(levelLow.CharacterId, "P00-05")?.State == QuestStates.Completed &&
+            levelLowAfter?.State == QuestStates.Locked && levelLowAgain?.Revision == levelLowAfter.Revision &&
+            levelLowAfter.Revision == levelLowBefore?.Revision &&
+            !levelLowCompletedRefused.Accepted &&
+            levelLowCompletedRefused.Failure?.FieldErrors.SequenceEqual(["level"]) == true,
+            $"level={levelLow.Level} state={levelLowAfter?.State} revision={levelLowBefore?.Revision}->{levelLowAfter?.Revision}");
+        var levelCoreLow = LevelActor("CORE_LOW", levelDefinition.MinLevel - 1);
+        CompleteLevelPrerequisite(levelCoreLow);
+        var levelCoreRefused = levelQuests.Accept(levelCoreLow, levelDefinition.QuestId);
+        Check(
+            "alpha.c1_core_accept_cannot_bypass_level",
+            !levelCoreRefused.Accepted &&
+            levelCoreRefused.Failure?.Code == QuestAcceptErrorCodes.PrerequisiteNotMet &&
+            levelCoreRefused.Failure.FieldErrors.SequenceEqual(["level"]) &&
+            levelQuests.GetState(levelCoreLow, levelDefinition.QuestId).State?.State == QuestStates.Locked,
+            $"accepted={levelCoreRefused.Accepted} code={levelCoreRefused.Failure?.Code}");
+        var levelHigh = LevelActor("HIGH", levelDefinition.MinLevel);
+        var levelHighLocked = levelQuests.GetState(levelHigh, levelDefinition.QuestId).State;
+        var levelHighMissing = levelAccept.Accept(
+            levelHigh, levelDefinition.QuestId, levelDefinition.StartNpcId, "f2" + new string('0', 30));
+        CompleteLevelPrerequisite(levelHigh);
+        var levelHighAvailable = levelQuests.GetState(levelHigh, levelDefinition.QuestId).State;
+        var levelHighAgain = levelQuests.GetState(levelHigh, levelDefinition.QuestId).State;
+        var levelHighAccepted = levelAccept.Accept(
+            levelHigh, levelDefinition.QuestId, levelDefinition.StartNpcId, "f3" + new string('0', 30));
+        Check(
+            "alpha.c1_level_threshold_still_requires_tutorial_then_accepts",
+            levelHighLocked?.State == QuestStates.Locked && !levelHighMissing.Accepted &&
+            levelHighMissing.Failure?.FieldErrors.Count == 0 &&
+            levelHighAvailable?.State == QuestStates.Available &&
+            levelHighAvailable.Revision == levelHighLocked.Revision + 1 &&
+            levelHighAgain?.Revision == levelHighAvailable.Revision &&
+            levelHighAccepted.State is { State: QuestStates.Active } &&
+            levelHighAccepted.State.Revision == levelHighAvailable.Revision + 1,
+            $"level={levelHigh.Level} state={levelHighAccepted.State?.State} revision={levelHighAccepted.State?.Revision}");
+        var levelStale = LevelActor("STALE", levelDefinition.MinLevel - 1);
+        CompleteLevelPrerequisite(levelStale);
+        levelStates.GetOrAdd(levelStale.CharacterId, levelDefinition.QuestId, () => new PlayerQuestState(
+            levelStale.CharacterId, levelDefinition.QuestId, QuestStates.Available,
+            levelDefinition.InitialStepId, levelDefinition.Objectives.Select(objective => objective.ObjectiveId), levelClock.UtcNow));
+        var levelStaleRead = levelQuests.GetState(levelStale, levelDefinition.QuestId).State;
+        var levelStalePassive = levelQuests.GetState(levelStale.CharacterId, levelDefinition.QuestId).State;
+        var levelStaleAgain = levelQuests.GetState(levelStale, levelDefinition.QuestId).State;
+        Check(
+            "alpha.c1_stale_available_relocks_once_and_passive_reads_do_not_unlock",
+            levelStaleRead is { State: QuestStates.Locked, Revision: 2 } &&
+            levelStalePassive?.State == QuestStates.Locked && levelStalePassive.Revision == levelStaleRead.Revision &&
+            levelStaleAgain?.Revision == levelStaleRead.Revision,
+            $"state={levelStaleRead?.State} revision={levelStaleRead?.Revision}");
+        var levelChanging = LevelActor("CHANGING", levelDefinition.MinLevel - 1);
+        CompleteLevelPrerequisite(levelChanging);
+        var levelChangingPassive = levelQuests.GetState(levelChanging.CharacterId, levelDefinition.QuestId).State;
+        var levelChangingLow = levelQuests.GetState(levelChanging, levelDefinition.QuestId).State;
+        levelChanging.Level = levelDefinition.MinLevel;
+        var levelChangingHigh = levelQuests.GetState(levelChanging, levelDefinition.QuestId).State;
+        levelChanging.Level = levelDefinition.MaxLevel + 1;
+        var levelChangingAbove = levelQuests.GetState(levelChanging, levelDefinition.QuestId).State;
+        var levelChangingList = levelQuests.GetStates(levelChanging.CharacterId)
+            .Single(state => state.QuestId == levelDefinition.QuestId);
+        var levelChangingRefused = levelQuests.Accept(levelChanging, levelDefinition.QuestId);
+        Check(
+            "alpha.c1_live_level_changes_and_upper_band_are_authoritative",
+            levelChangingPassive is { State: QuestStates.Locked, Revision: 1 } &&
+            levelChangingLow is { State: QuestStates.Locked, Revision: 1 } &&
+            levelChangingHigh is { State: QuestStates.Available, Revision: 2 } &&
+            levelChangingAbove is { State: QuestStates.Locked, Revision: 3 } &&
+            levelChangingList is { State: QuestStates.Locked, Revision: 3 } &&
+            !levelChangingRefused.Accepted &&
+            levelChangingRefused.Failure?.FieldErrors.SequenceEqual(["level"]) == true,
+            $"passive={levelChangingPassive?.State} low={levelChangingLow?.Revision} high={levelChangingHigh?.Revision} above={levelChangingAbove?.Revision}");
+        var levelProtected = new[] { QuestStates.Active, QuestStates.ReadyToTurnIn, QuestStates.Completed, QuestStates.Failed }
+            .Select(state =>
+            {
+                var actor = LevelActor("PROTECTED_" + state, levelDefinition.MinLevel - 1);
+                var stored = levelStates.GetOrAdd(actor.CharacterId, levelDefinition.QuestId, () => new PlayerQuestState(
+                    actor.CharacterId, levelDefinition.QuestId, state, levelDefinition.InitialStepId,
+                    levelDefinition.Objectives.Select(objective => objective.ObjectiveId), levelClock.UtcNow));
+                var before = stored.ToContract();
+                var after = levelQuests.GetState(actor, levelDefinition.QuestId).State;
+                return after is not null && after.State == before.State && after.Revision == before.Revision &&
+                       after.StepId == before.StepId && after.ObjectiveCounters.SequenceEqual(before.ObjectiveCounters);
+            }).ToArray();
+        Check(
+            "alpha.c1_level_reads_preserve_active_and_terminal_states",
+            levelProtected.All(unchanged => unchanged), $"preserved={levelProtected.Count(unchanged => unchanged)}/{levelProtected.Length}");
+
+        var alphaQuestValidationPassed = true;
+        string? alphaQuestValidationError = null;
+        try
+        {
+            QuestCatalogValidator.Validate(
+                alphaMergedQuests, alphaMergedRecords, npcAnchors);
+        }
+        catch (InvalidOperationException exception)
+        {
+            alphaQuestValidationPassed = false;
+            alphaQuestValidationError = exception.Message;
+        }
+
+        Check(
+            "alpha.quest_merge_validates",
+            alphaQuestValidationPassed,
+            alphaQuestValidationError);
+
+        Dictionary<string, QuestDefinition> AlphaOverlayDefinitions() =>
+            alphaOverlayQuests.QuestIds.ToDictionary(
+                questId => questId,
+                questId => alphaOverlayQuests.TryGet(questId, out var definition)
+                    ? definition
+                    : throw new InvalidOperationException($"missing overlay quest {questId}"),
+                StringComparer.Ordinal);
+
+        bool AlphaQuestMergeRejects(QuestCatalog overlay)
+        {
+            try
+            {
+                AlphaQuestCatalogMerger.Merge(questCatalog, overlay);
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+                return true;
+            }
+        }
+
+        var blockedOverlayDefinitions = AlphaOverlayDefinitions();
+        blockedOverlayDefinitions["P00-02"] = blockedOverlayDefinitions["P00-02"] with
+        {
+            Activation = QuestActivations.Blocked,
+            BlockedSteps = [new QuestBlockedStep("X", "turnInNpcId", "design.md")]
+        };
+        Check(
+            "alpha.quest_rejects_blocked_overlay",
+            AlphaQuestMergeRejects(new QuestCatalog(blockedOverlayDefinitions)),
+            "a BLOCKED alpha definition must fail");
+
+        var missingPackDefinitions = AlphaOverlayDefinitions();
+        missingPackDefinitions.Remove("C1-01");
+        Check(
+            "alpha.quest_rejects_missing_pack_quest",
+            AlphaQuestMergeRejects(new QuestCatalog(missingPackDefinitions)),
+            "a pack without C1-01 must fail");
+
+        var extraPackDefinitions = AlphaOverlayDefinitions();
+        extraPackDefinitions["P00-06"] = extraPackDefinitions["P00-02"] with
+        {
+            QuestId = "P00-06"
+        };
+        Check(
+            "alpha.quest_rejects_unknown_pack_quest",
+            AlphaQuestMergeRejects(new QuestCatalog(extraPackDefinitions)),
+            "an id outside the design pack must fail");
+
+        // Q1c runtime: the merged P00-05 semantics are exercised on fixtures.
+        // BOSS objectives credit only kills of the quest-boss record (the tick
+        // engine already emits KILL with source.RecordId, so a
+        // MAN-BM-SPAWN_BM_05_QUEST death reaches the objective), and
+        // orderedObjectives holds every later objective closed until the first
+        // incomplete one completes (boss before fragment before class-confirm).
+
+        QuestDefinition AlphaOrderedFixture(string questId, bool ordered) =>
+            new(
+                questId,
+                QuestTypes.Main,
+                "NPC_TA_VAN_KHANH",
+                1,
+                10,
+                [],
+                [
+                    new QuestObjectiveDefinition(
+                        "OBJ_BOSS_FIXTURE", QuestObjectiveTypes.Boss,
+                        ["MAN-BM-SPAWN_BM_05_QUEST"], 1, options.DefaultMapId),
+                    new QuestObjectiveDefinition(
+                        "OBJ_FRAGMENT_FIXTURE", QuestObjectiveTypes.Interact,
+                        ["ALPHA-BM-FRAGMENT"], 1, options.DefaultMapId)
+                ],
+                QuestStepIds.FromObjectiveId("OBJ_BOSS_FIXTURE"),
+                "NPC_TA_VAN_KHANH",
+                new QuestRewards([], [], "LEVEL_BAND_BASE"),
+                [],
+                OrderedObjectives: ordered);
+
+        var alphaRuntimeQuests = new InMemoryQuestService(
+            new QuestCatalog(
+                new Dictionary<string, QuestDefinition>
+                {
+                    ["ALPHA-ORDER-01"] = AlphaOrderedFixture("ALPHA-ORDER-01", ordered: true),
+                    ["ALPHA-FREE-01"] = AlphaOrderedFixture("ALPHA-FREE-01", ordered: false)
+                }),
+            new InMemoryQuestStateStore(),
+            alphaMergedRecords,
+            interactClock);
+
+        var alphaBossActor = NewPlayer("CHR_SELFCHECK_ALPHA_BOSS");
+        alphaRuntimeQuests.Accept(alphaBossActor, "ALPHA-ORDER-01");
+        var bossEventId = new string('f', 32);
+        var fragmentEventId = new string('a', 32);
+        var nonKillBossEvent = alphaRuntimeQuests.RecordVerifiedEvent(
+            alphaBossActor, fragmentEventId, QuestProgressEventTypes.InteractClaim,
+            "MAN-BM-SPAWN_BM_05_QUEST", options.DefaultMapId);
+        var bossKill = alphaRuntimeQuests.RecordVerifiedEvent(
+            alphaBossActor, bossEventId, QuestProgressEventTypes.Kill,
+            "MAN-BM-SPAWN_BM_05_QUEST", options.DefaultMapId);
+        var bossReplay = alphaRuntimeQuests.RecordVerifiedEvent(
+            alphaBossActor, bossEventId, QuestProgressEventTypes.Kill,
+            "MAN-BM-SPAWN_BM_05_QUEST", options.DefaultMapId);
+        var bossState = alphaRuntimeQuests.GetState(
+            alphaBossActor.CharacterId, "ALPHA-ORDER-01").State;
+        Check(
+            "alpha.quest_boss_credits_only_kills",
+            nonKillBossEvent.Count == 0 &&
+            bossKill.Count == 1 &&
+            bossReplay.Count == 0 &&
+            bossState is { State: QuestStates.Active } &&
+            bossState.ObjectiveCounters.GetValueOrDefault("OBJ_BOSS_FIXTURE") == 1 &&
+            bossState.ObjectiveCounters.GetValueOrDefault("OBJ_FRAGMENT_FIXTURE") == 0,
+            $"nonKill={nonKillBossEvent.Count} kill={bossKill.Count} " +
+            $"replay={bossReplay.Count} boss={bossState?.ObjectiveCounters.GetValueOrDefault("OBJ_BOSS_FIXTURE")}");
+
+        var alphaOrderActor = NewPlayer("CHR_SELFCHECK_ALPHA_ORDER");
+        alphaRuntimeQuests.Accept(alphaOrderActor, "ALPHA-ORDER-01");
+        var orderStateBefore = alphaRuntimeQuests.GetState(
+            alphaOrderActor.CharacterId, "ALPHA-ORDER-01").State;
+        var earlyFragment = alphaRuntimeQuests.RecordVerifiedEvent(
+            alphaOrderActor, fragmentEventId, QuestProgressEventTypes.InteractClaim,
+            "ALPHA-BM-FRAGMENT", options.DefaultMapId);
+        var orderStateAfter = alphaRuntimeQuests.GetState(
+            alphaOrderActor.CharacterId, "ALPHA-ORDER-01").State;
+        Check(
+            "alpha.quest_ordered_holds_later_objective",
+            earlyFragment.Count == 0 &&
+            orderStateBefore is { State: QuestStates.Active } &&
+            orderStateAfter is { State: QuestStates.Active } &&
+            orderStateAfter.Revision == orderStateBefore!.Revision &&
+            orderStateAfter.ObjectiveCounters.GetValueOrDefault("OBJ_BOSS_FIXTURE") == 0 &&
+            orderStateAfter.ObjectiveCounters.GetValueOrDefault("OBJ_FRAGMENT_FIXTURE") == 0,
+            $"changed={earlyFragment.Count} revision={orderStateAfter?.Revision}");
+
+        var inOrderKill = alphaRuntimeQuests.RecordVerifiedEvent(
+            alphaOrderActor, bossEventId, QuestProgressEventTypes.Kill,
+            "MAN-BM-SPAWN_BM_05_QUEST", options.DefaultMapId);
+        var inOrderFragment = alphaRuntimeQuests.RecordVerifiedEvent(
+            alphaOrderActor, new string('b', 32), QuestProgressEventTypes.InteractClaim,
+            "ALPHA-BM-FRAGMENT", options.DefaultMapId);
+        var orderDone = alphaRuntimeQuests.GetState(
+            alphaOrderActor.CharacterId, "ALPHA-ORDER-01").State;
+        Check(
+            "alpha.quest_ordered_completes_in_order",
+            inOrderKill.Count == 1 &&
+            inOrderFragment.Count == 1 &&
+            orderDone is { State: QuestStates.ReadyToTurnIn } &&
+            orderDone.ObjectiveCounters.GetValueOrDefault("OBJ_BOSS_FIXTURE") == 1 &&
+            orderDone.ObjectiveCounters.GetValueOrDefault("OBJ_FRAGMENT_FIXTURE") == 1,
+            $"{orderDone?.State}");
+
+        var alphaFreeActor = NewPlayer("CHR_SELFCHECK_ALPHA_FREE");
+        alphaRuntimeQuests.Accept(alphaFreeActor, "ALPHA-FREE-01");
+        var freeFragment = alphaRuntimeQuests.RecordVerifiedEvent(
+            alphaFreeActor, fragmentEventId, QuestProgressEventTypes.InteractClaim,
+            "ALPHA-BM-FRAGMENT", options.DefaultMapId);
+        var freeState = alphaRuntimeQuests.GetState(
+            alphaFreeActor.CharacterId, "ALPHA-FREE-01").State;
+        Check(
+            "alpha.quest_unordered_accepts_any_order",
+            freeFragment.Count == 1 &&
+            freeState is { State: QuestStates.Active } &&
+            freeState.ObjectiveCounters.GetValueOrDefault("OBJ_BOSS_FIXTURE") == 0 &&
+            freeState.ObjectiveCounters.GetValueOrDefault("OBJ_FRAGMENT_FIXTURE") == 1,
+            $"changed={freeFragment.Count} fragment={freeState?.ObjectiveCounters.GetValueOrDefault("OBJ_FRAGMENT_FIXTURE")}");
+
+        // Q1c runtime: the training-wave trial (DESIGN-BM-ALPHA-20261103
+        // questRules.P00-03.waveTrial) as a domain-only 20 Hz machine behind
+        // P1:AlphaProfile. The sourced rect (140,-2)-(148,2), windup 1,2 s
+        // (24 ticks), cooldown 6 s (120 ticks) and raw damage 12 come from the
+        // design; the hazard record ALPHA-BM-WAVE-TRAINING has no runtime
+        // entity, so the dodge credit is an INTERACT_CLAIM verified event the
+        // machine records itself. The dash has no iframe, so an iframe escape
+        // is unsupported by design.
+
+        var waveRecording = new RecordingQuestService();
+        var waveCombatOn = new CombatDamageFeature(
+            new P1CombatDamageOptions { Enabled = true },
+            services.GetRequiredService<IConfiguration>(),
+            services.GetRequiredService<IHostEnvironment>());
+        var waveCombatOff = new CombatDamageFeature(
+            new P1CombatDamageOptions { Enabled = false },
+            services.GetRequiredService<IConfiguration>(),
+            services.GetRequiredService<IHostEnvironment>());
+        var waveTrial = new AlphaWaveTrialService(
+            alphaDesign, waveRecording, waveCombatOn, new PlayerLifeLedger());
+        var waveTrialNoDamage = new AlphaWaveTrialService(
+            alphaDesign, waveRecording, waveCombatOff, new PlayerLifeLedger());
+
+        // Enter at tick 1000 (cycle opens, impact 1024), leave during the
+        // warning, and be outside at the impact frame: one dodge credit.
+        var waveActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE");
+        waveActor.X = 144;
+        waveActor.Y = 0;
+        var waveOpen = waveTrial.Tick([waveActor], 1000);
+        waveActor.X = 130;
+        waveTrial.Tick([waveActor], 1005);
+        var waveCredit = waveTrial.Tick([waveActor], 1024);
+        Check(
+            "alpha.wave_trial_dodge_credits",
+            waveOpen.Count == 0 &&
+            waveCredit.Count == 1 &&
+            waveCredit[0].Outcome == WaveTrialOutcomes.Credit &&
+            waveCredit[0].Damage == 0 &&
+            waveActor.Hp == 100 &&
+            waveRecording.Events.Count == 1 &&
+            waveRecording.Events[0].RecordId == "ALPHA-BM-WAVE-TRAINING" &&
+            waveRecording.Events[0].EventType == QuestProgressEventTypes.InteractClaim &&
+            waveRecording.Events[0].MapId == options.DefaultMapId,
+            $"{waveCredit.FirstOrDefault()?.Outcome} hp={waveActor.Hp} events={waveRecording.Events.Count}");
+
+        // Standing back inside during the 120-tick cooldown starts nothing;
+        // once the cooldown expires the trial retriggers and a second dodge
+        // credits again.
+        waveActor.X = 144;
+        var waveCooldownBlock = waveTrial.Tick([waveActor], 1030);
+        waveTrial.Tick([waveActor], 1144);
+        waveActor.X = 130;
+        var waveSecondCredit = waveTrial.Tick([waveActor], 1168);
+        Check(
+            "alpha.wave_trial_cooldown_and_retry",
+            waveCooldownBlock.Count == 0 &&
+            waveSecondCredit.Count == 1 &&
+            waveSecondCredit[0].Outcome == WaveTrialOutcomes.Credit &&
+            waveRecording.Events.Count == 2,
+            $"{waveSecondCredit.FirstOrDefault()?.Outcome} events={waveRecording.Events.Count}");
+
+        // Staying inside through the whole warning resolves a raw-damage hit
+        // on the impact tick, not before, and moves HP and the session
+        // revision exactly once.
+        var waveHitActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_HIT");
+        waveHitActor.X = 144;
+        waveHitActor.Y = 0;
+        var waveHitOpen = waveTrial.Tick([waveHitActor], 2000);
+        var waveHitEarly = waveTrial.Tick([waveHitActor], 2023);
+        var waveHit = waveTrial.Tick([waveHitActor], 2024);
+        Check(
+            "alpha.wave_trial_hit_raw_damage",
+            waveHitOpen.Count == 0 &&
+            waveHitEarly.Count == 0 &&
+            waveHit.Count == 1 &&
+            waveHit[0].Outcome == WaveTrialOutcomes.Hit &&
+            waveHit[0].Damage == 12 &&
+            waveHit[0].HpBefore == 100 &&
+            waveHit[0].HpAfter == 88 &&
+            waveHitActor.Hp == 88 &&
+            waveHitActor.Revision == 2 &&
+            waveRecording.Events.Count == 2,
+            $"{waveHit.FirstOrDefault()?.Outcome} hp={waveHitActor.Hp} rev={waveHitActor.Revision}");
+
+        // With P1:CombatDamage off the same impact resolves blocked: no HP, no
+        // revision, but the cooldown still runs so the trial stays retryable.
+        var waveGatedActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_GATED");
+        waveGatedActor.X = 144;
+        waveGatedActor.Y = 0;
+        waveTrialNoDamage.Tick([waveGatedActor], 3000);
+        var waveGated = waveTrialNoDamage.Tick([waveGatedActor], 3024);
+        Check(
+            "alpha.wave_trial_hit_damage_gated",
+            waveGated.Count == 1 &&
+            waveGated[0].Outcome == WaveTrialOutcomes.DamageBlocked &&
+            waveGated[0].Damage == 0 &&
+            waveGatedActor.Hp == 100 &&
+            waveGatedActor.Revision == 1,
+            $"{waveGated.FirstOrDefault()?.Outcome} hp={waveGatedActor.Hp}");
+
+        // Leaving the map mid-warning cancels with no credit and no cooldown,
+        // so returning can open a fresh cycle immediately.
+        var waveLeaveActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_LEAVE");
+        waveLeaveActor.X = 144;
+        waveLeaveActor.Y = 0;
+        waveTrial.Tick([waveLeaveActor], 4000);
+        waveLeaveActor.MapId = "MAP_THANH_LAC";
+        var waveLeave = waveTrial.Tick([waveLeaveActor], 4010);
+        waveLeaveActor.MapId = options.DefaultMapId;
+        waveTrial.Tick([waveLeaveActor], 4020);
+        waveLeaveActor.X = 130;
+        var waveLeaveCredit = waveTrial.Tick([waveLeaveActor], 4044);
+        Check(
+            "alpha.wave_trial_cancel_on_map_leave",
+            waveLeave.Count == 1 &&
+            waveLeave[0].Outcome == WaveTrialOutcomes.Cancelled &&
+            waveLeave[0].Damage == 0 &&
+            waveLeaveCredit.Count == 1 &&
+            waveLeaveCredit[0].Outcome == WaveTrialOutcomes.Credit &&
+            waveRecording.Events.Count == 3,
+            $"{waveLeave.FirstOrDefault()?.Outcome}/{waveLeaveCredit.FirstOrDefault()?.Outcome}");
+
+        // Leaving and re-entering before the impact is still inside at the
+        // impact frame: the hit lands.
+        var waveReenterActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_REENTER");
+        waveReenterActor.X = 144;
+        waveReenterActor.Y = 0;
+        waveTrial.Tick([waveReenterActor], 5000);
+        waveReenterActor.X = 130;
+        waveTrial.Tick([waveReenterActor], 5010);
+        waveReenterActor.X = 144;
+        var waveReenterHit = waveTrial.Tick([waveReenterActor], 5024);
+        Check(
+            "alpha.wave_trial_reentry_hits",
+            waveReenterHit.Count == 1 &&
+            waveReenterHit[0].Outcome == WaveTrialOutcomes.Hit &&
+            waveReenterHit[0].Damage == 12 &&
+            waveReenterActor.Hp == 88,
+            $"{waveReenterHit.FirstOrDefault()?.Outcome} hp={waveReenterActor.Hp}");
+
+        // A downed actor never opens a cycle; dying mid-warning cancels it
+        // with no damage and no credit.
+        var waveDownActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_DOWN", hp: 0);
+        waveDownActor.X = 144;
+        waveDownActor.Y = 0;
+        var waveDownSkip = waveTrial.Tick([waveDownActor], 6000);
+        var waveDieActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_DIE");
+        waveDieActor.X = 144;
+        waveDieActor.Y = 0;
+        waveTrial.Tick([waveDieActor], 7000);
+        waveDieActor.Hp = 0;
+        var waveDieCancel = waveTrial.Tick([waveDieActor], 7010);
+        Check(
+            "alpha.wave_trial_downed_and_death",
+            waveDownSkip.Count == 0 &&
+            waveDieCancel.Count == 1 &&
+            waveDieCancel[0].Outcome == WaveTrialOutcomes.Cancelled &&
+            waveDieCancel[0].Damage == 0 &&
+            waveRecording.Events.Count == 3,
+            $"{waveDieCancel.FirstOrDefault()?.Outcome} events={waveRecording.Events.Count}");
+
+        // The rectangle belongs to Bến Mưa: the same position on another map
+        // never triggers.
+        var waveForeignActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_FOREIGN");
+        waveForeignActor.MapId = "MAP_THANH_LAC";
+        waveForeignActor.X = 144;
+        waveForeignActor.Y = 0;
+        var waveForeignSkip = waveTrial.Tick([waveForeignActor], 8000);
+        Check(
+            "alpha.wave_trial_foreign_map",
+            waveForeignSkip.Count == 0 &&
+            waveForeignActor.Hp == 100,
+            $"resolutions={waveForeignSkip.Count}");
+
+        // Without the QUEST_HAZARD overlay record the machine is inert: no
+        // fabricated record id, no damage, no credit.
+        var waveNoHazardDesign = alphaDesign with
+        {
+            OverlayRecords = alphaDesign.OverlayRecords
+                .Where(record => !string.Equals(
+                    record.Kind, "QUEST_HAZARD", StringComparison.Ordinal))
+                .ToArray()
+        };
+        var waveInert = new AlphaWaveTrialService(
+            waveNoHazardDesign, waveRecording, waveCombatOn, new PlayerLifeLedger());
+        var waveInertActor = NewPlayer("CHR_SELFCHECK_ALPHA_WAVE_INERT");
+        waveInertActor.X = 144;
+        waveInertActor.Y = 0;
+        var waveInertSkip = waveInert.Tick([waveInertActor], 9000);
+        Check(
+            "alpha.wave_trial_inert_without_hazard_record",
+            waveInertSkip.Count == 0 &&
+            waveInertActor.Hp == 100 &&
+            waveRecording.Events.Count == 3,
+            $"resolutions={waveInertSkip.Count} hp={waveInertActor.Hp}");
+
+        // ─── QOD-21 Q3: the alpha loot payout switch ────
+
+        // DESIGN-BM-Q3-20261104 `loot`: effectiveGrant is AlphaProfile.Enabled AND
+        // explicit private alpha AND P1:AlphaLoot:GrantEnabled, off means a dry-run
+        // that is never paid later, and the roll happens once per kill key.
+        var lootProfileOff = new AlphaProfileOptions { Enabled = false };
+        var lootProfileOn = new AlphaProfileOptions { Enabled = true };
+        var lootFlagOff = new AlphaLootOptions { GrantEnabled = false };
+        var lootFlagOn = new AlphaLootOptions { GrantEnabled = true };
+        var lootRoller = new LootRoller(
+            enabledCombat.LootRecipes, new LootRngRollSource());
+        var lootLevel = new Func<int>(() => 5);
+        var lootMob = new WorldEntityInstance
+        {
+            EntityId = "ENT_SELFCHECK_LOOT_MOB",
+            RecordId = "MAN-SELFCHECK-LOOT",
+            Kind = WorldEntityKinds.Mob,
+            TemplateIds = new[] { "MOB_CARPLING" },
+            MapId = alphaDesign.Scope.MapId,
+            FloorId = "OVERWORLD",
+            X = 84,
+            Y = 0,
+            Quantity = 1,
+            RespawnSeconds = 0,
+            GroupId = "MAN-BM-SPAWN_BM_01",
+            MemberIndex = 1
+        };
+        lootMob.Initialize();
+        var lootActor = NewPlayer("CHR_SELFCHECK_ALPHA_LOOT");
+
+        // One ledger shared by the three switches: a death recorded while the
+        // payout was off must keep that answer after it is turned on.
+        var alphaLootGrantLedger = new LootGrantLedger();
+        var lootOffProduction = new LootGrantService(
+            services.GetRequiredService<IInventoryService>(), alphaLootGrantLedger,
+            new AlphaLootGrantPolicy(alphaDesign, lootProfileOff, lootFlagOff),
+            enabledCombat, new LootReceiptLedger());
+        var lootOffAlpha = new LootGrantService(
+            services.GetRequiredService<IInventoryService>(), alphaLootGrantLedger,
+            new AlphaLootGrantPolicy(alphaDesign, lootProfileOn, lootFlagOff),
+            enabledCombat, new LootReceiptLedger());
+        var lootOnAlpha = new LootGrantService(
+            services.GetRequiredService<IInventoryService>(), alphaLootGrantLedger,
+            new AlphaLootGrantPolicy(alphaDesign, lootProfileOn, lootFlagOn),
+            enabledCombat, new LootReceiptLedger());
+
+        var blockedProductionDeath = new string('a', 32);
+        var blockedAlphaDeath = new string('b', 32);
+        var productionBlock = lootOffProduction.OnMobDeath(
+            lootActor, lootMob, "MOB_CARPLING", lootLevel, blockedProductionDeath, 1);
+        var alphaDryRun = lootOffAlpha.OnMobDeath(
+            lootActor, lootMob, "MOB_CARPLING", lootLevel, blockedAlphaDeath, 1);
+        // Turning the flag on afterwards must not reach back for that death.
+        var afterFlagOn = lootOnAlpha.OnMobDeath(
+            lootActor, lootMob, "MOB_CARPLING", lootLevel, blockedAlphaDeath, 1);
+        var paidDeath = new string('c', 32);
+        var paidOnce = lootOnAlpha.OnMobDeath(
+            lootActor, lootMob, "MOB_CARPLING", lootLevel, paidDeath, 1);
+        var paidReplay = lootOnAlpha.OnMobDeath(
+            lootActor, lootMob, "MOB_CARPLING", lootLevel, paidDeath, 1);
+
+        var lootValidatorRejected = false;
+        try
+        {
+            AlphaLootPolicy.Validate(lootFlagOn, lootProfileOff, alphaDesign);
+        }
+        catch (InvalidOperationException)
+        {
+            lootValidatorRejected = true;
+        }
+
+        var rollKey = LootRollKeys.For(
+            lootRoller.ProfileVersion, lootActor.CharacterId, paidDeath, 1,
+            "MAN-BM-SPAWN_BM_01");
+
+        Check(
+            "alpha.loot_grant_requires_profile_and_own_flag",
+            alphaDesign.Loot.DefaultGrantEnabled == false &&
+            alphaDesign.Loot.NoLiveRerollOnRetry &&
+            alphaDesign.Loot.InclusiveIntegers &&
+            alphaDesign.Loot.CoinMinExpression == "mobLevel" &&
+            alphaDesign.Loot.CoinMaxExpression == "2*mobLevel" &&
+            alphaDesign.Loot.RollOnceKey.SequenceEqual(
+                new[] { "profileVersion", "characterId", "deathEventId", "lifeId", "groupId" }) &&
+            string.Equals(alphaDesign.Status,
+                "APPROVED_FOR_IMPLEMENTATION_PRIVATE_ALPHA_NOT_PLAYTEST_BALANCED",
+                StringComparison.Ordinal) &&
+            !alphaDesign.DefaultEnabled &&
+            !productionBlock.Granted &&
+            productionBlock.BlockedReason == LootGrantPolicies.SourceShortReason &&
+            !alphaDryRun.Granted &&
+            alphaDryRun.BlockedReason == LootGrantPolicies.DryRunReason &&
+            !afterFlagOn.Granted &&
+            afterFlagOn.BlockedReason == LootGrantPolicies.DryRunReason &&
+            paidOnce.Granted &&
+            paidOnce.Coin >= 5 && paidOnce.Coin <= 10 &&
+            paidReplay.Replayed && paidReplay.Coin == paidOnce.Coin &&
+            lootValidatorRejected &&
+            rollKey == string.Concat(
+                lootRoller.ProfileVersion, "|", lootActor.CharacterId, "|", paidDeath,
+                "|1|MAN-BM-SPAWN_BM_01"),
+            $"prod={productionBlock.BlockedReason} dry={alphaDryRun.BlockedReason} " +
+            $"backfill={afterFlagOn.Granted}/{afterFlagOn.BlockedReason} " +
+            $"coin={paidOnce.Coin} replay={paidReplay.Replayed}/{paidReplay.Coin}");
+
+        // ─── QOD-21 Q3: alpha quest XP valued at the accepted level ────
+
+        // DESIGN-BM-Q3-20261104 `xp`: nextLevelXp(L) = 100 + 50L + 25L², grant =
+        // floor(nextLevelXp * numerator / 100), normal 25 / boss 55, snapshotted at
+        // QUEST_ACCEPT_COMMIT. The decision ships three worked levels and the
+        // resolver is pinned to all six numbers, not to one of them.
+        var xpRules = new AlphaQuestXpRules(alphaDesign.Progression);
+        var xpNormal = new long?[4];
+        var xpBoss = new long?[4];
+        for (var level = 1; level <= 3; level++)
+        {
+            xpNormal[level] = xpRules.Resolve(new QuestXpRequest("LEVEL_BAND_BASE", level, false));
+            xpBoss[level] = xpRules.Resolve(new QuestXpRequest("LEVEL_BAND_BASE", level, true));
+        }
+
+        var xpUnknownRule = xpRules.Resolve(new QuestXpRequest("SOME_OTHER_RULE", 1, false));
+        var xpWithoutSnapshot = xpRules.Resolve(new QuestXpRequest("LEVEL_BAND_BASE", 0, false));
+        var xpZeroRules = new AlphaQuestXpRules(alphaDesign.Progression with
+        {
+            NormalQuestXpNumerator = 0,
+            BossQuestXpNumerator = 0
+        });
+        var xpZero = xpZeroRules.Resolve(new QuestXpRequest("LEVEL_BAND_BASE", 1, false));
+        var xpFormulaGuard = false;
+        try
+        {
+            _ = new AlphaQuestXpRules(alphaDesign.Progression with { XpToNext = "ceil(99+50*L)" });
+        }
+        catch (InvalidOperationException)
+        {
+            xpFormulaGuard = true;
+        }
+
+        // The snapshot, not the current level, decides the payout: accept at 1,
+        // reach 5 while doing the quest, and the reward is still the level-1 value.
+        var xpSnapshots = services.GetRequiredService<QuestXpSnapshotStore>();
+        var xpSnapshotActor = NewPlayer("CHR_SELFCHECK_XP_SNAPSHOT");
+        xpSnapshotActor.Level = 1;
+        xpSnapshots.RecordAccept(xpSnapshotActor.CharacterId, "P00-02", 1);
+        var xpSnapshotHasLevel = xpSnapshots.TryGetAcceptedLevel(
+            xpSnapshotActor.CharacterId, "P00-02", out var xpStoredLevel);
+        xpSnapshotActor.Level = 5;
+        var xpSnapshotService = new ExperienceService(
+            services.GetRequiredService<LevelProgressionTable>(), xpRules);
+        var xpSnapshotApplied = xpSnapshotService.TryApply(
+            xpSnapshotActor,
+            new QuestXpRequest("LEVEL_BAND_BASE", xpStoredLevel, false),
+            out var xpSnapshotGrant,
+            out _);
+        var xpSnapshotDelta = xpSnapshotGrant!.TotalXpAfter - xpSnapshotGrant.TotalXpBefore;
+        var xpNoSnapshot = xpSnapshots.TryGetAcceptedLevel(
+            "CHR_SELFCHECK_XP_NEVER_ACCEPTED", "P00-02", out _);
+        // With the profile off — which is how the self-check runs — the shipped
+        // container must still refuse to value LEVEL_BAND_BASE at all.
+        var xpGateOffRule = services.GetRequiredService<IQuestXpRule>();
+        var xpGateOffResolved = xpGateOffRule.Resolve(new QuestXpRequest("LEVEL_BAND_BASE", 1, true));
+
+        Check(
+            "alpha.xp_accept_snapshot_oracle",
+            alphaDesign.Progression.NormalQuestXpNumerator == 25 &&
+            alphaDesign.Progression.BossQuestXpNumerator == 55 &&
+            alphaDesign.Progression.Denominator == 100 &&
+            alphaDesign.Progression.AcceptSnapshot &&
+            xpNormal[1] == 43 && xpNormal[2] == 75 && xpNormal[3] == 118 &&
+            xpBoss[1] == 96 && xpBoss[2] == 165 && xpBoss[3] == 261 &&
+            xpUnknownRule is null &&
+            xpWithoutSnapshot is null &&
+            xpZero == 0 &&
+            xpFormulaGuard &&
+            xpSnapshotHasLevel && xpStoredLevel == 1 &&
+            xpSnapshotApplied && xpSnapshotDelta == 43 &&
+            xpSnapshotActor.TotalXp == 43 &&
+            !xpNoSnapshot &&
+            xpGateOffRule is UnresolvedQuestXpRules && xpGateOffResolved is null,
+            $"L1={xpNormal[1]}/{xpBoss[1]} L2={xpNormal[2]}/{xpBoss[2]} " +
+            $"L3={xpNormal[3]}/{xpBoss[3]} snapshot={xpSnapshotDelta} " +
+            $"level={xpSnapshotActor.Level} gateOff={xpGateOffRule.GetType().Name}");
+
+        // The snapshot is written by the real accept service at its commit point,
+        // and an idempotent replay returns the recorded answer without re-reading
+        // the (now different) level.
+        var xpAcceptActor = NewPlayer("CHR_SELFCHECK_XP_ACCEPT");
+        xpAcceptActor.X = 42;
+        xpAcceptActor.Y = 0;
+        xpAcceptActor.Level = 3;
+        var xpFirstAccept = questAccept.Accept(
+            xpAcceptActor, "P00-01", "NPC_LYAN", new string('c', 32)).Accepted;
+        var xpAcceptSnapshot = xpSnapshots.TryGetAcceptedLevel(
+            xpAcceptActor.CharacterId, "P00-01", out var xpAcceptedLevel);
+        xpAcceptActor.Level = 7;
+        var xpReplayAccept = questAccept.Accept(
+            xpAcceptActor, "P00-01", "NPC_LYAN", new string('c', 32)).Accepted;
+        var xpAfterReplay = xpSnapshots.TryGetAcceptedLevel(
+            xpAcceptActor.CharacterId, "P00-01", out var xpReplayedLevel);
+
+        Check(
+            "alpha.xp_snapshot_written_at_accept_commit",
+            xpFirstAccept && xpAcceptSnapshot && xpAcceptedLevel == 3 &&
+            xpReplayAccept && xpAfterReplay && xpReplayedLevel == 3,
+            $"accepted={xpFirstAccept} level={xpAcceptedLevel} replay={xpReplayedLevel}");
+
+        // ─── Q1c: P00-04 escort checkpoint machine ────
+
+        // Domain-only 20 Hz machine behind P1:AlphaProfile. Sourced values:
+        // NPC_LYAN, speed 3 wu/s (0,15 wu per tick), followRange 12,
+        // waypoints (42,0)->(80,0)->(120,0), checkpoint waves
+        // MAN-BM-WAVE_BM_ESCORT_A (MOB_CARPLING x3 at x=80) and
+        // MAN-BM-WAVE_BM_ESCORT_B (MOB_WATERROOT x3 at x=120). The machine
+        // holds the shared wave members dead until a checkpoint commits,
+        // pauses the NPC while its wave is active, restores the NPC to the
+        // last committed checkpoint on a wipe (resetting an in-progress wave
+        // with new life IDs, never a cleared one), and re-holds cleared-wave
+        // respawns so the wave cannot be farmed.
+
+        WorldEntityInstance EscortWaveMember(
+            string entityId,
+            string recordId,
+            string templateId,
+            double x,
+            int memberIndex)
+        {
+            var member = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = recordId,
+                Kind = WorldEntityKinds.Mob,
+                TemplateIds = new[] { templateId },
+                MapId = alphaDesign.Scope.MapId,
+                FloorId = "OVERWORLD",
+                X = x,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = 0,
+                GroupId = recordId,
+                MemberIndex = memberIndex,
+                GroupRespawnSeconds = 30
+            };
+            member.Initialize();
+            return member;
+        }
+
+        var escortWaveA1 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_A_1", "MAN-BM-WAVE_BM_ESCORT_A", "MOB_CARPLING", 80, 1);
+        var escortWaveA2 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_A_2", "MAN-BM-WAVE_BM_ESCORT_A", "MOB_CARPLING", 80, 2);
+        var escortWaveA3 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_A_3", "MAN-BM-WAVE_BM_ESCORT_A", "MOB_CARPLING", 80, 3);
+        var escortWaveB1 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_B_1", "MAN-BM-WAVE_BM_ESCORT_B", "MOB_WATERROOT", 120, 1);
+        var escortWaveB2 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_B_2", "MAN-BM-WAVE_BM_ESCORT_B", "MOB_WATERROOT", 120, 2);
+        var escortWaveB3 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_B_3", "MAN-BM-WAVE_BM_ESCORT_B", "MOB_WATERROOT", 120, 3);
+        var escortQuestStub = new EscortQuestStub();
+        var escortClock = new ServerClock();
+        var escortRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [
+                    escortWaveA1, escortWaveA2, escortWaveA3,
+                    escortWaveB1, escortWaveB2, escortWaveB3
+                ]),
+            escortClock);
+        var escort = new AlphaEscortService(alphaDesign, escortQuestStub, escortRegistry);
+
+        List<EscortResolution> TickEscort(
+            AlphaEscortService service,
+            PlayerSession player,
+            long from,
+            long to)
+        {
+            var all = new List<EscortResolution>();
+            for (var t = from; t <= to; t++)
+            {
+                all.AddRange(service.Tick([player], t));
+            }
+
+            return all;
+        }
+
+        // The NPC only walks within followRange of the owner, so walking
+        // phases keep the owner pinned to the NPC position each tick.
+        List<EscortResolution> WalkEscortWith(
+            AlphaEscortService service,
+            PlayerSession player,
+            long from,
+            long to)
+        {
+            var all = new List<EscortResolution>();
+            for (var t = from; t <= to; t++)
+            {
+                all.AddRange(service.Tick([player], t));
+                if (service.TryGetNpcPosition(player.CharacterId, out var npcX, out _))
+                {
+                    player.X = npcX;
+                }
+            }
+
+            return all;
+        }
+
+        // The escort credits only the kill notification the combat engine
+        // produces, so the fixture resolves a death the way the engine does —
+        // despawn the member, then report it with the event id the killer's
+        // combat stream carries. The returned notification can be handed over
+        // again to prove a replay cannot double-count.
+        var escortKillSequence = 0L;
+        CombatMobKill KillEscortWaveMember(
+            AlphaEscortService service,
+            WorldEntityRegistry registry,
+            WorldEntityInstance member,
+            string recordId,
+            string killerCharacterId)
+        {
+            var lifeId = member.LifeId;
+            registry.Despawn(member.EntityId);
+            escortKillSequence++;
+            var kill = new CombatMobKill(
+                killerCharacterId,
+                member.EntityId,
+                recordId,
+                lifeId,
+                $"{escortKillSequence:x32}");
+            ((ICombatKillSink)service).OnMobKilled(kill);
+            return kill;
+        }
+
+        // With no owner at all the machine still holds every wave member dead:
+        // the waves only exist after their checkpoint commits ("khi Ly An qua
+        // x=80/120" in the world records).
+        var escortBootHold = escort.Tick([], 1);
+        Check(
+            "alpha.escort_holds_waves_at_boot",
+            escortBootHold.Count == 0 &&
+            escortWaveA1.State == WorldEntityStates.Dead &&
+            escortWaveA2.State == WorldEntityStates.Dead &&
+            escortWaveA3.State == WorldEntityStates.Dead &&
+            escortWaveB1.State == WorldEntityStates.Dead &&
+            escortWaveB2.State == WorldEntityStates.Dead &&
+            escortWaveB3.State == WorldEntityStates.Dead,
+            $"a1={escortWaveA1.State} b1={escortWaveB1.State}");
+
+        // Golden path with a 20-tick out-of-range pause: the creation tick
+        // already moves, so 38 wu at 0,15 wu per tick is 254 movement ticks
+        // (1 at start + 253 walking), and the x=80 commit lands exactly 20
+        // ticks late (tick 1273), proving the speed and the followRange wait.
+        escortQuestStub.Set("CHR_SELFCHECK_ESCORT_MAIN", QuestStates.Active);
+        var escortOwner = NewPlayer("CHR_SELFCHECK_ESCORT_MAIN");
+        escortOwner.X = 42;
+        escortOwner.Y = 0;
+        var escortStarted = TickEscort(escort, escortOwner, 1000, 1000);
+        escortOwner.X = 20;
+        TickEscort(escort, escortOwner, 1001, 1020);
+        escortOwner.X = 42;
+        var escortEarlyCommit = WalkEscortWith(escort, escortOwner, 1021, 1272);
+        var escortCommit80 = WalkEscortWith(escort, escortOwner, 1273, 1273);
+        Check(
+            "alpha.escort_starts_and_moves_with_follow_range",
+            escortStarted.Count == 1 &&
+            escortStarted[0].Outcome == EscortOutcomes.Started &&
+            escortStarted[0].NpcX == 42 &&
+            escortEarlyCommit.All(r => r.Outcome != EscortOutcomes.CheckpointCommitted) &&
+            escortCommit80.Count == 2 &&
+            escortCommit80[0].Outcome == EscortOutcomes.CheckpointCommitted &&
+            escortCommit80[0].Detail == "80" &&
+            escortCommit80[1].Outcome == EscortOutcomes.WaveActivated &&
+            escortCommit80[1].Detail == "MAN-BM-WAVE_BM_ESCORT_A",
+            $"{escortStarted.FirstOrDefault()?.Outcome} " +
+            $"{escortCommit80.Select(r => r.Outcome + ":" + r.Detail).FirstOrDefault()}");
+
+        // The commit spawns wave A with fresh life IDs and the NPC waits at
+        // the checkpoint while the wave is active.
+        var escortPaused80 = TickEscort(escort, escortOwner, 1274, 1290);
+        var escortX80Found = escort.TryGetNpcPosition(
+            escortOwner.CharacterId, out double escortX80, out _);
+        Check(
+            "alpha.escort_checkpoint_80_commits_and_spawns_wave_a",
+            escortWaveA1.State == WorldEntityStates.Alive &&
+            escortWaveA1.LifeId == 2 &&
+            escortWaveA2.LifeId == 2 &&
+            escortWaveA3.LifeId == 2 &&
+            escortPaused80.All(r => r.Outcome != EscortOutcomes.CheckpointCommitted) &&
+            escortX80Found &&
+            escortX80 == 80,
+            $"a1={escortWaveA1.State}/{escortWaveA1.LifeId} npc={escortX80}");
+
+        // Two of three credited deaths do not clear the wave, and replaying one of
+        // them adds no credit (the same death event id is the same key). The third
+        // kill clears it and the NPC resumes on the tick that reports the clear.
+        KillEscortWaveMember(
+            escort,
+            escortRegistry,
+            escortWaveA1,
+            "MAN-BM-WAVE_BM_ESCORT_A",
+            escortOwner.CharacterId);
+        var escortKillA2 = KillEscortWaveMember(
+            escort,
+            escortRegistry,
+            escortWaveA2,
+            "MAN-BM-WAVE_BM_ESCORT_A",
+            escortOwner.CharacterId);
+        ((ICombatKillSink)escort).OnMobKilled(escortKillA2);
+        var escortTwoKills = TickEscort(escort, escortOwner, 1300, 1300);
+        KillEscortWaveMember(
+            escort,
+            escortRegistry,
+            escortWaveA3,
+            "MAN-BM-WAVE_BM_ESCORT_A",
+            escortOwner.CharacterId);
+        var escortWaveACleared = TickEscort(escort, escortOwner, 1301, 1301);
+        var escortXAfterAFound = escort.TryGetNpcPosition(
+            escortOwner.CharacterId, out double escortXAfterA, out _);
+        Check(
+            "alpha.escort_wave_a_clears_then_resumes",
+            escortTwoKills.All(r => r.Outcome != EscortOutcomes.WaveCleared) &&
+            escortWaveACleared.Count == 1 &&
+            escortWaveACleared[0].Outcome == EscortOutcomes.WaveCleared &&
+            escortWaveACleared[0].Detail == "MAN-BM-WAVE_BM_ESCORT_A" &&
+            escortXAfterAFound &&
+            escortXAfterA > 80,
+            $"{escortWaveACleared.FirstOrDefault()?.Outcome} npc={escortXAfterA}");
+
+        // Wipe mid-segment: the NPC restores to the last committed checkpoint
+        // and the cleared wave stays dead (not farmable); reviving resumes
+        // the walk from the checkpoint.
+        WalkEscortWith(escort, escortOwner, 1302, 1340);
+        escortOwner.Hp = 0;
+        var escortWipeMidWalk = TickEscort(escort, escortOwner, 1341, 1341);
+        escortOwner.Hp = 100;
+        escortOwner.X = 80;
+        var escortWipeHold = TickEscort(escort, escortOwner, 1342, 1342);
+        Check(
+            "alpha.escort_wipe_restores_checkpoint",
+            escortWipeMidWalk.Count == 1 &&
+            escortWipeMidWalk[0].Outcome == EscortOutcomes.Wiped &&
+            escortWipeMidWalk[0].Detail == "checkpoint=80" &&
+            escortWipeMidWalk[0].NpcX == 80 &&
+            escortWaveA1.State == WorldEntityStates.Dead &&
+            escortWaveA2.State == WorldEntityStates.Dead &&
+            escortWaveA3.State == WorldEntityStates.Dead &&
+            escortWipeHold.All(r => r.Outcome != EscortOutcomes.WaveActivated),
+            $"{escortWipeMidWalk.FirstOrDefault()?.Detail} a1={escortWaveA1.State}");
+
+        // The MobSpawnGroupService would respawn a cleared group after 30 s;
+        // the machine re-holds the members dead on the next tick so the
+        // completed checkpoint cannot be farmed.
+        escortWaveA1.ForceRespawn();
+        escortWaveA2.ForceRespawn();
+        escortWaveA3.ForceRespawn();
+        var escortFarmBlock = TickEscort(escort, escortOwner, 1343, 1343);
+        Check(
+            "alpha.escort_completed_wave_not_farmable",
+            escortFarmBlock.All(r => r.Outcome != EscortOutcomes.WaveActivated) &&
+            escortWaveA1.State == WorldEntityStates.Dead &&
+            escortWaveA2.State == WorldEntityStates.Dead &&
+            escortWaveA3.State == WorldEntityStates.Dead,
+            $"a1={escortWaveA1.State} outcomes={escortFarmBlock.Count}");
+
+        // Second segment: 40 wu is 267 movement ticks from the 1342 resume
+        // (the 1343 farm tick also moves), so the x=120 commit lands at tick
+        // 1608 (1342 + 266).
+        WalkEscortWith(escort, escortOwner, 1344, 1607);
+        var escortCommit120 = WalkEscortWith(escort, escortOwner, 1608, 1608);
+        Check(
+            "alpha.escort_checkpoint_120_and_wave_b",
+            escortCommit120.Count == 2 &&
+            escortCommit120[0].Outcome == EscortOutcomes.CheckpointCommitted &&
+            escortCommit120[0].Detail == "120" &&
+            escortCommit120[1].Outcome == EscortOutcomes.WaveActivated &&
+            escortCommit120[1].Detail == "MAN-BM-WAVE_BM_ESCORT_B" &&
+            escortWaveB1.State == WorldEntityStates.Alive &&
+            escortWaveB1.LifeId == 2,
+            $"{escortCommit120.Select(r => r.Outcome + ":" + r.Detail).FirstOrDefault()} " +
+            $"b1={escortWaveB1.State}/{escortWaveB1.LifeId}");
+
+        // Wipe mid-wave: one of three credited deaths down, the wipe restores the
+        // NPC to 120 and re-activates the pending wave. Only the member that is
+        // actually dead is re-spawned (fresh life ID); the ones still fighting keep
+        // their lives, and the instance's credit set resets to zero either way, so
+        // the fight restarts from the beginning without disturbing a life that is
+        // still in play.
+        KillEscortWaveMember(
+            escort,
+            escortRegistry,
+            escortWaveB1,
+            "MAN-BM-WAVE_BM_ESCORT_B",
+            escortOwner.CharacterId);
+        TickEscort(escort, escortOwner, 1609, 1609);
+        escortOwner.Hp = 0;
+        var escortWipeMidWave = TickEscort(escort, escortOwner, 1610, 1610);
+        escortOwner.Hp = 100;
+        Check(
+            "alpha.escort_wipe_mid_wave_resets_lives",
+            escortWipeMidWave.Count == 2 &&
+            escortWipeMidWave.Any(r => r.Outcome == EscortOutcomes.Wiped &&
+                r.NpcX == 120 && r.Detail == "checkpoint=120") &&
+            escortWipeMidWave.Any(r => r.Outcome == EscortOutcomes.WaveActivated &&
+                r.Detail == "MAN-BM-WAVE_BM_ESCORT_B") &&
+            escortWaveB1.State == WorldEntityStates.Alive &&
+            escortWaveB1.LifeId == 3 &&
+            escortWaveB2.State == WorldEntityStates.Alive &&
+            escortWaveB2.LifeId == 2 &&
+            escortWaveB3.State == WorldEntityStates.Alive &&
+            escortWaveB3.LifeId == 2,
+            $"b1={escortWaveB1.State}/{escortWaveB1.LifeId} b2={escortWaveB2.LifeId}");
+
+        // The refight: the reset lives have to be killed again — the credit the
+        // previous generation earned is gone — and the third kill completes the
+        // escort at the final waypoint.
+        KillEscortWaveMember(
+            escort,
+            escortRegistry,
+            escortWaveB1,
+            "MAN-BM-WAVE_BM_ESCORT_B",
+            escortOwner.CharacterId);
+        KillEscortWaveMember(
+            escort,
+            escortRegistry,
+            escortWaveB2,
+            "MAN-BM-WAVE_BM_ESCORT_B",
+            escortOwner.CharacterId);
+        var escortResetPartial = TickEscort(escort, escortOwner, 1611, 1611);
+        KillEscortWaveMember(
+            escort,
+            escortRegistry,
+            escortWaveB3,
+            "MAN-BM-WAVE_BM_ESCORT_B",
+            escortOwner.CharacterId);
+        var escortCompleted = TickEscort(escort, escortOwner, 1612, 1612);
+        Check(
+            "alpha.escort_completes_after_wave_b",
+            escortResetPartial.All(r => r.Outcome != EscortOutcomes.WaveCleared) &&
+            escortCompleted.Any(r => r.Outcome == EscortOutcomes.WaveCleared &&
+                r.Detail == "MAN-BM-WAVE_BM_ESCORT_B") &&
+            escortCompleted.Any(r => r.Outcome == EscortOutcomes.Completed &&
+                r.NpcX == 120 && r.NpcY == 0),
+            string.Join(",", escortCompleted.Select(r => r.Outcome)));
+
+        // The instance ends when the quest leaves ACTIVE and the cleared
+        // waves go back under hold.
+        escortQuestStub.Set("CHR_SELFCHECK_ESCORT_MAIN", QuestStates.Completed);
+        var escortEnded = TickEscort(escort, escortOwner, 1613, 1613);
+        Check(
+            "alpha.escort_ends_when_quest_leaves_active",
+            escortEnded.Count == 1 &&
+            escortEnded[0].Outcome == EscortOutcomes.Ended &&
+            escortEnded[0].Detail == QuestStates.Completed &&
+            escortWaveB1.State == WorldEntityStates.Dead &&
+            escortWaveB2.State == WorldEntityStates.Dead &&
+            escortWaveB3.State == WorldEntityStates.Dead,
+            $"{escortEnded.FirstOrDefault()?.Outcome} b1={escortWaveB1.State}");
+
+        // A player without the quest never opens an instance and nothing
+        // spawns.
+        var escortStranger = NewPlayer("CHR_SELFCHECK_ESCORT_STRANGER");
+        escortStranger.X = 42;
+        escortStranger.Y = 0;
+        var escortStrangerTick = TickEscort(escort, escortStranger, 2000, 2100);
+        Check(
+            "alpha.escort_ignores_player_without_quest",
+            escortStrangerTick.Count == 0 &&
+            !escort.TryGetNpcPosition(escortStranger.CharacterId, out _, out _) &&
+            escortWaveA1.State == WorldEntityStates.Dead,
+            $"outcomes={escortStrangerTick.Count}");
+
+        // Owner-specific instances: two owners, one in range and one far
+        // away; only the in-range NPC walks, so no second clone moves.
+        var escortTwoStub = new EscortQuestStub();
+        escortTwoStub.Set("CHR_SELFCHECK_ESCORT_TWO_A", QuestStates.Active);
+        escortTwoStub.Set("CHR_SELFCHECK_ESCORT_TWO_B", QuestStates.Active);
+        var escortTwoRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [
+                    escortWaveA1, escortWaveA2, escortWaveA3,
+                    escortWaveB1, escortWaveB2, escortWaveB3
+                ]),
+            escortClock);
+        var escortTwo = new AlphaEscortService(alphaDesign, escortTwoStub, escortTwoRegistry);
+        var escortOwnerA = NewPlayer("CHR_SELFCHECK_ESCORT_TWO_A");
+        escortOwnerA.X = 42;
+        escortOwnerA.Y = 0;
+        var escortOwnerB = NewPlayer("CHR_SELFCHECK_ESCORT_TWO_B");
+        escortOwnerB.X = 10;
+        escortOwnerB.Y = 0;
+        List<EscortResolution> escortTwoA = [];
+        List<EscortResolution> escortTwoB = [];
+        for (var t = 3000; t <= 3254; t++)
+        {
+            var twoResolutions = escortTwo.Tick([escortOwnerA, escortOwnerB], t);
+            escortTwoA.AddRange(twoResolutions.Where(r =>
+                string.Equals(r.CharacterId, "CHR_SELFCHECK_ESCORT_TWO_A", StringComparison.Ordinal)));
+            escortTwoB.AddRange(twoResolutions.Where(r =>
+                string.Equals(r.CharacterId, "CHR_SELFCHECK_ESCORT_TWO_B", StringComparison.Ordinal)));
+            if (escortTwo.TryGetNpcPosition("CHR_SELFCHECK_ESCORT_TWO_A", out var twoAx, out _))
+            {
+                escortOwnerA.X = twoAx;
+            }
+        }
+
+        var escortBxFound = escortTwo.TryGetNpcPosition(
+            "CHR_SELFCHECK_ESCORT_TWO_B", out double escortBx, out _);
+        Check(
+            "alpha.escort_owner_specific_instances",
+            escortTwoA.Any(r => r.Outcome == EscortOutcomes.CheckpointCommitted) &&
+            escortTwoB.Count == 1 &&
+            escortTwoB[0].Outcome == EscortOutcomes.Started &&
+            escortBxFound &&
+            escortBx == 42,
+            $"a={escortTwoA.Count} b={escortTwoB.Count} bx={escortBx}");
+
+        // ─── QOD-21 Q3: the alpha portal registry and route guards (work order 31 Q3) ────
+
+        // DEC-TUTORIAL-TRANSPORT-20261106 approved the registry pair and the route, and
+        // lists the cases it wants tested: wrong map/floor, range, dead, locked, owner
+        // and two owners. Everything here runs against the shipped transition service
+        // rather than a stand-in, because the destination's map bounds are exactly the
+        // kind of thing a fixture would hide.
+        var portalStore = new ChapterUnlockStore(new AlphaProfileOptions { Enabled = true });
+        var portalService = new PortalService(
+            services.GetRequiredService<ITeleportService>(),
+            portalStore,
+            services.GetRequiredService<GuardWindowStore>(),
+            services.GetRequiredService<CombatTickEngine>(),
+            services.GetRequiredService<ServerClock>(),
+            new PortalOptions { Enabled = true });
+        var portalActor = NewPlayer("CHR_SELFCHECK_PORTAL_OWNER");
+        portalActor.MapId = "MAP_BEN_MUA";
+        portalActor.X = 348;
+        portalActor.Y = 0;
+        var portalOther = NewPlayer("CHR_SELFCHECK_PORTAL_OTHER");
+        portalOther.MapId = "MAP_BEN_MUA";
+        portalOther.X = 348;
+        portalOther.Y = 0;
+
+        Check(
+            "alpha.portal_registry_is_the_approved_pair_only",
+            AlphaPortalRegistry.All.Count == 2 &&
+            AlphaPortalRegistry.Find("TP_BM_THANH_LAC") is { SourceMapId: "MAP_BEN_MUA", DestinationMapId: "MAP_THANH_LAC", DestinationXWu: 8 } &&
+            AlphaPortalRegistry.Find("TP_TL_BEN_MUA") is { SourceMapId: "MAP_THANH_LAC", SourceXWu: 20, DestinationMapId: "MAP_BEN_MUA", DestinationXWu: 348 } &&
+            AlphaPortalRegistry.Find("TP_BM_THANG_LONG") is null,
+            $"entries={AlphaPortalRegistry.All.Count} " +
+            $"thangLong={AlphaPortalRegistry.Find("TP_BM_THANG_LONG") is not null}");
+
+        var portalUnknown = portalService.Move(portalActor, "TP_BM_THANG_LONG", "1" + new string('0', 31));
+        Check(
+            "alpha.portal_refuses_an_id_the_registry_does_not_publish",
+            !portalUnknown.Accepted &&
+            portalUnknown.Code == PortalErrorCodes.NotFound &&
+            portalUnknown.FieldErrors.SequenceEqual(["payload.portalId"]) &&
+            portalActor.MapId == "MAP_BEN_MUA",
+            $"code={portalUnknown.Code} map={portalActor.MapId}");
+
+        var portalLocked = portalService.Move(portalActor, "TP_BM_THANH_LAC", "2" + new string('0', 31));
+        var portalGranted = portalStore.OnQuestCompleted(portalActor.CharacterId, "P00-05");
+        var portalMoved = portalService.Move(portalActor, "TP_BM_THANH_LAC", "3" + new string('0', 31));
+        Check(
+            "alpha.portal_locked_before_the_chapter_grant_and_open_after_it",
+            !portalLocked.Accepted &&
+            portalLocked.Code == PortalErrorCodes.Locked &&
+            portalLocked.FieldErrors.SequenceEqual(["chapterPermission"]) &&
+            portalGranted &&
+            portalMoved.Accepted &&
+            portalMoved.Result!.DestinationMapId == "MAP_THANH_LAC" &&
+            portalMoved.Result.DestinationXWu == 8 &&
+            portalMoved.Result.Applied &&
+            !portalMoved.Result.Replayed &&
+            portalActor.MapId == "MAP_THANH_LAC" && portalActor.X == 8 && portalActor.Y == 0,
+            $"locked={portalLocked.Code} moved={portalMoved.Accepted}/{portalMoved.Code} " +
+            $"now=({portalActor.X},{portalActor.Y}) on {portalActor.MapId} " +
+            $"revision={portalMoved.Result?.Revision}");
+
+        // The same key again must answer the stored receipt and must NOT move anybody:
+        // the decision's rule is that a replayed command returns history rather than
+        // dragging a character who has travelled on back to an old destination. The
+        // actor is walked off the arrival point first so a silent re-teleport cannot
+        // pass as "position happens to match".
+        portalActor.X = 60;
+        portalActor.Y = 12;
+        var portalReplay = portalService.Move(portalActor, "TP_BM_THANH_LAC", "3" + new string('0', 31));
+        Check(
+            "alpha.portal_replay_returns_history_without_moving_the_actor",
+            portalReplay.Accepted &&
+            portalReplay.Result!.Replayed &&
+            portalReplay.Result.DestinationMapId == "MAP_THANH_LAC" &&
+            portalReplay.Result.DestinationXWu == 8 &&
+            portalActor.X == 60 && portalActor.Y == 12,
+            $"replayed={portalReplay.Result?.Replayed} applied={portalReplay.Result?.Applied} " +
+            $"pos=({portalActor.X},{portalActor.Y})");
+
+        var portalConflict = portalService.Move(portalActor, "TP_TL_BEN_MUA", "3" + new string('0', 31));
+        Check(
+            "alpha.portal_same_key_different_payload_is_a_conflict",
+            !portalConflict.Accepted &&
+            portalConflict.Code == PortalErrorCodes.IdempotencyConflict &&
+            portalActor.MapId == "MAP_THANH_LAC",
+            $"code={portalConflict.Code} map={portalActor.MapId}");
+
+        var portalUnknownConflict = portalService.Move(
+            portalActor, "TP_NOT_PUBLISHED", "3" + new string('0', 31));
+        Check(
+            "alpha.portal_changed_unknown_body_conflicts_before_registry_lookup",
+            !portalUnknownConflict.Accepted &&
+            portalUnknownConflict.Code == PortalErrorCodes.IdempotencyConflict &&
+            portalUnknownConflict.FieldErrors.SequenceEqual(["idempotencyKey"]),
+            $"code={portalUnknownConflict.Code}");
+
+        portalActor.Hp = 0;
+        var portalHistoricalRevision = portalActor.Revision;
+        var portalDeadReplay = portalService.Move(
+            portalActor, "TP_BM_THANH_LAC", "3" + new string('0', 31));
+        Check(
+            "alpha.portal_downed_replay_preserves_the_entire_historical_receipt",
+            portalDeadReplay.Accepted &&
+            portalDeadReplay.Result == (portalMoved.Result! with { Replayed = true }) &&
+            portalActor.Hp == 0 && portalActor.X == 60 && portalActor.Y == 12 &&
+            portalActor.Revision == portalHistoricalRevision,
+            $"replayed={portalDeadReplay.Result?.Replayed} hp={portalActor.Hp}");
+
+        // Permission is per character, so a second owner standing at the same portal is
+        // still locked while the first one travels. This is the "two owners" case, and
+        // it is the shape that would break if the grant were ever made global.
+        var portalSecondLocked = portalService.Move(portalOther, "TP_BM_THANH_LAC", "4" + new string('0', 31));
+        Check(
+            "alpha.portal_permission_is_per_character_not_global",
+            !portalSecondLocked.Accepted &&
+            portalSecondLocked.Code == PortalErrorCodes.Locked &&
+            portalOther.MapId == "MAP_BEN_MUA" &&
+            portalStore.HasFlag(portalActor.CharacterId, AlphaChapterUnlockRules.Flag) &&
+            !portalStore.HasFlag(portalOther.CharacterId, AlphaChapterUnlockRules.Flag),
+            $"code={portalSecondLocked.Code} otherMap={portalOther.MapId}");
+
+        var portalFar = NewPlayer("CHR_SELFCHECK_PORTAL_FAR");
+        portalFar.MapId = "MAP_BEN_MUA";
+        portalFar.X = 300;
+        portalFar.Y = 0;
+        _ = portalStore.OnQuestCompleted(portalFar.CharacterId, "P00-05");
+        var portalRange = portalService.Move(portalFar, "TP_BM_THANH_LAC", "5" + new string('0', 31));
+        // portalOther is standing in Bến Mưa and asks for the Thanh Lạc portal, whose
+        // source side is the other map: this is the wrong-map case, and it is refused
+        // before the permission check, so a character cannot probe a portal it has no
+        // business reaching.
+        var portalWrongMap = portalService.Move(portalOther, "TP_TL_BEN_MUA", "6" + new string('0', 31));
+        Check(
+            "alpha.portal_requires_standing_at_it_on_its_own_map",
+            !portalRange.Accepted &&
+            portalRange.Code == PortalErrorCodes.OutOfRange &&
+            portalFar.MapId == "MAP_BEN_MUA" &&
+            !portalWrongMap.Accepted &&
+            portalWrongMap.Code == PortalErrorCodes.OutOfRange &&
+            portalOther.MapId == "MAP_BEN_MUA",
+            $"far={portalRange.Code} wrongMap={portalWrongMap.Code} " +
+            $"farPos=({portalFar.X},{portalFar.Y}) otherMap={portalOther.MapId}");
+
+        var portalDown = NewPlayer("CHR_SELFCHECK_PORTAL_DOWN", hp: 0);
+        portalDown.MapId = "MAP_BEN_MUA";
+        portalDown.X = 348;
+        portalDown.Y = 0;
+        _ = portalStore.OnQuestCompleted(portalDown.CharacterId, "P00-05");
+        var portalDead = portalService.Move(portalDown, "TP_BM_THANH_LAC", "7" + new string('0', 31));
+        Check(
+            "alpha.portal_refuses_a_downed_actor",
+            !portalDead.Accepted &&
+            portalDead.Code == PortalErrorCodes.NotAlive &&
+            portalDown.MapId == "MAP_BEN_MUA",
+            $"code={portalDead.Code} map={portalDown.MapId}");
+
+        var portalCleanupWindows = new GuardWindowStore();
+        var portalCleanupEvents = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var portalCleanupEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, portalCleanupEvents,
+            new MobCombatStateStore(), tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            portalCleanupWindows, geometry, NewDashes(geometry), new ServerClock());
+        var portalCleanupActor = NewPlayer("CHR_SELFCHECK_PORTAL_CLEANUP");
+        portalCleanupActor.MapId = "MAP_BEN_MUA";
+        portalCleanupActor.X = 348;
+        portalCleanupActor.Y = 0;
+        _ = portalStore.OnQuestCompleted(portalCleanupActor.CharacterId, "P00-05");
+        portalCleanupEngine.Schedule(
+            portalCleanupActor, portalCleanupActor.SessionId, new string('b', 32),
+            CombatV2Actions.Skill, "SK-MK-01", 1, 0, startTick: 0);
+        var portalCleanupWindow = portalCleanupWindows.Find(portalCleanupActor.CharacterId)!;
+        portalCleanupWindow.CounterSourceEntityId = "ENT_SELFCHECK_GUARD_MOB2";
+        portalCleanupWindow.CounterSourceLifeId = 1;
+        portalCleanupWindow.CounterTick = 2;
+        var portalCleanupRevision = portalCleanupActor.Revision;
+        var portalCleanupClock = new ServerClock();
+        var portalMissingBounds = new PortalService(
+            new InMemoryTeleportService(
+                new MapBoundsCatalog(new Dictionary<string, MapBounds>()), portalCleanupClock),
+            portalStore, portalCleanupWindows, portalCleanupEngine, portalCleanupClock,
+            new PortalOptions { Enabled = true });
+        var portalMissingKey = new string('c', 32);
+        var portalTransitionRefused = portalMissingBounds.Move(
+            portalCleanupActor, "TP_BM_THANH_LAC", portalMissingKey);
+        Check(
+            "alpha.portal_failed_teleport_preserves_guard_cast_counter_and_position",
+            !portalTransitionRefused.Accepted &&
+            portalTransitionRefused.Code == TeleportErrorCodes.InvalidMap &&
+            portalTransitionRefused.FieldErrors.SequenceEqual(["mapId"]) &&
+            portalCleanupActor.MapId == "MAP_BEN_MUA" && portalCleanupActor.X == 348 &&
+            portalCleanupActor.Y == 0 && portalCleanupActor.Revision == portalCleanupRevision &&
+            ReferenceEquals(portalCleanupWindow,
+                portalCleanupWindows.Find(portalCleanupActor.CharacterId)) &&
+            portalCleanupWindow is { IsOpen: true, CounterResolved: false, CounterTick: 2 } &&
+            portalCleanupEngine.ScheduledCastCount == 1 &&
+            portalCleanupEvents.Read(portalCleanupActor.SessionId, 0, 256).Events.Count == 0,
+            $"code={portalTransitionRefused.Code} casts={portalCleanupEngine.ScheduledCastCount} " +
+            $"window={portalCleanupWindow.IsOpen} counter={portalCleanupWindow.CounterResolved}");
+        portalCleanupActor.X = 300;
+        var portalRefusalRetry = portalMissingBounds.Move(
+            portalCleanupActor, "TP_BM_THANH_LAC", portalMissingKey);
+        Check(
+            "alpha.portal_refusals_do_not_record_a_receipt",
+            !portalRefusalRetry.Accepted && portalRefusalRetry.Code == PortalErrorCodes.OutOfRange &&
+            portalCleanupWindow.IsOpen && portalCleanupEngine.ScheduledCastCount == 1,
+            $"code={portalRefusalRetry.Code}");
+        portalCleanupActor.X = 348;
+        var portalCleanupService = new PortalService(
+            services.GetRequiredService<ITeleportService>(), portalStore,
+            portalCleanupWindows, portalCleanupEngine, portalCleanupClock,
+            new PortalOptions { Enabled = true });
+        var portalParallelKey = new string('d', 32);
+        using (var portalBarrier = new System.Threading.Barrier(2))
+        {
+            var portalParallelCalls = Enumerable.Range(0, 2).Select(_ =>
+                System.Threading.Tasks.Task.Factory.StartNew(() =>
+                {
+                    portalBarrier.SignalAndWait();
+                    return portalCleanupService.Move(
+                        portalCleanupActor, "TP_BM_THANH_LAC", portalParallelKey);
+                }, System.Threading.CancellationToken.None,
+                    System.Threading.Tasks.TaskCreationOptions.LongRunning,
+                    System.Threading.Tasks.TaskScheduler.Default)).ToArray();
+            System.Threading.Tasks.Task.WaitAll(portalParallelCalls);
+            var portalParallelResults = portalParallelCalls.Select(task => task.Result).ToArray();
+            var portalFreshResult = portalParallelResults.Single(result =>
+                result.Accepted && !result.Result!.Replayed).Result!;
+            var portalReplayResult = portalParallelResults.Single(result =>
+                result.Accepted && result.Result!.Replayed).Result!;
+            var portalCancelledEvents = portalCleanupEvents
+                .Read(portalCleanupActor.SessionId, 0, 256).Events;
+            Check(
+                "alpha.portal_concurrent_key_transitions_and_cleans_up_once",
+                portalParallelResults.All(result => result.Accepted) &&
+                portalFreshResult == (portalReplayResult with { Replayed = false }) &&
+                portalFreshResult is
+                    { InflightCastsCancelled: 1, ReservedCountersCancelled: 1, GuardWindowClosed: true } &&
+                portalCleanupActor.MapId == "MAP_THANH_LAC" && portalCleanupActor.X == 8 &&
+                portalCleanupActor.Revision == portalCleanupRevision + 1 &&
+                portalCleanupEngine.ScheduledCastCount == 0 &&
+                !portalCleanupWindow.IsOpen && portalCleanupWindow.CounterResolved &&
+                portalCancelledEvents.Count(ev => ev.Type == CombatEventTypesV2.Cancel) == 2 &&
+                portalCancelledEvents.Count(ev => ev.Type == CombatEventTypesV2.End) == 1 &&
+                portalCleanupEngine.Tick(2).Count == 0,
+                $"revision={portalCleanupActor.Revision} cancels={portalCancelledEvents.Count} " +
+                $"casts={portalCleanupEngine.ScheduledCastCount}");
+        }
+
+        var portalIndependentActor = NewPlayer("CHR_SELFCHECK_PORTAL_INDEPENDENT");
+        portalIndependentActor.MapId = "MAP_BEN_MUA";
+        portalIndependentActor.X = 348;
+        portalIndependentActor.Y = 0;
+        _ = portalStore.OnQuestCompleted(portalIndependentActor.CharacterId, "P00-05");
+        var portalIndependent = portalCleanupService.Move(
+            portalIndependentActor, "TP_BM_THANH_LAC", portalParallelKey);
+        Check(
+            "alpha.portal_same_key_is_independent_for_another_character",
+            portalIndependent is { Accepted: true, Result.Replayed: false } &&
+            portalIndependentActor.MapId == "MAP_THANH_LAC" && portalIndependentActor.X == 8,
+            $"accepted={portalIndependent.Accepted} replayed={portalIndependent.Result?.Replayed}");
+
+        var serializedClock = new ServerClock();
+        var serializedWindows = new GuardWindowStore();
+        var serializedEvents = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var serializedActor = NewPlayer("CHR_SELFCHECK_PORTAL_SERIALIZED");
+        serializedActor.MapId = "MAP_BEN_MUA";
+        serializedActor.X = 348;
+        serializedActor.Y = 0;
+        _ = portalStore.OnQuestCompleted(serializedActor.CharacterId, "P00-05");
+        var serializedSkills = new ObservedSkillCatalog(combatSkills);
+        var serializedEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, serializedSkills, serializedEvents,
+            new MobCombatStateStore(), tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            serializedWindows, geometry, NewDashes(geometry), serializedClock);
+        var engineMonitor = typeof(CombatTickEngine).GetField("_sync",
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
+            .GetValue(serializedEngine)!;
+        var acceptanceLocks = new List<(bool EngineHeld, bool ActorHeld, bool Excluded)>();
+        bool CompetingThreadExcluded() => System.Threading.Tasks.Task.Factory.StartNew(() =>
+        {
+            var entered = Monitor.TryEnter(engineMonitor);
+            if (entered)
+            {
+                Monitor.Exit(engineMonitor);
+            }
+            return !entered;
+        }, CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.LongRunning,
+            System.Threading.Tasks.TaskScheduler.Default).GetAwaiter().GetResult();
+        serializedSkills.OnRead = () => acceptanceLocks.Add((
+            Monitor.IsEntered(engineMonitor), Monitor.IsEntered(serializedActor.SyncRoot),
+            CompetingThreadExcluded()));
+        var serializedCombat = new InMemoryCombatV2Service(
+            serializedSkills, serializedEvents, serializedClock);
+        var serializedIntent = new CombatV2Intent(
+            CombatV2Actions.Skill, "SK-MK-01", null, 1, 1, 0, null);
+        var serializedKey = new string('e', 32);
+        var sourceCast = serializedEngine.AcceptAndSchedule(
+            serializedCombat, serializedActor, serializedActor.SessionId,
+            serializedIntent, serializedKey);
+        Check(
+            "alpha.portal_acceptance_and_schedule_exclude_transitions_and_ticks",
+            sourceCast.Accepted && acceptanceLocks.Count == 2 &&
+            acceptanceLocks.All(observed => observed is (true, true, true)) &&
+            serializedEngine.ScheduledCastCount == 1 &&
+            serializedWindows.Find(serializedActor.CharacterId) is { IsOpen: true },
+            $"accepted={sourceCast.Accepted} observations={string.Join(';', acceptanceLocks)}");
+        serializedSkills.OnRead = null;
+        var sourceWindow = serializedWindows.Find(serializedActor.CharacterId)!;
+        sourceWindow.CounterSourceEntityId = "ENT_SELFCHECK_GUARD_MOB2";
+        sourceWindow.CounterSourceLifeId = 1;
+        sourceWindow.CounterTick = 2;
+        var transitionLocks = new List<(bool EngineHeld, bool ActorHeld, bool Excluded)>();
+        var observedTeleport = new ObservedTeleportService(teleport, () =>
+            transitionLocks.Add((Monitor.IsEntered(engineMonitor),
+                Monitor.IsEntered(serializedActor.SyncRoot), CompetingThreadExcluded())));
+        var serializedPortals = new PortalService(
+            observedTeleport, portalStore, serializedWindows, serializedEngine,
+            serializedClock, new PortalOptions { Enabled = true });
+        var serializedMove = serializedPortals.Move(
+            serializedActor, "TP_BM_THANH_LAC", new string('f', 32));
+        Check(
+            "alpha.portal_transition_excludes_ticks_and_fresh_acceptance_through_teleport",
+            serializedMove.Accepted && transitionLocks.Count == 2 &&
+            transitionLocks.All(observed => observed is (true, true, true)) &&
+            serializedMove.Result is
+            { InflightCastsCancelled: 1, ReservedCountersCancelled: 1, GuardWindowClosed: true } &&
+            serializedEngine.ScheduledCastCount == 0 &&
+            sourceWindow.CounterResolved && !sourceWindow.IsOpen &&
+            serializedEngine.Tick(2).Count == 0,
+            $"accepted={serializedMove.Accepted} observations={string.Join(';', transitionLocks)}");
+        var historyEventCount = serializedEvents.Read(serializedActor.SessionId, 0, 256).Events.Count;
+        var sourceReplay = serializedEngine.AcceptAndSchedule(
+            serializedCombat, serializedActor, serializedActor.SessionId,
+            serializedIntent, serializedKey);
+        Check(
+            "alpha.portal_old_cast_receipt_cannot_schedule_on_destination",
+            sourceReplay is { Accepted: true, Replayed: true } &&
+            sourceReplay.Result == sourceCast.Result &&
+            serializedEngine.ScheduledCastCount == 0 &&
+            serializedWindows.Find(serializedActor.CharacterId) is null &&
+            serializedEvents.Read(serializedActor.SessionId, 0, 256).Events.Count == historyEventCount,
+            $"replayed={sourceReplay.Replayed} casts={serializedEngine.ScheduledCastCount}");
+        var destinationCast = serializedEngine.AcceptAndSchedule(
+            serializedCombat, serializedActor, serializedActor.SessionId,
+            new CombatV2Intent(CombatV2Actions.BasicAttack, null, null, 2, 1, 0, null),
+            new string('1', 32));
+        var destinationEvents = serializedEngine.Tick(serializedClock.Tick + 4);
+        Check(
+            "alpha.portal_fresh_destination_cast_survives_previous_transition_cleanup",
+            destinationCast is { Accepted: true, Replayed: false } &&
+            destinationCast.Result!.Events.Single().MapInstanceId == "MAP_THANH_LAC#1" &&
+            destinationEvents.Any(ev => ev.CastId == destinationCast.Result.CastId &&
+                ev.Type == CombatEventTypesV2.End) &&
+            destinationEvents.All(ev => ev.Type != CombatEventTypesV2.Cancel),
+            $"accepted={destinationCast.Accepted} events={string.Join(',', destinationEvents.Select(ev => ev.Type))}");
+
+        using (var scheduleRead = new ManualResetEventSlim())
+        {
+            serializedSkills.OnRead = scheduleRead.Set;
+            Exception? scheduleFailure = null;
+            var scheduleThread = new Thread(() =>
+            {
+                try
+                {
+                    serializedEngine.Schedule(serializedActor, serializedActor.SessionId,
+                        new string('2', 32), CombatV2Actions.Skill, "SK-MK-01", 1, 0, 10);
+                }
+                catch (Exception error)
+                {
+                    scheduleFailure = error;
+                }
+            })
+            { IsBackground = true };
+            bool reachedActorWait;
+            bool engineExcluded;
+            lock (serializedActor.SyncRoot)
+            {
+                scheduleThread.Start();
+                reachedActorWait = scheduleRead.Wait(TimeSpan.FromSeconds(10)) &&
+                    SpinWait.SpinUntil(() =>
+                        (scheduleThread.ThreadState & ThreadState.WaitSleepJoin) != 0,
+                        TimeSpan.FromSeconds(10));
+                var entered = Monitor.TryEnter(engineMonitor);
+                engineExcluded = !entered;
+                if (entered)
+                {
+                    Monitor.Exit(engineMonitor);
+                }
+            }
+            var scheduleJoined = scheduleThread.Join(TimeSpan.FromSeconds(10));
+            Check(
+                "alpha.portal_guard_open_cannot_outlive_engine_schedule_lock",
+                reachedActorWait && engineExcluded && scheduleJoined && scheduleFailure is null &&
+                serializedWindows.Find(serializedActor.CharacterId) is { IsOpen: true },
+                $"actorWait={reachedActorWait} engineExcluded={engineExcluded} joined={scheduleJoined} error={scheduleFailure}");
+            serializedSkills.OnRead = null;
+        }
+
+        returnSessions.Add(serializedActor);
+        var serializedReturn = new DeathReturnService(
+            returnSessions, maps, options,
+            new DeathReturnOptions { Enabled = true, RestoreHpFixture = 50 },
+            serializedWindows, serializedEngine, new PlayerLifeLedger(), serializedClock, null);
+        DeathReturnResult? serializedReturnResult = null;
+        Exception? serializedReturnFailure = null;
+        var returnThread = new Thread(() =>
+        {
+            try
+            {
+                serializedReturnResult = serializedReturn.ReturnToAnchor(
+                    serializedActor.SessionId, new string('3', 32));
+            }
+            catch (Exception error)
+            {
+                serializedReturnFailure = error;
+            }
+        }) { IsBackground = true };
+        bool returnReachedActorWait;
+        bool returnEngineExcluded;
+        lock (serializedActor.SyncRoot)
+        {
+            serializedActor.Hp = 0;
+            returnThread.Start();
+            returnReachedActorWait = SpinWait.SpinUntil(() =>
+                (returnThread.ThreadState & ThreadState.WaitSleepJoin) != 0,
+                TimeSpan.FromSeconds(10));
+            var entered = Monitor.TryEnter(engineMonitor);
+            returnEngineExcluded = !entered;
+            if (entered)
+            {
+                Monitor.Exit(engineMonitor);
+            }
+        }
+        var returnJoined = returnThread.Join(TimeSpan.FromSeconds(10));
+        Check(
+            "death_return.transition_holds_engine_before_waiting_for_actor",
+            returnReachedActorWait && returnEngineExcluded && returnJoined &&
+            serializedReturnFailure is null &&
+            serializedReturnResult is { Applied: true, Hp: 50, InflightCastsCancelled: 1 } &&
+            serializedEngine.ScheduledCastCount == 0 &&
+            serializedWindows.Find(serializedActor.CharacterId) is null &&
+            serializedReturnResult.Revision == serializedActor.Revision &&
+            serializedReturn.LedgerCount == 1,
+            $"actorWait={returnReachedActorWait} engineExcluded={returnEngineExcluded} " +
+            $"joined={returnJoined} error={serializedReturnFailure}");
+
+        var movementClock = new ServerClock();
+        var movementActor = NewPlayer("CHR_SELFCHECK_MOVE_TRANSITION");
+        returnSessions.Add(movementActor);
+        var movementRevision = movementActor.Revision;
+        var movementContext = new DefaultHttpContext();
+        movementContext.Request.ContentType = "application/json";
+        movementContext.Request.Headers["X-Session-ID"] = movementActor.SessionId;
+        var movementBody = JsonSerializer.SerializeToUtf8Bytes(new MoveEnvelope
+        {
+            SchemaVersion = 1,
+            RequestId = new string('4', 32),
+            IdempotencyKey = new string('5', 32),
+            SentAtUtc = P1Time.ToUtcString(movementClock.UtcNow),
+            CharacterId = movementActor.CharacterId,
+            Payload = new MoveIntent { InputSequence = 1, MoveX = 0, MoveY = 0 }
+        }, P1Json.Options);
+        using var movementStream = new MemoryStream(movementBody);
+        movementContext.Request.Body = movementStream;
+        movementContext.Request.ContentLength = movementBody.Length;
+        DateTimeOffset movementReset = default;
+        var movementClockAdvanced = false;
+        var movementTransitionApplied = false;
+        using var movementLogger = new ObservedLoggerFactory(() =>
+        {
+            var beforeTransitionTick = movementClock.Tick;
+            movementClockAdvanced = SpinWait.SpinUntil(
+                () => movementClock.Tick > beforeTransitionTick, TimeSpan.FromSeconds(10));
+            System.Threading.Tasks.Task.Factory.StartNew(() =>
+            {
+                var transition = new InMemoryTeleportService(maps, movementClock).Teleport(
+                    movementActor, new TeleportCommand("MAP_THANH_LAC", 8, 0, TeleportReasons.Quest));
+                movementTransitionApplied = transition.IsSuccess;
+                movementReset = movementActor.LastMoveAtUtc;
+            }, CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.LongRunning,
+                System.Threading.Tasks.TaskScheduler.Default).GetAwaiter().GetResult();
+        });
+        var movementHandler = typeof(Server.Health.Endpoints.P1Endpoints).GetMethod("MoveAsync",
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!;
+        var movementResult = ((System.Threading.Tasks.Task<IResult>)movementHandler.Invoke(null,
+            [movementContext, returnSessions, maps, geometry, movementClock,
+                Microsoft.Extensions.Options.Options.Create(options), movementLogger])!)
+            .GetAwaiter().GetResult();
+        Check(
+            "movement.queued_handler_cannot_backdate_transition_timing_reset",
+            movementClockAdvanced && movementTransitionApplied &&
+            movementResult is Microsoft.AspNetCore.Http.IStatusCodeHttpResult { StatusCode: 200 } &&
+            movementActor.MapId == "MAP_THANH_LAC" && movementActor.X == 8 && movementActor.Y == 0 &&
+            movementActor.LastMoveAtUtc >= movementReset &&
+            movementActor.Revision == movementRevision + 2,
+            $"advanced={movementClockAdvanced} teleported={movementTransitionApplied} " +
+            $"resetDeltaTicks={(movementActor.LastMoveAtUtc - movementReset).Ticks}");
+
+        // ─── QOD-21 Q2: the TALK route's guards (work order 31 Q2) ────
+
+        // DEC-TUTORIAL-TRANSPORT-20261106 approved the verb with these rules, and the
+        // happy path is still blocked by content (#134: no narrative node is spoken by
+        // NPC_CLASS_TRIAL), so what CAN be pinned today is every way the route must
+        // refuse. Each check below names a mutation that has to trip it.
+        var talkNodes = services.GetRequiredService<NarrativeNodeCatalog>();
+        var talkService = services.GetRequiredService<QuestTalkService>();
+        var talkActor = NewPlayer("CHR_SELFCHECK_TALK_ACTOR");
+        TalkEnvelope TalkCase(string npcId, string nodeId) => new()
+        {
+            SchemaVersion = 1,
+            RequestId = new string('a', 32),
+            IdempotencyKey = new string('b', 32),
+            SentAtUtc = "2026-11-07T00:00:00Z",
+            CharacterId = talkActor.CharacterId,
+            Payload = new TalkIntent { NpcId = npcId, NodeId = nodeId }
+        };
+        var talkPlain = TalkCase("NPC_LYAN", "DLG_SELFCHECK_UNUSED");
+        var talkPlainErrors = P1Validation.ValidateTalkEnvelope(talkPlain);
+        var talkNoPayload = P1Validation.ValidateTalkEnvelope(new TalkEnvelope
+        {
+            SchemaVersion = 1,
+            RequestId = new string('a', 32),
+            IdempotencyKey = new string('b', 32),
+            SentAtUtc = "2026-11-07T00:00:00Z",
+            CharacterId = talkActor.CharacterId
+        });
+        var talkLowerNode = P1Validation.ValidateTalkEnvelope(
+            TalkCase("NPC_LYAN", "dlg_c1_01_open"));
+        var talkForeignSpeaker = P1Validation.ValidateTalkEnvelope(
+            TalkCase("NPC_LYAN;DROP", "DLG_OKAY"));
+        Check(
+            "contracts.talk_envelope_refuses_a_missing_or_malformed_payload",
+            talkPlainErrors.Count == 0 &&
+            talkNoPayload.SequenceEqual(["payload"]) &&
+            talkLowerNode.SequenceEqual(["payload.nodeId"]) &&
+            talkForeignSpeaker.SequenceEqual(["payload.npcId"]) &&
+            P1Validation.ValidateTalkEnvelope(null).SequenceEqual(["body"]),
+            $"valid={talkPlainErrors.Count} noPayload=[{string.Join(",", talkNoPayload)}] " +
+            $"lowercaseNode=[{string.Join(",", talkLowerNode)}] " +
+            $"badNpc=[{string.Join(",", talkForeignSpeaker)}]");
+
+        var talkUnknown = talkService.Talk(talkActor, "NPC_LYAN", "DLG_SELFCHECK_NEVER_SHIPPED", "c" + new string('0', 31));
+        Check(
+            "contracts.talk_refuses_a_node_the_catalog_does_not_publish",
+            !talkUnknown.Accepted &&
+            talkUnknown.Code == TalkErrorCodes.UnknownNode &&
+            talkUnknown.FieldErrors.SequenceEqual(["payload.nodeId"]),
+            $"code={talkUnknown.Code} fields=[{string.Join(",", talkUnknown.FieldErrors)}]");
+
+        // Both of the claims below read a node out of the shipped catalog instead of a
+        // fixture, so a content change that renames a speaker or adds a branch moves
+        // the measurement rather than silently passing.
+        var talkCatalogNodes = talkNodes.ForQuest("C1-01");
+        var talkForeignSpeakerNode = talkCatalogNodes.FirstOrDefault(node => node.Choices.Count == 0);
+        var talkWrongSpeaker = talkForeignSpeakerNode is null
+            ? TalkOutcome.Rejected("no_shipped_node", false)
+            : talkService.Talk(
+                talkActor,
+                "NPC_SELFCHECK_NOT_THE_SPEAKER",
+                talkForeignSpeakerNode.NodeId,
+                "d" + new string('0', 31));
+        Check(
+            "contracts.talk_refuses_a_line_spoken_by_another_npc",
+            talkForeignSpeakerNode is not null &&
+            !talkWrongSpeaker.Accepted &&
+            talkWrongSpeaker.Code == TalkErrorCodes.WrongSpeaker &&
+            talkWrongSpeaker.FieldErrors.SequenceEqual(["payload.npcId"]),
+            $"node={talkForeignSpeakerNode?.NodeId} speaker={talkForeignSpeakerNode?.SpeakerNpcId} " +
+            $"code={talkWrongSpeaker.Code}");
+
+        // Measured from the shipped bundle at this head, not assumed: `narrative_nodes_v1.json`
+        // carries 229 nodes and exactly ONE of them has choices - DLG_C3_05_CHOICE,
+        // quest C3-05, speaker NPC_FORGE_MASTER. My first two attempts named a quest
+        // that ships no branch (C1-01, then SQ-VN-05 read out of a grep window rather
+        // than the nodes array) and the check failed with `node=` empty, which is the
+        // shape a vacuous test has when the data does not back it.
+        var talkChoiceNode = talkNodes.ForQuest("C3-05")
+            .FirstOrDefault(node => node.Choices.Count > 0);
+        var talkChoiceRefused = talkChoiceNode is null
+            ? TalkOutcome.Rejected(TalkErrorCodes.ChoiceRequired, false)
+            : talkService.Talk(
+                talkActor, talkChoiceNode.SpeakerNpcId, talkChoiceNode.NodeId, "e" + new string('0', 31));
+        Check(
+            "contracts.talk_refuses_a_choice_node_instead_of_picking_a_branch",
+            talkChoiceNode is not null &&
+            !talkChoiceRefused.Accepted &&
+            talkChoiceRefused.Code == TalkErrorCodes.ChoiceRequired,
+            $"node={talkChoiceNode?.NodeId} choices={talkChoiceNode?.Choices.Count} " +
+            $"code={talkChoiceRefused.Code}");
+
+        // The quest is derived from the node and never taken from the client. With the
+        // alpha quest pack not merged (this container runs the release gates OFF), the
+        // node's own quest is not a quest the runtime ships, so the route must answer
+        // quest_not_found for the NODE rather than crediting a quest nobody loaded.
+        var talkUnloadedQuest = talkForeignSpeakerNode is null
+            ? TalkOutcome.Rejected("no_shipped_node", false)
+            : talkService.Talk(
+                talkActor,
+                talkForeignSpeakerNode.SpeakerNpcId,
+                talkForeignSpeakerNode.NodeId,
+                "f" + new string('0', 31));
+        Check(
+            "contracts.talk_does_not_credit_a_quest_the_running_catalog_does_not_ship",
+            talkForeignSpeakerNode is not null &&
+            talkUnloadedQuest.Accepted == false &&
+            talkUnloadedQuest.Code == TalkErrorCodes.QuestNotFound,
+            $"node={talkForeignSpeakerNode?.NodeId} quest={talkForeignSpeakerNode?.QuestId} " +
+            $"code={talkUnloadedQuest.Code}");
+
+        var talkBadDistance = false;
+        try
+        {
+            QuestTalkOptionsValidator.Validate(new QuestTalkOptions { MaxInteractionDistanceWu = 0 });
+        }
+        catch (InvalidOperationException)
+        {
+            talkBadDistance = true;
+        }
+
+        Check(
+            "contracts.talk_options_refuse_a_non_positive_distance",
+            talkBadDistance && new QuestTalkOptions().MaxInteractionDistanceWu == 5,
+            $"refused={talkBadDistance}");
+
+        var talkReplayDefinition = FixtureQuest("P00-01", [], []);
+        var talkReplayCatalog = new QuestCatalog(new Dictionary<string, QuestDefinition>
+        {
+            [talkReplayDefinition.QuestId] = talkReplayDefinition
+        });
+        var talkReplayQuests = new InMemoryQuestService(
+            talkReplayCatalog, new InMemoryQuestStateStore(), shippedRecords,
+            services.GetRequiredService<IServerClock>());
+        var talkReplayService = new QuestTalkService(
+            talkNodes, new NarrativeService(talkNodes, talkReplayQuests, new NarrativeFlagStore()),
+            talkReplayQuests, talkReplayCatalog, npcAnchors, new QuestTalkOptions());
+        var talkReplayActor = NewPlayer("CHR_SELFCHECK_TALK_REPLAY");
+        var talkReplayAnchor = npcAnchors.All.Single(anchor =>
+            anchor.NpcId == "NPC_LYAN" && anchor.MapId == options.DefaultMapId);
+        talkReplayActor.X = talkReplayAnchor.X;
+        talkReplayActor.Y = talkReplayAnchor.Y;
+        talkReplayActor.FloorId = talkReplayAnchor.FloorId;
+        var talkReplayAccepted = talkReplayQuests.Accept(talkReplayActor, "P00-01");
+        var talkReplayKey = new string('1', 32);
+        var talkReplayFirst = talkReplayService.Talk(
+            talkReplayActor, "NPC_LYAN", "DLG_P00_01_CLUE", talkReplayKey);
+        var talkReplayState = talkReplayQuests.GetState(talkReplayActor.CharacterId, "P00-01").State;
+        var talkReplayReady = talkReplayService.Talk(
+            talkReplayActor, "NPC_LYAN", "DLG_P00_01_CLUE", talkReplayKey);
+        Check(
+            "contracts.talk_replays_the_receipt_after_its_own_credit_closes_the_reveal_gate",
+            talkReplayAccepted.Accepted && talkReplayFirst.Result is { Credited: true, Replayed: false } firstTalkReceipt &&
+            talkReplayState?.State == QuestStates.ReadyToTurnIn &&
+            talkReplayReady.Accepted && talkReplayReady.Result == firstTalkReceipt with { Replayed = true },
+            $"state={talkReplayState?.State} first={talkReplayFirst.Accepted} replay={talkReplayReady.Accepted} code={talkReplayReady.Code}");
+
+        talkReplayActor.MapId = "MAP_THANH_LAC";
+        talkReplayActor.X = 8;
+        var talkReplayMoved = talkReplayService.Talk(
+            talkReplayActor, "NPC_LYAN", "DLG_P00_01_CLUE", talkReplayKey);
+        Check(
+            "contracts.talk_replays_history_without_rechecking_current_position",
+            talkReplayMoved.Accepted && talkReplayFirst.Result is { } movedTalkReceipt &&
+            talkReplayMoved.Result == movedTalkReceipt with { Replayed = true } &&
+            talkReplayActor.MapId == "MAP_THANH_LAC" && talkReplayActor.X == 8 &&
+            talkReplayQuests.GetState(talkReplayActor.CharacterId, "P00-01").State?.Revision == talkReplayState?.Revision,
+            $"accepted={talkReplayMoved.Accepted} code={talkReplayMoved.Code} map={talkReplayActor.MapId}");
+
+        var talkReplayConflict = talkReplayService.Talk(
+            talkReplayActor, "NPC_LYAN", "DLG_SELFCHECK_NOT_PUBLISHED", talkReplayKey);
+        Check(
+            "contracts.talk_conflicts_on_changed_body_before_fresh_command_guards",
+            !talkReplayConflict.Accepted && talkReplayConflict.Code == TalkErrorCodes.IdempotencyConflict &&
+            talkReplayConflict.FieldErrors.SequenceEqual(["idempotencyKey"]),
+            $"code={talkReplayConflict.Code}");
+
+        talkReplayActor.MapId = talkReplayAnchor.MapId;
+        talkReplayActor.X = talkReplayAnchor.X;
+        var talkReplayFresh = talkReplayService.Talk(
+            talkReplayActor, "NPC_LYAN", "DLG_P00_01_CLUE", new string('2', 32));
+        var talkReplayOther = NewPlayer("CHR_SELFCHECK_TALK_REPLAY_OTHER");
+        talkReplayOther.X = talkReplayAnchor.X;
+        talkReplayOther.Y = talkReplayAnchor.Y;
+        var talkReplayForeign = talkReplayService.Talk(
+            talkReplayOther, "NPC_LYAN", "DLG_P00_01_CLUE", talkReplayKey);
+        Check(
+            "contracts.talk_new_keys_and_other_owners_do_not_borrow_a_receipt",
+            !talkReplayFresh.Accepted && talkReplayFresh.Code == TalkErrorCodes.NotRevealed &&
+            !talkReplayForeign.Accepted && talkReplayForeign.Code == TalkErrorCodes.NotRevealed &&
+            talkReplayQuests.GetState(talkReplayActor.CharacterId, "P00-01").State?.Revision == talkReplayState?.Revision,
+            $"fresh={talkReplayFresh.Code} other={talkReplayForeign.Code}");
+
+        var talkRaceActor = NewPlayer("CHR_SELFCHECK_TALK_RACE");
+        talkRaceActor.X = talkReplayAnchor.X;
+        talkRaceActor.Y = talkReplayAnchor.Y;
+        talkReplayQuests.Accept(talkRaceActor, "P00-01");
+        using var talkRaceStart = new Barrier(2);
+        var talkRaceRequests = Enumerable.Range(0, 2).Select(_ => Task.Factory.StartNew(() =>
+        {
+            talkRaceStart.SignalAndWait();
+            return talkReplayService.Talk(
+                talkRaceActor, "NPC_LYAN", "DLG_P00_01_CLUE", new string('3', 32));
+        }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default)).ToArray();
+        Task.WaitAll(talkRaceRequests);
+        var talkRaceResults = talkRaceRequests.Select(request => request.Result).ToArray();
+        var talkRaceState = talkReplayQuests.GetState(talkRaceActor.CharacterId, "P00-01").State;
+        Check(
+            "contracts.talk_concurrent_same_key_has_one_credit_and_one_historical_replay",
+            talkRaceResults.All(outcome => outcome.Accepted) &&
+            talkRaceResults.Count(outcome => outcome.Result is { Replayed: false, Credited: true }) == 1 &&
+            talkRaceResults.Count(outcome => outcome.Result is { Replayed: true, Credited: true }) == 1 &&
+            talkRaceState?.ObjectiveCounters.GetValueOrDefault(talkReplayDefinition.Objectives[0].ObjectiveId) == 1,
+            $"accepted={talkRaceResults.Count(outcome => outcome.Accepted)} state={talkRaceState?.State}");
+
+        // ─── QOD-21 Q4: two owners in the audience, and losing the row ────
+
+        // The escort read model above is the only place a client can see the NPC at
+        // all, and the content ships ONE canonical Lyan for every owner, so two
+        // owners on the same road must be served two different positions from one
+        // entity. The anchor here is deliberately off the waypoint path (30,0 while
+        // the path starts at 42,0): a projection that ignored its per-owner source
+        // would answer 30 to both viewers, which is what makes this a wiring test
+        // instead of a restatement of the domain check above. Owner B stands 32 WU
+        // from its own NPC — inside the 40 WU enter radius but far outside the
+        // sourced 12 WU follow range — so its NPC has never left 42.
+        var escortAudNpc = new WorldEntityInstance
+        {
+            EntityId = "ENT_SELFCHECK_ESCORT_NPC_LYAN",
+            RecordId = alphaDesign.QuestRules.P00_04_ActorId,
+            Kind = WorldEntityKinds.Npc,
+            TemplateIds = new[] { alphaDesign.QuestRules.P00_04_ActorId },
+            MapId = options.DefaultMapId,
+            FloorId = "OVERWORLD",
+            X = 30,
+            Y = 0,
+            Quantity = 1,
+            RespawnSeconds = 0
+        };
+        escortAudNpc.Initialize();
+        var escortAudRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [
+                    escortAudNpc,
+                    escortWaveA1, escortWaveA2, escortWaveA3,
+                    escortWaveB1, escortWaveB2, escortWaveB3
+                ]),
+            escortClock);
+        var escortAudStub = new EscortQuestStub();
+        escortAudStub.Set("CHR_SELFCHECK_ESCORT_AUD_A", QuestStates.Active);
+        escortAudStub.Set("CHR_SELFCHECK_ESCORT_AUD_B", QuestStates.Active);
+        var escortAud = new AlphaEscortService(alphaDesign, escortAudStub, escortAudRegistry);
+        var escortAudOwnerA = NewPlayer("CHR_SELFCHECK_ESCORT_AUD_A");
+        var escortAudOwnerB = NewPlayer("CHR_SELFCHECK_ESCORT_AUD_B");
+        escortAudOwnerB.X = 10;
+        escortAudOwnerB.Y = 0;
+        // 100 ticks at the sourced 3 wu/s = 0,15 WU per tick, so the walked distance
+        // is bounded by 100 * 0,15 = 15 WU. The measured value is 99 steps, not 100:
+        // the first tick only opens the instance (STARTED) and does not call Advance,
+        // so 42 + 99 * 0,15 = 56,85 is what the domain actually reports and the bound
+        // below is stated around that, not around a predicted 57.
+        for (var t = 5000; t < 5100; t++)
+        {
+            escortAud.Tick([escortAudOwnerA, escortAudOwnerB], t);
+            if (escortAud.TryGetNpcPosition(escortAudOwnerA.CharacterId, out var audWalkX, out _))
+            {
+                escortAudOwnerA.X = audWalkX;
+            }
+        }
+
+        var escortAudFoundA = escortAud.TryGetNpcPosition(
+            "CHR_SELFCHECK_ESCORT_AUD_A", out double audDomainX, out _);
+        var escortAudFoundB = escortAud.TryGetNpcPosition(
+            "CHR_SELFCHECK_ESCORT_AUD_B", out double audDomainBx, out _);
+        var escortAudProjection = new WorldAoiProjectionService(
+            escortAudRegistry,
+            new MobLifecycleService(
+                escortAudRegistry,
+                services.GetRequiredService<IWorldGeometryService>(),
+                aoiMobOptions,
+                escortClock),
+            enabledCombat,
+            new GatherClaimStore(escortClock),
+            new MobCombatStateStore(),
+            npcPositions: escortAud);
+        var escortAudRowA = escortAudProjection
+            .Project(escortAudOwnerA)
+            .Single(entity => entity.EntityId == "ENT_SELFCHECK_ESCORT_NPC_LYAN");
+        var escortAudRowB = escortAudProjection
+            .Project(escortAudOwnerB)
+            .Single(entity => entity.EntityId == "ENT_SELFCHECK_ESCORT_NPC_LYAN");
+        Check(
+            "alpha.escort_audience_position_is_per_owner",
+            escortAudFoundA && escortAudFoundB &&
+            audDomainX > 50 && audDomainX <= 57 && audDomainBx == 42 &&
+            escortAudRowA.X == audDomainX &&
+            escortAudRowB.X == audDomainBx &&
+            escortAudRowA.X != escortAudRowB.X &&
+            escortAudRowA.X != 30 && escortAudRowB.X != 30,
+            $"a={escortAudRowA.X} (domain {audDomainX}) b={escortAudRowB.X} " +
+            $"(domain {audDomainBx}) anchor=30");
+
+        // Losing AOI is the same distance test, not a separate policy: 60 WU away is
+        // past the 48 WU leave radius, so the row disappears — and the walk stops
+        // too, because 60 is far past the sourced 12 WU follow range. Coming back
+        // must return the row at the position the NPC was frozen at, which is the
+        // only way this leg can show that a client which walked away cannot make the
+        // escort advance behind its back.
+        escortAudOwnerA.X = audDomainX + 60;
+        var escortAudFarIds = escortAudProjection
+            .Project(escortAudOwnerA)
+            .Select(entity => entity.EntityId)
+            .ToHashSet(StringComparer.Ordinal);
+        for (var t = 5100; t < 5200; t++)
+        {
+            escortAud.Tick([escortAudOwnerA, escortAudOwnerB], t);
+        }
+
+        var escortAudFrozenX = escortAud.TryGetNpcPosition(
+            "CHR_SELFCHECK_ESCORT_AUD_A", out double audAfterFarX, out _)
+            ? audAfterFarX
+            : double.NaN;
+        escortAudOwnerA.X = audDomainX;
+        var escortAudBackRow = escortAudProjection
+            .Project(escortAudOwnerA)
+            .Single(entity => entity.EntityId == "ENT_SELFCHECK_ESCORT_NPC_LYAN");
+        Check(
+            "alpha.escort_audience_row_leaves_and_the_npc_freezes_with_it",
+            !escortAudFarIds.Contains("ENT_SELFCHECK_ESCORT_NPC_LYAN") &&
+            double.IsFinite(escortAudFrozenX) && escortAudFrozenX == audDomainX &&
+            escortAudBackRow.X == audDomainX,
+            $"far={escortAudFarIds.Contains("ENT_SELFCHECK_ESCORT_NPC_LYAN")} " +
+            $"frozen={escortAudFrozenX} at domain {audDomainX} back={escortAudBackRow.X}");
+
+        // Without the wave entities in the registry the machine reaches the first
+        // checkpoint and then stops: activation fails with a diagnostic naming the
+        // wave and how many actors it ships, and the escort neither fabricates a
+        // spawn nor walks on to "complete" a run it never fought.
+        var escortInertRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], []),
+            escortClock);
+        var escortInertStub = new EscortQuestStub();
+        escortInertStub.Set("CHR_SELFCHECK_ESCORT_INERT", QuestStates.Active);
+        var escortInert = new AlphaEscortService(alphaDesign, escortInertStub, escortInertRegistry);
+        var escortInertOwner = NewPlayer("CHR_SELFCHECK_ESCORT_INERT");
+        escortInertOwner.X = 42;
+        escortInertOwner.Y = 0;
+        List<EscortResolution> escortInertResolutions = [];
+        for (var t = 4000; t <= 4700; t++)
+        {
+            escortInertResolutions.AddRange(escortInert.Tick([escortInertOwner], t));
+            if (escortInert.TryGetNpcPosition(escortInertOwner.CharacterId, out var inertX, out _))
+            {
+                escortInertOwner.X = inertX;
+            }
+        }
+
+        Check(
+            "alpha.escort_missing_wave_blocks_instead_of_completing",
+            escortInertResolutions.Any(r => r.Outcome == EscortOutcomes.CheckpointCommitted &&
+                r.Detail == "80") &&
+            escortInertResolutions.Count(r =>
+                r.Outcome == EscortOutcomes.WaveActivationFailed) == 1 &&
+            escortInertResolutions.Single(r =>
+                r.Outcome == EscortOutcomes.WaveActivationFailed).Detail ==
+                "wave MAN-BM-WAVE_BM_ESCORT_A ships 0 of 3 required MOB_CARPLING actors" &&
+            escortInertResolutions.All(r => r.Outcome != EscortOutcomes.WaveActivated &&
+                r.Outcome != EscortOutcomes.WaveCleared &&
+                r.Outcome != EscortOutcomes.CheckpointCommitted ||
+                r.Detail == "80") &&
+            escortInertResolutions.All(r => r.Outcome != EscortOutcomes.Completed) &&
+            escortInert.TryGetNpcPosition(escortInertOwner.CharacterId, out var inertHeld, out _) &&
+            inertHeld == 80,
+            $"outcomes={string.Join(",", escortInertResolutions.Select(r => r.Outcome))}");
+
+        // ─── QOD-21 Q2: escort credit authority across two owners ────
+
+        // One wave group, two owners. The content ships a single shared group per
+        // wave, so the machine has to prove three things: an owner is only ever
+        // credited for the kills its own cast landed, one owner's wipe never
+        // re-spawns (and therefore never resets) the generation the other owner is
+        // fighting, and a deferred activation says so instead of walking on.
+        var escortIsoStub = new EscortQuestStub();
+        escortIsoStub.Set("CHR_SELFCHECK_ESCORT_ISO_A", QuestStates.Active);
+        escortIsoStub.Set("CHR_SELFCHECK_ESCORT_ISO_B", QuestStates.Active);
+        var escortIsoM1 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_ISO_1", "MAN-BM-WAVE_BM_ESCORT_A", "MOB_CARPLING", 80, 1);
+        var escortIsoM2 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_ISO_2", "MAN-BM-WAVE_BM_ESCORT_A", "MOB_CARPLING", 80, 2);
+        var escortIsoM3 = EscortWaveMember(
+            "ENT_SELFCHECK_ESCORT_ISO_3", "MAN-BM-WAVE_BM_ESCORT_A", "MOB_CARPLING", 80, 3);
+        var escortIsoRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [escortIsoM1, escortIsoM2, escortIsoM3]),
+            escortClock);
+        var escortIso = new AlphaEscortService(alphaDesign, escortIsoStub, escortIsoRegistry);
+        var escortIsoOwnerA = NewPlayer("CHR_SELFCHECK_ESCORT_ISO_A");
+        escortIsoOwnerA.X = 42;
+        escortIsoOwnerA.Y = 0;
+        var escortIsoOwnerB = NewPlayer("CHR_SELFCHECK_ESCORT_ISO_B");
+        escortIsoOwnerB.X = 42;
+        escortIsoOwnerB.Y = 0;
+        List<EscortResolution> escortIsoA = [];
+        List<EscortResolution> escortIsoB = [];
+        for (var t = 5000; t <= 5270; t++)
+        {
+            var isoRound = escortIso.Tick([escortIsoOwnerA, escortIsoOwnerB], t);
+            escortIsoA.AddRange(isoRound.Where(r =>
+                string.Equals(r.CharacterId, "CHR_SELFCHECK_ESCORT_ISO_A", StringComparison.Ordinal)));
+            escortIsoB.AddRange(isoRound.Where(r =>
+                string.Equals(r.CharacterId, "CHR_SELFCHECK_ESCORT_ISO_B", StringComparison.Ordinal)));
+            if (escortIso.TryGetNpcPosition(escortIsoOwnerA.CharacterId, out var isoAx, out _))
+            {
+                escortIsoOwnerA.X = isoAx;
+            }
+
+            if (escortIso.TryGetNpcPosition(escortIsoOwnerB.CharacterId, out var isoBx, out _))
+            {
+                escortIsoOwnerB.X = isoBx;
+            }
+        }
+
+        Check(
+            "alpha.escort_two_owners_join_one_shared_wave",
+            escortIsoA.Count(r => r.Outcome == EscortOutcomes.WaveActivated) == 1 &&
+            escortIsoB.Count(r => r.Outcome == EscortOutcomes.WaveActivated) == 1 &&
+            escortIsoM1.State == WorldEntityStates.Alive &&
+            escortIsoM1.LifeId == 2 &&
+            escortIsoM2.LifeId == 2 &&
+            escortIsoM3.LifeId == 2 &&
+            escortIsoA.All(r => r.Outcome != EscortOutcomes.WaveActivationFailed) &&
+            escortIsoB.All(r => r.Outcome != EscortOutcomes.WaveActivationFailed),
+            $"a={string.Join(",", escortIsoA.Select(r => r.Outcome))} " +
+            $"m1={escortIsoM1.LifeId}");
+
+        // Owner A kills one member and then dies. Its wipe re-activation must not
+        // touch the group owner B is still fighting: the same lives, the same dead
+        // member, and A reports the deferral instead of completing.
+        KillEscortWaveMember(
+            escortIso,
+            escortIsoRegistry,
+            escortIsoM1,
+            "MAN-BM-WAVE_BM_ESCORT_A",
+            escortIsoOwnerA.CharacterId);
+        escortIsoOwnerA.Hp = 0;
+        var escortIsoWipeRound = escortIso.Tick([escortIsoOwnerA, escortIsoOwnerB], 5300);
+        escortIsoOwnerA.Hp = 100;
+        Check(
+            "alpha.escort_wipe_does_not_respawn_another_owners_wave",
+            escortIsoWipeRound.Any(r =>
+                r.CharacterId == "CHR_SELFCHECK_ESCORT_ISO_A" &&
+                r.Outcome == EscortOutcomes.Wiped) &&
+            escortIsoWipeRound.Any(r =>
+                r.CharacterId == "CHR_SELFCHECK_ESCORT_ISO_A" &&
+                r.Outcome == EscortOutcomes.WaveActivationFailed &&
+                r.Detail ==
+                    "wave MAN-BM-WAVE_BM_ESCORT_A is held by another owner's active fight") &&
+            escortIsoWipeRound.All(r =>
+                r.CharacterId != "CHR_SELFCHECK_ESCORT_ISO_B" ||
+                (r.Outcome != EscortOutcomes.Wiped &&
+                 r.Outcome != EscortOutcomes.WaveActivationFailed &&
+                 r.Outcome != EscortOutcomes.WaveCleared)) &&
+            escortIsoM1.State == WorldEntityStates.Dead &&
+            escortIsoM1.LifeId == 2 &&
+            escortIsoM2.State == WorldEntityStates.Alive &&
+            escortIsoM2.LifeId == 2 &&
+            escortIsoM3.State == WorldEntityStates.Alive &&
+            escortIsoM3.LifeId == 2,
+            $"round={string.Join(",", escortIsoWipeRound.Select(r => r.Outcome))} " +
+            $"m1={escortIsoM1.State}/{escortIsoM1.LifeId}");
+
+        // The world's own group respawn brings the dead member back under a fresh
+        // life; both owners re-arm onto it (activation is no longer deferred). Owner
+        // B then kills all three. Only B's instance clears — the credit key names the
+        // instance of the character the engine reported as the killer.
+        escortIsoM1.ForceRespawn();
+        var escortIsoRespawnRound = escortIso.Tick([escortIsoOwnerA, escortIsoOwnerB], 5301);
+        KillEscortWaveMember(
+            escortIso, escortIsoRegistry, escortIsoM1,
+            "MAN-BM-WAVE_BM_ESCORT_A", escortIsoOwnerB.CharacterId);
+        KillEscortWaveMember(
+            escortIso, escortIsoRegistry, escortIsoM2,
+            "MAN-BM-WAVE_BM_ESCORT_A", escortIsoOwnerB.CharacterId);
+        KillEscortWaveMember(
+            escortIso, escortIsoRegistry, escortIsoM3,
+            "MAN-BM-WAVE_BM_ESCORT_A", escortIsoOwnerB.CharacterId);
+        var escortIsoBClearRound = escortIso.Tick([escortIsoOwnerA, escortIsoOwnerB], 5302);
+        Check(
+            "alpha.escort_kill_credit_is_owner_scoped",
+            escortIsoRespawnRound.Count(r => r.Outcome == EscortOutcomes.WaveActivated) == 1 &&
+            escortIsoRespawnRound.Single(r => r.Outcome == EscortOutcomes.WaveActivated)
+                .CharacterId == "CHR_SELFCHECK_ESCORT_ISO_A" &&
+            escortIsoM1.LifeId == 3 &&
+            escortIsoBClearRound.Count(r => r.Outcome == EscortOutcomes.WaveCleared) == 1 &&
+            escortIsoBClearRound.Single(r => r.Outcome == EscortOutcomes.WaveCleared)
+                .CharacterId == "CHR_SELFCHECK_ESCORT_ISO_B" &&
+            escortIso.TryGetNpcPosition("CHR_SELFCHECK_ESCORT_ISO_A", out var isoAStill, out _) &&
+            isoAStill == 80 &&
+            escortIso.TryGetNpcPosition("CHR_SELFCHECK_ESCORT_ISO_B", out var isoBAfter, out _) &&
+            isoBAfter > 80,
+            $"respawn={string.Join(",", escortIsoRespawnRound.Select(r => r.Outcome))} " +
+            $"clear={string.Join(",", escortIsoBClearRound.Select(r => r.Outcome))} " +
+            $"m1={escortIsoM1.LifeId}");
+
+        // ─── QOD-21 Q3: the v2 slot vocabulary beside the frozen v1 five ────
+
+        // The twelve tokens are the contract the clients bind to, so both directions
+        // of the side-by-side rule are pinned: the design list and the implemented
+        // list are one source of truth, every token is reachable from a canonical
+        // catalog slot label, and the collapse onto v1's five tokens never invents a
+        // v1 name for something v1 cannot say.
+        InventoryV2Slots.ValidateAgainstDesign(alphaDesign.Inventory.EquipmentSlots);
+        InventoryV2Slots.ValidateLabelMap();
+        var v2HatCollapses = InventoryV2Slots.CollapseToV1(InventoryV2Slots.Hat, out var v2HatV1);
+        var v2RingCollapses = InventoryV2Slots.CollapseToV1(InventoryV2Slots.RingLeft, out var v2RingV1);
+        var v2LegsCollapses = InventoryV2Slots.CollapseToV1(InventoryV2Slots.Legs, out var v2LegsV1);
+        var v2GlovesCollapses = InventoryV2Slots.CollapseToV1(InventoryV2Slots.Gloves, out _);
+        var v2LabelResolves = InventoryV2Slots.TryResolveLabel(
+            ItemCatalog.ArmorCategory, "Quần", out var v2LegsSlot);
+        var v2WeaponResolves = InventoryV2Slots.TryResolveLabel(
+            ItemCatalog.WeaponCategory, "Cung", out var v2WeaponSlot);
+        var v2SealResolves = InventoryV2Slots.TryResolveLabel(
+            ItemCatalog.AccessoryCategory, "Ấn hộ mệnh", out var v2SealSlot);
+        var v2NonEquipmentRejected = !InventoryV2Slots.TryResolveLabel(
+            "TIÊU HAO", "Nón", out _);
+        var v2UnknownLabelRejected = !InventoryV2Slots.TryResolveLabel(
+            ItemCatalog.ArmorCategory, "Khiên", out _);
+        var v2OrderGuard = false;
+        try
+        {
+            InventoryV2Slots.ValidateAgainstDesign(
+                alphaDesign.Inventory.EquipmentSlots.Reverse().ToList());
+        }
+        catch (InvalidOperationException)
+        {
+            v2OrderGuard = true;
+        }
+
+        var v2Unsupported = new InventoryV2UnsupportedItem
+        {
+            InstanceId = "ITM_SELFCHECK_V2_ORPHAN",
+            TemplateId = "EQ-MK-CHEST-T1-R-COMMON",
+            SourceSlot = "RING_S",
+            Reason = InventoryV2UnsupportedReasons.UnmappedSlot
+        };
+        var v2Snapshot = new InventorySnapshotV2
+        {
+            SlotSpec = alphaDesign.Inventory.WireMigration,
+            InventoryRevision = 4,
+            BagSlots = alphaDesign.Inventory.BagSlots,
+            Slots = InventoryV2Slots.All.Select(slot => new InventoryV2SlotEntry
+            {
+                SlotId = slot,
+                Item = slot switch
+                {
+                    InventoryV2Slots.Legs => new InventoryItemV2
+                    {
+                        InstanceId = "ITM_SELFCHECK_V2_LEGS",
+                        TemplateId = "EQ-MK-LEGS-T1-R-COMMON",
+                        Stack = 1,
+                        Location = "EQUIPPED",
+                        SlotId = InventoryV2Slots.Legs,
+                        Durability = 0,
+                        Version = 1
+                    },
+                    InventoryV2Slots.RingLeft => new InventoryItemV2
+                    {
+                        InstanceId = "ITM_SELFCHECK_V2_RING_L",
+                        TemplateId = "EQ-MK-RING_L-T1-R-COMMON",
+                        Stack = 1,
+                        Location = "EQUIPPED",
+                        SlotId = InventoryV2Slots.RingLeft,
+                        Durability = 0,
+                        Version = 1
+                    },
+                    _ => null
+                }
+            }).ToList(),
+            Bag =
+            [
+                new InventoryItemV2
+                {
+                    InstanceId = "ITM_SELFCHECK_V2_POTION",
+                    TemplateId = "POT-HP-01",
+                    Stack = 5,
+                    Location = "BAG",
+                    SlotId = null,
+                    Durability = 0,
+                    Version = 1
+                }
+            ],
+            Unsupported = [v2Unsupported],
+            Currencies = [new InventoryCurrency { CurrencyId = "COIN", Amount = 80 }]
+        };
+        var v2Wire = JsonSerializer.Serialize(v2Snapshot, P1Json.Options);
+        var v2RoundTrip = JsonSerializer.Deserialize<InventorySnapshotV2>(v2Wire, P1Json.Options);
+        Check(
+            "alpha.inventory_v2_slots_beside_v1_five",
+            InventoryV2Slots.All.Count == 12 &&
+            InventoryV2Slots.All.Distinct(StringComparer.Ordinal).Count() == 12 &&
+            InventoryV2Slots.All.SequenceEqual(
+                alphaDesign.Inventory.EquipmentSlots, StringComparer.Ordinal) &&
+            alphaDesign.Inventory.BagSlots == 100 &&
+            alphaDesign.Inventory.SchemaVersion == 2 &&
+            string.Equals(alphaDesign.Inventory.WireMigration,
+                "V2_SIDE_BY_SIDE_KEEP_V1_FIVE_SLOT_CONTRACT", StringComparison.Ordinal) &&
+            v2HatCollapses && v2HatV1 == EquipmentSlots.Hat &&
+            v2RingCollapses && v2RingV1 == EquipmentSlots.Accessory &&
+            !v2LegsCollapses && v2LegsV1.Length == 0 &&
+            !v2GlovesCollapses &&
+            v2LabelResolves && v2LegsSlot == InventoryV2Slots.Legs &&
+            v2WeaponResolves && v2WeaponSlot == InventoryV2Slots.Weapon &&
+            v2SealResolves && v2SealSlot == InventoryV2Slots.Seal &&
+            v2NonEquipmentRejected &&
+            v2UnknownLabelRejected &&
+            v2OrderGuard &&
+            v2RoundTrip is not null &&
+            v2RoundTrip.Slots.Count == 12 &&
+            v2RoundTrip.Slots.Count(entry => entry.Item is null) == 10 &&
+            v2RoundTrip.Bag.Count == 1 &&
+            v2RoundTrip.Bag[0].SlotId is null &&
+            v2RoundTrip.Unsupported.Count == 1 &&
+            v2RoundTrip.Unsupported[0].Reason == InventoryV2UnsupportedReasons.UnmappedSlot &&
+            v2RoundTrip.Unsupported[0].SourceSlot == "RING_S" &&
+            v2RoundTrip.Slots.Single(entry => entry.SlotId == InventoryV2Slots.RingLeft)
+                .Item?.TemplateId == "EQ-MK-RING_L-T1-R-COMMON",
+            $"collapse={v2HatV1}/{v2RingV1}/{v2LegsV1} roundTrip={v2RoundTrip?.Slots.Count} " +
+            $"empty={v2RoundTrip?.Slots.Count(e => e.Item is null)} order={v2OrderGuard}");
+
+        // ─── QOD-21 Q2: the P00-05 Mãng Cốt encounter machine ────
+
+        // The real encounter on the 20 Hz loop: the arena gate, the telegraph
+        // → impact → recovery timeline per sourced move shape, the C→B→A
+        // priority with no overlap, the phase thresholds evaluated at the
+        // impact frame, the phase guard, the wipe countdown with a fresh life
+        // and the quest-instance holds (world-event boss disabled, trial NPC
+        // visibility window).
+        WorldEntityInstance BossWorldEntity(string entityId, string recordId)
+        {
+            var boss = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = recordId,
+                Kind = WorldEntityKinds.Boss,
+                TemplateIds = new[] { "BOSS_MANG_COT" },
+                MapId = alphaDesign.Scope.MapId,
+                FloorId = "OVERWORLD",
+                X = 178,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = 0
+            };
+            boss.Initialize();
+            return boss;
+        }
+
+        var bossClock = new ServerClock();
+        (AlphaBossEncounterService Service, BossEncounterQuestStub Quest,
+            WorldEntityInstance QuestBoss, WorldEntityInstance EventBoss) NewBossFixture(
+                bool damageGateOn)
+        {
+            var questBoss = BossWorldEntity(
+                "ENT_SELFCHECK_BOSS_QUEST", alphaDesign.QuestRules.P00_05_BossRecordId);
+            var eventBoss = BossWorldEntity(
+                "ENT_SELFCHECK_BOSS_EVENT", alphaDesign.QuestRules.P00_05_WorldEventRecordIdDisabled);
+            var registry = new WorldEntityRegistry(
+                new WorldEntityCatalog([], [questBoss, eventBoss]), bossClock);
+            var stub = new BossEncounterQuestStub();
+            var feature = damageGateOn ? enabledCombat : combatDamage;
+            var service = new AlphaBossEncounterService(
+                alphaDesign,
+                stub,
+                registry,
+                feature,
+                new GuardDefenseService(
+                    new GuardWindowStore(),
+                    feature,
+                    new CombatEventStore(new CombatEventStreamOptions())),
+                new PlayerLifeLedger());
+            return (service, stub, questBoss, eventBoss);
+        }
+
+        List<BossEncounterResolution> TickBoss(
+            AlphaBossEncounterService service,
+            PlayerSession player,
+            long from,
+            long to)
+        {
+            var all = new List<BossEncounterResolution>();
+            for (var t = from; t <= to; t++)
+            {
+                all.AddRange(service.Tick([player], t));
+            }
+
+            return all;
+        }
+
+        PlayerSession NewArenaOwner(string characterId, double x, int hp = 4000)
+        {
+            var owner = NewPlayer(characterId, hp: hp);
+            owner.X = x;
+            owner.Y = 0;
+            return owner;
+        }
+
+        // Registration needs the quest active AND the owner inside the ring.
+        var (bossService, bossQuest, bossQuestEntity, bossEventEntity) =
+            NewBossFixture(damageGateOn: true);
+        bossQuest.Set("CHR_SELFCHECK_BOSS_MAIN", QuestStates.Active);
+        var bossOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_MAIN", 181);
+        var bossRegistered = TickBoss(bossService, bossOwner, 5000, 5000);
+        var bossOpenState = bossService.TryGetState("CHR_SELFCHECK_BOSS_MAIN", out var bossOpen);
+        Check(
+            "alpha.boss_registers_and_opens_move_c",
+            bossRegistered.Count == 2 &&
+            bossRegistered[0].Outcome == BossEncounterOutcomeCodes.Registered &&
+            bossRegistered[0].Detail == "life=1" &&
+            bossRegistered[1].Outcome == BossEncounterOutcomeCodes.Telegraph &&
+            bossRegistered[1].Detail == "C" &&
+            bossOpenState &&
+            bossOpen.Status == "OPEN" &&
+            bossOpen.Phase == 1 &&
+            bossOpen.BossHp == 1200 &&
+            bossOpen.BossMaxHp == 1200 &&
+            bossOpen.ActiveMoveId == "C" &&
+            bossOpen.ActiveMoveState == "TELEGRAPH" &&
+            bossQuestEntity.State == WorldEntityStates.Alive,
+            $"{string.Join(",", bossRegistered.Select(r => r.Outcome + ":" + (r.Detail ?? "-")))}");
+
+        // The world-event record at the same coordinate is a different entity and
+        // must survive another player's quest instance: instance scoping, not a
+        // global despawn, is what keeps the quest boss and the world boss apart.
+        var bossHoldTicks = TickBoss(bossService, bossOwner, 5001, 5001);
+        bossEventEntity.ForceRespawn();
+        TickBoss(bossService, bossOwner, 5002, 5002);
+        Check(
+            "alpha.boss_leaves_world_event_boss_untouched",
+            bossHoldTicks.Count == 0 &&
+            bossEventEntity.State == WorldEntityStates.Alive &&
+            bossQuestEntity.State == WorldEntityStates.Alive,
+            $"outcomes={bossHoldTicks.Count} event={bossEventEntity.State} " +
+            $"quest={bossQuestEntity.State}");
+
+        // Move C (Vòng Bọt, ANNULUS 3–7 WU, windup 1.0 s = 20 ticks) lands at
+        // tick 5020; with the damage gate off the frame still commits but pays
+        // nothing, the same rule as the mob impacts.
+        var (bossGateService, bossGateQuest, _, _) = NewBossFixture(damageGateOn: false);
+        bossGateQuest.Set("CHR_SELFCHECK_BOSS_GATE", QuestStates.Active);
+        var bossGateOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_GATE", 181);
+        var bossGateFrames = TickBoss(bossGateService, bossGateOwner, 5000, 5020);
+        Check(
+            "alpha.boss_damage_gate_off_blocks_impact",
+            bossGateFrames.Any(r => r.Outcome == BossEncounterOutcomeCodes.ImpactBlocked &&
+                r.Detail == $"C:{MobAttackBlockedReasons.GateOff}" && r.Damage == 0) &&
+            bossGateOwner.Hp == 4000,
+            $"{string.Join(",", bossGateFrames.Select(r => r.Outcome))}");
+
+        // The full C→B→A cycle against one stationary owner inside every shape:
+        // C 24×1.3 → 28, B 24×1.5 → 32, A 24×1.2 → 26 against armor 10, one
+        // revision bump per landed impact, and the impacts only ever open after
+        // the previous move's recovery (no overlap).
+        var bossImpacts = TickBoss(bossService, bossOwner, 5001, 5110);
+        var bossLanded = bossImpacts
+            .Where(r => r.Outcome == BossEncounterOutcomeCodes.Impact)
+            .Select(r => $"{r.Detail}={r.Damage}")
+            .ToArray();
+        Check(
+            "alpha.boss_impacts_stationary_owner_in_move_order",
+            bossLanded.SequenceEqual(new[] { "C=28", "B=32", "A=26" }) &&
+            bossImpacts.Where(r => r.Outcome == BossEncounterOutcomeCodes.Telegraph)
+                .Select(r => r.Detail).SequenceEqual(new[] { "B", "A" }) &&
+            bossOwner.Hp == 4000 - 28 - 32 - 26 &&
+            bossOwner.Revision == 4,
+            string.Join(",", bossLanded) + $" hp={bossOwner.Hp} rev={bossOwner.Revision}");
+
+        // Out at 9 WU the owner is inside the ring but outside the annulus
+        // (outer 7) and outside the cone (8): those frames dodge, while the
+        // telegraph-start-locked circle (r 4 on the position held at telegraph
+        // start) still lands because nobody moved.
+        var (bossDodgeService, bossDodgeQuest, _, _) = NewBossFixture(damageGateOn: true);
+        bossDodgeQuest.Set("CHR_SELFCHECK_BOSS_DODGE", QuestStates.Active);
+        var bossDodgeOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_DODGE", 187);
+        var bossDodgeFrames = TickBoss(bossDodgeService, bossDodgeOwner, 5000, 5110);
+        Check(
+            "alpha.boss_out_of_shape_frames_are_dodged",
+            bossDodgeFrames.Any(r => r.Outcome == BossEncounterOutcomeCodes.ImpactBlocked &&
+                r.Detail == "C:DODGED") &&
+            bossDodgeFrames.Any(r => r.Outcome == BossEncounterOutcomeCodes.ImpactBlocked &&
+                r.Detail == "A:DODGED") &&
+            bossDodgeFrames.Any(r => r.Outcome == BossEncounterOutcomeCodes.Impact &&
+                r.Detail == "B" && r.Damage == 32) &&
+            bossDodgeOwner.Hp == 4000 - 32,
+            $"{string.Join(",", bossDodgeFrames
+                .Where(r => r.Outcome == BossEncounterOutcomeCodes.Impact ||
+                            r.Outcome == BossEncounterOutcomeCodes.ImpactBlocked)
+                .Select(r => r.Detail))}");
+
+        // Damage before phase: HP dragged to 710 (60% of 1200) before the first
+        // frame flips the fight to phase 2 at that frame. The 20-tick phase
+        // guard then holds the next telegraph, and the recovery the boss needs
+        // before that is the source's 1.0 s shortened by the phase-2 multiplier
+        // 0.8 → 16 ticks, so the guard (until local tick 40) is what releases
+        // move B at tick 5040.
+        var (bossPhaseService, bossPhaseQuest, _, _) = NewBossFixture(damageGateOn: true);
+        bossPhaseQuest.Set("CHR_SELFCHECK_BOSS_PHASE", QuestStates.Active);
+        var bossPhaseOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_PHASE", 181);
+        TickBoss(bossPhaseService, bossPhaseOwner, 5000, 5000);
+        bossPhaseService.ApplyBossDamage("CHR_SELFCHECK_BOSS_PHASE", 490, 5000);
+        var bossPhaseFrames = TickBoss(bossPhaseService, bossPhaseOwner, 5001, 5020);
+        var bossHeldFrames = TickBoss(bossPhaseService, bossPhaseOwner, 5021, 5039);
+        var bossReleasedFrames = TickBoss(bossPhaseService, bossPhaseOwner, 5040, 5045);
+        var bossPhaseChanged = bossPhaseFrames
+            .Where(r => r.Outcome == BossEncounterOutcomeCodes.PhaseChanged)
+            .ToArray();
+        Check(
+            "alpha.boss_phase_two_guard_and_recovery",
+            bossPhaseChanged.Length == 1 &&
+            bossPhaseChanged[0].Detail == "Two" &&
+            bossPhaseChanged[0].Phase == 2 &&
+            bossPhaseChanged[0].BossHp == 710 &&
+            bossHeldFrames.All(r => r.Outcome != BossEncounterOutcomeCodes.Telegraph) &&
+            bossReleasedFrames.Count(r => r.Outcome == BossEncounterOutcomeCodes.Telegraph) == 1 &&
+            bossReleasedFrames.Single(r => r.Outcome == BossEncounterOutcomeCodes.Telegraph).Detail == "B",
+            $"{string.Join(",", bossPhaseFrames.Select(r => r.Outcome + ":" + (r.Detail ?? "-")))} " +
+            $"held={string.Join(",", bossHeldFrames.Select(r => r.Outcome))} " +
+            $"released={string.Join(",", bossReleasedFrames.Select(r => r.Outcome))}");
+
+        // One transition per frame: 350 HP is already past the 30% line, yet a
+        // phase-1 fight only steps to 2 at the first frame and reaches 3 at the
+        // next one.
+        var (bossStepService, bossStepQuest, _, _) = NewBossFixture(damageGateOn: true);
+        bossStepQuest.Set("CHR_SELFCHECK_BOSS_STEP", QuestStates.Active);
+        var bossStepOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_STEP", 181);
+        TickBoss(bossStepService, bossStepOwner, 5000, 5000);
+        bossStepService.ApplyBossDamage("CHR_SELFCHECK_BOSS_STEP", 850, 5000);
+        var bossStepFrames = TickBoss(bossStepService, bossStepOwner, 5001, 5070);
+        var bossStepPhases = bossStepFrames
+            .Where(r => r.Outcome == BossEncounterOutcomeCodes.PhaseChanged)
+            .Select(r => r.Detail)
+            .ToArray();
+        Check(
+            "alpha.boss_one_phase_transition_per_frame",
+            bossStepPhases.SequenceEqual(new[] { "Two", "Three" }) &&
+            bossStepFrames.First(r => r.Outcome == BossEncounterOutcomeCodes.PhaseChanged)
+                .Detail == "Two",
+            string.Join(",", bossStepPhases));
+
+        // A killing hit ends the fight inside its own tick: DEFEATED once, the
+        // boss despawned, and no further frames for that owner.
+        var bossDefeat = bossPhaseService.ApplyBossDamage(
+            "CHR_SELFCHECK_BOSS_PHASE", 710, 5046);
+        var bossDefeatTick = TickBoss(bossPhaseService, bossPhaseOwner, 5047, 5060);
+        var bossDefeatState = bossPhaseService.TryGetState(
+            "CHR_SELFCHECK_BOSS_PHASE", out var bossDefeatSnapshot);
+        Check(
+            "alpha.boss_defeat_reports_once_and_stops",
+            bossDefeat.Count == 1 &&
+            bossDefeat[0].Outcome == BossEncounterOutcomeCodes.Defeated &&
+            bossDefeatTick.Count == 0 &&
+            bossDefeatState &&
+            bossDefeatSnapshot.Status == "DEFEATED" &&
+            bossDefeatSnapshot.BossHp == 0,
+            $"{string.Join(",", bossDefeat.Select(r => r.Outcome))} " +
+            $"{bossDefeatSnapshot.Status}");
+
+        // NPC_CLASS_TRIAL only appears after the boss is down AND the fragment
+        // is claimed; it closes again the moment the instance ends (turn-in),
+        // which the same tick that drops ACTIVE reports as ENDED.
+        var bossTrialNoFragment = bossPhaseService.IsTrialNpcVisible("CHR_SELFCHECK_BOSS_PHASE");
+        bossPhaseQuest.Set("CHR_SELFCHECK_BOSS_PHASE", QuestStates.Active, fragment: 1);
+        var bossTrialVisible = bossPhaseService.IsTrialNpcVisible("CHR_SELFCHECK_BOSS_PHASE");
+        bossPhaseQuest.Set("CHR_SELFCHECK_BOSS_PHASE", QuestStates.Completed, fragment: 1);
+        var bossEnded = TickBoss(bossPhaseService, bossPhaseOwner, 5061, 5061);
+        var bossTrialAfterTurnIn = bossPhaseService.IsTrialNpcVisible("CHR_SELFCHECK_BOSS_PHASE");
+        Check(
+            "alpha.boss_trial_npc_visibility_window",
+            !bossTrialNoFragment &&
+            bossTrialVisible &&
+            !bossTrialAfterTurnIn &&
+            bossEnded.Count == 1 &&
+            bossEnded[0].Outcome == BossEncounterOutcomeCodes.Ended,
+            $"noFragment={bossTrialNoFragment} visible={bossTrialVisible} " +
+            $"afterTurnIn={bossTrialAfterTurnIn} ended={bossEnded.FirstOrDefault()?.Outcome}");
+
+        // The quest leaving ACTIVE while the fight is still open ends the
+        // instance and the boss goes back under despawn hold.
+        var (bossEndService, bossEndQuest, bossEndQuestBoss, _) = NewBossFixture(damageGateOn: true);
+        bossEndQuest.Set("CHR_SELFCHECK_BOSS_END", QuestStates.Active);
+        var bossEndOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_END", 181);
+        TickBoss(bossEndService, bossEndOwner, 5000, 5000);
+        bossEndQuest.Set("CHR_SELFCHECK_BOSS_END", QuestStates.ReadyToTurnIn);
+        var bossEndFrames = TickBoss(bossEndService, bossEndOwner, 5001, 5001);
+        Check(
+            "alpha.boss_ends_when_quest_leaves_active",
+            bossEndFrames.Count == 1 &&
+            bossEndFrames[0].Outcome == BossEncounterOutcomeCodes.Ended &&
+            bossEndFrames[0].Detail == QuestStates.ReadyToTurnIn &&
+            !bossEndService.TryGetState("CHR_SELFCHECK_BOSS_END", out _) &&
+            bossEndQuestBoss.State == WorldEntityStates.Alive,
+            $"{bossEndFrames.FirstOrDefault()?.Outcome} " +
+            $"boss={bossEndQuestBoss.State}");
+
+        // Wipe: ten seconds (200 ticks) without a live target inside the ring
+        // refills the boss, returns it to phase 1 and costs no loot; the owner
+        // coming back is a fresh attempt on a NEW life, never a replay.
+        var (bossWipeService, bossWipeQuest, bossWipeQuestBoss, _) =
+            NewBossFixture(damageGateOn: true);
+        bossWipeQuest.Set("CHR_SELFCHECK_BOSS_WIPE", QuestStates.Active);
+        var bossWipeOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_WIPE", 181);
+        TickBoss(bossWipeService, bossWipeOwner, 5000, 5000);
+        bossWipeOwner.X = 240;
+        var bossWipeEarly = TickBoss(bossWipeService, bossWipeOwner, 5001, 5200);
+        var bossWipeAt = TickBoss(bossWipeService, bossWipeOwner, 5201, 5201);
+        bossWipeOwner.X = 181;
+        var bossRedo = TickBoss(bossWipeService, bossWipeOwner, 5202, 5202);
+        var bossWipeState = bossWipeService.TryGetState("CHR_SELFCHECK_BOSS_WIPE", out var bossWipe);
+        Check(
+            "alpha.boss_wipe_resets_and_restarts_on_a_new_life",
+            bossWipeEarly.All(r => r.Outcome != BossEncounterOutcomeCodes.Wiped) &&
+            bossWipeAt.Count == 1 &&
+            bossWipeAt[0].Outcome == BossEncounterOutcomeCodes.Wiped &&
+            bossWipeAt[0].Detail == "life=2" &&
+            bossWipeAt[0].BossHp == 1200 &&
+            bossRedo.Count == 2 &&
+            bossRedo[0].Outcome == BossEncounterOutcomeCodes.Registered &&
+            bossRedo[0].Detail == "life=2" &&
+            bossWipeQuestBoss.State == WorldEntityStates.Alive &&
+            bossWipeQuestBoss.LifeId == 1 &&
+            bossWipeState &&
+            bossWipe.BossLifeId == 2 &&
+            bossWipe.Phase == 1,
+            $"{bossWipeAt.FirstOrDefault()?.Outcome}:{bossWipeAt.FirstOrDefault()?.Detail} " +
+            $"redo={string.Join(",", bossRedo.Select(r => r.Outcome))}");
+
+        // Outside the ring nothing opens at all: no instance, no state, no
+        // telegraph, and the world-event boss is left alone.
+        var (bossIdleService, _, bossIdleEvent, _) = NewBossFixture(damageGateOn: true);
+        var bossIdleOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_IDLE", 195);
+        var bossIdle = TickBoss(bossIdleService, bossIdleOwner, 5000, 5020);
+        Check(
+            "alpha.boss_never_opens_outside_the_arena",
+            bossIdle.Count == 0 &&
+            !bossIdleService.TryGetState("CHR_SELFCHECK_BOSS_IDLE", out _) &&
+            bossIdleEvent.State == WorldEntityStates.Alive,
+            $"outcomes={bossIdle.Count} event={bossIdleEvent.State}");
+
+        // questRules.P00-05.phaseNpcOverride: the same actor moves to (182,4)
+        // for as long as the instance is held, and only for its owner.
+        var bossPhaseNpc = bossService.TryGetPhaseNpcPosition(
+            "CHR_SELFCHECK_BOSS_MAIN", out double bossNpcX, out double bossNpcY);
+        var bossNpcOther = bossService.TryGetPhaseNpcPosition("CHR_NOBODY", out _, out _);
+        Check(
+            "alpha.boss_phase_npc_override_is_owner_specific",
+            bossPhaseNpc &&
+            bossNpcX == 182 &&
+            bossNpcY == 4 &&
+            !bossNpcOther,
+            $"npc=({bossNpcX},{bossNpcY}) other={bossNpcOther}");
+
+        // The tick engine resolves player casts only against `MOB` entities, so
+        // the quest boss is only strikable through the alpha bridge once an owner
+        // has registered an encounter. This proves all three: with no instance the
+        // boss is not a target; after registration the same cast lands and drains
+        // the encounter's HP; and the killing cast emits DEATH and credits the
+        // P00-05 BOSS objective with the death-event key (no new event types).
+        var bossIntStub = new BossEncounterQuestStub();
+        bossIntStub.Set("CHR_SELFCHECK_BOSS_INT", QuestStates.Active);
+        var bossIntBoss = BossWorldEntity(
+            "ENT_SELFCHECK_BOSS_INT", alphaDesign.QuestRules.P00_05_BossRecordId);
+        var bossIntRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [bossIntBoss]), bossClock);
+        var bossIntEncounter = new AlphaBossEncounterService(
+            alphaDesign,
+            bossIntStub,
+            bossIntRegistry,
+            enabledCombat,
+            new GuardDefenseService(
+                new GuardWindowStore(),
+                enabledCombat,
+                new CombatEventStore(new CombatEventStreamOptions())),
+            new PlayerLifeLedger());
+        var bossIntEngine = new CombatTickEngine(
+            bossIntRegistry,
+            enabledCombat,
+            combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions { CapacityPerSession = 512, MaxPageSize = 512 }),
+            new MobCombatStateStore(),
+            bossIntStub,
+            new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(),
+            tickGeometry,
+            NewDashes(tickGeometry),
+            new ServerClock(),
+            bosses: bossIntEncounter);
+        var bossIntOwner = NewPlayer("CHR_SELFCHECK_BOSS_INT", hp: 500);
+        bossIntOwner.X = 181;
+        bossIntOwner.Y = 0;
+
+        // Cast before the encounter is registered: the boss is a `BOSS`, so the
+        // mob path ignores it and the bridge reports no live target. Count only
+        // events that struck the boss (the cast still emits its own END).
+        var bossPreStrikes = 0;
+        bossIntEngine.Schedule(
+            bossIntOwner, "SES_BOSS_INT", "0000000000000000000000000000a000",
+            CombatV2Actions.BasicAttack, null, -1, 0, 10000);
+        for (var t = 10000L; t <= 10005; t++)
+        {
+            bossPreStrikes += bossIntEngine.Tick(t).Count(evt =>
+                string.Equals(evt.TargetId, bossIntBoss.EntityId, StringComparison.Ordinal));
+        }
+
+        bossIntEncounter.Tick([bossIntOwner], 10010);
+        var bossCastImpacts = 0;
+        var bossDeathEvents = 0;
+        var bossRounds = 0;
+        var bossKilled = false;
+        while (!bossKilled && bossRounds < 80)
+        {
+            var start = 11000 + bossRounds * 10;
+            bossIntEngine.Schedule(
+                bossIntOwner, "SES_BOSS_INT", $"{bossRounds:x32}",
+                CombatV2Actions.BasicAttack, null, -1, 0, start);
+            for (var t = start; t <= start + 5; t++)
+            {
+                foreach (var evt in bossIntEngine.Tick(t))
+                {
+                    if (!string.Equals(evt.TargetId, bossIntBoss.EntityId, StringComparison.Ordinal))
+                    {
+                        continue;
+                    }
+
+                    if (string.Equals(evt.Type, CombatEventTypesV2.Impact, StringComparison.Ordinal))
+                    {
+                        bossCastImpacts++;
+                    }
+                    else if (string.Equals(evt.Type, CombatEventTypesV2.Death, StringComparison.Ordinal))
+                    {
+                        bossDeathEvents++;
+                        bossKilled = true;
+                    }
+                }
+            }
+
+            bossRounds++;
+        }
+
+        var bossIntState = bossIntEncounter.TryGetState("CHR_SELFCHECK_BOSS_INT", out var bossIntSnapshot);
+        Check(
+            "alpha.boss_cast_kill_credits_objective_through_bridge",
+            bossPreStrikes == 0 &&
+            bossIntState &&
+            bossIntSnapshot.Status == "DEFEATED" &&
+            bossIntSnapshot.BossHp == 0 &&
+            bossCastImpacts == 67 &&
+            bossDeathEvents == 1 &&
+            bossIntBoss.State == WorldEntityStates.Alive &&
+            bossIntStub.VerifiedEvents.Any(e =>
+                e.EventType == QuestProgressEventTypes.Kill &&
+                e.RecordId == alphaDesign.QuestRules.P00_05_BossRecordId),
+            $"pre={bossPreStrikes} impacts={bossCastImpacts} deaths={bossDeathEvents} " +
+            $"hp={bossIntSnapshot.BossHp} state={bossIntSnapshot.Status}");
+
+        // Two owners fighting the same record template on one shared anchor must
+        // never share mutable state: A's damage, defeat and wipe leave B's HP, life,
+        // revision, status and snapshot identity exactly as they were.
+        var (bossIsoService, bossIsoQuest, _, _) = NewBossFixture(damageGateOn: true);
+        bossIsoQuest.Set("CHR_SELFCHECK_BOSS_ISO_A", QuestStates.Active);
+        bossIsoQuest.Set("CHR_SELFCHECK_BOSS_ISO_B", QuestStates.Active);
+        var bossIsoA = NewArenaOwner("CHR_SELFCHECK_BOSS_ISO_A", 181);
+        var bossIsoB = NewArenaOwner("CHR_SELFCHECK_BOSS_ISO_B", 184);
+        bossIsoService.Tick([bossIsoA, bossIsoB], 5000);
+        var bossIsoBBefore = bossIsoService.TryGetSnapshot(
+            "CHR_SELFCHECK_BOSS_ISO_B", 5000, out var bossIsoBPinned);
+        bossIsoService.ApplyBossDamage("CHR_SELFCHECK_BOSS_ISO_A", 1190, 5001);
+        bossIsoService.ApplyBossDamage("CHR_SELFCHECK_BOSS_ISO_A", 10, 5002);
+        bossIsoA.X = 300;
+        // Both owners stay in the roster (dropping one would legitimately end its
+        // instance), so only A's own state may move.
+        for (var t = 5003; t <= 5210; t++)
+        {
+            bossIsoService.Tick([bossIsoA, bossIsoB], t);
+        }
+        var bossIsoAa = bossIsoService.TryGetSnapshot(
+            "CHR_SELFCHECK_BOSS_ISO_A", 5210, out var bossIsoASnap);
+        var bossIsoBb = bossIsoService.TryGetSnapshot(
+            "CHR_SELFCHECK_BOSS_ISO_B", 5211, out var bossIsoBSnap);
+        // Strict round-trip under the P1 JSON options: the wire DTO must serialize
+        // and deserialize with no unmapped member, so a client binding the shipped
+        // contract sees exactly these fields.
+        var bossIsoWire = JsonSerializer.Serialize(bossIsoBSnap, P1Json.Options);
+        var bossIsoRoundTrip =
+            JsonSerializer.Deserialize<EncounterSnapshotV1>(bossIsoWire, P1Json.Options);
+        Check(
+            "alpha.boss_two_owner_attempts_are_isolated",
+            bossIsoBBefore &&
+            bossIsoAa &&
+            bossIsoBb &&
+            bossIsoASnap.Status == "DEFEATED" &&
+            bossIsoASnap.BossHp == 0 &&
+            bossIsoASnap.BossLifeId == 1 &&
+            bossIsoBSnap.Status == "OPEN" &&
+            bossIsoBSnap.BossHp == 1200 &&
+            bossIsoBSnap.BossLifeId == 1 &&
+            // B's own fight keeps advancing on its own tick budget, so only the
+            // fields A could have leaked into must be pinned.
+            bossIsoBSnap.BossRevision >= bossIsoBPinned.BossRevision &&
+            bossIsoBSnap.Phase == bossIsoBPinned.Phase &&
+            bossIsoBSnap.EncounterId == bossIsoBPinned.EncounterId &&
+            bossIsoASnap.EncounterId != bossIsoBSnap.EncounterId &&
+            !bossIsoBSnap.RegisteredCharacterIds.Contains("CHR_SELFCHECK_BOSS_ISO_A") &&
+            bossIsoRoundTrip is not null &&
+            bossIsoRoundTrip.EncounterId == bossIsoBSnap.EncounterId &&
+            bossIsoRoundTrip.BossHp == bossIsoBSnap.BossHp &&
+            bossIsoRoundTrip.Arena.CenterXWu == bossIsoBSnap.Arena.CenterXWu &&
+            bossIsoRoundTrip.SafePads.Count == bossIsoBSnap.SafePads.Count &&
+            bossIsoRoundTrip.MoveCooldownRemainingTicks.C ==
+                bossIsoBSnap.MoveCooldownRemainingTicks.C,
+            $"a={bossIsoASnap.Status}/{bossIsoASnap.BossHp} " +
+            $"b={bossIsoBSnap.Status}/{bossIsoBSnap.BossHp}/{bossIsoBSnap.BossRevision}");
+
+        // The approved read model: stable opaque id, one registered character, a
+        // locked cone facing that is normalized, deadlines that agree with the tick
+        // they were read on, per-move cooldowns, pads that only apply in phase 3,
+        // the same-actor phase NPC and a revision that moves only with real state.
+        var (bossSnapService, bossSnapQuest, _, _) = NewBossFixture(damageGateOn: true);
+        bossSnapQuest.Set("CHR_SELFCHECK_BOSS_SNAP", QuestStates.Active);
+        var bossSnapOwner = NewArenaOwner("CHR_SELFCHECK_BOSS_SNAP", 181);
+        TickBoss(bossSnapService, bossSnapOwner, 5000, 5000);
+        var bossSnapOnce = bossSnapService.TryGetSnapshot(
+            "CHR_SELFCHECK_BOSS_SNAP", 5005, out var bossSnapA);
+        var bossSnapAgain = bossSnapService.TryGetSnapshot(
+            "CHR_SELFCHECK_BOSS_SNAP", 5006, out var bossSnapB);
+        var bossSnapFacingLength = Math.Sqrt(
+            (bossSnapA.ActiveMove?.Shape.FacingX ?? 0) * (bossSnapA.ActiveMove?.Shape.FacingX ?? 0) +
+            (bossSnapA.ActiveMove?.Shape.FacingY ?? 0) * (bossSnapA.ActiveMove?.Shape.FacingY ?? 0));
+        // Move C opens first (priority), so the first frame is an annulus: it must
+        // carry no cone fields at all. Drive to move A's telegraph to read the cone
+        // facing the client needs, and check it is a normalized direction vector.
+        TickBoss(bossSnapService, bossSnapOwner, 5001, 5087);
+        var bossSnapConeOk = bossSnapService.TryGetSnapshot(
+            "CHR_SELFCHECK_BOSS_SNAP", 5088, out var bossSnapCone);
+        var bossConeFacing = bossSnapCone.ActiveMove?.Shape;
+        var bossConeFacingLength = Math.Sqrt(
+            (bossConeFacing?.FacingX ?? 0) * (bossConeFacing?.FacingX ?? 0) +
+            (bossConeFacing?.FacingY ?? 0) * (bossConeFacing?.FacingY ?? 0));
+        var bossSnapAfterKill = bossSnapService.ApplyBossDamage(
+            "CHR_SELFCHECK_BOSS_SNAP", 1200, 5089).Count;
+        var bossSnapDead = bossSnapService.TryGetSnapshot(
+            "CHR_SELFCHECK_BOSS_SNAP", 5090, out var bossSnapDeadSnap);
+        Check(
+            "alpha.boss_snapshot_is_atomic_and_owner_scoped",
+            bossSnapOnce && bossSnapAgain && bossSnapDead &&
+            System.Text.RegularExpressions.Regex.IsMatch(
+                bossSnapA.EncounterId, @"^ENC-[0-9A-F]{24}$") &&
+            bossSnapA.EncounterId == bossSnapB.EncounterId &&
+            bossSnapA.QuestId == "P00-05" &&
+            bossSnapA.BossRecordId == "MAN-BM-SPAWN_BM_05_QUEST" &&
+            // The fixture registers the quest-boss record under its own entity id;
+            // the canonical ENT_MAN_BM_SPAWN_BM_05_QUEST pairing is pinned by the
+            // shipped example and the contract validator.
+            bossSnapA.BossEntityId == "ENT_SELFCHECK_BOSS_QUEST" &&
+            bossSnapA.RegisteredCharacterIds.Count == 1 &&
+            bossSnapA.RegisteredCharacterIds[0] == "CHR_SELFCHECK_BOSS_SNAP" &&
+            bossSnapA.ActiveMove!.CastId == bossSnapB.ActiveMove!.CastId &&
+            bossSnapA.ActiveMove.State == "TELEGRAPH" &&
+            bossSnapA.ActiveMove.TicksRemaining ==
+                bossSnapA.ActiveMove.StateEndsAtTick - bossSnapA.ServerTick &&
+            bossSnapA.ActiveMove.StateEndsAtTick >= bossSnapA.ServerTick &&
+            bossSnapA.ActiveMove.Shape.Kind == "ANNULUS" &&
+            bossSnapA.ActiveMove.Shape.AngleDegrees is null &&
+            bossSnapA.ActiveMove.Shape.RangeWu is null &&
+            bossSnapA.ActiveMove.Shape.FacingX is null &&
+            bossSnapA.ActiveMove.Shape.FacingY is null &&
+            bossSnapA.ActiveMove.Shape.RadiusWu is null &&
+            bossSnapFacingLength == 0 &&
+            bossSnapA.ActiveMove.Shape.OuterRadiusWu == 7 &&
+            bossSnapA.ActiveMove.Shape.InnerRadiusWu == 3 &&
+            bossSnapA.MoveCooldownRemainingTicks.C == 235 &&
+            bossSnapA.MoveCooldownRemainingTicks.A == 0 &&
+            bossSnapConeOk &&
+            bossConeFacing!.Kind == "CONE" &&
+            bossConeFacing.AngleDegrees == 120 &&
+            bossConeFacing.RangeWu == 8 &&
+            bossConeFacing.InnerRadiusWu is null &&
+            bossConeFacing.RadiusWu is null &&
+            Math.Abs(bossConeFacingLength - 1.0) < 1e-9 &&
+            bossSnapCone!.ActiveMove!.TargetLock == "TELEGRAPH_START_FACING" &&
+            bossSnapA.Arena.Shape == "CIRCLE" &&
+            bossSnapA.Arena.RadiusWu == 11 &&
+            bossSnapA.SafePads.Count == 2 &&
+            bossSnapA.SafePads.All(pad => !pad.Applies) &&
+            bossSnapA.PhaseNpc.NpcId == "NPC_TA_VAN_KHANH" &&
+            bossSnapA.PhaseNpc.XWu == 182 &&
+            bossSnapA.PhaseNpc.YWu == 4 &&
+            !bossSnapA.TrialNpcVisible &&
+            bossSnapB.BossRevision == bossSnapA.BossRevision &&
+            bossSnapAfterKill == 1 &&
+            bossSnapDeadSnap.Status == "DEFEATED" &&
+            bossSnapDeadSnap.BossRevision > bossSnapB.BossRevision &&
+            bossSnapDeadSnap.ActiveMove is null &&
+            bossSnapDeadSnap.TrialNpcVisible == false,
+            $"id={bossSnapA.EncounterId} cast={bossSnapA.ActiveMove?.CastId} " +
+            $"rev={bossSnapA.BossRevision}->{bossSnapDeadSnap.BossRevision} " +
+            $"cone={bossConeFacing?.Kind}/flen={bossConeFacingLength} " +
+            $"dead={bossSnapDeadSnap.Status}/{bossSnapDeadSnap.ActiveMove?.MoveId}");
+
+
+        // The audience half of the same read model: the v2 world snapshot must show
+        // the encounter boss as targetable, with the encounter's HP, to the owner
+        // whose casts the engine will actually accept — and must keep the blocked
+        // policy for every other viewer, because one owner's encounter is not
+        // another player's fight. Same predicate on both sides, so a client can
+        // never be handed a target the cast path would refuse.
+        var audienceClock = new ServerClock();
+        var audienceQuestBoss = BossWorldEntity(
+            "ENT_SELFCHECK_AOI_BOSS_QUEST", alphaDesign.QuestRules.P00_05_BossRecordId);
+        var audienceRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [audienceQuestBoss]), audienceClock);
+        var audienceQuest = new BossEncounterQuestStub();
+        audienceQuest.Set("CHR_SELFCHECK_AOI_BOSS_OWNER", QuestStates.Active);
+        var audienceService = new AlphaBossEncounterService(
+            alphaDesign,
+            audienceQuest,
+            audienceRegistry,
+            enabledCombat,
+            new GuardDefenseService(
+                new GuardWindowStore(),
+                enabledCombat,
+                new CombatEventStore(new CombatEventStreamOptions())),
+            new PlayerLifeLedger());
+        var audienceProjection = new WorldAoiProjectionService(
+            audienceRegistry,
+            new MobLifecycleService(
+                audienceRegistry,
+                services.GetRequiredService<IWorldGeometryService>(),
+                aoiMobOptions,
+                audienceClock),
+            enabledCombat,
+            new GatherClaimStore(audienceClock),
+            new MobCombatStateStore(),
+            audienceService);
+        var audienceOwner = NewArenaOwner("CHR_SELFCHECK_AOI_BOSS_OWNER", 181);
+        var audienceStranger = NewArenaOwner("CHR_SELFCHECK_AOI_BOSS_STRANGER", 175);
+        TickBoss(audienceService, audienceOwner, 6000, 6000);
+        var audienceBossForOwner = audienceProjection
+            .Project(audienceOwner)
+            .Single(entity => entity.EntityId == "ENT_SELFCHECK_AOI_BOSS_QUEST");
+        var audienceBossForStranger = audienceProjection
+            .Project(audienceStranger)
+            .Single(entity => entity.EntityId == "ENT_SELFCHECK_AOI_BOSS_QUEST");
+        var audienceKillResolutions = audienceService.ApplyBossDamage(
+            "CHR_SELFCHECK_AOI_BOSS_OWNER", 1200, 6001).Count;
+        var audienceDeadBoss = audienceProjection
+            .Project(audienceOwner)
+            .Single(entity => entity.EntityId == "ENT_SELFCHECK_AOI_BOSS_QUEST");
+        Check(
+            "alpha.boss_audience_is_targetable_only_for_its_owner",
+            audienceBossForOwner is
+            {
+                Kind: WorldEntityKinds.Boss,
+                HealthState: WorldHealthStates.Alive,
+                Targetable: true,
+                Hp: 1200,
+                MaxHp: 1200
+            } &&
+            audienceBossForStranger is
+            {
+                HealthState: WorldHealthStates.Blocked,
+                Targetable: false,
+                Hp: 0,
+                MaxHp: 0
+            } &&
+            audienceKillResolutions == 1 &&
+            audienceDeadBoss is
+            {
+                HealthState: WorldHealthStates.Dead,
+                State: MobBehaviorStates.Dead,
+                Targetable: false,
+                Hp: 0,
+                MaxHp: 1200
+            },
+            $"owner={audienceBossForOwner.HealthState}/{audienceBossForOwner.Targetable}" +
+            $"/{audienceBossForOwner.Hp} stranger={audienceBossForStranger.HealthState} " +
+            $"dead={audienceDeadBoss.HealthState}/{audienceDeadBoss.State}/" +
+            $"{audienceDeadBoss.Targetable}");
+
+        var audienceLockActor = NewArenaOwner("CHR_SELFCHECK_AOI_BOSS_LOCK", 181);
+        var audienceLockHp = audienceLockActor.Hp;
+        var audienceLockRevision = audienceLockActor.Revision;
+        var audienceLockProbe = new ActorLockProbeBossBridge(audienceLockActor);
+        var audienceLockProjection = new WorldAoiProjectionService(
+            audienceRegistry,
+            new MobLifecycleService(audienceRegistry, geometry, aoiMobOptions, audienceClock),
+            enabledCombat, new GatherClaimStore(audienceClock), new MobCombatStateStore(),
+            audienceLockProbe);
+        var audienceLockSnapshot = WorldSnapshotFactory.CreateV2(
+            audienceLockActor, audienceLockProjection, audienceClock);
+        Check(
+            "world.snapshot_releases_actor_before_boss_audience_and_keeps_captured_viewer",
+            !audienceLockProbe.ActorLockHeld && audienceLockProbe.ActorCommitted &&
+            audienceLockSnapshot.MapId == "MAP_BEN_MUA" &&
+            audienceLockSnapshot.FloorId == "OVERWORLD" &&
+            audienceLockSnapshot.Revision == audienceLockRevision &&
+            audienceLockSnapshot.Self.X == 181 && audienceLockSnapshot.Self.Hp == audienceLockHp &&
+            audienceLockSnapshot.Entities.Count == 1 &&
+            audienceLockSnapshot.Entities[0].MapInstanceId == "MAP_BEN_MUA#1" &&
+            audienceLockActor.MapId == "MAP_NOT_IN_BOUNDS" &&
+            audienceLockActor.Revision == audienceLockRevision + 1 &&
+            audienceLockActor.Hp == audienceLockHp - 1,
+            $"held={audienceLockProbe.ActorLockHeld} committed={audienceLockProbe.ActorCommitted} " +
+            $"snapshot={audienceLockSnapshot.MapId}/{audienceLockSnapshot.Self.X} " +
+            $"live={audienceLockActor.MapId}/{audienceLockActor.X}");
+
+        var audienceConcurrentActor = NewArenaOwner("CHR_SELFCHECK_AOI_BOSS_CONCURRENT", 181);
+        var audienceConcurrentQuests = new BossEncounterQuestStub();
+        audienceConcurrentQuests.Set(audienceConcurrentActor.CharacterId, QuestStates.Active);
+        var audienceConcurrentService = new AlphaBossEncounterService(
+            alphaDesign, audienceConcurrentQuests, audienceRegistry, enabledCombat,
+            new GuardDefenseService(new GuardWindowStore(), enabledCombat,
+                new CombatEventStore(new CombatEventStreamOptions())), new PlayerLifeLedger());
+        var audienceConcurrentProjection = new WorldAoiProjectionService(
+            audienceRegistry,
+            new MobLifecycleService(audienceRegistry, geometry, aoiMobOptions, audienceClock),
+            enabledCombat, new GatherClaimStore(audienceClock), new MobCombatStateStore(),
+            audienceConcurrentService);
+        TickBoss(audienceConcurrentService, audienceConcurrentActor, 7000, 7000);
+        var audienceConcurrentResolutions = new List<BossEncounterResolution>();
+        var audienceConcurrentSnapshots = new List<WorldSnapshotV2>();
+        var audienceConcurrentFinished = false;
+        if (!audienceLockProbe.ActorLockHeld)
+        {
+            using var audienceConcurrentBarrier = new System.Threading.Barrier(2);
+            var audienceTickTask = System.Threading.Tasks.Task.Factory.StartNew(() =>
+            {
+                audienceConcurrentBarrier.SignalAndWait();
+                for (var tick = 7001L; tick <= 7200; tick++)
+                {
+                    audienceConcurrentResolutions.AddRange(
+                        audienceConcurrentService.Tick([audienceConcurrentActor], tick));
+                }
+            }, System.Threading.CancellationToken.None,
+                System.Threading.Tasks.TaskCreationOptions.LongRunning,
+                System.Threading.Tasks.TaskScheduler.Default);
+            var audienceReadTask = System.Threading.Tasks.Task.Factory.StartNew(() =>
+            {
+                audienceConcurrentBarrier.SignalAndWait();
+                for (var read = 0; read < 200; read++)
+                {
+                    audienceConcurrentSnapshots.Add(WorldSnapshotFactory.CreateV2(
+                        audienceConcurrentActor, audienceConcurrentProjection, audienceClock));
+                }
+            }, System.Threading.CancellationToken.None,
+                System.Threading.Tasks.TaskCreationOptions.LongRunning,
+                System.Threading.Tasks.TaskScheduler.Default);
+            audienceConcurrentFinished = System.Threading.Tasks.Task.WaitAll(
+                [audienceTickTask, audienceReadTask], TimeSpan.FromSeconds(10));
+        }
+        Check(
+            "world.concurrent_boss_impacts_and_snapshot_reads_terminate",
+            audienceConcurrentFinished && audienceConcurrentSnapshots.Count == 200 &&
+            audienceConcurrentResolutions.Any(result => result.Damage > 0) &&
+            audienceConcurrentSnapshots.All(snapshot =>
+                snapshot.MapId == "MAP_BEN_MUA" && snapshot.FloorId == "OVERWORLD" &&
+                snapshot.Self.X == 181 && snapshot.Entities.Count == 1),
+            $"finished={audienceConcurrentFinished} reads={audienceConcurrentSnapshots.Count} " +
+            $"damagingImpacts={audienceConcurrentResolutions.Count(result => result.Damage > 0)}");
 
         // ─── Mãng Cốt encounter state machine (Q-F part 1) ────
 
@@ -5026,6 +9746,838 @@ public static class ServiceSelfCheck
                     outcome?.Failure?.Code ??
                     $"{outcome?.Snapshot?.InventoryRevision}")));
 
+        // ─── QOD-24 Q4: equipment metadata is never an effective stat ────
+
+        // Work order 29 asks for this as a property of the product, so it is tested as
+        // one. First the wire half: none of the labels the gear aggregator uses may
+        // appear as a property on any contract type. Actor numbers that really are live
+        // (Hp/MaxHp/Mp/MaxMp) are deliberately absent from the deny list - the claim is
+        // that *catalogue metadata* has no wire home, not that stats are unspeakable. If
+        // someone later surfaces "attack" or "armor" on a snapshot, this fails here
+        // rather than in a client that assumed the number was resolved.
+        var gearStatVocabulary = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "WeaponPower", "WeaponAttack", "Armor", "PrimaryStat", "PrimaryValue",
+            "SecondaryStat", "SecondaryValue", "Strength", "Vitality", "FlatMaxHp",
+            "FlatMaxMp", "HpMax", "MpMax", "PhysicalAttack", "Attack", "Defense",
+            "EffectiveStats"
+        };
+        var gearStatPropsOnWire = typeof(InventorySnapshot).Assembly
+            .GetTypes()
+            .Where(type => type.IsPublic &&
+                           type.Namespace == "Server.Health.Contracts")
+            .SelectMany(type => type.GetProperties(
+                System.Reflection.BindingFlags.Public |
+                System.Reflection.BindingFlags.Instance))
+            .Where(property => gearStatVocabulary.Contains(property.Name))
+            .Select(property => property.DeclaringType?.Name + "." + property.Name)
+            .OrderBy(name => name, StringComparer.Ordinal)
+            .ToArray();
+        Check(
+            "equipment.gear_stat_labels_have_no_wire_field",
+            gearStatPropsOnWire.Length == 0,
+            $"found={string.Join("|", gearStatPropsOnWire)}");
+
+        // Then the runtime half, which is the stronger claim: wearing a hat the catalogue
+        // prices at +14 max HP must not move the actor's own numbers by one point. The
+        // aggregation is still asked for that item, so the check would go red the day
+        // gear is applied *without* the matching decision, in either direction.
+        itemCatalog.TryGet("EQ-MK-HAT-T1-R-COMMON", out var wornHatEntry);
+        var hatWorth = PlayerStatAggregation.Derive(
+            [PlayerStatAggregation.Resolve(wornHatEntry!)]);
+        var statProbeSeed = inventory.Apply(equipmentActor, new InventoryMutation
+        {
+            AddItems =
+            [
+                new ItemGrant
+                {
+                    TemplateId = "EQ-MK-HAT-T1-R-COMMON",
+                    Stack = 1,
+                    Location = InventoryLocations.Bag
+                }
+            ]
+        });
+        var statProbeHat = statProbeSeed.Snapshot!.Items
+            .Single(item => item.TemplateId == "EQ-MK-HAT-T1-R-COMMON");
+        var statsBeforeWearing = (
+            equipmentActor.Hp, equipmentActor.MaxHp, equipmentActor.Mp, equipmentActor.MaxMp);
+        var wearHat = equipment.Equip(
+            equipmentActor, statProbeHat.InstanceId,
+            statProbeSeed.Snapshot.InventoryRevision, NewKey());
+        var statsAfterWearing = (
+            equipmentActor.Hp, equipmentActor.MaxHp, equipmentActor.Mp, equipmentActor.MaxMp);
+        Check(
+            "equipment.wearing_the_hat_moves_no_actor_stat",
+            wearHat.Accepted &&
+            // The catalogue row for this hat states durability 100, and a grant that
+            // names no durability takes the source - measured here because guessing it
+            // is how a "7" got written into this check first.
+            statProbeHat.Durability == 100 && wornHatEntry!.Durability == 100 &&
+            hatWorth.HpMax == 212 &&
+            statsAfterWearing == statsBeforeWearing &&
+            inventory.GetSnapshot(equipmentActor.CharacterId)
+                .Items.Single(item => item.InstanceId == statProbeHat.InstanceId)
+                .Location == InventoryLocations.Equipped,
+            $"equip={wearHat.Failure?.Code ?? "OK"} hat.hp={hatWorth.HpMax} " +
+            $"hat.durability={statProbeHat.Durability} " +
+            $"before={statsBeforeWearing} after={statsAfterWearing}");
+
+        // ─── QOD-24 Q5: consumables, loaded from the source and applied only where the
+        // source states a rule ────
+
+        var consumables = ConsumableCatalog.Load(itemCatalog);
+        var restoreRows = consumables.Where(entry =>
+            entry.Kind == ConsumableEffectKind.RestorePercent).ToArray();
+        var unsupportedRows = consumables.Where(entry =>
+            entry.Kind == ConsumableEffectKind.Unsupported).ToArray();
+        Check(
+            "consumable.catalog_shape_is_fourteen_rows_seven_rules_and_seven_effects_this_server_cannot_perform",
+            consumables.Count == 14 && restoreRows.Length == 7 &&
+            unsupportedRows.Length == 7,
+            $"rows={consumables.Count} restore={restoreRows.Length} " +
+            $"unsupported={string.Join("|", unsupportedRows.Select(entry => entry.EffectStatLabel))}");
+
+        var consumableByItem = consumables.ToDictionary(
+            entry => entry.ItemId, StringComparer.Ordinal);
+        Check(
+            "consumable.catalog_percents_are_exactly_the_source_cells",
+            consumableByItem["POT-HP-01"] is { Percent: 25, Restores: ConsumableCatalog.Hp, ReviveRequired: false } &&
+            consumableByItem["POT-HP-02"].Percent == 35 &&
+            consumableByItem["POT-HP-03"].Percent == 45 &&
+            consumableByItem["POT-MP-01"] is { Percent: 20, Restores: ConsumableCatalog.Mp } &&
+            consumableByItem["POT-MP-02"].Percent == 30 &&
+            consumableByItem["POT-MP-03"].Percent == 40 &&
+            consumableByItem["POT-REVIVE-01"] is { Percent: 15, ReviveRequired: true } &&
+            consumableByItem["POT-HP-01"].StackLimit == 99 &&
+            consumableByItem["POT-HP-02"].RequiredLevel == 16,
+            $"hp={string.Join("|", consumables.Where(entry => entry.Restores == ConsumableCatalog.Hp).Select(entry => entry.Percent))}");
+
+        string ConsumableLoadFailure(string from, string to)
+        {
+            var root = Path.Combine(
+                Path.GetTempPath(), "p1-consumable-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var directory = Path.Combine(root, "docs", "production");
+                Directory.CreateDirectory(directory);
+                var sourceDirectory =
+                    ItemCatalogDiscovery.DiscoverDirectory(AppContext.BaseDirectory);
+                foreach (var relative in new[]
+                {
+                    ItemCatalog.RelativePath, ItemCatalog.VariantRelativePath
+                })
+                {
+                    var lines = File.ReadAllLines(Path.Combine(sourceDirectory, relative));
+                    File.WriteAllLines(
+                        Path.Combine(directory, Path.GetFileName(relative)),
+                        lines.Select(line =>
+                            line.Replace(from, to, StringComparison.Ordinal)).ToArray());
+                }
+
+                try
+                {
+                    ConsumableCatalog.Load(ItemCatalog.Load(root));
+                    return "LOADED";
+                }
+                catch (InvalidOperationException exception)
+                {
+                    return exception.Message;
+                }
+            }
+            finally
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+
+        var unparsableRestoreCell = ConsumableLoadFailure("25% HP tối đa", "25 HP");
+        var mismatchedRestoreStat = ConsumableLoadFailure(
+            "\"25% HP tối đa\"", "\"30% MP tối đa\"");
+        var unknownSlotLabel = ConsumableLoadFailure("Potion MP", "Nước uống");
+        Check(
+            "consumable.catalog_refuses_a_cell_it_cannot_parse_and_a_slot_label_it_does_not_know",
+            unparsableRestoreCell.Contains("not '<percent>% HP|MP tối đa'", StringComparison.Ordinal) &&
+            mismatchedRestoreStat.Contains("pairs stat label", StringComparison.Ordinal) &&
+            unknownSlotLabel.Contains("unknown slot label", StringComparison.Ordinal),
+            $"cell={Cut(unparsableRestoreCell)} stat={Cut(mismatchedRestoreStat)} slot={Cut(unknownSlotLabel)}");
+
+        var consumableActor = NewPlayer("CHR_SELFCHECK_CONSUMABLE");
+        var consumableSeed = inventory.Apply(consumableActor, new InventoryMutation
+        {
+            AddItems =
+            [
+                new ItemGrant { TemplateId = "POT-HP-01", Stack = 3, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "POT-MP-01", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "POT-HP-02", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "POT-REVIVE-01", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "FOOD-ATK-01", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-MK-CHEST-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag }
+            ]
+        });
+        var consumableItems = consumableSeed.Snapshot!.Items;
+        string ConsumableInstance(string templateId) => consumableItems
+            .Single(item => item.TemplateId == templateId).InstanceId;
+        var hpPotion = ConsumableInstance("POT-HP-01");
+        var mpPotion = ConsumableInstance("POT-MP-01");
+        var gatedPotion = ConsumableInstance("POT-HP-02");
+        var revivePotion = ConsumableInstance("POT-REVIVE-01");
+        var foodPotion = ConsumableInstance("FOOD-ATK-01");
+        var gearInstance = ConsumableInstance("EQ-MK-CHEST-T1-R-COMMON");
+        string ConsumeKey(string prefix) => prefix + new string('0', 32 - prefix.Length);
+        var consumableService = new ConsumableService(inventory, consumables);
+        var consumableRevision = consumableSeed.Snapshot.InventoryRevision;
+        consumableActor.Hp = 60;
+        consumableActor.Mp = 10;
+
+        var hpDrink = consumableService.Consume(
+            consumableActor, hpPotion, consumableRevision, ConsumeKey("ca"));
+        Check(
+            "consumable.hp_drink_restores_a_quarter_of_max_and_spends_one_stack",
+            hpDrink.Accepted && hpDrink.HpRestored == 25 && hpDrink.HpAfter == 85 &&
+            hpDrink.MpRestored == 0 && hpDrink.Snapshot!.InventoryRevision == consumableRevision + 1 &&
+            hpDrink.Snapshot.Items.Single(item => item.InstanceId == hpPotion).Stack == 2,
+            $"restored={hpDrink.HpRestored} hp={hpDrink.HpAfter} fail={hpDrink.Failure?.Code}");
+
+        var mpDrink = consumableService.Consume(
+            consumableActor, mpPotion, consumableRevision + 1, ConsumeKey("cb"));
+        Check(
+            "consumable.mp_drink_moves_only_its_own_pool_and_empties_the_instance",
+            mpDrink.Accepted && mpDrink.MpRestored == 10 && mpDrink.MpAfter == 20 &&
+            mpDrink.HpRestored == 0 && mpDrink.HpAfter == 85 &&
+            !mpDrink.Snapshot!.Items.Any(item => item.InstanceId == mpPotion),
+            $"mp={mpDrink.MpRestored} hp={mpDrink.HpAfter} fail={mpDrink.Failure?.Code}");
+
+        var replayDrink = consumableService.Consume(
+            consumableActor, hpPotion, consumableRevision, ConsumeKey("ca"));
+        Check(
+            "consumable.replayed_key_returns_the_recorded_result_without_a_second_spend",
+            replayDrink.Accepted && replayDrink.HpRestored == 25 &&
+            inventory.GetSnapshot(consumableActor.CharacterId)
+                .Items.Single(item => item.InstanceId == hpPotion).Stack == 2 &&
+            consumableActor.Hp == 85,
+            $"restored={replayDrink.HpRestored} hp={consumableActor.Hp}");
+
+        var conflictDrink = consumableService.Consume(
+            consumableActor, hpPotion, consumableRevision + 5, ConsumeKey("ca"));
+        Check(
+            "consumable.same_key_with_a_different_payload_is_a_conflict",
+            conflictDrink.Failure?.Code == ConsumableErrorCodes.IdempotencyConflict,
+            conflictDrink.Failure?.Code);
+
+        consumableActor.Hp = 90;
+        var clampDrink = consumableService.Consume(
+            consumableActor, hpPotion, consumableRevision + 2, ConsumeKey("cc"));
+        Check(
+            "consumable.heal_clamps_at_max_hp_and_reports_only_the_points_gained",
+            clampDrink.Accepted && clampDrink.HpRestored == 10 && clampDrink.HpAfter == 100 &&
+            inventory.GetSnapshot(consumableActor.CharacterId).InventoryRevision ==
+                consumableRevision + 3,
+            $"restored={clampDrink.HpRestored} hp={clampDrink.HpAfter}");
+
+        var fullDrink = consumableService.Consume(
+            consumableActor, hpPotion, consumableRevision + 3, ConsumeKey("cd"));
+        Check(
+            "consumable.a_drink_with_nothing_to_restore_is_refused_and_the_stack_survives",
+            fullDrink.Failure?.Code == ConsumableErrorCodes.NoEffect &&
+            inventory.GetSnapshot(consumableActor.CharacterId)
+                .Items.Single(item => item.InstanceId == hpPotion).Stack == 1 &&
+            inventory.GetSnapshot(consumableActor.CharacterId).InventoryRevision ==
+                consumableRevision + 3 &&
+            consumableActor.Hp == 100,
+            $"fail={fullDrink.Failure?.Code}");
+
+        // The rounding the source never states, made visible instead of buried: floor of
+        // 25% of a 3-point maximum is zero, and zero is not a reason to spend an item.
+        consumableActor.MaxHp = 3;
+        consumableActor.Hp = 0;
+        var tinyDrink = consumableService.Consume(
+            consumableActor, hpPotion, consumableRevision + 3, ConsumeKey("ce"));
+        Check(
+            "consumable.floor_rounding_at_a_three_point_maximum_spends_nothing",
+            tinyDrink.Failure?.Code == ConsumableErrorCodes.NoEffect &&
+            consumableActor.Hp == 0 &&
+            inventory.GetSnapshot(consumableActor.CharacterId)
+                .Items.Single(item => item.InstanceId == hpPotion).Stack == 1,
+            $"fail={tinyDrink.Failure?.Code} hp={consumableActor.Hp}");
+        consumableActor.MaxHp = 101;
+        var floorDrink = consumableService.Consume(
+            consumableActor, hpPotion, consumableRevision + 3, ConsumeKey("cf"));
+        Check(
+            "consumable.floor_is_the_ruleset_value_convention_not_round_half_up",
+            floorDrink.Accepted && floorDrink.HpRestored == 25 && floorDrink.HpAfter == 25,
+            $"restored={floorDrink.HpRestored} (101 * 25 / 100 = 25,25)");
+
+        var consumableLevelGate = consumableService.Consume(
+            consumableActor, gatedPotion, consumableRevision + 4, ConsumeKey("d0"));
+        var consumableReviveGate = consumableService.Consume(
+            consumableActor, revivePotion, consumableRevision + 4, ConsumeKey("d1"));
+        var consumableEffectGate = consumableService.Consume(
+            consumableActor, foodPotion, consumableRevision + 4, ConsumeKey("d2"));
+        var consumableGearGate = consumableService.Consume(
+            consumableActor, gearInstance, consumableRevision + 4, ConsumeKey("d3"));
+        Check(
+            "consumable.level_revive_effect_and_category_refusals_all_name_their_row",
+            consumableLevelGate.Failure?.Code == ConsumableErrorCodes.LevelRequired &&
+            consumableReviveGate.Failure?.Code == ConsumableErrorCodes.ReviveNotModelled &&
+            consumableEffectGate.Failure?.Code == ConsumableErrorCodes.EffectUnsupported &&
+            consumableByItem["FOOD-ATK-01"].EffectStatLabel == "Damage PvE" &&
+            consumableByItem["FOOD-ATK-01"].EffectValueCell == "+2% / 20 phút" &&
+            consumableGearGate.Failure?.Code == ConsumableErrorCodes.NotConsumable,
+            $"level={consumableLevelGate.Failure?.Code} revive={consumableReviveGate.Failure?.Code} " +
+            $"effect={consumableEffectGate.Failure?.Code} gear={consumableGearGate.Failure?.Code}");
+
+        var consumableStaleRevision = consumableService.Consume(
+            consumableActor, hpPotion, 1, ConsumeKey("d4"));
+        var consumableUnknownInstance = consumableService.Consume(
+            consumableActor, "ITM_NEVER_MINTED", consumableRevision + 4, ConsumeKey("d5"));
+        Check(
+            "consumable.stale_revision_and_unknown_instance_move_nothing",
+            consumableStaleRevision.Failure is { Code: ConsumableErrorCodes.RevisionConflict, Retryable: true } &&
+            consumableUnknownInstance.Failure?.Code == ConsumableErrorCodes.ItemNotFound &&
+            inventory.GetSnapshot(consumableActor.CharacterId).InventoryRevision ==
+                consumableRevision + 4,
+            $"stale={consumableStaleRevision.Failure?.Code} unknown={consumableUnknownInstance.Failure?.Code}");
+
+        var barrierActor = NewPlayer("CHR_SELFCHECK_CONSUMABLE_RACE");
+        var barrierSeed = inventory.Apply(barrierActor, new InventoryMutation
+        {
+            AddItems = [new ItemGrant
+            {
+                TemplateId = "POT-HP-01", Stack = 5, Location = InventoryLocations.Bag
+            }]
+        });
+        var barrierPotion = barrierSeed.Snapshot!.Items.Single().InstanceId;
+        barrierActor.Hp = 0;
+        var consumeRaceKey = ConsumeKey("d6");
+        var consumeRaceBarrier = new Barrier(4);
+        var consumeRaceOutcomes = new ConsumableOutcome?[4];
+        var consumeRaceThreads = new Thread[4];
+        for (var index = 0; index < consumeRaceThreads.Length; index++)
+        {
+            var outcomeSlot = index;
+            consumeRaceThreads[outcomeSlot] = new Thread(() =>
+            {
+                consumeRaceBarrier.SignalAndWait();
+                consumeRaceOutcomes[outcomeSlot] = consumableService.Consume(
+                    barrierActor, barrierPotion, barrierSeed.Snapshot!.InventoryRevision, consumeRaceKey);
+            });
+        }
+
+        foreach (var thread in consumeRaceThreads)
+        {
+            thread.Start();
+        }
+
+        foreach (var thread in consumeRaceThreads)
+        {
+            thread.Join();
+        }
+
+        Check(
+            "consumable.four_threads_on_one_key_spend_exactly_one_stack",
+            consumeRaceOutcomes.All(outcome => outcome is { Accepted: true, HpRestored: 25 }) &&
+            inventory.GetSnapshot(barrierActor.CharacterId)
+                .Items.Single(item => item.InstanceId == barrierPotion).Stack == 4 &&
+            barrierActor.Hp == 25 &&
+            consumableService.LedgerCount >= 1,
+            $"stacks={inventory.GetSnapshot(barrierActor.CharacterId)
+                .Items.Single(item => item.InstanceId == barrierPotion).Stack} hp={barrierActor.Hp}");
+
+        // ─── QOD-24 Q4/Q6: two approved production tables the server had never read ────
+
+        var elites = services.GetRequiredService<IReadOnlyList<MobEliteVariant>>();
+        var eliteProfiles = elites.Select(elite => elite.VariantProfileId)
+            .Distinct(StringComparer.Ordinal)
+            .OrderBy(profile => profile, StringComparer.Ordinal)
+            .ToArray();
+        var multiplierSets = elites
+            .Select(elite => (elite.HpMultiplier, elite.DamageMultiplier, elite.MoveSpeedMultiplier))
+            .Distinct()
+            .ToArray();
+        Check(
+            "elite.table_is_nine_rows_three_profiles_and_three_multiplier_sets",
+            elites.Count == 9 && eliteProfiles.Length == 3 && multiplierSets.Length == 3 &&
+            elites.All(elite => elite.LevelDelta == 2) &&
+            elites.All(elite => elite.RespawnDeltaSeconds == 0) &&
+            elites.All(elite => elite.BehaviorOverride.Length > 0) &&
+            elites.All(elite => elite.LootDelta.Contains("%", StringComparison.Ordinal)) &&
+            // Two of the three profiles name a telegraph duration in prose (1.5s and
+            // 2.0s); elite_v3 names an area hazard with a safe lane and no telegraph
+            // at all, so "elite telegraph timing" is not one sourced number.
+            elites.Count(elite => elite.BehaviorOverride.Contains(
+                "telegraph", StringComparison.Ordinal)) == 6 &&
+            elites.Count(elite => elite.BehaviorOverride.Contains(
+                "1.5s", StringComparison.Ordinal)) == 3 &&
+            elites.Count(elite => elite.BehaviorOverride.Contains(
+                "2.0s", StringComparison.Ordinal)) == 3 &&
+            elites.Count(elite => elite.BehaviorOverride.Contains(
+                "safe lane", StringComparison.Ordinal)) == 3,
+            $"rows={elites.Count} profiles={string.Join("|", eliteProfiles)} " +
+            $"sets={multiplierSets.Length} lvl2={elites.All(e => e.LevelDelta == 2)} " +
+            $"respawn0={elites.All(e => e.RespawnDeltaSeconds == 0)} " +
+            $"telegraphRows={elites.Count(e => e.BehaviorOverride.Contains("telegraph", StringComparison.Ordinal))} " +
+            $"lootPct={elites.All(e => e.LootDelta.Contains("%", StringComparison.Ordinal))}");
+
+        Check(
+            "elite.no_variant_in_the_source_is_pvp_eligible",
+            elites.All(elite => !elite.PvpAllowed) &&
+            elites.All(elite => elite.LootTableId.StartsWith("LT_", StringComparison.Ordinal)) &&
+            elites.Select(elite => elite.BaseEntityId).Distinct().Count() == 9,
+            $"pvp_allowed_anywhere={elites.Any(elite => elite.PvpAllowed)}");
+
+        // The conflict work order 29 asks me to name rather than resolve. The damage path
+        // scales elites from the runtime bundle (hp 6.0x, attack 1.6x, defense 1.8x), while
+        // the approved elite table states 1.65x / 1.8x / 2.0x hp per profile and a +2 level
+        // delta instead. Both numbers are printed so a fix is a decision, not a silent
+        // edit of whichever constant was nearer to hand: at the reference level the bundle
+        // ships 1152 hp on a base of 1152 / 6.0 = 192, and that same base at the table's
+        // largest hp multiplier is 192 * 2.0 = 384. This is the bundle's reference row,
+        // not the spawn the report in QOD-24_skill_catalog_coverage names: the shore
+        // stalker there carries base 216, so 216 gives 1296 against 388.8. Same conflict,
+        // different row - which is why the numbers are printed instead of averaged.
+        var tableMaxHpMultiplier = elites.Max(elite => elite.HpMultiplier);
+        var bundleReferenceEliteHp = 1152.0;
+        var tableDerivedEliteHp = bundleReferenceEliteHp / mobStats.Elite.Hp * tableMaxHpMultiplier;
+        Check(
+            "elite_the_runtime_bundle_and_the_approved_table_disagree_named",
+            mobStats.Elite.Hp == 6.0 && tableMaxHpMultiplier == 2.0 &&
+            !elites.Any(elite => Math.Abs(elite.HpMultiplier - mobStats.Elite.Hp) < 0.0001) &&
+            Math.Abs(tableDerivedEliteHp - 384.0) < 0.0001,
+            $"bundle={mobStats.Elite.Hp}x -> {bundleReferenceEliteHp} hp; " +
+            $"table max={tableMaxHpMultiplier}x -> {tableDerivedEliteHp} hp");
+
+        var npcDefinitions = services.GetRequiredService<IReadOnlyList<NpcActorDefinition>>();
+        var registryIds = npcDefinitions.Select(npc => npc.NpcId).ToHashSet(StringComparer.Ordinal);
+        var anchoredIds = npcAnchors.All.Select(anchor => anchor.NpcId)
+            .ToHashSet(StringComparer.Ordinal);
+        Check(
+            "npc.registry_and_the_anchor_catalog_are_the_same_83_ids_both_ways",
+            npcDefinitions.Count == 83 && registryIds.Count == 83 &&
+            anchoredIds.Count == 83 && registryIds.SetEquals(anchoredIds) &&
+            npcDefinitions.All(npc => !npc.CombatTargetable) &&
+            npcDefinitions.All(npc => npc.SourceMapId.StartsWith("MAP_", StringComparison.Ordinal)),
+            $"registry={registryIds.Count} anchors={anchoredIds.Count} " +
+            $"onlyInRegistry={registryIds.Except(anchoredIds).Count()} " +
+            $"onlyInAnchors={anchoredIds.Except(registryIds).Count()}");
+
+        // Service availability (Q6) has a source, and it is not a quest or a flag: it is a
+        // named service on the NPC. Loading it means the shop/forge/guild/arena packets can
+        // cite the token that exists instead of inventing an endpoint nobody approved.
+        var serviceTokens = npcDefinitions
+            .Where(npc => npc.InteractionServiceId != "NONE")
+            .GroupBy(npc => npc.InteractionServiceId, StringComparer.Ordinal)
+            .ToDictionary(group => group.Key, group => group.Count(), StringComparer.Ordinal);
+        Check(
+            "npc.service_tokens_are_the_source_vocabulary_and_none_of_them_has_a_route",
+            serviceTokens.Count == 14 &&
+            serviceTokens["SERVICE_FORGE"] == 2 && serviceTokens["SERVICE_SHOP"] == 2 &&
+            serviceTokens["SERVICE_SHOP_POTION"] == 1 && serviceTokens["SERVICE_TRAVEL"] == 4 &&
+            serviceTokens["SERVICE_PVP_QUEUE"] == 1 && serviceTokens["SERVICE_GUILD"] == 1 &&
+            serviceTokens["SERVICE_CLASS_SELECTION"] == 1 &&
+            npcDefinitions.Count(npc => npc.RoleProfile == "QUEST_GIVER") == 15,
+            $"services={string.Join("|", serviceTokens.OrderBy(pair => pair.Key).Select(pair => $"{pair.Key}={pair.Value}"))}");
+
+        string NpcRegistryTargetableFailure()
+        {
+            var root = Path.Combine(
+                Path.GetTempPath(), "p1-npc-target-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var production = Path.Combine(root, "docs", "production");
+                Directory.CreateDirectory(production);
+                var sourceRoot = ProductionTableDiscovery.DiscoverDirectory(
+                    AppContext.BaseDirectory, NpcActorRegistry.RelativePath);
+                foreach (var relative in new[]
+                {
+                    NpcActorRegistry.RelativePath, MobEliteVariantCatalog.RelativePath
+                })
+                {
+                    var lines = File.ReadAllLines(Path.Combine(sourceRoot, relative));
+                    File.WriteAllLines(
+                        Path.Combine(root, relative),
+                        lines.Select(line => line.Replace(
+                            ",false,1.0,", ",true,1.0,", StringComparison.Ordinal)).ToArray());
+                }
+
+                try
+                {
+                    NpcActorRegistry.Load(root);
+                    return "LOADED";
+                }
+                catch (InvalidOperationException exception)
+                {
+                    return exception.Message;
+                }
+            }
+            finally
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+
+        var targetableNpcRefused = NpcRegistryTargetableFailure();
+        Check(
+            "npc_the_loader_refuses_a_registry_row_the_audience_policy_cannot_express",
+            targetableNpcRefused.Contains("combat_targetable=true", StringComparison.Ordinal),
+            $"refused={Cut(targetableNpcRefused)}");
+
+        // ─── QOD-24: the pet/mount table, read for the first time, against the catalogue ───
+
+        var petRows = services.GetRequiredService<IReadOnlyList<CompanionEntry>>();
+        var companionRows = petRows.Where(row => row.IsCompanion).ToArray();
+        var mountRows = petRows.Where(row => !row.IsCompanion).ToArray();
+        var productionDirectory = ProductionTableDiscovery.DiscoverDirectory(
+            AppContext.BaseDirectory, CompanionCatalog.RelativePath);
+        Check(
+            "companion.table_is_five_companions_and_five_cosmetic_mounts",
+            petRows.Count == 10 && companionRows.Length == 5 && mountRows.Length == 5 &&
+            companionRows.All(row => row.LevelCap == 30 && row.OwnerRangeWu == 8 &&
+                row.Element != "COSMETIC" && row.FeedItemId == "PET-FEED-01" &&
+                row.FeedCooldownHours == 12) &&
+            mountRows.All(row => row.LevelCap == 1 && row.OwnerRangeWu == 0 &&
+                row.Element == "COSMETIC" && row.FeedItemId.Length == 0 &&
+                row.FeedCooldownHours == 0 && row.ActiveSkillId.Length == 0 &&
+                row.PassiveSkillId.Length == 0) &&
+            petRows.All(row => row.FeedStat.Contains("cosmetic", StringComparison.OrdinalIgnoreCase)),
+            $"rows={petRows.Count} companionRange={companionRows.Max(row => row.OwnerRangeWu)} " +
+            $"companionCap={companionRows.Max(row => row.LevelCap)} " +
+            $"mountRange={mountRows.Max(row => row.OwnerRangeWu)} " +
+            $"mountCap={mountRows.Max(row => row.LevelCap)} " +
+            $"feedHours={companionRows.Max(row => row.FeedCooldownHours)} " +
+            $"statFeedRows={petRows.Count(row => !row.FeedStat.Contains("cosmetic", StringComparison.OrdinalIgnoreCase))}");
+
+        // The item catalogue carries its own row for every one of these ids, so the two
+        // approved sources can be compared without guessing. `nameDisagreements` is the
+        // headline: the same item_id names a different creature in each file, and the pet
+        // table's four equipment slots exist in neither catalogue.
+        var catalogueRows =
+            new Dictionary<string, (string DisplayName, string Element, int RequiredLevel, string PrimaryValue)>(
+                StringComparer.Ordinal);
+        var petSlotTokenRows = 0;
+        foreach (var line in File
+                     .ReadAllLines(Path.Combine(productionDirectory, ItemCatalog.RelativePath))
+                     .Skip(1))
+        {
+            var cells = MobEliteVariantCatalog.SplitCsvLine(line);
+            if (cells.Count < 12)
+            {
+                continue;
+            }
+
+            if (cells[3].Contains("PET_", StringComparison.Ordinal) ||
+                cells[3].Contains("MOUNT_", StringComparison.Ordinal))
+            {
+                petSlotTokenRows++;
+            }
+
+            if (cells[0].StartsWith("PET-", StringComparison.Ordinal) ||
+                cells[0].StartsWith("MOUNT-", StringComparison.Ordinal))
+            {
+                catalogueRows[cells[0]] = (
+                    cells[1],
+                    cells[5],
+                    int.TryParse(cells[6], System.Globalization.NumberStyles.Integer,
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        out var requiredLevel) ? requiredLevel : -1,
+                    cells[11]);
+            }
+        }
+
+        var nameDisagreements = new List<string>();
+        var blankCatalogueElements = 0;
+        var impossibleLevelRows = 0;
+        var companionPlaceholders = 0;
+        var mountSpeedAgreements = 0;
+        var missingTemplates = 0;
+        foreach (var row in petRows)
+        {
+            if (!catalogueRows.TryGetValue(row.ItemTemplateId, out var catalogue))
+            {
+                missingTemplates++;
+                continue;
+            }
+
+            if (!string.Equals(catalogue.DisplayName, row.DisplayNameVi, StringComparison.Ordinal))
+            {
+                nameDisagreements.Add($"{row.ItemTemplateId} pet='{row.DisplayNameVi}' " +
+                    $"catalogue='{catalogue.DisplayName}'");
+            }
+
+            if (catalogue.Element.Length == 0)
+            {
+                blankCatalogueElements++;
+            }
+
+            if (catalogue.RequiredLevel > row.LevelCap)
+            {
+                impossibleLevelRows++;
+            }
+
+            if (row.IsCompanion && catalogue.PrimaryValue == "Pet passive")
+            {
+                companionPlaceholders++;
+            }
+
+            if (!row.IsCompanion &&
+                catalogue.PrimaryValue.Contains("+10%", StringComparison.Ordinal))
+            {
+                mountSpeedAgreements++;
+            }
+        }
+
+        Check(
+            "companion.every_template_id_exists_in_the_item_catalogue_and_names_another_creature",
+            missingTemplates == 0 && catalogueRows.Count == 11 &&
+            nameDisagreements.Count == 10,
+            $"missing={missingTemplates} disagreements={nameDisagreements.Count} " +
+            $"first={Cut(nameDisagreements.Count > 0 ? nameDisagreements[0] : "none")} " +
+            $"last={Cut(nameDisagreements.Count > 0 ? nameDisagreements[^1] : "none")}");
+
+        Check(
+            "companion.the_item_catalogue_states_no_element_and_no_item_fills_a_pet_slot",
+            blankCatalogueElements == 10 && petSlotTokenRows == 0,
+            $"blankElements={blankCatalogueElements} petSlotItems={petSlotTokenRows}");
+
+        // A mount whose source says level_cap 1 while the catalogue requires level 10 to
+        // bind/use it cannot be summoned at any level. This is a decision, not a number I
+        // can pick, so it is pinned as five rows until someone states which column wins.
+        Check(
+            "companion.the_five_mount_rows_gate_above_their_own_level_cap",
+            impossibleLevelRows == 5 && mountRows.All(row =>
+                catalogueRows[row.ItemTemplateId].RequiredLevel > row.LevelCap) &&
+            companionRows.All(row => catalogueRows[row.ItemTemplateId].RequiredLevel <= row.LevelCap),
+            $"impossible={impossibleLevelRows} mountRequired=" +
+            string.Join("|", mountRows.Select(row =>
+                $"{row.ItemTemplateId}:{catalogueRows[row.ItemTemplateId].RequiredLevel}/" +
+                $"cap{row.LevelCap}")));
+
+        Check(
+            "companion.the_sources_agree_only_on_the_mount_speed_rule",
+            mountSpeedAgreements == 5 && companionPlaceholders == 5,
+            $"mountSpeed={mountSpeedAgreements} companionPlaceholders={companionPlaceholders}");
+
+        var companionSkillIds = companionRows
+            .SelectMany(row => new[] { row.ActiveSkillId, row.PassiveSkillId })
+            .ToArray();
+        var otherSourceFiles = Directory.EnumerateFiles(productionDirectory)
+            .Where(file => file.EndsWith(".csv", StringComparison.OrdinalIgnoreCase) ||
+                           file.EndsWith(".md", StringComparison.OrdinalIgnoreCase))
+            .Where(file => !file.EndsWith("Pet_Mount_Production_Data_vi.csv", StringComparison.Ordinal))
+            .ToArray();
+        var skillIdsDefinedElsewhere = companionSkillIds
+            .Where(id => otherSourceFiles.Any(file =>
+                File.ReadAllText(file).Contains(id, StringComparison.Ordinal)))
+            .ToArray();
+        Check(
+            "companion.the_ten_pet_skill_ids_are_defined_nowhere_but_in_the_pet_table",
+            companionSkillIds.Length == 10 &&
+            companionSkillIds.Distinct(StringComparer.Ordinal).Count() == 10 &&
+            skillIdsDefinedElsewhere.Length == 0,
+            $"ids={companionSkillIds.Length} definedElsewhere=" +
+            $"{string.Join("|", skillIdsDefinedElsewhere)}");
+
+        string CompanionLoadFailure(string from, string to)
+        {
+            var root = Path.Combine(
+                Path.GetTempPath(), "p1-companion-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var directory = Path.Combine(root, "docs", "production");
+                Directory.CreateDirectory(directory);
+                var source = File.ReadAllLines(
+                    Path.Combine(productionDirectory, CompanionCatalog.RelativePath));
+                File.WriteAllLines(
+                    Path.Combine(directory, Path.GetFileName(CompanionCatalog.RelativePath)),
+                    source.Select(line => line.Replace(from, to, StringComparison.Ordinal)).ToArray());
+
+                try
+                {
+                    CompanionCatalog.Load(root);
+                    return "LOADED";
+                }
+                catch (InvalidOperationException exception)
+                {
+                    return exception.Message;
+                }
+            }
+            finally
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+
+        var statBearingSlots = CompanionLoadFailure(
+            "MOUNT_SADDLE cosmetic only", "MOUNT_SADDLE +5% hp");
+        var pvpPetRule = CompanionLoadFailure(
+            "PvE normal mobs only; no pet damage/heal in PvP",
+            "PvE and PvP damage allowed");
+        var mountGrowsALeash = CompanionLoadFailure(
+            ",0,\"dismount on combat", ",8,\"dismount on combat");
+        Check(
+            "companion.loader_refuses_a_stat_slot_a_pvp_rule_and_a_mount_that_leashes",
+            statBearingSlots.Contains("equipment_slots", StringComparison.Ordinal) &&
+            pvpPetRule.Contains("combat_rule", StringComparison.Ordinal) &&
+            mountGrowsALeash.Contains("contradicts the MOUNT leash", StringComparison.Ordinal),
+            $"slots={Cut(statBearingSlots)}|rule={Cut(pvpPetRule)}|leash={Cut(mountGrowsALeash)}");
+
+        // ─── QOD-21 Q3: the v2 twelve-slot handler ────
+
+        // Same store, same aggregate revision, second vocabulary: these checks pin
+        // what v2 is for (two accessories and the two armour slots v1 cannot name)
+        // and that v1 keeps seeing its own five tokens for the very same items.
+        var eqV2 = new EquipmentV2Service(
+            inventory,
+            services.GetRequiredService<IInventoryStateStore>(),
+            itemCatalog,
+            alphaDesign);
+        var eqV2Actor = NewPlayer("CHR_SELFCHECK_EQUIP_V2");
+        var eqV2Seed = inventory.Apply(eqV2Actor, new InventoryMutation
+        {
+            AddItems =
+            [
+                new ItemGrant { TemplateId = "EQ-MK-NECK-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-MK-NECK-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-MK-RING_L-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-MK-RING_R-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-MK-LEGS-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-MK-GLOVES-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-MK-NECK-T2-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "EQ-AD-HAT-T1-R-COMMON", Stack = 1, Location = InventoryLocations.Bag },
+                new ItemGrant { TemplateId = "POT-HP-01", Stack = 1, Location = InventoryLocations.Bag }
+            ]
+        });
+        var eqV2Items = eqV2Seed.Snapshot!.Items;
+        string EqV2Instance(string templateId, int occurrence = 1) => eqV2Items
+            .Where(item => item.TemplateId == templateId)
+            .Select(item => item.InstanceId)
+            .ElementAt(occurrence - 1);
+
+        var eqV2Empty = eqV2.Read(eqV2Actor).Snapshot!;
+        var eqV2Neck = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-NECK-T1-R-COMMON"), 1, NewKey()).Snapshot!;
+        var eqV2RingL = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-RING_L-T1-R-COMMON"), 2, NewKey()).Snapshot!;
+        var eqV2Legs = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-LEGS-T1-R-COMMON"), 3, NewKey()).Snapshot!;
+        var eqV2V1View = inventory.GetSnapshot(eqV2Actor.CharacterId);
+        var eqV2RingLOut = eqV2.Unequip(eqV2Actor, InventoryV2Slots.RingLeft, 4, NewKey()).Snapshot!;
+
+        Check(
+            "equipment_v2.equips_the_twelve_slots_without_moving_v1",
+            eqV2Seed.IsSuccess && eqV2Seed.Snapshot!.InventoryRevision == 1 &&
+            eqV2Empty.Slots.Count == 12 &&
+            eqV2Empty.Slots.All(entry => entry.Item is null) &&
+            eqV2Empty.BagSlots == 100 &&
+            eqV2Empty.Bag.Count == 9 &&
+            string.Equals(eqV2Empty.SlotSpec, alphaDesign.Inventory.WireMigration,
+                StringComparison.Ordinal) &&
+            eqV2Empty.InventoryRevision == 1 &&
+            // Two accessories in two slots is the whole point of v2.
+            eqV2RingL.Slots.Single(e => e.SlotId == InventoryV2Slots.Neck).Item is { } wornNeck &&
+            wornNeck.SlotId == InventoryV2Slots.Neck &&
+            eqV2RingL.Slots.Single(e => e.SlotId == InventoryV2Slots.RingLeft).Item?.TemplateId ==
+                "EQ-MK-RING_L-T1-R-COMMON" &&
+            eqV2Legs.Slots.Count(e => e.Item is not null) == 3 &&
+            eqV2Legs.Bag.Count == 6 &&
+            eqV2Legs.InventoryRevision == 4 &&
+            // v1 still reads three equipped items, in its own vocabulary or with no
+            // slot at all for the two armour pieces it has no token for.
+            eqV2V1View.Items.Count(item =>
+                item.Location == InventoryLocations.Equipped) == 3 &&
+            eqV2V1View.Items.Single(item =>
+                item.TemplateId == "EQ-MK-NECK-T1-R-COMMON" &&
+                item.Location == InventoryLocations.Equipped).Slot ==
+                EquipmentSlots.Accessory &&
+            eqV2V1View.Items.Single(item =>
+                item.TemplateId == "EQ-MK-RING_L-T1-R-COMMON" &&
+                item.Location == InventoryLocations.Equipped).Slot ==
+                EquipmentSlots.Accessory &&
+            eqV2V1View.Items.Single(item =>
+                item.TemplateId == "EQ-MK-LEGS-T1-R-COMMON" &&
+                item.Location == InventoryLocations.Equipped).Slot is null &&
+            eqV2RingLOut.Slots.Single(e => e.SlotId == InventoryV2Slots.RingLeft).Item is null &&
+            eqV2RingLOut.Bag.Single(item =>
+                item.TemplateId == "EQ-MK-RING_L-T1-R-COMMON" &&
+                item.Location == InventoryLocations.Bag).SlotId is null &&
+            inventory.GetSnapshot(eqV2Actor.CharacterId).Items.Count(item =>
+                item.Location == InventoryLocations.Equipped) == 2,
+            $"slots={eqV2Legs.Slots.Count(e => e.Item is not null)} " +
+            $"v1={string.Join('|', eqV2V1View.Items.Where(i => i.Location == InventoryLocations.Equipped).Select(i => i.Slot ?? "(none)"))}");
+
+        var eqV2NeckTaken = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-NECK-T1-R-COMMON", 2), 5, NewKey());
+        var eqV2Potion = eqV2.Equip(eqV2Actor, EqV2Instance("POT-HP-01"), 5, NewKey());
+        var eqV2TooHigh = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-NECK-T2-R-COMMON"), 5, NewKey());
+        var eqV2WrongClass = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-AD-HAT-T1-R-COMMON"), 5, NewKey());
+        var eqV2Unknown = eqV2.Equip(eqV2Actor, "ITM_NOPE_NOT_THERE", 5, NewKey());
+        var eqV2AlreadyWorn = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-LEGS-T1-R-COMMON"), 5, NewKey());
+        var eqV2EmptySlot = eqV2.Unequip(eqV2Actor, InventoryV2Slots.Seal, 5, NewKey());
+        var eqV2StaleRevision = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-GLOVES-T1-R-COMMON"), 2, NewKey());
+        var eqV2Key = NewKey();
+        var eqV2First = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-GLOVES-T1-R-COMMON"), 5, eqV2Key);
+        var eqV2Replay = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-GLOVES-T1-R-COMMON"), 5, eqV2Key);
+        var eqV2Conflict = eqV2.Equip(
+            eqV2Actor, EqV2Instance("EQ-MK-RING_R-T1-R-COMMON"), 6, eqV2Key);
+
+        Check(
+            "equipment_v2.gates_revisions_and_idempotency_match_v1_rules",
+            eqV2NeckTaken.Failure?.Code == EquipmentErrorCodes.SlotOccupied &&
+            eqV2NeckTaken.Snapshot is not null &&
+            eqV2Potion.Failure?.Code == EquipmentErrorCodes.NotEquippable &&
+            eqV2TooHigh.Failure?.Code == EquipmentErrorCodes.LevelRequired &&
+            eqV2WrongClass.Failure?.Code == EquipmentErrorCodes.ClassRestricted &&
+            eqV2Unknown.Failure?.Code == EquipmentErrorCodes.ItemNotFound &&
+            eqV2AlreadyWorn.Failure?.Code == EquipmentErrorCodes.WrongLocation &&
+            eqV2EmptySlot.Failure?.Code == EquipmentErrorCodes.WrongLocation &&
+            eqV2StaleRevision.Failure?.Code == EquipmentErrorCodes.RevisionConflict &&
+            eqV2StaleRevision.Failure.Retryable &&
+            eqV2StaleRevision.Snapshot?.InventoryRevision == 5 &&
+            eqV2First.Accepted && eqV2First.Snapshot!.InventoryRevision == 6 &&
+            eqV2Replay.Accepted && ReferenceEquals(eqV2Replay.Snapshot, eqV2First.Snapshot) &&
+            inventory.GetSnapshot(eqV2Actor.CharacterId).Items.Count(item =>
+                item.Location == InventoryLocations.Equipped) == 3 &&
+            eqV2Conflict.Failure?.Code == EquipmentErrorCodes.IdempotencyConflict,
+            $"occupied={eqV2NeckTaken.Failure?.Code} potion={eqV2Potion.Failure?.Code} " +
+            $"level={eqV2TooHigh.Failure?.Code} class={eqV2WrongClass.Failure?.Code} " +
+            $"stale={eqV2StaleRevision.Failure?.Code} replay={eqV2Replay.Snapshot?.InventoryRevision}");
+
+        // A slot string neither vocabulary can name must surface, not vanish: the
+        // decision's incompatibleV1Projection rule, exercised through the store seam
+        // because no route can write one.
+        var eqV2OrphanActor = NewPlayer("CHR_SELFCHECK_EQUIP_V2_ORPHAN");
+        inventory.Apply(eqV2OrphanActor, new InventoryMutation
+        {
+            AddItems =
+            [
+                new ItemGrant
+                {
+                    TemplateId = "POT-HP-01",
+                    Stack = 1,
+                    Location = InventoryLocations.Equipped,
+                    Slot = "TOTEM"
+                }
+            ]
+        });
+        var eqV2Orphan = eqV2.Read(eqV2OrphanActor).Snapshot!;
+
+        Check(
+            "equipment_v2.unsupported_reports_every_slot_it_cannot_name",
+            eqV2Orphan.Slots.Count == 12 &&
+            eqV2Orphan.Slots.All(entry =>
+                entry.Item is null && entry.SlotId.Length > 0) &&
+            eqV2Orphan.Unsupported.Count == 1 &&
+            eqV2Orphan.Unsupported[0].Reason == InventoryV2UnsupportedReasons.UnmappedSlot &&
+            eqV2Orphan.Unsupported[0].SourceSlot == "TOTEM" &&
+            eqV2Orphan.Bag.Count == 0,
+            $"unsupported={eqV2Orphan.Unsupported.Count} " +
+            $"reason={eqV2Orphan.Unsupported.FirstOrDefault()?.Reason}");
+
         // ─── turn-in ───────────────────────────────────────────
 
         var turnInActor = NewPlayer("CHR_SELFCHECK_TURNIN");
@@ -5205,6 +10757,7 @@ public static class ServiceSelfCheck
             services.GetRequiredService<IWorldGeometryService>(),
             failOnceLedger,
             services.GetRequiredService<ExperienceService>(),
+            services.GetRequiredService<QuestXpSnapshotStore>(),
             services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
 
         var failActor = NewPlayer("CHR_SELFCHECK_FAILONCE");
@@ -5273,6 +10826,7 @@ public static class ServiceSelfCheck
             services.GetRequiredService<IWorldGeometryService>(),
             flipFailLedger,
             services.GetRequiredService<ExperienceService>(),
+            services.GetRequiredService<QuestXpSnapshotStore>(),
             services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
 
         var flipFailActor = NewPlayer("CHR_SELFCHECK_FLIPFAIL");
@@ -5339,6 +10893,7 @@ public static class ServiceSelfCheck
             services.GetRequiredService<IWorldGeometryService>(),
             failOnceLedgerStore,
             services.GetRequiredService<ExperienceService>(),
+            services.GetRequiredService<QuestXpSnapshotStore>(),
             services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
 
         var ledgerFailActor = NewPlayer("CHR_SELFCHECK_LEDGERFAIL");
@@ -5397,6 +10952,208 @@ public static class ServiceSelfCheck
             ledgerInventoryRetry.Currencies[0].Amount == 20 &&
             ledgerInventoryRetry.Items.Count == 1,
             $"items={ledgerInventoryRetry.Items.Count} currencies={ledgerInventoryRetry.Currencies.Count}");
+
+        // ─── QOD-21 Q4: P00-05's chapter consequence lives inside the transaction ────
+
+        // The design states the consequence as prose, so the two tokens it names are
+        // pinned before anything uses them: a design whose sentence drops the flag or
+        // swaps the portal map has to fail startup rather than grant something the
+        // source no longer names.
+        Check(
+            "alpha.quest_p5_unlock_clause_is_pinned",
+            alphaDesign.QuestRules.P00_05_UnlockText.Contains(
+                "CHAPTER_C1_UNLOCKED", StringComparison.Ordinal) &&
+            alphaDesign.QuestRules.P00_05_UnlockText.Contains(
+                "MAP_THANH_LAC", StringComparison.Ordinal) &&
+            AlphaRejects(alphaDesign with
+            {
+                QuestRules = alphaDesign.QuestRules with
+                {
+                    P00_05_UnlockText = "P00-05 turn-in commits CHAPTER_C1 and portal"
+                }
+            }) &&
+            AlphaRejects(alphaDesign with
+            {
+                QuestRules = alphaDesign.QuestRules with
+                {
+                    P00_05_UnlockText = "P00-05 turn-in commits CHAPTER_C1_UNLOCKED " +
+                        "and MAP_GIANG_CHAU portal access"
+                }
+            }),
+            $"text={alphaDesign.QuestRules.P00_05_UnlockText}");
+
+        // A throwaway two-quest graph, because the consequence keys on the quest id
+        // the design names: P00-05 must grant, its neighbour must not, and both have
+        // to reach READY_TO_TURN_IN through the real quest service.
+        QuestDefinition ChapterFixture(string questId) => new(
+            questId,
+            QuestTypes.Main,
+            "NPC_TA_VAN_KHANH",
+            1,
+            10,
+            [],
+            [
+                new QuestObjectiveDefinition(
+                    "OBJ_CH_" + questId, QuestObjectiveTypes.Boss,
+                    ["MAN-BM-SPAWN_BM_05_QUEST"], 1, "MAP_BEN_MUA")
+            ],
+            QuestStepIds.FromObjectiveId("OBJ_CH_" + questId),
+            "NPC_TA_VAN_KHANH",
+            new QuestRewards([new QuestRewardCurrency("COIN", 20)], [], "LEVEL_BAND_BASE"),
+            []);
+
+        var chapterCatalog = new QuestCatalog(new Dictionary<string, QuestDefinition>
+        {
+            ["P00-05"] = ChapterFixture("P00-05"),
+            ["P00-04"] = ChapterFixture("P00-04")
+        });
+        var chapterQuests = new InMemoryQuestService(
+            chapterCatalog, new InMemoryQuestStateStore(), alphaMergedRecords, interactClock);
+
+        InMemoryQuestTurnInService ChapterTurnInService(
+            RewardLedgerStore ledger, IChapterUnlockSink sink) => new(
+                chapterCatalog,
+                chapterQuests,
+                inventory,
+                npcAnchors,
+                services.GetRequiredService<IWorldGeometryService>(),
+                ledger,
+                services.GetRequiredService<ExperienceService>(),
+                services.GetRequiredService<QuestXpSnapshotStore>(),
+                services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value,
+                sink);
+
+        void WalkToTurnInAnchor(PlayerSession actor, string questId, string eventId)
+        {
+            chapterQuests.Accept(actor, questId);
+            chapterQuests.RecordVerifiedEvent(
+                actor, eventId, QuestProgressEventTypes.Kill,
+                "MAN-BM-SPAWN_BM_05_QUEST", "MAP_BEN_MUA");
+            actor.X = turnInAnchor.X;
+            actor.Y = turnInAnchor.Y;
+        }
+
+        var chapterStore = new ChapterUnlockStore(new AlphaProfileOptions { Enabled = true });
+        var chapterKey = NewKey();
+        var chapterActor = NewPlayer("CHR_SELFCHECK_CHAPTER_P5");
+        WalkToTurnInAnchor(chapterActor, "P00-05", new string('1', 32));
+        var chapterTurnIn = ChapterTurnInService(new RewardLedgerStore(), chapterStore);
+        var chapterCommitted = chapterTurnIn.TurnIn(
+            chapterActor, "P00-05", "NPC_TA_VAN_KHANH", chapterKey);
+        var chapterReplay = chapterTurnIn.TurnIn(
+            chapterActor, "P00-05", "NPC_TA_VAN_KHANH", chapterKey);
+        var neighbourActor = NewPlayer("CHR_SELFCHECK_CHAPTER_P4");
+        WalkToTurnInAnchor(neighbourActor, "P00-04", new string('2', 32));
+        var neighbourCommitted = chapterTurnIn.TurnIn(
+            neighbourActor, "P00-04", "NPC_TA_VAN_KHANH", NewKey());
+        Check(
+            "alpha.chapter_unlock.p5_turn_in_grants_flag_and_portal",
+            chapterCommitted.Accepted && chapterReplay.Accepted && neighbourCommitted.Accepted &&
+            chapterStore.Count == 1 &&
+            chapterStore.HasFlag(chapterActor.CharacterId, AlphaChapterUnlockRules.Flag) &&
+            chapterStore.AllowsPortal(
+                chapterActor.CharacterId, AlphaChapterUnlockRules.PortalMapId) &&
+            !chapterStore.AllowsPortal(chapterActor.CharacterId, "MAP_BEN_MUA") &&
+            !chapterStore.HasFlag(neighbourActor.CharacterId, AlphaChapterUnlockRules.Flag),
+            $"count={chapterStore.Count} p5={chapterCommitted.Failure?.Code} " +
+            $"p4={neighbourCommitted.Failure?.Code}");
+
+        // With the profile off the sink is wired but inert: the turn-in still
+        // commits, and no chapter consequence is recorded for anybody.
+        var chapterOffStore = new ChapterUnlockStore(new AlphaProfileOptions { Enabled = false });
+        var chapterOffActor = NewPlayer("CHR_SELFCHECK_CHAPTER_OFF");
+        WalkToTurnInAnchor(chapterOffActor, "P00-05", new string('3', 32));
+        var chapterOffTurnIn = ChapterTurnInService(new RewardLedgerStore(), chapterOffStore)
+            .TurnIn(chapterOffActor, "P00-05", "NPC_TA_VAN_KHANH", NewKey());
+        Check(
+            "alpha.chapter_unlock.gate_off_records_nothing",
+            chapterOffTurnIn.Accepted &&
+            chapterOffStore.Count == 0 &&
+            !chapterOffStore.HasFlag(chapterOffActor.CharacterId, AlphaChapterUnlockRules.Flag) &&
+            !chapterOffStore.AllowsPortal(
+                chapterOffActor.CharacterId, AlphaChapterUnlockRules.PortalMapId),
+            $"count={chapterOffStore.Count} code={chapterOffTurnIn.Failure?.Code}");
+
+        // A ledger failure rolls the whole transaction back, and the consequence is
+        // part of it: the grant has to disappear with the flip and reappear on the
+        // retry, never survive a turn-in the client was told failed.
+        var chapterRevokeStore = new ChapterUnlockStore(new AlphaProfileOptions { Enabled = true });
+        var chapterRevokeLedger = new FailOnceLedgerStore();
+        var chapterRevokeTurnIn = ChapterTurnInService(chapterRevokeLedger, chapterRevokeStore);
+        var chapterRevokeActor = NewPlayer("CHR_SELFCHECK_CHAPTER_REVOKE");
+        WalkToTurnInAnchor(chapterRevokeActor, "P00-05", new string('4', 32));
+        var chapterRolledBack = chapterRevokeTurnIn.TurnIn(
+            chapterRevokeActor, "P00-05", "NPC_TA_VAN_KHANH", NewKey());
+        var chapterRolledState = chapterQuests.GetState(
+            chapterRevokeActor.CharacterId, "P00-05").State;
+        var countAfterRollback = chapterRevokeStore.Count;
+        var grantedAfterRollback = chapterRevokeStore.HasFlag(
+            chapterRevokeActor.CharacterId, AlphaChapterUnlockRules.Flag);
+        var chapterRetried = chapterRevokeTurnIn.TurnIn(
+            chapterRevokeActor, "P00-05", "NPC_TA_VAN_KHANH", NewKey());
+        Check(
+            "alpha.chapter_unlock.ledger_failure_rolls_the_grant_back",
+            !chapterRolledBack.Accepted &&
+            countAfterRollback == 0 &&
+            !grantedAfterRollback &&
+            string.Equals(
+                chapterRolledState?.State, QuestStates.ReadyToTurnIn, StringComparison.Ordinal) &&
+            chapterRetried.Accepted &&
+            chapterRevokeStore.HasFlag(
+                chapterRevokeActor.CharacterId, AlphaChapterUnlockRules.Flag),
+            $"rejected={chapterRolledBack.Failure?.Code} count={countAfterRollback} " +
+            $"state={chapterRolledState?.State} retry={chapterRetried.Failure?.Code}");
+
+        // DEC-ALPHA-INTERACT-IDS-20261105 narrows the widening I shipped in
+        // 61b96a2: the approval is an exact list of the six published overlay ids,
+        // not the ALPHA_ prefix. The interact route therefore addresses ENT_
+        // entities plus those six and nothing looser — the training hazard (a
+        // position-read rect, not an interaction) and any other ALPHA_ id are
+        // refused as invalid_payload before the registry is consulted, so no state
+        // can be touched through an id the decision never published. The cast
+        // vocabulary stays ENT_-only: /p1/v2/combat checks its target with
+        // IsEntityId, which no longer accepts the prefix at all.
+        Check(
+            "contracts.interact_target_accepts_ent_and_the_six_alpha_ids",
+            P1Validation.IsEntityId("ENT_MAN_BM_SPAWN_BM_01") &&
+            P1Validation.IsInteractTargetId("ENT_MAN_BM_OBJ_BM_PACKAGE_01") &&
+            P1Validation.AlphaInteractEntityIds.All(P1Validation.IsInteractTargetId) &&
+            P1Validation.AlphaInteractEntityIds.Count == 6 &&
+            !P1Validation.IsEntityId("ALPHA_OBJ_BM_RIPPLE_01") &&
+            !P1Validation.IsInteractTargetId("ALPHA_OBJ_BM_RIPPLE_99") &&
+            !P1Validation.IsInteractTargetId("ALPHA_WAVE_BM_TRAINING") &&
+            !P1Validation.IsInteractTargetId("alpha_obj_bm_fragment") &&
+            !P1Validation.IsInteractTargetId("ALPHA-OBJ-BM-FRAGMENT") &&
+            !P1Validation.IsInteractTargetId("FOO_MAN_BM_SPAWN_BM_01") &&
+            !P1Validation.IsInteractTargetId("ENT-MAN-BM-SPAWN") &&
+            !P1Validation.IsInteractTargetId("MAN_BM_SPAWN") &&
+            !P1Validation.IsInteractTargetId(null),
+            "ENT_ plus the six exact alpha ids accepted; the prefix and everything " +
+            "else still refused");
+
+        // The same rule at the route's own front door: an unpublished alpha id is
+        // named in fieldErrors and nothing else about the envelope is reported, so
+        // the answer cannot be mistaken for a state conflict.
+        List<string> InteractTargetErrors(string targetId) =>
+            P1Validation.ValidateInteractEnvelope(new InteractEnvelope
+            {
+                SchemaVersion = 1,
+                RequestId = new string('c', 32),
+                IdempotencyKey = new string('d', 32),
+                SentAtUtc = "2026-11-05T00:00:00Z",
+                CharacterId = "CHR_SELFCHECK_INTERACT_ID",
+                Payload = new InteractIntent { TargetId = targetId }
+            });
+
+        var unpublishedAlphaErrors = InteractTargetErrors("ALPHA_OBJ_BM_RIPPLE_99");
+        Check(
+            "contracts.interact_envelope_refuses_an_unpublished_alpha_id",
+            unpublishedAlphaErrors.Count == 1 &&
+            unpublishedAlphaErrors[0] == "payload.targetId" &&
+            InteractTargetErrors("ALPHA_OBJ_BM_RIPPLE_01").Count == 0 &&
+            InteractTargetErrors("ENT_MAN_BM_OBJ_BM_PACKAGE_01").Count == 0 &&
+            InteractTargetErrors("ALPHA_WAVE_BM_TRAINING").Count == 1,
+            $"unpublished={string.Join(",", unpublishedAlphaErrors)}");
 
         // ─── overflow: balance near long.MaxValue rejects without partial commit ───
 
@@ -5666,6 +11423,9 @@ public static class ServiceSelfCheck
         public QuestOutcome GetState(string characterId, string questId) =>
             _inner.GetState(characterId, questId);
 
+        public QuestOutcome GetState(PlayerSession actor, string questId) =>
+            _inner.GetState(actor, questId);
+
         public IReadOnlyList<QuestState> GetStates(string characterId) =>
             _inner.GetStates(characterId);
 
@@ -5697,6 +11457,226 @@ public static class ServiceSelfCheck
 
         public QuestOutcome Fail(PlayerSession actor, string questId) =>
             _inner.Fail(actor, questId);
+    }
+
+    private sealed class RecordingQuestService : IQuestService
+    {
+        public List<RecordedEvent> Events { get; } = [];
+
+        public QuestOutcome GetState(string characterId, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public QuestOutcome GetState(PlayerSession actor, string questId) =>
+            GetState(actor.CharacterId, questId);
+
+        public IReadOnlyList<QuestState> GetStates(string characterId) => [];
+
+        public QuestOutcome Accept(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public IReadOnlyList<QuestState> RecordVerifiedEvent(
+            PlayerSession actor,
+            string eventId,
+            string eventType,
+            string recordId,
+            string mapId)
+        {
+            Events.Add(new RecordedEvent(recordId, eventType, mapId));
+            return [];
+        }
+
+        public QuestOutcome TurnIn(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public QuestOutcome RevertTurnIn(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public QuestOutcome Fail(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public sealed record RecordedEvent(string RecordId, string EventType, string MapId);
+    }
+
+    private sealed class EscortQuestStub : IQuestService
+    {
+        private readonly Dictionary<string, string> _states = new(StringComparer.Ordinal);
+
+        public void Set(string characterId, string state) => _states[characterId] = state;
+
+        public QuestOutcome GetState(string characterId, string questId) =>
+            _states.TryGetValue(characterId, out var state)
+                ? QuestOutcome.Success(new QuestState
+                {
+                    QuestId = questId,
+                    State = state,
+                    StepId = "STEP_ACTIVE",
+                    ObjectiveCounters = new Dictionary<string, int>(),
+                    Revision = 1
+                })
+                : QuestOutcome.Rejected(QuestErrorCodes.QuestNotFound, retryable: false, "stub");
+
+        public QuestOutcome GetState(PlayerSession actor, string questId) =>
+            GetState(actor.CharacterId, questId);
+
+        public IReadOnlyList<QuestState> GetStates(string characterId) => [];
+
+        public QuestOutcome Accept(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public IReadOnlyList<QuestState> RecordVerifiedEvent(
+            PlayerSession actor,
+            string eventId,
+            string eventType,
+            string recordId,
+            string mapId) => [];
+
+        public QuestOutcome TurnIn(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public QuestOutcome RevertTurnIn(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public QuestOutcome Fail(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+    }
+
+    // The boss encounter only reads quest state, and its trial-visibility rule
+    // also reads the fragment objective's counter, so the stub carries both. The
+    // cast integration asserts kill credit through it, so it also records events.
+    // Records what the tick engine reports as a resolved kill, so the
+    // notification itself can be pinned (one per death, the right life, the same
+    // event id the combat stream carries).
+    private sealed class RecordingKillSink : ICombatKillSink
+    {
+        public List<CombatMobKill> Kills { get; } = [];
+
+        public void OnMobKilled(CombatMobKill kill) => Kills.Add(kill);
+    }
+
+    private sealed class ObservedLoggerFactory(Action beforeCreate) : ILoggerFactory
+    {
+        public ILogger CreateLogger(string categoryName)
+        {
+            beforeCreate();
+            return Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+        }
+
+        public void AddProvider(ILoggerProvider provider) { }
+        public void Dispose() { }
+    }
+
+    private sealed class ObservedSkillCatalog(ICombatSkillCatalog inner) : ICombatSkillCatalog
+    {
+        public Action? OnRead { get; set; }
+        public int Count => inner.Count;
+
+        public bool TryGet(string skillId, out CombatSkillDefinition skill)
+        {
+            OnRead?.Invoke();
+            return inner.TryGet(skillId, out skill);
+        }
+    }
+
+    private sealed class ObservedTeleportService(ITeleportService inner, Action observe) : ITeleportService
+    {
+        public TeleportOutcome Teleport(PlayerSession actor, TeleportCommand? command)
+        {
+            observe();
+            var result = inner.Teleport(actor, command);
+            observe();
+            return result;
+        }
+    }
+
+    private sealed class ActorLockProbeBossBridge(PlayerSession actor) : ICombatBossBridge
+    {
+        public bool ActorLockHeld { get; private set; }
+        public bool ActorCommitted { get; private set; }
+        public int BossDefense => 0;
+
+        public bool IsLiveBossTarget(string characterId, WorldEntityInstance entity) => false;
+
+        public bool TryGetAudience(
+            string characterId, WorldEntityInstance entity, out BossEncounterAudience audience)
+        {
+            ActorLockHeld = System.Threading.Monitor.IsEntered(actor.SyncRoot);
+            if (!ActorLockHeld)
+            {
+                System.Threading.Tasks.Task.Run(() =>
+                {
+                    lock (actor.SyncRoot)
+                    {
+                        actor.MapId = "MAP_NOT_IN_BOUNDS";
+                        actor.FloorId = "OTHER_FLOOR";
+                        actor.X = 999;
+                        actor.Hp--;
+                        actor.Revision++;
+                        ActorCommitted = true;
+                    }
+                }).GetAwaiter().GetResult();
+            }
+            audience = default;
+            return false;
+        }
+
+        public (int HpBefore, int HpAfter, bool Died) ApplyDamage(
+            string characterId, int damage, long tick) => (0, 0, false);
+    }
+
+    private sealed class BossEncounterQuestStub : IQuestService
+    {
+        private readonly Dictionary<string, string> _states = new(StringComparer.Ordinal);
+        private readonly Dictionary<string, int> _fragments = new(StringComparer.Ordinal);
+        public List<(string EventType, string RecordId)> VerifiedEvents { get; } = [];
+
+        public void Set(string characterId, string state, int fragment = 0)
+        {
+            _states[characterId] = state;
+            _fragments[characterId] = fragment;
+        }
+
+        public QuestOutcome GetState(string characterId, string questId) =>
+            _states.TryGetValue(characterId, out var state)
+                ? QuestOutcome.Success(new QuestState
+                {
+                    QuestId = questId,
+                    State = state,
+                    StepId = "STEP_ACTIVE",
+                    ObjectiveCounters = new Dictionary<string, int>
+                    {
+                        ["OBJ_P00_05_FRAGMENT"] = _fragments.TryGetValue(characterId, out var f) ? f : 0
+                    },
+                    Revision = 1
+                })
+                : QuestOutcome.Rejected(QuestErrorCodes.QuestNotFound, retryable: false, "stub");
+
+        public QuestOutcome GetState(PlayerSession actor, string questId) =>
+            GetState(actor.CharacterId, questId);
+
+        public IReadOnlyList<QuestState> GetStates(string characterId) => [];
+
+        public QuestOutcome Accept(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public IReadOnlyList<QuestState> RecordVerifiedEvent(
+            PlayerSession actor,
+            string eventId,
+            string eventType,
+            string recordId,
+            string mapId)
+        {
+            VerifiedEvents.Add((eventType, recordId));
+            return [];
+        }
+
+        public QuestOutcome TurnIn(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public QuestOutcome RevertTurnIn(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public QuestOutcome Fail(PlayerSession actor, string questId) =>
+            QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
     }
 
     private sealed class FailOnceLedgerStore : RewardLedgerStore
@@ -5764,7 +11744,7 @@ public static class ServiceSelfCheck
 
         public FixedQuestXpRule(long amount) => _amount = amount;
 
-        public long? Resolve(string ruleId) => _amount;
+        public long? Resolve(QuestXpRequest request) => _amount;
     }
 
     private static void RunBarrierParallel(int count, Action<int> body)
