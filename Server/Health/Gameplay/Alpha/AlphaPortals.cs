@@ -190,8 +190,7 @@ public sealed class PortalService
                     PortalErrorCodes.NotFound, retryable: false, ["payload.portalId"]);
             }
 
-            long revision;
-            lock (actor.SyncRoot)
+            return _engine.SerializeActor(actor, () =>
             {
                 if (!string.Equals(actor.MapId, portal.SourceMapId, StringComparison.Ordinal) ||
                     !string.Equals(actor.FloorId, "OVERWORLD", StringComparison.Ordinal))
@@ -233,29 +232,27 @@ public sealed class PortalService
                         transition.Field is null ? Array.Empty<string>() : [transition.Field]);
                 }
 
-                revision = transition.Snapshot!.Revision;
-            }
-
-            // Engine cancellation must not hold the actor lock: ticks acquire engine then actor.
-            var guardWasOpen = _windows.FindAny(actor.CharacterId) is { IsOpen: true };
-            _windows.Close(actor.CharacterId, GuardWindowEndReasons.MapOrFloorChange);
-            var cancelled = _engine.CancelPendingFor(actor.CharacterId);
-            var endCount = ObservedCancellations(cancelled, CombatEventTypesV2.End);
-            var cancelCount = ObservedCancellations(cancelled, CombatEventTypesV2.Cancel);
-            var result = new PortalResult(
-                portal.PortalId,
-                portal.DestinationMapId,
-                portal.DestinationXWu,
-                portal.DestinationYWu,
-                Applied: true,
-                Replayed: false,
-                revision,
-                EventId(portal, actor.CharacterId),
-                endCount,
-                Math.Max(0, cancelCount - endCount),
-                guardWasOpen);
-            _entries[key] = (requestHash, result);
-            return PortalOutcome.Success(result);
+                var revision = transition.Snapshot!.Revision;
+                var guardWasOpen = _windows.FindAny(actor.CharacterId) is { IsOpen: true };
+                _windows.Close(actor.CharacterId, GuardWindowEndReasons.MapOrFloorChange);
+                var cancelled = _engine.CancelPendingFor(actor.CharacterId);
+                var endCount = ObservedCancellations(cancelled, CombatEventTypesV2.End);
+                var cancelCount = ObservedCancellations(cancelled, CombatEventTypesV2.Cancel);
+                var result = new PortalResult(
+                    portal.PortalId,
+                    portal.DestinationMapId,
+                    portal.DestinationXWu,
+                    portal.DestinationYWu,
+                    Applied: true,
+                    Replayed: false,
+                    revision,
+                    EventId(portal, actor.CharacterId),
+                    endCount,
+                    Math.Max(0, cancelCount - endCount),
+                    guardWasOpen);
+                _entries[key] = (requestHash, result);
+                return PortalOutcome.Success(result);
+            });
         }
     }
 

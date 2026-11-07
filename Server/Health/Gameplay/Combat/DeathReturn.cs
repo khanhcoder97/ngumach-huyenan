@@ -225,32 +225,29 @@ public sealed class DeathReturnService
                     : Rejected(DeathReturnErrorCodes.KeyConflict, actor);
             }
 
-            if (!_bounds.TryResolve(actor.MapId, out var bounds) ||
-                (_alpha is { } rules &&
-                 !string.Equals(actor.MapId, rules.MapId, StringComparison.Ordinal)))
+            return _engine.SerializeActor(actor, () =>
             {
-                // Two reasons, one code: the map has no bounds the server may
-                // clamp into, or (under the alpha profile) it is not the map the
-                // approved safe anchor belongs to. Returning an actor across maps
-                // would be the generic client teleport every source forbids.
-                return Rejected(DeathReturnErrorCodes.UnknownMap, actor);
-            }
+                if (!_bounds.TryResolve(actor.MapId, out var bounds) ||
+                    (_alpha is { } rules &&
+                     !string.Equals(actor.MapId, rules.MapId, StringComparison.Ordinal)))
+                {
+                    return Rejected(DeathReturnErrorCodes.UnknownMap, actor);
+                }
 
-            var result = Apply(actor, bounds);
-            if (!result.Applied)
-            {
-                // A refusal changed nothing, so the same key stays valid for the
-                // retry once the actor is actually downed.
+                var result = Apply(actor, bounds);
+                if (!result.Applied)
+                {
+                    return result;
+                }
+
+                _ledger[idempotencyKey] = (actor.CharacterId, result);
+                if (_ledger.Count > LedgerCapacity)
+                {
+                    _receiptsHeldPastBound++;
+                }
+
                 return result;
-            }
-
-            _ledger[idempotencyKey] = (actor.CharacterId, result);
-            if (_ledger.Count > LedgerCapacity)
-            {
-                _receiptsHeldPastBound++;
-            }
-
-            return result;
+            });
         }
     }
 
@@ -267,10 +264,6 @@ public sealed class DeathReturnService
         PlayerDeathRecord? death;
         var rules = _alpha;
 
-        // Only the actor's own state is written under the actor lock. The
-        // cleanup below reaches into the tick engine, and the tick loop takes the
-        // engine lock before the actor lock, so holding both here would invert
-        // that order.
         lock (actor.SyncRoot)
         {
             if (actor.Hp > 0)

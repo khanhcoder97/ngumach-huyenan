@@ -722,7 +722,6 @@ public static class P1Endpoints
         }
 
         var payload = envelope.Payload!;
-        var now = clock.UtcNow;
         WorldSnapshot snapshot;
         double finalX;
         double finalY;
@@ -745,6 +744,7 @@ public static class P1Endpoints
                     P1ErrorCodes.StaleSequence, ["payload.inputSequence"], session.Revision);
             }
 
+            var now = clock.UtcNow;
             var elapsedSeconds = Math.Clamp(
                 (now - session.LastMoveAtUtc).TotalSeconds, 0, options.MaxStepSeconds);
             var distance = options.MoveSpeedWuPerSecond * elapsedSeconds;
@@ -1025,7 +1025,8 @@ public static class P1Endpoints
         }
 
         var payload = envelope.Payload!;
-        var outcome = combat.Resolve(
+        var outcome = engine.AcceptAndSchedule(
+            combat,
             session,
             session.SessionId,
             new CombatV2Intent(
@@ -1041,21 +1042,6 @@ public static class P1Endpoints
         var logger = loggerFactory.CreateLogger("P1.CombatV2");
         if (outcome.Accepted && outcome.Result is { } result)
         {
-            // Cached receipts remain replays even after the scheduler removed
-            // the completed cast. Never schedule a second effect for that receipt.
-            if (!outcome.Replayed)
-            {
-                engine.Schedule(
-                    session,
-                    session.SessionId,
-                    result.CastId,
-                    result.ActionKind,
-                    result.SkillId,
-                    payload.AimX!.Value,
-                    payload.AimY!.Value,
-                    clock.Tick);
-            }
-
             logger.LogDebug(
                 "Accepted {ActionKind} cast {CastId} sequence {Sequence} for {SessionId}",
                 result.ActionKind, result.CastId, result.NextInputSequence, session.SessionId);

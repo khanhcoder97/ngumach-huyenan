@@ -144,3 +144,146 @@ python "$LOCALAPPDATA/Temp/probe_portal_line.py"   # -> x=352.5, first refusal=N
 Probe không được commit: cả hai là script đo một lần, không phải regression. Phần đã trở
 thành regression nằm trong `alpha-p00` (đoạn AOI của hộ tống) và self-check
 `alpha.escort_audience_*`.
+
+## 7. Bổ sung — transition và combat phải cùng một thứ tự commit
+
+Trạng thái mục 4.3 ở trên đã cũ: schema, validator, handler và hai gate đã tồn tại ở
+parent `7696da28ecf92ad46e5d413183106d8cd017d07d`; không còn chờ tạo route. Happy path
+HTTP cả tutorial vẫn thiếu narrative node của `NPC_CLASS_TRIAL`, không được thay bằng
+fixture cấp quyền chương. `portal_locked` hiện trả `retryable: true` trong handler;
+mô tả `false` ở mục 2 không phản ánh implementation hiện tại.
+
+Delta server tiếp theo không đổi wire/anchor/gate. `CombatTickEngine.SerializeActor`
+đặt thứ tự engine → actor cho acceptance + schedule, portal fresh validation + teleport
++ cleanup + receipt, và death-return fresh bounds check + restore + cleanup + receipt.
+`Schedule` mở guard trước khi nhả hai khóa. HTTP combat gọi `AcceptAndSchedule`, không
+còn khoảng trống giữa `Resolve` và `Schedule`. Historical receipt vẫn được trả như lịch
+sử; replay cast đã bị portal hủy không được xếp lịch lại ở map đích.
+
+Đây là serialisation trong một process, **không phải durability transaction**. Tick
+không bị bọc thêm actor lock quanh boss callback: engine → boss và boss → actor đã tồn
+tại, nên thêm actor → boss sẽ đảo thứ tự khóa. Packet không tuyên bố đã giải quyết toàn
+bộ aggro/boss targeting hoặc biến snapshot nhiều aggregate thành atomic snapshot.
+
+Self-check thêm sáu assertion cố định, không nằm trong vòng lặp có số lượng ngẫu nhiên:
+
+- Quan sát cả lookup acceptance và lookup schedule: thread gọi đang giữ engine/actor,
+  thread cạnh tranh `Monitor.TryEnter` engine thất bại.
+- Quan sát trước/sau **teleport thật**, không thay kết quả teleport: cùng exclusion;
+  sau transition không còn cast, guard đóng, reserved counter đã cancel.
+- Replay source-map cast receipt không tạo cast/event/guard mới ở destination.
+- Cast mới sau transition có audience map đích và được resolve, không bị cleanup cũ hủy.
+- Giữ actor ở thread kiểm thử, cho schedule tiến tới trạng thái chờ actor: engine vẫn
+  không lấy được; guard không thể mở ở ngoài vùng schedule đã khóa.
+- Tương tự cho death-return: engine đã bị giữ trước khi chờ actor; sau khi nhả actor,
+  return kết thúc, cleanup/receipt có cùng revision. Deadline chỉ là watchdog liveness,
+  không dùng ngủ một khoảng rồi đoán một thread đã chạy tới đâu.
+
+Lượt đầu: build Release 0 warning/error, self-check **614 passed / 0 failed / 614 total**.
+Ba mutation độc lập đã chạy trên source, build lại và kiểm toàn bộ self-check:
+
+| Mutation | Kết quả | Assertion thực sự bắt lỗi |
+| --- | --- | --- |
+| Bỏ engine lock trong `SerializeActor` | 611 / 3 / 614 | acceptance, teleport exclusion, death-return engine-before-actor |
+| Trả `Schedule` về guard-open sau engine lock như trước | 613 / 1 / 614 | `alpha.portal_guard_open_cannot_outlive_engine_schedule_lock` |
+| Bỏ điều kiện `Replayed: false` trước schedule | 613 / 1 / 614 | `alpha.portal_old_cast_receipt_cannot_schedule_on_destination` |
+
+Mỗi mutation đã được khôi phục trước mutation sau. Không giữ mutation nào trong source.
+Lượt verify sau khôi phục, raw HTTP và CI của **commit chứa delta** phải được công bố
+riêng trên #87/#41/PR106; CI 30/30 của parent không chứng minh delta này.
+
+Lệnh chạy từ repository root:
+
+```bash
+dotnet build Server/Health/Health.csproj -c Release --no-restore --nologo
+dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
+bash Server/Health/Smoke/run_e2e_p1.sh alpha-p00
+bash Server/Health/Smoke/run_e2e_p1.sh death-return
+bash Server/Health/Smoke/run_e2e_p1.sh dev
+bash Server/Health/Smoke/run_e2e_p1.sh mob-combat
+bash Server/Health/Smoke/run_e2e_p1.sh two-client
+bash Server/Health/Smoke/run_e2e_p1.sh default
+bash Server/Health/Smoke/run_e2e_p1.sh audience-gateoff
+bash Server/Health/Smoke/run_e2e_p1.sh alpha-revive
+```
+
+## 8. Field `result.eventId` — mâu thuẫn semantic cần quyết định, không sửa wire lén
+
+`PortalResponse.schema.json:77–80` đóng băng ý nghĩa deterministic theo
+`character + portalId + destination map`. `AlphaPortals.cs`, hàm `EventId`, đang hash
+đúng ba đầu vào đó. Vì không có operation key/revision/life trong hash, hai lần đi mới
+cùng chiều của cùng character sẽ có cùng id; đây là kết luận từ công thức source,
+**chưa phải số đo một hành trình HTTP lặp lại**.
+
+Trong khi đó `Production_Technical_Contracts_vi.md:59` yêu cầu consumer lưu `eventId`
+để dedupe server events. Nếu consumer coi mỗi receipt portal là một transition event,
+chuyến mới có thể bị loại như replay. Khóa engine không sửa được mâu thuẫn này.
+
+Owner cần chốt một trong hai ý nghĩa trước khi đổi field/consumer:
+
+1. Giữ schema hiện tại: id là route identity per character, không là unique operation
+   event; chỉ định khóa dedupe transition khác và contract cho consumer.
+2. Duyệt semantic/version migration sang id per committed operation, vẫn ổn định khi
+   replay; chọn đầu vào có ownership/idempotency rõ, quy tắc lịch sử và migration receipt.
+
+Acceptance cần có fresh out → fresh back → fresh out (operation khác), replay từng key,
+changed-body conflict, hai character, và dedupe consumer qua reconnect. Hiện **blocked**
+ở `result.eventId` operation identity/migration; không tự thêm trường hay đổi hash trong
+schema freeze. MAP_VIEWED, target-map TALK/C1 arrival và class-confirm content vẫn mở.
+
+## 9. Bổ sung — movement chờ actor không được ghi lùi timing reset
+
+`MoveAsync` trước delta lấy `clock.UtcNow` trước actor lock rồi ghi `LastMoveAtUtc`
+trong lock. Nếu teleport/death-return reset timing trong lúc request chưa lấy được
+actor, request có thể ghi đè bằng timestamp cũ. Delta chuyển phép đọc clock vào actor
+lock, ngay trước phép tính elapsed; không đổi sequence, epoch, wire, geometry hay gate.
+
+Assertion cố định thứ bảy gọi **handler MoveAsync thật** bằng context/JSON hợp lệ.
+Logger factory cung cấp điểm xen kẽ trước lock; thread cạnh tranh gọi teleport thật,
+không giả kết quả hay timestamp. Test đợi clock tick tiến theo trạng thái, dùng deadline
+chỉ làm watchdog, sau đó so `LastMoveAtUtc >= transitionResetAtUtc`, response 200,
+map/position đích và revision tăng đúng hai lần. Đây là endpoint-level in-process,
+không phải một HTTP socket probe.
+
+Trên runtime cũ, build thành công và toàn bộ suite cho **614 passed / 1 failed / 615 total**; đúng `movement.queued_handler_cannot_backdate_transition_timing_reset` thất
+bại với `advanced=True teleported=True resetDeltaTicks=-406606` (.NET time ticks,
+khoảng 40,6606 ms bị ghi lùi). Sau khi chuyển clock sampling vào lock, test qua.
+
+Review còn sửa giả định tick-zero trong assertion destination cast ở mục 7:
+`ServerClock.Tick` chạy theo stopwatch từ lúc tạo clock, không đợi test gọi Tick.
+Test hiện resolve bằng `serializedClock.Tick + 4` lấy sau acceptance, thay vì tick 4
+tuyệt đối; không dùng setup nhanh làm điều kiện pass.
+
+Kết quả cuối cùng trên toàn bộ source đã khôi phục, không còn mutation:
+
+| Lượt kiểm | Số đo thực tế |
+| --- | --- |
+| Release build | 0 warning, 0 error |
+| Self-check, ba process mới liên tiếp | 615 / 0 / 615 ở cả ba lượt |
+| CI-shaped smoke, cwd `Server/Health`, năm gate của workflow | 358 checks |
+| HTTP `alpha-p00` | 132 checks |
+| HTTP `death-return` | 17 checks |
+| HTTP `dev` | 110 checks |
+| HTTP `mob-combat` | 33 checks |
+| HTTP `two-client` | 99 checks |
+| HTTP `default` | 22 checks |
+| HTTP `audience-gateoff` | 14 checks |
+| HTTP `alpha-revive` | 7 checks |
+| Frozen contracts | 35 schemas / 35 examples, pass |
+| Combat/social source self-test | 364 independent drift cases rejected |
+
+HTTP dùng runner ở mục 7 với `E2E_PORT=5107`. Smoke dùng server riêng tại 5108,
+`P1__QuestAccept__Enabled`, `P1__Interact__Enabled`, `P1__QuestTurnIn__Enabled`,
+`P1__CombatV2__Enabled`, `P1__CombatDamage__Enabled` đều `true` chỉ trong process test;
+chạy `python Server/Health/Smoke/smoke_p1.py http://127.0.0.1:5108`. Không đổi default.
+Logs cục bộ: `%TEMP%/wo31-final615-build.out`, `wo31-final615-selfcheck-{1,2,3}.out`,
+`wo31-final615-e2e-{profile}.out`, `wo31-final615-smoke.out`; negative movement ở
+`wo31-movement-before.out`. Exact commit/CI và raw HTTP được công bố trên #87/#41/PR106.
+
+Raw HTTP cuối vẫn cho C1 accept `422 prerequisite_not_met`, `fieldErrors:["level"]`,
+state `LOCKED`; TALK original/replay/conflict `200/200/409`, receipt revision 3.
+P00-05 TALK có `credited:false`, `appliedFlag:null`, `eventId:null`; portal trả
+`422 out_of_range` từ 281,1 WU. Kết thúc runner vẫn là
+`talk=ROUTE_LIVE_NO_NODE_FOR_TRIAL_NPC c1_01=LOCKED`, không phải public chapter closure.
+Ba negative serialization ở mục 7 được đo trước assertion movement thứ bảy; không đổi
+các tổng lịch sử đó thành 615. CI parent 7696da2 không được dùng thay CI delta runtime.

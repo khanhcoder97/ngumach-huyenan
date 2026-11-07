@@ -7669,6 +7669,247 @@ public static class ServiceSelfCheck
             portalIndependentActor.MapId == "MAP_THANH_LAC" && portalIndependentActor.X == 8,
             $"accepted={portalIndependent.Accepted} replayed={portalIndependent.Result?.Replayed}");
 
+        var serializedClock = new ServerClock();
+        var serializedWindows = new GuardWindowStore();
+        var serializedEvents = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var serializedActor = NewPlayer("CHR_SELFCHECK_PORTAL_SERIALIZED");
+        serializedActor.MapId = "MAP_BEN_MUA";
+        serializedActor.X = 348;
+        serializedActor.Y = 0;
+        _ = portalStore.OnQuestCompleted(serializedActor.CharacterId, "P00-05");
+        var serializedSkills = new ObservedSkillCatalog(combatSkills);
+        var serializedEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, serializedSkills, serializedEvents,
+            new MobCombatStateStore(), tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            serializedWindows, geometry, NewDashes(geometry), serializedClock);
+        var engineMonitor = typeof(CombatTickEngine).GetField("_sync",
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
+            .GetValue(serializedEngine)!;
+        var acceptanceLocks = new List<(bool EngineHeld, bool ActorHeld, bool Excluded)>();
+        bool CompetingThreadExcluded() => System.Threading.Tasks.Task.Factory.StartNew(() =>
+        {
+            var entered = Monitor.TryEnter(engineMonitor);
+            if (entered)
+            {
+                Monitor.Exit(engineMonitor);
+            }
+            return !entered;
+        }, CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.LongRunning,
+            System.Threading.Tasks.TaskScheduler.Default).GetAwaiter().GetResult();
+        serializedSkills.OnRead = () => acceptanceLocks.Add((
+            Monitor.IsEntered(engineMonitor), Monitor.IsEntered(serializedActor.SyncRoot),
+            CompetingThreadExcluded()));
+        var serializedCombat = new InMemoryCombatV2Service(
+            serializedSkills, serializedEvents, serializedClock);
+        var serializedIntent = new CombatV2Intent(
+            CombatV2Actions.Skill, "SK-MK-01", null, 1, 1, 0, null);
+        var serializedKey = new string('e', 32);
+        var sourceCast = serializedEngine.AcceptAndSchedule(
+            serializedCombat, serializedActor, serializedActor.SessionId,
+            serializedIntent, serializedKey);
+        Check(
+            "alpha.portal_acceptance_and_schedule_exclude_transitions_and_ticks",
+            sourceCast.Accepted && acceptanceLocks.Count == 2 &&
+            acceptanceLocks.All(observed => observed is (true, true, true)) &&
+            serializedEngine.ScheduledCastCount == 1 &&
+            serializedWindows.Find(serializedActor.CharacterId) is { IsOpen: true },
+            $"accepted={sourceCast.Accepted} observations={string.Join(';', acceptanceLocks)}");
+        serializedSkills.OnRead = null;
+        var sourceWindow = serializedWindows.Find(serializedActor.CharacterId)!;
+        sourceWindow.CounterSourceEntityId = "ENT_SELFCHECK_GUARD_MOB2";
+        sourceWindow.CounterSourceLifeId = 1;
+        sourceWindow.CounterTick = 2;
+        var transitionLocks = new List<(bool EngineHeld, bool ActorHeld, bool Excluded)>();
+        var observedTeleport = new ObservedTeleportService(teleport, () =>
+            transitionLocks.Add((Monitor.IsEntered(engineMonitor),
+                Monitor.IsEntered(serializedActor.SyncRoot), CompetingThreadExcluded())));
+        var serializedPortals = new PortalService(
+            observedTeleport, portalStore, serializedWindows, serializedEngine,
+            serializedClock, new PortalOptions { Enabled = true });
+        var serializedMove = serializedPortals.Move(
+            serializedActor, "TP_BM_THANH_LAC", new string('f', 32));
+        Check(
+            "alpha.portal_transition_excludes_ticks_and_fresh_acceptance_through_teleport",
+            serializedMove.Accepted && transitionLocks.Count == 2 &&
+            transitionLocks.All(observed => observed is (true, true, true)) &&
+            serializedMove.Result is
+            { InflightCastsCancelled: 1, ReservedCountersCancelled: 1, GuardWindowClosed: true } &&
+            serializedEngine.ScheduledCastCount == 0 &&
+            sourceWindow.CounterResolved && !sourceWindow.IsOpen &&
+            serializedEngine.Tick(2).Count == 0,
+            $"accepted={serializedMove.Accepted} observations={string.Join(';', transitionLocks)}");
+        var historyEventCount = serializedEvents.Read(serializedActor.SessionId, 0, 256).Events.Count;
+        var sourceReplay = serializedEngine.AcceptAndSchedule(
+            serializedCombat, serializedActor, serializedActor.SessionId,
+            serializedIntent, serializedKey);
+        Check(
+            "alpha.portal_old_cast_receipt_cannot_schedule_on_destination",
+            sourceReplay is { Accepted: true, Replayed: true } &&
+            sourceReplay.Result == sourceCast.Result &&
+            serializedEngine.ScheduledCastCount == 0 &&
+            serializedWindows.Find(serializedActor.CharacterId) is null &&
+            serializedEvents.Read(serializedActor.SessionId, 0, 256).Events.Count == historyEventCount,
+            $"replayed={sourceReplay.Replayed} casts={serializedEngine.ScheduledCastCount}");
+        var destinationCast = serializedEngine.AcceptAndSchedule(
+            serializedCombat, serializedActor, serializedActor.SessionId,
+            new CombatV2Intent(CombatV2Actions.BasicAttack, null, null, 2, 1, 0, null),
+            new string('1', 32));
+        var destinationEvents = serializedEngine.Tick(serializedClock.Tick + 4);
+        Check(
+            "alpha.portal_fresh_destination_cast_survives_previous_transition_cleanup",
+            destinationCast is { Accepted: true, Replayed: false } &&
+            destinationCast.Result!.Events.Single().MapInstanceId == "MAP_THANH_LAC#1" &&
+            destinationEvents.Any(ev => ev.CastId == destinationCast.Result.CastId &&
+                ev.Type == CombatEventTypesV2.End) &&
+            destinationEvents.All(ev => ev.Type != CombatEventTypesV2.Cancel),
+            $"accepted={destinationCast.Accepted} events={string.Join(',', destinationEvents.Select(ev => ev.Type))}");
+
+        using (var scheduleRead = new ManualResetEventSlim())
+        {
+            serializedSkills.OnRead = scheduleRead.Set;
+            Exception? scheduleFailure = null;
+            var scheduleThread = new Thread(() =>
+            {
+                try
+                {
+                    serializedEngine.Schedule(serializedActor, serializedActor.SessionId,
+                        new string('2', 32), CombatV2Actions.Skill, "SK-MK-01", 1, 0, 10);
+                }
+                catch (Exception error)
+                {
+                    scheduleFailure = error;
+                }
+            })
+            { IsBackground = true };
+            bool reachedActorWait;
+            bool engineExcluded;
+            lock (serializedActor.SyncRoot)
+            {
+                scheduleThread.Start();
+                reachedActorWait = scheduleRead.Wait(TimeSpan.FromSeconds(10)) &&
+                    SpinWait.SpinUntil(() =>
+                        (scheduleThread.ThreadState & ThreadState.WaitSleepJoin) != 0,
+                        TimeSpan.FromSeconds(10));
+                var entered = Monitor.TryEnter(engineMonitor);
+                engineExcluded = !entered;
+                if (entered)
+                {
+                    Monitor.Exit(engineMonitor);
+                }
+            }
+            var scheduleJoined = scheduleThread.Join(TimeSpan.FromSeconds(10));
+            Check(
+                "alpha.portal_guard_open_cannot_outlive_engine_schedule_lock",
+                reachedActorWait && engineExcluded && scheduleJoined && scheduleFailure is null &&
+                serializedWindows.Find(serializedActor.CharacterId) is { IsOpen: true },
+                $"actorWait={reachedActorWait} engineExcluded={engineExcluded} joined={scheduleJoined} error={scheduleFailure}");
+            serializedSkills.OnRead = null;
+        }
+
+        returnSessions.Add(serializedActor);
+        var serializedReturn = new DeathReturnService(
+            returnSessions, maps, options,
+            new DeathReturnOptions { Enabled = true, RestoreHpFixture = 50 },
+            serializedWindows, serializedEngine, new PlayerLifeLedger(), serializedClock, null);
+        DeathReturnResult? serializedReturnResult = null;
+        Exception? serializedReturnFailure = null;
+        var returnThread = new Thread(() =>
+        {
+            try
+            {
+                serializedReturnResult = serializedReturn.ReturnToAnchor(
+                    serializedActor.SessionId, new string('3', 32));
+            }
+            catch (Exception error)
+            {
+                serializedReturnFailure = error;
+            }
+        }) { IsBackground = true };
+        bool returnReachedActorWait;
+        bool returnEngineExcluded;
+        lock (serializedActor.SyncRoot)
+        {
+            serializedActor.Hp = 0;
+            returnThread.Start();
+            returnReachedActorWait = SpinWait.SpinUntil(() =>
+                (returnThread.ThreadState & ThreadState.WaitSleepJoin) != 0,
+                TimeSpan.FromSeconds(10));
+            var entered = Monitor.TryEnter(engineMonitor);
+            returnEngineExcluded = !entered;
+            if (entered)
+            {
+                Monitor.Exit(engineMonitor);
+            }
+        }
+        var returnJoined = returnThread.Join(TimeSpan.FromSeconds(10));
+        Check(
+            "death_return.transition_holds_engine_before_waiting_for_actor",
+            returnReachedActorWait && returnEngineExcluded && returnJoined &&
+            serializedReturnFailure is null &&
+            serializedReturnResult is { Applied: true, Hp: 50, InflightCastsCancelled: 1 } &&
+            serializedEngine.ScheduledCastCount == 0 &&
+            serializedWindows.Find(serializedActor.CharacterId) is null &&
+            serializedReturnResult.Revision == serializedActor.Revision &&
+            serializedReturn.LedgerCount == 1,
+            $"actorWait={returnReachedActorWait} engineExcluded={returnEngineExcluded} " +
+            $"joined={returnJoined} error={serializedReturnFailure}");
+
+        var movementClock = new ServerClock();
+        var movementActor = NewPlayer("CHR_SELFCHECK_MOVE_TRANSITION");
+        returnSessions.Add(movementActor);
+        var movementRevision = movementActor.Revision;
+        var movementContext = new DefaultHttpContext();
+        movementContext.Request.ContentType = "application/json";
+        movementContext.Request.Headers["X-Session-ID"] = movementActor.SessionId;
+        var movementBody = JsonSerializer.SerializeToUtf8Bytes(new MoveEnvelope
+        {
+            SchemaVersion = 1,
+            RequestId = new string('4', 32),
+            IdempotencyKey = new string('5', 32),
+            SentAtUtc = P1Time.ToUtcString(movementClock.UtcNow),
+            CharacterId = movementActor.CharacterId,
+            Payload = new MoveIntent { InputSequence = 1, MoveX = 0, MoveY = 0 }
+        }, P1Json.Options);
+        using var movementStream = new MemoryStream(movementBody);
+        movementContext.Request.Body = movementStream;
+        movementContext.Request.ContentLength = movementBody.Length;
+        DateTimeOffset movementReset = default;
+        var movementClockAdvanced = false;
+        var movementTransitionApplied = false;
+        using var movementLogger = new ObservedLoggerFactory(() =>
+        {
+            var beforeTransitionTick = movementClock.Tick;
+            movementClockAdvanced = SpinWait.SpinUntil(
+                () => movementClock.Tick > beforeTransitionTick, TimeSpan.FromSeconds(10));
+            System.Threading.Tasks.Task.Factory.StartNew(() =>
+            {
+                var transition = new InMemoryTeleportService(maps, movementClock).Teleport(
+                    movementActor, new TeleportCommand("MAP_THANH_LAC", 8, 0, TeleportReasons.Quest));
+                movementTransitionApplied = transition.IsSuccess;
+                movementReset = movementActor.LastMoveAtUtc;
+            }, CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.LongRunning,
+                System.Threading.Tasks.TaskScheduler.Default).GetAwaiter().GetResult();
+        });
+        var movementHandler = typeof(Server.Health.Endpoints.P1Endpoints).GetMethod("MoveAsync",
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!;
+        var movementResult = ((System.Threading.Tasks.Task<IResult>)movementHandler.Invoke(null,
+            [movementContext, returnSessions, maps, geometry, movementClock,
+                Microsoft.Extensions.Options.Options.Create(options), movementLogger])!)
+            .GetAwaiter().GetResult();
+        Check(
+            "movement.queued_handler_cannot_backdate_transition_timing_reset",
+            movementClockAdvanced && movementTransitionApplied &&
+            movementResult is Microsoft.AspNetCore.Http.IStatusCodeHttpResult { StatusCode: 200 } &&
+            movementActor.MapId == "MAP_THANH_LAC" && movementActor.X == 8 && movementActor.Y == 0 &&
+            movementActor.LastMoveAtUtc >= movementReset &&
+            movementActor.Revision == movementRevision + 2,
+            $"advanced={movementClockAdvanced} teleported={movementTransitionApplied} " +
+            $"resetDeltaTicks={(movementActor.LastMoveAtUtc - movementReset).Ticks}");
+
         // ─── QOD-21 Q2: the TALK route's guards (work order 31 Q2) ────
 
         // DEC-TUTORIAL-TRANSPORT-20261106 approved the verb with these rules, and the
@@ -11310,6 +11551,41 @@ public static class ServiceSelfCheck
         public List<CombatMobKill> Kills { get; } = [];
 
         public void OnMobKilled(CombatMobKill kill) => Kills.Add(kill);
+    }
+
+    private sealed class ObservedLoggerFactory(Action beforeCreate) : ILoggerFactory
+    {
+        public ILogger CreateLogger(string categoryName)
+        {
+            beforeCreate();
+            return Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+        }
+
+        public void AddProvider(ILoggerProvider provider) { }
+        public void Dispose() { }
+    }
+
+    private sealed class ObservedSkillCatalog(ICombatSkillCatalog inner) : ICombatSkillCatalog
+    {
+        public Action? OnRead { get; set; }
+        public int Count => inner.Count;
+
+        public bool TryGet(string skillId, out CombatSkillDefinition skill)
+        {
+            OnRead?.Invoke();
+            return inner.TryGet(skillId, out skill);
+        }
+    }
+
+    private sealed class ObservedTeleportService(ITeleportService inner, Action observe) : ITeleportService
+    {
+        public TeleportOutcome Teleport(PlayerSession actor, TeleportCommand? command)
+        {
+            observe();
+            var result = inner.Teleport(actor, command);
+            observe();
+            return result;
+        }
     }
 
     private sealed class ActorLockProbeBossBridge(PlayerSession actor) : ICombatBossBridge

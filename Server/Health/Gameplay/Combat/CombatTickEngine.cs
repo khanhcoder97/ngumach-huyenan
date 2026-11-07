@@ -164,9 +164,36 @@ public sealed class CombatTickEngine
         }
     }
 
-    // Schedules an accepted cast. Returns false when the same castId is
-    // already active. Cached command replays must not call this method; the
-    // endpoint enforces that through CombatV2Outcome.Replayed.
+    // Map/life transitions and cast acceptance use the same engine-before-actor order as ticks.
+    internal T SerializeActor<T>(PlayerSession actor, Func<T> command)
+    {
+        lock (_sync)
+        {
+            lock (actor.SyncRoot)
+            {
+                return command();
+            }
+        }
+    }
+
+    public CombatV2Outcome AcceptAndSchedule(
+        InMemoryCombatV2Service combat,
+        PlayerSession actor,
+        string sessionId,
+        CombatV2Intent intent,
+        string? idempotencyKey) => SerializeActor(actor, () =>
+        {
+            var outcome = combat.Resolve(actor, sessionId, intent, idempotencyKey);
+            if (outcome is { Accepted: true, Replayed: false, Result: { } result })
+            {
+                Schedule(actor, sessionId, result.CastId, result.ActionKind, result.SkillId,
+                    intent.AimX, intent.AimY, _clock.Tick);
+            }
+
+            return outcome;
+        });
+
+    // Historical receipts must not schedule effects again after their cast has ended.
     public bool Schedule(
         PlayerSession actor,
         string sessionId,
@@ -228,43 +255,43 @@ public sealed class CombatTickEngine
         }
 
         var (facingX, facingY) = Normalize(aimX, aimY);
-        bool opened;
         lock (_sync)
         {
-            opened = !_casts.ContainsKey(castId);
-            if (opened)
+            lock (actor.SyncRoot)
             {
-                _casts[castId] = new ScheduledCast(
-                    castId,
-                    sessionId,
-                    actor,
-                    actor.CharacterId,
-                    actor.MapId,
-                    actor.FloorId,
-                    actor.X,
-                    actor.Y,
-                    facingX,
-                    facingY,
-                    actor.Revision,
-                    startTick,
-                    hitTicks,
-                    coefficients,
-                    rangeWu,
-                    angleDegrees,
-                    maxTargets,
-                    skill?.SkillId,
-                    skill?.SkillId == SkMk02);
+                var opened = !_casts.ContainsKey(castId);
+                if (opened)
+                {
+                    _casts[castId] = new ScheduledCast(
+                        castId,
+                        sessionId,
+                        actor,
+                        actor.CharacterId,
+                        actor.MapId,
+                        actor.FloorId,
+                        actor.X,
+                        actor.Y,
+                        facingX,
+                        facingY,
+                        actor.Revision,
+                        startTick,
+                        hitTicks,
+                        coefficients,
+                        rangeWu,
+                        angleDegrees,
+                        maxTargets,
+                        skill?.SkillId,
+                        skill?.SkillId == SkMk02);
+                }
+
+                if (opened && skill is { SkillId: SkMk01 })
+                {
+                    OpenGuardWindow(actor, sessionId, castId, skill, facingX, facingY, startTick);
+                }
+
+                return opened;
             }
         }
-
-        if (opened && skill is { SkillId: SkMk01 })
-        {
-            // Outside the cast lock: the window store takes the defender lock,
-            // and no path may hold both in the opposite order.
-            OpenGuardWindow(actor, sessionId, castId, skill, facingX, facingY, startTick);
-        }
-
-        return opened;
     }
 
     // DEC-022 §2: the window attaches to the cast tick with the accepted facing
