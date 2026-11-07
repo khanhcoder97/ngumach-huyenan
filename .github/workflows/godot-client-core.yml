@@ -112,8 +112,9 @@ jobs:
       - name: Enforce positive assertion count
         if: always()
         run: |
-          test -s TestResults/clientcore-http/assertions.txt
-          count="$(tr -d '[:space:]' < TestResults/clientcore-http/assertions.txt)"
+          file="TestResults/clientcore-http/gates-off/assertions.txt"
+          test -s "$file"
+          count="$(tr -d '[:space:]' < "$file")"
           test -n "$count"
           test "$count" -gt 0
           echo "HTTP assertions: $count"
