@@ -1,16 +1,16 @@
 {
  "manifestId": "NGM_RUNTIME_AUDIO_V1",
- "checkpoint": "MEDIA-02 checkpoint 40 - M6 runtime delivery revised: CIN_008 draft mix v1 added (total 614 -> 615, mix 17 -> 18); status phrasing corrected (all 21 dialogue windows approved for DRAFT VO production per the Goi 30 D1 decision, PR #120; only CIN_001_S05 is DECIDED); P0 draft mixes v3 (checkpoint 31), CIN_006 mix v1 (checkpoint 34), CIN_003 mix v1 (checkpoint 37), CIN_005 mix v1 (checkpoint 38), CIN_007 mix v1 (checkpoint 39), prologue (checkpoint 27/28), composed music (checkpoint 26) and composed ambience (checkpoint 30) unchanged",
+ "checkpoint": "MEDIA-02 checkpoint 41 - M6 runtime delivery revised: CIN_009 draft mix v1 added (total 615 -> 616, mix 18 -> 19); status phrasing corrected (all 21 dialogue windows approved for DRAFT VO production per the Goi 30 D1 decision, PR #120; only CIN_001_S05 is DECIDED); P0 draft mixes v3 (checkpoint 31), CIN_006 mix v1 (checkpoint 34), CIN_003 mix v1 (checkpoint 37), CIN_005 mix v1 (checkpoint 38), CIN_007 mix v1 (checkpoint 39), CIN_008 mix v1 (checkpoint 40), prologue (checkpoint 27/28), composed music (checkpoint 26) and composed ambience (checkpoint 30) unchanged",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "counts": {
   "music_ambience": 22,
   "sfx_ui_variants": 519,
   "vo": 30,
-  "mix": 18,
+  "mix": 19,
   "composed": 26
  },
- "totalFiles": 615,
+ "totalFiles": 616,
  "notes": [
   "Every file copied from real bytes and verified: sha256 + size + ffprobe duration against the checkpoint 04/07/08 pack records. LFS pointers fail the copy.",
   "All cues remain RENDERED_CANDIDATE / DRAFT_NOT_FINAL_VO. Files are delivered into the runtime tree; wiring them into Godot scenes/code is Codex's presentation adapter work (Muse writes no .gd/.tscn/.cs).",
@@ -11707,6 +11707,24 @@
    "channels": 2,
    "integratedLufs": -24.58,
    "truePeakDbtp": -1.61,
+   "assetState": "DRAFT_MIX_NOT_FINAL",
+   "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"
+  },
+  {
+   "runtimePath": "assets/audio/mix/cin009_v1/CIN_009_mix_draft_v1.wav",
+   "sourcePath": "Art_Source/Audio/Muse/MIX/CIN009_DRAFT_V1/CIN_009_mix_draft_v1.wav",
+   "sha256": "196994e8162b41e9964cf1e2ddc4ad7bf94efd938f153b15c9ab5fe1f76809e4",
+   "sizeBytes": 3456100,
+   "durationSeconds": 18.0,
+   "cueKey": "MIX/V1/CIN_009",
+   "category": "mix",
+   "sceneId": "CIN_009",
+   "mixVersion": "v1_cin009_proposed",
+   "codec": "pcm_s16le",
+   "sampleRateHz": 48000,
+   "channels": 2,
+   "integratedLufs": -17.84,
+   "truePeakDbtp": -2.91,
    "assetState": "DRAFT_MIX_NOT_FINAL",
    "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"
   },

@@ -1556,6 +1556,97 @@ def check_cin008_mix():
          f"not a mix PASS")
 
 
+def check_cin009_mix():
+    """Checkpoint 41: CIN_009 draft mix v1.
+
+    Mirrors check_cin009_mix() for MIX/CIN009_DRAFT_V1/ +
+    CIN009_MIX_V1_manifest_v1.json (single scene, no review mix):
+    every stem must carry ORIGINAL_COMPOSED_BY_MUSE provenance, the
+    mix WAV must match the manifest sha/duration/format, ducking
+    evidence must show a real in-window cut with no out-of-window
+    change, and loop joins must carry QA ratios. The mix itself is
+    a DRAFT (see the manifest mixVerdict); nothing here is a mix
+    PASS. The stem assignment is NEW and PROPOSED_CANDIDATE. Unlike
+    CIN_005/CIN_006, the CP17 draft VO take FITS its window
+    (4.080 s, 12.5-16.580 s): the recorded overrun is -0.92 and
+    the tail trim at the scene edge is 0.0. Ducking evidence is measured over the full VO window (the CP39 full-window method is retained so the depth is comparable across the CIN_003/CIN_005/CIN_007/CIN_009/CIN_009 mixes). The mix is hotter than CIN_009 (-17.84 LUFS) because the CP17 VO take itself is hot (-17.23 LUFS); VO is kept at unity per the recipe, not normalized.
+    """
+    mix_dir = ROOT / "Art_Source/Audio/Muse/MIX/CIN009_DRAFT_V1"
+    manifest_path = mix_dir / "CIN009_MIX_V1_manifest_v1.json"
+    if not manifest_path.exists():
+        err("CIN009 MIX V1: missing CIN009_MIX_V1_manifest_v1.json")
+        return
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("mixVersion") != "v1_cin009_proposed":
+        err(f"CIN009 MIX V1: mixVersion "
+            f"{manifest.get('mixVersion')} != v1_cin009_proposed")
+    scenes = manifest.get("scenes", [])
+    if len(scenes) != 1:
+        err(f"CIN009 MIX V1: {len(scenes)}/1 scenes in manifest")
+    checked = 0
+    for scene in scenes:
+        mx = scene["mix"]
+        wav = mix_dir / mx["file"]
+        if not wav.exists():
+            err(f"CIN009 MIX V1 {scene['sceneId']}: missing {mx['file']}")
+            continue
+        if is_lfs_pointer(wav):
+            err(f"CIN009 MIX V1 {scene['sceneId']}: wav is an LFS pointer")
+            continue
+        if sha256_of(wav) != mx["sha256"]:
+            err(f"CIN009 MIX V1 {scene['sceneId']}: wav sha mismatch")
+        p = probe(wav)
+        if p and abs(p["duration"] - mx["durationSeconds"]) > 0.02:
+            err(f"CIN009 MIX V1 {scene['sceneId']}: duration "
+                f"{p['duration']} != manifest {mx['durationSeconds']}")
+        if p:
+            if (p.get("codec") != "pcm_s16le"
+                    or p.get("sample_rate") != 48000
+                    or p.get("channels") != 2):
+                err(f"CIN009 MIX V1 {scene['sceneId']}: format "
+                    f"{p.get('codec')}/{p.get('sample_rate')}/"
+                    f"{p.get('channels')} != pcm_s16le/48000/2")
+        if abs(mx["durationSeconds"] - scene["seconds"]) > 0.05:
+            err(f"CIN009 MIX V1 {scene['sceneId']}: mix duration "
+                f"{mx['durationSeconds']} != scene {scene['seconds']}")
+        for st in scene["stems"]:
+            prov = st.get("provenance", "")
+            if "ORIGINAL_COMPOSED_BY_MUSE" not in prov:
+                err(f"CIN009 MIX V1 {scene['sceneId']}: {st['role']} "
+                    f"stem {st['cue']} provenance is not composed: {prov}")
+            if "PORTED_CODEX_PACKV1" in prov:
+                err(f"CIN009 MIX V1 {scene['sceneId']}: {st['role']} "
+                    f"stem {st['cue']} still uses a ported stem")
+        for ev in scene["ducking"]["evidence"]:
+            if ev["depthInWindowDb"] >= 0:
+                err(f"CIN009 MIX V1 {scene['sceneId']}: ducking depth "
+                    f"in window {ev['depthInWindowDb']} >= 0 on "
+                    f"{ev['bus']} bus")
+            if ev["depthOutsideWindowDb"] != 0:
+                err(f"CIN009 MIX V1 {scene['sceneId']}: ducking depth "
+                    f"outside window {ev['depthOutsideWindowDb']} "
+                    f"!= 0 on {ev['bus']} bus")
+        for lq in scene["loopQA"]:
+            for join in lq["joins"]:
+                if join.get("ratioToP999") is None:
+                    err(f"CIN009 MIX V1 {scene['sceneId']}: loop join "
+                        f"{lq['cue']} @{join['atSeconds']} has no "
+                        f"QA ratio")
+        vo = scene.get("vo", {})
+        if vo.get("tailTrimmedAtSceneEdgeSeconds", 0) != 0.0:
+            err(f"CIN009 MIX V1 {scene['sceneId']}: recorded VO tail "
+                f"trim {vo.get('tailTrimmedAtSceneEdgeSeconds')} != 0.0")
+        if vo.get("overrunVsWindowSeconds", 0) != -0.92:
+            err(f"CIN009 MIX V1 {scene['sceneId']}: recorded VO "
+                f"overrun {vo.get('overrunVsWindowSeconds')} != -0.92")
+        checked += 1
+    COUNTS["cin009_mix_v1_files_checked"] = checked
+    note(f"CIN_009 draft mix v1 checked: {checked}/1 file (18 s, "
+         f"fully composed stems, PROPOSED assignment, VO take fits "
+         f"inside its window, ends 16.580 s); DRAFT_MIX_NOT_FINAL, "
+         f"not a mix PASS")
+
+
 def check_ab_shortlist():
     """Checkpoint 33 (Goi 31 item 3): A/B review shortlist.
 
@@ -2380,10 +2471,10 @@ def check_prologue():
     if vo_n != 5 or mix_n != 1:
         err(f"PROLOGUE: runtime audio registrations vo={vo_n} "
             f"mix={mix_n} (want 5/1)")
-    # Checkpoint 40: 614 + 1 CIN_008 mix v1 file = 615.
-    if am.get("totalFiles") != 615:
+    # Checkpoint 41: 615 + 1 CIN_009 mix v1 file = 616.
+    if am.get("totalFiles") != 616:
         err(f"PROLOGUE: runtime audio total {am.get('totalFiles')}"
-            f" != 615")
+            f" != 616")
     COUNTS["prologue_files_checked"] = checked
     COUNTS["audio_files_checked"] = \
         COUNTS.get("audio_files_checked", 0) + 6
@@ -2423,6 +2514,7 @@ def main():
     check_cin005_mix()
     check_cin007_mix()
     check_cin008_mix()
+    check_cin009_mix()
     check_ab_shortlist()
     check_scene_clips()
     check_prologue()
