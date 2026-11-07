@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup>
+  <ItemGroup><Compile Include="D:/Project/NGUMACHHUYENAN-handoff-qod-20261106/Server/Health/Gameplay/Combat/PlayerLifeLedger.cs" Link="PlayerLifeLedger.cs" /></ItemGroup>
+</Project>

@@ -1,0 +1,5 @@
+P00-03 wave trial credited after 0 ticks of the 400 allowed (one windup is 24 ticks) over 3 in/out attempts, each followed by [24, 24, 24] ticks of windup waited for
+P00-04 wave A activated after 0 ticks of the 1200 allowed (sourced traverse: 38 WU at 3 wu/s = 254 ticks)
+P00-04 wave B activated after 0 ticks of the 1500 allowed (sourced traverse: 40 WU at 3 wu/s = 267 ticks)
+profile=alpha-p00 chain=P00-01..P00-05 boss=KILLED fragment=OK wave_trial=OK escort=A+B loot=PAID v2_inventory=OK talk=NO_HTTP_ROUTE c1_01=LOCKED second_client=ISOLATED
+PASS: e2e_p1 (alpha-p00) 112 checks against http://127.0.0.1:5198

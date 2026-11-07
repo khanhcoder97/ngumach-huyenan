@@ -1,0 +1,295 @@
+{
+  "head": "0f2678f481a98dd5b909dc845f570026d084564e",
+  "manifests": {
+    "audio/RUNTIME_AUDIO_manifest_v1.json": {
+      "references": 610,
+      "uniquePaths": 610,
+      "workingTreeMismatches": [],
+      "gitBlobOrLfsObjectsVerified": 610
+    },
+    "cinematics/RUNTIME_CINEMATICS_manifest_v1.json": {
+      "references": 103,
+      "uniquePaths": 103,
+      "workingTreeMismatches": [
+        {
+          "path": "assets/cinematics/P0_animatic_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_001/CIN_001_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_001/CIN_001_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_001/CIN_001_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_002/CIN_002_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_002/CIN_002_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_002/CIN_002_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_004/CIN_004_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_004/CIN_004_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_004/CIN_004_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_006/CIN_006_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_006/CIN_006_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_006/CIN_006_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_005/CIN_005_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_005/CIN_005_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_005/CIN_005_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_009/CIN_009_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_009/CIN_009_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_009/CIN_009_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_020/CIN_020_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_020/CIN_020_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_020/CIN_020_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_003/CIN_003_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_003/CIN_003_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_003/CIN_003_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_007/CIN_007_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_007/CIN_007_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_007/CIN_007_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_008/CIN_008_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_008/CIN_008_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_008/CIN_008_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_010/CIN_010_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_010/CIN_010_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_010/CIN_010_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_011/CIN_011_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_011/CIN_011_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_011/CIN_011_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_012/CIN_012_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_012/CIN_012_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_012/CIN_012_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_013/CIN_013_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_013/CIN_013_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_013/CIN_013_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_014/CIN_014_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_014/CIN_014_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_014/CIN_014_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_015/CIN_015_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_015/CIN_015_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_015/CIN_015_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_016/CIN_016_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_016/CIN_016_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_016/CIN_016_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_017/CIN_017_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_017/CIN_017_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_017/CIN_017_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_018/CIN_018_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_018/CIN_018_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_018/CIN_018_vi.srt",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_019/CIN_019_640x360_30fps.ogv",
+          "error": "LFS_POINTER"
+        },
+        {
+          "path": "assets/cinematics/CIN_019/CIN_019_timing_v1.json",
+          "error": "HASH_OR_SIZE"
+        },
+        {
+          "path": "assets/cinematics/CIN_019/CIN_019_vi.srt",
+          "error": "HASH_OR_SIZE"
+        }
+      ],
+      "gitBlobOrLfsObjectsVerified": 103
+    }
+  },
+  "decode": [
+    {
+      "path": "assets\\cinematics\\CIN_001\\CIN_001_640x360_30fps.ogv",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "path": "assets\\cinematics\\CIN_006\\CIN_006_640x360_30fps.ogv",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "path": "assets\\audio\\mix\\p0_v3\\CIN_001_mix_draft_v3.wav",
+      "exit": 0,
+      "stderr": ""
+    }
+  ],
+  "limits": [
+    "No ear audition",
+    "No Godot playback",
+    "No fresh loudness measurement",
+    "Source packs not fully revalidated"
+  ],
+  "campaign": {
+    "totals": {
+      "scenes": 20,
+      "shots": 63,
+      "seconds": 378,
+      "dialogueCues": 21
+    },
+    "videoScenes": 20,
+    "prologueSeparate": true
+  }
+}
