@@ -59,8 +59,8 @@ fails on anything else.
             the ordinary cast path, the fragment claim, a PAID loot kill (coin inside
             the sourced band, exactly one mutation per death) and the v2 twelve-slot
             equip/unequip surface over HTTP — and then the finale's
-            TALK objective, for which P1 has no route, so the profile asserts
-            the campaign stops there (P00-05 stays ACTIVE, C1-01 stays LOCKED)
+            TALK objective, whose NPC_CLASS_TRIAL has no published narrative node,
+            so the live route cannot finish it (P00-05 stays ACTIVE, C1-01 stays LOCKED)
             instead of faking a completion. A second client proves the same
             build keeps progress per character.
 
@@ -2053,6 +2053,19 @@ def alpha_p00_profile():
 
     # ── P00-01: three packages, then the first real XP receipt ──
     sequence, _, _ = alpha_approach(session, character, sequence, 42.0, 0.0)
+    c1_before = quests["C1-01"]
+    c1_status, c1_body = alpha_accept(session, character, "C1-01", "NPC_LYAN")
+    c1_error = c1_body.get("error") or {}
+    smoke_p1.check(
+        c1_status == 422 and c1_error.get("code") == "prerequisite_not_met" and
+        c1_error.get("retryable") is False and c1_error.get("fieldErrors") == ["level"],
+        f"C1 accept must report level before missing tutorial: {c1_status} {c1_error}")
+    c1_after = alpha_quests(session)["C1-01"]
+    smoke_p1.check(
+        c1_before.get("state") == "LOCKED" and c1_after == c1_before,
+        f"C1 refusal/read changed state or revision: {c1_before} -> {c1_after}")
+    print("C1 level refusal status=" + str(c1_status) + " response=" + json.dumps(c1_body, sort_keys=True))
+    print("C1 locked read=" + json.dumps(c1_after, sort_keys=True))
     status, body = alpha_accept(session, character, "P00-01", "NPC_LYAN")
     smoke_p1.check(status == 200 and (body.get("result") or {}).get("state") == "ACTIVE",
                    f"accept P00-01 {status}: {(body.get('error') or {})}")
@@ -2463,13 +2476,14 @@ def alpha_p00_profile():
     # class-confirm objective is measured and printed, not asserted: that objective
     # names NPC_CLASS_TRIAL, which no node speaks (issue #134), so a credit here would
     # belong to a different objective of the same quest or to none.
+    talk_credit_envelope = {
+        "schemaVersion": 1, "requestId": alpha_key(0xc1),
+        "idempotencyKey": alpha_key(0xc2),
+        "sentAtUtc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "characterId": character,
+        "payload": {"npcId": "NPC_TA_VAN_KHANH", "nodeId": "DLG_P00_05_CLUE"}}
     talk_credit_status, _, talk_credit_body = smoke_p1.call(
-        "POST", "/p1/quests/talk",
-        {"schemaVersion": 1, "requestId": alpha_key(0xc1),
-         "idempotencyKey": alpha_key(0xc2),
-         "sentAtUtc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-         "characterId": character,
-         "payload": {"npcId": "NPC_TA_VAN_KHANH", "nodeId": "DLG_P00_05_CLUE"}},
+        "POST", "/p1/quests/talk", talk_credit_envelope,
         {"X-Session-ID": session})
     talk_credit_result = talk_credit_body.get("result") or {}
     smoke_p1.check(
@@ -2530,6 +2544,36 @@ def alpha_p00_profile():
     # Registration is physical: the owner has to stand inside the sourced ring
     # (circle (178,0) r 11) before any cast reaches the quest boss.
     sequence, _, _ = alpha_approach(session, character, sequence, 178.0, 0.0, within=3.0)
+    talk_replay_before = alpha_quests(session).get("P00-05") or {}
+    talk_replay_status, _, talk_replay_body = smoke_p1.call(
+        "POST", "/p1/quests/talk", talk_credit_envelope,
+        {"X-Session-ID": session})
+    expected_talk_replay = dict(talk_credit_result, replayed=True)
+    smoke_p1.check(
+        talk_replay_status == 200 and talk_replay_body.get("result") == expected_talk_replay,
+        f"TALK historical replay away from NPC expected original receipt, got "
+        f"{talk_replay_status}: {talk_replay_body}")
+    talk_conflict_envelope = dict(talk_credit_envelope,
+        payload={"npcId": "NPC_TA_VAN_KHANH", "nodeId": "DLG_P00_05_OFFER"})
+    talk_conflict_status, _, talk_conflict_body = smoke_p1.call(
+        "POST", "/p1/quests/talk", talk_conflict_envelope,
+        {"X-Session-ID": session})
+    smoke_p1.check(
+        talk_conflict_status == 409 and
+        (talk_conflict_body.get("error") or {}).get("code") == "idempotency_conflict" and
+        "idempotencyKey" in ((talk_conflict_body.get("error") or {}).get("fieldErrors") or []),
+        f"TALK changed-body conflict away from NPC got {talk_conflict_status}: {talk_conflict_body}")
+    talk_replay_after = alpha_quests(session).get("P00-05") or {}
+    smoke_p1.check(
+        talk_replay_after.get("revision") == talk_replay_before.get("revision") and
+        talk_replay_after.get("objectiveCounters") == talk_replay_before.get("objectiveCounters"),
+        f"TALK replay/conflict changed quest state: {talk_replay_before} -> {talk_replay_after}")
+    print(f"TALK replay away from NPC: HTTP {talk_replay_status}, "
+          f"receiptRevision={expected_talk_replay.get('revision')}, "
+          f"conflict HTTP {talk_conflict_status}, questRevision={talk_replay_after.get('revision')}")
+    print("TALK original response=" + json.dumps(talk_credit_body, sort_keys=True))
+    print("TALK replay response=" + json.dumps(talk_replay_body, sort_keys=True))
+    print("TALK conflict response=" + json.dumps(talk_conflict_body, sort_keys=True))
     # Standing in the ring is what registers the encounter for this owner, and the
     # owner-facing audience row is the promise that makes the fight reachable: the
     # quest boss reads ALIVE and targetable here (and only for this session) before
@@ -2576,9 +2620,7 @@ def alpha_p00_profile():
         .get("objectiveCounters", {}).get("OBJ_P00_05_FRAGMENT") == 1,
         f"fragment interact {status}: {(body.get('result') or {}).get('questUpdates') or (body.get('error') or {})}")
 
-    # The finale's last objective is a TALK, and P1 has no dialogue route: this
-    # is where the HTTP tutorial genuinely stops. Recorded as the named reason
-    # it is, rather than being skipped or passed by fixture.
+    # NPC_CLASS_TRIAL has no published node, so the live TALK route cannot finish this objective.
     status, body = alpha_turnin(session, character, "P00-05", "NPC_TA_VAN_KHANH")
     quests = alpha_quests(session)
     smoke_p1.check(

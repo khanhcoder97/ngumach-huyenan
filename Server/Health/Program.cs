@@ -675,6 +675,7 @@ if (equipmentOptions.Enabled)
 if (selfCheck)
 {
     Environment.ExitCode = ServiceSelfCheck.Run(app.Services, app.Logger);
+    await app.DisposeAsync();
     return;
 }
 

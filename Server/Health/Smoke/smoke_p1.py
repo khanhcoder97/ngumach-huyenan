@@ -33,6 +33,8 @@ def call(method, path, body=None, headers=None):
             return response.status, response.headers, json.loads(response.read() or b"{}")
     except urllib.error.HTTPError as error:
         return error.code, error.headers, json.loads(error.read() or b"{}")
+    except TimeoutError as error:
+        raise AssertionError(f"HTTP timeout: {method} {path}") from error
 
 
 def sent_at_utc():

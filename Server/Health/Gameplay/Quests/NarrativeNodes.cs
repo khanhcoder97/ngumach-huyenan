@@ -399,7 +399,7 @@ public sealed class NarrativeService
     {
         ArgumentNullException.ThrowIfNull(actor);
 
-        var current = _questState.GetState(actor.CharacterId, questId).State;
+        var current = _questState.GetState(actor, questId).State;
         var node = _catalog.OfferNode(questId, current?.State);
         return node is null
             ? new NarrativeEnterResult(false, NarrativeErrorCodes.NotRevealed, null, null, null, [], [])
@@ -428,7 +428,7 @@ public sealed class NarrativeService
                 false, NarrativeErrorCodes.WrongSpeaker, null, null, null, [], []);
         }
 
-        var current = _questState.GetState(actor.CharacterId, questId).State;
+        var current = _questState.GetState(actor, questId).State;
         if (!string.Equals(
                 node.ConditionKey,
                 NarrativeConditions.ForQuestState(current?.State),

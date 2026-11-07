@@ -938,34 +938,7 @@ public static class P1Endpoints
                 P1ErrorCodes.SessionNotFound, ["sessionId"]);
         }
 
-        WorldSnapshotV2 snapshot;
-        lock (session.SyncRoot)
-        {
-            snapshot = new WorldSnapshotV2
-            {
-                MapId = session.MapId,
-                MapInstanceId = session.MapId + WorldAudience.MapInstanceSuffix,
-                FloorId = session.FloorId,
-                Phase = WorldAudience.Phase,
-                ServerTick = clock.Tick,
-                Revision = session.Revision,
-                ServerTimeUtc = P1Time.ToUtcString(clock.UtcNow),
-                Audience = new WorldAudienceV2(),
-                Self = new WorldSnapshotV2Self
-                {
-                    CharacterId = session.CharacterId,
-                    ClassId = session.ClassId,
-                    X = session.X,
-                    Y = session.Y,
-                    Hp = session.Hp,
-                    MaxHp = session.MaxHp,
-                    Mp = session.Mp,
-                    MaxMp = session.MaxMp,
-                    SwordIntent = session.SwordIntent
-                },
-                Entities = projection.Project(session).Select(MapEntityV2).ToArray()
-            };
-        }
+        var snapshot = WorldSnapshotFactory.CreateV2(session, projection, clock);
 
         return Results.Json(new P1WorldV2Response
         {
@@ -976,25 +949,6 @@ public static class P1Endpoints
             Result = snapshot
         });
     }
-
-    private static WorldEntityV2 MapEntityV2(ProjectedEntityV2 entity) => new()
-    {
-        EntityId = entity.EntityId,
-        Kind = entity.Kind,
-        MapInstanceId = entity.MapInstanceId,
-        FloorId = entity.FloorId,
-        Phase = entity.Phase,
-        X = entity.X,
-        Y = entity.Y,
-        State = entity.State,
-        HealthState = entity.HealthState,
-        Targetable = entity.Targetable,
-        Availability = entity.Availability,
-        Hp = entity.Hp,
-        MaxHp = entity.MaxHp,
-        Revision = entity.Revision,
-        LifeId = entity.LifeId
-    };
 
     private static async Task<IResult> CombatV2Async(
         HttpContext context,
@@ -2143,7 +2097,7 @@ public static class P1Endpoints
         var states = new List<QuestState>();
         foreach (var questId in catalog.QuestIds)
         {
-            if (quests.GetState(session.CharacterId, questId).State is { } state)
+            if (quests.GetState(session, questId).State is { } state)
             {
                 states.Add(state);
             }

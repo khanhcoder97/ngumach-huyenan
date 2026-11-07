@@ -2303,7 +2303,7 @@ public static class ServiceSelfCheck
             string.Join(",", questCatalog.QuestIds));
 
         var questActor = NewPlayer("CHR_SELFCHECK_QUEST");
-        var questInitial = quests.GetState(questActor.CharacterId, "P00-01");
+        var questInitial = quests.GetState(questActor, "P00-01");
         Check(
             "quest.initial_available",
             questInitial.State?.State == QuestStates.Available,
@@ -4286,6 +4286,99 @@ public static class ServiceSelfCheck
                 is { Applied: false, Replayed: true },
             $"count={ledgerService.LedgerCount} held={ledgerService.ReceiptsHeldPastBound}");
 
+        var supersededClock = new ManualServerClock(returnClock.UtcNow);
+        var supersededLives = new PlayerLifeLedger();
+        var supersededService = new DeathReturnService(
+            returnSessions, maps, options, new DeathReturnOptions { Enabled = true },
+            returnWindows, returnEngine, supersededLives, supersededClock,
+            services.GetRequiredService<AlphaDesign>().DeathReturn);
+        var supersededHero = NewPlayer("CHR_SELFCHECK_RETURN_SUPERSEDED", hp: 0);
+        returnSessions.Add(supersededHero);
+        supersededLives.RecordDamageCommit(
+            supersededHero.CharacterId, 1, 0, supersededHero.Revision, supersededClock.UtcNow);
+        var supersededKey = "d0" + new string('0', 30);
+        var supersededFirst = supersededService.ReturnToAnchor(supersededHero.SessionId, supersededKey);
+        supersededHero.Hp = 0;
+        supersededHero.Revision++;
+        supersededLives.RecordDamageCommit(
+            supersededHero.CharacterId, supersededFirst.Hp, 0,
+            supersededHero.Revision, supersededClock.UtcNow);
+        var supersededCooldown = TimeSpan.FromSeconds(
+            (double)supersededService.CooldownTicks / ServerClock.TicksPerSecond);
+        supersededClock.Advance(supersededCooldown);
+        var supersededSecond = supersededService.ReturnToAnchor(
+            supersededHero.SessionId, "d1" + new string('0', 30));
+        var supersededChurn = Enumerable.Range(0, 303).Select(index =>
+        {
+            var hero = NewPlayer("CHR_SELFCHECK_RETURN_SUPERSEDED_CHURN_" + index, hp: 0);
+            returnSessions.Add(hero);
+            supersededLives.RecordDamageCommit(
+                hero.CharacterId, 1, 0, hero.Revision, supersededClock.UtcNow);
+            return supersededService.ReturnToAnchor(hero.SessionId, index.ToString("x32"));
+        }).ToArray();
+        var cooldownChurnHero = returnSessions.Find(supersededChurn[0].SessionId!)!;
+        var cooldownChurnHp = cooldownChurnHero.Hp;
+        cooldownChurnHero.Hp = 0;
+        cooldownChurnHero.Revision++;
+        var cooldownChurnRevision = cooldownChurnHero.Revision;
+        supersededLives.RecordDamageCommit(
+            cooldownChurnHero.CharacterId, cooldownChurnHp, 0,
+            cooldownChurnRevision, supersededClock.UtcNow);
+        var cooldownChurnReturn = supersededService.ReturnToAnchor(
+            cooldownChurnHero.SessionId, "e0" + new string('0', 30));
+        Check(
+            "death_return.cooldown_survives_more_than_300_other_returns",
+            cooldownChurnReturn is { Applied: false, Replayed: false, ErrorCode: DeathReturnErrorCodes.Cooldown } &&
+            cooldownChurnReturn.NextReturnAllowedAtTick == supersededChurn[0].NextReturnAllowedAtTick &&
+            cooldownChurnHero.Hp == 0 && cooldownChurnHero.Revision == cooldownChurnRevision &&
+            supersededLives.LifeVersion(cooldownChurnHero.CharacterId) == 2,
+            $"code={cooldownChurnReturn.ErrorCode} hp={cooldownChurnHero.Hp} " +
+            $"tick={supersededClock.Tick} until={cooldownChurnReturn.NextReturnAllowedAtTick}");
+        supersededHero.Hp = 0;
+        supersededHero.Revision++;
+        supersededHero.X = 40;
+        var supersededDeath = supersededLives.RecordDamageCommit(
+            supersededHero.CharacterId, supersededSecond.Hp, 0,
+            supersededHero.Revision, supersededClock.UtcNow);
+        supersededClock.Advance(supersededCooldown);
+        var supersededRevision = supersededHero.Revision;
+        var supersededReplay = supersededService.ReturnToAnchor(supersededHero.SessionId, supersededKey);
+        Check(
+            "death_return.superseded_life_receipt_survives_more_than_300_returns",
+            supersededFirst.Applied && supersededSecond is { Applied: true, NewLifeVersion: 3 } &&
+            supersededChurn.All(result => result.Applied) &&
+            supersededService.LedgerCount == supersededChurn.Length + 2 &&
+            supersededReplay == supersededFirst with { Applied = false, Replayed = true } &&
+            supersededHero.Hp == 0 && supersededHero.X == 40 &&
+            supersededHero.Revision == supersededRevision &&
+            supersededLives.LifeVersion(supersededHero.CharacterId) == 3 &&
+            supersededLives.LatestDeath(supersededHero.CharacterId) == supersededDeath,
+            $"churn={supersededChurn.Length} count={supersededService.LedgerCount} " +
+            $"replayed={supersededReplay.Replayed} hp={supersededHero.Hp} " +
+            $"life={supersededLives.LifeVersion(supersededHero.CharacterId)}");
+        var supersededForeign = NewPlayer("CHR_SELFCHECK_RETURN_SUPERSEDED_FOREIGN", hp: 0);
+        returnSessions.Add(supersededForeign);
+        var supersededForeignRevision = supersededForeign.Revision;
+        var supersededConflict = supersededService.ReturnToAnchor(supersededForeign.SessionId, supersededKey);
+        Check(
+            "death_return.superseded_receipt_still_refuses_another_owner",
+            supersededConflict.ErrorCode == DeathReturnErrorCodes.KeyConflict &&
+            !supersededConflict.Applied && supersededForeign.Hp == 0 &&
+            supersededForeign.Revision == supersededForeignRevision,
+            $"code={supersededConflict.ErrorCode} hp={supersededForeign.Hp}");
+        var supersededReconnect = NewPlayer(supersededHero.CharacterId, hp: 0);
+        returnSessions.Add(supersededReconnect);
+        var supersededReconnectRevision = supersededReconnect.Revision;
+        var supersededReconnectReplay = supersededService.ReturnToAnchor(
+            supersededReconnect.SessionId, supersededKey);
+        Check(
+            "death_return.superseded_receipt_replays_history_after_reconnect",
+            supersededReconnectReplay == supersededFirst with { Applied = false, Replayed = true } &&
+            supersededReconnect.Hp == 0 && supersededReconnect.Revision == supersededReconnectRevision &&
+            supersededLives.LifeVersion(supersededReconnect.CharacterId) == 3,
+            $"replayed={supersededReconnectReplay.Replayed} hp={supersededReconnect.Hp} " +
+            $"life={supersededLives.LifeVersion(supersededReconnect.CharacterId)}");
+
         // DEC-DEATH-RETURN-20261105 answers the six packet questions, and the
         // approved shape is owned by three numbers the fixture does not have: the
         // anchor and the HP formula and the cooldown all come from the design, and
@@ -6182,6 +6275,139 @@ public static class ServiceSelfCheck
             alphaC1_01.Unlocks.Count == 0,
             $"band={alphaC1_01?.MinLevel}..{alphaC1_01?.MaxLevel}");
 
+        var levelStates = new InMemoryQuestStateStore();
+        var levelClock = services.GetRequiredService<IServerClock>();
+        var levelQuests = new InMemoryQuestService(
+            alphaMergedQuests, levelStates, alphaMergedRecords, levelClock);
+        var levelAccept = new InMemoryQuestAcceptService(
+            alphaMergedQuests, levelQuests, npcAnchors, geometry,
+            services.GetRequiredService<QuestAcceptOptions>(), new QuestXpSnapshotStore());
+        var levelDefinition = alphaC1_01!;
+        var levelAnchor = npcAnchors.All.Single(anchor =>
+            anchor.NpcId == levelDefinition.StartNpcId && anchor.MapId == options.DefaultMapId);
+        void CompleteLevelPrerequisite(PlayerSession actor)
+        {
+            var prerequisite = levelStates.GetOrAdd(actor.CharacterId, "P00-05", () => new PlayerQuestState(
+                actor.CharacterId, "P00-05", QuestStates.Completed, alphaP00_05!.InitialStepId,
+                alphaP00_05.Objectives.Select(objective => objective.ObjectiveId), levelClock.UtcNow));
+            lock (prerequisite.SyncRoot)
+            {
+                prerequisite.State = QuestStates.Completed;
+            }
+        }
+        PlayerSession LevelActor(string suffix, int level)
+        {
+            var actor = NewPlayer("CHR_SELFCHECK_C1_LEVEL_" + suffix);
+            actor.Level = level;
+            actor.MapId = levelAnchor.MapId;
+            actor.FloorId = levelAnchor.FloorId;
+            actor.X = levelAnchor.X;
+            actor.Y = levelAnchor.Y;
+            return actor;
+        }
+        var levelLow = LevelActor("LOW", levelDefinition.MinLevel - 1);
+        var levelLowBefore = levelQuests.GetState(levelLow, levelDefinition.QuestId).State;
+        var levelLowRefused = levelAccept.Accept(
+            levelLow, levelDefinition.QuestId, levelDefinition.StartNpcId, "f0" + new string('0', 30));
+        Check(
+            "alpha.c1_level_reason_precedes_missing_prerequisite",
+            levelLowBefore?.State == QuestStates.Locked && !levelLowRefused.Accepted &&
+            levelLowRefused.Failure is { Code: QuestAcceptErrorCodes.PrerequisiteNotMet, Retryable: false } &&
+            levelLowRefused.Failure.FieldErrors.SequenceEqual(["level"]),
+            $"level={levelLow.Level} state={levelLowBefore?.State} fields={string.Join(',', levelLowRefused.Failure?.FieldErrors ?? [])}");
+        CompleteLevelPrerequisite(levelLow);
+        var levelLowAfter = levelQuests.GetState(levelLow, levelDefinition.QuestId).State;
+        var levelLowAgain = levelQuests.GetState(levelLow, levelDefinition.QuestId).State;
+        var levelLowCompletedRefused = levelAccept.Accept(
+            levelLow, levelDefinition.QuestId, levelDefinition.StartNpcId, "f1" + new string('0', 30));
+        Check(
+            "alpha.c1_completed_tutorial_does_not_bypass_level",
+            levelStates.Find(levelLow.CharacterId, "P00-05")?.State == QuestStates.Completed &&
+            levelLowAfter?.State == QuestStates.Locked && levelLowAgain?.Revision == levelLowAfter.Revision &&
+            levelLowAfter.Revision == levelLowBefore?.Revision &&
+            !levelLowCompletedRefused.Accepted &&
+            levelLowCompletedRefused.Failure?.FieldErrors.SequenceEqual(["level"]) == true,
+            $"level={levelLow.Level} state={levelLowAfter?.State} revision={levelLowBefore?.Revision}->{levelLowAfter?.Revision}");
+        var levelCoreLow = LevelActor("CORE_LOW", levelDefinition.MinLevel - 1);
+        CompleteLevelPrerequisite(levelCoreLow);
+        var levelCoreRefused = levelQuests.Accept(levelCoreLow, levelDefinition.QuestId);
+        Check(
+            "alpha.c1_core_accept_cannot_bypass_level",
+            !levelCoreRefused.Accepted &&
+            levelCoreRefused.Failure?.Code == QuestAcceptErrorCodes.PrerequisiteNotMet &&
+            levelCoreRefused.Failure.FieldErrors.SequenceEqual(["level"]) &&
+            levelQuests.GetState(levelCoreLow, levelDefinition.QuestId).State?.State == QuestStates.Locked,
+            $"accepted={levelCoreRefused.Accepted} code={levelCoreRefused.Failure?.Code}");
+        var levelHigh = LevelActor("HIGH", levelDefinition.MinLevel);
+        var levelHighLocked = levelQuests.GetState(levelHigh, levelDefinition.QuestId).State;
+        var levelHighMissing = levelAccept.Accept(
+            levelHigh, levelDefinition.QuestId, levelDefinition.StartNpcId, "f2" + new string('0', 30));
+        CompleteLevelPrerequisite(levelHigh);
+        var levelHighAvailable = levelQuests.GetState(levelHigh, levelDefinition.QuestId).State;
+        var levelHighAgain = levelQuests.GetState(levelHigh, levelDefinition.QuestId).State;
+        var levelHighAccepted = levelAccept.Accept(
+            levelHigh, levelDefinition.QuestId, levelDefinition.StartNpcId, "f3" + new string('0', 30));
+        Check(
+            "alpha.c1_level_threshold_still_requires_tutorial_then_accepts",
+            levelHighLocked?.State == QuestStates.Locked && !levelHighMissing.Accepted &&
+            levelHighMissing.Failure?.FieldErrors.Count == 0 &&
+            levelHighAvailable?.State == QuestStates.Available &&
+            levelHighAvailable.Revision == levelHighLocked.Revision + 1 &&
+            levelHighAgain?.Revision == levelHighAvailable.Revision &&
+            levelHighAccepted.State is { State: QuestStates.Active } &&
+            levelHighAccepted.State.Revision == levelHighAvailable.Revision + 1,
+            $"level={levelHigh.Level} state={levelHighAccepted.State?.State} revision={levelHighAccepted.State?.Revision}");
+        var levelStale = LevelActor("STALE", levelDefinition.MinLevel - 1);
+        CompleteLevelPrerequisite(levelStale);
+        levelStates.GetOrAdd(levelStale.CharacterId, levelDefinition.QuestId, () => new PlayerQuestState(
+            levelStale.CharacterId, levelDefinition.QuestId, QuestStates.Available,
+            levelDefinition.InitialStepId, levelDefinition.Objectives.Select(objective => objective.ObjectiveId), levelClock.UtcNow));
+        var levelStaleRead = levelQuests.GetState(levelStale, levelDefinition.QuestId).State;
+        var levelStalePassive = levelQuests.GetState(levelStale.CharacterId, levelDefinition.QuestId).State;
+        var levelStaleAgain = levelQuests.GetState(levelStale, levelDefinition.QuestId).State;
+        Check(
+            "alpha.c1_stale_available_relocks_once_and_passive_reads_do_not_unlock",
+            levelStaleRead is { State: QuestStates.Locked, Revision: 2 } &&
+            levelStalePassive?.State == QuestStates.Locked && levelStalePassive.Revision == levelStaleRead.Revision &&
+            levelStaleAgain?.Revision == levelStaleRead.Revision,
+            $"state={levelStaleRead?.State} revision={levelStaleRead?.Revision}");
+        var levelChanging = LevelActor("CHANGING", levelDefinition.MinLevel - 1);
+        CompleteLevelPrerequisite(levelChanging);
+        var levelChangingPassive = levelQuests.GetState(levelChanging.CharacterId, levelDefinition.QuestId).State;
+        var levelChangingLow = levelQuests.GetState(levelChanging, levelDefinition.QuestId).State;
+        levelChanging.Level = levelDefinition.MinLevel;
+        var levelChangingHigh = levelQuests.GetState(levelChanging, levelDefinition.QuestId).State;
+        levelChanging.Level = levelDefinition.MaxLevel + 1;
+        var levelChangingAbove = levelQuests.GetState(levelChanging, levelDefinition.QuestId).State;
+        var levelChangingList = levelQuests.GetStates(levelChanging.CharacterId)
+            .Single(state => state.QuestId == levelDefinition.QuestId);
+        var levelChangingRefused = levelQuests.Accept(levelChanging, levelDefinition.QuestId);
+        Check(
+            "alpha.c1_live_level_changes_and_upper_band_are_authoritative",
+            levelChangingPassive is { State: QuestStates.Locked, Revision: 1 } &&
+            levelChangingLow is { State: QuestStates.Locked, Revision: 1 } &&
+            levelChangingHigh is { State: QuestStates.Available, Revision: 2 } &&
+            levelChangingAbove is { State: QuestStates.Locked, Revision: 3 } &&
+            levelChangingList is { State: QuestStates.Locked, Revision: 3 } &&
+            !levelChangingRefused.Accepted &&
+            levelChangingRefused.Failure?.FieldErrors.SequenceEqual(["level"]) == true,
+            $"passive={levelChangingPassive?.State} low={levelChangingLow?.Revision} high={levelChangingHigh?.Revision} above={levelChangingAbove?.Revision}");
+        var levelProtected = new[] { QuestStates.Active, QuestStates.ReadyToTurnIn, QuestStates.Completed, QuestStates.Failed }
+            .Select(state =>
+            {
+                var actor = LevelActor("PROTECTED_" + state, levelDefinition.MinLevel - 1);
+                var stored = levelStates.GetOrAdd(actor.CharacterId, levelDefinition.QuestId, () => new PlayerQuestState(
+                    actor.CharacterId, levelDefinition.QuestId, state, levelDefinition.InitialStepId,
+                    levelDefinition.Objectives.Select(objective => objective.ObjectiveId), levelClock.UtcNow));
+                var before = stored.ToContract();
+                var after = levelQuests.GetState(actor, levelDefinition.QuestId).State;
+                return after is not null && after.State == before.State && after.Revision == before.Revision &&
+                       after.StepId == before.StepId && after.ObjectiveCounters.SequenceEqual(before.ObjectiveCounters);
+            }).ToArray();
+        Check(
+            "alpha.c1_level_reads_preserve_active_and_terminal_states",
+            levelProtected.All(unchanged => unchanged), $"preserved={levelProtected.Count(unchanged => unchanged)}/{levelProtected.Length}");
+
         var alphaQuestValidationPassed = true;
         string? alphaQuestValidationError = null;
         try
@@ -7265,6 +7491,27 @@ public static class ServiceSelfCheck
             portalActor.MapId == "MAP_THANH_LAC",
             $"code={portalConflict.Code} map={portalActor.MapId}");
 
+        var portalUnknownConflict = portalService.Move(
+            portalActor, "TP_NOT_PUBLISHED", "3" + new string('0', 31));
+        Check(
+            "alpha.portal_changed_unknown_body_conflicts_before_registry_lookup",
+            !portalUnknownConflict.Accepted &&
+            portalUnknownConflict.Code == PortalErrorCodes.IdempotencyConflict &&
+            portalUnknownConflict.FieldErrors.SequenceEqual(["idempotencyKey"]),
+            $"code={portalUnknownConflict.Code}");
+
+        portalActor.Hp = 0;
+        var portalHistoricalRevision = portalActor.Revision;
+        var portalDeadReplay = portalService.Move(
+            portalActor, "TP_BM_THANH_LAC", "3" + new string('0', 31));
+        Check(
+            "alpha.portal_downed_replay_preserves_the_entire_historical_receipt",
+            portalDeadReplay.Accepted &&
+            portalDeadReplay.Result == (portalMoved.Result! with { Replayed = true }) &&
+            portalActor.Hp == 0 && portalActor.X == 60 && portalActor.Y == 12 &&
+            portalActor.Revision == portalHistoricalRevision,
+            $"replayed={portalDeadReplay.Result?.Replayed} hp={portalActor.Hp}");
+
         // Permission is per character, so a second owner standing at the same portal is
         // still locked while the first one travels. This is the "two owners" case, and
         // it is the shape that would break if the grant were ever made global.
@@ -7312,6 +7559,115 @@ public static class ServiceSelfCheck
             portalDead.Code == PortalErrorCodes.NotAlive &&
             portalDown.MapId == "MAP_BEN_MUA",
             $"code={portalDead.Code} map={portalDown.MapId}");
+
+        var portalCleanupWindows = new GuardWindowStore();
+        var portalCleanupEvents = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var portalCleanupEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, portalCleanupEvents,
+            new MobCombatStateStore(), tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            portalCleanupWindows, geometry, NewDashes(geometry), new ServerClock());
+        var portalCleanupActor = NewPlayer("CHR_SELFCHECK_PORTAL_CLEANUP");
+        portalCleanupActor.MapId = "MAP_BEN_MUA";
+        portalCleanupActor.X = 348;
+        portalCleanupActor.Y = 0;
+        _ = portalStore.OnQuestCompleted(portalCleanupActor.CharacterId, "P00-05");
+        portalCleanupEngine.Schedule(
+            portalCleanupActor, portalCleanupActor.SessionId, new string('b', 32),
+            CombatV2Actions.Skill, "SK-MK-01", 1, 0, startTick: 0);
+        var portalCleanupWindow = portalCleanupWindows.Find(portalCleanupActor.CharacterId)!;
+        portalCleanupWindow.CounterSourceEntityId = "ENT_SELFCHECK_GUARD_MOB2";
+        portalCleanupWindow.CounterSourceLifeId = 1;
+        portalCleanupWindow.CounterTick = 2;
+        var portalCleanupRevision = portalCleanupActor.Revision;
+        var portalCleanupClock = new ServerClock();
+        var portalMissingBounds = new PortalService(
+            new InMemoryTeleportService(
+                new MapBoundsCatalog(new Dictionary<string, MapBounds>()), portalCleanupClock),
+            portalStore, portalCleanupWindows, portalCleanupEngine, portalCleanupClock,
+            new PortalOptions { Enabled = true });
+        var portalMissingKey = new string('c', 32);
+        var portalTransitionRefused = portalMissingBounds.Move(
+            portalCleanupActor, "TP_BM_THANH_LAC", portalMissingKey);
+        Check(
+            "alpha.portal_failed_teleport_preserves_guard_cast_counter_and_position",
+            !portalTransitionRefused.Accepted &&
+            portalTransitionRefused.Code == TeleportErrorCodes.InvalidMap &&
+            portalTransitionRefused.FieldErrors.SequenceEqual(["mapId"]) &&
+            portalCleanupActor.MapId == "MAP_BEN_MUA" && portalCleanupActor.X == 348 &&
+            portalCleanupActor.Y == 0 && portalCleanupActor.Revision == portalCleanupRevision &&
+            ReferenceEquals(portalCleanupWindow,
+                portalCleanupWindows.Find(portalCleanupActor.CharacterId)) &&
+            portalCleanupWindow is { IsOpen: true, CounterResolved: false, CounterTick: 2 } &&
+            portalCleanupEngine.ScheduledCastCount == 1 &&
+            portalCleanupEvents.Read(portalCleanupActor.SessionId, 0, 256).Events.Count == 0,
+            $"code={portalTransitionRefused.Code} casts={portalCleanupEngine.ScheduledCastCount} " +
+            $"window={portalCleanupWindow.IsOpen} counter={portalCleanupWindow.CounterResolved}");
+        portalCleanupActor.X = 300;
+        var portalRefusalRetry = portalMissingBounds.Move(
+            portalCleanupActor, "TP_BM_THANH_LAC", portalMissingKey);
+        Check(
+            "alpha.portal_refusals_do_not_record_a_receipt",
+            !portalRefusalRetry.Accepted && portalRefusalRetry.Code == PortalErrorCodes.OutOfRange &&
+            portalCleanupWindow.IsOpen && portalCleanupEngine.ScheduledCastCount == 1,
+            $"code={portalRefusalRetry.Code}");
+        portalCleanupActor.X = 348;
+        var portalCleanupService = new PortalService(
+            services.GetRequiredService<ITeleportService>(), portalStore,
+            portalCleanupWindows, portalCleanupEngine, portalCleanupClock,
+            new PortalOptions { Enabled = true });
+        var portalParallelKey = new string('d', 32);
+        using (var portalBarrier = new System.Threading.Barrier(2))
+        {
+            var portalParallelCalls = Enumerable.Range(0, 2).Select(_ =>
+                System.Threading.Tasks.Task.Factory.StartNew(() =>
+                {
+                    portalBarrier.SignalAndWait();
+                    return portalCleanupService.Move(
+                        portalCleanupActor, "TP_BM_THANH_LAC", portalParallelKey);
+                }, System.Threading.CancellationToken.None,
+                    System.Threading.Tasks.TaskCreationOptions.LongRunning,
+                    System.Threading.Tasks.TaskScheduler.Default)).ToArray();
+            System.Threading.Tasks.Task.WaitAll(portalParallelCalls);
+            var portalParallelResults = portalParallelCalls.Select(task => task.Result).ToArray();
+            var portalFreshResult = portalParallelResults.Single(result =>
+                result.Accepted && !result.Result!.Replayed).Result!;
+            var portalReplayResult = portalParallelResults.Single(result =>
+                result.Accepted && result.Result!.Replayed).Result!;
+            var portalCancelledEvents = portalCleanupEvents
+                .Read(portalCleanupActor.SessionId, 0, 256).Events;
+            Check(
+                "alpha.portal_concurrent_key_transitions_and_cleans_up_once",
+                portalParallelResults.All(result => result.Accepted) &&
+                portalFreshResult == (portalReplayResult with { Replayed = false }) &&
+                portalFreshResult is
+                    { InflightCastsCancelled: 1, ReservedCountersCancelled: 1, GuardWindowClosed: true } &&
+                portalCleanupActor.MapId == "MAP_THANH_LAC" && portalCleanupActor.X == 8 &&
+                portalCleanupActor.Revision == portalCleanupRevision + 1 &&
+                portalCleanupEngine.ScheduledCastCount == 0 &&
+                !portalCleanupWindow.IsOpen && portalCleanupWindow.CounterResolved &&
+                portalCancelledEvents.Count(ev => ev.Type == CombatEventTypesV2.Cancel) == 2 &&
+                portalCancelledEvents.Count(ev => ev.Type == CombatEventTypesV2.End) == 1 &&
+                portalCleanupEngine.Tick(2).Count == 0,
+                $"revision={portalCleanupActor.Revision} cancels={portalCancelledEvents.Count} " +
+                $"casts={portalCleanupEngine.ScheduledCastCount}");
+        }
+
+        var portalIndependentActor = NewPlayer("CHR_SELFCHECK_PORTAL_INDEPENDENT");
+        portalIndependentActor.MapId = "MAP_BEN_MUA";
+        portalIndependentActor.X = 348;
+        portalIndependentActor.Y = 0;
+        _ = portalStore.OnQuestCompleted(portalIndependentActor.CharacterId, "P00-05");
+        var portalIndependent = portalCleanupService.Move(
+            portalIndependentActor, "TP_BM_THANH_LAC", portalParallelKey);
+        Check(
+            "alpha.portal_same_key_is_independent_for_another_character",
+            portalIndependent is { Accepted: true, Result.Replayed: false } &&
+            portalIndependentActor.MapId == "MAP_THANH_LAC" && portalIndependentActor.X == 8,
+            $"accepted={portalIndependent.Accepted} replayed={portalIndependent.Result?.Replayed}");
 
         // ─── QOD-21 Q2: the TALK route's guards (work order 31 Q2) ────
 
@@ -7438,6 +7794,95 @@ public static class ServiceSelfCheck
             "contracts.talk_options_refuse_a_non_positive_distance",
             talkBadDistance && new QuestTalkOptions().MaxInteractionDistanceWu == 5,
             $"refused={talkBadDistance}");
+
+        var talkReplayDefinition = FixtureQuest("P00-01", [], []);
+        var talkReplayCatalog = new QuestCatalog(new Dictionary<string, QuestDefinition>
+        {
+            [talkReplayDefinition.QuestId] = talkReplayDefinition
+        });
+        var talkReplayQuests = new InMemoryQuestService(
+            talkReplayCatalog, new InMemoryQuestStateStore(), shippedRecords,
+            services.GetRequiredService<IServerClock>());
+        var talkReplayService = new QuestTalkService(
+            talkNodes, new NarrativeService(talkNodes, talkReplayQuests, new NarrativeFlagStore()),
+            talkReplayQuests, talkReplayCatalog, npcAnchors, new QuestTalkOptions());
+        var talkReplayActor = NewPlayer("CHR_SELFCHECK_TALK_REPLAY");
+        var talkReplayAnchor = npcAnchors.All.Single(anchor =>
+            anchor.NpcId == "NPC_LYAN" && anchor.MapId == options.DefaultMapId);
+        talkReplayActor.X = talkReplayAnchor.X;
+        talkReplayActor.Y = talkReplayAnchor.Y;
+        talkReplayActor.FloorId = talkReplayAnchor.FloorId;
+        var talkReplayAccepted = talkReplayQuests.Accept(talkReplayActor, "P00-01");
+        var talkReplayKey = new string('1', 32);
+        var talkReplayFirst = talkReplayService.Talk(
+            talkReplayActor, "NPC_LYAN", "DLG_P00_01_CLUE", talkReplayKey);
+        var talkReplayState = talkReplayQuests.GetState(talkReplayActor.CharacterId, "P00-01").State;
+        var talkReplayReady = talkReplayService.Talk(
+            talkReplayActor, "NPC_LYAN", "DLG_P00_01_CLUE", talkReplayKey);
+        Check(
+            "contracts.talk_replays_the_receipt_after_its_own_credit_closes_the_reveal_gate",
+            talkReplayAccepted.Accepted && talkReplayFirst.Result is { Credited: true, Replayed: false } firstTalkReceipt &&
+            talkReplayState?.State == QuestStates.ReadyToTurnIn &&
+            talkReplayReady.Accepted && talkReplayReady.Result == firstTalkReceipt with { Replayed = true },
+            $"state={talkReplayState?.State} first={talkReplayFirst.Accepted} replay={talkReplayReady.Accepted} code={talkReplayReady.Code}");
+
+        talkReplayActor.MapId = "MAP_THANH_LAC";
+        talkReplayActor.X = 8;
+        var talkReplayMoved = talkReplayService.Talk(
+            talkReplayActor, "NPC_LYAN", "DLG_P00_01_CLUE", talkReplayKey);
+        Check(
+            "contracts.talk_replays_history_without_rechecking_current_position",
+            talkReplayMoved.Accepted && talkReplayFirst.Result is { } movedTalkReceipt &&
+            talkReplayMoved.Result == movedTalkReceipt with { Replayed = true } &&
+            talkReplayActor.MapId == "MAP_THANH_LAC" && talkReplayActor.X == 8 &&
+            talkReplayQuests.GetState(talkReplayActor.CharacterId, "P00-01").State?.Revision == talkReplayState?.Revision,
+            $"accepted={talkReplayMoved.Accepted} code={talkReplayMoved.Code} map={talkReplayActor.MapId}");
+
+        var talkReplayConflict = talkReplayService.Talk(
+            talkReplayActor, "NPC_LYAN", "DLG_SELFCHECK_NOT_PUBLISHED", talkReplayKey);
+        Check(
+            "contracts.talk_conflicts_on_changed_body_before_fresh_command_guards",
+            !talkReplayConflict.Accepted && talkReplayConflict.Code == TalkErrorCodes.IdempotencyConflict &&
+            talkReplayConflict.FieldErrors.SequenceEqual(["idempotencyKey"]),
+            $"code={talkReplayConflict.Code}");
+
+        talkReplayActor.MapId = talkReplayAnchor.MapId;
+        talkReplayActor.X = talkReplayAnchor.X;
+        var talkReplayFresh = talkReplayService.Talk(
+            talkReplayActor, "NPC_LYAN", "DLG_P00_01_CLUE", new string('2', 32));
+        var talkReplayOther = NewPlayer("CHR_SELFCHECK_TALK_REPLAY_OTHER");
+        talkReplayOther.X = talkReplayAnchor.X;
+        talkReplayOther.Y = talkReplayAnchor.Y;
+        var talkReplayForeign = talkReplayService.Talk(
+            talkReplayOther, "NPC_LYAN", "DLG_P00_01_CLUE", talkReplayKey);
+        Check(
+            "contracts.talk_new_keys_and_other_owners_do_not_borrow_a_receipt",
+            !talkReplayFresh.Accepted && talkReplayFresh.Code == TalkErrorCodes.NotRevealed &&
+            !talkReplayForeign.Accepted && talkReplayForeign.Code == TalkErrorCodes.NotRevealed &&
+            talkReplayQuests.GetState(talkReplayActor.CharacterId, "P00-01").State?.Revision == talkReplayState?.Revision,
+            $"fresh={talkReplayFresh.Code} other={talkReplayForeign.Code}");
+
+        var talkRaceActor = NewPlayer("CHR_SELFCHECK_TALK_RACE");
+        talkRaceActor.X = talkReplayAnchor.X;
+        talkRaceActor.Y = talkReplayAnchor.Y;
+        talkReplayQuests.Accept(talkRaceActor, "P00-01");
+        using var talkRaceStart = new Barrier(2);
+        var talkRaceRequests = Enumerable.Range(0, 2).Select(_ => Task.Factory.StartNew(() =>
+        {
+            talkRaceStart.SignalAndWait();
+            return talkReplayService.Talk(
+                talkRaceActor, "NPC_LYAN", "DLG_P00_01_CLUE", new string('3', 32));
+        }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default)).ToArray();
+        Task.WaitAll(talkRaceRequests);
+        var talkRaceResults = talkRaceRequests.Select(request => request.Result).ToArray();
+        var talkRaceState = talkReplayQuests.GetState(talkRaceActor.CharacterId, "P00-01").State;
+        Check(
+            "contracts.talk_concurrent_same_key_has_one_credit_and_one_historical_replay",
+            talkRaceResults.All(outcome => outcome.Accepted) &&
+            talkRaceResults.Count(outcome => outcome.Result is { Replayed: false, Credited: true }) == 1 &&
+            talkRaceResults.Count(outcome => outcome.Result is { Replayed: true, Credited: true }) == 1 &&
+            talkRaceState?.ObjectiveCounters.GetValueOrDefault(talkReplayDefinition.Objectives[0].ObjectiveId) == 1,
+            $"accepted={talkRaceResults.Count(outcome => outcome.Accepted)} state={talkRaceState?.State}");
 
         // ─── QOD-21 Q4: two owners in the audience, and losing the row ────
 
@@ -8509,6 +8954,87 @@ public static class ServiceSelfCheck
             $"/{audienceBossForOwner.Hp} stranger={audienceBossForStranger.HealthState} " +
             $"dead={audienceDeadBoss.HealthState}/{audienceDeadBoss.State}/" +
             $"{audienceDeadBoss.Targetable}");
+
+        var audienceLockActor = NewArenaOwner("CHR_SELFCHECK_AOI_BOSS_LOCK", 181);
+        var audienceLockHp = audienceLockActor.Hp;
+        var audienceLockRevision = audienceLockActor.Revision;
+        var audienceLockProbe = new ActorLockProbeBossBridge(audienceLockActor);
+        var audienceLockProjection = new WorldAoiProjectionService(
+            audienceRegistry,
+            new MobLifecycleService(audienceRegistry, geometry, aoiMobOptions, audienceClock),
+            enabledCombat, new GatherClaimStore(audienceClock), new MobCombatStateStore(),
+            audienceLockProbe);
+        var audienceLockSnapshot = WorldSnapshotFactory.CreateV2(
+            audienceLockActor, audienceLockProjection, audienceClock);
+        Check(
+            "world.snapshot_releases_actor_before_boss_audience_and_keeps_captured_viewer",
+            !audienceLockProbe.ActorLockHeld && audienceLockProbe.ActorCommitted &&
+            audienceLockSnapshot.MapId == "MAP_BEN_MUA" &&
+            audienceLockSnapshot.FloorId == "OVERWORLD" &&
+            audienceLockSnapshot.Revision == audienceLockRevision &&
+            audienceLockSnapshot.Self.X == 181 && audienceLockSnapshot.Self.Hp == audienceLockHp &&
+            audienceLockSnapshot.Entities.Count == 1 &&
+            audienceLockSnapshot.Entities[0].MapInstanceId == "MAP_BEN_MUA#1" &&
+            audienceLockActor.MapId == "MAP_NOT_IN_BOUNDS" &&
+            audienceLockActor.Revision == audienceLockRevision + 1 &&
+            audienceLockActor.Hp == audienceLockHp - 1,
+            $"held={audienceLockProbe.ActorLockHeld} committed={audienceLockProbe.ActorCommitted} " +
+            $"snapshot={audienceLockSnapshot.MapId}/{audienceLockSnapshot.Self.X} " +
+            $"live={audienceLockActor.MapId}/{audienceLockActor.X}");
+
+        var audienceConcurrentActor = NewArenaOwner("CHR_SELFCHECK_AOI_BOSS_CONCURRENT", 181);
+        var audienceConcurrentQuests = new BossEncounterQuestStub();
+        audienceConcurrentQuests.Set(audienceConcurrentActor.CharacterId, QuestStates.Active);
+        var audienceConcurrentService = new AlphaBossEncounterService(
+            alphaDesign, audienceConcurrentQuests, audienceRegistry, enabledCombat,
+            new GuardDefenseService(new GuardWindowStore(), enabledCombat,
+                new CombatEventStore(new CombatEventStreamOptions())), new PlayerLifeLedger());
+        var audienceConcurrentProjection = new WorldAoiProjectionService(
+            audienceRegistry,
+            new MobLifecycleService(audienceRegistry, geometry, aoiMobOptions, audienceClock),
+            enabledCombat, new GatherClaimStore(audienceClock), new MobCombatStateStore(),
+            audienceConcurrentService);
+        TickBoss(audienceConcurrentService, audienceConcurrentActor, 7000, 7000);
+        var audienceConcurrentResolutions = new List<BossEncounterResolution>();
+        var audienceConcurrentSnapshots = new List<WorldSnapshotV2>();
+        var audienceConcurrentFinished = false;
+        if (!audienceLockProbe.ActorLockHeld)
+        {
+            using var audienceConcurrentBarrier = new System.Threading.Barrier(2);
+            var audienceTickTask = System.Threading.Tasks.Task.Factory.StartNew(() =>
+            {
+                audienceConcurrentBarrier.SignalAndWait();
+                for (var tick = 7001L; tick <= 7200; tick++)
+                {
+                    audienceConcurrentResolutions.AddRange(
+                        audienceConcurrentService.Tick([audienceConcurrentActor], tick));
+                }
+            }, System.Threading.CancellationToken.None,
+                System.Threading.Tasks.TaskCreationOptions.LongRunning,
+                System.Threading.Tasks.TaskScheduler.Default);
+            var audienceReadTask = System.Threading.Tasks.Task.Factory.StartNew(() =>
+            {
+                audienceConcurrentBarrier.SignalAndWait();
+                for (var read = 0; read < 200; read++)
+                {
+                    audienceConcurrentSnapshots.Add(WorldSnapshotFactory.CreateV2(
+                        audienceConcurrentActor, audienceConcurrentProjection, audienceClock));
+                }
+            }, System.Threading.CancellationToken.None,
+                System.Threading.Tasks.TaskCreationOptions.LongRunning,
+                System.Threading.Tasks.TaskScheduler.Default);
+            audienceConcurrentFinished = System.Threading.Tasks.Task.WaitAll(
+                [audienceTickTask, audienceReadTask], TimeSpan.FromSeconds(10));
+        }
+        Check(
+            "world.concurrent_boss_impacts_and_snapshot_reads_terminate",
+            audienceConcurrentFinished && audienceConcurrentSnapshots.Count == 200 &&
+            audienceConcurrentResolutions.Any(result => result.Damage > 0) &&
+            audienceConcurrentSnapshots.All(snapshot =>
+                snapshot.MapId == "MAP_BEN_MUA" && snapshot.FloorId == "OVERWORLD" &&
+                snapshot.Self.X == 181 && snapshot.Entities.Count == 1),
+            $"finished={audienceConcurrentFinished} reads={audienceConcurrentSnapshots.Count} " +
+            $"damagingImpacts={audienceConcurrentResolutions.Count(result => result.Damage > 0)}");
 
         // ─── Mãng Cốt encounter state machine (Q-F part 1) ────
 
@@ -10656,6 +11182,9 @@ public static class ServiceSelfCheck
         public QuestOutcome GetState(string characterId, string questId) =>
             _inner.GetState(characterId, questId);
 
+        public QuestOutcome GetState(PlayerSession actor, string questId) =>
+            _inner.GetState(actor, questId);
+
         public IReadOnlyList<QuestState> GetStates(string characterId) =>
             _inner.GetStates(characterId);
 
@@ -10695,6 +11224,9 @@ public static class ServiceSelfCheck
 
         public QuestOutcome GetState(string characterId, string questId) =>
             QuestOutcome.Rejected(QuestErrorCodes.InvalidTransition, retryable: false, "stub");
+
+        public QuestOutcome GetState(PlayerSession actor, string questId) =>
+            GetState(actor.CharacterId, questId);
 
         public IReadOnlyList<QuestState> GetStates(string characterId) => [];
 
@@ -10742,6 +11274,9 @@ public static class ServiceSelfCheck
                 })
                 : QuestOutcome.Rejected(QuestErrorCodes.QuestNotFound, retryable: false, "stub");
 
+        public QuestOutcome GetState(PlayerSession actor, string questId) =>
+            GetState(actor.CharacterId, questId);
+
         public IReadOnlyList<QuestState> GetStates(string characterId) => [];
 
         public QuestOutcome Accept(PlayerSession actor, string questId) =>
@@ -10777,6 +11312,41 @@ public static class ServiceSelfCheck
         public void OnMobKilled(CombatMobKill kill) => Kills.Add(kill);
     }
 
+    private sealed class ActorLockProbeBossBridge(PlayerSession actor) : ICombatBossBridge
+    {
+        public bool ActorLockHeld { get; private set; }
+        public bool ActorCommitted { get; private set; }
+        public int BossDefense => 0;
+
+        public bool IsLiveBossTarget(string characterId, WorldEntityInstance entity) => false;
+
+        public bool TryGetAudience(
+            string characterId, WorldEntityInstance entity, out BossEncounterAudience audience)
+        {
+            ActorLockHeld = System.Threading.Monitor.IsEntered(actor.SyncRoot);
+            if (!ActorLockHeld)
+            {
+                System.Threading.Tasks.Task.Run(() =>
+                {
+                    lock (actor.SyncRoot)
+                    {
+                        actor.MapId = "MAP_NOT_IN_BOUNDS";
+                        actor.FloorId = "OTHER_FLOOR";
+                        actor.X = 999;
+                        actor.Hp--;
+                        actor.Revision++;
+                        ActorCommitted = true;
+                    }
+                }).GetAwaiter().GetResult();
+            }
+            audience = default;
+            return false;
+        }
+
+        public (int HpBefore, int HpAfter, bool Died) ApplyDamage(
+            string characterId, int damage, long tick) => (0, 0, false);
+    }
+
     private sealed class BossEncounterQuestStub : IQuestService
     {
         private readonly Dictionary<string, string> _states = new(StringComparer.Ordinal);
@@ -10803,6 +11373,9 @@ public static class ServiceSelfCheck
                     Revision = 1
                 })
                 : QuestOutcome.Rejected(QuestErrorCodes.QuestNotFound, retryable: false, "stub");
+
+        public QuestOutcome GetState(PlayerSession actor, string questId) =>
+            GetState(actor.CharacterId, questId);
 
         public IReadOnlyList<QuestState> GetStates(string characterId) => [];
 

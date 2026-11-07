@@ -30,7 +30,20 @@ public sealed class InMemoryQuestService : IQuestService
         _clock = clock;
     }
 
-    public QuestOutcome GetState(string characterId, string questId)
+    public QuestOutcome GetState(PlayerSession actor, string questId)
+    {
+        ArgumentNullException.ThrowIfNull(actor);
+        lock (actor.SyncRoot)
+        {
+            return ReadState(actor.CharacterId, questId, actor.Level);
+        }
+    }
+
+    // Character-only reads cannot establish authoritative level eligibility.
+    public QuestOutcome GetState(string characterId, string questId) =>
+        ReadState(characterId, questId, level: null);
+
+    private QuestOutcome ReadState(string characterId, string questId, int? level)
     {
         if (!P1Validation.IsCharacterId(characterId))
         {
@@ -43,10 +56,13 @@ public sealed class InMemoryQuestService : IQuestService
             return definitionFailure!;
         }
 
-        var state = GetOrCreate(characterId, definition);
+        var state = GetOrCreate(characterId, definition, level);
         lock (state.SyncRoot)
         {
-            RefreshAvailability(characterId, definition, state);
+            if (level is { } authoritativeLevel)
+            {
+                RefreshAvailability(characterId, definition, state, authoritativeLevel);
+            }
             return QuestOutcome.Success(state.ToContract());
         }
     }
@@ -61,14 +77,13 @@ public sealed class InMemoryQuestService : IQuestService
         var snapshots = new List<QuestState>();
         foreach (var state in _states.GetForCharacter(characterId))
         {
-            if (!_quests.TryGet(state.QuestId, out var definition))
+            if (!_quests.TryGet(state.QuestId, out _))
             {
                 continue;
             }
 
             lock (state.SyncRoot)
             {
-                RefreshAvailability(characterId, definition, state);
                 snapshots.Add(state.ToContract());
             }
         }
@@ -91,20 +106,29 @@ public sealed class InMemoryQuestService : IQuestService
             return definitionFailure!;
         }
 
-        var state = GetOrCreate(actor.CharacterId, definition);
-        lock (state.SyncRoot)
+        lock (actor.SyncRoot)
         {
-            RefreshAvailability(actor.CharacterId, definition, state);
-            if (!string.Equals(state.State, QuestStates.Available, StringComparison.Ordinal))
+            var state = GetOrCreate(actor.CharacterId, definition, actor.Level);
+            lock (state.SyncRoot)
             {
-                return QuestOutcome.InvalidTransition(state.ToContract());
-            }
+                RefreshAvailability(actor.CharacterId, definition, state, actor.Level);
+                if (actor.Level < definition.MinLevel || actor.Level > definition.MaxLevel)
+                {
+                    return new QuestOutcome(state.ToContract(), new QuestFailure(
+                        QuestAcceptErrorCodes.PrerequisiteNotMet, false, ["level"]));
+                }
 
-            state.State = QuestStates.Active;
-            state.StepId = definition.InitialStepId;
-            state.Revision++;
-            state.UpdatedAtUtc = _clock.UtcNow;
-            return QuestOutcome.Success(state.ToContract());
+                if (!string.Equals(state.State, QuestStates.Available, StringComparison.Ordinal))
+                {
+                    return QuestOutcome.InvalidTransition(state.ToContract());
+                }
+
+                state.State = QuestStates.Active;
+                state.StepId = definition.InitialStepId;
+                state.Revision++;
+                state.UpdatedAtUtc = _clock.UtcNow;
+                return QuestOutcome.Success(state.ToContract());
+            }
         }
     }
 
@@ -375,15 +399,13 @@ public sealed class InMemoryQuestService : IQuestService
         }
     }
 
-    private PlayerQuestState GetOrCreate(string characterId, QuestDefinition definition)
+    private PlayerQuestState GetOrCreate(
+        string characterId, QuestDefinition definition, int? level)
     {
         return _states.GetOrAdd(characterId, definition.QuestId, () =>
         {
-            // A blocked quest is not a playable quest: it keeps its place in the
-            // graph but never becomes available, however complete the player's
-            // prerequisites are.
-            var initialState = !definition.IsBlocked &&
-                               PrerequisitesMet(characterId, definition)
+            var initialState = level is { } authoritativeLevel &&
+                               IsAvailable(characterId, definition, authoritativeLevel)
                 ? QuestStates.Available
                 : QuestStates.Locked;
 
@@ -400,17 +422,28 @@ public sealed class InMemoryQuestService : IQuestService
     private void RefreshAvailability(
         string characterId,
         QuestDefinition definition,
-        PlayerQuestState state)
+        PlayerQuestState state,
+        int level)
     {
-        if (!definition.IsBlocked &&
-            string.Equals(state.State, QuestStates.Locked, StringComparison.Ordinal) &&
-            PrerequisitesMet(characterId, definition))
+        if (state.State is not (QuestStates.Locked or QuestStates.Available))
         {
-            state.State = QuestStates.Available;
+            return;
+        }
+
+        var next = IsAvailable(characterId, definition, level)
+            ? QuestStates.Available
+            : QuestStates.Locked;
+        if (!string.Equals(state.State, next, StringComparison.Ordinal))
+        {
+            state.State = next;
             state.Revision++;
             state.UpdatedAtUtc = _clock.UtcNow;
         }
     }
+
+    private bool IsAvailable(string characterId, QuestDefinition definition, int level) =>
+        !definition.IsBlocked && level >= definition.MinLevel && level <= definition.MaxLevel &&
+        PrerequisitesMet(characterId, definition);
 
     private bool PrerequisitesMet(string characterId, QuestDefinition definition)
     {

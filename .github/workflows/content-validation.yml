@@ -31,6 +31,10 @@ jobs:
       # world records the server loads, and prints how many rows are actually approved.
       - name: Reconcile the top-down placement migration
         run: python Implementation/Tools/reconcile_placement_migration.py
+      - name: Reconcile combat and social source data
+        run: |
+          python Implementation/Tools/reconcile_combat_social_sources.py
+          python Implementation/Tools/reconcile_combat_social_sources.py --self-test
       # Production_Technical_Contracts_vi.md is the frozen contract baseline and nothing
       # read it until now; this compares its envelope, event and canonical-error lists to
       # the shipped schemas and wire codes and prints every divergence by name.

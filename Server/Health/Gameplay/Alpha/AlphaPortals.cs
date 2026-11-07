@@ -112,18 +112,7 @@ public sealed record PortalOutcome(
 // destination is whatever the registry says it is, which is the whole point of the
 // decision's "server-owned destination, no arbitrary teleport".
 //
-// Order of refusals, and why each is where it is:
-//   1. unknown id            -> portal_not_found, before any state is read;
-//   2. not standing at it     -> out_of_range (same-map requirement first, because a
-//                              character on another map is not "close", it is
-//                              somewhere else entirely);
-//   3. downed                 -> actor_not_alive, the code the cast path already uses
-//                              for the same condition. The transition service refuses
-//                              an alive-required reason on a dead actor too, so this
-//                              check is a clearer answer, not the only barrier;
-//   4. no chapter permission  -> portal_locked. DEC-TUTORIAL-TRANSPORT-20261106 names
-//                              this code as valid, and the grant it waits for is the
-//                              one P00-05's turn-in writes inside its own transaction.
+// Historical receipt or conflict precedes registry lookup and fresh-state validation.
 // Permission is read as the character's flag, NOT through
 // `ChapterUnlockStore.AllowsPortal(character, mapId)`: that helper is destination
 // specific (it only ever answers for MAP_THANH_LAC), so using it for both directions
@@ -177,20 +166,6 @@ public sealed class PortalService
     {
         ArgumentNullException.ThrowIfNull(actor);
 
-        var portal = AlphaPortalRegistry.Find(portalId);
-        if (portal is null)
-        {
-            return PortalOutcome.Rejected(
-                PortalErrorCodes.NotFound, retryable: false, ["payload.portalId"]);
-        }
-
-        // The replay lookup comes BEFORE the position, life and permission guards, on
-        // purpose. The decision's rule is that an old key answers its stored receipt
-        // and does not drag anyone back - which only means something if it still holds
-        // for a character who has since travelled, stood down, or walked away from the
-        // portal. Checked in the other order, a replay from anywhere else on the map is
-        // refused as out_of_range and the receipt can never be re-read at all: my first
-        // version did exactly that and the self-check caught it.
         var key = (actor.CharacterId, idempotencyKey);
         var requestHash = Hash(portalId);
         lock (_entries)
@@ -208,56 +183,65 @@ public sealed class PortalService
                 return PortalOutcome.Success(previous.Result with { Replayed = true });
             }
 
-            if (!string.Equals(actor.MapId, portal.SourceMapId, StringComparison.Ordinal) ||
-                !string.Equals(actor.FloorId, "OVERWORLD", StringComparison.Ordinal))
-            {
-                return PortalOutcome.Rejected(PortalErrorCodes.OutOfRange, retryable: true);
-            }
-
-            var deltaX = actor.X - portal.SourceXWu;
-            var deltaY = actor.Y - portal.SourceYWu;
-            if (Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY)) >
-                _options.MaxInteractionDistanceWu + 1e-9)
-            {
-                return PortalOutcome.Rejected(PortalErrorCodes.OutOfRange, retryable: true);
-            }
-
-            if (actor.Hp <= 0)
-            {
-                return PortalOutcome.Rejected(PortalErrorCodes.NotAlive, retryable: true);
-            }
-
-            if (!_chapters.HasFlag(
-                    actor.CharacterId, AlphaChapterUnlockRules.Flag))
+            var portal = AlphaPortalRegistry.Find(portalId);
+            if (portal is null)
             {
                 return PortalOutcome.Rejected(
-                    PortalErrorCodes.Locked, retryable: true, ["chapterPermission"]);
+                    PortalErrorCodes.NotFound, retryable: false, ["payload.portalId"]);
             }
 
-            // MAP_OR_FLOOR_CHANGE is the shipped reason for exactly this event, so the
-            // window closes with the truth of why rather than the death-return's.
+            long revision;
+            lock (actor.SyncRoot)
+            {
+                if (!string.Equals(actor.MapId, portal.SourceMapId, StringComparison.Ordinal) ||
+                    !string.Equals(actor.FloorId, "OVERWORLD", StringComparison.Ordinal))
+                {
+                    return PortalOutcome.Rejected(PortalErrorCodes.OutOfRange, retryable: true);
+                }
+
+                var deltaX = actor.X - portal.SourceXWu;
+                var deltaY = actor.Y - portal.SourceYWu;
+                if (Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY)) >
+                    _options.MaxInteractionDistanceWu + 1e-9)
+                {
+                    return PortalOutcome.Rejected(PortalErrorCodes.OutOfRange, retryable: true);
+                }
+
+                if (actor.Hp <= 0)
+                {
+                    return PortalOutcome.Rejected(PortalErrorCodes.NotAlive, retryable: true);
+                }
+
+                if (!_chapters.HasFlag(actor.CharacterId, AlphaChapterUnlockRules.Flag))
+                {
+                    return PortalOutcome.Rejected(
+                        PortalErrorCodes.Locked, retryable: true, ["chapterPermission"]);
+                }
+
+                var transition = _teleport.Teleport(
+                    actor,
+                    new TeleportCommand(
+                        portal.DestinationMapId,
+                        portal.DestinationXWu,
+                        portal.DestinationYWu,
+                        TeleportReasons.Quest));
+                if (!transition.IsSuccess)
+                {
+                    return PortalOutcome.Rejected(
+                        transition.ErrorCode ?? TeleportErrorCodes.InvalidMap,
+                        transition.Retryable,
+                        transition.Field is null ? Array.Empty<string>() : [transition.Field]);
+                }
+
+                revision = transition.Snapshot!.Revision;
+            }
+
+            // Engine cancellation must not hold the actor lock: ticks acquire engine then actor.
             var guardWasOpen = _windows.FindAny(actor.CharacterId) is { IsOpen: true };
             _windows.Close(actor.CharacterId, GuardWindowEndReasons.MapOrFloorChange);
             var cancelled = _engine.CancelPendingFor(actor.CharacterId);
             var endCount = ObservedCancellations(cancelled, CombatEventTypesV2.End);
             var cancelCount = ObservedCancellations(cancelled, CombatEventTypesV2.Cancel);
-
-            var transition = _teleport.Teleport(
-                actor,
-                new TeleportCommand(
-                    portal.DestinationMapId,
-                    portal.DestinationXWu,
-                    portal.DestinationYWu,
-                    TeleportReasons.Quest));
-            if (!transition.IsSuccess)
-            {
-                return PortalOutcome.Rejected(
-                    transition.ErrorCode ?? TeleportErrorCodes.InvalidMap,
-                    transition.Retryable,
-                    transition.Field is null ? Array.Empty<string>() : [transition.Field]);
-            }
-
-            var revision = transition.Snapshot!.Revision;
             var result = new PortalResult(
                 portal.PortalId,
                 portal.DestinationMapId,

@@ -132,76 +132,12 @@ public sealed class QuestTalkService
     {
         ArgumentNullException.ThrowIfNull(actor);
 
-        if (!_nodes.TryGet(nodeId, out var node))
-        {
-            return TalkOutcome.Rejected(
-                TalkErrorCodes.UnknownNode, retryable: false, ["payload.nodeId"]);
-        }
-
-        // The speaker is checked before anything else because it is the one claim the
-        // request makes about the world: a node spoken by another NPC must not be
-        // creditable by naming a different one.
-        if (!string.Equals(node.SpeakerNpcId, npcId, StringComparison.Ordinal))
-        {
-            return TalkOutcome.Rejected(
-                TalkErrorCodes.WrongSpeaker, retryable: false, ["payload.npcId"]);
-        }
-
-        // CHOICE is out of scope for this verb by decision, so a node that requires
-        // one is refused rather than answered with a picked branch. Refusing before
-        // the domain is called means no flag and no progress can be set by a request
-        // that was rejected.
-        if (node.Choices.Count > 0)
-        {
-            return TalkOutcome.Rejected(
-                TalkErrorCodes.ChoiceRequired, retryable: false, ["payload.nodeId"]);
-        }
-
-        var questId = node.QuestId;
-        if (!_catalog.TryGet(questId, out var definition))
-        {
-            return TalkOutcome.Rejected(
-                TalkErrorCodes.QuestNotFound, retryable: false, ["payload.nodeId"]);
-        }
-
-        if (!_anchors.TryResolve(npcId, actor.MapId, out var anchor) ||
-            !string.Equals(anchor.FloorId, GroundFloor, StringComparison.Ordinal) ||
-            !string.Equals(actor.FloorId, anchor.FloorId, StringComparison.Ordinal))
-        {
-            return TalkOutcome.Rejected(TalkErrorCodes.OutOfRange, retryable: true);
-        }
-
-        var deltaX = actor.X - anchor.X;
-        var deltaY = actor.Y - anchor.Y;
-        if (Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY)) >
-            _options.MaxInteractionDistanceWu + 1e-9)
-        {
-            return TalkOutcome.Rejected(TalkErrorCodes.OutOfRange, retryable: true);
-        }
-
-        var before = _quests.GetState(actor.CharacterId, questId).State;
-        var revealed = string.Equals(
-            node.ConditionKey,
-            NarrativeConditions.ForQuestState(before?.State),
-            StringComparison.Ordinal);
-        if (!revealed)
-        {
-            return TalkOutcome.Rejected(
-                TalkErrorCodes.NotRevealed, retryable: true, ["revealGate"]);
-        }
-
-        // Resolved from the quest definition, never from a name pattern: the objective
-        // a TALK event feeds is the one whose source target lists this NPC.
-        var objective = definition.Objectives.FirstOrDefault(candidate =>
-            string.Equals(candidate.Type, QuestObjectiveTypes.Talk, StringComparison.Ordinal) &&
-            candidate.TargetIds.Any(target =>
-                string.Equals(target, npcId, StringComparison.Ordinal)));
-        var counterBefore = Counter(before?.ObjectiveCounters, objective);
-
         var key = (actor.CharacterId, idempotencyKey);
         var requestHash = Hash(npcId, nodeId);
+        lock (actor.SyncRoot)
         lock (_entries)
         {
+            // A receipt remains readable after its own credit changes the reveal gate.
             if (_entries.TryGetValue(key, out var previous))
             {
                 if (!string.Equals(previous.RequestHash, requestHash, StringComparison.Ordinal))
@@ -213,19 +149,68 @@ public sealed class QuestTalkService
                 return TalkOutcome.Success(previous.Result with { Replayed = true });
             }
 
-            // The domain call is the only writer: it owns the narrative flag and the
-            // verified TALK event, so this route cannot mint a progress path that
-            // bypasses the objective-scoped dedupe the quest runtime already enforces.
-            _narrative.Enter(actor, questId, npcId, nodeId);
+            if (!_nodes.TryGet(nodeId, out var node))
+            {
+                return TalkOutcome.Rejected(
+                    TalkErrorCodes.UnknownNode, retryable: false, ["payload.nodeId"]);
+            }
 
-            var after = _quests.GetState(actor.CharacterId, questId).State;
-            var counterAfter = Counter(after?.ObjectiveCounters, objective);
+            if (!string.Equals(node.SpeakerNpcId, npcId, StringComparison.Ordinal))
+            {
+                return TalkOutcome.Rejected(
+                    TalkErrorCodes.WrongSpeaker, retryable: false, ["payload.npcId"]);
+            }
 
-            // Credited is measured, not assumed: the objective counter has to have
-            // moved. A replayed node under a different key therefore answers
-            // `credited: false` with no objective named, which is what the contract's
-            // own validator requires of a non-credit.
-            var credited = objective is not null && counterAfter > counterBefore;
+            if (node.Choices.Count > 0)
+            {
+                return TalkOutcome.Rejected(
+                    TalkErrorCodes.ChoiceRequired, retryable: false, ["payload.nodeId"]);
+            }
+
+            var questId = node.QuestId;
+            if (!_catalog.TryGet(questId, out var definition))
+            {
+                return TalkOutcome.Rejected(
+                    TalkErrorCodes.QuestNotFound, retryable: false, ["payload.nodeId"]);
+            }
+
+            if (!_anchors.TryResolve(npcId, actor.MapId, out var anchor) ||
+                !string.Equals(anchor.FloorId, GroundFloor, StringComparison.Ordinal) ||
+                !string.Equals(actor.FloorId, anchor.FloorId, StringComparison.Ordinal))
+            {
+                return TalkOutcome.Rejected(TalkErrorCodes.OutOfRange, retryable: true);
+            }
+
+            var deltaX = actor.X - anchor.X;
+            var deltaY = actor.Y - anchor.Y;
+            if (Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY)) >
+                _options.MaxInteractionDistanceWu + 1e-9)
+            {
+                return TalkOutcome.Rejected(TalkErrorCodes.OutOfRange, retryable: true);
+            }
+
+            var before = _quests.GetState(actor, questId).State;
+            if (!string.Equals(node.ConditionKey,
+                    NarrativeConditions.ForQuestState(before?.State), StringComparison.Ordinal))
+            {
+                return TalkOutcome.Rejected(
+                    TalkErrorCodes.NotRevealed, retryable: true, ["revealGate"]);
+            }
+
+            var objective = definition.Objectives.FirstOrDefault(candidate =>
+                string.Equals(candidate.Type, QuestObjectiveTypes.Talk, StringComparison.Ordinal) &&
+                candidate.TargetIds.Any(target =>
+                    string.Equals(target, npcId, StringComparison.Ordinal)));
+            var counterBefore = Counter(before?.ObjectiveCounters, objective);
+            var entered = _narrative.Enter(actor, questId, npcId, nodeId);
+            if (!entered.Entered)
+            {
+                return TalkOutcome.Rejected(
+                    TalkErrorCodes.NotRevealed, retryable: true, ["revealGate"]);
+            }
+
+            var after = _quests.GetState(actor, questId).State;
+            var credited = objective is not null && Counter(after?.ObjectiveCounters, objective) > counterBefore;
             var eventId = credited
                 ? "PQTALK_" + Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(
                         string.Join('|', actor.CharacterId, QuestAttemptId, questId,
@@ -240,7 +225,7 @@ public sealed class QuestTalkService
                 nodeId,
                 credited,
                 Replayed: false,
-                AppliedFlag: node.Flag,
+                AppliedFlag: entered.AppliedFlag,
                 eventId,
                 after?.Revision ?? before?.Revision ?? 0);
             _entries[key] = (requestHash, result);

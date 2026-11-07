@@ -69,7 +69,7 @@ public sealed class InMemoryQuestAcceptService : IQuestAcceptService
                 "payload.questId");
         }
 
-        var current = CurrentState(actor.CharacterId, questId);
+        var current = CurrentState(actor, questId);
 
         if (!string.Equals(definition.StartNpcId, npcId, StringComparison.Ordinal))
         {
@@ -117,13 +117,13 @@ public sealed class InMemoryQuestAcceptService : IQuestAcceptService
                 QuestAcceptErrorCodes.OutOfRange, retryable: true, current);
         }
 
-        if (!PrerequisitesMet(actor.CharacterId, definition))
+        if (actor.Level < definition.MinLevel || actor.Level > definition.MaxLevel)
         {
             return QuestAcceptOutcome.Rejected(
-                QuestAcceptErrorCodes.PrerequisiteNotMet, retryable: false, current);
+                QuestAcceptErrorCodes.PrerequisiteNotMet, retryable: false, current, "level");
         }
 
-        if (actor.Level < definition.MinLevel || actor.Level > definition.MaxLevel)
+        if (!PrerequisitesMet(actor.CharacterId, definition))
         {
             return QuestAcceptOutcome.Rejected(
                 QuestAcceptErrorCodes.PrerequisiteNotMet, retryable: false, current);
@@ -164,8 +164,8 @@ public sealed class InMemoryQuestAcceptService : IQuestAcceptService
         return QuestAcceptOutcome.Success(accepted.State);
     }
 
-    private QuestState? CurrentState(string characterId, string questId) =>
-        _quests.GetState(characterId, questId).State;
+    private QuestState? CurrentState(PlayerSession actor, string questId) =>
+        _quests.GetState(actor, questId).State;
 
     private bool PrerequisitesMet(string characterId, QuestDefinition definition)
     {

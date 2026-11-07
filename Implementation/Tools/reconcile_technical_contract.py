@@ -197,14 +197,14 @@ def main() -> int:
         for found in ledger_capacity.finditer(
                 path.read_text(encoding="utf-8", errors="ignore")):
             by_capacity.setdefault(int(found.group(1)), []).append(path.stem)
-    print("server side: the idempotency ledgers are in-memory, bounded per character, "
-          "with capacities read from the declaring constants - "
+    print("server source: declared Capacity/LedgerCapacity thresholds - "
           + ", ".join(f"{capacity} ({len(sorted(set(names)))}: "
                       f"{', '.join(sorted(set(names)))})"
                       for capacity, names in sorted(by_capacity.items()))
-          + " - and are lost on restart, and no rate limiting exists on any endpoint, so "
-          "both numbers above are unreachable today (section 5 and section 6 of the "
-          "contract)")
+          + "; declarations are not proof of enforcement, owner scope, or expiry")
+    print("named limits: Health state/receipts remain in-memory and do not survive restart; "
+          "the production retention guarantee is unmet. This script does not run the "
+          "replay acceptance baseline or establish rate-limit enforcement.")
     if RATE_LIMIT_SENTENCE in doc_text.lower() and not any(
         "ratelimit" in path.name.lower() or "rate_limit" in path.name.lower()
         for path in SERVER_DIR.rglob("*.cs")

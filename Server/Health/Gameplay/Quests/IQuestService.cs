@@ -7,6 +7,8 @@ public interface IQuestService
 {
     QuestOutcome GetState(string characterId, string questId);
 
+    QuestOutcome GetState(PlayerSession actor, string questId);
+
     IReadOnlyList<QuestState> GetStates(string characterId);
 
     QuestOutcome Accept(PlayerSession actor, string questId);

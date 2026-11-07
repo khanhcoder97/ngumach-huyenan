@@ -127,3 +127,77 @@ dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check   # 568 passed,
 
 Bảng capacities cũng in ra từ `reconcile_technical_contract.py`, đọc từ hằng số khai báo chứ
 không gõ tay — cùng bài học khiến công cụ đó trước đây sai ("256 entries").
+
+## 7. Bổ sung 2026-11-07 — adapter phải mang toàn receipt, không chỉ bool
+
+Mục 4 là sketch lịch sử, **chưa đủ để triển khai**: `TryLookupReturnAsync -> bool` không trả
+snapshot đã commit; `RecordReturnAsync` thiếu HP/MP/map/coordinate/tick/cleanup/death identity.
+Không tái dựng các field đó từ actor hiện tại, vì đó là một đời khác. Các con số ở mục 6 thuộc
+`ce93db6`, không là kết quả hiện hành. Tại source head `1af85783b13fc8508a4744078168f72bc5a70830`,
+chạy lại hai lệnh Python cho 35 schema/35 example, 64 wire-code constants và 5/13 khớp tên;
+retention 30 ngày và 10.000 replay vẫn chưa được Health in-memory đáp ứng.
+
+Nguồn DTO: `PlayerLifeLedger.cs:20–25` (`PlayerDeathRecord`) và `DeathReturn.cs:88–109`
+(`DeathReturnResult`). Đề nghị interface **chỉ ở artifact này**, chưa tạo project/writer hoặc
+nối Health vào Persistence. Tên và ownership library do Remote chốt; dùng domain types trong
+sketch để chỉ chính xác field cần chuyển, không yêu cầu library Remote phụ thuộc executable Health.
+
+```csharp
+public sealed record LifeSnapshot(
+    string CharacterId, int LifeVersion, PlayerDeathRecord? LatestDeath);
+
+public sealed record DeathReturnCommit(
+    string IdempotencyKey, string RequestHash, LifeSnapshot Before,
+    LifeSnapshot After, DeathReturnResult CommittedResult,
+    DateTimeOffset CommittedUtc);
+
+public enum ReturnLookupKind { Missing, Committed, Tombstoned }
+
+public sealed record ReturnLookup(
+    ReturnLookupKind Kind, string? OwnerCharacterId, string? RequestHash,
+    DeathReturnCommit? Commit);
+
+public interface ILifeReceiptAdapter
+{
+    ValueTask<LifeSnapshot?> ReadLifeAsync(string characterId, CancellationToken ct);
+    ValueTask<ReturnLookup> LookupReturnAsync(string idempotencyKey, CancellationToken ct);
+    ValueTask CommitReturnAsync(DeathReturnCommit commit, CancellationToken ct);
+}
+```
+
+`CommittedResult` phải bảo toàn **toàn bộ** field của record nguồn, gồm sessionId lịch sử,
+map/x/y, HP/maxHP/MP/maxMP, revision/serverTick, các cancellation count/booleans,
+nextReturnAllowedAtTick, deathEventId và newLifeVersion. Replay chỉ đổi `Applied=false`,
+`Replayed=true`; không sửa snapshot theo reconnect hoặc tick mới. Envelope correlationId/
+requestId thuộc request hiện tại, không là identity death hoặc receipt.
+
+Sửa phạm vi câu ở mục 4: lifeVersion là provenance bất biến của receipt, **không** là namespace
+lookup để cùng key thành fresh command ở đời sau. Service hiện có global key registry:
+`DeathReturn.cs:224–235` replay cùng owner và conflict khác owner. Adapter phải giữ semantics đó
+trong operation death-return (không vô tình đổi thành key riêng từng đời hoặc cho owner khác
+mượn receipt). `Missing` chỉ khi chưa có nghĩa vụ; tombstone không được biến thành `Missing`.
+Mã phản hồi khi hết hạn/tombstone chưa được quyết định, nên chưa nối handler cho nhánh này.
+
+`CommitReturnAsync` là điểm commit duy nhất cho Remote thiết kế: CAS/fencing của life trước,
+state+revision+life+receipt+ledger/outbox phải atomic trong transaction Remote. Không gọi
+writer sau khi Health đã mutate actor rồi tuyên bố crash-safe; interface này chưa chứng minh
+transaction hoặc recovery. Death damage và return cùng dùng identity từ ledger server, không
+mint ID từ request. Remote còn cần adapter commit death tích hợp transaction damage; chữ ký
+`RecordDeathAsync` ở mục 4 không tự làm damage/state durable.
+
+Reclaim sau superseded life cũng không là expiry: key cũ vẫn có thể quay lại khi nhân vật đang
+downed ở đời kế tiếp. Không xóa nghĩa vụ vì churn, không giảm 30 ngày xuống capacity. Tests
+bắt buộc cho adapter: >300 receipt khác sau hai đời đã return, replay key đời đầu khi đang
+downed đời ba/reconnect, khác owner conflict, concurrent same key, crash trước/sau commit,
+restart, tombstone không thành fresh action và 10.000 replay không tăng life/item/currency.
+Packet chờ Remote/owner chốt expiry/tombstone/fencing; chưa có DB writer thứ hai.
+
+### 7.1 Đính chính cách đọc capacity và bằng chứng local
+
+`Capacity`/`LedgerCapacity` là hằng khai báo, không tự chứng minh mọi store bounded/per-character hoặc nghĩa vụ hết hạn. Checkpoint này giữ mọi death-return receipt khi chưa có expiry được chứng minh; superseded life không xóa key. `ReceiptsHeldPastBound` đếm các commit vượt threshold, không là quota mới hoặc retention guarantee. Cooldown chỉ được dọn khi deadline thực đã qua, không vì thêm character khác. Churn 303 return ở cùng tick đã bắt cooldown cũ mất trước 60 tick; test giữ HP/revision/life không đổi khi bị từ chối. Receipt đời đầu khi đang downed đời ba vẫn chỉ replay lịch sử, kể cả reconnect; khác owner vẫn conflict.
+
+Release candidate: build 0 warning/error, ba lượt self-check đều 600 passed/0 failed/600 total. Đây là chứng cứ in-process, không crash/restart/durability proof. Reconciliation nay chỉ in threshold từ source và nêu riêng phạm vi chưa kiểm; không suy ra bài 10.000 replay thất bại hoặc thành công từ một con số capacity. Yêu cầu retention 30 ngày vẫn chưa đạt; baseline replay production chưa được nghiệm thu.
+
+### 7.2 Checkpoint sau portal/snapshot — 2026-11-07
+
+Mốc600 ở mục7.1 là candidate trước tám regression portal/snapshot, không xóa lịch sử. Restored final candidate hiện đo ba log hoàn chỉnh **608 passed/0 failed/608 total**, build0warning/error. Portal cleanup-before-failed-teleport mutation cho605/3/608; snapshot actor-lock mutation cho606/2/608; cả hai đã restore trước final build. Logging tự drain trước process exit; log thiếu aggregate không dùng để suy tổng. Alpha HTTP132checks, death-return17, không biến chúng thành crash/restart/retention proof. Full source/commands/rawHTTP/limits ở `Implementation/Reports/QOD-18_handoff_vi.md` §8; exact commit/CI được nêu trong checkpoint issue. Adapter mục7 vẫn là artifact cho Remote review, chưa nối writer.

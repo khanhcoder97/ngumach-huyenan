@@ -51,6 +51,9 @@ public sealed record ProjectedEntityV2(
     long Revision,
     long LifeId);
 
+public sealed record WorldAoiViewer(
+    string CharacterId, string MapId, string FloorId, double X, double Y);
+
 public sealed class WorldAoiProjectionService
 {
     private const string EliteSuffix = "_ELITE";
@@ -87,7 +90,7 @@ public sealed class WorldAoiProjectionService
     // position when this viewer is the one escorting that actor, otherwise the canonical
     // anchor. Both the AOI distance test and the projected coordinates go through here, so
     // a walking NPC cannot be visible at its anchor while being reported somewhere else.
-    private (double X, double Y) EscortPosition(WorldEntityInstance entity, PlayerSession viewer)
+    private (double X, double Y) EscortPosition(WorldEntityInstance entity, WorldAoiViewer viewer)
     {
         if (_npcPositions is { } positions &&
             positions.TryGetEscortPosition(
@@ -104,7 +107,19 @@ public sealed class WorldAoiProjectionService
 
     // Returns the entities visible to this viewer and updates the remembered
     // visibility set used for the 48 WU leave radius on the next read.
-    public IReadOnlyList<ProjectedEntityV2> Project(PlayerSession viewer)
+    public IReadOnlyList<ProjectedEntityV2> Project(PlayerSession actor)
+    {
+        ArgumentNullException.ThrowIfNull(actor);
+        WorldAoiViewer viewer;
+        lock (actor.SyncRoot)
+        {
+            viewer = new WorldAoiViewer(
+                actor.CharacterId, actor.MapId, actor.FloorId, actor.X, actor.Y);
+        }
+        return Project(viewer);
+    }
+
+    public IReadOnlyList<ProjectedEntityV2> Project(WorldAoiViewer viewer)
     {
         ArgumentNullException.ThrowIfNull(viewer);
         var session = _visibility.GetOrAdd(
@@ -149,7 +164,7 @@ public sealed class WorldAoiProjectionService
         _visibility.TryRemove(characterId, out _);
 
     private ProjectedEntityV2 Map(
-        WorldEntityInstance entity, PlayerSession viewer, string mapInstanceId)
+        WorldEntityInstance entity, WorldAoiViewer viewer, string mapInstanceId)
     {
         var isMob = string.Equals(entity.Kind, WorldEntityKinds.Mob, StringComparison.Ordinal);
         var isBoss = string.Equals(entity.Kind, WorldEntityKinds.Boss, StringComparison.Ordinal);
@@ -250,7 +265,7 @@ public sealed class WorldAoiProjectionService
             entity.LifeId);
     }
 
-    private string ResolveAvailability(WorldEntityInstance entity, PlayerSession viewer)
+    private string ResolveAvailability(WorldEntityInstance entity, WorldAoiViewer viewer)
     {
         if (string.Equals(
                 entity.ClaimPolicy, WorldEntityClaimPolicies.PerCharacter, StringComparison.Ordinal))
