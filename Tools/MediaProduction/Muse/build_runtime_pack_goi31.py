@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """MEDIA-02 checkpoint 34 (Goi 31 item 4): minimal runtime pack.
 
+Checkpoint 37 extends it with CIN_003 (draft mix v1, same recipe);
+the CP34 scenes are verified unchanged on re-run (idempotent
+verify_muxed path), never re-muxed.
+
 Turns the per-scene clips for the prologue + CIN_001/002/004/006 into
 a playable runtime pack:
 
@@ -43,6 +47,7 @@ ROOT = Path(".")
 CINE = ROOT / "ClientGodot/assets/cinematics"
 MIX_V3 = ROOT / "ClientGodot/assets/audio/mix/p0_v3"
 MIX_CIN006 = ROOT / "Art_Source/Audio/Muse/MIX/CIN006_DRAFT_V1"
+MIX_CIN003 = ROOT / "Art_Source/Audio/Muse/MIX/CIN003_DRAFT_V1"
 FAILURES = []
 
 
@@ -104,7 +109,8 @@ def video_params(p: dict) -> dict:
 
 
 def mux(scene_id: str, mix_wav: Path, mix_version: str,
-        mix_manifest_sha: str, work: Path) -> dict:
+        mix_manifest_sha: str, work: Path,
+        checkpoint_label: str = "CP34") -> dict:
     """Mux mix audio into the scene's OGV + MP4; return audio records."""
     d = CINE / scene_id
     records = {}
@@ -136,8 +142,8 @@ def mux(scene_id: str, mix_wav: Path, mix_version: str,
              "-map", "0:v", "-map", "1:a",
              "-c:v", "copy", "-c:a", audio_codec, "-b:a", bitrate,
              "-t", f"{bv['duration']:.3f}",
-             "-metadata", f"comment=Ngũ Mạch MEDIA-02 CP34: embedded "
-                          f"draft mix {mix_version}",
+             "-metadata", f"comment=Ngũ Mạch MEDIA-02 {checkpoint_label}: "
+                          f"embedded draft mix {mix_version}",
              "-f", key,
              str(tmp)])
         after = probe(tmp)
@@ -236,7 +242,8 @@ def check_poster(scene_id: str) -> dict:
             "width": 640, "height": 360}
 
 
-def update_export_manifest(scene_id: str, audio_records: dict) -> None:
+def update_export_manifest(scene_id: str, audio_records: dict,
+                           checkpoint_note: str = None) -> None:
     d = CINE / scene_id
     mp = d / "scene_export_manifest_v1.json"
     exp = json.loads(mp.read_text(encoding="utf-8"))
@@ -246,10 +253,11 @@ def update_export_manifest(scene_id: str, audio_records: dict) -> None:
         exp["files"][key]["sha256"] = sha256(f)
         exp["files"][key]["sizeBytes"] = f.stat().st_size
         exp["files"][key]["audio"] = audio_records[key]
-    exp["checkpoint"] = ("MEDIA-02 checkpoint 34 - Goi 31 item 4: "
-                         "embedded draft mix audio in the runtime OGV "
-                         "+ review MP4 (video streams bit-identical); "
-                         "poster/SRT/timing unchanged")
+    exp["checkpoint"] = checkpoint_note or (
+        "MEDIA-02 checkpoint 34 - Goi 31 item 4: "
+        "embedded draft mix audio in the runtime OGV "
+        "+ review MP4 (video streams bit-identical); "
+        "poster/SRT/timing unchanged")
     mp.write_text(json.dumps(exp, ensure_ascii=False, indent=2) + "\n",
                   encoding="utf-8")
 
@@ -333,6 +341,8 @@ def main() -> None:
         "CIN_004": (MIX_V3 / "CIN_004_mix_draft_v3.wav", "v3_fully_composed"),
         "CIN_006": (MIX_CIN006 / "CIN_006_mix_draft_v1.wav",
                     "v1_cin006_proposed"),
+        "CIN_003": (MIX_CIN003 / "CIN_003_mix_draft_v1.wav",
+                    "v1_cin003_proposed"),
     }
     mix_manifest_shas = {}
     v3_manifest = json.loads(
@@ -345,6 +355,11 @@ def main() -> None:
         .read_text(encoding="utf-8"))
     mix_manifest_shas["CIN_006"] = \
         cin006_manifest["scenes"][0]["mix"]["sha256"]
+    cin003_manifest = json.loads(
+        (MIX_CIN003 / "CIN003_MIX_V1_manifest_v1.json")
+        .read_text(encoding="utf-8"))
+    mix_manifest_shas["CIN_003"] = \
+        cin003_manifest["scenes"][0]["mix"]["sha256"]
 
     pack_scenes = []
     for scene_id, (mix_wav, mix_version) in scenes.items():
@@ -366,10 +381,18 @@ def main() -> None:
             audio = verify_muxed(scene_id, work)
         else:
             audio = mux(scene_id, mix_wav, mix_version,
-                        mix_manifest_shas[scene_id], work)
+                        mix_manifest_shas[scene_id], work,
+                        checkpoint_label=("CP37" if scene_id == "CIN_003"
+                                          else "CP34"))
         if audio is None:
             continue
-        update_export_manifest(scene_id, audio)
+        note = None
+        if scene_id == "CIN_003":
+            note = ("MEDIA-02 checkpoint 37 - CIN_003 draft mix v1: "
+                    "embedded draft mix audio in the runtime OGV "
+                    "+ review MP4 (video streams bit-identical); "
+                    "poster/SRT/timing unchanged")
+        update_export_manifest(scene_id, audio, checkpoint_note=note)
         pack_scenes.append({
             "sceneId": scene_id,
             "durationSeconds": audio["ogv"]["durationSeconds"],
@@ -458,7 +481,7 @@ def main() -> None:
 
     pack = {
         "manifestId": "NGM_RUNTIME_PACK_GOI31_V1",
-        "checkpoint": "MEDIA-02 checkpoint 34 - Goi 31 item 4: minimal runtime pack (prologue + CIN_001/002/004/006)",
+        "checkpoint": "MEDIA-02 checkpoint 37 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 draft mix v1 embedded in the runtime OGV + review MP4; CP34 scenes verified unchanged)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "status": "DRAFT_NOT_FINAL",
@@ -480,14 +503,19 @@ def main() -> None:
             "subtitles) is a review-only viewing variant, NOT part "
             "of the runtime pack.",
             "Embedded mixes are DRAFT_MIX_NOT_FINAL; P0 scenes embed "
-            "v3 (fully composed), CIN_006 embeds its v1; v1/v2 P0 "
-            "mixes stay as separate files and Codex's adapter "
-            "chooses the mix version at PR review -- swapping the "
-            "embedded mix is a re-mux only, no picture change.",
+            "v3 (fully composed), CIN_006 embeds its v1 and CIN_003 "
+            "embeds its v1; v1/v2 P0 mixes stay as separate files and "
+            "Codex's adapter chooses the mix version at PR review -- "
+            "swapping the embedded mix is a re-mux only, no picture "
+            "change.",
             "CIN_006 stem assignment (thang_long music + "
             "thang_long_crowd ambience + reveal at 6.0 s) is "
             "PROPOSED_CANDIDATE; the alternate take CIN_006_ALT_T01 "
             "is NOT in the pack (DEC-MEDIA-P0 Q3).",
+            "CIN_003 stem assignment (ben_mua music + river_shore "
+            "ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the "
+            "CP17 draft VO take fits inside its 12.5-17.5 s window "
+            "(ends 16.532 s, no overrun, no tail trim).",
             "Final picture per shot stays blocked on the character "
             "lock; these clips are animatic-level Ken Burns on "
             "storyboard keyframes, NOT final pose animation.",

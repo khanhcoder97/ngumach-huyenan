@@ -1,6 +1,6 @@
 {
   "manifestId": "NGM_RUNTIME_PACK_GOI31_V1",
-  "checkpoint": "MEDIA-02 checkpoint 34 - Goi 31 item 4: minimal runtime pack (prologue + CIN_001/002/004/006)",
+  "checkpoint": "MEDIA-02 checkpoint 37 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 draft mix v1 embedded in the runtime OGV + review MP4; CP34 scenes verified unchanged)",
   "decisionId": "DEC-MEDIA-P0-20261105",
   "branch": "muse/media-production-20261104",
   "status": "DRAFT_NOT_FINAL",
@@ -14,8 +14,9 @@
   "contract": [
     "Runtime playback uses the clean OGV + the sidecar SRT overlay; no baked subtitles in any runtime file.",
     "CIN_000_640x360_30fps_sub_vi.mp4 (burned-in + embedded subtitles) is a review-only viewing variant, NOT part of the runtime pack.",
-    "Embedded mixes are DRAFT_MIX_NOT_FINAL; P0 scenes embed v3 (fully composed), CIN_006 embeds its v1; v1/v2 P0 mixes stay as separate files and Codex's adapter chooses the mix version at PR review -- swapping the embedded mix is a re-mux only, no picture change.",
+    "Embedded mixes are DRAFT_MIX_NOT_FINAL; P0 scenes embed v3 (fully composed), CIN_006 embeds its v1 and CIN_003 embeds its v1; v1/v2 P0 mixes stay as separate files and Codex's adapter chooses the mix version at PR review -- swapping the embedded mix is a re-mux only, no picture change.",
     "CIN_006 stem assignment (thang_long music + thang_long_crowd ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the alternate take CIN_006_ALT_T01 is NOT in the pack (DEC-MEDIA-P0 Q3).",
+    "CIN_003 stem assignment (ben_mua music + river_shore ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 16.532 s, no overrun, no tail trim).",
     "Final picture per shot stays blocked on the character lock; these clips are animatic-level Ken Burns on storyboard keyframes, NOT final pose animation.",
     "No ear audition has been done (NOT_AUDITIONED); loudness figures here are measured from the encoded bytes."
   ],
@@ -294,6 +295,64 @@
           "path": "assets/cinematics/CIN_006/CIN_006_timing_v1.json",
           "sha256": "4c237f04195989b6b113a8800d114320ca05079bb8163fa0c9d3871988402955",
           "sizeBytes": 2704
+        }
+      }
+    },
+    {
+      "sceneId": "CIN_003",
+      "durationSeconds": 18.0,
+      "embeddedMixVersion": "v1_cin003_proposed",
+      "files": {
+        "ogv": {
+          "codec": "vorbis",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bitRateKbps": 160,
+          "sourceMix": "Art_Source/Audio/Muse/MIX/CIN003_DRAFT_V1/CIN_003_mix_draft_v1.wav",
+          "sourceMixSha256": "35def4f0f2135991130aa03832a4bd817de7edfa25796b6c5e14af5a31d4fad4",
+          "mixVersion": "v1_cin003_proposed",
+          "integratedLUFS": "-21.12",
+          "truePeakDBTP": "-4.52",
+          "durationSeconds": 18.0,
+          "videoStoredFrames": 502,
+          "path": "assets/cinematics/CIN_003/CIN_003_640x360_30fps.ogv",
+          "sha256": "133ad2ddf14e942c54a209cb744aca6095c861ba3bacd6d0ebebf735c59c7b21",
+          "sizeBytes": 734469
+        },
+        "mp4": {
+          "codec": "aac",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bitRateKbps": 192,
+          "sourceMix": "Art_Source/Audio/Muse/MIX/CIN003_DRAFT_V1/CIN_003_mix_draft_v1.wav",
+          "sourceMixSha256": "35def4f0f2135991130aa03832a4bd817de7edfa25796b6c5e14af5a31d4fad4",
+          "mixVersion": "v1_cin003_proposed",
+          "integratedLUFS": "-21.18",
+          "truePeakDBTP": "-4.67",
+          "durationSeconds": 18.0,
+          "videoStoredFrames": 540,
+          "path": "assets/cinematics/CIN_003/CIN_003_640x360_30fps.mp4",
+          "sha256": "657fe12cf148702887be55d64a62dbb6968b0a6f317dbf06ced86c248a869c75",
+          "sizeBytes": 1658233
+        },
+        "poster": {
+          "sha256": "aeffda939892e64c76c62b06a9af66b3a4e4cb1300cd26a6e34fc791085d8d39",
+          "sizeBytes": 420141,
+          "width": 640,
+          "height": 360,
+          "path": "assets/cinematics/CIN_003/CIN_003_poster.png"
+        },
+        "srt": {
+          "cues": 1,
+          "sha256": "c98244a4892e768bd73e676e1f0a74569957e869b704921813edc0969dc5c363",
+          "sizeBytes": 108,
+          "encoding": "UTF-8/NFC",
+          "path": "assets/cinematics/CIN_003/CIN_003_vi.srt"
+        },
+        "timing": {
+          "path": "assets/cinematics/CIN_003/CIN_003_timing_v1.json",
+          "sha256": "0e6452a072ec1e87205116e7b9de4ea51e1cb5046eb5bda9fa8b41d4d2baa726",
+          "sizeBytes": 2377
         }
       }
     }

@@ -1,16 +1,16 @@
 {
  "manifestId": "NGM_RUNTIME_AUDIO_V1",
- "checkpoint": "MEDIA-02 checkpoint 34 - M6 runtime delivery revised: status phrasing corrected (all 21 dialogue windows approved for DRAFT VO production per the Goi 30 D1 decision, PR #120; only CIN_001_S05 is DECIDED); audio files: CIN_006 draft mix v1 added (total 610 -> 611, mix 13 -> 14); P0 draft mixes v3 (checkpoint 31), prologue (checkpoint 27/28), composed music (checkpoint 26) and composed ambience (checkpoint 30) unchanged",
+ "checkpoint": "MEDIA-02 checkpoint 37 - M6 runtime delivery revised: CIN_003 draft mix v1 added (total 611 -> 612, mix 14 -> 15); status phrasing corrected (all 21 dialogue windows approved for DRAFT VO production per the Goi 30 D1 decision, PR #120; only CIN_001_S05 is DECIDED); P0 draft mixes v3 (checkpoint 31), CIN_006 mix v1 (checkpoint 34), prologue (checkpoint 27/28), composed music (checkpoint 26) and composed ambience (checkpoint 30) unchanged",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "counts": {
   "music_ambience": 22,
   "sfx_ui_variants": 519,
   "vo": 30,
-  "mix": 14,
+  "mix": 15,
   "composed": 26
  },
- "totalFiles": 611,
+ "totalFiles": 612,
  "notes": [
   "Every file copied from real bytes and verified: sha256 + size + ffprobe duration against the checkpoint 04/07/08 pack records. LFS pointers fail the copy.",
   "All cues remain RENDERED_CANDIDATE / DRAFT_NOT_FINAL_VO. Files are delivered into the runtime tree; wiring them into Godot scenes/code is Codex's presentation adapter work (Muse writes no .gd/.tscn/.cs).",
@@ -11635,6 +11635,24 @@
    "channels": 2,
    "integratedLufs": -22.01,
    "truePeakDbtp": -3.39,
+   "assetState": "DRAFT_MIX_NOT_FINAL",
+   "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"
+  },
+  {
+   "runtimePath": "assets/audio/mix/cin003_v1/CIN_003_mix_draft_v1.wav",
+   "sourcePath": "Art_Source/Audio/Muse/MIX/CIN003_DRAFT_V1/CIN_003_mix_draft_v1.wav",
+   "sha256": "35def4f0f2135991130aa03832a4bd817de7edfa25796b6c5e14af5a31d4fad4",
+   "sizeBytes": 3456100,
+   "durationSeconds": 18.0,
+   "cueKey": "MIX/V1/CIN_003",
+   "category": "mix",
+   "sceneId": "CIN_003",
+   "mixVersion": "v1_cin003_proposed",
+   "codec": "pcm_s16le",
+   "sampleRateHz": 48000,
+   "channels": 2,
+   "integratedLufs": -21.16,
+   "truePeakDbtp": -4.63,
    "assetState": "DRAFT_MIX_NOT_FINAL",
    "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"
   },
