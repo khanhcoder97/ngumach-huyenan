@@ -372,6 +372,11 @@ namespace ClientCoreHttpRunner
                         "A tutorial chain authoritative in alpha catalog");
                     Check(tutorial.UnexpectedQuestIds.Count == 1 && tutorial.UnexpectedQuestIds[0] == "C1-01",
                         "A alpha catalog adds only C1-01");
+                    // Gói 32 checkpoint: the level-11 C1 slice must stay LOCKED for
+                    // this level-1 character; the alpha overlay only adds the record,
+                    // it must not open the chapter quest.
+                    var c1 = sessionA.Client.Quests.Where(q => q != null && q.questId == "C1-01").ToList();
+                    Check(c1.Count == 1 && c1[0].state == "LOCKED", "A C1-01 low-level locked");
                 }
                 else
                 {
