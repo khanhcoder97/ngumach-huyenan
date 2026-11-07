@@ -1743,6 +1743,93 @@ def check_cin010_mix():
          f"not a mix PASS")
 
 
+def check_playback_metadata():
+    """Checkpoint 43 (Codex WO32 item 4): playback metadata for embedded mixes.
+
+    Verifies ClientGodot/assets/cinematics/PLAYBACK_METADATA_v1.json against
+    the Goi 31 runtime pack + the cinematics manifest and against real bytes:
+    21 scene entries (11 with embedded soundtracks incl. the prologue, 10
+    silent), builder verdict PASS with no mismatches, embedded/silent sets
+    exactly matching pack-vs-clips, per-scene mixVersion equal to the pack's
+    embeddedMixVersion, source mix WAV sha256 equal to the recorded value,
+    silent scenes carrying NO_EMBEDDED_SOUNDTRACK with no mix attached, and
+    the audio-ownership policy block complete. The byte-level loudness/SHA
+    evidence was measured by build_playback_metadata_v1.py at build time;
+    this check verifies structure + cross-manifest consistency and file
+    hashes; it does not re-measure loudness and is not an ear audition.
+    """
+    path = ROOT / "ClientGodot/assets/cinematics/PLAYBACK_METADATA_v1.json"
+    if not path.exists():
+        err("playback metadata: missing PLAYBACK_METADATA_v1.json")
+        return
+    d = json.loads(path.read_text(encoding="utf-8"))
+    if d.get("manifestId") != "NGM_PLAYBACK_METADATA_V1":
+        err(f"playback metadata: manifestId {d.get('manifestId')} "
+            f"!= NGM_PLAYBACK_METADATA_V1")
+    ver = d.get("verification", {})
+    if ver.get("verdict") != "PASS" or ver.get("mismatches"):
+        err(f"playback metadata: builder verdict {ver.get('verdict')} "
+            f"mismatches {ver.get('mismatches')}")
+    pack = json.loads(
+        (ROOT / "ClientGodot/assets/cinematics/RUNTIME_PACK_GOI31_v1.json")
+        .read_text(encoding="utf-8"))
+    clips = json.loads(
+        (ROOT / "ClientGodot/assets/cinematics/RUNTIME_CINEMATICS_manifest_v1.json")
+        .read_text(encoding="utf-8"))
+    pack_versions = {s["sceneId"]: s["embeddedMixVersion"]
+                     for s in pack["scenes"]}
+    clip_ids = {s["sceneId"] for s in clips["sceneClips"]} | {"CIN_000"}
+    entries = {s["sceneId"]: s for s in d.get("scenes", [])}
+    if set(entries) != clip_ids:
+        err(f"playback metadata: scene set {sorted(entries)} "
+            f"!= cinematics set {sorted(clip_ids)}")
+    embedded = {sid for sid, s in entries.items()
+                if s.get("hasEmbeddedSoundtrack")}
+    silent = {sid for sid, s in entries.items()
+              if not s.get("hasEmbeddedSoundtrack")}
+    if embedded != set(pack_versions):
+        err(f"playback metadata: embedded set {sorted(embedded)} "
+            f"!= pack set {sorted(pack_versions)}")
+    for sid in sorted(embedded):
+        mix = entries[sid].get("embeddedMix") or {}
+        if mix.get("mixVersion") != pack_versions[sid]:
+            err(f"playback metadata {sid}: mixVersion "
+                f"{mix.get('mixVersion')} != pack {pack_versions[sid]}")
+        wav = mix.get("sourceMixWav")
+        if not wav:
+            err(f"playback metadata {sid}: no sourceMixWav recorded")
+            continue
+        p = ROOT / wav
+        if not p.exists():
+            err(f"playback metadata {sid}: sourceMixWav missing {wav}")
+        elif mix.get("sourceMixSha256") and sha256_of(p) != mix["sourceMixSha256"]:
+            err(f"playback metadata {sid}: sourceMixWav sha mismatch {wav}")
+        if entries[sid].get("audioOwnership") != "EMBEDDED_SOUNDTRACK_ONLY":
+            err(f"playback metadata {sid}: audioOwnership "
+                f"{entries[sid].get('audioOwnership')} "
+                f"!= EMBEDDED_SOUNDTRACK_ONLY")
+    for sid in sorted(silent):
+        if entries[sid].get("embeddedMix") is not None:
+            err(f"playback metadata {sid}: silent scene carries an embeddedMix")
+        if entries[sid].get("audioOwnership") != "NO_EMBEDDED_SOUNDTRACK":
+            err(f"playback metadata {sid}: audioOwnership "
+                f"{entries[sid].get('audioOwnership')} "
+                f"!= NO_EMBEDDED_SOUNDTRACK")
+    policy = d.get("audioOwnershipPolicy", {})
+    for key in ("embeddedScenes", "standaloneMixFiles", "voTakes",
+                "subtitles", "questSemantics"):
+        if key not in policy:
+            err(f"playback metadata: policy missing key {key}")
+    if d.get("reviewReel", {}).get("hasEmbeddedSoundtrack"):
+        err("playback metadata: review reel unexpectedly carries a soundtrack")
+    COUNTS["playback_metadata_scenes"] = len(entries)
+    COUNTS["playback_metadata_embedded"] = len(embedded)
+    COUNTS["playback_metadata_silent"] = len(silent)
+    note(f"playback metadata checked: {len(entries)} scenes "
+         f"({len(embedded)} embedded, {len(silent)} silent); "
+         f"WO32 item 4; not an ear audition")
+
+
 def check_ab_shortlist():
     """Checkpoint 33 (Goi 31 item 3): A/B review shortlist.
 
@@ -2612,11 +2699,12 @@ def main():
     check_cin008_mix()
     check_cin009_mix()
     check_cin010_mix()
+    check_playback_metadata()
     check_ab_shortlist()
     check_scene_clips()
     check_prologue()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 42 (CIN_010 draft mix v1: seventh scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1 and CIN_009 v1, same P0 v3 recipe, fully composed desert stems; CP17 draft VO take fits inside its window, ends 15.308 s, no overrun, no tail trim; runtime audio manifest total 616 -> 617, mix 19 -> 20)",
+        "checkpoint": "MEDIA-02 checkpoint 43 (playback metadata for embedded mixes, Codex WO32 item 4: PLAYBACK_METADATA_v1.json covers all 21 runtime cinematics — 11 with embedded soundtracks (prologue CIN_000 + CIN_001/002/003/004/005/006/007/008/009/010) and 10 silent scenes — with embeddedMix/voice/subtitle source and audio ownership per scene, every claim verified against real bytes by build_playback_metadata_v1.py; no runtime media files added or changed; runtime audio manifest total stays 617)",
         "base_integration": "6f2b465",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -2650,6 +2738,7 @@ def main():
             "CIN_008 draft mix v1 (checkpoint 40): fifth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1 and CIN_007 v1, same P0 v3 recipe (music tran_son + ambience river_shore + reveal stinger at 6.0 s + CP17 draft VO at 12.5 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_008 and the scene timing manifest lists only the reveal stinger as a candidate stem; tran_son is the composed set's bell-led gate form, matching the scene's central gate image (S02: tall wooden double gate nearly shut, lantern-lit), and river_shore is the water-edge bed for the bamboo forest pool (S03). Unlike CIN_005/CIN_006, the CP17 draft VO take FITS inside its 12.5-17.5 s window (3.552 s, ends 16.052 s): no overrun, no tail trim. Ducking evidence is measured over the full VO window (the CP39 method, retained for comparability). The mix measures -24.58 LUFS / -1.61 dBTP, quieter than the CIN_007 mix because the CP17 take itself is quieter (-23.10 LUFS per checkpoint 17); VO stays at unity per the recipe, no gain change was made. The v1 mix is embedded in CIN_008's runtime OGV + review MP4 (video streams copied bit-for-bit, verified by stored-frame counts). DRAFT_MIX_NOT_FINAL, no ear audition (NOT_AUDITIONED); adoption is Codex's adapter decision.",
             "CIN_009 draft mix v1 (checkpoint 41): sixth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1 and CIN_008 v1, same P0 v3 recipe (music lam_trieu + ambience waterfall + reveal stinger at 6.0 s + CP17 draft VO at 12.5 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_009 and the scene timing manifest lists only the reveal stinger as a candidate stem; lam_trieu is the composed set's G-major transposition with ornamented flute, carrying the forest's answering voice of the scene title 'Tieng rung duoc dap', and waterfall is the water bed for the stream running through all three shots. Unlike CIN_005/CIN_006, the CP17 draft VO take FITS inside its 12.5-17.5 s window (4.080 s, ends 16.580 s): no overrun, no tail trim. Ducking evidence is measured over the full VO window (the CP39 method, retained for comparability). The mix measures -17.84 LUFS / -2.91 dBTP, hotter than the CIN_008 mix because the CP17 take itself is hotter (-17.23 LUFS per checkpoint 17); VO stays at unity per the recipe, no gain change was made. The v1 mix is embedded in CIN_009's runtime OGV + review MP4 (video streams copied bit-for-bit, verified by stored-frame counts). DRAFT_MIX_NOT_FINAL, no ear audition (NOT_AUDITIONED); adoption is Codex's adapter decision.",
             "CIN_010 draft mix v1 (checkpoint 42): seventh scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1 and CIN_009 v1, same P0 v3 recipe (music sa_hoa + ambience desert_wind + reveal stinger at 6.0 s + CP17 draft VO at 12.5 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_010 and the scene timing manifest lists only the reveal stinger as a candidate stem; sa_hoa is the composed set's desert form ('Sa Hoa -- Lo va cat', kiln and sand: A minor pentatonic, dry bright plucks, 110 BPM), matching the scene's ash-gold caravan rest and last-water-flask image, and desert_wind is the desert wind bed for the dunes running through all three shots. Unlike CIN_005/CIN_006, the CP17 draft VO take FITS inside its 12.5-17.5 s window (2.808 s, ends 15.308 s): no overrun, no tail trim. Ducking evidence is measured over the full VO window (the CP39 method, retained for comparability). The mix measures -24.60 LUFS / -4.86 dBTP, quieter than the CIN_009 mix because the CP17 take itself is quieter (-22.01 LUFS per checkpoint 17, re-verified from real bytes this run); VO stays at unity per the recipe, no gain change was made. The v1 mix is embedded in CIN_010's runtime OGV + review MP4 (video streams copied bit-for-bit, verified by stored-frame counts). DRAFT_MIX_NOT_FINAL, no ear audition (NOT_AUDITIONED); adoption is Codex's adapter decision.",
+            "Playback metadata (checkpoint 43, Codex WO32 item 4): PLAYBACK_METADATA_v1.json records, for every runtime cinematic, whether a soundtrack is embedded, which mix (version + source WAV + sha256 + stems + VO take/window) and which subtitle source, plus the audio-ownership rules the presentation adapter must honour (embedded soundtrack only; standalone mix files and VO takes are alternates/components, never simultaneous layers; runtime subtitles are overlay SRT, burned variants review-only; rewatch/skip/seen/fallback grant no quest). All byte-level evidence (stream layout, embedded loudness vs source mix and pack record, file sha256, SRT cue counts) was measured by build_playback_metadata_v1.py at build time with a 0.40 LUFS tolerance; this check verifies structure, cross-manifest consistency and source-mix hashes. The metadata is a delivery FOR Codex's adapter; Muse does not wire playback. All mixes remain DRAFT_MIX_NOT_FINAL and NOT_AUDITIONED; final audible approval is pending per WO32.",
             "Prologue subtitled variant (checkpoint 28, owner request): a VIEWING variant only -- the canonical MP4/OGV keep the checkpoint 27 mix at its measured level (-20.81 LUFS) and the canonical SRT keeps its 6 cues. The variant's +5 dB is a flat presentation gain (no dynamics change, measured -15.83 LUFS / -4.09 dBTP on the variant file), and its readable SRT is a presentation split whose concatenated text is verified identical to the canonical SRT. Burned-in subtitle font is DejaVu Sans (the project has no locked Vietnamese display font, same placeholder status as the title card). No OGV subtitled variant: in-engine subtitle display is the presentation adapter's concern (Codex).",
         ],
     }
