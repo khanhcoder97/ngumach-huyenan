@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_AND_CONTRACT_PROTOTYPE",
+  "productionReady": false,
+  "decision": "USER_MODULAR_CHARACTER_20261107",
+  "engine": "Godot.NET 2D Compatibility",
+  "framePolicy": {
+    "minimum": 16,
+    "maximum": 20,
+    "default": 16,
+    "renderTargetFps": 60,
+    "directions": [
+      "N",
+      "NE",
+      "E",
+      "SE",
+      "S",
+      "SW",
+      "W",
+      "NW"
+    ]
+  },
+  "authoring": {
+    "canvas": [
+      96,
+      96
+    ],
+    "origin": [
+      48,
+      72
+    ],
+    "nativeBodyHeight": 36,
+    "pixelUnitsPerWu": 20,
+    "commonClipIds": [
+      "idle",
+      "walk",
+      "run",
+      "hurt",
+      "death",
+      "dodge",
+      "interact"
+    ],
+    "classClipIds": [
+      "basic_attack",
+      "skill_01",
+      "skill_02",
+      "skill_03",
+      "skill_04",
+      "skill_05",
+      "skill_06"
+    ],
+    "reusableRigidPartsAllowed": true,
+    "rigidPartPolicy": "16–20 placement records bound to actual body poses; unique source image count must be reported separately. Never pad body poses."
+  },
+  "sharedRigs": [
+    {
+      "rigId": "RIG_HUMAN_M_V1",
+      "bodyFrame": "HUMAN_M",
+      "authoredDirectionsRequired": 8,
+      "productionApproved": false
+    },
+    {
+      "rigId": "RIG_HUMAN_F_V1",
+      "bodyFrame": "HUMAN_F",
+      "authoredDirectionsRequired": 8,
+      "productionApproved": false
+    }
+  ],
+  "classBaseProfiles": [
+    {
+      "baseId": "BASE_MK_M_V1",
+      "classId": "CLASS_MINH_KIEM",
+      "className": "Minh Kiếm",
+      "bodyFrame": "HUMAN_M",
+      "sharedRigId": "RIG_HUMAN_M_V1",
+      "poseSetId": "POSE_MK_M_V1",
+      "weaponFamily": "JIAN",
+      "status": "PLANNED",
+      "productionApproved": false
+    },
+    {
+      "baseId": "BASE_MK_F_V1",
+      "classId": "CLASS_MINH_KIEM",
+      "className": "Minh Kiếm",
+      "bodyFrame": "HUMAN_F",
+      "sharedRigId": "RIG_HUMAN_F_V1",
+      "poseSetId": "POSE_MK_F_V1",
+      "weaponFamily": "JIAN",
+      "status": "PLANNED",
+      "productionApproved": false
+    },
+    {
+      "baseId": "BASE_AD_M_V1",
+      "classId": "CLASS_ANH_DAO",
+      "className": "Ảnh Đao",
+      "bodyFrame": "HUMAN_M",
+      "sharedRigId": "RIG_HUMAN_M_V1",
+      "poseSetId": "POSE_AD_M_V1",
+      "weaponFamily": "DAO",
+      "status": "PLANNED",
+      "productionApproved": false
+    },
+    {
+      "baseId": "BASE_AD_F_V1",
+      "classId": "CLASS_ANH_DAO",
+      "className": "Ảnh Đao",
+      "bodyFrame": "HUMAN_F",
+      "sharedRigId": "RIG_HUMAN_F_V1",
+      "poseSetId": "POSE_AD_F_V1",
+      "weaponFamily": "DAO",
+      "status": "PLANNED",
+      "productionApproved": false
+    },
+    {
+      "baseId": "BASE_HB_M_V1",
+      "classId": "CLASS_HUYEN_BUT",
+      "className": "Huyền Bút",
+      "bodyFrame": "HUMAN_M",
+      "sharedRigId": "RIG_HUMAN_M_V1",
+      "poseSetId": "POSE_HB_M_V1",
+      "weaponFamily": "BRUSH",
+      "status": "PLANNED",
+      "productionApproved": false
+    },
+    {
+      "baseId": "BASE_HB_F_V1",
+      "classId": "CLASS_HUYEN_BUT",
+      "className": "Huyền Bút",
+      "bodyFrame": "HUMAN_F",
+      "sharedRigId": "RIG_HUMAN_F_V1",
+      "poseSetId": "POSE_HB_F_V1",
+      "weaponFamily": "BRUSH",
+      "status": "PLANNED",
+      "productionApproved": false
+    },
+    {
+      "baseId": "BASE_TC_M_V1",
+      "classId": "CLASS_THACH_CHUY",
+      "className": "Thạch Chùy",
+      "bodyFrame": "HUMAN_M",
+      "sharedRigId": "RIG_HUMAN_M_V1",
+      "poseSetId": "POSE_TC_M_V1",
+      "weaponFamily": "HAMMER",
+      "status": "PLANNED",
+      "productionApproved": false
+    },
+    {
+      "baseId": "BASE_TC_F_V1",
+      "classId": "CLASS_THACH_CHUY",
+      "className": "Thạch Chùy",
+      "bodyFrame": "HUMAN_F",
+      "sharedRigId": "RIG_HUMAN_F_V1",
+      "poseSetId": "POSE_TC_F_V1",
+      "weaponFamily": "HAMMER",
+      "status": "PLANNED",
+      "productionApproved": false
+    },
+    {
+      "baseId": "BASE_LC_M_V1",
+      "classId": "CLASS_LINH_CUNG",
+      "className": "Linh Cung",
+      "bodyFrame": "HUMAN_M",
+      "sharedRigId": "RIG_HUMAN_M_V1",
+      "poseSetId": "POSE_LC_M_V1",
+      "weaponFamily": "BOW",
+      "status": "PLANNED",
+      "productionApproved": false
+    },
+    {
+      "baseId": "BASE_LC_F_V1",
+      "classId": "CLASS_LINH_CUNG",
+      "className": "Linh Cung",
+      "bodyFrame": "HUMAN_F",
+      "sharedRigId": "RIG_HUMAN_F_V1",
+      "poseSetId": "POSE_LC_F_V1",
+      "weaponFamily": "BOW",
+      "status": "PLANNED",
+      "productionApproved": false
+    }
+  ],
+  "paletteTargets": {
+    "skin": 8,
+    "facePresets": 6,
+    "hairStyles": 10,
+    "hairPalettes": 13,
+    "faceMarks": 6,
+    "eyePresets": 6,
+    "eyePalettes": 8,
+    "eyeValuesStatus": "PROPOSED_ART_TARGET_NOT_SERVER_ENTITLEMENTS"
+  },
+  "renderParts": [
+    "cape_back",
+    "hair_back",
+    "weapon_far",
+    "arm_far",
+    "body",
+    "legs",
+    "boots",
+    "chest_back",
+    "chest_front",
+    "gloves_far",
+    "face",
+    "eyes",
+    "brows",
+    "mouth",
+    "face_mark",
+    "hair_under_hat",
+    "hat_back",
+    "hat_front",
+    "hair_front",
+    "weapon_near",
+    "arm_near",
+    "gloves_near",
+    "cape_front",
+    "accessory",
+    "seal_cosmetic",
+    "neck_accessory",
+    "ring_l",
+    "ring_r",
+    "pendant"
+  ],
+  "slotVisualBindings": {
+    "EQUIP_HAT": [
+      "hat_back",
+      "hat_front"
+    ],
+    "EQUIP_CHEST": [
+      "chest_back",
+      "chest_front"
+    ],
+    "EQUIP_LEGS": [
+      "legs"
+    ],
+    "EQUIP_WEAPON": [
+      "weapon_far",
+      "weapon_near"
+    ],
+    "EQUIP_GLOVES": [
+      "gloves_far",
+      "gloves_near"
+    ],
+    "EQUIP_BOOTS": [
+      "boots"
+    ],
+    "EQUIP_CLOAK": [
+      "cape_back",
+      "cape_front"
+    ],
+    "EQUIP_NECK": [
+      "neck_accessory"
+    ],
+    "EQUIP_RING_L": [
+      "ring_l"
+    ],
+    "EQUIP_RING_R": [
+      "ring_r"
+    ],
+    "EQUIP_PENDANT": [
+      "pendant"
+    ],
+    "EQUIP_SEAL": [
+      "seal_cosmetic"
+    ]
+  },
+  "runtimeScope": {
+    "loginCharacterCreation": "NOT_IMPLEMENTED_BY_THIS_PACKET",
+    "serverWireChanges": "NONE",
+    "gameplayActivation": "OFF",
+    "legacyHeroFallback": "RETAIN_UNTIL_A_COMPLETE_MODULAR_PACK_IS_APPROVED",
+    "bakedClassAuthoring": "HOLD_NEW_BAKED_CLASS_SHEETS"
+  },
+  "releaseBlockers": [
+    "No approved multi-layer pose master yet",
+    "Two current base-image candidates cover SOUTH idle only",
+    "No approved garment/eye/hair/weapon layer pack yet",
+    "Character-creation/appearance persistence endpoints absent from current client",
+    "No crowd/weak-GPU performance acceptance for layered avatars yet"
+  ],
+  "pilot": {
+    "classId": "CLASS_MINH_KIEM",
+    "bodyFrames": [
+      "HUMAN_M",
+      "HUMAN_F"
+    ],
+    "actions": [
+      "idle",
+      "walk",
+      "basic_attack",
+      "skill_01"
+    ],
+    "directions": [
+      "N",
+      "NE",
+      "E",
+      "SE",
+      "S",
+      "SW",
+      "W",
+      "NW"
+    ],
+    "framesPerDirection": 16,
+    "outfitFamilies": 2,
+    "hairStyles": 2,
+    "weaponVariants": 2,
+    "headwearFamilies": 1,
+    "mode": "LABORATORY_FIT_TEST_ONLY",
+    "gameplayReleaseStillRequiresAllActions": true
+  }
+}

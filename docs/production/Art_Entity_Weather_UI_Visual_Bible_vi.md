@@ -1,4 +1,6 @@
 # ART BIBLE: TẠO HÌNH NPC, QUÁI, THỜI TIẾT VÀ SKIN UI
+
+> **Chốt chủ dự án 07/11/2026:** áp dụng [Chuẩn 16–20 frame/60 FPS](Actor_Animation_16_20F_60FPS_20261107_vi.md), ưu tiên hơn các số frame/FPS/camera blockout cũ phía dưới. Mỗi clip/hướng mới phải có16–20frame nguồn thực.
 ## Ngũ Mạch: Huyền Ấn — pixel art production v2.0
 
 > DEC-016 (2026-10-28): áp dụng `Top_Down_Gameplay_World_Spec_vi.md`. Các bảng kích thước/placement cũ là blockout chưa nghiệm thu top-down. Y luôn là Bắc–Nam trên mặt đất. “Platform” là bệ/cầu/vùng an toàn có đường đi hoặc floor link, không yêu cầu nhảy; chiều cao silhouette/capsule cũ không dùng làm collider. ID được giữ; không tự chuyển tọa độ cũ thành độ cao.
@@ -8,13 +10,13 @@
 
 **Ngôn ngữ tạo hình:** fantasy võ hiệp huyền thuật pixel art, lấy chất liệu từ thủ công vùng sông–rừng–sa mạc–thành đá nhưng dùng kiến trúc, phù văn, nhân vật và trang phục nguyên bản của Lạc Châu. Vẽ theo cụm pixel sạch, silhouette rõ, palette có giới hạn, shading theo dải màu/dither; không dùng anti-aliasing, blur hay gradient mượt. Tuyệt đối không dùng sprite/UI/âm thanh/hình cắt hoặc dấu hiệu nhận diện từ KPAH/JAR tham chiếu. Chuẩn kỹ thuật chi tiết theo [`Pixel_Art_Production_Standard_vi.md`](Pixel_Art_Production_Standard_vi.md).
 
-**Tỉ lệ chuẩn:** giữ map 1 WU=0,5m, hero cell 48×64 px, footprint capsule ngang 1,2×0,6 WU, camera 18 WU ở 16:9. Sprite 20 PPU trên logical canvas 640×360 nên hero nằm trong cell cao 64 source px; output 1080p phóng nguyên 3× thành tối đa 192 screen px. Boss cao 1,6–3 lần theo spec. Gameplay sprite frame-based; pivot chân và anchor vũ khí/tay/đầu/hông/tâm thân khai báo theo pixel. Animation không điều khiển vị trí server.
+**Tỉ lệ chuẩn hiện hành:** 1 WU=0,5m; Godot.NET Compatibility, viewport1280×720,20pixel/WU, camera64×36WU (F2:48×27). Hero runtime cao36pixel; source atlas có rect/pivot/referenceHeight riêng. Các bounds/cell/WU trong bảng tạo hình phía dưới là blockout lịch sử, không tự đổi thành collider hoặc render scale. Mỗi clip/hướng16–20frame thực; animation không điều khiển vị trí server.
 
 **Lưới asset:**
 - Actor thường dùng sprite sheet 512²–1024² chia page theo state; boss 1024²–2048²/page theo phase/layer. Không ép mọi frame thành cùng ô nếu trim metadata/pivot vẫn chính xác.
 - Quái thường 512²; elite 512²–1024²; boss/environment 1024²–2048²/page. Lossless, no mipmap, point filter, không nén mất dữ liệu; giữ PPU 20.
-- Icon item 32²–64²; skill/UI 32²–48²; portrait 64²–96² source pixel. Chỉ tăng khi detail gameplay cần và phải chỉ rõ scale nguyên tại 640×360.
-- Gameplay top-down XY dùng8hướng N/NE/E/SE/S/SW/W/NW theo DEC-015/016; sheet actor48×64native, pivot chân. Menu/model sheet front/back/side chỉ là tham chiếu tạo hình, không thay8hướng runtime.
+- Icon item 32²–64²; skill/UI 32²–48²; portrait 64²–96² source pixel. Chỉ tăng khi detail gameplay cần và phải chỉ rõ scale nguyên tại viewport1280×720.
+- Gameplay top-down XY dùng8hướng N/NE/E/SE/S/SW/W/NW theo DEC-015/016; sheet theo frame rect/pivot; grid48×64 chỉ là tham chiếu legacy, không ép atlas trim mới. Menu/model sheet front/back/side chỉ là tham chiếu tạo hình, không thay8hướng runtime.
 - Outline actor 1–2 source px; team/target outline là pixel overlay có shape rõ, không shader làm mềm.
 - Tạo test sáng/tối và color-blind/pattern cho item/quái; màu luôn đi cùng shape/icon.
 - VFX pixel sprite trên lớp actor; weather/parallax có pattern riêng; telegraph boss luôn nằm trên actor/weather và dùng silhouette/shape tương phản.

@@ -67,3 +67,19 @@ Nhấp quái còn sống để khóa; Tab đổi lần lượt các mục tiêu 
 Khóa được bỏ khi mục tiêu chết, ra khỏi snapshot, hồi sinh sang life khác hoặc đổi phiên/instance/floor/phase. Quái/NPC nội suy vị trí nhận được, không mô phỏng AI hoặc HP tại client. Tên chồng nhau ưu tiên mục tiêu đang khóa; vị trí spawn không bị dời. Float damage/miss/immune/absorb, flash trúng đòn và cleanup đọc theo event thực, map/floor/life; không hiển thị hit cũ lên quái vừa hồi sinh. Cast gây damage kết thúc không có hit có thông báo; guard/dash không bị gán là đòn hụt.
 
 Kiểm riêng: Run_Playable_Alpha.ps1 -CombatTest -EvidenceDirectory <thư mục riêng>. Runner đi từ spawn x18 theo public movement tới bờ sông gần cá x84, chọn/cycle/đánh/cast bằng pointer event; đo FPS online với target HUD, đọc HP/MP/cooldown thực và kiểm không cấp loot/quest giả. Mob AI vẫn OFF theo baseline. --target-self-test là fixture UI/DTO/pointer riêng, không HTTP; thêm --capture <absolute.png> để chụp bảng kiểm có nhãn fixture.
+
+
+## Thư viện asset16–20khung — 07/11/2026
+
+Nhấp Xem_Thu_Vien_Asset.cmd hoặc chạy Run_Actor_Library.ps1; -Test kiểm native, cổng ảnh chưa duyệt, loop/one-shot và tua khung. ActorLibrary.tscn riêng cho review class/quái/boss/NPC/VFX, có8hướng, timeline16–20khung và nhãn nguồn/lật/thiếu/HOLD. Ảnh ứng viên chưa tự thay gameplay. Nguồn PNG/prompt và tình trạng ở Art_Source/Actor_Library_20261107/README_vi.md; chuẩn ở docs/production/Actor_Animation_16_20F_60FPS_20261107_vi.md.
+
+
+## Prototype nhân vật ghép lớp —07/11/2026
+
+Đặc tả và nghiên cứu trong docs/production/Modular_Character_Appearance_20261107_vi.md. Hai rig dùng chung cho10profile class/giới tính; có hai ứng viên base nam/nữ hướngS trong Art_Source/Modular_Characters_20261107. Chúng chưa đủ8hướng/layer fit; không thay hero online.
+
+Sau build, chạy Godot --headless --path ClientGodot ModularCharacterTest.tscn để kiểm hợp đồng ghép lớp. Test fixture metadata kiểm clock, origin, poseSet, che tóc/mặt, thứ tự tay/vũ khí, stale revision và atomic swap; không chứng nhận hình đẹp/GPU/đăng nhập/tạo nhân vật server. Renderer prototype chưa gắn vào main scene. Job vẽ mới class đã liền trang bị chuyển HOLD_MODULAR_MIGRATION.
+
+## Phòng thử paper-doll
+
+Chạy Run_PaperDoll_Lab.ps1 để thử base nam/nữ và các phần tóc/mắt/đồ/kiếm/mũ/cape. Có timeline, điểm neo và fit draft gắn nguồn. Đây là công cụ authoring S/idle với mẫu chưa duyệt; chưa thay hero hoặc tạo account. Hướng dẫn: docs/production/PaperDoll_Fit_Lab_20261107_vi.md.

@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "productionApproved": [],
+  "holds": [
+    {
+      "id": "mob_carpling_idle_s",
+      "reason": "Single-direction pilot; remaining angles absent; fringe/noise and movement require review."
+    },
+    {
+      "id": "class_anh_dao_death",
+      "reason": "SE has a separate16-frame continuous-fall repair, also used by permitted SW mirror. Full clip awaits native transition review."
+    },
+    {
+      "id": "class_huyen_but_death",
+      "reason": "SE has a separate16-frame continuous-fall repair, also used by permitted SW mirror. Full clip awaits native transition review."
+    },
+    {
+      "id": "class_anh_dao_hurt",
+      "reason": "Suspected two 8-frame reactions; must verify single recoil across both rows."
+    },
+    {
+      "id": "class_huyen_but_hurt",
+      "reason": "Suspected repeated 8-frame gesture, needs native timeline review."
+    },
+    {
+      "id": "class_thach_chuy_hurt",
+      "reason": "Suspected repeated 8-frame gesture, needs native timeline review."
+    },
+    {
+      "id": "class_linh_cung_hurt",
+      "reason": "Suspected repeated 8-frame gesture, needs native timeline review."
+    },
+    {
+      "id": "mob_carpling_idle",
+      "reason": "V2 corrects rear-facing anatomy; still needs full native motion/edge review."
+    },
+    {
+      "id": "mob_waterroot_idle",
+      "reason": "V2 still has nine source rows, not ten. Hold."
+    },
+    {
+      "id": "mob_shore_stalker_idle",
+      "reason": "V2 still has seven columns, not eight. Hold."
+    },
+    {
+      "id": "npc_lyan_walk",
+      "reason": "Must verify actual opposing foot contacts; identity reference may have retained too much of idle."
+    },
+    {
+      "id": "npc_ta_van_khanh_idle",
+      "reason": "Left bandage/broken sword continuity must be checked; three authored left-side angles still missing."
+    },
+    {
+      "id": "sk_mk_01_vfx",
+      "reason": "VFX has noisy soft fringe and emblem-like silhouette; needs clean pixel-effect revision and comparison with canonical spell geometry."
+    },
+    {
+      "id": "sk_mk_02_vfx",
+      "reason": "VFX has noisy soft fringe and emblem-like silhouette; needs clean pixel-effect revision and comparison with canonical spell geometry."
+    },
+    {
+      "id": "sk_mk_03_vfx",
+      "reason": "VFX has noisy soft fringe and emblem-like silhouette; needs clean pixel-effect revision and comparison with canonical spell geometry."
+    },
+    {
+      "id": "sk_mk_04_vfx",
+      "reason": "VFX has noisy soft fringe and emblem-like silhouette; needs clean pixel-effect revision and comparison with canonical spell geometry."
+    },
+    {
+      "id": "sk_tc_01_vfx",
+      "reason": "VFX has noisy soft fringe and emblem-like silhouette; needs clean pixel-effect revision and comparison with canonical spell geometry."
+    },
+    {
+      "id": "sk_lc_01_vfx",
+      "reason": "VFX has noisy soft fringe and emblem-like silhouette; needs clean pixel-effect revision and comparison with canonical spell geometry."
+    }
+  ],
+  "policy": "Structure/export permits review only. No new generated actor is approved for live gameplay until visual/native motion QA."
+}

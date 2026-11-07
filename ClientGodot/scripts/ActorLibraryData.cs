@@ -1,0 +1,115 @@
+using Godot;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+namespace Ngumach.VisualReboot;
+
+/// <summary>Visual catalogue only. Never provides stats, damage or progression.</summary>
+public sealed class ActorLibraryData : IDisposable
+{
+    public const string Root="res://assets/actor_library_v1/";
+    public sealed record Actor(string Id,string Name,string Kind,float Height,bool Mirror,string[] Clips);
+    public sealed record Frame(string File,Rect2 Region,Vector2 Pivot);
+    public sealed record Direction(string Name,bool Flip,float Height,Frame[] Frames);
+    public sealed record Page(string Id,string Status,Direction[] Directions,bool Approved,string VisualState,string Notes);
+    public readonly Dictionary<string,Actor> Actors=new(StringComparer.Ordinal);
+    public readonly Dictionary<string,Page> Pages=new(StringComparer.Ordinal);
+    private readonly Dictionary<string,Texture2D> _textures=new(StringComparer.Ordinal);
+    private readonly Queue<string> _order=new();
+    public int CachedTextures=>_textures.Count;
+    private readonly bool _reviewMode;
+    public ActorLibraryData(bool reviewMode=false)
+    {
+        _reviewMode=reviewMode;
+        using var catalog=JsonDocument.Parse(FileAccess.GetFileAsString(Root+"catalog.json"));
+        foreach(var a in catalog.RootElement.GetProperty("actors").EnumerateArray())
+        {
+            var actor=new Actor(a.GetProperty("id").GetString()!,a.GetProperty("name").GetString()!,a.GetProperty("kind").GetString()!,
+                a.GetProperty("renderHeightPx").GetSingle(),a.GetProperty("mirrorAllowed").GetBoolean(),a.GetProperty("requiredClips").EnumerateArray().Select(x=>x.GetString()!).ToArray());
+            Actors.Add(actor.Id,actor);
+        }
+        foreach(var skill in catalog.RootElement.GetProperty("skills").EnumerateArray())
+        {var id=skill.GetProperty("id").GetString()!;Actors.Add(id,new Actor(id,skill.GetProperty("name").GetString()!,"VFX",100,true,new[]{"full_timeline"}));}
+        using var pages=JsonDocument.Parse(FileAccess.GetFileAsString(Root+"pages.json"));
+        foreach(var p in pages.RootElement.GetProperty("pages").EnumerateArray())
+        {
+            string common=p.GetProperty("file").GetString()!;float height=p.GetProperty("referenceHeight").GetSingle();
+            var directions=new List<Direction>();
+            foreach(var d in p.GetProperty("directions").EnumerateArray())
+            {
+                var frames=new List<Frame>();
+                foreach(var f in d.GetProperty("frames").EnumerateArray())
+                {var r=f.GetProperty("rect");var pivot=f.GetProperty("pivot");frames.Add(new Frame(f.TryGetProperty("file",out var file)?file.GetString()!:Root+common,new Rect2(r[0].GetSingle(),r[1].GetSingle(),r[2].GetSingle(),r[3].GetSingle()),new Vector2(pivot[0].GetSingle(),pivot[1].GetSingle())));}
+                if(frames.Count<16||frames.Count>20)throw new InvalidOperationException("Actor clip requires16–20actual frames");
+                directions.Add(new Direction(d.GetProperty("direction").GetString()!,d.GetProperty("flip").GetBoolean(),d.TryGetProperty("referenceHeight",out var h)?h.GetSingle():height,frames.ToArray()));
+            }
+            var id=p.GetProperty("id").GetString()!;Pages.Add(id,new Page(id,p.GetProperty("status").GetString()!,directions.ToArray(),p.GetProperty("productionApproved").GetBoolean(),p.GetProperty("visualState").GetString()!,p.GetProperty("visualNotes").GetString()!));
+        }
+    }
+    public bool Resolve(string actorId,string clip,int direction,out Direction? result)
+    {
+        result=null;if(!Actors.TryGetValue(actorId,out var actor))return false;
+        string id=actorId.ToLowerInvariant()+"_"+clip;
+        if(actor.Kind=="VFX")id=actorId.ToLowerInvariant().Replace('-','_')+"_vfx";
+        string name=new[]{"N","NE","E","SE","S","SW","W","NW"}[Math.Clamp(direction,0,7)];
+        bool mirrorOverride=false;string sourceName=name;
+        // A separately authored angle repairs one block; allowed mirrors use that repair too.
+        if(actor.Kind!="VFX")
+        {
+            string specific=id+"_"+name.ToLowerInvariant();
+            if(Pages.ContainsKey(specific))id=specific;
+            else if(direction>=5)
+            {
+                if(!actor.Mirror)return false;
+                sourceName=new[]{"SE","E","NE"}[Math.Clamp(direction-5,0,2)];
+                string source=id+"_"+sourceName.ToLowerInvariant();
+                if(Pages.ContainsKey(source)){id=source;mirrorOverride=true;}
+            }
+        }
+        if(!Pages.TryGetValue(id,out var page)||(!_reviewMode&&!page.Approved))return false;
+        result=actor.Kind=="VFX"?page.Directions[0]:page.Directions.FirstOrDefault(d=>d.Name==(mirrorOverride?sourceName:name));
+        if(mirrorOverride&&result!=null)result=result with{Name=name,Flip=!result.Flip};
+        return result!=null;
+    }
+    public string ReviewStatus(string actorId,string clip)
+    {string key=Actors[actorId].Kind=="VFX"?actorId.ToLowerInvariant().Replace('-','_')+"_vfx":actorId.ToLowerInvariant()+"_"+clip;return Pages.TryGetValue(key,out var page)?page.VisualState+(page.Notes.Length>0?" · "+page.Notes:""):"CHƯA CÓ DỮ LIỆU";}
+    public Texture2D Texture(string file)
+    {
+        if(_textures.TryGetValue(file,out var texture))return texture;
+        while(_textures.Count>=8){string old=_order.Dequeue();if(_textures.Remove(old,out var resource))resource.Dispose();}
+        texture=ResourceLoader.Load<Texture2D>(file,cacheMode:ResourceLoader.CacheMode.Ignore);_textures.Add(file,texture);_order.Enqueue(file);return texture;
+    }
+    public static double Duration(string clip)=>clip switch{"idle"=>1,"walk"=>.8,"run"=>.64,"basic_attack"=>.6,"hurt"=>.3,"death"=>1.2,"dodge"=>.48,"turn"=>.5,"interact"=>1.6,_=>.9};
+    public float ReferenceHeight(string id,int direction,Direction current)=>current.Height;
+    public void Dispose(){foreach(var texture in _textures.Values)texture.Dispose();_textures.Clear();}
+}
+
+/// <summary>Frame-based sprite player; no skeletal warp or gameplay events.</summary>
+public partial class ActorLibrarySprite : Sprite2D
+{
+    public ActorLibraryData Library=null!;
+    public string ActorId="",Clip="idle";
+    public int Facing=4,ManualFrame=-1,DisplayedFrame;
+    public float DisplayHeight=72;
+    public bool Paused,Loop=true;
+    private double _clock;
+    private ActorLibraryData.Frame? _shown;
+    public bool Available=>Library!=null&&Library.Resolve(ActorId,Clip,Facing,out _);
+    public void Restart(){_clock=0;_shown=null;}
+    public void Seek(int frame)
+    {if(Library!=null&&Library.Resolve(ActorId,Clip,Facing,out var direction)){ManualFrame=Math.Clamp(frame,0,direction!.Frames.Length-1);_clock=ActorLibraryData.Duration(Clip)*ManualFrame/direction.Frames.Length;_shown=null;}}
+    public override void _Ready(){RegionEnabled=true;Centered=false;TextureFilter=TextureFilterEnum.Nearest;}
+    public override void _Process(double delta)
+    {
+        if(Library==null||!Library.Resolve(ActorId,Clip,Facing,out var direction)){Visible=false;return;}
+        Visible=true;if(!Paused)_clock+=delta;
+        int count=direction!.Frames.Length;int elapsed=(int)(_clock/ActorLibraryData.Duration(Clip)*count);
+        int frame=ManualFrame>=0?Math.Clamp(ManualFrame,0,count-1):Loop?elapsed%count:Math.Min(elapsed,count-1);
+        DisplayedFrame=frame;var pose=direction.Frames[frame];
+        if(ReferenceEquals(pose,_shown))return;_shown=pose;
+        Texture=Library.Texture(pose.File);RegionRect=pose.Region;FlipH=direction.Flip;
+        var pivot=pose.Pivot;if(FlipH)pivot.X=pose.Region.Size.X-pivot.X;
+        Offset=-pivot;Scale=Vector2.One*DisplayHeight/Math.Max(1,Library.ReferenceHeight(ActorId,Facing,direction));
+    }
+}

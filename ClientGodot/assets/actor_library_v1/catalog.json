@@ -1,0 +1,2763 @@
+{
+  "schemaVersion": 1,
+  "scope": "BASE_ACTOR_ANIMATIONS_AND_SKILL_TIMELINE_CANDIDATES",
+  "excludes": [
+    "equipment/outfit/body variants",
+    "static portraits and skill icons",
+    "mounts/pets",
+    "map tiles and UI",
+    "additional split VFX components required by each mechanic"
+  ],
+  "policy": "Actor_Animation_16_20F_60FPS_20261107_vi.md",
+  "renderTargetFps": 60,
+  "framesPerDirection": 16,
+  "directionOrder": [
+    "N",
+    "NE",
+    "E",
+    "SE",
+    "S",
+    "SW",
+    "W",
+    "NW"
+  ],
+  "mirrorMap": {
+    "SW": "SE",
+    "W": "E",
+    "NW": "NE"
+  },
+  "actors": [
+    {
+      "id": "CLASS_MINH_KIEM",
+      "name": "Minh Kiếm",
+      "kind": "CLASS",
+      "appearance": "young martial swordsman, dark high topknot with gold clasp, ivory crossed tunic, short dark teal coat and gunmetal shoulder guards edged in muted gold, dark trousers and boots, slim straight jian sword",
+      "uniqueFace": true,
+      "renderHeightPx": 36,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "basic_attack",
+        "skill_01",
+        "skill_02",
+        "skill_03",
+        "skill_04",
+        "skill_05",
+        "skill_06",
+        "hurt",
+        "death",
+        "dodge"
+      ],
+      "newProductionStrategy": "MODULAR_CHARACTER_V1",
+      "bakedAssetUsage": "REFERENCE_AND_LEGACY_FALLBACK_ONLY",
+      "mirrorAllowed": true
+    },
+    {
+      "id": "CLASS_ANH_DAO",
+      "name": "Ảnh Đao",
+      "kind": "CLASS",
+      "appearance": "agile martial artist, swept dark hair with copper streak, charcoal and crimson short crossed coat, ochre belt, dark fitted trousers and boots, curved short dao in dark hip scabbard",
+      "uniqueFace": true,
+      "renderHeightPx": 36,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "basic_attack",
+        "skill_01",
+        "skill_02",
+        "skill_03",
+        "skill_04",
+        "skill_05",
+        "skill_06",
+        "hurt",
+        "death",
+        "dodge"
+      ],
+      "newProductionStrategy": "MODULAR_CHARACTER_V1",
+      "bakedAssetUsage": "REFERENCE_AND_LEGACY_FALLBACK_ONLY",
+      "mirrorAllowed": true
+    },
+    {
+      "id": "CLASS_HUYEN_BUT",
+      "name": "Huyền Bút",
+      "kind": "CLASS",
+      "appearance": "young ink sorceress, neat black braid and jade clasp, ivory and ink-blue scholarly crossed robe, restrained cyan stole, practical navy boots, closed ink pot and large bamboo calligraphy brush",
+      "uniqueFace": true,
+      "renderHeightPx": 36,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "basic_attack",
+        "skill_01",
+        "skill_02",
+        "skill_03",
+        "skill_04",
+        "skill_05",
+        "skill_06",
+        "hurt",
+        "death",
+        "dodge"
+      ],
+      "newProductionStrategy": "MODULAR_CHARACTER_V1",
+      "bakedAssetUsage": "REFERENCE_AND_LEGACY_FALLBACK_ONLY",
+      "mirrorAllowed": true
+    },
+    {
+      "id": "CLASS_THACH_CHUY",
+      "name": "Thạch Chùy",
+      "kind": "CLASS",
+      "appearance": "sturdy stocky guardian, medium tan skin, dark short hair and bronze headband, ochre and stone-grey quilted armour, squared shoulder plates, brown boots, rust sash and broad square stone hammer",
+      "uniqueFace": true,
+      "renderHeightPx": 36,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "basic_attack",
+        "skill_01",
+        "skill_02",
+        "skill_03",
+        "skill_04",
+        "skill_05",
+        "skill_06",
+        "hurt",
+        "death",
+        "dodge"
+      ],
+      "newProductionStrategy": "MODULAR_CHARACTER_V1",
+      "bakedAssetUsage": "REFERENCE_AND_LEGACY_FALLBACK_ONLY",
+      "mirrorAllowed": true
+    },
+    {
+      "id": "CLASS_LINH_CUNG",
+      "name": "Linh Cung",
+      "kind": "CLASS",
+      "appearance": "lean woodland archer, dark high ponytail, moss-green crossed tunic, short jade-and-oat layered shoulder cape, ochre wrist wraps, forest trousers, soft boots, compact bent wooden leaf-tip bow and short quiver",
+      "uniqueFace": true,
+      "renderHeightPx": 36,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "basic_attack",
+        "skill_01",
+        "skill_02",
+        "skill_03",
+        "skill_04",
+        "skill_05",
+        "skill_06",
+        "hurt",
+        "death",
+        "dodge"
+      ],
+      "newProductionStrategy": "MODULAR_CHARACTER_V1",
+      "bakedAssetUsage": "REFERENCE_AND_LEGACY_FALLBACK_ONLY",
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_CARPLING",
+      "name": "Cá Linh",
+      "kind": "MOB",
+      "appearance": "2,2×1,8; swarm; cá thân dài, vây như lá mưa, xanh lam bạc; nhảy từ vũng; cú đớp line ngắn báo 0,45s; hồi 0,5s; cá/nguyên liệu; biến thể vây đỏ elite",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_WATERROOT",
+      "name": "Rễ Nước",
+      "kind": "MOB",
+      "appearance": "2,5×3; area denial; rễ gỗ ướt với hạt sáng xanh; mọc dưới đất, vòng gợn 0,7s rồi quật thẳng; có thể chặt khi lộ; gỗ/dược; nở gai elite",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_SHORE_STALKER",
+      "name": "Kẻ Rình Bờ",
+      "kind": "MOB",
+      "appearance": "4×4; ambusher; thú bốn chân, mõm dài, lưng sậy; nấp trong cỏ, mắt lóe 0,5s; lao ngang, recovery 0,8s; da/cá; elite để lại vệt bùn",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_MOSS_BEAST",
+      "name": "Thú Rêu",
+      "kind": "MOB",
+      "appearance": "3×3; bruiser; thân rùa/mèo tròn, lưng rêu có đốm; húc ngắn, cuộn tròn 0,9s; chậm xoay; gỗ/dược; elite có khiên rêu",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_DREAM_ROOT",
+      "name": "Rễ Mộng",
+      "kind": "MOB",
+      "appearance": "3,8×4,5; control; thân cây thấp, mặt không người, rễ tách như ngón; rễ đâm line theo mục tiêu sau 0,8s; vùng ký ức xanh hiện hình; gỗ/linh phách; tinh anh có rễ phụ",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_SAND_BEETLE",
+      "name": "Bọ Cát",
+      "kind": "MOB",
+      "appearance": "2,3×1,5; skirmisher; mai cát dạng nêm, chân 6 điểm, vàng sẫm; đào xuống báo bụi 0,6s, trồi lên gây hitbox nhỏ; quặng/da; elite tạo 2 dấu giả",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_ASH_RAIDER",
+      "name": "Cướp Tro",
+      "kind": "MOB",
+      "appearance": "4,2×4,6; melee humanoid; mặt nạ lọc, áo quấn vải, đao rỉ; chém ngang báo 0,45s, ném tro làm mù 0,7s; không gây mù màn hình toàn phần; Đồng/vải; elite ném bom có vùng",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_FURNACE_WARDEN",
+      "name": "Người Canh Lò",
+      "kind": "MOB",
+      "appearance": "5×5; armored; giáp sắt nóng, lõi đỏ sau lưng, chùy ngắn; đập đất cone báo 0,7s; giáp sau lưng mở sau đòn; fire sweep line; quặng/linh phách; tinh anh có thêm vent",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_FALSE_SIGIL",
+      "name": "Kẻ Giả Phù",
+      "kind": "MOB",
+      "appearance": "4,3×4,8; agile human; áo thường, phù giả phát sáng sai màu, nửa mặt che; đổi vị trí nhanh, đâm chéo; marker giả tắt trước attack 0,5s; giấy phù/Danh Vọng",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_SMALL_STATUE",
+      "name": "Tượng Nhỏ",
+      "kind": "MOB",
+      "appearance": "4×5; sentry; tượng đá khớp đồng, mắt hình vòng; bắn viên đá đơn; khóa line 0,7s; cọc điều khiển có thể phá; đá/quặng",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_FLAME_SENTINEL",
+      "name": "Tượng Gác Lò",
+      "kind": "MOB",
+      "appearance": "5×6; elite, không phải boss; tượng đồng/đá cùng họa tiết với Tượng Hành Hỏa, lõi nhỏ hình tam giác; quét ngắn báo 0,7s, gọi một cột lửa báo 1s; không có phase gate hoặc mechanic dập cọc; quặng đồng; elite có vật liệu lò",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_STONE_AUTOMATON",
+      "name": "Tượng Cơ",
+      "kind": "MOB",
+      "appearance": "4,8×5,5; guard; đá khối có cơ cấu kim loại ở khuỷu; chậm, block frontal; đòn nện vòng 0,75s; đá/linh phách",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_FALSE_SOLDIER",
+      "name": "Binh sĩ giả lệnh",
+      "kind": "MOB",
+      "appearance": "4,8×5; human melee; hai phe màu sắc nhưng dấu sáp giả giống nhau; đội hình đôi, đâm line; gọi viện khi mục tiêu xa; huy hiệu chiến trường",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_AMBUSH_TROOPER",
+      "name": "Phục kích binh",
+      "kind": "MOB",
+      "appearance": "4,5×4,8; melee; áo giáp nhẹ, khăn che mặt, cờ giả; xuất hiện theo wave, ném móc báo 0,6s; Đồng/vải/weapon common",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_SIEGE_ENGINE",
+      "name": "Phá Thành Cơ",
+      "kind": "MOB",
+      "appearance": "8×7; siege hazard; xe công thành thấp, 2 nỏ, bánh bọc sắt; lane shot 1s, có dây neo phá được; cần né ngang; quặng/achievement",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_MIRRORFISH",
+      "name": "Cá Gương",
+      "kind": "MOB",
+      "appearance": "3×2; ranged; cá thân trong, mặt gương hình thoi; bắn bubble line báo 0,65s; phản chiếu hình giả 0,8s; vảy uyên",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_PRESSURE_GUARD",
+      "name": "Kẻ Gác Buồng",
+      "kind": "MOB",
+      "appearance": "4,5×5; guard underwater; giáp vòm, bình áp suất sau lưng; đẩy áp lực cone, rồi slow bubble; áp suất lên màu/shape; linh phách/vảy",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_DROWNED_EXILE",
+      "name": "Kẻ Lưu Vong",
+      "kind": "MOB",
+      "appearance": "4,8×5; humanoid; áo thành phố chìm, dải vải trôi lên; đánh lướt, để lại water pool; không mất máu vì nước; Đồng, đồ cấp vùng",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_MACHINIST",
+      "name": "Kẻ Đục Mạch",
+      "kind": "MOB",
+      "appearance": "4,2×4,6; objective add; áo thợ máy, khoan mạch gắn tay; khoan vào cột; cần interrupt/đánh lùi trước 10s; MAT-CORE, raid contribution",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_RIFT_HUNTER",
+      "name": "Thợ Săn Mạch",
+      "kind": "MOB",
+      "appearance": "4,8×5,2; ranged; giáp nhiều đoạn, mặt nạ khe dọc, dây sáng tím; bắn 3 projectile có spread, vòng target 0,8s; đá mạch",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_BOSS_ADD",
+      "name": "Hộ Vệ Lõi",
+      "kind": "MOB",
+      "appearance": "4–5×5; raid add; mỗi add mang một biểu tượng hành động: ngắt, giải, phá giáp; 3 hành vi dễ đọc, không cần class bắt buộc; token encounter",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "BOSS_FLAME_SENTINEL",
+      "name": "Tượng Hành Hỏa",
+      "kind": "BOSS",
+      "appearance": "tượng hộ vệ đồng/đá 8 WU; lõi lò tam giác, hai vai bất đối xứng; 3 pha: quét ngang báo 0,8s; gọi 3 cột lửa có vòng đất báo 1s; vent làm lộ lõi 4s sau khi dập cọc; đồng hun/đá đen, lửa cam; cột lửa không che chân và lối thoát",
+      "uniqueFace": true,
+      "renderHeightPx": 150,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "telegraph_03",
+        "attack_03",
+        "recovery_03"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "BOSS_MANG_COT",
+      "name": "Mãng Cốt",
+      "kind": "BOSS",
+      "appearance": "thân rắn xương dài 15 WU; đầu có sừng gãy, cổ nhiều đốt; theo DEC-017/Rules §4: quét cone120°/8WU báo0,9s; lặn-trồi radius4WU báo1,2s; vòng bọt riêng annulus3..7WU báo1s; xương trắng ngà, rêu lam; nước bắn thấp, không che chân; vòng bọt không chỉ là VFX điểm trồi",
+      "uniqueFace": true,
+      "renderHeightPx": 150,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "telegraph_03",
+        "attack_03",
+        "recovery_03"
+      ],
+      "mirrorAllowed": false
+    },
+    {
+      "id": "BOSS_ANCIENT_TREE",
+      "name": "Cổ Thụ Trăm Mắt",
+      "kind": "BOSS",
+      "appearance": "cây 28 WU cao, thân lệch, 12 cụm mắt nhưng tối đa 5 sáng cùng lúc; rễ đuổi 1s; 3 rễ sáng cần chạm theo A-B-C; nấm độc có đường thoát; gỗ đen xanh, mắt xanh rêu; lá rơi theo vùng",
+      "uniqueFace": true,
+      "renderHeightPx": 150,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "telegraph_03",
+        "attack_03",
+        "recovery_03"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "BOSS_FURNACE",
+      "name": "Lò Trời",
+      "kind": "BOSS",
+      "appearance": "golem lò 12 WU, ống khói, lõi tròn; ba van giảm nạp; pha 1 giáp, pha 2 tắt van, pha 3 ba lane lửa; cam đồng/đen; heat haze không làm méo telegraph",
+      "uniqueFace": true,
+      "renderHeightPx": 150,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "telegraph_03",
+        "attack_03",
+        "recovery_03"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "BOSS_TONG_BANH",
+      "name": "Tống Bành",
+      "kind": "BOSS",
+      "appearance": "actor người 5,8 WU trong giáp tháo rời có 2 ụ phụ; giáp trước/sau; hai bẫy giáp đánh dấu; đòn lao ngang báo cờ kéo; thép xám xanh, bụi nặng khi bước, không có máu",
+      "uniqueFace": true,
+      "renderHeightPx": 150,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "telegraph_03",
+        "attack_03",
+        "recovery_03"
+      ],
+      "mirrorAllowed": false
+    },
+    {
+      "id": "BOSS_TIDE_SERPENT",
+      "name": "Mẫu Xà Thủy",
+      "kind": "BOSS",
+      "appearance": "xà biển 16 WU, cổ dài, vảy gương, đuôi rộng; nước dâng platform; đớp theo target line; phân thân, sóng âm chỉ thân thật; xanh lam/teal; caustic dưới chân, không bloom trắng",
+      "uniqueFace": true,
+      "renderHeightPx": 150,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "telegraph_03",
+        "attack_03",
+        "recovery_03"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "BOSS_COSM",
+      "name": "Cơ Vô Tướng",
+      "kind": "BOSS",
+      "appearance": "thân người 5,5 WU, vòng cơ khí sau lưng 12 WU, mặt nạ sứ; line/sweep/orb; thiết bị ký ức; 5 socket cuối; telegraph phải đọc ở 20vfx; tím mực + đồng, hình học gãy; camera không cắt cảnh",
+      "uniqueFace": true,
+      "renderHeightPx": 150,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "telegraph_03",
+        "attack_03",
+        "recovery_03"
+      ],
+      "mirrorAllowed": false
+    },
+    {
+      "id": "BOSS_YOUNG_TREE",
+      "name": "Cổ Thụ Con",
+      "kind": "BOSS",
+      "appearance": "thân cây 9 WU, 4 rễ chuyển động và 3 nụ mắt; nhỏ hơn rõ rệt Cổ Thụ Trăm Mắt; rễ hình nón báo 0,9s; nấm độc 3 vùng; rễ sáng lộ khiên để phá; gỗ non sẫm, nhựa xanh; nấm giữ silhouette người chơi",
+      "uniqueFace": true,
+      "renderHeightPx": 150,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "telegraph_03",
+        "attack_03",
+        "recovery_03"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "BOSS_ASH_FURNACE",
+      "name": "Lò Tro",
+      "kind": "BOSS",
+      "appearance": "golem lò 10 WU, hai ống xả lệch và 3 van có thể đọc được; nạp lò 10s; đóng ít nhất 2/3 van; ba lane lửa có khe thoát; sắt ám tro, lõi cam; dùng hình bóng khác Lò Trời",
+      "uniqueFace": true,
+      "renderHeightPx": 150,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "telegraph_03",
+        "attack_03",
+        "recovery_03"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "BOSS_SIEGE_ENGINE",
+      "name": "Phá Thành Cơ",
+      "kind": "BOSS",
+      "appearance": "cỗ máy 11×8 WU trên càng kéo, nỏ kép và dây neo nhìn thấy được; bắn 3 lane báo trước; cắt neo sau; lao ngang báo cờ kéo; tiến độ neo giữ qua wipe; thép xanh xám, dây vải đỏ; không tạo khói che vùng đánh",
+      "uniqueFace": true,
+      "renderHeightPx": 150,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "telegraph_03",
+        "attack_03",
+        "recovery_03"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "BOSS_YOUNG_SERPENT",
+      "name": "Mẫu Xà Non",
+      "kind": "BOSS",
+      "appearance": "xà nước 12 WU, thân mảnh, hai vây trong; không có clone trang trí; đớp theo target line; nhấn chìm hai lane; sóng âm đánh dấu thân thật ở phase cuối; xanh ngọc lạnh; safe platform có viền sáng và ký hiệu",
+      "uniqueFace": true,
+      "renderHeightPx": 150,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "telegraph_03",
+        "attack_03",
+        "recovery_03"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "BOSS_PRESSURE_HEART",
+      "name": "Tim Áp Suất",
+      "kind": "BOSS",
+      "appearance": "lõi tinh thể 9 WU lơ lửng trong khung bốn trụ; không có mặt người; tia theo ba lane; đánh dấu trụ nhận tia; đồng bộ hai van trong 6s; safe platform khi nước dâng; tinh thể lam/trắng mờ; tương phản cao, không bloom trắng",
+      "uniqueFace": true,
+      "renderHeightPx": 150,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "telegraph_03",
+        "attack_03",
+        "recovery_03"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_ACTIVITY_STEWARD",
+      "name": "Quan viên lịch hội",
+      "kind": "NPC",
+      "appearance": "4,8 WU; tư thế cởi mở, dáng người chạy việc; áo nâu đỏ, thẻ lịch, trống tay nhỏ và bảng giờ; đọc giờ hoạt động, gõ bảng một nhịp; thoại ngắn, hiện timezone",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_ARENA_REWARD_CLERK",
+      "name": "Thủ quỹ giải",
+      "kind": "NPC",
+      "appearance": "4,6 WU; dáng nhỏ gọn, ngồi cạnh tủ cúp; áo vàng đồng tối, bảng xếp hạng, hộp huy hiệu và sổ mùa; trao huy hiệu bằng hai tay; luôn nhìn ra roster trước khi hiển thị reward",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_ARENA_STEWARD",
+      "name": "Trọng tài Long Môn",
+      "kind": "NPC",
+      "appearance": "5,1 WU; dáng thẳng, hai tay rõ; áo trọng tài chàm-trắng, phù hiệu vòng đấu, cờ hiệu hai mặt; giơ cờ khi check-in/forfeit; animation dứt khoát, không thiên vị phe; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_BLACKSMITH",
+      "name": "Thợ Rèn Thanh Lạc",
+      "kind": "NPC",
+      "appearance": "thợ rèn/tu bổ khác nhau; tạp dề, búa/kìm, animation kiểm tra item",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_BM_RESCUE_01",
+      "name": "Dân chài mắc rễ I",
+      "kind": "NPC",
+      "appearance": "dân chài mắc rễ; áo ướt, biểu cảm hoảng sợ rồi bình tĩnh sau rescue",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "RAIN_WOOD_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact",
+        "rescue_wait",
+        "rescue_free"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_BM_RESCUE_02",
+      "name": "Người chèo đò mắc rễ II",
+      "kind": "NPC",
+      "appearance": "người chèo đò khăn đỏ, tay giữ đèn ở x=148; tương tác tháo dây rễ, đi theo đến checkpoint",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "RAIN_WOOD_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact",
+        "rescue_wait",
+        "rescue_free"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_BOAT_KEEPER",
+      "name": "Người Giữ Thuyền",
+      "kind": "NPC",
+      "appearance": "áo phao vải, sào chống, còi; hoạt ảnh kéo dây thuyền",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "RAIN_WOOD_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_BY_DIVER_01",
+      "name": "Thợ lặn khăn vàng",
+      "kind": "NPC",
+      "appearance": "outfit áp suất cùng family; diver lead có 2 bình khí, nhóm có 1 bình và màu khăn riêng",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "DEEP_WATER_CERULEAN",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_BY_DIVER_02",
+      "name": "Thợ lặn khăn đỏ",
+      "kind": "NPC",
+      "appearance": "diver khăn đỏ, thấp hơn, bình đôi; ngồi kiểm rò khí; actor quest C5-01",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "DEEP_WATER_CERULEAN",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_BY_DIVER_03",
+      "name": "Thợ lặn khăn trắng",
+      "kind": "NPC",
+      "appearance": "diver khăn trắng, áo vải xanh đậm, chân bị thương; tựa tường; đứng dậy sau rescue trigger",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "DEEP_WATER_CERULEAN",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_BY_WITNESS_ANH_DAO",
+      "name": "Bản chiếu ký ức Ảnh Đao",
+      "kind": "NPC",
+      "appearance": "bản chiếu ký ức Ảnh Đao, khăn vai Hỏa và hai vệt đao chéo; tương tác thoại không va chạm tại waypoint Map Atlas",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "DEEP_WATER_CERULEAN",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_BY_WITNESS_HUYEN_BUT",
+      "name": "Bản chiếu ký ức Huyền Bút",
+      "kind": "NPC",
+      "appearance": "bản chiếu ký ức Huyền Bút, tay áo lam và nét mực treo trong không khí; tương tác thoại không va chạm tại waypoint Map Atlas",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "DEEP_WATER_CERULEAN",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_BY_WITNESS_LINH_CUNG",
+      "name": "Bản chiếu ký ức Linh Cung",
+      "kind": "NPC",
+      "appearance": "bản chiếu ký ức Linh Cung, cung Mộc có dây lá phát sáng; tương tác thoại không va chạm tại waypoint Map Atlas",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "DEEP_WATER_CERULEAN",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_BY_WITNESS_MINH_KIEM",
+      "name": "Bản chiếu ký ức Minh Kiếm",
+      "kind": "NPC",
+      "appearance": "bản chiếu ký ức Minh Kiếm, giáp nhẹ Kim viền trong như nước, kiếm gãy thành dải sáng; tương tác thoại không va chạm tại waypoint Map Atlas",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "DEEP_WATER_CERULEAN",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_BY_WITNESS_THACH_CHUY",
+      "name": "Bản chiếu ký ức Thạch Chùy",
+      "kind": "NPC",
+      "appearance": "bản chiếu ký ức Thạch Chùy, giáp Thổ vuông cạnh và chùy trong mờ; tương tác thoại không va chạm tại waypoint Map Atlas",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "DEEP_WATER_CERULEAN",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_CAPTAIN_TRAN_SON",
+      "name": "Đội trưởng Trấn Sơn",
+      "kind": "NPC",
+      "appearance": "5,3 WU; lực lưỡng, sẹo mảnh ở cằm; giáp lắp ghép xám xanh, cờ gấp sau lưng; nhìn theo đường thành, đặt tay lên bản đồ; giọng trầm; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_GUARD",
+      "paletteId": "WAR_STONE_CRIMSON",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_CARAVAN_GUARD",
+      "name": "Hộ vệ đoàn xe",
+      "kind": "NPC",
+      "appearance": "hộ vệ đoàn xe, áo cát có khiên gỗ, spear; animation kiểm tra đường",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_GUARD",
+      "paletteId": "ASH_OCHRE_COPPER",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_CLASS_TRIAL",
+      "name": "Quan sát viên nhập môn",
+      "kind": "NPC",
+      "appearance": "4,8 WU; người trung tính, dáng tĩnh; áo vải ngà, năm dải màu nhỏ trên tay áo, thẻ thử thách; ghi nhận kết quả, không biểu lộ thiên vị; thoại được điều kiện hóa theo lớp",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "RAIN_WOOD_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_COURT_ARCHIVIST",
+      "name": "Quan thư lầu",
+      "kind": "NPC",
+      "appearance": "5 WU; trưởng thành 45–55, vai áo vuông, bàn tay dính mực; áo tím mực/giấy ngà, thẻ thư khắc số, cuộn hồ sơ niêm dây đỏ; mở một trang mỗi câu, không xé/đốt tài liệu; giọng chuẩn mực, ít cảm thán",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_CO_VO_TUONG",
+      "name": "Cơ Vô Tướng",
+      "kind": "NPC",
+      "appearance": "5,5 WU; người già 55–65; dáng gầy cao, lưng bị khung máy nâng; áo choàng mực đen, lõi đồng ở ngực, nửa mặt nạ sứ nứt; nhịp thở máy 2 nhịp/1 chu kỳ, bàn tay rung khi ký ức xuất hiện; giọng kép rất nhẹ; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "RIFT_VIOLET_SILVER",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": false
+    },
+    {
+      "id": "NPC_DG02_WORKER_01",
+      "name": "Công nhân Lò Tro 1",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy WORKER, wardrobe REGIONAL_WORKER, palette NEUTRAL_REGION, identifying detail work props and gloves; shared humanoid rig",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "NEUTRAL_REGION",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_DG02_WORKER_02",
+      "name": "Công nhân Lò Tro 2",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy WORKER, wardrobe REGIONAL_WORKER, palette NEUTRAL_REGION, identifying detail work props and gloves; shared humanoid rig",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "NEUTRAL_REGION",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_DG02_WORKER_03",
+      "name": "Công nhân Lò Tro 3",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy WORKER, wardrobe REGIONAL_WORKER, palette NEUTRAL_REGION, identifying detail work props and gloves; shared humanoid rig",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "NEUTRAL_REGION",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_DG02_WORKER_04",
+      "name": "Công nhân Lò Tro 4",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy WORKER, wardrobe REGIONAL_WORKER, palette NEUTRAL_REGION, identifying detail work props and gloves; shared humanoid rig",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "NEUTRAL_REGION",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_DIVER_LEAD",
+      "name": "Đội trưởng thợ lặn",
+      "kind": "NPC",
+      "appearance": "5 WU; khỏe, vai/đùi phát triển; áo áp suất xanh ngọc, bình khí đôi, kính tròn; kiểm tra van sau vai; giọng vang nhưng bị lọc qua mặt nạ; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "DEEP_WATER_CERULEAN",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_FISHER_01",
+      "name": "Ngư dân Bến Mưa",
+      "kind": "NPC",
+      "appearance": "ngư dân lớn tuổi, mũ lá cong, giỏ cá; animation giật cần và cúi nhặt cá",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "RAIN_WOOD_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_FOREMAN_MOC",
+      "name": "Quản đốn Mộc",
+      "kind": "NPC",
+      "appearance": "5 WU; phụ nữ/nam trung niên khỏe, bắp tay rõ; áo da xanh rêu, găng chặt cây, rìu cất sau vai; thử lưỡi rìu, nheo mắt nhìn tán cây; giọng vang, không khoa trương; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "FOREST_JADE_MIST",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_FORGE_MASTER",
+      "name": "Chủ Lò Sa Hỏa",
+      "kind": "NPC",
+      "appearance": "5,1 WU; dáng vuông, tay lớn; tạp dề đen, kính che mắt, kẹp kim loại màu đồng; gõ kẹp ba nhịp; mỗi lần nói chỉ ngẩng mắt sau câu đầu; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "ASH_OCHRE_COPPER",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_GUARD_CAPTAIN",
+      "name": "Đội trưởng cổng",
+      "kind": "NPC",
+      "appearance": "5,2 WU; dáng quân nhân đứng rộng chân; giáp xanh đá, bảng hiệu lệnh, giáo ngắn; chào nghi thức, gõ cán giáo; giọng kỷ luật; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_GUARD",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_GUILD_CLERK",
+      "name": "Chấp sự bang hội",
+      "kind": "NPC",
+      "appearance": "clerk có hồ sơ/biểu tượng UI cụ thể, không cần tên thoại dài; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_GUILD_SCOUT",
+      "name": "Trinh sát bang",
+      "kind": "NPC",
+      "appearance": "4,8 WU; thanh mảnh, chân nhẹ; áo choàng xanh xám, ống nhòm và cờ tín hiệu; quan sát nóc thành, ra dấu tay; giọng nhỏ, chính xác",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_GUARD",
+      "paletteId": "WAR_STONE_CRIMSON",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_HA_MAC",
+      "name": "Hạ Mặc",
+      "kind": "NPC",
+      "appearance": "4,8 WU; học giả 30–40; dáng gầy, nhiều túi giấy/cuộn bản đồ; áo xám giấy + lam mực, kính lúp gập và thẻ ghi chép; ghi nhanh, cắn đầu bút khi suy nghĩ; giọng rõ, tò mò nhưng không lên lớp; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_LT_MECHANIC",
+      "name": "Thợ máy Lâm Triều",
+      "kind": "NPC",
+      "appearance": "lao động Lâm Triều; rìu, giỏ nấm, dây van, thước nước",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "FOREST_JADE_MIST",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_LYAN",
+      "name": "Ly An",
+      "kind": "NPC",
+      "appearance": "4,3 WU; thiếu nữ 17–19; dáng nhỏ nhanh, áo khoác mưa vạt ngắn, túi chéo lớn; xanh mưa + vàng đất; thư sáp ở tay; tóc buộc lệch; vuốt mép thư khi lo, nhìn thẳng khi quyết; giọng sáng, nói ngắn; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "RAIN_WOOD_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_MASTER_ANH_DAO",
+      "name": "Trưởng môn Ảnh Đao",
+      "kind": "NPC",
+      "appearance": "Ảnh Đao/Hỏa; áo ôm gọn, khăn vai lệch, đao ngắn kép; dựa gót chân, nhìn mục tiêu trước khi nói; cam than/đỏ sẫm; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_SECT_MASTER",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact",
+        "trial"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_MASTER_HUYEN_BUT",
+      "name": "Trưởng môn Huyền Bút",
+      "kind": "NPC",
+      "appearance": "Huyền Bút/Thủy; tay áo rộng có khóa, bút dài bằng cẳng tay, hộp mực; xoay bút giữa ngón tay, nét cử động mềm; lam mực/xanh ngọc; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_SECT_MASTER",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact",
+        "trial"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_MASTER_LINH_CUNG",
+      "name": "Trưởng môn Linh Cung",
+      "kind": "NPC",
+      "appearance": "Linh Cung/Mộc; cung gập, dây tên lá, áo choàng nhiều lớp ngắn; quay về phía gió, nhìn đường bắn; xanh lá/vàng cỏ; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_SECT_MASTER",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact",
+        "trial"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_MASTER_MINH_KIEM",
+      "name": "Trưởng môn Minh Kiếm",
+      "kind": "NPC",
+      "appearance": "Minh Kiếm/Kim; áo dài chéo vạt, kiếm bản mảnh, khóa kim loại lục giác; đứng thẳng, tay luôn gần chuôi; vàng nhạt/xám bạc; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_SECT_MASTER",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact",
+        "trial"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_MASTER_THACH_CHUY",
+      "name": "Trưởng môn Thạch Chùy",
+      "kind": "NPC",
+      "appearance": "Thạch Chùy/Thổ; áo giáp vải dày, chùy thấp, gối bọc đá; chân mở rộng, động tác tiết kiệm; nâu đá/đồng; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_SECT_MASTER",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact",
+        "trial"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_MEDIC_BEN",
+      "name": "Y sĩ Bến Mưa",
+      "kind": "NPC",
+      "appearance": "áo sáng, hộp cứu thương gỗ, khăn xanh; icon shop thuốc",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "RAIN_WOOD_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_MEDIC_SA_HOA",
+      "name": "Y sư Sa Hỏa",
+      "kind": "NPC",
+      "appearance": "4,8 WU; phụ nữ 35–45; chắc tay, mắt quan sát; khăn lọc bụi, áo cát sáng có túi cứu thương đỏ; chỉnh mặt nạ, kiểm tra túi thuốc; giọng nhanh, bình tĩnh",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "ASH_OCHRE_COPPER",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_MUSHROOMER",
+      "name": "Người hái nấm",
+      "kind": "NPC",
+      "appearance": "lao động Lâm Triều; rìu, giỏ nấm, dây van, thước nước",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "FOREST_JADE_MIST",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_PRESSURE_KEEPER",
+      "name": "Kỹ sư áp suất",
+      "kind": "NPC",
+      "appearance": "kỹ sư Bạch Uyên, bộ đo áp suất 3 ống, kính vòm; thao tác van; portrait/indicator hiển thị pressure state",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "DEEP_WATER_CERULEAN",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_RAID_KEEPER",
+      "name": "Thủ vệ hoạt động",
+      "kind": "NPC",
+      "appearance": "clerk có hồ sơ/biểu tượng UI cụ thể, không cần tên thoại dài; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_REFUGEE_LEADER",
+      "name": "Trưởng đoàn tị nạn",
+      "kind": "NPC",
+      "appearance": "4,7 WU; dáng mảnh nhưng đứng chắn trước người khác; áo vải chắp nhiều lớp, khăn che bụi, bản đồ gấp; đếm người bằng ngón tay; giọng chắc, không van xin; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "WAR_STONE_CRIMSON",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_RELIC_MERCHANT",
+      "name": "Thương nhân Di Vật",
+      "kind": "NPC",
+      "appearance": "ba merchant class: chợ, cổ vật, nước; mỗi người có bảng giá/props riêng",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_REPAIRER",
+      "name": "Thợ tu bổ",
+      "kind": "NPC",
+      "appearance": "thợ rèn/tu bổ khác nhau; tạp dề, búa/kìm, animation kiểm tra item",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_GUARD",
+      "paletteId": "WAR_STONE_CRIMSON",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_SAM_CHU_QUY",
+      "name": "Sầm Chủ Quỹ",
+      "kind": "NPC",
+      "appearance": "4,4 WU; trung niên chắc người, thân thiện; áo thương nhân đỏ nâu, cân gỗ, ống nước treo hông; cân đồng xu, chùi bàn tay; nói nhanh, có tiếng cười mũi; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "ASH_OCHRE_COPPER",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_SH_WORKER_01",
+      "name": "Công nhân lò 1",
+      "kind": "NPC",
+      "appearance": "công nhân lò khác màu khăn/đồ bảo hộ; chỉ trạng thái “chưa cứu/đã cứu”, không tạo sprite-set riêng",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "ASH_OCHRE_COPPER",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_SH_WORKER_02",
+      "name": "Công nhân lò 2",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy WORKER, wardrobe REGIONAL_WORKER, palette ASH_OCHRE_COPPER, identifying detail work props and gloves; shared humanoid rig",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "ASH_OCHRE_COPPER",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_SH_WORKER_03",
+      "name": "Công nhân lò 3",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy WORKER, wardrobe REGIONAL_WORKER, palette ASH_OCHRE_COPPER, identifying detail work props and gloves; shared humanoid rig",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "ASH_OCHRE_COPPER",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_SH_WORKER_04",
+      "name": "Công nhân lò 4",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy WORKER, wardrobe REGIONAL_WORKER, palette ASH_OCHRE_COPPER, identifying detail work props and gloves; shared humanoid rig",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "ASH_OCHRE_COPPER",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_SIEGE_CLERK",
+      "name": "Chấp sự công thành",
+      "kind": "NPC",
+      "appearance": "clerk có hồ sơ/biểu tượng UI cụ thể, không cần tên thoại dài",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "WAR_STONE_CRIMSON",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TA_VAN_KHANH",
+      "name": "Tạ Vân Khanh",
+      "kind": "NPC",
+      "appearance": "5,2 WU; người trưởng thành 40–50; dáng thẳng nhưng vai trái cứng; áo hộ ấn xanh đen, một tay quấn băng; kiếm gãy đeo sau lưng; kiểm tra dây băng, hạn chế quay trái; giọng thấp, giữ khoảng lặng; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "RAIN_WOOD_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": false
+    },
+    {
+      "id": "NPC_TELEPORTER",
+      "name": "Người Giữ Cổng",
+      "kind": "NPC",
+      "appearance": "clerk có hồ sơ/biểu tượng UI cụ thể, không cần tên thoại dài",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_APOTHECARY",
+      "name": "Dược sư kinh thành",
+      "kind": "NPC",
+      "appearance": "4,6 WU; nhanh nhẹn, vai đeo túi thuốc; áo màu ngà/xanh lá, hộp dược chia ngăn, thẻ dược liệu; sắp lọ theo nhóm effect; không tạo aura/heal giả khi idle",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_AUCTION_CLERK",
+      "name": "Chấp sự ký gửi",
+      "kind": "NPC",
+      "appearance": "4,7 WU; trung niên, tay áo gọn, tư thế ghi chép; áo lam đậm, túi đựng thẻ giá, bảng giao dịch bằng gỗ; huy hiệu hình cân; chỉ tay vào giá/fee trước confirm; giọng rõ, không thúc mua",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_BANKER",
+      "name": "Thủ khố",
+      "kind": "NPC",
+      "appearance": "4,9 WU; dáng vững, chuyển động tiết kiệm; áo xanh mực viền đồng, chùm chìa khóa và sổ kho; không mặc giáp; kiểm sổ hai lần trước khi xác nhận; giọng điềm tĩnh",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_BEAST_TENDER",
+      "name": "Người Giữ Thú",
+      "kind": "NPC",
+      "appearance": "4,8 WU; thân thiện, dáng hơi cúi về thú; áo vải rêu nhạt, còi gọi thú, túi thức ăn và khăn lau; tương tác với thú player không chặn đi; giọng ấm, không coi pet là combat loot",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_CIVILIAN_01",
+      "name": "Người chở hàng",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy CIVILIAN, wardrobe CIVILIAN_WARDROBE, palette IMPERIAL_SLATE_BRASS, identifying detail shared face/body with unique hair and palette",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_CIVILIAN",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_CIVILIAN_02",
+      "name": "Người bán cá",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy CIVILIAN, wardrobe CIVILIAN_WARDROBE, palette IMPERIAL_SLATE_BRASS, identifying detail shared face/body with unique hair and palette",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_CIVILIAN",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_CIVILIAN_03",
+      "name": "Khách Đại Chợ",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy CIVILIAN, wardrobe CIVILIAN_WARDROBE, palette IMPERIAL_SLATE_BRASS, identifying detail shared face/body with unique hair and palette",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_CIVILIAN",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_CIVILIAN_04",
+      "name": "Người mua dược",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy CIVILIAN, wardrobe CIVILIAN_WARDROBE, palette IMPERIAL_SLATE_BRASS, identifying detail shared face/body with unique hair and palette",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_CIVILIAN",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_CIVILIAN_05",
+      "name": "Người gửi hàng",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy CIVILIAN, wardrobe CIVILIAN_WARDROBE, palette IMPERIAL_SLATE_BRASS, identifying detail shared face/body with unique hair and palette",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_CIVILIAN",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_CIVILIAN_06",
+      "name": "Thợ phụ Bách Công",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy CIVILIAN, wardrobe CIVILIAN_WARDROBE, palette IMPERIAL_SLATE_BRASS, identifying detail shared face/body with unique hair and palette",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_CIVILIAN",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_CIVILIAN_07",
+      "name": "Người xem hội",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy CIVILIAN, wardrobe CIVILIAN_WARDROBE, palette IMPERIAL_SLATE_BRASS, identifying detail shared face/body with unique hair and palette",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_CIVILIAN",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_CIVILIAN_08",
+      "name": "Sứ giả bang hội",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy CIVILIAN, wardrobe CIVILIAN_WARDROBE, palette IMPERIAL_SLATE_BRASS, identifying detail shared face/body with unique hair and palette",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_CIVILIAN",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_GATEKEEPER_E",
+      "name": "Quan giữ lộ Đông",
+      "kind": "NPC",
+      "appearance": "Regional Vietnamese fantasy SERVICE, wardrobe SERVICE_WARDROBE, palette IMPERIAL_SLATE_BRASS, identifying detail service prop silhouette; readable role icon",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_GATEKEEPER_W",
+      "name": "Quan giữ lộ Tây",
+      "kind": "NPC",
+      "appearance": "5,2 WU; dáng hộ vệ cổng nhưng không đe dọa; giáp nhẹ xám đá, áo choàng đỏ đất, bảng lộ trình; hai đầu thành khác phù hiệu; chỉ tuyến bằng tay, không vẫy người chơi đi vào route chưa mở",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "IMPERIAL_SLATE_BRASS",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_GUARD_RESCUE",
+      "name": "Hộ vệ Thanh Lạc mắc kẹt",
+      "kind": "NPC",
+      "appearance": "hộ vệ bị kẹt cạnh cọc điều khiển; giáp mỏng, không có weapon attack",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_GUARD",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_WITNESS_01",
+      "name": "Chủ quầy trà",
+      "kind": "NPC",
+      "appearance": "hai người bán hàng làm nhân chứng; silhouette thấp/cao, một người cầm giỏ, một người chống gậy",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TL_WITNESS_02",
+      "name": "Người gác sạp",
+      "kind": "NPC",
+      "appearance": "người gác sạp thấp, khăn vàng, gậy tre; quay đầu theo NPC impostor; thoại phụ khác witness 01",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TONG_BANH",
+      "name": "Tống Bành",
+      "kind": "NPC",
+      "appearance": "5,8 WU khi đội giáp; thân người 5 WU; giáp công thành nhiều mảng vuông, vai phải to, cờ lệnh rách; đứng yên như tượng; khi nói xoay toàn thân trước khi quay đầu; giọng đục; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "WAR_STONE_CRIMSON",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": false
+    },
+    {
+      "id": "NPC_TRADER",
+      "name": "Thương nhân Thanh Lạc",
+      "kind": "NPC",
+      "appearance": "ba merchant class: chợ, cổ vật, nước; mỗi người có bảng giá/props riêng",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_SERVICE",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TS_ENVOY_01",
+      "name": "Sứ giả quân Bắc",
+      "kind": "NPC",
+      "appearance": "sứ giả hai phe; áo quân phục khác màu nhưng cùng silhouette, đưa văn kiện",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "WAR_STONE_CRIMSON",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TS_ENVOY_02",
+      "name": "Sứ giả quân Nam",
+      "kind": "NPC",
+      "appearance": "sứ giả quân phía Nam, áo xám lam, lệnh cuộn dây bạc; giơ hai tay khi bị hỏi, thoại đối chiếu khác NPC 01",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "WAR_STONE_CRIMSON",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TS_REFUGEE_A",
+      "name": "Đoàn tị nạn A",
+      "kind": "NPC",
+      "appearance": "ba nhóm hộ tống; 4 actor mỗi nhóm, dùng LOD/crowd proxy khi ở xa",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "WAR_STONE_CRIMSON",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TS_REFUGEE_B",
+      "name": "Đoàn tị nạn B",
+      "kind": "NPC",
+      "appearance": "nhóm 4 người, trẻ em và thùng đồ, khăn vàng; di chuyển chậm hơn, có animation đỡ xe",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "WAR_STONE_CRIMSON",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_TS_REFUGEE_C",
+      "name": "Đoàn tị nạn C",
+      "kind": "NPC",
+      "appearance": "nhóm 4 người, một người bị thương, băng vải xanh; dừng tại checkpoint C để cứu thương",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_QUEST_ACTOR",
+      "paletteId": "WAR_STONE_CRIMSON",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_VAN_NHU",
+      "name": "Vân Như",
+      "kind": "NPC",
+      "appearance": "4,6 WU; người trưởng thành 28–35; tay khéo, dáng thẳng; áo thợ nhuộm xanh mực, tạp dề vải sáng có vệt màu, khuyên đồng hình giọt; cầm bảng mẫu vải; kéo dải lụa qua tay, pha màu bằng chén nhỏ; giọng bình tĩnh, giải thích ngắn; không làm cử chỉ như pháp sư; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "TEAL_STONE_GOLD",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_WATER_KEEPER",
+      "name": "Người Giữ Nước",
+      "kind": "NPC",
+      "appearance": "4,9 WU; lớn tuổi, dáng gầy vững; áo xanh lam nhạt nhiều dây van, trượng đo mực nước; quan sát giọt nước, chậm quay đầu; giọng đều, có hơi khàn; this is a distinct named person with a bespoke face, not the player or a generic crowd clone",
+      "uniqueFace": true,
+      "archetype": "PREFAB_NPC_QUEST_GIVER",
+      "paletteId": "FOREST_JADE_MIST",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_WATER_SELLER",
+      "name": "Người bán nước",
+      "kind": "NPC",
+      "appearance": "ba merchant class: chợ, cổ vật, nước; mỗi người có bảng giá/props riêng",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "ASH_OCHRE_COPPER",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "NPC_WOODCUTTER_01",
+      "name": "Thợ đốn gỗ",
+      "kind": "NPC",
+      "appearance": "lao động Lâm Triều; rìu, giỏ nấm, dây van, thước nước",
+      "uniqueFace": false,
+      "archetype": "PREFAB_NPC_WORKER",
+      "paletteId": "FOREST_JADE_MIST",
+      "renderHeightPx": 38,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "interact"
+      ],
+      "mirrorAllowed": true
+    },
+    {
+      "id": "MOB_DREAM_ROOT_ELITE",
+      "name": "Rễ Mộng tinh anh",
+      "kind": "MOB",
+      "appearance": "3,8×4,5; control; thân cây thấp, mặt không người, rễ tách như ngón; rễ đâm line theo mục tiêu sau 0,8s; vùng ký ức xanh hiện hình; gỗ/linh phách; tinh anh có rễ phụ; elite variant retains the same species but has visibly reinforced armour/ridges/spines as appropriate and a distinct readable elite silhouette, not just a colour swap",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true,
+      "variantOf": "MOB_DREAM_ROOT"
+    },
+    {
+      "id": "MOB_FALSE_SIGIL_ELITE",
+      "name": "Kẻ Giả Phù tinh anh",
+      "kind": "MOB",
+      "appearance": "4,3×4,8; agile human; áo thường, phù giả phát sáng sai màu, nửa mặt che; đổi vị trí nhanh, đâm chéo; marker giả tắt trước attack 0,5s; giấy phù/Danh Vọng; elite variant retains the same species but has visibly reinforced armour/ridges/spines as appropriate and a distinct readable elite silhouette, not just a colour swap",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true,
+      "variantOf": "MOB_FALSE_SIGIL"
+    },
+    {
+      "id": "MOB_FALSE_SOLDIER_ELITE",
+      "name": "Binh sĩ giả lệnh tinh anh",
+      "kind": "MOB",
+      "appearance": "4,8×5; human melee; hai phe màu sắc nhưng dấu sáp giả giống nhau; đội hình đôi, đâm line; gọi viện khi mục tiêu xa; huy hiệu chiến trường; elite variant retains the same species but has visibly reinforced armour/ridges/spines as appropriate and a distinct readable elite silhouette, not just a colour swap",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true,
+      "variantOf": "MOB_FALSE_SOLDIER"
+    },
+    {
+      "id": "MOB_FURNACE_WARDEN_ELITE",
+      "name": "Người Canh Lò tinh anh",
+      "kind": "MOB",
+      "appearance": "5×5; armored; giáp sắt nóng, lõi đỏ sau lưng, chùy ngắn; đập đất cone báo 0,7s; giáp sau lưng mở sau đòn; fire sweep line; quặng/linh phách; tinh anh có thêm vent; elite variant retains the same species but has visibly reinforced armour/ridges/spines as appropriate and a distinct readable elite silhouette, not just a colour swap",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true,
+      "variantOf": "MOB_FURNACE_WARDEN"
+    },
+    {
+      "id": "MOB_PRESSURE_GUARD_ELITE",
+      "name": "Kẻ Gác Buồng tinh anh",
+      "kind": "MOB",
+      "appearance": "4,5×5; guard underwater; giáp vòm, bình áp suất sau lưng; đẩy áp lực cone, rồi slow bubble; áp suất lên màu/shape; linh phách/vảy; elite variant retains the same species but has visibly reinforced armour/ridges/spines as appropriate and a distinct readable elite silhouette, not just a colour swap",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true,
+      "variantOf": "MOB_PRESSURE_GUARD"
+    },
+    {
+      "id": "MOB_RIFT_HUNTER_ELITE",
+      "name": "Thợ Săn Mạch tinh anh",
+      "kind": "MOB",
+      "appearance": "4,8×5,2; ranged; giáp nhiều đoạn, mặt nạ khe dọc, dây sáng tím; bắn 3 projectile có spread, vòng target 0,8s; đá mạch; elite variant retains the same species but has visibly reinforced armour/ridges/spines as appropriate and a distinct readable elite silhouette, not just a colour swap",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true,
+      "variantOf": "MOB_RIFT_HUNTER"
+    },
+    {
+      "id": "MOB_SHORE_STALKER_ELITE",
+      "name": "Kẻ Rình Bờ tinh anh",
+      "kind": "MOB",
+      "appearance": "4×4; ambusher; thú bốn chân, mõm dài, lưng sậy; nấp trong cỏ, mắt lóe 0,5s; lao ngang, recovery 0,8s; da/cá; elite để lại vệt bùn; elite variant retains the same species but has visibly reinforced armour/ridges/spines as appropriate and a distinct readable elite silhouette, not just a colour swap",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true,
+      "variantOf": "MOB_SHORE_STALKER"
+    },
+    {
+      "id": "MOB_SMALL_STATUE_ELITE",
+      "name": "Tượng Nhỏ tinh anh",
+      "kind": "MOB",
+      "appearance": "4×5; sentry; tượng đá khớp đồng, mắt hình vòng; bắn viên đá đơn; khóa line 0,7s; cọc điều khiển có thể phá; đá/quặng; elite variant retains the same species but has visibly reinforced armour/ridges/spines as appropriate and a distinct readable elite silhouette, not just a colour swap",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true,
+      "variantOf": "MOB_SMALL_STATUE"
+    },
+    {
+      "id": "MOB_STONE_AUTOMATON_ELITE",
+      "name": "Tượng Cơ tinh anh",
+      "kind": "MOB",
+      "appearance": "4,8×5,5; guard; đá khối có cơ cấu kim loại ở khuỷu; chậm, block frontal; đòn nện vòng 0,75s; đá/linh phách; elite variant retains the same species but has visibly reinforced armour/ridges/spines as appropriate and a distinct readable elite silhouette, not just a colour swap",
+      "uniqueFace": true,
+      "renderHeightPx": 40,
+      "requiredClips": [
+        "idle",
+        "walk",
+        "hurt",
+        "death",
+        "telegraph_01",
+        "attack_01",
+        "recovery_01",
+        "telegraph_02",
+        "attack_02",
+        "recovery_02",
+        "run",
+        "turn"
+      ],
+      "mirrorAllowed": true,
+      "variantOf": "MOB_STONE_AUTOMATON"
+    }
+  ],
+  "skills": [
+    {
+      "id": "SK-MK-01",
+      "classId": "CLASS_MINH_KIEM",
+      "slot": 1,
+      "name": "Phản Quang",
+      "description": "Vai trò: đỡ phản công. CD 10s, 12 MP. Nhấn tạo thế thủ 0,4s, giảm 70% sát thương; nếu đòn cận chiến trúng trong cửa đỡ, phản 180% sát thương vũ khí và nhận 2 Kiếm Ý. Nếu không có đòn chạm, kết thúc với giảm sát thương hụt 20%. Hoạt ảnh: hạ trọng tâm, đưa kiếm chéo trước ngực; 6 frame đầu viền bạc mảnh báo thế đỡ. Khi đỡ thành công, kiếm phát một vòng cung lục giác màu vàng nhạt, âm thanh kim loại khô; không tạo flash màn hình. Boss không bị choáng, người chơi nhận thông báo “Đỡ chuẩn” cạnh thanh tài nguyên. Vùng đỡ 120 độ phía trước, cự ly 2,2m."
+    },
+    {
+      "id": "SK-MK-02",
+      "classId": "CLASS_MINH_KIEM",
+      "slot": 2,
+      "name": "Tầm Long",
+      "description": "Vai trò: áp sát/đánh mục tiêu đầu. CD 8s, 16 MP, lao 5,5m, 150%, +1 Kiếm Ý. Chuẩn bị 0,15s, lướt 0,20s, hồi 0,24s. Mũi kiếm kéo vệt trắng bạc có lõi vàng; nhân vật không biến mất. Hit là một hình thoi mảnh trước người, không xuyên tường; nếu va chướng ngại thì dừng ở mép. Tạo vạch bụi nhỏ ở điểm dừng. Quái thường bị lùi 0,25m, boss tích Choáng Mạch."
+    },
+    {
+      "id": "SK-MK-03",
+      "classId": "CLASS_MINH_KIEM",
+      "slot": 3,
+      "name": "Kiếm Trận",
+      "description": "Vai trò: quét nhóm. CD 10s, 22 MP, hình quạt 100 độ, tổng 190%, tối đa 5 mục tiêu. Ba nhát có nhịp 0,10/0,12/0,14s: ngang, chéo lên, chém xuống; trọng số sát thương 45/55/90%. VFX ba cung kiếm vàng trắng lệch nhau, cung thứ ba dày nhất; mỗi cung tồn tại dưới 0,22s. Đánh trúng nhiều mục tiêu có số sát thương tách riêng, không cộng dồn một con số che mục tiêu. Ưu tiên trúng địch gần nhất trong quạt."
+    },
+    {
+      "id": "SK-MK-04",
+      "classId": "CLASS_MINH_KIEM",
+      "slot": 4,
+      "name": "Thiết Y",
+      "description": "Vai trò: phòng thủ cá nhân. CD 16s, 24 MP, khiên bằng 12% HP tối đa trong 4s, không cộng dồn. Động tác cắm kiếm cạnh thân rồi kéo vòng sáng kim loại mờ quanh vai và ngực. Khiên hiển thị một viền lục giác xanh bạc ở chân thanh HP, không phủ toàn thân. Khi bị đánh, viền nứt theo lượng khiên mất; hết thời gian tự tan thành bụi sáng. Nội tại Thủ Nhất cộng thêm 4% giá trị khiên theo quy tắc Bible."
+    },
+    {
+      "id": "SK-MK-05",
+      "classId": "CLASS_MINH_KIEM",
+      "slot": 5,
+      "name": "Bạch Hồng (cơ động)",
+      "description": "Vai trò: vượt ngang, xóa chậm. CD 9s, 10 MP, lướt 6m ngang, không gây sát thương. Vệt kiếm mảnh trắng xanh chạy sau nhân vật trong 0,16s; nhân vật luôn thấy rõ tại đầu/cuối pha. Xóa trạng thái Chậm khi khởi động, không xóa choáng, trói, độc hoặc vùng khóa. Không cho đi xuyên tường/địch lớn; va chạm dừng lướt. Không có hitbox sát thương."
+    },
+    {
+      "id": "SK-MK-06",
+      "classId": "CLASS_MINH_KIEM",
+      "slot": 6,
+      "name": "Vạn Tượng Quy Nhất (tuyệt kỹ)",
+      "description": "Vai trò: đường kiếm dồn sát thương. CD 60s, 40 MP. Tấn công đường thẳng 7m, 260% + 60% mỗi Kiếm Ý, tối đa 5 mục tiêu; tiêu Kiếm Ý khi server chấp nhận. 0,70s kết tụ: các nét kim loại nhỏ hội về mũi kiếm, nhân vật giữ dáng ngang vững. Sau báo trước là đường chém ngang rộng 0,8m, vệt vàng trắng phân lớp, tồn tại 0,35s. Camera rung tối đa 0,12s tại hit, không cắt cảnh; số Kiếm Ý được hiển thị thành năm vạch sáng tắt theo số đã dùng. Boss nhận sát thương và Choáng Mạch, không bị đứng im."
+    },
+    {
+      "id": "SK-AD-01",
+      "classId": "CLASS_ANH_DAO",
+      "slot": 1,
+      "name": "Huyết Nguyệt",
+      "description": "Vai trò: chảy máu đơn mục tiêu. CD 8s, 14 MP, đòn 140% và chảy máu 3 lần ×25% trong 4s. Chém vòng cung đỏ sẫm, rìa cam chỉ sáng lúc cắt; tránh máu bắn hoặc hình ảnh bạo lực. Dấu chảy máu là ba vệt đỏ nhỏ chạy dọc viền thanh máu mục tiêu, mỗi tick có âm thanh rất nhẹ. Nhận Nhiệt theo quy tắc lớp: đòn trúng cho 1 Nhiệt tối đa một lần mỗi 1,5s."
+    },
+    {
+      "id": "SK-AD-02",
+      "classId": "CLASS_ANH_DAO",
+      "slot": 2,
+      "name": "Tàn Hỏa",
+      "description": "Vai trò: gài nổ. CD 12s, 18 MP. Gắn dấu 5s; đòn tiếp theo của người chơi lên mục tiêu kích nổ 120% vùng nhỏ, hoặc 180% nếu có đủ 5 Nhiệt tại lúc kích hoạt. Dấu là một vòng than đỏ quanh chân địch với năm khe sáng; đồng đội nhìn thấy biểu tượng nhỏ, không phải vòng sàn. Nổ bán kính 1,5m, VFX bụi than hướng ra ngoài và tia lửa ngắn. Nếu dấu hết hạn thì tắt, không tự nổ. Mỗi mục tiêu chỉ mang một dấu từ cùng người chơi."
+    },
+    {
+      "id": "SK-AD-03",
+      "classId": "CLASS_ANH_DAO",
+      "slot": 3,
+      "name": "Xích Ảnh",
+      "description": "Vai trò: hai nhát, thưởng vị trí sau lưng quái. CD 10s, 20 MP, hai hit ×85%. Nhát đầu lướt chéo ngắn 1m, nhát sau đảo cổ tay chém ngược. Mỗi nhát có cửa hitbox riêng 0,10s, tổng góc 80 độ. Nếu nhát hai chạm phía sau quái thường, tăng theo nội tại Bóng Sát (+8%); boss dùng hướng vị trí của người chơi khi lệnh được xác nhận. Vệt lửa tối, không dùng ảnh phân thân gây nhầm với nhân vật thật."
+    },
+    {
+      "id": "SK-AD-04",
+      "classId": "CLASS_ANH_DAO",
+      "slot": 4,
+      "name": "Tước Mạch",
+      "description": "Vai trò: làm chậm/tích Choáng Mạch. CD 14s, 22 MP, 160%, chậm 25% trong 2,5s; boss nhận Choáng Mạch thay hiệu ứng khống chế. Hoạt ảnh chém dọc từ vai xuống, thanh lửa mỏng dừng ở vị trí hit. Quái thường có dấu ba vệt xích đỏ trên chân; boss có biểu tượng mạch bị nứt cạnh tên hiệu ứng. Không khóa hoạt ảnh mục tiêu; không cộng dồn thời gian làm chậm."
+    },
+    {
+      "id": "SK-AD-05",
+      "classId": "CLASS_ANH_DAO",
+      "slot": 5,
+      "name": "Ảnh Bộ (cơ động)",
+      "description": "Vai trò: đổi vị trí. CD 8s, 10 MP, lướt 6m, xóa khóa mục tiêu của quái thường; không tàng hình. Nhân vật thu thấp người và trượt qua làn khói than trong 0,22s; silhouette được viền màu cam để đồng đội không mất dấu. Khóa mục tiêu boss không bị xóa. Không tạo ảo ảnh có thể bị nhắm."
+    },
+    {
+      "id": "SK-AD-06",
+      "classId": "CLASS_ANH_DAO",
+      "slot": 6,
+      "name": "Tử Diệm (tuyệt kỹ)",
+      "description": "Vai trò: nổ diện nhỏ, tiêu Nhiệt. CD 60s, 35 MP, 230% vùng nhỏ +45% mỗi Nhiệt, tiêu sạch Nhiệt. 0,55s tích lực: lưỡi đao hút các hạt than vào sống đao; vòng cảnh báo cá nhân 1,7m tông đỏ đen chỉ báo vùng gây sát thương, không phải vùng nguy hiểm cho chính người chơi. Chém xoay một vòng thấp, lửa bùng 0,25s, tắt nhanh để thấy boss. Mỗi tầng Nhiệt thêm một vòng nhỏ ở điểm hit, tối đa 5 vòng; số vòng đồng bộ biểu tượng Nhiệt."
+    },
+    {
+      "id": "SK-HB-01",
+      "classId": "CLASS_HUYEN_BUT",
+      "slot": 1,
+      "name": "Mực Triều",
+      "description": "Vai trò: đạn sóng xuyên quái thường. CD 6s, 12 MP, 130%, đường thẳng 5m, xuyên tối đa 3 quái thường. Vẽ nét ngang bằng bút; nét mực xanh lam chuyển thành sóng có rìa giấy loang, không giống đạn phép tròn. Đầu sóng cao 0,8m, bay 0,25s; mỗi mục tiêu trúng có dấu chấm mực nhỏ. Boss chặn đường đạn; không xuyên tường. Nội tại Nét Mực giảm 1s CD sau tổng ba lần trúng hợp lệ."
+    },
+    {
+      "id": "SK-HB-02",
+      "classId": "CLASS_HUYEN_BUT",
+      "slot": 2,
+      "name": "Hàn Châm",
+      "description": "Vai trò: làm chậm/khống chế nhẹ. CD 12s, 18 MP, 110%, chậm 35% trong 2s; quái nhỏ đóng băng 0,6s. Bút chấm ba điểm sáng xanh trước khi một kim băng mảnh bay đi. Trúng tạo hình băng dạng cánh hoa trên chân, không phủ thân. Boss nhận làm chậm theo giới hạn PvE hoặc tích Choáng Mạch tùy bảng kháng; không đóng băng boss. Cửa báo trước 0,18s, tốc độ đạn đủ để đọc và né ở cự ly xa."
+    },
+    {
+      "id": "SK-HB-03",
+      "classId": "CLASS_HUYEN_BUT",
+      "slot": 3,
+      "name": "Thủy Kính",
+      "description": "Vai trò: khiên đồng đội. CD 16s, 22 MP, khiên 10% HP tối đa trong 4s; chỉ giữ khiên lớn nhất. Chọn mục tiêu đồng minh theo hướng con trỏ/joystick hỗ trợ: ưu tiên đồng minh gần tâm nút, nếu không chọn thì người gần nhất trong 6m có HP thấp nhất. Một nét tròn xanh ngọc khép quanh mục tiêu, mặt kính mỏng nghiêng 15 độ; khiên không che nhân vật. Nội tại Tĩnh Thủy thêm phần khiên theo bảng nội tại khi mục tiêu thấp HP; quy tắc không cộng dồn bắt buộc."
+    },
+    {
+      "id": "SK-HB-04",
+      "classId": "CLASS_HUYEN_BUT",
+      "slot": 4,
+      "name": "Mưa Tinh",
+      "description": "Vai trò: hồi máu vùng. CD 18s, 28 MP, bán kính 3m; hồi 8% HP +2% mỗi giây trong 3s; tiêu 2 Thủy Ấn tăng tổng hồi 30%. Vẽ một vòng tròn xanh nhạt trên mặt đất, báo trước 0,45s; giọt sáng rơi thẳng trong vùng, không làm giảm tương phản nền. Hồi tick ở 0/1/2/3s; người rời vùng sau khi nhận tick vẫn giữ lượng đã hồi. Tối đa 5 người theo nội tại Chia Dòng; thứ tự ưu tiên: người chơi, thành viên nhóm trong vùng theo % HP thấp nhất. Không hồi mục tiêu ngoài party/guild."
+    },
+    {
+      "id": "SK-HB-05",
+      "classId": "CLASS_HUYEN_BUT",
+      "slot": 5,
+      "name": "Lưu Thủy Bộ (cơ động)",
+      "description": "Vai trò: lùi giữ khoảng cách. CD 10s, 10 MP, lùi 4m và tăng 20% tốc chạy trong 1,5s. Nhân vật xoay vai, bước trượt ngược, để lại hai nét nước mỏng. Hướng lùi theo vector ngược hướng mặt; có thể chỉnh bằng joystick, không xuyên địch/tường. Vệt nước không gây sát thương và tan sau 0,3s."
+    },
+    {
+      "id": "SK-HB-06",
+      "classId": "CLASS_HUYEN_BUT",
+      "slot": 6,
+      "name": "Long Mạch Hồi Nguyên (tuyệt kỹ)",
+      "description": "Vai trò: hồi nhóm và giải trạng thái. CD 70s, 45 MP; hồi 12% HP cho nhóm và giải một Chậm hoặc Độc, chịu giới hạn raid. Nhân vật viết một vòng ấn lớn dưới chân; nét chữ cách điệu là hình học hư cấu, không dùng ký tự giả Hán sai nghĩa. Sóng xanh lam tràn ra bán kính 8m trong 0,45s, đồng minh nhận một dải sáng từ chân lên vai. Chỉ mục tiêu party trong cùng encounter được hồi; raid áp dụng hệ số cấu hình (mặc định 70% từ ngoài party), tránh vượt ngân sách hồi. Không xóa stun/khóa cơ chế boss."
+    },
+    {
+      "id": "SK-TC-01",
+      "classId": "CLASS_THACH_CHUY",
+      "slot": 1,
+      "name": "Trấn Sơn",
+      "description": "Vai trò: đánh đơn mục tiêu, giảm tốc. CD 8s, 14 MP, 170%, giảm tốc 20% trong 2s. Nâng chùy qua vai, nện chéo xuống; chuẩn bị 0,25s cho tiếng rít đá. Hitbox hình quạt 60 độ, sâu 2,6m. Vết nứt đất chỉ là decal ngắn 0,35s, không tồn tại như chướng ngại. Quái hiện bụi vàng xám ở chân; boss nhận Choáng Mạch."
+    },
+    {
+      "id": "SK-TC-02",
+      "classId": "CLASS_THACH_CHUY",
+      "slot": 2,
+      "name": "Chấn Địa",
+      "description": "Vai trò: sát thương quanh thân/hất quái nhỏ. CD 14s, 20 MP, vòng bán kính 3m gây 120%; quái thường hất 0,5s. Nâng chùy thẳng, vòng bụi mỏng hiện trên đất 0,35s, sau đó sóng đá thấp lan ra. Đường kính tối đa 6m; mép ngoài dùng mảnh đá nhỏ, không dựng khối có thể hiểu là platform. Boss không hất, có thanh tích lũy Choáng Mạch."
+    },
+    {
+      "id": "SK-TC-03",
+      "classId": "CLASS_THACH_CHUY",
+      "slot": 3,
+      "name": "Thiết Bích",
+      "description": "Vai trò: giảm sát thương nhận. CD 18s, 24 MP, giảm 25% sát thương trong 4s; tiêu 2 Thế tăng lên 35%. Hạ chùy làm trụ, hiện ba mảng giáp đá trên vai/lưng/đầu gối, không biến nhân vật thành khối đá. Viền buff màu đất sáng quanh thanh HP; khi bị đánh, mảng nứt theo thời gian còn lại. Không cộng dồn, lần dùng mới chỉ làm mới thời lượng."
+    },
+    {
+      "id": "SK-TC-04",
+      "classId": "CLASS_THACH_CHUY",
+      "slot": 4,
+      "name": "Khiêu Chiến",
+      "description": "Vai trò: điều hướng quái thường. CD 20s, 16 MP; quái thường trong 6m ưu tiên tấn công người dùng trong 4s; boss không bị ép đổi mục tiêu. Nhân vật gõ chùy xuống đất, phát vòng âm thanh dạng đường gợn màu đất. Quái thường có mũi tên nhỏ hướng về người chơi, chỉ hiển thị trong 0,7s; biểu tượng khiêu chiến cạnh tên quái giữ 4s. Thủ lĩnh có miễn nhiễm nhưng vẫn nhận sát thương nếu kỹ năng có cấu hình sát thương riêng (mặc định không gây damage)."
+    },
+    {
+      "id": "SK-TC-05",
+      "classId": "CLASS_THACH_CHUY",
+      "slot": 5,
+      "name": "Phá Nham (cơ động)",
+      "description": "Vai trò: lao ngắn/ngắt hoạt ảnh quái nhỏ. CD 10s, 12 MP, lao 4m gây 100%, ngắt hoạt ảnh quái thường. Chuẩn bị 0,22s, người chơi ghì vai sau chùy, sau đó lao thẳng với một dải bụi sát mặt đất. Va mục tiêu thường tạo vòng đá nhỏ và ngắt động tác không phải boss; không xuyên tường. Boss không bị interrupt, chỉ nhận sát thương và Choáng Mạch."
+    },
+    {
+      "id": "SK-TC-06",
+      "classId": "CLASS_THACH_CHUY",
+      "slot": 6,
+      "name": "Sơn Thần Giáng Thế (tuyệt kỹ)",
+      "description": "Vai trò: vùng chắn ngắn và sát thương. CD 70s, 40 MP, vùng 4m tồn tại 5s, gây 180%; tiêu Thế tăng tối đa 2s. Cắm chùy, tạo một vòng chắn bằng các phiến đá thấp cao 0,55m; khoảng mở hướng camera giúp người chơi nhìn thấy bên trong. Vùng tấn công đánh một lần khi tạo, sau đó không tick damage. Đá mờ dần từ giây cuối; không chặn di chuyển đồng minh, đạn đồng minh hoặc telegraph boss. Mỗi Thế làm một phiến sáng và thêm tối đa 2s."
+    },
+    {
+      "id": "SK-LC-01",
+      "classId": "CLASS_LINH_CUNG",
+      "slot": 1,
+      "name": "Khóa Mạch",
+      "description": "Vai trò: đánh dấu tăng sát thương nhóm. CD 10s, 16 MP, 130%, dấu 5s khiến nhóm gây thêm 3%, không cộng dồn. Bắn một mũi tên lá dài, quỹ đạo dễ đọc; khi trúng hiện dây rễ xanh ngọc nhỏ quấn quanh viền mục tiêu. Biểu tượng dấu hiện cạnh HP quái; nếu nhiều cung thủ, ưu tiên dấu có thời lượng còn lại dài nhất hoặc từ người chơi có đóng góp gần nhất theo cấu hình, không cộng nhiều buff. Nội tại Ghim Dấu tăng thời lượng 1s."
+    },
+    {
+      "id": "SK-LC-02",
+      "classId": "CLASS_LINH_CUNG",
+      "slot": 2,
+      "name": "Dây Gai",
+      "description": "Vai trò: bẫy làm chậm. CD 14s, 18 MP, bán kính 2m gây 90%, làm chậm quái thường 40% trong 2,5s. Bắn hạt giống xuống điểm chọn, vòng rễ xanh lục hiện 0,45s báo vùng; dây gai mọc thấp từ đất. Bẫy tồn tại tối đa 4s nếu không trúng; chỉ kích hoạt một lần. Boss không bị root/chậm nếu có kháng, vẫn có thể tích Choáng Mạch. VFX không che texture đất cảnh báo."
+    },
+    {
+      "id": "SK-LC-03",
+      "classId": "CLASS_LINH_CUNG",
+      "slot": 3,
+      "name": "Liên Châu",
+      "description": "Vai trò: sát thương nhiều hit. CD 8s, 18 MP, 5 mũi ×45%, tối đa 3 mũi trên cùng một mục tiêu. Loạt tên bắn trong 0,55s với khoảng 0,11s; độ lệch quạt tối đa 12 độ; mục tiêu khóa gần con trỏ đầu tiên. Mỗi tên có trail lá 0,12s và va chạm riêng để đọc số hit. Hệ thống mục tiêu giới hạn 3 tên vào một mục tiêu nhằm giữ vai trò đa mục tiêu, không cho bắn tự động nhân damage lên boss."
+    },
+    {
+      "id": "SK-LC-04",
+      "classId": "CLASS_LINH_CUNG",
+      "slot": 4,
+      "name": "Tán Hoa",
+      "description": "Vai trò: hình nón gần. CD 12s, 20 MP, góc 100 độ, tổng 150%, giảm 30% nếu mục tiêu ở quá gần. Bắn loạt cánh gỗ/hoa mảnh theo hình quạt, không phát nổ. Ranh giới gần là 0,8m; mục tiêu trong đó nhận 70% tổng hệ số để tránh chồng hitbox cận cảnh. Tông xanh non/vàng kem, không dùng cánh quá lớn. Có số lượng 5–7 cánh chính và hạt phụ giới hạn."
+    },
+    {
+      "id": "SK-LC-05",
+      "classId": "CLASS_LINH_CUNG",
+      "slot": 5,
+      "name": "Phi Diệp (cơ động)",
+      "description": "Vai trò: lùi đồng thời phản kích. CD 9s, 12 MP, lùi 5m và bắn 80%. Hoạt ảnh kéo cung trong lúc trượt lùi, hitbox tên đi sau 0,12s; nếu lùi bị vật cản thì dừng và vẫn bắn theo hướng ban đầu. Vệt lá chỉ theo đường bay, không tạo hit nếu phát bắn bị server từ chối. Dùng cho điều khiển chuột và joystick; không tự tìm đường vòng."
+    },
+    {
+      "id": "SK-LC-06",
+      "classId": "CLASS_LINH_CUNG",
+      "slot": 6,
+      "name": "Bách Tiễn Quy Tông (tuyệt kỹ)",
+      "description": "Vai trò: vùng sát thương có báo trước. CD 65s, 40 MP; báo vùng 1,2s, mưa tên bán kính 6m tổng 300%; tiêu 3 Mộc Tiêu tăng 20%. Người chơi chọn điểm trong tầm 12m; hình tròn xanh rêu viền vàng hiện đủ 1,2s, tâm có ba vòng mũi tên để người chơi phân biệt mình tạo và boss cảnh báo. Mưa tên rơi theo 4 đợt trong 0,8s, tổng 300% chia đều; tối đa 8 mục tiêu thường, boss nhận damage theo hệ số. Khi tiêu 3 Mộc Tiêu, vòng tâm sáng thêm ba vạch, không thay đổi vùng/timing để tránh nhầm telegraph."
+    }
+  ],
+  "aliases": [
+    {
+      "id": "MOB_DREAM_ROOT_ELITE",
+      "baseActor": "MOB_DREAM_ROOT",
+      "variant": "ELITE",
+      "status": "DISTINCT_VARIANT_CLIPS_REQUIRED"
+    },
+    {
+      "id": "MOB_FALSE_SIGIL_ELITE",
+      "baseActor": "MOB_FALSE_SIGIL",
+      "variant": "ELITE",
+      "status": "DISTINCT_VARIANT_CLIPS_REQUIRED"
+    },
+    {
+      "id": "MOB_FALSE_SOLDIER_ELITE",
+      "baseActor": "MOB_FALSE_SOLDIER",
+      "variant": "ELITE",
+      "status": "DISTINCT_VARIANT_CLIPS_REQUIRED"
+    },
+    {
+      "id": "MOB_FURNACE_WARDEN_ELITE",
+      "baseActor": "MOB_FURNACE_WARDEN",
+      "variant": "ELITE",
+      "status": "DISTINCT_VARIANT_CLIPS_REQUIRED"
+    },
+    {
+      "id": "MOB_PRESSURE_GUARD_ELITE",
+      "baseActor": "MOB_PRESSURE_GUARD",
+      "variant": "ELITE",
+      "status": "DISTINCT_VARIANT_CLIPS_REQUIRED"
+    },
+    {
+      "id": "MOB_RIFT_HUNTER_ELITE",
+      "baseActor": "MOB_RIFT_HUNTER",
+      "variant": "ELITE",
+      "status": "DISTINCT_VARIANT_CLIPS_REQUIRED"
+    },
+    {
+      "id": "MOB_SHORE_STALKER_ELITE",
+      "baseActor": "MOB_SHORE_STALKER",
+      "variant": "ELITE",
+      "status": "DISTINCT_VARIANT_CLIPS_REQUIRED"
+    },
+    {
+      "id": "MOB_SMALL_STATUE_ELITE",
+      "baseActor": "MOB_SMALL_STATUE",
+      "variant": "ELITE",
+      "status": "DISTINCT_VARIANT_CLIPS_REQUIRED"
+    },
+    {
+      "id": "MOB_STONE_AUTOMATON_ELITE",
+      "baseActor": "MOB_STONE_AUTOMATON",
+      "variant": "ELITE",
+      "status": "DISTINCT_VARIANT_CLIPS_REQUIRED"
+    }
+  ],
+  "selectors": [
+    {
+      "id": "BOSS_WEEKLY_ROTATION",
+      "source": "docs/production/Weekly_Boss_Rotation_Data_vi.csv",
+      "actorIds": [
+        "BOSS_ANCIENT_TREE",
+        "BOSS_FLAME_SENTINEL",
+        "BOSS_FURNACE",
+        "BOSS_MANG_COT",
+        "BOSS_TIDE_SERPENT",
+        "BOSS_TONG_BANH"
+      ]
+    }
+  ],
+  "unresolvedManifestIds": []
+}

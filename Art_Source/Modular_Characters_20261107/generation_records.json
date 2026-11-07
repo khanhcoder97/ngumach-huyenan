@@ -1,0 +1,32 @@
+[
+  {
+    "id": "body_human_male_idle_s_v1",
+    "source": "Sheets/body_human_male_idle_s_v1.png",
+    "prompt": "Prompts/body_human_male_idle_s_v1.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "BODY_STYLE_AND_MOTION_CANDIDATE",
+    "productionApproved": false,
+    "layerFitApproved": false,
+    "nativeGridReady": false,
+    "rigId": "RIG_HUMAN_M_V1",
+    "clipId": "idle"
+  },
+  {
+    "id": "body_human_female_idle_s_v1",
+    "source": "Sheets/body_human_female_idle_s_v1.png",
+    "prompt": "Prompts/body_human_female_idle_s_v1.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "BODY_STYLE_AND_MOTION_CANDIDATE",
+    "productionApproved": false,
+    "layerFitApproved": false,
+    "nativeGridReady": false,
+    "rigId": "RIG_HUMAN_F_V1",
+    "clipId": "idle"
+  }
+]

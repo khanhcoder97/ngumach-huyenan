@@ -1,0 +1,375 @@
+[
+  {
+    "id": "class_anh_dao_idle",
+    "source": "Sheets/class_anh_dao_idle.png",
+    "prompt": "Prompts/class_anh_dao_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_INSPECTION",
+    "reference": "Art_Source/Actor_Library_20261107/Rejections/class_anh_dao_idle_v0.png"
+  },
+  {
+    "id": "mob_carpling_idle_s",
+    "source": "Sheets/mob_carpling_idle_s.png",
+    "prompt": "Prompts/mob_carpling_idle_s.txt",
+    "columns": 4,
+    "rows": 4,
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_anh_dao_walk",
+    "source": "Sheets/class_anh_dao_walk.png",
+    "prompt": "Prompts/class_anh_dao_walk.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_huyen_but_idle",
+    "source": "Sheets/class_huyen_but_idle_v2.png",
+    "prompt": "Prompts/class_huyen_but_idle_v2.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_thach_chuy_idle",
+    "source": "Sheets/class_thach_chuy_idle_v2.png",
+    "prompt": "Prompts/class_thach_chuy_idle_v2.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_linh_cung_idle",
+    "source": "Sheets/class_linh_cung_idle_v2.png",
+    "prompt": "Prompts/class_linh_cung_idle_v2.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_anh_dao_basic_attack",
+    "source": "Sheets/class_anh_dao_basic_attack.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_huyen_but_walk",
+    "source": "Sheets/class_huyen_but_walk.png",
+    "prompt": "Prompts/class_huyen_but_walk.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_thach_chuy_walk",
+    "source": "Sheets/class_thach_chuy_walk.png",
+    "prompt": "Prompts/class_thach_chuy_walk.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_linh_cung_walk",
+    "source": "Sheets/class_linh_cung_walk.png",
+    "prompt": "Prompts/class_linh_cung_walk.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "npc_lyan_idle",
+    "source": "Sheets/npc_lyan_idle_v2.png",
+    "prompt": "Prompts/npc_lyan_idle_v2.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/npc_lyan_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "sk_ad_01_vfx",
+    "source": "Sheets/sk_ad_01_vfx_v2.png",
+    "prompt": "Prompts/sk_ad_01_vfx_v2.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_01_vfx.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "sk_hb_01_vfx",
+    "source": "Sheets/sk_hb_01_vfx_v2.png",
+    "prompt": "Prompts/sk_hb_01_vfx_v2.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_01_vfx.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_huyen_but_basic_attack",
+    "source": "Sheets/class_huyen_but_basic_attack.png",
+    "prompt": "Prompts/class_huyen_but_basic_attack.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_linh_cung_basic_attack",
+    "source": "Sheets/class_linh_cung_basic_attack.png",
+    "prompt": "Prompts/class_linh_cung_basic_attack.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_anh_dao_hurt",
+    "source": "Sheets/class_anh_dao_hurt.png",
+    "prompt": "Prompts/class_anh_dao_hurt.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_anh_dao_death",
+    "source": "Sheets/class_anh_dao_death.png",
+    "prompt": "Prompts/class_anh_dao_death.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_huyen_but_hurt",
+    "source": "Sheets/class_huyen_but_hurt.png",
+    "prompt": "Prompts/class_huyen_but_hurt.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_huyen_but_death",
+    "source": "Sheets/class_huyen_but_death.png",
+    "prompt": "Prompts/class_huyen_but_death.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_thach_chuy_hurt",
+    "source": "Sheets/class_thach_chuy_hurt.png",
+    "prompt": "Prompts/class_thach_chuy_hurt.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_linh_cung_hurt",
+    "source": "Sheets/class_linh_cung_hurt.png",
+    "prompt": "Prompts/class_linh_cung_hurt.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "npc_ta_van_khanh_idle",
+    "source": "Sheets/npc_ta_van_khanh_idle.png",
+    "prompt": "Prompts/npc_ta_van_khanh_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "npc_lyan_walk",
+    "source": "Sheets/npc_lyan_walk.png",
+    "prompt": "Prompts/npc_lyan_walk.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/npc_lyan_idle_v2.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "npc_lyan_interact",
+    "source": "Sheets/npc_lyan_interact.png",
+    "prompt": "Prompts/npc_lyan_interact.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/npc_lyan_idle_v2.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "sk_mk_01_vfx",
+    "source": "Sheets/sk_mk_01_vfx.png",
+    "prompt": "Prompts/sk_mk_01_vfx.txt",
+    "columns": 4,
+    "rows": 4,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "sk_mk_02_vfx",
+    "source": "Sheets/sk_mk_02_vfx.png",
+    "prompt": "Prompts/sk_mk_02_vfx.txt",
+    "columns": 4,
+    "rows": 4,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "sk_mk_03_vfx",
+    "source": "Sheets/sk_mk_03_vfx.png",
+    "prompt": "Prompts/sk_mk_03_vfx.txt",
+    "columns": 4,
+    "rows": 4,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "sk_mk_04_vfx",
+    "source": "Sheets/sk_mk_04_vfx.png",
+    "prompt": "Prompts/sk_mk_04_vfx.txt",
+    "columns": 4,
+    "rows": 4,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "sk_tc_01_vfx",
+    "source": "Sheets/sk_tc_01_vfx.png",
+    "prompt": "Prompts/sk_tc_01_vfx.txt",
+    "columns": 4,
+    "rows": 4,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "sk_lc_01_vfx",
+    "source": "Sheets/sk_lc_01_vfx.png",
+    "prompt": "Prompts/sk_lc_01_vfx.txt",
+    "columns": 4,
+    "rows": 4,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_thach_chuy_basic_attack",
+    "source": "Sheets/class_thach_chuy_basic_attack_v2.png",
+    "prompt": "Prompts/class_thach_chuy_basic_attack_v2.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "mob_shore_stalker_idle",
+    "source": "Sheets/mob_shore_stalker_idle_v2.png",
+    "prompt": "Prompts/mob_shore_stalker_idle_v2.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_shore_stalker_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "mob_waterroot_idle",
+    "source": "Sheets/mob_waterroot_idle_v2.png",
+    "prompt": "Prompts/mob_waterroot_idle_v2.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "mob_carpling_idle",
+    "source": "Sheets/mob_carpling_idle_v2.png",
+    "prompt": "Prompts/mob_carpling_idle_v2.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_anh_dao_death_se",
+    "source": "Sheets/class_anh_dao_death_se_v1.png",
+    "prompt": "Prompts/class_anh_dao_death_se_v1.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_death.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  },
+  {
+    "id": "class_huyen_but_death_se",
+    "source": "Sheets/class_huyen_but_death_se_v1.png",
+    "prompt": "Prompts/class_huyen_but_death_se_v1.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_death.png",
+    "status": "GENERATED_PENDING_INSPECTION"
+  }
+]

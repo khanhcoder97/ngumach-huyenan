@@ -1,0 +1,11 @@
+{
+  "baseCommit": "e597e452e9bcc08bd8316ba35ece79431b6588ce",
+  "note": "Local tested source bytes. Tests validate metadata contract only, not art fit or performance.",
+  "hashes": {
+    "ClientGodot/scripts/ModularCharacterModel.cs": "23a211debd0ff7152dec2f82465fdee5b7d459aa0234fc2b25222034f3a5ab66",
+    "ClientGodot/scripts/ModularCharacterRenderer.cs": "b1bf8a450089f9c74ba0bb43f5fc5c65cb858d337113c7ada86ea8d52dd3be8e",
+    "ClientGodot/scripts/ModularCharacterSelfTest.cs": "97ab5dcedb77d68e3ff674001974c6e7ee75f721b1237e56fd26584f3fedfcb6",
+    "Tools/ArtProduction/inspect_modular_candidates.py": "6219e2b71bbc818a7d685d10bafa31d8430b57dd22aff350d003c3eff42dffc6",
+    "Art_Source/Modular_Characters_20261107/modular_character_plan.json": "c22032ea39e9d39dd8dc89eff68027c91776809d4b74c425770d03e33f6101ac"
+  }
+}

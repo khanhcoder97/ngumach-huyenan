@@ -1,0 +1,115 @@
+[
+  {
+    "id": "class_huyen_but_idle",
+    "source": "Sheets/class_huyen_but_idle.png",
+    "prompt": "Prompts/class_huyen_but_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_REPAIR"
+  },
+  {
+    "id": "class_thach_chuy_idle",
+    "source": "Sheets/class_thach_chuy_idle.png",
+    "prompt": "Prompts/class_thach_chuy_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_REPAIR"
+  },
+  {
+    "id": "class_linh_cung_idle",
+    "source": "Sheets/class_linh_cung_idle.png",
+    "prompt": "Prompts/class_linh_cung_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_REPAIR"
+  },
+  {
+    "id": "npc_lyan_idle",
+    "source": "Sheets/npc_lyan_idle.png",
+    "prompt": "Prompts/npc_lyan_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_OR_VISUAL_REPAIR"
+  },
+  {
+    "id": "sk_ad_01_vfx",
+    "source": "Sheets/sk_ad_01_vfx.png",
+    "prompt": "Prompts/sk_ad_01_vfx.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_OR_VISUAL_REPAIR"
+  },
+  {
+    "id": "sk_hb_01_vfx",
+    "source": "Sheets/sk_hb_01_vfx.png",
+    "prompt": "Prompts/sk_hb_01_vfx.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_OR_VISUAL_REPAIR"
+  },
+  {
+    "id": "class_thach_chuy_basic_attack",
+    "source": "Sheets/class_thach_chuy_basic_attack.png",
+    "prompt": "Prompts/class_thach_chuy_basic_attack.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "status": "SUPERSEDED_LAYOUT_OR_VISUAL_REPAIR"
+  },
+  {
+    "id": "mob_shore_stalker_idle",
+    "source": "Sheets/mob_shore_stalker_idle.png",
+    "prompt": "Prompts/mob_shore_stalker_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_OR_VISUAL_REPAIR"
+  },
+  {
+    "id": "mob_waterroot_idle",
+    "source": "Sheets/mob_waterroot_idle.png",
+    "prompt": "Prompts/mob_waterroot_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_OR_VISUAL_REPAIR"
+  },
+  {
+    "id": "mob_carpling_idle",
+    "source": "Sheets/mob_carpling_idle.png",
+    "prompt": "Prompts/mob_carpling_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_idle_s.png",
+    "status": "SUPERSEDED_LAYOUT_OR_VISUAL_REPAIR"
+  },
+  {
+    "id": "class_anh_dao_idle",
+    "source": "Rejections/class_anh_dao_idle_v0.png",
+    "prompt": "Prompts/class_anh_dao_idle_v0.txt",
+    "columns": 8,
+    "rows": 10,
+    "status": "REJECTED_CLIPPED_ATLAS",
+    "generator": "built-in image_gen"
+  }
+]
