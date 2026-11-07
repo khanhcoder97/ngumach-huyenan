@@ -54,6 +54,8 @@ QOD-28/QOD-29 đã được đọc: binding MAP_VIEWED chưa có objective ID; e
 
 Các reconciliation mới mô tả gap hữu ích nhưng không thay việc triển khai finale. Gói32 ưu tiên source/runtime/paired artifacts; không giao thêm vòng report-only trước P00-05/portal.
 
+Workshop baseline hiện hành cũng đã compile/check và chạy branch execution:38reachable scenes,2398choice edges,992decision states,31explicit ends; repeat-read/reveal/evidence-order/restart PASS. Lượt đầu thiếu dependency inkjs tại checkout mới; copy đúng dependency đã có trong worktree workshop rồi chạy lại. Đây là regression của prototype đọc baseline, **không** chứng minh node JSON mới đã vào Ink hoặc vào server. Source node mới chỉ mới được duyệt và kiểm references; literary quality không được chấm tự động thành human approval.
+
 ## Remote — trạng thái vẫn chưa có bàn giao mới
 
 PR98 chưa đổi5371a46. Tree Persistence vẫn không có tracked csproj library/test/harness. Comment mới trên#79 là **Qoder local gửi interface**, không là Remote ACK hay code mới. Không chạy test DB từ project không tồn tại, không coi server CI chung là QR PASS. Chỉ đạo R1 tiếp tục bắt buộc; source/project trước, sau đó transaction/fencing/crash/backup/adapter; không chuyển DB sang Qoder local để tạo writer thứ hai.
