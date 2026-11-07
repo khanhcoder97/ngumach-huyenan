@@ -2056,6 +2056,20 @@
   ],
   "unsupported": {
     "mobCoinBand": "MISSING_SOURCE",
-    "bossLoot": "BOSSDATA_BLOCKED_UNTIL_QOD_19"
+    "bossLoot": "BOSSDATA_BLOCKED_UNTIL_QOD_19",
+    "craftRecipes": {
+      "status": "PRESENT_IN_SOURCE_NOT_EXPORTED",
+      "reason": "NO_CRAFT_SERVICE; FORGE_SPEC_BASELINE_CONFLICT_UNRESOLVED",
+      "count": 7,
+      "entryIds": [
+        "RCP_CRAFT_AD_WEAPON_T1",
+        "RCP_CRAFT_FOOD_ATK",
+        "RCP_CRAFT_FOOD_DEF",
+        "RCP_CRAFT_HB_WEAPON_T1",
+        "RCP_CRAFT_LC_WEAPON_T1",
+        "RCP_CRAFT_MK_WEAPON_T1",
+        "RCP_CRAFT_TC_WEAPON_T1"
+      ]
+    }
   }
 }
