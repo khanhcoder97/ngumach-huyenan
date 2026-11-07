@@ -46,6 +46,57 @@ jobs:
           path: TestResults/clientcore/
           if-no-files-found: warn
 
+  paired-http-runner:
+    runs-on: ubuntu-latest
+    needs: shared-core
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [gates-off, private-alpha]
+    env:
+      PAIRED_SERVER_HEAD: 6814126e2def8a1c4270a1016f0ab85404cba46e
+      PAIRED_SERVER_BRANCH: qoder/qod-21-ben-mua-playable-alpha-20261103
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: client
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+      - name: Fetch the pinned Qoder server checkout
+        run: |
+          git -C client fetch --no-tags origin "refs/heads/${PAIRED_SERVER_BRANCH}"
+          git -C client worktree add --detach "$RUNNER_TEMP/paired-server" "$PAIRED_SERVER_HEAD"
+          test "$(git -C "$RUNNER_TEMP/paired-server" rev-parse HEAD)" = "$PAIRED_SERVER_HEAD"
+      - name: Run paired ${{ matrix.mode }} (real server, positive assertions)
+        timeout-minutes: 20
+        run: |
+          python3 client/Shared/ClientCore.HttpRunner/run_http.py \
+            --client-root client \
+            --server-root "$RUNNER_TEMP/paired-server" \
+            --server-head "$PAIRED_SERVER_HEAD" \
+            --mode "${{ matrix.mode }}" \
+            --artifacts-root client/TestResults/clientcore-http-g32
+      - name: Enforce positive assertion count
+        if: always()
+        run: |
+          file="client/TestResults/clientcore-http-g32/${{ matrix.mode }}/assertions.txt"
+          test -s "$file"
+          count="$(tr -d '[:space:]' < "$file")"
+          test -n "$count"
+          test "$count" -gt 0
+          echo "HTTP assertions (${{ matrix.mode }}): $count"
+      - name: Upload paired artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clientcore-http-g32-${{ matrix.mode }}
+          path: client/TestResults/clientcore-http-g32/${{ matrix.mode }}/
+          if-no-files-found: warn
+
   shared-http-runner:
     runs-on: ubuntu-latest
     needs: shared-core

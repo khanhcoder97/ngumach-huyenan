@@ -77,6 +77,34 @@ namespace NguMach.Client.Core.Tests
             };
         }
 
+        // The pinned server mints a fresh requestId for TALK/portal responses
+        // instead of echoing the request envelope id (the death-return route is
+        // the one that echoes). Fixtures model that real wire shape so a client
+        // that assumes an echo fails here instead of only in the paired run.
+        private static string ServerRequestId() => Guid.NewGuid().ToString("N");
+
+        private static P1HttpReply RefusalReply(
+            P1Request r, int status, string code, bool retryable, params string[] fields)
+        {
+            string fieldJson = "";
+            if (fields != null && fields.Length > 0)
+            {
+                var quoted = new string[fields.Length];
+                for (int i = 0; i < fields.Length; i++) quoted[i] = "\"" + fields[i] + "\"";
+                fieldJson = ",\"fieldErrors\":[" + string.Join(",", quoted) + "]";
+            }
+            return new P1HttpReply
+            {
+                StatusCode = status,
+                CorrelationId = r.CorrelationId,
+                Body = "{\"schemaVersion\":1,\"requestId\":\"" + ServerRequestId() +
+                       "\",\"error\":{\"code\":\"" + code +
+                       "\",\"messageKey\":\"P1.ERROR." + code.ToUpperInvariant() +
+                       "\",\"retryable\":" + (retryable ? "true" : "false") + fieldJson +
+                       ",\"correlationId\":\"" + r.CorrelationId + "\"}}"
+            };
+        }
+
         private static P1HttpReply QuestReply(P1Request r, string questId)
         {
             return new P1HttpReply
@@ -1163,10 +1191,13 @@ namespace NguMach.Client.Core.Tests
                     {
                         StatusCode = 200,
                         CorrelationId = r.CorrelationId,
-                        Body = "{\"schemaVersion\":1,\"requestId\":\"" + r.CorrelationId +
+                        Body = "{\"schemaVersion\":1,\"requestId\":\"" + ServerRequestId() +
                                "\",\"sessionId\":\"" + SessionOne + "\",\"result\":{" +
-                               "\"applied\":true,\"appliedFlags\":[\"FLAG_TALK_01\"]," +
-                               "\"questId\":\"P00-01\",\"stepId\":\"STEP_P00_01_TALK\",\"revision\":2}" +
+                               "\"questId\":\"P00-01\",\"objectiveId\":null," +
+                               "\"npcId\":\"NPC_LYAN\",\"nodeId\":\"NODE_GREETING_01\"," +
+                               "\"credited\":true,\"replayed\":false,\"appliedFlag\":\"FLAG_TALK_01\"," +
+                               "\"eventId\":\"PQTALK_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef\"," +
+                               "\"revision\":2}" +
                                "}"
                     });
                 return Task.FromResult(NetworkFailure(r));
@@ -1185,8 +1216,9 @@ namespace NguMach.Client.Core.Tests
             Assert.True(P1Wire.Hex32(body.idempotencyKey));
             Assert.False(client.HasPendingMutation);
             Assert.Equal("P00-01", client.LastTalk.questId);
-            Assert.Equal("STEP_P00_01_TALK", client.LastTalk.stepId);
-            Assert.True(client.LastTalk.applied);
+            Assert.Equal("NODE_GREETING_01", client.LastTalk.nodeId);
+            Assert.True(client.LastTalk.credited);
+            Assert.False(client.LastTalk.replayed);
         }
 
         [Fact]
@@ -1238,10 +1270,13 @@ namespace NguMach.Client.Core.Tests
                     {
                         StatusCode = 200,
                         CorrelationId = r.CorrelationId,
-                        Body = "{\"schemaVersion\":1,\"requestId\":\"" + r.CorrelationId +
+                        Body = "{\"schemaVersion\":1,\"requestId\":\"" + ServerRequestId() +
                                "\",\"sessionId\":\"" + SessionOne + "\",\"result\":{" +
-                               "\"applied\":true,\"appliedFlags\":[],\"questId\":\"P00-01\"," +
-                               "\"stepId\":\"STEP_P00_01_TALK\",\"revision\":2}}"
+                               "\"questId\":\"P00-01\",\"objectiveId\":null," +
+                               "\"npcId\":\"NPC_LYAN\",\"nodeId\":\"NODE_GREETING_01\"," +
+                               "\"credited\":true,\"replayed\":false,\"appliedFlag\":null," +
+                               "\"eventId\":\"PQTALK_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef\"," +
+                               "\"revision\":2}}"
                     });
                 return Task.FromResult(NetworkFailure(r));
             };
@@ -1267,10 +1302,14 @@ namespace NguMach.Client.Core.Tests
                     {
                         StatusCode = 200,
                         CorrelationId = r.CorrelationId,
-                        Body = "{\"schemaVersion\":1,\"requestId\":\"" + r.CorrelationId +
+                        Body = "{\"schemaVersion\":1,\"requestId\":\"" + ServerRequestId() +
                                "\",\"sessionId\":\"" + SessionOne + "\",\"result\":{" +
-                               "\"portalId\":\"TP_BM_THANH_LAC\",\"destinationMapId\":\"MAP_THANH_LAC\"," +
-                               "\"destinationXWu\":8.0,\"destinationYWu\":0.0,\"serverTick\":100,\"revision\":1}" +
+                               "\"portalId\":\"TP_BM_THANH_LAC\",\"mapId\":\"MAP_THANH_LAC\"," +
+                               "\"xWu\":8.0,\"yWu\":0.0,\"applied\":true,\"replayed\":false," +
+                               "\"revision\":1," +
+                               "\"eventId\":\"P1PORTAL_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef\"," +
+                               "\"inflightCastsCancelled\":1,\"reservedCountersCancelled\":0," +
+                               "\"guardWindowClosed\":true}" +
                                "}"
                     });
                 return Task.FromResult(NetworkFailure(r));
@@ -1288,7 +1327,9 @@ namespace NguMach.Client.Core.Tests
             Assert.True(P1Wire.Hex32(body.idempotencyKey));
             Assert.False(client.HasPendingMutation);
             Assert.Equal("TP_BM_THANH_LAC", client.LastPortal.portalId);
-            Assert.Equal("MAP_THANH_LAC", client.LastPortal.destinationMapId);
+            Assert.Equal("MAP_THANH_LAC", client.LastPortal.mapId);
+            Assert.True(client.LastPortal.applied);
+            Assert.Equal(1, client.LastPortal.inflightCastsCancelled);
         }
 
         [Fact]
@@ -1362,6 +1403,169 @@ namespace NguMach.Client.Core.Tests
             Assert.False(result.Success);
             Assert.Equal("feature_unavailable", result.Code);
             Assert.False(client.HasPendingMutation);
+        }
+
+        [Theory]
+        [InlineData("invalid_transition", false, "revealGate")]
+        [InlineData("out_of_range", false, "distanceWu")]
+        [InlineData("owner_mismatch", false, "characterId")]
+        public async Task TalkAsync_ConfirmedRefusalSurfacesCodeFieldsAndClearsPending(
+            string code, bool retryable, string field)
+        {
+            var transport = new DelegateTransport();
+            transport.Handler = (r, ct) =>
+            {
+                if (r.Path == "/p1/sessions") return Task.FromResult(SessionReply(r, SessionOne));
+                if (r.Path == "/p1/quests/talk")
+                    return Task.FromResult(RefusalReply(r, 409, code, retryable, field));
+                return Task.FromResult(NetworkFailure(r));
+            };
+            var client = new P1Client(transport);
+            Assert.True((await client.ConnectAsync(CancellationToken.None)).Success);
+
+            var result = await client.TalkAsync("NPC_LYAN", "NODE_GREETING_01", CancellationToken.None);
+
+            Assert.False(result.Success);
+            Assert.Equal(code, result.Code);
+            Assert.Equal(retryable, result.Retryable);
+            Assert.Contains(field, result.FieldErrors);
+            Assert.Null(client.LastTalk);
+            Assert.False(client.HasPendingMutation);
+            Assert.Equal(P1ConnectionState.Ready, client.State);
+        }
+
+        [Theory]
+        [InlineData("portal_locked", false, "chapterGrant")]
+        [InlineData("idempotency_conflict", false, "idempotencyKey")]
+        [InlineData("actor_not_alive", false, "hp")]
+        public async Task PortalAsync_ConfirmedRefusalSurfacesCodeFieldsAndClearsPending(
+            string code, bool retryable, string field)
+        {
+            var transport = new DelegateTransport();
+            transport.Handler = (r, ct) =>
+            {
+                if (r.Path == "/p1/sessions") return Task.FromResult(SessionReply(r, SessionOne));
+                if (r.Path == "/p1/world/portal")
+                    return Task.FromResult(RefusalReply(r, 409, code, retryable, field));
+                return Task.FromResult(NetworkFailure(r));
+            };
+            var client = new P1Client(transport);
+            Assert.True((await client.ConnectAsync(CancellationToken.None)).Success);
+
+            var result = await client.PortalAsync("TP_BM_THANH_LAC", CancellationToken.None);
+
+            Assert.False(result.Success);
+            Assert.Equal(code, result.Code);
+            Assert.Equal(retryable, result.Retryable);
+            Assert.Contains(field, result.FieldErrors);
+            Assert.Null(client.LastPortal);
+            Assert.False(client.HasPendingMutation);
+            Assert.Equal(P1ConnectionState.Ready, client.State);
+        }
+
+        [Fact]
+        public async Task TalkAsync_SuccessForDifferentNodeStaysUncertainAndKeepsPending()
+        {
+            var transport = new DelegateTransport();
+            transport.Handler = (r, ct) =>
+            {
+                if (r.Path == "/p1/sessions") return Task.FromResult(SessionReply(r, SessionOne));
+                if (r.Path == "/p1/quests/talk")
+                    return Task.FromResult(new P1HttpReply
+                    {
+                        StatusCode = 200,
+                        CorrelationId = r.CorrelationId,
+                        Body = "{\"schemaVersion\":1,\"requestId\":\"" + ServerRequestId() +
+                               "\",\"sessionId\":\"" + SessionOne + "\",\"result\":{" +
+                               "\"questId\":\"P00-01\",\"objectiveId\":null," +
+                               "\"npcId\":\"NPC_LYAN\",\"nodeId\":\"NODE_SOMETHING_ELSE\"," +
+                               "\"credited\":true,\"replayed\":false,\"appliedFlag\":null," +
+                               "\"eventId\":\"PQTALK_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef\"," +
+                               "\"revision\":2}}"
+                    });
+                return Task.FromResult(NetworkFailure(r));
+            };
+            var client = new P1Client(transport);
+            Assert.True((await client.ConnectAsync(CancellationToken.None)).Success);
+
+            var result = await client.TalkAsync("NPC_LYAN", "NODE_GREETING_01", CancellationToken.None);
+
+            Assert.False(result.Success);
+            Assert.Equal("mutation_outcome_unknown", result.Code);
+            Assert.Null(client.LastTalk);
+            Assert.True(client.HasPendingMutation);
+        }
+
+        [Fact]
+        public async Task PortalAsync_SuccessForDifferentPortalStaysUncertainAndKeepsPending()
+        {
+            var transport = new DelegateTransport();
+            transport.Handler = (r, ct) =>
+            {
+                if (r.Path == "/p1/sessions") return Task.FromResult(SessionReply(r, SessionOne));
+                if (r.Path == "/p1/world/portal")
+                    return Task.FromResult(new P1HttpReply
+                    {
+                        StatusCode = 200,
+                        CorrelationId = r.CorrelationId,
+                        Body = "{\"schemaVersion\":1,\"requestId\":\"" + ServerRequestId() +
+                               "\",\"sessionId\":\"" + SessionOne + "\",\"result\":{" +
+                               "\"portalId\":\"TP_TL_BEN_MUA\",\"mapId\":\"MAP_BEN_MUA\"," +
+                               "\"xWu\":8.0,\"yWu\":0.0,\"applied\":true,\"replayed\":false," +
+                               "\"revision\":1," +
+                               "\"eventId\":\"P1PORTAL_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef\"}}"
+                    });
+                return Task.FromResult(NetworkFailure(r));
+            };
+            var client = new P1Client(transport);
+            Assert.True((await client.ConnectAsync(CancellationToken.None)).Success);
+
+            var result = await client.PortalAsync("TP_BM_THANH_LAC", CancellationToken.None);
+
+            Assert.False(result.Success);
+            Assert.Equal("mutation_outcome_unknown", result.Code);
+            Assert.Null(client.LastPortal);
+            Assert.True(client.HasPendingMutation);
+        }
+
+        [Fact]
+        public async Task TalkAsync_OldReceiptFromPreviousSessionIsNotApplied()
+        {
+            int sessions = 0;
+            var transport = new DelegateTransport();
+            transport.Handler = (r, ct) =>
+            {
+                if (r.Path == "/p1/sessions")
+                {
+                    int index = Interlocked.Increment(ref sessions);
+                    return Task.FromResult(SessionReply(r, index == 1 ? SessionOne : SessionTwo));
+                }
+                if (r.Path == "/p1/quests/talk")
+                    return Task.FromResult(new P1HttpReply
+                    {
+                        StatusCode = 200,
+                        CorrelationId = r.CorrelationId,
+                        // Old receipt still names the first session.
+                        Body = "{\"schemaVersion\":1,\"requestId\":\"" + ServerRequestId() +
+                               "\",\"sessionId\":\"" + SessionOne + "\",\"result\":{" +
+                               "\"questId\":\"P00-01\",\"objectiveId\":null," +
+                               "\"npcId\":\"NPC_LYAN\",\"nodeId\":\"NODE_GREETING_01\"," +
+                               "\"credited\":true,\"replayed\":false,\"appliedFlag\":null," +
+                               "\"eventId\":\"PQTALK_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef\"," +
+                               "\"revision\":2}}"
+                    });
+                return Task.FromResult(NetworkFailure(r));
+            };
+            var client = new P1Client(transport);
+            Assert.True((await client.ConnectAsync(CancellationToken.None)).Success);
+            Assert.True((await client.ConnectAsync(CancellationToken.None)).Success);
+
+            var result = await client.TalkAsync("NPC_LYAN", "NODE_GREETING_01", CancellationToken.None);
+
+            Assert.False(result.Success);
+            Assert.Equal("mutation_outcome_unknown", result.Code);
+            Assert.Null(client.LastTalk);
+            Assert.True(client.HasPendingMutation);
         }
 
         [Fact]

@@ -120,8 +120,22 @@ namespace NguMach.Client.P1
     {
         public bool Success;
         public string Code, CorrelationId;
+        // Confirmed server refusals carry the server's own retryability and
+        // fieldErrors. A definite rejection must never be downgraded to an
+        // unknown outcome by the caller.
+        public bool Retryable;
+        public string[] FieldErrors;
         public static P1Result Ok() { return new P1Result { Success = true }; }
         public static P1Result Fail(string code, string correlation = null)
         { return new P1Result { Code = code, CorrelationId = correlation }; }
+        public static P1Result Fail(string code, string correlation, bool retryable, string[] fieldErrors)
+        {
+            return new P1Result
+            {
+                Code = code, CorrelationId = correlation,
+                Retryable = retryable,
+                FieldErrors = fieldErrors ?? Array.Empty<string>()
+            };
+        }
     }
 }

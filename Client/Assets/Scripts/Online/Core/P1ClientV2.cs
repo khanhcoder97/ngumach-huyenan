@@ -399,6 +399,20 @@ namespace NguMach.Client.P1
         { return (h.StatusCode == 404 || h.StatusCode == 405) && r == null; }
         private P1Result RejectPending(string reason)
         { pending = null; State = P1ConnectionState.Ready; return Fail(reason); }
+        // A confirmed error envelope is a definite non-commit: release the
+        // pending slot and surface the server's own code/retryability/fieldErrors.
+        // A 4xx without an error object is malformed, not a refusal, so it keeps
+        // the key/body in UncertainMutation for a safe retry.
+        private P1Result RejectPendingError<T>(P1HttpReply reply, P1Response<T> r)
+        {
+            if (r == null || r.error == null) return Uncertain(reply.CorrelationId);
+            var code = string.IsNullOrEmpty(r.error.code) ? "invalid_response" : r.error.code;
+            pending = null;
+            State = P1ConnectionState.Ready;
+            LastError = code;
+            LastCorrelationId = reply.CorrelationId;
+            return P1Result.Fail(code, reply.CorrelationId, r.error.retryable, r.error.fieldErrors);
+        }
 
         private async Task<P1Result> ApplyTalk(P1HttpReply reply, CancellationToken ct)
         {
@@ -406,8 +420,28 @@ namespace NguMach.Client.P1
             if (IsExpired(r)) return Expire();
             if (MissingRoute(reply, r)) return RejectPending("feature_unavailable");
             if (Ambiguous(reply, r)) return Uncertain(reply.CorrelationId);
-            if (!Good(reply, r) || r.sessionId != SessionId || r.requestId != pending.CorrelationId ||
-                r.result == null || string.IsNullOrWhiteSpace(r.result.questId)) return Uncertain(reply.CorrelationId);
+            // TalkResponse.requestId is a server-issued trace id at the pinned
+            // contract, not an echo of the request envelope id (the server mints
+            // it). The transport reply already belongs to this lane's pending
+            // command; identity is proven below by sessionId plus the echoed
+            // npcId/nodeId, so requiring an echo here would reject every real
+            // success and refusal as an unknown outcome.
+            if (r == null) return Uncertain(reply.CorrelationId);
+            // A confirmed 4xx refusal is a definite non-commit. Surface the
+            // server's code/retryability/fieldErrors, clear pending and let the
+            // caller try again; only timeout/lost/malformed responses stay
+            // uncertain with the same key/body.
+            if (!Good(reply, r))
+            {
+                if (r.sessionId != null && r.sessionId != SessionId) return Uncertain(reply.CorrelationId);
+                return RejectPendingError(reply, r);
+            }
+            if (r.sessionId != SessionId || r.result == null || !ValidTalk(r.result))
+                return Uncertain(reply.CorrelationId);
+            // The receipt must describe the node the client actually asked for.
+            var sentTalk = P1Wire.Decode<P1Envelope<P1QuestTalkIntent>>(pending.Body).payload;
+            if (sentTalk == null || r.result.npcId != sentTalk.npcId || r.result.nodeId != sentTalk.nodeId)
+                return Uncertain(reply.CorrelationId);
             pending = null; State = P1ConnectionState.NeedsResync;
             LastTalk = r.result;
             return P1Result.Ok();
@@ -419,8 +453,22 @@ namespace NguMach.Client.P1
             if (IsExpired(r)) return Expire();
             if (MissingRoute(reply, r)) return RejectPending("feature_unavailable");
             if (Ambiguous(reply, r)) return Uncertain(reply.CorrelationId);
-            if (!Good(reply, r) || r.sessionId != SessionId || r.requestId != pending.CorrelationId ||
-                r.result == null || string.IsNullOrWhiteSpace(r.result.portalId)) return Uncertain(reply.CorrelationId);
+            // Same server-issued requestId semantics as TALK; the receipt is
+            // matched to the pending command by the lane, its sessionId and the
+            // echoed portalId below.
+            if (r == null) return Uncertain(reply.CorrelationId);
+            // Same refusal rule as TALK: a confirmed error is not an unknown
+            // outcome and must not keep a dead mutation pending.
+            if (!Good(reply, r))
+            {
+                if (r.sessionId != null && r.sessionId != SessionId) return Uncertain(reply.CorrelationId);
+                return RejectPendingError(reply, r);
+            }
+            if (r.sessionId != SessionId || r.result == null || !ValidPortal(r.result))
+                return Uncertain(reply.CorrelationId);
+            var sentPortal = P1Wire.Decode<P1Envelope<P1WorldPortalIntent>>(pending.Body).payload;
+            if (sentPortal == null || r.result.portalId != sentPortal.portalId)
+                return Uncertain(reply.CorrelationId);
             pending = null; State = P1ConnectionState.NeedsResync;
             LastPortal = r.result;
             return P1Result.Ok();
@@ -428,15 +476,67 @@ namespace NguMach.Client.P1
 
         private async Task<P1Result> ApplyMapViewed(P1HttpReply reply, CancellationToken ct)
         {
+            // MAP_VIEWED is approved for private-alpha but its wire schema is not
+            // frozen yet; this applies the same confirmed-error handling without
+            // treating acknowledged/serverTick as a frozen contract.
             var r = Parse<P1QuestMapViewedResult>(reply);
             if (IsExpired(r)) return Expire();
             if (MissingRoute(reply, r)) return RejectPending("feature_unavailable");
             if (Ambiguous(reply, r)) return Uncertain(reply.CorrelationId);
-            if (!Good(reply, r) || r.sessionId != SessionId || r.requestId != pending.CorrelationId ||
-                r.result == null || string.IsNullOrWhiteSpace(r.result.questId)) return Uncertain(reply.CorrelationId);
+            if (r == null || r.requestId != pending.CorrelationId) return Uncertain(reply.CorrelationId);
+            if (!Good(reply, r))
+            {
+                if (r.sessionId != null && r.sessionId != SessionId) return Uncertain(reply.CorrelationId);
+                return RejectPendingError(reply, r);
+            }
+            if (r.sessionId != SessionId || r.result == null || !ValidMapViewed(r.result))
+                return Uncertain(reply.CorrelationId);
             pending = null; State = P1ConnectionState.NeedsResync;
             LastMapViewed = r.result;
             return P1Result.Ok();
+        }
+
+        // Wire-level validators for the new gameplay receipts. They follow the
+        // pinned Qoder schema (patterns, ranges, finite values, replay/credit
+        // identity) instead of accepting loosely-shaped success payloads.
+        private static bool ValidTalk(P1QuestTalkResult r)
+        {
+            if (r == null || r.revision < 0) return false;
+            if (!Pattern(r.questId, "^[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{2}$")) return false;
+            if (!Pattern(r.npcId, "^NPC_[A-Z0-9_]+$")) return false;
+            if (!Pattern(r.nodeId, "^[A-Z][A-Z0-9_]{2,63}$")) return false;
+            if (r.objectiveId != null && !Pattern(r.objectiveId, "^OBJ_[A-Z0-9_]+$")) return false;
+            if (r.appliedFlag != null && !Pattern(r.appliedFlag, "^[A-Z][A-Z0-9_]{2,63}$")) return false;
+            if (r.eventId != null && !Pattern(r.eventId, "^PQTALK_[0-9a-f]{64}$")) return false;
+            // A credited node must carry its deterministic receipt id; a node
+            // that credits nothing legitimately carries eventId=null.
+            if (r.credited && string.IsNullOrEmpty(r.eventId)) return false;
+            return true;
+        }
+
+        private static bool ValidPortal(P1WorldPortalResult r)
+        {
+            if (r == null || r.revision < 0) return false;
+            if (r.portalId != "TP_BM_THANH_LAC" && r.portalId != "TP_TL_BEN_MUA") return false;
+            if (!Pattern(r.mapId, "^MAP_[A-Z0-9_]+$")) return false;
+            if (!P1Wire.Finite(r.xWu) || !P1Wire.Finite(r.yWu)) return false;
+            if (r.xWu < -100000 || r.xWu > 100000 || r.yWu < -100000 || r.yWu > 100000) return false;
+            if (!Pattern(r.eventId, "^P1PORTAL_[0-9a-f]{64}$")) return false;
+            if (r.inflightCastsCancelled < 0 || r.reservedCountersCancelled < 0) return false;
+            return true;
+        }
+
+        private static bool ValidMapViewed(P1QuestMapViewedResult r)
+        {
+            if (r == null || r.revision < 0 || r.serverTick < 0) return false;
+            if (!Pattern(r.questId, "^[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{2}$")) return false;
+            return true;
+        }
+
+        private static bool Pattern(string value, string pattern)
+        {
+            return value != null && System.Text.RegularExpressions.Regex.IsMatch(
+                value, pattern, System.Text.RegularExpressions.RegexOptions.CultureInvariant);
         }
 
         // ── Inventory v2 (Qoder 77bc3a6: twelve closed slots beside frozen v1) ──
@@ -513,10 +613,11 @@ namespace NguMach.Client.P1
             {
                 // A rejection may carry the current authoritative snapshot
                 // (revision_conflict / slot_occupied). Adopt it but never retry
-                // silently: the definite error reaches the UI.
+                // silently: the definite error reaches the UI with the server's
+                // own retryability and field list.
                 if (r.result != null && (InventoryV2 == null || r.result.inventoryRevision >= InventoryV2.inventoryRevision))
                     InventoryV2 = r.result;
-                return RejectPending(Error(reply, r));
+                return RejectPendingError(reply, r);
             }
 
             long expected;

@@ -31,17 +31,24 @@ namespace NguMach.Client.Core.Tests
             }
         }
 
-        // Ignores CancellationToken entirely: the pre-fix bug.
-        private sealed class IgnoringTransport : IP1Transport
+        // Ignores CancellationToken entirely (the pre-fix bug) and completes only
+        // when the test releases it, so the deadline path never depends on a sleep.
+        private sealed class GatedTransport : IP1Transport
         {
-            private readonly int _delayMs;
-            public IgnoringTransport(int delayMs) { _delayMs = delayMs; }
-            public async Task<P1HttpReply> SendAsync(P1Request request, CancellationToken ct)
-            {
-                await Task.Delay(_delayMs);
-                return new P1HttpReply { StatusCode = 200, CorrelationId = "late" };
-            }
+            private readonly TaskCompletionSource<P1HttpReply> _gate =
+                new TaskCompletionSource<P1HttpReply>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            public Task<P1HttpReply> Sent => _gate.Task;
+
+            public Task<P1HttpReply> SendAsync(P1Request request, CancellationToken ct) => _gate.Task;
+
+            public void Complete(P1HttpReply reply) => _gate.TrySetResult(reply);
         }
+
+        // A deadline that is already reached: the wrapper must time out without
+        // consulting the wall clock, which keeps this test deterministic under CI load.
+        private static Task ImmediateDeadline(TimeSpan timeout, CancellationTokenSource cts)
+            => Task.CompletedTask;
 
         [Fact]
         public async Task FastInner_ReturnsNormally()
@@ -76,32 +83,36 @@ namespace NguMach.Client.Core.Tests
         }
 
         [Fact]
-        public async Task IgnoringInner_TimesOutOnDeadlineWithinBudget()
+        public async Task IgnoringInner_TimesOutOnControlledDeadline()
         {
-            // Codex harness at 685b888: 40ms timeout still not done after 316ms.
-            var inner = new IgnoringTransport(5000);
-            var t = new TimeoutTransport(inner, TimeSpan.FromMilliseconds(40));
+            // The inner transport never completes on its own. A controlled,
+            // already-reached deadline proves the wrapper returns without waiting
+            // for it, so CI scheduling cannot turn this into a budget race.
+            var inner = new GatedTransport();
+            var t = new TimeoutTransport(inner, TimeSpan.FromMilliseconds(40), ImmediateDeadline);
             var req = new P1Request("POST", "/p1/world/interact", "payload", "s", "key-1");
-            var sw = System.Diagnostics.Stopwatch.StartNew();
-            var reply = await t.SendAsync(req, CancellationToken.None).WaitAsync(TimeSpan.FromSeconds(2));
-            sw.Stop();
+            var reply = await t.SendAsync(req, CancellationToken.None);
             Assert.Equal(0, reply.StatusCode);
             Assert.Equal("key-1", reply.CorrelationId);
-            Assert.True(sw.ElapsedMilliseconds < 1000,
-                "caller must complete in deadline, took " + sw.ElapsedMilliseconds + "ms");
+            Assert.False(inner.Sent.IsCompleted, "a timed-out call must not wait for the inner");
+            inner.Complete(new P1HttpReply { StatusCode = 200, CorrelationId = "late" });
         }
 
         [Fact]
         public async Task IgnoringInner_LateCompletionRejectedAndObserved()
         {
-            var inner = new IgnoringTransport(150);
-            var t = new TimeoutTransport(inner, TimeSpan.FromMilliseconds(30));
+            var inner = new GatedTransport();
+            var t = new TimeoutTransport(inner, TimeSpan.FromMilliseconds(30), ImmediateDeadline);
             var req = new P1Request("GET", "/x", null, "s", "key-2");
-            var reply = await t.SendAsync(req, CancellationToken.None).WaitAsync(TimeSpan.FromSeconds(2));
+            var reply = await t.SendAsync(req, CancellationToken.None);
             Assert.Equal(0, reply.StatusCode);
             Assert.Equal("key-2", reply.CorrelationId);
-            // Wait for the abandoned inner task, then assert nothing throws.
-            await Task.Delay(250);
+            // Release the abandoned inner task; ObserveLate consumes it, so the
+            // late success cannot overwrite the timeout reply or go unobserved.
+            inner.Complete(new P1HttpReply { StatusCode = 200, CorrelationId = "late" });
+            await inner.Sent;
+            await Task.Yield();
+            Assert.Equal(0, reply.StatusCode);
             var exceptions = System.Threading.Volatile.Read(ref _lateExceptions);
             Assert.Equal(0, exceptions);
         }

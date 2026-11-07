@@ -164,48 +164,64 @@ namespace NguMach.Client.P1
         [JsonProperty(Required = Required.Always)] public int xp, currency, durability;
     }
 
-    // P1/QuestTalkRequest.schema.json — NPC dialogue node intent.
-    // Gate: P1:QuestTalk:Enabled + AlphaProfile (default OFF).
+    // P1/QuestTalkRequest.schema.json (Qoder pin 6814126) — NPC dialogue intent.
+    // Gate: P1:QuestTalk:Enabled + AlphaProfile (default OFF). The client names
+    // only the NPC and node; quest/attempt/objective/speaker are server-derived.
     [Serializable] public sealed class P1QuestTalkIntent
     {
         [JsonProperty(Required = Required.Always)] public string npcId;
         [JsonProperty(Required = Required.Always)] public string nodeId;
     }
 
-    // P1/QuestTalkResponse.schema.json — narrative credit, no XP/turn-in/chapter.
+    // P1/TalkResponse.schema.json (Qoder pin 6814126) — narrative credit only:
+    // no XP, turn-in, chapter unlock or map movement. credited/replayed are the
+    // server's decision; the nullable receipt fields are explicit on the wire.
     [Serializable] public sealed class P1QuestTalkResult
     {
-        [JsonProperty(Required = Required.Always)] public bool applied;
-        [JsonProperty(Required = Required.Always)] public string[] appliedFlags;
         [JsonProperty(Required = Required.Always)] public string questId;
-        [JsonProperty(Required = Required.Always)] public string stepId;
+        public string objectiveId;
+        [JsonProperty(Required = Required.Always)] public string npcId;
+        [JsonProperty(Required = Required.Always)] public string nodeId;
+        [JsonProperty(Required = Required.Always)] public bool credited;
+        [JsonProperty(Required = Required.Always)] public bool replayed;
+        public string appliedFlag;
+        public string eventId;
         [JsonProperty(Required = Required.Always)] public long revision;
     }
 
-    // P1/WorldPortalRequest.schema.json — portal intent, server-owned destination.
-    // Gate: P1:Portal:Enabled + AlphaProfile (default OFF).
+    // P1/PortalRequest.schema.json (Qoder pin 6814126) — portal intent,
+    // server-owned destination. Gate: P1:Portal:Enabled + AlphaProfile (OFF).
     [Serializable] public sealed class P1WorldPortalIntent
     {
         [JsonProperty(Required = Required.Always)] public string portalId;
     }
 
-    // P1/WorldPortalResponse.schema.json — server-owned destination and arrival.
+    // P1/PortalResponse.schema.json (Qoder pin 6814126) — receipt of one map
+    // transition: the destination the server chose plus what the transition
+    // cleared. A replay keeps the original destination; it never pulls the
+    // character back.
     [Serializable] public sealed class P1WorldPortalResult
     {
         [JsonProperty(Required = Required.Always)] public string portalId;
-        [JsonProperty(Required = Required.Always)] public string destinationMapId;
-        [JsonProperty(Required = Required.Always)] public double destinationXWu, destinationYWu;
-        [JsonProperty(Required = Required.Always)] public long serverTick, revision;
+        [JsonProperty(Required = Required.Always)] public string mapId;
+        [JsonProperty(Required = Required.Always)] public double xWu, yWu;
+        [JsonProperty(Required = Required.Always)] public bool applied, replayed;
+        [JsonProperty(Required = Required.Always)] public long revision;
+        [JsonProperty(Required = Required.Always)] public string eventId;
+        public int inflightCastsCancelled, reservedCountersCancelled;
+        public bool guardWindowClosed;
     }
 
-    // P1/QuestMapViewedRequest.schema.json — player viewed map intent.
-    // Gate: private-alpha (default OFF).
+    // QOD-28 MAP_VIEWED is approved for private-alpha but its wire schema is not
+    // frozen yet (binding/schema/example pending owner approval). This model is
+    // an interim acknowledgement, not a frozen contract; do not treat
+    // acknowledged/serverTick as the final QOD-28 payload.
     [Serializable] public sealed class P1QuestMapViewedIntent
     {
         [JsonProperty(Required = Required.Always)] public string questId;
     }
 
-    // P1/QuestMapViewedResponse.schema.json — server acknowledgement.
+    // Interim MAP_VIEWED acknowledgement — NOT a frozen contract (QOD-28).
     [Serializable] public sealed class P1QuestMapViewedResult
     {
         [JsonProperty(Required = Required.Always)] public string questId;

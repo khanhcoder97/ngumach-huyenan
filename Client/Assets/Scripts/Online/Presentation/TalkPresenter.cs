@@ -1,10 +1,9 @@
 // OPC-16 O4 — TALK read model. The receipt only proves what the server credited
-// (applied flags, quest/step revision); it never grants XP, turn-in, chapter
-// unlock or a map transition. After TALK the client must fresh-read the world.
-// Owner: OpenCode.
+// (objective/flag/event id, quest revision); it never grants XP, turn-in,
+// chapter unlock or a map transition. After TALK the client must fresh-read the
+// world. Owner: OpenCode.
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using NguMach.Client.P1;
@@ -16,10 +15,12 @@ namespace NguMach.Client.Presentation
         public string NpcId { get; }
         public string NodeId { get; }
         public string QuestId { get; }
-        public string StepId { get; }
-        public IReadOnlyList<string> AppliedFlags { get; }
+        public string ObjectiveId { get; }
+        public string AppliedFlag { get; }
+        public string EventId { get; }
         public long Revision { get; }
-        public bool LastApplied { get; }
+        public bool Credited { get; }
+        public bool Replayed { get; }
         public bool HasReceipt { get; }
         public bool CanTalk { get; }
         public bool HasPendingMutation { get; }
@@ -28,18 +29,21 @@ namespace NguMach.Client.Presentation
         public string HintVi { get; }
 
         internal TalkViewState(
-            string npcId, string nodeId, string questId, string stepId, IReadOnlyList<string> appliedFlags,
-            long revision, bool lastApplied, bool canTalk, bool hasPendingMutation,
+            string npcId, string nodeId, string questId, string objectiveId,
+            string appliedFlag, string eventId, long revision, bool credited, bool replayed,
+            bool canTalk, bool hasPendingMutation,
             string errorCode, string correlationId, string hintVi)
         {
             NpcId = npcId;
             NodeId = nodeId;
             QuestId = questId;
-            StepId = stepId;
-            AppliedFlags = appliedFlags ?? Array.Empty<string>();
+            ObjectiveId = objectiveId;
+            AppliedFlag = appliedFlag;
+            EventId = eventId;
             Revision = revision;
-            LastApplied = lastApplied;
-            HasReceipt = !string.IsNullOrEmpty(questId);
+            Credited = credited;
+            Replayed = replayed;
+            HasReceipt = !string.IsNullOrEmpty(questId) && !string.IsNullOrEmpty(nodeId);
             CanTalk = canTalk;
             HasPendingMutation = hasPendingMutation;
             ErrorCode = errorCode;
@@ -71,13 +75,15 @@ namespace NguMach.Client.Presentation
             var receipt = _adapter.LastTalk;
             bool canTalk = _adapter.ConnectionState == UIConnectionState.Ready && !_adapter.HasPendingMutation;
             _view = new TalkViewState(
-                _lastNpcId,
-                _lastNodeId,
+                receipt != null ? receipt.npcId : _lastNpcId,
+                receipt != null ? receipt.nodeId : _lastNodeId,
                 receipt != null ? receipt.questId : null,
-                receipt != null ? receipt.stepId : null,
-                receipt != null ? receipt.appliedFlags : null,
+                receipt != null ? receipt.objectiveId : null,
+                receipt != null ? receipt.appliedFlag : null,
+                receipt != null ? receipt.eventId : null,
                 receipt != null ? receipt.revision : 0,
-                receipt != null && receipt.applied,
+                receipt != null && receipt.credited,
+                receipt != null && receipt.replayed,
                 canTalk,
                 _adapter.HasPendingMutation,
                 _lastErrorCode,
@@ -120,7 +126,8 @@ namespace NguMach.Client.Presentation
         {
             if (!string.IsNullOrEmpty(_lastErrorCode)) return HintFor(_lastErrorCode);
             if (receipt == null) return canTalk ? "Chọn lời thoại với NPC." : "Cần đồng bộ lại với máy chủ.";
-            if (!receipt.applied) return "Máy chủ không ghi nhận lời thoại này.";
+            if (receipt.replayed) return "Máy chủ cho biết lời thoại này đã được ghi nhận trước đó.";
+            if (!receipt.credited) return "Máy chủ đã trả lời nhưng không cấp tiến độ cho lời thoại này.";
             if (_adapter.ConnectionState != UIConnectionState.Ready)
                 return "Máy chủ đã ghi nhận lời thoại. Cần đọc lại thế giới trước khi tiếp tục.";
             return "Máy chủ đã ghi nhận lời thoại; không tự cấp thưởng hay mở chương.";
@@ -129,6 +136,7 @@ namespace NguMach.Client.Presentation
         private static string HintFor(string code)
         {
             if (code == "invalid_input") return "Cần chọn NPC và đoạn thoại cụ thể.";
+            if (code == "invalid_payload") return "Yêu cầu lời thoại không đúng hợp đồng máy chủ.";
             if (code == "pending_mutation") return "Đang chờ máy chủ xác nhận thao tác trước.";
             if (code == "resync_required") return "Cần đồng bộ lại với máy chủ trước khi nói chuyện.";
             if (code == "feature_unavailable") return "Lời thoại nhiệm vụ chưa được bật trên máy chủ.";

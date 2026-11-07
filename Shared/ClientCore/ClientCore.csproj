@@ -34,6 +34,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="NguMach.Client.Core.Tests" />
+  </ItemGroup>
+
   <!-- Reuse the existing portable Core/Presentation sources by explicit include (provenance kept). -->
   <ItemGroup>
     <Compile Include="../../Client/Assets/Scripts/Online/Core/*.cs" />

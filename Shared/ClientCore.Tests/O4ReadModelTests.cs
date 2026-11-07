@@ -120,10 +120,14 @@ namespace NguMach.Client.Core.Tests
         {
             return new P1QuestTalkResult
             {
-                applied = true,
-                appliedFlags = new[] { "FLAG_TALK_01" },
                 questId = "P00-05",
-                stepId = "STEP_P00_05_TALK",
+                objectiveId = "OBJ_P00_05_CLASS_CONFIRM",
+                npcId = "NPC_LYAN",
+                nodeId = "DLG_P00_05_CLUE",
+                credited = true,
+                replayed = false,
+                appliedFlag = "FLAG_TALK_01",
+                eventId = "PQTALK_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
                 revision = 12
             };
         }
@@ -133,11 +137,16 @@ namespace NguMach.Client.Core.Tests
             return new P1WorldPortalResult
             {
                 portalId = "TP_BM_THANH_LAC",
-                destinationMapId = "MAP_THANH_LAC",
-                destinationXWu = 8,
-                destinationYWu = 0,
-                serverTick = 100,
-                revision = 3
+                mapId = "MAP_THANH_LAC",
+                xWu = 8,
+                yWu = 0,
+                applied = true,
+                replayed = false,
+                revision = 3,
+                eventId = "P1PORTAL_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+                inflightCastsCancelled = 1,
+                reservedCountersCancelled = 0,
+                guardWindowClosed = true
             };
         }
 
@@ -258,10 +267,12 @@ namespace NguMach.Client.Core.Tests
             var presenter = new TalkPresenter(adapter);
 
             Assert.True(presenter.View.HasReceipt);
-            Assert.True(presenter.View.LastApplied);
+            Assert.True(presenter.View.Credited);
+            Assert.False(presenter.View.Replayed);
             Assert.Equal("P00-05", presenter.View.QuestId);
-            Assert.Equal("STEP_P00_05_TALK", presenter.View.StepId);
-            Assert.Single(presenter.View.AppliedFlags);
+            Assert.Equal("OBJ_P00_05_CLASS_CONFIRM", presenter.View.ObjectiveId);
+            Assert.Equal("FLAG_TALK_01", presenter.View.AppliedFlag);
+            Assert.Equal("DLG_P00_05_CLUE", presenter.View.NodeId);
             Assert.Contains("không tự cấp thưởng", presenter.View.HintVi);
         }
 
@@ -299,8 +310,12 @@ namespace NguMach.Client.Core.Tests
 
             Assert.Single(adapter.PortalCalls);
             Assert.Equal("TP_BM_THANH_LAC", view.PortalId);
-            Assert.Equal("MAP_THANH_LAC", view.DestinationMapId);
-            Assert.Equal(8, view.DestinationXWu);
+            Assert.Equal("MAP_THANH_LAC", view.MapId);
+            Assert.Equal(8, view.XWu);
+            Assert.True(view.Applied);
+            Assert.False(view.Replayed);
+            Assert.Equal(1, view.InflightCastsCancelled);
+            Assert.True(view.GuardWindowClosed);
             Assert.True(view.HasReceipt);
             Assert.True(view.RequiresWorldRefresh);
             Assert.False(view.CanRequest);

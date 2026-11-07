@@ -17,12 +17,30 @@ namespace NguMach.Client.Core.Transport
     {
         private readonly IP1Transport _inner;
         private readonly TimeSpan _timeout;
+        private readonly Func<TimeSpan, CancellationTokenSource, Task> _deadline;
 
         public TimeoutTransport(IP1Transport inner, TimeSpan timeout)
+            : this(inner, timeout, static (delay, cts) =>
+            {
+                // Deadline task and inner cancellation share one token so a late
+                // inner completion can never outlive the caller-visible timeout.
+                cts.CancelAfter(delay);
+                return Task.Delay(Timeout.InfiniteTimeSpan, cts.Token);
+            })
+        {
+        }
+
+        // Test seam: tests supply an already-completed (or otherwise controlled)
+        // deadline task so timeout behaviour is proven without wall-clock sleeps.
+        internal TimeoutTransport(
+            IP1Transport inner,
+            TimeSpan timeout,
+            Func<TimeSpan, CancellationTokenSource, Task> deadline)
         {
             _inner = inner ?? throw new ArgumentNullException(nameof(inner));
             if (timeout <= TimeSpan.Zero) throw new ArgumentOutOfRangeException(nameof(timeout));
             _timeout = timeout;
+            _deadline = deadline ?? throw new ArgumentNullException(nameof(deadline));
         }
 
         public async Task<P1HttpReply> SendAsync(P1Request request, CancellationToken ct)
@@ -32,10 +50,8 @@ namespace NguMach.Client.Core.Transport
 
             using (var cts = CancellationTokenSource.CreateLinkedTokenSource(ct))
             {
-                cts.CancelAfter(_timeout);
                 var innerTask = _inner.SendAsync(request, cts.Token);
-
-                var timeoutTask = Task.Delay(Timeout.InfiniteTimeSpan, cts.Token);
+                var timeoutTask = _deadline(_timeout, cts);
                 var completed = await Task.WhenAny(innerTask, timeoutTask).ConfigureAwait(false);
 
                 if (completed == innerTask)
