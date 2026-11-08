@@ -797,6 +797,94 @@ def check_composed_score_md8_pack():
 
 
 
+def check_vo_palette_mf_cp1():
+    """WO37 M-F checkpoint 1: distinct fictional voice palette + pickups.
+
+    Palette: 11 roles / 11 distinct fictional system voices (Ly An keeps
+    Aria; every other role gets a distinct voice; the undecided letter
+    recipient gets the catalog's only neutral-gender voice as a
+    placeholder, NOT a casting decision). Pickups: 20 alternate takes
+    (14 dialogue + 1 alternate + 5 narration), WAV 48 kHz mono, each
+    byte-checked against the pack; raw MP3s byte-checked too. The
+    dedicated MF validator (check_vo_palette_mf_cp1_v1.py) re-measures
+    loudness/true peak from real bytes, re-checks window fit, text
+    equality with the canonical manifests, and the runtime manifest
+    entries; this check re-verifies bytes/SHA/duration only. Pickups
+    are alternates: they do NOT replace the canonical takes embedded
+    in the 21 scene mixes, and the three kept canonical overruns
+    (CIN_005_S03 / CIN_018_S03 / CIN_006_S03) are unchanged.
+    """
+    palette = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                          / "VOICE_PALETTE_v1.json").read_text(
+                              encoding="utf-8"))
+    if palette["counts"] != {"roles": 11, "distinctVoices": 11,
+                             "keptVoices": 1, "newVoices": 10,
+                             "pickupTakes": 20}:
+        err(f"VO palette counts drift: {palette['counts']}")
+    voices = [r["voice"] for r in palette["roles"]]
+    if len(set(voices)) != 11:
+        err("VO palette voices are not unique per role")
+    pack = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                       / "VO_PALETTE_PICKUPS_pack_v1.json").read_text(
+                           encoding="utf-8"))
+    if pack["counts"] != {"takes": 20, "dialogue": 14, "alternate": 1,
+                         "narration": 5, "fits": 14, "overruns": 0}:
+        err(f"VO palette pickups counts drift: {pack['counts']}")
+    if pack.get("keptCanonicalOverrunsUnchanged") != [
+            "CIN_005_S03 +0.160 s", "CIN_018_S03 +0.280 s",
+            "CIN_006_S03 +0.520 s"]:
+        err("VO palette kept-overruns record drift")
+    total = 0
+    for take in pack["takes"]:
+        pal = take["paletteTake"]
+        entry = {"path": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/"
+                         + pal["wav"],
+                 "sha256": pal["wavSha256"],
+                 "size_bytes": pal["wavBytes"],
+                 "codec": "pcm_s16le", "sample_rate_hz": 48000,
+                 "channels": 1, "duration_s": pal["durationSeconds"]}
+        check_audio_file(entry, f"VO palette {take['takeKey']}")
+        total += 1
+        raw = ROOT / "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1" \
+            / pal["rawMp3"]
+        if not raw.exists():
+            err(f"VO palette {take['takeKey']}: raw mp3 missing")
+        elif is_lfs_pointer(raw):
+            err(f"VO palette {take['takeKey']}: raw mp3 is an LFS pointer")
+        else:
+            if sha256_of(raw) != pal["rawMp3Sha256"]:
+                err(f"VO palette {take['takeKey']}: raw mp3 sha mismatch")
+            if raw.stat().st_size != pal["rawMp3Bytes"]:
+                err(f"VO palette {take['takeKey']}: raw mp3 size mismatch")
+        total += 1
+        if pal["ttsReturnedVoice"] != take["voice"]:
+            err(f"VO palette {take['takeKey']}: ttsReturnedVoice "
+                f"{pal['ttsReturnedVoice']} != {take['voice']}")
+    review = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                         / "PRONUNCIATION_REVIEW_PACK_v1.json").read_text(
+                             encoding="utf-8"))
+    if review["counts"] != {"spokenNames": 5, "distinctSpokenNames": 4,
+                            "unspokenNames": 12, "abPairs": 5}:
+        err(f"pronunciation review pack counts drift: {review['counts']}")
+    playlist = ROOT / "Implementation/Reports/MuseMedia" / \
+        "vo_palette_review_playlist.txt"
+    if not playlist.exists():
+        err("VO palette review playlist missing")
+    else:
+        listed = [ln for ln in playlist.read_text(encoding="utf-8")
+                  .splitlines() if ln and not ln.startswith("#")]
+        if len(listed) != 10:
+            err(f"VO palette review playlist entries {len(listed)} != 10")
+        for p in listed:
+            if not (ROOT / p).exists():
+                err(f"VO palette review playlist path missing: {p}")
+    COUNTS["vo_palette_pickup_takes"] = len(pack["takes"])
+    COUNTS["audio_files_checked"] += total
+    note(f"VO palette MF CP1 validated: 11 roles / 11 distinct voices, "
+         f"20 pickup takes ({total} files); pronunciation review pack "
+         f"5 spoken rows / 12 unspoken names, 10-entry A-B playlist")
+
+
 def parse_srt(text):
     cues = []
     blocks = [b.strip() for b in re.split(r"\n\s*\n", text.strip()) if b.strip()]
@@ -4606,10 +4694,10 @@ def check_prologue():
     if vo_n != 5 or mix_n != 1:
         err(f"PROLOGUE: runtime audio registrations vo={vo_n} "
             f"mix={mix_n} (want 5/1)")
-    # WO37 M-D checkpoint 8: 736 + 1 MD8 file = 737.
-    if am.get("totalFiles") != 737:
+    # WO37 M-F checkpoint 1: 737 + 20 palette pickups = 757.
+    if am.get("totalFiles") != 757:
         err(f"PROLOGUE: runtime audio total {am.get('totalFiles')}"
-            f" != 737")
+            f" != 757")
     COUNTS["prologue_files_checked"] = checked
     COUNTS["audio_files_checked"] = \
         COUNTS.get("audio_files_checked", 0) + 6
@@ -4638,6 +4726,7 @@ def main():
     check_composed_score_md6_pack()
     check_composed_score_md7_pack()
     check_composed_score_md8_pack()
+    check_vo_palette_mf_cp1()
     check_timing_srt()
     check_runtime_cine_manifest()
     check_animatic_vo()
@@ -4675,7 +4764,7 @@ def main():
     check_scene_clips()
     check_prologue()
     result = {
-        "checkpoint": "MEDIA-02 WO37 M-D checkpoint 8 (phase layer: thanh_lac intensity; runtime audio manifest total 736 -> 737; composed score now 16 music cues + 4 stingers + 3 transitions + 37 MD2 files + 48 MD3 files + 3 MD4 files + 3 MD5 files + 3 MD6 files + 5 MD7 files + 1 MD8 file across the checkpoint-26, MD1, MD2, MD3, MD4, MD5, MD6, MD7 and MD8 packs) following MEDIA-02 checkpoint 54 (CIN_020 draft mix v1: seventeenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016 v1, CIN_017 v1, CIN_018 v1 and CIN_019 v1, same P0 v3 recipe; ben_mua music + river_shore ambience + reveal stinger at 6.0 s + CP17 draft VO take (fits its 12.5-17.5 s window by 2.000 s); embedded in CIN_020 runtime OGV + review MP4, video streams bit-identical; playback metadata + pronunciation table re-run for the new embedded mix: 21 embedded soundtracks, 0 silent, 27 playback cue rows, 23 seam rows, 21 fallback rows, 176 fallback files; runtime audio manifest total 626 -> 627, mix 29 -> 30; every entry now carries an embedded soundtrack, WO37 M-B big checkpoint 1 complete; integration baseline 6f79853, PR #119 MERGEABLE/CLEAN per Codex comment 6716052477 / WO37 MEDIA-03-05)",
+        "checkpoint": "MEDIA-02 WO37 M-F checkpoint 1 (voice palette: 11 roles / 11 distinct fictional system voices, 20 palette pickup takes delivered to runtime vo/palette_pickups/, runtime audio manifest total 737 -> 757; pronunciation review pack: 5 spoken rows / 12 unspoken names, 10-entry A-B playlist) following MEDIA-02 WO37 M-D checkpoint 8 (phase layer: thanh_lac intensity; runtime audio manifest total 736 -> 737; composed score now 16 music cues + 4 stingers + 3 transitions + 37 MD2 files + 48 MD3 files + 3 MD4 files + 3 MD5 files + 3 MD6 files + 5 MD7 files + 1 MD8 file across the checkpoint-26, MD1, MD2, MD3, MD4, MD5, MD6, MD7 and MD8 packs) following MEDIA-02 checkpoint 54 (CIN_020 draft mix v1: seventeenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016 v1, CIN_017 v1, CIN_018 v1 and CIN_019 v1, same P0 v3 recipe; ben_mua music + river_shore ambience + reveal stinger at 6.0 s + CP17 draft VO take (fits its 12.5-17.5 s window by 2.000 s); embedded in CIN_020 runtime OGV + review MP4, video streams bit-identical; playback metadata + pronunciation table re-run for the new embedded mix: 21 embedded soundtracks, 0 silent, 27 playback cue rows, 23 seam rows, 21 fallback rows, 176 fallback files; runtime audio manifest total 626 -> 627, mix 29 -> 30; every entry now carries an embedded soundtrack, WO37 M-B big checkpoint 1 complete; integration baseline 6f79853, PR #119 MERGEABLE/CLEAN per Codex comment 6716052477 / WO37 MEDIA-03-05)",
         "base_integration": "6f79853",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -4727,6 +4816,7 @@ def main():
             "CIN_020 draft mix v1 (checkpoint 54): seventeenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016 v1, CIN_017 v1, CIN_018 v1 and CIN_019 v1, same P0 v3 recipe (music ben_mua + ambience river_shore + reveal stinger at 6.0 s + CP17 draft VO at 12.5 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_020 and the scene timing manifest lists only the reveal stinger as a candidate stem; ben_mua is the composed set's rain-quay leitmotif, the theme of the opening quay where the sealed letter changed hands, the setting-exact cue for the closing scene where the letter is answered at the same river (S01 medium shot, the villager at the repaired plank table on the river dock reading the opened letter; S02 interior, the villager at a wooden desk by an open window writing the reply, the river beyond; S03 top-down view of the table with the folded reply, the villager seated at frame left seen from behind), and river_shore is the composed water-edge bed for the dock and the river beyond the window; ben_mua is a third scene-mix use (CIN_003/CIN_014), river_shore a fourth (CIN_003/CIN_008/CIN_019); rift_finale was passed over because its full close was spent at CIN_019's resolution -- this scene is the quiet morning after. Like CIN_007/CIN_008/CIN_009/CIN_010/CIN_011/CIN_012/CIN_013/CIN_014/CIN_015/CIN_016/CIN_017/CIN_019, the CP17 draft VO take FITS inside its 12.5-17.5 s window (3.000 s, ends 15.500 s) by 2.000 s: no overrun, no tail trim. The window is the uniform 12.5-17.5 s (39 chars at 7.80 chars/s); it was NOT widened. Ducking evidence is measured over the full VO window (the CP39 method, retained for comparability): -5.25 dB, a real cut -- ben_mua carries real signal inside this window (segment RMS -20.5 dBFS measured from the stem bytes this run); same compressor params, measured evidence, not a retune. The mix measures -23.41 LUFS / -5.22 dBTP; the CP17 take itself measures -19.59 LUFS per checkpoint 17, re-verified from real bytes this run; VO stays at unity per the recipe, no gain change was made. The v1 mix is embedded in CIN_020's runtime OGV + review MP4 (video streams copied bit-for-bit). The playback metadata (checkpoint 43 builder) and pronunciation table (checkpoint 44 builder) were re-run for the new embedded mix: 21 embedded soundtracks, 0 silent, 27 playback cue rows, 23 seam rows (1 flagged), 21 fallback rows, 176 files verified. Casting: the recipient's voice is a placeholder role voice (CP17 VOICE_LETTER_RECIPIENT; identity/gender undecided) and the draft take uses the same fictional system voice as Ly An's drafts -- a draft-casting collision for the WO37 M-F palette work to resolve. Staging: the timing records the S03 dialogue onscreen: null; the S03 keyframe shows the villager seated at frame left seen from behind in the top-down frame, so the speaker is present but his face is not visible, and the CP24 keyframe manifest records his appearance drifting between all three shots (S01 headband and brown vest; S02 conical hat and blue tunic; S03 green top and dark headwrap) -- the scene's pack character list is empty, so no named character lock exists for him -- final-picture/casting matters, not mix defects; the mix does not move the VO. With this mix, every one of the 21 entries carries an embedded soundtrack and Work Order 37 M-B big checkpoint 1 is complete. DRAFT_MIX_NOT_FINAL, no ear audition (NOT_AUDITIONED); adoption is Codex's adapter decision.",
             "Pronunciation table (checkpoint 44, Codex WO32 item 3; re-run at checkpoint 54 for the CIN_020 draft mix v1): PRONUNCIATION_TABLE_v1.json records 16 proper names with syllable + tone + approximate Northern Vietnamese IPA guidance (only 4 are actually spoken in current audio: Lạc Châu, Huyền Ấn, Bến Mưa in the prologue narration and Sa Hỏa in CIN_018_S03; the 10 speaker/role names are never spoken in their own lines, so the listener checks voice fit, not name pronunciation), 27 playback cue rows (21 embedded mixes + 6 P0 v1/v2 alternates) with head/tail silence re-measured by silencedetect, VO take lead/tail silence, window slack and manifest ducking/loop-join evidence, 23 seam rows with wrap jumps re-measured from the runtime OGG beds (1 flagged: MUSIC/sa_hoa composed, 0.016015; no new seam row this checkpoint -- MUSIC/ben_mua + AMBIENCE/river_shore were already measured at CIN_003), and a 21-scene fallback chain (embedded -> standalone mix -> stems+VO -> VO+SRT -> SRT only; no scene is silent any more (CIN_020 embedded at checkpoint 54); the chain's silent tail survives only as the terminal fallback if an embedded file is missing or corrupt at runtime). CIN_018's cue row carries both dialogue takes (S02 FITS, S03 overrun +0.280 s kept per owner verdict) and its fallback re-assembly lists both VO takes. Loudness is NOT re-measured in this checkpoint (WO32 item 3 rule); mix loudness figures are cited from their mix manifests only. NOT_AUDITIONED.",
             "Prologue subtitled variant (checkpoint 28, owner request): a VIEWING variant only -- the canonical MP4/OGV keep the checkpoint 27 mix at its measured level (-20.81 LUFS) and the canonical SRT keeps its 6 cues. The variant's +5 dB is a flat presentation gain (no dynamics change, measured -15.83 LUFS / -4.09 dBTP on the variant file), and its readable SRT is a presentation split whose concatenated text is verified identical to the canonical SRT. Burned-in subtitle font is DejaVu Sans (the project has no locked Vietnamese display font, same placeholder status as the title card). No OGV subtitled variant: in-engine subtitle display is the presentation adapter's concern (Codex).",
+            "Voice palette + pickups (WO37 M-F checkpoint 1): one distinct fictional system voice per speaking role (11 roles / 11 voices; Ly An keeps Aria, Tạ Vân Khanh conor, Hạ Mặc vincent, Sầm Chủ Quỹ hubert, Trưởng đoàn magnus, Tống Bành ronan, Đội trưởng thợ lặn briggs, Cơ Vô Tướng atlas, Người chơi miles, Người nhận thư ElvenWizard neutral-gender placeholder, Người kể chuyện History) and 20 palette pickup takes (14 dialogue + 1 alternate + 5 prologue narration segments), all measured from real bytes. The pickups are ALTERNATES: they do not replace the canonical takes embedded in the 21 scene mixes or the prologue film, and the three kept canonical overruns (CIN_005_S03 +0.160 s, CIN_018_S03 +0.280 s, CIN_006_S03 +0.520 s) are unchanged. All 14 windowed pickups FIT their windows (0 overruns); the two lines whose canonical takes overrun fit in their new voices (CIN_006_S03 vincent 4.848 s vs 5.0 s window, slack 0.152 s; CIN_018_S03 miles 4.512 s vs 5.0 s window, slack 0.488 s) -- recorded as data only, the canonical overrun decision stands until the director adopts the palette and re-mixes. The narrator pickups run 6-8 LUFS quieter than the canonical Helio narration (History -27.77 to -30.13 LUFS vs -21.72 to -22.49 LUFS) and mostly shorter, so adopting them means re-balancing the prologue mix, not re-recording. The pronunciation review pack (PRONUNCIATION_REVIEW_PACK_v1.json) adds A-B listening rows for the 4 spoken names (Lạc Châu, Huyền Ấn, Bến Mưa in the prologue; Sa Hỏa in CIN_018_S03) with estimated in-take timecodes by character ratio (navigation aid, NOT forced alignment) and specific listening questions; the 12 unspoken names -- including Tạ Vân Khanh, DECIDED spelling but never spoken in delivered audio -- get no pickup, per WO37 M-F. The pronunciation table itself (CP44) is unchanged and stays tied to the embedded mixes. DRAFT_PALETTE / DRAFT_NOT_FINAL, no ear audition (NOT_AUDITIONED); adoption into mixes is a Codex/director decision.",
         ],
     }
     print(f"counts: {json.dumps(COUNTS, indent=1)}")

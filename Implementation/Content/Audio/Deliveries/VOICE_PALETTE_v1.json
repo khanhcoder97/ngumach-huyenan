@@ -1,0 +1,145 @@
+{
+ "manifestId": "NGM_VOICE_PALETTE_V1",
+ "checkpoint": "MEDIA-02 WO37 M-F CP1",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "workOrderRef": "WO37 M-F",
+ "branch": "muse/media-production-20261104",
+ "status": "DRAFT_PALETTE",
+ "auditionStatus": "NOT_AUDITIONED",
+ "scope": "One distinct fictional system voice per speaking role. No real-voice cloning. DRAFT TTS is not final casting or acting. Ly An keeps her established voice; every other role gets a distinct voice; the undecided letter recipient gets the catalog's only neutral-gender voice as a placeholder, NOT a casting or gender decision.",
+ "collisionsResolved": [
+  "All male speakers shared avocado_v2:MAI_03 (Helio) in CP04/CP17.",
+  "Letter recipient shared avocado_v2:MAI_01 (Aria) with Ly An (CP54).",
+  "Prologue narrator shared avocado_v2:MAI_03 (Helio) with all male characters."
+ ],
+ "roles": [
+  {
+   "role": "NPC_LYAN",
+   "speakerDisplay": "Ly An",
+   "voice": "avocado_v2:MAI_01",
+   "voiceLabel": "Aria (fictional system voice)",
+   "voiceGender": "F",
+   "previousVoice": "avocado_v2:MAI_01",
+   "paletteChange": "KEPT",
+   "rationale": "Established in CP04/CP17; 7 takes already use Aria. No pickup.",
+   "status": "DRAFT_PALETTE"
+  },
+  {
+   "role": "NPC_TA_VAN_KHANH",
+   "speakerDisplay": "Tạ Vân Khanh",
+   "voice": "avocado_v2:conor",
+   "voiceLabel": "Polished Coin (fictional system voice)",
+   "voiceGender": "M",
+   "previousVoice": "avocado_v2:MAI_03",
+   "paletteChange": "NEW_DISTINCT",
+   "rationale": "Named escort; was sharing Helio with all male speakers.",
+   "status": "DRAFT_PALETTE"
+  },
+  {
+   "role": "NPC_HA_MAC",
+   "speakerDisplay": "Hạ Mặc",
+   "voice": "avocado_v2:vincent",
+   "voiceLabel": "Gruff Brick (fictional system voice)",
+   "voiceGender": "M",
+   "previousVoice": "avocado_v2:MAI_03",
+   "paletteChange": "NEW_DISTINCT",
+   "rationale": "Cinematic-only staging (DEC Q4); was sharing Helio.",
+   "status": "DRAFT_PALETTE"
+  },
+  {
+   "role": "NPC_SAM_CHU_QUY",
+   "speakerDisplay": "Sầm Chủ Quỹ",
+   "voice": "avocado_v2:hubert",
+   "voiceLabel": "Loud Gravel (fictional system voice)",
+   "voiceGender": "M",
+   "previousVoice": "avocado_v2:MAI_03",
+   "paletteChange": "NEW_DISTINCT",
+   "rationale": "Cinematic-only staging (DEC Q4); was sharing Helio.",
+   "status": "DRAFT_PALETTE"
+  },
+  {
+   "role": "NPC_REFUGEE_LEADER",
+   "speakerDisplay": "Trưởng đoàn",
+   "voice": "avocado_v2:magnus",
+   "voiceLabel": "Boomy Mountain (fictional system voice)",
+   "voiceGender": "M",
+   "previousVoice": "avocado_v2:MAI_03",
+   "paletteChange": "NEW_DISTINCT",
+   "rationale": "One-line role; was sharing Helio.",
+   "status": "DRAFT_PALETTE"
+  },
+  {
+   "role": "NPC_TONG_BANH",
+   "speakerDisplay": "Tống Bành",
+   "voice": "avocado_v2:ronan",
+   "voiceLabel": "Fluid Hammock (fictional system voice)",
+   "voiceGender": "M",
+   "previousVoice": "avocado_v2:MAI_03",
+   "paletteChange": "NEW_DISTINCT",
+   "rationale": "One-line role; was sharing Helio.",
+   "status": "DRAFT_PALETTE"
+  },
+  {
+   "role": "NPC_DIVER_LEAD",
+   "speakerDisplay": "Đội trưởng thợ lặn",
+   "voice": "avocado_v2:briggs",
+   "voiceLabel": "Husky Campfire (fictional system voice)",
+   "voiceGender": "M",
+   "previousVoice": "avocado_v2:MAI_03",
+   "paletteChange": "NEW_DISTINCT",
+   "rationale": "Two takes; was sharing Helio.",
+   "status": "DRAFT_PALETTE"
+  },
+  {
+   "role": "NPC_CO_VO_TUONG",
+   "speakerDisplay": "Cơ Vô Tướng",
+   "voice": "avocado_v2:atlas",
+   "voiceLabel": "Burnished Trophy (fictional system voice)",
+   "voiceGender": "M",
+   "previousVoice": "avocado_v2:MAI_03",
+   "paletteChange": "NEW_DISTINCT",
+   "rationale": "One-line role; was sharing Helio.",
+   "status": "DRAFT_PALETTE"
+  },
+  {
+   "role": "PLAYER",
+   "speakerDisplay": "Người chơi",
+   "voice": "avocado_v2:miles",
+   "voiceLabel": "Satiny Moon (fictional system voice)",
+   "voiceGender": "M",
+   "previousVoice": "avocado_v2:MAI_03",
+   "paletteChange": "NEW_DISTINCT",
+   "rationale": "Timing-only placeholder (VOICE_PLACEHOLDER_ONLY); distinct voice so the placeholder no longer sounds like a named character. Still NOT a casting or gender decision.",
+   "status": "DRAFT_PALETTE"
+  },
+  {
+   "role": "LETTER_RECIPIENT",
+   "speakerDisplay": "Người nhận thư",
+   "voice": "avocado_v2:ElvenWizard",
+   "voiceLabel": "Ethereal Star (fictional system voice)",
+   "voiceGender": "N",
+   "previousVoice": "avocado_v2:MAI_01",
+   "paletteChange": "NEW_NEUTRAL_PLACEHOLDER",
+   "rationale": "Recipient identity/gender UNDECIDED (owner direction, CP54). Was sharing Aria with Ly An (draft-casting collision). Neutral-gender catalog voice used as a placeholder; NOT a casting or gender decision.",
+   "status": "DRAFT_PALETTE"
+  },
+  {
+   "role": "NARRATOR",
+   "speakerDisplay": "Người kể chuyện",
+   "voice": "avocado_v2:History",
+   "voiceLabel": "Learned Globe (fictional system voice)",
+   "voiceGender": "M",
+   "previousVoice": "avocado_v2:MAI_03",
+   "paletteChange": "NEW_DISTINCT",
+   "rationale": "Prologue narrator; was sharing Helio with all male characters.",
+   "status": "DRAFT_PALETTE"
+  }
+ ],
+ "counts": {
+  "roles": 11,
+  "distinctVoices": 11,
+  "keptVoices": 1,
+  "newVoices": 10,
+  "pickupTakes": 20
+ }
+}

@@ -1849,6 +1849,48 @@ def main():
         audio_entries.append(entry)
         counts["composed"] += 1
 
+    # --- 3s. WO37 M-F checkpoint 1 voice palette pickups ---
+    # The palette builder (build_vo_palette_mf_cp1.py) already rendered
+    # the 20 alternate takes into Art_Source/Audio/Muse/VO/
+    # PALETTE_PICKUPS_v1/ (WAV 48 kHz mono, measured from real bytes)
+    # and recorded them in VO_PALETTE_PICKUPS_pack_v1.json. This section
+    # copies them into vo/palette_pickups/ and registers them as
+    # PALETTE_ALTERNATE takes. They do NOT replace the canonical takes
+    # (§3/3b/3c/3f) embedded in the 21 scene mixes or the prologue
+    # film; adoption is a Codex/director decision (M-B follow-up).
+    # Ly An's takes are not re-recorded (voice kept), so no pickup
+    # exists for her 7 takes.
+    mf1 = json.loads(
+        (ROOT / "Implementation/Content/Audio/Deliveries"
+         / "VO_PALETTE_PICKUPS_pack_v1.json").read_text(encoding="utf-8"))
+    for take in mf1["takes"]:
+        pal = take["paletteTake"]
+        src_rel = (f"Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/"
+                   f"{pal['wav']}")
+        dest_rel = f"vo/palette_pickups/{pal['wav']}"
+        entry = copy_verified_audio(
+            src_rel, dest_rel, pal["wavSha256"], pal["wavBytes"],
+            pal["durationSeconds"], f"VO palette {take['takeKey']}")
+        if entry is None:
+            continue
+        entry.update({"cueKey": f"VO/{take['takeKey']}_palette_v1",
+                      "category": "vo", "speaker": take["role"],
+                      "voice": take["voice"],
+                      "takePurpose": "PALETTE_ALTERNATE",
+                      "takeKind": take["kind"],
+                      "windowSceneSeconds": take["windowSceneSeconds"],
+                      "windowStatus": take["windowStatus"],
+                      "fit": take["fit"],
+                      "slackSeconds": take["slackSeconds"],
+                      "codec": "pcm_s16le", "sampleRateHz": 48000,
+                      "channels": 1,
+                      "integratedLufs": pal["integratedLufs"],
+                      "truePeakDbtp": pal["truePeakDbtp"],
+                      "assetState": "DRAFT_NOT_FINAL_VO",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["vo"] += 1
+
     # --- 3f. Prologue CIN_000 narration VO + film mix (checkpoint 27) ---
     # The prologue is a standalone pre-game film (owner-ordered,
     # script approved in main chat 2026-11-06), NOT part of the
@@ -1900,8 +1942,11 @@ def main():
 
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 WO37 M-D checkpoint 8 - M8 runtime "
-                       "delivery revised: MD8 phase layer added (1 "
+        "checkpoint": ("MEDIA-02 WO37 M-F checkpoint 1 - M8 runtime "
+                       "delivery revised: voice palette pickups added "
+                       "(20 alternate takes, vo 30 -> 50, total "
+                       "737 -> 757); WO37 M-D checkpoint 8 - MD8 phase "
+                       "layer added (1 "
                        "layer, total 736 -> 737); MD7 phase layers "
                        "(checkpoint 7: 5 layers, total 731 -> 736); "
                        "MD6 phase layers "

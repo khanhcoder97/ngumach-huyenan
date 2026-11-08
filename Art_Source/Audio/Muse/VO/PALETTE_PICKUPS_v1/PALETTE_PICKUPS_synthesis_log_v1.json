@@ -1,0 +1,204 @@
+{
+ "takes": [
+  {
+   "mp3": "CIN002_S02_palette_tts_raw.mp3",
+   "wav": "VO_CIN002_S02_TAVANKHANH_palette_v1.wav",
+   "role": "NPC_TA_VAN_KHANH",
+   "voice": "avocado_v2:conor",
+   "ttsReturnedVoice": "avocado_v2:conor",
+   "bytes": 26533,
+   "sha256": "3017b295dee8d31b0ef8fb11160f38b1aa6b5c7363cab080fb9259cba37b4673",
+   "textChars": 51
+  },
+  {
+   "mp3": "CIN006_S03_palette_tts_raw.mp3",
+   "wav": "VO_CIN_006_S03_HAMAC_palette_v1.wav",
+   "role": "NPC_HA_MAC",
+   "voice": "avocado_v2:vincent",
+   "ttsReturnedVoice": "avocado_v2:vincent",
+   "bytes": 38821,
+   "sha256": "f7b4a1a1601c1d1e36baca27e9199a521d456315db1eeef54a8c74728b45ee9d",
+   "textChars": 82
+  },
+  {
+   "mp3": "CIN006_ALT_T01_palette_tts_raw.mp3",
+   "wav": "VO_CIN_006_ALT_T01_HAMAC_palette_v1-alt.wav",
+   "role": "NPC_HA_MAC",
+   "voice": "avocado_v2:vincent",
+   "ttsReturnedVoice": "avocado_v2:vincent",
+   "bytes": 26533,
+   "sha256": "d2a49d9dc87aa98518df4845162877c2773b5b30b65e3fedcd5dbd8dab55ca8d",
+   "textChars": 47
+  },
+  {
+   "mp3": "CIN008_S03_palette_tts_raw.mp3",
+   "wav": "VO_CIN_008_S03_TAVANKHANH_palette_v1.wav",
+   "role": "NPC_TA_VAN_KHANH",
+   "voice": "avocado_v2:conor",
+   "ttsReturnedVoice": "avocado_v2:conor",
+   "bytes": 25381,
+   "sha256": "46458116feedd95ae1b98de480bfce2133d512c63a50f9c103a042844ca230b9",
+   "textChars": 46
+  },
+  {
+   "mp3": "CIN010_S03_palette_tts_raw.mp3",
+   "wav": "VO_CIN_010_S03_SAMCHUQUY_palette_v1.wav",
+   "role": "NPC_SAM_CHU_QUY",
+   "voice": "avocado_v2:hubert",
+   "ttsReturnedVoice": "avocado_v2:hubert",
+   "bytes": 26917,
+   "sha256": "146a4aa892eb133e5d8635b0ad3c4dcd07262c62e64d4d6cb99e73498c94d6dc",
+   "textChars": 40
+  },
+  {
+   "mp3": "CIN011_S03_palette_tts_raw.mp3",
+   "wav": "VO_CIN_011_S03_HAMAC_palette_v1.wav",
+   "role": "NPC_HA_MAC",
+   "voice": "avocado_v2:vincent",
+   "ttsReturnedVoice": "avocado_v2:vincent",
+   "bytes": 35173,
+   "sha256": "7a48961680e0306b470bf9b814ede2ffe5c1e668b1d2461120580ebb0ae44e54",
+   "textChars": 87
+  },
+  {
+   "mp3": "CIN012_S03_palette_tts_raw.mp3",
+   "wav": "VO_CIN_012_S03_HAMAC_palette_v1.wav",
+   "role": "NPC_HA_MAC",
+   "voice": "avocado_v2:vincent",
+   "ttsReturnedVoice": "avocado_v2:vincent",
+   "bytes": 30373,
+   "sha256": "5d32339593b9c6a73174e28ccbb6dcad59d3bfe92ec41961d9f9a847c219ac8d",
+   "textChars": 71
+  },
+  {
+   "mp3": "CIN013_S03_palette_tts_raw.mp3",
+   "wav": "VO_CIN_013_S03_REFUGEELEADER_palette_v1.wav",
+   "role": "NPC_REFUGEE_LEADER",
+   "voice": "avocado_v2:magnus",
+   "ttsReturnedVoice": "avocado_v2:magnus",
+   "bytes": 20773,
+   "sha256": "6d3e8e1bd82606376c94ca52e63ec8c3a9f3e907a2b7012441882f515f2c51a4",
+   "textChars": 37
+  },
+  {
+   "mp3": "CIN014_S03_palette_tts_raw.mp3",
+   "wav": "VO_CIN_014_S03_TONGBANH_palette_v1.wav",
+   "role": "NPC_TONG_BANH",
+   "voice": "avocado_v2:ronan",
+   "ttsReturnedVoice": "avocado_v2:ronan",
+   "bytes": 21733,
+   "sha256": "7763d445a25b16d6e2287c850974184443b98dc8188c70a4ce7af64c360686cd",
+   "textChars": 44
+  },
+  {
+   "mp3": "CIN015_S03_palette_tts_raw.mp3",
+   "wav": "VO_CIN_015_S03_DIVERLEAD_palette_v1.wav",
+   "role": "NPC_DIVER_LEAD",
+   "voice": "avocado_v2:briggs",
+   "ttsReturnedVoice": "avocado_v2:briggs",
+   "bytes": 24421,
+   "sha256": "6904ef7a6d5ef1fae1306e720038eb0d65b3ab50bc845540bb7601e11b4946f1",
+   "textChars": 48
+  },
+  {
+   "mp3": "CIN016_S03_palette_tts_raw.mp3",
+   "wav": "VO_CIN_016_S03_HAMAC_palette_v1.wav",
+   "role": "NPC_HA_MAC",
+   "voice": "avocado_v2:vincent",
+   "ttsReturnedVoice": "avocado_v2:vincent",
+   "bytes": 19813,
+   "sha256": "ce2b72826c95f02b65b5a44d2d78dfbc23ef23200b4ec80bcaa0c8dd21b07e6a",
+   "textChars": 42
+  },
+  {
+   "mp3": "CIN017_S03_palette_tts_raw.mp3",
+   "wav": "VO_CIN_017_S03_DIVERLEAD_palette_v1.wav",
+   "role": "NPC_DIVER_LEAD",
+   "voice": "avocado_v2:briggs",
+   "ttsReturnedVoice": "avocado_v2:briggs",
+   "bytes": 23077,
+   "sha256": "131e47eb6edf40aa54c29ca7f918b43db6c76194e6d463452d6fcfa3ee046767",
+   "textChars": 44
+  },
+  {
+   "mp3": "CIN018_S02_palette_tts_raw.mp3",
+   "wav": "VO_CIN_018_S02_COVOTUONG_palette_v1.wav",
+   "role": "NPC_CO_VO_TUONG",
+   "voice": "avocado_v2:atlas",
+   "ttsReturnedVoice": "avocado_v2:atlas",
+   "bytes": 20581,
+   "sha256": "8f5567134c9b32701ed4396abbdceccfea8ffdfd628a2e3e190a7947eb80291d",
+   "textChars": 42
+  },
+  {
+   "mp3": "CIN018_S03_palette_tts_raw.mp3",
+   "wav": "VO_CIN_018_S03_PLAYER_palette_v1.wav",
+   "role": "PLAYER",
+   "voice": "avocado_v2:miles",
+   "ttsReturnedVoice": "avocado_v2:miles",
+   "bytes": 36133,
+   "sha256": "98febabb52f4342013f72c7db029ba7021374ad3ab06df5844eb5f9a0974e442",
+   "textChars": 78
+  },
+  {
+   "mp3": "CIN020_S03_palette_tts_raw.mp3",
+   "wav": "VO_CIN_020_S03_LETTERRECIPIENT_palette_v1.wav",
+   "role": "LETTER_RECIPIENT",
+   "voice": "avocado_v2:ElvenWizard",
+   "ttsReturnedVoice": "avocado_v2:ElvenWizard",
+   "bytes": 24613,
+   "sha256": "ab8d10b66d33b48b6d02d8e5f48d05f670cbe7eeec633c91828100c6c9e7132a",
+   "textChars": 39
+  },
+  {
+   "mp3": "CIN000_SEG01_palette_tts_raw.mp3",
+   "wav": "VO_CIN000_SEG01_NARRATOR_palette_v1.wav",
+   "role": "NARRATOR",
+   "voice": "avocado_v2:History",
+   "ttsReturnedVoice": "avocado_v2:History",
+   "bytes": 104101,
+   "sha256": "3a42dfb907c2aca3b9b83487fca6500bfd709ff7b327a326d13c17aa000cdfaf",
+   "textChars": 234
+  },
+  {
+   "mp3": "CIN000_SEG02_palette_tts_raw.mp3",
+   "wav": "VO_CIN000_SEG02_NARRATOR_palette_v1.wav",
+   "role": "NARRATOR",
+   "voice": "avocado_v2:History",
+   "ttsReturnedVoice": "avocado_v2:History",
+   "bytes": 134053,
+   "sha256": "d936907966af149a0b0a7006182658e6403859dda7beaf9b41e67f9c2c7ae392",
+   "textChars": 265
+  },
+  {
+   "mp3": "CIN000_SEG03_palette_tts_raw.mp3",
+   "wav": "VO_CIN000_SEG03_NARRATOR_palette_v1.wav",
+   "role": "NARRATOR",
+   "voice": "avocado_v2:History",
+   "ttsReturnedVoice": "avocado_v2:History",
+   "bytes": 130021,
+   "sha256": "531342b4549fb974f73252d7eb3fcd50125fb7784ae80e1f844676edf18b59ba",
+   "textChars": 311
+  },
+  {
+   "mp3": "CIN000_SEG04_palette_tts_raw.mp3",
+   "wav": "VO_CIN000_SEG04_NARRATOR_palette_v1.wav",
+   "role": "NARRATOR",
+   "voice": "avocado_v2:History",
+   "ttsReturnedVoice": "avocado_v2:History",
+   "bytes": 102181,
+   "sha256": "9c6e32f1254edcaa4177d4ee6a53062376a8006b6dc25105a8d901abd13e9b9a",
+   "textChars": 258
+  },
+  {
+   "mp3": "CIN000_SEG05_palette_tts_raw.mp3",
+   "wav": "VO_CIN000_SEG05_NARRATOR_palette_v1.wav",
+   "role": "NARRATOR",
+   "voice": "avocado_v2:History",
+   "ttsReturnedVoice": "avocado_v2:History",
+   "bytes": 53413,
+   "sha256": "e8b352517f94eafeacbb60aabd470bc61d00d1b7aa180c3a96d6d9b038131074",
+   "textChars": 120
+  }
+ ]
+}

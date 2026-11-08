@@ -1,0 +1,353 @@
+{
+ "manifestId": "NGM_PRONUNCIATION_REVIEW_PACK_V1",
+ "checkpoint": "MEDIA-02 WO37 M-F CP1",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "workOrderRef": "WO37 M-F",
+ "branch": "muse/media-production-20261104",
+ "status": "DRAFT_NOT_FINAL",
+ "auditionStatus": "NOT_AUDITIONED",
+ "crossReference": "PRONUNCIATION_TABLE_v1.json (CP44): 16 names, 4 spoken, only Tạ Vân Khanh DECIDED. This pack does NOT modify that table (it stays tied to the embedded mixes); it adds A-B listening rows for the palette pickups.",
+ "timecodeMethod": "Estimated in-take timecodes by character ratio (name offset / line length x take duration). ESTIMATED — navigation aid for the listener, NOT a measured forced alignment.",
+ "spokenNames": [
+  {
+   "name": "Lạc Châu",
+   "ipaApprox": "/laːk˨˩ʔ tɕəw˧/",
+   "syllables": [
+    {
+     "syllable": "Lạc",
+     "tone": "nặng"
+    },
+    {
+     "syllable": "Châu",
+     "tone": "ngang"
+    }
+   ],
+   "status": "PROPOSED",
+   "source": "Prologue SRT cue 1 (SEG01)",
+   "takeKey": "CIN000_SEG01",
+   "line": "Xưa, Lạc Châu sống nhờ năm dòng mạch chảy dưới lòng đất và mặt nước. Năm mạch trao nhau dòng chảy qua một cơ chế điều hòa gọi là Huyền Ấn — và năm ngọn tháp canh giữ sự trao đổi ấy, để không vùng nào thừa nước, không vùng nào cạn khô.",
+   "aTake": {
+    "label": "canonical take (embedded in mix/prologue film)",
+    "file": "VO_CIN000_SEG01_NARRATOR.wav",
+    "voice": "avocado_v2:MAI_03",
+    "durationSeconds": 16.512,
+    "integratedLufs": -21.72,
+    "estimatedNameTimecodeSeconds": [
+     0.353,
+     0.917
+    ]
+   },
+   "bTake": {
+    "label": "palette pickup (M-F CP1 alternate)",
+    "file": "VO_CIN000_SEG01_NARRATOR_palette_v1.wav",
+    "voice": "avocado_v2:History",
+    "durationSeconds": 13.008,
+    "integratedLufs": -30.13,
+    "estimatedNameTimecodeSeconds": [
+     0.278,
+     0.723
+    ]
+   },
+   "listeningQuestions": [
+    "Nghe 'Lạc' có đủ thanh nặng và âm cuối -c bật rõ không, hay bị nuốt thành 'Lạ'?",
+    "So sánh take cũ (Helio) và take palette (History): giọng mới có giữ rõ hai âm tiết Lạc–Châu ở cả hai lần xuất hiện (SEG01 và SEG04) không?"
+   ]
+  },
+  {
+   "name": "Huyền Ấn",
+   "ipaApprox": "/hwiən˨˩ ʔən˨˩ʔ/",
+   "syllables": [
+    {
+     "syllable": "Huyền",
+     "tone": "huyền"
+    },
+    {
+     "syllable": "Ấn",
+     "tone": "nặng"
+    }
+   ],
+   "status": "PROPOSED",
+   "source": "Prologue SRT cue 1 (SEG01)",
+   "takeKey": "CIN000_SEG01",
+   "line": "Xưa, Lạc Châu sống nhờ năm dòng mạch chảy dưới lòng đất và mặt nước. Năm mạch trao nhau dòng chảy qua một cơ chế điều hòa gọi là Huyền Ấn — và năm ngọn tháp canh giữ sự trao đổi ấy, để không vùng nào thừa nước, không vùng nào cạn khô.",
+   "aTake": {
+    "label": "canonical take (embedded in mix/prologue film)",
+    "file": "VO_CIN000_SEG01_NARRATOR.wav",
+    "voice": "avocado_v2:MAI_03",
+    "durationSeconds": 16.512,
+    "integratedLufs": -21.72,
+    "estimatedNameTimecodeSeconds": [
+     9.103,
+     9.667
+    ]
+   },
+   "bTake": {
+    "label": "palette pickup (M-F CP1 alternate)",
+    "file": "VO_CIN000_SEG01_NARRATOR_palette_v1.wav",
+    "voice": "avocado_v2:History",
+    "durationSeconds": 13.008,
+    "integratedLufs": -30.13,
+    "estimatedNameTimecodeSeconds": [
+     7.171,
+     7.616
+    ]
+   },
+   "listeningQuestions": [
+    "Nghe 'Huyền' có đủ thanh huyền, 'Ấn' có đủ thanh nặng và âm cuối -n không?",
+    "Cụm 'Huyền Ấn' trong câu dài SEG01 có bị nuốt âm nào khi giọng History đọc liền mạch không?"
+   ]
+  },
+  {
+   "name": "Lạc Châu",
+   "ipaApprox": "/laːk˨˩ʔ tɕəw˧/",
+   "syllables": [
+    {
+     "syllable": "Lạc",
+     "tone": "nặng"
+    },
+    {
+     "syllable": "Châu",
+     "tone": "ngang"
+    }
+   ],
+   "status": "PROPOSED",
+   "source": "Prologue SRT cue 4 (SEG04)",
+   "takeKey": "CIN000_SEG04",
+   "line": "Ngày nay, dòng chảy ở Lạc Châu không còn đi đúng đường. Có tiếng chuông ngân dưới mặt nước, ở nơi không hề treo chuông. Có những cái tên bị mất khỏi danh sách. Và vẫn còn những lá thư — niêm sáp năm vạch — đi qua các tuyến đường thủy, chờ người nhận chịu mở.",
+   "aTake": {
+    "label": "canonical take (embedded in mix/prologue film)",
+    "file": "VO_CIN000_SEG04_NARRATOR.wav",
+    "voice": "avocado_v2:MAI_03",
+    "durationSeconds": 14.928,
+    "integratedLufs": -21.8,
+    "estimatedNameTimecodeSeconds": [
+     1.273,
+     1.736
+    ]
+   },
+   "bTake": {
+    "label": "palette pickup (M-F CP1 alternate)",
+    "file": "VO_CIN000_SEG04_NARRATOR_palette_v1.wav",
+    "voice": "avocado_v2:History",
+    "durationSeconds": 12.768,
+    "integratedLufs": -27.77,
+    "estimatedNameTimecodeSeconds": [
+     1.089,
+     1.485
+    ]
+   },
+   "listeningQuestions": [
+    "Nghe 'Lạc' có đủ thanh nặng và âm cuối -c bật rõ không, hay bị nuốt thành 'Lạ'?",
+    "So sánh take cũ (Helio) và take palette (History): giọng mới có giữ rõ hai âm tiết Lạc–Châu ở cả hai lần xuất hiện (SEG01 và SEG04) không?"
+   ]
+  },
+  {
+   "name": "Bến Mưa",
+   "ipaApprox": "/ɓen˨˩ʔ mɯə˧/",
+   "syllables": [
+    {
+     "syllable": "Bến",
+     "tone": "nặng"
+    },
+    {
+     "syllable": "Mưa",
+     "tone": "ngang"
+    }
+   ],
+   "status": "PROPOSED",
+   "source": "Prologue SRT cue 5 (SEG05)",
+   "takeKey": "CIN000_SEG05",
+   "line": "Bến Mưa là một bến đò nhỏ nơi các tuyến ấy giao nhau. Mưa không ngớt. Và hôm nay, một người khách lạ vừa bước lên bến...",
+   "aTake": {
+    "label": "canonical take (embedded in mix/prologue film)",
+    "file": "VO_CIN000_SEG05_NARRATOR.wav",
+    "voice": "avocado_v2:MAI_03",
+    "durationSeconds": 8.04,
+    "integratedLufs": -22.33,
+    "estimatedNameTimecodeSeconds": [
+     0.0,
+     0.469
+    ]
+   },
+   "bTake": {
+    "label": "palette pickup (M-F CP1 alternate)",
+    "file": "VO_CIN000_SEG05_NARRATOR_palette_v1.wav",
+    "voice": "avocado_v2:History",
+    "durationSeconds": 6.672,
+    "integratedLufs": -28.67,
+    "estimatedNameTimecodeSeconds": [
+     0.0,
+     0.389
+    ]
+   },
+   "listeningQuestions": [
+    "Nghe 'Bến' có đủ thanh nặng, 'Mưa' có đủ thanh ngang và nguyên âm ươ không?",
+    "Câu kết SEG05 đọc chậm — tên Bến Mưa có nổi rõ như một địa danh, hay chìm vào nhịp câu?"
+   ]
+  },
+  {
+   "name": "Sa Hỏa",
+   "ipaApprox": "/sa˧ hwa˧˩˧/",
+   "syllables": [
+    {
+     "syllable": "Sa",
+     "tone": "ngang"
+    },
+    {
+     "syllable": "Hỏa",
+     "tone": "hỏi"
+    }
+   ],
+   "status": "PROPOSED",
+   "source": "Dialogue take CIN_018_S03",
+   "takeKey": "CIN018_S03",
+   "line": "Ở Sa Hỏa ông đã cho nước. Ở nơi khác, người ta không được hỏi vì sao nước mất.",
+   "aTake": {
+    "label": "canonical take (embedded in mix/prologue film)",
+    "file": "VO_CIN_018_S03_PLAYER_draft_v1.wav",
+    "voice": "avocado_v2:MAI_03",
+    "durationSeconds": 5.28,
+    "integratedLufs": -22.54,
+    "estimatedNameTimecodeSeconds": [
+     0.135,
+     0.542
+    ]
+   },
+   "bTake": {
+    "label": "palette pickup (M-F CP1 alternate)",
+    "file": "VO_CIN_018_S03_PLAYER_palette_v1.wav",
+    "voice": "avocado_v2:miles",
+    "durationSeconds": 4.512,
+    "integratedLufs": -23.43,
+    "estimatedNameTimecodeSeconds": [
+     0.116,
+     0.463
+    ]
+   },
+   "listeningQuestions": [
+    "Nghe 'Sa' có đọc thành 'Xa' không; 'Hỏa' có đủ thanh hỏi và âm cuối -a không?",
+    "So sánh take cũ (Helio, VOICE_PLACEHOLDER_ONLY) và take palette (miles): giọng mới có giữ rõ hai âm tiết không, và có còn nghe như một nhân vật đã đặt tên không (không được — vẫn là placeholder)?"
+   ]
+  }
+ ],
+ "unspokenNames": [
+  {
+   "name": "Ly An",
+   "status": "PROPOSED",
+   "note": "Not spoken in delivered audio — no pickup recorded (WO37 M-F: no useless reads to inflate count)."
+  },
+  {
+   "name": "Tạ Vân Khanh",
+   "status": "DECIDED",
+   "note": "DECIDED spelling; never spoken in delivered audio — no pickup recorded."
+  },
+  {
+   "name": "Hạ Mặc",
+   "status": "PROPOSED",
+   "note": "Not spoken in delivered audio — no pickup recorded (WO37 M-F: no useless reads to inflate count)."
+  },
+  {
+   "name": "Sầm Chủ Quỹ",
+   "status": "PROPOSED",
+   "note": "Not spoken in delivered audio — no pickup recorded (WO37 M-F: no useless reads to inflate count)."
+  },
+  {
+   "name": "Tống Bành",
+   "status": "PROPOSED",
+   "note": "Not spoken in delivered audio — no pickup recorded (WO37 M-F: no useless reads to inflate count)."
+  },
+  {
+   "name": "Cơ Vô Tướng",
+   "status": "PROPOSED",
+   "note": "Not spoken in delivered audio — no pickup recorded (WO37 M-F: no useless reads to inflate count)."
+  },
+  {
+   "name": "Trưởng đoàn",
+   "status": "PROPOSED",
+   "note": "Not spoken in delivered audio — no pickup recorded (WO37 M-F: no useless reads to inflate count)."
+  },
+  {
+   "name": "Đội trưởng thợ lặn",
+   "status": "PROPOSED",
+   "note": "Not spoken in delivered audio — no pickup recorded (WO37 M-F: no useless reads to inflate count)."
+  },
+  {
+   "name": "Người chơi",
+   "status": "PROPOSED",
+   "note": "Not spoken in delivered audio — no pickup recorded (WO37 M-F: no useless reads to inflate count)."
+  },
+  {
+   "name": "Người nhận thư",
+   "status": "PROPOSED",
+   "note": "Not spoken in delivered audio — no pickup recorded (WO37 M-F: no useless reads to inflate count)."
+  },
+  {
+   "name": "Mãng Cốt",
+   "status": "PROPOSED",
+   "note": "Not spoken in delivered audio — no pickup recorded (WO37 M-F: no useless reads to inflate count)."
+  },
+  {
+   "name": "Ngũ Mạch",
+   "status": "PROPOSED",
+   "note": "Not spoken in delivered audio — no pickup recorded (WO37 M-F: no useless reads to inflate count)."
+  }
+ ],
+ "counts": {
+  "spokenNames": 5,
+  "distinctSpokenNames": 4,
+  "unspokenNames": 12,
+  "abPairs": 5
+ },
+ "playlist": [
+  {
+   "label": "A Lạc Châu — canonical CIN000_SEG01",
+   "path": "Art_Source/Audio/Muse/VO/PROLOGUE_DRAFT/VO_CIN000_SEG01_NARRATOR.wav",
+   "durationSeconds": 16.512
+  },
+  {
+   "label": "B Lạc Châu — palette CIN000_SEG01",
+   "path": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN000_SEG01_NARRATOR_palette_v1.wav",
+   "durationSeconds": 13.008
+  },
+  {
+   "label": "A Huyền Ấn — canonical CIN000_SEG01",
+   "path": "Art_Source/Audio/Muse/VO/PROLOGUE_DRAFT/VO_CIN000_SEG01_NARRATOR.wav",
+   "durationSeconds": 16.512
+  },
+  {
+   "label": "B Huyền Ấn — palette CIN000_SEG01",
+   "path": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN000_SEG01_NARRATOR_palette_v1.wav",
+   "durationSeconds": 13.008
+  },
+  {
+   "label": "A Lạc Châu — canonical CIN000_SEG04",
+   "path": "Art_Source/Audio/Muse/VO/PROLOGUE_DRAFT/VO_CIN000_SEG04_NARRATOR.wav",
+   "durationSeconds": 14.928
+  },
+  {
+   "label": "B Lạc Châu — palette CIN000_SEG04",
+   "path": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN000_SEG04_NARRATOR_palette_v1.wav",
+   "durationSeconds": 12.768
+  },
+  {
+   "label": "A Bến Mưa — canonical CIN000_SEG05",
+   "path": "Art_Source/Audio/Muse/VO/PROLOGUE_DRAFT/VO_CIN000_SEG05_NARRATOR.wav",
+   "durationSeconds": 8.04
+  },
+  {
+   "label": "B Bến Mưa — palette CIN000_SEG05",
+   "path": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN000_SEG05_NARRATOR_palette_v1.wav",
+   "durationSeconds": 6.672
+  },
+  {
+   "label": "A Sa Hỏa — canonical CIN018_S03",
+   "path": "Art_Source/Audio/Muse/VO/CAMPAIGN_DRAFT/VO_CIN_018_S03_PLAYER_draft_v1.wav",
+   "durationSeconds": 5.28
+  },
+  {
+   "label": "B Sa Hỏa — palette CIN018_S03",
+   "path": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN_018_S03_PLAYER_palette_v1.wav",
+   "durationSeconds": 4.512
+  }
+ ]
+}
