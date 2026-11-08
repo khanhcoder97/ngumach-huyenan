@@ -29,6 +29,10 @@ Checkpoint 45 extends it with CIN_011 (draft mix v1, same recipe);
 the CP34/CP37/CP38/CP39/CP40/CP41/CP42 scenes are verified
 unchanged on re-run, never re-muxed.
 
+Checkpoint 46 extends it with CIN_012 (draft mix v1, same recipe);
+the CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45 scenes are verified
+unchanged on re-run, never re-muxed.
+
 Turns the per-scene clips for the prologue + CIN_001/002/004/006 into
 a playable runtime pack:
 
@@ -78,6 +82,7 @@ MIX_CIN008 = ROOT / "Art_Source/Audio/Muse/MIX/CIN008_DRAFT_V1"
 MIX_CIN009 = ROOT / "Art_Source/Audio/Muse/MIX/CIN009_DRAFT_V1"
 MIX_CIN010 = ROOT / "Art_Source/Audio/Muse/MIX/CIN010_DRAFT_V1"
 MIX_CIN011 = ROOT / "Art_Source/Audio/Muse/MIX/CIN011_DRAFT_V1"
+MIX_CIN012 = ROOT / "Art_Source/Audio/Muse/MIX/CIN012_DRAFT_V1"
 FAILURES = []
 
 
@@ -385,6 +390,8 @@ def main() -> None:
                     "v1_cin010_proposed"),
         "CIN_011": (MIX_CIN011 / "CIN_011_mix_draft_v1.wav",
                     "v1_cin011_proposed"),
+        "CIN_012": (MIX_CIN012 / "CIN_012_mix_draft_v1.wav",
+                    "v1_cin012_proposed"),
     }
     mix_manifest_shas = {}
     v3_manifest = json.loads(
@@ -432,6 +439,11 @@ def main() -> None:
         .read_text(encoding="utf-8"))
     mix_manifest_shas["CIN_011"] = \
         cin011_manifest["scenes"][0]["mix"]["sha256"]
+    cin012_manifest = json.loads(
+        (MIX_CIN012 / "CIN012_MIX_V1_manifest_v1.json")
+        .read_text(encoding="utf-8"))
+    mix_manifest_shas["CIN_012"] = \
+        cin012_manifest["scenes"][0]["mix"]["sha256"]
 
     pack_scenes = []
     for scene_id, (mix_wav, mix_version) in scenes.items():
@@ -454,7 +466,8 @@ def main() -> None:
         else:
             audio = mux(scene_id, mix_wav, mix_version,
                         mix_manifest_shas[scene_id], work,
-                        checkpoint_label=("CP45" if scene_id == "CIN_011"
+                        checkpoint_label=("CP46" if scene_id == "CIN_012"
+                                          else "CP45" if scene_id == "CIN_011"
                                           else "CP42" if scene_id == "CIN_010"
                                           else "CP41" if scene_id == "CIN_009"
                                           else "CP40" if scene_id == "CIN_008"
@@ -497,6 +510,11 @@ def main() -> None:
                     "poster/SRT/timing unchanged")
         if scene_id == "CIN_011":
             note = ("MEDIA-02 checkpoint 45 - CIN_011 draft mix v1: "
+                    "embedded draft mix audio in the runtime OGV "
+                    "+ review MP4 (video streams bit-identical); "
+                    "poster/SRT/timing unchanged")
+        if scene_id == "CIN_012":
+            note = ("MEDIA-02 checkpoint 46 - CIN_012 draft mix v1: "
                     "embedded draft mix audio in the runtime OGV "
                     "+ review MP4 (video streams bit-identical); "
                     "poster/SRT/timing unchanged")
@@ -589,7 +607,7 @@ def main() -> None:
 
     pack = {
         "manifestId": "NGM_RUNTIME_PACK_GOI31_V1",
-        "checkpoint": "MEDIA-02 checkpoint 45 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41/CP42 scenes verified unchanged)",
+        "checkpoint": "MEDIA-02 checkpoint 46 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45 scenes verified unchanged)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "status": "DRAFT_NOT_FINAL",
@@ -613,9 +631,9 @@ def main() -> None:
             "Embedded mixes are DRAFT_MIX_NOT_FINAL; P0 scenes embed "
             "v3 (fully composed), CIN_006 embeds its v1, CIN_003 "
             "embeds its v1, CIN_005 embeds its v1, CIN_007 embeds "
-            "its v1, CIN_008 embeds its v1, CIN_009 embeds its v1 "
-            "and CIN_010 embeds its "
-            "v1; v1/v2 P0 mixes "
+            "its v1, CIN_008 embeds its v1, CIN_009 embeds its v1, "
+            "CIN_010 embeds its v1, CIN_011 embeds its v1 and "
+            "CIN_012 embeds its v1; v1/v2 P0 mixes "
             "stay as separate files and "
             "Codex's adapter chooses the mix version at PR review -- "
             "swapping the embedded mix is a re-mux only, no picture "
@@ -676,6 +694,25 @@ def main() -> None:
             "behind S02. The mix measures -20.34 LUFS because the "
             "CP17 VO take itself is quiet (-21.50 LUFS); VO is "
             "kept at unity per the recipe, not normalized.",
+            "CIN_012 stem assignment (tran_son music + "
+            "forge ambience + reveal at 6.0 s) is "
+            "PROPOSED_CANDIDATE; the CP17 draft VO take fits inside "
+            "its 12.5-17.5 s window (ends 16.820 s, no overrun, no "
+            "tail trim) with 0.680 s to spare. tran_son is the "
+            "composed set's bell-led stately form ('Tran Son — "
+            "Nguoi qua cua': the bell states the motif, a low "
+            "flute answers, a drum marks every bar line, 90 BPM), "
+            "matching the scene's lantern-lit hall and moral "
+            "decision (S01 stone furnace, S02 archive desk, S03 "
+            "Ha Mac behind the long wooden table); forge is the "
+            "fire bed (fire rumble + crackle + metallic clinks) "
+            "for the stone furnace and smithing tools of S01. "
+            "sa_hoa was passed over: it was just used for CIN_010 "
+            "and its 110 BPM drive suits that desert scene better "
+            "than this quiet moral line. The mix measures -25.60 "
+            "LUFS because the CP17 VO take itself is quiet "
+            "(-25.38 LUFS); VO is kept at unity per the recipe, "
+            "not normalized.",
             "CIN_003 stem assignment (ben_mua music + river_shore "
             "ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the "
             "CP17 draft VO take fits inside its 12.5-17.5 s window "

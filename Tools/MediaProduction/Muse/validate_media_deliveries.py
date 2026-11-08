@@ -1840,6 +1840,104 @@ def check_cin011_mix():
          f"DRAFT_MIX_NOT_FINAL, not a mix PASS")
 
 
+def check_cin012_mix():
+    """Checkpoint 46: CIN_012 draft mix v1.
+
+    Mirrors check_cin011_mix() for MIX/CIN012_DRAFT_V1/ +
+    CIN012_MIX_V1_manifest_v1.json (single scene, no review mix):
+    every stem must carry ORIGINAL_COMPOSED_BY_MUSE provenance, the
+    mix WAV must match the manifest sha/duration/format, ducking
+    evidence must show a real in-window cut with no out-of-window
+    change, and loop joins must carry QA ratios. The mix itself is
+    a DRAFT (see the manifest mixVerdict); nothing here is a mix
+    PASS. The stem assignment is NEW and PROPOSED_CANDIDATE. Like
+    CIN_007/CIN_008/CIN_009/CIN_010/CIN_011, the CP17 draft VO take
+    FITS its window -- by 0.680 s (4.320 s, 12.5-16.820 s): the
+    recorded overrun is -0.68 and the tail trim at the scene edge
+    is 0.0. Ducking evidence is
+    measured over the full VO window (the CP39 full-window method is
+    retained so the depth is comparable across the
+    CIN_003/CIN_005/CIN_007/CIN_008/CIN_009/CIN_010/CIN_011/CIN_012 mixes).
+    The mix measures -25.60 LUFS because the CP17 VO take itself is
+    quiet (-25.38 LUFS); VO is kept at unity per the recipe, not
+    normalized.
+    """
+    mix_dir = ROOT / "Art_Source/Audio/Muse/MIX/CIN012_DRAFT_V1"
+    manifest_path = mix_dir / "CIN012_MIX_V1_manifest_v1.json"
+    if not manifest_path.exists():
+        err("CIN012 MIX V1: missing CIN012_MIX_V1_manifest_v1.json")
+        return
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("mixVersion") != "v1_cin012_proposed":
+        err(f"CIN012 MIX V1: mixVersion "
+            f"{manifest.get('mixVersion')} != v1_cin012_proposed")
+    scenes = manifest.get("scenes", [])
+    if len(scenes) != 1:
+        err(f"CIN012 MIX V1: {len(scenes)}/1 scenes in manifest")
+    checked = 0
+    for scene in scenes:
+        mx = scene["mix"]
+        wav = mix_dir / mx["file"]
+        if not wav.exists():
+            err(f"CIN012 MIX V1 {scene['sceneId']}: missing {mx['file']}")
+            continue
+        if is_lfs_pointer(wav):
+            err(f"CIN012 MIX V1 {scene['sceneId']}: wav is an LFS pointer")
+            continue
+        if sha256_of(wav) != mx["sha256"]:
+            err(f"CIN012 MIX V1 {scene['sceneId']}: wav sha mismatch")
+        p = probe(wav)
+        if p and abs(p["duration"] - mx["durationSeconds"]) > 0.02:
+            err(f"CIN012 MIX V1 {scene['sceneId']}: duration "
+                f"{p['duration']} != manifest {mx['durationSeconds']}")
+        if p:
+            if (p.get("codec") != "pcm_s16le"
+                    or p.get("sample_rate") != 48000
+                    or p.get("channels") != 2):
+                err(f"CIN012 MIX V1 {scene['sceneId']}: format "
+                    f"{p.get('codec')}/{p.get('sample_rate')}/"
+                    f"{p.get('channels')} != pcm_s16le/48000/2")
+        if abs(mx["durationSeconds"] - scene["seconds"]) > 0.05:
+            err(f"CIN012 MIX V1 {scene['sceneId']}: mix duration "
+                f"{mx['durationSeconds']} != scene {scene['seconds']}")
+        for st in scene["stems"]:
+            prov = st.get("provenance", "")
+            if "ORIGINAL_COMPOSED_BY_MUSE" not in prov:
+                err(f"CIN012 MIX V1 {scene['sceneId']}: {st['role']} "
+                    f"stem {st['cue']} provenance is not composed: {prov}")
+            if "PORTED_CODEX_PACKV1" in prov:
+                err(f"CIN012 MIX V1 {scene['sceneId']}: {st['role']} "
+                    f"stem {st['cue']} still uses a ported stem")
+        for ev in scene["ducking"]["evidence"]:
+            if ev["depthInWindowDb"] >= 0:
+                err(f"CIN012 MIX V1 {scene['sceneId']}: ducking depth "
+                    f"in window {ev['depthInWindowDb']} >= 0 on "
+                    f"{ev['bus']} bus")
+            if ev["depthOutsideWindowDb"] != 0:
+                err(f"CIN012 MIX V1 {scene['sceneId']}: ducking depth "
+                    f"outside window {ev['depthOutsideWindowDb']} "
+                    f"!= 0 on {ev['bus']} bus")
+        for lq in scene["loopQA"]:
+            for join in lq["joins"]:
+                if join.get("ratioToP999") is None:
+                    err(f"CIN012 MIX V1 {scene['sceneId']}: loop join "
+                        f"{lq['cue']} @{join['atSeconds']} has no "
+                        f"QA ratio")
+        vo = scene.get("vo", {})
+        if vo.get("tailTrimmedAtSceneEdgeSeconds", 0) != 0.0:
+            err(f"CIN012 MIX V1 {scene['sceneId']}: recorded VO tail "
+                f"trim {vo.get('tailTrimmedAtSceneEdgeSeconds')} != 0.0")
+        if vo.get("overrunVsWindowSeconds", 0) != -0.68:
+            err(f"CIN012 MIX V1 {scene['sceneId']}: recorded VO "
+                f"overrun {vo.get('overrunVsWindowSeconds')} != -0.68")
+        checked += 1
+    COUNTS["cin012_mix_v1_files_checked"] = checked
+    note(f"CIN_012 draft mix v1 checked: {checked}/1 file (18 s, "
+         f"fully composed stems, PROPOSED assignment, VO take fits "
+         f"inside its window by 0.680 s, ends 16.820 s); "
+         f"DRAFT_MIX_NOT_FINAL, not a mix PASS")
+
+
 def check_playback_metadata():
     """Checkpoint 43 (Codex WO32 item 4): playback metadata for embedded mixes.
 
@@ -1992,8 +2090,8 @@ def check_pronunciation_table():
 
     Verifies Implementation/Content/Audio/Deliveries/PRONUNCIATION_TABLE_v1.json
     against real bytes and real sources: 16 names (4 spoken in current
-    audio, 1 DECIDED spelling), 18 playback cue rows (12 embedded mixes +
-    6 P0 v1/v2 alternates), 19 seam rows, 21 fallback rows. Head/tail
+    audio, 1 DECIDED spelling), 19 playback cue rows (13 embedded mixes +
+    6 P0 v1/v2 alternates), 20 seam rows, 21 fallback rows. Head/tail
     silence is re-measured here by silencedetect and wrap jumps are
     re-measured by f32 decode; ducking depths and loop joins are checked
     against the mix manifests; fallback files are checked for existence
@@ -2018,10 +2116,10 @@ def check_pronunciation_table():
         err(f"pronunciation table: names {counts.get('names')} != 16")
     if counts.get("namesSpokenInAudio") != 4:
         err(f"pronunciation table: spoken {counts.get('namesSpokenInAudio')} != 4")
-    if counts.get("playbackCueRows") != 18:
-        err(f"pronunciation table: cue rows {counts.get('playbackCueRows')} != 18")
-    if counts.get("seamRows") != 19:
-        err(f"pronunciation table: seam rows {counts.get('seamRows')} != 19")
+    if counts.get("playbackCueRows") != 19:
+        err(f"pronunciation table: cue rows {counts.get('playbackCueRows')} != 19")
+    if counts.get("seamRows") != 20:
+        err(f"pronunciation table: seam rows {counts.get('seamRows')} != 20")
     if counts.get("fallbackScenes") != 21:
         err(f"pronunciation table: fallback scenes {counts.get('fallbackScenes')} != 21")
     # --- names
@@ -2171,9 +2269,10 @@ def check_pronunciation_table():
     COUNTS["pronunciation_seam_flagged"] = sum(1 for r in d.get("seamTable", []) if r.get("flagEarCheck"))
     COUNTS["pronunciation_fallback_scenes"] = len(d.get("fallbackTable", []))
     COUNTS["pronunciation_fallback_files"] = counts.get("fallbackFilesVerified", 0)
-    note("Pronunciation table (checkpoint 44, Codex WO32 item 3): 16 names "
-         "(4 spoken in current audio, 1 DECIDED spelling), 17 playback cue "
-         "rows, 19 seam rows (1 flagged for ear check), 21 fallback rows; "
+    note("Pronunciation table (checkpoint 44, Codex WO32 item 3; re-run "
+         "at checkpoint 46 for the CIN_012 draft mix v1): 16 names "
+         "(4 spoken in current audio, 1 DECIDED spelling), 19 playback cue "
+         "rows, 20 seam rows (1 flagged for ear check), 21 fallback rows; "
          "NOT_AUDITIONED; loudness not re-measured.")
 
 
@@ -3001,10 +3100,10 @@ def check_prologue():
     if vo_n != 5 or mix_n != 1:
         err(f"PROLOGUE: runtime audio registrations vo={vo_n} "
             f"mix={mix_n} (want 5/1)")
-    # Checkpoint 45: 617 + 1 CIN_011 mix v1 file = 618.
-    if am.get("totalFiles") != 618:
+    # Checkpoint 46: 618 + 1 CIN_012 mix v1 file = 619.
+    if am.get("totalFiles") != 619:
         err(f"PROLOGUE: runtime audio total {am.get('totalFiles')}"
-            f" != 618")
+            f" != 619")
     COUNTS["prologue_files_checked"] = checked
     COUNTS["audio_files_checked"] = \
         COUNTS.get("audio_files_checked", 0) + 6
@@ -3047,13 +3146,14 @@ def main():
     check_cin009_mix()
     check_cin010_mix()
     check_cin011_mix()
+    check_cin012_mix()
     check_playback_metadata()
     check_pronunciation_table()
     check_ab_shortlist()
     check_scene_clips()
     check_prologue()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 45 (CIN_011 draft mix v1: eighth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1 and CIN_010 v1, same P0 v3 recipe; quiet_discovery music + wind_canopy ambience + reveal stinger + CP17 draft VO at 12.2 s, take fits its 12.2-17.8 s window by 0.008 s; embedded in CIN_011 runtime OGV + review MP4, video streams bit-identical; playback metadata + pronunciation table re-run for the new embedded mix: 12 embedded soundtracks, 9 silent CIN_012-020, 18 playback cue rows, 19 seam rows, 21 fallback rows; runtime audio manifest total 617 -> 618, mix 20 -> 21)",
+        "checkpoint": "MEDIA-02 checkpoint 46 (CIN_012 draft mix v1: ninth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1 and CIN_011 v1, same P0 v3 recipe; tran_son music + forge ambience + reveal stinger + CP17 draft VO at 12.5 s, take fits its 12.5-17.5 s window by 0.680 s; embedded in CIN_012 runtime OGV + review MP4, video streams bit-identical; playback metadata + pronunciation table re-run for the new embedded mix: 13 embedded soundtracks, 8 silent CIN_013-020, 19 playback cue rows, 20 seam rows, 21 fallback rows; runtime audio manifest total 618 -> 619, mix 21 -> 22)",
         "base_integration": "6f2b465",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -3088,8 +3188,9 @@ def main():
             "CIN_009 draft mix v1 (checkpoint 41): sixth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1 and CIN_008 v1, same P0 v3 recipe (music lam_trieu + ambience waterfall + reveal stinger at 6.0 s + CP17 draft VO at 12.5 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_009 and the scene timing manifest lists only the reveal stinger as a candidate stem; lam_trieu is the composed set's G-major transposition with ornamented flute, carrying the forest's answering voice of the scene title 'Tieng rung duoc dap', and waterfall is the water bed for the stream running through all three shots. Unlike CIN_005/CIN_006, the CP17 draft VO take FITS inside its 12.5-17.5 s window (4.080 s, ends 16.580 s): no overrun, no tail trim. Ducking evidence is measured over the full VO window (the CP39 method, retained for comparability). The mix measures -17.84 LUFS / -2.91 dBTP, hotter than the CIN_008 mix because the CP17 take itself is hotter (-17.23 LUFS per checkpoint 17); VO stays at unity per the recipe, no gain change was made. The v1 mix is embedded in CIN_009's runtime OGV + review MP4 (video streams copied bit-for-bit, verified by stored-frame counts). DRAFT_MIX_NOT_FINAL, no ear audition (NOT_AUDITIONED); adoption is Codex's adapter decision.",
             "CIN_010 draft mix v1 (checkpoint 42): seventh scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1 and CIN_009 v1, same P0 v3 recipe (music sa_hoa + ambience desert_wind + reveal stinger at 6.0 s + CP17 draft VO at 12.5 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_010 and the scene timing manifest lists only the reveal stinger as a candidate stem; sa_hoa is the composed set's desert form ('Sa Hoa -- Lo va cat', kiln and sand: A minor pentatonic, dry bright plucks, 110 BPM), matching the scene's ash-gold caravan rest and last-water-flask image, and desert_wind is the desert wind bed for the dunes running through all three shots. Unlike CIN_005/CIN_006, the CP17 draft VO take FITS inside its 12.5-17.5 s window (2.808 s, ends 15.308 s): no overrun, no tail trim. Ducking evidence is measured over the full VO window (the CP39 method, retained for comparability). The mix measures -24.60 LUFS / -4.86 dBTP, quieter than the CIN_009 mix because the CP17 take itself is quieter (-22.01 LUFS per checkpoint 17, re-verified from real bytes this run); VO stays at unity per the recipe, no gain change was made. The v1 mix is embedded in CIN_010's runtime OGV + review MP4 (video streams copied bit-for-bit, verified by stored-frame counts). DRAFT_MIX_NOT_FINAL, no ear audition (NOT_AUDITIONED); adoption is Codex's adapter decision.",
             "CIN_011 draft mix v1 (checkpoint 45): eighth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1 and CIN_010 v1, same P0 v3 recipe (music quiet_discovery + ambience wind_canopy + reveal stinger at 6.0 s + CP17 draft VO at 12.2 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_011 and the scene timing manifest lists only the reveal stinger as a candidate stem; quiet_discovery is the composed set's exploration silence ('Khoang lang kham pha': solo flute fragments, single bells, long near-silences, water drops, 60 BPM), matching the scene's quiet carving workshop and moral reflection (S01 workbench with carved tablets, S02 two men in an open bamboo shelter, S03 Ha Mac leaning over a carved landscape panel), and wind_canopy is the wind-through-canopy bed for the open shelter and the greenery behind S02. Unlike CIN_005/CIN_006, the CP17 draft VO take FITS inside its 12.2-17.8 s window (5.592 s, ends 17.792 s) by 0.008 s: no overrun, no tail trim. The window was widened from the uniform 12.5-17.5 s for rate (87 chars at 15.54 chars/s). Ducking evidence is measured over the full VO window (the CP39 method, retained for comparability). The mix measures -20.34 LUFS / -3.30 dBTP; the CP17 take itself is quiet (-21.50 LUFS per checkpoint 17, re-verified from real bytes this run); VO stays at unity per the recipe, no gain change was made. The v1 mix is embedded in CIN_011's runtime OGV + review MP4 (video streams copied bit-for-bit, verified by stored-frame counts). The playback metadata (checkpoint 43 builder) and pronunciation table (checkpoint 44 builder) were re-run for the new embedded mix: 12 embedded soundtracks, 9 silent CIN_012-020, 18 playback cue rows, 19 seam rows (1 flagged), 21 fallback rows, 130 files verified. DRAFT_MIX_NOT_FINAL, no ear audition (NOT_AUDITIONED); adoption is Codex's adapter decision.",
+            "CIN_012 draft mix v1 (checkpoint 46): ninth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1 and CIN_011 v1, same P0 v3 recipe (music tran_son + ambience forge + reveal stinger at 6.0 s + CP17 draft VO at 12.5 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_012 and the scene timing manifest lists only the reveal stinger as a candidate stem; tran_son is the composed set's bell-led stately form ('Tran Son — Nguoi qua cua', 90 BPM), matching the scene's lantern-lit hall and moral decision (S01 stone furnace, S02 archive desk, S03 Ha Mac behind the long wooden table), and forge is the fire bed for the stone furnace and smithing tools of S01. sa_hoa was passed over: it was just used for CIN_010 and its 110 BPM drive suits that desert scene better than this quiet moral line. Like CIN_007/CIN_008/CIN_009/CIN_010/CIN_011, the CP17 draft VO take FITS inside its 12.5-17.5 s window (4.320 s, ends 16.820 s) by 0.680 s: no overrun, no tail trim. The window is the uniform 12.5-17.5 s (71 chars at 14.20 chars/s); it was NOT widened. Ducking evidence is measured over the full VO window (the CP39 method, retained for comparability). The mix measures -25.60 LUFS / -5.13 dBTP; the CP17 take itself is quiet (-25.38 LUFS per checkpoint 17, re-verified from real bytes this run); VO stays at unity per the recipe, no gain change was made. The v1 mix is embedded in CIN_012's runtime OGV + review MP4 (video streams copied bit-for-bit, verified by stored-frame counts). The playback metadata (checkpoint 43 builder) and pronunciation table (checkpoint 44 builder) were re-run for the new embedded mix: 13 embedded soundtracks, 8 silent CIN_013-020, 19 playback cue rows, 20 seam rows (1 flagged), 21 fallback rows, 135 files verified. DRAFT_MIX_NOT_FINAL, no ear audition (NOT_AUDITIONED); adoption is Codex's adapter decision.",
             "Playback metadata (checkpoint 43, Codex WO32 item 4): PLAYBACK_METADATA_v1.json records, for every runtime cinematic, whether a soundtrack is embedded, which mix (version + source WAV + sha256 + stems + VO take/window) and which subtitle source, plus the audio-ownership rules the presentation adapter must honour (embedded soundtrack only; standalone mix files and VO takes are alternates/components, never simultaneous layers; runtime subtitles are overlay SRT, burned variants review-only; rewatch/skip/seen/fallback grant no quest). All byte-level evidence (stream layout, embedded loudness vs source mix and pack record, file sha256, SRT cue counts) was measured by build_playback_metadata_v1.py at build time with a 0.40 LUFS tolerance; this check verifies structure, cross-manifest consistency and source-mix hashes. The metadata is a delivery FOR Codex's adapter; Muse does not wire playback. All mixes remain DRAFT_MIX_NOT_FINAL and NOT_AUDITIONED; final audible approval is pending per WO32.",
-            "Pronunciation table (checkpoint 44, Codex WO32 item 3; re-run at checkpoint 45 for the CIN_011 draft mix v1): PRONUNCIATION_TABLE_v1.json records 16 proper names with syllable + tone + approximate Northern Vietnamese IPA guidance (only 4 are actually spoken in current audio: Lạc Châu, Huyền Ấn, Bến Mưa in the prologue narration and Sa Hỏa in CIN_018_S03; the 10 speaker/role names are never spoken in their own lines, so the listener checks voice fit, not name pronunciation), 18 playback cue rows (12 embedded mixes + 6 P0 v1/v2 alternates) with head/tail silence re-measured by silencedetect, VO take lead/tail silence, window slack and manifest ducking/loop-join evidence, 19 seam rows with wrap jumps re-measured from the runtime OGG beds (1 flagged: MUSIC/sa_hoa composed, 0.016015), and a 21-scene fallback chain (embedded -> standalone mix -> stems+VO -> VO+SRT -> SRT only; silent scenes CIN_012-020 have no audio fallback). Loudness is NOT re-measured in this checkpoint (WO32 item 3 rule); mix loudness figures are cited from their mix manifests only. NOT_AUDITIONED.",
+            "Pronunciation table (checkpoint 44, Codex WO32 item 3; re-run at checkpoint 46 for the CIN_012 draft mix v1): PRONUNCIATION_TABLE_v1.json records 16 proper names with syllable + tone + approximate Northern Vietnamese IPA guidance (only 4 are actually spoken in current audio: Lạc Châu, Huyền Ấn, Bến Mưa in the prologue narration and Sa Hỏa in CIN_018_S03; the 10 speaker/role names are never spoken in their own lines, so the listener checks voice fit, not name pronunciation), 19 playback cue rows (13 embedded mixes + 6 P0 v1/v2 alternates) with head/tail silence re-measured by silencedetect, VO take lead/tail silence, window slack and manifest ducking/loop-join evidence, 20 seam rows with wrap jumps re-measured from the runtime OGG beds (1 flagged: MUSIC/sa_hoa composed, 0.016015; new row this checkpoint: AMBIENCE/forge, first embedded use), and a 21-scene fallback chain (embedded -> standalone mix -> stems+VO -> VO+SRT -> SRT only; silent scenes CIN_013-020 have no audio fallback). Loudness is NOT re-measured in this checkpoint (WO32 item 3 rule); mix loudness figures are cited from their mix manifests only. NOT_AUDITIONED.",
             "Prologue subtitled variant (checkpoint 28, owner request): a VIEWING variant only -- the canonical MP4/OGV keep the checkpoint 27 mix at its measured level (-20.81 LUFS) and the canonical SRT keeps its 6 cues. The variant's +5 dB is a flat presentation gain (no dynamics change, measured -15.83 LUFS / -4.09 dBTP on the variant file), and its readable SRT is a presentation split whose concatenated text is verified identical to the canonical SRT. Burned-in subtitle font is DejaVu Sans (the project has no locked Vietnamese display font, same placeholder status as the title card). No OGV subtitled variant: in-engine subtitle display is the presentation adapter's concern (Codex).",
         ],
     }

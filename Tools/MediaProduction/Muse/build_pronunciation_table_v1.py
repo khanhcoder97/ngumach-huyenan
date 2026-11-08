@@ -18,7 +18,7 @@ Builds Implementation/Content/Audio/Deliveries/PRONUNCIATION_TABLE_v1.json
   count (owner decision 2026-11-07, D-12), "Mang Cot" against
   docs/production + the CIN_004 timing character list. Any mismatch exits
   1 and writes nothing.
-- PLAYBACK CUES (18 mix rows): the 12 embedded mixes + the 6 P0 v1/v2
+- PLAYBACK CUES (19 mix rows): the 13 embedded mixes + the 6 P0 v1/v2
   alternates. Per row: head/tail silence measured by silencedetect
   (-60 dBFS) on the real mix WAV, VO take lead/tail silence measured on
   the real take WAV, window slack from the VO manifests, ducking depth
@@ -37,7 +37,7 @@ Builds Implementation/Content/Audio/Deliveries/PRONUNCIATION_TABLE_v1.json
   verified to exist (mix WAV sha256 vs manifest for embedded scenes):
   embedded soundtrack -> standalone mix WAV -> stem re-assembly + VO
   take -> VO take + SRT -> silent video + SRT overlay. Silent scenes
-  (CIN_012-020) have no mix fallback: the adapter must not improvise
+  (CIN_013-020) have no mix fallback: the adapter must not improvise
   one. Global rules: never play embedded + external audio together;
   burned-subtitle variant is review-only; rewatch/skip/seen/fallback
   never grant quest.
@@ -94,6 +94,7 @@ MIX_MANIFESTS = {
     "cin009": ROOT / "Art_Source/Audio/Muse/MIX/CIN009_DRAFT_V1/CIN009_MIX_V1_manifest_v1.json",
     "cin010": ROOT / "Art_Source/Audio/Muse/MIX/CIN010_DRAFT_V1/CIN010_MIX_V1_manifest_v1.json",
     "cin011": ROOT / "Art_Source/Audio/Muse/MIX/CIN011_DRAFT_V1/CIN011_MIX_V1_manifest_v1.json",
+    "cin012": ROOT / "Art_Source/Audio/Muse/MIX/CIN012_DRAFT_V1/CIN012_MIX_V1_manifest_v1.json",
     "prologue": ROOT / "Art_Source/Audio/Muse/MIX/PROLOGUE_DRAFT/PROLOGUE_mix_manifest_v1.json",
 }
 COMPOSED = ROOT / "Art_Source/Audio/Muse/COMPOSED"
@@ -534,6 +535,9 @@ MIX_ROWS = [
     ("CIN_011", "v1_cin011_proposed", "cin011",
      "Art_Source/Audio/Muse/MIX/CIN011_DRAFT_V1/CIN_011_mix_draft_v1.wav",
      "ClientGodot/assets/audio/mix/cin011_v1/CIN_011_mix_draft_v1.wav"),
+    ("CIN_012", "v1_cin012_proposed", "cin012",
+     "Art_Source/Audio/Muse/MIX/CIN012_DRAFT_V1/CIN_012_mix_draft_v1.wav",
+     "ClientGodot/assets/audio/mix/cin012_v1/CIN_012_mix_draft_v1.wav"),
 ]
 EMBEDDED_RUNTIME_MIX = {  # sceneId -> runtime standalone mix (embedded set)
     "CIN_000": "ClientGodot/assets/audio/mix/prologue/PROLOGUE_mix_v1.wav",
@@ -548,6 +552,7 @@ EMBEDDED_RUNTIME_MIX = {  # sceneId -> runtime standalone mix (embedded set)
     "CIN_009": "ClientGodot/assets/audio/mix/cin009_v1/CIN_009_mix_draft_v1.wav",
     "CIN_010": "ClientGodot/assets/audio/mix/cin010_v1/CIN_010_mix_draft_v1.wav",
     "CIN_011": "ClientGodot/assets/audio/mix/cin011_v1/CIN_011_mix_draft_v1.wav",
+    "CIN_012": "ClientGodot/assets/audio/mix/cin012_v1/CIN_012_mix_draft_v1.wav",
 }
 
 
@@ -796,7 +801,7 @@ FALLBACK_RULES = [
     {"id": "FB-5",
      "rule": "If the SRT is missing, show no captions. Never burn captions from VO text and never use the review-only burned-subtitle variant as runtime."},
     {"id": "FB-6",
-     "rule": "Scenes with no mix yet (CIN_012-020) play silent video + SRT only. The adapter must not improvise a mix from stems or play a VO take over silent video."},
+     "rule": "Scenes with no mix yet (CIN_013-020) play silent video + SRT only. The adapter must not improvise a mix from stems or play a VO take over silent video."},
     {"id": "FB-7",
      "rule": "Rewatch, skip, seen-state and any fallback step never grant quest progress (WO32 item 4; enforcement is the Codex runtime's job)."},
 ]
@@ -806,7 +811,7 @@ MIX_MANIFEST_BY_SCENE = {
     "CIN_001": "p0v3", "CIN_002": "p0v3", "CIN_004": "p0v3",
     "CIN_003": "cin003", "CIN_005": "cin005", "CIN_006": "cin006",
     "CIN_007": "cin007", "CIN_008": "cin008", "CIN_009": "cin009",
-    "CIN_010": "cin010", "CIN_011": "cin011",
+    "CIN_010": "cin010", "CIN_011": "cin011", "CIN_012": "cin012",
 }
 
 
@@ -932,7 +937,7 @@ def main():
     fail_if_errors()
     out = {
         "manifestId": "NGM_PRONUNCIATION_TABLE_V1",
-        "checkpoint": "MEDIA-02 checkpoint 45 - pronunciation/proper-name table re-run: CIN_011 draft mix v1 embedded (12 embedded mixes, 9 silent CIN_012-020); names/seams unchanged (Codex WO32 item 3)",
+        "checkpoint": "MEDIA-02 checkpoint 46 - pronunciation/proper-name table re-run: CIN_012 draft mix v1 embedded (13 embedded mixes, 8 silent CIN_013-020); names/seams unchanged (Codex WO32 item 3)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "workOrderRef": "Work Order 32 (PR #128) item 3; issue #116 comment 6713518554",
         "branch": "muse/media-production-20261104",
