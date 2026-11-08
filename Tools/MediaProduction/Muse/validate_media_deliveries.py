@@ -349,6 +349,90 @@ def check_composed_score_md2_pack():
          f"M-D coverage 15/15 slots, 0 gaps")
 
 
+def check_composed_score_md3_pack():
+    """WO37 M-D checkpoint 3: the MD3 pack (9 intros + 9 outros + 27
+    stems + 3 phase layers for the 9 checkpoint-26 cues). Same
+    contract as the MD2 checker: provenance must stay explicit, every
+    cue byte-checked on both sides; intros/outros are 2-bar one-shots
+    at the parent tempo, stems and layers loop at the parent duration.
+    Stem/layer parents are checkpoint-26 cues, except the tragedy and
+    arena layers (MD1 parents). The coverage matrix must still show
+    all 15 M-D slots covered and must record the md3 block."""
+    pack = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                       / "MUSIC_SCORE_MD3_pack_v1.json").read_text(
+                           encoding="utf-8"))
+    if pack["counts"] != {"intro": 9, "outro": 9, "stems": 27,
+                          "layers": 3, "total": 48}:
+        err(f"COMPOSED MD3 pack counts drift: {pack['counts']}")
+    cp26 = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                       / "MUSIC_COMPOSED_pack_v1.json").read_text(
+                           encoding="utf-8"))
+    cp26_by_key = {c["cueKey"]: c for c in cp26["cues"]}
+    md1 = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                      / "MUSIC_SCORE_MD1_pack_v1.json").read_text(
+                          encoding="utf-8"))
+    md1_by_key = {c["cueKey"]: c for c in md1["cues"]}
+    total = 0
+    for cue in pack["cues"]:
+        if cue.get("provenance") != "ORIGINAL_COMPOSED_BY_MUSE":
+            err(f"COMPOSED MD3 {cue['cueKey']}: provenance missing/drift")
+        for side_name in ("master", "runtime"):
+            side = cue[side_name]
+            entry = {"path": side["path"], "sha256": side["sha256"],
+                     "size_bytes": side["sizeBytes"],
+                     "codec": side["codec"],
+                     "sample_rate_hz": side["sampleRateHz"],
+                     "channels": side["channels"],
+                     "duration_s": side["durationSeconds"]}
+            check_audio_file(entry, f"COMPOSED MD3 {cue['cueKey']}/"
+                             f"{side_name}")
+            total += 1
+        parent = cue.get("parentCueKey")
+        base = cp26_by_key.get(parent) or md1_by_key.get(parent)
+        if base is None:
+            err(f"COMPOSED MD3 {cue['cueKey']}: parent {parent} "
+                "unknown")
+            continue
+        if cue["kind"] in ("INTRO", "OUTRO"):
+            if cue.get("loop"):
+                err(f"COMPOSED MD3 {cue['cueKey']}: intro/outro must "
+                    "not loop")
+            bpm = base["composition"]["tempoBpm"]
+            if abs(cue["master"]["durationSeconds"] - 480.0 / bpm) \
+                    > 0.02:
+                err(f"COMPOSED MD3 {cue['cueKey']}: duration "
+                    f"{cue['master']['durationSeconds']} != 2 bars "
+                    f"at {bpm} bpm")
+        elif cue["kind"] in ("STEM", "LAYER"):
+            if not cue.get("loop"):
+                err(f"COMPOSED MD3 {cue['cueKey']}: stem/layer must "
+                    "loop")
+            if abs(cue["master"]["durationSeconds"]
+                   - base["master"]["durationSeconds"]) > 0.02:
+                err(f"COMPOSED MD3 {cue['cueKey']}: duration != "
+                    "parent duration")
+        else:
+            err(f"COMPOSED MD3 {cue['cueKey']}: unknown kind "
+                f"{cue.get('kind')}")
+    cov = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                      / "MUSIC_SCORE_MD_COVERAGE_v1.json").read_text(
+                          encoding="utf-8"))
+    if cov["slotsTotal"] != 15 or cov["slotsCoveredComposed"] != 15 \
+            or cov["slotsGap"] != 0:
+        err(f"COMPOSED MD3 coverage drift: {cov['slotsTotal']} slots, "
+            f"{cov['slotsCoveredComposed']} covered, "
+            f"{cov['slotsGap']} gaps")
+    md3cov = cov.get("md3", {})
+    if (md3cov.get("intros"), md3cov.get("outros"),
+            md3cov.get("stems"), md3cov.get("layers")) != (9, 9, 27, 3):
+        err(f"COMPOSED MD3 coverage md3 block drift: {md3cov}")
+    COUNTS["audio_composed_score_md3_cues"] = len(pack["cues"])
+    COUNTS["audio_files_checked"] += total
+    note(f"composed MD3 pack validated: {len(pack['cues'])} cues "
+         f"(9 intro + 9 outro + 27 stems + 3 layers), {total} files; "
+         f"M-D coverage 15/15 slots, 0 gaps")
+
+
 def parse_srt(text):
     cues = []
     blocks = [b.strip() for b in re.split(r"\n\s*\n", text.strip()) if b.strip()]
@@ -4158,10 +4242,10 @@ def check_prologue():
     if vo_n != 5 or mix_n != 1:
         err(f"PROLOGUE: runtime audio registrations vo={vo_n} "
             f"mix={mix_n} (want 5/1)")
-    # WO37 M-D checkpoint 2: 637 + 37 MD2 files = 674.
-    if am.get("totalFiles") != 674:
+    # WO37 M-D checkpoint 3: 674 + 48 MD3 files = 722.
+    if am.get("totalFiles") != 722:
         err(f"PROLOGUE: runtime audio total {am.get('totalFiles')}"
-            f" != 674")
+            f" != 722")
     COUNTS["prologue_files_checked"] = checked
     COUNTS["audio_files_checked"] = \
         COUNTS.get("audio_files_checked", 0) + 6
@@ -4184,6 +4268,7 @@ def main():
     check_composed_ambience_pack()
     check_composed_score_md1_pack()
     check_composed_score_md2_pack()
+    check_composed_score_md3_pack()
     check_timing_srt()
     check_runtime_cine_manifest()
     check_animatic_vo()
@@ -4221,7 +4306,7 @@ def main():
     check_scene_clips()
     check_prologue()
     result = {
-        "checkpoint": "MEDIA-02 WO37 M-D checkpoint 2 (intro/outro + stems + phase layers for the 7 MD1 score cues: 7 intros + 7 outros + 21 stems + 2 layers; runtime audio manifest total 637 -> 674; composed score now 16 music cues + 4 stingers + 3 transitions + 37 MD2 files across the checkpoint-26, MD1 and MD2 packs) following MEDIA-02 checkpoint 54 (CIN_020 draft mix v1: seventeenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016 v1, CIN_017 v1, CIN_018 v1 and CIN_019 v1, same P0 v3 recipe; ben_mua music + river_shore ambience + reveal stinger at 6.0 s + CP17 draft VO take (fits its 12.5-17.5 s window by 2.000 s); embedded in CIN_020 runtime OGV + review MP4, video streams bit-identical; playback metadata + pronunciation table re-run for the new embedded mix: 21 embedded soundtracks, 0 silent, 27 playback cue rows, 23 seam rows, 21 fallback rows, 176 fallback files; runtime audio manifest total 626 -> 627, mix 29 -> 30; every entry now carries an embedded soundtrack, WO37 M-B big checkpoint 1 complete; integration baseline 6f79853, PR #119 MERGEABLE/CLEAN per Codex comment 6716052477 / WO37 MEDIA-03-05)",
+        "checkpoint": "MEDIA-02 WO37 M-D checkpoint 3 (intro/outro + stems + phase layers for the 9 checkpoint-26 score cues: 9 intros + 9 outros + 27 stems + 3 layers; runtime audio manifest total 674 -> 722; composed score now 16 music cues + 4 stingers + 3 transitions + 37 MD2 files + 48 MD3 files across the checkpoint-26, MD1, MD2 and MD3 packs) following MEDIA-02 checkpoint 54 (CIN_020 draft mix v1: seventeenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016 v1, CIN_017 v1, CIN_018 v1 and CIN_019 v1, same P0 v3 recipe; ben_mua music + river_shore ambience + reveal stinger at 6.0 s + CP17 draft VO take (fits its 12.5-17.5 s window by 2.000 s); embedded in CIN_020 runtime OGV + review MP4, video streams bit-identical; playback metadata + pronunciation table re-run for the new embedded mix: 21 embedded soundtracks, 0 silent, 27 playback cue rows, 23 seam rows, 21 fallback rows, 176 fallback files; runtime audio manifest total 626 -> 627, mix 29 -> 30; every entry now carries an embedded soundtrack, WO37 M-B big checkpoint 1 complete; integration baseline 6f79853, PR #119 MERGEABLE/CLEAN per Codex comment 6716052477 / WO37 MEDIA-03-05)",
         "base_integration": "6f79853",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -4246,6 +4331,7 @@ def main():
             "All campaign clip motion (checkpoints 21-25) is animatic-level Ken Burns on still keyframes, not final pose-animated takes.",
             "Composed pack (checkpoint 26, Goi 30 item 7): 13 ORIGINAL cues composed by Muse (9 music + 4 SFX/CINEMA stingers) from one leitmotif system; loudness measured from real bytes by the composer (music -22.0 LUFS target, stingers -25.0), this check re-verifies bytes/SHA/duration only. Loop seams are recorded per cue in the delivery manifest: wrapJump after a disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it; no ear audition. The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; composed cues are parallel candidates whose adoption is Codex's presentation-adapter decision.",
             "Composed ambience pack (checkpoint 30): 13 ORIGINAL cues composed by Muse (all AMBIENCE/* cues, 16.0 s each) from filtered-noise beds with slow gust/swell envelopes and sparse deterministic events; loudness targets are the ported cues' checkpoint-07 measured LUFS, this check re-verifies bytes/SHA/duration only. Loop seams are recorded per cue in the delivery manifest with the same disclosed 0.25 s end-landing construction; no ear audition. Crowd beds are filtered noise only (no voices, no words). The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; composed cues are parallel candidates whose adoption is Codex's presentation-adapter decision.",
+            "Composed MD3 intro/outro + stems + phase layers (WO37 M-D checkpoint 3): 48 ORIGINAL files composed by Muse (9 two-bar intros + 9 two-bar outros + 27 stems + 3 additive phase layers) for the 9 checkpoint-26 cues, from the same leitmotif system as checkpoint 26/MD1/MD2; loudness measured from real bytes by the composer (intros/outros -22.0 LUFS target like the music, layers -25.0), this check re-verifies bytes/SHA/duration only, and the dedicated MD3 validator (check_composed_score_md3_v1.py) re-measures loudness from real bytes within +/-0.5 and re-checks the stem exact-sum (lead + padbass + percussion = shipped checkpoint-26 master within 24-bit quantisation) and the combined base+layer levels. The checkpoint-26 masters were built in several separate renders, so each cue's reproducing RNG history (pairs per --only run) is recorded in the MD3 pack and the coverage matrix; one cue (ben_mua) reproduces to 1.19e-07 after a least-squares fitted gain instead of bit-exact. Loop seams are recorded per looping cue in the delivery manifest with the same disclosed 0.25 s end-landing construction; no ear audition. The M-D coverage matrix (MUSIC_SCORE_MD_COVERAGE_v1.json) still shows 15/15 slots covered, 0 gaps, and records the md3 block plus openForMdCp4. The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; MD3 files are parallel candidates whose adoption is Codex's presentation-adapter decision.",
             "Composed MD2 intro/outro + stems + phase layers (WO37 M-D checkpoint 2): 37 ORIGINAL files composed by Muse (7 two-bar intros + 7 two-bar outros + 21 stems + 2 additive phase layers) for the 7 MD1 cues, from the same leitmotif system as checkpoint 26/MD1; loudness measured from real bytes by the composer (intros/outros -22.0 LUFS target like the music, layers -25.0), this check re-verifies bytes/SHA/duration only, and the dedicated MD2 validator (check_composed_score_md2_v1.py) re-measures loudness from real bytes within +/-0.5 and re-checks the stem exact-sum (lead + padbass + percussion = shipped MD1 master within 24-bit quantisation) and the combined base+layer levels. Loop seams are recorded per looping cue in the delivery manifest with the same disclosed 0.25 s end-landing construction; no ear audition. The tragedy percussion stem is digital silence by design (the cue has no percussion elements); its loudness is recorded null, not -inf. The M-D coverage matrix (MUSIC_SCORE_MD_COVERAGE_v1.json) still shows 15/15 slots covered, 0 gaps, and records the md2 block plus openForMdCp3. The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; MD2 files are parallel candidates whose adoption is Codex's presentation-adapter decision.",
             "Composed MD1 score pack (WO37 M-D checkpoint 1): 10 ORIGINAL cues composed by Muse (7 missing core score cues -- hub, Thanh Lac, rain, swamp, dungeon, arena, tragedy -- + 3 transition bridges of 6.0 s) from the same leitmotif system as checkpoint 26; loudness measured from real bytes by the composer (music -22.0 LUFS target, transitions -25.0), this check re-verifies bytes/SHA/duration only, and the dedicated MD1 validator (check_composed_score_md1_v1.py) re-measures loudness from real bytes within +/-0.5. Loop seams are recorded per cue in the delivery manifest: wrapJump after a disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it; no ear audition. The M-D coverage matrix (MUSIC_SCORE_MD_COVERAGE_v1.json) shows 15/15 slots covered, 0 gaps. The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; MD1 cues are parallel candidates whose adoption is Codex's presentation-adapter decision. Intro/outro segments, stems and phase-layer candidates for the MD1 cues were delivered in M-D checkpoint 2.",
             "A/B review shortlist (checkpoint 33, Goi 31 item 3): 12 P0 mix cells, 9 composed music + 4 stingers, 13 composed + 13 ported ambience, 21 canonical VO takes + 1 alternate, 44 seam rows, 6 M3U playlists (72 entries). This check verifies bytes/SHA/duration and playlist resolution only; loudness/true-peak/seam numbers in the shortlist JSON were measured from real bytes by build_ab_shortlist_goi31.py at build time and are NOT re-measured here. Audition status is NOT_AUDITIONED: no human listening has happened, and the defect table (D-01..D-12) is open for the listener/director. The alternate take CIN_006_ALT_T01 is verified to live in its own playlist only. D-12 resolved by owner decision 2026-11-07: the canonical spelling is 'Tạ Vân Khanh'. The 'Tạ Văn Khánh' label came from the shortlist tool's SPEAKER_DISPLAY fallback (the P0 VO manifest stores the speaker id only; no manifest carried the wrong spelling) and was corrected at checkpoint 36.",

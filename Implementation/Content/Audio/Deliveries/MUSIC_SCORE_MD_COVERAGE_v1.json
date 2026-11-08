@@ -1,6 +1,6 @@
 {
  "coverageId": "NGM_MUSIC_SCORE_MD_COVERAGE_V1",
- "checkpoint": "MEDIA-02 WO37 M-D checkpoint 2",
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 3",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "baseSha": "6f79853",
@@ -209,5 +209,37 @@
   "Per-cue intro/outro segments and stems for the 9 checkpoint-26 cues (if the director wants them).",
   "More phase-layer candidates (e.g. boss phase 3, tragedy intensity layer, arena low layer).",
   "Ear audition of all MD1/MD2 cues + loop seams (NOT_AUDITIONED)."
+ ],
+ "md3": {
+  "pack": "MUSIC_SCORE_MD3_pack_v1",
+  "intros": 9,
+  "outros": 9,
+  "stems": 27,
+  "layers": 3,
+  "detail": "2-bar intro/outro for each of the 9 checkpoint-26 cues; lead / pad-bass / percussion stems per checkpoint-26 cue, summing to the shipped checkpoint-26 master within 24-bit quantisation; additive phase layers MUSIC/boss_mang_cot_layer_phase3, MUSIC/tragedy_layer_intensity and MUSIC/arena_layer_low.",
+  "reproHistories": {
+   "ben_mua": [],
+   "thang_long": [],
+   "boss_mang_cot": [
+    "thang_long"
+   ],
+   "quiet_discovery": [],
+   "lam_trieu": [
+    "quiet_discovery"
+   ],
+   "sa_hoa": [],
+   "tran_son": [
+    "sa_hoa"
+   ],
+   "bach_uyen": [],
+   "rift_finale": [
+    "ben_mua"
+   ],
+   "note": "The shipped checkpoint-26 masters were built in several separate renders (pairs per --only run, in piece order within each pair), so a single sequential re-render does not reproduce them; each cue's reproducing RNG history is listed here and recorded per cue in the MD3 pack's referenceReproduction block."
+  }
+ },
+ "openForMdCp4": [
+  "Ear audition of all MD1/MD2/MD3 cues + loop seams (NOT_AUDITIONED).",
+  "More phase-layer candidates (e.g. boss phase 4, swamp/dungeon intensity layers)."
  ]
 }
