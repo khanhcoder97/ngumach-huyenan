@@ -1410,6 +1410,63 @@ def main():
         audio_entries.append(entry)
         counts["composed"] += 1
 
+    # --- 3i. Composed ambience REAL VARIANTS (WO37 M-E checkpoint 1) ---
+    # The composer (build_composed_ambience_variants_me_cp1.py)
+    # already rendered the variant runtime OGGs into
+    # ClientGodot/assets/audio/composed/ambience/; this section
+    # verifies them in place against the variants delivery pack and
+    # registers them in the runtime audio manifest. Same contract as
+    # 3h: the v01 masters/runtimes and the ported PackV1 entries are
+    # untouched; variants are parallel candidates whose adoption (and
+    # any rotation policy) is Codex's adapter decision. Each variant
+    # registers under its cueKey with a variantId, so an adapter can
+    # pick v01/v02/v03 per cue without guessing filenames.
+    composed_amb_var = json.loads(
+        (ROOT / "Implementation/Content/Audio/Deliveries"
+         / "AMBIENCE_COMPOSED_VARIANTS_pack_v1.json").read_text(
+             encoding="utf-8"))
+    for cue in composed_amb_var["cues"]:
+        for var in cue["variants"][1:]:
+            rt = var["runtime"]
+            dest_rel = rt["path"].split("assets/audio/", 1)[1]
+            dest = AUDIO_DEST / dest_rel
+            label = (f"composed ambience variant {cue['cueKey']} "
+                     f"{var['variantId']}")
+            check(dest.exists(),
+                  f"{label}: runtime file missing {rt['path']}")
+            if not dest.exists():
+                continue
+            check(not is_lfs_pointer(dest),
+                  f"{label}: runtime file is an LFS pointer")
+            got_sha = sha256(dest)
+            got_size = dest.stat().st_size
+            check(got_sha == rt["sha256"],
+                  f"{label}: sha mismatch {got_sha} != {rt['sha256']}")
+            check(got_size == rt["sizeBytes"],
+                  f"{label}: size mismatch {got_size} != {rt['sizeBytes']}")
+            got_dur = ffprobe_duration_s(dest)
+            check(abs(got_dur - rt["durationSeconds"]) <= DUR_TOL_S,
+                  f"{label}: duration mismatch {got_dur} != "
+                  f"{rt['durationSeconds']}")
+            entry = {"runtimePath": "assets/audio/" + dest_rel,
+                     "sourcePath": var["master"]["path"],
+                     "sha256": got_sha, "sizeBytes": got_size,
+                     "durationSeconds": round(got_dur, 4)}
+            entry.update({
+                "cueKey": cue["cueKey"],
+                "variantId": var["variantId"],
+                "category": "composed_ambience_variant",
+                "codec": rt["codec"],
+                "sampleRateHz": rt["sampleRateHz"],
+                "channels": rt["channels"],
+                "integratedLufs": rt["integratedLufs"],
+                "truePeakDbtp": rt["truePeakDbtp"],
+                "assetState": "COMPOSED_CANDIDATE",
+                "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER",
+                "provenance": "ORIGINAL_COMPOSED_BY_MUSE"})
+            audio_entries.append(entry)
+            counts["composed"] += 1
+
     # --- 3k. WO37 M-D checkpoint 1 score batch (MD1 pack) ---
     # The composer (build_composed_score_md1.py) already rendered the
     # runtime OGGs into ClientGodot/assets/audio/composed/music/ and
@@ -1942,7 +1999,9 @@ def main():
 
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 WO37 M-F checkpoint 1 - M8 runtime "
+        "checkpoint": ("MEDIA-02 WO37 M-E checkpoint 1 - ambience "
+                       "variants added (26 variant renders, total "
+                       "757 -> 783); WO37 M-F checkpoint 1 - M8 runtime "
                        "delivery revised: voice palette pickups added "
                        "(20 alternate takes, vo 30 -> 50, total "
                        "737 -> 757); WO37 M-D checkpoint 8 - MD8 phase "
@@ -2065,6 +2124,18 @@ def main():
             "Codex's presentation-adapter decision. Loudness targets "
             "are the ported cues' checkpoint-07 measured LUFS; "
             "measured from real bytes; no ear audition.",
+            "Composed ambience REAL VARIANTS (WO37 M-E checkpoint 1): "
+            "26 ORIGINAL variant renders (v02/v03 for each of the 13 "
+            "checkpoint-30 cues), provenance "
+            "ORIGINAL_COMPOSED_BY_MUSE, delivered in parallel under "
+            "assets/audio/composed/ambience/ from "
+            "AMBIENCE_COMPOSED_VARIANTS_pack_v1.json. Same recipe as "
+            "v01 with new deterministic seeds (rift drone/shimmer "
+            "detuned +/-0.4 Hz); waveform difference vs v01 measured "
+            "from real bytes for every variant. They do NOT replace "
+            "the v01 masters or the ported PackV1 files; adoption and "
+            "any rotation policy are Codex's presentation-adapter "
+            "decision. No ear audition.",
             "WO37 M-D checkpoint 3 intro/outro + stems + phase layers "
             "(MD3): 48 ORIGINAL files composed by Muse -- 2-bar "
             "intro/outro for each of the 9 checkpoint-26 cues, lead / "
