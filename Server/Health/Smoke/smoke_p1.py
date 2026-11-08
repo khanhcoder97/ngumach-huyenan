@@ -109,6 +109,18 @@ def turnin_envelope(quest_id, npc_id, character_id=CHARACTER_ID,
     }
 
 
+def talk_envelope(npc_id, node_id, character_id=CHARACTER_ID,
+                  request_id="34" * 16, idempotency_key="35" * 16):
+    return {
+        "schemaVersion": 1,
+        "requestId": request_id,
+        "idempotencyKey": idempotency_key,
+        "sentAtUtc": sent_at_utc(),
+        "characterId": character_id,
+        "payload": {"npcId": npc_id, "nodeId": node_id},
+    }
+
+
 def equip_envelope(item_instance_id, expected_revision, character_id=CHARACTER_ID,
                    request_id="32" * 16, idempotency_key="33" * 16):
     return {

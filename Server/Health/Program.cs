@@ -82,7 +82,22 @@ builder.Services.AddSingleton(serviceProvider =>
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
     var path = NarrativeNodeCatalog.Discover(configuration, environment.ContentRootPath);
-    return NarrativeNodeCatalog.Load(path);
+    var catalog = NarrativeNodeCatalog.Load(path);
+    if (!serviceProvider.GetRequiredService<AlphaProfileOptions>().Enabled)
+    {
+        return catalog;
+    }
+
+    // DEC-TUTORIAL-CLOSURE-20261108: the class-confirm node is a private-alpha overlay
+    // over the 229-node baseline, merged only with the profile on. The bindings are
+    // validated against the merged quest catalog and the NPC anchors, so a source edit
+    // that no longer matches the content fails startup rather than at the TALK route.
+    var closurePath = AlphaNarrativeOverlayLoader.Discover(configuration, environment.ContentRootPath);
+    return AlphaNarrativeOverlayMerger.Merge(
+        catalog,
+        AlphaNarrativeOverlayLoader.Load(closurePath),
+        serviceProvider.GetRequiredService<IQuestCatalog>(),
+        serviceProvider.GetRequiredService<NpcAnchorCatalog>());
 });
 builder.Services.AddSingleton(serviceProvider =>
 {

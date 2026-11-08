@@ -6275,6 +6275,255 @@ public static class ServiceSelfCheck
             alphaC1_01.Unlocks.Count == 0,
             $"band={alphaC1_01?.MinLevel}..{alphaC1_01?.MaxLevel}");
 
+        // ─── WO32 item 1 / DEC-TUTORIAL-CLOSURE-20261108: the class-confirm overlay ────
+        //
+        // The narrative overlay is merged over the SHIPPED baseline (this container runs
+        // the release gates OFF, so the resolved catalog is the 229-node production bundle)
+        // and validated against the real alpha quest pack and NPC anchors. The checks below
+        // measure the loaded content, not a typed-in count: the merged catalog must carry
+        // exactly one more node than the baseline, and the baseline object itself must stay
+        // unmutated so the gate-off path is provably untouched.
+        var closureConfiguration = services.GetRequiredService<IConfiguration>();
+        var baseNarrative = services.GetRequiredService<NarrativeNodeCatalog>();
+        var closureOverlay = AlphaNarrativeOverlayLoader.Load(
+            AlphaNarrativeOverlayLoader.Discover(
+                closureConfiguration, alphaEnvironment.ContentRootPath));
+        var mergedNarrative = AlphaNarrativeOverlayMerger.Merge(
+            baseNarrative, closureOverlay, alphaMergedQuests, npcAnchors);
+
+        Check(
+            "alpha.narrative_overlay_adds_one_node_and_leaves_the_baseline_intact",
+            mergedNarrative.Count == baseNarrative.Count + 1 &&
+            !baseNarrative.TryGet("DLG_P00_05_CLASS_CONFIRM", out _) &&
+            mergedNarrative.TryGet("DLG_P00_05_CLASS_CONFIRM", out _) &&
+            baseNarrative.TryGet("DLG_P00_05_CLUE", out var untouchedClue) &&
+            untouchedClue.NextNodeId == "DLG_P00_05_TURN_IN",
+            $"base={baseNarrative.Count} merged={mergedNarrative.Count}");
+
+        var confirmNode = mergedNarrative.TryGet("DLG_P00_05_CLASS_CONFIRM", out var loadedConfirm)
+            ? loadedConfirm
+            : null;
+        Check(
+            "alpha.narrative_overlay_node_binds_the_approved_source",
+            confirmNode is
+            {
+                QuestId: "P00-05",
+                GraphId: "GRAPH_P00_05",
+                Type: "CLUE",
+                SpeakerNpcId: "NPC_CLASS_TRIAL",
+                ConditionKey: NarrativeConditions.QuestActive,
+                OnEnterEvent: NarrativeEnterEvents.ObjectiveProgress,
+                NextNodeId: "DLG_P00_05_TURN_IN",
+                TextKey: "DLG_P00_05_CLASS_CONFIRM_TEXT",
+                BindObjectiveId: "OBJ_P00_05_CLASS_CONFIRM",
+                RequiredMapId: "MAP_BEN_MUA",
+                RequiredFloorId: "OVERWORLD",
+                Flag: null
+            } &&
+            confirmNode.RequiredCompletedObjectiveIds is { } requiredObjectives &&
+            requiredObjectives.SequenceEqual(
+                new[] { "OBJ_P00_05_BOSS", "OBJ_P00_05_FRAGMENT" }, StringComparer.Ordinal) &&
+            closureOverlay.SourceStatus == "VI_EDITED_ALPHA_20261108" &&
+            !string.IsNullOrWhiteSpace(closureOverlay.TextVi) &&
+            closureOverlay.ClassPolicy == AlphaNarrativeOverlayLoader.ClassPolicy &&
+            closureOverlay.RewardPolicy == AlphaNarrativeOverlayLoader.RewardPolicy,
+            $"speaker={confirmNode?.SpeakerNpcId} bind={confirmNode?.BindObjectiveId} " +
+            $"source={closureOverlay.SourceStatus}");
+
+        var patchedClue = mergedNarrative.TryGet("DLG_P00_05_CLUE", out var mergedClue) ? mergedClue : null;
+        var patchedTurnIn = mergedNarrative.TryGet("DLG_P00_05_TURN_IN", out var mergedTurnIn) ? mergedTurnIn : null;
+        Check(
+            "alpha.narrative_overlay_graph_patch_repoints_clue_and_reorders_turn_in",
+            patchedClue?.NextNodeId == "DLG_P00_05_CLASS_CONFIRM" &&
+            confirmNode?.Order == 3 && patchedTurnIn?.Order == 4 &&
+            patchedClue?.NextNodeId == confirmNode?.NodeId &&
+            confirmNode?.NextNodeId == patchedTurnIn?.NodeId,
+            $"clue.next={patchedClue?.NextNodeId} confirm.order={confirmNode?.Order} " +
+            $"turnin.order={patchedTurnIn?.Order}");
+
+        // Each mutation below has to trip the merger; a validator that accepted any of
+        // them would ship a node bound to content that does not exist. The graph-patch
+        // values are built as real JSON elements so the type guards are exercised too.
+        bool OverlayMergeRejects(AlphaNarrativeOverlay mutated)
+        {
+            try
+            {
+                AlphaNarrativeOverlayMerger.Merge(baseNarrative, mutated, alphaMergedQuests, npcAnchors);
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+                return true;
+            }
+        }
+        var missingNodePatch = new Dictionary<string, JsonElement>
+        {
+            ["DLG_P00_05_CLUE.nextNodeId"] = JsonSerializer.SerializeToElement("DLG_P00_05_NOT_SHIPPED")
+        };
+        var missingPatchTarget = new Dictionary<string, JsonElement>
+        {
+            ["DLG_P00_05_NOT_SHIPPED.order"] = JsonSerializer.SerializeToElement(4)
+        };
+        Check(
+            "alpha.narrative_overlay_validator_refuses_every_unbound_mutation",
+            OverlayMergeRejects(closureOverlay with { BindObjectiveId = "OBJ_P00_05_NOT_SHIPPED" }) &&
+            OverlayMergeRejects(closureOverlay with
+            {
+                RequiredCompletedObjectiveIds = new[] { "OBJ_P00_05_NOT_SHIPPED" }
+            }) &&
+            OverlayMergeRejects(closureOverlay with { RequiredMapId = "MAP_NOT_SHIPPED" }) &&
+            OverlayMergeRejects(closureOverlay with { RequiredFloorId = "NOT_OVERWORLD" }) &&
+            OverlayMergeRejects(closureOverlay with { SpeakerNpcId = "NPC_NOT_SHIPPED" }) &&
+            OverlayMergeRejects(closureOverlay with { GraphPatch = missingNodePatch }) &&
+            OverlayMergeRejects(closureOverlay with { GraphPatch = missingPatchTarget }) &&
+            OverlayMergeRejects(closureOverlay with { NodeId = "DLG_P00_05_CLUE" }),
+            "bind/prereq/map/floor/speaker/graphPatch/duplicate mutations all refused");
+
+        // The in-process finale proves the credit flow the HTTP checkpoint below walks:
+        // boss -> fragment -> class-confirm -> READY -> turn-in -> chapter permission. The
+        // fixture keeps the REAL P00-05 objectives and only drops the prerequisite chain so
+        // the quest can be accepted in isolation; the level band is left intact and C1-01 is
+        // carried along to prove the tutorial does not bypass its minLevel 11 gate.
+        var finaleP5 = alphaP00_05! with
+        {
+            PrerequisiteQuestIds = Array.Empty<string>(),
+            Rewards = new QuestRewards([new QuestRewardCurrency("COIN", 20)], [], "LEVEL_BAND_BASE")
+        };
+        var finaleCatalog = new QuestCatalog(new Dictionary<string, QuestDefinition>
+        {
+            ["P00-05"] = finaleP5,
+            ["C1-01"] = alphaC1_01!
+        });
+        var finaleClock = services.GetRequiredService<IServerClock>();
+        var finaleQuests = new InMemoryQuestService(
+            finaleCatalog, new InMemoryQuestStateStore(), alphaMergedRecords, finaleClock);
+        var finaleNarrative = new NarrativeService(mergedNarrative, finaleQuests, new NarrativeFlagStore());
+        var finaleTalk = new QuestTalkService(
+            mergedNarrative, finaleNarrative, finaleQuests, finaleCatalog, npcAnchors, new QuestTalkOptions());
+        npcAnchors.TryResolve("NPC_CLASS_TRIAL", "MAP_BEN_MUA", out var finaleTrialAnchor);
+        var finaleActor = NewPlayer("CHR_SELFCHECK_CLASS_CONFIRM");
+        finaleActor.Level = finaleP5.MinLevel;
+        finaleActor.MapId = "MAP_BEN_MUA";
+        finaleActor.FloorId = "OVERWORLD";
+        finaleActor.X = finaleTrialAnchor.X;
+        finaleActor.Y = finaleTrialAnchor.Y;
+        var finaleAccept = finaleQuests.Accept(finaleActor, "P00-05");
+        int FinaleCounter(string objectiveId) =>
+            finaleQuests.GetState(finaleActor, "P00-05").State?.ObjectiveCounters
+                .GetValueOrDefault(objectiveId) ?? -1;
+
+        var confirmBeforeBoss = finaleTalk.Talk(
+            finaleActor, "NPC_CLASS_TRIAL", "DLG_P00_05_CLASS_CONFIRM", "a" + new string('0', 31));
+        Check(
+            "alpha.class_confirm.fresh_talk_refused_before_boss_and_fragment",
+            finaleAccept.Accepted &&
+            !confirmBeforeBoss.Accepted &&
+            confirmBeforeBoss.Code == TalkErrorCodes.NotRevealed &&
+            confirmBeforeBoss.FieldErrors.SequenceEqual(["prerequisiteObjective"]) &&
+            FinaleCounter("OBJ_P00_05_CLASS_CONFIRM") == 0 &&
+            finaleQuests.GetState(finaleActor, "P00-05").State?.State == QuestStates.Active,
+            $"accepted={finaleAccept.Accepted} code={confirmBeforeBoss.Code} " +
+            $"fields=[{string.Join(",", confirmBeforeBoss.FieldErrors)}]");
+
+        finaleQuests.RecordVerifiedEvent(
+            finaleActor, new string('1', 32), QuestProgressEventTypes.Kill,
+            "MAN-BM-SPAWN_BM_05_QUEST", "MAP_BEN_MUA");
+        var confirmBeforeFragment = finaleTalk.Talk(
+            finaleActor, "NPC_CLASS_TRIAL", "DLG_P00_05_CLASS_CONFIRM", "b" + new string('0', 31));
+        Check(
+            "alpha.class_confirm.fresh_talk_refused_after_boss_before_fragment",
+            FinaleCounter("OBJ_P00_05_BOSS") == 1 &&
+            !confirmBeforeFragment.Accepted &&
+            confirmBeforeFragment.Code == TalkErrorCodes.NotRevealed &&
+            confirmBeforeFragment.FieldErrors.SequenceEqual(["prerequisiteObjective"]) &&
+            FinaleCounter("OBJ_P00_05_FRAGMENT") == 0,
+            $"boss={FinaleCounter("OBJ_P00_05_BOSS")} code={confirmBeforeFragment.Code}");
+
+        finaleQuests.RecordVerifiedEvent(
+            finaleActor, new string('2', 32), QuestProgressEventTypes.InteractClaim,
+            "ALPHA-BM-FRAGMENT", "MAP_BEN_MUA");
+        var confirmWrongSpeaker = finaleTalk.Talk(
+            finaleActor, "NPC_TA_VAN_KHANH", "DLG_P00_05_CLASS_CONFIRM", "c" + new string('0', 31));
+        Check(
+            "alpha.class_confirm.refuses_the_line_spoken_by_another_npc",
+            FinaleCounter("OBJ_P00_05_FRAGMENT") == 1 &&
+            !confirmWrongSpeaker.Accepted &&
+            confirmWrongSpeaker.Code == TalkErrorCodes.WrongSpeaker,
+            $"fragment={FinaleCounter("OBJ_P00_05_FRAGMENT")} code={confirmWrongSpeaker.Code}");
+
+        npcAnchors.TryResolve("NPC_CLASS_TRIAL", "MAP_THANH_LAC", out var finaleOtherMapAnchor);
+        finaleActor.MapId = "MAP_THANH_LAC";
+        finaleActor.X = finaleOtherMapAnchor.X;
+        finaleActor.Y = finaleOtherMapAnchor.Y;
+        var confirmWrongMap = finaleTalk.Talk(
+            finaleActor, "NPC_CLASS_TRIAL", "DLG_P00_05_CLASS_CONFIRM", "d" + new string('0', 31));
+        finaleActor.MapId = "MAP_BEN_MUA";
+        finaleActor.X = finaleTrialAnchor.X;
+        finaleActor.Y = finaleTrialAnchor.Y;
+        Check(
+            "alpha.class_confirm.refuses_the_other_map_trial_anchor",
+            !confirmWrongMap.Accepted &&
+            confirmWrongMap.Code == TalkErrorCodes.OutOfRange &&
+            confirmWrongMap.FieldErrors.SequenceEqual(["map"]),
+            $"code={confirmWrongMap.Code} fields=[{string.Join(",", confirmWrongMap.FieldErrors)}]");
+
+        var confirmKey = "e" + new string('0', 31);
+        var confirmHappy = finaleTalk.Talk(
+            finaleActor, "NPC_CLASS_TRIAL", "DLG_P00_05_CLASS_CONFIRM", confirmKey);
+        var confirmReadyState = finaleQuests.GetState(finaleActor, "P00-05").State;
+        Check(
+            "alpha.class_confirm.talk_credits_only_class_confirm_and_reaches_ready",
+            confirmHappy.Accepted &&
+            confirmHappy.Result is { Credited: true, ObjectiveId: "OBJ_P00_05_CLASS_CONFIRM", Replayed: false } &&
+            FinaleCounter("OBJ_P00_05_BOSS") == 1 &&
+            FinaleCounter("OBJ_P00_05_FRAGMENT") == 1 &&
+            FinaleCounter("OBJ_P00_05_CLASS_CONFIRM") == 1 &&
+            confirmReadyState?.State == QuestStates.ReadyToTurnIn,
+            $"credited={confirmHappy.Result?.Credited} objective={confirmHappy.Result?.ObjectiveId} " +
+            $"state={confirmReadyState?.State}");
+
+        var confirmReplay = finaleTalk.Talk(
+            finaleActor, "NPC_CLASS_TRIAL", "DLG_P00_05_CLASS_CONFIRM", confirmKey);
+        var confirmFreshAfterReady = finaleTalk.Talk(
+            finaleActor, "NPC_CLASS_TRIAL", "DLG_P00_05_CLASS_CONFIRM", "f" + new string('0', 31));
+        Check(
+            "alpha.class_confirm.replays_the_receipt_but_a_new_key_meets_the_closed_reveal",
+            confirmHappy.Result is { } confirmReceipt &&
+            confirmReplay.Accepted && confirmReplay.Result == confirmReceipt with { Replayed = true } &&
+            !confirmFreshAfterReady.Accepted &&
+            confirmFreshAfterReady.Code == TalkErrorCodes.NotRevealed &&
+            confirmFreshAfterReady.FieldErrors.SequenceEqual(["revealGate"]) &&
+            finaleQuests.GetState(finaleActor, "P00-05").State?.Revision == confirmReadyState?.Revision,
+            $"replay={confirmReplay.Result?.Replayed} fresh={confirmFreshAfterReady.Code}");
+
+        npcAnchors.TryResolve("NPC_TA_VAN_KHANH", "MAP_BEN_MUA", out var finaleTurnInAnchor);
+        finaleActor.X = finaleTurnInAnchor.X;
+        finaleActor.Y = finaleTurnInAnchor.Y;
+        var finaleChapterStore = new ChapterUnlockStore(new AlphaProfileOptions { Enabled = true });
+        var finaleTurnIn = new InMemoryQuestTurnInService(
+            finaleCatalog,
+            finaleQuests,
+            inventory,
+            npcAnchors,
+            services.GetRequiredService<IWorldGeometryService>(),
+            new RewardLedgerStore(),
+            services.GetRequiredService<ExperienceService>(),
+            services.GetRequiredService<QuestXpSnapshotStore>(),
+            services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value,
+            finaleChapterStore).TurnIn(finaleActor, "P00-05", "NPC_TA_VAN_KHANH", "g" + new string('0', 31));
+        var finaleC1State = finaleQuests.GetState(finaleActor, "C1-01").State;
+        Check(
+            "alpha.class_confirm.turn_in_commits_chapter_permission_without_bypassing_c1_level",
+            finaleTurnIn.Accepted &&
+            finaleQuests.GetState(finaleActor, "P00-05").State?.State == QuestStates.Completed &&
+            finaleChapterStore.HasFlag(finaleActor.CharacterId, AlphaChapterUnlockRules.Flag) &&
+            finaleChapterStore.AllowsPortal(finaleActor.CharacterId, AlphaChapterUnlockRules.PortalMapId) &&
+            finaleC1State?.State == QuestStates.Locked &&
+            finaleActor.Level < alphaC1_01!.MinLevel,
+            $"turnin={finaleTurnIn.Accepted} p5={finaleQuests.GetState(finaleActor, "P00-05").State?.State} " +
+            $"chapter={finaleChapterStore.HasFlag(finaleActor.CharacterId, AlphaChapterUnlockRules.Flag)} " +
+            $"c1={finaleC1State?.State} level={finaleActor.Level}");
+
         var levelStates = new InMemoryQuestStateStore();
         var levelClock = services.GetRequiredService<IServerClock>();
         var levelQuests = new InMemoryQuestService(
@@ -7912,10 +8161,10 @@ public static class ServiceSelfCheck
 
         // ─── QOD-21 Q2: the TALK route's guards (work order 31 Q2) ────
 
-        // DEC-TUTORIAL-TRANSPORT-20261106 approved the verb with these rules, and the
-        // happy path is still blocked by content (#134: no narrative node is spoken by
-        // NPC_CLASS_TRIAL), so what CAN be pinned today is every way the route must
-        // refuse. Each check below names a mutation that has to trip it.
+        // DEC-TUTORIAL-TRANSPORT-20261106 approved the verb with these rules, and
+        // WO32 added DLG_P00_05_CLASS_CONFIRM (CLUE order=3) bound to NPC_CLASS_TRIAL,
+        // so today we can pin both refusal paths and the happy TALK→turn-in→COMPLETED
+        // chain. Each check below names a mutation that has to trip it.
         var talkNodes = services.GetRequiredService<NarrativeNodeCatalog>();
         var talkService = services.GetRequiredService<QuestTalkService>();
         var talkActor = NewPlayer("CHR_SELFCHECK_TALK_ACTOR");

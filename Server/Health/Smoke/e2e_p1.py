@@ -1617,6 +1617,16 @@ def alpha_turnin(session_id, character_id, quest_id, npc_id):
     return status, body
 
 
+def alpha_talk(session_id, character_id, npc_id, node_id):
+    status, _, body = smoke_p1.call(
+        "POST", "/p1/quests/talk",
+        smoke_p1.talk_envelope(
+            npc_id, node_id, character_id=character_id,
+            request_id=alpha_key(0xd1), idempotency_key=alpha_key(0xd2)),
+        {"X-Session-ID": session_id})
+    return status, body
+
+
 def alpha_kill(session_id, character_id, sequence, entity_id, pace=0.12, outcome=None):
     """Cast the basic attack at one entity, staying in reach, until the snapshot
     reports that life DEAD. Returns (nextSequence, acceptedCasts, refusedCodes,
@@ -2633,7 +2643,38 @@ def alpha_p00_profile():
         quests["C1-01"].get("state") == "LOCKED",
         f"C1-01 before P00-05 completes is {quests['C1-01'].get('state')}")
 
-    # ── a second client, so "per character" is proven on the same build ──
+    # ── PUBLIC HTTP FINALE: P00-05 boss→fragment→CLASS_CONFIRM→READY→TURN_IN→CHAPTER ──
+    # Approach NPC_CLASS_TRIAL (188, 0) and TALK the new CLUE node
+    sequence, _, _ = alpha_approach(session, character, sequence, 188.0, 0.0)
+    status, body = alpha_talk(session, character, "NPC_CLASS_TRIAL", "DLG_P00_05_CLASS_CONFIRM")
+    smoke_p1.check(
+        status == 200,
+        f"CLASS_CONFIRM talk approach 188,0: {(body.get('error') or {})}")
+    smoke_p1.check(
+        alpha_counter(quests, "P00-05", "OBJ_P00_05_CLASS_CONFIRM") == 1,
+        f"class confirm credited after successful TALK: "
+        f"{alpha_counter(quests, 'P00-05', 'OBJ_P00_05_CLASS_CONFIRM')}")
+    quests_after_talk = alpha_quests(session)
+    smoke_p1.check(
+        quests_after_talk["P00-05"].get("state") == "READY_TO_TURN_IN",
+        f"state after TALK is READY_TO_TURN_IN: {quests_after_talk['P00-05'].get('state')}")
+
+    # Walk to NPC_TA_VAN_KHANH (64, 0) and turn in
+    sequence, _, _ = alpha_approach(session, character, sequence, 64.0, 0.0)
+    status, body = alpha_turnin(session, character, "P00-05", "NPC_TA_VAN_KHANH")
+    smoke_p1.check(
+        status == 200,
+        f"turn-in success at 64,0: {(body.get('error') or {})}")
+    quests_after_turnin = alpha_quests(session)
+    smoke_p1.check(
+        quests_after_turnin["P00-05"].get("state") == "COMPLETED",
+        f"P00-05 completed after turn-in: {quests_after_turnin['P00-05'].get('state')}")
+    smoke_p1.check(
+        quests_after_turnin["C1-01"].get("state") == "LOCKED",
+        f"C1-01 still LOCKED at low level after chapter unlock: "
+        f"{quests_after_turnin['C1-01'].get('state')}")
+
+    # A second client, so "per character" is proven on the same build ──
     second = "CHR_E2E_ALPHA_B"
     session_b, sequence_b = alpha_session(second)
     sequence_b, _, _ = alpha_approach(session_b, second, sequence_b, 42.0, 0.0)
@@ -2661,7 +2702,7 @@ def alpha_p00_profile():
     print(
         "profile=alpha-p00 chain=P00-01..P00-05 "
         f"boss=KILLED fragment=OK wave_trial=OK escort=A+B loot=PAID v2_inventory=OK "
-        f"talk=ROUTE_LIVE_NO_NODE_FOR_TRIAL_NPC c1_01=LOCKED second_client=ISOLATED")
+        f"class-confirm=FINISHED turn-in=COMPLETED c1_01=LOCKED second_client=ISOLATED")
 
 
 def death_return_envelope(character, key, payload=None, schema_version=1,

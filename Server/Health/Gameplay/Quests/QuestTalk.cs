@@ -197,6 +197,38 @@ public sealed class QuestTalkService
                     TalkErrorCodes.NotRevealed, retryable: true, ["revealGate"]);
             }
 
+            // DEC-TUTORIAL-CLOSURE-20261108: the overlay node binds a map/floor and the
+            // objectives that must already be committed. A fresh TALK that misses them is
+            // refused here rather than entered with zero credit - the ordered objective
+            // gate would otherwise silently no-op and hide why the player is stuck. The
+            // baseline nodes carry no binding (null), so their behaviour is unchanged.
+            if (node.RequiredMapId is not null &&
+                !string.Equals(node.RequiredMapId, actor.MapId, StringComparison.Ordinal))
+            {
+                return TalkOutcome.Rejected(TalkErrorCodes.OutOfRange, retryable: true, ["map"]);
+            }
+
+            if (node.RequiredFloorId is not null &&
+                !string.Equals(node.RequiredFloorId, actor.FloorId, StringComparison.Ordinal))
+            {
+                return TalkOutcome.Rejected(TalkErrorCodes.OutOfRange, retryable: true, ["floor"]);
+            }
+
+            if (node.RequiredCompletedObjectiveIds is { Count: > 0 } requiredIds)
+            {
+                foreach (var requiredId in requiredIds)
+                {
+                    var requiredObjective = definition.Objectives.FirstOrDefault(candidate =>
+                        string.Equals(candidate.ObjectiveId, requiredId, StringComparison.Ordinal));
+                    if (requiredObjective is null ||
+                        Counter(before?.ObjectiveCounters, requiredObjective) < requiredObjective.Count)
+                    {
+                        return TalkOutcome.Rejected(
+                            TalkErrorCodes.NotRevealed, retryable: true, ["prerequisiteObjective"]);
+                    }
+                }
+            }
+
             var objective = definition.Objectives.FirstOrDefault(candidate =>
                 string.Equals(candidate.Type, QuestObjectiveTypes.Talk, StringComparison.Ordinal) &&
                 candidate.TargetIds.Any(target =>
