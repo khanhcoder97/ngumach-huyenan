@@ -1,0 +1,23 @@
+{
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 8 (phase layer: thanh_lac intensity; runtime audio manifest total 736 -> 737)",
+ "base_integration": "6f79853",
+ "branch": "muse/media-production-20261104",
+ "counts": {
+  "md8_cues": 1,
+  "md8_files_checked": 2,
+  "coverage_slots": 15
+ },
+ "mismatches": [],
+ "notes": [
+  "MD8 MUSIC/thanh_lac_layer_intensity: combined base+layer re-measured -21.66 LUFS / -10.58 dBTP",
+  "MD8 MUSIC/thanh_lac_layer_intensity/master: sha/size/codec/duration/loudness re-verified (-25.00 LUFS / -15.21 dBTP)",
+  "MD8 MUSIC/thanh_lac_layer_intensity/runtime: sha/size/codec/duration/loudness re-verified (-24.92 LUFS / -15.31 dBTP)",
+  "coverage verified: 15/15 slots covered, 0 gaps, md8 1 layer"
+ ],
+ "verdict": "PASS",
+ "limits": [
+  "Loudness/true-peak are re-measured here from real bytes (ffmpeg loudnorm) and compared to the pack within +/-0.5; they are not a mix PASS.",
+  "Loop seams are recorded indicators (wrapJump after the disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it), not a seamlessness PASS.",
+  "No ear audition of the MD8 layer or its loop seam; audition status NOT_AUDITIONED."
+ ]
+}
