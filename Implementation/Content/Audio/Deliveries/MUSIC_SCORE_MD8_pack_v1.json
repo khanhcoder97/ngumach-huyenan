@@ -1,0 +1,75 @@
+{
+ "packId": "NGM_MUSIC_SCORE_MD8_V1",
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 8 - phase layer (thanh_lac intensity; Work Order 37 module M-D)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "6f79853",
+ "provenance": "ORIGINAL_COMPOSED_BY_MUSE: phase layer authored as data in Tools/MediaProduction/Muse/build_composed_score_md8.py (synthesis engine reused from build_composed_music.py, MD1 arrangement from build_composed_score_md1.py) and rendered by procedural synthesis. No external samples, no ported bytes. This 1 file is NEW audio, counted separately from the 541 ported PackV1 files and from the checkpoint-26, checkpoint-30, MD1, MD2, MD3, MD4, MD5, MD6 and MD7 packs, which keep their own provenance and are untouched.",
+ "counts": {
+  "intro": 0,
+  "outro": 0,
+  "stems": 0,
+  "layers": 1,
+  "total": 1
+ },
+ "cues": [
+  {
+   "cueKey": "MUSIC/thanh_lac_layer_intensity",
+   "nameVi": "Thanh Lạc · Lớp tăng cường",
+   "kind": "LAYER",
+   "loop": true,
+   "parentCueKey": "MUSIC/thanh_lac",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 96,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Additive intensity layer over thanh_lac (16 bars @ 96 bpm): soft drum on the bar line and on beat 2 (the two-beat market pulse; the base has no drums at all) and a low pluck echo of the motif head on bars 4 and 13 (bars where the base has no melody; the arpeggio is texture, not melody). The base has pads on every bar, a bell of the chord tonic on every bar line, bass on all four beats, pluck arpeggios on every bar plus a second off-beat pluck voice an octave down, flute motif at bars 0/8, a low-pluck tail at bar 12 and shaker on every offbeat; this layer adds the pulse the market arrangement withholds. No bells, no shaker, no bass fill, no pad, no flute. -25 LUFS target; combined base+layer loudness measured from real bytes.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md8.py on the checkpoint-26 engine (build_composed_music.py) and the MD1 arrangement (build_composed_score_md1.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/layers/thanh_lac_layer_intensity.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 40.0,
+    "sizeBytes": 11520102,
+    "sha256": "11aa071704cb7df6fea9e881f96f8b60fcc43d6a5cb0bd931ef4d96dcc394d92",
+    "integratedLufs": -25.0,
+    "truePeakDbtp": -15.21
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/layers/thanh_lac_layer_intensity.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 40.0,
+    "sizeBytes": 212861,
+    "sha256": "f4d0f331335c53f46d33fb1366185a955904350e08d6be9ebe3c809272c29ff1",
+    "integratedLufs": -24.92,
+    "truePeakDbtp": -15.31
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.013445,
+    "tailRms": 0.00027,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.001976,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   },
+   "combinedWithBase": {
+    "baseCueKey": "MUSIC/thanh_lac",
+    "method": "base master + layer master summed from real bytes, ffmpeg loudnorm",
+    "integratedLufs": -21.66,
+    "truePeakDbtp": -10.58
+   }
+  }
+ ],
+ "notes": [
+  "Phase layers are ADDITIVE loops at the parent cue's tempo/bars (-25 LUFS target): they play over the base cue, they do not replace it. Combined base+layer loudness/true-peak is measured from real bytes and recorded per layer.",
+  "The MD8 layer adds only what its base and the earlier layers do not already do: thanh_lac intensity adds the two-beat market drum pulse the busiest street arrangement withholds (no drums at all in the base) plus a low pluck echo on melody-free bars. After MD8 every composed score cue carries an intensity layer; no further intensity layer is pending for a score cue.",
+  "Adoption is a presentation-adapter decision (Codex): the MD8 file is delivered in parallel under ClientGodot/assets/audio/composed/layers/ and does NOT replace the ported PackV1 files, their cue bindings, or the checkpoint-26/30/MD1/MD2/MD3/MD4/MD5/MD6/MD7 cues.",
+  "No ear audition has been done; loudness/true-peak are measured from real bytes. Loop seams are recorded per looping cue in the delivery manifest: wrapJump after a disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it."
+ ]
+}

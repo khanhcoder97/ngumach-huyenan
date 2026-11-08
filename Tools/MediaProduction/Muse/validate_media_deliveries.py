@@ -723,6 +723,80 @@ def check_composed_score_md7_pack():
          f"M-D coverage 15/15 slots, 0 gaps")
 
 
+def check_composed_score_md8_pack():
+    """WO37 M-D checkpoint 8: the MD8 pack (1 additive phase layer:
+    thanh_lac intensity).
+    Same contract as the MD3/MD5/MD6/MD7 checkers: provenance must stay
+    explicit, every cue byte-checked on both sides; layers loop at
+    the parent duration. Layer parents are checkpoint-26 cues
+    (thang_long, tran_son, bach_uyen, rift_finale, quiet_discovery).
+    The coverage matrix must still show all 15 M-D slots covered
+    and must record the md7 block."""
+    pack = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                       / "MUSIC_SCORE_MD8_pack_v1.json").read_text(
+                           encoding="utf-8"))
+    if pack["counts"] != {"intro": 0, "outro": 0, "stems": 0,
+                          "layers": 1, "total": 1}:
+        err(f"COMPOSED MD8 pack counts drift: {pack['counts']}")
+    cp26 = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                       / "MUSIC_COMPOSED_pack_v1.json").read_text(
+                           encoding="utf-8"))
+    cp26_by_key = {c["cueKey"]: c for c in cp26["cues"]}
+    md1 = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                      / "MUSIC_SCORE_MD1_pack_v1.json").read_text(
+                          encoding="utf-8"))
+    md1_by_key = {c["cueKey"]: c for c in md1["cues"]}
+    total = 0
+    for cue in pack["cues"]:
+        if cue.get("provenance") != "ORIGINAL_COMPOSED_BY_MUSE":
+            err(f"COMPOSED MD8 {cue['cueKey']}: provenance missing/drift")
+        for side_name in ("master", "runtime"):
+            side = cue[side_name]
+            entry = {"path": side["path"], "sha256": side["sha256"],
+                     "size_bytes": side["sizeBytes"],
+                     "codec": side["codec"],
+                     "sample_rate_hz": side["sampleRateHz"],
+                     "channels": side["channels"],
+                     "duration_s": side["durationSeconds"]}
+            check_audio_file(entry, f"COMPOSED MD8 {cue['cueKey']}/"
+                             f"{side_name}")
+            total += 1
+        parent = cue.get("parentCueKey")
+        base = cp26_by_key.get(parent) or md1_by_key.get(parent)
+        if base is None:
+            err(f"COMPOSED MD8 {cue['cueKey']}: parent {parent} "
+                "unknown")
+            continue
+        if cue["kind"] != "LAYER":
+            err(f"COMPOSED MD8 {cue['cueKey']}: unknown kind "
+                f"{cue.get('kind')} (MD8 is layers only)")
+            continue
+        if not cue.get("loop"):
+            err(f"COMPOSED MD8 {cue['cueKey']}: layer must loop")
+        if abs(cue["master"]["durationSeconds"]
+               - base["master"]["durationSeconds"]) > 0.02:
+            err(f"COMPOSED MD8 {cue['cueKey']}: duration != "
+                "parent duration")
+    cov = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                      / "MUSIC_SCORE_MD_COVERAGE_v1.json").read_text(
+                          encoding="utf-8"))
+    if cov["slotsTotal"] != 15 or cov["slotsCoveredComposed"] != 15 \
+            or cov["slotsGap"] != 0:
+        err(f"COMPOSED MD8 coverage drift: {cov['slotsTotal']} slots, "
+            f"{cov['slotsCoveredComposed']} covered, "
+            f"{cov['slotsGap']} gaps")
+    md8cov = cov.get("md8", {})
+    if md8cov.get("pack") != "MUSIC_SCORE_MD8_pack_v1" or \
+            md8cov.get("layers") != 1:
+        err(f"COMPOSED MD8 coverage md8 block drift: {md8cov}")
+    COUNTS["audio_composed_score_md8_cues"] = len(pack["cues"])
+    COUNTS["audio_files_checked"] += total
+    note(f"composed MD8 pack validated: {len(pack['cues'])} cues "
+         f"(1 layer), {total} files; "
+         f"M-D coverage 15/15 slots, 0 gaps")
+
+
+
 def parse_srt(text):
     cues = []
     blocks = [b.strip() for b in re.split(r"\n\s*\n", text.strip()) if b.strip()]
@@ -4532,10 +4606,10 @@ def check_prologue():
     if vo_n != 5 or mix_n != 1:
         err(f"PROLOGUE: runtime audio registrations vo={vo_n} "
             f"mix={mix_n} (want 5/1)")
-    # WO37 M-D checkpoint 7: 731 + 5 MD7 files = 736.
-    if am.get("totalFiles") != 736:
+    # WO37 M-D checkpoint 8: 736 + 1 MD8 file = 737.
+    if am.get("totalFiles") != 737:
         err(f"PROLOGUE: runtime audio total {am.get('totalFiles')}"
-            f" != 736")
+            f" != 737")
     COUNTS["prologue_files_checked"] = checked
     COUNTS["audio_files_checked"] = \
         COUNTS.get("audio_files_checked", 0) + 6
@@ -4563,6 +4637,7 @@ def main():
     check_composed_score_md5_pack()
     check_composed_score_md6_pack()
     check_composed_score_md7_pack()
+    check_composed_score_md8_pack()
     check_timing_srt()
     check_runtime_cine_manifest()
     check_animatic_vo()
@@ -4600,7 +4675,7 @@ def main():
     check_scene_clips()
     check_prologue()
     result = {
-        "checkpoint": "MEDIA-02 WO37 M-D checkpoint 7 (phase layers: thang_long intensity, tran_son intensity, bach_uyen intensity, rift_finale intensity, quiet_discovery intensity; runtime audio manifest total 731 -> 736; composed score now 16 music cues + 4 stingers + 3 transitions + 37 MD2 files + 48 MD3 files + 3 MD4 files + 3 MD5 files + 3 MD6 files + 5 MD7 files across the checkpoint-26, MD1, MD2, MD3, MD4, MD5, MD6 and MD7 packs) following MEDIA-02 checkpoint 54 (CIN_020 draft mix v1: seventeenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016 v1, CIN_017 v1, CIN_018 v1 and CIN_019 v1, same P0 v3 recipe; ben_mua music + river_shore ambience + reveal stinger at 6.0 s + CP17 draft VO take (fits its 12.5-17.5 s window by 2.000 s); embedded in CIN_020 runtime OGV + review MP4, video streams bit-identical; playback metadata + pronunciation table re-run for the new embedded mix: 21 embedded soundtracks, 0 silent, 27 playback cue rows, 23 seam rows, 21 fallback rows, 176 fallback files; runtime audio manifest total 626 -> 627, mix 29 -> 30; every entry now carries an embedded soundtrack, WO37 M-B big checkpoint 1 complete; integration baseline 6f79853, PR #119 MERGEABLE/CLEAN per Codex comment 6716052477 / WO37 MEDIA-03-05)",
+        "checkpoint": "MEDIA-02 WO37 M-D checkpoint 8 (phase layer: thanh_lac intensity; runtime audio manifest total 736 -> 737; composed score now 16 music cues + 4 stingers + 3 transitions + 37 MD2 files + 48 MD3 files + 3 MD4 files + 3 MD5 files + 3 MD6 files + 5 MD7 files + 1 MD8 file across the checkpoint-26, MD1, MD2, MD3, MD4, MD5, MD6, MD7 and MD8 packs) following MEDIA-02 checkpoint 54 (CIN_020 draft mix v1: seventeenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016 v1, CIN_017 v1, CIN_018 v1 and CIN_019 v1, same P0 v3 recipe; ben_mua music + river_shore ambience + reveal stinger at 6.0 s + CP17 draft VO take (fits its 12.5-17.5 s window by 2.000 s); embedded in CIN_020 runtime OGV + review MP4, video streams bit-identical; playback metadata + pronunciation table re-run for the new embedded mix: 21 embedded soundtracks, 0 silent, 27 playback cue rows, 23 seam rows, 21 fallback rows, 176 fallback files; runtime audio manifest total 626 -> 627, mix 29 -> 30; every entry now carries an embedded soundtrack, WO37 M-B big checkpoint 1 complete; integration baseline 6f79853, PR #119 MERGEABLE/CLEAN per Codex comment 6716052477 / WO37 MEDIA-03-05)",
         "base_integration": "6f79853",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,

@@ -1,6 +1,6 @@
 {
  "coverageId": "NGM_MUSIC_SCORE_MD_COVERAGE_V1",
- "checkpoint": "MEDIA-02 WO37 M-D checkpoint 7",
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 8",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "baseSha": "6f79853",
@@ -277,5 +277,14 @@
  "openForMdCp8": [
   "Ear audition of all MD1/MD2/MD3/MD4/MD5/MD6/MD7 cues + loop seams (NOT_AUDITIONED).",
   "More phase-layer candidates (e.g. Thanh Lac intensity layer -- the only score cue still without one)."
+ ],
+ "md8": {
+  "pack": "MUSIC_SCORE_MD8_pack_v1",
+  "layers": 1,
+  "detail": "Additive phase layer MUSIC/thanh_lac_layer_intensity -- the last score cue without an intensity layer; after MD8 every composed score cue carries one."
+ },
+ "openForMdCp9": [
+  "Ear audition of all MD1/MD2/MD3/MD4/MD5/MD6/MD7/MD8 cues + loop seams (NOT_AUDITIONED).",
+  "More phase-layer candidates if the director asks for them (e.g. boss phase 6 or a second intensity layer for a cue the director wants louder) -- no intensity layer is pending for a score cue after MD8."
  ]
 }
