@@ -348,12 +348,13 @@ namespace NguMach.Client.Core.Tests
 
             Assert.Null(binder.PendingCastId);
             Assert.True(binder.IsCommitted(CastOne));
+            // The rejected/cancelled pending cast joins the history: the consumer
+            // may already have started it, so it can never re-bind or play twice.
+            Assert.True(binder.IsCommitted(CastTwo));
 
-            // A rejected/cancelled start may retry the still-authoritative cast,
-            // but the older committed cast can never replay.
             EncounterVfxPayload afterReject;
-            Assert.True(binder.TryBind(Snapshot(CastTwo), out afterReject));
-            Assert.Equal(CastTwo, afterReject.CastId);
+            Assert.False(binder.TryBind(Snapshot(CastTwo), out afterReject));
+            Assert.Null(afterReject);
         }
 
         [Fact]

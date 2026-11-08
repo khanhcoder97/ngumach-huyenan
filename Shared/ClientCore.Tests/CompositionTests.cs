@@ -317,6 +317,41 @@ namespace NguMach.Client.Core.Tests
         }
 
         [Fact]
+        public async Task EncounterRead_OwnerMustMatchSessionCharacterWhenKnown()
+        {
+            // The reference fixture registers exactly one owner:
+            // CHR_0123456789ABCDEF0123456789ABCDEF.
+            const string fixtureOwner = "CHR_0123456789ABCDEF0123456789ABCDEF";
+            var encounterJson = FindFixture();
+            var t = new DelegateTransport
+            {
+                Handler = (r, ct) =>
+                {
+                    if (r.Path == "/p1/sessions") return Task.FromResult(SessionReply(r, SessionOne));
+                    return Task.FromResult(EncounterReply(r, encounterJson));
+                }
+            };
+
+            using (var wrong = new ClientSession(t, characterId: "CHR_OTHER_CHARACTER"))
+            {
+                Assert.True((await wrong.ConnectAsync()).Success);
+                var rejected = await wrong.ReadCurrentEncounterAsync().WaitAsync(TimeSpan.FromSeconds(5));
+                Assert.Equal(EncounterReadOutcome.Error, rejected.Outcome);
+                Assert.Contains("owner mismatch", rejected.ErrorCode);
+                Assert.False(wrong.Encounter.HasSnapshot);
+            }
+
+            using (var owner = new ClientSession(t, characterId: fixtureOwner))
+            {
+                Assert.True((await owner.ConnectAsync()).Success);
+                var accepted = await owner.ReadCurrentEncounterAsync().WaitAsync(TimeSpan.FromSeconds(5));
+                Assert.Equal(EncounterReadOutcome.Success, accepted.Outcome);
+                Assert.True(owner.Encounter.HasSnapshot);
+                Assert.Equal(fixtureOwner, owner.Encounter.State.RegisteredCharacterIds[0]);
+            }
+        }
+
+        [Fact]
         public async Task EncounterRead_InvalidEnvelopeOrSnapshotIsRejected()
         {
             var encounterJson = FindFixture();

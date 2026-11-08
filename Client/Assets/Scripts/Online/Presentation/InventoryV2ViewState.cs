@@ -11,11 +11,13 @@ namespace NguMach.Client.Presentation
 {
     public sealed class InventoryV2ViewState
     {
-        public static readonly string[] SlotOrder =
+        // Read-only wrapper over a private array: consumers can enumerate and
+        // index the canonical order but cannot rewrite the elements process-wide.
+        public static readonly IReadOnlyList<string> SlotOrder = Array.AsReadOnly(new[]
         {
             "HAT", "CHEST", "LEGS", "WEAPON", "GLOVES", "BOOTS",
             "NECK", "RING_L", "RING_R", "PENDANT", "CLOAK", "SEAL"
-        };
+        });
 
         public long InventoryRevision { get; }
         public IReadOnlyDictionary<string, InventoryV2ItemView> Equipment { get; }
@@ -24,6 +26,10 @@ namespace NguMach.Client.Presentation
         public IReadOnlyList<CurrencyView> Currencies { get; }
         public string SelectedInstanceId { get; }
         public int BagSlots { get; }
+
+        private static readonly IReadOnlyDictionary<string, InventoryV2ItemView> EmptyEquipment =
+            new System.Collections.ObjectModel.ReadOnlyDictionary<string, InventoryV2ItemView>(
+                new Dictionary<string, InventoryV2ItemView>());
 
         public InventoryV2ViewState(
             long inventoryRevision,
@@ -35,12 +41,50 @@ namespace NguMach.Client.Presentation
             string selectedInstanceId = null)
         {
             InventoryRevision = inventoryRevision;
-            Equipment = equipment ?? new Dictionary<string, InventoryV2ItemView>();
-            Bag = bag ?? Array.Empty<InventoryV2ItemView>();
-            Unsupported = unsupported ?? Array.Empty<UnsupportedEquipView>();
-            Currencies = currencies ?? Array.Empty<CurrencyView>();
+            // Defensive copies: these collections are built from the server
+            // snapshot the client core owns. The view publishes read-only copies
+            // so a UI consumer can never mutate live inventory state through a
+            // cast, and a caller that reuses its collections after construction
+            // cannot change an already-published view.
+            Equipment = CopyEquipment(equipment);
+            Bag = CopyBag(bag);
+            Unsupported = CopyUnsupported(unsupported);
+            Currencies = CopyCurrencies(currencies);
             BagSlots = bagSlots;
             SelectedInstanceId = selectedInstanceId;
+        }
+
+        private static IReadOnlyDictionary<string, InventoryV2ItemView> CopyEquipment(
+            IReadOnlyDictionary<string, InventoryV2ItemView> source)
+        {
+            if (source == null || source.Count == 0) return EmptyEquipment;
+            var copy = new Dictionary<string, InventoryV2ItemView>(source.Count, StringComparer.Ordinal);
+            foreach (var pair in source) copy[pair.Key] = pair.Value;
+            return new System.Collections.ObjectModel.ReadOnlyDictionary<string, InventoryV2ItemView>(copy);
+        }
+
+        private static IReadOnlyList<InventoryV2ItemView> CopyBag(IReadOnlyList<InventoryV2ItemView> source)
+        {
+            if (source == null || source.Count == 0) return Array.Empty<InventoryV2ItemView>();
+            var copy = new InventoryV2ItemView[source.Count];
+            for (int i = 0; i < copy.Length; i++) copy[i] = source[i];
+            return Array.AsReadOnly(copy);
+        }
+
+        private static IReadOnlyList<UnsupportedEquipView> CopyUnsupported(IReadOnlyList<UnsupportedEquipView> source)
+        {
+            if (source == null || source.Count == 0) return Array.Empty<UnsupportedEquipView>();
+            var copy = new UnsupportedEquipView[source.Count];
+            for (int i = 0; i < copy.Length; i++) copy[i] = source[i];
+            return Array.AsReadOnly(copy);
+        }
+
+        private static IReadOnlyList<CurrencyView> CopyCurrencies(IReadOnlyList<CurrencyView> source)
+        {
+            if (source == null || source.Count == 0) return Array.Empty<CurrencyView>();
+            var copy = new CurrencyView[source.Count];
+            for (int i = 0; i < copy.Length; i++) copy[i] = source[i];
+            return Array.AsReadOnly(copy);
         }
 
         public InventoryV2ViewState WithSelection(string instanceId)

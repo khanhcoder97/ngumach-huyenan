@@ -225,15 +225,20 @@ namespace NguMach.Client.P1
         {
             // Cancellation after send is also ambiguous; never leave new input enabled.
             State = P1ConnectionState.UncertainMutation;
+            // Capture the session this command was dispatched under, not only when a
+            // caller passes one. A typed read can expire this client (session_not_found)
+            // from outside the lane while the send is in flight, so every mutation gets
+            // the same stale-session gate regardless of call site.
+            string dispatchSession = expectedSessionId ?? SessionId;
             var reply = await Send(pending, ct);
 
             // Guard cancellation/session lifetime inside Core immediately after the
             // transport await and BEFORE ClearPendingMutation, receipt/cooldown/world
-            // apply. If the session was disposed/relogined or the caller cancelled,
-            // surface stale and leave the pending mutation (body+key) intact for retry.
+            // apply. If the session was disposed/expired/relogined or the caller
+            // cancelled, surface stale and leave the pending mutation (body+key)
+            // intact for retry; State stays whatever the expiry set (never Ready).
             ct.ThrowIfCancellationRequested();
-            if (expectedSessionId != null &&
-                !string.Equals(SessionId, expectedSessionId, StringComparison.Ordinal))
+            if (!string.Equals(SessionId, dispatchSession, StringComparison.Ordinal))
                 return P1Result.Fail("stale_session");
 
             if (pendingKind == PendingKind.Interact) return await ApplyInteraction(reply, ct);

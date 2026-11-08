@@ -443,7 +443,13 @@ namespace NguMach.Client.P1
             if (sentTalk == null || r.result.npcId != sentTalk.npcId || r.result.nodeId != sentTalk.nodeId)
                 return Uncertain(reply.CorrelationId);
             pending = null; State = P1ConnectionState.NeedsResync;
-            LastTalk = r.result;
+            // Monotonic receipt per quest: a late/replayed answer carrying a lower
+            // revision must not rewind the presenter, while a different quest is a
+            // fresh receipt and always wins.
+            if (LastTalk == null ||
+                !string.Equals(LastTalk.questId, r.result.questId, StringComparison.Ordinal) ||
+                r.result.revision >= LastTalk.revision)
+                LastTalk = r.result;
             return P1Result.Ok();
         }
 
@@ -470,7 +476,13 @@ namespace NguMach.Client.P1
             if (sentPortal == null || r.result.portalId != sentPortal.portalId)
                 return Uncertain(reply.CorrelationId);
             pending = null; State = P1ConnectionState.NeedsResync;
-            LastPortal = r.result;
+            // Same monotonic rule as TALK, scoped to the portal identity: a lower
+            // revision for the same portal never rewinds the receipt, another
+            // portal is a new transition and wins by arrival.
+            if (LastPortal == null ||
+                !string.Equals(LastPortal.portalId, r.result.portalId, StringComparison.Ordinal) ||
+                r.result.revision >= LastPortal.revision)
+                LastPortal = r.result;
             return P1Result.Ok();
         }
 
@@ -492,7 +504,12 @@ namespace NguMach.Client.P1
             if (r.sessionId != SessionId || r.result == null || !ValidMapViewed(r.result))
                 return Uncertain(reply.CorrelationId);
             pending = null; State = P1ConnectionState.NeedsResync;
-            LastMapViewed = r.result;
+            // Interim acknowledgement, same monotonic rule scoped to the quest: a
+            // stale serverTick/revision from an older answer never rewinds it.
+            if (LastMapViewed == null ||
+                !string.Equals(LastMapViewed.questId, r.result.questId, StringComparison.Ordinal) ||
+                r.result.revision >= LastMapViewed.revision)
+                LastMapViewed = r.result;
             return P1Result.Ok();
         }
 

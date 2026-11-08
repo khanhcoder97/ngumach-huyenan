@@ -350,6 +350,15 @@ namespace NguMach.Client.Core.Composition
             if (!EncounterSnapshotValidator.TryParse(result.ToString(Formatting.None), out snapshot, out parseError))
                 return EncounterReadResult.Fail(EncounterReadOutcome.Error, "invalid_snapshot: " + parseError, reply.StatusCode);
 
+            // Owner identity: the snapshot must carry exactly this session's own
+            // character as its registered owner, so two sessions can never read
+            // each other's encounter. A session created without a character id
+            // cannot prove ownership and keeps the shape-only validation.
+            if (!string.IsNullOrEmpty(_characterId) &&
+                (snapshot.RegisteredCharacterIds == null || snapshot.RegisteredCharacterIds.Count == 0 ||
+                 !string.Equals(snapshot.RegisteredCharacterIds[0], _characterId, StringComparison.Ordinal)))
+                return EncounterReadResult.Fail(EncounterReadOutcome.Error, "invalid_snapshot: owner mismatch", reply.StatusCode);
+
             if (!IsCurrentEpoch(sessionId, generation))
                 return EncounterReadResult.Fail(EncounterReadOutcome.Stale, "stale_session");
 

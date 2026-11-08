@@ -41,6 +41,7 @@ namespace NguMach.Client.Presentation
 
         public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => _client.ReadQuestsAsync(ct);
         public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => _client.ReadInventoryAsync(ct);
+        public Task<P1Result> ReadWorldAsync(CancellationToken ct) => _client.ReadWorldAsync(ct);
         public Task<P1Result> ReadInventoryV2Async(CancellationToken ct) => _client.ReadInventoryV2Async(ct);
         public Task<P1Result> EquipV2Async(string itemInstanceId, long expectedRevision, CancellationToken ct)
             => _client.EquipV2Async(itemInstanceId, expectedRevision, ct);

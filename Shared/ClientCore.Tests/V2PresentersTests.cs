@@ -328,5 +328,65 @@ namespace NguMach.Client.Core.Tests
             Assert.Equal("mutation_outcome_unknown", view.ErrorCode);
             Assert.Equal(0, adapter.Calls);
         }
+
+        [Fact]
+        public void InventoryViewState_CopiesSourceCollectionsOnConstruction()
+        {
+            var slot = new ItemSlotView(new P1Item
+            {
+                instanceId = "ITEM_1", templateId = "TPL_1", stack = 1,
+                location = "BAG", durability = 0, version = 1
+            });
+            var slots = new Dictionary<int, ItemSlotView> { { 0, slot } };
+            var warnings = new[] { "duplicate_slot_index:0:ITEM_DUP" };
+            var view = new InventoryViewState(7, slots,
+                new[] { new CurrencyView(new P1Currency { currencyId = "COIN", amount = 5 }) },
+                diagnosticWarnings: warnings);
+
+            // A caller that reuses its collections after construction cannot
+            // change an already-published view.
+            slots.Clear();
+            warnings[0] = "tampered";
+            Assert.Single(view.Slots);
+            Assert.Equal("duplicate_slot_index:0:ITEM_DUP", view.DiagnosticWarnings[0]);
+
+            // The exposed collections reject mutation even through a downcast.
+            var mutableSlots = view.Slots as IDictionary<int, ItemSlotView>;
+            Assert.NotNull(mutableSlots);
+            Assert.Throws<NotSupportedException>(() => mutableSlots[9] = slot);
+            var mutableCurrencies = view.Currencies as IList<CurrencyView>;
+            Assert.NotNull(mutableCurrencies);
+            Assert.Throws<NotSupportedException>(() => mutableCurrencies.Add(view.Currencies[0]));
+        }
+
+        [Fact]
+        public void InventoryV2ViewState_CopiesSourceCollectionsOnConstruction()
+        {
+            var bagItem = new InventoryV2ItemView(Item("ITEM_BAG", "TPL_BAG", "BAG", null));
+            var bag = new List<InventoryV2ItemView> { bagItem };
+            var equipment = new Dictionary<string, InventoryV2ItemView> { { "HAT", bagItem } };
+            var currencies = new List<CurrencyView>
+            {
+                new CurrencyView(new P1Currency { currencyId = "COIN", amount = 1 })
+            };
+            var unsupported = new List<UnsupportedEquipView>();
+            var view = new InventoryV2ViewState(3, equipment, bag, unsupported, currencies);
+
+            equipment.Clear();
+            bag.Clear();
+            currencies.Clear();
+
+            Assert.Single(view.Equipment);
+            Assert.Single(view.Bag);
+            Assert.Single(view.Currencies);
+            Assert.Equal(3, view.InventoryRevision);
+
+            var mutableBag = view.Bag as IList<InventoryV2ItemView>;
+            Assert.NotNull(mutableBag);
+            Assert.Throws<NotSupportedException>(() => mutableBag.Add(bagItem));
+            var mutableEquipment = view.Equipment as IDictionary<string, InventoryV2ItemView>;
+            Assert.NotNull(mutableEquipment);
+            Assert.Throws<NotSupportedException>(() => mutableEquipment["WEAPON"] = bagItem);
+        }
     }
 }

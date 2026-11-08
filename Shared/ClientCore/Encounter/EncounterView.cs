@@ -11,18 +11,21 @@ using System;
 
 namespace NguMach.Client.Core.Encounter
 {
+    // Immutable once handed out: setters are internal to the package so a
+    // consumer can read transitions but never forge an "Accepted/IsNewCast"
+    // update that the view or VFX binder would then trust.
     public sealed class EncounterUpdate
     {
-        public bool Accepted { get; set; }
-        public string RejectReason { get; set; }
-        public bool IsNewEncounter { get; set; }
-        public bool IsNewLife { get; set; }
-        public bool IsNewCast { get; set; }
-        public bool StateChanged { get; set; }
-        public bool PhaseChanged { get; set; }
-        public bool IsTerminal { get; set; }
-        public bool IsCleared { get; set; }
-        public string CastId { get; set; }
+        public bool Accepted { get; internal set; }
+        public string RejectReason { get; internal set; }
+        public bool IsNewEncounter { get; internal set; }
+        public bool IsNewLife { get; internal set; }
+        public bool IsNewCast { get; internal set; }
+        public bool StateChanged { get; internal set; }
+        public bool PhaseChanged { get; internal set; }
+        public bool IsTerminal { get; internal set; }
+        public bool IsCleared { get; internal set; }
+        public string CastId { get; internal set; }
     }
 
     public sealed class EncounterView
@@ -51,6 +54,11 @@ namespace NguMach.Client.Core.Encounter
                     reject = "stale life: " + snapshot.BossLifeId + " < " + Snapshot.BossLifeId;
                 else if (snapshot.BossLifeId == Snapshot.BossLifeId && snapshot.BossRevision < Snapshot.BossRevision)
                     reject = "stale revision: " + snapshot.BossRevision + " < " + Snapshot.BossRevision;
+                else if (snapshot.BossLifeId == Snapshot.BossLifeId && snapshot.BossRevision == Snapshot.BossRevision &&
+                         snapshot.ServerTick < Snapshot.ServerTick)
+                    // Same life and revision but a rewound server tick: accepting
+                    // it would roll back countdowns the players already saw.
+                    reject = "stale server tick: " + snapshot.ServerTick + " < " + Snapshot.ServerTick;
             }
             if (reject != null)
             {

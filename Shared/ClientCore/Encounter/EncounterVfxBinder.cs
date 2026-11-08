@@ -187,13 +187,18 @@ namespace NguMach.Client.Core.Encounter
             _committed.Clear();
         }
 
-        // Lifecycle cleanup. A rejected/cancelled cast only drops that pending
-        // payload; death/logout/map/encounter changes clear the whole visual scene.
+        // Lifecycle cleanup. A rejected/cancelled cast joins the committed history
+        // before it is dropped: the consumer may already have started that VFX, so
+        // the same cast id can never re-bind or play twice. Death/logout/map/
+        // encounter changes clear the whole visual scene and start fresh.
+        // A caller whose engine failed to start a still-authoritative cast uses
+        // CancelPending() instead, which keeps the retry path open.
         public void ClearForLifecycle(EncounterVfxLifecycleChange change)
         {
             if (change == EncounterVfxLifecycleChange.CastCanceled ||
                 change == EncounterVfxLifecycleChange.CastRejected)
             {
+                if (_pending != null) _committed.Add(_pending.CastId);
                 _pending = null;
                 return;
             }

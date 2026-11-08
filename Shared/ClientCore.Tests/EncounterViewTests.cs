@@ -130,6 +130,27 @@ namespace NguMach.Client.Core.Tests
         }
 
         [Fact]
+        public void StaleServerTick_IsRejectedAtSameLifeAndRevision()
+        {
+            var v = new EncounterView();
+            var newer = Snap("cast-2", 1);
+            newer.ServerTick = 50;
+            v.Apply(newer);
+            // Same life and revision with a rewound tick must never roll back
+            // the countdown the players are already looking at.
+            var older = Snap("cast-1", 1);
+            older.ServerTick = 40;
+            var update = v.Apply(older);
+            Assert.False(update.Accepted);
+            Assert.Contains("stale server tick", update.RejectReason);
+            Assert.Equal(50, v.Snapshot.ServerTick);
+            // An equal tick is an idempotent re-poll and stays accepted.
+            var sameTick = Snap("cast-1", 1);
+            sameTick.ServerTick = 50;
+            Assert.True(v.Apply(sameTick).Accepted);
+        }
+
+        [Fact]
         public void NewLife_ClearsPendingVfxAndTracksNewCast()
         {
             var v = new EncounterView();

@@ -63,6 +63,10 @@ namespace NguMach.Client.Presentation
         public const int SlotsPerPage = 25;
         public const int TotalSlots = PagesCount * SlotsPerPage; // 100
 
+        private static readonly IReadOnlyDictionary<int, ItemSlotView> EmptySlots =
+            new System.Collections.ObjectModel.ReadOnlyDictionary<int, ItemSlotView>(
+                new Dictionary<int, ItemSlotView>());
+
         public long InventoryRevision { get; }
         /// <summary>Key = 0..99 (slot index). Only populated slots present.</summary>
         public IReadOnlyDictionary<int, ItemSlotView> Slots { get; }
@@ -82,12 +86,41 @@ namespace NguMach.Client.Presentation
             string[] diagnosticWarnings = null)
         {
             InventoryRevision = revision;
-            Slots = slots ?? new Dictionary<int, ItemSlotView>();
-            Currencies = currencies ?? Array.Empty<CurrencyView>();
+            // Defensive copies: the presenter's source collections belong to the
+            // adapter/client core. The view hands out read-only snapshots so a UI
+            // consumer can never cast down and mutate live client state, and a
+            // caller that reuses its array/dictionary after construction cannot
+            // change an already-published view. DiagnosticWarnings keeps its
+            // string[] shape for existing consumers but is cloned.
+            Slots = CopySlots(slots);
+            Currencies = CopyCurrencies(currencies);
             ActivePage = Math.Max(0, Math.Min(PagesCount - 1, activePage));
             SelectedInstanceId = selectedInstanceId;
             FilterText = filterText;
-            DiagnosticWarnings = diagnosticWarnings ?? Array.Empty<string>();
+            DiagnosticWarnings = CopyWarnings(diagnosticWarnings);
+        }
+
+        private static IReadOnlyDictionary<int, ItemSlotView> CopySlots(
+            IReadOnlyDictionary<int, ItemSlotView> source)
+        {
+            if (source == null || source.Count == 0) return EmptySlots;
+            var copy = new Dictionary<int, ItemSlotView>(source.Count);
+            foreach (var pair in source) copy[pair.Key] = pair.Value;
+            return new System.Collections.ObjectModel.ReadOnlyDictionary<int, ItemSlotView>(copy);
+        }
+
+        private static IReadOnlyList<CurrencyView> CopyCurrencies(IReadOnlyList<CurrencyView> source)
+        {
+            if (source == null || source.Count == 0) return Array.Empty<CurrencyView>();
+            var copy = new CurrencyView[source.Count];
+            for (int i = 0; i < copy.Length; i++) copy[i] = source[i];
+            return Array.AsReadOnly(copy);
+        }
+
+        private static string[] CopyWarnings(string[] source)
+        {
+            if (source == null || source.Length == 0) return Array.Empty<string>();
+            return (string[])source.Clone();
         }
 
         public InventoryViewState WithPage(int page) =>
@@ -206,6 +239,9 @@ namespace NguMach.Client.Presentation
 
     public sealed class QuestEntryView
     {
+        private static readonly IReadOnlyDictionary<string, int> EmptyCounters =
+            new System.Collections.ObjectModel.ReadOnlyDictionary<string, int>(new Dictionary<string, int>());
+
         public string QuestId { get; }
         public string State { get; }    // "AVAILABLE" | "ACTIVE" | "READY_TO_TURN_IN" | "COMPLETED"
         public string StepId { get; }
@@ -223,9 +259,20 @@ namespace NguMach.Client.Presentation
             State = q.state;
             StepId = q.stepId;
             Revision = q.revision;
-            Counters = q.objectiveCounters ?? new Dictionary<string, int>();
+            // Defensive copy: the client core owns P1Quest.objectiveCounters. The
+            // view exposes a read-only snapshot so a UI consumer can never cast
+            // down and corrupt live client quest state.
+            Counters = CopyCounters(q.objectiveCounters);
             Title = title ?? q.questId + " (UNRESOLVED)";
             ObjectiveDescription = objectiveDesc ?? q.stepId ?? "";
+        }
+
+        private static IReadOnlyDictionary<string, int> CopyCounters(IReadOnlyDictionary<string, int> source)
+        {
+            if (source == null || source.Count == 0) return EmptyCounters;
+            var copy = new Dictionary<string, int>(source.Count, StringComparer.Ordinal);
+            foreach (var pair in source) copy[pair.Key] = pair.Value;
+            return new System.Collections.ObjectModel.ReadOnlyDictionary<string, int>(copy);
         }
 
         public bool IsReadyToTurnIn => State == "READY_TO_TURN_IN";

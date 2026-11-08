@@ -35,11 +35,47 @@ namespace NguMach.Client.Presentation
             HasPendingMutation = hasPendingMutation;
             NextReturnAllowedAtTick = nextReturnAllowedAtTick;
             ServerTick = serverTick;
-            Receipt = receipt;
-            LastApplied = receipt != null && receipt.applied;
-            LastReplayed = receipt != null && receipt.replayed;
+            // Deep copy: the receipt is a mutable wire DTO the client core also
+            // holds. The view hands out its own snapshot, so a UI consumer can
+            // never corrupt client-owned state through this property.
+            Receipt = CopyReceipt(receipt);
+            LastApplied = Receipt != null && Receipt.applied;
+            LastReplayed = Receipt != null && Receipt.replayed;
             ErrorCode = errorCode;
             HintVi = BuildHint();
+        }
+
+        private static P1DeathReturnResultV1 CopyReceipt(P1DeathReturnResultV1 r)
+        {
+            if (r == null) return null;
+            return new P1DeathReturnResultV1
+            {
+                applied = r.applied,
+                replayed = r.replayed,
+                mapId = r.mapId,
+                xWu = r.xWu,
+                yWu = r.yWu,
+                hp = r.hp,
+                maxHp = r.maxHp,
+                mp = r.mp,
+                maxMp = r.maxMp,
+                serverTick = r.serverTick,
+                revision = r.revision,
+                cleared = r.cleared == null ? null : new P1DeathReturnCleared
+                {
+                    inflightCasts = r.cleared.inflightCasts,
+                    reservedCounters = r.cleared.reservedCounters,
+                    guardWindowClosed = r.cleared.guardWindowClosed,
+                    movementWindowReset = r.cleared.movementWindowReset
+                },
+                penalties = r.penalties == null ? null : new P1DeathReturnPenalties
+                {
+                    xp = r.penalties.xp,
+                    currency = r.penalties.currency,
+                    durability = r.penalties.durability
+                },
+                nextReturnAllowedAtTick = r.nextReturnAllowedAtTick
+            };
         }
 
         public bool IsCooldownAt(long tick)
