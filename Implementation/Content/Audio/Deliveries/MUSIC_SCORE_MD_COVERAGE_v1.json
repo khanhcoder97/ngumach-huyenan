@@ -1,6 +1,6 @@
 {
  "coverageId": "NGM_MUSIC_SCORE_MD_COVERAGE_V1",
- "checkpoint": "MEDIA-02 WO37 M-D checkpoint 1",
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 2",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "baseSha": "6f79853",
@@ -196,5 +196,18 @@
    "status": "COVERED_COMPOSED",
    "notes": "Checkpoint 26; the set's only full close; ported cue exists."
   }
+ ],
+ "md2": {
+  "pack": "MUSIC_SCORE_MD2_pack_v1",
+  "intros": 7,
+  "outros": 7,
+  "stems": 21,
+  "layers": 2,
+  "detail": "2-bar intro/outro for each of the 7 MD1 cues; lead / pad-bass / percussion stems per MD1 cue, summing to the shipped MD1 master within 24-bit quantisation; additive phase layers MUSIC/arena_layer_high and MUSIC/boss_mang_cot_layer_phase2."
+ },
+ "openForMdCp3": [
+  "Per-cue intro/outro segments and stems for the 9 checkpoint-26 cues (if the director wants them).",
+  "More phase-layer candidates (e.g. boss phase 3, tragedy intensity layer, arena low layer).",
+  "Ear audition of all MD1/MD2 cues + loop seams (NOT_AUDITIONED)."
  ]
 }
