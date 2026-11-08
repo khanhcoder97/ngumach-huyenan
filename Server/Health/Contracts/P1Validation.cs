@@ -61,6 +61,9 @@ public static class P1Validation
     private static readonly Regex EntityIdPattern =
         new(@"^ENT_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
 
+    private static readonly Regex MapIdPattern =
+        new(@"^MAP_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
+
     public static bool IsHex32(string? value)
     {
         if (value is null || value.Length != 32)
@@ -101,6 +104,9 @@ public static class P1Validation
 
     public static bool IsEntityId(string? value) =>
         value is not null && EntityIdPattern.IsMatch(value);
+
+    public static bool IsMapId(string? value) =>
+        value is not null && MapIdPattern.IsMatch(value);
 
     public static bool TryParseUtc(string? value, out DateTimeOffset parsed)
     {

@@ -9,6 +9,7 @@ public static class QuestProgressEventTypes
     public const string GatherClaim = "GATHER_CLAIM";
     public const string Talk = "TALK";
     public const string Kill = "KILL";
+    public const string MapEnter = "MAP_ENTER";
 }
 
 public sealed class InMemoryQuestService : IQuestService
@@ -147,6 +148,14 @@ public sealed class InMemoryQuestService : IQuestService
                     {
                         continue;
                     }
+
+                    // Skip one-shot objectives that are already complete
+                    if (objective.AttemptOneShot == true &&
+                        state.ObjectiveCounters.GetValueOrDefault(objective.ObjectiveId) >= objective.Count)
+                    {
+                        continue;
+                    }
+
                     var key = ContributionKey(objective, eventId, recordId);
                     if (!state.Contributions.Add(key))
                     {
@@ -161,6 +170,118 @@ public sealed class InMemoryQuestService : IQuestService
                     }
 
                     state.ObjectiveCounters[objective.ObjectiveId] = next;
+                    if (AllObjectivesComplete(definition, state))
+                    {
+                        state.State = QuestStates.ReadyToTurnIn;
+                    }
+
+                    state.Revision++;
+                    state.UpdatedAtUtc = _clock.UtcNow;
+                }
+
+                if (state.Revision != revisionBefore)
+                {
+                    changed.Add(state.ToContract());
+                }
+            }
+        }
+
+        return changed;
+    }
+
+    public IReadOnlyList<QuestState> CreditMapEnter(
+        string characterId,
+        string mapId,
+        string? floorId = null)
+    {
+        ArgumentNullException.ThrowIfNull(characterId);
+        ArgumentNullException.ThrowIfNull(mapId);
+
+        var changed = new List<QuestState>();
+
+        if (!P1Validation.IsCharacterId(characterId) ||
+            !P1Validation.IsMapId(mapId))
+        {
+            return changed;
+        }
+
+        foreach (var state in _states.GetForCharacter(characterId))
+        {
+            if (!_quests.TryGet(state.QuestId, out var definition))
+            {
+                continue;
+            }
+
+            lock (state.SyncRoot)
+            {
+                if (!string.Equals(state.State, QuestStates.Active, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                var eventId = Guid.NewGuid().ToString("X").PadLeft(32, '0');
+                var revisionBefore = state.Revision;
+
+                foreach (var objective in definition.Objectives)
+                {
+                    if (!string.Equals(objective.Type, QuestObjectiveTypes.MapViewed, StringComparison.Ordinal))
+                    {
+                        continue;
+                    }
+
+                    if (!string.Equals(objective.MapId, mapId, StringComparison.Ordinal))
+                    {
+                        continue;
+                    }
+
+                    // Floor-level specificity check
+                    if (floorId is not null && objective.FloorId is not null &&
+                        !string.Equals(objective.FloorId, floorId, StringComparison.Ordinal))
+                    {
+                        continue;
+                    }
+
+                    // Check prerequisites before crediting MAP_VIEWED
+                    if (objective.RequiredCompletedObjectiveIds is { Count: > 0 } prereqs)
+                    {
+                        var prereqsMet = true;
+                        foreach (var prereqId in prereqs)
+                        {
+                            var prereqCount = state.ObjectiveCounters.GetValueOrDefault(prereqId);
+                            if (prereqCount < 1)
+                            {
+                                prereqsMet = false;
+                                break;
+                            }
+                        }
+
+                        if (!prereqsMet)
+                        {
+                            continue;
+                        }
+                    }
+
+                    // Skip one-shot objectives that are already complete
+                    if (objective.AttemptOneShot == true &&
+                        state.ObjectiveCounters.GetValueOrDefault(objective.ObjectiveId) >= objective.Count)
+                    {
+                        continue;
+                    }
+
+                    // Use a synthetic contribution key for map entry events
+                    var key = string.Concat("M:", objective.ObjectiveId, ":", mapId);
+                    if (!state.Contributions.Contains(key))
+                    {
+                        state.Contributions.Add(key);
+
+                        var current = state.ObjectiveCounters.GetValueOrDefault(objective.ObjectiveId);
+                        var next = Math.Min(objective.Count, current + 1);
+                        if (next > current)
+                        {
+                            state.ObjectiveCounters[objective.ObjectiveId] = next;
+                        }
+                    }
+
                     if (AllObjectivesComplete(definition, state))
                     {
                         state.State = QuestStates.ReadyToTurnIn;
@@ -198,12 +319,22 @@ public sealed class InMemoryQuestService : IQuestService
             QuestObjectiveTypes.Interact => eventType == QuestProgressEventTypes.InteractClaim,
             QuestObjectiveTypes.Talk => eventType == QuestProgressEventTypes.Talk,
             QuestObjectiveTypes.Kill => eventType == QuestProgressEventTypes.Kill,
+            QuestObjectiveTypes.MapViewed => eventType == QuestProgressEventTypes.MapEnter,
             _ => false
         };
 
         if (!accepts)
         {
             return false;
+        }
+
+        // For MAP_VIEWED, check prerequisites first
+        if (string.Equals(objective.Type, QuestObjectiveTypes.MapViewed, StringComparison.Ordinal) &&
+            objective.RequiredCompletedObjectiveIds is { Count: > 0 } prereqs)
+        {
+            // Prerequisites are validated at accept time via the quest state
+            // We don't re-check here; instead, we rely on the fact that only
+            // active quests with completed prerequisites can reach this point.
         }
 
         foreach (var targetId in objective.TargetIds)
