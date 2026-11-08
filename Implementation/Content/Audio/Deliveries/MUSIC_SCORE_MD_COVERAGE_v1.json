@@ -1,6 +1,6 @@
 {
  "coverageId": "NGM_MUSIC_SCORE_MD_COVERAGE_V1",
- "checkpoint": "MEDIA-02 WO37 M-D checkpoint 6",
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 7",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "baseSha": "6f79853",
@@ -268,5 +268,14 @@
  "openForMdCp7": [
   "Ear audition of all MD1/MD2/MD3/MD4/MD5/MD6 cues + loop seams (NOT_AUDITIONED).",
   "More phase-layer candidates (e.g. Thang Long / Tran Son / Bach Uyen / rift finale / quiet discovery intensity layers)."
+ ],
+ "md7": {
+  "pack": "MUSIC_SCORE_MD7_pack_v1",
+  "layers": 5,
+  "detail": "Additive phase layers MUSIC/thang_long_layer_intensity, MUSIC/tran_son_layer_intensity, MUSIC/bach_uyen_layer_intensity, MUSIC/rift_finale_layer_intensity and MUSIC/quiet_discovery_layer_intensity."
+ },
+ "openForMdCp8": [
+  "Ear audition of all MD1/MD2/MD3/MD4/MD5/MD6/MD7 cues + loop seams (NOT_AUDITIONED).",
+  "More phase-layer candidates (e.g. Thanh Lac intensity layer -- the only score cue still without one)."
  ]
 }
