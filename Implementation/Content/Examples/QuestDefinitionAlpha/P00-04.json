@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "questId": "P00-04",
+  "titleKey": "QUEST.P00-04.TITLE",
+  "graphId": "GRAPH_P00_04",
+  "questType": "MAIN",
+  "activation": "ACTIVE",
+  "levelBand": {
+    "min": 1,
+    "max": 10
+  },
+  "startNpcId": "NPC_TA_VAN_KHANH",
+  "turnInNpcId": "NPC_TA_VAN_KHANH",
+  "prerequisiteQuestIds": [
+    "P00-03"
+  ],
+  "objectives": [
+    {
+      "objectiveId": "OBJ_P00_04_WAVE_A",
+      "type": "KILL",
+      "targetIds": [
+        "MAN-BM-WAVE_BM_ESCORT_A"
+      ],
+      "count": 3,
+      "mapId": "MAP_BEN_MUA"
+    },
+    {
+      "objectiveId": "OBJ_P00_04_WAVE_B",
+      "type": "KILL",
+      "targetIds": [
+        "MAN-BM-WAVE_BM_ESCORT_B"
+      ],
+      "count": 3,
+      "mapId": "MAP_BEN_MUA"
+    }
+  ],
+  "rewards": {
+    "currency": [
+      {
+        "currencyId": "COIN",
+        "amount": 30
+      }
+    ],
+    "itemIds": [
+      "POT-HP-01"
+    ],
+    "xpRule": "LEVEL_BAND_BASE"
+  },
+  "unlocks": [
+    "P00-05"
+  ],
+  "sourceRef": "DESIGN-BM-ALPHA-20261103 questRules.P00-04; Quest_and_Narrative_Production_Spec_vi.md#P00-04"
+}

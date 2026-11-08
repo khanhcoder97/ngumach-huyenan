@@ -112,6 +112,8 @@ public sealed class CombatTickEngine
     private readonly DashMovementService _dashes;
     private readonly ServerClock _clock;
     private readonly LootGrantService? _lootGrants;
+    private readonly ICombatBossBridge? _bosses;
+    private readonly ICombatKillSink? _kills;
     private readonly object _sync = new();
     private readonly Dictionary<string, ScheduledCast> _casts = new(StringComparer.Ordinal);
 
@@ -127,7 +129,9 @@ public sealed class CombatTickEngine
         IWorldGeometryService geometry,
         DashMovementService dashes,
         ServerClock clock,
-        LootGrantService? lootGrants = null)
+        LootGrantService? lootGrants = null,
+        ICombatBossBridge? bosses = null,
+        ICombatKillSink? kills = null)
     {
         _entities = entities;
         _combat = combat;
@@ -141,6 +145,8 @@ public sealed class CombatTickEngine
         _dashes = dashes;
         _clock = clock;
         _lootGrants = lootGrants;
+        _bosses = bosses;
+        _kills = kills;
     }
 
     // Where each accepted dash actually landed and why it stopped; internal
@@ -158,9 +164,36 @@ public sealed class CombatTickEngine
         }
     }
 
-    // Schedules an accepted cast. Returns false when the same castId is
-    // already active. Cached command replays must not call this method; the
-    // endpoint enforces that through CombatV2Outcome.Replayed.
+    // Map/life transitions and cast acceptance use the same engine-before-actor order as ticks.
+    internal T SerializeActor<T>(PlayerSession actor, Func<T> command)
+    {
+        lock (_sync)
+        {
+            lock (actor.SyncRoot)
+            {
+                return command();
+            }
+        }
+    }
+
+    public CombatV2Outcome AcceptAndSchedule(
+        InMemoryCombatV2Service combat,
+        PlayerSession actor,
+        string sessionId,
+        CombatV2Intent intent,
+        string? idempotencyKey) => SerializeActor(actor, () =>
+        {
+            var outcome = combat.Resolve(actor, sessionId, intent, idempotencyKey);
+            if (outcome is { Accepted: true, Replayed: false, Result: { } result })
+            {
+                Schedule(actor, sessionId, result.CastId, result.ActionKind, result.SkillId,
+                    intent.AimX, intent.AimY, _clock.Tick);
+            }
+
+            return outcome;
+        });
+
+    // Historical receipts must not schedule effects again after their cast has ended.
     public bool Schedule(
         PlayerSession actor,
         string sessionId,
@@ -222,43 +255,43 @@ public sealed class CombatTickEngine
         }
 
         var (facingX, facingY) = Normalize(aimX, aimY);
-        bool opened;
         lock (_sync)
         {
-            opened = !_casts.ContainsKey(castId);
-            if (opened)
+            lock (actor.SyncRoot)
             {
-                _casts[castId] = new ScheduledCast(
-                    castId,
-                    sessionId,
-                    actor,
-                    actor.CharacterId,
-                    actor.MapId,
-                    actor.FloorId,
-                    actor.X,
-                    actor.Y,
-                    facingX,
-                    facingY,
-                    actor.Revision,
-                    startTick,
-                    hitTicks,
-                    coefficients,
-                    rangeWu,
-                    angleDegrees,
-                    maxTargets,
-                    skill?.SkillId,
-                    skill?.SkillId == SkMk02);
+                var opened = !_casts.ContainsKey(castId);
+                if (opened)
+                {
+                    _casts[castId] = new ScheduledCast(
+                        castId,
+                        sessionId,
+                        actor,
+                        actor.CharacterId,
+                        actor.MapId,
+                        actor.FloorId,
+                        actor.X,
+                        actor.Y,
+                        facingX,
+                        facingY,
+                        actor.Revision,
+                        startTick,
+                        hitTicks,
+                        coefficients,
+                        rangeWu,
+                        angleDegrees,
+                        maxTargets,
+                        skill?.SkillId,
+                        skill?.SkillId == SkMk02);
+                }
+
+                if (opened && skill is { SkillId: SkMk01 })
+                {
+                    OpenGuardWindow(actor, sessionId, castId, skill, facingX, facingY, startTick);
+                }
+
+                return opened;
             }
         }
-
-        if (opened && skill is { SkillId: SkMk01 })
-        {
-            // Outside the cast lock: the window store takes the defender lock,
-            // and no path may hold both in the opposite order.
-            OpenGuardWindow(actor, sessionId, castId, skill, facingX, facingY, startTick);
-        }
-
-        return opened;
     }
 
     // DEC-022 §2: the window attaches to the cast tick with the accepted facing
@@ -388,15 +421,40 @@ public sealed class CombatTickEngine
     // Q-E: the kill path hands every death to the grant service exactly once.
     // The shipped loot bundle is grant-off until the coin band exists, so the
     // outcome records that reason instead of inventing an amount.
-    private void RecordLootOnDeath(PlayerSession killer, CombatEventV2 death, long lifeId)
+    private void RecordLootOnDeath(
+        PlayerSession killer, WorldEntityInstance target, CombatEventV2 death, long lifeId)
     {
-        _lootGrants?.Grant(
+        // Whether anything is payable is the grant policy's answer, not this call
+        // site's: with no alpha profile the policy blocks with the same reason the
+        // shipped bundle has always carried, so the death path stays byte-identical.
+        var templateId = target.TemplateIds.FirstOrDefault();
+        if (_lootGrants is null || templateId is null)
+        {
+            return;
+        }
+
+        _lootGrants.OnMobDeath(
             killer,
+            target,
+            templateId,
+            () => _combat.MobStats.ReferenceLevel,
             death.EventId,
-            lifeId,
-            grantEnabled: false,
-            blockedReason: LootGrantPolicies.SourceShortReason,
-            items: []);
+            lifeId);
+    }
+
+    // The quest machines that pay objective credit for a kill are told here, at
+    // the moment the death is resolved, with the same event id the killer's
+    // combat stream carries. Nothing about the mob path changes when no sink is
+    // wired.
+    private void NotifyMobKilled(
+        PlayerSession killer, WorldEntityInstance target, CombatEventV2 death)
+    {
+        _kills?.OnMobKilled(new CombatMobKill(
+            killer.CharacterId,
+            target.EntityId,
+            target.RecordId,
+            target.LifeId,
+            death.EventId));
     }
 
     public IReadOnlyList<CombatEventV2> CancelPendingFor(string characterId)
@@ -568,7 +626,8 @@ public sealed class CombatTickEngine
         _entities.Despawn(source.EntityId);
         var death = AppendGuardEvent(
             window, tick, CombatEventTypesV2.Death, source, result: null);
-        RecordLootOnDeath(window.Defender, death, source.LifeId);
+        RecordLootOnDeath(window.Defender, source, death, source.LifeId);
+        NotifyMobKilled(window.Defender, source, death);
         yield return death;
 
         _quests.RecordVerifiedEvent(
@@ -665,6 +724,18 @@ public sealed class CombatTickEngine
                 continue;
             }
 
+            // The alpha quest boss keeps its HP in the encounter, not in the mob
+            // state store, so it resolves on its own path and feeds the encounter.
+            if (_bosses is not null && _bosses.IsLiveBossTarget(cast.ActorId, target))
+            {
+                foreach (var bossEvent in ResolveBossHit(cast, target, hitIndex, impactTick))
+                {
+                    yield return bossEvent;
+                }
+
+                continue;
+            }
+
             var stats = maybeBundle ? ResolveMobStats(target) : null;
             var maxHp = stats?.Hp ?? 0;
             if (maxHp <= 0)
@@ -722,7 +793,8 @@ public sealed class CombatTickEngine
             var deathEvent = AppendEvent(
                 cast, impactTick + 1, CombatEventTypesV2.Death, target.EntityId, lifeId,
                 hitIndex: null, target.Revision, result: null);
-            RecordLootOnDeath(cast.Actor, deathEvent, lifeId);
+            RecordLootOnDeath(cast.Actor, target, deathEvent, lifeId);
+            NotifyMobKilled(cast.Actor, target, deathEvent);
             yield return deathEvent;
 
             // QOD-17 DEV kill-credit policy: the source that lands the killing
@@ -737,12 +809,84 @@ public sealed class CombatTickEngine
         }
     }
 
+    private IEnumerable<CombatEventV2> ResolveBossHit(
+        ScheduledCast cast, WorldEntityInstance target, int hitIndex, long impactTick)
+    {
+        // No damage lands while the P1:CombatDamage gate is off, exactly like a
+        // mob impact; the boss simply is not struck.
+        if (!_combat.Enabled)
+        {
+            yield break;
+        }
+
+        var lifeId = target.LifeId;
+        var hitProbability = DamageFormula.HitProbability(
+            CombatActorBaseline.Accuracy, CombatActorBaseline.Dodge);
+        if (!_rolls.Roll(cast.CastId, target.EntityId, hitIndex, CombatRollKind.Hit, hitProbability))
+        {
+            yield return AppendEvent(
+                cast, impactTick, CombatEventTypesV2.Miss, target.EntityId, lifeId,
+                hitIndex, target.Revision,
+                new CombatEventResultV2(false, false, false, 0, 0, 0));
+            yield break;
+        }
+
+        var critProbability = DamageFormula.AttributeCritChance(luk: 5, gearCrit: 0, cap: 0.5);
+        var crit = _rolls.Roll(
+            cast.CastId, target.EntityId, hitIndex, CombatRollKind.Crit, critProbability);
+        var raw = DamageFormula.RawDamage(
+            CombatActorBaseline.Attack, 0, cast.Coefficients[hitIndex], 1, 0);
+        var amount = (int)DamageFormula.FinalDamage(
+            raw,
+            DamageFormula.MitigationMultiplier(_bosses!.BossDefense),
+            1,
+            crit ? DamageFormula.CritMultiplier : 1,
+            1);
+
+        // The encounter owns the boss HP and phase bookkeeping, so the resolved
+        // damage is pushed there rather than into the mob state store.
+        var (hpBefore, _, died) = _bosses.ApplyDamage(cast.ActorId, amount, impactTick);
+        var hpDamage = Math.Min(amount, hpBefore);
+        yield return AppendEvent(
+            cast, impactTick, CombatEventTypesV2.Impact, target.EntityId, lifeId,
+            hitIndex, target.Revision,
+            new CombatEventResultV2(true, crit, false, amount, 0, hpDamage));
+
+        if (!died)
+        {
+            yield break;
+        }
+
+        // The shared world entity is deliberately NOT despawned: it is the anchor
+        // other owners are fighting too. The encounter marks this owner's attempt
+        // defeated, and the bridge stops vouching for it, so the killed attempt
+        // cannot be cast at again while another owner's fight is untouched.
+        var deathEvent = AppendEvent(
+            cast, impactTick + 1, CombatEventTypesV2.Death, target.EntityId, lifeId,
+            hitIndex: null, target.Revision, result: null);
+        yield return deathEvent;
+
+        // Same DEV kill-credit policy as a mob: the P00-05 BOSS objective takes
+        // the killing death event id, keyed so a replay never double-counts.
+        _quests.RecordVerifiedEvent(
+            cast.Actor,
+            deathEvent.EventId,
+            QuestProgressEventTypes.Kill,
+            target.RecordId,
+            target.MapId);
+    }
+
     private List<WorldEntityInstance> SelectTargets(ScheduledCast cast)
     {
         var targets = new List<(WorldEntityInstance Entity, double Distance)>();
         foreach (var entity in _entities.All)
         {
-            if (!string.Equals(entity.Kind, WorldEntityKinds.Mob, StringComparison.Ordinal) ||
+            var isMob = string.Equals(entity.Kind, WorldEntityKinds.Mob, StringComparison.Ordinal);
+            // The alpha quest boss is a `BOSS` entity the bridge vouches for as
+            // this actor's live target; nothing changes when there is no bridge.
+            var isBossTarget = !isMob && _bosses is not null &&
+                _bosses.IsLiveBossTarget(cast.ActorId, entity);
+            if ((!isMob && !isBossTarget) ||
                 !string.Equals(entity.State, WorldEntityStates.Alive, StringComparison.Ordinal) ||
                 !string.Equals(entity.MapId, cast.MapId, StringComparison.Ordinal) ||
                 !string.Equals(entity.FloorId, cast.FloorId, StringComparison.Ordinal))

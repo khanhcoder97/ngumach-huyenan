@@ -6,10 +6,12 @@ namespace Server.Health.Gameplay.Inventory;
 public sealed class InMemoryInventoryService : IInventoryService
 {
     private readonly IInventoryStateStore _states;
+    private readonly ItemCatalog? _catalog;
 
-    public InMemoryInventoryService(IInventoryStateStore states)
+    public InMemoryInventoryService(IInventoryStateStore states, ItemCatalog? catalog = null)
     {
         _states = states;
+        _catalog = catalog;
     }
 
     public InventorySnapshot GetSnapshot(string characterId)
@@ -142,10 +144,13 @@ public sealed class InMemoryInventoryService : IInventoryService
             foreach (var item in state.Items)
             {
                 if (string.Equals(item.Location, InventoryLocations.Equipped, StringComparison.Ordinal) &&
-                    item.Slot is not null &&
+                    // The twelve-slot token a v2 write placed this item in is the
+                    // occupancy truth; a v1 write has none, so its v1 token is used
+                    // exactly as before.
+                    (item.SlotV2 ?? item.Slot) is { } worn &&
                     !leavingEquipped.Contains(item.InstanceId))
                 {
-                    occupiedSlots.Add(item.Slot);
+                    occupiedSlots.Add(worn);
                 }
             }
 
@@ -153,12 +158,12 @@ public sealed class InMemoryInventoryService : IInventoryService
             {
                 var move = moves[index];
                 if (!string.Equals(move.ToLocation, InventoryLocations.Equipped, StringComparison.Ordinal) ||
-                    move.Slot is null)
+                    (move.SlotV2 ?? move.Slot) is not { } target)
                 {
                     continue;
                 }
 
-                if (!occupiedSlots.Add(move.Slot))
+                if (!occupiedSlots.Add(target))
                 {
                     return InventoryOutcome.Rejected(
                         InventoryErrorCodes.SlotOccupied, retryable: false,
@@ -186,16 +191,23 @@ public sealed class InMemoryInventoryService : IInventoryService
             foreach (var move in moves)
             {
                 var item = state.FindItem(move.InstanceId)!;
+                var worn = string.Equals(
+                    move.ToLocation, InventoryLocations.Equipped, StringComparison.Ordinal);
                 item.Location = move.ToLocation;
-                item.Slot = string.Equals(
-                    move.ToLocation, InventoryLocations.Equipped, StringComparison.Ordinal)
-                    ? move.Slot
-                    : null;
+                item.Slot = worn ? move.Slot : null;
+                item.SlotV2 = worn ? move.SlotV2 : null;
                 item.Version++;
             }
 
             foreach (var add in adds)
             {
+                // A grant that does not name a durability takes the canonical
+                // catalog's own value; a template the catalog does not know keeps
+                // 0 because there is no source to read, not because 0 was chosen.
+                var durability = add.Durability ??
+                    (_catalog is not null && _catalog.TryGet(add.TemplateId, out var entry)
+                        ? entry.Durability ?? 0
+                        : 0);
                 state.Items.Add(new InventoryItemEntry
                 {
                     InstanceId = $"ITM_{Guid.NewGuid():N}".ToUpperInvariant(),
@@ -203,7 +215,7 @@ public sealed class InMemoryInventoryService : IInventoryService
                     Stack = add.Stack,
                     Location = add.Location,
                     Slot = add.Slot,
-                    Durability = add.Durability
+                    Durability = durability
                 });
             }
 

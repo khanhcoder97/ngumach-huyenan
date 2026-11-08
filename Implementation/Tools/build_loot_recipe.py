@@ -70,9 +70,43 @@ def main():
         fail(f"{args.csv} not found")
 
     with args.csv.open(encoding="utf-8-sig", newline="") as handle:
-        rows = [row for row in csv.DictReader(handle) if row["row_type"] == "LOOT_ENTRY"]
+        all_rows = list(csv.DictReader(handle))
+    rows = [row for row in all_rows if row["row_type"] == "LOOT_ENTRY"]
     if not rows:
         fail("no LOOT_ENTRY rows")
+
+    # RECIPE rows are craft definitions, not loot groups. No craft service exists
+    # and the forge spec's baseline table disagrees with these rows, so they stay
+    # unexported — but the unsupported ledger must name every dropped row instead
+    # of silently discarding them.
+    recipe_rows = sorted(
+        (row for row in all_rows if row["row_type"] == "RECIPE"),
+        key=lambda item: item["entry_id"],
+    )
+    recipe_ids = [row["entry_id"].strip() for row in recipe_rows]
+    if len(set(recipe_ids)) != len(recipe_ids):
+        fail("duplicate RECIPE entry_id")
+
+    # REWARD/CURRENCY_REWARD rows carry the per-source ledger caps (cap_scope) for
+    # activity payouts. No reward-ledger service reads them and cap enforcement
+    # awaits an owner decision, so they stay unexported but must be named.
+    reward_rows = sorted(
+        (row for row in all_rows if row["row_type"] == "REWARD"),
+        key=lambda item: item["entry_id"],
+    )
+    currency_reward_rows = sorted(
+        (row for row in all_rows if row["row_type"] == "CURRENCY_REWARD"),
+        key=lambda item: item["entry_id"],
+    )
+    for label, group in (("REWARD", reward_rows), ("CURRENCY_REWARD", currency_reward_rows)):
+        ids = [row["entry_id"].strip() for row in group]
+        if len(set(ids)) != len(ids):
+            fail(f"duplicate {label} entry_id")
+        for row in group:
+            if not (row["item_or_currency_id"] or "").strip():
+                fail(f"{row['entry_id']}: {label} row has no item_or_currency_id")
+            if not (row["cap_scope"] or "").strip():
+                fail(f"{row['entry_id']}: {label} row has no cap_scope")
 
     # Gear only appears in RECIPE rows (craft outputs). If a mob loot table ever
     # names an EQ- item, the rarity/roll vector that decides which variant drops
@@ -167,6 +201,24 @@ def main():
         "unsupported": {
             "mobCoinBand": "MISSING_SOURCE",
             "bossLoot": "BOSSDATA_BLOCKED_UNTIL_QOD_19",
+            "craftRecipes": {
+                "status": "PRESENT_IN_SOURCE_NOT_EXPORTED",
+                "reason": "NO_CRAFT_SERVICE; FORGE_SPEC_BASELINE_CONFLICT_UNRESOLVED",
+                "count": len(recipe_ids),
+                "entryIds": recipe_ids,
+            },
+            "activityRewards": {
+                "status": "PRESENT_IN_SOURCE_NOT_EXPORTED",
+                "reason": "NO_REWARD_LEDGER_SERVICE; CAPS_UNENFORCED_PENDING_OWNER",
+                "count": len(reward_rows),
+                "entryIds": [row["entry_id"].strip() for row in reward_rows],
+            },
+            "currencyRewards": {
+                "status": "PRESENT_IN_SOURCE_NOT_EXPORTED",
+                "reason": "NO_REWARD_LEDGER_SERVICE; CAPS_UNENFORCED_PENDING_OWNER",
+                "count": len(currency_reward_rows),
+                "entryIds": [row["entry_id"].strip() for row in currency_reward_rows],
+            },
         },
     }
 
@@ -177,6 +229,9 @@ def main():
     entries = sum(len(group["entries"]) for source in payload_sources for group in source["groups"])
     print(
         f"OK: wrote {len(payload_sources)} loot sources / {entries} entries to {args.output}"
+        f"; {len(recipe_ids)} RECIPE rows named in unsupported (not exported)"
+        f"; {len(reward_rows)} REWARD + {len(currency_reward_rows)} CURRENCY_REWARD rows"
+        " named in unsupported (not exported)"
     )
 
 

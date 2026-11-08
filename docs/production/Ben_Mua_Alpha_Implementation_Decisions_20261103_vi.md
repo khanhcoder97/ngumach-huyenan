@@ -1,0 +1,25 @@
+# Quyết định triển khai Bến Mưa alpha — 03/11/2026
+
+ID `DESIGN-BM-ALPHA-20261103`, dữ liệu máy đọc: `Implementation/Content/DesignBaselines/ben_mua_alpha_20261103.json`. Codex ban hành trong quyền quản lý/thiết kế được chủ dự án giao để tiếp tục hoàn thiện game. Đây là **nguồn thiết kế mới cho private alpha**, không giả là dữ liệu cũ đã giải mã hoặc kết quả cân bằng. Production gates giữ OFF; không tự đóng topology REVIEWED, không sửa349placementCSV. Overlay mới có ID ALPHA-* riêng, sourceRef và version; vị trí phải qua kiểm tra bounds/LOS/collision trước khi kích hoạt profile.
+
+## Trả lời các câu hỏi Qoder đang chờ
+
+- Boss tutorial dùng **MAN-BM-SPAWN_BM_05_QUEST**, không dùng ACTIVITY_BOSS. Hai record cùng vị trí là hai vai trò/instance khác nhau; world-event record tắt trong quest instance, không xóa canonical. Boss quest alpha cấp5 HP1200/ATK24/armor6, defense là alias không cộng đôi. Đây là lựa chọn mới cho tutorial; hồ sơ world-boss HP×35 vẫn không được ghi đè hoặc bật theo profile này.
+- Ring Ø22 từ Atlas giữ center(178,0), radius11. MoveA/B/C lấy windup/range/shape/coefficient/recovery/CD từ Rules§4; JSON khai đủ trường. Phase60/30, mỗi impact tối đa1phase, phaseGuard1s mới được chốt cho alpha; phase2 recovery×0.8, phase3 không tăng damage, có hai safe-pad(168,0)/(188,0), radius0.75 chỉ là vị trí tránh vòng bọt, không ban invulnerability.
+- Không overlap; ưu tiên C→B→A; A/B chỉ ngắt bằng stagger hợp lệ, C không ngắt, không gắn UNDODGEABLE. Wipe/no alive target10s reset fullHP/phase1, không loot/unlock, không giới hạn số thử; checkpoint quest giữ. Reset invalidates old generation; lifeId mới ở attempt mới, replay reset không sinh nhiều life/reward.
+- **Không mở thêm closed CombatEventV2 type.** Phase/wipe/reset đọc qua encounter snapshot schema1 mới `GET /p1/encounters/{encounterId}` và entity revision; vẫn dùng đúng cast/impact/death event hiện có. Event version lớn hơn nếu cần phải có proposal, không nhét field lạ vào v2.
+- **Túi100slot, đủ12slot gear** theo EquipmentSpec là quyết định đúng; đề xuất5slot đã thiếu. V2 read/equip/unequip side-by-side theo JSON, schemaVersion2, preserve v1 route/enum5slot cho client cũ. Không auto-swap, revision inventory, currentHP/MP giữ tuyệt đối rồi clamp; equip không hồi máu. Nguồn typed armor/weapon_power thắng primary alias trùng; independent secondary attributes tính một lần.
+- XP quest snapshot theo Rules§1: thường25%, boss-chapter55% XP-to-next ở cấp accept, floor; reward số tuyệt đối có sẵn thắng. Nhãn LEVEL_BAND_BASE không còn là lý do bỏ XP khi profile đã resolve. Mob XP/level thresholds giữ công thức nguồn, không tự chia class stat ngoài budget.
+- Coin band và gear vector **alpha-only** có trong JSON: inclusive[L,2L], Common100% khi recipe đã chọn nhánh gear, uniformly trong eligible MK/T1Common canonical. Recipe chance/group semantics giữ nguồn; không biến rarityweight thành dropchance mới. Default grant OFF; seed/result không reroll khi retry. Playtest phải đo TTK/attempt/drop totals trước khi nói cân bằng tốt.
+
+## Bổ sung để quest thực sự có đường đi
+
+JSON tạo7overlay records:3gợn nước,2dân,1training wave,1mảnhấn. Không đổi các coordinate cũ. P00-03 trainingwave cần có mặt trong warning trước rồi tránh impact mới credit, đứng ngoài từ đầu không credit; cứu dân giữ qua retry. P00-04 dùng cùng LyAn actor trong quest instance owner, checkpointx80/120 và wave record IDs nguồn, kill credit gắn instance/attempt/wave/life/death thay đếm loài bất kỳ. Không tạo clone thứ hai trong cùng instance hoặc kéo NPC openworld của người khác.
+
+P00-03 nộp LyAn; P00-04 nộp Tạ; P00-05 nộp Tạ trong quest phase tại(182,4) sau accept (override vị trí cùng actor, không tạo bản sao). NPC_CLASS_TRIAL xuất hiện sau boss+fragment **trước** COMPLETED, sửa vòng điều kiện TALK phải hoàn tất trước turn-in. Mảnhấn chỉ tương tác sau killcommitted đúng owner. Đọc/skip thoại không tự grant. P00-05 turn-in mở flag ChươngI và portal ThanhLạc; C1-01 có record thật theo JSON, minLevel11 giữ nguồn, không tự bypass cấp hoặc gọi ChươngI đã hoàn tất.
+
+Các con số mới có thể cần chỉnh sau playtest; chỉnh qua version/diff có report, không bỏ guard/checkpoint/ledger cho demo chạy nhanh. Qoder có quyền implement/validate nguồn mới này trong module của mình, không cần hỏi lại bốn câu Q-F cũ. Khi gặp thiếu field khác phải chỉ ra field và tiếp phần độc lập, không kết thúc cả gói.
+
+## Bổ sung để có thể thử lại sau khi chết
+
+Alpha Bến Mưa cho return về anchor nguồn(18,0), chỉ actor đã DOWNED, request là intent không có tọa độ. JSON chốt hồi50% current effective maxHP (ceil,min1), MP giữ tuyệt đối rồiclamp, không mấtXP/Đồng/durability trongalpha; không dùng startingMaxHp fixture làm currentmax. Clear cast/counter/guard/moveheld và idempotency theo character/death/life/key, cooldown3s cho death mới. Route/schema và lỗi trong JSON, productiongateOFF. Qoder được nối DeathReturnService vào HTTP theo quyết định này, publish contract/UIadapter handoff; không tự thêm teleport tự do hoặc gọi persistence đã hoàn tất. Đây là dữ liệu thiết kếalpha mới, không giả giá trị hồi50% đã có từ rules cũ.

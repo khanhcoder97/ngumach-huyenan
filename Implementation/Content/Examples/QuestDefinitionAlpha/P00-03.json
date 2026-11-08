@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "questId": "P00-03",
+  "titleKey": "QUEST.P00-03.TITLE",
+  "graphId": "GRAPH_P00_03",
+  "questType": "MAIN",
+  "activation": "ACTIVE",
+  "levelBand": {
+    "min": 1,
+    "max": 10
+  },
+  "startNpcId": "NPC_LYAN",
+  "turnInNpcId": "NPC_LYAN",
+  "prerequisiteQuestIds": [
+    "P00-02"
+  ],
+  "objectives": [
+    {
+      "objectiveId": "OBJ_P00_03_VILLAGERS",
+      "type": "INTERACT",
+      "targetIds": [
+        "ALPHA-BM-VILLAGER-01",
+        "ALPHA-BM-VILLAGER-02"
+      ],
+      "count": 2,
+      "mapId": "MAP_BEN_MUA"
+    },
+    {
+      "objectiveId": "OBJ_P00_03_WATERROOT",
+      "type": "KILL",
+      "targetIds": [
+        "MOB_WATERROOT"
+      ],
+      "count": 3,
+      "mapId": "MAP_BEN_MUA"
+    },
+    {
+      "objectiveId": "OBJ_P00_03_WAVE_TRIAL",
+      "type": "INTERACT",
+      "targetIds": [
+        "ALPHA-BM-WAVE-TRAINING"
+      ],
+      "count": 1,
+      "mapId": "MAP_BEN_MUA"
+    }
+  ],
+  "rewards": {
+    "currency": [],
+    "itemIds": [
+      "EQ-MK-BOOTS-T1-R-COMMON",
+      "POT-HP-01"
+    ],
+    "xpRule": "LEVEL_BAND_BASE"
+  },
+  "unlocks": [
+    "P00-04"
+  ],
+  "sourceRef": "DESIGN-BM-ALPHA-20261103 questRules.P00-03; Quest_and_Narrative_Production_Spec_vi.md#P00-03"
+}

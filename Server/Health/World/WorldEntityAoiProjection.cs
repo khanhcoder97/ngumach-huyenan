@@ -7,10 +7,11 @@ namespace Server.Health.World;
 // QOD-16 phase 2 audience policy (owner decision Q6): the v2 snapshot exposes
 // MOB/BOSS/NPC/GATHER_NODE/INTERACTABLE after an AOI filter — enter 40 WU,
 // leave at 48 WU (8 WU hysteresis) from Online_Persistence_Release_Complete
-// §2 — within the same map instance/floor/phase. The internal projection sees
-// all 27 candidates; a client only receives its visible subset. Phase and
-// instance are labelled DEV placeholders until encounter phases (QOD-19) and
-// multi-instance maps exist.
+// §2 — within the same map instance/floor/phase. The internal read model sees every
+// candidate the registry holds; a client receives only the visible subset. The instance
+// label is always mapId + "#1" and the phase is the constant OPEN_WORLD, so nothing in
+// this filter is encounter-aware - the Mãng Cốt fight scopes by its own quest-attempt
+// instance rather than through these two constants.
 public static class WorldAudience
 {
     public const double AoiEnterWu = 40;
@@ -50,6 +51,9 @@ public sealed record ProjectedEntityV2(
     long Revision,
     long LifeId);
 
+public sealed record WorldAoiViewer(
+    string CharacterId, string MapId, string FloorId, double X, double Y);
+
 public sealed class WorldAoiProjectionService
 {
     private const string EliteSuffix = "_ELITE";
@@ -59,6 +63,8 @@ public sealed class WorldAoiProjectionService
     private readonly CombatDamageFeature _combat;
     private readonly GatherClaimStore _claims;
     private readonly MobCombatStateStore _states;
+    private readonly ICombatBossBridge? _bosses;
+    private readonly INpcEscortPositionSource? _npcPositions;
     private readonly ConcurrentDictionary<string, SessionVisibility> _visibility =
         new(StringComparer.Ordinal);
 
@@ -67,20 +73,53 @@ public sealed class WorldAoiProjectionService
         MobLifecycleService mobs,
         CombatDamageFeature combat,
         GatherClaimStore claims,
-        MobCombatStateStore states)
+        MobCombatStateStore states,
+        ICombatBossBridge? bosses = null,
+        INpcEscortPositionSource? npcPositions = null)
     {
         _entities = entities;
         _mobs = mobs;
         _combat = combat;
         _claims = claims;
         _states = states;
+        _bosses = bosses;
+        _npcPositions = npcPositions;
+    }
+
+    // The position an audience member is shown for an NPC: the escort domain's live
+    // position when this viewer is the one escorting that actor, otherwise the canonical
+    // anchor. Both the AOI distance test and the projected coordinates go through here, so
+    // a walking NPC cannot be visible at its anchor while being reported somewhere else.
+    private (double X, double Y) EscortPosition(WorldEntityInstance entity, WorldAoiViewer viewer)
+    {
+        if (_npcPositions is { } positions &&
+            positions.TryGetEscortPosition(
+                viewer.CharacterId, out var escortedEntityId, out var x, out var y) &&
+            string.Equals(entity.EntityId, escortedEntityId, StringComparison.Ordinal))
+        {
+            return (x, y);
+        }
+
+        return (entity.X, entity.Y);
     }
 
     public int SessionCount => _visibility.Count;
 
     // Returns the entities visible to this viewer and updates the remembered
     // visibility set used for the 48 WU leave radius on the next read.
-    public IReadOnlyList<ProjectedEntityV2> Project(PlayerSession viewer)
+    public IReadOnlyList<ProjectedEntityV2> Project(PlayerSession actor)
+    {
+        ArgumentNullException.ThrowIfNull(actor);
+        WorldAoiViewer viewer;
+        lock (actor.SyncRoot)
+        {
+            viewer = new WorldAoiViewer(
+                actor.CharacterId, actor.MapId, actor.FloorId, actor.X, actor.Y);
+        }
+        return Project(viewer);
+    }
+
+    public IReadOnlyList<ProjectedEntityV2> Project(WorldAoiViewer viewer)
     {
         ArgumentNullException.ThrowIfNull(viewer);
         var session = _visibility.GetOrAdd(
@@ -102,7 +141,8 @@ public sealed class WorldAoiProjectionService
                 var limit = session.Visible.Contains(entity.EntityId)
                     ? WorldAudience.AoiLeaveWu
                     : WorldAudience.AoiEnterWu;
-                if (Distance(entity.X, entity.Y, viewer.X, viewer.Y) > limit)
+                var (positionX, positionY) = EscortPosition(entity, viewer);
+                if (Distance(positionX, positionY, viewer.X, viewer.Y) > limit)
                 {
                     continue;
                 }
@@ -124,7 +164,7 @@ public sealed class WorldAoiProjectionService
         _visibility.TryRemove(characterId, out _);
 
     private ProjectedEntityV2 Map(
-        WorldEntityInstance entity, PlayerSession viewer, string mapInstanceId)
+        WorldEntityInstance entity, WorldAoiViewer viewer, string mapInstanceId)
     {
         var isMob = string.Equals(entity.Kind, WorldEntityKinds.Mob, StringComparison.Ordinal);
         var isBoss = string.Equals(entity.Kind, WorldEntityKinds.Boss, StringComparison.Ordinal);
@@ -133,9 +173,22 @@ public sealed class WorldAoiProjectionService
                 entity.Kind, WorldEntityKinds.GatherNode, StringComparison.Ordinal) ||
             string.Equals(entity.Kind, WorldEntityKinds.Interactable, StringComparison.Ordinal);
 
+        // The alpha boss encounter is owner-scoped, so only the registered owner
+        // has an audience view of it; everyone else keeps the blocked policy.
+        BossEncounterAudience? bossAudience = null;
+        if (isBoss && _bosses is not null &&
+            _bosses.TryGetAudience(viewer.CharacterId, entity, out var audience))
+        {
+            bossAudience = audience;
+        }
+
         var state = isMob || isBoss
             ? _mobs.GetState(entity.EntityId)
             : entity.State;
+        if (bossAudience?.Defeated == true)
+        {
+            state = MobBehaviorStates.Dead;
+        }
 
         string healthState;
         var targetable = false;
@@ -147,18 +200,38 @@ public sealed class WorldAoiProjectionService
             var stats = ResolveMobStats(entity);
             var dead = string.Equals(entity.State, WorldEntityStates.Dead, StringComparison.Ordinal) ||
                        string.Equals(state, MobBehaviorStates.Dead, StringComparison.Ordinal);
-            healthState = dead ? WorldHealthStates.Dead : WorldHealthStates.Alive;
-            targetable = !dead;
+            var knownMaxHp = stats?.Hp ?? 0;
+            // A mob the audience cannot resolve stats for is not "alive at 0 HP":
+            // ResolveHit skips any target whose max HP is unknown, so a cast
+            // accepted at it produces no event at all. Report BLOCKED and not
+            // targetable, the same policy the boss branch uses, instead of
+            // advertising a target the engine will silently not resolve. The
+            // behaviour state (IDLE/CHASE/TELEGRAPH …) still travels untouched —
+            // it is real, it is only the health numbers that are unavailable.
+            healthState = dead
+                ? WorldHealthStates.Dead
+                : knownMaxHp > 0 ? WorldHealthStates.Alive : WorldHealthStates.Blocked;
+            targetable = !dead && knownMaxHp > 0;
             var lifeState = _states.TryGet(entity.EntityId, entity.LifeId);
-            hp = dead ? 0 : lifeState?.Hp ?? stats?.Hp ?? 0;
-            maxHp = stats?.Hp ?? 0;
+            hp = dead || knownMaxHp <= 0 ? 0 : lifeState?.Hp ?? knownMaxHp;
+            maxHp = knownMaxHp;
         }
         else if (isBoss)
         {
-            // Mãng Cốt stays BOSSDATA_BLOCKED until the QOD-19 encounter data
-            // exists; a blocked boss is not shown as dead and is not targetable.
+            // A boss with no encounter for this viewer stays BOSSDATA_BLOCKED:
+            // it is not shown as dead and is not targetable. The owner of a live
+            // encounter gets the same view the cast path will accept, so the
+            // audience never advertises a target the engine would refuse.
             healthState = WorldHealthStates.Blocked;
-            targetable = false;
+            if (bossAudience is { } owned)
+            {
+                healthState = owned.Defeated
+                    ? WorldHealthStates.Dead
+                    : WorldHealthStates.Alive;
+                targetable = owned.Targetable;
+                hp = owned.Hp;
+                maxHp = owned.MaxHp;
+            }
         }
         else if (isNpc)
         {
@@ -180,8 +253,8 @@ public sealed class WorldAoiProjectionService
             mapInstanceId,
             entity.FloorId,
             WorldAudience.Phase,
-            entity.X,
-            entity.Y,
+            EscortPosition(entity, viewer).X,
+            EscortPosition(entity, viewer).Y,
             state,
             healthState,
             targetable,
@@ -192,7 +265,7 @@ public sealed class WorldAoiProjectionService
             entity.LifeId);
     }
 
-    private string ResolveAvailability(WorldEntityInstance entity, PlayerSession viewer)
+    private string ResolveAvailability(WorldEntityInstance entity, WorldAoiViewer viewer)
     {
         if (string.Equals(
                 entity.ClaimPolicy, WorldEntityClaimPolicies.PerCharacter, StringComparison.Ordinal))

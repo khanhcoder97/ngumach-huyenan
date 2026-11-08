@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
 using Server.Health.Endpoints;
+using Server.Health.Gameplay.Alpha;
 using Server.Health.Gameplay.Combat;
 using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
+using Server.Health.Gameplay.Pets;
 using Server.Health.Gameplay.Progress;
 using Server.Health.Gameplay.Quests;
 using Server.Health.Gameplay.Teleport;
@@ -62,7 +64,17 @@ builder.Services.AddSingleton<IQuestCatalog>(serviceProvider =>
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
     var directory = QuestCatalogLoader.DiscoverDirectory(
         configuration, environment.ContentRootPath);
-    return QuestCatalogLoader.Load(directory);
+    var catalog = QuestCatalogLoader.Load(directory);
+    var alphaOptions = serviceProvider.GetRequiredService<AlphaProfileOptions>();
+    if (!alphaOptions.Enabled)
+    {
+        return catalog;
+    }
+
+    var overlayDirectory = AlphaQuestCatalogMerger.DiscoverOverlayDirectory(
+        environment.ContentRootPath);
+    return AlphaQuestCatalogMerger.Merge(
+        catalog, QuestCatalogLoader.Load(overlayDirectory));
 });
 builder.Services.AddSingleton<IQuestStateStore, InMemoryQuestStateStore>();
 builder.Services.AddSingleton(serviceProvider =>
@@ -70,20 +82,102 @@ builder.Services.AddSingleton(serviceProvider =>
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
     var path = NarrativeNodeCatalog.Discover(configuration, environment.ContentRootPath);
-    return NarrativeNodeCatalog.Load(path);
+    var catalog = NarrativeNodeCatalog.Load(path);
+    if (!serviceProvider.GetRequiredService<AlphaProfileOptions>().Enabled)
+    {
+        return catalog;
+    }
+
+    // DEC-TUTORIAL-CLOSURE-20261108: the class-confirm node is a private-alpha overlay
+    // over the 229-node baseline, merged only with the profile on. The bindings are
+    // validated against the merged quest catalog and the NPC anchors, so a source edit
+    // that no longer matches the content fails startup rather than at the TALK route.
+    var closurePath = AlphaNarrativeOverlayLoader.Discover(configuration, environment.ContentRootPath);
+    return AlphaNarrativeOverlayMerger.Merge(
+        catalog,
+        AlphaNarrativeOverlayLoader.Load(closurePath),
+        serviceProvider.GetRequiredService<IQuestCatalog>(),
+        serviceProvider.GetRequiredService<NpcAnchorCatalog>());
 });
 builder.Services.AddSingleton(serviceProvider =>
 {
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
     return LevelProgressionTable.Load(LevelProgressionTable.Discover(environment.ContentRootPath));
 });
-builder.Services.AddSingleton<IQuestXpRule, UnresolvedQuestXpRules>();
+builder.Services.AddSingleton<QuestXpSnapshotStore>();
+builder.Services.AddSingleton<IQuestXpRule>(serviceProvider =>
+{
+    // The approved alpha progression is the only source that states what a quest
+    // reward is worth; with the profile off nothing does, so the shipped resolver
+    // keeps answering "unresolved" and XP stays unapplied on the wire.
+    var alphaProfile = serviceProvider
+        .GetRequiredService<IOptions<AlphaProfileOptions>>().Value;
+    return alphaProfile.Enabled
+        ? new AlphaQuestXpRules(
+            serviceProvider.GetRequiredService<AlphaDesign>().Progression)
+        : new UnresolvedQuestXpRules();
+});
 builder.Services.AddSingleton<ExperienceService>();
 builder.Services.AddSingleton(serviceProvider =>
 {
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
     return ItemCatalog.Load(
         ItemCatalogDiscovery.DiscoverDirectory(environment.ContentRootPath));
+});
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return ClassPassiveCatalogLoader.Load(
+        ClassPassiveCatalogLoader.DiscoverDirectory(environment.ContentRootPath));
+});
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return CurrencyCatalogLoader.Load(
+        CurrencyCatalogLoader.DiscoverDirectory(environment.ContentRootPath));
+});
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return LifeSimCatalogLoader.Load(
+        LifeSimCatalogLoader.DiscoverDirectory(environment.ContentRootPath));
+});
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return WeeklyBossRotationCatalogLoader.Load(
+        WeeklyBossRotationCatalogLoader.DiscoverDirectory(environment.ContentRootPath));
+});
+// Work order 29 Q5: the `Tiêu hao` rows are classified at boot, so a source cell that
+// stops parsing (a new stat label, a percentage outside the wording this loader accepts)
+// fails startup instead of silently healing nobody. Loading is not applying: no route
+// consumes this yet, because what a client may ask for is a contract decision.
+builder.Services.AddSingleton(serviceProvider =>
+    ConsumableCatalog.Load(serviceProvider.GetRequiredService<ItemCatalog>()));
+builder.Services.AddSingleton<IConsumableService>(serviceProvider => new ConsumableService(
+    serviceProvider.GetRequiredService<IInventoryService>(),
+    serviceProvider.GetRequiredService<IReadOnlyList<ConsumableEntry>>()));
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return MobEliteVariantCatalog.Load(ProductionTableDiscovery.DiscoverDirectory(
+        environment.ContentRootPath, MobEliteVariantCatalog.RelativePath));
+});
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return NpcActorRegistry.Load(ProductionTableDiscovery.DiscoverDirectory(
+        environment.ContentRootPath, NpcActorRegistry.RelativePath));
+});
+// QOD-24: the pet and mount table, loaded as data only. There is no companion route and
+// no gate for it: nothing in Production_Rules says how a pet enters the damage formula,
+// the leash tick or the bag, so the table is read to pin what it claims against the item
+// catalogue, not to act on it.
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    return CompanionCatalog.Load(ProductionTableDiscovery.DiscoverDirectory(
+        environment.ContentRootPath, CompanionCatalog.RelativePath));
 });
 builder.Services.AddSingleton<NarrativeFlagStore>();
 builder.Services.AddSingleton<NarrativeService>();
@@ -92,8 +186,48 @@ builder.Services.AddSingleton(serviceProvider =>
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
     var path = WorldRecordLoader.DiscoverPath(configuration, environment.ContentRootPath);
-    return WorldRecordLoader.Load(
+    var baseCatalog = WorldRecordLoader.Load(
         path, serviceProvider.GetRequiredService<MapBoundsCatalog>());
+    if (!serviceProvider.GetRequiredService<AlphaProfileOptions>().Enabled)
+    {
+        return baseCatalog;
+    }
+
+    return AlphaOverlayMerger.MergeRecords(
+        baseCatalog,
+        serviceProvider.GetRequiredService<AlphaDesign>(),
+        serviceProvider.GetRequiredService<MapBoundsCatalog>());
+});
+builder.Services.Configure<AlphaProfileOptions>(
+    builder.Configuration.GetSection(AlphaProfileOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<AlphaProfileOptions>>().Value);
+builder.Services.Configure<AlphaLootOptions>(
+    builder.Configuration.GetSection(AlphaLootOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<AlphaLootOptions>>().Value);
+builder.Services.AddSingleton(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+    var path = AlphaProfileLoader.Discover(configuration, environment.ContentRootPath);
+    var design = AlphaProfileLoader.Load(path);
+    var maps = serviceProvider.GetRequiredService<MapBoundsCatalog>();
+    // Validate against the unmerged base records so overlays can never collide
+    // with (or depend on) themselves: the runtime merge stays a pure addition.
+    var recordsPath = WorldRecordLoader.DiscoverPath(configuration, environment.ContentRootPath);
+    var baseRecords = WorldRecordLoader.Load(recordsPath, maps);
+    AlphaProfileValidator.Validate(
+        design,
+        maps,
+        serviceProvider.GetRequiredService<NpcAnchorCatalog>(),
+        baseRecords);
+    // The v2 twelve-slot vocabulary has to cover every equipment label the canonical
+    // catalogue carries; a label it cannot name would only surface as a runtime
+    // refusal to equip, so it fails here instead.
+    InventoryV2Slots.ValidateCatalogLabels(
+        serviceProvider.GetRequiredService<ItemCatalog>());
+    return design;
 });
 builder.Services.AddSingleton<IQuestService, InMemoryQuestService>();
 builder.Services.Configure<QuestAcceptOptions>(
@@ -112,7 +246,30 @@ builder.Services.Configure<QuestTurnInOptions>(
     builder.Configuration.GetSection(QuestTurnInOptions.SectionName));
 builder.Services.AddSingleton(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
+// DEC-TUTORIAL-TRANSPORT-20261106: TALK gets its own switch. It is deliberately not
+// reusing P1:QuestTurnIn - a reward verb must not be the hidden gate for a line of
+// dialogue, and the route exists only while this gate AND the alpha profile are on.
+builder.Services.Configure<QuestTalkOptions>(
+    builder.Configuration.GetSection(QuestTalkOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<QuestTalkOptions>>().Value);
+builder.Services.AddSingleton<QuestTalkService>();
+// DEC-TUTORIAL-TRANSPORT-20261106 pairs the portal route with the alpha profile the
+// same way, and the registry it serves is the two-entry atlas pair only. The switch
+// ships OFF; the domain is reachable in this build but no route is mapped to it yet.
+builder.Services.Configure<PortalOptions>(
+    builder.Configuration.GetSection(PortalOptions.SectionName));
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<PortalOptions>>().Value);
+builder.Services.AddSingleton<PortalService>();
 builder.Services.AddSingleton<RewardLedgerStore>();
+// P00-05's chapter consequence is written inside the turn-in transaction and
+// revoked if a later step of that transaction rolls back. The store records
+// nothing while P1:AlphaProfile is off, so every other profile's turn-in is
+// byte-identical to what it was before this seam existed.
+builder.Services.AddSingleton<ChapterUnlockStore>();
+builder.Services.AddSingleton<IChapterUnlockSink>(sp =>
+    sp.GetRequiredService<ChapterUnlockStore>());
 builder.Services.AddSingleton<IQuestTurnInService, InMemoryQuestTurnInService>();
 builder.Services.AddSingleton(serviceProvider =>
 {
@@ -129,19 +286,35 @@ builder.Services.AddSingleton(serviceProvider =>
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
     var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
     var path = WorldEntityLoader.DiscoverPath(configuration, environment.ContentRootPath);
-    return WorldEntityLoader.Load(
+    var baseCatalog = WorldEntityLoader.Load(
         path, serviceProvider.GetRequiredService<MapBoundsCatalog>());
+    if (!serviceProvider.GetRequiredService<AlphaProfileOptions>().Enabled)
+    {
+        return baseCatalog;
+    }
+
+    return AlphaOverlayMerger.MergeEntities(
+        baseCatalog,
+        serviceProvider.GetRequiredService<AlphaDesign>(),
+        serviceProvider.GetRequiredService<MapBoundsCatalog>());
 });
 builder.Services.AddSingleton(serviceProvider => new WorldEntityRegistry(
     serviceProvider.GetRequiredService<WorldEntityCatalog>(),
     serviceProvider.GetRequiredService<IServerClock>()));
 builder.Services.AddSingleton<IInventoryStateStore, InMemoryInventoryStateStore>();
-builder.Services.AddSingleton<IInventoryService, InMemoryInventoryService>();
+// The catalog is passed in so a grant that does not name a durability takes the
+// canonical CSV value instead of silently storing 0.
+builder.Services.AddSingleton<IInventoryService>(serviceProvider => new InMemoryInventoryService(
+    serviceProvider.GetRequiredService<IInventoryStateStore>(),
+    serviceProvider.GetRequiredService<ItemCatalog>()));
 builder.Services.Configure<EquipmentOptions>(
     builder.Configuration.GetSection(EquipmentOptions.SectionName));
 builder.Services.AddSingleton(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<EquipmentOptions>>().Value);
 builder.Services.AddSingleton<IEquipmentService, EquipmentService>();
+// The v2 twelve-slot surface beside the frozen v1 five: same store, same aggregate
+// revision, different vocabulary. Its routes are mapped only under P1:AlphaProfile.
+builder.Services.AddSingleton<IEquipmentV2Service, EquipmentV2Service>();
 builder.Services.AddSingleton<ITeleportService, InMemoryTeleportService>();
 builder.Services.Configure<InteractionOptions>(
     builder.Configuration.GetSection(InteractionOptions.SectionName));
@@ -168,6 +341,10 @@ builder.Services.AddSingleton<InMemoryCombatV2Service>();
 builder.Services.AddSingleton<MobCombatStateStore>();
 builder.Services.AddSingleton<ICombatRollSource, CombatRngRollSource>();
 builder.Services.AddSingleton<GuardWindowStore>();
+// DEC-DEATH-RETURN-20261105: every player-damage path commits its life/death
+// record through this ledger, so it is a single instance for the process and is
+// keyed by character, never by session.
+builder.Services.AddSingleton<PlayerLifeLedger>();
 builder.Services.AddSingleton<GuardDefenseService>();
 builder.Services.AddSingleton<DashMovementService>();
 builder.Services.AddSingleton<CombatStatusProjection>();
@@ -176,14 +353,58 @@ builder.Services.Configure<DeathReturnOptions>(
     builder.Configuration.GetSection(DeathReturnOptions.SectionName));
 builder.Services.AddSingleton(serviceProvider =>
     serviceProvider.GetRequiredService<IOptions<DeathReturnOptions>>().Value);
-builder.Services.AddSingleton<DeathReturnService>();
+// The approved alpha rules decide the anchor, the HP formula and the cooldown;
+// without that profile the service falls back to the labelled DEV fixture shape
+// it has always had (spawn anchor, no restore, no cooldown) and no route exists.
+builder.Services.AddSingleton(serviceProvider => new DeathReturnService(
+    serviceProvider.GetRequiredService<ISessionStore>(),
+    serviceProvider.GetRequiredService<MapBoundsCatalog>(),
+    serviceProvider.GetRequiredService<P1WorldOptions>(),
+    serviceProvider.GetRequiredService<DeathReturnOptions>(),
+    serviceProvider.GetRequiredService<GuardWindowStore>(),
+    serviceProvider.GetRequiredService<CombatTickEngine>(),
+    serviceProvider.GetRequiredService<PlayerLifeLedger>(),
+    serviceProvider.GetRequiredService<IServerClock>(),
+    serviceProvider.GetRequiredService<AlphaProfileOptions>().Enabled
+        ? serviceProvider.GetRequiredService<AlphaDesign>().DeathReturn
+        : null));
 builder.Services.AddSingleton<CombatTickEngine>();
 builder.Services.AddSingleton<LootReceiptLedger>();
 builder.Services.AddSingleton<LootGrantLedger>();
+// Who may be paid for a kill is the alpha profile's answer; every other profile
+// resolves to the same block the shipped bundle has always carried.
+builder.Services.AddSingleton<ILootGrantPolicy>(serviceProvider => new AlphaLootGrantPolicy(
+    serviceProvider.GetRequiredService<AlphaDesign>(),
+    serviceProvider.GetRequiredService<AlphaProfileOptions>(),
+    serviceProvider.GetRequiredService<AlphaLootOptions>()));
 builder.Services.AddSingleton<LootGrantService>();
 builder.Services.AddSingleton<MobSpawnGroupService>();
 builder.Services.AddSingleton<WorldEntityProjectionService>();
-builder.Services.AddSingleton<WorldAoiProjectionService>();
+// The escort position source reaches the read model only under the alpha profile: with
+// the gate off the projection keeps every NPC at its canonical anchor, which is the
+// production behaviour nothing here changes.
+builder.Services.AddSingleton(sp => new WorldAoiProjectionService(
+    sp.GetRequiredService<WorldEntityRegistry>(),
+    sp.GetRequiredService<MobLifecycleService>(),
+    sp.GetRequiredService<CombatDamageFeature>(),
+    sp.GetRequiredService<GatherClaimStore>(),
+    sp.GetRequiredService<MobCombatStateStore>(),
+    sp.GetRequiredService<ICombatBossBridge>(),
+    sp.GetRequiredService<AlphaProfileOptions>().Enabled
+        ? sp.GetRequiredService<AlphaEscortService>()
+        : null));
+builder.Services.AddSingleton<AlphaWaveTrialService>();
+builder.Services.AddSingleton<AlphaEscortService>();
+builder.Services.AddSingleton<AlphaBossEncounterService>();
+// The tick engine casts at the alpha quest boss through this bridge; with the
+// profile OFF the encounter holds no instance so the impact path is unchanged.
+builder.Services.AddSingleton<ICombatBossBridge>(sp =>
+    sp.GetRequiredService<AlphaBossEncounterService>());
+// Resolved mob deaths are pushed to the escort machine instead of inferred from
+// polled world state; with the profile OFF the escort holds no instance, so
+// every kill notification is dropped and the mob path is unchanged.
+builder.Services.AddSingleton<ICombatKillSink>(sp =>
+    sp.GetRequiredService<AlphaEscortService>());
 builder.Services.AddHostedService<WorldTickBackgroundService>();
 
 var app = builder.Build();
@@ -201,6 +422,72 @@ app.Logger.LogInformation("Loaded quest definitions: {QuestCount}.", quests.Coun
 
 var itemCatalog = app.Services.GetRequiredService<ItemCatalog>();
 app.Logger.LogInformation("Loaded item catalogue: {ItemCount} items.", itemCatalog.Count);
+
+var weeklyRotation = app.Services.GetRequiredService<WeeklyBossRotationCatalog>();
+app.Logger.LogInformation(
+    "Loaded weekly boss rotation: {SlotCount} slots (data only - no scheduler, rank or reward contract exists yet).",
+    weeklyRotation.Count);
+
+var lifeSim = app.Services.GetRequiredService<LifeSimCatalog>();
+app.Logger.LogInformation(
+    "Loaded life sim catalog: {ContentCount} entries ({Crops} CROP, {Fish} FISH) - timings and caps are data, not a running gather loop.",
+    lifeSim.Count,
+    lifeSim.CountOfType("CROP"),
+    lifeSim.CountOfType("FISH"));
+
+var eliteVariants = app.Services.GetRequiredService<IReadOnlyList<MobEliteVariant>>();
+app.Logger.LogInformation(
+    "Loaded elite variant table: {RowCount} elites across {Profiles} profiles (hp {MinHp}–{MaxHp}x, pvp allowed: {Pvp}) - the runtime mob-stat bundle still uses its own multipliers, which the self-check compares.",
+    eliteVariants.Count,
+    eliteVariants.Select(elite => elite.VariantProfileId).Distinct().Count(),
+    eliteVariants.Min(elite => elite.HpMultiplier),
+    eliteVariants.Max(elite => elite.HpMultiplier),
+    eliteVariants.Any(elite => elite.PvpAllowed) ? "yes somewhere" : "never");
+
+var npcActors = app.Services.GetRequiredService<IReadOnlyList<NpcActorDefinition>>();
+app.Logger.LogInformation(
+    "Loaded NPC actor registry: {RowCount} NPCs, {ServiceCount} carrying a service token, none combat-targetable - service availability is data, not a route.",
+    npcActors.Count,
+    npcActors.Count(actor => actor.InteractionServiceId != "NONE"));
+
+var companions = app.Services.GetRequiredService<IReadOnlyList<CompanionEntry>>();
+// Distinct sets, not the first row's scalars: the boot line claims something about the
+// whole table, so it has to read the whole table. All five companions do agree today
+// (leash 8 WU, feed 12 h), which is exactly the kind of fact a First() call hides - a
+// future row with a different leash would keep printing a half-truth, the same class of
+// defect the contract reconciliation step just lost its hardcoded capacity to.
+app.Logger.LogInformation(
+    "Loaded pet and mount table: {CompanionCount} companions (leash {RangeWu} WU, fed every {FeedHours}h for cosmetics only) and {MountCount} cosmetic mounts (no combat) - the item catalogue names a different creature for every one of these ids, which the self-check pins; there is no companion route.",
+    companions.Count(entry => entry.IsCompanion),
+    string.Join("/", companions.Where(entry => entry.IsCompanion)
+        .Select(entry => entry.OwnerRangeWu).Distinct().Order()),
+    string.Join("/", companions.Where(entry => entry.IsCompanion)
+        .Select(entry => entry.FeedCooldownHours).Distinct().Order()),
+    companions.Count(entry => !entry.IsCompanion));
+
+var consumableRules = app.Services.GetRequiredService<IReadOnlyList<ConsumableEntry>>();
+app.Logger.LogInformation(
+    "Loaded consumable catalogue: {RowCount} rows ({Sourced} percentage rules, {Unsupported} effects with no subsystem here, {Revive} framed as a revive) - domain only, no use route.",
+    consumableRules.Count,
+    consumableRules.Count(entry => entry.Kind == ConsumableEffectKind.RestorePercent),
+    consumableRules.Count(entry => entry.Kind == ConsumableEffectKind.Unsupported),
+    consumableRules.Count(entry => entry.ReviveRequired));
+
+var currencies = app.Services.GetRequiredService<CurrencyCatalog>();
+app.Logger.LogInformation(
+    "Loaded currency catalogue: {CurrencyCount} currencies ({CharacterScoped} character-scoped, " +
+    "{AccountScoped} account-scoped, {Tradeable} tradeable - caps are data, not enforced yet).",
+    currencies.Count,
+    currencies.CountWhere(currency => currency.StorageScope == "character"),
+    currencies.CountWhere(currency => currency.StorageScope == "account"),
+    currencies.CountWhere(currency => currency.Tradeable));
+
+var classPassives = app.Services.GetRequiredService<ClassPassiveCatalog>();
+app.Logger.LogInformation(
+    "Loaded class passive catalogue: {PassiveCount} passives across {ClassCount} classes " +
+    "(data only - no passive is applied to combat yet).",
+    classPassives.Count,
+    classPassives.SupportedClassIds.Count);
 
 var narrativeNodes = app.Services.GetRequiredService<NarrativeNodeCatalog>();
 app.Logger.LogInformation(
@@ -247,15 +534,20 @@ if (combatV2.Enabled)
 }
 
 var deathReturn = app.Services.GetRequiredService<DeathReturnOptions>();
-DeathReturnOptionsValidator.Validate(deathReturn, worldOptions);
+DeathReturnOptionsValidator.Validate(
+    deathReturn,
+    worldOptions,
+    app.Services.GetRequiredService<AlphaProfileOptions>().Enabled);
 if (deathReturn.Enabled)
 {
     app.Logger.LogWarning(
-        "DEV FIXTURE: P1:DeathReturn is enabled. The anchor is P1World SpawnX/SpawnY " +
-        "clamped to the actor's map bounds, not a reviewed safe anchor, and " +
-        "RestoreHpFixture {RestoreHp} is a configured starting HP, not a produced " +
-        "restore rule; no penalty is applied because no source defines one. Nothing " +
-        "reaches it over HTTP until the QOD-18 DeathReturn contract is approved.",
+        "DEV FIXTURE: P1:DeathReturn is enabled. With P1:AlphaProfile off the anchor " +
+        "is P1World SpawnX/SpawnY clamped to the actor's map bounds (not a reviewed " +
+        "safe anchor), RestoreHpFixture {RestoreHp} is a configured starting HP rather " +
+        "than the approved formula, and there is no cooldown because no source defines " +
+        "one; in that shape the route stays unmapped and only in-process callers reach " +
+        "it. With both gates on the anchor, HP, cooldown and penalties come from " +
+        "DEC-DEATH-RETURN-20261105.",
         deathReturn.RestoreHpFixture);
 }
 
@@ -303,6 +595,45 @@ foreach (var questId in quests.QuestIds)
 var worldRecords = app.Services.GetRequiredService<WorldRecordCatalog>();
 app.Logger.LogInformation(
     "Loaded world records: {RecordCount}.", worldRecords.Count);
+var alphaDesign = app.Services.GetRequiredService<AlphaDesign>();
+var alphaOptions = app.Services.GetRequiredService<AlphaProfileOptions>();
+app.Logger.LogInformation(
+    "Loaded alpha profile {DecisionId} ({Status}) with {OverlayCount} overlay records; boss {BossProfile}.",
+    alphaDesign.DecisionId,
+    alphaDesign.Status,
+    alphaDesign.OverlayRecords.Count,
+    alphaDesign.Boss.ProfileId);
+if (alphaOptions.Enabled)
+{
+    var runtimeEntityCount = alphaDesign.OverlayRecords.Count(overlay =>
+        AlphaOverlayMerger.HasRuntimeEntity(overlay.Kind));
+    app.Logger.LogWarning(
+        "PRIVATE ALPHA: P1:AlphaProfile is enabled; {OverlayCount} overlay records, " +
+        "{EntityCount} overlay entities and {QuestCount} alpha quest definitions " +
+        "(P00-02..05 unblocked, C1-01 added) are merged into the Bến Mưa world. " +
+        "The training-wave hazard stays record-only (no wire hazard kind); the wave " +
+        "trial, the P00-04 escort and the P00-05 encounter tick as domain state. " +
+        "Production gates remain OFF.",
+        alphaDesign.OverlayRecords.Count,
+        runtimeEntityCount,
+        quests.Count);
+}
+
+// The loot payout switch is validated against the profile that owns the only coin
+// band, so no other profile can pay it out by turning one flag on.
+var alphaLootOptions = app.Services.GetRequiredService<AlphaLootOptions>();
+AlphaLootPolicy.Validate(alphaLootOptions, alphaOptions, alphaDesign);
+if (AlphaLootPolicy.EffectiveGrantEnabled(alphaLootOptions, alphaOptions, alphaDesign))
+{
+    app.Logger.LogWarning(
+        "PRIVATE ALPHA LOOT: P1:AlphaLoot:GrantEnabled is on with P1:AlphaProfile, so a " +
+        "resolved mob kill rolls {CoinMin}..{CoinMax} coin and the sourced recipe items, " +
+        "once per (profile, character, death, life, group). The design states this band as " +
+        "alpha-only seed data, not a production economy approval.",
+        alphaDesign.Loot.CoinMinExpression,
+        alphaDesign.Loot.CoinMaxExpression);
+}
+
 QuestCatalogValidator.Validate(quests, worldRecords, npcAnchors);
 InteractionContentValidator.Validate(worldEntities, worldRecords);
 
@@ -327,6 +658,18 @@ if (questAcceptOptions.Enabled)
 
 var questTurnInOptions = app.Services.GetRequiredService<QuestTurnInOptions>();
 QuestTurnInOptionsValidator.Validate(questTurnInOptions);
+var questTalkOptions = app.Services.GetRequiredService<QuestTalkOptions>();
+QuestTalkOptionsValidator.Validate(questTalkOptions);
+if (questTalkOptions.Enabled && !app.Services
+        .GetRequiredService<IOptions<AlphaProfileOptions>>().Value.Enabled)
+{
+    // The decision pairs this route with the alpha profile the way death-return is
+    // paired: the switch alone maps nothing, and a profile-less talk verb would be a
+    // dialogue surface over content the release build does not ship.
+    app.Logger.LogWarning(
+        "P1:QuestTalk is enabled without P1:AlphaProfile; /p1/quests/talk stays " +
+        "unmapped because the narrative nodes it reads belong to the alpha pack.");
+}
 if (questTurnInOptions.Enabled)
 {
     app.Logger.LogWarning(
@@ -347,6 +690,7 @@ if (equipmentOptions.Enabled)
 if (selfCheck)
 {
     Environment.ExitCode = ServiceSelfCheck.Run(app.Services, app.Logger);
+    await app.DisposeAsync();
     return;
 }
 

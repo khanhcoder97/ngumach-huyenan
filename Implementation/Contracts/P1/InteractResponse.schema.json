@@ -47,7 +47,7 @@
         },
         "targetId": {
           "type": "string",
-          "pattern": "^ENT_[A-Z0-9_]+$"
+          "pattern": "^(?:ENT|ALPHA)_[A-Z0-9_]+$"
         },
         "recordId": {
           "type": "string",
@@ -92,7 +92,7 @@
           "properties": {
             "itemId": {
               "type": "string",
-              "pattern": "^[A-Z][A-Z0-9-]+$"
+              "pattern": "^[A-Z][A-Z0-9_-]+$"
             },
             "quantity": {
               "type": "integer",

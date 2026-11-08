@@ -22,6 +22,24 @@ jobs:
         run: python Implementation/Tools/validate_topology.py
       - name: Validate narrative and cinema handoff
         run: python Implementation/Tools/validate_narrative.py
+      # The map atlas states positions as numbers; this keeps them telling the same
+      # story as the records the server loads, and lists every reviewed disagreement.
+      - name: Reconcile the map atlas against shipped placements
+        run: python Implementation/Tools/reconcile_map_atlas.py
+      # DEC-016 produced a 349-row placement migration that no code reads, so its review
+      # state was invisible. This checks it against the manifest it cites and against the
+      # world records the server loads, and prints how many rows are actually approved.
+      - name: Reconcile the top-down placement migration
+        run: python Implementation/Tools/reconcile_placement_migration.py
+      - name: Reconcile combat and social source data
+        run: |
+          python Implementation/Tools/reconcile_combat_social_sources.py
+          python Implementation/Tools/reconcile_combat_social_sources.py --self-test
+      # Production_Technical_Contracts_vi.md is the frozen contract baseline and nothing
+      # read it until now; this compares its envelope, event and canonical-error lists to
+      # the shipped schemas and wire codes and prints every divergence by name.
+      - name: Reconcile the technical contract against the shipped surface
+        run: python Implementation/Tools/reconcile_technical_contract.py
       - name: Rebuild world runtime content and verify no drift
         run: |
           python Implementation/Tools/build_world_records.py

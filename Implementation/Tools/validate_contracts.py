@@ -4,6 +4,7 @@
 import argparse
 import csv
 import json
+import math
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -480,6 +481,247 @@ def check_combat_event_page_v2(example, label, errors):
         errors.append(f"{label}.resyncReason: only allowed when resyncRequired is true")
 
 
+def check_encounter_snapshot_v1(example, label, errors):
+    """Per-kind shape rules the JSON-Schema subset cannot express (no if/then),
+    plus the deadline/identity coherence the approved decisions require."""
+    if not isinstance(example, dict):
+        return
+
+    def finite(value):
+        return isinstance(value, (int, float)) and not isinstance(value, bool) \
+            and math.isfinite(value)
+
+    hp, max_hp = example.get("bossHp"), example.get("bossMaxHp")
+    if not finite(hp) or not finite(max_hp):
+        return
+    if hp > max_hp:
+        errors.append(f"{label}.bossHp: must not exceed bossMaxHp")
+    status = example.get("status")
+    if status == "DEFEATED" and hp != 0:
+        errors.append(f"{label}.bossHp: a defeated boss must read 0")
+    if status in ("OPEN", "RESET") and hp <= 0:
+        errors.append(f"{label}.bossHp: {status} requires a living boss")
+
+    tick = example.get("serverTick")
+    move = example.get("activeMove")
+    if move is None:
+        return
+    if not isinstance(move, dict) or not isinstance(tick, int):
+        return
+    ends = move.get("stateEndsAtTick")
+    remaining = move.get("ticksRemaining")
+    if not isinstance(ends, int) or not isinstance(remaining, int):
+        return
+    if ends < tick:
+        errors.append(f"{label}.activeMove.stateEndsAtTick: must be >= serverTick")
+    if remaining != ends - tick:
+        errors.append(
+            f"{label}.activeMove.ticksRemaining: must equal "
+            "stateEndsAtTick - serverTick")
+
+    shape = move.get("shape")
+    if not isinstance(shape, dict):
+        return
+    kind = shape.get("kind")
+    cone = kind == "CONE"
+    circle = kind == "CIRCLE"
+    annulus = kind == "ANNULUS"
+    required = {
+        "angleDegrees": cone, "rangeWu": cone,
+        "facingX": cone, "facingY": cone,
+        "radiusWu": circle,
+        "innerRadiusWu": annulus, "outerRadiusWu": annulus,
+    }
+    for field, must_have in required.items():
+        present = shape.get(field) is not None
+        if must_have and not present:
+            errors.append(f"{label}.activeMove.shape.{field}: required for {kind}")
+        if not must_have and present:
+            errors.append(
+                f"{label}.activeMove.shape.{field}: must be null for {kind}")
+    if cone:
+        fx, fy = shape.get("facingX"), shape.get("facingY")
+        if finite(fx) and finite(fy):
+            length = math.sqrt(fx * fx + fy * fy)
+            if abs(length - 1.0) > 1e-6:
+                errors.append(
+                    f"{label}.activeMove.shape: cone facing must be normalized "
+                    f"(|facing|={length})")
+        angle = shape.get("angleDegrees")
+        if not finite(angle) or not 0 < angle <= 360:
+            errors.append(f"{label}.activeMove.shape.angleDegrees: cone needs 0<angle<=360")
+        reach = shape.get("rangeWu")
+        if not finite(reach) or reach <= 0:
+            errors.append(f"{label}.activeMove.shape.rangeWu: cone needs range > 0")
+    if annulus:
+        inner, outer = shape.get("innerRadiusWu"), shape.get("outerRadiusWu")
+        if not finite(inner) or not finite(outer) or not 0 <= inner < outer:
+            errors.append(
+                f"{label}.activeMove.shape: annulus needs 0 <= innerRadius < outerRadius")
+    for field in ("centerXWu", "centerYWu"):
+        if not finite(shape.get(field)):
+            errors.append(f"{label}.activeMove.shape.{field}: must be a finite number")
+
+    if example.get("phaseGuardRemainingTicks", 0) > 0 and move.get("state") is not None:
+        errors.append(
+            f"{label}.phaseGuardRemainingTicks: a guarded boss resolves no move")
+
+    phase = example.get("phase")
+    for index, pad in enumerate(example.get("safePads") or []):
+        if isinstance(pad, dict) and pad.get("applies") and phase is not None and phase < 3:
+            errors.append(
+                f"{label}.safePads[{index}].applies: pads only apply from phase 3")
+
+
+def check_death_return_request(example, label, errors):
+    if example:
+        errors.append(
+            f"{label}: DEC-DEATH-RETURN-20261105 freezes an empty intent payload; a "
+            "request that names a map, coordinate or anchor is invalid_payload"
+        )
+
+
+def check_death_return_response(example, label, errors):
+    result = example.get("result")
+    if not isinstance(result, dict):
+        return
+    if result.get("applied") and result.get("replayed"):
+        errors.append(f"{label}.result: a commit cannot also be a replay")
+    for low_key, high_key in (("hp", "maxHp"), ("mp", "maxMp")):
+        low = result.get(low_key)
+        high = result.get(high_key)
+        if isinstance(low, int) and isinstance(high, int) and low > high:
+            errors.append(f"{label}.result.{low_key}: exceeds {high_key}")
+    penalties = result.get("penalties")
+    if isinstance(penalties, dict):
+        for key in ("xp", "currency", "durability"):
+            if penalties.get(key) != 0:
+                errors.append(
+                    f"{label}.result.penalties.{key}: the approved decision sets every "
+                    "penalty to zero, so a non-zero value needs a new decision"
+                )
+    cleared = result.get("cleared")
+    if isinstance(cleared, dict):
+        for key in ("inflightCasts", "reservedCounters"):
+            value = cleared.get(key)
+            if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+                errors.append(
+                    f"{label}.result.cleared.{key}: must be a non-negative count of "
+                    "things this return actually cleared"
+                )
+        if result.get("applied") and cleared.get("movementWindowReset") is not True:
+            errors.append(
+                f"{label}.result.cleared.movementWindowReset: a committed return always "
+                "restarts the movement window"
+            )
+
+
+def check_talk_request(example, label, errors):
+    # DEC-TUTORIAL-TRANSPORT-20261106 approves a payload that names the speaker and the
+    # narrative node and nothing else. The schema's additionalProperties already refuses
+    # more; this rule keeps the *semantics* named, so a future edit that "just adds
+    # questId" is reported as the contract break it is rather than accepted silently.
+    for forbidden in ("questId", "objectiveId", "mapId", "xWu", "yWu", "flag", "reason"):
+        if forbidden in example:
+            errors.append(
+                f"{label}: '{forbidden}' is not the client's to choose; TALK takes npcId "
+                "and nodeId only"
+            )
+
+
+def check_talk_response(example, label, errors):
+    result = example.get("result")
+    if not isinstance(result, dict):
+        return
+    if result.get("credited") is True and result.get("eventId") is None:
+        errors.append(
+            f"{label}.result: a credit always mints a deterministic eventId over "
+            "character, quest attempt, objective and node"
+        )
+    if result.get("credited") is False and result.get("objectiveId") is not None:
+        errors.append(
+            f"{label}.result.objectiveId: nothing was credited, so no objective may be "
+            "named"
+        )
+    for grant in ("xp", "currency", "rewards", "unlocks", "chapterUnlock", "destination"):
+        if grant in result:
+            errors.append(
+                f"{label}.result.{grant}: TALK grants no XP, no turn-in, no chapter "
+                "unlock and no map movement (DEC-TUTORIAL-TRANSPORT-20261106)"
+            )
+
+
+def check_portal_request(example, label, errors):
+    payload = example.get("payload")
+    if not isinstance(payload, dict):
+        return
+    # DEC-TUTORIAL-TRANSPORT-20261106: the route accepts portalId and nothing else.
+    # A request that can name a map, a coordinate, a floor, a reason or a destination
+    # is an arbitrary teleport wearing a portal id, which is exactly what the decision
+    # closes ("server-owned destination, no arbitrary teleport").
+    for forbidden in (
+        "mapId", "xWu", "yWu", "floorId", "reason", "destination", "targetMapId",
+        "questId"
+    ):
+        if forbidden in payload:
+            errors.append(
+                f"{label}.payload.{forbidden}: the client may not name a destination; "
+                "portalId is the only field the route accepts "
+                "(DEC-TUTORIAL-TRANSPORT-20261106)"
+            )
+    if payload.get("portalId") == "TP_BM_THANG_LONG":
+        errors.append(
+            f"{label}.payload.portalId: TP_BM_THANG_LONG is an atlas selector, not an "
+            "alpha route; Thang Long stays behind C1-06"
+        )
+
+
+def check_portal_response(example, label, errors):
+    result = example.get("result")
+    if not isinstance(result, dict):
+        return
+    # The registry pair, copied from the atlas lines the portal packet cites. Two
+    # rules come out of this: a portal must arrive somewhere other than where it
+    # stands, and the two directions must keep their own numbers. The arrival point in
+    # Thanh Lac is x=8 while the return portal stands at x=20; a receipt that merged
+    # them (either 8 used for both, or 20 arriving at 20) is the failure the decision
+    # calls out by name, and it cannot be caught by a shape check.
+    pair = {
+        "TP_BM_THANH_LAC": ("MAP_BEN_MUA", "MAP_THANH_LAC", 8.0, 0.0),
+        "TP_TL_BEN_MUA": ("MAP_THANH_LAC", "MAP_BEN_MUA", 348.0, 0.0),
+    }
+    portal_id = result.get("portalId")
+    if portal_id not in pair:
+        errors.append(
+            f"{label}.result.portalId: {portal_id!r} is not one of the two approved "
+            "alpha routes"
+        )
+        return
+    _source, destination, dest_x, dest_y = pair[portal_id]
+    if result.get("mapId") != destination:
+        errors.append(
+            f"{label}.result.mapId: {portal_id} arrives at {destination}, not "
+            f"{result.get('mapId')!r}"
+        )
+    if float(result.get("xWu", 0.0)) != dest_x or float(result.get("yWu", 0.0)) != dest_y:
+        errors.append(
+            f"{label}.result.xWu/yWu: {portal_id} arrives at ({dest_x},{dest_y}); "
+            f"({result.get('xWu')},{result.get('yWu')}) merges the Thanh Lac arrival 8 "
+            "with the return portal 20, which the decision keeps apart"
+        )
+    if not str(result.get("eventId", "")).startswith("P1PORTAL_"):
+        errors.append(
+            f"{label}.result.eventId: a transition receipt always carries the "
+            "deterministic portal event id"
+        )
+    for grant in ("xp", "currency", "rewards", "unlocks", "chapterUnlock"):
+        if grant in result:
+            errors.append(
+                f"{label}.result.{grant}: a portal moves a character and clears combat "
+                f"state; it grants nothing else ({grant})"
+            )
+
+
 def check_example_semantics(name, example, map_config, errors):
     label = f"{name}{EXAMPLE_SUFFIX}"
     check_map_bounds(example, map_config, label, errors)
@@ -487,6 +729,8 @@ def check_example_semantics(name, example, map_config, errors):
         check_world_snapshot(example, label, errors)
     elif name == "WorldSnapshotV2":
         check_world_snapshot_v2(example, label, errors)
+    elif name == "EncounterSnapshotV1":
+        check_encounter_snapshot_v1(example, label, errors)
     elif name == "CombatInputV2":
         check_combat_input_v2(example, label, errors)
     elif name == "CombatEventV2":
@@ -505,6 +749,18 @@ def check_example_semantics(name, example, map_config, errors):
         result = example.get("result")
         if isinstance(result, dict):
             check_inventory(result, f"{label}.result", errors)
+    elif name == "DeathReturnRequest":
+        check_death_return_request(example, label, errors)
+    elif name == "DeathReturnResponse":
+        check_death_return_response(example, label, errors)
+    elif name == "TalkRequest":
+        check_talk_request(example, label, errors)
+    elif name == "TalkResponse":
+        check_talk_response(example, label, errors)
+    elif name == "PortalRequest":
+        check_portal_request(example, label, errors)
+    elif name == "PortalResponse":
+        check_portal_response(example, label, errors)
 
 
 def write_report(

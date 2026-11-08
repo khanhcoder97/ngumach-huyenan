@@ -14,8 +14,11 @@ public static class QuestCatalogLoader
         PropertyNameCaseInsensitive = true
     };
 
+    // Entity-style tokens and canonical record ids (MAN-BM-WAVE_BM_ESCORT_A,
+    // ALPHA-BM-RIPPLE-01): the alpha P00-04 rule credits kills per wave record,
+    // so a quest objective must be able to name a record id, not only a species.
     private static readonly Regex TargetIdPattern =
-        new(@"^[A-Z][A-Z0-9_]+$", RegexOptions.CultureInvariant);
+        new(@"^[A-Z][A-Z0-9_-]+$", RegexOptions.CultureInvariant);
 
     private static readonly Regex MapIdPattern =
         new(@"^MAP_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
@@ -313,6 +316,7 @@ public static class QuestCatalogLoader
 
             var rewards = ParseRewards(path, questId, file.Rewards);
             var unlocks = ParseUnlocks(path, questId, file.Unlocks);
+            var orderedObjectives = file.OrderedObjectives ?? false;
 
             var quest = new QuestDefinition(
                 questId,
@@ -327,7 +331,8 @@ public static class QuestCatalogLoader
                 rewards,
                 unlocks,
                 activation,
-                blockedSteps);
+                blockedSteps,
+                orderedObjectives);
 
             if (!quests.TryAdd(quest.QuestId, quest))
             {
@@ -499,6 +504,7 @@ public static class QuestCatalogLoader
         public string? TurnInNpcId { get; init; }
         public string? Activation { get; init; }
         public List<BlockedStepFile>? BlockedSteps { get; init; }
+        public bool? OrderedObjectives { get; init; }
         public LevelBandFile? LevelBand { get; init; }
         public List<string>? PrerequisiteQuestIds { get; init; }
         public List<ObjectiveFile>? Objectives { get; init; }

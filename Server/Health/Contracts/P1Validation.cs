@@ -61,6 +61,24 @@ public static class P1Validation
     private static readonly Regex EntityIdPattern =
         new(@"^ENT_[A-Z0-9_]+$", RegexOptions.CultureInvariant);
 
+    // DEC-ALPHA-INTERACT-IDS-20261105: the alpha overlay's interactables are
+    // addressed by their own ALPHA_ prefix, which an ENT_-only vocabulary cannot
+    // name — but the approval is an exact list of the six published ids, not the
+    // prefix. So the alpha set is enumerated and nothing else under ALPHA_ is
+    // addressable: the training hazard (ALPHA_WAVE_BM_TRAINING) is a server-side
+    // rect the wave trial reads by position, and any other ALPHA_ id is refused as
+    // invalid_payload before the registry is consulted.
+    public static readonly IReadOnlySet<string> AlphaInteractEntityIds =
+        new HashSet<string>(StringComparer.Ordinal)
+        {
+            "ALPHA_OBJ_BM_FRAGMENT",
+            "ALPHA_OBJ_BM_RIPPLE_01",
+            "ALPHA_OBJ_BM_RIPPLE_02",
+            "ALPHA_OBJ_BM_RIPPLE_03",
+            "ALPHA_OBJ_BM_VILLAGER_01",
+            "ALPHA_OBJ_BM_VILLAGER_02"
+        };
+
     public static bool IsHex32(string? value)
     {
         if (value is null || value.Length != 32)
@@ -101,6 +119,11 @@ public static class P1Validation
 
     public static bool IsEntityId(string? value) =>
         value is not null && EntityIdPattern.IsMatch(value);
+
+    // What the interact route may address: a canonical ENT_ entity, or one of the
+    // six alpha ids the decision published.
+    public static bool IsInteractTargetId(string? value) =>
+        IsEntityId(value) || (value is not null && AlphaInteractEntityIds.Contains(value));
 
     public static bool TryParseUtc(string? value, out DateTimeOffset parsed)
     {
@@ -357,9 +380,84 @@ public static class P1Validation
             return errors;
         }
 
-        if (!IsEntityId(envelope.Payload.TargetId))
+        if (!IsInteractTargetId(envelope.Payload.TargetId))
         {
             errors.Add("payload.targetId");
+        }
+
+        return errors;
+    }
+
+    private static readonly Regex NodeIdPattern = new(
+        @"^[A-Z][A-Z0-9_]{2,63}$", RegexOptions.CultureInvariant);
+
+    // A narrative node id is the catalog's own vocabulary (DLG_*): upper case, at
+    // least three characters, no separators beyond underscore. Pinned to
+    // TalkRequest.schema.json so the wire and this validator cannot drift.
+    public static bool IsNodeId(string? value) =>
+        value is not null && NodeIdPattern.IsMatch(value);
+
+    // The two alpha route ids are the enum in PortalRequest.schema.json, and this is
+    // the same list kept in one place on the server side: the registry is the source
+    // of truth and an id it does not publish is refused as payload.portalId before any
+    // state is read. TP_BM_THANG_LONG is absent on purpose.
+    public static bool IsPortalId(string? value) =>
+        Server.Health.Gameplay.Alpha.AlphaPortalRegistry.Find(value ?? string.Empty) is not null;
+
+    public static List<string> ValidatePortalEnvelope(PortalEnvelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        ValidateEnvelopeHeader(
+            errors, envelope.SchemaVersion, envelope.RequestId, envelope.IdempotencyKey,
+            envelope.SentAtUtc, envelope.CharacterId);
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+            return errors;
+        }
+
+        if (!IsPortalId(envelope.Payload.PortalId))
+        {
+            errors.Add("payload.portalId");
+        }
+
+        return errors;
+    }
+
+    public static List<string> ValidateTalkEnvelope(TalkEnvelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        ValidateEnvelopeHeader(
+            errors, envelope.SchemaVersion, envelope.RequestId, envelope.IdempotencyKey,
+            envelope.SentAtUtc, envelope.CharacterId);
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+            return errors;
+        }
+
+        if (!IsNpcId(envelope.Payload.NpcId))
+        {
+            errors.Add("payload.npcId");
+        }
+
+        if (!IsNodeId(envelope.Payload.NodeId))
+        {
+            errors.Add("payload.nodeId");
         }
 
         return errors;
@@ -460,6 +558,154 @@ public static class P1Validation
         }
 
         return errors;
+    }
+
+    // The v2 inventory envelopes differ from v1 only in the schema version they
+    // carry (2) and the slot vocabulary `unequip` names; the header rules are the
+    // same, so the answers stay comparable across the two contract generations.
+    public static List<string> ValidateEquipV2Envelope(EquipV2Envelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        ValidateV2EnvelopeHeader(
+            errors, envelope.SchemaVersion, envelope.RequestId, envelope.IdempotencyKey,
+            envelope.SentAtUtc, envelope.CharacterId);
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+            return errors;
+        }
+
+        var instanceId = envelope.Payload.ItemInstanceId;
+        if (instanceId is null || instanceId.Length is < 1 or > 64)
+        {
+            errors.Add("payload.itemInstanceId");
+        }
+
+        if (envelope.Payload.ExpectedRevision is null or < 1)
+        {
+            errors.Add("payload.expectedRevision");
+        }
+
+        return errors;
+    }
+
+    public static List<string> ValidateUnequipV2Envelope(UnequipV2Envelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        ValidateV2EnvelopeHeader(
+            errors, envelope.SchemaVersion, envelope.RequestId, envelope.IdempotencyKey,
+            envelope.SentAtUtc, envelope.CharacterId);
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+            return errors;
+        }
+
+        if (!InventoryV2Slots.IsValid(envelope.Payload.SlotId))
+        {
+            errors.Add("payload.slotId");
+        }
+
+        if (envelope.Payload.ExpectedRevision is null or < 1)
+        {
+            errors.Add("payload.expectedRevision");
+        }
+
+        return errors;
+    }
+
+    // DEC-DEATH-RETURN-20261105: the payload has no fields, so there is nothing to
+    // validate inside it. Presence is still required - a request that omits
+    // "payload" is a different shape than the one the decision froze - and no
+    // destination may ever appear here, because the anchor is server-owned.
+    public static List<string> ValidateDeathReturnEnvelope(DeathReturnEnvelope? envelope)
+    {
+        var errors = new List<string>();
+        if (envelope is null)
+        {
+            errors.Add("body");
+            return errors;
+        }
+
+        if (envelope.SchemaVersion != 1)
+        {
+            errors.Add("schemaVersion");
+        }
+
+        if (!IsHex32(envelope.RequestId))
+        {
+            errors.Add("requestId");
+        }
+
+        if (!IsHex32(envelope.IdempotencyKey))
+        {
+            errors.Add("idempotencyKey");
+        }
+
+        if (!TryParseUtc(envelope.SentAtUtc, out _))
+        {
+            errors.Add("sentAtUtc");
+        }
+
+        if (!IsCharacterId(envelope.CharacterId))
+        {
+            errors.Add("characterId");
+        }
+
+        if (envelope.Payload is null)
+        {
+            errors.Add("payload");
+        }
+
+        return errors;
+    }
+
+    private static void ValidateV2EnvelopeHeader(
+        List<string> errors,
+        int? schemaVersion,
+        string? requestId,
+        string? idempotencyKey,
+        string? sentAtUtc,
+        string? characterId)
+    {
+        if (schemaVersion != 2)
+        {
+            errors.Add("schemaVersion");
+        }
+
+        if (!IsHex32(requestId))
+        {
+            errors.Add("requestId");
+        }
+
+        if (!IsHex32(idempotencyKey))
+        {
+            errors.Add("idempotencyKey");
+        }
+
+        if (!TryParseUtc(sentAtUtc, out _))
+        {
+            errors.Add("sentAtUtc");
+        }
+
+        if (!IsCharacterId(characterId))
+        {
+            errors.Add("characterId");
+        }
     }
 
     private static void ValidateEnvelopeHeader(

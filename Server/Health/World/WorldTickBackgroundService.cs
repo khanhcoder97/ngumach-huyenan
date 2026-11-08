@@ -1,13 +1,16 @@
 using Microsoft.Extensions.Options;
+using Server.Health.Gameplay.Alpha;
 using Server.Health.Gameplay.Combat;
 
 namespace Server.Health.World;
 
 // 20 Hz background tick per ServerClock.TicksPerSecond. Respawns shared
 // DEPLETED interactables/mobs, resolves scheduled player casts, drives mob AI
-// (telegraph -> impact -> recovery) only when the fixture gate is on, and lands
-// mob damage only when P1:CombatDamage is on. Per-character gather shard claims
-// are lazy (UtcNow-based), no tick needed.
+// (telegraph -> impact -> recovery) only when the fixture gate is on, lands
+// mob damage only when P1:CombatDamage is on, and drives the alpha
+// training-wave trial, the P00-04 escort and the P00-05 Mãng Cốt encounter only
+// when P1:AlphaProfile is on.
+// Per-character gather shard claims are lazy (UtcNow-based), no tick needed.
 public sealed class WorldTickBackgroundService : BackgroundService
 {
     private static readonly TimeSpan TickPeriod = TimeSpan.FromSeconds(
@@ -17,6 +20,10 @@ public sealed class WorldTickBackgroundService : BackgroundService
     private readonly MobLifecycleService _mobs;
     private readonly MobAttackService _mobAttacks;
     private readonly MobBehaviorOptions _mobOptions;
+    private readonly AlphaProfileOptions _alphaOptions;
+    private readonly AlphaWaveTrialService _waveTrial;
+    private readonly AlphaEscortService _escort;
+    private readonly AlphaBossEncounterService _bossEncounter;
     private readonly ISessionStore _sessions;
     private readonly CombatTickEngine _combat;
     private readonly MobSpawnGroupService _groups;
@@ -28,6 +35,10 @@ public sealed class WorldTickBackgroundService : BackgroundService
         MobLifecycleService mobs,
         MobAttackService mobAttacks,
         IOptions<MobBehaviorOptions> mobOptions,
+        IOptions<AlphaProfileOptions> alphaOptions,
+        AlphaWaveTrialService waveTrial,
+        AlphaEscortService escort,
+        AlphaBossEncounterService bossEncounter,
         ISessionStore sessions,
         CombatTickEngine combat,
         MobSpawnGroupService groups,
@@ -38,6 +49,10 @@ public sealed class WorldTickBackgroundService : BackgroundService
         _mobs = mobs;
         _mobAttacks = mobAttacks;
         _mobOptions = mobOptions.Value;
+        _alphaOptions = alphaOptions.Value;
+        _waveTrial = waveTrial;
+        _escort = escort;
+        _bossEncounter = bossEncounter;
         _sessions = sessions;
         _combat = combat;
         _groups = groups;
@@ -57,33 +72,91 @@ public sealed class WorldTickBackgroundService : BackgroundService
             var tick = _clock.Tick;
 
             _entities.Update();
-            _combat.Tick(tick);
+            // The engine already returns the events its tick resolved, and until now this
+            // loop dropped them: the server logged every mob->player hit and produced no
+            // line at all for the casts going the other way. That asymmetry is why the
+            // review's failed escort run reads "witnessed 0 of 3 deaths, refusals {}" with
+            // no way to tell whether the player's hits landed. This is the symmetric half -
+            // one line per impact, miss or death the engine resolved, and nothing about
+            // combat changes.
+            foreach (var resolved in _combat.Tick(tick))
+            {
+                if (resolved.Type is CombatEventTypesV2.Impact
+                    or CombatEventTypesV2.Miss
+                    or CombatEventTypesV2.Death)
+                {
+                    _logger.LogInformation(
+                        "player {EventType} {ActorId} on {TargetId} hit {HitIndex}: " +
+                        "amount {Amount}, hpDamage {HpDamage}, absorbed {Absorbed}, " +
+                        "target life {TargetLifeId}, tick {ServerTick}",
+                        resolved.Type, resolved.ActorId, resolved.TargetId ?? "-",
+                        resolved.HitIndex, resolved.Result?.Amount ?? 0,
+                        resolved.Result?.HpDamage ?? 0, resolved.Result?.Absorbed ?? 0,
+                        resolved.TargetLifeId, resolved.ServerTick);
+                }
+            }
+
             _groups.Tick();
 
-            if (_mobOptions.Enabled)
+            if (_mobOptions.Enabled || _alphaOptions.Enabled)
             {
                 var players = _sessions.All();
-                var impacts = _mobAttacks.ApplyImpacts(_mobs.Tick(players), players, tick);
-                foreach (var impact in impacts)
+                if (_mobOptions.Enabled)
                 {
-                    if (impact.BlockedReason != MobAttackBlockedReasons.None)
+                    var impacts = _mobAttacks.ApplyImpacts(_mobs.Tick(players), players, tick);
+                    foreach (var impact in impacts)
+                    {
+                        if (impact.BlockedReason != MobAttackBlockedReasons.None)
+                        {
+                            _logger.LogInformation(
+                                "DEV FIXTURE mob impact {EntityId} on {TargetCharacterId} " +
+                                "did not land: {BlockedReason}",
+                                impact.EntityId, impact.TargetCharacterId, impact.BlockedReason);
+                            continue;
+                        }
+
+                        _logger.LogInformation(
+                            "DEV FIXTURE mob impact {EntityId} attack {AttackId} on " +
+                            "{TargetCharacterId}: {Damage} ({HpBefore} -> {HpAfter}), " +
+                            "guard phase {GuardPhase} (DR {DamageReduction}), " +
+                            "confirmation {ConfirmationEventId}",
+                            impact.EntityId, impact.AttackId, impact.TargetCharacterId,
+                            impact.Damage, impact.HpBefore, impact.HpAfter,
+                            impact.GuardPhase, impact.DamageReduction,
+                            impact.Confirmation?.ConfirmationEventId ?? "-");
+                    }
+                }
+
+                if (_alphaOptions.Enabled)
+                {
+                    foreach (var resolution in _waveTrial.Tick(players, tick))
                     {
                         _logger.LogInformation(
-                            "DEV FIXTURE mob impact {EntityId} on {TargetCharacterId} " +
-                            "did not land: {BlockedReason}",
-                            impact.EntityId, impact.TargetCharacterId, impact.BlockedReason);
-                        continue;
+                            "ALPHA wave trial {CharacterId}: {Outcome} damage {Damage} " +
+                            "({HpBefore} -> {HpAfter}) event {QuestEventId}",
+                            resolution.CharacterId, resolution.Outcome, resolution.Damage,
+                            resolution.HpBefore, resolution.HpAfter,
+                            resolution.QuestEventId ?? "-");
                     }
 
-                    _logger.LogInformation(
-                        "DEV FIXTURE mob impact {EntityId} attack {AttackId} on " +
-                        "{TargetCharacterId}: {Damage} ({HpBefore} -> {HpAfter}), " +
-                        "guard phase {GuardPhase} (DR {DamageReduction}), " +
-                        "confirmation {ConfirmationEventId}",
-                        impact.EntityId, impact.AttackId, impact.TargetCharacterId,
-                        impact.Damage, impact.HpBefore, impact.HpAfter,
-                        impact.GuardPhase, impact.DamageReduction,
-                        impact.Confirmation?.ConfirmationEventId ?? "-");
+                    foreach (var resolution in _escort.Tick(players, tick))
+                    {
+                        _logger.LogInformation(
+                            "ALPHA escort {CharacterId}: {Outcome} {Detail} npc=({NpcX},{NpcY})",
+                            resolution.CharacterId, resolution.Outcome,
+                            resolution.Detail ?? "-", resolution.NpcX, resolution.NpcY);
+                    }
+
+                    foreach (var resolution in _bossEncounter.Tick(players, tick))
+                    {
+                        _logger.LogInformation(
+                            "ALPHA boss encounter {CharacterId}: {Outcome} {Detail} " +
+                            "phase {Phase} bossHp {BossHp} damage {Damage} " +
+                            "({HpBefore} -> {HpAfter})",
+                            resolution.CharacterId, resolution.Outcome,
+                            resolution.Detail ?? "-", resolution.Phase, resolution.BossHp,
+                            resolution.Damage, resolution.HpBefore, resolution.HpAfter);
+                    }
                 }
             }
         }

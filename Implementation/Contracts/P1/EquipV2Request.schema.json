@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/contracts/p1/EquipV2Request.schema.json",
+  "title": "P1 v2 equip request",
+  "description": "Posted to POST /p1/inventory/v2/equip. The slot is not client-supplied: the server resolves it from the canonical catalog slot label onto the twelve approved tokens, so a client cannot place an item in a slot it does not belong to. An item whose label maps to no approved token is rejected not_equippable. The v1 equip request and route are unchanged.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "requestId",
+    "idempotencyKey",
+    "sentAtUtc",
+    "characterId",
+    "payload"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 2
+    },
+    "requestId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "idempotencyKey": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "sentAtUtc": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "characterId": {
+      "type": "string",
+      "pattern": "^CHR_[A-Z0-9_]+$"
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "itemInstanceId",
+        "expectedRevision"
+      ],
+      "properties": {
+        "itemInstanceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  }
+}

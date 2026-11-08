@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "requestId": "0123456789abcdef0123456789abcdef",
+  "sessionId": "fedcba9876543210fedcba9876543210",
+  "serverTimeUtc": "2026-11-04T08:34:27Z",
+  "result": {
+    "schemaVersion": 1,
+    "encounterId": "ENC-0123456789ABCDEF01234567",
+    "questId": "P00-05",
+    "bossRecordId": "MAN-BM-SPAWN_BM_05_QUEST",
+    "bossEntityId": "ENT_MAN_BM_SPAWN_BM_05_QUEST",
+    "bossLifeId": 1,
+    "bossRevision": 8,
+    "status": "OPEN",
+    "phase": 1,
+    "bossHp": 1200,
+    "bossMaxHp": 1200,
+    "serverTick": 2000,
+    "registeredCharacterIds": ["CHR_0123456789ABCDEF0123456789ABCDEF"],
+    "activeMove": {
+      "moveId": "A",
+      "castId": "CAST-0123456789AB-0001",
+      "state": "TELEGRAPH",
+      "ticksRemaining": 18,
+      "stateEndsAtTick": 2018,
+      "shape": {
+        "kind": "CONE",
+        "centerXWu": 178.0,
+        "centerYWu": 0.0,
+        "angleDegrees": 120.0,
+        "rangeWu": 8.0,
+        "radiusWu": null,
+        "innerRadiusWu": null,
+        "outerRadiusWu": null,
+        "facingX": 1.0,
+        "facingY": 0.0
+      },
+      "targetLock": "TELEGRAPH_START_FACING"
+    },
+    "moveCooldownRemainingTicks": { "A": 0, "B": 20, "C": 40 },
+    "phaseGuardRemainingTicks": 0,
+    "wipeCountdownTicks": null,
+    "arena": {
+      "shape": "CIRCLE",
+      "centerXWu": 178.0,
+      "centerYWu": 0.0,
+      "radiusWu": 11.0
+    },
+    "safePads": [
+      { "centerXWu": 168.0, "centerYWu": 0.0, "radiusWu": 0.75, "applies": false },
+      { "centerXWu": 188.0, "centerYWu": 0.0, "radiusWu": 0.75, "applies": false }
+    ],
+    "phaseNpc": { "npcId": "NPC_TA_VAN_KHANH", "xWu": 182.0, "yWu": 4.0, "active": true },
+    "trialNpcVisible": false
+  }
+}

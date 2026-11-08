@@ -65,7 +65,15 @@ public sealed record NarrativeNode(
     string? OnEnterEvent,
     string? Flag,
     string? ChoiceGroupId,
-    IReadOnlyList<NarrativeNodeChoice> Choices);
+    IReadOnlyList<NarrativeNodeChoice> Choices,
+    // DEC-TUTORIAL-CLOSURE-20261108: the alpha class-confirm overlay binds a node to
+    // one objective and to the objectives that must already be committed before a
+    // fresh TALK may credit it. The 229 baseline nodes carry none of these (null),
+    // so their behaviour is unchanged; only the merged overlay node populates them.
+    string? BindObjectiveId = null,
+    IReadOnlyList<string>? RequiredCompletedObjectiveIds = null,
+    string? RequiredMapId = null,
+    string? RequiredFloorId = null);
 
 public sealed class NarrativeNodeCatalog
 {
@@ -111,6 +119,68 @@ public sealed class NarrativeNodeCatalog
         }
 
         return null;
+    }
+
+    // Immutable overlay used by the alpha-gated narrative merger: add one node and
+    // replace a few existing ones (the graph patch), leaving every other baseline
+    // node byte-identical. With the gate off the base catalog is returned untouched,
+    // so the 229 shipped nodes are never rewritten by this path. The merged set is
+    // re-checked for next-node integrity exactly as Load does, because a patch that
+    // repoints a graph at a node nobody added would otherwise dangle at runtime.
+    public NarrativeNodeCatalog WithOverlay(
+        NarrativeNode added,
+        IReadOnlyDictionary<string, NarrativeNode> replacements)
+    {
+        ArgumentNullException.ThrowIfNull(added);
+        ArgumentNullException.ThrowIfNull(replacements);
+
+        var nodes = new Dictionary<string, NarrativeNode>(_nodes, StringComparer.Ordinal);
+        foreach (var (nodeId, replacement) in replacements)
+        {
+            if (!nodes.ContainsKey(nodeId))
+            {
+                throw new InvalidOperationException(
+                    $"narrative overlay patches node '{nodeId}', which the baseline does not publish.");
+            }
+
+            nodes[nodeId] = replacement;
+        }
+
+        if (!nodes.TryAdd(added.NodeId, added))
+        {
+            throw new InvalidOperationException(
+                $"narrative overlay node '{added.NodeId}' already exists in the baseline.");
+        }
+
+        foreach (var node in nodes.Values)
+        {
+            if (node.NextNodeId is not null && !nodes.ContainsKey(node.NextNodeId))
+            {
+                throw new InvalidOperationException(
+                    $"narrative overlay leaves node '{node.NodeId}' pointing at missing next node " +
+                    $"'{node.NextNodeId}'.");
+            }
+        }
+
+        var byQuest = new Dictionary<string, List<NarrativeNode>>(StringComparer.Ordinal);
+        foreach (var node in nodes.Values)
+        {
+            if (!byQuest.TryGetValue(node.QuestId, out var list))
+            {
+                list = [];
+                byQuest[node.QuestId] = list;
+            }
+
+            list.Add(node);
+        }
+
+        return new NarrativeNodeCatalog(
+            nodes,
+            byQuest.ToDictionary(
+                pair => pair.Key,
+                pair => (IReadOnlyList<NarrativeNode>)pair.Value,
+                StringComparer.Ordinal),
+            _flags);
     }
 
     public const string RelativePath = "Implementation/Content/Runtime/narrative_nodes_v1.json";
@@ -399,7 +469,7 @@ public sealed class NarrativeService
     {
         ArgumentNullException.ThrowIfNull(actor);
 
-        var current = _questState.GetState(actor.CharacterId, questId).State;
+        var current = _questState.GetState(actor, questId).State;
         var node = _catalog.OfferNode(questId, current?.State);
         return node is null
             ? new NarrativeEnterResult(false, NarrativeErrorCodes.NotRevealed, null, null, null, [], [])
@@ -428,7 +498,7 @@ public sealed class NarrativeService
                 false, NarrativeErrorCodes.WrongSpeaker, null, null, null, [], []);
         }
 
-        var current = _questState.GetState(actor.CharacterId, questId).State;
+        var current = _questState.GetState(actor, questId).State;
         if (!string.Equals(
                 node.ConditionKey,
                 NarrativeConditions.ForQuestState(current?.State),
