@@ -1410,6 +1410,57 @@ def main():
         audio_entries.append(entry)
         counts["composed"] += 1
 
+    # --- 3k. WO37 M-D checkpoint 1 score batch (MD1 pack) ---
+    # The composer (build_composed_score_md1.py) already rendered the
+    # runtime OGGs into ClientGodot/assets/audio/composed/music/ and
+    # .../composed/transitions/; this section verifies them in place
+    # against the delivery pack and registers them in the runtime
+    # audio manifest. Same contract as 3e/3h: the ported PackV1
+    # entries and the checkpoint-26/30 composed packs are untouched;
+    # MD1 cues are parallel candidates whose adoption is Codex's
+    # adapter decision.
+    composed_md1 = json.loads(
+        (ROOT / "Implementation/Content/Audio/Deliveries"
+         / "MUSIC_SCORE_MD1_pack_v1.json").read_text(encoding="utf-8"))
+    for cue in composed_md1["cues"]:
+        rt = cue["runtime"]
+        dest_rel = rt["path"].split("assets/audio/", 1)[1]
+        dest = AUDIO_DEST / dest_rel
+        label = f"composed MD1 {cue['cueKey']}"
+        check(dest.exists(), f"{label}: runtime file missing {rt['path']}")
+        if not dest.exists():
+            continue
+        check(not is_lfs_pointer(dest),
+              f"{label}: runtime file is an LFS pointer")
+        got_sha = sha256(dest)
+        got_size = dest.stat().st_size
+        check(got_sha == rt["sha256"],
+              f"{label}: sha mismatch {got_sha} != {rt['sha256']}")
+        check(got_size == rt["sizeBytes"],
+              f"{label}: size mismatch {got_size} != {rt['sizeBytes']}")
+        got_dur = ffprobe_duration_s(dest)
+        check(abs(got_dur - rt["durationSeconds"]) <= DUR_TOL_S,
+              f"{label}: duration mismatch {got_dur} != "
+              f"{rt['durationSeconds']}")
+        entry = {"runtimePath": "assets/audio/" + dest_rel,
+                 "sourcePath": cue["master"]["path"],
+                 "sha256": got_sha, "sizeBytes": got_size,
+                 "durationSeconds": round(got_dur, 4)}
+        entry.update({
+            "cueKey": cue["cueKey"],
+            "category": ("composed_music" if cue["kind"] == "MUSIC"
+                         else "composed_transition"),
+            "codec": rt["codec"],
+            "sampleRateHz": rt["sampleRateHz"],
+            "channels": rt["channels"],
+            "integratedLufs": rt["integratedLufs"],
+            "truePeakDbtp": rt["truePeakDbtp"],
+            "assetState": "COMPOSED_CANDIDATE",
+            "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER",
+            "provenance": "ORIGINAL_COMPOSED_BY_MUSE"})
+        audio_entries.append(entry)
+        counts["composed"] += 1
+
     # --- 3f. Prologue CIN_000 narration VO + film mix (checkpoint 27) ---
     # The prologue is a standalone pre-game film (owner-ordered,
     # script approved in main chat 2026-11-06), NOT part of the
@@ -1461,9 +1512,13 @@ def main():
 
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 checkpoint 52 - M6 runtime delivery "
-                       "revised: CIN_018 draft mix v1 added (total 624 -> "
-                       "625, mix 27 -> 28); status phrasing corrected "
+        "checkpoint": ("MEDIA-02 WO37 M-D checkpoint 1 - M6 runtime "
+                       "delivery revised: MD1 score batch added (7 "
+                       "missing core cues + 3 transition bridges, "
+                       "total 627 -> 637); label also catches up "
+                       "CIN_019 mix v1 (checkpoint 53) and CIN_020 "
+                       "mix v1 (checkpoint 54) added since the "
+                       "checkpoint-52 label; status phrasing corrected "
                        "(all 21 dialogue windows approved for DRAFT VO "
                        "production per the Goi 30 D1 decision, PR #120; "
                        "only CIN_001_S05 is DECIDED); P0 draft mixes v3 "
@@ -1561,6 +1616,22 @@ def main():
             "Codex's presentation-adapter decision. Loudness targets "
             "are the ported cues' checkpoint-07 measured LUFS; "
             "measured from real bytes; no ear audition.",
+            "WO37 M-D checkpoint 1 score batch (MD1): 10 ORIGINAL "
+            "cues composed by Muse (7 missing core score cues -- hub, "
+            "Thanh Lac, rain, swamp, dungeon, arena, tragedy -- + 3 "
+            "transition bridges), provenance "
+            "ORIGINAL_COMPOSED_BY_MUSE, delivered in parallel under "
+            "assets/audio/composed/music/ and "
+            "assets/audio/composed/transitions/ from "
+            "MUSIC_SCORE_MD1_pack_v1.json; coverage matrix "
+            "MUSIC_SCORE_MD_COVERAGE_v1.json now shows 15/15 M-D "
+            "slots covered, 0 gaps. They do NOT replace the ported "
+            "PackV1 files, their bindings, or the checkpoint-26/30 "
+            "composed packs; adoption is Codex's presentation-adapter "
+            "decision. Loudness measured from real bytes (music "
+            "-22 LUFS target, transitions -25 LUFS); no ear audition. "
+            "Intro/outro segments, stems and phase-layer candidates "
+            "remain open for M-D checkpoint 2.",
             "Prologue CIN_000 (checkpoint 27): 5 narration draft "
             "takes (fictional TTS narrator, DRAFT casting) + the "
             "film's draft mix (narration + checkpoint 26 composed "

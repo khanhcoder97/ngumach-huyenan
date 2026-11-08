@@ -211,6 +211,61 @@ def check_composed_ambience_pack():
          f"{total} files")
 
 
+def check_composed_score_md1_pack():
+    """WO37 M-D checkpoint 1: the MD1 score pack (7 missing core cues
+    + 3 transition bridges). Same contract as check_composed_pack:
+    provenance must stay explicit, every cue byte-checked on both
+    sides, music cues loop, transitions are 6.0 s one-shots. The
+    coverage matrix must show all 15 M-D slots covered."""
+    pack = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                       / "MUSIC_SCORE_MD1_pack_v1.json").read_text(
+                           encoding="utf-8"))
+    if pack["counts"] != {"music": 7, "transitions": 3, "total": 10}:
+        err(f"COMPOSED MD1 pack counts drift: {pack['counts']}")
+    total = 0
+    for cue in pack["cues"]:
+        if cue.get("provenance") != "ORIGINAL_COMPOSED_BY_MUSE":
+            err(f"COMPOSED MD1 {cue['cueKey']}: provenance missing/drift")
+        for side_name in ("master", "runtime"):
+            side = cue[side_name]
+            entry = {"path": side["path"], "sha256": side["sha256"],
+                     "size_bytes": side["sizeBytes"],
+                     "codec": side["codec"],
+                     "sample_rate_hz": side["sampleRateHz"],
+                     "channels": side["channels"],
+                     "duration_s": side["durationSeconds"]}
+            check_audio_file(entry, f"COMPOSED MD1 {cue['cueKey']}/"
+                             f"{side_name}")
+            total += 1
+        if cue["kind"] == "MUSIC" and not cue.get("loop"):
+            err(f"COMPOSED MD1 {cue['cueKey']}: music cue must loop")
+        if cue["kind"] == "TRANSITION":
+            if cue.get("loop"):
+                err(f"COMPOSED MD1 {cue['cueKey']}: transition must "
+                    "not loop")
+            if abs(cue["master"]["durationSeconds"] - 6.0) > 0.02:
+                err(f"COMPOSED MD1 {cue['cueKey']}: transition "
+                    f"duration {cue['master']['durationSeconds']} "
+                    "!= 6.0 s")
+    cov = json.loads((ROOT / "Implementation/Content/Audio/Deliveries"
+                      / "MUSIC_SCORE_MD_COVERAGE_v1.json").read_text(
+                          encoding="utf-8"))
+    if cov["slotsTotal"] != 15 or cov["slotsCoveredComposed"] != 15 \
+            or cov["slotsGap"] != 0:
+        err(f"COMPOSED MD1 coverage drift: {cov['slotsTotal']} slots, "
+            f"{cov['slotsCoveredComposed']} covered, "
+            f"{cov['slotsGap']} gaps")
+    for slot in cov["slots"]:
+        if slot["status"] != "COVERED_COMPOSED":
+            err(f"COMPOSED MD1 coverage slot {slot['slot']}: status "
+                f"{slot['status']}")
+    COUNTS["audio_composed_score_md1_cues"] = len(pack["cues"])
+    COUNTS["audio_files_checked"] += total
+    note(f"composed MD1 score pack validated: {len(pack['cues'])} cues "
+         f"(7 music + 3 transitions), {total} files; M-D coverage "
+         f"15/15 slots, 0 gaps")
+
+
 def parse_srt(text):
     cues = []
     blocks = [b.strip() for b in re.split(r"\n\s*\n", text.strip()) if b.strip()]
@@ -4020,10 +4075,10 @@ def check_prologue():
     if vo_n != 5 or mix_n != 1:
         err(f"PROLOGUE: runtime audio registrations vo={vo_n} "
             f"mix={mix_n} (want 5/1)")
-    # Checkpoint 54: 626 + 1 CIN_020 mix v1 file = 627.
-    if am.get("totalFiles") != 627:
+    # WO37 M-D checkpoint 1: 627 + 10 MD1 score cues = 637.
+    if am.get("totalFiles") != 637:
         err(f"PROLOGUE: runtime audio total {am.get('totalFiles')}"
-            f" != 627")
+            f" != 637")
     COUNTS["prologue_files_checked"] = checked
     COUNTS["audio_files_checked"] = \
         COUNTS.get("audio_files_checked", 0) + 6
@@ -4044,6 +4099,7 @@ def main():
     check_audio_packs()
     check_composed_pack()
     check_composed_ambience_pack()
+    check_composed_score_md1_pack()
     check_timing_srt()
     check_runtime_cine_manifest()
     check_animatic_vo()
@@ -4081,7 +4137,7 @@ def main():
     check_scene_clips()
     check_prologue()
     result = {
-        "checkpoint": "MEDIA-02 checkpoint 54 (CIN_020 draft mix v1: seventeenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016 v1, CIN_017 v1, CIN_018 v1 and CIN_019 v1, same P0 v3 recipe; ben_mua music + river_shore ambience + reveal stinger at 6.0 s + CP17 draft VO take (fits its 12.5-17.5 s window by 2.000 s); embedded in CIN_020 runtime OGV + review MP4, video streams bit-identical; playback metadata + pronunciation table re-run for the new embedded mix: 21 embedded soundtracks, 0 silent, 27 playback cue rows, 23 seam rows, 21 fallback rows, 176 fallback files; runtime audio manifest total 626 -> 627, mix 29 -> 30; every entry now carries an embedded soundtrack, WO37 M-B big checkpoint 1 complete; integration baseline 6f79853, PR #119 MERGEABLE/CLEAN per Codex comment 6716052477 / WO37 MEDIA-03-05)",
+        "checkpoint": "MEDIA-02 WO37 M-D checkpoint 1 (whole-game score batch 1: 7 missing core cues + 3 transition bridges; 15/15 M-D slots covered, 0 gaps; runtime audio manifest total 627 -> 637; composed score now 16 music cues + 4 stingers + 3 transitions across the checkpoint-26 and MD1 packs) following MEDIA-02 checkpoint 54 (CIN_020 draft mix v1: seventeenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016 v1, CIN_017 v1, CIN_018 v1 and CIN_019 v1, same P0 v3 recipe; ben_mua music + river_shore ambience + reveal stinger at 6.0 s + CP17 draft VO take (fits its 12.5-17.5 s window by 2.000 s); embedded in CIN_020 runtime OGV + review MP4, video streams bit-identical; playback metadata + pronunciation table re-run for the new embedded mix: 21 embedded soundtracks, 0 silent, 27 playback cue rows, 23 seam rows, 21 fallback rows, 176 fallback files; runtime audio manifest total 626 -> 627, mix 29 -> 30; every entry now carries an embedded soundtrack, WO37 M-B big checkpoint 1 complete; integration baseline 6f79853, PR #119 MERGEABLE/CLEAN per Codex comment 6716052477 / WO37 MEDIA-03-05)",
         "base_integration": "6f79853",
         "branch": "muse/media-production-20261104",
         "counts": COUNTS,
@@ -4106,6 +4162,7 @@ def main():
             "All campaign clip motion (checkpoints 21-25) is animatic-level Ken Burns on still keyframes, not final pose-animated takes.",
             "Composed pack (checkpoint 26, Goi 30 item 7): 13 ORIGINAL cues composed by Muse (9 music + 4 SFX/CINEMA stingers) from one leitmotif system; loudness measured from real bytes by the composer (music -22.0 LUFS target, stingers -25.0), this check re-verifies bytes/SHA/duration only. Loop seams are recorded per cue in the delivery manifest: wrapJump after a disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it; no ear audition. The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; composed cues are parallel candidates whose adoption is Codex's presentation-adapter decision.",
             "Composed ambience pack (checkpoint 30): 13 ORIGINAL cues composed by Muse (all AMBIENCE/* cues, 16.0 s each) from filtered-noise beds with slow gust/swell envelopes and sparse deterministic events; loudness targets are the ported cues' checkpoint-07 measured LUFS, this check re-verifies bytes/SHA/duration only. Loop seams are recorded per cue in the delivery manifest with the same disclosed 0.25 s end-landing construction; no ear audition. Crowd beds are filtered noise only (no voices, no words). The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; composed cues are parallel candidates whose adoption is Codex's presentation-adapter decision.",
+            "Composed MD1 score pack (WO37 M-D checkpoint 1): 10 ORIGINAL cues composed by Muse (7 missing core score cues -- hub, Thanh Lac, rain, swamp, dungeon, arena, tragedy -- + 3 transition bridges of 6.0 s) from the same leitmotif system as checkpoint 26; loudness measured from real bytes by the composer (music -22.0 LUFS target, transitions -25.0), this check re-verifies bytes/SHA/duration only, and the dedicated MD1 validator (check_composed_score_md1_v1.py) re-measures loudness from real bytes within +/-0.5. Loop seams are recorded per cue in the delivery manifest: wrapJump after a disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it; no ear audition. The M-D coverage matrix (MUSIC_SCORE_MD_COVERAGE_v1.json) shows 15/15 slots covered, 0 gaps. The 541 ported PackV1 files keep their own provenance and are NOT counted as new audio; MD1 cues are parallel candidates whose adoption is Codex's presentation-adapter decision. Intro/outro segments, stems and phase-layer candidates remain open for M-D checkpoint 2.",
             "A/B review shortlist (checkpoint 33, Goi 31 item 3): 12 P0 mix cells, 9 composed music + 4 stingers, 13 composed + 13 ported ambience, 21 canonical VO takes + 1 alternate, 44 seam rows, 6 M3U playlists (72 entries). This check verifies bytes/SHA/duration and playlist resolution only; loudness/true-peak/seam numbers in the shortlist JSON were measured from real bytes by build_ab_shortlist_goi31.py at build time and are NOT re-measured here. Audition status is NOT_AUDITIONED: no human listening has happened, and the defect table (D-01..D-12) is open for the listener/director. The alternate take CIN_006_ALT_T01 is verified to live in its own playlist only. D-12 resolved by owner decision 2026-11-07: the canonical spelling is 'Tạ Vân Khanh'. The 'Tạ Văn Khánh' label came from the shortlist tool's SPEAKER_DISPLAY fallback (the P0 VO manifest stores the speaker id only; no manifest carried the wrong spelling) and was corrected at checkpoint 36.",
             "Prologue CIN_000 (checkpoint 27): a standalone pre-game film, NOT a campaign scene; its narration is DRAFT TTS (narrator casting is a director decision), its mix is DRAFT_MIX_NOT_FINAL, and no ear audition has been done. Identity checks inside the film builder use crop-compensated diffs (full-res < 20, 160x90 structure < 8) because the render path resamples twice; a brute-force fit on S01 confirmed the designed zooms (1.015/1.035/1.055) at zero offset with a 4.2-6.5 structure floor. Headline picture defects: S01/S03 mechanism design drift and S11's ambiguous arrival direction, recorded per shot in CIN000_keyframes_manifest_v1.json.",
             "CIN_006 draft mix v1 (checkpoint 34, Goi 31 item 4): first scene mix for CIN_006, built with the P0 v3 recipe (music thang_long + ambience thang_long_crowd + reveal stinger at 6.0 s + CP19 draft VO at 12.5 s). The stem assignment is NEW and PROPOSED_CANDIDATE -- the CP02 stem table assigns nothing to CIN_006 and the scene timing manifest lists only the reveal stinger as a candidate stem. The +0.52 s VO overrun window is kept as-is per the owner decision; the take tail is trimmed 0.02 s at the 18.00 s scene edge (recorded, not hidden). The alternate take CIN_006_ALT_T01 is NOT in the mix or the pack (DEC-MEDIA-P0 Q3). The minimal runtime pack embeds v3 mixes in the P0 scene OGV/MP4 and the CIN_006 v1 mix in CIN_006's OGV/MP4 (video streams copied bit-for-bit, verified by stored-frame counts); the prologue film is verified unchanged. Runtime playback is clean OGV + sidecar SRT overlay; the baked-subtitle MP4 is review-only. No ear audition has been done (NOT_AUDITIONED).",

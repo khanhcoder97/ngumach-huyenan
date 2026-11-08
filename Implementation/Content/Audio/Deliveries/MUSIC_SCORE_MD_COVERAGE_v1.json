@@ -1,0 +1,200 @@
+{
+ "coverageId": "NGM_MUSIC_SCORE_MD_COVERAGE_V1",
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 1",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "6f79853",
+ "workOrder": "37_MUSE_FULL_CAMPAIGN_MEDIA_20261108.md module M-D",
+ "slotsTotal": 15,
+ "slotsCoveredComposed": 15,
+ "slotsGap": 0,
+ "extraComposedOutsideSlots": [
+  {
+   "cueKey": "MUSIC/bach_uyen",
+   "pack": "MUSIC_COMPOSED_pack_v1",
+   "note": "Bach Uyen (underwater city) is a composed cue outside the 15 WO37 M-D slots; kept, not counted as slot coverage."
+  }
+ ],
+ "transitions": [
+  "MUSIC/transition_area",
+  "MUSIC/transition_calm_danger",
+  "MUSIC/transition_danger_calm"
+ ],
+ "transitionNotes": [
+  "3 bridges delivered (calm->danger, danger->calm, area->area); each 6.0 s, -25 LUFS target, one-shot.",
+  "The 3 s cinema transition stinger (checkpoint 26) stays presentation-only and is NOT a score transition."
+ ],
+ "openForMdCp2": [
+  "Per-cue intro/outro segments for the 7 MD1 cues (and the 9 checkpoint-26 cues, if the director wants them).",
+  "Stems (lead / pad-bass / percussion groups) per cue.",
+  "Phase-layer candidates (e.g. arena low/high intensity layers, boss phase layers).",
+  "Ear audition of all 10 MD1 cues + loop seams (NOT_AUDITIONED)."
+ ],
+ "slots": [
+  {
+   "slot": "hub",
+   "slotVi": "Trung tâm / hub an toàn",
+   "composedCueKey": "MUSIC/hub_lac_chau",
+   "composedPack": "MUSIC_SCORE_MD1_pack_v1",
+   "portedCueKey": null,
+   "adjacentAmbience": [],
+   "status": "COVERED_COMPOSED",
+   "notes": "MD1 batch 1: no music cue existed before (ported pack has no hub music; city_night ambience is adjacent only)."
+  },
+  {
+   "slot": "explore",
+   "slotVi": "Khám phá",
+   "composedCueKey": "MUSIC/quiet_discovery",
+   "composedPack": "MUSIC_COMPOSED_pack_v1",
+   "portedCueKey": "MUSIC/quiet_discovery",
+   "adjacentAmbience": [],
+   "status": "COVERED_COMPOSED",
+   "notes": "Checkpoint 26; ported cue with the same key exists."
+  },
+  {
+   "slot": "ben_mua",
+   "slotVi": "Bến Mưa",
+   "composedCueKey": "MUSIC/ben_mua",
+   "composedPack": "MUSIC_COMPOSED_pack_v1",
+   "portedCueKey": "MUSIC/ben_mua",
+   "adjacentAmbience": [],
+   "status": "COVERED_COMPOSED",
+   "notes": "Checkpoint 26; the theme itself; ported cue exists."
+  },
+  {
+   "slot": "thanh_lac",
+   "slotVi": "Thanh Lạc (thị trấn)",
+   "composedCueKey": "MUSIC/thanh_lac",
+   "composedPack": "MUSIC_SCORE_MD1_pack_v1",
+   "portedCueKey": null,
+   "adjacentAmbience": [],
+   "status": "COVERED_COMPOSED",
+   "notes": "MD1 batch 1: no music cue existed before (no ported Thanh Lac music; thang_long_crowd ambience belongs to Thang Long, not Thanh Lac)."
+  },
+  {
+   "slot": "thang_long",
+   "slotVi": "Thăng Long",
+   "composedCueKey": "MUSIC/thang_long",
+   "composedPack": "MUSIC_COMPOSED_pack_v1",
+   "portedCueKey": "MUSIC/thang_long",
+   "adjacentAmbience": [
+    "AMBIENCE/thang_long_crowd"
+   ],
+   "status": "COVERED_COMPOSED",
+   "notes": "Checkpoint 26; ported cue exists."
+  },
+  {
+   "slot": "rain",
+   "slotVi": "Mưa (nhạc nền mưa)",
+   "composedCueKey": "MUSIC/rain_veil",
+   "composedPack": "MUSIC_SCORE_MD1_pack_v1",
+   "portedCueKey": null,
+   "adjacentAmbience": [
+    "AMBIENCE/rain_light",
+    "AMBIENCE/rain_heavy"
+   ],
+   "status": "COVERED_COMPOSED",
+   "notes": "MD1 batch 1: before, only ambience existed (rain_light, rain_heavy); no music cue."
+  },
+  {
+   "slot": "swamp",
+   "slotVi": "Đầm (swamp)",
+   "composedCueKey": "MUSIC/swamp",
+   "composedPack": "MUSIC_SCORE_MD1_pack_v1",
+   "portedCueKey": null,
+   "adjacentAmbience": [
+    "AMBIENCE/river_shore"
+   ],
+   "status": "COVERED_COMPOSED",
+   "notes": "MD1 batch 1: no music cue existed before; river_shore ambience is water-edge, not swamp."
+  },
+  {
+   "slot": "forest",
+   "slotVi": "Rừng",
+   "composedCueKey": "MUSIC/lam_trieu",
+   "composedPack": "MUSIC_COMPOSED_pack_v1",
+   "portedCueKey": "MUSIC/lam_trieu",
+   "adjacentAmbience": [
+    "AMBIENCE/wind_canopy"
+   ],
+   "status": "COVERED_COMPOSED",
+   "notes": "Checkpoint 26 (Lam Trieu, G major transposition); ported cue exists."
+  },
+  {
+   "slot": "mountain",
+   "slotVi": "Núi / cửa ải",
+   "composedCueKey": "MUSIC/tran_son",
+   "composedPack": "MUSIC_COMPOSED_pack_v1",
+   "portedCueKey": "MUSIC/tran_son",
+   "adjacentAmbience": [
+    "AMBIENCE/mountain_wind"
+   ],
+   "status": "COVERED_COMPOSED",
+   "notes": "Checkpoint 26 (Tran Son gate form); ported cue exists."
+  },
+  {
+   "slot": "desert",
+   "slotVi": "Sa mạc",
+   "composedCueKey": "MUSIC/sa_hoa",
+   "composedPack": "MUSIC_COMPOSED_pack_v1",
+   "portedCueKey": "MUSIC/sa_hoa",
+   "adjacentAmbience": [
+    "AMBIENCE/desert_wind"
+   ],
+   "status": "COVERED_COMPOSED",
+   "notes": "Checkpoint 26 (Sa Hoa, A minor pentatonic); ported cue exists."
+  },
+  {
+   "slot": "dungeon",
+   "slotVi": "Hầm / dungeon",
+   "composedCueKey": "MUSIC/dungeon",
+   "composedPack": "MUSIC_SCORE_MD1_pack_v1",
+   "portedCueKey": null,
+   "adjacentAmbience": [
+    "AMBIENCE/cave_drips"
+   ],
+   "status": "COVERED_COMPOSED",
+   "notes": "MD1 batch 1: no music cue existed before; cave_drips ambience is adjacent only."
+  },
+  {
+   "slot": "boss",
+   "slotVi": "Boss",
+   "composedCueKey": "MUSIC/boss_mang_cot",
+   "composedPack": "MUSIC_COMPOSED_pack_v1",
+   "portedCueKey": "MUSIC/boss_mang_cot",
+   "adjacentAmbience": [],
+   "status": "COVERED_COMPOSED",
+   "notes": "Checkpoint 26; ported cue exists."
+  },
+  {
+   "slot": "arena",
+   "slotVi": "Đấu trường / arena",
+   "composedCueKey": "MUSIC/arena",
+   "composedPack": "MUSIC_SCORE_MD1_pack_v1",
+   "portedCueKey": null,
+   "adjacentAmbience": [],
+   "status": "COVERED_COMPOSED",
+   "notes": "MD1 batch 1: no music cue existed before."
+  },
+  {
+   "slot": "tragedy",
+   "slotVi": "Bi kịch / tragedy",
+   "composedCueKey": "MUSIC/tragedy",
+   "composedPack": "MUSIC_SCORE_MD1_pack_v1",
+   "portedCueKey": null,
+   "adjacentAmbience": [],
+   "status": "COVERED_COMPOSED",
+   "notes": "MD1 batch 1: no music cue existed before."
+  },
+  {
+   "slot": "resolution",
+   "slotVi": "Kết / resolution",
+   "composedCueKey": "MUSIC/rift_finale",
+   "composedPack": "MUSIC_COMPOSED_pack_v1",
+   "portedCueKey": "MUSIC/rift_finale",
+   "adjacentAmbience": [],
+   "status": "COVERED_COMPOSED",
+   "notes": "Checkpoint 26; the set's only full close; ported cue exists."
+  }
+ ]
+}
