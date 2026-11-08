@@ -94,6 +94,7 @@ CIN015_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN015_DRA
 CIN016_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN016_DRAFT_V1"
 CIN017_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN017_DRAFT_V1"
 CIN018_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN018_DRAFT_V1"
+CIN019_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN019_DRAFT_V1"
 DUR_TOL_S = 0.02
 
 # P0 animatic files delivered in checkpoint 03, revised in checkpoint 13
@@ -1172,6 +1173,66 @@ def main():
         entry.update({"cueKey": f"MIX/V1/{scene['sceneId']}",
                       "category": "mix", "sceneId": scene["sceneId"],
                       "mixVersion": "v1_cin018_proposed",
+                      "codec": mx["format"]["codec"],
+                      "sampleRateHz": mx["format"]["sampleRateHz"],
+                      "channels": mx["format"]["channels"],
+                      "integratedLufs": float(mx["integratedLUFS"]),
+                      "truePeakDbtp": float(mx["truePeakDBTP"]),
+                      "assetState": "DRAFT_MIX_NOT_FINAL",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["mix"] += 1
+
+    # --- 3k15. CIN_019 draft mix v1 (checkpoint 53) ---
+    # Sixteenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1,
+    # CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1,
+    # CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016 v1,
+    # CIN_017 v1 and CIN_018 v1 (same recipe as P0 v3; stem
+    # assignment PROPOSED_CANDIDATE, see
+    # CIN019_MIX_V1_manifest_v1.json). The CP17 VO take (Ly An)
+    # FITS inside its 12.5-17.5 s window (2.880 s, ends 15.380 s,
+    # 2.120 s before the window end); no overrun, no tail trim.
+    # Ducking -4.29 dB over the full VO window (CP39 method -- a
+    # real cut: rift_finale carries real signal inside the
+    # window, segment RMS -22.1 dBFS measured this run). The mix
+    # measures -27.09 LUFS / -8.62 dBTP -- the quietest scene mix
+    # so far -- because the CP17 take itself is one of the
+    # quietest (-25.52 LUFS); VO is kept at unity per the recipe,
+    # not normalized. rift_finale is the composed set's only
+    # full close (the leitmotif's answering tail, withheld in
+    # every other cue except the resolve stinger) and this is
+    # its FIRST scene-mix use, for the campaign's resolution
+    # scene; river_shore is a third scene-mix use (CIN_003,
+    # CIN_008) for the rebuilt river village the line lands in.
+    # Staging: the timing records the S03 dialogue onscreen:
+    # true for Ly An and the keyframe manifest lists her among
+    # the scene's on-screen characters, but the S03 frame is a
+    # wide dawn view of the whole village under reconstruction
+    # and no individual figure is identifiable as Ly An at this
+    # scale; faces and costumes are storyboard placeholders
+    # (NPC_LYAN has no approved cinematic character lock).
+    # Final-picture/character-lock matter, not a mix defect;
+    # the mix does not move the VO. Delivered under
+    # mix/cin019_v1/; the P0 v1/v2/v3, CIN_006 v1, CIN_003 v1,
+    # CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1,
+    # CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1,
+    # CIN_016 v1, CIN_017 v1 and CIN_018 v1 mixes are
+    # byte-identical to before. Adoption is Codex's decision.
+    cin019_mix = json.loads((CIN019_MIX_V1_SRC
+                             / "CIN019_MIX_V1_manifest_v1.json")
+                            .read_text(encoding="utf-8"))
+    for scene in cin019_mix["scenes"]:
+        mx = scene["mix"]
+        src_rel = f"Art_Source/Audio/Muse/MIX/CIN019_DRAFT_V1/{mx['file']}"
+        dest_rel = f"mix/cin019_v1/{mx['file']}"
+        entry = copy_verified_audio(
+            src_rel, dest_rel, mx["sha256"], mx["format"]["bytes"],
+            mx["durationSeconds"], f"CIN_019 mix v1 {scene['sceneId']}")
+        if entry is None:
+            continue
+        entry.update({"cueKey": f"MIX/V1/{scene['sceneId']}",
+                      "category": "mix", "sceneId": scene["sceneId"],
+                      "mixVersion": "v1_cin019_proposed",
                       "codec": mx["format"]["codec"],
                       "sampleRateHz": mx["format"]["sampleRateHz"],
                       "channels": mx["format"]["channels"],

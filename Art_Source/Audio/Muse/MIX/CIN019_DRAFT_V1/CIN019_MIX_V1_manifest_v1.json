@@ -1,0 +1,152 @@
+{
+  "checkpoint": "MEDIA-02 checkpoint 53 - CIN_019 draft mix v1 (sixteenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016 v1, CIN_017 v1 and CIN_018 v1, same recipe as P0 v3)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_MIX_NOT_FINAL",
+  "mixVersion": "v1_cin019_proposed",
+  "mixVerdict": "DRAFT_MIX_FOR_REVIEW: sixteenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016 v1, CIN_017 v1 and CIN_018 v1, built with the P0 v3 recipe (same gain targets, ducking params, peak guard, loop joins). Stem assignment is NEW and PROPOSED_CANDIDATE (the CP02 stem table assigns nothing to CIN_019; the scene timing manifest lists only the reveal stinger as a candidate stem). VO take is the CP17 draft; the take FITS its window (2.880 s, 12.5-15.380 s) by 2.120 s: no overrun, no tail trim at the scene edge. NOT a mix PASS: no ear audition, stem table not locked, stinger placement PROPOSED pending picture lock. Adoption is Codex's adapter decision.",
+  "stemAssignment": {
+    "status": "PROPOSED_CANDIDATE_NEW",
+    "source": "No CP02 assignment exists for CIN_019; rift_finale music + river_shore ambience are the resolution cues (composed, CP26/CP30) for this scene (S01: wide three-quarter view of a mountaintop stone platform at dusk, five elemental pillars around an empty central space, WIDE_STATIC; S02: medium interior shot of a machinery hall, a young warden straining at a large sparking wall lever, a second warden at a bank of levers on a control console, MEDIUM; S03: wide dawn view of a riverside village under reconstruction, water cascading through a stepped, stone-repaired channel in the foreground, small groups of workers carrying logs and baskets, WIDE_STATIC; keyframes CIN_019 S01/S02/S03). rift_finale is the composed set's only full close -- the Ben Mua leitmotif's answering tail (F#-E-D), withheld in every other cue except the resolve stinger, sounds here -- for the line that closes the campaign's arc ('Lan nay khong ai giu het nam con duong.'). It has not been used in any scene mix before; this is its first scene-mix use. river_shore is the composed water-edge bed for the scene's landing: the spoken line sits in S03, at the rebuilt river village with the repaired channel running through the frame; also used for CIN_003 and CIN_008 (third scene-mix use). mountain_wind was passed over: it beds only S01's mountaintop -- neither the machinery hall nor the river village the line lands in. ben_mua was passed over: the rain-quay leitmotif of the opening (CIN_003/CIN_014) -- this scene is the answer to that opening, and the set reserves its full close for it. quiet_discovery was passed over: the exploration silence (CIN_007/CIN_011/CIN_016), wrong for a resolution. thang_long is the capital-city form (wrong setting); tran_son is the bell-led gate form (CIN_008/CIN_012); lam_trieu is the pastoral flute (CIN_009/CIN_013); sa_hoa is desert/dry (CIN_010/CIN_018); bach_uyen is the underwater low-passed form (CIN_015/CIN_017) -- the water here runs in an open repaired channel at dawn, not submerged; boss_mang_cot is boss material and there is no boss in this beat. underwater was passed over: a submerged bed, wrong for an open channel at dawn; wind_canopy is a forest bed; waterfall was used for CIN_009; rain_light and rain_heavy are rain beds, but no rain is depicted in any of the three keyframes (dusk platform, hall interior, dawn village); cave_drips is a cave bed; desert_wind, city_night, thang_long_crowd and forge are wrong for this setting; rift (the ambience bed) beds the rift site itself, not the village the scene lands in. The reveal stinger is the scene's only manifest-listed candidate stem (CIN_019_timing_v1.json).",
+    "alternateTakeExcluded": "N/A: CIN_019 has no alternate take."
+  },
+  "gainStaging": {
+    "vo": "unity (anchor; take as delivered)",
+    "musicTargetLUFS": -30.0,
+    "ambiencePrimaryTargetLUFS": -36.0,
+    "stingers": "unity",
+    "peakCeilingDBTP": -1.0
+  },
+  "notes": [
+    "VO window 12.5-17.5 s is PROPOSED_ANIMATIC_PLACEMENT (only CIN_001_S05 is DECIDED); all 21 windows are approved for DRAFT VO per Goi 30 D1. The window is the uniform 12.5-17.5 s; it was NOT widened.",
+    "VO take runs 12.5-15.380 s: 2.880 s, ending 2.120 s BEFORE the 17.5 s window end -- the take FITS inside its window by 2120 ms (no overrun, unlike CIN_005/CIN_006/CIN_018). The take ends 2.620 s before the 18.00 s scene end, so no tail trim at the scene edge. The window, the take and the timing are unchanged.",
+    "The CP17 VO take measures -25.52 LUFS (checkpoint 17, re-verified from real bytes this run) -- one of the quietest campaign takes (the CIN_008 take measured -23.10 LUFS). VO is kept at unity per the recipe, not normalized.",
+    "Staging: the timing manifest records the S03 dialogue onscreen: true for Ly An (NPC_LYAN), and the keyframe manifest lists Ly An among the scene's on-screen characters -- but S03's frame is a WIDE dawn view of the whole village under reconstruction (stepped, stone-repaired channel in the foreground, small groups of workers carrying logs and baskets): no individual figure is identifiable as Ly An at this scale, and the scene's faces and costumes are storyboard placeholders (NPC_LYAN has no approved cinematic character lock). The placement is onscreen per the timing; the identity is not verifiable in the frame -- a final-picture/character-lock matter, not a mix defect; the mix does not move the VO.",
+    "Ducking depth is measured on the ducked bus against its unducked render (RMS over the full VO window vs a 2 s reference before the window). The full-window method from checkpoint 39 is retained so the depth is comparable across the CIN_003/CIN_005/CIN_007/CIN_008/ CIN_009/CIN_010/CIN_011/CIN_012/CIN_013/CIN_014/CIN_015/CIN_016/CIN_017/CIN_018/CIN_019 mixes (a 2 s slice can understate the cut on cues whose window opening is quiet).",
+    "Ducking depth is measured from real bytes over the full VO window (CP39 method, same params as every scene mix); rift_finale carries real signal inside this window (segment RMS -22.1 dBFS measured from the stem bytes this run), so a real cut is expected here, and the number in the manifest is the measured one, not a target. If the depth came out 0.0 dB it would mean the cue is silent in this window -- that is NOT the case for rift_finale (unlike quiet_discovery in CIN_016, which is digitally silent 12-15 s); a 0.0 dB reading here would be investigated, not reported as a silence pocket.",
+    "Ambience loop join uses a 1 s acrossfade; loopQA reports the max sample jump at the join against the bed's own 99.9th-percentile jump.",
+    "Stinger placement at 6.0 s (S02 start) is PROPOSED pending picture lock, mirroring the CIN_004 reveal at 6.0 s."
+  ],
+  "scenes": [
+    {
+      "sceneId": "CIN_019",
+      "seconds": 18.0,
+      "vo": {
+        "take": "VO_CIN_019_S03_LYAN_draft_v1.wav",
+        "windowSeconds": [
+          12.5,
+          15.38
+        ],
+        "takeDurationSeconds": 2.88,
+        "takeEndSeconds": 15.38,
+        "tailTrimmedAtSceneEdgeSeconds": 0.0,
+        "overrunVsWindowSeconds": -2.12,
+        "gainDb": 0.0
+      },
+      "stems": [
+        {
+          "cue": "MUSIC/rift_finale",
+          "role": "music",
+          "source": "ClientGodot/assets/audio/composed/music/rift_finale.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -30.0,
+          "packMeasuredLUFS": -21.95,
+          "remeasuredLUFS": -21.95,
+          "gainDb": -8.05,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/river_shore",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -36.0,
+          "packMeasuredLUFS": -29.69,
+          "remeasuredLUFS": -29.69,
+          "gainDb": -6.31,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/reveal",
+          "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "atSeconds": 6.0,
+          "gainDb": 0.0,
+          "packMeasuredLUFS": -24.96,
+          "remeasuredLUFS": -24.96,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "music",
+            "windowSeconds": [
+              12.5,
+              15.38
+            ],
+            "referenceSeconds": [
+              10.0,
+              12.0
+            ],
+            "depthInWindowDb": -4.29,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/reveal",
+        "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+        "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+        "atSeconds": 6.0,
+        "gainDb": 0.0,
+        "packMeasuredLUFS": -24.96,
+        "remeasuredLUFS": -24.96,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00154,
+              "bedP999Jump": 0.00266,
+              "ratioToP999": 0.58
+            }
+          ]
+        }
+      ],
+      "mix": {
+        "file": "CIN_019_mix_draft_v1.wav",
+        "sha256": "28d6c4754fd2634e7964518b1c6def55d4bea53058389c72e2d497549b943c69",
+        "durationSeconds": 18.0,
+        "integratedLUFS": "-27.09",
+        "truePeakDBTP": "-8.62",
+        "loudnessRangeLU": "8.10",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 3456100
+        }
+      }
+    }
+  ]
+}

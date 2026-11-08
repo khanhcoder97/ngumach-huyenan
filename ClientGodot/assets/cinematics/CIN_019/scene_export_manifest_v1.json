@@ -1,130 +1,157 @@
 {
- "schemaVersion": 1,
- "checkpoint": "MEDIA-02 checkpoint 25 - CIN_019 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
- "decisionId": "DEC-MEDIA-P0-20261105",
- "branch": "muse/media-production-20261104",
- "baseSha": "f0859d0",
- "sceneId": "CIN_019",
- "title": "Năm mạch, không một chủ nhân",
- "durationSeconds": 18.0,
- "dialogueCues": 1,
- "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
- "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
- "motionModel": {
-  "kind": "ANIMATIC_MOTION_KEN_BURNS",
-  "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
-  "shots": {
-   "CIN_019_S01": "push-in centered",
-   "CIN_019_S02": "push-in centered",
-   "CIN_019_S03": "push-in centered"
-  }
- },
- "reelOffsetSeconds": null,
- "reelTotalSeconds": null,
- "files": {
-  "mp4": {
-   "path": "assets/cinematics/CIN_019/CIN_019_640x360_30fps.mp4",
-   "sha256": "01390d08e77ba8c7c758e91a6eb67bc874a124d5568eea77a71652a9a026828f",
-   "sizeBytes": 1320849,
-   "codec": "h264",
-   "width": 640,
-   "height": 360,
-   "fps": 30,
-   "durationSeconds": 18.0,
-   "frames": 540
+  "schemaVersion": 1,
+  "checkpoint": "MEDIA-02 checkpoint 53 - CIN_019 draft mix v1: embedded draft mix audio in the runtime OGV + review MP4 (video streams bit-identical); poster/SRT/timing unchanged",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "baseSha": "f0859d0",
+  "sceneId": "CIN_019",
+  "title": "Năm mạch, không một chủ nhân",
+  "durationSeconds": 18.0,
+  "dialogueCues": 1,
+  "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+  "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+  "motionModel": {
+    "kind": "ANIMATIC_MOTION_KEN_BURNS",
+    "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
+    "shots": {
+      "CIN_019_S01": "push-in centered",
+      "CIN_019_S02": "push-in centered",
+      "CIN_019_S03": "push-in centered"
+    }
   },
-  "ogv": {
-   "path": "assets/cinematics/CIN_019/CIN_019_640x360_30fps.ogv",
-   "sha256": "6bea0c19fc75facd7308f4128a18b50115ddc823ee73b495764d1bf103fed412",
-   "sizeBytes": 460426,
-   "codec": "theora",
-   "width": 640,
-   "height": 360,
-   "fps": 30,
-   "durationSeconds": 18.0,
-   "storedFrames": 498
+  "reelOffsetSeconds": null,
+  "reelTotalSeconds": null,
+  "files": {
+    "mp4": {
+      "path": "assets/cinematics/CIN_019/CIN_019_640x360_30fps.mp4",
+      "sha256": "b33b48059417859a3c4f114dde2ebb1c8280d471c442280a5fc6a07e67e95eee",
+      "sizeBytes": 1768091,
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "frames": 540,
+      "audio": {
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 192,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN019_DRAFT_V1/CIN_019_mix_draft_v1.wav",
+        "sourceMixSha256": "28d6c4754fd2634e7964518b1c6def55d4bea53058389c72e2d497549b943c69",
+        "mixVersion": "v1_cin019_proposed",
+        "integratedLUFS": "-27.10",
+        "truePeakDBTP": "-8.53",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 540
+      }
+    },
+    "ogv": {
+      "path": "assets/cinematics/CIN_019/CIN_019_640x360_30fps.ogv",
+      "sha256": "0e23a71c2c46b5e8304755a158155ba25ff8f5a5ddf75f7c2754100fbe1dbbb2",
+      "sizeBytes": 741393,
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "storedFrames": 498,
+      "audio": {
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 160,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN019_DRAFT_V1/CIN_019_mix_draft_v1.wav",
+        "sourceMixSha256": "28d6c4754fd2634e7964518b1c6def55d4bea53058389c72e2d497549b943c69",
+        "mixVersion": "v1_cin019_proposed",
+        "integratedLUFS": "-27.08",
+        "truePeakDBTP": "-8.59",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 498
+      }
+    },
+    "poster": {
+      "path": "assets/cinematics/CIN_019/CIN_019_poster.png",
+      "sha256": "95d4ee945f24a7fdccdfd2286edb5f1a4b9b033c4ca26c6a6cf891847fa92fbd",
+      "sizeBytes": 340035,
+      "sourceKeyframe": "keyframe_CIN_019_S01.png"
+    },
+    "timing": {
+      "path": "assets/cinematics/CIN_019/CIN_019_timing_v1.json",
+      "sha256": "46c634b3643b4f32c1527b2fefc7be4e1bfad09366147f452dd22742768625cd",
+      "sizeBytes": 2385
+    },
+    "srt": {
+      "path": "assets/cinematics/CIN_019/CIN_019_vi.srt",
+      "sha256": "faac38b559210e82b467320e228e50a6a5c47b1b09e510df052830f2aa6b0668",
+      "sizeBytes": 85,
+      "status": "DRAFT"
+    }
   },
-  "poster": {
-   "path": "assets/cinematics/CIN_019/CIN_019_poster.png",
-   "sha256": "95d4ee945f24a7fdccdfd2286edb5f1a4b9b033c4ca26c6a6cf891847fa92fbd",
-   "sizeBytes": 340035,
-   "sourceKeyframe": "keyframe_CIN_019_S01.png"
+  "frameCheck": {
+    "CIN_019_S01": {
+      "identitySeconds": 0.0,
+      "identityMeanAbsChannelDiff": 3.692,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 5.9,
+      "motionMeanAbsChannelDiff": 19.846,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 16.533,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_019_S02": {
+      "identitySeconds": 6.0,
+      "identityMeanAbsChannelDiff": 4.541,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 11.9,
+      "motionMeanAbsChannelDiff": 40.943,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 34.47,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_019_S03": {
+      "identitySeconds": 12.0,
+      "identityMeanAbsChannelDiff": 3.989,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 17.9,
+      "motionMeanAbsChannelDiff": 25.923,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 21.518,
+      "continuousMinRequired": 0.5
+    }
   },
-  "timing": {
-   "path": "assets/cinematics/CIN_019/CIN_019_timing_v1.json",
-   "sha256": "46c634b3643b4f32c1527b2fefc7be4e1bfad09366147f452dd22742768625cd",
-   "sizeBytes": 2385
-  },
-  "srt": {
-   "path": "assets/cinematics/CIN_019/CIN_019_vi.srt",
-   "sha256": "faac38b559210e82b467320e228e50a6a5c47b1b09e510df052830f2aa6b0668",
-   "sizeBytes": 85,
-   "status": "DRAFT"
-  }
- },
- "frameCheck": {
-  "CIN_019_S01": {
-   "identitySeconds": 0.0,
-   "identityMeanAbsChannelDiff": 3.692,
-   "identityMaxAllowed": 10.0,
-   "motionSeconds": 5.9,
-   "motionMeanAbsChannelDiff": 19.846,
-   "motionMinRequired": 1.5,
-   "continuousMotionMeanAbsChannelDiff": 16.533,
-   "continuousMinRequired": 0.5
-  },
-  "CIN_019_S02": {
-   "identitySeconds": 6.0,
-   "identityMeanAbsChannelDiff": 4.541,
-   "identityMaxAllowed": 10.0,
-   "motionSeconds": 11.9,
-   "motionMeanAbsChannelDiff": 40.943,
-   "motionMinRequired": 1.5,
-   "continuousMotionMeanAbsChannelDiff": 34.47,
-   "continuousMinRequired": 0.5
-  },
-  "CIN_019_S03": {
-   "identitySeconds": 12.0,
-   "identityMeanAbsChannelDiff": 3.989,
-   "identityMaxAllowed": 10.0,
-   "motionSeconds": 17.9,
-   "motionMeanAbsChannelDiff": 25.923,
-   "motionMinRequired": 1.5,
-   "continuousMotionMeanAbsChannelDiff": 21.518,
-   "continuousMinRequired": 0.5
-  }
- },
- "shots": [
-  {
-   "shotId": "CIN_019_S01",
-   "startSeconds": 0.0,
-   "endSeconds": 6.0,
-   "camera": "WIDE_STATIC",
-   "keyframe": "keyframe_CIN_019_S01.png",
-   "motion": "push-in centered"
-  },
-  {
-   "shotId": "CIN_019_S02",
-   "startSeconds": 6.0,
-   "endSeconds": 12.0,
-   "camera": "MEDIUM_STATIC",
-   "keyframe": "keyframe_CIN_019_S02.png",
-   "motion": "push-in centered"
-  },
-  {
-   "shotId": "CIN_019_S03",
-   "startSeconds": 12.0,
-   "endSeconds": 18.0,
-   "camera": "WIDE_STATIC",
-   "keyframe": "keyframe_CIN_019_S03.png",
-   "motion": "push-in centered"
-  }
- ],
- "notes": [
-  "Campaign animated take (Goi 30 item 7, checkpoint 25 batch): real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
-  "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
-  "CIN_019 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
-  "Scene SRT carries 1 cue (Ly An, CIN_019_S03 at 12.5-17.5 s). Dialogue window status in the campaign manifest: PROPOSED_ANIMATIC_PLACEMENT, approved for DRAFT VO production only by the checkpoint-14 D1 decision. The checkpoint 17 VO draft for this cue measures 2.880 s at natural speed (windowFit FITS, not sped up).",
-  "Recorded keyframe defects: S03's Ly An is not individually identifiable among the small distant figures and its channel flow reads fully established over finished-looking stone weirs rather than a first trickle through freshly repaired channels; S02 has only one additional warden at the controls where the prompt says 'other wardens', and its failing lever throws heavy sparks and debris, reading closer to an exploding mechanism than a jammed lever being braced; S01's earth pillar reads as a half-collapsed rubble stack and its wood pillar as plain bamboo scaffolding. All three shots are first candidates for the final-picture revision pass once the character lock exists."
- ]
+  "shots": [
+    {
+      "shotId": "CIN_019_S01",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "camera": "WIDE_STATIC",
+      "keyframe": "keyframe_CIN_019_S01.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_019_S02",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "camera": "MEDIUM_STATIC",
+      "keyframe": "keyframe_CIN_019_S02.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_019_S03",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "camera": "WIDE_STATIC",
+      "keyframe": "keyframe_CIN_019_S03.png",
+      "motion": "push-in centered"
+    }
+  ],
+  "notes": [
+    "Campaign animated take (Goi 30 item 7, checkpoint 25 batch): real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+    "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
+    "CIN_019 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
+    "Scene SRT carries 1 cue (Ly An, CIN_019_S03 at 12.5-17.5 s). Dialogue window status in the campaign manifest: PROPOSED_ANIMATIC_PLACEMENT, approved for DRAFT VO production only by the checkpoint-14 D1 decision. The checkpoint 17 VO draft for this cue measures 2.880 s at natural speed (windowFit FITS, not sped up).",
+    "Recorded keyframe defects: S03's Ly An is not individually identifiable among the small distant figures and its channel flow reads fully established over finished-looking stone weirs rather than a first trickle through freshly repaired channels; S02 has only one additional warden at the controls where the prompt says 'other wardens', and its failing lever throws heavy sparks and debris, reading closer to an exploding mechanism than a jammed lever being braced; S01's earth pillar reads as a half-collapsed rubble stack and its wood pillar as plain bamboo scaffolding. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+  ],
+  "hasAudioTrack": true
 }

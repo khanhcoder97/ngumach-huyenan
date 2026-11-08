@@ -37,7 +37,7 @@ Builds Implementation/Content/Audio/Deliveries/PRONUNCIATION_TABLE_v1.json
   verified to exist (mix WAV sha256 vs manifest for embedded scenes):
   embedded soundtrack -> standalone mix WAV -> stem re-assembly + VO
   take -> VO take + SRT -> silent video + SRT overlay. Silent scenes
-  (CIN_019-020) have no mix fallback: the adapter must not improvise
+  (CIN_020) has no mix fallback: the adapter must not improvise
   one. Global rules: never play embedded + external audio together;
   burned-subtitle variant is review-only; rewatch/skip/seen/fallback
   never grant quest.
@@ -101,6 +101,7 @@ MIX_MANIFESTS = {
     "cin016": ROOT / "Art_Source/Audio/Muse/MIX/CIN016_DRAFT_V1/CIN016_MIX_V1_manifest_v1.json",
     "cin017": ROOT / "Art_Source/Audio/Muse/MIX/CIN017_DRAFT_V1/CIN017_MIX_V1_manifest_v1.json",
     "cin018": ROOT / "Art_Source/Audio/Muse/MIX/CIN018_DRAFT_V1/CIN018_MIX_V1_manifest_v1.json",
+    "cin019": ROOT / "Art_Source/Audio/Muse/MIX/CIN019_DRAFT_V1/CIN019_MIX_V1_manifest_v1.json",
     "prologue": ROOT / "Art_Source/Audio/Muse/MIX/PROLOGUE_DRAFT/PROLOGUE_mix_manifest_v1.json",
 }
 COMPOSED = ROOT / "Art_Source/Audio/Muse/COMPOSED"
@@ -562,6 +563,9 @@ MIX_ROWS = [
     ("CIN_018", "v1_cin018_proposed", "cin018",
      "Art_Source/Audio/Muse/MIX/CIN018_DRAFT_V1/CIN_018_mix_draft_v1.wav",
      "ClientGodot/assets/audio/mix/cin018_v1/CIN_018_mix_draft_v1.wav"),
+    ("CIN_019", "v1_cin019_proposed", "cin019",
+     "Art_Source/Audio/Muse/MIX/CIN019_DRAFT_V1/CIN_019_mix_draft_v1.wav",
+     "ClientGodot/assets/audio/mix/cin019_v1/CIN_019_mix_draft_v1.wav"),
 ]
 EMBEDDED_RUNTIME_MIX = {  # sceneId -> runtime standalone mix (embedded set)
     "CIN_000": "ClientGodot/assets/audio/mix/prologue/PROLOGUE_mix_v1.wav",
@@ -583,6 +587,7 @@ EMBEDDED_RUNTIME_MIX = {  # sceneId -> runtime standalone mix (embedded set)
     "CIN_016": "ClientGodot/assets/audio/mix/cin016_v1/CIN_016_mix_draft_v1.wav",
     "CIN_017": "ClientGodot/assets/audio/mix/cin017_v1/CIN_017_mix_draft_v1.wav",
     "CIN_018": "ClientGodot/assets/audio/mix/cin018_v1/CIN_018_mix_draft_v1.wav",
+    "CIN_019": "ClientGodot/assets/audio/mix/cin019_v1/CIN_019_mix_draft_v1.wav",
 }
 
 
@@ -874,7 +879,7 @@ FALLBACK_RULES = [
     {"id": "FB-5",
      "rule": "If the SRT is missing, show no captions. Never burn captions from VO text and never use the review-only burned-subtitle variant as runtime."},
     {"id": "FB-6",
-     "rule": "Scenes with no mix yet (CIN_019-020) play silent video + SRT only. The adapter must not improvise a mix from stems or play a VO take over silent video."},
+     "rule": "Scenes with no mix yet (CIN_020) play silent video + SRT only. The adapter must not improvise a mix from stems or play a VO take over silent video."},
     {"id": "FB-7",
      "rule": "Rewatch, skip, seen-state and any fallback step never grant quest progress (WO32 item 4; enforcement is the Codex runtime's job)."},
 ]
@@ -891,6 +896,7 @@ MIX_MANIFEST_BY_SCENE = {
     "CIN_016": "cin016",
     "CIN_017": "cin017",
     "CIN_018": "cin018",
+    "CIN_019": "cin019",
 }
 
 
@@ -1024,7 +1030,7 @@ def main():
     fail_if_errors()
     out = {
         "manifestId": "NGM_PRONUNCIATION_TABLE_V1",
-        "checkpoint": "MEDIA-02 checkpoint 52 - pronunciation/proper-name table re-run: CIN_018 draft mix v1 embedded (19 embedded mixes, 2 silent CIN_019-020); names unchanged, no new seam row (MUSIC/sa_hoa + AMBIENCE/desert_wind already in the table from the CIN_010 scene mix); CIN_018 is the only campaign scene with two dialogue windows, so its cue row carries both takes (S02 FITS, S03 overrun +0.280 s kept per owner verdict) (Codex WO32 item 3); integration baseline 6f79853 (PR #128 merged, owner LF policy now on integration)",
+        "checkpoint": "MEDIA-02 checkpoint 53 - pronunciation/proper-name table re-run: CIN_019 draft mix v1 embedded (20 embedded mixes, 1 silent CIN_020); names unchanged, 1 new seam row (MUSIC/rift_finale composed, wrap jump 0.00036, first measured now that the cue is used in a scene mix; AMBIENCE/river_shore already in the table from the CIN_003/CIN_008 scene mixes) (Codex WO32 item 3); integration baseline 6f79853 (PR #128 merged, owner LF policy now on integration)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "workOrderRef": "Work Order 32 (PR #128) item 3; issue #116 comment 6713518554",
         "branch": "muse/media-production-20261104",

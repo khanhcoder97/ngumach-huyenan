@@ -7,10 +7,10 @@
   "music_ambience": 22,
   "sfx_ui_variants": 519,
   "vo": 30,
-  "mix": 28,
+  "mix": 29,
   "composed": 26
  },
- "totalFiles": 625,
+ "totalFiles": 626,
  "notes": [
   "Every file copied from real bytes and verified: sha256 + size + ffprobe duration against the checkpoint 04/07/08 pack records. LFS pointers fail the copy.",
   "All cues remain RENDERED_CANDIDATE / DRAFT_NOT_FINAL_VO. Files are delivered into the runtime tree; wiring them into Godot scenes/code is Codex's presentation adapter work (Muse writes no .gd/.tscn/.cs).",
@@ -11887,6 +11887,24 @@
    "channels": 2,
    "integratedLufs": -21.51,
    "truePeakDbtp": -2.51,
+   "assetState": "DRAFT_MIX_NOT_FINAL",
+   "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"
+  },
+  {
+   "runtimePath": "assets/audio/mix/cin019_v1/CIN_019_mix_draft_v1.wav",
+   "sourcePath": "Art_Source/Audio/Muse/MIX/CIN019_DRAFT_V1/CIN_019_mix_draft_v1.wav",
+   "sha256": "28d6c4754fd2634e7964518b1c6def55d4bea53058389c72e2d497549b943c69",
+   "sizeBytes": 3456100,
+   "durationSeconds": 18.0,
+   "cueKey": "MIX/V1/CIN_019",
+   "category": "mix",
+   "sceneId": "CIN_019",
+   "mixVersion": "v1_cin019_proposed",
+   "codec": "pcm_s16le",
+   "sampleRateHz": 48000,
+   "channels": 2,
+   "integratedLufs": -27.09,
+   "truePeakDbtp": -8.62,
    "assetState": "DRAFT_MIX_NOT_FINAL",
    "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"
   },
