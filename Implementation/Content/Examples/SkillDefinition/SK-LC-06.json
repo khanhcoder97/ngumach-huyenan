@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-LC-06",
+  "classId": "CLASS_LINH_CUNG",
+  "displayNameKey": "SKILL.SK-LC-06.NAME",
+  "cooldownSeconds": 65,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 40
+  },
+  "targeting": {
+    "type": "AREA_RAIN",
+    "rangeWu": 24,
+    "angleDegrees": 360,
+    "maxTargets": 8
+  },
+  "coefficients": {
+    "pve": 3.0,
+    "boss": 3.0,
+    "pvp": 1.0
+  },
+  "telegraphSeconds": 1.2,
+  "vfxKey": "VFX/Skill/SK-LC-06",
+  "sourceRef": "Combat_Skills_VFX_Animation_Spec_vi.md#Linh-Cung"
+}

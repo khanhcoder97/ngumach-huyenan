@@ -47,7 +47,7 @@ public static class P1Validation
         new(@"^[A-Z][A-Z0-9_]*$", RegexOptions.CultureInvariant);
 
     private static readonly Regex SkillIdPattern =
-        new(@"^SK-MK-0[1-3]$", RegexOptions.CultureInvariant);
+        new(@"^(SK-(MK|AD|HB|TC|LC)-[0-9]{2})$", RegexOptions.CultureInvariant);
 
     private static readonly Regex QuestIdPattern =
         new(@"^[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{2}$", RegexOptions.CultureInvariant);

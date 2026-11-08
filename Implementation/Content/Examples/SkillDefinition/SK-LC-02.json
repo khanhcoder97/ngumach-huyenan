@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-LC-02",
+  "classId": "CLASS_LINH_CUNG",
+  "displayNameKey": "SKILL.SK-LC-02.NAME",
+  "cooldownSeconds": 14,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 18
+  },
+  "targeting": {
+    "type": "TRAP_AREA",
+    "rangeWu": 4,
+    "angleDegrees": 360,
+    "maxTargets": 1
+  },
+  "coefficients": {
+    "pve": 0.9,
+    "boss": 0.9,
+    "pvp": 0.405
+  },
+  "telegraphSeconds": 0.45,
+  "vfxKey": "VFX/Skill/SK-LC-02",
+  "sourceRef": "Combat_Skills_VFX_Animation_Spec_vi.md#Linh-Cung"
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-AD-01",
+  "classId": "CLASS_ANH_DAO",
+  "displayNameKey": "SKILL.SK-AD-01.NAME",
+  "cooldownSeconds": 8,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 14
+  },
+  "targeting": {
+    "type": "TARGETED",
+    "rangeWu": 2.5,
+    "angleDegrees": 90,
+    "maxTargets": 1
+  },
+  "coefficients": {
+    "pve": 1.4,
+    "boss": 1.4,
+    "pvp": 0.63
+  },
+  "telegraphSeconds": 0.3,
+  "vfxKey": "VFX/Skill/SK-AD-01",
+  "sourceRef": "Combat_Skills_VFX_Animation_Spec_vi.md#Anh-Dao"
+}

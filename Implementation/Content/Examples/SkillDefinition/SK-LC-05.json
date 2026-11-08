@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-LC-05",
+  "classId": "CLASS_LINH_CUNG",
+  "displayNameKey": "SKILL.SK-LC-05.NAME",
+  "cooldownSeconds": 9,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 12
+  },
+  "targeting": {
+    "type": "DASH_BACKWARD_ATTACK",
+    "rangeWu": 5,
+    "angleDegrees": 60,
+    "maxTargets": 1
+  },
+  "coefficients": {
+    "pve": 0.8,
+    "boss": 0.8,
+    "pvp": 0.36
+  },
+  "telegraphSeconds": 0.12,
+  "vfxKey": "VFX/Skill/SK-LC-05",
+  "sourceRef": "Combat_Skills_VFX_Animation_Spec_vi.md#Linh-Cung"
+}

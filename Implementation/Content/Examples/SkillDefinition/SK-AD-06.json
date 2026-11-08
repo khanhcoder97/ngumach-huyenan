@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-AD-06",
+  "classId": "CLASS_ANH_DAO",
+  "displayNameKey": "SKILL.SK-AD-06.NAME",
+  "cooldownSeconds": 60,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 35
+  },
+  "targeting": {
+    "type": "CIRCLE",
+    "rangeWu": 3.4,
+    "angleDegrees": 360,
+    "maxTargets": 3
+  },
+  "coefficients": {
+    "pve": 2.3,
+    "boss": 2.3,
+    "pvp": 0.92
+  },
+  "telegraphSeconds": 0.55,
+  "vfxKey": "VFX/Skill/SK-AD-06",
+  "sourceRef": "Combat_Skills_VFX_Animation_Spec_vi.md#Anh-Dao"
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-TC-03",
+  "classId": "CLASS_THACH_CHUY",
+  "displayNameKey": "SKILL.SK-TC-03.NAME",
+  "cooldownSeconds": 18,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 24
+  },
+  "targeting": {
+    "type": "SELF",
+    "rangeWu": 0,
+    "angleDegrees": 360,
+    "maxTargets": 1
+  },
+  "coefficients": {
+    "pve": 1.0,
+    "boss": 1.0,
+    "pvp": 0.45
+  },
+  "telegraphSeconds": 0.6,
+  "vfxKey": "VFX/Skill/SK-TC-03",
+  "sourceRef": "Combat_Skills_VFX_Animation_Spec_vi.md#Thach-Chuy"
+}
