@@ -269,12 +269,45 @@ public static class QuestCatalogLoader
                         $"{path}: objective '{objectiveId}' has invalid mapId '{objectiveFile.MapId}'.");
                 }
 
+                // Validate optional fields for MAP_VIEWED and other extended types
+                var floorId = objectiveFile.FloorId;
+                if (floorId is not null && !TokenIdPattern.IsMatch(floorId))
+                {
+                    throw new InvalidOperationException(
+                        $"{path}: objective '{objectiveId}' has invalid floorId '{floorId}'.");
+                }
+
+                var requiredCompletedObjectiveIds = objectiveFile.RequiredCompletedObjectiveIds;
+                if (requiredCompletedObjectiveIds is not null)
+                {
+                    var seenPrereqs = new HashSet<string>(StringComparer.Ordinal);
+                    foreach (var prereqId in requiredCompletedObjectiveIds)
+                    {
+                        if (!P1Validation.IsObjectiveId(prereqId))
+                        {
+                            throw new InvalidOperationException(
+                                $"{path}: objective '{objectiveId}' has invalid prerequisite '{prereqId}'.");
+                        }
+
+                        if (!seenPrereqs.Add(prereqId))
+                        {
+                            throw new InvalidOperationException(
+                                $"{path}: objective '{objectiveId}' has duplicate prerequisite '{prereqId}'.");
+                        }
+                    }
+                }
+
+                var attemptOneShot = objectiveFile.AttemptOneShot;
+
                 objectives.Add(new QuestObjectiveDefinition(
                     objectiveId,
                     objectiveFile.Type!,
                     targetIds,
                     objectiveFile.Count.Value,
-                    objectiveFile.MapId));
+                    objectiveFile.MapId,
+                    floorId,
+                    requiredCompletedObjectiveIds,
+                    attemptOneShot));
             }
 
             var initialStepId = QuestStepIds.FromObjectiveId(objectives[0].ObjectiveId);
@@ -539,5 +572,8 @@ public static class QuestCatalogLoader
         public List<string>? TargetIds { get; init; }
         public int? Count { get; init; }
         public string? MapId { get; init; }
+        public string? FloorId { get; init; }
+        public List<string>? RequiredCompletedObjectiveIds { get; init; }
+        public bool? AttemptOneShot { get; init; }
     }
 }
