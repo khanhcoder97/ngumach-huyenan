@@ -1,0 +1,746 @@
+{
+ "manifestId": "NGM_P0_MOTION_AB_V1",
+ "checkpoint": "WO37 M-C checkpoint 2 - P0 motion/AB (12 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "workOrder": "WO37 M-C",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "6f79853",
+ "status": "DRAFT_POSE_ANIMATION - storyboard-level motion draft; final picture still waits on character lock; A/B is a review pack, runtime files are NOT replaced",
+ "sources": {
+  "motionLedger": "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json",
+  "p0KeyframesManifest": "Art_Source/Cinematics/P0_Animatic/P0_keyframes_16x9_manifest_v1.json",
+  "cin001Timing": "Implementation/Content/Narrative/Deliveries/CIN_001/CIN_001_timing_v1.json",
+  "cin002Timing": "Implementation/Content/Narrative/Deliveries/CIN_002/CIN_002_timing_v1.json",
+  "cin004Timing": "Implementation/Content/Narrative/Deliveries/CIN_004/CIN_004_timing_v1.json"
+ },
+ "rules": {
+  "poseCount": 5,
+  "poseFps": 10,
+  "framesPerPose": 3,
+  "outputFps": 30,
+  "shotDurationSeconds": 6.0,
+  "frameSize": [
+   640,
+   360
+  ],
+  "poseFrameSize": [
+   640,
+   360
+  ],
+  "stripCellSize": [
+   320,
+   180
+  ],
+  "status": "DRAFT_POSE_ANIMATION - storyboard-level motion draft; final picture still waits on character lock; A/B is a review pack, runtime files are NOT replaced",
+  "beatSeconds": 0.5,
+  "note": "5 poses per beat at 10 pose fps (0.5 s beat). The generated-strip route was abandoned after full-resolution verification: every generated strip is a panorama with the subject repeated, not 8 separate frames, so equal-width cuts hold fragments of adjacent repeats. All 12 shots are procedural (code-rendered from the storyboard keyframe); no generated pixels remain in the pack."
+ },
+ "rejectedStrips": [
+  {
+   "shotId": "CIN_001_S05",
+   "attempt": "v1",
+   "webpSha256": "63797abf79cbf7664047026341187e204f14f808bff617c59c58d7f4d9181605",
+   "reason": "Panorama, not a strip: one continuous scene with the girl repeated 8 times; equal cutting gives background jumps (bamboo -> pier -> water)."
+  },
+  {
+   "shotId": "CIN_001_S05",
+   "attempt": "v2",
+   "webpSha256": "bbd6fa6b17e30dc7cf828451667f035b7615a8a643aaa2e166608d70a5d1904a",
+   "reason": "Tracking close-up: camera pans right across panels and the girl is much larger than the keyframe framing; beat would jump-cut at hold boundaries."
+  },
+  {
+   "shotId": "CIN_002_S02",
+   "attempt": "v1",
+   "webpSha256": "3765fbfd44f49a20b59d5f25d9f349f3eae92ae0369ff21ea5451fcd576afe24",
+   "reason": "Panels 6-8: face melts (eyes/nose smeared); panel 5 already touches the water with a contact ripple (guardrail violation, verified on 2x zoom)."
+  },
+  {
+   "shotId": "CIN_002_S02",
+   "attempt": "v2",
+   "webpSha256": "9d85271c98d6ed85cd7550f26f9e584d206be68d78afd33439de3f2f9b84eedd",
+   "reason": "Square 560x560 cells (not 16:9; cannot fit without heavy padding/crop); panels 7-8 hand touches the water."
+  },
+  {
+   "shotId": "CIN_004_S01",
+   "attempt": "v1",
+   "webpSha256": "90f3f403e4bbc22567ad9cd2dff7a7a7233386d6ca54ff23be4959504864d129",
+   "reason": "Panel 1 starts with the head low (continuity jump from the keyframe); panels 6-8 head exits the right edge of frame."
+  },
+  {
+   "shotId": "CIN_002_S02",
+   "attempt": "v3 (used, then rejected)",
+   "webpSha256": "dd5b6a1cb1718100cbe610d3c8f35b87cae8217e0157c7effb201293d3e5ef1f",
+   "pngSha256": "6a3cc142ac3f04d98edf1e3349f0b582d5cdd0fcd15a6d036c9442ab6f225928",
+   "reason": "Panorama, not a strip: the man repeats along one continuous scene; equal 740 px cuts hold fragments of adjacent repeats (pose 5 holds the dissolving figure from the next repeat; verified at full resolution)."
+  },
+  {
+   "shotId": "CIN_004_S01",
+   "attempt": "v2 (used, then rejected)",
+   "webpSha256": "9a9cadcc8dacc57fa2542ee87f52ab2f3748d6e82733bf5f6ba9592d806be564",
+   "pngSha256": "0424bcde9acdd23031f9936ffc15ce4a62a337230e373b4007572f2d951f005a",
+   "reason": "Panorama: pose 5 holds a second serpent neck at the right edge and the head in a different position (verified at full resolution)."
+  },
+  {
+   "shotId": "CIN_004_S02",
+   "attempt": "v1 (used, then rejected)",
+   "webpSha256": "21befa44c08724a2c049d5ef07f96599fa4488a5a2df26f41f0c4774b217d9d7",
+   "pngSha256": "56d411a00e0b6958be40fbd07c2c2fa4433d30b9c3abd3a5f9375e9fb905931f",
+   "reason": "Panorama: pose 5 is a different panorama slice (head cropped at the right edge, coil in a different position; verified at full resolution)."
+  }
+ ],
+ "shots": [
+  {
+   "shotId": "CIN_001_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S01/pose_01.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S01/pose_02.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S01/pose_03.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S01/pose_04.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "2463a1db3a5c92bb6b6359ebb09e1da9951a2f14bd038ab0237c7618762c6346",
+    "d9cbe35fd1b17cc77094889e63ae24167e82ad12ae849028d000cc6d9095ddbf",
+    "afc2fdcb9232c7017248564f32fc23cc373f3c10baca2acd837fd298442ad40b",
+    "3cc434503583c78b92fa9d6f22ca630ed4ac6275496b338386c3d8acdcd47782",
+    "23629c9d0243199fb9d9413e1276fa6c9a466c99b4290c2883f7b49d8fa5ad9a"
+   ],
+   "interPoseMeanAbsDiff": [
+    0.62,
+    0.702,
+    0.783,
+    0.829
+   ],
+   "meanInterPoseDiff": 0.734,
+   "pose1VsKeyframeDiff": 0.301,
+   "lastPoseVsKeyframeDiff": 0.438,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_001_S02",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S02/pose_01.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S02/pose_02.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S02/pose_03.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S02/pose_04.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S02/pose_05.png"
+   ],
+   "poseSha256": [
+    "64ff4284238dfb10e70c1f61e124b3d02d91683d9eab929857ee50f11c7ccc66",
+    "b2c104e91af411d82f9866cc8065b3f8f591f8e25a61b869b7162ef1d6dd863c",
+    "e681f3f6eb08b370ae442d7718232dde63ef2705b50e79b2211df8c4fa691b8d",
+    "03075ef19ef3562688981bc115f0ec83de70b46001b0c88882c251dc77470e9c",
+    "7076d20163fc38c8a22b9b1ca35a65ac0430387f814f1784e080ac0ea652dc51"
+   ],
+   "interPoseMeanAbsDiff": [
+    1.414,
+    1.476,
+    1.539,
+    1.577
+   ],
+   "meanInterPoseDiff": 1.502,
+   "pose1VsKeyframeDiff": 0.255,
+   "lastPoseVsKeyframeDiff": 0.388,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_001_S03",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S03/pose_01.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S03/pose_02.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S03/pose_03.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S03/pose_04.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S03/pose_05.png"
+   ],
+   "poseSha256": [
+    "475aca3e0136a0e09bbe584dc67f58c2c6f6cff9ad8c9ddf75d74ea7ab26d698",
+    "645c454654d5187ec842542a8671b7d3aa399218ff6554809ff547f033e79577",
+    "21122b13cd27fcc9e04ba3efa33c59ab4fab1158e8777b7486c510d2b92ad244",
+    "c8492bba811683d3ddaab8c4e1739357af49ba706c6d9277a133241fee9b2ed9",
+    "1d058c9b2ec25bc9061982c4d93ab15f1f5e1b6ae632c66ee94718465a1ead90"
+   ],
+   "interPoseMeanAbsDiff": [
+    0.229,
+    0.394,
+    0.607,
+    0.763
+   ],
+   "meanInterPoseDiff": 0.498,
+   "pose1VsKeyframeDiff": 0.099,
+   "lastPoseVsKeyframeDiff": 0.473,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_001_S04",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S04/pose_01.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S04/pose_02.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S04/pose_03.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S04/pose_04.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S04/pose_05.png"
+   ],
+   "poseSha256": [
+    "1dae0a114cfb4cc3330b8156fb3bf34d3661888593b348f7e3b262acc2187ccd",
+    "8ee4196402289a8ad77c495771054961c847e98549d6496d992bc9737776d472",
+    "0226a4145babee6e723eb7c6d07f8fef0f807b4c9f213a35cd4c753088b4ef16",
+    "534944919ce2dda0d40a3678d8df2d507d5c4794eb030c05a2b670e3b454e10b",
+    "5b3519b0f6caff2dbbe375ca0d697745702614a72c3a10152a4c0eafc7ebcb34"
+   ],
+   "interPoseMeanAbsDiff": [
+    0.469,
+    0.508,
+    0.5,
+    0.534
+   ],
+   "meanInterPoseDiff": 0.503,
+   "pose1VsKeyframeDiff": 0.235,
+   "lastPoseVsKeyframeDiff": 0.486,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_001_S05",
+   "route": "procedural",
+   "beatSeconds": [
+    0.8,
+    1.3
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S05/pose_01.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S05/pose_02.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S05/pose_03.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S05/pose_04.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S05/pose_05.png"
+   ],
+   "poseSha256": [
+    "01c0b669f0a3246ff97aa58c9de8f4357de99d5601ef1883362b17ba0b5d9b6e",
+    "f69e0d046da0b46c4d6bfc2954d82c94f169da6feefa4953843592d2ec9f9c31",
+    "e1cb7f232ad9dc057c823915d1732d2641880ec314cf2318b4278413c32f77db",
+    "e9bfec88099bee9f36970cdf1d18ae7c533e98615341827fcd546b334f5bd939",
+    "83299009451699a3c1f0a8593b3824ccae9151979c47ebf21df2b949eba31348"
+   ],
+   "interPoseMeanAbsDiff": [
+    2.39,
+    2.466,
+    2.539,
+    2.576
+   ],
+   "meanInterPoseDiff": 2.493,
+   "pose1VsKeyframeDiff": 0.284,
+   "lastPoseVsKeyframeDiff": 5.534,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_001_S06",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S06/pose_01.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S06/pose_02.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S06/pose_03.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S06/pose_04.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_001_S06/pose_05.png"
+   ],
+   "poseSha256": [
+    "0678aa59b4c856b724ba53981132bcf27ff33bdee44bf64130b0296d34184278",
+    "7bae0cbc48371be434d75a77630f9fd961ebc4b26d0002c9b148ff0f1617ee6f",
+    "1934a53a16cbebb1bf662c41f6470f43ebd1db2505a9f966e010431eb79760bd",
+    "7bae0cbc48371be434d75a77630f9fd961ebc4b26d0002c9b148ff0f1617ee6f",
+    "0678aa59b4c856b724ba53981132bcf27ff33bdee44bf64130b0296d34184278"
+   ],
+   "interPoseMeanAbsDiff": [
+    1.813,
+    1.814,
+    1.814,
+    1.813
+   ],
+   "meanInterPoseDiff": 1.813,
+   "pose1VsKeyframeDiff": 0.0,
+   "lastPoseVsKeyframeDiff": 0.0,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_002_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S01/pose_01.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S01/pose_02.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S01/pose_03.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S01/pose_04.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "e3006def80a0ba99ba7023b1ece69de86329a8ad6507cdd850d076e44c4e1de5",
+    "9987dc62d19660fdac9b3a410c75bc44c3bc64d2cb2e805734b490481b0cccac",
+    "163889e5e575f8edf723072c8bd4b25e86196fa808dc992d3abf99d780761f81",
+    "acc66dc520ff25302206d00775c45f37580cff6a266a682f24765f82fe66cf7f",
+    "50457582a0f4b93110aa85a2e2bf011ec1292eda3434331a33b0484a703514cf"
+   ],
+   "interPoseMeanAbsDiff": [
+    0.822,
+    0.967,
+    1.142,
+    1.286
+   ],
+   "meanInterPoseDiff": 1.054,
+   "pose1VsKeyframeDiff": 0.394,
+   "lastPoseVsKeyframeDiff": 0.691,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_002_S02",
+   "route": "procedural",
+   "beatSeconds": [
+    1.0,
+    1.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S02/pose_01.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S02/pose_02.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S02/pose_03.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S02/pose_04.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S02/pose_05.png"
+   ],
+   "poseSha256": [
+    "89d740147db63f8ac48195e3393195e12920feb944a32519f431031a49587cdf",
+    "5734e77db0ed95231afd9ad34b1c1245474a9b9a84bd71899dbea80b8021b732",
+    "a86e5e4ca952ef8fd8507f45a9ec8fd32a3ff5f587a8f290de0ef0f37dbf575a",
+    "b3e5530fc6374ebd6095fc81558586d75f0a3bc9179b7cf3088380ade5f51420",
+    "a078531f37a21f49135c97e49d1d32d2e99bb7a3f12f9756fb208db7e4d16f2d"
+   ],
+   "interPoseMeanAbsDiff": [
+    1.606,
+    1.61,
+    1.615,
+    1.613
+   ],
+   "meanInterPoseDiff": 1.611,
+   "pose1VsKeyframeDiff": 0.249,
+   "lastPoseVsKeyframeDiff": 3.388,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_002_S03",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S03/pose_01.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S03/pose_02.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S03/pose_03.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S03/pose_04.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_002_S03/pose_05.png"
+   ],
+   "poseSha256": [
+    "19f516683cb9c4d7885e78490c7763ef08a5c80106f6ba67367a58044f793fe4",
+    "1af77f858a8ed67b2de614636d185de68df20876992fedc73a977842f97c1035",
+    "5066e74f4d02091c7e5438aecdfd63b29cde0524c663ca97be1f8c55f2fdcc05",
+    "8f86c6e2d56d4e8696486e3886c162b5a6636868c19fb14750f9814e45d3fb55",
+    "1322d8cbdb6fa7156e0eb45f0f2c1409becbd9855a6009feeb42817bfff9c6ce"
+   ],
+   "interPoseMeanAbsDiff": [
+    1.431,
+    1.464,
+    1.495,
+    1.559
+   ],
+   "meanInterPoseDiff": 1.487,
+   "pose1VsKeyframeDiff": 0.034,
+   "lastPoseVsKeyframeDiff": 0.129,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_004_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S01/pose_01.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S01/pose_02.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S01/pose_03.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S01/pose_04.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "65f685d524531e0e9a50b2aa3346105ea17e7078b17ab2f750996ce3ad6b493b",
+    "f996410669a5205d7fc32c52722d8786b1a9c102a8318c819b42546ff891b52f",
+    "72f0da463fe57c36a8a3456d14f17ce009dbe3ed0aa4beab722ae37eb5882bf9",
+    "780cd263cafd1c454b50f432baad358da887308334e8d74e21d25cef924c2a8c",
+    "3db6d8030f7f3c4548b7aa60e02d43e57b836dbb3deb9c3296b0c74db272424c"
+   ],
+   "interPoseMeanAbsDiff": [
+    2.902,
+    2.894,
+    2.902,
+    2.885
+   ],
+   "meanInterPoseDiff": 2.896,
+   "pose1VsKeyframeDiff": 0.238,
+   "lastPoseVsKeyframeDiff": 6.391,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_004_S02",
+   "route": "procedural",
+   "beatSeconds": [
+    1.5,
+    2.0
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S02/pose_01.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S02/pose_02.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S02/pose_03.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S02/pose_04.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S02/pose_05.png"
+   ],
+   "poseSha256": [
+    "162f480d8ca4a19dec955281d68a93e2a91bd26d84361f26c9f94826bf583de3",
+    "d9f779769348e9f56c42571c54cd67ada6a67ff9c142d509c041330f9a995a94",
+    "849ac5d8d36aeb27841cf363261608c5ea164f8e12e109d4c4e80d036f76935d",
+    "9737fb38d7cf2aeb49a742834ad63713f8afb86b70cf9de3cbd9d09af3de4399",
+    "e225b582a55a5cb98d6474d86bbfcf6014b4aaa933d85021f2389470cfa36ac1"
+   ],
+   "interPoseMeanAbsDiff": [
+    9.991,
+    10.467,
+    11.229,
+    11.875
+   ],
+   "meanInterPoseDiff": 10.89,
+   "pose1VsKeyframeDiff": 0.295,
+   "lastPoseVsKeyframeDiff": 25.588,
+   "maskPixels": 107072
+  },
+  {
+   "shotId": "CIN_004_S03",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S03/pose_01.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S03/pose_02.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S03/pose_03.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S03/pose_04.png",
+    "Art_Source/Cinematics/P0_Motion/pose_frames/CIN_004_S03/pose_05.png"
+   ],
+   "poseSha256": [
+    "e24397bbf19d8c77480c720851ab9a7a216192d26055ec0c4891eadfe3e7f1a3",
+    "8a5ae48263b41a64a8186cc9c8cdbaf6259f410ffdb8915468716c3c8c52b318",
+    "b2dfb2d7190359b4cb7d08745a3cb2bcc31d4c577eeab0330bd3d5672e9a9087",
+    "a6f98107c2efaf89076d9e6f90cbe89c9264a36f2d2337feb49e1bda82e87e2b",
+    "d36636064d276a4855f428456278f103245d5dd61ba1d6396f79c875625448cb"
+   ],
+   "interPoseMeanAbsDiff": [
+    7.939,
+    7.699,
+    7.666,
+    7.566
+   ],
+   "meanInterPoseDiff": 7.718,
+   "pose1VsKeyframeDiff": 0.26,
+   "lastPoseVsKeyframeDiff": 9.701,
+   "maskPixels": 76513
+  }
+ ],
+ "shotTakes": {
+  "CIN_001_S01": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_S01_pose_640x360_30fps.mp4",
+   "sha256": "512e6732f61a8cbabea292f5b24ef889486664fe3cc0f457c88dcfec38a5c312",
+   "sizeBytes": 98553,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_001_S02": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_S02_pose_640x360_30fps.mp4",
+   "sha256": "01152fcc29ddfb9495849944ee9b460837229cbf5fa09a53c5a852593cd4676b",
+   "sizeBytes": 94160,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_001_S03": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_S03_pose_640x360_30fps.mp4",
+   "sha256": "7c2df787c23ec1a3d485811773d87915d501b99a6ebbfe02ef3d4408e0b613dc",
+   "sizeBytes": 61849,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_001_S04": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_S04_pose_640x360_30fps.mp4",
+   "sha256": "ebe8598dfb72dec1eab709be03886850878d0c21a5ff2ba9ad16caf30794ddb4",
+   "sizeBytes": 81319,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_001_S05": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_S05_pose_640x360_30fps.mp4",
+   "sha256": "d4e47e03481e80aeec3c671f4caac63e2ac1a5ceccf0e31e948ce116cba10805",
+   "sizeBytes": 93918,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 24
+  },
+  "CIN_001_S06": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_S06_pose_640x360_30fps.mp4",
+   "sha256": "8ba58e3779933b1e1e1f0daaabcc2e0fb2a92dfba4febfad3854217aa1f36dac",
+   "sizeBytes": 75050,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_002_S01": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_002_S01_pose_640x360_30fps.mp4",
+   "sha256": "05a5686412c9d19ca8bbcb12774c6f28a916e5d233db0fe27d63501397790d8d",
+   "sizeBytes": 76065,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_002_S02": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_002_S02_pose_640x360_30fps.mp4",
+   "sha256": "925cf0198094cc5a13ec43c89bfb412f0057b647c87ee65ae5c572602dd9a6ca",
+   "sizeBytes": 110012,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 30
+  },
+  "CIN_002_S03": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_002_S03_pose_640x360_30fps.mp4",
+   "sha256": "116275bdea6acb656de16937b66ed90b257a609c15a778f5a6ccb24d6844d86a",
+   "sizeBytes": 69470,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_004_S01": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_004_S01_pose_640x360_30fps.mp4",
+   "sha256": "719be9d3f31d17d1a458e043b763a41fa019ffc6b73f73fc237eb3c5883e1aeb",
+   "sizeBytes": 101529,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_004_S02": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_004_S02_pose_640x360_30fps.mp4",
+   "sha256": "1683efd0df231ea3a57d1b4686f05991620f907c2f3dafd9c5056007eeaab8c2",
+   "sizeBytes": 187999,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 45
+  },
+  "CIN_004_S03": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_004_S03_pose_640x360_30fps.mp4",
+   "sha256": "a047fc353e3685c07136b7d0986e809b192f78a82f7887a5c23bb4343b900918",
+   "sizeBytes": 163030,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  }
+ },
+ "sceneTakes": {
+  "CIN_001": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_pose_640x360_30fps.mp4",
+   "sha256": "e244b152f778051990752e18f462a94f54eb037ff65075fd356b6b08e62624f1",
+   "sizeBytes": 1393983,
+   "durationSeconds": 36.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_001_mix_draft_v3.wav",
+    "sourceMixSha256": "1463ce02d64fa35ba785c0911afdd6193fdafb697b6a3c4d52552516aa1e3320"
+   }
+  },
+  "CIN_002": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_002_pose_640x360_30fps.mp4",
+   "sha256": "822a32d7a9291e520d42e122a2e690d61a9d7c2a93ade9361d8e4c6897b104be",
+   "sizeBytes": 700853,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_002_mix_draft_v3.wav",
+    "sourceMixSha256": "0dc438137976772a214e3a434c045c06caa4217d31b5ddc49475a5016107fe0c"
+   }
+  },
+  "CIN_004": {
+   "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_004_pose_640x360_30fps.mp4",
+   "sha256": "15e1b8d1d276b64660e019e75efe819ae34909bb210fa4b8830c4c8a79ef6fdd",
+   "sizeBytes": 897630,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/p0_v3/CIN_004_mix_draft_v3.wav",
+    "sourceMixSha256": "8e3bc4e2908412ca78048b42c2012a05ddf22ca59442dd008a8277f311db84cc"
+   }
+  }
+ },
+ "abVideos": {
+  "CIN_001": {
+   "file": "Art_Source/Cinematics/P0_Motion/ab/CIN_001_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "827ad1d7a1d4651db425499a62282cc7e6dc061f556f97cf3cf6ca9e79bd28a4",
+   "sizeBytes": 1811416,
+   "durationSeconds": 36.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_001/CIN_001_640x360_30fps.mp4",
+    "sha256": "9ffdf366bbca3ced5f614501651d8f832ba1ee5db1d67ad19e84ce030d2e4e25"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_pose_640x360_30fps.mp4",
+    "sha256": "e244b152f778051990752e18f462a94f54eb037ff65075fd356b6b08e62624f1"
+   }
+  },
+  "CIN_002": {
+   "file": "Art_Source/Cinematics/P0_Motion/ab/CIN_002_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "7621c008189cb64bb2072c3a49b70bb70349d8b1471b90d8e328903899e7906c",
+   "sizeBytes": 895363,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_002/CIN_002_640x360_30fps.mp4",
+    "sha256": "e09f1302db1f408917986f4db1e0857946ebf6a61dada2cab1f318c516d0d7a7"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_002_pose_640x360_30fps.mp4",
+    "sha256": "822a32d7a9291e520d42e122a2e690d61a9d7c2a93ade9361d8e4c6897b104be"
+   }
+  },
+  "CIN_004": {
+   "file": "Art_Source/Cinematics/P0_Motion/ab/CIN_004_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "66d5ae81504d71201a55d745ab8889708578e41f7f4714241111d2cc4e47e9f2",
+   "sizeBytes": 1154975,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_004/CIN_004_640x360_30fps.mp4",
+    "sha256": "65e5104fe7444067df4df5e52aeadf9078a9a12e2455805384751d1b2bab7891"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/P0_Motion/takes/CIN_004_pose_640x360_30fps.mp4",
+    "sha256": "15e1b8d1d276b64660e019e75efe819ae34909bb210fa4b8830c4c8a79ef6fdd"
+   }
+  }
+ },
+ "contacts": {
+  "CIN_001_S01": {
+   "file": "Art_Source/Cinematics/P0_Motion/contact/CIN_001_S01_contact.png",
+   "sha256": "ba3f1487ae3c22cf833aec84099a838dd86c2449e398011d42508fde87767487"
+  },
+  "CIN_001_S02": {
+   "file": "Art_Source/Cinematics/P0_Motion/contact/CIN_001_S02_contact.png",
+   "sha256": "63db2c072ef4ca3b00dfec2303117de418c159c83f3c363d56956889df99f5bf"
+  },
+  "CIN_001_S03": {
+   "file": "Art_Source/Cinematics/P0_Motion/contact/CIN_001_S03_contact.png",
+   "sha256": "dc409e821c968a5ad9999fc63c6519d489c9b9e83fdb4f8b077e1c0188b05d76"
+  },
+  "CIN_001_S04": {
+   "file": "Art_Source/Cinematics/P0_Motion/contact/CIN_001_S04_contact.png",
+   "sha256": "c35e75318320e74696af55f8d240fb21978f3933abeab14397ffccab32b8d13a"
+  },
+  "CIN_001_S05": {
+   "file": "Art_Source/Cinematics/P0_Motion/contact/CIN_001_S05_contact.png",
+   "sha256": "47d246f8bff1de50b6b59ad7a8038aee5d77a4b88385892269eae0e9cc379db1"
+  },
+  "CIN_001_S06": {
+   "file": "Art_Source/Cinematics/P0_Motion/contact/CIN_001_S06_contact.png",
+   "sha256": "bf8024ee9809480203a44ba007df1eb395831c9ad81428789afb66b0d7e0b920"
+  },
+  "CIN_002_S01": {
+   "file": "Art_Source/Cinematics/P0_Motion/contact/CIN_002_S01_contact.png",
+   "sha256": "409c2dc2ba2c114f24602bcbae82fc0271e5c98df4ab00e730276fb928bebc0e"
+  },
+  "CIN_002_S02": {
+   "file": "Art_Source/Cinematics/P0_Motion/contact/CIN_002_S02_contact.png",
+   "sha256": "4b36aeba4d36adf36e66415855044d95061fabb4bca4239165febf61e67f99bf"
+  },
+  "CIN_002_S03": {
+   "file": "Art_Source/Cinematics/P0_Motion/contact/CIN_002_S03_contact.png",
+   "sha256": "31aa3d31c1f76d455d8334c41495d4d5c4d5b0ebf15019f06dcf0f5cf32073c4"
+  },
+  "CIN_004_S01": {
+   "file": "Art_Source/Cinematics/P0_Motion/contact/CIN_004_S01_contact.png",
+   "sha256": "35246a9915ac523ecabba5e30462d59547e1fa1e4cb6cc85776c7b36ed624332"
+  },
+  "CIN_004_S02": {
+   "file": "Art_Source/Cinematics/P0_Motion/contact/CIN_004_S02_contact.png",
+   "sha256": "661a09e42e6fa79b8d16a07f5727ad28641480ec33e03cddec234148aa9b31f3"
+  },
+  "CIN_004_S03": {
+   "file": "Art_Source/Cinematics/P0_Motion/contact/CIN_004_S03_contact.png",
+   "sha256": "575802098bd2dd686f789a7d8152ba3ff355b20e14a754218f4df806798c9549"
+  }
+ },
+ "totals": {
+  "shots": 12,
+  "posesPerShot": 5,
+  "poseFps": 10,
+  "generatedShots": 0,
+  "proceduralShots": 12,
+  "sceneDurations": {
+   "CIN_001": 36.0,
+   "CIN_002": 18.0,
+   "CIN_004": 18.0
+  }
+ }
+}
