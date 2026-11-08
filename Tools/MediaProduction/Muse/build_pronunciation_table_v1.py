@@ -37,7 +37,7 @@ Builds Implementation/Content/Audio/Deliveries/PRONUNCIATION_TABLE_v1.json
   verified to exist (mix WAV sha256 vs manifest for embedded scenes):
   embedded soundtrack -> standalone mix WAV -> stem re-assembly + VO
   take -> VO take + SRT -> silent video + SRT overlay. Silent scenes
-  (CIN_015-020) have no mix fallback: the adapter must not improvise
+  (CIN_016-020) have no mix fallback: the adapter must not improvise
   one. Global rules: never play embedded + external audio together;
   burned-subtitle variant is review-only; rewatch/skip/seen/fallback
   never grant quest.
@@ -97,6 +97,7 @@ MIX_MANIFESTS = {
     "cin012": ROOT / "Art_Source/Audio/Muse/MIX/CIN012_DRAFT_V1/CIN012_MIX_V1_manifest_v1.json",
     "cin013": ROOT / "Art_Source/Audio/Muse/MIX/CIN013_DRAFT_V1/CIN013_MIX_V1_manifest_v1.json",
     "cin014": ROOT / "Art_Source/Audio/Muse/MIX/CIN014_DRAFT_V1/CIN014_MIX_V1_manifest_v1.json",
+    "cin015": ROOT / "Art_Source/Audio/Muse/MIX/CIN015_DRAFT_V1/CIN015_MIX_V1_manifest_v1.json",
     "prologue": ROOT / "Art_Source/Audio/Muse/MIX/PROLOGUE_DRAFT/PROLOGUE_mix_manifest_v1.json",
 }
 COMPOSED = ROOT / "Art_Source/Audio/Muse/COMPOSED"
@@ -546,6 +547,9 @@ MIX_ROWS = [
     ("CIN_014", "v1_cin014_proposed", "cin014",
      "Art_Source/Audio/Muse/MIX/CIN014_DRAFT_V1/CIN_014_mix_draft_v1.wav",
      "ClientGodot/assets/audio/mix/cin014_v1/CIN_014_mix_draft_v1.wav"),
+    ("CIN_015", "v1_cin015_proposed", "cin015",
+     "Art_Source/Audio/Muse/MIX/CIN015_DRAFT_V1/CIN_015_mix_draft_v1.wav",
+     "ClientGodot/assets/audio/mix/cin015_v1/CIN_015_mix_draft_v1.wav"),
 ]
 EMBEDDED_RUNTIME_MIX = {  # sceneId -> runtime standalone mix (embedded set)
     "CIN_000": "ClientGodot/assets/audio/mix/prologue/PROLOGUE_mix_v1.wav",
@@ -563,6 +567,7 @@ EMBEDDED_RUNTIME_MIX = {  # sceneId -> runtime standalone mix (embedded set)
     "CIN_012": "ClientGodot/assets/audio/mix/cin012_v1/CIN_012_mix_draft_v1.wav",
     "CIN_013": "ClientGodot/assets/audio/mix/cin013_v1/CIN_013_mix_draft_v1.wav",
     "CIN_014": "ClientGodot/assets/audio/mix/cin014_v1/CIN_014_mix_draft_v1.wav",
+    "CIN_015": "ClientGodot/assets/audio/mix/cin015_v1/CIN_015_mix_draft_v1.wav",
 }
 
 
@@ -811,7 +816,7 @@ FALLBACK_RULES = [
     {"id": "FB-5",
      "rule": "If the SRT is missing, show no captions. Never burn captions from VO text and never use the review-only burned-subtitle variant as runtime."},
     {"id": "FB-6",
-     "rule": "Scenes with no mix yet (CIN_015-020) play silent video + SRT only. The adapter must not improvise a mix from stems or play a VO take over silent video."},
+     "rule": "Scenes with no mix yet (CIN_016-020) play silent video + SRT only. The adapter must not improvise a mix from stems or play a VO take over silent video."},
     {"id": "FB-7",
      "rule": "Rewatch, skip, seen-state and any fallback step never grant quest progress (WO32 item 4; enforcement is the Codex runtime's job)."},
 ]
@@ -824,6 +829,7 @@ MIX_MANIFEST_BY_SCENE = {
     "CIN_010": "cin010", "CIN_011": "cin011", "CIN_012": "cin012",
     "CIN_013": "cin013",
     "CIN_014": "cin014",
+    "CIN_015": "cin015",
 }
 
 
@@ -949,7 +955,7 @@ def main():
     fail_if_errors()
     out = {
         "manifestId": "NGM_PRONUNCIATION_TABLE_V1",
-        "checkpoint": "MEDIA-02 checkpoint 48 - pronunciation/proper-name table re-run: CIN_014 draft mix v1 embedded (15 embedded mixes, 6 silent CIN_015-020); names/seams unchanged (Codex WO32 item 3); integration baseline 6f79853 (PR #128 merged, owner LF policy now on integration)",
+        "checkpoint": "MEDIA-02 checkpoint 49 - pronunciation/proper-name table re-run: CIN_015 draft mix v1 embedded (16 embedded mixes, 5 silent CIN_016-020); names unchanged, 1 new seam row (MUSIC/bach_uyen composed, first scene-mix use; AMBIENCE/underwater composed already in the table from P0 v3 CIN_002) (Codex WO32 item 3); integration baseline 6f79853 (PR #128 merged, owner LF policy now on integration)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "workOrderRef": "Work Order 32 (PR #128) item 3; issue #116 comment 6713518554",
         "branch": "muse/media-production-20261104",

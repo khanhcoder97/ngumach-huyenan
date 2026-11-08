@@ -1,6 +1,6 @@
 {
  "manifestId": "NGM_PRONUNCIATION_TABLE_V1",
- "checkpoint": "MEDIA-02 checkpoint 48 - pronunciation/proper-name table re-run: CIN_014 draft mix v1 embedded (15 embedded mixes, 6 silent CIN_015-020); names/seams unchanged (Codex WO32 item 3); integration baseline 6f79853 (PR #128 merged, owner LF policy now on integration)",
+ "checkpoint": "MEDIA-02 checkpoint 49 - pronunciation/proper-name table re-run: CIN_015 draft mix v1 embedded (16 embedded mixes, 5 silent CIN_016-020); names unchanged, 1 new seam row (MUSIC/bach_uyen composed, first scene-mix use; AMBIENCE/underwater composed already in the table from P0 v3 CIN_002) (Codex WO32 item 3); integration baseline 6f79853 (PR #128 merged, owner LF policy now on integration)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "workOrderRef": "Work Order 32 (PR #128) item 3; issue #116 comment 6713518554",
  "branch": "muse/media-production-20261104",
@@ -12,11 +12,11 @@
   "names": 16,
   "namesSpokenInAudio": 4,
   "namesDecided": 1,
-  "playbackCueRows": 21,
-  "seamRows": 21,
+  "playbackCueRows": 22,
+  "seamRows": 22,
   "seamRowsFlaggedEarCheck": 1,
   "fallbackScenes": 21,
-  "fallbackFilesVerified": 145
+  "fallbackFilesVerified": 150
  },
  "docsProductionOccurrences": {
   "Tạ Vân Khanh": 37,
@@ -2021,6 +2021,60 @@
      ]
     }
    ]
+  },
+  {
+   "sceneId": "CIN_015",
+   "mixVersion": "v1_cin015_proposed",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/CIN015_DRAFT_V1/CIN_015_mix_draft_v1.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/cin015_v1/CIN_015_mix_draft_v1.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-25.30",
+   "mixTruePeakDBTP_manifest": "-3.89",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.0,
+   "voSpan": {
+    "windowSeconds": [
+     12.5,
+     17.5
+    ],
+    "takeSpanSeconds": [
+     12.5,
+     15.38
+    ],
+    "takeDurationSeconds": 2.88
+   },
+   "voTakeLeadSilenceSeconds": 0.115,
+   "voTakeTailSilenceSeconds": 0.253,
+   "voWindowSlackSeconds": 2.12,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      12.5,
+      15.38
+     ],
+     "referenceSeconds": [
+      10.0,
+      12.0
+     ],
+     "depthInWindowDb": -6.87,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/underwater",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00049,
+       "bedP999Jump": 0.00082,
+       "ratioToP999": 0.593
+      }
+     ]
+    }
+   ]
   }
  ],
  "playbackCueNotes": {
@@ -2179,6 +2233,18 @@
    "flagEarCheck": false
   },
   {
+   "cueKey": "MUSIC/bach_uyen",
+   "version": "composed",
+   "measuredFrom": "ClientGodot/assets/audio/composed/music/bach_uyen.ogg",
+   "wrapJumpMeasured": 0.000568,
+   "cp33WrapJumpMeasured": 0.000568,
+   "cp33PostLandingRecorded": 1.3e-05,
+   "headRms100ms": 0.18173,
+   "tailRms100ms": 0.074878,
+   "seamBasis": "master WAV (CP26, post-landing)",
+   "flagEarCheck": false
+  },
+  {
    "cueKey": "MUSIC/ben_mua",
    "version": "composed",
    "measuredFrom": "ClientGodot/assets/audio/composed/music/ben_mua.ogg",
@@ -2314,7 +2380,7 @@
   },
   {
    "id": "FB-6",
-   "rule": "Scenes with no mix yet (CIN_015-020) play silent video + SRT only. The adapter must not improvise a mix from stems or play a VO take over silent video."
+   "rule": "Scenes with no mix yet (CIN_016-020) play silent video + SRT only. The adapter must not improvise a mix from stems or play a VO take over silent video."
   },
   {
    "id": "FB-7",
@@ -3238,26 +3304,62 @@
   {
    "sceneId": "CIN_015",
    "kind": "campaign",
-   "hasEmbeddedSoundtrack": false,
-   "audioOwnership": "NO_EMBEDDED_SOUNDTRACK",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
    "primary": {
-    "mode": "SILENT_VIDEO_PLUS_SRT_OVERLAY",
-    "note": "No scene mix delivered yet; adapter must not improvise one (FB-6)."
+    "mode": "EMBEDDED_SOUNDTRACK",
+    "mixVersion": "v1_cin015_proposed"
    },
-   "fallbackMixWav": null,
-   "fallbackStemsAndVo": null,
-   "fallbackVoAndSrt": null,
+   "fallbackMixWav": {
+    "path": "ClientGodot/assets/audio/mix/cin015_v1/CIN_015_mix_draft_v1.wav",
+    "sha256": "635afb8fce8a48bb7930936d0d34312fdee42a8e8a7da094332b82c8d783c5ee",
+    "mixVersion": "v1_cin015_proposed"
+   },
+   "fallbackStemsAndVo": {
+    "stems": [
+     {
+      "cue": "MUSIC/bach_uyen",
+      "role": "music",
+      "source": "ClientGodot/assets/audio/composed/music/bach_uyen.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "AMBIENCE/underwater",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/underwater.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+      "segmentSceneSeconds": null,
+      "atSeconds": 6.0
+     }
+    ],
+    "voTakes": [
+     "VO_CIN_015_S03_DIVERLEAD_draft_v1.wav"
+    ]
+   },
+   "fallbackVoAndSrt": {
+    "voTakes": [
+     "VO_CIN_015_S03_DIVERLEAD_draft_v1.wav"
+    ],
+    "srt": "ClientGodot/assets/cinematics/CIN_015/CIN_015_vi.srt"
+   },
    "fallbackSrtOnly": {
     "srt": "ClientGodot/assets/cinematics/CIN_015/CIN_015_vi.srt"
    },
    "ogv": "ClientGodot/assets/cinematics/CIN_015/CIN_015_640x360_30fps.ogv",
-   "mp4": "ClientGodot/assets/cinematics/CIN_015/CIN_015_640x360_30fps.mp4",
-   "silentNote": {
-    "voDraftsExist": [
-     "VO_CIN_015_S03_DIVERLEAD_draft_v1.wav"
-    ],
-    "reason": "VO drafts exist for later mixing only; they are NOT a playback fallback over silent video."
-   }
+   "mp4": "ClientGodot/assets/cinematics/CIN_015/CIN_015_640x360_30fps.mp4"
   },
   {
    "sceneId": "CIN_016",
@@ -3386,6 +3488,6 @@
   "spokenNamesVerifiedAgainstSrtAndTakeTexts": true,
   "mixSha256VerifiedAgainstManifests": true,
   "seamWrapJumpReMeasuredAndMatchedCp33Within": 0.002,
-  "fallbackFilesExistenceChecked": 145
+  "fallbackFilesExistenceChecked": 150
  }
 }
