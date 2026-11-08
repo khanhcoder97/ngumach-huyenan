@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "questId": "C1-01",
+  "titleKey": "QUEST.C1-01.TITLE",
+  "graphId": "GRAPH_C1_01",
+  "questType": "MAIN",
+  "activation": "BLOCKED",
+  "levelBand": {
+    "min": 11,
+    "max": 20
+  },
+  "startNpcId": "NPC_MASTER_BY_PLAYER_CLASS",
+  "prerequisiteQuestIds": [
+    "P00-05"
+  ],
+  "objectives": [
+    {
+      "objectiveId": "OBJ_C1_01_TALK_ALYAN",
+      "type": "TALK",
+      "targetIds": [
+        "NPC_LYAN"
+      ],
+      "count": 1,
+      "mapId": "MAP_THANH_LAC",
+      "floorId": "OVERWORLD"
+    },
+    {
+      "objectiveId": "OBJ_C1_01_TALK_TA_VAN_KHANH",
+      "type": "TALK",
+      "targetIds": [
+        "NPC_TA_VAN_KHANH"
+      ],
+      "count": 1,
+      "mapId": "MAP_THANH_LAC",
+      "floorId": "OVERWORLD"
+    },
+    {
+      "objectiveId": "OBJ_C1_01_MAP_VIEWED",
+      "type": "MAP_VIEWED",
+      "targetIds": [],
+      "count": 1,
+      "mapId": "MAP_THANH_LAC",
+      "floorId": "OVERWORLD",
+      "requiredCompletedObjectiveIds": [
+        "OBJ_C1_01_TALK_ALYAN",
+        "OBJ_C1_01_TALK_TA_VAN_KHANH"
+      ],
+      "attemptOneShot": true
+    }
+  ],
+  "rewards": {
+    "currency": [],
+    "itemIds": [],
+    "xpRule": "LEVEL_BAND_BASE"
+  },
+  "unlocks": [
+    {
+      "unlockType": "CHAPTER_C1_UNLOCKED",
+      "chapterFlag": "CHAPTER_C1_UNLOCKED"
+    }
+  ],
+  "sourceRef": "Combat_Skills_VFX_Animation_Spec_vi.md#Thanh-Lac"
+}
