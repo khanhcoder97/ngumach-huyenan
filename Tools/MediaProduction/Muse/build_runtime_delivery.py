@@ -1629,6 +1629,61 @@ def main():
         audio_entries.append(entry)
         counts["composed"] += 1
 
+    # --- 3o. WO37 M-D checkpoint 5 phase layers ---
+    # The composer (build_composed_score_md5.py) already rendered the
+    # runtime OGGs into ClientGodot/assets/audio/composed/layers/;
+    # this section verifies them in place against the delivery pack
+    # and registers them in the runtime audio manifest. Same contract
+    # as 3k/3l/3m/3n: the ported PackV1 entries and the
+    # checkpoint-26/30/MD1/MD2/MD3/MD4 packs are untouched; MD5 files are
+    # parallel candidates whose adoption is Codex's adapter decision.
+    # Layers are additive loops over their base cue (combined
+    # base+layer loudness measured from real bytes; the MD5 validator
+    # re-checks that from real bytes).
+    composed_md5 = json.loads(
+        (ROOT / "Implementation/Content/Audio/Deliveries"
+         / "MUSIC_SCORE_MD5_pack_v1.json").read_text(encoding="utf-8"))
+    for cue in composed_md5["cues"]:
+        rt = cue["runtime"]
+        dest_rel = rt["path"].split("assets/audio/", 1)[1]
+        dest = AUDIO_DEST / dest_rel
+        label = f"composed MD5 {cue['cueKey']}"
+        check(dest.exists(), f"{label}: runtime file missing {rt['path']}")
+        if not dest.exists():
+            continue
+        check(not is_lfs_pointer(dest),
+              f"{label}: runtime file is an LFS pointer")
+        got_sha = sha256(dest)
+        got_size = dest.stat().st_size
+        check(got_sha == rt["sha256"],
+              f"{label}: sha mismatch {got_sha} != {rt['sha256']}")
+        check(got_size == rt["sizeBytes"],
+              f"{label}: size mismatch {got_size} != {rt['sizeBytes']}")
+        got_dur = ffprobe_duration_s(dest)
+        check(abs(got_dur - rt["durationSeconds"]) <= DUR_TOL_S,
+              f"{label}: duration mismatch {got_dur} != "
+              f"{rt['durationSeconds']}")
+        entry = {"runtimePath": "assets/audio/" + dest_rel,
+                 "sourcePath": cue["master"]["path"],
+                 "sha256": got_sha, "sizeBytes": got_size,
+                 "durationSeconds": round(got_dur, 4)}
+        entry.update({
+            "cueKey": cue["cueKey"],
+            "category": {"INTRO": "composed_intro",
+                         "OUTRO": "composed_outro",
+                         "STEM": "composed_stem",
+                         "LAYER": "composed_layer"}[cue["kind"]],
+            "codec": rt["codec"],
+            "sampleRateHz": rt["sampleRateHz"],
+            "channels": rt["channels"],
+            "integratedLufs": rt["integratedLufs"],
+            "truePeakDbtp": rt["truePeakDbtp"],
+            "assetState": "COMPOSED_CANDIDATE",
+            "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER",
+            "provenance": "ORIGINAL_COMPOSED_BY_MUSE"})
+        audio_entries.append(entry)
+        counts["composed"] += 1
+
     # --- 3f. Prologue CIN_000 narration VO + film mix (checkpoint 27) ---
     # The prologue is a standalone pre-game film (owner-ordered,
     # script approved in main chat 2026-11-06), NOT part of the
@@ -1680,9 +1735,11 @@ def main():
 
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 WO37 M-D checkpoint 4 - M6 runtime "
-                       "delivery revised: MD4 phase layers added (3 "
-                       "layers, total 722 -> 725); MD3 intro/outro + "
+        "checkpoint": ("MEDIA-02 WO37 M-D checkpoint 5 - M6 runtime "
+                       "delivery revised: MD5 phase layers added (3 "
+                       "layers, total 725 -> 728); MD4 phase layers "
+                       "(checkpoint 4: 3 layers, total 722 -> 725); "
+                       "MD3 intro/outro + "
                        "stems + phase layers (checkpoint 3: 9 intros "
                        "+ 9 outros + 27 stems + 3 layers, total "
                        "674 -> 722); MD2 "
@@ -1827,6 +1884,27 @@ def main():
             "PackV1 files, their bindings, or the "
             "checkpoint-26/30/MD1/MD2/MD3 cues; adoption is Codex's "
             "presentation-adapter decision. No ear audition.",
+            "WO37 M-D checkpoint 5 phase layers (MD5): 3 ORIGINAL "
+            "files composed by Muse -- additive phase layers "
+            "MUSIC/boss_mang_cot_layer_phase5, "
+            "MUSIC/hub_layer_intensity and "
+            "MUSIC/rain_layer_intensity (combined base+layer "
+            "loudness measured from real bytes) -- provenance "
+            "ORIGINAL_COMPOSED_BY_MUSE, delivered in parallel under "
+            "assets/audio/composed/layers/ from "
+            "MUSIC_SCORE_MD5_pack_v1.json; coverage matrix "
+            "MUSIC_SCORE_MD_COVERAGE_v1.json records the MD5 delivery "
+            "and lists openForMdCp6. Boss phase 5 completes the "
+            "16th-note drum grid with 16th-note octave bass, a D6 "
+            "bell every bar and the minor head in flute (the first "
+            "flute in any boss layer -- the base has no flute at "
+            "all); hub intensity adds the festival pulse a drumless "
+            "home base withholds; rain intensity adds the weight of "
+            "heavier rain inside the base's own 1200 Hz veil. They "
+            "do NOT replace the ported PackV1 files, their bindings, "
+            "or the checkpoint-26/30/MD1/MD2/MD3/MD4 cues; adoption "
+            "is Codex's presentation-adapter decision. No ear "
+            "audition.",
             "WO37 M-D checkpoint 2 intro/outro + stems + phase layers "
             "(MD2): 37 ORIGINAL files composed by Muse -- 2-bar "
             "intro/outro for each of the 7 MD1 cues, lead / pad-bass "
