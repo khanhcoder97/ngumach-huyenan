@@ -1,0 +1,50 @@
+{
+  "head": "9deb06c",
+  "manifests": {
+    "audio/RUNTIME_AUDIO_manifest_v1.json": {
+      "references": 615,
+      "uniquePaths": 615,
+      "workingTreeMismatches": [],
+      "gitBlobOrLfsObjectsVerified": 615
+    },
+    "cinematics/RUNTIME_CINEMATICS_manifest_v1.json": {
+      "references": 103,
+      "uniquePaths": 103,
+      "workingTreeMismatches": [],
+      "gitBlobOrLfsObjectsVerified": 103
+    }
+  },
+  "decode": [
+    {
+      "path": "assets\\cinematics\\CIN_001\\CIN_001_640x360_30fps.ogv",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "path": "assets\\cinematics\\CIN_006\\CIN_006_640x360_30fps.ogv",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "path": "assets\\audio\\mix\\p0_v3\\CIN_001_mix_draft_v3.wav",
+      "exit": 0,
+      "stderr": ""
+    }
+  ],
+  "limits": [
+    "No ear audition",
+    "No Godot playback",
+    "No fresh loudness measurement",
+    "Source packs not fully revalidated"
+  ],
+  "campaign": {
+    "totals": {
+      "scenes": 20,
+      "shots": 63,
+      "seconds": 378,
+      "dialogueCues": 21
+    },
+    "videoScenes": 20,
+    "prologueSeparate": true
+  }
+}
