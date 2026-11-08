@@ -93,6 +93,7 @@ CIN014_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN014_DRA
 CIN015_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN015_DRAFT_V1"
 CIN016_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN016_DRAFT_V1"
 CIN017_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN017_DRAFT_V1"
+CIN018_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN018_DRAFT_V1"
 DUR_TOL_S = 0.02
 
 # P0 animatic files delivered in checkpoint 03, revised in checkpoint 13
@@ -1107,6 +1108,80 @@ def main():
         audio_entries.append(entry)
         counts["mix"] += 1
 
+    # --- 3k14. CIN_018 draft mix v1 (checkpoint 52) ---
+    # Fifteenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1,
+    # CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1,
+    # CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016 v1
+    # and CIN_017 v1 (same recipe as P0 v3; stem assignment
+    # PROPOSED_CANDIDATE, see CIN018_MIX_V1_manifest_v1.json).
+    # CIN_018 is the ONLY campaign scene with TWO dialogue windows:
+    # the S02 take (Co Vo Tuong) FITS inside its 6.5-11.5 s window
+    # (2.880 s, ends 9.380 s, 2.120 s before the window end) and the
+    # S03 take (player) OVERRUNS its 12.5-17.5 s window by 0.280 s
+    # (5.280 s, ends 17.780 s, 0.220 s before the 18.00 s scene
+    # end) -- the overrun is KEPT per the owner verdict on the
+    # three campaign overruns, not trimmed, not sped up; no tail
+    # trim at the scene edge for either take. Both takes duck the
+    # music bus through ONE combined VO bus (ducking -6.05 dB over
+    # the S02 window and -7.44 dB over the S03 window, CP39
+    # full-window method per window -- real cuts, as expected:
+    # MUSIC/sa_hoa was NOT silent inside CIN_010's window either
+    # (measured cut -7.94 dB there)). The mix measures -21.51
+    # LUFS; the CP17 VO takes themselves are -23.77 LUFS (S02)
+    # and -22.54 LUFS (S03); VO is kept at unity per the recipe,
+    # not normalized. The reveal stinger is placed at 0.0 s (S01
+    # start), NOT the recipe's 6.0 s: the cue is 3.000 s long, so
+    # at 6.0 s it would sit under 2.5 s of the S02 line -- the
+    # scene's key refusal line, spoken on screen. Staging: the
+    # S02 speaker IS identifiable (onscreen: true, face visible at
+    # his desk); the S03 line is delivered off-screen (onscreen:
+    # null, like Ly An's voice in CIN_004, DEC-MEDIA-P0 Q2) -- the
+    # masked figure in the S03 keyframe is NOT identified as the
+    # speaker, and the keyframe defects record its full-face
+    # porcelain mask (not the specified cracked half mask) and
+    # torso-spanning copper machinery; S02 is a medium shot
+    # instead of the detail close view and his hair differs from
+    # S01's; S01's petition renders as a modern wax-sealed
+    # envelope. Final-picture/character-lock matters, not mix
+    # defects; the mix does not move the VO. The S03 take is
+    # VOICE_PLACEHOLDER_ONLY (VOICE_GUIDE assigns the player no
+    # spoken voice or gender). Stem reuse stated plainly: the
+    # sa_hoa + desert_wind pairing is the same as CIN_010 (the
+    # ash-gold caravan rest) because the two scenes share the
+    # Sa Hoa / desert setting and the cue set has a single desert
+    # form; bach_uyen was passed over because it is the
+    # underwater form -- the opposite of this drought scene
+    # (water present there, water withheld here). Delivered under
+    # mix/cin018_v1/; the P0 v1/v2/v3, CIN_006 v1, CIN_003 v1,
+    # CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1,
+    # CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1,
+    # CIN_016 v1 and CIN_017 v1 mixes are byte-identical to
+    # before. Adoption is Codex's decision.
+    cin018_mix = json.loads((CIN018_MIX_V1_SRC
+                             / "CIN018_MIX_V1_manifest_v1.json")
+                            .read_text(encoding="utf-8"))
+    for scene in cin018_mix["scenes"]:
+        mx = scene["mix"]
+        src_rel = f"Art_Source/Audio/Muse/MIX/CIN018_DRAFT_V1/{mx['file']}"
+        dest_rel = f"mix/cin018_v1/{mx['file']}"
+        entry = copy_verified_audio(
+            src_rel, dest_rel, mx["sha256"], mx["format"]["bytes"],
+            mx["durationSeconds"], f"CIN_018 mix v1 {scene['sceneId']}")
+        if entry is None:
+            continue
+        entry.update({"cueKey": f"MIX/V1/{scene['sceneId']}",
+                      "category": "mix", "sceneId": scene["sceneId"],
+                      "mixVersion": "v1_cin018_proposed",
+                      "codec": mx["format"]["codec"],
+                      "sampleRateHz": mx["format"]["sampleRateHz"],
+                      "channels": mx["format"]["channels"],
+                      "integratedLufs": float(mx["integratedLUFS"]),
+                      "truePeakDbtp": float(mx["truePeakDBTP"]),
+                      "assetState": "DRAFT_MIX_NOT_FINAL",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["mix"] += 1
+
     # --- 3e. Composed music + cinema stingers (checkpoint 26) ---
     # The composer (build_composed_music.py) already rendered the
     # runtime OGGs into ClientGodot/assets/audio/composed/; this
@@ -1255,9 +1330,9 @@ def main():
 
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 checkpoint 51 - M6 runtime delivery "
-                       "revised: CIN_017 draft mix v1 added (total 623 -> "
-                       "624, mix 26 -> 27); status phrasing corrected "
+        "checkpoint": ("MEDIA-02 checkpoint 52 - M6 runtime delivery "
+                       "revised: CIN_018 draft mix v1 added (total 624 -> "
+                       "625, mix 27 -> 28); status phrasing corrected "
                        "(all 21 dialogue windows approved for DRAFT VO "
                        "production per the Goi 30 D1 decision, PR #120; "
                        "only CIN_001_S05 is DECIDED); P0 draft mixes v3 "
@@ -1273,6 +1348,7 @@ def main():
                        "CIN_015 mix v1 (checkpoint 49), "
                        "CIN_016 mix v1 (checkpoint 50), "
                        "CIN_017 mix v1 (checkpoint 51), "
+                       "CIN_018 mix v1 (checkpoint 52), "
                        "prologue "
                        "(checkpoint 27/28), composed music "
                        "(checkpoint 26) and composed ambience "

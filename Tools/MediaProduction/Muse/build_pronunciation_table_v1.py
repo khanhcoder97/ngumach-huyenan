@@ -37,7 +37,7 @@ Builds Implementation/Content/Audio/Deliveries/PRONUNCIATION_TABLE_v1.json
   verified to exist (mix WAV sha256 vs manifest for embedded scenes):
   embedded soundtrack -> standalone mix WAV -> stem re-assembly + VO
   take -> VO take + SRT -> silent video + SRT overlay. Silent scenes
-  (CIN_018-020) have no mix fallback: the adapter must not improvise
+  (CIN_019-020) have no mix fallback: the adapter must not improvise
   one. Global rules: never play embedded + external audio together;
   burned-subtitle variant is review-only; rewatch/skip/seen/fallback
   never grant quest.
@@ -100,6 +100,7 @@ MIX_MANIFESTS = {
     "cin015": ROOT / "Art_Source/Audio/Muse/MIX/CIN015_DRAFT_V1/CIN015_MIX_V1_manifest_v1.json",
     "cin016": ROOT / "Art_Source/Audio/Muse/MIX/CIN016_DRAFT_V1/CIN016_MIX_V1_manifest_v1.json",
     "cin017": ROOT / "Art_Source/Audio/Muse/MIX/CIN017_DRAFT_V1/CIN017_MIX_V1_manifest_v1.json",
+    "cin018": ROOT / "Art_Source/Audio/Muse/MIX/CIN018_DRAFT_V1/CIN018_MIX_V1_manifest_v1.json",
     "prologue": ROOT / "Art_Source/Audio/Muse/MIX/PROLOGUE_DRAFT/PROLOGUE_mix_manifest_v1.json",
 }
 COMPOSED = ROOT / "Art_Source/Audio/Muse/COMPOSED"
@@ -558,6 +559,9 @@ MIX_ROWS = [
     ("CIN_017", "v1_cin017_proposed", "cin017",
      "Art_Source/Audio/Muse/MIX/CIN017_DRAFT_V1/CIN_017_mix_draft_v1.wav",
      "ClientGodot/assets/audio/mix/cin017_v1/CIN_017_mix_draft_v1.wav"),
+    ("CIN_018", "v1_cin018_proposed", "cin018",
+     "Art_Source/Audio/Muse/MIX/CIN018_DRAFT_V1/CIN_018_mix_draft_v1.wav",
+     "ClientGodot/assets/audio/mix/cin018_v1/CIN_018_mix_draft_v1.wav"),
 ]
 EMBEDDED_RUNTIME_MIX = {  # sceneId -> runtime standalone mix (embedded set)
     "CIN_000": "ClientGodot/assets/audio/mix/prologue/PROLOGUE_mix_v1.wav",
@@ -578,6 +582,7 @@ EMBEDDED_RUNTIME_MIX = {  # sceneId -> runtime standalone mix (embedded set)
     "CIN_015": "ClientGodot/assets/audio/mix/cin015_v1/CIN_015_mix_draft_v1.wav",
     "CIN_016": "ClientGodot/assets/audio/mix/cin016_v1/CIN_016_mix_draft_v1.wav",
     "CIN_017": "ClientGodot/assets/audio/mix/cin017_v1/CIN_017_mix_draft_v1.wav",
+    "CIN_018": "ClientGodot/assets/audio/mix/cin018_v1/CIN_018_mix_draft_v1.wav",
 }
 
 
@@ -778,6 +783,49 @@ def build_playback_cues(takes, srt_cues, mix_manifests):
             "duckingNote_manifest": duck_note,
             "loopJoins": loop_joins,
         })
+        # CIN_018 is the only campaign scene with TWO dialogue
+        # windows: record both takes in the cue row (the
+        # single-take fields above stay the S03 take, as in every
+        # earlier mix). Each voice entry is verified against the VO
+        # manifests (sha, duration) and measured for lead/tail
+        # silence, exactly like the primary take.
+        voices_detail = []
+        for v in (entry.get("voices") or []):
+            take_name = v.get("take")
+            vtake = None
+            for t in takes.values():
+                if t["wav"] == take_name:
+                    vtake = t
+                    break
+            if vtake is None:
+                err(f"VO take {take_name} not in VO manifests ({scene_id})")
+                continue
+            vw0, vw1 = vtake["windowSceneSeconds"]
+            vpath = find_take_wav(take_name)
+            if vtake.get("wavSha256") and sha256(vpath) != vtake["wavSha256"]:
+                err(f"VO take sha256 mismatch: {take_name}")
+            dd = probe_duration(vpath)
+            if abs(dd - vtake["durationSeconds"]) > 0.01:
+                err(f"VO take duration mismatch {take_name}: "
+                    f"{dd} vs manifest {vtake['durationSeconds']}")
+            vlead, vtail = head_tail_silence(vpath, dd)
+            voices_detail.append({
+                "shotId": v.get("shotId"),
+                "speaker": v.get("speaker"),
+                "speakerDisplay": v.get("speakerDisplay"),
+                "take": take_name,
+                "windowSeconds": vtake["windowSceneSeconds"],
+                "takeSpanSeconds": v.get("windowSeconds"),
+                "takeDurationSeconds": vtake["durationSeconds"],
+                "voWindowSlackSeconds": round(
+                    vw1 - (vw0 + vtake["durationSeconds"]), 3),
+                "voTakeLeadSilenceSeconds": vlead,
+                "voTakeTailSilenceSeconds": vtail,
+                "overrunVsWindowSeconds": v.get("overrunVsWindowSeconds"),
+                "fit": v.get("fit"),
+            })
+        if voices_detail:
+            cues[-1]["voices"] = voices_detail
     return cues, seam_inputs
 
 
@@ -826,7 +874,7 @@ FALLBACK_RULES = [
     {"id": "FB-5",
      "rule": "If the SRT is missing, show no captions. Never burn captions from VO text and never use the review-only burned-subtitle variant as runtime."},
     {"id": "FB-6",
-     "rule": "Scenes with no mix yet (CIN_018-020) play silent video + SRT only. The adapter must not improvise a mix from stems or play a VO take over silent video."},
+     "rule": "Scenes with no mix yet (CIN_019-020) play silent video + SRT only. The adapter must not improvise a mix from stems or play a VO take over silent video."},
     {"id": "FB-7",
      "rule": "Rewatch, skip, seen-state and any fallback step never grant quest progress (WO32 item 4; enforcement is the Codex runtime's job)."},
 ]
@@ -842,6 +890,7 @@ MIX_MANIFEST_BY_SCENE = {
     "CIN_015": "cin015",
     "CIN_016": "cin016",
     "CIN_017": "cin017",
+    "CIN_018": "cin018",
 }
 
 
@@ -924,8 +973,16 @@ def build_fallback_table(takes, mix_manifests):
                                       "source": src,
                                       "segmentSceneSeconds": st.get("segmentSceneSeconds"),
                                       "atSeconds": st.get("atSeconds")})
-                vo = entry.get("vo", {})
-                vo_files = [vo.get("take")] if vo.get("take") else []
+                # CIN_018 carries TWO VO takes (the only campaign
+                # scene with two dialogue windows): the fallback
+                # re-assembly needs both.
+                voices = entry.get("voices")
+                if voices:
+                    vo_files = [v.get("take") for v in voices
+                                if v.get("take")]
+                else:
+                    vo = entry.get("vo", {})
+                    vo_files = [vo.get("take")] if vo.get("take") else []
                 for w in vo_files:
                     if not find_take_wav(w).exists():
                         err(f"fallback VO take missing for {sid}: {w}")
@@ -967,7 +1024,7 @@ def main():
     fail_if_errors()
     out = {
         "manifestId": "NGM_PRONUNCIATION_TABLE_V1",
-        "checkpoint": "MEDIA-02 checkpoint 51 - pronunciation/proper-name table re-run: CIN_017 draft mix v1 embedded (18 embedded mixes, 3 silent CIN_018-020); names unchanged, no new seam row (MUSIC/bach_uyen + AMBIENCE/underwater already in the table from the CIN_015 scene mix) (Codex WO32 item 3); integration baseline 6f79853 (PR #128 merged, owner LF policy now on integration)",
+        "checkpoint": "MEDIA-02 checkpoint 52 - pronunciation/proper-name table re-run: CIN_018 draft mix v1 embedded (19 embedded mixes, 2 silent CIN_019-020); names unchanged, no new seam row (MUSIC/sa_hoa + AMBIENCE/desert_wind already in the table from the CIN_010 scene mix); CIN_018 is the only campaign scene with two dialogue windows, so its cue row carries both takes (S02 FITS, S03 overrun +0.280 s kept per owner verdict) (Codex WO32 item 3); integration baseline 6f79853 (PR #128 merged, owner LF policy now on integration)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "workOrderRef": "Work Order 32 (PR #128) item 3; issue #116 comment 6713518554",
         "branch": "muse/media-production-20261104",

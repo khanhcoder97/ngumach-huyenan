@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build PLAYBACK_METADATA_v1.json — MEDIA-02 checkpoint 43 (Codex WO32 item 4); re-run at checkpoint 51 for the CIN_017 draft mix v1 (18 embedded mixes, 3 silent).
+"""Build PLAYBACK_METADATA_v1.json — MEDIA-02 checkpoint 43 (Codex WO32 item 4); re-run at checkpoint 52 for the CIN_018 draft mix v1 (19 embedded mixes, 2 silent).
 
 Purpose (Codex direction 2026-11-08, issue #116 comment 6713518554, item 4):
 runtime OGV/MP4 files now carry embedded soundtracks. The presentation adapter
@@ -272,6 +272,22 @@ def main():
                     "overrunVsWindowSeconds": vo.get("overrunVsWindowSeconds"),
                     "status": "DRAFT_VO_NOT_FINAL",
                 }
+                # CIN_018 is the only campaign scene with TWO dialogue
+                # windows: record both takes (the single "voice" above
+                # stays the S03 take, as in every earlier mix).
+                voices = ms.get("voices")
+                if voices:
+                    mix_info["voices"] = [
+                        {"shotId": v.get("shotId"),
+                         "speaker": v.get("speaker"),
+                         "speakerDisplay": v.get("speakerDisplay"),
+                         "take": v.get("take"),
+                         "windowSeconds": v.get("windowSeconds"),
+                         "takeDurationSeconds": v.get("takeDurationSeconds"),
+                         "overrunVsWindowSeconds": v.get("overrunVsWindowSeconds"),
+                         "fit": v.get("fit"),
+                         "status": "DRAFT_VO_NOT_FINAL"}
+                        for v in voices]
         if scene_id in ("CIN_001", "CIN_002", "CIN_004"):
             mix_info["alternateStandaloneMixesNotEmbedded"] = [
                 {"mixVersion": "v1_ported_stems",
@@ -356,7 +372,7 @@ def main():
 
     metadata = {
         "manifestId": "NGM_PLAYBACK_METADATA_V1",
-        "checkpoint": "MEDIA-02 checkpoint 51 (re-run of the checkpoint 43 builder: CIN_017 draft mix v1 embedded; 18 embedded soundtracks, 3 silent CIN_018-020)",
+        "checkpoint": "MEDIA-02 checkpoint 52 (re-run of the checkpoint 43 builder: CIN_018 draft mix v1 embedded; 19 embedded soundtracks, 2 silent CIN_019-020)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "workOrderRef": "Codex Work Order 32 / issue #116 comment 6713518554 item 4",
         "branch": "muse/media-production-20261104",
