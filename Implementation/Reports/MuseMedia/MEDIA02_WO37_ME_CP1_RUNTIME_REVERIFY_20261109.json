@@ -1,0 +1,27 @@
+{
+ "checkpoint": "MEDIA-02 WO37 M-E checkpoint 1 (composed ambience real variants: 13 cues x v02/v03, 26 new variant renders; runtime audio manifest total 757 -> 783) - runtime re-verification",
+ "base_integration": "6f79853",
+ "branch": "muse/media-production-20261104",
+ "verifies": "runtime delivery as revised by this checkpoint: 26 variant OGGs registered under assets/audio/composed/ambience/ as composed_ambience_variant entries; all prior entries unchanged (21 embedded soundtracks, 0 silent; playback metadata 21/0).",
+ "counts": {
+  "totalFiles": 783,
+  "counts": {
+   "music_ambience": 22,
+   "sfx_ui_variants": 519,
+   "vo": 50,
+   "mix": 30,
+   "composed": 162
+  },
+  "variant_entries_found": 26,
+  "variant_entries_missing": 0
+ },
+ "mismatches": 0,
+ "notes": [
+  "26 new variant files re-hashed + re-measured from real bytes (13 cues x v02/v03, master + runtime); 13 v01 cross-refs re-hashed against the checkpoint-30 pack; all 39 master SHAs and all 39 runtime SHAs distinct; diff-vs-v01 RMS ratios recomputed from decoded bytes; seam indicators recomputed from decoded masters.",
+  "runtime manifest total 783 files (counts {'music_ambience': 22, 'sfx_ui_variants': 519, 'vo': 50, 'mix': 30, 'composed': 162}); 26/26 variant entries found with matching sha/size/duration."
+ ],
+ "verdict": "PASS",
+ "limits": [
+  "Runtime re-verification checks manifest registration (sha/size/duration) only; Godot wiring remains Codex's adapter decision."
+ ]
+}
