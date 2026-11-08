@@ -45,6 +45,8 @@
     <Compile Include="TutorialProgressTests.cs" />
     <Compile Include="EncounterVfxBinderTests.cs" />
     <Compile Include="LocalizationAndCatalogPhysicalTests.cs" />
+    <Compile Include="SessionLifecycleTests.cs" />
+    <Compile Include="ContractConformanceTests.cs" />
   </ItemGroup>
 
 </Project>

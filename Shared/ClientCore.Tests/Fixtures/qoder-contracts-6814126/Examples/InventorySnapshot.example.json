@@ -1,0 +1,28 @@
+{
+  "inventoryRevision": 7,
+  "items": [
+    {
+      "instanceId": "ITM_MINH_KIEM_WEAPON_01",
+      "templateId": "EQ-MK-WEAPON-T1-R-COMMON",
+      "stack": 1,
+      "location": "EQUIPPED",
+      "slot": "WEAPON_MAIN",
+      "durability": 100,
+      "version": 1
+    },
+    {
+      "instanceId": "ITM_MINH_KIEM_POTION_01",
+      "templateId": "POT-HP-01",
+      "stack": 5,
+      "location": "BAG",
+      "durability": 0,
+      "version": 1
+    }
+  ],
+  "currencies": [
+    {
+      "currencyId": "COIN",
+      "amount": 20
+    }
+  ]
+}

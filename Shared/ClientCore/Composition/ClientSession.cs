@@ -44,8 +44,13 @@ namespace NguMach.Client.Core.Composition
         }
     }
 
-    public sealed class ClientSession : IDisposable
+    public sealed class ClientSession : IDisposable, IAsyncDisposable
     {
+        // Default bound for awaitable cleanup. Dispose()/DisposeAsync() never
+        // block the UI thread; DisposeAsync() additionally waits at most this
+        // long for an in-flight read to unwind before it returns.
+        public static readonly TimeSpan DefaultDisposeTimeout = TimeSpan.FromSeconds(2);
+
         private readonly IP1Transport _rawTransport;
         private readonly IP1Transport _transport;
         private readonly bool _ownsTransport;
@@ -55,11 +60,13 @@ namespace NguMach.Client.Core.Composition
         private readonly object _disposeGate = new object();
         private CancellationTokenSource _cts;
         private PendingMutationSnapshot _pendingCarry;
-        private bool _disposed;
+        private volatile bool _disposed;
         private bool _encounterLaneDisposed;
 
         public P1Client Client { get; private set; }
-        public P1ClientAdapter Adapter { get; private set; }
+        // Stable for the whole session lifetime: presenters keep one reference
+        // and always reach the current epoch (a relogin swaps Client, not Adapter).
+        public P1ClientAdapter Adapter { get; }
         public StaleResponseGuard Guard { get; private set; }
         public EncounterView Encounter { get; }
         // Host-supplied deployment facts. Production-off is the default; no route is
@@ -67,8 +74,13 @@ namespace NguMach.Client.Core.Composition
         public ClientCapability Capability { get; }
         public ServiceAvailability Availability { get; }
         public long SessionGeneration { get; private set; }
+        // Upper bound DisposeAsync() may spend waiting for an in-flight read.
+        public TimeSpan DisposeTimeout { get; }
         public IMainThreadDispatcher Dispatcher => _dispatcher;
-        public CancellationToken Token { get { return _cts != null ? _cts.Token : CancellationToken.None; } }
+        // After Dispose the token source is released: reads observe cancellation
+        // through the captured token they already hold, and a fresh property read
+        // degrades to CancellationToken.None instead of throwing.
+        public CancellationToken Token { get { var cts = _cts; return cts != null ? cts.Token : CancellationToken.None; } }
         public bool HasPendingMutation => Client.HasPendingMutation || _pendingCarry != null;
 
         // Raised on the injected main-thread dispatcher after a typed encounter read
@@ -82,15 +94,21 @@ namespace NguMach.Client.Core.Composition
             TimeSpan? requestTimeout = null,
             IMainThreadDispatcher dispatcher = null,
             string characterId = null,
-            DeploymentProfile profile = null)
+            DeploymentProfile profile = null,
+            TimeSpan? disposeTimeout = null)
         {
             _rawTransport = transport ?? throw new ArgumentNullException(nameof(transport));
             _ownsTransport = ownsTransport;
             _characterId = string.IsNullOrWhiteSpace(characterId) ? null : characterId;
             _dispatcher = dispatcher ?? new SynchronousDispatcher();
             _transport = new TimeoutTransport(_rawTransport, requestTimeout ?? TimeSpan.FromSeconds(30));
+            DisposeTimeout = disposeTimeout ?? DefaultDisposeTimeout;
             Client = new P1Client(_transport, useWorldV2: useWorldV2, characterId: _characterId);
-            Adapter = new P1ClientAdapter(Client);
+            // One adapter for the session's lifetime, bound to the live client
+            // through a provider so a relogin is invisible to presenters and a
+            // disposed session degrades to a typed "disposed" failure instead of
+            // touching a dead transport or the previous epoch's state.
+            Adapter = new P1ClientAdapter(() => _disposed ? null : Client);
             Guard = new StaleResponseGuard();
             Encounter = new EncounterView();
             Capability = ClientCapability.FromProfile(profile ?? DeploymentProfile.ProductionOff());
@@ -132,7 +150,6 @@ namespace NguMach.Client.Core.Composition
 
             var previous = Client;
             Client = new P1Client(_transport, useWorldV2: previous.UseWorldV2, characterId: _characterId);
-            Adapter = new P1ClientAdapter(Client);
             return await ConnectAsync(ct);
         }
 
@@ -386,14 +403,41 @@ namespace NguMach.Client.Core.Composition
             long generation = SessionGeneration;
             _dispatcher.Post(() =>
             {
+                Action<EncounterUpdate> live;
                 lock (_disposeGate)
                 {
-                    if (_disposed || SessionGeneration != generation || EncounterUpdated == null ||
-                        Client != capturedClient) return;
+                    if (_disposed || SessionGeneration != generation || Client != capturedClient) return;
+                    // Re-check the subscription when the callback actually runs:
+                    // an unsubscribe (or a new subscriber) between Post and drain
+                    // must change who receives this update.
+                    live = StillSubscribed(handler, EncounterUpdated);
+                    if (live == null) return;
                 }
-                try { handler(update); }
+                try { live(update); }
                 catch (Exception) { /* a consumer callback must not corrupt the client lane */ }
             });
+        }
+
+        // Returns the subset of the captured handlers that is still subscribed, or
+        // null when none is. Handlers added after Post() never receive it.
+        private static Action<EncounterUpdate> StillSubscribed(
+            Action<EncounterUpdate> captured, Action<EncounterUpdate> current)
+        {
+            if (captured == null || current == null) return null;
+            var live = current.GetInvocationList();
+            Action<EncounterUpdate> result = null;
+            foreach (var entry in captured.GetInvocationList())
+            {
+                foreach (var candidate in live)
+                {
+                    if (ReferenceEquals(candidate, entry))
+                    {
+                        result += (Action<EncounterUpdate>)entry;
+                        break;
+                    }
+                }
+            }
+            return result;
         }
 
         private bool IsCurrentEpoch(string sessionId, long generation)
@@ -415,8 +459,9 @@ namespace NguMach.Client.Core.Composition
 
         private CancellationTokenSource CreateLinkedToken(CancellationToken caller)
         {
-            if (_cts == null) throw new ObjectDisposedException(nameof(ClientSession));
-            return CancellationTokenSource.CreateLinkedTokenSource(caller, _cts.Token);
+            var cts = _cts;
+            if (cts == null) throw new ObjectDisposedException(nameof(ClientSession));
+            return CancellationTokenSource.CreateLinkedTokenSource(caller, cts.Token);
         }
 
         private EncounterReadResult CanceledOrStale(string sessionId, long generation, string code)
@@ -436,39 +481,77 @@ namespace NguMach.Client.Core.Composition
             return token.Value<string>();
         }
 
-        public void Cancel() { try { _cts.Cancel(); } catch (Exception) { } }
+        public void Cancel() { var cts = _cts; if (cts == null) return; try { cts.Cancel(); } catch (Exception) { } }
 
-        public void Dispose()
+        // Claims the one-shot right to run cleanup. The first caller wins and
+        // performs its own cleanup (sync non-blocking, or async bounded); any
+        // later Dispose/DisposeAsync is a no-op so cleanup can never run twice.
+        private bool TryBeginDispose()
         {
-            bool already;
             lock (_disposeGate)
             {
-                already = _disposed;
+                if (_disposed) return false;
                 _disposed = true;
             }
-            if (already) return;
             EncounterUpdated = null;
-            try { _cts.Cancel(); } catch (Exception) { }
-            _cts.Dispose();
+            var cts = _cts;
+            _cts = null;
+            if (cts != null)
+            {
+                try { cts.Cancel(); } catch (Exception) { }
+                cts.Dispose();
+            }
             Guard.EndSession();
+            return true;
+        }
 
-            // Non-blocking shutdown: never spin-wait on the UI thread. Cancel the
-            // token source so cancellation-aware reads exit, mark the lane disposed
-            // so in-flight reads skip Release() in their finally blocks, and take
-            // the lane only if no read holds it. A non-cancelling transport may
-            // keep a read in-flight past Dispose; that read exits on its own and
-            // its late reply is rejected by the epoch check in ReadEncounterCoreAsync.
+        private void DisposeOwnedTransport()
+        {
+            if (!_ownsTransport) return;
+            var disposable = _rawTransport as IDisposable;
+            if (disposable != null) disposable.Dispose();
+        }
+
+        // Non-blocking shutdown: never spin-wait on the UI thread. Cancel the
+        // token source so cancellation-aware reads exit, mark the lane disposed
+        // so in-flight reads skip Release() in their finally blocks, and take
+        // the lane only if no read holds it. A non-cancelling transport may
+        // keep a read in-flight past Dispose; that read exits on its own and
+        // its late reply is rejected by the epoch check in ReadEncounterCoreAsync.
+        public void Dispose()
+        {
+            if (!TryBeginDispose()) return;
             lock (_disposeGate) { _encounterLaneDisposed = true; }
             try
             {
                 if (_encounterLane.Wait(0)) _encounterLane.Release();
             }
             catch (ObjectDisposedException) { }
-            if (_ownsTransport)
+            DisposeOwnedTransport();
+        }
+
+        // Awaitable, bounded cleanup for hosts that need to know when the session
+        // is really torn down. It never blocks the caller's thread: the wait is
+        // async and capped by DisposeTimeout, so a transport that ignores
+        // cancellation can delay cleanup but can never hang it.
+        public async ValueTask DisposeAsync()
+        {
+            if (!TryBeginDispose()) return;
+            bool acquired = false;
+            try
             {
-                var disposable = _rawTransport as IDisposable;
-                if (disposable != null) disposable.Dispose();
+                acquired = await _encounterLane.WaitAsync(DisposeTimeout).ConfigureAwait(false);
             }
+            catch (ObjectDisposedException) { }
+            catch (OperationCanceledException) { }
+            lock (_disposeGate) { _encounterLaneDisposed = true; }
+            if (acquired)
+            {
+                try { _encounterLane.Release(); }
+                catch (ObjectDisposedException) { }
+                catch (SemaphoreFullException) { }
+            }
+            DisposeOwnedTransport();
         }
     }
 }

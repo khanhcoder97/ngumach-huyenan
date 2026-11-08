@@ -3,6 +3,10 @@
 Target framework: `net8.0` (Godot 4.7.2 stable .NET baseline; do not self-upgrade).
 No `UnityEngine` / `UnityEditor` / UI Toolkit / `Resources.Load`. Engine-agnostic.
 
+Adoption packet for host integrators: [`Shared/ADOPTION.md`](ADOPTION.md)
+(source/dependency closure, contract pin, lifetime/thread semantics, migration
+notes, license status).
+
 Code head: `ce4ce5b83505e55059722b06f4e347292f27144b`; verified head:
 `35228071dab9d59562e8a9691c62d390de374c2a` (2026-11-04 re-verify, PR #109) (branch
 `opencode/opc-15-godot-client-core-20261103`); encounter validation is bound to

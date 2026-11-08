@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/contracts/p1/InteractRequest.schema.json",
+  "title": "P1 world interact request payload",
+  "description": "Payload of POST /p1/world/interact. The envelope keeps the shared Envelope shape; only INTERACTABLE and GATHER_NODE entities can be targeted.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "targetId"
+  ],
+  "properties": {
+    "targetId": {
+      "description": "A canonical ENT_ entity, or one of the six alpha overlay ids published by DEC-ALPHA-INTERACT-IDS-20261105. The ALPHA_ prefix itself is not accepted: an id outside the exact list (including the training hazard ALPHA_WAVE_BM_TRAINING) is refused as invalid_payload.",
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^ENT_[A-Z0-9_]+$"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "ALPHA_OBJ_BM_FRAGMENT",
+            "ALPHA_OBJ_BM_RIPPLE_01",
+            "ALPHA_OBJ_BM_RIPPLE_02",
+            "ALPHA_OBJ_BM_RIPPLE_03",
+            "ALPHA_OBJ_BM_VILLAGER_01",
+            "ALPHA_OBJ_BM_VILLAGER_02"
+          ]
+        }
+      ]
+    }
+  }
+}

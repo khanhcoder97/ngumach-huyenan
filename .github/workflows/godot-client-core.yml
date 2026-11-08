@@ -145,8 +145,18 @@ jobs:
             --client-root client \
             --server-root "$RUNNER_TEMP/paired-server" \
             --server-head "$PAIRED_SERVER_HEAD" \
+            --contract-pin client/Shared/ClientCore.Tests/Fixtures/qoder-contract-pins.json \
             --mode "${{ matrix.mode }}" \
             --artifacts-root client/TestResults/clientcore-http-g32
+      - name: Negative controls (runner must refuse hostile inputs)
+        if: matrix.mode == 'gates-off'
+        timeout-minutes: 20
+        run: |
+          python3 client/Shared/ClientCore.HttpRunner/run_negative_controls.py \
+            --client-root client \
+            --server-root "$RUNNER_TEMP/paired-server" \
+            --contract-pin client/Shared/ClientCore.Tests/Fixtures/qoder-contract-pins.json \
+            --artifacts-root client/TestResults/clientcore-http-g32/negative-controls
       - name: Enforce positive assertion count
         if: always()
         run: |
@@ -162,6 +172,13 @@ jobs:
         with:
           name: clientcore-http-g32-${{ matrix.mode }}
           path: client/TestResults/clientcore-http-g32/${{ matrix.mode }}/
+          if-no-files-found: warn
+      - name: Upload negative-control artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clientcore-http-g32-negative-controls
+          path: client/TestResults/clientcore-http-g32/negative-controls/
           if-no-files-found: warn
 
   shared-http-runner:

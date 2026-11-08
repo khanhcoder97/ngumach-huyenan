@@ -291,7 +291,9 @@ namespace PlayerUIChecks
         [Fact]
         public void Adapter_ThrowsOnNullClient()
         {
-            Assert.Throws<ArgumentNullException>(() => new P1ClientAdapter(null));
+            // Explicit cast: P1ClientAdapter also has an internal provider
+            // binding (Func<P1Client>), so a bare null is ambiguous.
+            Assert.Throws<ArgumentNullException>(() => new P1ClientAdapter((P1Client)null));
         }
 
         [Fact]

@@ -11,15 +11,22 @@ Two gate modes are supported so CI can measure both sides of the same pairing:
                    the checkpoint routes are exercised for real.
 
 Mandatory contract: exit 0 only with a positive assertion count, a healthy
-server that reports the expected identity, and a server checkout whose HEAD
-matches the requested pin. Anything missing is UNVERIFIED (exit 2) or FAIL (1),
-never a PASS.
+server that reports the expected identity, a server checkout whose HEAD
+matches the requested pin, and (when --contract-pin is given) contract bytes
+at the server root that hash exactly like the pinned manifest. Anything
+missing is UNVERIFIED (exit 2) or FAIL (1), never a PASS. A child process
+that survives cleanup is an orphan and fails the run.
+
+The pass/fail decisions (decide_runner_exit, verify_contract_pin,
+survivors) are pure functions so run_negative_controls.py can drive them
+with real inputs and assert the runner refuses to pass.
 
 Artifacts: TestResults/clientcore-http/<mode>/ plus a top-level summary.
 """
 
 import argparse
 import hashlib
+import json
 import os
 import re
 import signal
@@ -155,7 +162,9 @@ def content_fingerprint(content_root):
     return fingerprint
 
 
-def wait_healthy(base_url, process, timeout_seconds=90):
+def wait_healthy(base_url, process, timeout_seconds=None):
+    if timeout_seconds is None:
+        timeout_seconds = int(os.environ.get("P1_HEALTH_TIMEOUT_SECONDS", "90"))
     deadline = time.monotonic() + timeout_seconds
     while time.monotonic() < deadline:
         if process.poll() is not None:
@@ -180,6 +189,85 @@ def assertion_count(stdout):
         return int(match.group(1))
     except ValueError:
         return None
+
+
+def decide_runner_exit(returncode, count):
+    """Pure pass/fail decision for a finished runner process.
+
+    Returns (exit_code, message). exit 2 = UNVERIFIED, 1 = FAIL, 0 = PASS.
+    """
+    if returncode == 2:
+        return 2, "runner UNVERIFIED (no server / skip)"
+    if returncode != 0:
+        return 1, "runner exited {}".format(returncode)
+    if count is None:
+        return 1, ("runner did not report '" + ASSERTION_MARKER.pattern +
+                   "' - zero-assertion runs cannot pass")
+    if count <= 0:
+        return 1, "runner reported zero assertions"
+    return 0, ""
+
+
+def verify_contract_pin(server_root, manifest_path):
+    """Verify contract bytes at server_root against the pinned manifest.
+
+    Pure decision helper: every file listed in the manifest must exist under
+    server_root/Implementation/Contracts/P1 with exactly the pinned SHA-256,
+    and the tree must contain no unpinned schema/example file. Returns
+    (ok, message).
+    """
+    try:
+        with open(manifest_path, "r", encoding="utf-8") as stream:
+            manifest = json.load(stream)
+    except (OSError, ValueError) as exc:
+        return False, "contract manifest unreadable: {}".format(exc)
+    files = manifest.get("files")
+    if not files:
+        return False, "contract manifest lists no files"
+    root = os.path.join(server_root, "Implementation", "Contracts", "P1")
+    problems = []
+    pinned = set()
+    for entry in files:
+        kind, name, want = entry.get("kind"), entry.get("name"), entry.get("sha256")
+        if kind not in ("schema", "example") or not name or not want:
+            problems.append("malformed manifest entry: {!r}".format(entry))
+            continue
+        relative = (os.path.join("Examples", name) if kind == "example" else name)
+        pinned.add(os.path.normpath(relative))
+        path = os.path.join(root, relative)
+        if not os.path.isfile(path):
+            problems.append("missing {} {}".format(kind, name))
+            continue
+        got = sha256_file(path)
+        if got != want:
+            problems.append("content mismatch {} {}: pinned {} got {}".format(
+                kind, name, want[:12], got[:12]))
+    # No unpinned contract file may hide next to the pinned set.
+    if os.path.isdir(root):
+        on_disk = set()
+        for name in os.listdir(root):
+            path = os.path.join(root, name)
+            if os.path.isfile(path) and name.endswith(".schema.json"):
+                on_disk.add(os.path.normpath(name))
+        examples = os.path.join(root, "Examples")
+        if os.path.isdir(examples):
+            for name in os.listdir(examples):
+                if name.endswith(".example.json"):
+                    on_disk.add(os.path.normpath(os.path.join("Examples", name)))
+        for relative in sorted(on_disk - pinned):
+            problems.append("unpinned contract file: " + relative)
+    else:
+        problems.append("contract tree missing: " + root)
+    if problems:
+        return False, "; ".join(problems[:10]) + (
+            " (+{} more)".format(len(problems) - 10) if len(problems) > 10 else "")
+    return True, "{} pinned contract files verified".format(len(files))
+
+
+def survivors(processes):
+    """Pure check: which of these child processes are still alive?"""
+    return [label for label, process in processes
+            if process is not None and process.poll() is None]
 
 
 def find_health_dll(server_root):
@@ -233,6 +321,14 @@ def run_mode(args, mode):
         print("ERROR: client HEAD {} != pinned {}".format(client_head, args.client_head),
               file=sys.stderr)
         return 1
+    contract_ok = None
+    if args.contract_pin:
+        contract_ok, contract_message = verify_contract_pin(args.server_root, args.contract_pin)
+        print("==> contract pin: " + contract_message, flush=True)
+        if not contract_ok:
+            print("ERROR: contract pin verification failed: " + contract_message,
+                  file=sys.stderr)
+            return 1
     dirty = git_dirty_tracked(args.server_root)
     if dirty:
         print("ERROR: server checkout has tracked modifications: " + "; ".join(dirty),
@@ -294,6 +390,9 @@ def run_mode(args, mode):
         stream.write("content_root={}\n".format(args.content_root))
         stream.write("health_dll={}\n".format(health_dll))
         stream.write("health_sha256={}\n".format(health_hash))
+        if args.contract_pin:
+            stream.write("contract_pin_manifest={}\n".format(args.contract_pin))
+            stream.write("contract_pin_ok={}\n".format(contract_ok))
         for relative, digest in content_hashes.items():
             stream.write("content:{}={}\n".format(relative, digest))
 
@@ -314,61 +413,54 @@ def run_mode(args, mode):
         cwd=args.content_root, env=env, stdout=server_log, stderr=subprocess.STDOUT,
         start_new_session=(os.name != "nt"))
     runner_process = None
+    result = 1
     try:
         if not wait_healthy(base_url, process):
             print("ERROR: server pid={} did not become healthy with identity '{}'; see {}".format(
                 process.pid, SERVER_IDENTITY, server_log_path), file=sys.stderr)
-            return 1
-        if process.poll() is not None:
+            result = 1
+        elif process.poll() is not None:
             print("ERROR: server pid={} exited after health check".format(process.pid),
                   file=sys.stderr)
-            return 1
-        print("==> server healthy pid={}".format(process.pid), flush=True)
+            result = 1
+        else:
+            print("==> server healthy pid={}".format(process.pid), flush=True)
 
-        env["P1_BASE_URL"] = base_url
-        print("==> running portable HTTP runner (mandatory)", flush=True)
-        runner_process = subprocess.Popen(
-            [DOTNET_CLIENT, "run", "--project", runner_csproj, "-c", "Release", "--no-build"],
-            cwd=args.client_root, env=env,
-            stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-            start_new_session=(os.name != "nt"))
-        try:
-            stdout, _ = runner_process.communicate(timeout=RUNNER_TIMEOUT_SECONDS)
-        except subprocess.TimeoutExpired:
-            kill_tree(runner_process, "runner-timeout")
-            stdout, _ = runner_process.communicate()
-            with open(runner_log_path, "w", encoding="utf-8") as log:
-                log.write(decode_capture(stdout))
-                log.write("\nERROR: runner exceeded {} seconds\n".format(RUNNER_TIMEOUT_SECONDS))
-            print("ERROR: runner exceeded " + str(RUNNER_TIMEOUT_SECONDS) + " seconds",
-                  file=sys.stderr)
-            return 1
+            env["P1_BASE_URL"] = base_url
+            print("==> running portable HTTP runner (mandatory)", flush=True)
+            runner_process = subprocess.Popen(
+                [DOTNET_CLIENT, "run", "--project", runner_csproj, "-c", "Release", "--no-build"],
+                cwd=args.client_root, env=env,
+                stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                start_new_session=(os.name != "nt"))
+            try:
+                stdout, _ = runner_process.communicate(timeout=RUNNER_TIMEOUT_SECONDS)
+            except subprocess.TimeoutExpired:
+                kill_tree(runner_process, "runner-timeout")
+                stdout, _ = runner_process.communicate()
+                with open(runner_log_path, "w", encoding="utf-8") as log:
+                    log.write(decode_capture(stdout))
+                    log.write("\nERROR: runner exceeded {} seconds\n".format(RUNNER_TIMEOUT_SECONDS))
+                print("ERROR: runner exceeded " + str(RUNNER_TIMEOUT_SECONDS) + " seconds",
+                      file=sys.stderr)
+                result = 1
+            else:
+                text = decode_capture(stdout)
+                with open(runner_log_path, "w", encoding="utf-8") as log:
+                    log.write(text)
+                sys.stdout.write(text)
 
-        text = decode_capture(stdout)
-        with open(runner_log_path, "w", encoding="utf-8") as log:
-            log.write(text)
-        sys.stdout.write(text)
+                count = assertion_count(text)
+                with open(assertions_path, "w", encoding="utf-8") as stream:
+                    stream.write(str(count if count is not None else 0) + "\n")
+                print("==> runner exit {}".format(runner_process.returncode), flush=True)
+                print("==> assertions: {}".format(count if count is not None else "missing"),
+                      flush=True)
+                print("artifacts: " + artifacts, flush=True)
 
-        count = assertion_count(text)
-        with open(assertions_path, "w", encoding="utf-8") as stream:
-            stream.write(str(count if count is not None else 0) + "\n")
-        print("==> runner exit {}".format(runner_process.returncode), flush=True)
-        print("==> assertions: {}".format(count if count is not None else "missing"), flush=True)
-        print("artifacts: " + artifacts, flush=True)
-
-        if runner_process.returncode == 2:
-            print("ERROR: runner UNVERIFIED (no server / skip)", file=sys.stderr)
-            return 2
-        if runner_process.returncode != 0:
-            return 1
-        if count is None:
-            print("ERROR: runner did not report '" + ASSERTION_MARKER.pattern +
-                  "' - zero-assertion runs cannot pass", file=sys.stderr)
-            return 1
-        if count <= 0:
-            print("ERROR: runner reported zero assertions", file=sys.stderr)
-            return 1
-        return 0
+                result, message = decide_runner_exit(runner_process.returncode, count)
+                if result != 0:
+                    print("ERROR: " + message, file=sys.stderr)
     finally:
         if runner_process is not None:
             kill_tree(runner_process, "runner")
@@ -378,6 +470,13 @@ def run_mode(args, mode):
         if process.poll() is not None:
             print("==> server pid={} reaped exit={}".format(process.pid, process.returncode),
                   flush=True)
+        # A child that survives cleanup is an orphan: the run cannot pass.
+        orphans = survivors([("runner", runner_process), ("server", process)])
+        if orphans:
+            print("ERROR: orphan process(es) survived cleanup: " + ", ".join(orphans),
+                  file=sys.stderr)
+            result = 1
+    return result
 
 
 def parse_args(argv):
@@ -387,6 +486,10 @@ def parse_args(argv):
     parser.add_argument("--server-head", default=os.environ.get("P1_SERVER_HEAD"))
     parser.add_argument("--client-head", default=os.environ.get("P1_CLIENT_HEAD"))
     parser.add_argument("--content-root", default=os.environ.get("P1_CONTENT_ROOT"))
+    parser.add_argument("--contract-pin",
+                        default=os.environ.get("P1_CONTRACT_PIN"),
+                        help="path to qoder-contract-pins.json; when given, every "
+                             "contract byte at the server root must match its pinned SHA-256")
     parser.add_argument("--mode", choices=sorted(MODES), default=os.environ.get("P1_ALPHA_MODE", "gates-off"))
     parser.add_argument("--artifacts-root",
                         default=os.environ.get("P1_ARTIFACTS_ROOT",
@@ -396,6 +499,8 @@ def parse_args(argv):
     args.server_root = os.path.abspath(args.server_root)
     args.content_root = os.path.abspath(args.content_root or args.server_root)
     args.artifacts_root = os.path.abspath(args.artifacts_root)
+    if args.contract_pin:
+        args.contract_pin = os.path.abspath(args.contract_pin)
     return args
 
 

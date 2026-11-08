@@ -1,0 +1,16 @@
+{
+  "eventId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "eventType": "combat.hit",
+  "aggregateId": "CHR_MINH_KIEM_01",
+  "aggregateRevision": 43,
+  "emittedAtUtc": "2026-10-23T20:00:00Z",
+  "schemaVersion": 1,
+  "payload": {
+    "sourceId": "CHR_MINH_KIEM_01",
+    "targetId": "MOB_CARPLING",
+    "skillId": "SK-MK-01",
+    "damage": 18,
+    "hit": true,
+    "cooldownEndsAtUtc": "2026-10-23T20:00:10Z"
+  }
+}
