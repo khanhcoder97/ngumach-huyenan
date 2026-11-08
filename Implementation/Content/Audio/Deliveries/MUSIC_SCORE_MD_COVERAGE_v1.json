@@ -1,6 +1,6 @@
 {
  "coverageId": "NGM_MUSIC_SCORE_MD_COVERAGE_V1",
- "checkpoint": "MEDIA-02 WO37 M-D checkpoint 5",
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 6",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "baseSha": "6f79853",
@@ -259,5 +259,14 @@
  "openForMdCp6": [
   "Ear audition of all MD1/MD2/MD3/MD4/MD5 cues + loop seams (NOT_AUDITIONED).",
   "More phase-layer candidates (e.g. Ben Mua / Sa Hoa / Lam Trieu intensity layers)."
+ ],
+ "md6": {
+  "pack": "MUSIC_SCORE_MD6_pack_v1",
+  "layers": 3,
+  "detail": "Additive phase layers MUSIC/ben_mua_layer_intensity, MUSIC/lam_trieu_layer_intensity and MUSIC/sa_hoa_layer_intensity."
+ },
+ "openForMdCp7": [
+  "Ear audition of all MD1/MD2/MD3/MD4/MD5/MD6 cues + loop seams (NOT_AUDITIONED).",
+  "More phase-layer candidates (e.g. Thang Long / Tran Son / Bach Uyen / rift finale / quiet discovery intensity layers)."
  ]
 }
