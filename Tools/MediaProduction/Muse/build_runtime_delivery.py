@@ -91,6 +91,7 @@ CIN012_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN012_DRA
 CIN013_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN013_DRAFT_V1"
 CIN014_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN014_DRAFT_V1"
 CIN015_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN015_DRAFT_V1"
+CIN016_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN016_DRAFT_V1"
 DUR_TOL_S = 0.02
 
 # P0 animatic files delivered in checkpoint 03, revised in checkpoint 13
@@ -994,6 +995,59 @@ def main():
         audio_entries.append(entry)
         counts["mix"] += 1
 
+    # --- 3k12. CIN_016 draft mix v1 (checkpoint 50) ---
+    # Thirteenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1,
+    # CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1,
+    # CIN_012 v1, CIN_013 v1, CIN_014 v1 and CIN_015 v1 (same recipe
+    # as P0 v3; stem assignment PROPOSED_CANDIDATE, see
+    # CIN016_MIX_V1_manifest_v1.json). The CP17 draft VO take FITS
+    # inside its 12.5-17.5 s window (2.472 s, ends 14.972 s, 2.528 s
+    # before the window end): no overrun, no tail trim at the 18.00 s
+    # scene edge. Ducking evidence is measured over the full VO window
+    # (CP39 method, retained for comparability): 0.0 dB -- NOT a
+    # missing compressor: MUSIC/quiet_discovery is digitally silent
+    # from 12 s to 15 s (RMS -120 dB floor), so the 12.5-14.972 s VO
+    # window falls entirely inside the cue's near-silence gap between
+    # fragments; the sidechain compressor (same params) has no signal
+    # to cut there. The mix measures -25.07 LUFS; the CP17 VO take
+    # itself is -21.92 LUFS; VO is kept at unity per the recipe, not
+    # normalized. Staging: unlike CIN_015, the speaker IS identifiable
+    # here -- the S03 keyframe shows Ha Mac clearly (face in profile,
+    # green headband, green robe, brush in hand, writing in the book)
+    # asking the blue-robed elder across the desk; whether the hooded
+    # figure seen from behind in S02 is Ha Mac arriving is a
+    # continuity question for final picture (woven basket-hat vs
+    # rectangular backpack) -- a final-picture/character-lock matter,
+    # not a mix defect; the mix does not move the VO. Delivered under
+    # mix/cin016_v1/; the P0 v1/v2/v3, CIN_006 v1, CIN_003 v1,
+    # CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1,
+    # CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1 and CIN_015 v1
+    # mixes are byte-identical to before. Adoption is Codex's decision.
+    cin016_mix = json.loads((CIN016_MIX_V1_SRC
+                             / "CIN016_MIX_V1_manifest_v1.json")
+                            .read_text(encoding="utf-8"))
+    for scene in cin016_mix["scenes"]:
+        mx = scene["mix"]
+        src_rel = f"Art_Source/Audio/Muse/MIX/CIN016_DRAFT_V1/{mx['file']}"
+        dest_rel = f"mix/cin016_v1/{mx['file']}"
+        entry = copy_verified_audio(
+            src_rel, dest_rel, mx["sha256"], mx["format"]["bytes"],
+            mx["durationSeconds"], f"CIN_016 mix v1 {scene['sceneId']}")
+        if entry is None:
+            continue
+        entry.update({"cueKey": f"MIX/V1/{scene['sceneId']}",
+                      "category": "mix", "sceneId": scene["sceneId"],
+                      "mixVersion": "v1_cin016_proposed",
+                      "codec": mx["format"]["codec"],
+                      "sampleRateHz": mx["format"]["sampleRateHz"],
+                      "channels": mx["format"]["channels"],
+                      "integratedLufs": float(mx["integratedLUFS"]),
+                      "truePeakDbtp": float(mx["truePeakDBTP"]),
+                      "assetState": "DRAFT_MIX_NOT_FINAL",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["mix"] += 1
+
     # --- 3e. Composed music + cinema stingers (checkpoint 26) ---
     # The composer (build_composed_music.py) already rendered the
     # runtime OGGs into ClientGodot/assets/audio/composed/; this
@@ -1142,9 +1196,9 @@ def main():
 
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 checkpoint 49 - M6 runtime delivery "
-                       "revised: CIN_015 draft mix v1 added (total 621 -> "
-                       "622, mix 24 -> 25); status phrasing corrected "
+        "checkpoint": ("MEDIA-02 checkpoint 50 - M6 runtime delivery "
+                       "revised: CIN_016 draft mix v1 added (total 622 -> "
+                       "623, mix 25 -> 26); status phrasing corrected "
                        "(all 21 dialogue windows approved for DRAFT VO "
                        "production per the Goi 30 D1 decision, PR #120; "
                        "only CIN_001_S05 is DECIDED); P0 draft mixes v3 "
@@ -1158,6 +1212,7 @@ def main():
                        "CIN_013 mix v1 (checkpoint 47), "
                        "CIN_014 mix v1 (checkpoint 48), "
                        "CIN_015 mix v1 (checkpoint 49), "
+                       "CIN_016 mix v1 (checkpoint 50), "
                        "prologue "
                        "(checkpoint 27/28), composed music "
                        "(checkpoint 26) and composed ambience "
@@ -1532,7 +1587,7 @@ def main():
 
     cine_manifest = {
         "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
-        "checkpoint": "MEDIA-02 checkpoint 49 - Goi 31 item 4 extended (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 + CIN_015: P0 mixes v3, CIN_006 mix v1, CIN_003 mix v1, CIN_005 mix v1, CIN_007 mix v1, CIN_008 mix v1, CIN_009 mix v1, CIN_010 mix v1, CIN_011 mix v1, CIN_012 mix v1, CIN_013 mix v1, CIN_014 mix v1 and CIN_015 mix v1 embedded in the runtime OGV + review MP4; poster + SRT + timing per scene; baked-subtitle variant stays review-only); checkpoint 32 shot fixes + status phrasing (all 21 dialogue windows approved for DRAFT VO per Goi 30 D1, PR #120; only CIN_001_S05 DECIDED) otherwise unchanged; prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
+        "checkpoint": "MEDIA-02 checkpoint 50 - Goi 31 item 4 extended (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 + CIN_015 + CIN_016: P0 mixes v3, CIN_006 mix v1, CIN_003 mix v1, CIN_005 mix v1, CIN_007 mix v1, CIN_008 mix v1, CIN_009 mix v1, CIN_010 mix v1, CIN_011 mix v1, CIN_012 mix v1, CIN_013 mix v1, CIN_014 mix v1, CIN_015 mix v1 and CIN_016 mix v1 embedded in the runtime OGV + review MP4; poster + SRT + timing per scene; baked-subtitle variant stays review-only); checkpoint 32 shot fixes + status phrasing (all 21 dialogue windows approved for DRAFT VO per Goi 30 D1, PR #120; only CIN_001_S05 DECIDED) otherwise unchanged; prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "campaignTotals": {"scenes": 20, "shots": 63, "seconds": 378,

@@ -45,6 +45,10 @@ Checkpoint 49 extends it with CIN_015 (draft mix v1, same recipe);
 the CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47/CP48 scenes are
 verified unchanged on re-run, never re-muxed.
 
+Checkpoint 50 extends it with CIN_016 (draft mix v1, same recipe);
+the CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47/CP48/CP49
+scenes are verified unchanged on re-run, never re-muxed.
+
 Turns the per-scene clips for the prologue + CIN_001/002/004/006 into
 a playable runtime pack:
 
@@ -98,6 +102,7 @@ MIX_CIN012 = ROOT / "Art_Source/Audio/Muse/MIX/CIN012_DRAFT_V1"
 MIX_CIN013 = ROOT / "Art_Source/Audio/Muse/MIX/CIN013_DRAFT_V1"
 MIX_CIN014 = ROOT / "Art_Source/Audio/Muse/MIX/CIN014_DRAFT_V1"
 MIX_CIN015 = ROOT / "Art_Source/Audio/Muse/MIX/CIN015_DRAFT_V1"
+MIX_CIN016 = ROOT / "Art_Source/Audio/Muse/MIX/CIN016_DRAFT_V1"
 FAILURES = []
 
 
@@ -413,6 +418,8 @@ def main() -> None:
                     "v1_cin014_proposed"),
         "CIN_015": (MIX_CIN015 / "CIN_015_mix_draft_v1.wav",
                     "v1_cin015_proposed"),
+        "CIN_016": (MIX_CIN016 / "CIN_016_mix_draft_v1.wav",
+                    "v1_cin016_proposed"),
     }
     mix_manifest_shas = {}
     v3_manifest = json.loads(
@@ -480,6 +487,11 @@ def main() -> None:
         .read_text(encoding="utf-8"))
     mix_manifest_shas["CIN_015"] = \
         cin015_manifest["scenes"][0]["mix"]["sha256"]
+    cin016_manifest = json.loads(
+        (MIX_CIN016 / "CIN016_MIX_V1_manifest_v1.json")
+        .read_text(encoding="utf-8"))
+    mix_manifest_shas["CIN_016"] = \
+        cin016_manifest["scenes"][0]["mix"]["sha256"]
 
     pack_scenes = []
     for scene_id, (mix_wav, mix_version) in scenes.items():
@@ -502,7 +514,8 @@ def main() -> None:
         else:
             audio = mux(scene_id, mix_wav, mix_version,
                         mix_manifest_shas[scene_id], work,
-                        checkpoint_label=("CP49" if scene_id == "CIN_015"
+                        checkpoint_label=("CP50" if scene_id == "CIN_016"
+                                          else "CP49" if scene_id == "CIN_015"
                                           else "CP48" if scene_id == "CIN_014"
                                           else "CP47" if scene_id == "CIN_013"
                                           else "CP46" if scene_id == "CIN_012"
@@ -569,6 +582,11 @@ def main() -> None:
                     "poster/SRT/timing unchanged")
         if scene_id == "CIN_015":
             note = ("MEDIA-02 checkpoint 49 - CIN_015 draft mix v1: "
+                    "embedded draft mix audio in the runtime OGV "
+                    "+ review MP4 (video streams bit-identical); "
+                    "poster/SRT/timing unchanged")
+        if scene_id == "CIN_016":
+            note = ("MEDIA-02 checkpoint 50 - CIN_016 draft mix v1: "
                     "embedded draft mix audio in the runtime OGV "
                     "+ review MP4 (video streams bit-identical); "
                     "poster/SRT/timing unchanged")
@@ -661,7 +679,7 @@ def main() -> None:
 
     pack = {
         "manifestId": "NGM_RUNTIME_PACK_GOI31_V1",
-        "checkpoint": "MEDIA-02 checkpoint 49 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 + CIN_015 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47/CP48 scenes verified unchanged)",
+        "checkpoint": "MEDIA-02 checkpoint 50 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 + CIN_015 + CIN_016 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47/CP48/CP49 scenes verified unchanged)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "status": "DRAFT_NOT_FINAL",
@@ -688,7 +706,8 @@ def main() -> None:
             "its v1, CIN_008 embeds its v1, CIN_009 embeds its v1, "
             "CIN_010 embeds its v1, CIN_011 embeds its v1, "
             "CIN_012 embeds its v1, CIN_013 embeds its v1, "
-            "CIN_014 embeds its v1 and CIN_015 embeds its v1; "
+            "CIN_014 embeds its v1, CIN_015 embeds its v1 and "
+            "CIN_016 embeds its v1; "
             "v1/v2 P0 mixes "
             "stay as separate files and "
             "Codex's adapter chooses the mix version at PR review -- "
@@ -846,6 +865,39 @@ def main() -> None:
             "a bare diver hand, S01 no figure at all) -- a "
             "final-picture/character-lock matter, not a mix "
             "defect; the mix does not move the VO.",
+            "CIN_016 stem assignment (quiet_discovery music + "
+            "wind_canopy ambience + reveal at 6.0 s) is "
+            "PROPOSED_CANDIDATE; the CP17 draft VO take fits inside "
+            "its 12.5-17.5 s window (ends 14.972 s, no overrun, no "
+            "tail trim) with 2.528 s to spare. quiet_discovery is the "
+            "composed set's exploration silence ('Khoang lang kham "
+            "pha': solo flute fragments, single bells, long "
+            "near-silences, water drops, 60 BPM) -- the setting-exact "
+            "cue for a quiet indoor conversation about writing "
+            "someone else's story down (S01 detail of the old "
+            "manuscript under the hanging lamp, S02 the blue-robed man "
+            "at the desk with a hooded figure seen from behind, S03 "
+            "Ha Mac writing in his book as he asks the elder across "
+            "the desk); wind_canopy is the wind-through-canopy bed "
+            "for the greenery outside the S03 window and the bamboo "
+            "walls. Both are third scene-mix uses (CIN_007, CIN_011, "
+            "CIN_014 for wind_canopy). The mix measures -25.07 LUFS; "
+            "the CP17 VO take itself is -21.92 LUFS; VO is kept at "
+            "unity per the recipe, not normalized. Ducking is 0.0 dB "
+            "over the full VO window -- NOT a missing compressor: "
+            "quiet_discovery is digitally silent from 12 s to 15 s "
+            "(RMS -120 dB floor), so the 12.5-14.972 s window falls "
+            "entirely inside the cue's near-silence gap between "
+            "fragments; the earlier quiet_discovery mixes show a real "
+            "cut (CIN_007 -9.43 dB, CIN_011 -10.79 dB) because their "
+            "longer windows extended past 15 s. Staging: unlike "
+            "CIN_015, the speaker IS identifiable here (S03 shows Ha "
+            "Mac clearly, face in profile, brush in hand); whether "
+            "the hooded figure seen from behind in S02 is Ha Mac "
+            "arriving is a continuity question for final picture "
+            "(woven basket-hat vs rectangular backpack) -- a "
+            "final-picture/character-lock matter, not a mix defect; "
+            "the mix does not move the VO.",
             "CIN_003 stem assignment (ben_mua music + river_shore "
             "ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the "
             "CP17 draft VO take fits inside its 12.5-17.5 s window "
