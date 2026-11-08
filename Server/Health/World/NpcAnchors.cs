@@ -40,6 +40,42 @@ public sealed class NpcAnchorCatalog
 
         return false;
     }
+
+    /// <summary>
+    /// Resolves NPC_MASTER_BY_PLAYER_CLASS token to the appropriate class master NPC.
+    /// Supported classes: MINH_KIEM, ANH_DAO, HUYEN_BUT, THACH_CHUY, LINH_CUNG.
+    /// Returns null if the token is not recognized or no anchor exists for the resolved NPC.
+    /// </summary>
+    public string? ResolveClassMasterToken(
+        string? tokenId,
+        string? characterClass,
+        string mapId)
+    {
+        // Only handle the specific token pattern
+        if (!string.Equals(tokenId, "NPC_MASTER_BY_PLAYER_CLASS", StringComparison.Ordinal))
+        {
+            return tokenId;
+        }
+
+        // Map class to NPC ID
+        var npcId = characterClass switch
+        {
+            "CLASS_MINH_KIEM" => "NPC_MASTER_MINH_KIEM",
+            "CLASS_ANH_DAO" => "NPC_MASTER_ANH_DAO",
+            "CLASS_HUYEN_BUT" => "NPC_MASTER_HUYEN_BUT",
+            "CLASS_THACH_CHUY" => "NPC_MASTER_THACH_CHUY",
+            "CLASS_LINH_CUNG" => "NPC_MASTER_LINH_CUNG",
+            _ => null
+        };
+
+        // Verify the resolved NPC has an anchor on the specified map
+        if (npcId is not null && TryResolve(npcId, mapId, out _))
+        {
+            return npcId;
+        }
+
+        return null;
+    }
 }
 
 public static class NpcAnchorLoader
