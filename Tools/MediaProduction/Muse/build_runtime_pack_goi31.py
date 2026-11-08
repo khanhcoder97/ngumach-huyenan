@@ -49,6 +49,10 @@ Checkpoint 50 extends it with CIN_016 (draft mix v1, same recipe);
 the CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47/CP48/CP49
 scenes are verified unchanged on re-run, never re-muxed.
 
+Checkpoint 51 extends it with CIN_017 (draft mix v1, same recipe);
+the CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47/CP48/CP49/CP50
+scenes are verified unchanged on re-run, never re-muxed.
+
 Turns the per-scene clips for the prologue + CIN_001/002/004/006 into
 a playable runtime pack:
 
@@ -103,6 +107,7 @@ MIX_CIN013 = ROOT / "Art_Source/Audio/Muse/MIX/CIN013_DRAFT_V1"
 MIX_CIN014 = ROOT / "Art_Source/Audio/Muse/MIX/CIN014_DRAFT_V1"
 MIX_CIN015 = ROOT / "Art_Source/Audio/Muse/MIX/CIN015_DRAFT_V1"
 MIX_CIN016 = ROOT / "Art_Source/Audio/Muse/MIX/CIN016_DRAFT_V1"
+MIX_CIN017 = ROOT / "Art_Source/Audio/Muse/MIX/CIN017_DRAFT_V1"
 FAILURES = []
 
 
@@ -420,6 +425,8 @@ def main() -> None:
                     "v1_cin015_proposed"),
         "CIN_016": (MIX_CIN016 / "CIN_016_mix_draft_v1.wav",
                     "v1_cin016_proposed"),
+        "CIN_017": (MIX_CIN017 / "CIN_017_mix_draft_v1.wav",
+                    "v1_cin017_proposed"),
     }
     mix_manifest_shas = {}
     v3_manifest = json.loads(
@@ -492,6 +499,11 @@ def main() -> None:
         .read_text(encoding="utf-8"))
     mix_manifest_shas["CIN_016"] = \
         cin016_manifest["scenes"][0]["mix"]["sha256"]
+    cin017_manifest = json.loads(
+        (MIX_CIN017 / "CIN017_MIX_V1_manifest_v1.json")
+        .read_text(encoding="utf-8"))
+    mix_manifest_shas["CIN_017"] = \
+        cin017_manifest["scenes"][0]["mix"]["sha256"]
 
     pack_scenes = []
     for scene_id, (mix_wav, mix_version) in scenes.items():
@@ -514,7 +526,8 @@ def main() -> None:
         else:
             audio = mux(scene_id, mix_wav, mix_version,
                         mix_manifest_shas[scene_id], work,
-                        checkpoint_label=("CP50" if scene_id == "CIN_016"
+                        checkpoint_label=("CP51" if scene_id == "CIN_017"
+                                          else "CP50" if scene_id == "CIN_016"
                                           else "CP49" if scene_id == "CIN_015"
                                           else "CP48" if scene_id == "CIN_014"
                                           else "CP47" if scene_id == "CIN_013"
@@ -587,6 +600,11 @@ def main() -> None:
                     "poster/SRT/timing unchanged")
         if scene_id == "CIN_016":
             note = ("MEDIA-02 checkpoint 50 - CIN_016 draft mix v1: "
+                    "embedded draft mix audio in the runtime OGV "
+                    "+ review MP4 (video streams bit-identical); "
+                    "poster/SRT/timing unchanged")
+        if scene_id == "CIN_017":
+            note = ("MEDIA-02 checkpoint 51 - CIN_017 draft mix v1: "
                     "embedded draft mix audio in the runtime OGV "
                     "+ review MP4 (video streams bit-identical); "
                     "poster/SRT/timing unchanged")
@@ -679,7 +697,7 @@ def main() -> None:
 
     pack = {
         "manifestId": "NGM_RUNTIME_PACK_GOI31_V1",
-        "checkpoint": "MEDIA-02 checkpoint 50 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 + CIN_015 + CIN_016 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47/CP48/CP49 scenes verified unchanged)",
+        "checkpoint": "MEDIA-02 checkpoint 51 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 + CIN_015 + CIN_016 + CIN_017 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47/CP48/CP49/CP50 scenes verified unchanged)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "status": "DRAFT_NOT_FINAL",
@@ -706,8 +724,8 @@ def main() -> None:
             "its v1, CIN_008 embeds its v1, CIN_009 embeds its v1, "
             "CIN_010 embeds its v1, CIN_011 embeds its v1, "
             "CIN_012 embeds its v1, CIN_013 embeds its v1, "
-            "CIN_014 embeds its v1, CIN_015 embeds its v1 and "
-            "CIN_016 embeds its v1; "
+            "CIN_014 embeds its v1, CIN_015 embeds its v1, "
+            "CIN_016 embeds its v1 and CIN_017 embeds its v1; "
             "v1/v2 P0 mixes "
             "stay as separate files and "
             "Codex's adapter chooses the mix version at PR review -- "
@@ -898,6 +916,42 @@ def main() -> None:
             "(woven basket-hat vs rectangular backpack) -- a "
             "final-picture/character-lock matter, not a mix defect; "
             "the mix does not move the VO.",
+            "CIN_017 stem assignment (bach_uyen music + "
+            "underwater ambience + reveal at 6.0 s) is "
+            "PROPOSED_CANDIDATE; the CP17 draft VO take fits inside "
+            "its 12.5-17.5 s window (ends 15.668 s, no overrun, no "
+            "tail trim) with 1.832 s to spare. bach_uyen is the "
+            "composed set's underwater low-passed form (850 Hz) -- "
+            "the setting-exact cue for a tide-serpent scene built "
+            "around water and a crystal core (S01 wide view of the "
+            "flooded ruined temple courtyard at night, the teal "
+            "tide serpent coiled around the crystal core in the "
+            "water; S02 detail of the serpent coiled around the "
+            "glowing crystal on the stone pillar, bubbles rising; "
+            "S03 misty river gorge with fishing gear on the bank "
+            "and the serpent-shaped dark current winding down the "
+            "river); underwater is the composed underwater bed for "
+            "the water framing all three shots. Both are second "
+            "scene-mix uses -- the same pairing as CIN_015 (the "
+            "drowned city), stated plainly because the two scenes "
+            "share one water chapter and the cue set has a single "
+            "water form; boss_mang_cot was passed over because it "
+            "is boss material for the WRONG boss (Mang Cot, not "
+            "the Tide Serpent), and this beat is a quiet line, not "
+            "a boss fight. The mix measures -24.63 LUFS; the CP17 "
+            "VO take itself is -22.33 LUFS; ducking is -4.85 dB "
+            "over the full VO window; VO is kept at unity per the "
+            "recipe, not normalized. Staging: like CIN_015, the "
+            "speaker is NOT identifiable here -- the timing "
+            "manifest marks the S03 dialogue onscreen: null for "
+            "the Diver Lead, and the S03 keyframe shows only the "
+            "river gorge with no diver figure anywhere in the "
+            "frame (S01 the serpent with no human figure, S02 "
+            "only the serpent and the crystal) -- the line is "
+            "delivered off-screen, like Ly An's voice in CIN_004 "
+            "(DEC-MEDIA-P0 Q2); a final-picture/character-lock "
+            "matter, not a mix defect; the mix does not move "
+            "the VO.",
             "CIN_003 stem assignment (ben_mua music + river_shore "
             "ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the "
             "CP17 draft VO take fits inside its 12.5-17.5 s window "

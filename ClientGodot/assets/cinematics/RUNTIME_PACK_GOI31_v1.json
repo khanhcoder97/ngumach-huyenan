@@ -1,6 +1,6 @@
 {
   "manifestId": "NGM_RUNTIME_PACK_GOI31_V1",
-  "checkpoint": "MEDIA-02 checkpoint 50 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 + CIN_015 + CIN_016 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47/CP48/CP49 scenes verified unchanged)",
+  "checkpoint": "MEDIA-02 checkpoint 51 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 + CIN_015 + CIN_016 + CIN_017 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47/CP48/CP49/CP50 scenes verified unchanged)",
   "decisionId": "DEC-MEDIA-P0-20261105",
   "branch": "muse/media-production-20261104",
   "status": "DRAFT_NOT_FINAL",
@@ -14,7 +14,7 @@
   "contract": [
     "Runtime playback uses the clean OGV + the sidecar SRT overlay; no baked subtitles in any runtime file.",
     "CIN_000_640x360_30fps_sub_vi.mp4 (burned-in + embedded subtitles) is a review-only viewing variant, NOT part of the runtime pack.",
-    "Embedded mixes are DRAFT_MIX_NOT_FINAL; P0 scenes embed v3 (fully composed), CIN_006 embeds its v1, CIN_003 embeds its v1, CIN_005 embeds its v1, CIN_007 embeds its v1, CIN_008 embeds its v1, CIN_009 embeds its v1, CIN_010 embeds its v1, CIN_011 embeds its v1, CIN_012 embeds its v1, CIN_013 embeds its v1, CIN_014 embeds its v1, CIN_015 embeds its v1 and CIN_016 embeds its v1; v1/v2 P0 mixes stay as separate files and Codex's adapter chooses the mix version at PR review -- swapping the embedded mix is a re-mux only, no picture change.",
+    "Embedded mixes are DRAFT_MIX_NOT_FINAL; P0 scenes embed v3 (fully composed), CIN_006 embeds its v1, CIN_003 embeds its v1, CIN_005 embeds its v1, CIN_007 embeds its v1, CIN_008 embeds its v1, CIN_009 embeds its v1, CIN_010 embeds its v1, CIN_011 embeds its v1, CIN_012 embeds its v1, CIN_013 embeds its v1, CIN_014 embeds its v1, CIN_015 embeds its v1, CIN_016 embeds its v1 and CIN_017 embeds its v1; v1/v2 P0 mixes stay as separate files and Codex's adapter chooses the mix version at PR review -- swapping the embedded mix is a re-mux only, no picture change.",
     "CIN_006 stem assignment (thang_long music + thang_long_crowd ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the alternate take CIN_006_ALT_T01 is NOT in the pack (DEC-MEDIA-P0 Q3).",
     "CIN_008 stem assignment (tran_son music + river_shore ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 16.052 s, no overrun, no tail trim). tran_son is the composed set's bell-led gate form, matching the scene's central gate image (S02); river_shore is the water-edge bed for the bamboo forest pool (S03).",
     "CIN_009 stem assignment (lam_trieu music + waterfall ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 16.580 s, no overrun, no tail trim). lam_trieu is the composed set's G-major transposition with ornamented flute (Lam Trieu, forest tide) -- the flute carries the forest's answering voice of the scene title 'Tieng rung duoc dap'; waterfall is the water bed for the stream running through all three shots (S01 roots stream, S02 forest path, S03 top-down waterfall and shrine). The mix is hotter than CIN_008 (-17.84 LUFS) because the CP17 VO take itself is hot (-17.23 LUFS); VO is kept at unity per the recipe, not normalized.",
@@ -25,6 +25,7 @@
     "CIN_014 stem assignment (ben_mua music + wind_canopy ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 15.572 s, no overrun, no tail trim) with 1.928 s to spare. ben_mua is the campaign's own leitmotif statement ('Ben Mua', the rain quay): D major pentatonic question phrase hanging on scale degree 2, tail withheld -- the unresolved hanging phrase for a commander who stamps an order he knows is false (S01 kneeling among discarded armour, S02 the seal set down in detail, S03 Tong Banh at the open village gate); wind_canopy is the wind-through-canopy bed for the bamboo framing all three shots. lam_trieu was passed over: the pastoral flute was just used for CIN_013, the immediately preceding scene; tran_son was passed over: the bell-led gate form, already used for CIN_008 and CIN_012. The mix measures -24.42 LUFS; the CP17 VO take itself is -22.05 LUFS; ducking is -8.84 dB over the full VO window; VO is kept at unity per the recipe, not normalized. Staging: the timing manifest marks the S03 dialogue onscreen: true for Tong Banh and the keyframe places a blue-robed figure at the gate, but the recorded keyframe defects note he is not visually identifiable in S03 (his armour differs across S01/S02 and neither S03 figure matches it) -- a final-picture/character-lock matter, not a mix defect; the mix does not move the VO.",
     "CIN_015 stem assignment (bach_uyen music + underwater ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 15.380 s, no overrun, no tail trim) with 2.120 s to spare. bach_uyen is the composed set's underwater low-passed form (850 Hz) -- the setting-exact cue for a drowned city (S01 wide view of the submerged ruined town, S02 the dining bowl tied to the stone table with the guide rope and a bare diver hand, S03 top-down underwater corridor with a small diver figure in a conical hat); underwater is the composed underwater bed for the submerged city framing all three shots; both are first scene-mix uses (P0 v3 review reel only before). ben_mua was passed over: just used for CIN_014, the immediately preceding scene. The mix measures -25.30 LUFS; the CP17 VO take itself is -23.27 LUFS; ducking is -6.87 dB over the full VO window; VO is kept at unity per the recipe, not normalized. Staging: the timing manifest marks the S03 dialogue onscreen: true for the Diver Lead and the keyframe places a small diver figure at the bottom centre of the corridor, but the figure is tiny and seen from above/behind, so the speaker is not identifiable by face or gear from the picture alone (S02 shows only a bare diver hand, S01 no figure at all) -- a final-picture/character-lock matter, not a mix defect; the mix does not move the VO.",
     "CIN_016 stem assignment (quiet_discovery music + wind_canopy ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 14.972 s, no overrun, no tail trim) with 2.528 s to spare. quiet_discovery is the composed set's exploration silence ('Khoang lang kham pha': solo flute fragments, single bells, long near-silences, water drops, 60 BPM) -- the setting-exact cue for a quiet indoor conversation about writing someone else's story down (S01 detail of the old manuscript under the hanging lamp, S02 the blue-robed man at the desk with a hooded figure seen from behind, S03 Ha Mac writing in his book as he asks the elder across the desk); wind_canopy is the wind-through-canopy bed for the greenery outside the S03 window and the bamboo walls. Both are third scene-mix uses (CIN_007, CIN_011, CIN_014 for wind_canopy). The mix measures -25.07 LUFS; the CP17 VO take itself is -21.92 LUFS; VO is kept at unity per the recipe, not normalized. Ducking is 0.0 dB over the full VO window -- NOT a missing compressor: quiet_discovery is digitally silent from 12 s to 15 s (RMS -120 dB floor), so the 12.5-14.972 s window falls entirely inside the cue's near-silence gap between fragments; the earlier quiet_discovery mixes show a real cut (CIN_007 -9.43 dB, CIN_011 -10.79 dB) because their longer windows extended past 15 s. Staging: unlike CIN_015, the speaker IS identifiable here (S03 shows Ha Mac clearly, face in profile, brush in hand); whether the hooded figure seen from behind in S02 is Ha Mac arriving is a continuity question for final picture (woven basket-hat vs rectangular backpack) -- a final-picture/character-lock matter, not a mix defect; the mix does not move the VO.",
+    "CIN_017 stem assignment (bach_uyen music + underwater ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 15.668 s, no overrun, no tail trim) with 1.832 s to spare. bach_uyen is the composed set's underwater low-passed form (850 Hz) -- the setting-exact cue for a tide-serpent scene built around water and a crystal core (S01 wide view of the flooded ruined temple courtyard at night, the teal tide serpent coiled around the crystal core in the water; S02 detail of the serpent coiled around the glowing crystal on the stone pillar, bubbles rising; S03 misty river gorge with fishing gear on the bank and the serpent-shaped dark current winding down the river); underwater is the composed underwater bed for the water framing all three shots. Both are second scene-mix uses -- the same pairing as CIN_015 (the drowned city), stated plainly because the two scenes share one water chapter and the cue set has a single water form; boss_mang_cot was passed over because it is boss material for the WRONG boss (Mang Cot, not the Tide Serpent), and this beat is a quiet line, not a boss fight. The mix measures -24.63 LUFS; the CP17 VO take itself is -22.33 LUFS; ducking is -4.85 dB over the full VO window; VO is kept at unity per the recipe, not normalized. Staging: like CIN_015, the speaker is NOT identifiable here -- the timing manifest marks the S03 dialogue onscreen: null for the Diver Lead, and the S03 keyframe shows only the river gorge with no diver figure anywhere in the frame (S01 the serpent with no human figure, S02 only the serpent and the crystal) -- the line is delivered off-screen, like Ly An's voice in CIN_004 (DEC-MEDIA-P0 Q2); a final-picture/character-lock matter, not a mix defect; the mix does not move the VO.",
     "CIN_003 stem assignment (ben_mua music + river_shore ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 16.532 s, no overrun, no tail trim).",
     "CIN_005 stem assignment (thang_long music + thang_long_crowd ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take overruns its 12.5-17.5 s window by 0.160 s and the overrun is KEPT per the owner verdict (Goi 30 D1); no tail trim.",
     "CIN_007 stem assignment (quiet_discovery music + wind_canopy ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 16.412 s, no overrun, no tail trim). Ducking evidence is measured over the full VO window because quiet_discovery is sparse by design (the first 2 s of the window are near-silence).",
@@ -1002,6 +1003,64 @@
           "path": "assets/cinematics/CIN_016/CIN_016_timing_v1.json",
           "sha256": "0064f447bfdb2d3b40776623fc40d60a2d724d812659aa8ad506ce5331a5e405",
           "sizeBytes": 2387
+        }
+      }
+    },
+    {
+      "sceneId": "CIN_017",
+      "durationSeconds": 18.0,
+      "embeddedMixVersion": "v1_cin017_proposed",
+      "files": {
+        "ogv": {
+          "codec": "vorbis",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bitRateKbps": 160,
+          "sourceMix": "Art_Source/Audio/Muse/MIX/CIN017_DRAFT_V1/CIN_017_mix_draft_v1.wav",
+          "sourceMixSha256": "c62771d9b9a23575fd871f2591406cc5fbb4c0316c23788cd7f74fef79cf185e",
+          "mixVersion": "v1_cin017_proposed",
+          "integratedLUFS": "-24.64",
+          "truePeakDBTP": "-2.70",
+          "durationSeconds": 18.0,
+          "videoStoredFrames": 506,
+          "path": "assets/cinematics/CIN_017/CIN_017_640x360_30fps.ogv",
+          "sha256": "32aec36ef796437531b256586aba75286ed14ef78b8a0888b0ffb0b6e2c54042",
+          "sizeBytes": 719222
+        },
+        "mp4": {
+          "codec": "aac",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bitRateKbps": 192,
+          "sourceMix": "Art_Source/Audio/Muse/MIX/CIN017_DRAFT_V1/CIN_017_mix_draft_v1.wav",
+          "sourceMixSha256": "c62771d9b9a23575fd871f2591406cc5fbb4c0316c23788cd7f74fef79cf185e",
+          "mixVersion": "v1_cin017_proposed",
+          "integratedLUFS": "-24.64",
+          "truePeakDBTP": "-2.42",
+          "durationSeconds": 18.0,
+          "videoStoredFrames": 540,
+          "path": "assets/cinematics/CIN_017/CIN_017_640x360_30fps.mp4",
+          "sha256": "71686396e146daf84057255c9b7171d28d544024f84957dd4ec0fef40a391b7e",
+          "sizeBytes": 1668417
+        },
+        "poster": {
+          "sha256": "71f35b2980c03426e55d26d7bdebb5e5e0ae309401f2390212b987adb8f18e4e",
+          "sizeBytes": 382664,
+          "width": 640,
+          "height": 360,
+          "path": "assets/cinematics/CIN_017/CIN_017_poster.png"
+        },
+        "srt": {
+          "cues": 1,
+          "sha256": "559a0c0c36e764d68545a32f9989b54f7fb8edc6e50a62558a9c784077063704",
+          "sizeBytes": 94,
+          "encoding": "UTF-8/NFC",
+          "path": "assets/cinematics/CIN_017/CIN_017_vi.srt"
+        },
+        "timing": {
+          "path": "assets/cinematics/CIN_017/CIN_017_timing_v1.json",
+          "sha256": "64a630bd18ba5a9437ed3ad3cc17a0322fb64d0abba558652f447d797bf15499",
+          "sizeBytes": 2397
         }
       }
     }

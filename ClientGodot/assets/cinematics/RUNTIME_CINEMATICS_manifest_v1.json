@@ -1,6 +1,6 @@
 {
  "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
- "checkpoint": "MEDIA-02 checkpoint 50 - Goi 31 item 4 extended (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 + CIN_015 + CIN_016: P0 mixes v3, CIN_006 mix v1, CIN_003 mix v1, CIN_005 mix v1, CIN_007 mix v1, CIN_008 mix v1, CIN_009 mix v1, CIN_010 mix v1, CIN_011 mix v1, CIN_012 mix v1, CIN_013 mix v1, CIN_014 mix v1, CIN_015 mix v1 and CIN_016 mix v1 embedded in the runtime OGV + review MP4; poster + SRT + timing per scene; baked-subtitle variant stays review-only); checkpoint 32 shot fixes + status phrasing (all 21 dialogue windows approved for DRAFT VO per Goi 30 D1, PR #120; only CIN_001_S05 DECIDED) otherwise unchanged; prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
+ "checkpoint": "MEDIA-02 checkpoint 51 - Goi 31 item 4 extended (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 + CIN_015 + CIN_016 + CIN_017: P0 mixes v3, CIN_006 mix v1, CIN_003 mix v1, CIN_005 mix v1, CIN_007 mix v1, CIN_008 mix v1, CIN_009 mix v1, CIN_010 mix v1, CIN_011 mix v1, CIN_012 mix v1, CIN_013 mix v1, CIN_014 mix v1, CIN_015 mix v1, CIN_016 mix v1 and CIN_017 mix v1 embedded in the runtime OGV + review MP4; poster + SRT + timing per scene; baked-subtitle variant stays review-only); checkpoint 32 shot fixes + status phrasing (all 21 dialogue windows approved for DRAFT VO per Goi 30 D1, PR #120; only CIN_001_S05 DECIDED) otherwise unchanged; prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "branch": "muse/media-production-20261104",
  "campaignTotals": {
@@ -1295,25 +1295,51 @@
    "files": {
     "mp4": {
      "path": "assets/cinematics/CIN_017/CIN_017_640x360_30fps.mp4",
-     "sha256": "001ee554a9f9d19c246d0d0a1fab11479098a5af4348c0fc497a2a8804ecf8e7",
-     "sizeBytes": 1220752,
+     "sha256": "71686396e146daf84057255c9b7171d28d544024f84957dd4ec0fef40a391b7e",
+     "sizeBytes": 1668417,
      "codec": "h264",
      "width": 640,
      "height": 360,
      "fps": 30,
      "durationSeconds": 18.0,
-     "frames": 540
+     "frames": 540,
+     "audio": {
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateKbps": 192,
+      "sourceMix": "Art_Source/Audio/Muse/MIX/CIN017_DRAFT_V1/CIN_017_mix_draft_v1.wav",
+      "sourceMixSha256": "c62771d9b9a23575fd871f2591406cc5fbb4c0316c23788cd7f74fef79cf185e",
+      "mixVersion": "v1_cin017_proposed",
+      "integratedLUFS": "-24.64",
+      "truePeakDBTP": "-2.42",
+      "durationSeconds": 18.0,
+      "videoStoredFrames": 540
+     }
     },
     "ogv": {
      "path": "assets/cinematics/CIN_017/CIN_017_640x360_30fps.ogv",
-     "sha256": "3278b2626e2df9eed2f8d8270fe59b6ec7bb9182b1184f8d9a102b659b8a74ef",
-     "sizeBytes": 460245,
+     "sha256": "32aec36ef796437531b256586aba75286ed14ef78b8a0888b0ffb0b6e2c54042",
+     "sizeBytes": 719222,
      "codec": "theora",
      "width": 640,
      "height": 360,
      "fps": 30,
      "durationSeconds": 18.0,
-     "storedFrames": 506
+     "storedFrames": 506,
+     "audio": {
+      "codec": "vorbis",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "bitRateKbps": 160,
+      "sourceMix": "Art_Source/Audio/Muse/MIX/CIN017_DRAFT_V1/CIN_017_mix_draft_v1.wav",
+      "sourceMixSha256": "c62771d9b9a23575fd871f2591406cc5fbb4c0316c23788cd7f74fef79cf185e",
+      "mixVersion": "v1_cin017_proposed",
+      "integratedLUFS": "-24.64",
+      "truePeakDBTP": "-2.70",
+      "durationSeconds": 18.0,
+      "videoStoredFrames": 506
+     }
     },
     "poster": {
      "path": "assets/cinematics/CIN_017/CIN_017_poster.png",

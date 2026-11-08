@@ -92,6 +92,7 @@ CIN013_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN013_DRA
 CIN014_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN014_DRAFT_V1"
 CIN015_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN015_DRAFT_V1"
 CIN016_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN016_DRAFT_V1"
+CIN017_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN017_DRAFT_V1"
 DUR_TOL_S = 0.02
 
 # P0 animatic files delivered in checkpoint 03, revised in checkpoint 13
@@ -1048,6 +1049,64 @@ def main():
         audio_entries.append(entry)
         counts["mix"] += 1
 
+    # --- 3k13. CIN_017 draft mix v1 (checkpoint 51) ---
+    # Fourteenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1,
+    # CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1,
+    # CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1 and CIN_016 v1
+    # (same recipe as P0 v3; stem assignment PROPOSED_CANDIDATE, see
+    # CIN017_MIX_V1_manifest_v1.json). The CP17 draft VO take FITS
+    # inside its 12.5-17.5 s window (3.168 s, ends 15.668 s, 1.832 s
+    # before the window end): no overrun, no tail trim at the 18.00 s
+    # scene edge. Ducking evidence is measured over the full VO window
+    # (CP39 method, retained for comparability): -4.85 dB -- a real
+    # cut, as expected: MUSIC/bach_uyen was NOT silent inside
+    # CIN_015's window either (measured cut -6.87 dB there). The mix
+    # measures -24.63 LUFS; the CP17 VO take itself is -22.33 LUFS;
+    # VO is kept at unity per the recipe, not normalized. Staging:
+    # like CIN_015, the speaker is NOT identifiable here -- and this
+    # time the timing manifest says so itself: the S03 dialogue
+    # onscreen is null for the Diver Lead (NPC_DIVER_LEAD), and the
+    # S03 keyframe shows only the misty river gorge with no diver
+    # figure anywhere in the frame (S01 the serpent with no human
+    # figure, S02 only the serpent and the crystal) -- the line is
+    # delivered off-screen, like Ly An's voice in CIN_004 (DEC-MEDIA-
+    # P0 Q2); a final-picture/character-lock matter, not a mix defect;
+    # the mix does not move the VO. Stem reuse stated plainly: the
+    # bach_uyen + underwater pairing is the same as CIN_015 (the
+    # drowned city) because the two scenes share one water chapter
+    # and the cue set has a single water form; boss_mang_cot was
+    # passed over because it is boss material for the WRONG boss
+    # (Mang Cot, not the Tide Serpent). Delivered under
+    # mix/cin017_v1/; the P0 v1/v2/v3, CIN_006 v1, CIN_003 v1,
+    # CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1,
+    # CIN_011 v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1 and
+    # CIN_016 v1 mixes are byte-identical to before. Adoption is
+    # Codex's decision.
+    cin017_mix = json.loads((CIN017_MIX_V1_SRC
+                             / "CIN017_MIX_V1_manifest_v1.json")
+                            .read_text(encoding="utf-8"))
+    for scene in cin017_mix["scenes"]:
+        mx = scene["mix"]
+        src_rel = f"Art_Source/Audio/Muse/MIX/CIN017_DRAFT_V1/{mx['file']}"
+        dest_rel = f"mix/cin017_v1/{mx['file']}"
+        entry = copy_verified_audio(
+            src_rel, dest_rel, mx["sha256"], mx["format"]["bytes"],
+            mx["durationSeconds"], f"CIN_017 mix v1 {scene['sceneId']}")
+        if entry is None:
+            continue
+        entry.update({"cueKey": f"MIX/V1/{scene['sceneId']}",
+                      "category": "mix", "sceneId": scene["sceneId"],
+                      "mixVersion": "v1_cin017_proposed",
+                      "codec": mx["format"]["codec"],
+                      "sampleRateHz": mx["format"]["sampleRateHz"],
+                      "channels": mx["format"]["channels"],
+                      "integratedLufs": float(mx["integratedLUFS"]),
+                      "truePeakDbtp": float(mx["truePeakDBTP"]),
+                      "assetState": "DRAFT_MIX_NOT_FINAL",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["mix"] += 1
+
     # --- 3e. Composed music + cinema stingers (checkpoint 26) ---
     # The composer (build_composed_music.py) already rendered the
     # runtime OGGs into ClientGodot/assets/audio/composed/; this
@@ -1196,9 +1255,9 @@ def main():
 
     audio_manifest = {
         "manifestId": "NGM_RUNTIME_AUDIO_V1",
-        "checkpoint": ("MEDIA-02 checkpoint 50 - M6 runtime delivery "
-                       "revised: CIN_016 draft mix v1 added (total 622 -> "
-                       "623, mix 25 -> 26); status phrasing corrected "
+        "checkpoint": ("MEDIA-02 checkpoint 51 - M6 runtime delivery "
+                       "revised: CIN_017 draft mix v1 added (total 623 -> "
+                       "624, mix 26 -> 27); status phrasing corrected "
                        "(all 21 dialogue windows approved for DRAFT VO "
                        "production per the Goi 30 D1 decision, PR #120; "
                        "only CIN_001_S05 is DECIDED); P0 draft mixes v3 "
@@ -1213,6 +1272,7 @@ def main():
                        "CIN_014 mix v1 (checkpoint 48), "
                        "CIN_015 mix v1 (checkpoint 49), "
                        "CIN_016 mix v1 (checkpoint 50), "
+                       "CIN_017 mix v1 (checkpoint 51), "
                        "prologue "
                        "(checkpoint 27/28), composed music "
                        "(checkpoint 26) and composed ambience "
@@ -1587,7 +1647,7 @@ def main():
 
     cine_manifest = {
         "manifestId": "NGM_RUNTIME_CINEMATICS_V1",
-        "checkpoint": "MEDIA-02 checkpoint 50 - Goi 31 item 4 extended (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 + CIN_015 + CIN_016: P0 mixes v3, CIN_006 mix v1, CIN_003 mix v1, CIN_005 mix v1, CIN_007 mix v1, CIN_008 mix v1, CIN_009 mix v1, CIN_010 mix v1, CIN_011 mix v1, CIN_012 mix v1, CIN_013 mix v1, CIN_014 mix v1, CIN_015 mix v1 and CIN_016 mix v1 embedded in the runtime OGV + review MP4; poster + SRT + timing per scene; baked-subtitle variant stays review-only); checkpoint 32 shot fixes + status phrasing (all 21 dialogue windows approved for DRAFT VO per Goi 30 D1, PR #120; only CIN_001_S05 DECIDED) otherwise unchanged; prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
+        "checkpoint": "MEDIA-02 checkpoint 51 - Goi 31 item 4 extended (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 + CIN_015 + CIN_016 + CIN_017: P0 mixes v3, CIN_006 mix v1, CIN_003 mix v1, CIN_005 mix v1, CIN_007 mix v1, CIN_008 mix v1, CIN_009 mix v1, CIN_010 mix v1, CIN_011 mix v1, CIN_012 mix v1, CIN_013 mix v1, CIN_014 mix v1, CIN_015 mix v1, CIN_016 mix v1 and CIN_017 mix v1 embedded in the runtime OGV + review MP4; poster + SRT + timing per scene; baked-subtitle variant stays review-only); checkpoint 32 shot fixes + status phrasing (all 21 dialogue windows approved for DRAFT VO per Goi 30 D1, PR #120; only CIN_001_S05 DECIDED) otherwise unchanged; prologue CIN_000 subtitled viewing variant registered under the 'prologue' key (mp4SubVi: burned-in + embedded readable Vietnamese subtitles, narration +5 dB presentation gain; canonical film files unchanged); checkpoint 27 prologue registration otherwise unchanged (standalone pre-game film with embedded mixed audio; NOT part of the 20-scene campaign totals); campaign video batch (checkpoint 25) + P0 animatic v3 + audio/timing otherwise unchanged",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "campaignTotals": {"scenes": 20, "shots": 63, "seconds": 378,
