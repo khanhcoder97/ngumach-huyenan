@@ -1,0 +1,2113 @@
+{
+ "manifestId": "NGM_CAMPAIGN_MOTION_P2_V1",
+ "checkpoint": "WO37 M-C checkpoint 3a - campaign motion, priority-2 (26 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "workOrder": "WO37 M-C",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "6f79853",
+ "status": "DRAFT_POSE_ANIMATION - storyboard-level motion draft; final picture still waits on character lock; A/B is a review pack, runtime files are NOT replaced",
+ "sources": {
+  "motionLedger": "Implementation/Content/Narrative/Deliveries/MOTION_LEDGER_v1.json",
+  "timingFiles": "Implementation/Content/Narrative/Deliveries/CIN_*/CIN_*_timing_v1.json",
+  "mixes": "ClientGodot/assets/audio/mix/cin*_v1/*_mix_draft_v1.wav (draft v1 mixes)",
+  "runtimeVideos": "ClientGodot/assets/cinematics/CIN_*/CIN_*_640x360_30fps.mp4 (Ken Burns animatic takes)"
+ },
+ "rules": {
+  "poseCount": 5,
+  "poseFps": 10,
+  "framesPerPose": 3,
+  "outputFps": 30,
+  "shotDurationSeconds": 6.0,
+  "frameSize": [
+   640,
+   360
+  ],
+  "poseFrameSize": [
+   640,
+   360
+  ],
+  "status": "DRAFT_POSE_ANIMATION - storyboard-level motion draft; final picture still waits on character lock; A/B is a review pack, runtime files are NOT replaced",
+  "beatSeconds": 0.5,
+  "note": "Same model as M-C checkpoint 2 (P0): 5 poses per beat at 10 pose fps (0.5 s beat); keyframe hold before the beat, last pose held after; 6 s per shot. All 26 shots procedural (code-rendered from the storyboard keyframe); no generated pixels. Dialogue-shot beats start exactly at the dialogue window start. Scenes mix pose-animated shots with Ken Burns hold slices (priority-3 shots from the ledger) in the scene B take, so the B take stays a full-scene review cut."
+ },
+ "rejectedStrips": [],
+ "shots": [
+  {
+   "shotId": "CIN_003_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_003_S01/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_003_S01/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_003_S01/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_003_S01/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_003_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "3c68df00cbd7ed8d841abec80c1ececa38960876ab87abf76ee7839b67ef2226",
+    "b0c04e69f4025f021d4ec4f81584888a1e20750a17076a4fcbca8d6cbcf20266",
+    "65cfb51ebdc3b17148e9f0dfa97b076d3e181d8f7491b62780f324323d81d63b",
+    "e4fb884d0bb5034e2d242be9426629ab3282cd4f9b39a535f791134c268844fb",
+    "6e80723fbc8c83a5c46b6e7e7680bb830f180bb8a90602596326c24e2f7ede1f"
+   ],
+   "interPoseMeanAbsDiff": [
+    0.794,
+    0.858,
+    0.918,
+    0.935
+   ],
+   "meanInterPoseDiff": 0.876,
+   "pose1VsKeyframeDiff": 0.186,
+   "lastPoseVsKeyframeDiff": 0.287,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_003_S02",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_003_S02/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_003_S02/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_003_S02/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_003_S02/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_003_S02/pose_05.png"
+   ],
+   "poseSha256": [
+    "11d626ebb89bc530c507df4869646aef3b4062128eaf18a52350b02384741f99",
+    "c2b5135b765c59700a1f7cb5961f76dd69a09a9f00e6c49bb9ce7f0d0a97696b",
+    "28251457b724a0c6eb0c6372cc7909236238aa9cb948bbfd20365b2fcb8f386a",
+    "7bb21c4fd77a2a2d0f94fe7366a33cd3489ea543a8af414f9d3c8dd72f7b6a90",
+    "d014ca24f8b969c9d855f96533d08165b8735d8dcc06638a509f511496772fa5"
+   ],
+   "interPoseMeanAbsDiff": [
+    1.636,
+    1.699,
+    1.789,
+    1.868
+   ],
+   "meanInterPoseDiff": 1.748,
+   "pose1VsKeyframeDiff": 0.049,
+   "lastPoseVsKeyframeDiff": 0.181,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_005_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S01/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S01/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S01/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S01/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "949c7f07cbbafeddf1e5f6fefd46db8c2531964e31c7ca879786d3a970d32e88",
+    "e382587cfb1c8b9c58afa8d3026dc42f50af94aa8cad6d7a3203609ba220ab78",
+    "3abbfad6fa4eb275bb14141984e2b3795d1e67875db8964586c7022efc26ff40",
+    "e382587cfb1c8b9c58afa8d3026dc42f50af94aa8cad6d7a3203609ba220ab78",
+    "949c7f07cbbafeddf1e5f6fefd46db8c2531964e31c7ca879786d3a970d32e88"
+   ],
+   "interPoseMeanAbsDiff": [
+    1.204,
+    1.202,
+    1.202,
+    1.204
+   ],
+   "meanInterPoseDiff": 1.203,
+   "pose1VsKeyframeDiff": 0.0,
+   "lastPoseVsKeyframeDiff": 0.0,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_005_S02",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S02/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S02/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S02/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S02/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S02/pose_05.png"
+   ],
+   "poseSha256": [
+    "7c47e5c88f1bdcc5d82a80d6b2d0f26f1c2851fade762747e1d26ee4b4d3db48",
+    "5e61854b55940b1f99c619a54b78387efd66831db31b602439ae1a399edd6f44",
+    "df2e948969b790b106dca794ee0ec043d4799ff447374a41fdd89d82498835ad",
+    "5e61854b55940b1f99c619a54b78387efd66831db31b602439ae1a399edd6f44",
+    "7c47e5c88f1bdcc5d82a80d6b2d0f26f1c2851fade762747e1d26ee4b4d3db48"
+   ],
+   "interPoseMeanAbsDiff": [
+    2.594,
+    2.605,
+    2.605,
+    2.594
+   ],
+   "meanInterPoseDiff": 2.599,
+   "pose1VsKeyframeDiff": 0.0,
+   "lastPoseVsKeyframeDiff": 0.0,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_005_S03",
+   "route": "procedural",
+   "beatSeconds": [
+    0.5,
+    1.0
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S03/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S03/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S03/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S03/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_005_S03/pose_05.png"
+   ],
+   "poseSha256": [
+    "f2db67721c4cbb19650485d4a991b02eae4a0b1cf8cac66f328f5262f9699d35",
+    "becb611f2e6d5e1cbf199cc7e507338705dbd9082818165b00f1eaf2da9d7036",
+    "2cb4727578d029d247d9a094ab3fd04a014a3d359d805f5b9cf2df0e8c1332bf",
+    "becb611f2e6d5e1cbf199cc7e507338705dbd9082818165b00f1eaf2da9d7036",
+    "f2db67721c4cbb19650485d4a991b02eae4a0b1cf8cac66f328f5262f9699d35"
+   ],
+   "interPoseMeanAbsDiff": [
+    3.847,
+    3.845,
+    3.845,
+    3.847
+   ],
+   "meanInterPoseDiff": 3.846,
+   "pose1VsKeyframeDiff": 0.0,
+   "lastPoseVsKeyframeDiff": 0.0,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_006_S02",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_006_S02/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_006_S02/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_006_S02/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_006_S02/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_006_S02/pose_05.png"
+   ],
+   "poseSha256": [
+    "ef1a9a09e83d2e7d5d2757dc6755c98a554c7e7c9cd31c88f3e757382f250ac0",
+    "f0c4a5ced06b6967963b40213b925bb43975a4762e7997f8cc2146ed198b0f53",
+    "066e1845b4c30bd7127f29fda8a9158d7e6e072ad835d1eb5fe86ae5a30005e8",
+    "0ada1f94f842dfbfec95e67510f83551a4742dd370c6cc91c31b160b85690799",
+    "1f4a63f9e09249610bad0ba995f136d2176acffe15e2b72526551cf5156d5e6f"
+   ],
+   "interPoseMeanAbsDiff": [
+    0.436,
+    0.444,
+    0.444,
+    0.438
+   ],
+   "meanInterPoseDiff": 0.441,
+   "pose1VsKeyframeDiff": 0.0,
+   "lastPoseVsKeyframeDiff": 0.597,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_007_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_007_S01/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_007_S01/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_007_S01/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_007_S01/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_007_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "7f34e45e98e8464f5a2c85e02a90c287398f306db99164294aeb816f217a61b1",
+    "ea93c8fd495b0ed3c92410c65e8b8c091f51fe76f448bad083dfa8b0927699fb",
+    "0631db9337102edcaabf431e683451791255181df76da68362c2f3a0d1fe71e6",
+    "7ca42596b476d163bfe0a08ff8658433d981d3622fc6d76e34a6fd19b81ef950",
+    "9bc4bc00e2af5bbc9038ddb3f3426d496b4290b0af4a0db1ccaa98cbd98513bc"
+   ],
+   "interPoseMeanAbsDiff": [
+    2.521,
+    2.586,
+    2.685,
+    2.707
+   ],
+   "meanInterPoseDiff": 2.625,
+   "pose1VsKeyframeDiff": 0.035,
+   "lastPoseVsKeyframeDiff": 0.156,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_008_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_008_S01/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_008_S01/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_008_S01/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_008_S01/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_008_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "65bc88c32426d7122d246be724c247b264a3410d69884523e095b8fb3bfc8d16",
+    "107c6d17de65587059610fe5940dd7ffec3849730ebd8c1a009cf9f629f6a84a",
+    "2cbff9346ab251472b2b302fb7cbcbcfb3f01c6c329edc415f672409e25caeac",
+    "c8c881a593134c3c8bd800654db0731051114c442f95b921fbc2f06357875a69",
+    "96d472335edf49696250801627f7e50c9bc40663ba87e7170942468f97749e45"
+   ],
+   "interPoseMeanAbsDiff": [
+    1.98,
+    1.989,
+    1.989,
+    1.983
+   ],
+   "meanInterPoseDiff": 1.985,
+   "pose1VsKeyframeDiff": 0.0,
+   "lastPoseVsKeyframeDiff": 3.689,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_008_S02",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_008_S02/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_008_S02/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_008_S02/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_008_S02/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_008_S02/pose_05.png"
+   ],
+   "poseSha256": [
+    "c34be2f4e9e2c8ddd914de7cd862f936306ef529fcaeae0c52a004deaaa08aab",
+    "5917d55ef33c4fcadf74af5ea8238030bf96dd5874241970f3132e408899ac10",
+    "9c88abb7016cb8e465e7f147cdc92d5efde0dc9413e93201fa6c1d16df0d09d0",
+    "5917d55ef33c4fcadf74af5ea8238030bf96dd5874241970f3132e408899ac10",
+    "c34be2f4e9e2c8ddd914de7cd862f936306ef529fcaeae0c52a004deaaa08aab"
+   ],
+   "interPoseMeanAbsDiff": [
+    0.191,
+    0.195,
+    0.195,
+    0.191
+   ],
+   "meanInterPoseDiff": 0.193,
+   "pose1VsKeyframeDiff": 0.0,
+   "lastPoseVsKeyframeDiff": 0.0,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_009_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S01/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S01/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S01/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S01/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "993522b816878d33402714d6985e55757cc43088ce93a99065fc66368d70ff7d",
+    "5c40aa56d34d28158bbc18294def4cd608731334c60eb258260596f6329c7f1c",
+    "42040303d9ec0265a7a2223bdbef7210c7ef7ebe010f609e0a7a1d3bfd3bb61c",
+    "67c9dae8744c7814bbab069af5ae357ba073ddb2d8c371c05c6c43985003d3a0",
+    "2085536c695af45d90670acce92b977eb0c79d2d68a56192f7330673bc4b80ef"
+   ],
+   "interPoseMeanAbsDiff": [
+    2.906,
+    3.015,
+    3.157,
+    3.262
+   ],
+   "meanInterPoseDiff": 3.085,
+   "pose1VsKeyframeDiff": 0.055,
+   "lastPoseVsKeyframeDiff": 0.271,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_009_S02",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S02/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S02/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S02/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S02/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S02/pose_05.png"
+   ],
+   "poseSha256": [
+    "0e73f6f2fc05ec87282e88b2ae751a658c0fb69df4de46923a0104f3f3027511",
+    "e8dc65a079d3588bfaa855a280c11b9963955257652643e48c5b4cc2d993d387",
+    "2af58bf13cd600ba919dbf7458661e06616647c2335792f5f35025cfd44b6ff5",
+    "0bda3c4d4860db50704a9d0b85a681b8a8e29e70fc3c40105f785c914d8bfdd8",
+    "adbe1dc9d5668c3c79104a976b6e3185e8d38eda6f591206fb4103446d374e5f"
+   ],
+   "interPoseMeanAbsDiff": [
+    4.007,
+    4.017,
+    4.032,
+    4.031
+   ],
+   "meanInterPoseDiff": 4.022,
+   "pose1VsKeyframeDiff": 0.008,
+   "lastPoseVsKeyframeDiff": 0.109,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_009_S03",
+   "route": "procedural",
+   "beatSeconds": [
+    0.5,
+    1.0
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S03/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S03/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S03/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S03/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_009_S03/pose_05.png"
+   ],
+   "poseSha256": [
+    "efa3ba52f64634e654a918c2f38e42c60feffaf63fcdb5c5e636a14ca43f7c7e",
+    "4e88371dceba6e68a0d13d4d9d6258b4899c580944298eee26faa2054d4ec72f",
+    "a1784be88699306450d96f767cf1220b1f49d45889768c934fc5fa666a28c3ed",
+    "8b3ace9681a9a9aad8c442e00cab388d4dac4fed90f82dbb981bc37a7830ac48",
+    "c406b29fcb26eef11510ccc6aad06218ccf1101f0bb735f4524c281ca220fb33"
+   ],
+   "interPoseMeanAbsDiff": [
+    3.45,
+    3.562,
+    3.688,
+    3.778
+   ],
+   "meanInterPoseDiff": 3.619,
+   "pose1VsKeyframeDiff": 0.052,
+   "lastPoseVsKeyframeDiff": 0.254,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_010_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_010_S01/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_010_S01/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_010_S01/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_010_S01/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_010_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "88b1a7b23c2eea81300368984264bdf174f5c0286ecbe262669507f1fe29dda0",
+    "d83701855aea614e3abf44b672e532f70495ded36c3033a6df9444ade003b6af",
+    "e1e699353001dd83bdbe29736004ea84b666cb911106bb7d225aa046a1fc5cbc",
+    "91fd026248f642c8b0e51ab6159d380dc40a4a159dfe0d325d042401ee09ad73",
+    "32578488c65e912227edcf74f2ef4224e82a2b3aa47c444b1766a3e1920241db"
+   ],
+   "interPoseMeanAbsDiff": [
+    2.761,
+    2.774,
+    2.789,
+    2.789
+   ],
+   "meanInterPoseDiff": 2.778,
+   "pose1VsKeyframeDiff": 0.01,
+   "lastPoseVsKeyframeDiff": 0.117,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_011_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_011_S01/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_011_S01/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_011_S01/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_011_S01/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_011_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "ac15b31964b7c1724b1988e55ba4450f88d0c167db43a68684330a8c142ca9f4",
+    "6efa926791a387d129a35510446393ed9873046acc2607dc18923518963e0b14",
+    "a58d80e15f9ffb72e697d3e5cfe69318001d97393143749d6ac857116d646848",
+    "cb69ad523846e111a5cc8aa77b77218451d4a0b973d4af5340404ca8ab78640a",
+    "592e892248aec1a097160fe7938d32f556408ee8f1983a8bff13c439dd38ebef"
+   ],
+   "interPoseMeanAbsDiff": [
+    0.474,
+    0.499,
+    0.502,
+    0.519
+   ],
+   "meanInterPoseDiff": 0.498,
+   "pose1VsKeyframeDiff": 0.009,
+   "lastPoseVsKeyframeDiff": 0.146,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_011_S02",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_011_S02/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_011_S02/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_011_S02/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_011_S02/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_011_S02/pose_05.png"
+   ],
+   "poseSha256": [
+    "be6468eb522a6e6c2a24d379cf2572074ed699bbfe2e648b1e54c975eef24771",
+    "62e3d776ac203650efd5c8fee4ea6c540b4c5c8e0584e52a66560f1c7461a4a8",
+    "07c1ddee4fb69da756ab074f4dabda483d4d5f971669a1ffa23f58f706a356ce",
+    "62e3d776ac203650efd5c8fee4ea6c540b4c5c8e0584e52a66560f1c7461a4a8",
+    "be6468eb522a6e6c2a24d379cf2572074ed699bbfe2e648b1e54c975eef24771"
+   ],
+   "interPoseMeanAbsDiff": [
+    1.065,
+    1.078,
+    1.078,
+    1.065
+   ],
+   "meanInterPoseDiff": 1.071,
+   "pose1VsKeyframeDiff": 0.0,
+   "lastPoseVsKeyframeDiff": 0.0,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_012_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_012_S01/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_012_S01/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_012_S01/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_012_S01/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_012_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "2a5c0cef8742d645a28cda0fd2d75a40e2164de7fa5034def3220344ef01377e",
+    "a04145122b16f6afa68267745a287a0f1f42633f57842ed9d45486f53b25a575",
+    "adda215f06d665ef1e1c842edb7c0e227b2581ff9c6654cd85afbad9d1b523bc",
+    "44835b2430f2916d608233790a6812d1ce5b1a33037feebfd845780f23186181",
+    "f89cf62892422069a96327e4840ddaf93ef5d4f2580b25819b6cb561053046bf"
+   ],
+   "interPoseMeanAbsDiff": [
+    0.684,
+    0.735,
+    0.765,
+    0.786
+   ],
+   "meanInterPoseDiff": 0.743,
+   "pose1VsKeyframeDiff": 0.023,
+   "lastPoseVsKeyframeDiff": 0.372,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_013_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_013_S01/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_013_S01/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_013_S01/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_013_S01/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_013_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "5da44673482b52c415c0a6a99efb7ca2e18a0d96fa06d0e5953fb173172dbafd",
+    "aedc3d60578ccb2b59017c7d5967f0b25cffd06211a810a53d4bd8398ac640f4",
+    "ee43e996f39145a74af7dc1519e2ff46598a8e2490a6791a7599b60a3a2ea848",
+    "aedc3d60578ccb2b59017c7d5967f0b25cffd06211a810a53d4bd8398ac640f4",
+    "5da44673482b52c415c0a6a99efb7ca2e18a0d96fa06d0e5953fb173172dbafd"
+   ],
+   "interPoseMeanAbsDiff": [
+    2.081,
+    2.077,
+    2.077,
+    2.081
+   ],
+   "meanInterPoseDiff": 2.079,
+   "pose1VsKeyframeDiff": 0.0,
+   "lastPoseVsKeyframeDiff": 0.0,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_015_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_015_S01/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_015_S01/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_015_S01/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_015_S01/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_015_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "b5d3935273e497c9a9faf99a2f7be644c0b342e0756e7ae7f6925df37f2a8139",
+    "ecc986ee9de7a27097425336fd693a1e3eb31205a1d8fd5113c18454434bc992",
+    "99dc53916aba60fc46fafb639ff3d847ed902879000285c660d2641984b81bae",
+    "7f5573f410e8eeae2fa2a99e52206fb4b9264111bd5be4f81af6241059a7fb16",
+    "27e5f17fa303b65f611156d68cdb1549ff75ab03acd363ad4ab210d8ecb1c37a"
+   ],
+   "interPoseMeanAbsDiff": [
+    1.368,
+    1.371,
+    1.37,
+    1.368
+   ],
+   "meanInterPoseDiff": 1.369,
+   "pose1VsKeyframeDiff": 0.054,
+   "lastPoseVsKeyframeDiff": 0.058,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_015_S02",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_015_S02/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_015_S02/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_015_S02/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_015_S02/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_015_S02/pose_05.png"
+   ],
+   "poseSha256": [
+    "591face57cff60ebe56840826f935c46d000ddc5a788a4320b1e27ac319026cf",
+    "6024283fdbd083c48f9ea9e4e4f73034179991fec3dd098fc233993c67f67a07",
+    "71692638fa843e9a1b39af7d134b807ce9dd3e9ae3b8289d7a30f6929c8bea23",
+    "a15614674a5349cdaf6cb2640827c378aef631d2c173fcc9f2e77801b66b5719",
+    "e0ecfce625903ede74b26ac837f77a83dab6080db54203310afa12e1500819a4"
+   ],
+   "interPoseMeanAbsDiff": [
+    0.915,
+    0.923,
+    0.925,
+    0.916
+   ],
+   "meanInterPoseDiff": 0.92,
+   "pose1VsKeyframeDiff": 0.045,
+   "lastPoseVsKeyframeDiff": 0.044,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_016_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_016_S01/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_016_S01/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_016_S01/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_016_S01/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_016_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "0125c345f7bb73a4d4a476206071bd2f43a523aea9a356cb86f2eaf5b5b5ea82",
+    "de6082d1ebc2b4cd9fd097f6831f54bb131b4cdbd64e23d8db8fe53e12404ea9",
+    "020cd1ade757fe6d5b01ca0094626debd89e3039a1f771043c40b0b97823dc82",
+    "de6082d1ebc2b4cd9fd097f6831f54bb131b4cdbd64e23d8db8fe53e12404ea9",
+    "0125c345f7bb73a4d4a476206071bd2f43a523aea9a356cb86f2eaf5b5b5ea82"
+   ],
+   "interPoseMeanAbsDiff": [
+    0.46,
+    0.461,
+    0.461,
+    0.46
+   ],
+   "meanInterPoseDiff": 0.461,
+   "pose1VsKeyframeDiff": 0.0,
+   "lastPoseVsKeyframeDiff": 0.0,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_018_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_018_S01/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_018_S01/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_018_S01/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_018_S01/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_018_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "cd345c964e8cc5d3641cf23bb74629df726474ca3bbd2ce483d8bdfd426dab9f",
+    "077419a505548495943a07a125cc2187667cd9fcdbc08ecbf78a8b13b72544c2",
+    "ad26eaf1eec8b76ed2bf9e4554830f069a5a520e7320a2a0558c881615916f1f",
+    "077419a505548495943a07a125cc2187667cd9fcdbc08ecbf78a8b13b72544c2",
+    "cd345c964e8cc5d3641cf23bb74629df726474ca3bbd2ce483d8bdfd426dab9f"
+   ],
+   "interPoseMeanAbsDiff": [
+    4.815,
+    4.816,
+    4.816,
+    4.815
+   ],
+   "meanInterPoseDiff": 4.816,
+   "pose1VsKeyframeDiff": 0.0,
+   "lastPoseVsKeyframeDiff": 0.0,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_019_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_019_S01/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_019_S01/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_019_S01/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_019_S01/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_019_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "7561bcacdfc98bde2764428fd4db866bd77809e7537c9a12c1b211c804bbc0a0",
+    "a1268f99787c6a98ebbb250263347207909a95ff94b2f2881b7c6ad39550f802",
+    "1e53acf161e20196e620cabb2d6719f2f957b662ba876af4c25837990bd21350",
+    "6013e58d29712f2f1ee3a92a92145f5744ebc291108a0af71e908481c7506ebd",
+    "13a70e0dd3b5106ce3df8bae595210f6801893fba7e2a58f441bbf740dd67c58"
+   ],
+   "interPoseMeanAbsDiff": [
+    1.272,
+    1.322,
+    1.348,
+    1.384
+   ],
+   "meanInterPoseDiff": 1.332,
+   "pose1VsKeyframeDiff": 0.024,
+   "lastPoseVsKeyframeDiff": 0.425,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_019_S02",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_019_S02/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_019_S02/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_019_S02/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_019_S02/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_019_S02/pose_05.png"
+   ],
+   "poseSha256": [
+    "465b36259f3ea10bddbd2f294f24becc502f2239db66598df99453841b3b2795",
+    "e30bb2789e5576fef86d238c5e663d4f7cff38c1b1b1ac668a9e7407c2c2cbb9",
+    "f2b1399be1b60cb709fabd8433d5570aaef1e492e6dfe46eb26200fd933f0d23",
+    "b77aaf67d14736fe2cc9e4416cb15af1a397a630cba694cb02a53e4fa5cd3e3b",
+    "37be412a152019e487de790b91cc3a18eec7d46a65e489e6619152efee31e611"
+   ],
+   "interPoseMeanAbsDiff": [
+    0.699,
+    0.748,
+    0.777,
+    0.81
+   ],
+   "meanInterPoseDiff": 0.758,
+   "pose1VsKeyframeDiff": 0.011,
+   "lastPoseVsKeyframeDiff": 0.4,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_020_S01",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S01/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S01/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S01/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S01/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S01/pose_05.png"
+   ],
+   "poseSha256": [
+    "ae7f096c848100511f488b9380cf49ef89613131e642c30da5c93d3a23feccc6",
+    "7802a5640a34623c9872e8116864416f2e94e6bc5f530d9ed96daf45ea1835fa",
+    "6d0bcba408f818d26a64fa58ec5be75fd0078dbb153c9927b513badd17efd0ff",
+    "cb67254dc153675768f38676abf47fe22cdacc0db6e5ef3436d4362f8b3c0272",
+    "728129be320fdd8bddeab69682b7870519ff650cdb0ef5981b6821bf33ff909f"
+   ],
+   "interPoseMeanAbsDiff": [
+    1.417,
+    1.491,
+    1.577,
+    1.582
+   ],
+   "meanInterPoseDiff": 1.517,
+   "pose1VsKeyframeDiff": 0.033,
+   "lastPoseVsKeyframeDiff": 0.143,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_020_S02",
+   "route": "procedural",
+   "beatSeconds": [
+    2.0,
+    2.5
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S02/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S02/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S02/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S02/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S02/pose_05.png"
+   ],
+   "poseSha256": [
+    "9fe69c5a14b0b2ac31fe7b7016b0f8a9812451bf348511718ce5c76de001bff6",
+    "225338d9719940aa07d5176856ac5452897915349ca973ca8c9d9f31f5f6cdd9",
+    "d3a1fac5fb74b764a5909a2191f4dd7e96f0b4a9b99887b1a4ae9dff241a8f40",
+    "ba5f5820a1b1ccb330ab391bc24c11b105833af59fd1ddee739b17d85bf0ad91",
+    "41a4628e6a51fb850f19662d150b160d58252ee456cad9e7a46738d39fd7438d"
+   ],
+   "interPoseMeanAbsDiff": [
+    1.064,
+    1.069,
+    1.072,
+    1.067
+   ],
+   "meanInterPoseDiff": 1.068,
+   "pose1VsKeyframeDiff": 0.0,
+   "lastPoseVsKeyframeDiff": 1.649,
+   "maskPixels": null
+  },
+  {
+   "shotId": "CIN_020_S03",
+   "route": "procedural",
+   "beatSeconds": [
+    0.5,
+    1.0
+   ],
+   "poseCount": 5,
+   "poseFps": 10,
+   "poseFiles": [
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S03/pose_01.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S03/pose_02.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S03/pose_03.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S03/pose_04.png",
+    "Art_Source/Cinematics/Campaign_Motion/pose_frames/CIN_020_S03/pose_05.png"
+   ],
+   "poseSha256": [
+    "99ee6d93580e5deaa1949c21c38f7de08b826fc83da283fd7a6fd79b403d1705",
+    "00a8b235eaf61924939868cc023b990996e74d227cc217f67b4d8a63aa2fb13a",
+    "ed6932a1bbe2dc20df391452f9fcea6930606cd6f4909154b2ba9ae22ae5ea17",
+    "00a8b235eaf61924939868cc023b990996e74d227cc217f67b4d8a63aa2fb13a",
+    "99ee6d93580e5deaa1949c21c38f7de08b826fc83da283fd7a6fd79b403d1705"
+   ],
+   "interPoseMeanAbsDiff": [
+    2.481,
+    2.485,
+    2.485,
+    2.481
+   ],
+   "meanInterPoseDiff": 2.483,
+   "pose1VsKeyframeDiff": 0.0,
+   "lastPoseVsKeyframeDiff": 0.0,
+   "maskPixels": null
+  }
+ ],
+ "shotTakes": {
+  "CIN_003_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_003_S01_pose_640x360_30fps.mp4",
+   "sha256": "2b97c6af23c9115dc9ec5cf524fc766a9b03b5c268c1393e7f2134a7ada6af01",
+   "sizeBytes": 124120,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_003_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_003_S02_pose_640x360_30fps.mp4",
+   "sha256": "240ad86ff281479c30f89cc9360e62ceae7a5008d6e00dc1cab601b290044a33",
+   "sizeBytes": 117098,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_005_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_005_S01_pose_640x360_30fps.mp4",
+   "sha256": "1fe8ff9bfd8626ede582d91e504906f948faed9e4dc550f965069c3167464cbb",
+   "sizeBytes": 129645,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_005_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_005_S02_pose_640x360_30fps.mp4",
+   "sha256": "10d438363d98d1795d9066399dad39115ca5fc88871fbb9f9adc1e6480e78c72",
+   "sizeBytes": 119132,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_005_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_005_S03_pose_640x360_30fps.mp4",
+   "sha256": "7211f81770d4b0aa4c390be60e93c5debc3dd14de24d96f667b955a0e373aca3",
+   "sizeBytes": 137929,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 15
+  },
+  "CIN_006_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_006_S02_pose_640x360_30fps.mp4",
+   "sha256": "58afbf66dc830363008bf973e1d0ae89a019ea4320f969e4e7e9a84dbdb36de4",
+   "sizeBytes": 99361,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_007_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_007_S01_pose_640x360_30fps.mp4",
+   "sha256": "e399f7183e762aca16d5d83d75708e9f180ee07b7b860e844c983bf14dd03b93",
+   "sizeBytes": 105903,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_008_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_008_S01_pose_640x360_30fps.mp4",
+   "sha256": "b97efda3e171485724c3f50db760273406a37585600f0a1a4c6107b7851aa9a3",
+   "sizeBytes": 77258,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_008_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_008_S02_pose_640x360_30fps.mp4",
+   "sha256": "d63f881d368adc3e9035c8615aabeb7bc7f7d2967965fd07976508e827222f61",
+   "sizeBytes": 82418,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_009_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_009_S01_pose_640x360_30fps.mp4",
+   "sha256": "cdec137f5c41994ce4b890c294858478ffb8ccc989a588decf6253b5d8456b24",
+   "sizeBytes": 116671,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_009_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_009_S02_pose_640x360_30fps.mp4",
+   "sha256": "d1ad7bf1c9dfcbf5d92983a98bc1a96cfa4602f56e33c48de650fb11843ae7d3",
+   "sizeBytes": 119616,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_009_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_009_S03_pose_640x360_30fps.mp4",
+   "sha256": "5fc3b5768bbae86548540a78f6ef7bcef0728952ecdf37b75d108b4a6e49d2b0",
+   "sizeBytes": 140847,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 15
+  },
+  "CIN_010_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_010_S01_pose_640x360_30fps.mp4",
+   "sha256": "68f1d1ff4e23e8044271bb24ad8290e8e88b3a98a72652bf1a339b63f8a4feec",
+   "sizeBytes": 132687,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_011_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_011_S01_pose_640x360_30fps.mp4",
+   "sha256": "961132ead4a6e3a181e10eff4edbaa98209c3810337356e5f201328bc714eec1",
+   "sizeBytes": 106218,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_011_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_011_S02_pose_640x360_30fps.mp4",
+   "sha256": "b02d155465210a2086389d9fdfa099406adee827ef6cf231e3055f6cabb3239a",
+   "sizeBytes": 124537,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_012_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_012_S01_pose_640x360_30fps.mp4",
+   "sha256": "a063c19f2e89091e4e3eca0ea86975cac763f450893cfd16b0e9cf352da46b54",
+   "sizeBytes": 115663,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_013_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_013_S01_pose_640x360_30fps.mp4",
+   "sha256": "00b4ada23f3bedaad6d64df49164bfacf7a7b5249132f019a95a0c2a16e7ddc8",
+   "sizeBytes": 103930,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_015_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_015_S01_pose_640x360_30fps.mp4",
+   "sha256": "dd48f1f2e2cb09110e2a5cb04e6da07c1b976eaab8e48cac6ece007b4200c602",
+   "sizeBytes": 107169,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_015_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_015_S02_pose_640x360_30fps.mp4",
+   "sha256": "7ec0bc4bd24b64aaa89bb29e80184900d7bc9ff1b3b165321d5da416e2433183",
+   "sizeBytes": 96700,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_016_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_016_S01_pose_640x360_30fps.mp4",
+   "sha256": "112f480bc3f739958219b03ad47eb5a34e36b6a0560221cad8832caec84ba521",
+   "sizeBytes": 68851,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_018_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_018_S01_pose_640x360_30fps.mp4",
+   "sha256": "46f095205abe7035fe01a0202174bcbd1520eb7c9e67fbe3377b0b5652efadc4",
+   "sizeBytes": 115703,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_019_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_019_S01_pose_640x360_30fps.mp4",
+   "sha256": "3d7853cf5b40862d15ec505cfb9b0fdba663bfdcaa31ececf838f4e556ef2af3",
+   "sizeBytes": 96178,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_019_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_019_S02_pose_640x360_30fps.mp4",
+   "sha256": "a73a6ad106350ecc6b524dee16a64d825838c42f991d3078f55348df798086c1",
+   "sizeBytes": 125127,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_020_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_020_S01_pose_640x360_30fps.mp4",
+   "sha256": "af2e3b263de507a578ecf3ecfa0ba8c52167cd664dbf2c423e117e1e706267f6",
+   "sizeBytes": 121423,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_020_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_020_S02_pose_640x360_30fps.mp4",
+   "sha256": "5b9b78c972c58794401b7e56f6688b977a8d8a99f2acb183ed7ef3e489893eb3",
+   "sizeBytes": 102981,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 60
+  },
+  "CIN_020_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_020_S03_pose_640x360_30fps.mp4",
+   "sha256": "eaff4cc90baa5cc014ddbb0106520b5c1cc3ccc6e5666cdedc5ec643aaa5b78e",
+   "sizeBytes": 113296,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "beatStartFrame": 15
+  }
+ },
+ "holdSlices": {
+  "CIN_003_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_003_S03_hold_640x360_30fps.mp4",
+   "sha256": "a40ad14db4ae7c8d7b13777c20e2d9a1d04cc48930ce6ff1fd1da4363a752772",
+   "sizeBytes": 660165,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_003/CIN_003_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "657fe12cf148702887be55d64a62dbb6968b0a6f317dbf06ced86c248a869c75",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0
+  },
+  "CIN_006_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_006_S01_hold_640x360_30fps.mp4",
+   "sha256": "fb6470af215c9c10f353cc0b61dc159d15467f05ac37cce95aae8d18e6dc94d2",
+   "sizeBytes": 771374,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_006/CIN_006_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "e551b9ad2d7b76330a9e1d2adb4e417edeeba25358d37aa6705575d75d832321",
+   "sourceStartSeconds": 0.0,
+   "sourceEndSeconds": 6.0
+  },
+  "CIN_006_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_006_S03_hold_640x360_30fps.mp4",
+   "sha256": "571991bead74f636e9cffe9a53ccf9d439031621217e0d077329f928edc326a2",
+   "sizeBytes": 739372,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_006/CIN_006_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "e551b9ad2d7b76330a9e1d2adb4e417edeeba25358d37aa6705575d75d832321",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0
+  },
+  "CIN_007_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_007_S02_hold_640x360_30fps.mp4",
+   "sha256": "00aeb60e26a1189c75dbf17905918452fd6d3648e9277c01a4efe85868ed1912",
+   "sizeBytes": 306052,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_007/CIN_007_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "771aff2582faa890f90f644b709d6961e841382ab9e9faa2bfc241a5e5bdd125",
+   "sourceStartSeconds": 6.0,
+   "sourceEndSeconds": 12.0
+  },
+  "CIN_007_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_007_S03_hold_640x360_30fps.mp4",
+   "sha256": "5b30f6ff9ee571b8e4cb1eadf0ddd39414d6cc0ed7d338d3d956c802ecf9113e",
+   "sizeBytes": 552729,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_007/CIN_007_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "771aff2582faa890f90f644b709d6961e841382ab9e9faa2bfc241a5e5bdd125",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0
+  },
+  "CIN_008_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_008_S03_hold_640x360_30fps.mp4",
+   "sha256": "b8a88b070c665eadaf47de24f4893eb2cc15d982c8a16eea0e44e2d41e3bb973",
+   "sizeBytes": 560465,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_008/CIN_008_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "cc8654acd7f4ff6657676f9d9796a9f420dc54f21f2622e2656d2877800f2fee",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0
+  },
+  "CIN_010_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_010_S02_hold_640x360_30fps.mp4",
+   "sha256": "09b00326bdfd32fd9a220d8cce9a248a5d83f179d00cc7142c5ede8a6b2d8876",
+   "sizeBytes": 527216,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_010/CIN_010_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "d717e5f665e9a9ef3a9f31e69bd7b85ffa3ac313cba092bcf4d8626e9a070f56",
+   "sourceStartSeconds": 6.0,
+   "sourceEndSeconds": 12.0
+  },
+  "CIN_010_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_010_S03_hold_640x360_30fps.mp4",
+   "sha256": "65c7f554e35b2d956b41f64e6dee2044fcd89875ec8091576b9c2c59cbc8dac5",
+   "sizeBytes": 613890,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_010/CIN_010_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "d717e5f665e9a9ef3a9f31e69bd7b85ffa3ac313cba092bcf4d8626e9a070f56",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0
+  },
+  "CIN_011_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_011_S03_hold_640x360_30fps.mp4",
+   "sha256": "8fe8077d8ff671ced5306591b97736e436090ea15d55caa804fbef95fb81b418",
+   "sizeBytes": 604174,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_011/CIN_011_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "cec9e96af68b4f654458455fa038446c5734ad4fe95bacf211891a43fdbf1b71",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0
+  },
+  "CIN_012_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_012_S02_hold_640x360_30fps.mp4",
+   "sha256": "76626454185f2e669aa0c795ef773bc23dec4d739dfb295fbaf5386407134b9a",
+   "sizeBytes": 373750,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_012/CIN_012_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "aee3ef178b524d13c30fc927e7ad89cc01b9ede1a73a9b927c193baf65e67731",
+   "sourceStartSeconds": 6.0,
+   "sourceEndSeconds": 12.0
+  },
+  "CIN_012_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_012_S03_hold_640x360_30fps.mp4",
+   "sha256": "460ddc98f0e0083cdb4a4d29995be7172df4b71faeec4011550e8230d1afed5d",
+   "sizeBytes": 398673,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_012/CIN_012_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "aee3ef178b524d13c30fc927e7ad89cc01b9ede1a73a9b927c193baf65e67731",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0
+  },
+  "CIN_013_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_013_S02_hold_640x360_30fps.mp4",
+   "sha256": "61950ff6114ab6741927c108199b64fb402b613007e1dc364c36c1d5db917e5e",
+   "sizeBytes": 407772,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_013/CIN_013_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "6227ec1b945e5fe87f5d7eec3de8a3e36b4e7c73922130cd100270e3a214de0f",
+   "sourceStartSeconds": 6.0,
+   "sourceEndSeconds": 12.0
+  },
+  "CIN_013_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_013_S03_hold_640x360_30fps.mp4",
+   "sha256": "1eabf18741d0e1edc603fa3acf879412582c0ab65ed4eaa30faa57da8b156806",
+   "sizeBytes": 441472,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_013/CIN_013_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "6227ec1b945e5fe87f5d7eec3de8a3e36b4e7c73922130cd100270e3a214de0f",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0
+  },
+  "CIN_015_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_015_S03_hold_640x360_30fps.mp4",
+   "sha256": "2bbb82523882f1efb5bf63d225a8da5a416c788bff153fe851b680e4c606a853",
+   "sizeBytes": 489741,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_015/CIN_015_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "95a6b688aaa5d8e77103d0045edf2ac50a9a122d6d956b797f6c136857947f22",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0
+  },
+  "CIN_016_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_016_S02_hold_640x360_30fps.mp4",
+   "sha256": "bd21a2ed2969f3800d7ee60b9d9e23841cc60db80abe87373a98b9ea3297a142",
+   "sizeBytes": 317535,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_016/CIN_016_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "59caedc90f3c096b54aedc8d8c0a6848078af6a2e8afe62f10d47b305ee5921c",
+   "sourceStartSeconds": 6.0,
+   "sourceEndSeconds": 12.0
+  },
+  "CIN_016_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_016_S03_hold_640x360_30fps.mp4",
+   "sha256": "37d72135de305e6bea4d3e34243e02215104c2aa1aa28c32b150a45828669033",
+   "sizeBytes": 458886,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_016/CIN_016_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "59caedc90f3c096b54aedc8d8c0a6848078af6a2e8afe62f10d47b305ee5921c",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0
+  },
+  "CIN_018_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_018_S02_hold_640x360_30fps.mp4",
+   "sha256": "1143fe5f64035da5804e616fdd1490937390e1ec9471dd4fe7ce84be612b28c8",
+   "sizeBytes": 304233,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_018/CIN_018_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "703d4641cdb179597fb414d90d7a037513937ba5a3a5701724b84c43ec2c1b35",
+   "sourceStartSeconds": 6.0,
+   "sourceEndSeconds": 12.0
+  },
+  "CIN_018_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_018_S03_hold_640x360_30fps.mp4",
+   "sha256": "0d2cd2922acd8a6c31360ccb0d9033c167613c325311df831e3b1efe908df8d2",
+   "sizeBytes": 499558,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_018/CIN_018_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "703d4641cdb179597fb414d90d7a037513937ba5a3a5701724b84c43ec2c1b35",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0
+  },
+  "CIN_019_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_019_S03_hold_640x360_30fps.mp4",
+   "sha256": "a1d7420b2e4b9a6e891a81fcbbe55a9dda4a1f44d1bc83398405f1a73232f4c3",
+   "sizeBytes": 600243,
+   "frames": 180,
+   "durationSeconds": 6.0,
+   "kind": "KEN_BURNS_HOLD",
+   "sourceRuntime": "ClientGodot/assets/cinematics/CIN_019/CIN_019_640x360_30fps.mp4",
+   "sourceRuntimeSha256": "b33b48059417859a3c4f114dde2ebb1c8280d471c442280a5fc6a07e67e95eee",
+   "sourceStartSeconds": 12.0,
+   "sourceEndSeconds": 18.0
+  }
+ },
+ "sceneTakes": {
+  "CIN_003": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_003_pose_640x360_30fps.mp4",
+   "sha256": "08a17999d803f0030df1f8582134f0de4bdf1636ab1e0ecc855a94fe740b8b45",
+   "sizeBytes": 1346666,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin003_v1/CIN_003_mix_draft_v1.wav",
+    "sourceMixSha256": "35def4f0f2135991130aa03832a4bd817de7edfa25796b6c5e14af5a31d4fad4"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_003_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_003_S02",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_003_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  },
+  "CIN_005": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_005_pose_640x360_30fps.mp4",
+   "sha256": "3ef19d4244b9fb9293bdd763055de5b3ad6da5612f7f5d5533f5a3027dbbf524",
+   "sizeBytes": 834544,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin005_v1/CIN_005_mix_draft_v1.wav",
+    "sourceMixSha256": "40db6c4b41ad1a3da697c9dba18a2dbf0d358edaf11a8324178349fcfb2e0988"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_005_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_005_S02",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_005_S03",
+     "kind": "POSE_ANIMATION"
+    }
+   ]
+  },
+  "CIN_006": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_006_pose_640x360_30fps.mp4",
+   "sha256": "82f4dda2576af010fd4c0805ef84f057f5c39444f275d9c5547233523f9fd6e4",
+   "sizeBytes": 2058073,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin006_v1/CIN_006_mix_draft_v1.wav",
+    "sourceMixSha256": "a71a38f006f4a8511c051173bbffb1609f46b8dba14e9141fda4143d1173dda6"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_006_S01",
+     "kind": "KEN_BURNS_HOLD"
+    },
+    {
+     "shotId": "CIN_006_S02",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_006_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  },
+  "CIN_007": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_007_pose_640x360_30fps.mp4",
+   "sha256": "a51431388e7a0665ef34d626e9f08b77bf653f1723e7c8a0d19ee05c924408e4",
+   "sizeBytes": 1409861,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin007_v1/CIN_007_mix_draft_v1.wav",
+    "sourceMixSha256": "ee9f4c0aed0549878ba2d62c2f387aecb87488097809e7427fc82eae950aa03a"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_007_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_007_S02",
+     "kind": "KEN_BURNS_HOLD"
+    },
+    {
+     "shotId": "CIN_007_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  },
+  "CIN_008": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_008_pose_640x360_30fps.mp4",
+   "sha256": "aeb28788ead7bda443b50d323114761ad05b897460ae29819299dd0624d528ef",
+   "sizeBytes": 1166808,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin008_v1/CIN_008_mix_draft_v1.wav",
+    "sourceMixSha256": "eaaaf4a17c518f11b2fc36f53b159d86013ed2c38db69350e9331dc0bc155f96"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_008_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_008_S02",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_008_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  },
+  "CIN_009": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_009_pose_640x360_30fps.mp4",
+   "sha256": "c22c55520da3009f1fd05c32989f60a390ae7c0f5f21f71e070640a14e74988b",
+   "sizeBytes": 823920,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin009_v1/CIN_009_mix_draft_v1.wav",
+    "sourceMixSha256": "196994e8162b41e9964cf1e2ddc4ad7bf94efd938f153b15c9ab5fe1f76809e4"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_009_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_009_S02",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_009_S03",
+     "kind": "POSE_ANIMATION"
+    }
+   ]
+  },
+  "CIN_010": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_010_pose_640x360_30fps.mp4",
+   "sha256": "e599aeff8b7b97750191d45739fca33ac22f49d79992adbf73d4fd3bf7a1ab87",
+   "sizeBytes": 1720410,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin010_v1/CIN_010_mix_draft_v1.wav",
+    "sourceMixSha256": "6a3f9d21bd61bb2c43d2f55356f0ca743006931ffbac53568e7f17c0ff6b4bb2"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_010_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_010_S02",
+     "kind": "KEN_BURNS_HOLD"
+    },
+    {
+     "shotId": "CIN_010_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  },
+  "CIN_011": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_011_pose_640x360_30fps.mp4",
+   "sha256": "ce7caf3e4d18e239e9d7790f56d8f613b877c003763cf8809c3921c9304782dc",
+   "sizeBytes": 1281464,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin011_v1/CIN_011_mix_draft_v1.wav",
+    "sourceMixSha256": "aa89602b48cf2e2ac0ae2b5a3d4a7c872fc7c386c7989c5c46d32df074232fa1"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_011_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_011_S02",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_011_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  },
+  "CIN_012": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_012_pose_640x360_30fps.mp4",
+   "sha256": "655acf054584a5c00b45742ea343796f6529d2443b1cc7a4941e46179dff97cd",
+   "sizeBytes": 1376361,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin012_v1/CIN_012_mix_draft_v1.wav",
+    "sourceMixSha256": "63073ea64e623aedfb9767e90a8efc8e3ab8a6e1d0cbb6b14c9d2aeb56d719ef"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_012_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_012_S02",
+     "kind": "KEN_BURNS_HOLD"
+    },
+    {
+     "shotId": "CIN_012_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  },
+  "CIN_013": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_013_pose_640x360_30fps.mp4",
+   "sha256": "3ee82577b2e724abc099cf710759733ed925648388bc40ab9ab20943e664910d",
+   "sizeBytes": 1397664,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin013_v1/CIN_013_mix_draft_v1.wav",
+    "sourceMixSha256": "9851c8e350615e9af9a965c9ecb85b1377c862fa8a8ab5c5033863cc04b50067"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_013_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_013_S02",
+     "kind": "KEN_BURNS_HOLD"
+    },
+    {
+     "shotId": "CIN_013_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  },
+  "CIN_015": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_015_pose_640x360_30fps.mp4",
+   "sha256": "c20ed21861f9811a3dd4c66f25c68d04d10dfcb0c4da0866211acdb4877b0f53",
+   "sizeBytes": 1139361,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin015_v1/CIN_015_mix_draft_v1.wav",
+    "sourceMixSha256": "635afb8fce8a48bb7930936d0d34312fdee42a8e8a7da094332b82c8d783c5ee"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_015_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_015_S02",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_015_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  },
+  "CIN_016": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_016_pose_640x360_30fps.mp4",
+   "sha256": "c47710a19615196165b159f57a76f820b87a7f49bee4575c92ee12829acade5f",
+   "sizeBytes": 1291290,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin016_v1/CIN_016_mix_draft_v1.wav",
+    "sourceMixSha256": "5560346034e91a261718bc0a38e89681c9e25191a8be3cb2d8803b797668c5a0"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_016_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_016_S02",
+     "kind": "KEN_BURNS_HOLD"
+    },
+    {
+     "shotId": "CIN_016_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  },
+  "CIN_018": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_018_pose_640x360_30fps.mp4",
+   "sha256": "0804447a7e1e43b92fc7f5e21c5df9f78a08dcf0b099561930cbd83a435875eb",
+   "sizeBytes": 1366327,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin018_v1/CIN_018_mix_draft_v1.wav",
+    "sourceMixSha256": "25796b3d494716fddd419b3069101b8595a26f6ce663c4a5da774b00431bfd00"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_018_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_018_S02",
+     "kind": "KEN_BURNS_HOLD"
+    },
+    {
+     "shotId": "CIN_018_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  },
+  "CIN_019": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_019_pose_640x360_30fps.mp4",
+   "sha256": "d39f7a9862265ec3b5949512c41c0a30828da3b96f6eea6bcf88f0429a7097fd",
+   "sizeBytes": 1267037,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin019_v1/CIN_019_mix_draft_v1.wav",
+    "sourceMixSha256": "28d6c4754fd2634e7964518b1c6def55d4bea53058389c72e2d497549b943c69"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_019_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_019_S02",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_019_S03",
+     "kind": "KEN_BURNS_HOLD"
+    }
+   ]
+  },
+  "CIN_020": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_020_pose_640x360_30fps.mp4",
+   "sha256": "7ae22522831bc8f70fdc3bda8184576f43cbc3da9d156dbc0714d8020e6106aa",
+   "sizeBytes": 783357,
+   "durationSeconds": 18.0,
+   "audio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sourceMix": "ClientGodot/assets/audio/mix/cin020_v1/CIN_020_mix_draft_v1.wav",
+    "sourceMixSha256": "90b51db920c68ca516c92510c9e706c87d9079136d41dbbc48f9b9262e60ba8f"
+   },
+   "segments": [
+    {
+     "shotId": "CIN_020_S01",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_020_S02",
+     "kind": "POSE_ANIMATION"
+    },
+    {
+     "shotId": "CIN_020_S03",
+     "kind": "POSE_ANIMATION"
+    }
+   ]
+  }
+ },
+ "abVideos": {
+  "CIN_003": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_003_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "e26f6716ec0c97a3756db3a9b299ccf725170898ac21418b3955bdbc7750737e",
+   "sizeBytes": 3171336,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_003/CIN_003_640x360_30fps.mp4",
+    "sha256": "657fe12cf148702887be55d64a62dbb6968b0a6f317dbf06ced86c248a869c75"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_003_pose_640x360_30fps.mp4",
+    "sha256": "08a17999d803f0030df1f8582134f0de4bdf1636ab1e0ecc855a94fe740b8b45"
+   }
+  },
+  "CIN_005": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_005_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "ea5bff4c42367df2e2b8391e8551099c4f9203e2b39885f627d76c49b9d65068",
+   "sizeBytes": 3329814,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_005/CIN_005_640x360_30fps.mp4",
+    "sha256": "223f5801032e50ad4d4a05cad2a39f3cb32f71d4f1ce3c6add5b71ceacd64210"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_005_pose_640x360_30fps.mp4",
+    "sha256": "3ef19d4244b9fb9293bdd763055de5b3ad6da5612f7f5d5533f5a3027dbbf524"
+   }
+  },
+  "CIN_006": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_006_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "0d1bc5e04938632a7057cd77c2f666893eba36cef14bda7742b8cdd943eb348b",
+   "sizeBytes": 4622693,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_006/CIN_006_640x360_30fps.mp4",
+    "sha256": "e551b9ad2d7b76330a9e1d2adb4e417edeeba25358d37aa6705575d75d832321"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_006_pose_640x360_30fps.mp4",
+    "sha256": "82f4dda2576af010fd4c0805ef84f057f5c39444f275d9c5547233523f9fd6e4"
+   }
+  },
+  "CIN_007": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_007_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "3db13157fa58987243d5319459169c1e6ccec6fbbf145530c43f3a1853ce726f",
+   "sizeBytes": 2999766,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_007/CIN_007_640x360_30fps.mp4",
+    "sha256": "771aff2582faa890f90f644b709d6961e841382ab9e9faa2bfc241a5e5bdd125"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_007_pose_640x360_30fps.mp4",
+    "sha256": "a51431388e7a0665ef34d626e9f08b77bf653f1723e7c8a0d19ee05c924408e4"
+   }
+  },
+  "CIN_008": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_008_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "a68a33de96f155b46d22525611a6dca1520565885ade2b0f13a6bc57230d4915",
+   "sizeBytes": 2555353,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_008/CIN_008_640x360_30fps.mp4",
+    "sha256": "cc8654acd7f4ff6657676f9d9796a9f420dc54f21f2622e2656d2877800f2fee"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_008_pose_640x360_30fps.mp4",
+    "sha256": "aeb28788ead7bda443b50d323114761ad05b897460ae29819299dd0624d528ef"
+   }
+  },
+  "CIN_009": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_009_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "4122ab028bddcb77c2983e3ec6f1154b6776453b97e71988a672fd17547b48f7",
+   "sizeBytes": 2869727,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_009/CIN_009_640x360_30fps.mp4",
+    "sha256": "51d6b590e412faeb0d0eabf1305aa9a33c928af05818b4a58a24d49e1b22e6e6"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_009_pose_640x360_30fps.mp4",
+    "sha256": "c22c55520da3009f1fd05c32989f60a390ae7c0f5f21f71e070640a14e74988b"
+   }
+  },
+  "CIN_010": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_010_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "4cb27d268f58d9e7859e9ee2c40db7294eef6faa715f8b4c3c19ed432f862ba5",
+   "sizeBytes": 3916726,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_010/CIN_010_640x360_30fps.mp4",
+    "sha256": "d717e5f665e9a9ef3a9f31e69bd7b85ffa3ac313cba092bcf4d8626e9a070f56"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_010_pose_640x360_30fps.mp4",
+    "sha256": "e599aeff8b7b97750191d45739fca33ac22f49d79992adbf73d4fd3bf7a1ab87"
+   }
+  },
+  "CIN_011": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_011_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "079526a30516970b366b5b7099410aedc04fbbaae500de8c3b80a9148bb4d2b5",
+   "sizeBytes": 3273020,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_011/CIN_011_640x360_30fps.mp4",
+    "sha256": "cec9e96af68b4f654458455fa038446c5734ad4fe95bacf211891a43fdbf1b71"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_011_pose_640x360_30fps.mp4",
+    "sha256": "ce7caf3e4d18e239e9d7790f56d8f613b877c003763cf8809c3921c9304782dc"
+   }
+  },
+  "CIN_012": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_012_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "896d6992cd02d801b20971390a4c2a407fcde435f013ecee89abe4915b980904",
+   "sizeBytes": 2889303,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_012/CIN_012_640x360_30fps.mp4",
+    "sha256": "aee3ef178b524d13c30fc927e7ad89cc01b9ede1a73a9b927c193baf65e67731"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_012_pose_640x360_30fps.mp4",
+    "sha256": "655acf054584a5c00b45742ea343796f6529d2443b1cc7a4941e46179dff97cd"
+   }
+  },
+  "CIN_013": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_013_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "daad3b5996c98b05353eb75e06d7c1d0a1c16216c49d57a8dd36ce83b77727d1",
+   "sizeBytes": 2949958,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_013/CIN_013_640x360_30fps.mp4",
+    "sha256": "6227ec1b945e5fe87f5d7eec3de8a3e36b4e7c73922130cd100270e3a214de0f"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_013_pose_640x360_30fps.mp4",
+    "sha256": "3ee82577b2e724abc099cf710759733ed925648388bc40ab9ab20943e664910d"
+   }
+  },
+  "CIN_015": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_015_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "404b6ab12b7b67b825e1c1a022d9978159cae23952511976e84d494e19fe4116",
+   "sizeBytes": 2742971,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_015/CIN_015_640x360_30fps.mp4",
+    "sha256": "95a6b688aaa5d8e77103d0045edf2ac50a9a122d6d956b797f6c136857947f22"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_015_pose_640x360_30fps.mp4",
+    "sha256": "c20ed21861f9811a3dd4c66f25c68d04d10dfcb0c4da0866211acdb4877b0f53"
+   }
+  },
+  "CIN_016": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_016_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "be9ff6b49d0de0cea56d2cf02fed2f9e8a7c47ba626a7c4c0a36b9ba29c928d5",
+   "sizeBytes": 2581800,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_016/CIN_016_640x360_30fps.mp4",
+    "sha256": "59caedc90f3c096b54aedc8d8c0a6848078af6a2e8afe62f10d47b305ee5921c"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_016_pose_640x360_30fps.mp4",
+    "sha256": "c47710a19615196165b159f57a76f820b87a7f49bee4575c92ee12829acade5f"
+   }
+  },
+  "CIN_018": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_018_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "c5b9ab2bc864c69d0bbe94e44c7db1ce6843adda747045cff75fab055960039a",
+   "sizeBytes": 2928516,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_018/CIN_018_640x360_30fps.mp4",
+    "sha256": "703d4641cdb179597fb414d90d7a037513937ba5a3a5701724b84c43ec2c1b35"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_018_pose_640x360_30fps.mp4",
+    "sha256": "0804447a7e1e43b92fc7f5e21c5df9f78a08dcf0b099561930cbd83a435875eb"
+   }
+  },
+  "CIN_019": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_019_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "d2d6f2992c62fd38fe04409dbe0948242d9bc68c7af12dcff6e5c493ed84bf47",
+   "sizeBytes": 3056661,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_019/CIN_019_640x360_30fps.mp4",
+    "sha256": "b33b48059417859a3c4f114dde2ebb1c8280d471c442280a5fc6a07e67e95eee"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_019_pose_640x360_30fps.mp4",
+    "sha256": "d39f7a9862265ec3b5949512c41c0a30828da3b96f6eea6bcf88f0429a7097fd"
+   }
+  },
+  "CIN_020": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/ab/CIN_020_ab_kenburns_vs_pose_640x720_30fps.mp4",
+   "sha256": "686a63020b2f9714bc0e583358466366bb16076f8358a1d7185919ea57550ccb",
+   "sizeBytes": 2738651,
+   "durationSeconds": 18.0,
+   "aTake": {
+    "file": "ClientGodot/assets/cinematics/CIN_020/CIN_020_640x360_30fps.mp4",
+    "sha256": "b1d10d62ab015c90f26597f99bb69eb4f2247e41851d91bbaa3a00b44f6ac84b"
+   },
+   "bTake": {
+    "file": "Art_Source/Cinematics/Campaign_Motion/takes/CIN_020_pose_640x360_30fps.mp4",
+    "sha256": "7ae22522831bc8f70fdc3bda8184576f43cbc3da9d156dbc0714d8020e6106aa"
+   }
+  }
+ },
+ "contacts": {
+  "CIN_003_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_003_S01_contact.png",
+   "sha256": "dd6a3724fb985796cc0d6f7afdabc30f0de905daec8d8a7cf53e7764a859658d"
+  },
+  "CIN_003_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_003_S02_contact.png",
+   "sha256": "3b9e996decfd16043036ff980d357861c36d8f44e453c0cb9f135f0e30d34f2c"
+  },
+  "CIN_005_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_005_S01_contact.png",
+   "sha256": "e8680545ec90c445232f37dc49fdb4c4eeda0ecd5b5d28dc18ff7c923ecbb059"
+  },
+  "CIN_005_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_005_S02_contact.png",
+   "sha256": "3b57792ecb6bd7a2f21cc29ebc869676ca2f708ed559b44c6282285ce3ffe5b0"
+  },
+  "CIN_005_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_005_S03_contact.png",
+   "sha256": "3c50c78bd343ec69dad964031a5bdfae97dcf8adee87d4cbb248d8493a34a8bb"
+  },
+  "CIN_006_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_006_S02_contact.png",
+   "sha256": "b2e399b46a076246806c02b2e0e2f2972a0d54d7529530f47352272459c13949"
+  },
+  "CIN_007_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_007_S01_contact.png",
+   "sha256": "24cc70fbcf0cff778423e51e6068587b1db0afc04aa95a48256d8e7b393c341f"
+  },
+  "CIN_008_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_008_S01_contact.png",
+   "sha256": "9604116e5d3be9007d825a6dfe67dafe37607bec1b0a8930aaf1310527886e66"
+  },
+  "CIN_008_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_008_S02_contact.png",
+   "sha256": "a6461f475c058747b46bf4e2c69c1d7ec83d97a4b62f6c009bcf99886fb55109"
+  },
+  "CIN_009_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_009_S01_contact.png",
+   "sha256": "91e9724770bb3c4d36c7923ca8a93c08ac220f124b7fb9991eef379e8611b54c"
+  },
+  "CIN_009_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_009_S02_contact.png",
+   "sha256": "801342090fbc8f2602a0f085d4e90279ed1a9a25252e86ef39426ac024383546"
+  },
+  "CIN_009_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_009_S03_contact.png",
+   "sha256": "78eda5bf34c94dac400ffd0dd32acb58ba3aa2e019e76804a65b5ee3975a11ce"
+  },
+  "CIN_010_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_010_S01_contact.png",
+   "sha256": "6eddfb5e87538a5b52140c00d9898ad3bd2f3b2cc3f784740c74e10e64b01681"
+  },
+  "CIN_011_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_011_S01_contact.png",
+   "sha256": "50b4e9addaa693a32ebf606b9f16963982287e0ee0e65ce576ba61342aa0698a"
+  },
+  "CIN_011_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_011_S02_contact.png",
+   "sha256": "5e7907712288c5d174c6d42ab95a450a6c6e8ea2510d5d3db28cf16bc1113175"
+  },
+  "CIN_012_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_012_S01_contact.png",
+   "sha256": "c333d17b4ed2ef4db5c2ce476d232bc1e624de846ef4a5b7d6dc5671e343c6ba"
+  },
+  "CIN_013_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_013_S01_contact.png",
+   "sha256": "b4dcc008686c33ee2d10c17efb70a45b17991c1c597e79fbaba0d03278504887"
+  },
+  "CIN_015_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_015_S01_contact.png",
+   "sha256": "e3dd6621c117af6d0cd8f83fa54545ff5b524e31c4508ccfb95d586ebb2d2fe1"
+  },
+  "CIN_015_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_015_S02_contact.png",
+   "sha256": "ff687ef4ba466872427b5e98bbd21886f525ae5e16bf1d80ff32d26a39b9094e"
+  },
+  "CIN_016_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_016_S01_contact.png",
+   "sha256": "a33d361ed5a8056ccbadc1f2f6bbac26f718d4d594571a8c890723525911f80a"
+  },
+  "CIN_018_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_018_S01_contact.png",
+   "sha256": "77b476ef94996a43b0a89c66f3ea9688739a09176cf426d1eeab3c02983d9544"
+  },
+  "CIN_019_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_019_S01_contact.png",
+   "sha256": "b430d19b4fb423a39f1d7bf13c4fe513c183917ffa4987e5e9f66197de06a95f"
+  },
+  "CIN_019_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_019_S02_contact.png",
+   "sha256": "8b43d78280aa2b187e06ee1acc08f1aa2afdcf34ce3fad3b623c1339b9d539a6"
+  },
+  "CIN_020_S01": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_020_S01_contact.png",
+   "sha256": "4b016d0c5dd834d6ce5b90810fb4c1f5e03aa028fa78681cec81da2d759a4824"
+  },
+  "CIN_020_S02": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_020_S02_contact.png",
+   "sha256": "e0106a9190c094a6c07fbb8fb0d386146fb9c7d9b2a034e1b453ec0131013c9d"
+  },
+  "CIN_020_S03": {
+   "file": "Art_Source/Cinematics/Campaign_Motion/contact/CIN_020_S03_contact.png",
+   "sha256": "59a3f34dafd9b3a84ae0396abd055d01dc66e12ba15ebb6dd807b236a3c741ba"
+  }
+ },
+ "totals": {
+  "shots": 26,
+  "posesPerShot": 5,
+  "poseFps": 10,
+  "generatedShots": 0,
+  "proceduralShots": 26,
+  "scenes": 15,
+  "sceneShotSlots": 45,
+  "holdSegments": 19,
+  "sceneDurations": {
+   "CIN_003": 18.0,
+   "CIN_005": 18.0,
+   "CIN_006": 18.0,
+   "CIN_007": 18.0,
+   "CIN_008": 18.0,
+   "CIN_009": 18.0,
+   "CIN_010": 18.0,
+   "CIN_011": 18.0,
+   "CIN_012": 18.0,
+   "CIN_013": 18.0,
+   "CIN_015": 18.0,
+   "CIN_016": 18.0,
+   "CIN_018": 18.0,
+   "CIN_019": 18.0,
+   "CIN_020": 18.0
+  },
+  "note": "The 6 remaining priority-3 shots (CIN_014 S01-S03, CIN_017 S01-S03) belong to scenes with no priority-2 shot, so they have no scene B take in this pack; they stay Ken Burns hold per ledger rule R4."
+ }
+}
