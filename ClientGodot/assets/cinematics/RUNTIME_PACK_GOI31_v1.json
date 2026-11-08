@@ -1,6 +1,6 @@
 {
   "manifestId": "NGM_RUNTIME_PACK_GOI31_V1",
-  "checkpoint": "MEDIA-02 checkpoint 42 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41 scenes verified unchanged)",
+  "checkpoint": "MEDIA-02 checkpoint 45 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41/CP42 scenes verified unchanged)",
   "decisionId": "DEC-MEDIA-P0-20261105",
   "branch": "muse/media-production-20261104",
   "status": "DRAFT_NOT_FINAL",
@@ -19,6 +19,7 @@
     "CIN_008 stem assignment (tran_son music + river_shore ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 16.052 s, no overrun, no tail trim). tran_son is the composed set's bell-led gate form, matching the scene's central gate image (S02); river_shore is the water-edge bed for the bamboo forest pool (S03).",
     "CIN_009 stem assignment (lam_trieu music + waterfall ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 16.580 s, no overrun, no tail trim). lam_trieu is the composed set's G-major transposition with ornamented flute (Lam Trieu, forest tide) -- the flute carries the forest's answering voice of the scene title 'Tieng rung duoc dap'; waterfall is the water bed for the stream running through all three shots (S01 roots stream, S02 forest path, S03 top-down waterfall and shrine). The mix is hotter than CIN_008 (-17.84 LUFS) because the CP17 VO take itself is hot (-17.23 LUFS); VO is kept at unity per the recipe, not normalized.",
     "CIN_010 stem assignment (sa_hoa music + desert_wind ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 15.308 s, no overrun, no tail trim). sa_hoa is the composed set's desert form ('Sa Hoa -- Lo va cat', kiln and sand: A minor pentatonic, dry bright plucks, 110 BPM), matching the scene's ash-gold caravan rest and last-water-flask image (S01 caravan + barrel, S02 flask poured into the barrel, S03 flask set on the map cloth); desert_wind is the desert wind bed for the dunes running through all three shots. The mix measures -24.60 LUFS because the CP17 VO take itself is quiet (-22.01 LUFS); VO is kept at unity per the recipe, not normalized.",
+    "CIN_011 stem assignment (quiet_discovery music + wind_canopy ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.2-17.8 s window (ends 17.792 s, no overrun, no tail trim) by 0.008 s. quiet_discovery is the composed set's exploration silence ('Khoang lang kham pha': solo flute fragments, single bells, long near-silences, water drops, 60 BPM), matching the scene's quiet carving workshop and moral reflection (S01 workbench with carved tablets, S02 two men in an open bamboo shelter, S03 Ha Mac leaning over a carved landscape panel); wind_canopy is the wind-through-canopy bed for the open shelter and the greenery behind S02. The mix measures -20.34 LUFS because the CP17 VO take itself is quiet (-21.50 LUFS); VO is kept at unity per the recipe, not normalized.",
     "CIN_003 stem assignment (ben_mua music + river_shore ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 16.532 s, no overrun, no tail trim).",
     "CIN_005 stem assignment (thang_long music + thang_long_crowd ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take overruns its 12.5-17.5 s window by 0.160 s and the overrun is KEPT per the owner verdict (Goi 30 D1); no tail trim.",
     "CIN_007 stem assignment (quiet_discovery music + wind_canopy ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the CP17 draft VO take fits inside its 12.5-17.5 s window (ends 16.412 s, no overrun, no tail trim). Ducking evidence is measured over the full VO window because quiet_discovery is sparse by design (the first 2 s of the window are near-silence).",
@@ -648,6 +649,64 @@
           "path": "assets/cinematics/CIN_010/CIN_010_timing_v1.json",
           "sha256": "05b194a3b2119721a535a9f60d0c34159164b9857ee075b9144cbd163fc5fef1",
           "sizeBytes": 2399
+        }
+      }
+    },
+    {
+      "sceneId": "CIN_011",
+      "durationSeconds": 18.0,
+      "embeddedMixVersion": "v1_cin011_proposed",
+      "files": {
+        "ogv": {
+          "codec": "vorbis",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bitRateKbps": 160,
+          "sourceMix": "Art_Source/Audio/Muse/MIX/CIN011_DRAFT_V1/CIN_011_mix_draft_v1.wav",
+          "sourceMixSha256": "aa89602b48cf2e2ac0ae2b5a3d4a7c872fc7c386c7989c5c46d32df074232fa1",
+          "mixVersion": "v1_cin011_proposed",
+          "integratedLUFS": "-20.38",
+          "truePeakDBTP": "-3.44",
+          "durationSeconds": 18.0,
+          "videoStoredFrames": 486,
+          "path": "assets/cinematics/CIN_011/CIN_011_640x360_30fps.ogv",
+          "sha256": "1b58d65f7871412eb871adec2309465cffedc739f97e726bc026db1d614a2cdc",
+          "sizeBytes": 768807
+        },
+        "mp4": {
+          "codec": "aac",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bitRateKbps": 192,
+          "sourceMix": "Art_Source/Audio/Muse/MIX/CIN011_DRAFT_V1/CIN_011_mix_draft_v1.wav",
+          "sourceMixSha256": "aa89602b48cf2e2ac0ae2b5a3d4a7c872fc7c386c7989c5c46d32df074232fa1",
+          "mixVersion": "v1_cin011_proposed",
+          "integratedLUFS": "-20.37",
+          "truePeakDBTP": "-3.34",
+          "durationSeconds": 18.0,
+          "videoStoredFrames": 540,
+          "path": "assets/cinematics/CIN_011/CIN_011_640x360_30fps.mp4",
+          "sha256": "cec9e96af68b4f654458455fa038446c5734ad4fe95bacf211891a43fdbf1b71",
+          "sizeBytes": 1879636
+        },
+        "poster": {
+          "sha256": "5762cd1600830847ee2b2cae065d8eb4d007dd2db3f02263e1d0af3f6823c302",
+          "sizeBytes": 390493,
+          "width": 640,
+          "height": 360,
+          "path": "assets/cinematics/CIN_011/CIN_011_poster.png"
+        },
+        "srt": {
+          "cues": 1,
+          "sha256": "f1ae820579e17490df1a192491a14ea6b17666021de5323057a7a95974461617",
+          "sizeBytes": 154,
+          "encoding": "UTF-8/NFC",
+          "path": "assets/cinematics/CIN_011/CIN_011_vi.srt"
+        },
+        "timing": {
+          "path": "assets/cinematics/CIN_011/CIN_011_timing_v1.json",
+          "sha256": "db01ab3b17aed17159f6dd1afeacefef7ed5522c955a81e889430d946b5be324",
+          "sizeBytes": 2448
         }
       }
     }

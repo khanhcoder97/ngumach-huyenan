@@ -25,6 +25,10 @@ Checkpoint 42 extends it with CIN_010 (draft mix v1, same recipe);
 the CP34/CP37/CP38/CP39/CP40/CP41 scenes are verified unchanged on
 re-run, never re-muxed.
 
+Checkpoint 45 extends it with CIN_011 (draft mix v1, same recipe);
+the CP34/CP37/CP38/CP39/CP40/CP41/CP42 scenes are verified
+unchanged on re-run, never re-muxed.
+
 Turns the per-scene clips for the prologue + CIN_001/002/004/006 into
 a playable runtime pack:
 
@@ -73,6 +77,7 @@ MIX_CIN007 = ROOT / "Art_Source/Audio/Muse/MIX/CIN007_DRAFT_V1"
 MIX_CIN008 = ROOT / "Art_Source/Audio/Muse/MIX/CIN008_DRAFT_V1"
 MIX_CIN009 = ROOT / "Art_Source/Audio/Muse/MIX/CIN009_DRAFT_V1"
 MIX_CIN010 = ROOT / "Art_Source/Audio/Muse/MIX/CIN010_DRAFT_V1"
+MIX_CIN011 = ROOT / "Art_Source/Audio/Muse/MIX/CIN011_DRAFT_V1"
 FAILURES = []
 
 
@@ -378,6 +383,8 @@ def main() -> None:
                     "v1_cin009_proposed"),
         "CIN_010": (MIX_CIN010 / "CIN_010_mix_draft_v1.wav",
                     "v1_cin010_proposed"),
+        "CIN_011": (MIX_CIN011 / "CIN_011_mix_draft_v1.wav",
+                    "v1_cin011_proposed"),
     }
     mix_manifest_shas = {}
     v3_manifest = json.loads(
@@ -420,6 +427,11 @@ def main() -> None:
         .read_text(encoding="utf-8"))
     mix_manifest_shas["CIN_010"] = \
         cin010_manifest["scenes"][0]["mix"]["sha256"]
+    cin011_manifest = json.loads(
+        (MIX_CIN011 / "CIN011_MIX_V1_manifest_v1.json")
+        .read_text(encoding="utf-8"))
+    mix_manifest_shas["CIN_011"] = \
+        cin011_manifest["scenes"][0]["mix"]["sha256"]
 
     pack_scenes = []
     for scene_id, (mix_wav, mix_version) in scenes.items():
@@ -442,7 +454,8 @@ def main() -> None:
         else:
             audio = mux(scene_id, mix_wav, mix_version,
                         mix_manifest_shas[scene_id], work,
-                        checkpoint_label=("CP42" if scene_id == "CIN_010"
+                        checkpoint_label=("CP45" if scene_id == "CIN_011"
+                                          else "CP42" if scene_id == "CIN_010"
                                           else "CP41" if scene_id == "CIN_009"
                                           else "CP40" if scene_id == "CIN_008"
                                           else "CP39" if scene_id == "CIN_007"
@@ -479,6 +492,11 @@ def main() -> None:
                     "poster/SRT/timing unchanged")
         if scene_id == "CIN_010":
             note = ("MEDIA-02 checkpoint 42 - CIN_010 draft mix v1: "
+                    "embedded draft mix audio in the runtime OGV "
+                    "+ review MP4 (video streams bit-identical); "
+                    "poster/SRT/timing unchanged")
+        if scene_id == "CIN_011":
+            note = ("MEDIA-02 checkpoint 45 - CIN_011 draft mix v1: "
                     "embedded draft mix audio in the runtime OGV "
                     "+ review MP4 (video streams bit-identical); "
                     "poster/SRT/timing unchanged")
@@ -571,7 +589,7 @@ def main() -> None:
 
     pack = {
         "manifestId": "NGM_RUNTIME_PACK_GOI31_V1",
-        "checkpoint": "MEDIA-02 checkpoint 42 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41 scenes verified unchanged)",
+        "checkpoint": "MEDIA-02 checkpoint 45 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41/CP42 scenes verified unchanged)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "status": "DRAFT_NOT_FINAL",
@@ -641,6 +659,22 @@ def main() -> None:
             "is the desert wind bed for the dunes running through "
             "all three shots. The mix measures -24.60 LUFS because "
             "the CP17 VO take itself is quiet (-22.01 LUFS); VO is "
+            "kept at unity per the recipe, not normalized.",
+            "CIN_011 stem assignment (quiet_discovery music + "
+            "wind_canopy ambience + reveal at 6.0 s) is "
+            "PROPOSED_CANDIDATE; the CP17 draft VO take fits inside "
+            "its 12.2-17.8 s window (ends 17.792 s, no overrun, no "
+            "tail trim) by 0.008 s. quiet_discovery is the composed "
+            "set's exploration silence ('Khoang lang kham pha': "
+            "solo flute fragments, single bells, long "
+            "near-silences, water drops, 60 BPM), matching the "
+            "scene's quiet carving workshop and moral reflection "
+            "(S01 workbench with carved tablets, S02 two men in an "
+            "open bamboo shelter, S03 Ha Mac leaning over a carved "
+            "landscape panel); wind_canopy is the wind-through-"
+            "canopy bed for the open shelter and the greenery "
+            "behind S02. The mix measures -20.34 LUFS because the "
+            "CP17 VO take itself is quiet (-21.50 LUFS); VO is "
             "kept at unity per the recipe, not normalized.",
             "CIN_003 stem assignment (ben_mua music + river_shore "
             "ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the "
