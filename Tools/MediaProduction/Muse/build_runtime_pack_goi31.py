@@ -37,6 +37,10 @@ Checkpoint 47 extends it with CIN_013 (draft mix v1, same recipe);
 the CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46 scenes are verified
 unchanged on re-run, never re-muxed.
 
+Checkpoint 48 extends it with CIN_014 (draft mix v1, same recipe);
+the CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47 scenes are
+verified unchanged on re-run, never re-muxed.
+
 Turns the per-scene clips for the prologue + CIN_001/002/004/006 into
 a playable runtime pack:
 
@@ -88,6 +92,7 @@ MIX_CIN010 = ROOT / "Art_Source/Audio/Muse/MIX/CIN010_DRAFT_V1"
 MIX_CIN011 = ROOT / "Art_Source/Audio/Muse/MIX/CIN011_DRAFT_V1"
 MIX_CIN012 = ROOT / "Art_Source/Audio/Muse/MIX/CIN012_DRAFT_V1"
 MIX_CIN013 = ROOT / "Art_Source/Audio/Muse/MIX/CIN013_DRAFT_V1"
+MIX_CIN014 = ROOT / "Art_Source/Audio/Muse/MIX/CIN014_DRAFT_V1"
 FAILURES = []
 
 
@@ -399,6 +404,8 @@ def main() -> None:
                     "v1_cin012_proposed"),
         "CIN_013": (MIX_CIN013 / "CIN_013_mix_draft_v1.wav",
                     "v1_cin013_proposed"),
+        "CIN_014": (MIX_CIN014 / "CIN_014_mix_draft_v1.wav",
+                    "v1_cin014_proposed"),
     }
     mix_manifest_shas = {}
     v3_manifest = json.loads(
@@ -456,6 +463,11 @@ def main() -> None:
         .read_text(encoding="utf-8"))
     mix_manifest_shas["CIN_013"] = \
         cin013_manifest["scenes"][0]["mix"]["sha256"]
+    cin014_manifest = json.loads(
+        (MIX_CIN014 / "CIN014_MIX_V1_manifest_v1.json")
+        .read_text(encoding="utf-8"))
+    mix_manifest_shas["CIN_014"] = \
+        cin014_manifest["scenes"][0]["mix"]["sha256"]
 
     pack_scenes = []
     for scene_id, (mix_wav, mix_version) in scenes.items():
@@ -478,7 +490,8 @@ def main() -> None:
         else:
             audio = mux(scene_id, mix_wav, mix_version,
                         mix_manifest_shas[scene_id], work,
-                        checkpoint_label=("CP47" if scene_id == "CIN_013"
+                        checkpoint_label=("CP48" if scene_id == "CIN_014"
+                                          else "CP47" if scene_id == "CIN_013"
                                           else "CP46" if scene_id == "CIN_012"
                                           else "CP45" if scene_id == "CIN_011"
                                           else "CP42" if scene_id == "CIN_010"
@@ -533,6 +546,11 @@ def main() -> None:
                     "poster/SRT/timing unchanged")
         if scene_id == "CIN_013":
             note = ("MEDIA-02 checkpoint 47 - CIN_013 draft mix v1: "
+                    "embedded draft mix audio in the runtime OGV "
+                    "+ review MP4 (video streams bit-identical); "
+                    "poster/SRT/timing unchanged")
+        if scene_id == "CIN_014":
+            note = ("MEDIA-02 checkpoint 48 - CIN_014 draft mix v1: "
                     "embedded draft mix audio in the runtime OGV "
                     "+ review MP4 (video streams bit-identical); "
                     "poster/SRT/timing unchanged")
@@ -625,7 +643,7 @@ def main() -> None:
 
     pack = {
         "manifestId": "NGM_RUNTIME_PACK_GOI31_V1",
-        "checkpoint": "MEDIA-02 checkpoint 47 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46 scenes verified unchanged)",
+        "checkpoint": "MEDIA-02 checkpoint 48 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47 scenes verified unchanged)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "status": "DRAFT_NOT_FINAL",
@@ -651,7 +669,8 @@ def main() -> None:
             "embeds its v1, CIN_005 embeds its v1, CIN_007 embeds "
             "its v1, CIN_008 embeds its v1, CIN_009 embeds its v1, "
             "CIN_010 embeds its v1, CIN_011 embeds its v1, "
-            "CIN_012 embeds its v1 and CIN_013 embeds its v1; "
+            "CIN_012 embeds its v1, CIN_013 embeds its v1 and "
+            "CIN_014 embeds its v1; "
             "v1/v2 P0 mixes "
             "stay as separate files and "
             "Codex's adapter chooses the mix version at PR review -- "
@@ -754,6 +773,34 @@ def main() -> None:
             "The line plays over Ly An waiting at the gate; "
             "voice-over vs staging mismatch is a director/Codex "
             "call.",
+            "CIN_014 stem assignment (ben_mua music + "
+            "wind_canopy ambience + reveal at 6.0 s) is "
+            "PROPOSED_CANDIDATE; the CP17 draft VO take fits inside "
+            "its 12.5-17.5 s window (ends 15.572 s, no overrun, no "
+            "tail trim) with 1.928 s to spare. ben_mua is the "
+            "campaign's own leitmotif statement ('Ben Mua', the "
+            "rain quay): D major pentatonic question phrase hanging "
+            "on scale degree 2, tail withheld -- the unresolved "
+            "hanging phrase for a commander who stamps an order he "
+            "knows is false (S01 kneeling among discarded armour, "
+            "S02 the seal set down in detail, S03 Tong Banh at the "
+            "open village gate); wind_canopy is the wind-through-"
+            "canopy bed for the bamboo framing all three shots. "
+            "lam_trieu was passed over: the pastoral flute was just "
+            "used for CIN_013, the immediately preceding scene; "
+            "tran_son was passed over: the bell-led gate form, "
+            "already used for CIN_008 and CIN_012. The mix "
+            "measures -24.42 LUFS; the CP17 VO take itself is "
+            "-22.05 LUFS; ducking is -8.84 dB over the full VO "
+            "window; VO is kept at unity per the recipe, not "
+            "normalized. Staging: the timing manifest marks the "
+            "S03 dialogue onscreen: true for Tong Banh and the "
+            "keyframe places a blue-robed figure at the gate, but "
+            "the recorded keyframe defects note he is not visually "
+            "identifiable in S03 (his armour differs across "
+            "S01/S02 and neither S03 figure matches it) -- a "
+            "final-picture/character-lock matter, not a mix "
+            "defect; the mix does not move the VO.",
             "CIN_003 stem assignment (ben_mua music + river_shore "
             "ambience + reveal at 6.0 s) is PROPOSED_CANDIDATE; the "
             "CP17 draft VO take fits inside its 12.5-17.5 s window "

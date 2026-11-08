@@ -1,6 +1,6 @@
 {
  "manifestId": "NGM_PLAYBACK_METADATA_V1",
- "checkpoint": "MEDIA-02 checkpoint 47 (re-run of the checkpoint 43 builder: CIN_013 draft mix v1 embedded; 14 embedded soundtracks, 7 silent CIN_014-020)",
+ "checkpoint": "MEDIA-02 checkpoint 48 (re-run of the checkpoint 43 builder: CIN_014 draft mix v1 embedded; 15 embedded soundtracks, 6 silent CIN_015-020)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "workOrderRef": "Codex Work Order 32 / issue #116 comment 6713518554 item 4",
  "branch": "muse/media-production-20261104",
@@ -19,8 +19,8 @@
  },
  "counts": {
   "scenesTotal": 21,
-  "withEmbeddedSoundtrack": 14,
-  "silent": 7
+  "withEmbeddedSoundtrack": 15,
+  "silent": 6
  },
  "scenes": [
   {
@@ -1236,24 +1236,78 @@
    "sceneId": "CIN_014",
    "kind": "campaign",
    "durationSeconds": 18.0,
-   "hasEmbeddedSoundtrack": false,
-   "audioOwnership": "NO_EMBEDDED_SOUNDTRACK",
-   "audioOwnershipNote": "The runtime video is SILENT (verified: no audio stream). No scene mix has been delivered for this scene yet; the adapter must not improvise one from stems. Dialogue VO takes exist as drafts under Art_Source/Audio/Muse/VO/ for later mixing.",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
+   "audioOwnershipNote": "Play ONLY the soundtrack embedded in the video file. Do NOT play any standalone mix file (ClientGodot/assets/audio/mix/**) or VO take at the same time: those are the same mix delivered as separate files for review / alternate routing, not an additional layer.",
    "video": {
     "ogv": {
      "path": "ClientGodot/assets/cinematics/CIN_014/CIN_014_640x360_30fps.ogv",
      "durationSecondsMeasured": 18.0,
-     "audioStream": null,
-     "subtitleStreamsEmbedded": 0
+     "audioStream": {
+      "codec": "vorbis",
+      "sampleRateHz": 48000,
+      "channels": 2
+     },
+     "subtitleStreamsEmbedded": 0,
+     "embeddedLoudnessLUFS": -24.44,
+     "embeddedTruePeakDBTP": -2.14,
+     "deltaVsPackRecordedLUFS": 0.0
     },
     "mp4": {
      "path": "ClientGodot/assets/cinematics/CIN_014/CIN_014_640x360_30fps.mp4",
      "durationSecondsMeasured": 18.0,
-     "audioStream": null,
-     "subtitleStreamsEmbedded": 0
+     "audioStream": {
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2
+     },
+     "subtitleStreamsEmbedded": 0,
+     "embeddedLoudnessLUFS": -24.43,
+     "embeddedTruePeakDBTP": -1.94,
+     "deltaVsPackRecordedLUFS": 0.0
     }
    },
-   "embeddedMix": null,
+   "embeddedMix": {
+    "mixVersion": "v1_cin014_proposed",
+    "status": "DRAFT_MIX_NOT_FINAL",
+    "mixManifest": "Art_Source/Audio/Muse/MIX/CIN014_DRAFT_V1/CIN014_MIX_V1_manifest_v1.json",
+    "sourceMixWav": "Art_Source/Audio/Muse/MIX/CIN014_DRAFT_V1/CIN_014_mix_draft_v1.wav",
+    "sourceMixSha256": "b63e51bf69383a57aad504f5b3aad0108f657027621e7455f1f55950ea6cb0f1",
+    "sourceMixMeasuredLUFS": -24.42,
+    "sourceMixMeasuredTruePeakDBTP": -1.95,
+    "embeddedVsSourceDeltaLUFS": 0.02,
+    "stems": [
+     {
+      "cue": "MUSIC/ben_mua",
+      "role": "music",
+      "source": "ClientGodot/assets/audio/composed/music/ben_mua.ogg",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)"
+     },
+     {
+      "cue": "AMBIENCE/wind_canopy",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/wind_canopy.ogg",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)"
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)"
+     }
+    ],
+    "voice": {
+     "type": "dialogue_take_inside_mix",
+     "take": "VO_CIN_014_S03_TONGBANH_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      15.572
+     ],
+     "takeDurationSeconds": 3.072,
+     "overrunVsWindowSeconds": -1.928,
+     "status": "DRAFT_VO_NOT_FINAL"
+    }
+   },
    "subtitle": {
     "mode": "OVERLAY_SRT",
     "burnedIntoRuntimeVideo": false,
