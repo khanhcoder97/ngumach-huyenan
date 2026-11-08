@@ -527,6 +527,45 @@
       "sourceRef": "Map_Production_Atlas_vi.md; encounter spawn được đề xuất trong manifest"
     },
     {
+      "recordId": "MAN-BM-OBJ_BM_WATER_RIPPLE_01",
+      "mapId": "MAP_BEN_MUA",
+      "recordType": "INTERACTABLE",
+      "designState": "QUEST_TRIGGER",
+      "entityId": "OBJ_BM_WATER_RIPPLE_01",
+      "xWu": 122.0,
+      "yWu": -1.0,
+      "respawnSeconds": 0,
+      "respawnPolicy": "One-time interactable for quest objective; persists after interaction",
+      "condition": "P00-02 ripple objective #1; trigger when character passes through area",
+      "sourceRef": "Map_Production_Atlas_vi.md#73; Quest_and_Narrative_Production_Spec_vi.md#P00-02"
+    },
+    {
+      "recordId": "MAN-BM-OBJ_BM_WATER_RIPPLE_02",
+      "mapId": "MAP_BEN_MUA",
+      "recordType": "INTERACTABLE",
+      "designState": "QUEST_TRIGGER",
+      "entityId": "OBJ_BM_WATER_RIPPLE_02",
+      "xWu": 132.0,
+      "yWu": -1.0,
+      "respawnSeconds": 0,
+      "respawnPolicy": "One-time interactable for quest objective; persists after interaction",
+      "condition": "P00-02 ripple objective #2; trigger when character passes through area",
+      "sourceRef": "Map_Production_Atlas_vi.md#73; Quest_and_Narrative_Production_Spec_vi.md#P00-02"
+    },
+    {
+      "recordId": "MAN-BM-OBJ_BM_WATER_RIPPLE_03",
+      "mapId": "MAP_BEN_MUA",
+      "recordType": "INTERACTABLE",
+      "designState": "QUEST_TRIGGER",
+      "entityId": "OBJ_BM_WATER_RIPPLE_03",
+      "xWu": 142.0,
+      "yWu": -1.0,
+      "respawnSeconds": 0,
+      "respawnPolicy": "One-time interactable for quest objective; persists after interaction",
+      "condition": "P00-02 ripple objective #3; trigger when character passes through area",
+      "sourceRef": "Map_Production_Atlas_vi.md#73; Quest_and_Narrative_Production_Spec_vi.md#P00-02"
+    },
+    {
       "recordId": "MAN-BY-EVENT_BOSS_BY_TIDE_SERPENT",
       "mapId": "MAP_BACH_UYEN",
       "recordType": "BOSS",

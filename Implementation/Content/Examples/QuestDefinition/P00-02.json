@@ -4,7 +4,7 @@
   "titleKey": "QUEST.P00-02.TITLE",
   "graphId": "GRAPH_P00_02",
   "questType": "MAIN",
-  "activation": "BLOCKED",
+  "activation": "ACTIVE",
   "levelBand": {
     "min": 1,
     "max": 10
@@ -23,13 +23,17 @@
       ],
       "count": 4,
       "mapId": "MAP_BEN_MUA"
-    }
-  ],
-  "blockedSteps": [
+    },
     {
-      "designStep": "P00_02_RIPPLES",
-      "missingField": "objectiveTargets",
-      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-02 (3 gợn nước); world_records MAP_BEN_MUA has no ripple record — interactables are only MAN-BM-OBJ_BM_PACKAGE_01..03"
+      "objectiveId": "OBJ_P00_02_RIPPLES",
+      "type": "INTERACT",
+      "targetIds": [
+        "OBJ_BM_WATER_RIPPLE_01",
+        "OBJ_BM_WATER_RIPPLE_02",
+        "OBJ_BM_WATER_RIPPLE_03"
+      ],
+      "count": 3,
+      "mapId": "MAP_BEN_MUA"
     }
   ],
   "rewards": {
