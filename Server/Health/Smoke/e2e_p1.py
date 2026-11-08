@@ -1617,6 +1617,21 @@ def alpha_turnin(session_id, character_id, quest_id, npc_id):
     return status, body
 
 
+def alpha_portal(session_id, character_id, portal_id):
+    """One POST /p1/world/portal body. The payload is {portalId} per DEC-TUTORIAL-TRANSPORT-20261106."""
+    def envelope():
+        return {
+            "schemaVersion": 1,
+            "requestId": alpha_key(0xe1),
+            "idempotencyKey": alpha_key(0xe2),
+            "sentAtUtc": sent_at_utc(),
+            "characterId": character_id,
+            "payload": {"portalId": portal_id},
+        }
+    status, _, body = smoke_p1.call("POST", "/p1/world/portal", envelope(), {"X-Session-ID": session_id})
+    return status, body
+
+
 def alpha_talk(session_id, character_id, npc_id, node_id):
     status, _, body = smoke_p1.call(
         "POST", "/p1/quests/talk",
@@ -2674,6 +2689,41 @@ def alpha_p00_profile():
         f"C1-01 still LOCKED at low level after chapter unlock: "
         f"{quests_after_turnin['C1-01'].get('state')}")
 
+    # ── PORTAL POSITIVE JOURNEY: BM(348,0) → TL(186,0) via CHAPTER_C1_UNLOCKED ──
+    # After P00-05 turn-in, chapter flag is granted; approach BEN_MUA_THANH_LAC at (348,0)
+    sequence, _, _ = alpha_approach(session, character, sequence, 348.0, 0.0)
+    status, body = alpha_portal(session, character, "BEN_MUA_THANH_LAC")
+    smoke_p1.check(
+        status == 200,
+        f"portal allowed with chapter permission: {(body.get('error') or {})}")
+    portal_result = (body.get("result") or {})
+    smoke_p1.check(
+        portal_result.get("mapId") == "MAP_THANH_LAC" and
+        abs(portal_result.get("xWu", 0) - 186.0) < 0.5 and
+        abs(portal_result.get("yWu", 0) - 0.0) < 0.5,
+        f"portal destination correct: {portal_result}")
+    smoke_p1.check(
+        portal_result.get("applied") is True and portal_result.get("replayed") is False,
+        f"portal transaction applied fresh: {portal_result}")
+    _, player_x, player_y = v2_snapshot(session)[2].get(character, {}).get("self", {})
+    smoke_p1.check(
+        abs(player_x - 186.0) < 0.5 and abs(player_y - 0.0) < 0.5,
+        f"player arrived at THANH_LAC({186},0): x={player_x} y={player_y}")
+
+    # Reuse same key immediately — must replay without moving again
+    status, body = alpha_portal(session, character, "BEN_MUA_THANH_LAC")
+    smoke_p1.check(
+        status == 200 and ((body.get("result") or {}).get("replayed") is True),
+        f"same-key replay returned stored receipt: {(body.get('result') or {})}")
+
+    # Walk far away then come back — fresh key must refuse if already teleported this session
+    sequence, _, _ = alpha_approach(session, character, sequence, 370.0, 0.0)
+    status, body = alpha_portal(session, character, "BEN_MUA_THANH_LAC")
+    smoke_p1.check(
+        status != 200 and (body.get("result") or {}).get("applied") is False,
+        f"teleport reuse refused when out of range / not in source map: "
+        f"{(body.get('error') or {})}")
+
     # A second client, so "per character" is proven on the same build ──
     second = "CHR_E2E_ALPHA_B"
     session_b, sequence_b = alpha_session(second)
@@ -2702,7 +2752,7 @@ def alpha_p00_profile():
     print(
         "profile=alpha-p00 chain=P00-01..P00-05 "
         f"boss=KILLED fragment=OK wave_trial=OK escort=A+B loot=PAID v2_inventory=OK "
-        f"class-confirm=FINISHED turn-in=COMPLETED c1_01=LOCKED second_client=ISOLATED")
+        f"class-confirm=FINISHED turn-in=COMPLETED portal=SUCCESS c1_01=LOCKED second_client=ISOLATED")
 
 
 def death_return_envelope(character, key, payload=None, schema_version=1,
