@@ -1,0 +1,331 @@
+========================================================================
+MODE private-alpha
+========================================================================
++ D:/Project/NGUMACHHUYENAN-tools/dotnet10/dotnet.exe build D:\Project\NGUMACHHUYENAN-review-qod-20261108\Server\Health\Health.csproj -c Release --nologo
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Health -> D:\Project\NGUMACHHUYENAN-review-qod-20261108\Server\Health\bin\Release\net10.0\Health.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:17.36
++ D:/Project/NGUMACHHUYENAN-tools/dotnet8/dotnet.exe build D:\Project\NGUMACHHUYENAN-review-opc-next-20261108\Shared\ClientCore.HttpRunner\ClientCore.HttpRunner.csproj -c Release --nologo
+  Determining projects to restore...
+  Restored D:\Project\NGUMACHHUYENAN-review-opc-next-20261108\Shared\ClientCore.HttpRunner\ClientCore.HttpRunner.csproj (in 946 ms).
+  1 of 2 projects are up-to-date for restore.
+  ClientCore -> D:\Project\NGUMACHHUYENAN-review-opc-next-20261108\Shared\ClientCore\bin\Release\net8.0\NguMach.Client.Core.dll
+  ClientCore.HttpRunner -> D:\Project\NGUMACHHUYENAN-review-opc-next-20261108\Shared\ClientCore.HttpRunner\bin\Release\net8.0\ClientCoreHttpRunner.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:08.19
+==> client dotnet: D:/Project/NGUMACHHUYENAN-tools/dotnet8/dotnet.exe
+==> server dotnet: D:/Project/NGUMACHHUYENAN-tools/dotnet10/dotnet.exe
+==> mode: private-alpha
+==> client root: D:\Project\NGUMACHHUYENAN-review-opc-next-20261108
+==> server root: D:\Project\NGUMACHHUYENAN-review-qod-20261108
+==> content root: D:\Project\NGUMACHHUYENAN-review-qod-20261108
+==> client head: f41397f07515f0c640b7f44481eccfecba2198bb
+==> server head: 6814126e2def8a1c4270a1016f0ab85404cba46e
+==> health sha256: 16fbd1d5a4e83c2d3480d0cef31428c1f3acc41835003689979e972b5bcd2c7c
+==> content Implementation/Content/Runtime/narrative_nodes_v1.json: eae4d69b0b0882c013a50f5873079950b41c5891a6e62930fb27916976c331d2
+==> content Implementation/Content/Runtime/npc_anchors.json: b00b20ec7095e6f921d063ab241db1ce2c2ea0d8c2dd0bccd180ecadb485ba1d
+==> content Implementation/Content/Runtime/world_entities_bm.json: ad97a784b662fee6632d2246f994f1aafa51c7ac73c554a1fbc285f443a24890
+==> content Implementation/Content/Runtime/world_records.json: a25aaee2105d4b77befe185caa0384878f11e6b1b1b62f9bfde8dcf21fdf8102
+==> content Implementation/Content/Runtime/loot_recipe_v1.json: 1790ef911a43d538c81aac21fef75c820aa8a85ce0ad27ab5bdac541fa7f584d
+==> content Implementation/Content/DesignBaselines/ben_mua_alpha_20261103.json: 80a003f48236850cca4b2941b07f002f1eb26354dd102eb6d485071c8a6b3185
+==> starting private server at http://127.0.0.1:51075
+==> server healthy pid=4448
+==> running portable HTTP runner (mandatory)
+PASS A connect
+
+PASS A ready
+
+PASS A identity
+
+PASS A availability quests
+
+PASS A availability world-v2
+
+PASS A availability map-viewed held
+
+PASS A availability encounter
+
+PASS A availability inventory-v2
+
+PASS A availability death-return
+
+PASS A availability quest-talk
+
+PASS A availability portal
+
+PASS A tutorial quests read
+
+PASS A tutorial chain authoritative in alpha catalog
+
+PASS A alpha catalog adds only C1-01
+
+PASS A C1-01 low-level locked
+
+PASS A tutorial chain P00-01..05
+
+PASS A P00-01 available packages step
+
+PASS A P00-01 counter starts at 0
+
+PASS A P00-02..05 locked by source
+
+PASS A next actionable P00-01
+
+PASS A first incomplete P00-01
+
+PASS A P00-02 far refusal
+
+PASS A blocked accept clears pending
+
+PASS A inv pre
+
+PASS A pre coin 0
+
+PASS A accept
+
+PASS A parcel ENT_MAN_BM_OBJ_BM_PACKAGE_01
+
+PASS A parcel ENT_MAN_BM_OBJ_BM_PACKAGE_02
+
+PASS A parcel ENT_MAN_BM_OBJ_BM_PACKAGE_03
+
+PASS A read quests
+
+PASS A inv before turnin
+
+PASS A lost response
+
+PASS A pending
+
+PASS A captured mutation body
+
+PASS A retry same key success
+
+PASS A inv post
+
+PASS A 20 coin
+
+PASS A 1 chest
+
+PASS A tutorial quests after turn-in
+
+PASS A P00-01 completed
+
+PASS A P00-01 counter 3
+
+PASS A first incomplete P00-02
+
+PASS A server unlock claim P00-02
+
+PASS A P00-02 available after server unlock
+
+PASS A P00-03..05 still locked
+
+PASS A next actionable P00-02 in alpha
+
+PASS A P00-02 accepted after server unlock: ok
+
+PASS A P00-02 active from server
+
+PASS A repeat rejected
+
+PASS A inv read after reject
+
+PASS A no double grant
+
+PASS A no double chest
+
+PASS alpha inventory v2 read
+
+PASS alpha inventory v2 twelve slots
+
+PASS alpha inventory v2 bag present
+
+PASS alpha chest in bag
+
+PASS alpha equip chest accepted: ok
+
+PASS alpha equip advances revision
+
+PASS alpha chest in CHEST slot
+
+PASS alpha captured equip body
+
+PASS alpha equip replay accepted
+
+PASS alpha equip replay same snapshot
+
+PASS alpha inventory after replay
+
+PASS alpha equip replay no state change
+
+PASS alpha chest still equipped
+
+PASS alpha stale revision refused
+
+PASS alpha stale revision retryable field
+
+PASS alpha stale revision cleans pending
+
+PASS alpha unequip chest accepted: ok
+
+PASS alpha unequip advances revision
+
+PASS alpha CHEST slot empty
+
+PASS alpha chest back in bag
+
+PASS alpha death-return alive refused
+
+PASS alpha death-return refusal cleans pending
+
+PASS alpha portal far refused
+
+PASS alpha portal far retryable
+
+PASS alpha portal far cleans pending
+
+PASS alpha portal locked refused
+
+PASS alpha portal locked chapter field
+
+PASS alpha portal locked cleans pending
+
+UNVERIFIED encounter HTTP: route absent/encounter not found (404 encounter_not_found)
+
+PASS B connect
+
+PASS B identity
+
+PASS A/B different characters
+
+PASS B read quests
+
+PASS B quest not completed by A
+
+PASS B tutorial quests read
+
+PASS B tutorial chain authoritative in alpha catalog
+
+PASS B tutorial chain P00-01..05
+
+PASS B P00-01 available
+
+PASS B P00-02..05 locked by source
+
+PASS B next actionable P00-01
+
+PASS B P00-02 far refusal
+
+PASS B blocked accept clears pending
+
+PASS B inv pre
+
+PASS B pre coin 0
+
+PASS cross-session replay rejected
+
+PASS cross-session replay error is structured
+
+PASS B inv after cross-session replay
+
+PASS B no coin from A replay
+
+PASS B no chest from A replay
+
+PASS alpha talk far refused
+
+PASS alpha talk far retryable
+
+PASS alpha talk far cleans pending
+
+PASS alpha talk wrong speaker refused
+
+PASS alpha talk wrong speaker field
+
+PASS alpha talk wrong speaker cleans pending
+
+PASS alpha talk closed reveal refused
+
+PASS alpha talk reveal gate field
+
+PASS alpha talk reveal gate cleans pending
+
+PASS alpha talk offer accepted: ok
+
+PASS alpha talk receipt identity
+
+PASS alpha talk narrative node credits nothing
+
+PASS alpha talk requires fresh read
+
+PASS alpha talk fresh world read
+
+PASS alpha captured talk body
+
+PASS alpha talk replay accepted
+
+PASS alpha talk replay receipt
+
+PASS B accept
+
+PASS B parcel ENT_MAN_BM_OBJ_BM_PACKAGE_01
+
+PASS B parcel ENT_MAN_BM_OBJ_BM_PACKAGE_02
+
+PASS B parcel ENT_MAN_BM_OBJ_BM_PACKAGE_03
+
+PASS B read quests
+
+PASS B inv before turnin
+
+PASS B expiry on mutation rejected
+
+PASS B pending survives expiry
+
+PASS B relogin monotonic epoch
+
+PASS B pending carried across relogin
+
+PASS B retry same key after relogin
+
+PASS B inv post
+
+PASS B 20 coin once
+
+PASS B 1 chest once
+
+EXPIRING world request: /p1/v2/world/7d6a2f0b29504a5a90272fe79f9b7ca9
+
+PASS B read expiry observed
+
+PASS B read relogin
+
+PASS B world after relogin
+
+PASS replay after commit rejected
+
+PASS A inv after replay
+
+PASS A replay no double grant
+
+PASS A replay no double chest
+
+PASS ClientCore HTTP assertions: 138
+
+==> runner exit 0
+==> assertions: 138
+artifacts: D:\Project\NGUMACHHUYENAN-tools\handoff-next-20261108\evidence\paired\private-alpha
+==> cleanup server pid=4448
+==> server pid=4448 reaped exit=1
+==> mode=private-alpha exit=0
