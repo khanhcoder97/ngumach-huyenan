@@ -28,17 +28,17 @@
     {
       "designStep": "P00_03_TURN_IN_NPC",
       "missingField": "turnInNpcId",
-      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-03; BM npcs are NPC_LYAN/NPC_TA_VAN_KHANH/NPC_CLASS_TRIAL — none is the report hand-in"
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-03; 'NPC_LYAN/NPC_TA_VAN_KHANH/NPC_CLASS_TRIAL — none is the report hand-in'; no turn-in NPC specified in spec"
     },
     {
       "designStep": "P00_03_VILLAGERS",
-      "missingField": "objectiveTargets",
-      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-03 (2 dân); no villager npc or interactable on MAP_BEN_MUA (checked MAN-BM-* and ENT_MAN_BM-*)"
+      "missingField": "interactableVillagers",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-03 'tương tác 2 dân mắc kẹt' (interact with 2 trapped villagers); Content_Bible_Ngu_Mach_Huyen_An_vi.md#cứu dân mắc kẹt; NO NPC anchor entries nor world_records INTERACTABLEs found at MAP_BEN_MUA; design spec provides no coordinates or NPC IDs for villagers"
     },
     {
-      "designStep": "P00_03_WAVE",
-      "missingField": "dodgeMechanic",
-      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-03 (né một đợt sóng) — no wave/dodge system exists in P1"
+      "designStep": "P00_03_WAVE_DODGE",
+      "missingField": "waveEncounterData",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-03 'né một đợt sóng'; Content_Bible_Ngu_Mach_Huyen_An_vi.md#Dạy né vùng đánh; No wave/dodge encounter system implemented in P1 runtime; design spec provides no wave definition, timing, AoE radius, or telegraph data"
     }
   ],
   "rewards": {
