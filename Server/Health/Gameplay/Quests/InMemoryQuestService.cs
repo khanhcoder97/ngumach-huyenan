@@ -9,6 +9,7 @@ public static class QuestProgressEventTypes
     public const string GatherClaim = "GATHER_CLAIM";
     public const string Talk = "TALK";
     public const string Kill = "KILL";
+    public const string MapEnter = "MAP_ENTER";
 }
 
 public sealed class InMemoryQuestService : IQuestService
@@ -247,6 +248,7 @@ public sealed class InMemoryQuestService : IQuestService
             QuestObjectiveTypes.Talk => eventType == QuestProgressEventTypes.Talk,
             QuestObjectiveTypes.Kill => eventType == QuestProgressEventTypes.Kill,
             QuestObjectiveTypes.Boss => eventType == QuestProgressEventTypes.Kill,
+            QuestObjectiveTypes.MapViewed => eventType == QuestProgressEventTypes.MapEnter,
             _ => false
         };
 

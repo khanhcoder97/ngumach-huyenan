@@ -26,10 +26,11 @@ public static class QuestObjectiveTypes
     public const string Escort = "ESCORT";
     public const string Boss = "BOSS";
     public const string Talk = "TALK";
+    public const string MapViewed = "MAP_VIEWED";
 
     private static readonly HashSet<string> Known = new(StringComparer.Ordinal)
     {
-        Collect, Kill, Interact, Escort, Boss, Talk
+        Collect, Kill, Interact, Escort, Boss, Talk, MapViewed
     };
 
     public static bool IsKnown(string? value) => value is not null && Known.Contains(value);
