@@ -144,6 +144,17 @@ def sha256_file(path):
     return digest.hexdigest()
 
 
+def sha256_contract_file(path):
+    """Digest of the LF-normalized bytes.
+
+    The same contract file checks out CRLF on Windows (core.autocrlf) and LF
+    on CI, so contract pins must be EOL-independent to mean anything.
+    """
+    with open(path, "rb") as stream:
+        data = stream.read()
+    return hashlib.sha256(data.replace(b"\r\n", b"\n")).hexdigest()
+
+
 def content_fingerprint(content_root):
     """Hash the runtime bundles the checkpoint actually reads."""
     candidates = [
@@ -238,7 +249,7 @@ def verify_contract_pin(server_root, manifest_path):
         if not os.path.isfile(path):
             problems.append("missing {} {}".format(kind, name))
             continue
-        got = sha256_file(path)
+        got = sha256_contract_file(path)
         if got != want:
             problems.append("content mismatch {} {}: pinned {} got {}".format(
                 kind, name, want[:12], got[:12]))

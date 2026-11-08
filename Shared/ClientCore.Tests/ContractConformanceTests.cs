@@ -83,9 +83,21 @@ namespace NguMach.Client.Core.Tests
 
         private static string Sha256Hex(string path)
         {
-            using (var stream = File.OpenRead(path))
-            using (var sha = SHA256.Create())
-                return BitConverter.ToString(sha.ComputeHash(stream)).Replace("-", "").ToLowerInvariant();
+            // Pin over git's canonical LF form: the same contract file checks
+            // out CRLF on Windows and LF on CI, so the digest must ignore EOL.
+            var bytes = File.ReadAllBytes(path);
+            using (var normalized = new MemoryStream())
+            {
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    if (bytes[i] == (byte)'\r' && i + 1 < bytes.Length && bytes[i + 1] == (byte)'\n')
+                        continue;
+                    normalized.WriteByte(bytes[i]);
+                }
+                using (var sha = SHA256.Create())
+                    return BitConverter.ToString(sha.ComputeHash(normalized.ToArray()))
+                        .Replace("-", "").ToLowerInvariant();
+            }
         }
 
         private static string VendoredPath(PinEntry entry)
