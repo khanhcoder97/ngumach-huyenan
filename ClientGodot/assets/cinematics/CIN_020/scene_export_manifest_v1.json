@@ -1,130 +1,157 @@
 {
- "schemaVersion": 1,
- "checkpoint": "MEDIA-02 checkpoint 24 - CIN_020 animated take (Goi 30 item 7): closing campaign scene: 3 storyboard keyframes + 18 s Ken Burns clip",
- "decisionId": "DEC-MEDIA-P0-20261105",
- "branch": "muse/media-production-20261104",
- "baseSha": "f0859d0",
- "sceneId": "CIN_020",
- "title": "Thư có hồi âm",
- "durationSeconds": 18.0,
- "dialogueCues": 1,
- "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
- "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
- "motionModel": {
-  "kind": "ANIMATIC_MOTION_KEN_BURNS",
-  "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
-  "shots": {
-   "CIN_020_S01": "push-in centered on the table and letter",
-   "CIN_020_S02": "push-in centered on the sheet and brush",
-   "CIN_020_S03": "zoom-out centered"
-  }
- },
- "reelOffsetSeconds": null,
- "reelTotalSeconds": null,
- "files": {
-  "mp4": {
-   "path": "assets/cinematics/CIN_020/CIN_020_640x360_30fps.mp4",
-   "sha256": "e358b499e3f4b9fe9b9399ca2ba539fb3fe93be964912eae75c276dd458b985e",
-   "sizeBytes": 1455998,
-   "codec": "h264",
-   "width": 640,
-   "height": 360,
-   "fps": 30,
-   "durationSeconds": 18.0,
-   "frames": 540
+  "schemaVersion": 1,
+  "checkpoint": "MEDIA-02 checkpoint 54 - CIN_020 draft mix v1: embedded draft mix audio in the runtime OGV + review MP4 (video streams bit-identical); poster/SRT/timing unchanged",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "baseSha": "f0859d0",
+  "sceneId": "CIN_020",
+  "title": "Thư có hồi âm",
+  "durationSeconds": 18.0,
+  "dialogueCues": 1,
+  "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+  "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+  "motionModel": {
+    "kind": "ANIMATIC_MOTION_KEN_BURNS",
+    "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
+    "shots": {
+      "CIN_020_S01": "push-in centered on the table and letter",
+      "CIN_020_S02": "push-in centered on the sheet and brush",
+      "CIN_020_S03": "zoom-out centered"
+    }
   },
-  "ogv": {
-   "path": "assets/cinematics/CIN_020/CIN_020_640x360_30fps.ogv",
-   "sha256": "96035eed9c613a068f8bd6d4456b616b17f6684f9a692d71e3ba41af58657b66",
-   "sizeBytes": 486063,
-   "codec": "theora",
-   "width": 640,
-   "height": 360,
-   "fps": 30,
-   "durationSeconds": 18.0,
-   "storedFrames": 502
+  "reelOffsetSeconds": null,
+  "reelTotalSeconds": null,
+  "files": {
+    "mp4": {
+      "path": "assets/cinematics/CIN_020/CIN_020_640x360_30fps.mp4",
+      "sha256": "b1d10d62ab015c90f26597f99bb69eb4f2247e41851d91bbaa3a00b44f6ac84b",
+      "sizeBytes": 1903320,
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "frames": 540,
+      "audio": {
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 192,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN020_DRAFT_V1/CIN_020_mix_draft_v1.wav",
+        "sourceMixSha256": "90b51db920c68ca516c92510c9e706c87d9079136d41dbbc48f9b9262e60ba8f",
+        "mixVersion": "v1_cin020_proposed",
+        "integratedLUFS": "-23.42",
+        "truePeakDBTP": "-5.20",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 540
+      }
+    },
+    "ogv": {
+      "path": "assets/cinematics/CIN_020/CIN_020_640x360_30fps.ogv",
+      "sha256": "4db83dfe28267318849a1bcfdaa4bcdb465d98cb8e20a00ae10d59d153458f02",
+      "sizeBytes": 755787,
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "storedFrames": 502,
+      "audio": {
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 160,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN020_DRAFT_V1/CIN_020_mix_draft_v1.wav",
+        "sourceMixSha256": "90b51db920c68ca516c92510c9e706c87d9079136d41dbbc48f9b9262e60ba8f",
+        "mixVersion": "v1_cin020_proposed",
+        "integratedLUFS": "-23.37",
+        "truePeakDBTP": "-5.22",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 502
+      }
+    },
+    "poster": {
+      "path": "assets/cinematics/CIN_020/CIN_020_poster.png",
+      "sha256": "f8a2b44714e87ccdfce2e0aa81039c2d46b04399f5c87c3b96ecee8997af6d1a",
+      "sizeBytes": 413255,
+      "sourceKeyframe": "keyframe_CIN_020_S01.png"
+    },
+    "timing": {
+      "path": "assets/cinematics/CIN_020/CIN_020_timing_v1.json",
+      "sha256": "064ac1818ade834c8cf05a1dd9c9dc00a71e57b9cd248ae5816dd325d6dfbc38",
+      "sizeBytes": 2345
+    },
+    "srt": {
+      "path": "assets/cinematics/CIN_020/CIN_020_vi.srt",
+      "sha256": "7f27d6672e5a7b55f87162d636a0802cbaaafb9bc7116e9330f9cfc731e27dcc",
+      "sizeBytes": 87,
+      "status": "DRAFT"
+    }
   },
-  "poster": {
-   "path": "assets/cinematics/CIN_020/CIN_020_poster.png",
-   "sha256": "f8a2b44714e87ccdfce2e0aa81039c2d46b04399f5c87c3b96ecee8997af6d1a",
-   "sizeBytes": 413255,
-   "sourceKeyframe": "keyframe_CIN_020_S01.png"
+  "frameCheck": {
+    "CIN_020_S01": {
+      "identitySeconds": 0.0,
+      "identityMeanAbsChannelDiff": 5.029,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 5.9,
+      "motionMeanAbsChannelDiff": 40.979,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 35.437,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_020_S02": {
+      "identitySeconds": 6.0,
+      "identityMeanAbsChannelDiff": 3.723,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 11.9,
+      "motionMeanAbsChannelDiff": 41.891,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 33.304,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_020_S03": {
+      "identitySeconds": 17.9667,
+      "identityMeanAbsChannelDiff": 6.484,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 12.0,
+      "motionMeanAbsChannelDiff": 35.249,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 30.948,
+      "continuousMinRequired": 0.5
+    }
   },
-  "timing": {
-   "path": "assets/cinematics/CIN_020/CIN_020_timing_v1.json",
-   "sha256": "064ac1818ade834c8cf05a1dd9c9dc00a71e57b9cd248ae5816dd325d6dfbc38",
-   "sizeBytes": 2345
-  },
-  "srt": {
-   "path": "assets/cinematics/CIN_020/CIN_020_vi.srt",
-   "sha256": "7f27d6672e5a7b55f87162d636a0802cbaaafb9bc7116e9330f9cfc731e27dcc",
-   "sizeBytes": 87,
-   "status": "DRAFT"
-  }
- },
- "frameCheck": {
-  "CIN_020_S01": {
-   "identitySeconds": 0.0,
-   "identityMeanAbsChannelDiff": 5.029,
-   "identityMaxAllowed": 10.0,
-   "motionSeconds": 5.9,
-   "motionMeanAbsChannelDiff": 40.979,
-   "motionMinRequired": 1.5,
-   "continuousMotionMeanAbsChannelDiff": 35.437,
-   "continuousMinRequired": 0.5
-  },
-  "CIN_020_S02": {
-   "identitySeconds": 6.0,
-   "identityMeanAbsChannelDiff": 3.723,
-   "identityMaxAllowed": 10.0,
-   "motionSeconds": 11.9,
-   "motionMeanAbsChannelDiff": 41.891,
-   "motionMinRequired": 1.5,
-   "continuousMotionMeanAbsChannelDiff": 33.304,
-   "continuousMinRequired": 0.5
-  },
-  "CIN_020_S03": {
-   "identitySeconds": 17.9667,
-   "identityMeanAbsChannelDiff": 6.484,
-   "identityMaxAllowed": 10.0,
-   "motionSeconds": 12.0,
-   "motionMeanAbsChannelDiff": 35.249,
-   "motionMinRequired": 1.5,
-   "continuousMotionMeanAbsChannelDiff": 30.948,
-   "continuousMinRequired": 0.5
-  }
- },
- "shots": [
-  {
-   "shotId": "CIN_020_S01",
-   "startSeconds": 0.0,
-   "endSeconds": 6.0,
-   "camera": "MEDIUM_STATIC",
-   "keyframe": "keyframe_CIN_020_S01.png",
-   "motion": "push-in centered on the table and letter"
-  },
-  {
-   "shotId": "CIN_020_S02",
-   "startSeconds": 6.0,
-   "endSeconds": 12.0,
-   "camera": "DETAIL_LOCKED",
-   "keyframe": "keyframe_CIN_020_S02.png",
-   "motion": "push-in centered on the sheet and brush"
-  },
-  {
-   "shotId": "CIN_020_S03",
-   "startSeconds": 12.0,
-   "endSeconds": 18.0,
-   "camera": "TOPDOWN_MATCH",
-   "keyframe": "keyframe_CIN_020_S03.png",
-   "motion": "zoom-out centered"
-  }
- ],
- "notes": [
-  "Closing campaign scene with video: an animated take with real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
-  "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
-  "CIN_020 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
-  "Dialogue window 12.5-17.5 s stays PROPOSED_ANIMATIC_PLACEMENT. Its VO draft (checkpoint 17, placeholder voice VOICE_LETTER_RECIPIENT) runs 3.000 s inside the 5.0 s window (FITS at natural speed); the clip carries no audio.",
-  "Pack character list is empty: no character lock, no spawn claim, no persistent ID involved. The unnamed villager's appearance drifts across the three shots (headband/vest; conical hat/blue tunic; headwrap/green top) -- a continuity lock is needed at final picture, recorded per shot in the keyframe manifest."
- ]
+  "shots": [
+    {
+      "shotId": "CIN_020_S01",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "camera": "MEDIUM_STATIC",
+      "keyframe": "keyframe_CIN_020_S01.png",
+      "motion": "push-in centered on the table and letter"
+    },
+    {
+      "shotId": "CIN_020_S02",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "camera": "DETAIL_LOCKED",
+      "keyframe": "keyframe_CIN_020_S02.png",
+      "motion": "push-in centered on the sheet and brush"
+    },
+    {
+      "shotId": "CIN_020_S03",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "camera": "TOPDOWN_MATCH",
+      "keyframe": "keyframe_CIN_020_S03.png",
+      "motion": "zoom-out centered"
+    }
+  ],
+  "notes": [
+    "Closing campaign scene with video: an animated take with real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+    "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
+    "CIN_020 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
+    "Dialogue window 12.5-17.5 s stays PROPOSED_ANIMATIC_PLACEMENT. Its VO draft (checkpoint 17, placeholder voice VOICE_LETTER_RECIPIENT) runs 3.000 s inside the 5.0 s window (FITS at natural speed); the clip carries no audio.",
+    "Pack character list is empty: no character lock, no spawn claim, no persistent ID involved. The unnamed villager's appearance drifts across the three shots (headband/vest; conical hat/blue tunic; headwrap/green top) -- a continuity lock is needed at final picture, recorded per shot in the keyframe manifest."
+  ],
+  "hasAudioTrack": true
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build PLAYBACK_METADATA_v1.json — MEDIA-02 checkpoint 43 (Codex WO32 item 4); re-run at checkpoint 53 for the CIN_019 draft mix v1 (20 embedded mixes, 1 silent).
+"""Build PLAYBACK_METADATA_v1.json — MEDIA-02 checkpoint 43 (Codex WO32 item 4); re-run at checkpoint 54 for the CIN_020 draft mix v1 (21 embedded mixes, 0 silent).
 
 Purpose (Codex direction 2026-11-08, issue #116 comment 6713518554, item 4):
 runtime OGV/MP4 files now carry embedded soundtracks. The presentation adapter
@@ -372,7 +372,7 @@ def main():
 
     metadata = {
         "manifestId": "NGM_PLAYBACK_METADATA_V1",
-        "checkpoint": "MEDIA-02 checkpoint 53 (re-run of the checkpoint 43 builder: CIN_019 draft mix v1 embedded; 20 embedded soundtracks, 1 silent CIN_020)",
+        "checkpoint": "MEDIA-02 checkpoint 54 (re-run of the checkpoint 43 builder: CIN_020 draft mix v1 embedded; 21 embedded soundtracks, 0 silent -- every entry now carries an embedded soundtrack, WO37 M-B big checkpoint 1 complete)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "workOrderRef": "Codex Work Order 32 / issue #116 comment 6713518554 item 4",
         "branch": "muse/media-production-20261104",

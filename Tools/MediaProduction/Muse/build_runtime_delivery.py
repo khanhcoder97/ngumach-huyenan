@@ -95,6 +95,7 @@ CIN016_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN016_DRA
 CIN017_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN017_DRAFT_V1"
 CIN018_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN018_DRAFT_V1"
 CIN019_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN019_DRAFT_V1"
+CIN020_MIX_V1_SRC = ROOT / "Art_Source" / "Audio" / "Muse" / "MIX" / "CIN020_DRAFT_V1"
 DUR_TOL_S = 0.02
 
 # P0 animatic files delivered in checkpoint 03, revised in checkpoint 13
@@ -1233,6 +1234,75 @@ def main():
         entry.update({"cueKey": f"MIX/V1/{scene['sceneId']}",
                       "category": "mix", "sceneId": scene["sceneId"],
                       "mixVersion": "v1_cin019_proposed",
+                      "codec": mx["format"]["codec"],
+                      "sampleRateHz": mx["format"]["sampleRateHz"],
+                      "channels": mx["format"]["channels"],
+                      "integratedLufs": float(mx["integratedLUFS"]),
+                      "truePeakDbtp": float(mx["truePeakDBTP"]),
+                      "assetState": "DRAFT_MIX_NOT_FINAL",
+                      "wireStatus": "RUNTIME_DELIVERED_REQUIRES_CODEX_ADAPTER"})
+        audio_entries.append(entry)
+        counts["mix"] += 1
+
+    # --- 3k16. CIN_020 draft mix v1 (checkpoint 54) ---
+    # Seventeenth scene mix after CIN_006 v1, CIN_003 v1, CIN_005
+    # v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011
+    # v1, CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016
+    # v1, CIN_017 v1, CIN_018 v1 and CIN_019 v1 (same recipe as
+    # P0 v3; stem assignment PROPOSED_CANDIDATE, see
+    # CIN020_MIX_V1_manifest_v1.json). The CP17 VO take (the
+    # letter recipient) FITS inside its 12.5-17.5 s window
+    # (3.000 s, ends 15.500 s, 2.000 s before the window end);
+    # no overrun, no tail trim. Ducking -5.25 dB over the full
+    # VO window (CP39 method -- a real cut: ben_mua carries real
+    # signal inside the window, segment RMS -20.5 dBFS measured
+    # this run). The mix measures -23.41 LUFS / -5.22 dBTP; the
+    # CP17 take measures -19.59 LUFS; VO is kept at unity per
+    # the recipe, not normalized. ben_mua is the rain-quay
+    # leitmotif of the opening where the sealed letter changed
+    # hands, back for the closing scene where the letter is
+    # answered at the same river (third scene-mix use after
+    # CIN_003 and CIN_014); river_shore is a fourth scene-mix
+    # use (CIN_003, CIN_008, CIN_019). rift_finale was passed
+    # over: the set's only full close, spent at CIN_019's
+    # resolution -- this scene is the quiet morning after.
+    # Casting: the recipient's voice is a placeholder role
+    # voice (CP17 VOICE_LETTER_RECIPIENT; identity/gender
+    # undecided) and the draft take uses the same fictional
+    # system voice as Ly An's drafts -- a draft-casting
+    # collision for the WO37 M-F palette work, not a mix
+    # decision. Staging: the timing records the S03 dialogue
+    # onscreen: null; the S03 keyframe shows the villager
+    # seated at frame left seen from behind (top-down), so the
+    # speaker is present but his face is not visible; the CP24
+    # keyframe manifest records his appearance drifting between
+    # all three shots (the scene's pack character list is
+    # empty; no named lock exists for him).
+    # Final-picture/casting matters, not mix defects; the mix
+    # does not move the VO. Delivered under mix/cin020_v1/; the
+    # P0 v1/v2/v3, CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007
+    # v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1,
+    # CIN_012 v1, CIN_013 v1, CIN_014 v1, CIN_015 v1, CIN_016
+    # v1, CIN_017 v1, CIN_018 v1 and CIN_019 v1 mixes are
+    # byte-identical to before. With this mix, every one of
+    # the 21 entries carries an embedded soundtrack (0 silent)
+    # and WO37 M-B big checkpoint 1 is complete. Adoption is
+    # Codex's decision.
+    cin020_mix = json.loads((CIN020_MIX_V1_SRC
+                             / "CIN020_MIX_V1_manifest_v1.json")
+                            .read_text(encoding="utf-8"))
+    for scene in cin020_mix["scenes"]:
+        mx = scene["mix"]
+        src_rel = f"Art_Source/Audio/Muse/MIX/CIN020_DRAFT_V1/{mx['file']}"
+        dest_rel = f"mix/cin020_v1/{mx['file']}"
+        entry = copy_verified_audio(
+            src_rel, dest_rel, mx["sha256"], mx["format"]["bytes"],
+            mx["durationSeconds"], f"CIN_020 mix v1 {scene['sceneId']}")
+        if entry is None:
+            continue
+        entry.update({"cueKey": f"MIX/V1/{scene['sceneId']}",
+                      "category": "mix", "sceneId": scene["sceneId"],
+                      "mixVersion": "v1_cin020_proposed",
                       "codec": mx["format"]["codec"],
                       "sampleRateHz": mx["format"]["sampleRateHz"],
                       "channels": mx["format"]["channels"],

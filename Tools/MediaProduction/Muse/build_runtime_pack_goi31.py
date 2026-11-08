@@ -64,6 +64,12 @@ Checkpoint 53 extends it with CIN_019 (draft mix v1, same recipe);
 the CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47/CP48/CP49/CP50/CP51/CP52
 scenes are verified unchanged on re-run, never re-muxed.
 
+Checkpoint 54 extends it with CIN_020 (draft mix v1, same recipe);
+the CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47/CP48/CP49/CP50/CP51/CP52/CP53
+scenes are verified unchanged on re-run, never re-muxed. With
+CIN_020 the pack covers all 21 entries and every scene embeds a
+draft mix v1 (Work Order 37 M-B big checkpoint 1 complete).
+
 Turns the per-scene clips for the prologue + CIN_001/002/004/006 into
 a playable runtime pack:
 
@@ -121,6 +127,7 @@ MIX_CIN016 = ROOT / "Art_Source/Audio/Muse/MIX/CIN016_DRAFT_V1"
 MIX_CIN017 = ROOT / "Art_Source/Audio/Muse/MIX/CIN017_DRAFT_V1"
 MIX_CIN018 = ROOT / "Art_Source/Audio/Muse/MIX/CIN018_DRAFT_V1"
 MIX_CIN019 = ROOT / "Art_Source/Audio/Muse/MIX/CIN019_DRAFT_V1"
+MIX_CIN020 = ROOT / "Art_Source/Audio/Muse/MIX/CIN020_DRAFT_V1"
 FAILURES = []
 
 
@@ -444,6 +451,8 @@ def main() -> None:
                     "v1_cin018_proposed"),
         "CIN_019": (MIX_CIN019 / "CIN_019_mix_draft_v1.wav",
                     "v1_cin019_proposed"),
+        "CIN_020": (MIX_CIN020 / "CIN_020_mix_draft_v1.wav",
+                    "v1_cin020_proposed"),
     }
     mix_manifest_shas = {}
     v3_manifest = json.loads(
@@ -531,6 +540,11 @@ def main() -> None:
         .read_text(encoding="utf-8"))
     mix_manifest_shas["CIN_019"] = \
         cin019_manifest["scenes"][0]["mix"]["sha256"]
+    cin020_manifest = json.loads(
+        (MIX_CIN020 / "CIN020_MIX_V1_manifest_v1.json")
+        .read_text(encoding="utf-8"))
+    mix_manifest_shas["CIN_020"] = \
+        cin020_manifest["scenes"][0]["mix"]["sha256"]
 
     pack_scenes = []
     for scene_id, (mix_wav, mix_version) in scenes.items():
@@ -553,7 +567,8 @@ def main() -> None:
         else:
             audio = mux(scene_id, mix_wav, mix_version,
                         mix_manifest_shas[scene_id], work,
-                        checkpoint_label=("CP53" if scene_id == "CIN_019"
+                        checkpoint_label=("CP54" if scene_id == "CIN_020"
+                                          else "CP53" if scene_id == "CIN_019"
                                           else "CP52" if scene_id == "CIN_018"
                                           else "CP51" if scene_id == "CIN_017"
                                           else "CP50" if scene_id == "CIN_016"
@@ -647,6 +662,11 @@ def main() -> None:
                     "embedded draft mix audio in the runtime OGV "
                     "+ review MP4 (video streams bit-identical); "
                     "poster/SRT/timing unchanged")
+        if scene_id == "CIN_020":
+            note = ("MEDIA-02 checkpoint 54 - CIN_020 draft mix v1: "
+                    "embedded draft mix audio in the runtime OGV "
+                    "+ review MP4 (video streams bit-identical); "
+                    "poster/SRT/timing unchanged")
         update_export_manifest(scene_id, audio, checkpoint_note=note)
         pack_scenes.append({
             "sceneId": scene_id,
@@ -736,7 +756,7 @@ def main() -> None:
 
     pack = {
         "manifestId": "NGM_RUNTIME_PACK_GOI31_V1",
-        "checkpoint": "MEDIA-02 checkpoint 53 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 + CIN_015 + CIN_016 + CIN_017 + CIN_018 + CIN_019 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47/CP48/CP49/CP50/CP51/CP52 scenes verified unchanged)",
+        "checkpoint": "MEDIA-02 checkpoint 54 - Goi 31 item 4 extended: minimal runtime pack (prologue + CIN_001/002/004/006 + CIN_003 + CIN_005 + CIN_007 + CIN_008 + CIN_009 + CIN_010 + CIN_011 + CIN_012 + CIN_013 + CIN_014 + CIN_015 + CIN_016 + CIN_017 + CIN_018 + CIN_019 + CIN_020 draft mixes v1 embedded in the runtime OGV + review MP4; CP34/CP37/CP38/CP39/CP40/CP41/CP42/CP45/CP46/CP47/CP48/CP49/CP50/CP51/CP52/CP53 scenes verified unchanged; all 21 entries now embed a soundtrack, WO37 M-B big checkpoint 1 complete)",
         "decisionId": "DEC-MEDIA-P0-20261105",
         "branch": "muse/media-production-20261104",
         "status": "DRAFT_NOT_FINAL",
@@ -765,7 +785,9 @@ def main() -> None:
             "CIN_012 embeds its v1, CIN_013 embeds its v1, "
             "CIN_014 embeds its v1, CIN_015 embeds its v1, "
             "CIN_016 embeds its v1, CIN_017 embeds its v1, "
-            "CIN_018 embeds its v1 and CIN_019 embeds its v1; "
+            "CIN_018 embeds its v1, CIN_019 embeds its v1 and "
+            "CIN_020 embeds its v1 -- all 21 entries now embed "
+            "a soundtrack; "
             "v1/v2 P0 mixes "
             "stay as separate files and "
             "Codex's adapter chooses the mix version at PR review -- "
@@ -1039,6 +1061,31 @@ def main() -> None:
             "wax-sealed envelope. Final-picture/character-lock "
             "matters, not mix defects; the mix does not move "
             "the VO.",
+            "CIN_020 stem assignment (ben_mua music + "
+            "river_shore ambience + reveal at 6.0 s) is "
+            "PROPOSED_CANDIDATE; ben_mua is the rain-quay "
+            "leitmotif of the opening where the sealed letter "
+            "changed hands, back for the closing scene where "
+            "the letter is answered at the same river (third "
+            "scene-mix use, CIN_003/CIN_014); river_shore is "
+            "a fourth use (CIN_003/CIN_008/CIN_019). The CP17 "
+            "draft VO take fits inside its 12.5-17.5 s window "
+            "(3.000 s, ends 15.500 s) by 2.000 s: no overrun, "
+            "no tail trim. The mix measures -23.41 LUFS; the "
+            "CP17 take itself measures -19.59 LUFS; VO is "
+            "kept at unity per the recipe, not normalized. "
+            "Casting: the recipient's voice is a placeholder "
+            "role voice (identity/gender undecided) sharing "
+            "Ly An's draft voice -- an M-F palette item, not "
+            "a mix decision. Staging: the timing records S03 "
+            "onscreen: null; the S03 frame shows the villager "
+            "from behind (top-down), face not visible, and "
+            "the CP24 manifest records his appearance "
+            "drifting between all three shots (no named lock "
+            "exists for him). Final-picture/casting matters, "
+            "not mix defects; the mix does not move the VO. "
+            "With this mix the pack covers all 21 entries "
+            "and WO37 M-B big checkpoint 1 is complete.",
             "CIN_019 stem assignment (rift_finale music + "
             "river_shore ambience + reveal at 6.0 s) is "
             "PROPOSED_CANDIDATE; rift_finale is the composed "

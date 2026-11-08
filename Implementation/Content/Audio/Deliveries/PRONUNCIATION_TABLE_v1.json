@@ -1,6 +1,6 @@
 {
  "manifestId": "NGM_PRONUNCIATION_TABLE_V1",
- "checkpoint": "MEDIA-02 checkpoint 53 - pronunciation/proper-name table re-run: CIN_019 draft mix v1 embedded (20 embedded mixes, 1 silent CIN_020); names unchanged, 1 new seam row (MUSIC/rift_finale composed, wrap jump 0.00036, first measured now that the cue is used in a scene mix; AMBIENCE/river_shore already in the table from the CIN_003/CIN_008 scene mixes) (Codex WO32 item 3); integration baseline 6f79853 (PR #128 merged, owner LF policy now on integration)",
+ "checkpoint": "MEDIA-02 checkpoint 54 - pronunciation/proper-name table re-run: CIN_020 draft mix v1 embedded (21 embedded mixes, 0 silent -- every entry now carries an embedded soundtrack, WO37 M-B big checkpoint 1 complete); names unchanged, no new seam row (MUSIC/ben_mua + AMBIENCE/river_shore already in the table from the CIN_003 scene mix) (Codex WO32 item 3); integration baseline 6f79853 (PR #128 merged, owner LF policy now on integration)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "workOrderRef": "Work Order 32 (PR #128) item 3; issue #116 comment 6713518554",
  "branch": "muse/media-production-20261104",
@@ -12,11 +12,11 @@
   "names": 16,
   "namesSpokenInAudio": 4,
   "namesDecided": 1,
-  "playbackCueRows": 26,
+  "playbackCueRows": 27,
   "seamRows": 23,
   "seamRowsFlaggedEarCheck": 1,
   "fallbackScenes": 21,
-  "fallbackFilesVerified": 171
+  "fallbackFilesVerified": 176
  },
  "docsProductionOccurrences": {
   "Tạ Vân Khanh": 37,
@@ -2348,6 +2348,60 @@
      ]
     }
    ]
+  },
+  {
+   "sceneId": "CIN_020",
+   "mixVersion": "v1_cin020_proposed",
+   "sourceMix": "Art_Source/Audio/Muse/MIX/CIN020_DRAFT_V1/CIN_020_mix_draft_v1.wav",
+   "runtimeMix": "ClientGodot/assets/audio/mix/cin020_v1/CIN_020_mix_draft_v1.wav",
+   "durationSeconds": 18.0,
+   "mixIntegratedLUFS_manifest": "-23.41",
+   "mixTruePeakDBTP_manifest": "-5.22",
+   "headSilenceSeconds": 0.0,
+   "tailSilenceSeconds": 0.0,
+   "voSpan": {
+    "windowSeconds": [
+     12.5,
+     17.5
+    ],
+    "takeSpanSeconds": [
+     12.5,
+     15.5
+    ],
+    "takeDurationSeconds": 3.0
+   },
+   "voTakeLeadSilenceSeconds": 0.084,
+   "voTakeTailSilenceSeconds": 0.169,
+   "voWindowSlackSeconds": 2.0,
+   "duckingEvidence_manifest": [
+    {
+     "bus": "music",
+     "windowSeconds": [
+      12.5,
+      15.5
+     ],
+     "referenceSeconds": [
+      10.0,
+      12.0
+     ],
+     "depthInWindowDb": -5.25,
+     "depthOutsideWindowDb": 0.0
+    }
+   ],
+   "duckingNote_manifest": null,
+   "loopJoins": [
+    {
+     "cue": "AMBIENCE/river_shore",
+     "joins": [
+      {
+       "atSeconds": 15.5,
+       "maxJump": 0.00154,
+       "bedP999Jump": 0.00266,
+       "ratioToP999": 0.58
+      }
+     ]
+    }
+   ]
   }
  ],
  "playbackCueNotes": {
@@ -2665,7 +2719,7 @@
   },
   {
    "id": "FB-6",
-   "rule": "Scenes with no mix yet (CIN_020) play silent video + SRT only. The adapter must not improvise a mix from stems or play a VO take over silent video."
+   "rule": "Every scene now has an embedded mix (checkpoint 54); silent video + SRT only is the terminal fallback if an embedded soundtrack file is missing or corrupt at runtime. The adapter must not improvise a mix from stems or play a VO take over silent video."
   },
   {
    "id": "FB-7",
@@ -3891,26 +3945,62 @@
   {
    "sceneId": "CIN_020",
    "kind": "campaign",
-   "hasEmbeddedSoundtrack": false,
-   "audioOwnership": "NO_EMBEDDED_SOUNDTRACK",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
    "primary": {
-    "mode": "SILENT_VIDEO_PLUS_SRT_OVERLAY",
-    "note": "No scene mix delivered yet; adapter must not improvise one (FB-6)."
+    "mode": "EMBEDDED_SOUNDTRACK",
+    "mixVersion": "v1_cin020_proposed"
    },
-   "fallbackMixWav": null,
-   "fallbackStemsAndVo": null,
-   "fallbackVoAndSrt": null,
+   "fallbackMixWav": {
+    "path": "ClientGodot/assets/audio/mix/cin020_v1/CIN_020_mix_draft_v1.wav",
+    "sha256": "90b51db920c68ca516c92510c9e706c87d9079136d41dbbc48f9b9262e60ba8f",
+    "mixVersion": "v1_cin020_proposed"
+   },
+   "fallbackStemsAndVo": {
+    "stems": [
+     {
+      "cue": "MUSIC/ben_mua",
+      "role": "music",
+      "source": "ClientGodot/assets/audio/composed/music/ben_mua.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "AMBIENCE/river_shore",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+      "segmentSceneSeconds": [
+       0.0,
+       18.0
+      ],
+      "atSeconds": null
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+      "segmentSceneSeconds": null,
+      "atSeconds": 6.0
+     }
+    ],
+    "voTakes": [
+     "VO_CIN_020_S03_LETTERRECIPIENT_draft_v1.wav"
+    ]
+   },
+   "fallbackVoAndSrt": {
+    "voTakes": [
+     "VO_CIN_020_S03_LETTERRECIPIENT_draft_v1.wav"
+    ],
+    "srt": "ClientGodot/assets/cinematics/CIN_020/CIN_020_vi.srt"
+   },
    "fallbackSrtOnly": {
     "srt": "ClientGodot/assets/cinematics/CIN_020/CIN_020_vi.srt"
    },
    "ogv": "ClientGodot/assets/cinematics/CIN_020/CIN_020_640x360_30fps.ogv",
-   "mp4": "ClientGodot/assets/cinematics/CIN_020/CIN_020_640x360_30fps.mp4",
-   "silentNote": {
-    "voDraftsExist": [
-     "VO_CIN_020_S03_LETTERRECIPIENT_draft_v1.wav"
-    ],
-    "reason": "VO drafts exist for later mixing only; they are NOT a playback fallback over silent video."
-   }
+   "mp4": "ClientGodot/assets/cinematics/CIN_020/CIN_020_640x360_30fps.mp4"
   }
  ],
  "verification": {
@@ -3918,6 +4008,6 @@
   "spokenNamesVerifiedAgainstSrtAndTakeTexts": true,
   "mixSha256VerifiedAgainstManifests": true,
   "seamWrapJumpReMeasuredAndMatchedCp33Within": 0.002,
-  "fallbackFilesExistenceChecked": 171
+  "fallbackFilesExistenceChecked": 176
  }
 }

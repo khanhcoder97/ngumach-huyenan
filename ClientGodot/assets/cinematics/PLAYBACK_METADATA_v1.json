@@ -1,6 +1,6 @@
 {
  "manifestId": "NGM_PLAYBACK_METADATA_V1",
- "checkpoint": "MEDIA-02 checkpoint 53 (re-run of the checkpoint 43 builder: CIN_019 draft mix v1 embedded; 20 embedded soundtracks, 1 silent CIN_020)",
+ "checkpoint": "MEDIA-02 checkpoint 54 (re-run of the checkpoint 43 builder: CIN_020 draft mix v1 embedded; 21 embedded soundtracks, 0 silent -- every entry now carries an embedded soundtrack, WO37 M-B big checkpoint 1 complete)",
  "decisionId": "DEC-MEDIA-P0-20261105",
  "workOrderRef": "Codex Work Order 32 / issue #116 comment 6713518554 item 4",
  "branch": "muse/media-production-20261104",
@@ -19,8 +19,8 @@
  },
  "counts": {
   "scenesTotal": 21,
-  "withEmbeddedSoundtrack": 20,
-  "silent": 1
+  "withEmbeddedSoundtrack": 21,
+  "silent": 0
  },
  "scenes": [
   {
@@ -1764,24 +1764,78 @@
    "sceneId": "CIN_020",
    "kind": "campaign",
    "durationSeconds": 18.0,
-   "hasEmbeddedSoundtrack": false,
-   "audioOwnership": "NO_EMBEDDED_SOUNDTRACK",
-   "audioOwnershipNote": "The runtime video is SILENT (verified: no audio stream). No scene mix has been delivered for this scene yet; the adapter must not improvise one from stems. Dialogue VO takes exist as drafts under Art_Source/Audio/Muse/VO/ for later mixing.",
+   "hasEmbeddedSoundtrack": true,
+   "audioOwnership": "EMBEDDED_SOUNDTRACK_ONLY",
+   "audioOwnershipNote": "Play ONLY the soundtrack embedded in the video file. Do NOT play any standalone mix file (ClientGodot/assets/audio/mix/**) or VO take at the same time: those are the same mix delivered as separate files for review / alternate routing, not an additional layer.",
    "video": {
     "ogv": {
      "path": "ClientGodot/assets/cinematics/CIN_020/CIN_020_640x360_30fps.ogv",
      "durationSecondsMeasured": 18.0,
-     "audioStream": null,
-     "subtitleStreamsEmbedded": 0
+     "audioStream": {
+      "codec": "vorbis",
+      "sampleRateHz": 48000,
+      "channels": 2
+     },
+     "subtitleStreamsEmbedded": 0,
+     "embeddedLoudnessLUFS": -23.37,
+     "embeddedTruePeakDBTP": -5.22,
+     "deltaVsPackRecordedLUFS": 0.0
     },
     "mp4": {
      "path": "ClientGodot/assets/cinematics/CIN_020/CIN_020_640x360_30fps.mp4",
      "durationSecondsMeasured": 18.0,
-     "audioStream": null,
-     "subtitleStreamsEmbedded": 0
+     "audioStream": {
+      "codec": "aac",
+      "sampleRateHz": 48000,
+      "channels": 2
+     },
+     "subtitleStreamsEmbedded": 0,
+     "embeddedLoudnessLUFS": -23.42,
+     "embeddedTruePeakDBTP": -5.2,
+     "deltaVsPackRecordedLUFS": 0.0
     }
    },
-   "embeddedMix": null,
+   "embeddedMix": {
+    "mixVersion": "v1_cin020_proposed",
+    "status": "DRAFT_MIX_NOT_FINAL",
+    "mixManifest": "Art_Source/Audio/Muse/MIX/CIN020_DRAFT_V1/CIN020_MIX_V1_manifest_v1.json",
+    "sourceMixWav": "Art_Source/Audio/Muse/MIX/CIN020_DRAFT_V1/CIN_020_mix_draft_v1.wav",
+    "sourceMixSha256": "90b51db920c68ca516c92510c9e706c87d9079136d41dbbc48f9b9262e60ba8f",
+    "sourceMixMeasuredLUFS": -23.41,
+    "sourceMixMeasuredTruePeakDBTP": -5.22,
+    "embeddedVsSourceDeltaLUFS": 0.04,
+    "stems": [
+     {
+      "cue": "MUSIC/ben_mua",
+      "role": "music",
+      "source": "ClientGodot/assets/audio/composed/music/ben_mua.ogg",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)"
+     },
+     {
+      "cue": "AMBIENCE/river_shore",
+      "role": "ambience",
+      "source": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)"
+     },
+     {
+      "cue": "SFX/CINEMA/reveal",
+      "role": "stinger",
+      "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)"
+     }
+    ],
+    "voice": {
+     "type": "dialogue_take_inside_mix",
+     "take": "VO_CIN_020_S03_LETTERRECIPIENT_draft_v1.wav",
+     "windowSeconds": [
+      12.5,
+      15.5
+     ],
+     "takeDurationSeconds": 3.0,
+     "overrunVsWindowSeconds": -2.0,
+     "status": "DRAFT_VO_NOT_FINAL"
+    }
+   },
    "subtitle": {
     "mode": "OVERLAY_SRT",
     "burnedIntoRuntimeVideo": false,
