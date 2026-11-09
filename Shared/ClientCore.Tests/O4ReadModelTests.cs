@@ -474,5 +474,73 @@ namespace NguMach.Client.Core.Tests
             Assert.True(av.InAudience);
             Assert.False(av.IsOnRoad);
         }
+
+        private static bool Hex32(string s)
+        {
+            if (s == null || s.Length != 32) return false;
+            foreach (char c in s) if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f'))) return false;
+            return true;
+        }
+
+        private static void AssertTraceShape(P1EventV2[] trace, long firstCursor)
+        {
+            var ids = new HashSet<string>(StringComparer.Ordinal);
+            long cursor = firstCursor - 1;
+            foreach (var e in trace)
+            {
+                Assert.True(Hex32(e.eventId));
+                Assert.True(Hex32(e.castId));
+                Assert.True(ids.Add(e.eventId));
+                Assert.True(e.cursor > cursor);
+                Assert.True(e.serverTick >= 0);
+                Assert.False(string.IsNullOrWhiteSpace(e.actorId));
+                cursor = e.cursor;
+            }
+        }
+
+        [Fact]
+        public void Trace_HitDeathIsFullLifecycleAndDeterministic()
+        {
+            var trace = CombatTraceFactory.HitDeathTrace(
+                CombatTraceFactory.Id(101), "CHR_TEST_A", "ENT_BOSS_BM_05");
+            Assert.Equal(5, trace.Length);
+            Assert.Equal(
+                new[] { "CAST_START", "COUNTER_CONFIRMED", "IMPACT", "DEATH", "END" },
+                Array.ConvertAll(trace, e => e.type));
+            AssertTraceShape(trace, 1);
+            Assert.True(trace[2].result != null && trace[2].result.hit);
+            Assert.Equal(trace[2].result.amount, trace[2].result.absorbed + trace[2].result.hpDamage);
+            var again = CombatTraceFactory.HitDeathTrace(
+                CombatTraceFactory.Id(101), "CHR_TEST_A", "ENT_BOSS_BM_05");
+            Assert.Equal(trace[0].eventId, again[0].eventId);
+        }
+
+        [Fact]
+        public void Trace_MissTwoOwnersGapAndLateAreDistinct()
+        {
+            var miss = CombatTraceFactory.MissTrace(CombatTraceFactory.Id(201), "CHR_TEST_A", "ENT_BOSS_BM_05");
+            Assert.Equal(3, miss.Length);
+            Assert.False(miss[1].result.hit);
+            Assert.Equal(0, miss[1].result.amount);
+            AssertTraceShape(miss, 1);
+
+            var two = CombatTraceFactory.TwoOwnersTrace();
+            Assert.Equal(6, two.Length);
+            AssertTraceShape(two, 1);
+            Assert.Equal(2, new HashSet<string>(Array.ConvertAll(two, e => e.castId)).Count);
+
+            var gap = CombatTraceFactory.GapTrace(CombatTraceFactory.Id(301), "CHR_TEST_A", "ENT_BOSS_BM_05");
+            Assert.Equal(new long[] { 1, 5 }, Array.ConvertAll(gap, e => e.cursor));
+
+            var late = CombatTraceFactory.LateImpactTrace(CombatTraceFactory.Id(401), "CHR_TEST_A", "ENT_BOSS_BM_05");
+            AssertTraceShape(late, 1);
+            Assert.True(late[1].serverTick < late[0].serverTick);
+
+            var basic = CombatTraceFactory.BasicAttackSample();
+            Assert.Equal("BASIC_ATTACK", basic.actionKind);
+            Assert.Null(basic.skillId);
+            var skill = CombatTraceFactory.SkillSample("SK-MK-02", "ENT_BOSS_BM_05");
+            Assert.Equal("SK-MK-02", skill.skillId);
+        }
     }
 }
