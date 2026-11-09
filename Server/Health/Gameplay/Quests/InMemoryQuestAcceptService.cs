@@ -76,6 +76,19 @@ public sealed class InMemoryQuestAcceptService : IQuestAcceptService
                 "payload.npcId");
         }
 
+        // A quest whose source is still incomplete is refused for that reason
+        // rather than for a prerequisite the player may already meet: the field
+        // errors name the design steps waiting on content, so "walk closer" is
+        // never the advice for a quest that cannot open yet.
+        if (definition.IsBlocked)
+        {
+            return QuestAcceptOutcome.Rejected(
+                QuestAcceptErrorCodes.PrerequisiteNotMet,
+                retryable: false,
+                current,
+                [.. definition.Blocked.Select(step => $"activation.blocked.{step.DesignStep}")]);
+        }
+
         if (!_anchors.TryResolve(npcId, actor.MapId, out var anchor) ||
             !string.Equals(anchor.FloorId, GroundFloor, StringComparison.Ordinal))
         {

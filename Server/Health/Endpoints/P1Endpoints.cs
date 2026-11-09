@@ -48,6 +48,15 @@ public static class P1Endpoints
             app.MapPost("/p1/quests/turnin", TurnInAsync);
         }
 
+        var equipment = app.ServiceProvider
+            .GetRequiredService<IOptions<EquipmentOptions>>()
+            .Value;
+        if (equipment.Enabled)
+        {
+            app.MapPost("/p1/inventory/equip", EquipAsync);
+            app.MapPost("/p1/inventory/unequip", UnequipAsync);
+        }
+
         var combatV2 = app.ServiceProvider
             .GetRequiredService<IOptions<P1CombatV2Options>>()
             .Value;
@@ -1178,6 +1187,234 @@ public static class P1Endpoints
         QuestTurnInErrorCodes.OutOfRange => StatusCodes.Status422UnprocessableEntity,
         QuestTurnInErrorCodes.IdempotencyConflict => StatusCodes.Status409Conflict,
         QuestErrorCodes.InvalidTransition => StatusCodes.Status409Conflict,
+        _ => StatusCodes.Status400BadRequest
+    };
+
+    private static async Task<IResult> EquipAsync(
+        HttpContext context,
+        ISessionStore sessions,
+        IEquipmentService equipment,
+        ServerClock clock,
+        ILoggerFactory loggerFactory)
+    {
+        var requestId = NewRequestId();
+
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge)
+        {
+            return P1Results.EquipmentError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status413PayloadTooLarge, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        if (string.IsNullOrWhiteSpace(body) || !context.Request.HasJsonContentType())
+        {
+            return P1Results.EquipmentError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        EquipEnvelope? envelope;
+        try
+        {
+            envelope = JsonSerializer.Deserialize<EquipEnvelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.EquipmentError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        if (envelope?.RequestId is { } incomingRequestId &&
+            P1Validation.IsHex32(incomingRequestId))
+        {
+            requestId = incomingRequestId;
+        }
+
+        var fieldErrors = P1Validation.ValidateEquipEnvelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.EquipmentError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                fieldErrors, retryable: false);
+        }
+
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return P1Results.EquipmentError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        var session = sessions.Find(sessionId);
+        if (session is null)
+        {
+            return P1Results.EquipmentError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status404NotFound, P1ErrorCodes.SessionNotFound,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        if (!string.Equals(envelope!.CharacterId, session.CharacterId, StringComparison.Ordinal))
+        {
+            return P1Results.EquipmentError(
+                context, clock, requestId, session.SessionId,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["characterId"], retryable: false);
+        }
+
+        var payload = envelope.Payload!;
+        var outcome = equipment.Equip(
+            session,
+            payload.ItemInstanceId!,
+            payload.ExpectedRevision!.Value,
+            envelope.IdempotencyKey!);
+
+        return EquipmentResult(
+            context, clock, requestId, session, outcome, "equip", loggerFactory);
+    }
+
+    private static async Task<IResult> UnequipAsync(
+        HttpContext context,
+        ISessionStore sessions,
+        IEquipmentService equipment,
+        ServerClock clock,
+        ILoggerFactory loggerFactory)
+    {
+        var requestId = NewRequestId();
+
+        var (body, tooLarge) = await ReadBodyAsync(context);
+        if (tooLarge)
+        {
+            return P1Results.EquipmentError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status413PayloadTooLarge, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        if (string.IsNullOrWhiteSpace(body) || !context.Request.HasJsonContentType())
+        {
+            return P1Results.EquipmentError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        UnequipEnvelope? envelope;
+        try
+        {
+            envelope = JsonSerializer.Deserialize<UnequipEnvelope>(body, P1Json.Options);
+        }
+        catch (JsonException)
+        {
+            return P1Results.EquipmentError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["body"], retryable: false);
+        }
+
+        if (envelope?.RequestId is { } incomingRequestId &&
+            P1Validation.IsHex32(incomingRequestId))
+        {
+            requestId = incomingRequestId;
+        }
+
+        var fieldErrors = P1Validation.ValidateUnequipEnvelope(envelope);
+        if (fieldErrors.Count > 0)
+        {
+            return P1Results.EquipmentError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                fieldErrors, retryable: false);
+        }
+
+        var sessionId = context.Request.Headers["X-Session-ID"].ToString().Trim();
+        if (sessionId.Length == 0)
+        {
+            return P1Results.EquipmentError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        var session = sessions.Find(sessionId);
+        if (session is null)
+        {
+            return P1Results.EquipmentError(
+                context, clock, requestId, sessionId: null,
+                StatusCodes.Status404NotFound, P1ErrorCodes.SessionNotFound,
+                ["X-Session-ID"], retryable: false);
+        }
+
+        if (!string.Equals(envelope!.CharacterId, session.CharacterId, StringComparison.Ordinal))
+        {
+            return P1Results.EquipmentError(
+                context, clock, requestId, session.SessionId,
+                StatusCodes.Status400BadRequest, P1ErrorCodes.InvalidPayload,
+                ["characterId"], retryable: false);
+        }
+
+        var payload = envelope.Payload!;
+        var outcome = equipment.Unequip(
+            session,
+            payload.Slot!,
+            payload.ExpectedRevision!.Value,
+            envelope.IdempotencyKey!);
+
+        return EquipmentResult(
+            context, clock, requestId, session, outcome, "unequip", loggerFactory);
+    }
+
+    private static IResult EquipmentResult(
+        HttpContext context,
+        ServerClock clock,
+        string requestId,
+        PlayerSession session,
+        EquipmentOutcome outcome,
+        string operation,
+        ILoggerFactory loggerFactory)
+    {
+        var logger = loggerFactory.CreateLogger("P1.Equipment");
+        if (outcome.Accepted && outcome.Snapshot is { } snapshot)
+        {
+            logger.LogDebug(
+                "Accepted inventory {Operation} for {SessionId} at revision {Revision}",
+                operation, session.SessionId, snapshot.InventoryRevision);
+
+            return P1Results.EquipmentSuccess(
+                requestId, session.SessionId, clock, snapshot);
+        }
+
+        var failure = outcome.Failure!;
+        logger.LogDebug(
+            "Rejected inventory {Operation} for {SessionId}: {Code}",
+            operation, session.SessionId, failure.Code);
+
+        return P1Results.EquipmentError(
+            context, clock, requestId, session.SessionId,
+            EquipmentStatus(failure.Code), failure.Code,
+            failure.FieldErrors, failure.Retryable, outcome.Snapshot);
+    }
+
+    private static int EquipmentStatus(string code) => code switch
+    {
+        P1ErrorCodes.InvalidPayload => StatusCodes.Status400BadRequest,
+        P1ErrorCodes.SessionNotFound => StatusCodes.Status404NotFound,
+        EquipmentErrorCodes.ItemNotFound => StatusCodes.Status404NotFound,
+        EquipmentErrorCodes.WrongLocation => StatusCodes.Status409Conflict,
+        EquipmentErrorCodes.SlotOccupied => StatusCodes.Status409Conflict,
+        EquipmentErrorCodes.RevisionConflict => StatusCodes.Status409Conflict,
+        EquipmentErrorCodes.IdempotencyConflict => StatusCodes.Status409Conflict,
+        EquipmentErrorCodes.ClassRestricted => StatusCodes.Status422UnprocessableEntity,
+        EquipmentErrorCodes.LevelRequired => StatusCodes.Status422UnprocessableEntity,
+        EquipmentErrorCodes.NotEquippable => StatusCodes.Status422UnprocessableEntity,
         _ => StatusCodes.Status400BadRequest
     };
 

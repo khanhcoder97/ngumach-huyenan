@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-MK-06",
+  "classId": "CLASS_MINH_KIEM",
+  "displayNameKey": "SKILL.SK-MK-06.NAME",
+  "cooldownSeconds": 60,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 40
+  },
+  "targeting": {
+    "type": "LINE",
+    "rangeWu": 14,
+    "angleDegrees": 180,
+    "maxTargets": 5
+  },
+  "coefficients": {
+    "pve": 2.6,
+    "boss": 2.6,
+    "pvp": 1.0
+  },
+  "telegraphSeconds": 0.7,
+  "vfxKey": "VFX/Skill/SK-MK-06",
+  "sourceRef": "Combat_Skills_VFX_Animation_Spec_vi.md#Minh-Kiem"
+}

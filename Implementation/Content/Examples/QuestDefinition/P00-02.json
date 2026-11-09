@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "questId": "P00-02",
+  "titleKey": "QUEST.P00-02.TITLE",
+  "graphId": "GRAPH_P00_02",
+  "questType": "MAIN",
+  "activation": "ACTIVE",
+  "levelBand": {
+    "min": 1,
+    "max": 10
+  },
+  "startNpcId": "NPC_TA_VAN_KHANH",
+  "turnInNpcId": "NPC_TA_VAN_KHANH",
+  "prerequisiteQuestIds": [
+    "P00-01"
+  ],
+  "objectives": [
+    {
+      "objectiveId": "OBJ_P00_02_CARPLING",
+      "type": "KILL",
+      "targetIds": [
+        "MOB_CARPLING"
+      ],
+      "count": 4,
+      "mapId": "MAP_BEN_MUA"
+    },
+    {
+      "objectiveId": "OBJ_P00_02_RIPPLES",
+      "type": "INTERACT",
+      "targetIds": [
+        "OBJ_BM_WATER_RIPPLE_01",
+        "OBJ_BM_WATER_RIPPLE_02",
+        "OBJ_BM_WATER_RIPPLE_03"
+      ],
+      "count": 3,
+      "mapId": "MAP_BEN_MUA"
+    }
+  ],
+  "rewards": {
+    "currency": [],
+    "itemIds": [
+      "POT-HP-01"
+    ],
+    "xpRule": "LEVEL_BAND_BASE"
+  },
+  "unlocks": [
+    "P00-03"
+  ],
+  "sourceRef": "Quest_and_Narrative_Production_Spec_vi.md#P00-02"
+}

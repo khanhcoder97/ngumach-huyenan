@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "requestId": "cccccccccccccccccccccccccccccccc",
+  "idempotencyKey": "dddddddddddddddddddddddddddddddd",
+  "sentAtUtc": "2026-10-30T00:00:00Z",
+  "characterId": "CHR_SMOKE_01",
+  "payload": {
+    "slot": "WEAPON",
+    "expectedRevision": 4
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-TC-04",
+  "classId": "CLASS_THACH_CHUY",
+  "displayNameKey": "SKILL.SK-TC-04.NAME",
+  "cooldownSeconds": 20,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 16
+  },
+  "targeting": {
+    "type": "SELF_AURA",
+    "rangeWu": 12,
+    "angleDegrees": 360,
+    "maxTargets": 6
+  },
+  "coefficients": {
+    "pve": 0,
+    "boss": 0,
+    "pvp": 0
+  },
+  "telegraphSeconds": 0.3,
+  "vfxKey": "VFX/Skill/SK-TC-04",
+  "sourceRef": "Combat_Skills_VFX_Animation_Spec_vi.md#Thach-Chuy"
+}

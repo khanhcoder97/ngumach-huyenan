@@ -86,12 +86,19 @@ public sealed class CombatTickEngine
     public const int BasicAttackRangeWu = 4;
     public const int BasicAttackAngleDegrees = 90;
     public const string SkMk01 = "SK-MK-01";
+    public const string SkMk02 = "SK-MK-02";
     public const string SkMk03 = "SK-MK-03";
 
     private static readonly int[] BasicHitTicks = [3];
     private static readonly double[] BasicCoefficients = [1.0];
     private static readonly int[] Mk03HitTicks = [2, 5, 8];
     private static readonly double[] Mk03Coefficients = [0.45, 0.55, 0.90];
+
+    // Art Brief P1: SK-MK-02 is prep 0,15s (3 ticks) then a 0,20s dash (4
+    // ticks), so the sweep resolves on tick +7. The dash carries no damage and
+    // therefore no coefficient.
+    private static readonly int[] Mk02MoveTicks = [7];
+    private static readonly double[] NoCoefficients = [];
 
     private readonly WorldEntityRegistry _entities;
     private readonly CombatDamageFeature _combat;
@@ -102,7 +109,9 @@ public sealed class CombatTickEngine
     private readonly ICombatRollSource _rolls;
     private readonly GuardWindowStore _guards;
     private readonly IWorldGeometryService _geometry;
+    private readonly DashMovementService _dashes;
     private readonly ServerClock _clock;
+    private readonly LootGrantService? _lootGrants;
     private readonly object _sync = new();
     private readonly Dictionary<string, ScheduledCast> _casts = new(StringComparer.Ordinal);
 
@@ -116,7 +125,9 @@ public sealed class CombatTickEngine
         ICombatRollSource rolls,
         GuardWindowStore guards,
         IWorldGeometryService geometry,
-        ServerClock clock)
+        DashMovementService dashes,
+        ServerClock clock,
+        LootGrantService? lootGrants = null)
     {
         _entities = entities;
         _combat = combat;
@@ -127,8 +138,14 @@ public sealed class CombatTickEngine
         _rolls = rolls;
         _guards = guards;
         _geometry = geometry;
+        _dashes = dashes;
         _clock = clock;
+        _lootGrants = lootGrants;
     }
+
+    // Where each accepted dash actually landed and why it stopped; internal
+    // audit until a contract version carries it to clients.
+    public DashLedger DashLedger => _dashes.Ledger;
 
     public int ScheduledCastCount
     {
@@ -185,10 +202,11 @@ public sealed class CombatTickEngine
                     angleDegrees = skill.AngleDegrees ?? 100;
                     maxTargets = skill.MaxTargets;
                     break;
-                case "SK-MK-02":
-                    // Dash movement carries no damage in the supported subset.
-                    hitTicks = [];
-                    coefficients = [];
+                case SkMk02:
+                    // Dash movement: the single scheduled tick is where the
+                    // swept move resolves, and it carries no damage.
+                    hitTicks = Mk02MoveTicks;
+                    coefficients = NoCoefficients;
                     rangeWu = skill.RangeWu ?? 11;
                     angleDegrees = skill.AngleDegrees ?? 0;
                     break;
@@ -228,7 +246,8 @@ public sealed class CombatTickEngine
                     rangeWu,
                     angleDegrees,
                     maxTargets,
-                    skill?.SkillId);
+                    skill?.SkillId,
+                    skill?.SkillId == SkMk02);
             }
         }
 
@@ -328,6 +347,23 @@ public sealed class CombatTickEngine
                 }
             }
 
+            // A window is spatial: it belongs to the map/floor it was opened on.
+            // The impact path closes a stale window lazily, but an actor who
+            // changed instance with no incoming hit would otherwise keep one open
+            // forever, so the tick sweeps it. A reserved counter still cancels on
+            // its own tick (as WINDOW_CLOSED_...) rather than being re-timed here.
+            foreach (var window in _guards.OpenWindows())
+            {
+                var defender = window.Defender;
+                if (string.Equals(defender.MapId, window.MapId, StringComparison.Ordinal) &&
+                    string.Equals(defender.FloorId, window.FloorId, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                _guards.Close(defender.CharacterId, GuardWindowEndReasons.MapOrFloorChange);
+            }
+
             // A reserved counter resolves on its own tick even when no player
             // cast is in flight (DEC-022 §3: counter at the tick after the
             // confirmation, never inside the hit stack that produced it).
@@ -337,6 +373,65 @@ public sealed class CombatTickEngine
             {
                 window.CounterResolved = true;
                 emitted.AddRange(ResolveCounter(window, tick));
+            }
+        }
+
+        return emitted;
+    }
+
+    // Q-B3 lifecycle cleanup: returning from a downed state ends the previous
+    // life's fight. Every cast still in flight for that actor emits CANCEL then
+    // END exactly once and resolves no damage and no kill credit, and a counter
+    // reserved for a later tick is cancelled now instead of swinging at a source
+    // the actor can no longer see. The events go through the same store the
+    // client already polls, so a cancellation is never a silent drop.
+    // Q-E: the kill path hands every death to the grant service exactly once.
+    // The shipped loot bundle is grant-off until the coin band exists, so the
+    // outcome records that reason instead of inventing an amount.
+    private void RecordLootOnDeath(PlayerSession killer, CombatEventV2 death, long lifeId)
+    {
+        _lootGrants?.Grant(
+            killer,
+            death.EventId,
+            lifeId,
+            grantEnabled: false,
+            blockedReason: LootGrantPolicies.SourceShortReason,
+            items: []);
+    }
+
+    public IReadOnlyList<CombatEventV2> CancelPendingFor(string characterId)
+    {
+        ArgumentNullException.ThrowIfNull(characterId);
+
+        var emitted = new List<CombatEventV2>();
+        lock (_sync)
+        {
+            var tick = _clock.Tick;
+            var abandoned = new List<string>();
+            foreach (var cast in _casts.Values)
+            {
+                if (!string.Equals(cast.ActorId, characterId, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                emitted.Add(AppendEvent(cast, tick, CombatEventTypesV2.Cancel,
+                    targetId: null, targetLifeId: null, hitIndex: null, targetRevision: null, result: null));
+                emitted.Add(AppendEnd(cast, tick));
+                abandoned.Add(cast.CastId);
+            }
+
+            foreach (var castId in abandoned)
+            {
+                _casts.Remove(castId);
+            }
+
+            if (_guards.FindAny(characterId) is { } window &&
+                !window.CounterResolved && window.CounterSourceEntityId is { } sourceId)
+            {
+                window.CounterResolved = true;
+                emitted.Add(CancelCounter(
+                    window, tick, sourceId, window.CounterSourceLifeId ?? 0, "RETURNED_TO_ANCHOR"));
             }
         }
 
@@ -473,6 +568,7 @@ public sealed class CombatTickEngine
         _entities.Despawn(source.EntityId);
         var death = AppendGuardEvent(
             window, tick, CombatEventTypesV2.Death, source, result: null);
+        RecordLootOnDeath(window.Defender, death, source.LifeId);
         yield return death;
 
         _quests.RecordVerifiedEvent(
@@ -544,6 +640,16 @@ public sealed class CombatTickEngine
     private IEnumerable<CombatEventV2> ResolveHit(
         ScheduledCast cast, int hitIndex, long impactTick)
     {
+        if (cast.IsMovement)
+        {
+            // A dash is movement, not an impact: it emits no combat event and
+            // its outcome (where the actor landed and why it stopped) lives in
+            // the dash ledger until a contract version carries it.
+            _dashes.Apply(
+                cast.Actor, cast.CastId, cast.FacingX, cast.FacingY, cast.RangeWu, impactTick);
+            yield break;
+        }
+
         var targets = SelectTargets(cast);
         if (targets.Count == 0)
         {
@@ -616,6 +722,7 @@ public sealed class CombatTickEngine
             var deathEvent = AppendEvent(
                 cast, impactTick + 1, CombatEventTypesV2.Death, target.EntityId, lifeId,
                 hitIndex: null, target.Revision, result: null);
+            RecordLootOnDeath(cast.Actor, deathEvent, lifeId);
             yield return deathEvent;
 
             // QOD-17 DEV kill-credit policy: the source that lands the killing
@@ -768,7 +875,8 @@ public sealed class CombatTickEngine
             double rangeWu,
             double angleDegrees,
             int maxTargets,
-            string? skillId)
+            string? skillId,
+            bool isMovement)
         {
             CastId = castId;
             SessionId = sessionId;
@@ -788,6 +896,7 @@ public sealed class CombatTickEngine
             AngleDegrees = angleDegrees;
             MaxTargets = maxTargets;
             SkillId = skillId;
+            IsMovement = isMovement;
         }
 
         public string CastId { get; }
@@ -808,6 +917,7 @@ public sealed class CombatTickEngine
         public double AngleDegrees { get; }
         public int MaxTargets { get; }
         public string? SkillId { get; }
+        public bool IsMovement { get; }
         public int NextHitIndex { get; set; }
 
         public long EndTick() => HitTicks.Length > 0

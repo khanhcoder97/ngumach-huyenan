@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-MK-05",
+  "classId": "CLASS_MINH_KIEM",
+  "displayNameKey": "SKILL.SK-MK-05.NAME",
+  "cooldownSeconds": 9,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 10
+  },
+  "targeting": {
+    "type": "DASH",
+    "rangeWu": 12,
+    "maxTargets": 1
+  },
+  "coefficients": {
+    "pve": 0,
+    "boss": 0,
+    "pvp": 0
+  },
+  "telegraphSeconds": 0.16,
+  "vfxKey": "VFX/Skill/SK-MK-05",
+  "sourceRef": "Combat_Skills_VFX_Animation_Spec_vi.md#Minh-Kiem"
+}

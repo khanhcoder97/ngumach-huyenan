@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-MK-04",
+  "classId": "CLASS_MINH_KIEM",
+  "displayNameKey": "SKILL.SK-MK-04.NAME",
+  "cooldownSeconds": 16,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 24
+  },
+  "targeting": {
+    "type": "SELF",
+    "rangeWu": 0,
+    "angleDegrees": 360,
+    "maxTargets": 1
+  },
+  "coefficients": {
+    "pve": 1.2,
+    "boss": 1.2,
+    "pvp": 0.5
+  },
+  "telegraphSeconds": 0.6,
+  "vfxKey": "VFX/Skill/SK-MK-04",
+  "sourceRef": "Combat_Skills_VFX_Animation_Spec_vi.md#Minh-Kiem"
+}

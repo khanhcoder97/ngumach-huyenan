@@ -9,6 +9,7 @@ public static class InventoryErrorCodes
     public const string InsufficientItems = "insufficient_items";
     public const string InsufficientCurrency = "insufficient_currency";
     public const string SlotOccupied = "slot_occupied";
+    public const string WrongLocation = "wrong_location";
 }
 
 public sealed class InventoryOutcome

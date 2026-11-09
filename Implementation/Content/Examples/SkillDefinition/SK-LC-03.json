@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-LC-03",
+  "classId": "CLASS_LINH_CUNG",
+  "displayNameKey": "SKILL.SK-LC-03.NAME",
+  "cooldownSeconds": 8,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 18
+  },
+  "targeting": {
+    "type": "MULTISHOT",
+    "rangeWu": 7,
+    "angleDegrees": 30,
+    "maxTargets": 3
+  },
+  "coefficients": {
+    "pve": 2.25,
+    "boss": 2.25,
+    "pvp": 0.9
+  },
+  "telegraphSeconds": 0.25,
+  "vfxKey": "VFX/Skill/SK-LC-03",
+  "sourceRef": "Combat_Skills_VFX_Animation_Spec_vi.md#Linh-Cung"
+}

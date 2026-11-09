@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Server.Health.Contracts;
 using Server.Health.Gameplay.Inventory;
+using Server.Health.Gameplay.Progress;
 using Server.Health.World;
 
 namespace Server.Health.Gameplay.Quests;
@@ -17,6 +18,7 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
     private readonly NpcAnchorCatalog _anchors;
     private readonly IWorldGeometryService _geometry;
     private readonly RewardLedgerStore _ledger;
+    private readonly ExperienceService _experience;
     private readonly QuestTurnInOptions _options;
     private readonly ConcurrentDictionary<(string CharacterId, string Key), TurnInIdempotencyEntry>
         _entries = new();
@@ -28,6 +30,7 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
         NpcAnchorCatalog anchors,
         IWorldGeometryService geometry,
         RewardLedgerStore ledger,
+        ExperienceService experience,
         QuestTurnInOptions options)
     {
         _catalog = catalog;
@@ -36,6 +39,7 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
         _anchors = anchors;
         _geometry = geometry;
         _ledger = ledger;
+        _experience = experience;
         _options = options;
     }
 
@@ -152,7 +156,12 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
                     flipped.Failure?.FieldErrors.ToArray() ?? ["state"]);
             }
 
-            var rewardSnapshot = BuildRewards(definition, mutation);
+            // XP belongs to the same transaction as the items and currency: it
+            // commits only when the rule has a source, and it is restored if a
+            // later step (ledger) fails.
+            var xpApplied = _experience.TryApply(
+                actor, definition.Rewards.XpRule, out var xpGrant, out _);
+            var rewardSnapshot = BuildRewards(definition, mutation, xpApplied);
             var result = new TurnInResult
             {
                 QuestState = flipped.State,
@@ -162,6 +171,11 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
 
             if (!_ledger.TryRecord(actor.CharacterId, questId, result))
             {
+                if (xpGrant is not null)
+                {
+                    _experience.Restore(actor, xpGrant);
+                }
+
                 RollbackInventoryGrant(actor, inventoryBefore, grant.Snapshot!);
                 var reverted = _quests.RevertTurnIn(actor, questId);
                 if (!reverted.Accepted)
@@ -260,7 +274,8 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
 
     private static TurnInRewards BuildRewards(
         QuestDefinition definition,
-        InventoryMutation mutation)
+        InventoryMutation mutation,
+        bool xpApplied)
     {
         var currency = mutation.CurrencyDeltas?
             .Select(d => new TurnInCurrencyReward { CurrencyId = d.CurrencyId, Amount = d.Amount })
@@ -272,7 +287,7 @@ public sealed class InMemoryQuestTurnInService : IQuestTurnInService
             .ToList()
             ?? new List<TurnInItemReward>();
 
-        var xp = new TurnInXpReward { XpRule = definition.Rewards.XpRule, Applied = false };
+        var xp = new TurnInXpReward { XpRule = definition.Rewards.XpRule, Applied = xpApplied };
 
         return new TurnInRewards
         {

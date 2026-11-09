@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "classId": "CLASS_THACH_CHUY",
+  "displayNameKey": "CLASS.CLASS_THACH_CHUY.NAME",
+  "element": "THO",
+  "role": "TANK",
+  "weaponType": "CLUB",
+  "startingSkillIds": ["SK-TC-01", "SK-TC-02", "SK-TC-03", "SK-TC-04", "SK-TC-05", "SK-TC-06"],
+  "assetKey": "Art/Characters/CLASS_THACH_CHUY",
+  "sourceRef": "Content_Bible_Ngu_Mach_Huyen_An_vi.md#Thach-Chuy"
+}

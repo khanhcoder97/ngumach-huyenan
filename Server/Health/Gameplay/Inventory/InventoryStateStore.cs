@@ -75,10 +75,10 @@ internal sealed class InventoryItemEntry
 {
     public required string InstanceId { get; init; }
     public required string TemplateId { get; init; }
-    public required string Location { get; init; }
+    public required string Location { get; set; }
     public required int Durability { get; init; }
     public int Stack { get; set; }
-    public string? Slot { get; init; }
+    public string? Slot { get; set; }
     public int Version { get; set; } = 1;
 }
 

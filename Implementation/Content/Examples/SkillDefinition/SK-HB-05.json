@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "skillId": "SK-HB-05",
+  "classId": "CLASS_HUYEN_BUT",
+  "displayNameKey": "SKILL.SK-HB-05.NAME",
+  "cooldownSeconds": 10,
+  "resourceCost": {
+    "resource": "MP",
+    "amount": 10
+  },
+  "targeting": {
+    "type": "DASH_BACKWARD",
+    "rangeWu": 8,
+    "maxTargets": 1
+  },
+  "coefficients": {
+    "pve": 0,
+    "boss": 0,
+    "pvp": 0
+  },
+  "telegraphSeconds": 0.18,
+  "vfxKey": "VFX/Skill/SK-HB-05",
+  "sourceRef": "Combat_Skills_VFX_Animation_Spec_vi.md#Huyen-But"
+}
