@@ -131,10 +131,18 @@ internal static class V2Checks
         }
         {
             var t = new Script(); var c = await Connect(t);
-            var flood = new P1EventV2[300];
-            for (long i = 1; i <= 300; i++) flood[i - 1] = Event(i, "CAST_START");
-            t.Replies.Enqueue(Reply(Page(flood)));
-            Check((await c.ReadEventsAsync(None)).Success && c.EventCursor == 300, "flood page advances cursor to the last event");
+            // Event pages are capped at 100 server-side; the flood arrives in
+            // three pages whose combined backlog would exceed the presentation
+            // bound if it were unbounded.
+            for (int start = 1; start <= 300; start += 100)
+            {
+                var page = new P1EventV2[100];
+                for (long i = start; i < start + 100; i++) page[i - start] = Event(i, "CAST_START");
+                t.Replies.Enqueue(Reply(Page(page)));
+                var read = await c.ReadEventsAsync(None);
+                Check(read.Success, "flood page starting " + start + " advances cursor");
+            }
+            Check(c.EventCursor == 300, "flood pages advance cursor to the last event");
             Check(c.DrainPresentationEvents().Length == 256, "presentation backlog is bounded at 256");
             Check(c.DrainPresentationEvents().Length == 0, "drained backlog does not replay");
         }
