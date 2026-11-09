@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "decisionId": "DEC-INVENTORY-ALPHA-20261108",
+  "status": "APPROVED_FOR_PRIVATE_ALPHA_IMPLEMENTATION",
+  "productionEnabled": false,
+  "sourceRefs": [
+    "a793aed89e8c5fc152f60e8ead30c7cf25280978:docs/production/Runtime_State_and_Catalog_Precision_vi.md#1-4",
+    "Production_Decision_Register_vi.md#DEC-023",
+    "QOD-24_Bag_Capacity_Inventory_Full_Packet_20261105_vi.md",
+    "QOD-24_Consumable_Use_Contract_Packet_20261105_vi.md"
+  ],
+  "capacity": {
+    "gate": "P1:InventoryCapacity:Enabled",
+    "requiresAlphaProfile": true,
+    "bagSlots": 100,
+    "slotUnit": "ONE_COMPATIBLE_STACK_PER_AUTHORITATIVE_BAG_SLOT",
+    "stackLimitSource": "ITEM_CATALOG_STACK_LIMIT_MAX_QUANTITY_PER_STACK",
+    "mergePolicy": "SAME_STACK_FINGERPRINT_ONLY_DETERMINISTIC_EXISTING_SLOT_ORDER",
+    "equippedItemsConsumeBagSlot": false,
+    "unequipRequiresFreeBagSlotUnlessMergedLegally": true,
+    "error": {
+      "code": "inventory_full",
+      "messageKey": "P1.ERROR.INVENTORY_FULL",
+      "retryable": true,
+      "httpStatus": 409
+    },
+    "affectedOperations": ["QUEST_TURNIN", "GATHER", "LOOT_GRANT", "UNEQUIP", "OTHER_BAG_GRANTS"],
+    "commitPolicy": "PLAN_ALL_ALLOCATIONS_THEN_ATOMIC_COMMIT_ALL_OR_NOTHING",
+    "refusalPolicy": "NO_MUTATION_NO_REVISION_NO_CONSUMPTION_NO_SUCCESS_RECEIPT_OR_DEATH_PAYABLE_MARK",
+    "refusalRetry": "SAME_KEY_AND_BODY_MAY_RETRY_AFTER_SPACE_AVAILABLE_UNTIL_SUCCESS_COMMITS",
+    "committedReplay": "HISTORICAL_RECEIPT_NO_NEW_ALLOCATION_OR_GRANT",
+    "questOnFull": "KEEP_READY_TO_TURN_IN_AND_ALL_ITEMS_CURRENCY_XP_UNCHANGED",
+    "lootOnFull": "KEEP_SAME_DEATH_AND_SAME_ROLL_PENDING_NO_REROLL_OR_MARK_PAID",
+    "overflowMailbox": false,
+    "questPouchAndBank": "SEPARATE_UNSUPPORTED_CONTAINERS_NO_ENUM_EXTENSION_IN_THIS_SLICE",
+    "existingOverCapacity": "PRESERVE_ITEMS_REFUSE_NET_NEW_BAG_ALLOCATION_ALLOW_ACTIONS_THAT_FREE_SPACE"
+  },
+  "consume": {
+    "route": "POST /p1/inventory/consume",
+    "gate": "P1:InventoryConsume:Enabled",
+    "requiresAlphaProfile": true,
+    "payloadFields": ["itemInstanceId", "expectedRevision"],
+    "responseSnapshot": "EXISTING_INVENTORY_SNAPSHOT_V1_PLUS_EXPLICIT_ACTOR_HEAL_RECEIPT",
+    "activationSubset": ["SOURCED_HP_RESTORE_ITEMS", "SOURCED_MP_RESTORE_ITEMS"],
+    "amountRule": "FLOOR_CURRENT_EFFECTIVE_MAX_TIMES_SOURCED_PERCENT_THEN_CLAMP",
+    "minimumArtificialHealing": false,
+    "noEffectPolicy": "REFUSE_NO_EFFECT_WITHOUT_SPENDING_ITEM_OR_BUMPING_REVISION",
+    "actorMustBeAlive": true,
+    "deadActorRefusal": "invalid_condition",
+    "requiresNpcDistance": false,
+    "extraCooldownSeconds": null,
+    "newErrorCodesApproved": ["not_consumable", "effect_unsupported", "revive_not_modelled", "no_effect"],
+    "replayPolicy": "GLOBAL_KEY_OWNER_HASH_ORIGINAL_RESULT_NO_SECOND_SPEND_HEAL_OR_COOLDOWN_RESET",
+    "unsupported": ["REVIVE", "FOOD_BUFF_ACTIVATION", "REPAIR_TARGET_MUTATION", "ALLY_TARGET_HEAL"],
+    "clientAutoUse": "EXPLICIT_OPT_IN_ONLY_AFTER_SERVER_CONSUME_WIRE_REVIEW"
+  },
+  "effectiveStats": {
+    "gate": "P1:EffectiveStats:Enabled",
+    "requiresAlphaProfile": true,
+    "sourceDecision": "DEC-023",
+    "noGearL1": {"hp": 198, "mp": 102, "physicalAttack": 20, "armor": 10},
+    "weaponOnlyOracle": {"templateId": "EQ-MK-WEAPON-T1-R-COMMON", "physicalAttack": 38},
+    "hatOnlyOracle": {"templateId": "EQ-MK-HAT-T1-R-COMMON", "hp": 212, "armor": 14},
+    "poolChangePolicy": "KEEP_ABSOLUTE_CURRENT_THEN_CLAMP_NO_HEAL_NO_REVIVE",
+    "legacyEnduranceFixture": "EXPLICIT_SEPARATE_PROFILE_NOT_SILENTLY_REPLACED",
+    "missingModifiers": "BLOCK_EFFECT_ACTIVATION_WITH_EXACT_SOURCE_GAP"
+  }
+}
