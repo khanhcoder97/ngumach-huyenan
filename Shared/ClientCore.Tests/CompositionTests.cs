@@ -18,7 +18,7 @@ namespace NguMach.Client.Core.Tests
         private const string SessionTwo = "22222222222222222222222222222222";
         private const string EncounterId = "ENC-0123456789ABCDEF01234567";
 
-        private static string WorldJson => "{\"mapId\":\"MAP_BEN_MUA\",\"serverTick\":1,\"revision\":0,\"self\":{\"characterId\":\"char_test\",\"classId\":\"CLASS_MINH_KIEM\",\"x\":18,\"y\":0,\"hp\":100,\"maxHp\":100,\"mp\":50,\"maxMp\":50,\"swordIntent\":0},\"entities\":[]}";
+        private static string WorldJson => "{\"mapId\":\"MAP_BEN_MUA\",\"serverTick\":1,\"revision\":0,\"self\":{\"characterId\":\"CHR_0123456789ABCDEF0123456789ABCDEF\",\"classId\":\"CLASS_MINH_KIEM\",\"x\":18,\"y\":0,\"hp\":100,\"maxHp\":100,\"mp\":50,\"maxMp\":50,\"swordIntent\":0},\"entities\":[]}";
 
         private sealed class DelegateTransport : IP1Transport
         {
@@ -348,6 +348,63 @@ namespace NguMach.Client.Core.Tests
                 Assert.Equal(EncounterReadOutcome.Success, accepted.Outcome);
                 Assert.True(owner.Encounter.HasSnapshot);
                 Assert.Equal(fixtureOwner, owner.Encounter.State.RegisteredCharacterIds[0]);
+            }
+        }
+
+        [Fact]
+        public async Task EncounterRead_DefaultSessionCapturesServerCharacter()
+        {
+            // O38-A: a session created without an explicit characterId still
+            // enforces owner identity against the server-assigned character
+            // captured from session/world at connect. Same embedded owner
+            // accepts and emits; a foreign world character rejects with no
+            // snapshot and no event.
+            const string fixtureOwner = "CHR_0123456789ABCDEF0123456789ABCDEF";
+            var encounterJson = FindFixture();
+            Func<string, string> worldFor = chr =>
+                "{\"mapId\":\"MAP_BEN_MUA\",\"serverTick\":1,\"revision\":0,\"self\":{\"characterId\":\"" + chr +
+                "\",\"classId\":\"CLASS_MINH_KIEM\",\"x\":18,\"y\":0,\"hp\":100,\"maxHp\":100,\"mp\":50,\"maxMp\":50,\"swordIntent\":0},\"entities\":[]}";
+            Func<P1Request, string, P1HttpReply> replyFor = (r, chr) => new P1HttpReply
+            {
+                StatusCode = 201,
+                CorrelationId = r.CorrelationId,
+                Body = "{\"schemaVersion\":1,\"requestId\":\"" + r.CorrelationId +
+                       "\",\"sessionId\":\"" + SessionOne + "\",\"result\":" + worldFor(chr) + "}"
+            };
+
+            var sameT = new DelegateTransport
+            {
+                Handler = (r, ct) => r.Path == "/p1/sessions"
+                    ? Task.FromResult(replyFor(r, fixtureOwner))
+                    : Task.FromResult(EncounterReply(r, encounterJson))
+            };
+            using (var same = new ClientSession(sameT))
+            {
+                int events = 0;
+                same.EncounterUpdated += _ => events++;
+                Assert.True((await same.ConnectAsync()).Success);
+                var accepted = await same.ReadCurrentEncounterAsync().WaitAsync(TimeSpan.FromSeconds(5));
+                Assert.Equal(EncounterReadOutcome.Success, accepted.Outcome);
+                Assert.True(same.Encounter.HasSnapshot);
+                Assert.Equal(1, events);
+            }
+
+            var foreignT = new DelegateTransport
+            {
+                Handler = (r, ct) => r.Path == "/p1/sessions"
+                    ? Task.FromResult(replyFor(r, "CHR_TEST"))
+                    : Task.FromResult(EncounterReply(r, encounterJson))
+            };
+            using (var foreign = new ClientSession(foreignT))
+            {
+                int events = 0;
+                foreign.EncounterUpdated += _ => events++;
+                Assert.True((await foreign.ConnectAsync()).Success);
+                var rejected = await foreign.ReadCurrentEncounterAsync().WaitAsync(TimeSpan.FromSeconds(5));
+                Assert.Equal(EncounterReadOutcome.Error, rejected.Outcome);
+                Assert.Contains("owner mismatch", rejected.ErrorCode);
+                Assert.False(foreign.Encounter.HasSnapshot);
+                Assert.Equal(0, events);
             }
         }
 

@@ -78,6 +78,19 @@ internal static class V2Checks
             Check(!(await c.ReadWorldAsync(None)).Success && c.World.revision == 1, "missing required v2 fields never default silently");
             var wrongFloor = World(2); wrongFloor.entities[0].floorId = "OTHER"; t.Replies.Enqueue(Reply(wrongFloor));
             Check(!(await c.ReadWorldAsync(None)).Success && c.WorldV2.floorId == "OVERWORLD", "cross-floor data rejected atomically");
+            // WorldSnapshotV2.schema.json's published state enum carries TELEGRAPH
+            // and RECOVER (MobBehavior's read window and punished-after window), so
+            // a mob in either state must pass the snapshot validator; a label
+            // outside the published enum must still reject atomically.
+            var telegraph = World(3); telegraph.entities[0].state = "TELEGRAPH"; t.Replies.Enqueue(Reply(telegraph));
+            Check((await c.ReadWorldAsync(None)).Success && c.WorldV2.entities[0].state == "TELEGRAPH",
+                "contract TELEGRAPH mob state accepted");
+            var recover = World(4); recover.entities[0].state = "RECOVER"; t.Replies.Enqueue(Reply(recover));
+            Check((await c.ReadWorldAsync(None)).Success && c.WorldV2.entities[0].state == "RECOVER",
+                "contract RECOVER mob state accepted");
+            var bogus = World(5); bogus.entities[0].state = "TELEGRAF"; t.Replies.Enqueue(Reply(bogus));
+            Check(!(await c.ReadWorldAsync(None)).Success && c.WorldV2.entities[0].state == "RECOVER",
+                "state outside the contract enum rejects atomically");
         }
         {
             var t = new Script(); var c = await Connect(t);

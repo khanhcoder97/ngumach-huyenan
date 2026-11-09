@@ -55,6 +55,11 @@ namespace NguMach.Client.Core.Composition
         private readonly IP1Transport _transport;
         private readonly bool _ownsTransport;
         private readonly string _characterId;
+        // O38-A: when the session is created without an explicit characterId,
+        // the server assigns one at connect. The authoritative owner is always
+        // the connected world's self.characterId (captured in ConnectAsync
+        // success), never null after a successful connect.
+        private string _authoritativeCharacterId;
         private readonly IMainThreadDispatcher _dispatcher;
         private readonly SemaphoreSlim _encounterLane = new SemaphoreSlim(1, 1);
         private readonly object _disposeGate = new object();
@@ -127,6 +132,9 @@ namespace NguMach.Client.Core.Composition
                 {
                     SessionGeneration++;
                     Guard.BeginSession(Client.SessionId, SessionGeneration);
+                    _authoritativeCharacterId = Client.World != null && Client.World.self != null
+                        ? Client.World.self.characterId
+                        : null;
                     Encounter.Reset();
                     RestorePendingCarry();
                 }
@@ -147,6 +155,7 @@ namespace NguMach.Client.Core.Composition
             _cts = new CancellationTokenSource();
             Guard.EndSession();
             Encounter.Reset();
+            _authoritativeCharacterId = null;
 
             var previous = Client;
             Client = new P1Client(_transport, useWorldV2: previous.UseWorldV2, characterId: _characterId);
@@ -369,11 +378,14 @@ namespace NguMach.Client.Core.Composition
 
             // Owner identity: the snapshot must carry exactly this session's own
             // character as its registered owner, so two sessions can never read
-            // each other's encounter. A session created without a character id
-            // cannot prove ownership and keeps the shape-only validation.
-            if (!string.IsNullOrEmpty(_characterId) &&
+            // each other's encounter. The expected owner is the explicit
+            // constructor id when given, otherwise the server-assigned character
+            // captured from session/world at connect. A session that never
+            // captured one keeps the shape-only validation.
+            string expectedOwner = !string.IsNullOrEmpty(_characterId) ? _characterId : _authoritativeCharacterId;
+            if (!string.IsNullOrEmpty(expectedOwner) &&
                 (snapshot.RegisteredCharacterIds == null || snapshot.RegisteredCharacterIds.Count == 0 ||
-                 !string.Equals(snapshot.RegisteredCharacterIds[0], _characterId, StringComparison.Ordinal)))
+                 !string.Equals(snapshot.RegisteredCharacterIds[0], expectedOwner, StringComparison.Ordinal)))
                 return EncounterReadResult.Fail(EncounterReadOutcome.Error, "invalid_snapshot: owner mismatch", reply.StatusCode);
 
             if (!IsCurrentEpoch(sessionId, generation))

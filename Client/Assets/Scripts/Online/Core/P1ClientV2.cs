@@ -102,7 +102,7 @@ namespace NguMach.Client.P1
                     e.mapInstanceId != w.mapInstanceId || e.floorId != w.floorId || e.phase != w.phase ||
                     !P1Wire.Finite(e.x) || !P1Wire.Finite(e.y) || e.revision < 0 || e.lifeId < 0 || e.maxHp < 0 || e.hp < 0 || e.hp > e.maxHp ||
                     !OneOf(e.kind, "MOB", "BOSS", "NPC", "GATHER_NODE", "INTERACTABLE") ||
-                    !OneOf(e.state, "IDLE", "AGGRO", "CHASE", "ATTACK", "RETURN", "DEAD", "ACTIVE", "AVAILABLE", "DEPLETED") ||
+                    !OneOf(e.state, "IDLE", "AGGRO", "CHASE", "TELEGRAPH", "ATTACK", "RECOVER", "RETURN", "DEAD", "ACTIVE", "AVAILABLE", "DEPLETED") ||
                     !OneOf(e.healthState, "ALIVE", "DEAD", "INVULNERABLE", "BLOCKED") ||
                     e.availability != null && !OneOf(e.availability, "AVAILABLE", "COOLDOWN")) return false;
                 bool hostile = e.kind == "MOB" || e.kind == "BOSS";

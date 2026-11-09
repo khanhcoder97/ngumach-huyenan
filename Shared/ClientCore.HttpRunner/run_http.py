@@ -42,7 +42,10 @@ CLIENT_ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 DOTNET = os.environ.get("DOTNET", "dotnet")
 DOTNET_CLIENT = os.environ.get("DOTNET_CLIENT", DOTNET)
 DOTNET_SERVER = os.environ.get("DOTNET_SERVER", DOTNET)
-RUNNER_TIMEOUT_SECONDS = int(os.environ.get("RUNNER_TIMEOUT_SECONDS", "600"))
+# The full private-alpha journey (P00-01..P00-05 + finale + portal) walks about
+# 1900 WU and casts through a 1200 HP boss over real HTTP at 0.3 s/step, so the
+# default budget is 20 minutes; the CI workflow matches it.
+RUNNER_TIMEOUT_SECONDS = int(os.environ.get("RUNNER_TIMEOUT_SECONDS", "1200"))
 SERVER_IDENTITY = "ngu-mach-huyen-an-server"
 ASSERTION_MARKER = re.compile(r"^PASS ClientCore HTTP assertions: (\d+)\s*$", re.MULTILINE)
 
@@ -61,6 +64,24 @@ ALPHA_FLAGS = {
     "P1__Portal__Enabled": "true",
     "P1__DeathReturn__Enabled": "true",
     "P1__Equipment__Enabled": "true",
+    # Checkpoint 2 (full tutorial): the P00 chain needs the alpha loot band to
+    # exist (coin drop proves the kill credit + inventory revision) and a pool
+    # that survives the wave-trial/escort/boss damage the AlphaProfile-driven
+    # world tick applies regardless of MobBehavior. 4000/500 matches the
+    # reference alpha-p00 boot in the server's run_e2e_p1.sh.
+    #
+    # MobBehavior must be ON here even though BASE_FLAGS keeps it OFF: the
+    # projected `state` of MOB/BOSS rows comes from MobLifecycleService, whose
+    # Tick only runs while the gate is enabled. With it off a killed mob keeps
+    # projecting IDLE forever and no journey step can ever witness a death
+    # (probe: "witnessed 0 of 4 CARPLING"). The reference alpha-p00 boot also
+    # runs with MobBehavior enabled.
+    "P1__MobBehavior__Enabled": "true",
+    "P1__AlphaLoot__GrantEnabled": "true",
+    "P1World__StartingHp": "4000",
+    "P1World__StartingMaxHp": "4000",
+    "P1World__StartingMp": "500",
+    "P1World__StartingMaxMp": "500",
 }
 
 MODES = {

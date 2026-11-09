@@ -23,7 +23,7 @@ namespace NguMach.Client.Core.Tests
         private const string SessionTwo = "22222222222222222222222222222222";
 
         private static string WorldJson =>
-            "{\"mapId\":\"MAP_BEN_MUA\",\"serverTick\":1,\"revision\":0,\"self\":{\"characterId\":\"char_test\"," +
+            "{\"mapId\":\"MAP_BEN_MUA\",\"serverTick\":1,\"revision\":0,\"self\":{\"characterId\":\"CHR_0123456789ABCDEF0123456789ABCDEF\"," +
             "\"classId\":\"CLASS_MINH_KIEM\",\"x\":18,\"y\":0,\"hp\":100,\"maxHp\":100,\"mp\":50,\"maxMp\":50," +
             "\"swordIntent\":0},\"entities\":[]}";
 

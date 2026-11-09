@@ -121,7 +121,11 @@ jobs:
       matrix:
         mode: [gates-off, private-alpha]
     env:
-      PAIRED_SERVER_HEAD: 6814126e2def8a1c4270a1016f0ab85404cba46e
+      # Successor of 6814126 on the same Qoder branch: docs, P00-05 class-confirm
+      # + public HTTP finale, portal positive BM->TL, MAP_VIEWED type + MAP_ENTER
+      # credit. Implementation/Contracts/P1 is byte-identical 6814126..4cada35,
+      # so the 70-file contract pin still verifies against this checkout.
+      PAIRED_SERVER_HEAD: 4cada354fc9efc1f1f4fff9c1d8acf9bccba6731
       PAIRED_SERVER_BRANCH: qoder/qod-21-ben-mua-playable-alpha-20261103
     steps:
       - uses: actions/checkout@v4
@@ -139,7 +143,10 @@ jobs:
           git -C client worktree add --detach "$RUNNER_TEMP/paired-server" "$PAIRED_SERVER_HEAD"
           test "$(git -C "$RUNNER_TEMP/paired-server" rev-parse HEAD)" = "$PAIRED_SERVER_HEAD"
       - name: Run paired ${{ matrix.mode }} (real server, positive assertions)
-        timeout-minutes: 20
+        # 30 not 20: the private-alpha full-tutorial journey walks ~1900 WU and
+        # casts through a 1200 HP boss over real HTTP (RUNNER_TIMEOUT_SECONDS
+        # defaults to 1200, so the step must outlast the runner itself).
+        timeout-minutes: 30
         run: |
           python3 client/Shared/ClientCore.HttpRunner/run_http.py \
             --client-root client \
