@@ -42,7 +42,8 @@
       "dialogue": {
         "speaker": "NPC_LYAN",
         "speakerDisplay": "Ly An",
-        "onscreen": null,
+        "onscreen": false,
+        "stagingNote": "M-C CP5: no person in the current storyboard keyframe (top-down spring path, stone channel, root mass, shrine — no named character; motion ledger namedCharactersVisible=[]); the line is delivered as voice-over in the draft mix. onscreen=false records the current picture and mix; the final-picture decision (add Ly An to the frame vs keep the voice-over) stays with the director — flip this field with the picture revision.",
         "windowSeconds": [
           12.5,
           17.5
