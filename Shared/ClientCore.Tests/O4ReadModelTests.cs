@@ -542,5 +542,60 @@ namespace NguMach.Client.Core.Tests
             var skill = CombatTraceFactory.SkillSample("SK-MK-02", "ENT_BOSS_BM_05");
             Assert.Equal("SK-MK-02", skill.skillId);
         }
+
+        private static MediaMetadata SampleMedia()
+        {
+            return new MediaMetadata(
+                "CIN_001",
+                new[] { "Assets/Media/CIN_001.mp4" },
+                true,
+                new[]
+                {
+                    new MediaSubtitleCue(0, 10, "Bến Mưa lúc rạng đông..."),
+                    new MediaSubtitleCue(10, 20, "Một phong thư lạ lạc giữa bến trúc.")
+                });
+        }
+
+        [Fact]
+        public void Media_PlayingSeekCueSeenAndSkipArePresentationOnly()
+        {
+            var p = new MediaPlaybackPresenter(reducedMotion: true);
+            Assert.True(p.Load(SampleMedia(), 36));
+            Assert.Equal(MediaPlaybackPhase.Playing, p.View.Phase);
+            Assert.True(p.View.ReducedMotion);
+            Assert.Equal("Bến Mưa lúc rạng đông...", p.View.CurrentSubtitle);
+            p.Seek(12);
+            Assert.Equal("Một phong thư lạ lạc giữa bến trúc.", p.View.CurrentSubtitle);
+            Assert.Equal(12.0, p.View.ElapsedSeconds);
+            Assert.Equal(36.0, p.Seek(999));
+            Assert.Equal(36.0, p.View.ElapsedSeconds);
+            Assert.Equal(1.0, p.View.ProgressNormalized);
+            p.Seek(5);
+            p.End(skipped: true);
+            Assert.True(p.View.HasSeen);
+            Assert.True(p.View.WasSkipped);
+            Assert.Equal(MediaPlaybackPhase.Ended, p.View.Phase);
+            p.Rewatch();
+            Assert.Equal(1, p.View.RewatchCount);
+            Assert.False(p.View.WasSkipped);
+            Assert.Equal(0.0, p.View.ElapsedSeconds);
+        }
+
+        [Fact]
+        public void Media_FallbackOnUnsupportedCodecEmbeddedMixAndBadPath()
+        {
+            var notAllowed = new MediaPlaybackPresenter();
+            Assert.False(notAllowed.Load(SampleMedia(), 36, codecSupported: true, requestedPath: "Assets/Media/other.mp4"));
+            Assert.Equal(MediaPlaybackPhase.Fallback, notAllowed.View.Phase);
+            Assert.Equal("path_not_allowed", notAllowed.View.FallbackReason);
+
+            var vo = new MediaPlaybackPresenter();
+            Assert.False(vo.Load(SampleMedia(), 36, codecSupported: true, requestedPath: "Assets/Media/vo_001.mp4"));
+            Assert.Equal("embedded_soundtrack_only", vo.View.FallbackReason);
+
+            var codec = new MediaPlaybackPresenter();
+            Assert.False(codec.Load(SampleMedia(), 36, codecSupported: false, requestedPath: "Assets/Media/CIN_001.mp4"));
+            Assert.Equal("unsupported_codec", codec.View.FallbackReason);
+        }
     }
 }
