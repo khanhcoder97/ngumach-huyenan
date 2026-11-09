@@ -1,0 +1,931 @@
+{
+  "manifestId": "NGM_P0_CANDIDATE_M38A_SUBSET_V1",
+  "workOrder": "WO38 M38-A (GoI 38, issue #116 comment 6733227370, PR #130)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "baselineSha": "14b588c663a6d53295b34f1d632e84c48c7f5ca9",
+  "status": "DRAFT_CANDIDATE_FOR_CODEX_REVIEW - NOT final animation, NOT_AUDITIONED, runtime package NOT modified",
+  "candidate": {
+    "video": "B takes - procedural pose animation from storyboard keyframes (WO37 M-C CP2): 5 poses per shot at 10 pose/s inside 30 fps video",
+    "audio": "P0 draft mix v3 embedded (AAC 48 kHz stereo) - fully composed music + composed ambience + draft VO, sidechain-ducked",
+    "scenes": [
+      "CIN_001",
+      "CIN_002",
+      "CIN_004"
+    ],
+    "totalDurationSeconds": 72.0,
+    "frameSize": [
+      640,
+      360
+    ],
+    "fps": 30
+  },
+  "files": [
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/candidate_m38a/P0_candidate_review_72s_640x360_30fps.mp4",
+      "role": "candidate_review_reel_72s",
+      "bytes": 2989770,
+      "sha256": "a9ae424cd95de09899dfd8bcff40a1ca572f571f7043d3259e10f14c0110780c"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/candidate_m38a/P0_candidate_contact_all12.png",
+      "role": "candidate_contact_sheet_all12",
+      "bytes": 866130,
+      "sha256": "916dbeb4d8d660435f3ec91a4a24889acb1d878debbde7d837efed5358d68739"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_pose_640x360_30fps.mp4",
+      "role": "candidate_scene_take_CIN_001",
+      "bytes": 1393983,
+      "sha256": "e244b152f778051990752e18f462a94f54eb037ff65075fd356b6b08e62624f1"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/ab/CIN_001_ab_kenburns_vs_pose_640x720_30fps.mp4",
+      "role": "ab_comparison_video_CIN_001",
+      "bytes": 1811416,
+      "sha256": "827ad1d7a1d4651db425499a62282cc7e6dc061f556f97cf3cf6ca9e79bd28a4"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_002_pose_640x360_30fps.mp4",
+      "role": "candidate_scene_take_CIN_002",
+      "bytes": 700853,
+      "sha256": "822a32d7a9291e520d42e122a2e690d61a9d7c2a93ade9361d8e4c6897b104be"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/ab/CIN_002_ab_kenburns_vs_pose_640x720_30fps.mp4",
+      "role": "ab_comparison_video_CIN_002",
+      "bytes": 895363,
+      "sha256": "7621c008189cb64bb2072c3a49b70bb70349d8b1471b90d8e328903899e7906c"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_004_pose_640x360_30fps.mp4",
+      "role": "candidate_scene_take_CIN_004",
+      "bytes": 897630,
+      "sha256": "15e1b8d1d276b64660e019e75efe819ae34909bb210fa4b8830c4c8a79ef6fdd"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/ab/CIN_004_ab_kenburns_vs_pose_640x720_30fps.mp4",
+      "role": "ab_comparison_video_CIN_004",
+      "bytes": 1154975,
+      "sha256": "66d5ae81504d71201a55d745ab8889708578e41f7f4714241111d2cc4e47e9f2"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_S01_pose_640x360_30fps.mp4",
+      "role": "shot_take_CIN_001_S01",
+      "bytes": 98553,
+      "sha256": "512e6732f61a8cbabea292f5b24ef889486664fe3cc0f457c88dcfec38a5c312"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/contact/CIN_001_S01_contact.png",
+      "role": "contact_sheet_CIN_001_S01",
+      "bytes": 145977,
+      "sha256": "ba3f1487ae3c22cf833aec84099a838dd86c2449e398011d42508fde87767487"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_S02_pose_640x360_30fps.mp4",
+      "role": "shot_take_CIN_001_S02",
+      "bytes": 94160,
+      "sha256": "01152fcc29ddfb9495849944ee9b460837229cbf5fa09a53c5a852593cd4676b"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/contact/CIN_001_S02_contact.png",
+      "role": "contact_sheet_CIN_001_S02",
+      "bytes": 150868,
+      "sha256": "63db2c072ef4ca3b00dfec2303117de418c159c83f3c363d56956889df99f5bf"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_S03_pose_640x360_30fps.mp4",
+      "role": "shot_take_CIN_001_S03",
+      "bytes": 61849,
+      "sha256": "7c2df787c23ec1a3d485811773d87915d501b99a6ebbfe02ef3d4408e0b613dc"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/contact/CIN_001_S03_contact.png",
+      "role": "contact_sheet_CIN_001_S03",
+      "bytes": 103080,
+      "sha256": "dc409e821c968a5ad9999fc63c6519d489c9b9e83fdb4f8b077e1c0188b05d76"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_S04_pose_640x360_30fps.mp4",
+      "role": "shot_take_CIN_001_S04",
+      "bytes": 81319,
+      "sha256": "ebe8598dfb72dec1eab709be03886850878d0c21a5ff2ba9ad16caf30794ddb4"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/contact/CIN_001_S04_contact.png",
+      "role": "contact_sheet_CIN_001_S04",
+      "bytes": 133689,
+      "sha256": "c35e75318320e74696af55f8d240fb21978f3933abeab14397ffccab32b8d13a"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_S05_pose_640x360_30fps.mp4",
+      "role": "shot_take_CIN_001_S05",
+      "bytes": 93918,
+      "sha256": "d4e47e03481e80aeec3c671f4caac63e2ac1a5ceccf0e31e948ce116cba10805"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/contact/CIN_001_S05_contact.png",
+      "role": "contact_sheet_CIN_001_S05",
+      "bytes": 156611,
+      "sha256": "47d246f8bff1de50b6b59ad7a8038aee5d77a4b88385892269eae0e9cc379db1"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_001_S06_pose_640x360_30fps.mp4",
+      "role": "shot_take_CIN_001_S06",
+      "bytes": 75050,
+      "sha256": "8ba58e3779933b1e1e1f0daaabcc2e0fb2a92dfba4febfad3854217aa1f36dac"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/contact/CIN_001_S06_contact.png",
+      "role": "contact_sheet_CIN_001_S06",
+      "bytes": 142933,
+      "sha256": "bf8024ee9809480203a44ba007df1eb395831c9ad81428789afb66b0d7e0b920"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_002_S01_pose_640x360_30fps.mp4",
+      "role": "shot_take_CIN_002_S01",
+      "bytes": 76065,
+      "sha256": "05a5686412c9d19ca8bbcb12774c6f28a916e5d233db0fe27d63501397790d8d"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/contact/CIN_002_S01_contact.png",
+      "role": "contact_sheet_CIN_002_S01",
+      "bytes": 125271,
+      "sha256": "409c2dc2ba2c114f24602bcbae82fc0271e5c98df4ab00e730276fb928bebc0e"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_002_S02_pose_640x360_30fps.mp4",
+      "role": "shot_take_CIN_002_S02",
+      "bytes": 110012,
+      "sha256": "925cf0198094cc5a13ec43c89bfb412f0057b647c87ee65ae5c572602dd9a6ca"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/contact/CIN_002_S02_contact.png",
+      "role": "contact_sheet_CIN_002_S02",
+      "bytes": 158967,
+      "sha256": "4b36aeba4d36adf36e66415855044d95061fabb4bca4239165febf61e67f99bf"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_002_S03_pose_640x360_30fps.mp4",
+      "role": "shot_take_CIN_002_S03",
+      "bytes": 69470,
+      "sha256": "116275bdea6acb656de16937b66ed90b257a609c15a778f5a6ccb24d6844d86a"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/contact/CIN_002_S03_contact.png",
+      "role": "contact_sheet_CIN_002_S03",
+      "bytes": 146733,
+      "sha256": "31aa3d31c1f76d455d8334c41495d4d5c4d5b0ebf15019f06dcf0f5cf32073c4"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_004_S01_pose_640x360_30fps.mp4",
+      "role": "shot_take_CIN_004_S01",
+      "bytes": 101529,
+      "sha256": "719be9d3f31d17d1a458e043b763a41fa019ffc6b73f73fc237eb3c5883e1aeb"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/contact/CIN_004_S01_contact.png",
+      "role": "contact_sheet_CIN_004_S01",
+      "bytes": 155996,
+      "sha256": "35246a9915ac523ecabba5e30462d59547e1fa1e4cb6cc85776c7b36ed624332"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_004_S02_pose_640x360_30fps.mp4",
+      "role": "shot_take_CIN_004_S02",
+      "bytes": 187999,
+      "sha256": "1683efd0df231ea3a57d1b4686f05991620f907c2f3dafd9c5056007eeaab8c2"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/contact/CIN_004_S02_contact.png",
+      "role": "contact_sheet_CIN_004_S02",
+      "bytes": 266563,
+      "sha256": "661a09e42e6fa79b8d16a07f5727ad28641480ec33e03cddec234148aa9b31f3"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/takes/CIN_004_S03_pose_640x360_30fps.mp4",
+      "role": "shot_take_CIN_004_S03",
+      "bytes": 163030,
+      "sha256": "a047fc353e3685c07136b7d0986e809b192f78a82f7887a5c23bb4343b900918"
+    },
+    {
+      "path": "Art_Source/Cinematics/P0_Motion/contact/CIN_004_S03_contact.png",
+      "role": "contact_sheet_CIN_004_S03",
+      "bytes": 261695,
+      "sha256": "575802098bd2dd686f789a7d8152ba3ff355b20e14a754218f4df806798c9549"
+    }
+  ],
+  "perShot": [
+    {
+      "shotId": "CIN_001_S01",
+      "sceneId": "CIN_001",
+      "windowInSceneSeconds": [
+        0.0,
+        6.0
+      ],
+      "windowInReelSeconds": [
+        0.0,
+        6.0
+      ],
+      "camera": "WIDE_STATIC",
+      "beatWindowShotLocalSeconds": [
+        2.0,
+        2.5
+      ],
+      "beatWindowSceneSeconds": [
+        2.0,
+        2.5
+      ],
+      "poseCount": 5,
+      "poseFps": 10,
+      "route": "procedural",
+      "meanInterPoseDiff": 0.734,
+      "pose1VsKeyframeDiff": 0.301,
+      "lastPoseVsKeyframeDiff": 0.438,
+      "dialogue": null,
+      "characterLockRequired": false,
+      "guardrails": []
+    },
+    {
+      "shotId": "CIN_001_S02",
+      "sceneId": "CIN_001",
+      "windowInSceneSeconds": [
+        6.0,
+        12.0
+      ],
+      "windowInReelSeconds": [
+        6.0,
+        12.0
+      ],
+      "camera": "DETAIL_LOCKED",
+      "beatWindowShotLocalSeconds": [
+        2.0,
+        2.5
+      ],
+      "beatWindowSceneSeconds": [
+        8.0,
+        8.5
+      ],
+      "poseCount": 5,
+      "poseFps": 10,
+      "route": "procedural",
+      "meanInterPoseDiff": 1.502,
+      "pose1VsKeyframeDiff": 0.255,
+      "lastPoseVsKeyframeDiff": 0.388,
+      "dialogue": null,
+      "characterLockRequired": false,
+      "guardrails": []
+    },
+    {
+      "shotId": "CIN_001_S03",
+      "sceneId": "CIN_001",
+      "windowInSceneSeconds": [
+        12.0,
+        18.0
+      ],
+      "windowInReelSeconds": [
+        12.0,
+        18.0
+      ],
+      "camera": "DETAIL_LOCKED",
+      "beatWindowShotLocalSeconds": [
+        2.0,
+        2.5
+      ],
+      "beatWindowSceneSeconds": [
+        14.0,
+        14.5
+      ],
+      "poseCount": 5,
+      "poseFps": 10,
+      "route": "procedural",
+      "meanInterPoseDiff": 0.498,
+      "pose1VsKeyframeDiff": 0.099,
+      "lastPoseVsKeyframeDiff": 0.473,
+      "dialogue": null,
+      "characterLockRequired": false,
+      "guardrails": []
+    },
+    {
+      "shotId": "CIN_001_S04",
+      "sceneId": "CIN_001",
+      "windowInSceneSeconds": [
+        18.0,
+        24.0
+      ],
+      "windowInReelSeconds": [
+        18.0,
+        24.0
+      ],
+      "camera": "DETAIL_LOCKED",
+      "beatWindowShotLocalSeconds": [
+        2.0,
+        2.5
+      ],
+      "beatWindowSceneSeconds": [
+        20.0,
+        20.5
+      ],
+      "poseCount": 5,
+      "poseFps": 10,
+      "route": "procedural",
+      "meanInterPoseDiff": 0.503,
+      "pose1VsKeyframeDiff": 0.235,
+      "lastPoseVsKeyframeDiff": 0.486,
+      "dialogue": null,
+      "characterLockRequired": false,
+      "guardrails": []
+    },
+    {
+      "shotId": "CIN_001_S05",
+      "sceneId": "CIN_001",
+      "windowInSceneSeconds": [
+        24.0,
+        30.0
+      ],
+      "windowInReelSeconds": [
+        24.0,
+        30.0
+      ],
+      "camera": "MEDIUM_STATIC",
+      "beatWindowShotLocalSeconds": [
+        0.8,
+        1.3
+      ],
+      "beatWindowSceneSeconds": [
+        24.8,
+        25.3
+      ],
+      "poseCount": 5,
+      "poseFps": 10,
+      "route": "procedural",
+      "meanInterPoseDiff": 2.493,
+      "pose1VsKeyframeDiff": 0.284,
+      "lastPoseVsKeyframeDiff": 5.534,
+      "dialogue": {
+        "speaker": "NPC_LYAN",
+        "windowSceneSeconds": [
+          24.8,
+          28.5
+        ],
+        "text": "Đầu kia! Giữ giúp tôi đầu kia!",
+        "beatStartsAtWindowHead": true
+      },
+      "characterLockRequired": true,
+      "guardrails": []
+    },
+    {
+      "shotId": "CIN_001_S06",
+      "sceneId": "CIN_001",
+      "windowInSceneSeconds": [
+        30.0,
+        36.0
+      ],
+      "windowInReelSeconds": [
+        30.0,
+        36.0
+      ],
+      "camera": "TOPDOWN_MATCH",
+      "beatWindowShotLocalSeconds": [
+        2.0,
+        2.5
+      ],
+      "beatWindowSceneSeconds": [
+        32.0,
+        32.5
+      ],
+      "poseCount": 5,
+      "poseFps": 10,
+      "route": "procedural",
+      "meanInterPoseDiff": 1.813,
+      "pose1VsKeyframeDiff": 0.0,
+      "lastPoseVsKeyframeDiff": 0.0,
+      "dialogue": null,
+      "characterLockRequired": true,
+      "guardrails": []
+    },
+    {
+      "shotId": "CIN_002_S01",
+      "sceneId": "CIN_002",
+      "windowInSceneSeconds": [
+        0.0,
+        6.0
+      ],
+      "windowInReelSeconds": [
+        36.0,
+        42.0
+      ],
+      "camera": "GROUND_DETAIL",
+      "beatWindowShotLocalSeconds": [
+        2.0,
+        2.5
+      ],
+      "beatWindowSceneSeconds": [
+        2.0,
+        2.5
+      ],
+      "poseCount": 5,
+      "poseFps": 10,
+      "route": "procedural",
+      "meanInterPoseDiff": 1.054,
+      "pose1VsKeyframeDiff": 0.394,
+      "lastPoseVsKeyframeDiff": 0.691,
+      "dialogue": null,
+      "characterLockRequired": false,
+      "guardrails": []
+    },
+    {
+      "shotId": "CIN_002_S02",
+      "sceneId": "CIN_002",
+      "windowInSceneSeconds": [
+        6.0,
+        12.0
+      ],
+      "windowInReelSeconds": [
+        42.0,
+        48.0
+      ],
+      "camera": "MEDIUM_STATIC",
+      "beatWindowShotLocalSeconds": [
+        1.0,
+        1.5
+      ],
+      "beatWindowSceneSeconds": [
+        7.0,
+        7.5
+      ],
+      "poseCount": 5,
+      "poseFps": 10,
+      "route": "procedural",
+      "meanInterPoseDiff": 1.611,
+      "pose1VsKeyframeDiff": 0.249,
+      "lastPoseVsKeyframeDiff": 3.388,
+      "dialogue": {
+        "speaker": "NPC_TA_VAN_KHANH",
+        "windowSceneSeconds": [
+          7.0,
+          11.0
+        ],
+        "text": "Trên bờ chỉ nghe nửa tiếng. Phần còn lại ở dưới ấy.",
+        "beatStartsAtWindowHead": true
+      },
+      "characterLockRequired": true,
+      "guardrails": []
+    },
+    {
+      "shotId": "CIN_002_S03",
+      "sceneId": "CIN_002",
+      "windowInSceneSeconds": [
+        12.0,
+        18.0
+      ],
+      "windowInReelSeconds": [
+        48.0,
+        54.0
+      ],
+      "camera": "TOPDOWN_MATCH",
+      "beatWindowShotLocalSeconds": [
+        2.0,
+        2.5
+      ],
+      "beatWindowSceneSeconds": [
+        14.0,
+        14.5
+      ],
+      "poseCount": 5,
+      "poseFps": 10,
+      "route": "procedural",
+      "meanInterPoseDiff": 1.487,
+      "pose1VsKeyframeDiff": 0.034,
+      "lastPoseVsKeyframeDiff": 0.129,
+      "dialogue": null,
+      "characterLockRequired": false,
+      "guardrails": []
+    },
+    {
+      "shotId": "CIN_004_S01",
+      "sceneId": "CIN_004",
+      "windowInSceneSeconds": [
+        0.0,
+        6.0
+      ],
+      "windowInReelSeconds": [
+        54.0,
+        60.0
+      ],
+      "camera": "WIDE_STATIC",
+      "beatWindowShotLocalSeconds": [
+        2.0,
+        2.5
+      ],
+      "beatWindowSceneSeconds": [
+        2.0,
+        2.5
+      ],
+      "poseCount": 5,
+      "poseFps": 10,
+      "route": "procedural",
+      "meanInterPoseDiff": 2.896,
+      "pose1VsKeyframeDiff": 0.238,
+      "lastPoseVsKeyframeDiff": 6.391,
+      "dialogue": null,
+      "characterLockRequired": true,
+      "guardrails": [
+        "BROKEN_HORN: exactly one broken horn (short jagged stump) + one whole curved horn (canon, checkpoint 13 fix)"
+      ]
+    },
+    {
+      "shotId": "CIN_004_S02",
+      "sceneId": "CIN_004",
+      "windowInSceneSeconds": [
+        6.0,
+        12.0
+      ],
+      "windowInReelSeconds": [
+        60.0,
+        66.0
+      ],
+      "camera": "DETAIL_LOCKED",
+      "beatWindowShotLocalSeconds": [
+        1.5,
+        2.0
+      ],
+      "beatWindowSceneSeconds": [
+        7.5,
+        8.0
+      ],
+      "poseCount": 5,
+      "poseFps": 10,
+      "route": "procedural",
+      "meanInterPoseDiff": 10.89,
+      "pose1VsKeyframeDiff": 0.295,
+      "lastPoseVsKeyframeDiff": 25.588,
+      "dialogue": {
+        "speaker": "NPC_LYAN",
+        "windowSceneSeconds": [
+          7.5,
+          9.5
+        ],
+        "text": "Nó cứ tránh chỗ nước ấy.",
+        "beatStartsAtWindowHead": true
+      },
+      "characterLockRequired": true,
+      "guardrails": []
+    },
+    {
+      "shotId": "CIN_004_S03",
+      "sceneId": "CIN_004",
+      "windowInSceneSeconds": [
+        12.0,
+        18.0
+      ],
+      "windowInReelSeconds": [
+        66.0,
+        72.0
+      ],
+      "camera": "TOPDOWN_MATCH",
+      "beatWindowShotLocalSeconds": [
+        2.0,
+        2.5
+      ],
+      "beatWindowSceneSeconds": [
+        14.0,
+        14.5
+      ],
+      "poseCount": 5,
+      "poseFps": 10,
+      "route": "procedural",
+      "meanInterPoseDiff": 7.718,
+      "pose1VsKeyframeDiff": 0.26,
+      "lastPoseVsKeyframeDiff": 9.701,
+      "dialogue": null,
+      "characterLockRequired": true,
+      "guardrails": []
+    }
+  ],
+  "audioRouting": {
+    "rule": "EMBEDDED_SOUNDTRACK_ONLY - play only the soundtrack embedded in the candidate clip; never play a standalone mix WAV or VO take at the same time",
+    "embeddedMixes": {
+      "CIN_001": {
+        "path": "ClientGodot/assets/audio/mix/p0_v3/CIN_001_mix_draft_v3.wav",
+        "role": "candidate_embedded_soundtrack_mix_wav",
+        "bytes": 6912100,
+        "sha256": "1463ce02d64fa35ba785c0911afdd6193fdafb697b6a3c4d52552516aa1e3320",
+        "integratedLufs": -21.06,
+        "truePeakDbtp": -1.66
+      },
+      "CIN_002": {
+        "path": "ClientGodot/assets/audio/mix/p0_v3/CIN_002_mix_draft_v3.wav",
+        "role": "candidate_embedded_soundtrack_mix_wav",
+        "bytes": 3456100,
+        "sha256": "0dc438137976772a214e3a434c045c06caa4217d31b5ddc49475a5016107fe0c",
+        "integratedLufs": -22.67,
+        "truePeakDbtp": -4.25
+      },
+      "CIN_004": {
+        "path": "ClientGodot/assets/audio/mix/p0_v3/CIN_004_mix_draft_v3.wav",
+        "role": "candidate_embedded_soundtrack_mix_wav",
+        "bytes": 3456100,
+        "sha256": "8e3bc4e2908412ca78048b42c2012a05ddf22ca59442dd008a8277f311db84cc",
+        "integratedLufs": -26.78,
+        "truePeakDbtp": -8.27
+      }
+    },
+    "subtitles": "external SRT (UTF-8), not baked into the candidate video; no double captions",
+    "alternatesNotInCandidate": [
+      "P0 mix v1 (ported stems) ClientGodot/assets/audio/mix/p0/",
+      "P0 mix v2 (composed music + ported ambience) ClientGodot/assets/audio/mix/p0_v2/",
+      "M-F CP1 palette pickup VO takes (alternate casting) ClientGodot/assets/audio/vo/palette_pickups/"
+    ],
+    "playbackMetadataConsistency": {
+      "CIN_001": "EMBEDDED_SOUNDTRACK_ONLY",
+      "CIN_002": "EMBEDDED_SOUNDTRACK_ONLY",
+      "CIN_004": "EMBEDDED_SOUNDTRACK_ONLY"
+    }
+  },
+  "sourceClosure": {
+    "keyframes": [
+      {
+        "path": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S01.png",
+        "role": "storyboard_keyframe_CIN_001_S01",
+        "bytes": 368439,
+        "sha256": "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8"
+      },
+      {
+        "path": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S02.png",
+        "role": "storyboard_keyframe_CIN_001_S02",
+        "bytes": 366983,
+        "sha256": "b09dfb68f439b034ecbc102f5df6b52f4d8e6babe14b89fce38d1fd66dbf343e"
+      },
+      {
+        "path": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S03.png",
+        "role": "storyboard_keyframe_CIN_001_S03",
+        "bytes": 281130,
+        "sha256": "c07ddc98665021894c4cd92099dd24faac3a6f18f10610d3d67f81d34f1467bb"
+      },
+      {
+        "path": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S04.png",
+        "role": "storyboard_keyframe_CIN_001_S04",
+        "bytes": 333443,
+        "sha256": "0722da26101620a15e622f9bf54237ad929f10cc65ddf0555447c582299aa741"
+      },
+      {
+        "path": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S05.png",
+        "role": "storyboard_keyframe_CIN_001_S05",
+        "bytes": 366264,
+        "sha256": "0d48a6283d82aec6b1e5b77051d80c0e0714b12b86c4ef48d153d129ba098656"
+      },
+      {
+        "path": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S06.png",
+        "role": "storyboard_keyframe_CIN_001_S06",
+        "bytes": 336169,
+        "sha256": "0678aa59b4c856b724ba53981132bcf27ff33bdee44bf64130b0296d34184278"
+      },
+      {
+        "path": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_002_S01.png",
+        "role": "storyboard_keyframe_CIN_002_S01",
+        "bytes": 271088,
+        "sha256": "3553e28e24322bbea33affabfd900d5d2360a132c5a492355a7fe3a173906fb3"
+      },
+      {
+        "path": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_002_S02.png",
+        "role": "storyboard_keyframe_CIN_002_S02",
+        "bytes": 378360,
+        "sha256": "4c5b7b3523c59efa4d7e4a081fc936b0781b21b0f9f16c595360430212c0cafa"
+      },
+      {
+        "path": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_002_S03.png",
+        "role": "storyboard_keyframe_CIN_002_S03",
+        "bytes": 344865,
+        "sha256": "71d1a25239eb8c7720243e96e1be9195859b801409f97952d37cd037db39e3d6"
+      },
+      {
+        "path": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_004_S01.png",
+        "role": "storyboard_keyframe_CIN_004_S01",
+        "bytes": 384737,
+        "sha256": "e43df4ff0178dcc2dc390ee907bd1d05e35632cdbc9e8672b2310eb535d54829"
+      },
+      {
+        "path": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_004_S02.png",
+        "role": "storyboard_keyframe_CIN_004_S02",
+        "bytes": 405121,
+        "sha256": "fc0450bf902e9020dd2d1548168712653e20566ba1f437de80a9a26f09615cf5"
+      },
+      {
+        "path": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_004_S03.png",
+        "role": "storyboard_keyframe_CIN_004_S03",
+        "bytes": 443192,
+        "sha256": "e7493991a21827df7dc5a5d4e115d3aa12ebf986c5301e6ea183bdea662cf59b"
+      }
+    ],
+    "timing": [
+      {
+        "path": "Implementation/Content/Narrative/Deliveries/CIN_001/CIN_001_timing_v1.json",
+        "role": "timing_CIN_001",
+        "bytes": 2503,
+        "sha256": "2c905e375145aa31d0465fae87638cbccfb76d74df184dc90d1d5130755f65e3"
+      },
+      {
+        "path": "Implementation/Content/Narrative/Deliveries/CIN_002/CIN_002_timing_v1.json",
+        "role": "timing_CIN_002",
+        "bytes": 1708,
+        "sha256": "bc0578cd80ee0f7584fec695e97be34e356899df9ae7e5d9919a9b665fc70c0c"
+      },
+      {
+        "path": "Implementation/Content/Narrative/Deliveries/CIN_004/CIN_004_timing_v1.json",
+        "role": "timing_CIN_004",
+        "bytes": 1783,
+        "sha256": "431b3b025d37bcc39190b87f5a0847b6e0c74e0dbb719998de5cd48ff6f75a97"
+      }
+    ],
+    "subtitles": [
+      {
+        "path": "ClientGodot/assets/cinematics/CIN_001/CIN_001_vi.srt",
+        "role": "subtitles_runtime_CIN_001",
+        "bytes": 73,
+        "sha256": "c014be143d1878eecf656679f4b7df70087fac87f10383b3d4218cd092da4f8d"
+      },
+      {
+        "path": "Implementation/Content/Narrative/Deliveries/CIN_001/CIN_001_vi.srt",
+        "role": "subtitles_delivery_CIN_001",
+        "bytes": 73,
+        "sha256": "c014be143d1878eecf656679f4b7df70087fac87f10383b3d4218cd092da4f8d"
+      },
+      {
+        "path": "ClientGodot/assets/cinematics/CIN_002/CIN_002_vi.srt",
+        "role": "subtitles_runtime_CIN_002",
+        "bytes": 105,
+        "sha256": "466a5051eb04f99af62497ecc2a36eec96fb08416ef3511055f8cc932b55dbbd"
+      },
+      {
+        "path": "Implementation/Content/Narrative/Deliveries/CIN_002/CIN_002_vi.srt",
+        "role": "subtitles_delivery_CIN_002",
+        "bytes": 105,
+        "sha256": "466a5051eb04f99af62497ecc2a36eec96fb08416ef3511055f8cc932b55dbbd"
+      },
+      {
+        "path": "ClientGodot/assets/cinematics/CIN_004/CIN_004_vi.srt",
+        "role": "subtitles_runtime_CIN_004",
+        "bytes": 68,
+        "sha256": "b06b87b1f07f841d082a7ee7ed60647d488f05939e419a1321df4ad5a4296645"
+      },
+      {
+        "path": "Implementation/Content/Narrative/Deliveries/CIN_004/CIN_004_vi.srt",
+        "role": "subtitles_delivery_CIN_004",
+        "bytes": 68,
+        "sha256": "b06b87b1f07f841d082a7ee7ed60647d488f05939e419a1321df4ad5a4296645"
+      }
+    ],
+    "voTakes": [
+      {
+        "path": "Art_Source/Audio/Muse/VO/P0_DRAFT/CIN001_S05_tts_raw.mp3",
+        "role": "vo_draft_take_source",
+        "bytes": 20581,
+        "sha256": "a22b506761bf81bd1567187aba410a7a2029cc5f00e79b378664d2f12bfd7413"
+      },
+      {
+        "path": "Art_Source/Audio/Muse/VO/P0_DRAFT/CIN002_S02_tts_raw.mp3",
+        "role": "vo_draft_take_source",
+        "bytes": 30373,
+        "sha256": "66d4ae86fcf6310386f895bd726fd17db72d35b0b2203276a2274d7585e28a54"
+      },
+      {
+        "path": "Art_Source/Audio/Muse/VO/P0_DRAFT/CIN004_S02_tts_raw.mp3",
+        "role": "vo_draft_take_source",
+        "bytes": 14053,
+        "sha256": "5a001d7523e0f851ea5a0d20fc5afd7d9c1b689d75f41f0c66f5e71c9bfeaf64"
+      },
+      {
+        "path": "Art_Source/Audio/Muse/VO/P0_DRAFT/P0_VO_manifest_v1.json",
+        "role": "vo_draft_take_source",
+        "bytes": 4319,
+        "sha256": "0d04e106dafddde9261ea1d761e45b114ffe829a5d4fb238c214bc3ecf9c164f"
+      },
+      {
+        "path": "Art_Source/Audio/Muse/VO/P0_DRAFT/P0_VO_timeline_draft_v1.wav",
+        "role": "vo_draft_take_source",
+        "bytes": 6912100,
+        "sha256": "d5a853807456c6926680ae2c88cd7bc1de2e6061028b371e91d35751e98bba1f"
+      },
+      {
+        "path": "Art_Source/Audio/Muse/VO/P0_DRAFT/VO_CIN001_S05_LYAN_draft_v1.wav",
+        "role": "vo_draft_take_source",
+        "bytes": 246628,
+        "sha256": "51fc65de235916c3c8b4a002564db7a6e484298f11567af803ff0437b4c1d113"
+      },
+      {
+        "path": "Art_Source/Audio/Muse/VO/P0_DRAFT/VO_CIN002_S02_TAVANKHANH_draft_v1.wav",
+        "role": "vo_draft_take_source",
+        "bytes": 364132,
+        "sha256": "4439578bfb58f5a29cd4d5177c6e53474621ec516b527c08b0802193d407bdcc"
+      },
+      {
+        "path": "Art_Source/Audio/Muse/VO/P0_DRAFT/VO_CIN004_S02_LYAN_OFFSCREEN_draft_v1.wav",
+        "role": "vo_draft_take_source",
+        "bytes": 168292,
+        "sha256": "1fcc662e7621f83bc5f51940b5481ae0342868f7f46c038d3d074ac254028496"
+      }
+    ],
+    "mixManifests": [
+      {
+        "path": "Art_Source/Audio/Muse/MIX/P0_DRAFT/P0_MIX_manifest_v1.json",
+        "role": "mix_manifest",
+        "bytes": 11729,
+        "sha256": "94e2786cd52a22f7c3f54f5cad62c1460ac3341ee3fc50f20b953ee36a9db54f"
+      },
+      {
+        "path": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V2/P0_MIX_V2_manifest_v1.json",
+        "role": "mix_manifest",
+        "bytes": 14346,
+        "sha256": "b4c07ec88afa3c1ef4fd9ff0246b23448360aa6271323734d8e3e6dbd2d7f305"
+      },
+      {
+        "path": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V3/P0_MIX_V3_manifest_v1.json",
+        "role": "mix_manifest",
+        "bytes": 14988,
+        "sha256": "1677380134198965acf12b9ee8ddccbcd659b9f836b3a8d00ad87d2be0a04469"
+      }
+    ],
+    "tools": [
+      {
+        "path": "Tools/MediaProduction/Muse/build_p0_motion_ab_v1.py",
+        "role": "builder_tool",
+        "bytes": 29508,
+        "sha256": "5d76cc3e03899a709da8135df0449b8a29c30fb9558fd11a569a14a726be4939"
+      },
+      {
+        "path": "Tools/MediaProduction/Muse/build_p0_mix_v3.py",
+        "role": "builder_tool",
+        "bytes": 29664,
+        "sha256": "a2ad2aa745e5f87ff99b4f1eb567951248c581f3c52df470508936f40f0c2e44"
+      },
+      {
+        "path": "Tools/MediaProduction/Muse/build_p0_candidate_m38a.py",
+        "role": "builder_tool",
+        "bytes": 14021,
+        "sha256": "611667b97dfe6f24f53c7a6074ce87d7fcdd58faad36766c1b199e30d626110c"
+      }
+    ]
+  },
+  "runtimeUnchangedProof": [
+    {
+      "path": "ClientGodot/assets/cinematics/CIN_001/CIN_001_640x360_30fps.mp4",
+      "role": "runtime_current_CIN_001",
+      "bytes": 1224004,
+      "sha256": "9ffdf366bbca3ced5f614501651d8f832ba1ee5db1d67ad19e84ce030d2e4e25"
+    },
+    {
+      "path": "ClientGodot/assets/cinematics/CIN_001/CIN_001_640x360_30fps.ogv",
+      "role": "runtime_current_CIN_001",
+      "bytes": 1483364,
+      "sha256": "af60880a3776f0f3564a9bd167de912db8f9727697f460257fd1a28471609917"
+    },
+    {
+      "path": "ClientGodot/assets/cinematics/CIN_001/CIN_001_poster.png",
+      "role": "runtime_current_CIN_001",
+      "bytes": 368439,
+      "sha256": "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8"
+    },
+    {
+      "path": "ClientGodot/assets/cinematics/CIN_002/CIN_002_640x360_30fps.mp4",
+      "role": "runtime_current_CIN_002",
+      "bytes": 603413,
+      "sha256": "e09f1302db1f408917986f4db1e0857946ebf6a61dada2cab1f318c516d0d7a7"
+    },
+    {
+      "path": "ClientGodot/assets/cinematics/CIN_002/CIN_002_640x360_30fps.ogv",
+      "role": "runtime_current_CIN_002",
+      "bytes": 749277,
+      "sha256": "d4388b2f41ecaadc20d18613c259a57083790a69a7f8cd0e5966dcfaa47505bf"
+    },
+    {
+      "path": "ClientGodot/assets/cinematics/CIN_002/CIN_002_poster.png",
+      "role": "runtime_current_CIN_002",
+      "bytes": 271088,
+      "sha256": "3553e28e24322bbea33affabfd900d5d2360a132c5a492355a7fe3a173906fb3"
+    },
+    {
+      "path": "ClientGodot/assets/cinematics/CIN_004/CIN_004_640x360_30fps.mp4",
+      "role": "runtime_current_CIN_004",
+      "bytes": 655887,
+      "sha256": "65e5104fe7444067df4df5e52aeadf9078a9a12e2455805384751d1b2bab7891"
+    },
+    {
+      "path": "ClientGodot/assets/cinematics/CIN_004/CIN_004_640x360_30fps.ogv",
+      "role": "runtime_current_CIN_004",
+      "bytes": 768058,
+      "sha256": "457780fa7431719d9018257e0f0a132c603bb3b2aba542ad1ec42fb51b7de590"
+    },
+    {
+      "path": "ClientGodot/assets/cinematics/CIN_004/CIN_004_poster.png",
+      "role": "runtime_current_CIN_004",
+      "bytes": 384737,
+      "sha256": "e43df4ff0178dcc2dc390ee907bd1d05e35632cdbc9e8672b2310eb535d54829"
+    }
+  ],
+  "provenance": {
+    "musicAmbience": "ORIGINAL_COMPOSED_BY_MUSE - procedural synthesis, no samples (CP26/CP30)",
+    "voice": "fictional TTS draft voices only, no real-voice cloning (Ly An = Aria; male draft voice shared - M-F palette pickups are alternates, not in this candidate)",
+    "picture": "procedural pose animation rendered from generated storyboard keyframes (STORYBOARD_ONLY); 8 generated strips rejected at CP2, 0 generated pixels in the takes",
+    "portedPackV1FilesInCandidate": 0
+  }
+}
