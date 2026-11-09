@@ -400,5 +400,79 @@ namespace NguMach.Client.Core.Tests
             Assert.False(presenter.HasBlocking);
             Assert.DoesNotContain(presenter.Messages, m => m.Sequence == critical.Sequence);
         }
+
+        private sealed class FakeUiAdapter : IP1UIAdapter
+        {
+            public UIConnectionState ConnectionState { get; set; } = UIConnectionState.Ready;
+            public bool HasPendingMutation { get; set; }
+            public string LastErrorCode { get; set; }
+            public string LastCorrelationId { get; set; }
+            public P1Self Self { get; set; }
+            public P1World World { get; set; }
+            public P1WorldV2 WorldV2 { get; set; }
+            public P1Quest[] Quests { get; set; } = new P1Quest[0];
+            public P1Inventory Inventory { get; set; }
+            public Task<P1Result> ReadQuestsAsync(CancellationToken ct) { return Task.FromResult(P1Result.Ok()); }
+            public Task<P1Result> ReadInventoryAsync(CancellationToken ct) { return Task.FromResult(P1Result.Ok()); }
+            public Task<P1Result> ReadWorldAsync(CancellationToken ct) { return Task.FromResult(P1Result.Ok()); }
+            public Task<P1Result> AcceptQuestAsync(string questId, string npcId, CancellationToken ct) { return Task.FromResult(P1Result.Ok()); }
+            public Task<P1Result> InteractAsync(string targetId, CancellationToken ct) { return Task.FromResult(P1Result.Ok()); }
+            public Task<P1Result> TurnInQuestAsync(string questId, string npcId, CancellationToken ct) { return Task.FromResult(P1Result.Ok()); }
+            public Task<P1Result> RetryPendingAsync(CancellationToken ct) { return Task.FromResult(P1Result.Ok()); }
+        }
+
+        private static P1WorldV2 EscortWorld(double npcX, bool includeNpc)
+        {
+            var self = new P1Self { characterId = "CHR_TEST_A", classId = "CLASS_MINH_KIEM", x = 82, y = 0, hp = 100, maxHp = 100, mp = 50, maxMp = 50, swordIntent = 0 };
+            var entities = new List<P1EntityV2>();
+            if (includeNpc)
+                entities.Add(new P1EntityV2
+                {
+                    entityId = "ENT_NPC_LYAN_ESCORT", kind = "NPC",
+                    mapInstanceId = "MI_BEN_MUA_01", floorId = "F1", phase = "PVE",
+                    state = "ACTIVE", healthState = "INVULNERABLE", targetable = false,
+                    x = npcX, y = 0, hp = 1, maxHp = 1, revision = 1, lifeId = 1, availability = "AVAILABLE"
+                });
+            return new P1WorldV2
+            {
+                schemaVersion = 2, mapId = "MAP_BEN_MUA", mapInstanceId = "MI_BEN_MUA_01",
+                floorId = "F1", phase = "PVE", serverTimeUtc = "2026-11-07T00:00:00Z",
+                serverTick = 500, revision = 9,
+                audience = new P1Audience { aoiEnterWu = 40, aoiLeaveWu = 48 },
+                self = self, entities = entities.ToArray()
+            };
+        }
+
+        [Fact]
+        public void Escort_ProjectsAudienceRowAsImmutableView()
+        {
+            var a = new FakeUiAdapter { WorldV2 = EscortWorld(90, true), Self = EscortWorld(90, true).self };
+            var p = new EscortPresenter(a);
+            var v = p.Refresh();
+            Assert.True(v.InAudience);
+            Assert.Equal("ENT_NPC_LYAN_ESCORT", v.EntityId);
+            Assert.Equal(90, v.X);
+            Assert.True(v.IsOnRoad);
+            Assert.Equal(8, v.DistanceToSelfWu);
+            // Immutable snapshot: mutating the audience row afterwards does
+            // not rewrite the published view.
+            a.WorldV2.entities[0].x = 42;
+            Assert.Equal(90, v.X);
+        }
+
+        [Fact]
+        public void Escort_AbsentRowIsNotInAudienceAndAnchorIsNotOnRoad()
+        {
+            var absent = new FakeUiAdapter { WorldV2 = EscortWorld(90, false), Self = EscortWorld(90, false).self };
+            var v = new EscortPresenter(absent).Refresh();
+            Assert.False(v.InAudience);
+            Assert.False(v.IsOnRoad);
+            Assert.False(string.IsNullOrEmpty(v.HintVi));
+
+            var anchor = new FakeUiAdapter { WorldV2 = EscortWorld(42, true), Self = EscortWorld(42, true).self };
+            var av = new EscortPresenter(anchor).Refresh();
+            Assert.True(av.InAudience);
+            Assert.False(av.IsOnRoad);
+        }
     }
 }
