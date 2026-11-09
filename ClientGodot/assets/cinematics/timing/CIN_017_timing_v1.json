@@ -44,7 +44,8 @@
       "dialogue": {
         "speaker": "NPC_DIVER_LEAD",
         "speakerDisplay": "Đội trưởng thợ lặn",
-        "onscreen": null,
+        "onscreen": false,
+        "stagingNote": "M-C CP5: no diver figure anywhere in the S03 keyframe (framing + knownDefects record 'No person'); the CP51 mix manifest already records the line as delivered off-screen. onscreen=false records the current picture and mix; the final-picture decision stays with the director — flip this field with the picture revision.",
         "windowSeconds": [
           12.5,
           17.5

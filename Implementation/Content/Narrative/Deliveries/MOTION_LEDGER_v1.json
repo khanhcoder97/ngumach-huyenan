@@ -26,17 +26,17 @@
     "shots": 63,
     "dialogueShots": 21,
     "byMotionClass": {
-      "ACTION_ANIMATION": 38,
-      "KEN_BURNS_HOLD": 25
+      "ACTION_ANIMATION": 37,
+      "KEN_BURNS_HOLD": 26
     },
     "byPriority": {
       "1": 12,
-      "2": 26,
-      "3": 25
+      "2": 25,
+      "3": 26
     },
-    "characterLockRequired": 31,
-    "speakerIdentifiabilityDefects": 4,
-    "speakerNotInFrame": 1,
+    "characterLockRequired": 32,
+    "speakerIdentifiabilityDefects": 5,
+    "speakerNotInFrame": 2,
     "cp32FixedShots": 14,
     "keyframesShaVerifiedOnDisk": 63
   },
@@ -84,7 +84,6 @@
     "CIN_019_S02",
     "CIN_020_S01",
     "CIN_020_S02",
-    "CIN_020_S03",
     "CIN_003_S03",
     "CIN_006_S01",
     "CIN_006_S03",
@@ -109,7 +108,8 @@
     "CIN_017_S03",
     "CIN_018_S02",
     "CIN_018_S03",
-    "CIN_019_S03"
+    "CIN_019_S03",
+    "CIN_020_S03"
   ],
   "milestones": {
     "M-C checkpoint 2 (P0 motion/AB)": [
@@ -152,7 +152,6 @@
       "CIN_019_S02",
       "CIN_020_S01",
       "CIN_020_S02",
-      "CIN_020_S03",
       "CIN_003_S03",
       "CIN_006_S01",
       "CIN_006_S03",
@@ -177,7 +176,8 @@
       "CIN_017_S03",
       "CIN_018_S02",
       "CIN_018_S03",
-      "CIN_019_S03"
+      "CIN_019_S03",
+      "CIN_020_S03"
     ]
   },
   "shots": [
@@ -900,7 +900,7 @@
         "speaker": "NPC_LYAN",
         "speakerCanonical": "NPC_LYAN",
         "speakerDisplay": "Ly An",
-        "onscreen": null,
+        "onscreen": false,
         "windowSeconds": [
           12.5,
           17.5
@@ -1430,7 +1430,7 @@
         "speaker": "NPC_LYAN",
         "speakerCanonical": "NPC_LYAN",
         "speakerDisplay": "Ly An",
-        "onscreen": null,
+        "onscreen": false,
         "windowSeconds": [
           12.5,
           17.5
@@ -2525,7 +2525,7 @@
         "speaker": "NPC_DIVER_LEAD",
         "speakerCanonical": "NPC_DIVER_LEAD",
         "speakerDisplay": "Đội trưởng thợ lặn",
-        "onscreen": null,
+        "onscreen": false,
         "windowSeconds": [
           12.5,
           17.5
@@ -2922,10 +2922,10 @@
         "identityMeanAbsChannelDiff": 6.484
       },
       "dialogue": {
-        "speaker": null,
-        "speakerCanonical": null,
+        "speaker": "LETTER_RECIPIENT",
+        "speakerCanonical": "LETTER_RECIPIENT",
         "speakerDisplay": "Người nhận thư",
-        "onscreen": null,
+        "onscreen": true,
         "windowSeconds": [
           12.5,
           17.5
@@ -2933,16 +2933,18 @@
         "text": "Chờ một chút. Tôi muốn gửi lại vài lời."
       },
       "speakerIdentifiableInStoryboard": false,
-      "speakerIdentifiabilityDefect": false,
-      "speakerNotInFrame": false,
+      "speakerIdentifiabilityDefect": true,
+      "speakerNotInFrame": true,
       "namedCharactersVisible": [],
-      "namedCharactersRequired": [],
-      "characterLockRequired": false,
+      "namedCharactersRequired": [
+        "LETTER_RECIPIENT"
+      ],
+      "characterLockRequired": true,
       "genericPersonMention": true,
       "mascotFreeConfirmed": false,
-      "motionClass": "ACTION_ANIMATION",
-      "priority": 2,
-      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture + speaker not identifiable in storyboard",
       "guardrails": [],
       "cp32Fixed": null
     }

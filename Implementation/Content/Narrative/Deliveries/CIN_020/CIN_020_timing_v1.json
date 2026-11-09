@@ -40,9 +40,11 @@
       "camera": "TOPDOWN_MATCH",
       "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
       "dialogue": {
-        "speaker": null,
+        "speaker": "LETTER_RECIPIENT",
+        "speakerStatus": "PLACEHOLDER",
         "speakerDisplay": "Người nhận thư",
-        "onscreen": null,
+        "onscreen": true,
+        "stagingNote": "M-C CP5: speaker ID is the voice-palette placeholder role LETTER_RECIPIENT (recipient identity/gender UNDECIDED per owner direction, CP54; neutral placeholder voice avocado_v2:ElvenWizard, NOT a casting or gender decision). The S03 keyframe shows the seated villager from behind (face not visible; appearance drifts across shots) and the CP54 mix manifest records the line as an on-set voice from behind, so onscreen=true records that the speaker is present in frame; identifiability and identity stay open for the final-picture/casting decision.",
         "windowSeconds": [
           12.5,
           17.5

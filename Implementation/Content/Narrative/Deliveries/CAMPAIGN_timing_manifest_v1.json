@@ -474,7 +474,7 @@
       "cues": [
         {
           "speakerDisplay": "Người nhận thư",
-          "speakerId": null,
+          "speakerId": "LETTER_RECIPIENT",
           "shotId": "CIN_020_S03",
           "windowSeconds": [
             12.5,
@@ -482,7 +482,8 @@
           ],
           "chars": 39,
           "charsPerSecond": 7.8,
-          "widenedForRate": false
+          "widenedForRate": false,
+          "speakerStatus": "PLACEHOLDER"
         }
       ],
       "staging": "PACK_CHARACTERS_AS_LISTED_NO_SPAWN_CLAIM"

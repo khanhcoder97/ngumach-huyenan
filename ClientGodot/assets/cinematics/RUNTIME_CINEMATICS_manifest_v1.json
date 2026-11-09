@@ -413,8 +413,8 @@
     },
     "timing": {
      "path": "assets/cinematics/CIN_005/CIN_005_timing_v1.json",
-     "sha256": "b82b2582f238abf1dd0da3b241258dd08f9a6664bc3cc3996042d5b028e0f618",
-     "sizeBytes": 2377
+     "sha256": "4437df319bac09041663ed632be217e9513cd08b5fa518b882fb4bb9584d2b3f",
+     "sizeBytes": 2850
     },
     "srt": {
      "path": "assets/cinematics/CIN_005/CIN_005_vi.srt",
@@ -487,8 +487,8 @@
     },
     "timing": {
      "path": "assets/cinematics/CIN_009/CIN_009_timing_v1.json",
-     "sha256": "0f49fc20b67ff947823701a8cbeece79b20ad6951d1f64f6743cfb20c34ddca9",
-     "sizeBytes": 2381
+     "sha256": "c8a567d67168539911043bbdb39246be24900a53889d301873b1ebfd2c6527bc",
+     "sizeBytes": 2836
     },
     "srt": {
      "path": "assets/cinematics/CIN_009/CIN_009_vi.srt",
@@ -561,8 +561,8 @@
     },
     "timing": {
      "path": "assets/cinematics/CIN_020/CIN_020_timing_v1.json",
-     "sha256": "064ac1818ade834c8cf05a1dd9c9dc00a71e57b9cd248ae5816dd325d6dfbc38",
-     "sizeBytes": 2345
+     "sha256": "0e6667dcda9f3b4088d712ae2cb52cf2df524b519e275db0470235df4033bbe2",
+     "sizeBytes": 2972
     },
     "srt": {
      "path": "assets/cinematics/CIN_020/CIN_020_vi.srt",
@@ -1375,8 +1375,8 @@
     },
     "timing": {
      "path": "assets/cinematics/CIN_017/CIN_017_timing_v1.json",
-     "sha256": "64a630bd18ba5a9437ed3ad3cc17a0322fb64d0abba558652f447d797bf15499",
-     "sizeBytes": 2397
+     "sha256": "8ce15679c56eacc16f401dae89eac50925cc2f21c9a2baec983e8fd939ea106f",
+     "sizeBytes": 2745
     },
     "srt": {
      "path": "assets/cinematics/CIN_017/CIN_017_vi.srt",
@@ -1645,7 +1645,7 @@
    "durationSeconds": 18,
    "shots": 3,
    "timingFile": "assets/cinematics/timing/CIN_005_timing_v1.json",
-   "timingSha256": "b82b2582f238abf1dd0da3b241258dd08f9a6664bc3cc3996042d5b028e0f618",
+   "timingSha256": "4437df319bac09041663ed632be217e9513cd08b5fa518b882fb4bb9584d2b3f",
    "srtFile": "assets/cinematics/timing/CIN_005_vi.srt",
    "srtSha256": "1f3443dd74d1cd92a008358eb1156d3fc984d4a89057dc4658f2e077df33be5e",
    "srtStatus": "DRAFT",
@@ -1693,7 +1693,7 @@
    "durationSeconds": 18,
    "shots": 3,
    "timingFile": "assets/cinematics/timing/CIN_009_timing_v1.json",
-   "timingSha256": "0f49fc20b67ff947823701a8cbeece79b20ad6951d1f64f6743cfb20c34ddca9",
+   "timingSha256": "c8a567d67168539911043bbdb39246be24900a53889d301873b1ebfd2c6527bc",
    "srtFile": "assets/cinematics/timing/CIN_009_vi.srt",
    "srtSha256": "a0147ac421b78dfd705fdf6ece0aed6bf212b8d17550f5c3b4182bad44da2a24",
    "srtStatus": "DRAFT",
@@ -1789,7 +1789,7 @@
    "durationSeconds": 18,
    "shots": 3,
    "timingFile": "assets/cinematics/timing/CIN_017_timing_v1.json",
-   "timingSha256": "64a630bd18ba5a9437ed3ad3cc17a0322fb64d0abba558652f447d797bf15499",
+   "timingSha256": "8ce15679c56eacc16f401dae89eac50925cc2f21c9a2baec983e8fd939ea106f",
    "srtFile": "assets/cinematics/timing/CIN_017_vi.srt",
    "srtSha256": "559a0c0c36e764d68545a32f9989b54f7fb8edc6e50a62558a9c784077063704",
    "srtStatus": "DRAFT",
@@ -1825,7 +1825,7 @@
    "durationSeconds": 18,
    "shots": 3,
    "timingFile": "assets/cinematics/timing/CIN_020_timing_v1.json",
-   "timingSha256": "064ac1818ade834c8cf05a1dd9c9dc00a71e57b9cd248ae5816dd325d6dfbc38",
+   "timingSha256": "0e6667dcda9f3b4088d712ae2cb52cf2df524b519e275db0470235df4033bbe2",
    "srtFile": "assets/cinematics/timing/CIN_020_vi.srt",
    "srtSha256": "7f27d6672e5a7b55f87162d636a0802cbaaafb9bc7116e9330f9cfc731e27dcc",
    "srtStatus": "DRAFT",
