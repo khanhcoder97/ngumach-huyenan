@@ -1,0 +1,144 @@
+{
+ "validator": "check_p0_ingest_m38b_v1",
+ "manifest": "Implementation/Content/Narrative/Deliveries/P0_INGEST_M38B_SUBSET_v1.json",
+ "total": 27,
+ "passed": 27,
+ "failed": 0,
+ "results": [
+  {
+   "check": "manifest fileCount",
+   "pass": true,
+   "detail": "29 entries"
+  },
+  {
+   "check": "all file hashes+sizes",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "CIN_001 candidate MP4 stream shape",
+   "pass": true,
+   "detail": "dur=36.000000"
+  },
+  {
+   "check": "CIN_001 candidate OGV stream shape",
+   "pass": true,
+   "detail": "dur=36.000000"
+  },
+  {
+   "check": "CIN_001 runtime MP4 stream shape",
+   "pass": true,
+   "detail": "dur=36.000000"
+  },
+  {
+   "check": "CIN_001 runtime OGV stream shape",
+   "pass": true,
+   "detail": "dur=36.000000"
+  },
+  {
+   "check": "CIN_001 SRT encoding+window",
+   "pass": true,
+   "detail": "window=[24.8, 28.5]"
+  },
+  {
+   "check": "CIN_001 OGV loudness vs WAV master",
+   "pass": true,
+   "detail": "delta=0.16 LUFS"
+  },
+  {
+   "check": "CIN_002 candidate MP4 stream shape",
+   "pass": true,
+   "detail": "dur=18.000000"
+  },
+  {
+   "check": "CIN_002 candidate OGV stream shape",
+   "pass": true,
+   "detail": "dur=18.000000"
+  },
+  {
+   "check": "CIN_002 runtime MP4 stream shape",
+   "pass": true,
+   "detail": "dur=18.000000"
+  },
+  {
+   "check": "CIN_002 runtime OGV stream shape",
+   "pass": true,
+   "detail": "dur=18.000000"
+  },
+  {
+   "check": "CIN_002 SRT encoding+window",
+   "pass": true,
+   "detail": "window=[7.0, 11.0]"
+  },
+  {
+   "check": "CIN_002 OGV loudness vs WAV master",
+   "pass": true,
+   "detail": "delta=0.24 LUFS"
+  },
+  {
+   "check": "CIN_004 candidate MP4 stream shape",
+   "pass": true,
+   "detail": "dur=18.000000"
+  },
+  {
+   "check": "CIN_004 candidate OGV stream shape",
+   "pass": true,
+   "detail": "dur=18.000000"
+  },
+  {
+   "check": "CIN_004 runtime MP4 stream shape",
+   "pass": true,
+   "detail": "dur=18.000000"
+  },
+  {
+   "check": "CIN_004 runtime OGV stream shape",
+   "pass": true,
+   "detail": "dur=18.000000"
+  },
+  {
+   "check": "CIN_004 SRT encoding+window",
+   "pass": true,
+   "detail": "window=[7.5, 9.5]"
+  },
+  {
+   "check": "CIN_004 OGV loudness vs WAV master",
+   "pass": true,
+   "detail": "delta=0.05 LUFS"
+  },
+  {
+   "check": "runtime tree unchanged vs M38-A proof",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "OGV frame ~= B MP4 frame @27s (S05 beat)",
+   "pass": true,
+   "detail": "meanAbsDiff=3.11"
+  },
+  {
+   "check": "OGV frame != A runtime frame @27s",
+   "pass": true,
+   "detail": "meanAbsDiff=8.14"
+  },
+  {
+   "check": "exactly-one-audio-path rule present",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "honest status (NOT_AUDITIONED, no self-PASS)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "new files only under Art_Source",
+   "pass": true,
+   "detail": "Art_Source/Cinematics/P0_Motion/candidate_m38a/CIN_001_candidateB_640x360_30fps.ogv; Art_Source/Cinematics/P0_Motion/candidate_m38a/CIN_002_candidateB_640x360_30fps.ogv; Art_Source/Cinematics/P0_Motion/candidate_m38a/CIN_004_candidateB_640x360_30fps.ogv"
+  },
+  {
+   "check": "git: no runtime modifications",
+   "pass": true,
+   "detail": ""
+  }
+ ]
+}
