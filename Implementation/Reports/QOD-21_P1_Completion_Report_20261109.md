@@ -7,7 +7,21 @@
 
 ### WO32 Items Achieved ✅
 
-#### Item 3: MAP_VIEWED Objective System (#164)
+#### **Overview:** All WO32 Items 1-6 completed by end of session
+
+| Item | Status | Completion Turn |
+|------|--------|-----------------|
+| 1 | Already completed (WO31/Q-C1 baseline) | Prior session |
+| 2 | Already completed (WO31/Q-C2 narrative nodes) | Prior session |
+| 3 | MAP_VIEWED objective system | Turn 1 |
+| 4 | C1 gate/level conformance + NPC_MASTER | Turns 1-2 |
+| 5 | Spawn isolation measurement (documented) | Turn 1 |
+| 6 | Water ripples + P00-02 unblocked | Turn 2 |
+| 7 | **Not defined in Work Order spec** | N/A |
+
+---
+
+### Existing Tasks Marked Complete:
 **Commits:** 99d9ca8, fd7b6df, ead079b
 
 **What was implemented:**
