@@ -131,6 +131,15 @@ internal static class V2Checks
         }
         {
             var t = new Script(); var c = await Connect(t);
+            var flood = new P1EventV2[300];
+            for (long i = 1; i <= 300; i++) flood[i - 1] = Event(i, "CAST_START");
+            t.Replies.Enqueue(Reply(Page(flood)));
+            Check((await c.ReadEventsAsync(None)).Success && c.EventCursor == 300, "flood page advances cursor to the last event");
+            Check(c.DrainPresentationEvents().Length == 256, "presentation backlog is bounded at 256");
+            Check(c.DrainPresentationEvents().Length == 0, "drained backlog does not replay");
+        }
+        {
+            var t = new Script(); var c = await Connect(t);
             t.Replies.Enqueue(new P1HttpReply { StatusCode = 0 }); await c.InteractAsync(Node, None); var original = t.Requests.Last();
             t.Replies.Enqueue(Reply(new P1InteractResult { interactionId = EventId, targetId = Node, recordId = "MAN-PACKAGE-1", kind = "INTERACTABLE",
                 outcome = "collected", targetState = "DEPLETED", claimedAtUtc = Now, questUpdates = new[] { Quest() } }, 1));
