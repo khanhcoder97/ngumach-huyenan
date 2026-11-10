@@ -1,3 +1,5 @@
+> Hướng hiện hành 10/11: Run_PaperDoll_Lab.ps1 mặc định mở bộ ảnh pixel chi tiết được vẽ lại theo phong cách trước. Mẫu hình khối V2 bị bác bỏ về mỹ thuật. Xem docs/production/Restored_Pixel_Style_20261110_vi.md.
+
 > 10/11/2026: PaperDollLab mặc định dùng registered native master (cùng body/outfit pose), không dùng bộ PNG sinh riêng đã bị bác bỏ. Hướng dẫn hiện hành: docs/production/Registered_PaperDoll_Master_20261110_vi.md.
 
 # Godot client — Bến Mưa local alpha

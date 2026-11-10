@@ -37,7 +37,7 @@ public sealed class PaperDollLabData
     public Catalogue Data {get;}
     public Draft Edits {get;private set;}
     public bool Registered {get;}
-    public PaperDollLabData(bool registered=true)
+    public PaperDollLabData(bool registered=false)
     {
         Registered=registered;
         if(registered){Data=RegisteredPaperDollMaster.CreateCatalogue();Edits=EmptyDraft();return;}

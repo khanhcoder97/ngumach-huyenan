@@ -35,16 +35,16 @@ public partial class PaperDollLab : Control
     private ulong _benchmarkStart,_lastTick;
     private readonly List<double> _samples=new();
     private string DraftPath=>_data.Registered?"user://paperdoll_lab/fit_registered_master_v1.json":"user://paperdoll_lab/fit_legacy_v2.json";
-    public override void _Ready(){try{Build();}catch(Exception e){GD.PushError("PAPERDOLL_LAB_INIT_FAIL "+e);GetTree().Quit(1);}}
+    public override void _Ready(){try{var args=OS.GetCmdlineUserArgs();if(!args.Contains("--paperdoll-fit-tools")&&!args.Contains("--paperdoll-self-test")&&!args.Contains("--paperdoll-registration-test")){Callable.From(()=>GetTree().ChangeSceneToFile("res://PaperDollArtReview.tscn")).CallDeferred();return;}Build();}catch(Exception e){GD.PushError("PAPERDOLL_LAB_INIT_FAIL "+e);GetTree().Quit(1);}}
     private void Build()
     {
-        Engine.MaxFps=60;Theme=MoonGlassTheme.Create();_data=new PaperDollLabData(!OS.GetCmdlineUserArgs().Contains("--paperdoll-legacy"));
+        Engine.MaxFps=60;Theme=MoonGlassTheme.Create();_data=new PaperDollLabData((OS.GetCmdlineUserArgs().Contains("--paperdoll-self-test")||OS.GetCmdlineUserArgs().Contains("--paperdoll-registration-test"))&&!OS.GetCmdlineUserArgs().Contains("--paperdoll-legacy"));
         var bg=new ColorRect{Color=Color.FromHtml("#20243b"),MouseFilter=MouseFilterEnum.Ignore};bg.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);AddChild(bg);
         var margin=new MarginContainer();margin.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         foreach(string edge in new[]{"left","right","top","bottom"})margin.AddThemeConstantOverride("margin_"+edge,16);
         AddChild(margin);var root=new VBoxContainer();root.AddThemeConstantOverride("separation",9);margin.AddChild(root);
         root.AddChild(MoonGlassTheme.Label("NGŨ MẠCH HUYỀN ẤN  /  PAPER-DOLL STUDIO",22));
-        root.AddChild(MoonGlassTheme.Label("MASTER CHUNG · Tỉ lệ 4,5 đầu · Trang phục theo cùng khớp cơ thể · Trang bị gameplay giữ nguyên",12,MoonGlassTheme.Blue));
+        root.AddChild(MoonGlassTheme.Label("CÔNG CỤ KỸ THUẬT · Nguồn cũ bị giữ · Không dùng làm mẫu mỹ thuật hiện hành",12,MoonGlassTheme.Blue));
         var row=new HBoxContainer{SizeFlagsVertical=SizeFlags.ExpandFill};row.AddThemeConstantOverride("separation",12);root.AddChild(row);
         VBoxContainer Panel(int width,string title)
         {

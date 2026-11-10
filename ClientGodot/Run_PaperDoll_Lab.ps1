@@ -3,6 +3,9 @@ param(
     [string]$DotnetPath,
     [switch]$SkipBuild,
     [switch]$SelfTest,
+    [switch]$ArtSelfTest,
+    [switch]$FitTools,
+    [ValidateRange(0,2)][int]$ArtView=2,
     [switch]$Female,
     [switch]$Indigo,
     [switch]$Hat,
@@ -31,10 +34,16 @@ try {
         & $GodotPath --headless --editor --path $PSScriptRoot --import --quit
         if($LASTEXITCODE){throw 'Paper-doll lab import failed.'}
     }
-    $launchArgs=@('--path',$PSScriptRoot,'PaperDollLab.tscn')
-    if($SelfTest){$launchArgs=@('--headless')+$launchArgs}
+    $technical=$SelfTest -or $FitTools -or $Legacy -or [bool]$Benchmark -or [bool]$ExportMaster
+    $scene=if($technical){'PaperDollLab.tscn'}else{'PaperDollArtReview.tscn'}
+    $launchArgs=@('--path',$PSScriptRoot,$scene)
+    if($SelfTest -or $ArtSelfTest -or $ExportMaster){$launchArgs=@('--headless')+$launchArgs}
     $launchArgs+='--'
     if($SelfTest){$launchArgs+='--paperdoll-self-test'}
+    if($ArtSelfTest){$launchArgs+='--paperdoll-art-self-test'}
+    if($technical){$launchArgs+='--paperdoll-fit-tools'}
+    if($ExportMaster){$launchArgs+='--paperdoll-registration-test'}
+    $launchArgs+=@('--paperdoll-art-view',[string]$ArtView)
     if($Female){$launchArgs+='--paperdoll-female'}
     if($Indigo){$launchArgs+='--paperdoll-indigo'}
     if($Hat){$launchArgs+='--paperdoll-hat'}

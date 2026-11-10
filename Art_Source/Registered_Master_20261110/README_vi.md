@@ -1,3 +1,5 @@
+> OWNER REJECTED — chủ dự án bác bỏ nét vẽ hình khối/procedural. Chỉ giữ kiểm kỹ thuật; không dùng làm mẫu mỹ thuật, không hiển thị mặc định. Nguồn ảnh mới: Art_Source/Restored_Pixel_Style_20261110.
+
 # Registered master V2 — nguồn có layer
 
 Đây là **master kỹ thuật**, chưa phê duyệt mỹ thuật hoặc dùng cho hero gameplay.

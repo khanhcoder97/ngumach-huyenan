@@ -1,3 +1,5 @@
+> Hết hiệu lực làm hướng mỹ thuật: chủ dự án bác bỏ mẫu procedural. Chỉ lưu tài liệu kỹ thuật. Hướng hiện hành: Restored_Pixel_Style_20261110_vi.md.
+
 # Master nhân vật dùng chung cơ thể/trang phục — 10/11/2026
 
 Trạng thái: **master kỹ thuật có layer và kiểm chứng đăng ký pixel**, chưa phải art cuối hoặc bộ nhân vật gameplay đầy đủ. Các PNG base/đồ sinh riêng trước đây bị chủ dự án bác bỏ vì tỉ lệ và khớp nối sai; không tiếp tục coi chúng là nguồn master.

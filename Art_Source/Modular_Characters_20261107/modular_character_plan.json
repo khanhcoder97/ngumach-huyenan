@@ -335,6 +335,19 @@
       "RIG_HUMAN_M_V2",
       "RIG_HUMAN_F_V2"
     ],
-    "note": "V1 class profiles remain historical until art-approved V2 migration; never mix V1 clothes onto V2 body."
+    "note": "V1 class profiles remain historical until art-approved V2 migration; never mix V1 clothes onto V2 body.",
+    "ownerRejectedVisualStyle": true,
+    "defaultPreview": false
+  },
+  "artDirection": {
+    "source": "Art_Source/Restored_Pixel_Style_20261110",
+    "preferredStyle": "RESTORED_ILLUSTRATIVE_PIXEL_ART",
+    "bodyPolicy": "ELONGATE_PREVIOUS_STYLE_NATURALLY",
+    "outfitPolicy": "DRAW_COMPLETE_OUTFIT_ON_SAME_BASE",
+    "poseCountPerActor": 1,
+    "layerPackReady": false,
+    "animationReady": false,
+    "productionApproved": false,
+    "framePolicyUnchanged": true
   }
 }
