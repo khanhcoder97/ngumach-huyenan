@@ -16,6 +16,7 @@ public partial class ModularCharacterRenderer : Node2D
     private int _lastFrame=-1;
     public Session Animation=>_session;
     public bool PlaybackPaused {get;set;}
+    internal Func<string,Texture2D?>? ReviewTextureResolver {get;set;}
     internal bool SeekReviewFrame(int frame){if(!_session.SeekFrame(frame))return false;Refresh();return true;}
     public override void _Ready(){YSortEnabled=false;TextureFilter=TextureFilterEnum.Nearest;}
     public bool TryApply(Look look,out string reason)=>Apply(look,false,out reason);
@@ -32,8 +33,9 @@ public partial class ModularCharacterRenderer : Node2D
         var next=new Dictionary<string,Texture2D>(StringComparer.Ordinal);long bytes=0;
         foreach(string path in paths)
         {
-            if(!FileAccess.FileExists(path))return false;
-            var texture=_textures.TryGetValue(path,out var existing)?existing:GD.Load<Texture2D>(path);
+            bool native=path.StartsWith("master://",StringComparison.Ordinal);
+            if(!native&&!FileAccess.FileExists(path))return false;
+            var texture=_textures.TryGetValue(path,out var existing)?existing:native?ReviewTextureResolver?.Invoke(path):GD.Load<Texture2D>(path);
             if(texture==null)return false;next.Add(path,texture);bytes+=(long)texture.GetWidth()*texture.GetHeight()*4;
             if(bytes>32L*1024*1024)return false;
         }
@@ -45,7 +47,12 @@ public partial class ModularCharacterRenderer : Node2D
     public override void _Draw()
     {
         foreach(var c in _draw)
-        {if(!_textures.TryGetValue(c.Texture,out var texture))continue;DrawTextureRectRegion(texture,new Rect2(c.Position.X,c.Position.Y,(float)c.Region.Width/c.SourcePixelsPerUnit,(float)c.Region.Height/c.SourcePixelsPerUnit),new Rect2(c.Region.X,c.Region.Y,c.Region.Width,c.Region.Height));}
+        {
+            if(!_textures.TryGetValue(c.Texture,out var texture))continue;var t=c.Transform??Identity;
+            DrawSetTransform(new Vector2(c.Position.X,c.Position.Y),Mathf.DegToRad((float)t.Degrees),new Vector2((float)t.Scale*(t.FlipH?-1:1),(float)t.Scale*(t.FlipV?-1:1)));
+            DrawTextureRectRegion(texture,new Rect2(-(float)t.PivotX,-(float)t.PivotY,(float)c.Region.Width/c.SourcePixelsPerUnit,(float)c.Region.Height/c.SourcePixelsPerUnit),new Rect2(c.Region.X,c.Region.Y,c.Region.Width,c.Region.Height));
+        }
+        DrawSetTransform(Vector2.Zero,0,Vector2.One);
     }
     // Godot resources may be shared by other avatars. Never Dispose a shared texture here.
     public override void _ExitTree(){_textures.Clear();_draw=Array.Empty<DrawCommand>();}

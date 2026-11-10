@@ -1,3 +1,5 @@
+> Quyết định 10/11/2026 thay phần hình học/presentation: dùng registered master chung, bộ outfit phủ áo + quần, nón giữ tóc. Các PNG sinh riêng bị bác bỏ. Xem Registered_PaperDoll_Master_20261110_vi.md; không đổi trang bị/stat.
+
 # Nhân vật ghép lớp và tạo diện mạo — quyết định 07/11/2026
 
 Trạng thái: thiết kế triển khai + prototype hợp đồng, **chưa phải hệ tạo nhân vật/trang bị online hoàn chỉnh**. Theo yêu cầu trực tiếp của chủ dự án, dừng tạo mới nhân vật người chơi dưới dạng một sprite đã vẽ cố định tóc, giáp và vũ khí. Quyết định này bổ sung chuẩn 16–20 khung/60 FPS, không đổi engine, tọa độ, hitbox, class balance hoặc wire enum đang dùng.
@@ -83,8 +85,8 @@ Render 60 FPS không đồng nghĩa có 60 pose nguồn. Clip 16 pose dài 0,8 s
 | Slot thiết kế | Pass đổi trên nhân vật |
 |---|---|
 | EQUIP_HAT | hat_back/front + chính sách tóc |
-| EQUIP_CHEST | chest_back/front và sleeve fit |
-| EQUIP_LEGS | legs/vạt tương thích |
+| EQUIP_CHEST | outfit đồng bộ áo + quần và sleeve fit |
+| EQUIP_LEGS | giữ gameplay; không có visual riêng khi outfit đang mặc |
 | EQUIP_WEAPON | weapon_far/near + grip family |
 | EQUIP_GLOVES | gloves_far/near |
 | EQUIP_BOOTS | boots |

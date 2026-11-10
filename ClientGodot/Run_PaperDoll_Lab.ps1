@@ -5,6 +5,11 @@ param(
     [switch]$SelfTest,
     [switch]$Female,
     [switch]$Indigo,
+    [switch]$Hat,
+    [switch]$Tools,
+    [switch]$Legacy,
+    [string]$ExportMaster,
+    [ValidateRange(0,15)][int]$Pose=0,
     [string]$Capture,
     [string]$Benchmark
 )
@@ -32,6 +37,11 @@ try {
     if($SelfTest){$launchArgs+='--paperdoll-self-test'}
     if($Female){$launchArgs+='--paperdoll-female'}
     if($Indigo){$launchArgs+='--paperdoll-indigo'}
+    if($Hat){$launchArgs+='--paperdoll-hat'}
+    if($Tools){$launchArgs+='--paperdoll-capture-tools'}
+    if($Legacy){$launchArgs+='--paperdoll-legacy'}
+    if($ExportMaster){$launchArgs+=@('--paperdoll-export-master',$ExportMaster)}
+    $launchArgs+=@('--paperdoll-pose',[string]$Pose)
     if($Capture){$launchArgs+=@('--paperdoll-capture',$Capture)}
     if($Benchmark){$launchArgs+=@('--paperdoll-benchmark',$Benchmark)}
     & $GodotPath @launchArgs

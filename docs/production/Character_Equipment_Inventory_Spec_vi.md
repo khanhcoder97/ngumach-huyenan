@@ -1,3 +1,5 @@
+> 10/11/2026: Áo/quần đổi thành một bộ ngoại hình theo Registered_PaperDoll_Master_20261110_vi.md. Item, EQUIP_CHEST/EQUIP_LEGS, chỉ số và protocol giữ nguyên; outfit phủ cả thân trên/dưới.
+
 # ĐẶC TẢ NHÂN VẬT, TRANG BỊ VÀ TÚI ĐỒ
 
 > Quyết định chủ dự án07/11/2026: nhân vật người chơi chuyển sang base nam/nữ + bộ phận trang phục/vũ khí/diện mạo tách lớp. Xem [pipeline modular](Modular_Character_Appearance_20261107_vi.md). Mười profile class/giới tính dùng chung hai rig khi tương thích; các sprite class đã vẽ liền đồ chỉ còn reference/fallback. Chuẩn16–20pose thực/clip/hướng và render60FPS giữ nguyên.
@@ -45,8 +47,8 @@ Giá trị trên là baseline để làm vertical slice, mọi hệ số phải 
 | Slot | ID | Nhóm chỉ số thường gặp | Ngoại hình |
 |---|---|---|---|
 | Nón | EQUIP_HAT | giáp, HP, kháng | tùy chọn ẩn nón |
-| Áo | EQUIP_CHEST | giáp, HP, thuộc tính | thân trên |
-| Quần | EQUIP_LEGS | giáp, thể chất | thân dưới |
+| Áo | EQUIP_CHEST | giáp, HP, thuộc tính | chọn bộ ngoại hình áo + quần |
+| Quần | EQUIP_LEGS | giáp, thể chất | giữ stat; không phủ riêng khi outfit đang mặc |
 | Vũ khí | EQUIP_WEAPON | công, chỉ số lớp, hiệu ứng đòn | thay weapon sprite/anchor set |
 | Găng | EQUIP_GLOVES | tốc đánh, chính xác | tay |
 | Giày | EQUIP_BOOTS | tốc chạy, né | chân |

@@ -11,7 +11,10 @@ public static class ModularCharacterModel
     public readonly record struct Pixel(int X,int Y)
     {public static Pixel operator +(Pixel a,Pixel b)=>new(a.X+b.X,a.Y+b.Y);public static Pixel operator -(Pixel a,Pixel b)=>new(a.X-b.X,a.Y-b.Y);}
     public readonly record struct Region(int X,int Y,int Width,int Height);
-    public sealed record Slice(string Texture,Region Region,Pixel Offset,string? Anchor=null,bool Hidden=false,int SourcePixelsPerUnit=0);
+    public readonly record struct Point(double X,double Y);
+    public readonly record struct PaintTransform(double PivotX,double PivotY,double Degrees,double Scale=1,bool FlipH=false,bool FlipV=false);
+    public static readonly PaintTransform Identity=new(0,0,0,1);
+    public sealed record Slice(string Texture,Region Region,Pixel Offset,string? Anchor=null,bool Hidden=false,int SourcePixelsPerUnit=0,PaintTransform? Transform=null);
     public sealed record Pose(string Fingerprint,IReadOnlyDictionary<string,Pixel> Anchors,IReadOnlyDictionary<string,Slice> Skin,string[] PaintOrder);
     public sealed record Clip(string Key,string PoseSet,double Seconds,bool Loop,Pose[] Poses);
     public sealed record BodyPack(string Id,string ClassId,string RigId,string WeaponFamily,Pixel Canvas,Pixel Origin,bool Approved,IReadOnlyDictionary<string,Clip> Clips,int SourcePixelsPerUnit=1);
@@ -19,7 +22,7 @@ public static class ModularCharacterModel
     public sealed record Binding(string PoseSet,Slice[] Frames,string[] ExpectedBodyPoses);
     public sealed record Part(string Id,string Slot,string RigId,string? WeaponFamily,PartMode Mode,bool Approved,string[] Hides,IReadOnlyDictionary<string,Binding> Bindings);
     public sealed record Look(long Revision,BodyPack Body,Part[] Parts);
-    public readonly record struct DrawCommand(string PartId,string Texture,Region Region,Pixel Position,int SourcePixelsPerUnit=1);
+    public readonly record struct DrawCommand(string PartId,string Texture,Region Region,Pixel Position,int SourcePixelsPerUnit=1,PaintTransform? Transform=null);
     public sealed record ClipPlan(double Seconds,bool Loop,IReadOnlyList<IReadOnlyList<DrawCommand>> Frames);
     public sealed class PreparedLook
     {
@@ -41,7 +44,7 @@ public static class ModularCharacterModel
             var body=look.Body;
             Require(look.Revision>=0,"negative appearance revision");
             Require(WeaponFamilies.TryGetValue(body.ClassId,out var family)&&family==body.WeaponFamily,"unknown class/weapon family");
-            Require(body.RigId is "RIG_HUMAN_M_V1" or "RIG_HUMAN_F_V1","unknown body rig");
+            Require(body.RigId is "RIG_HUMAN_M_V1" or "RIG_HUMAN_F_V1" or "RIG_HUMAN_M_V2" or "RIG_HUMAN_F_V2","unknown body rig");
             Require(body.Canvas==new Pixel(96,96)&&body.Origin==new Pixel(48,72),"master canvas/origin mismatch");
             Require(reviewMode||body.Approved,"body is not production approved");
             Require(body.SourcePixelsPerUnit>=1&&body.SourcePixelsPerUnit<=16,"invalid source pixel scale");
@@ -86,7 +89,7 @@ public static class ModularCharacterModel
                     {
                         Require(!slices.ContainsKey(part.Slot),"wearable overwrites base skin slot");
                         var slice=part.Bindings[key].Frames[i];
-                        Require(part.Mode!=PartMode.Deformable||slice.Anchor==null,"deformable uses master-canvas coordinates");
+                        Require(part.Mode!=PartMode.Deformable||slice.Anchor==null||reviewMode,"deformable uses master-canvas coordinates");
                         Require(part.Mode!=PartMode.AnchoredRigid||slice.Hidden||slice.Anchor!=null,"rigid part lacks anchor");
                         slices.Add(part.Slot,slice);
                     }
@@ -103,8 +106,13 @@ public static class ModularCharacterModel
                         Pixel position=slice.Offset;
                         if(slice.Anchor!=null)
                         {Require(pose.Anchors.TryGetValue(slice.Anchor,out var anchor),"missing anchor: "+slice.Anchor);position+=anchor;}
-                        Require(position.X>=0&&position.Y>=0&&position.X+(int)Math.Ceiling((double)slice.Region.Width/sourceScale)<=body.Canvas.X&&position.Y+(int)Math.Ceiling((double)slice.Region.Height/sourceScale)<=body.Canvas.Y,"layer outside shared canvas");
-                        commands.Add(new DrawCommand(slot,slice.Texture,slice.Region,position-body.Origin,sourceScale));
+                        var transform=slice.Transform??Identity;
+                        Require(ValidTransform(transform),"invalid part transform");
+                        Require(Math.Abs(transform.PivotX)<=96&&Math.Abs(transform.PivotY)<=96&&Math.Abs(transform.Degrees)<=180,"transform out of range");
+                        Require(reviewMode||transform==Identity,"runtime transform is review-only; production requires authored angles");
+                        var command=new DrawCommand(slot,slice.Texture,slice.Region,position-body.Origin,sourceScale,transform);
+                        Require(Corners(command).All(p=>p.X+body.Origin.X>=-.001&&p.Y+body.Origin.Y>=-.001&&p.X+body.Origin.X<=body.Canvas.X+.001&&p.Y+body.Origin.Y<=body.Canvas.Y+.001),"layer outside shared canvas");
+                        commands.Add(command);
                     }
                     frames[i]=Array.AsReadOnly(commands.ToArray());
                 }
@@ -114,6 +122,21 @@ public static class ModularCharacterModel
         }
         catch(InvalidOperationException e){reason=e.Message;return false;}
     }
+    public static bool ValidTransform(PaintTransform t)=>double.IsFinite(t.PivotX)&&double.IsFinite(t.PivotY)&&double.IsFinite(t.Degrees)&&double.IsFinite(t.Scale)&&t.Scale>=.25&&t.Scale<=2&&Math.Abs(t.PivotX)<=96&&Math.Abs(t.PivotY)<=96&&Math.Abs(t.Degrees)<=180;
+    public static Point ToActor(DrawCommand command,double x,double y)
+    {
+        var t=command.Transform??Identity;double a=t.Degrees*Math.PI/180,c=Math.Cos(a),s=Math.Sin(a);
+        x=(x-t.PivotX)*t.Scale*(t.FlipH?-1:1);y=(y-t.PivotY)*t.Scale*(t.FlipV?-1:1);
+        return new(command.Position.X+x*c-y*s,command.Position.Y+x*s+y*c);
+    }
+    public static Point FromActor(DrawCommand command,double x,double y)
+    {
+        var t=command.Transform??Identity;double a=-t.Degrees*Math.PI/180,c=Math.Cos(a),s=Math.Sin(a);
+        x-=command.Position.X;y-=command.Position.Y;double rx=x*c-y*s,ry=x*s+y*c;
+        return new(rx/t.Scale*(t.FlipH?-1:1)+t.PivotX,ry/t.Scale*(t.FlipV?-1:1)+t.PivotY);
+    }
+    public static Point[] Corners(DrawCommand command)
+    {double w=(double)command.Region.Width/command.SourcePixelsPerUnit,h=(double)command.Region.Height/command.SourcePixelsPerUnit;return new[]{ToActor(command,0,0),ToActor(command,w,0),ToActor(command,w,h),ToActor(command,0,h)};}
     private static void Require(bool condition,string reason){if(!condition)throw new InvalidOperationException(reason);}
 
     /// <summary>One clock for the whole avatar. Pure-data staging happens before an atomic swap.</summary>

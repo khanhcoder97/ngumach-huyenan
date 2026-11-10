@@ -1,3 +1,5 @@
+> 10/11/2026: PaperDollLab mặc định dùng registered native master (cùng body/outfit pose), không dùng bộ PNG sinh riêng đã bị bác bỏ. Hướng dẫn hiện hành: docs/production/Registered_PaperDoll_Master_20261110_vi.md.
+
 # Godot client — Bến Mưa local alpha
 
 Godot 4.7.2 .NET, .NET SDK 8; Compatibility renderer. Có hai chế độ riêng:

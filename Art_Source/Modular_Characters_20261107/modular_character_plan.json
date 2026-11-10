@@ -217,7 +217,8 @@
     "neck_accessory",
     "ring_l",
     "ring_r",
-    "pendant"
+    "pendant",
+    "outfit"
   ],
   "slotVisualBindings": {
     "EQUIP_HAT": [
@@ -225,12 +226,9 @@
       "hat_front"
     ],
     "EQUIP_CHEST": [
-      "chest_back",
-      "chest_front"
+      "outfit"
     ],
-    "EQUIP_LEGS": [
-      "legs"
-    ],
+    "EQUIP_LEGS": [],
     "EQUIP_WEAPON": [
       "weapon_far",
       "weapon_near"
@@ -305,5 +303,38 @@
     "headwearFamilies": 1,
     "mode": "LABORATORY_FIT_TEST_ONLY",
     "gameplayReleaseStillRequiresAllActions": true
+  },
+  "appearanceEquipmentPolicy": {
+    "mode": "COMPLETE_OUTFIT_VISUAL_ONLY",
+    "driver": "EQUIP_CHEST_OR_COSMETIC_OUTFIT",
+    "covers": [
+      "CHEST_VISUAL",
+      "LEGS_VISUAL"
+    ],
+    "equipmentSlotsUnchanged": true,
+    "statsUnchanged": true,
+    "independentBoots": true
+  },
+  "registeredTechnicalMaster": {
+    "source": "ClientGodot/assets/paperdoll_master/master.json",
+    "renderer": "ClientGodot/scripts/RegisteredPaperDollMaster.cs",
+    "editableSources": "Art_Source/Registered_Master_20261110",
+    "canvas": [
+      96,
+      96
+    ],
+    "standingHeight": 54,
+    "headHeight": 12,
+    "poses": 16,
+    "direction": "S",
+    "action": "idle",
+    "visualApproved": false,
+    "productionApproved": false,
+    "legacyPngSourcesRejected": true,
+    "rigIds": [
+      "RIG_HUMAN_M_V2",
+      "RIG_HUMAN_F_V2"
+    ],
+    "note": "V1 class profiles remain historical until art-approved V2 migration; never mix V1 clothes onto V2 body."
   }
 }

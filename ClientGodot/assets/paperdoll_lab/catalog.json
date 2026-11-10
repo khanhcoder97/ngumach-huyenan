@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "scope": "FIT_LAB_ONLY",
   "productionApproved": false,
   "canvas": [
@@ -17,7 +17,7 @@
   "sources": [
     {
       "file": "res://assets/paperdoll_lab/male_idle_s.png",
-      "sha256": "015a76efff5bbacf7f683aa5c4016e5c05114eef2a88123a6c2aab9dea3d4a30"
+      "sha256": "3837fa25fadaa180b534317e81c10645bc719046c234c3bf008368159758dc23"
     },
     {
       "file": "res://assets/paperdoll_lab/female_idle_s.png",
@@ -26,6 +26,10 @@
     {
       "file": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
       "sha256": "ea7e2131f6d92b0b65cef6a429a8d580ac558072eb71c6ba6d371bbfba898359"
+    },
+    {
+      "file": "res://assets/paperdoll_lab/outfits_swords_v2.png",
+      "sha256": "3356f1dd1b9015d64adf10c95dc35ae0429dd9b9c38e4be3e1257d4f9d58d4b0"
     }
   ],
   "bodies": [
@@ -38,216 +42,276 @@
       "frames": [
         {
           "region": [
-            108,
+            107,
             62,
-            120,
-            216
+            122,
+            218
           ],
           "offset": [
             38,
-            36
+            35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
             ],
             "head": [
               48,
-              37
+              36
             ],
             "face": [
               48,
-              46
+              45
             ],
             "chest": [
               48,
-              52
+              51
             ],
             "hip": [
               48,
-              62
+              61
             ],
             "hand_near": [
               57,
-              59
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "fb73428bef7d557d341c9c6f1316ba6580e2094a637a68770d56621d842c2b56"
+          "handRegion": [
+            203,
+            206,
+            30,
+            30
+          ],
+          "handOffset": [
+            54,
+            59
+          ],
+          "fingerprint": "e7b35d0bf0d1b6fd4973bb77145916f1da3c3161a9605102589e4853b7c9fad8"
         },
         {
           "region": [
             414,
             62,
             126,
-            216
+            218
           ],
           "offset": [
             38,
-            36
+            35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
             ],
             "head": [
               48,
-              37
+              36
             ],
             "face": [
               48,
-              46
+              45
             ],
             "chest": [
               48,
-              52
+              51
             ],
             "hip": [
               48,
-              62
+              61
             ],
             "hand_near": [
-              57,
-              59
+              58,
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "9c13967d421b7ce5d7aef92c9f59eada0d893a9e9fc9379d2ad596483fdb9578"
+          "handRegion": [
+            516,
+            206,
+            30,
+            30
+          ],
+          "handOffset": [
+            55,
+            59
+          ],
+          "fingerprint": "3e892bae81c8b3d3698116cc4ccf37872291964835c01aff331757311a8f4733"
         },
         {
           "region": [
-            720,
+            723,
             62,
-            130,
-            216
+            125,
+            218
+          ],
+          "offset": [
+            38,
+            35
+          ],
+          "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
+            "ground": [
+              48,
+              72
+            ],
+            "head": [
+              48,
+              36
+            ],
+            "face": [
+              48,
+              45
+            ],
+            "chest": [
+              48,
+              51
+            ],
+            "hip": [
+              48,
+              61
+            ],
+            "hand_near": [
+              58,
+              62
+            ]
+          },
+          "paintOrder": [
+            "cape_back",
+            "body",
+            "outfit",
+            "boots",
+            "weapon_near",
+            "hand_near",
+            "eyes",
+            "hair_front",
+            "hat_front"
+          ],
+          "handRegion": [
+            825,
+            206,
+            30,
+            30
+          ],
+          "handOffset": [
+            55,
+            59
+          ],
+          "fingerprint": "f08995e990d3253c382a0a56ea374d4947b989b1dc1dc6e2ad8fd793bfcaef8c"
+        },
+        {
+          "region": [
+            1032,
+            62,
+            127,
+            218
           ],
           "offset": [
             37,
-            36
+            35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
             ],
             "head": [
               48,
-              37
+              36
             ],
             "face": [
               48,
-              46
+              45
             ],
             "chest": [
               48,
-              52
+              51
             ],
             "hip": [
               48,
-              62
+              61
             ],
             "hand_near": [
               57,
-              59
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "5c9d7f93c42a8c61e61cab35c2a16e682d729f215e0e2fd0a25e2d630c62ce0b"
+          "handRegion": [
+            1134,
+            206,
+            30,
+            30
+          ],
+          "handOffset": [
+            54,
+            59
+          ],
+          "fingerprint": "e408098f9026051385187b47869746291c4b3cfe53ca2ceb3bdc3a3ce427df99"
         },
         {
           "region": [
-            1027,
-            62,
-            134,
-            216
+            100,
+            363,
+            136,
+            220
           ],
           "offset": [
             37,
-            36
-          ],
-          "anchors": {
-            "ground": [
-              48,
-              72
-            ],
-            "head": [
-              48,
-              37
-            ],
-            "face": [
-              48,
-              46
-            ],
-            "chest": [
-              48,
-              52
-            ],
-            "hip": [
-              48,
-              62
-            ],
-            "hand_near": [
-              57,
-              59
-            ]
-          },
-          "paintOrder": [
-            "cape_back",
-            "body",
-            "legs",
-            "boots",
-            "chest_front",
-            "eyes",
-            "hair_front",
-            "hat_front",
-            "weapon_near"
-          ],
-          "fingerprint": "22070fed9ef544f91287eb734b76cf702979cc7fb60fd000dc52feacd0c80db6"
-        },
-        {
-          "region": [
-            97,
-            363,
-            139,
-            219
-          ],
-          "offset": [
-            36,
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -269,35 +333,49 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              58,
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "ac04f5ac5f0088bc49ede73c974dc6192df3a72d41e925b3ec9312e0ffb731e1"
+          "handRegion": [
+            208,
+            513,
+            30,
+            30
+          ],
+          "handOffset": [
+            55,
+            60
+          ],
+          "fingerprint": "5f3ebe933abd94c5432bfdaf17e068332368a9c4119c020f565302f095fdc72b"
         },
         {
           "region": [
-            404,
+            405,
             363,
-            144,
-            219
+            145,
+            220
           ],
           "offset": [
             36,
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -319,35 +397,49 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              58,
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "cabd93994959d9569ab5e5be6dbf04b536ecaca7f290e7d8ad72a46ee838f2e8"
+          "handRegion": [
+            519,
+            513,
+            30,
+            30
+          ],
+          "handOffset": [
+            55,
+            60
+          ],
+          "fingerprint": "65698070ee246ad52c4e756b0c7c46b060cedc14c35df9288a1cff5f446c451e"
         },
         {
           "region": [
-            711,
+            710,
             363,
-            147,
-            219
+            149,
+            220
           ],
           "offset": [
             36,
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -369,35 +461,49 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              59,
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "c0b6543dc76919958f5aa1fb4f2bca01af8a8bff272919cb2cef2acc96784425"
+          "handRegion": [
+            830,
+            513,
+            30,
+            30
+          ],
+          "handOffset": [
+            56,
+            60
+          ],
+          "fingerprint": "19ce365476d088966bb40f8f5e4f6b4da17f14f95fb270b6f16decc1fec4ebcc"
         },
         {
           "region": [
             1019,
             363,
-            150,
-            219
+            151,
+            220
           ],
           "offset": [
             35,
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -419,35 +525,49 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              58,
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "5ef070fea6717c546de79705abc74e905ed8237112da82bc845bc595fa36d664"
+          "handRegion": [
+            1139,
+            513,
+            30,
+            30
+          ],
+          "handOffset": [
+            55,
+            60
+          ],
+          "fingerprint": "da08198262e6a98e10fd79db44687403887990a2835e09b9a4643881cf174a4c"
         },
         {
           "region": [
-            98,
-            668,
-            143,
-            219
+            97,
+            667,
+            142,
+            221
           ],
           "offset": [
             36,
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -469,35 +589,49 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              58,
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "84538b9cee50cd8f951da88527318f7d4ab91fa0b48e225d4f3b9e237fef455b"
+          "handRegion": [
+            211,
+            817,
+            30,
+            30
+          ],
+          "handOffset": [
+            55,
+            60
+          ],
+          "fingerprint": "017c7334cd3f86dcb01dba0fb8d23cdc1af2a9f558b36b7e1f018fb0a97f3ae5"
         },
         {
           "region": [
-            408,
-            668,
-            138,
-            220
+            406,
+            667,
+            142,
+            221
           ],
           "offset": [
             36,
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -519,35 +653,49 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              58,
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "7ca2019607cd7af829dd2c5893af04d3c2376b3282ff945c83912b9f49407dd9"
+          "handRegion": [
+            520,
+            817,
+            30,
+            30
+          ],
+          "handOffset": [
+            55,
+            60
+          ],
+          "fingerprint": "390cd102b13a44600b441b6407591b4411be282bfb4ec3dabd169f9ac241111a"
         },
         {
           "region": [
-            717,
-            668,
-            137,
-            220
+            716,
+            667,
+            140,
+            221
           ],
           "offset": [
-            37,
+            36,
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -569,35 +717,49 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              58,
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "68b6fdaf71f7220d424b2596b957a80dc857eb0ae15a395f4d864a77d07551f2"
+          "handRegion": [
+            830,
+            817,
+            30,
+            30
+          ],
+          "handOffset": [
+            55,
+            60
+          ],
+          "fingerprint": "7d61a4a2ddafa9316f6df48ea68598013747de66eb831babb74befd127de362a"
         },
         {
           "region": [
-            1027,
-            668,
-            135,
-            219
+            1025,
+            667,
+            140,
+            221
           ],
           "offset": [
-            37,
+            36,
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -619,35 +781,49 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              58,
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "efb6cfd537e9a4b2dc24c8d7413550c8bab468971fc34fecb8355df1255ed2e7"
+          "handRegion": [
+            1139,
+            817,
+            30,
+            30
+          ],
+          "handOffset": [
+            55,
+            60
+          ],
+          "fingerprint": "f9daa3fc3de7e781de2aa128d4046517aec9721a0082b30eb25d944b144d436d"
         },
         {
           "region": [
             103,
-            974,
-            131,
-            219
+            973,
+            129,
+            221
           ],
           "offset": [
             37,
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -670,34 +846,48 @@
             ],
             "hand_near": [
               57,
-              58
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "1a359e3caced013173aacb36d3bd349519892f24e33daf9e1e0e3bfc1466becc"
+          "handRegion": [
+            205,
+            1123,
+            30,
+            30
+          ],
+          "handOffset": [
+            54,
+            60
+          ],
+          "fingerprint": "38202ba6c6be07f41199f91f40231fbd9f7c410cade2c92faa4112d1aac60f3a"
         },
         {
           "region": [
-            414,
-            974,
-            127,
-            219
+            413,
+            973,
+            129,
+            221
           ],
           "offset": [
             37,
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -720,34 +910,112 @@
             ],
             "hand_near": [
               57,
-              58
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "d5bc90ea15bf08b7bc4b452d66156dc5fc8af1c3149800ba3b780986c18ccd40"
+          "handRegion": [
+            515,
+            1123,
+            30,
+            30
+          ],
+          "handOffset": [
+            54,
+            60
+          ],
+          "fingerprint": "30a7c97ddc8bf0bb89857bed6973a4eef5ea428d4dfb11ca9c341b0230a71434"
         },
         {
           "region": [
-            724,
-            974,
-            123,
-            219
+            721,
+            973,
+            126,
+            221
+          ],
+          "offset": [
+            37,
+            35
+          ],
+          "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
+            "ground": [
+              48,
+              72
+            ],
+            "head": [
+              48,
+              36
+            ],
+            "face": [
+              48,
+              45
+            ],
+            "chest": [
+              48,
+              51
+            ],
+            "hip": [
+              48,
+              61
+            ],
+            "hand_near": [
+              57,
+              63
+            ]
+          },
+          "paintOrder": [
+            "cape_back",
+            "body",
+            "outfit",
+            "boots",
+            "weapon_near",
+            "hand_near",
+            "eyes",
+            "hair_front",
+            "hat_front"
+          ],
+          "handRegion": [
+            823,
+            1123,
+            30,
+            30
+          ],
+          "handOffset": [
+            54,
+            60
+          ],
+          "fingerprint": "b542016e20fe3b714221a2baff54c10c07f081f338145c15355ca255e2f0868d"
+        },
+        {
+          "region": [
+            1034,
+            973,
+            124,
+            221
           ],
           "offset": [
             38,
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -770,71 +1038,31 @@
             ],
             "hand_near": [
               57,
-              58
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "ba3101ec4116c90b6c6466c9839dfcf0c0da35dba28fdb2ee31ba7ed3c6807ec"
-        },
-        {
-          "region": [
-            1033,
-            974,
-            122,
-            219
+          "handRegion": [
+            1130,
+            1123,
+            30,
+            30
           ],
-          "offset": [
-            38,
-            35
+          "handOffset": [
+            54,
+            60
           ],
-          "anchors": {
-            "ground": [
-              48,
-              72
-            ],
-            "head": [
-              48,
-              36
-            ],
-            "face": [
-              48,
-              45
-            ],
-            "chest": [
-              48,
-              51
-            ],
-            "hip": [
-              48,
-              61
-            ],
-            "hand_near": [
-              57,
-              58
-            ]
-          },
-          "paintOrder": [
-            "cape_back",
-            "body",
-            "legs",
-            "boots",
-            "chest_front",
-            "eyes",
-            "hair_front",
-            "hat_front",
-            "weapon_near"
-          ],
-          "fingerprint": "b9e0ada80fc62213cf56fa4a8b387a55dd466792c017253e03026232c2c5be4b"
+          "fingerprint": "e626a49a7c3c097cc36b8704a41fa333180a72a74729526e32756f8cc1504832"
         }
       ]
     },
@@ -857,6 +1085,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -879,21 +1111,31 @@
             ],
             "hand_near": [
               57,
-              58
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "a15bba95bc28195c105f367ef2a7c52e3219c606bd1bc07c8a28d48bf55c38af"
+          "handRegion": [
+            211,
+            197,
+            30,
+            30
+          ],
+          "handOffset": [
+            54,
+            59
+          ],
+          "fingerprint": "24ca7be8f03c6b09db25beb054761fe0a214032b82d0f6fc5943b9dc09304c57"
         },
         {
           "region": [
@@ -907,6 +1149,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -929,21 +1175,31 @@
             ],
             "hand_near": [
               57,
-              58
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "97f5a85bd5792604f476b5aca52a7987fc1b1883e335783e42c5980c36a75c38"
+          "handRegion": [
+            510,
+            197,
+            30,
+            30
+          ],
+          "handOffset": [
+            54,
+            59
+          ],
+          "fingerprint": "4c87ad8cecebbd69bd3a07690ad5d3100f5d5e552f6a8fcaa1e1ae58bad91b77"
         },
         {
           "region": [
@@ -957,6 +1213,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -978,22 +1238,32 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              56,
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "55affee441debbe2c1b1595128dc92822e87b1ec28a0aa3581276df89d4b5f51"
+          "handRegion": [
+            810,
+            197,
+            30,
+            30
+          ],
+          "handOffset": [
+            53,
+            59
+          ],
+          "fingerprint": "ed4498a31337705c97e03de379dbafadccd6f898ef5dcc413572282def327393"
         },
         {
           "region": [
@@ -1007,6 +1277,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -1028,22 +1302,32 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              56,
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "a86bf78a67a3cb4d7b766946cc6e7bc7a8318c5f4a53dcbf4119f644960af7bc"
+          "handRegion": [
+            1109,
+            197,
+            30,
+            30
+          ],
+          "handOffset": [
+            53,
+            59
+          ],
+          "fingerprint": "14477b01eafca0e8bbb220c8fcb0118e4ecffc14779ea51b3093f5f984fba12a"
         },
         {
           "region": [
@@ -1057,6 +1341,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -1079,21 +1367,31 @@
             ],
             "hand_near": [
               57,
-              58
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "7eafee4bb1a21029dc308dcca086ca16bee058012655d5ee3027a75f9de6301d"
+          "handRegion": [
+            211,
+            502,
+            30,
+            30
+          ],
+          "handOffset": [
+            54,
+            59
+          ],
+          "fingerprint": "8957eeec4e0c838efb52422790149e25b04ef2d176e4a85ec226b3c8d6e9dcc8"
         },
         {
           "region": [
@@ -1107,6 +1405,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -1128,22 +1430,32 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              58,
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "5b4ba85414f97a2f4a8b2f4de3e704aa856a57e254159037a8231098a1c2c977"
+          "handRegion": [
+            517,
+            501,
+            30,
+            30
+          ],
+          "handOffset": [
+            55,
+            59
+          ],
+          "fingerprint": "962a0d52397e230aaf3b3918cea84c167418faada8fd6be696b852ddb4a3ac53"
         },
         {
           "region": [
@@ -1157,6 +1469,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -1178,22 +1494,32 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              58,
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "4c814f5f56a287ea0e1d46bbac3d9272691f12ab6d11df02dfca7d26dc798b33"
+          "handRegion": [
+            816,
+            501,
+            30,
+            30
+          ],
+          "handOffset": [
+            55,
+            59
+          ],
+          "fingerprint": "9a32c14eed3fa9df677f6356221a8102e4720ab348f5fcfe6a3179bc161efa01"
         },
         {
           "region": [
@@ -1207,6 +1533,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -1228,22 +1558,32 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              58,
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "3a561b4be8a2cad5e5545f8c820b65abc5e43e7f7138e5593ebc4ae580592ce9"
+          "handRegion": [
+            1116,
+            501,
+            30,
+            30
+          ],
+          "handOffset": [
+            55,
+            59
+          ],
+          "fingerprint": "836a4cfaec485f087bbd95b94445f61c16d603d7ec2d3091b1f79f29225a9d8e"
         },
         {
           "region": [
@@ -1257,6 +1597,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -1279,21 +1623,31 @@
             ],
             "hand_near": [
               57,
-              58
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "3283c04a8fd919a07ef9f9d87185ced3bcbf74146a455d6cf2bfe65cd28ac1a4"
+          "handRegion": [
+            211,
+            812,
+            30,
+            30
+          ],
+          "handOffset": [
+            54,
+            59
+          ],
+          "fingerprint": "91714c5e8422fe4319c00ce1820f7846c457b2af60f0d0d0a8a2e28a84b89dad"
         },
         {
           "region": [
@@ -1307,6 +1661,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -1329,21 +1687,31 @@
             ],
             "hand_near": [
               57,
-              58
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "1043cb3fa8b912a36aebba4fa7c7eaf395f990cab9a9269fc2d95afe0d3b621b"
+          "handRegion": [
+            514,
+            812,
+            30,
+            30
+          ],
+          "handOffset": [
+            54,
+            59
+          ],
+          "fingerprint": "bc1b47ecab7704c083c57d36c83f483210f3aa046093cfc7662dff6cc6e510e9"
         },
         {
           "region": [
@@ -1357,6 +1725,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -1378,22 +1750,32 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              56,
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "63ea02a4ca57bae1315af48a4cf8ed026a496c25681424aec7779ef579655543"
+          "handRegion": [
+            809,
+            812,
+            30,
+            30
+          ],
+          "handOffset": [
+            53,
+            59
+          ],
+          "fingerprint": "1c614e14e0da7fe670662b401109a89958fb05676281d40b69ecd6f75bd8d26d"
         },
         {
           "region": [
@@ -1407,6 +1789,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -1428,22 +1814,32 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              56,
+              62
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "af6df0bcad9fdb16ec835f88dbd3e66ef3a3ed4ebc8c42eb331f6541e2d215fb"
+          "handRegion": [
+            1109,
+            812,
+            30,
+            30
+          ],
+          "handOffset": [
+            53,
+            59
+          ],
+          "fingerprint": "be3c9f5598241cd751061cbd3fade38715e88eb2442f4a9ba51f04c94a3dcc35"
         },
         {
           "region": [
@@ -1457,6 +1853,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -1479,21 +1879,31 @@
             ],
             "hand_near": [
               57,
-              58
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "ee91dd07e4991aacba0f199ea043deb1ec5377b5a24407c4e0e5851667a34635"
+          "handRegion": [
+            210,
+            1127,
+            30,
+            30
+          ],
+          "handOffset": [
+            54,
+            60
+          ],
+          "fingerprint": "58908e5f0b745b778581ac6e071ba68d4358b8799ccd5862cd9bbcc6e6a75668"
         },
         {
           "region": [
@@ -1507,6 +1917,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -1529,21 +1943,31 @@
             ],
             "hand_near": [
               57,
-              58
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "1acd1a68c22573bae29985278842da6b7278a574e53ac1338ac2a5da967e3dc8"
+          "handRegion": [
+            510,
+            1128,
+            30,
+            30
+          ],
+          "handOffset": [
+            54,
+            60
+          ],
+          "fingerprint": "da42ba5daa70f8d6ecee24214582fa6a1d3f77fa98a2393ee5d96814e7c0f433"
         },
         {
           "region": [
@@ -1557,6 +1981,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -1578,22 +2006,32 @@
               61
             ],
             "hand_near": [
-              57,
-              58
+              56,
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "f5505bbc165dda50f49b3dd15e8be88c1be8a20678f9c2639d96ac52477cc716"
+          "handRegion": [
+            810,
+            1128,
+            30,
+            30
+          ],
+          "handOffset": [
+            53,
+            60
+          ],
+          "fingerprint": "d8c9e48db76fc8ef8244d8d4be273eef738137c024184447539995c4ecedc6fd"
         },
         {
           "region": [
@@ -1607,6 +2045,10 @@
             35
           ],
           "anchors": {
+            "canvas": [
+              0,
+              0
+            ],
             "ground": [
               48,
               72
@@ -1629,21 +2071,31 @@
             ],
             "hand_near": [
               57,
-              58
+              63
             ]
           },
           "paintOrder": [
             "cape_back",
             "body",
-            "legs",
+            "outfit",
             "boots",
-            "chest_front",
+            "weapon_near",
+            "hand_near",
             "eyes",
             "hair_front",
-            "hat_front",
-            "weapon_near"
+            "hat_front"
           ],
-          "fingerprint": "8508a3f8a522eb903b477432a66dbb8f154c41fa3d6b255656407ba855d11c37"
+          "handRegion": [
+            1110,
+            1127,
+            30,
+            30
+          ],
+          "handOffset": [
+            54,
+            60
+          ],
+          "fingerprint": "5089389ef36343e2afe9f577935481e0b1e447eb9cad6230b422db87c76180d4"
         }
       ]
     }
@@ -1667,10 +2119,19 @@
       ],
       "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
       "sourcePixelsPerUnit": 12,
+      "headCoverClipTopPixels": 18,
       "hides": [],
       "uniqueSourceImages": 1,
       "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
+      "rigId": null,
+      "transform": {
+        "pivotX": 0,
+        "pivotY": 0,
+        "degrees": 0,
+        "scale": 1,
+        "flipH": false,
+        "flipV": false
+      }
     },
     {
       "id": "HAIR_TOPKNOT",
@@ -1690,10 +2151,19 @@
       ],
       "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
       "sourcePixelsPerUnit": 12,
+      "headCoverClipTopPixels": 54,
       "hides": [],
       "uniqueSourceImages": 1,
       "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
+      "rigId": null,
+      "transform": {
+        "pivotX": 0,
+        "pivotY": 0,
+        "degrees": 0,
+        "scale": 1,
+        "flipH": false,
+        "flipV": false
+      }
     },
     {
       "id": "EYES_JADE",
@@ -1713,10 +2183,19 @@
       ],
       "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
       "sourcePixelsPerUnit": 12,
+      "headCoverClipTopPixels": 0,
       "hides": [],
       "uniqueSourceImages": 1,
       "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
+      "rigId": null,
+      "transform": {
+        "pivotX": 0,
+        "pivotY": 0,
+        "degrees": 0,
+        "scale": 1,
+        "flipH": false,
+        "flipV": false
+      }
     },
     {
       "id": "EYES_AMBER",
@@ -1736,109 +2215,26 @@
       ],
       "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
       "sourcePixelsPerUnit": 12,
+      "headCoverClipTopPixels": 0,
       "hides": [],
       "uniqueSourceImages": 1,
       "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
-    },
-    {
-      "id": "CHEST_IVORY",
-      "name": "Áo giao lĩnh ngà",
-      "slot": "chest_front",
-      "anchor": "chest",
-      "category": "OUTFIT",
-      "region": [
-        72,
-        363,
-        169,
-        227
-      ],
-      "offset": [
-        -7,
-        0
-      ],
-      "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
-      "sourcePixelsPerUnit": 12,
-      "hides": [],
-      "uniqueSourceImages": 1,
-      "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
-    },
-    {
-      "id": "CHEST_INDIGO",
-      "name": "Áo giao lĩnh chàm",
-      "slot": "chest_front",
-      "anchor": "chest",
-      "category": "OUTFIT",
-      "region": [
-        385,
-        363,
-        170,
-        227
-      ],
-      "offset": [
-        -7,
-        0
-      ],
-      "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
-      "sourcePixelsPerUnit": 12,
-      "hides": [],
-      "uniqueSourceImages": 1,
-      "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
-    },
-    {
-      "id": "LEGS_IVORY",
-      "name": "Quần ngà",
-      "slot": "legs",
-      "anchor": "hip",
-      "category": "OUTFIT",
-      "region": [
-        699,
-        409,
-        169,
-        149
-      ],
-      "offset": [
-        -7,
-        -3
-      ],
-      "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
-      "sourcePixelsPerUnit": 12,
-      "hides": [],
-      "uniqueSourceImages": 1,
-      "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
-    },
-    {
-      "id": "LEGS_INDIGO",
-      "name": "Quần chàm",
-      "slot": "legs",
-      "anchor": "hip",
-      "category": "OUTFIT",
-      "region": [
-        1012,
-        409,
-        170,
-        149
-      ],
-      "offset": [
-        -7,
-        -3
-      ],
-      "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
-      "sourcePixelsPerUnit": 12,
-      "hides": [],
-      "uniqueSourceImages": 1,
-      "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
+      "rigId": null,
+      "transform": {
+        "pivotX": 0,
+        "pivotY": 0,
+        "degrees": 0,
+        "scale": 1,
+        "flipH": false,
+        "flipV": false
+      }
     },
     {
       "id": "BOOTS_BROWN",
       "name": "Hài nâu",
       "slot": "boots",
       "anchor": "ground",
-      "category": "OUTFIT",
+      "category": "BOOTS",
       "region": [
         74,
         743,
@@ -1851,17 +2247,26 @@
       ],
       "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
       "sourcePixelsPerUnit": 12,
+      "headCoverClipTopPixels": 0,
       "hides": [],
       "uniqueSourceImages": 1,
       "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
+      "rigId": null,
+      "transform": {
+        "pivotX": 0,
+        "pivotY": 0,
+        "degrees": 0,
+        "scale": 1,
+        "flipH": false,
+        "flipV": false
+      }
     },
     {
       "id": "BOOTS_SILVER",
-      "name": "Hài viền bạc",
+      "name": "Hài bạc",
       "slot": "boots",
       "anchor": "ground",
-      "category": "OUTFIT",
+      "category": "BOOTS",
       "region": [
         387,
         743,
@@ -1874,56 +2279,19 @@
       ],
       "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
       "sourcePixelsPerUnit": 12,
+      "headCoverClipTopPixels": 0,
       "hides": [],
       "uniqueSourceImages": 1,
       "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
-    },
-    {
-      "id": "JIAN_STEEL",
-      "name": "Kiếm thép",
-      "slot": "weapon_near",
-      "anchor": "hand_near",
-      "category": "WEAPON",
-      "region": [
-        747,
-        640,
-        78,
-        275
-      ],
-      "offset": [
-        -3,
-        -7
-      ],
-      "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
-      "sourcePixelsPerUnit": 12,
-      "hides": [],
-      "uniqueSourceImages": 1,
-      "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
-    },
-    {
-      "id": "JIAN_JADE",
-      "name": "Kiếm ngọc",
-      "slot": "weapon_near",
-      "anchor": "hand_near",
-      "category": "WEAPON",
-      "region": [
-        1061,
-        641,
-        78,
-        273
-      ],
-      "offset": [
-        -3,
-        -7
-      ],
-      "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
-      "sourcePixelsPerUnit": 12,
-      "hides": [],
-      "uniqueSourceImages": 1,
-      "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
+      "rigId": null,
+      "transform": {
+        "pivotX": 0,
+        "pivotY": 0,
+        "degrees": 0,
+        "scale": 1,
+        "flipH": false,
+        "flipV": false
+      }
     },
     {
       "id": "HAT_CIRCLET",
@@ -1939,14 +2307,23 @@
       ],
       "offset": [
         -8,
-        -3
+        4
       ],
       "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
       "sourcePixelsPerUnit": 12,
+      "headCoverClipTopPixels": 0,
       "hides": [],
       "uniqueSourceImages": 1,
       "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
+      "rigId": null,
+      "transform": {
+        "pivotX": 0,
+        "pivotY": 0,
+        "degrees": 0,
+        "scale": 1,
+        "flipH": false,
+        "flipV": false
+      }
     },
     {
       "id": "HAT_TRAVELLER",
@@ -1966,12 +2343,19 @@
       ],
       "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
       "sourcePixelsPerUnit": 12,
-      "hides": [
-        "hair_front"
-      ],
+      "headCoverClipTopPixels": 0,
+      "hides": [],
       "uniqueSourceImages": 1,
       "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
+      "rigId": null,
+      "transform": {
+        "pivotX": 0,
+        "pivotY": 0,
+        "degrees": 0,
+        "scale": 1,
+        "flipH": false,
+        "flipV": false
+      }
     },
     {
       "id": "CAPE_JADE",
@@ -1991,10 +2375,19 @@
       ],
       "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
       "sourcePixelsPerUnit": 12,
+      "headCoverClipTopPixels": 0,
       "hides": [],
       "uniqueSourceImages": 1,
       "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
+      "rigId": null,
+      "transform": {
+        "pivotX": 0,
+        "pivotY": 0,
+        "degrees": 0,
+        "scale": 1,
+        "flipH": false,
+        "flipV": false
+      }
     },
     {
       "id": "CAPE_INDIGO",
@@ -2014,18 +2407,284 @@
       ],
       "texture": "res://assets/paperdoll_lab/mk_s_parts_v1.png",
       "sourcePixelsPerUnit": 12,
+      "headCoverClipTopPixels": 0,
       "hides": [],
       "uniqueSourceImages": 1,
       "approved": false,
-      "note": "Static isolated SOUTH part; sixteen placement bindings are not sixteen authored garment poses."
+      "rigId": null,
+      "transform": {
+        "pivotX": 0,
+        "pivotY": 0,
+        "degrees": 0,
+        "scale": 1,
+        "flipH": false,
+        "flipV": false
+      }
+    },
+    {
+      "id": "OUTFIT_IVORY_M",
+      "name": "Bộ giao lĩnh ngà",
+      "slot": "outfit",
+      "anchor": "chest",
+      "category": "OUTFIT",
+      "region": [
+        94,
+        80,
+        256,
+        323
+      ],
+      "offset": [
+        -8,
+        -1
+      ],
+      "texture": "res://assets/paperdoll_lab/outfits_swords_v2.png",
+      "sourcePixelsPerUnit": 16,
+      "headCoverClipTopPixels": 0,
+      "hides": [],
+      "uniqueSourceImages": 1,
+      "approved": false,
+      "rigId": "RIG_HUMAN_M_V1",
+      "transform": {
+        "pivotX": 0,
+        "pivotY": 0,
+        "degrees": 0,
+        "scale": 1,
+        "flipH": false,
+        "flipV": false
+      }
+    },
+    {
+      "id": "OUTFIT_INDIGO_M",
+      "name": "Bộ giao lĩnh chàm",
+      "slot": "outfit",
+      "anchor": "chest",
+      "category": "OUTFIT",
+      "region": [
+        536,
+        80,
+        260,
+        323
+      ],
+      "offset": [
+        -8,
+        -1
+      ],
+      "texture": "res://assets/paperdoll_lab/outfits_swords_v2.png",
+      "sourcePixelsPerUnit": 16,
+      "headCoverClipTopPixels": 0,
+      "hides": [],
+      "uniqueSourceImages": 1,
+      "approved": false,
+      "rigId": "RIG_HUMAN_M_V1",
+      "transform": {
+        "pivotX": 0,
+        "pivotY": 0,
+        "degrees": 0,
+        "scale": 1,
+        "flipH": false,
+        "flipV": false
+      }
+    },
+    {
+      "id": "OUTFIT_IVORY_F",
+      "name": "Bộ giao lĩnh ngà",
+      "slot": "outfit",
+      "anchor": "chest",
+      "category": "OUTFIT",
+      "region": [
+        983,
+        81,
+        252,
+        322
+      ],
+      "offset": [
+        -8,
+        -1
+      ],
+      "texture": "res://assets/paperdoll_lab/outfits_swords_v2.png",
+      "sourcePixelsPerUnit": 16,
+      "headCoverClipTopPixels": 0,
+      "hides": [],
+      "uniqueSourceImages": 1,
+      "approved": false,
+      "rigId": "RIG_HUMAN_F_V1",
+      "transform": {
+        "pivotX": 0,
+        "pivotY": 0,
+        "degrees": 0,
+        "scale": 1,
+        "flipH": false,
+        "flipV": false
+      }
+    },
+    {
+      "id": "OUTFIT_INDIGO_F",
+      "name": "Bộ giao lĩnh chàm",
+      "slot": "outfit",
+      "anchor": "chest",
+      "category": "OUTFIT",
+      "region": [
+        1427,
+        80,
+        253,
+        323
+      ],
+      "offset": [
+        -8,
+        -1
+      ],
+      "texture": "res://assets/paperdoll_lab/outfits_swords_v2.png",
+      "sourcePixelsPerUnit": 16,
+      "headCoverClipTopPixels": 0,
+      "hides": [],
+      "uniqueSourceImages": 1,
+      "approved": false,
+      "rigId": "RIG_HUMAN_F_V1",
+      "transform": {
+        "pivotX": 0,
+        "pivotY": 0,
+        "degrees": 0,
+        "scale": 1,
+        "flipH": false,
+        "flipV": false
+      }
+    },
+    {
+      "id": "JIAN_STEEL_LEFT",
+      "name": "Kiếm thép · chéo trái",
+      "slot": "weapon_near",
+      "anchor": "hand_near",
+      "category": "WEAPON",
+      "region": [
+        105,
+        535,
+        234,
+        268
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "texture": "res://assets/paperdoll_lab/outfits_swords_v2.png",
+      "sourcePixelsPerUnit": 16,
+      "headCoverClipTopPixels": 0,
+      "hides": [],
+      "uniqueSourceImages": 1,
+      "approved": false,
+      "rigId": null,
+      "transform": {
+        "pivotX": 12.75,
+        "pivotY": 1.875,
+        "degrees": 0,
+        "scale": 0.75,
+        "flipH": false,
+        "flipV": false
+      }
+    },
+    {
+      "id": "JIAN_JADE_LEFT",
+      "name": "Kiếm ngọc · chéo trái",
+      "slot": "weapon_near",
+      "anchor": "hand_near",
+      "category": "WEAPON",
+      "region": [
+        549,
+        535,
+        234,
+        268
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "texture": "res://assets/paperdoll_lab/outfits_swords_v2.png",
+      "sourcePixelsPerUnit": 16,
+      "headCoverClipTopPixels": 0,
+      "hides": [],
+      "uniqueSourceImages": 1,
+      "approved": false,
+      "rigId": null,
+      "transform": {
+        "pivotX": 12.75,
+        "pivotY": 1.875,
+        "degrees": 0,
+        "scale": 0.75,
+        "flipH": false,
+        "flipV": false
+      }
+    },
+    {
+      "id": "JIAN_STEEL_RIGHT",
+      "name": "Kiếm thép · chéo phải",
+      "slot": "weapon_near",
+      "anchor": "hand_near",
+      "category": "WEAPON",
+      "region": [
+        991,
+        535,
+        235,
+        268
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "texture": "res://assets/paperdoll_lab/outfits_swords_v2.png",
+      "sourcePixelsPerUnit": 16,
+      "headCoverClipTopPixels": 0,
+      "hides": [],
+      "uniqueSourceImages": 1,
+      "approved": false,
+      "rigId": null,
+      "transform": {
+        "pivotX": 1.875,
+        "pivotY": 1.875,
+        "degrees": 0,
+        "scale": 0.75,
+        "flipH": false,
+        "flipV": false
+      }
+    },
+    {
+      "id": "JIAN_JADE_RIGHT",
+      "name": "Kiếm ngọc · chéo phải",
+      "slot": "weapon_near",
+      "anchor": "hand_near",
+      "category": "WEAPON",
+      "region": [
+        1436,
+        535,
+        234,
+        268
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "texture": "res://assets/paperdoll_lab/outfits_swords_v2.png",
+      "sourcePixelsPerUnit": 16,
+      "headCoverClipTopPixels": 0,
+      "hides": [],
+      "uniqueSourceImages": 1,
+      "approved": false,
+      "rigId": null,
+      "transform": {
+        "pivotX": 1.875,
+        "pivotY": 1.875,
+        "degrees": 0,
+        "scale": 0.75,
+        "flipH": false,
+        "flipV": false
+      }
     }
   ],
+  "outfitVisualOnly": true,
+  "equipmentSlotsUnchanged": true,
+  "ownerRejectedLegacyPng": true,
   "limitations": [
-    "Initial body guides are unapproved seeds; inspect every pose.",
-    "Sources are not native pixel masters; explicit atlas-wide review calibration only.",
-    "No walk, attack, skill, eight-direction art, under-hat variant or split arm skin passes.",
-    "Tunic/cape reuse is a static fitting study, not accepted deformable animation.",
-    "No create-character, equipment mutation, ownership or online persistence."
+    "S/idle candidate only. Static outfit is one connected shirt/trouser visual, not equipment changes.",
+    "Foreground hand is an exact source-region redraw; master skin passes still need native authoring.",
+    "Transforms and source calibration are review-only. 16 placements are not 16 garment artworks."
   ],
-  "catalogueFingerprint": "6218303017eeca5baeee82f95a79d87205ee102e953b44e99b6cc19dfb30ec00"
+  "catalogueFingerprint": "e1a442f2d70d2d00cca9c1d0cda255002afaeedae69e2e9324e1786d9adb2e84"
 }

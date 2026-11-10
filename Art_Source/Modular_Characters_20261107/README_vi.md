@@ -1,3 +1,5 @@
+> 10/11: Các base/trang phục PNG sinh riêng không đạt yêu cầu khớp/tỉ lệ. Chỉ giữ lịch sử. Nguồn hiện hành: Art_Source/Registered_Master_20261110 và RegisteredPaperDollMaster.cs; chưa phê duyệt art cuối.
+
 # Base nhân vật ghép lớp — 07/11/2026
 
 Đã tạo hai ứng viên base nam/nữ hướng S, mỗi sheet 16 ô idle. PNG nguyên từ imagegen tích hợp, prompt trong Prompts. Chưa có tóc/mắt/vũ khí/giáp; base có coverage trung tính. Đây chưa phải bộ 8 hướng, chưa phải pose master đúng grid 96×96 hoặc pack layer đã fit. productionApproved=false.

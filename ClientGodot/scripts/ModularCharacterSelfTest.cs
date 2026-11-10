@@ -86,6 +86,14 @@ public partial class ModularCharacterSelfTest : Node
         Check(!TryCompile(look with{Body=look.Body with{SourcePixelsPerUnit=0}},true,out _,out _),"zero source calibration rejected");
         var calibrated=look with{Body=look.Body with{SourcePixelsPerUnit=6}};Check(TryCompile(calibrated,true,out var scaled,out _)&&scaled!.Clips["idle/S"].Frames[0].All(c=>c.SourcePixelsPerUnit==6),"one declared source calibration inherited by body and parts");
         Check(twenty.SeekFrame(7)&&twenty.FrameIndex==7,"scrub chooses requested pose");double scrubTime=twenty.Elapsed;Check(!twenty.SeekFrame(-1)&&!twenty.SeekFrame(20)&&twenty.Elapsed==scrubTime,"out-of-range scrub preserves clock");
+        var pivoted=new DrawCommand("weapon","fixture",new(0,0,4,20),new(10,10),1,new PaintTransform(2,2,90));
+        Check(ToActor(pivoted,2,2)==new Point(10,10),"grip pivot remains at actor attachment under rotation");
+        var corner=ToActor(pivoted,0,0);Check(Math.Abs(corner.X-12)<.0001&&Math.Abs(corner.Y-8)<.0001,"ninety-degree source transform has expected geometry");
+        Check(!ValidTransform(new PaintTransform(0,0,double.NaN))&&!ValidTransform(new PaintTransform(0,0,0,0)),"invalid transform values rejected");
+        var rotatedBindings=look.Parts[0].Bindings.ToDictionary(p=>p.Key,p=>p.Value with{Frames=p.Value.Frames.Select(f=>f with{Transform=new PaintTransform(8,6,30)}).ToArray()});
+        Check(TryCompile(look with{Parts=new[]{look.Parts[0] with{Bindings=rotatedBindings}}},true,out var rotated,out _)&&rotated!.Clips["idle/S"].Frames[0].Single(c=>c.PartId=="shirt").Transform!.Value.Degrees==30,"review compiles rotated layer around its pivot");
+        rotatedBindings=look.Parts[0].Bindings.ToDictionary(p=>p.Key,p=>p.Value with{Frames=p.Value.Frames.Select(f=>f with{Transform=new PaintTransform(0,0,0,0)}).ToArray()});
+        Check(!TryCompile(look with{Parts=new[]{look.Parts[0] with{Bindings=rotatedBindings}}},true,out _,out _),"invalid per-frame transform blocks look atomically");
         var changing=new Session();changing.TryApply(Fixture(),true,ResourcesReady,out _);
         Check(!changing.TryApply(Fixture(2),true,plan=>{changing.TryPlay("walk/S",ResourcesReady);return true;},out _)&&changing.Current!.Revision==1&&changing.ClipKey=="walk/S","action change cannot commit texture pages for the wrong clip");
         Check(!changing.TryPlay("death/S",plan=>{changing.TryApply(Fixture(3),true,ResourcesReady,out _);return true;})&&changing.Current!.Revision==3&&changing.ClipKey=="walk/S","prepared action cannot overwrite a newer appearance");
