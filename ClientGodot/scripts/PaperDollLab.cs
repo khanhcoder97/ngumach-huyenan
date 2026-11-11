@@ -35,7 +35,7 @@ public partial class PaperDollLab : Control
     private ulong _benchmarkStart,_lastTick;
     private readonly List<double> _samples=new();
     private string DraftPath=>_data.Registered?"user://paperdoll_lab/fit_registered_master_v1.json":"user://paperdoll_lab/fit_legacy_v2.json";
-    public override void _Ready(){try{var args=OS.GetCmdlineUserArgs();if(!args.Contains("--paperdoll-fit-tools")&&!args.Contains("--paperdoll-self-test")&&!args.Contains("--paperdoll-registration-test")){Callable.From(()=>GetTree().ChangeSceneToFile("res://PaperDollArtReview.tscn")).CallDeferred();return;}Build();}catch(Exception e){GD.PushError("PAPERDOLL_LAB_INIT_FAIL "+e);GetTree().Quit(1);}}
+    public override void _Ready(){try{var args=OS.GetCmdlineUserArgs();if(!args.Contains("--paperdoll-fit-tools")&&!args.Contains("--paperdoll-self-test")&&!args.Contains("--paperdoll-registration-test")){Callable.From(()=>GetTree().ChangeSceneToFile("res://ArtStudio.tscn")).CallDeferred();return;}Build();}catch(Exception e){GD.PushError("PAPERDOLL_LAB_INIT_FAIL "+e);GetTree().Quit(1);}}
     private void Build()
     {
         Engine.MaxFps=60;Theme=MoonGlassTheme.Create();_data=new PaperDollLabData((OS.GetCmdlineUserArgs().Contains("--paperdoll-self-test")||OS.GetCmdlineUserArgs().Contains("--paperdoll-registration-test"))&&!OS.GetCmdlineUserArgs().Contains("--paperdoll-legacy"));

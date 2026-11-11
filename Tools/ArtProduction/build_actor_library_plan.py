@@ -35,8 +35,8 @@ def build():
     actors=[];skills=[];jobs=[]
     def add(actor):
         if actor['kind']=='CLASS':
-            actor['newProductionStrategy']='MODULAR_CHARACTER_V1'
-            actor['bakedAssetUsage']='REFERENCE_AND_LEGACY_FALLBACK_ONLY'
+            actor['newProductionStrategy']='BAKED_SPRITE_SHEETS_V1'
+            actor['bakedAssetUsage']='PRIMARY_ART_DIRECTION_REVIEW_PER_SHEET'
         actor['mirrorAllowed']=actor['id'] not in {'NPC_TA_VAN_KHANH','NPC_CO_VO_TUONG','NPC_TONG_BANH','BOSS_MANG_COT','BOSS_COSM','BOSS_TONG_BANH'}
         actors.append(actor)
         for clip in actor['requiredClips']:
@@ -49,7 +49,7 @@ def build():
             elif re.match(r'(telegraph|attack|recovery)_\d+',clip):
                 phase=clip.split('_')[0];description='Sixteen-pose '+phase+' sequence for attack variant '+clip[-2:]+'. Follow the authored tell/action in the creature description. Telegraph anticipates without hitting, attack releases, recovery settles. No separate magical VFX, environment or targets.'
             key=actor['id'].lower()+'_'+clip
-            jobs.append(dict(id=key,ownerId=actor['id'],kind=actor['kind'],clip=clip,columns=8,rows=10,framesPerDirection=16,directions=['N','NE','E','SE','S'],status='HOLD_MODULAR_MIGRATION' if actor['kind']=='CLASS' else 'REQUESTED',referenceJob=None if clip=='idle' else actor['id'].lower()+'_idle',prompt='Subject '+actor['id']+' — '+actor['name']+'. Identity: '+actor['appearance']+'. Animation: '+description+'.'+LAYOUT))
+            jobs.append(dict(id=key,ownerId=actor['id'],kind=actor['kind'],clip=clip,columns=8,rows=10,framesPerDirection=16,directions=['N','NE','E','SE','S'],status='REQUESTED',referenceJob=None if clip=='idle' else actor['id'].lower()+'_idle',prompt='Subject '+actor['id']+' — '+actor['name']+'. Identity: '+actor['appearance']+'. Animation: '+description+'.'+LAYOUT))
             if not actor['mirrorAllowed']:
                 for direction in ['SW','W','NW']:
                     jobs.append(dict(id=key+'_'+direction.lower(),ownerId=actor['id'],kind=actor['kind'],clip=clip,direction=direction,columns=4,rows=4,framesPerDirection=16,directions=[direction],status='REQUESTED',referenceJob=actor['id'].lower()+'_idle',prompt='Original anatomically consistent '+direction+' view of '+actor['name']+'. Identity: '+actor['appearance']+'. '+description+'. EXACT4columns4rows16consecutive full-body frames, one direction ONLY: '+direction+'. Preserve the correct anatomical side of bandages, broken horn, mask, armour and held props: redraw this angle, do NOT horizontally mirror another view. All sixteen frames whole, padded and separate; stable ground anchor. Top-down crisp pixel art, limited stepped palette, genuine transparent alpha. No text/grid/border/background/ground/shadow.'))

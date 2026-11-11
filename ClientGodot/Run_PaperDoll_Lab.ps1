@@ -4,6 +4,9 @@ param(
     [switch]$SkipBuild,
     [switch]$SelfTest,
     [switch]$ArtSelfTest,
+    [switch]$StudioSelfTest,
+    [string]$StudioProject,
+    [switch]$ArchivedArtReview,
     [switch]$FitTools,
     [ValidateRange(0,2)][int]$ArtView=2,
     [switch]$Female,
@@ -35,12 +38,15 @@ try {
         if($LASTEXITCODE){throw 'Paper-doll lab import failed.'}
     }
     $technical=$SelfTest -or $FitTools -or $Legacy -or [bool]$Benchmark -or [bool]$ExportMaster
-    $scene=if($technical){'PaperDollLab.tscn'}else{'PaperDollArtReview.tscn'}
+    $scene=if($technical){'PaperDollLab.tscn'}elseif($ArtSelfTest -or $ArchivedArtReview){'PaperDollArtReview.tscn'}else{'ArtStudio.tscn'}
     $launchArgs=@('--path',$PSScriptRoot,$scene)
-    if($SelfTest -or $ArtSelfTest -or $ExportMaster){$launchArgs=@('--headless')+$launchArgs}
+    if($SelfTest -or $ArtSelfTest -or $StudioSelfTest -or $ExportMaster){$launchArgs=@('--headless')+$launchArgs}
     $launchArgs+='--'
     if($SelfTest){$launchArgs+='--paperdoll-self-test'}
     if($ArtSelfTest){$launchArgs+='--paperdoll-art-self-test'}
+    if($StudioSelfTest){$launchArgs+='--studio-self-test'}
+    if($StudioProject){$launchArgs+=@('--studio-project',$StudioProject)}
+    if($ArchivedArtReview){$launchArgs+='--paperdoll-archived-review'}
     if($technical){$launchArgs+='--paperdoll-fit-tools'}
     if($ExportMaster){$launchArgs+='--paperdoll-registration-test'}
     $launchArgs+=@('--paperdoll-art-view',[string]$ArtView)
@@ -51,7 +57,7 @@ try {
     if($Legacy){$launchArgs+='--paperdoll-legacy'}
     if($ExportMaster){$launchArgs+=@('--paperdoll-export-master',$ExportMaster)}
     $launchArgs+=@('--paperdoll-pose',[string]$Pose)
-    if($Capture){$launchArgs+=@('--paperdoll-capture',$Capture)}
+    if($Capture){$launchArgs+=@($(if($scene -eq 'ArtStudio.tscn'){'--studio-capture'}else{'--paperdoll-capture'}),$Capture)}
     if($Benchmark){$launchArgs+=@('--paperdoll-benchmark',$Benchmark)}
     & $GodotPath @launchArgs
     if($LASTEXITCODE){throw 'Paper-doll lab failed.'}

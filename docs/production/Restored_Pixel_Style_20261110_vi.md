@@ -1,3 +1,5 @@
+> 12/11/2026 — ĐÃ THAY THẾ: chủ dự án hủy hướng nhân vật paper-doll mới, quay lại sprite sheet chibi cũ. Mặc định mở ArtStudio.tscn; xem [hướng dẫn hiện hành](Sprite_Studio_20261112_vi.md). Nội dung dưới đây là lịch sử.
+
 # Khóa hướng mỹ thuật nhân vật pixel — 10/11/2026, lần sửa phong cách
 
 Yêu cầu của chủ dự án: không dùng cách vẽ hình khối/procedural vừa thử; giữ phong cách pixel chi tiết của bộ trước, điều chỉnh cơ thể dài hơn và vẽ quần áo theo base mới.

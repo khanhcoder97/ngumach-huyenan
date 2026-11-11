@@ -90,10 +90,8 @@ def main(export,require_complete,check=False):
         page['productionApproved']=bool(page.get('legacy') or page['id'] in approved)
         page['visualState']='EXISTING_NATIVE_APPROVED' if page.get('legacy') else 'APPROVED' if page['id'] in approved else 'HOLD' if page['id'] in holds else 'AWAITING_VISUAL_REVIEW'
         page['visualNotes']=holds.get(page['id'],'')
-        if page['id'].startswith('class_') and not page.get('legacy'):
-            page['productionApproved']=False
-            page['visualState']='REFERENCE_ONLY_MODULAR_MIGRATION'
-            page['visualNotes']='New player art uses modular bodies/parts. Keep this baked sheet as reference only. '+page['visualNotes']
+        # 12/11 owner returned to baked sheets. Keep actual visual holds/review states;
+        # changing art direction does NOT approve a candidate or manufacture missing clips.
     def save(path,value):
         rendered=json.dumps(value,ensure_ascii=False,indent=2)+'\n'
         if check:assert path.read_text(encoding='utf8')==rendered,'stale metadata: '+str(path)

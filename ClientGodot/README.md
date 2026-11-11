@@ -1,6 +1,4 @@
-> Hướng hiện hành 10/11: Run_PaperDoll_Lab.ps1 mặc định mở bộ ảnh pixel chi tiết được vẽ lại theo phong cách trước. Mẫu hình khối V2 bị bác bỏ về mỹ thuật. Xem docs/production/Restored_Pixel_Style_20261110_vi.md.
-
-> 10/11/2026: PaperDollLab mặc định dùng registered native master (cùng body/outfit pose), không dùng bộ PNG sinh riêng đã bị bác bỏ. Hướng dẫn hiện hành: docs/production/Registered_PaperDoll_Master_20261110_vi.md.
+> **Hiện hành 12/11/2026:** dùng sprite sheet chibi nguyên khối cũ; hủy hướng vẽ paper-doll mới. `Run_Art_Studio.ps1` và `Run_PaperDoll_Lab.ps1` mặc định mở Sprite/VFX Studio với Lý An. [Hướng dẫn chỉnh tay](../docs/production/Sprite_Studio_20261112_vi.md). Equipment slots/chỉ số giữ nguyên; bản chỉnh chưa tự áp vào gameplay.
 
 # Godot client — Bến Mưa local alpha
 

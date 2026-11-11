@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "status": "DESIGN_AND_CONTRACT_PROTOTYPE",
+  "status": "SUPERSEDED_BY_BAKED_SPRITE_SHEETS",
   "productionReady": false,
-  "decision": "USER_MODULAR_CHARACTER_20261107",
+  "decision": "USER_RETURN_TO_EXISTING_CHIBI_SPRITES_20261112",
   "engine": "Godot.NET 2D Compatibility",
   "framePolicy": {
     "minimum": 16,
@@ -340,14 +340,11 @@
     "defaultPreview": false
   },
   "artDirection": {
-    "source": "Art_Source/Restored_Pixel_Style_20261110",
-    "preferredStyle": "RESTORED_ILLUSTRATIVE_PIXEL_ART",
-    "bodyPolicy": "ELONGATE_PREVIOUS_STYLE_NATURALLY",
-    "outfitPolicy": "DRAW_COMPLETE_OUTFIT_ON_SAME_BASE",
-    "poseCountPerActor": 1,
-    "layerPackReady": false,
-    "animationReady": false,
-    "productionApproved": false,
-    "framePolicyUnchanged": true
+    "mode": "BAKED_SPRITE_SHEETS_V1",
+    "defaultPreview": "res://ArtStudio.tscn",
+    "defaultPage": "npc_lyan_idle",
+    "newPaperDollArtCancelled": true,
+    "framePolicyUnchanged": true,
+    "productionApproved": false
   }
 }

@@ -1,6 +1,6 @@
 # Thư viện actor/VFX — đợt sản xuất07/11/2026
 
-> Quyết định mới07/11: player class chuyển sang pipeline modular ở Art_Source/Modular_Characters_20261107.60job vẽ class liền trang bị chuyển HOLD_MODULAR_MIGRATION;19page class ứng viên chỉ là reference,3clip legacy giữ fallback. Các số liệu ở báo cáo đợt đầu là lịch sử, không phải tiến độ của bộ modular mới.
+> Quyết định hiện hành 12/11: quay lại sprite sheet chibi nguyên khối. Hủy hướng nhân vật paper-doll mới; studio giữ để chỉnh tay. Nguồn cũ giữ nguyên, các HOLD chất lượng vẫn giữ. Xem [Sprite Studio](../../docs/production/Sprite_Studio_20261112_vi.md).
 
 **Đang sản xuất; chưa hoàn thành toàn bộ thư viện.** Chuẩn16–20pose thực/clip/hướng, renderer60FPS. PNG mới là ứng viên review, chưa tự thay asset gameplay.
 

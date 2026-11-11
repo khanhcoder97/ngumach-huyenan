@@ -1,3 +1,5 @@
+> 12/11/2026 — ĐÃ THAY THẾ: chủ dự án hủy hướng nhân vật paper-doll mới, quay lại sprite sheet chibi cũ. Mặc định mở ArtStudio.tscn; xem [hướng dẫn hiện hành](Sprite_Studio_20261112_vi.md). Nội dung dưới đây là lịch sử.
+
 > Hết hiệu lực làm hướng mỹ thuật: chủ dự án bác bỏ mẫu procedural. Chỉ lưu tài liệu kỹ thuật. Hướng hiện hành: Restored_Pixel_Style_20261110_vi.md.
 
 # Master nhân vật dùng chung cơ thể/trang phục — 10/11/2026

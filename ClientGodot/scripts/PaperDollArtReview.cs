@@ -20,6 +20,8 @@ public partial class PaperDollArtReview : Control
     private int _selected=2;
     public override void _Ready()
     {
+        if(!OS.GetCmdlineUserArgs().Contains("--paperdoll-art-self-test")&&!OS.GetCmdlineUserArgs().Contains("--paperdoll-archived-review"))
+        {Callable.From(()=>GetTree().ChangeSceneToFile("res://ArtStudio.tscn")).CallDeferred();return;}
         try{Build();}
         catch(Exception e){GD.PushError("PAPERDOLL_ART_REVIEW_FAIL "+e);GetTree().Quit(1);}
     }

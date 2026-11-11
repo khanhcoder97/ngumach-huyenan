@@ -47,6 +47,7 @@ jobs:
       - run: python Tools/ArtProduction/inspect_motion16.py
       - run: python Tools/ArtProduction/build_actor_library_plan.py --check
       - run: python Tools/ArtProduction/inspect_actor_library.py --export --check
+      - run: python Tools/ArtProduction/audit_sprite_restore.py
       - run: python Tools/ArtProduction/inspect_modular_candidates.py --check
       - run: python Tools/ArtProduction/export_paperdoll_lab.py --check
       - run: python Tools/ArtProduction/inspect_registered_master.py --check
