@@ -1,0 +1,1501 @@
+{
+ "coverageId": "NGM_SFX_COVERAGE_ME_CP2A_V1",
+ "checkpoint": "MEDIA-02 WO37 M-E checkpoint 2a",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "workOrder": "37_MUSE_FULL_CAMPAIGN_MEDIA_20261108.md module M-E",
+ "branch": "muse/media-production-20261104",
+ "sources": {
+  "catalogue": "Implementation/Content/DesignBaselines/audio_cues_v1.json",
+  "catalogueBundle": "DESIGN_AUDIO_CUES_V1",
+  "catalogueOwner": "Codex",
+  "sfxPack": "Implementation/Content/Audio/Deliveries/SFX_UI_pack_v1.json",
+  "sfxPackId": "NGM_SFX_UI_PACK_V1",
+  "musicAmbiencePack": "Implementation/Content/Audio/Deliveries/MUSIC_AMBIENCE_pack_v1.json",
+  "musicAmbiencePackId": "NGM_MUSIC_AMBIENCE_PACK_V1",
+  "musicComposedPack": "Implementation/Content/Audio/Deliveries/MUSIC_COMPOSED_pack_v1.json",
+  "ambienceComposedPack": "Implementation/Content/Audio/Deliveries/AMBIENCE_COMPOSED_pack_v1.json",
+  "gameManifest": "Client/Assets/AudioManifests/game_audio_v1.json",
+  "gamePackId": "NGM_ORIGINAL_AUDIO_V1",
+  "workOrder37": "Implementation/Work_Orders/37_MUSE_FULL_CAMPAIGN_MEDIA_20261108.md",
+  "audioDirection": "docs/production/Audio_Production_Direction_v1_vi.md",
+  "audioDelivery": "docs/production/Audio_Pack_V1_Delivery_vi.md"
+ },
+ "counts": {
+  "catalogueKeys": 63,
+  "catalogueCoveredVerified": 63,
+  "catalogueSfxKeys": 54,
+  "catalogueMusicAmbienceKeys": 9,
+  "deliveredSfxUiCues": 173,
+  "deliveredMusicAmbienceCues": 22,
+  "deliveredBeyondCatalogue": 119,
+  "deliveredBeyondCatalogueByCategory": {
+   "ACCOUNT": 3,
+   "BOSS": 35,
+   "CINEMA": 4,
+   "COSMETIC": 2,
+   "CRAFT": 2,
+   "FORGE": 7,
+   "GUILD": 4,
+   "LIFE": 8,
+   "MONSTER": 24,
+   "PET": 3,
+   "PVP": 8,
+   "QUEST": 2,
+   "TRADE": 5,
+   "UI": 10,
+   "WORLD": 2
+  },
+  "gameManifestCues": 195,
+  "bindings": {
+   "skills": 30,
+   "monsters": 30,
+   "bosses": 12,
+   "maps": 46,
+   "npcs": 83,
+   "companions": 10,
+   "cinema": 20
+  },
+  "bossComposition": {
+   "intro": 12,
+   "warning": 14,
+   "success": 12
+  },
+  "monsterFamilies": [
+   "aquatic",
+   "beast",
+   "construct",
+   "engine",
+   "insect",
+   "raider",
+   "rift",
+   "roots"
+  ],
+  "monsterPhases": {
+   "attack": 8,
+   "death": 8,
+   "hurt": 8
+  },
+  "filesVerified": 72
+ },
+ "coverage": [
+  {
+   "cueKey": "SFX/SKILL/metal_parry",
+   "catalogueTrigger": "COUNTER_CONFIRMED",
+   "catalogueSkillId": "SK-MK-01",
+   "catalogueClassId": "CLASS_MINH_KIEM",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/metal_parry",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/metal_parry_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "f039557ea5204a0c14e89816aa93424d32476120057dd05c8e1dd2915b7d0c20",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/metal_thrust",
+   "catalogueTrigger": "DASH_PATH_CONFIRMED",
+   "catalogueSkillId": "SK-MK-02",
+   "catalogueClassId": "CLASS_MINH_KIEM",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/metal_thrust",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/metal_thrust_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "1b0e4b648e303ea38b3330b0eb8dced0cc6b044c43162396780156fe13ae9139",
+    "sizeBytes": 27836,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2895
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/metal_three_cuts",
+   "catalogueTrigger": "MULTI_HIT_CONFIRMED",
+   "catalogueSkillId": "SK-MK-03",
+   "catalogueClassId": "CLASS_MINH_KIEM",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/metal_three_cuts",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/metal_three_cuts_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "71eb698a1c55cd4eb1069fb7cd8f733bfb725b5bfbea746224bd64a137631ab1",
+    "sizeBytes": 25984,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2702
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/metal_shield",
+   "catalogueTrigger": "SHIELD_STATE",
+   "catalogueSkillId": "SK-MK-04",
+   "catalogueClassId": "CLASS_MINH_KIEM",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/metal_shield",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/metal_shield_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "69a61d64e54e575ae271834bd4e396ddfe5a5c69f0563fff84ac0ed680975a6c",
+    "sizeBytes": 66744,
+    "codec": "pcm_s16le",
+    "duration_s": 0.6948
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/air_step",
+   "catalogueTrigger": "DASH_PATH_CONFIRMED",
+   "catalogueSkillId": "SK-MK-05",
+   "catalogueClassId": "CLASS_MINH_KIEM",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/air_step",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/air_step_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "89cf8131cd55ce564eb5ec6a07f2dab6604753499428aea2f5cb2e4b38ccfecf",
+    "sizeBytes": 25984,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2702
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/metal_resonance",
+   "catalogueTrigger": "ULTIMATE_RELEASE_CONFIRMED",
+   "catalogueSkillId": "SK-MK-06",
+   "catalogueClassId": "CLASS_MINH_KIEM",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/metal_resonance",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/metal_resonance_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "b2a6d6c20ba6b6748f0c5caa0d298d9985c436193f235cea7b9ea969f6ac084c",
+    "sizeBytes": 125108,
+    "codec": "pcm_s16le",
+    "duration_s": 1.3028
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/ember_cut",
+   "catalogueTrigger": "HIT_AND_STATUS_CONFIRMED",
+   "catalogueSkillId": "SK-AD-01",
+   "catalogueClassId": "CLASS_ANH_DAO",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/ember_cut",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/ember_cut_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "ef2eb8f901324643aa8ecfd22396863e5b9ff59c28784cb86eade047973b2c65",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/ember_pop",
+   "catalogueTrigger": "MARK_TRIGGER_OR_EXPIRE",
+   "catalogueSkillId": "SK-AD-02",
+   "catalogueClassId": "CLASS_ANH_DAO",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/ember_pop",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/ember_pop_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "6eac8aa313ce74c472a8adeec02ed0b047f24491a32ae14bbbd96d8830c4042e",
+    "sizeBytes": 27836,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2895
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/ember_double_cut",
+   "catalogueTrigger": "MULTI_HIT_CONFIRMED",
+   "catalogueSkillId": "SK-AD-03",
+   "catalogueClassId": "CLASS_ANH_DAO",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/ember_double_cut",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/ember_double_cut_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "06bbc872350a0ba1285ac90957693eddc09c4a570cecc64c3f476dc71c3ac891",
+    "sizeBytes": 25984,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2702
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/ember_chain",
+   "catalogueTrigger": "HIT_AND_STATUS_CONFIRMED",
+   "catalogueSkillId": "SK-AD-04",
+   "catalogueClassId": "CLASS_ANH_DAO",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/ember_chain",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/ember_chain_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "eb7f253e6b0e9219f68eaa016ceffc683276e4c8006d4ae86eee900e788e1548",
+    "sizeBytes": 66744,
+    "codec": "pcm_s16le",
+    "duration_s": 0.6948
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/ember_step",
+   "catalogueTrigger": "DASH_PATH_CONFIRMED",
+   "catalogueSkillId": "SK-AD-05",
+   "catalogueClassId": "CLASS_ANH_DAO",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/ember_step",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/ember_step_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "7eb8506bda8a5d8bda15f234492fcbbaf4fa6369f60658407711a7cf1265b470",
+    "sizeBytes": 25984,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2702
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/ember_low_burst",
+   "catalogueTrigger": "ULTIMATE_RELEASE_CONFIRMED",
+   "catalogueSkillId": "SK-AD-06",
+   "catalogueClassId": "CLASS_ANH_DAO",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/ember_low_burst",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/ember_low_burst_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "b0e034d7bda5068614b3b8bf4caf27392de193e1f79256af42377140ed038718",
+    "sizeBytes": 125108,
+    "codec": "pcm_s16le",
+    "duration_s": 1.3028
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/ink_wave",
+   "catalogueTrigger": "PROJECTILE_STATE",
+   "catalogueSkillId": "SK-HB-01",
+   "catalogueClassId": "CLASS_HUYEN_BUT",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/ink_wave",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/ink_wave_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "c9525a83440c03b31ab7d990a7aab3923ddecca08436a52cbc857842addd4325",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/ice_tick",
+   "catalogueTrigger": "PROJECTILE_HIT_CONFIRMED",
+   "catalogueSkillId": "SK-HB-02",
+   "catalogueClassId": "CLASS_HUYEN_BUT",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/ice_tick",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/ice_tick_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "9170fd4340383b4858be021f60921fe481cde60dec48d457c9c963325e9cb941",
+    "sizeBytes": 27836,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2895
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/water_glass",
+   "catalogueTrigger": "SHIELD_STATE",
+   "catalogueSkillId": "SK-HB-03",
+   "catalogueClassId": "CLASS_HUYEN_BUT",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/water_glass",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/water_glass_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "37817a75fe3e83d7949c0b9e2c7e6e2465476ea8533a467697fe69e36376f873",
+    "sizeBytes": 25984,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2702
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/water_rain_soft",
+   "catalogueTrigger": "HEAL_ZONE_STATE",
+   "catalogueSkillId": "SK-HB-04",
+   "catalogueClassId": "CLASS_HUYEN_BUT",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/water_rain_soft",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/water_rain_soft_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "29c77373a5161888b6eeff2fa97bc8666710f5bb9e598caf3f873771ff33a81b",
+    "sizeBytes": 66744,
+    "codec": "pcm_s16le",
+    "duration_s": 0.6948
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/water_step",
+   "catalogueTrigger": "DASH_PATH_CONFIRMED",
+   "catalogueSkillId": "SK-HB-05",
+   "catalogueClassId": "CLASS_HUYEN_BUT",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/water_step",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/water_step_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "7896e67cf6967b00ba641ffb65afebadcd1c657512cbff93966fbaf550de7c6d",
+    "sizeBytes": 25984,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2702
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/water_chime",
+   "catalogueTrigger": "GROUP_HEAL_CONFIRMED",
+   "catalogueSkillId": "SK-HB-06",
+   "catalogueClassId": "CLASS_HUYEN_BUT",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/water_chime",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/water_chime_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "17540b280f2633ed50d14bd06c70869242434508940cb201b92e8efcb28168a8",
+    "sizeBytes": 125108,
+    "codec": "pcm_s16le",
+    "duration_s": 1.3028
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/stone_hit",
+   "catalogueTrigger": "HIT_CONFIRMED",
+   "catalogueSkillId": "SK-TC-01",
+   "catalogueClassId": "CLASS_THACH_CHUY",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/stone_hit",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/stone_hit_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "e6378704d91afd6e01eadfea24f5ab38f17ca3114b20b39e8b9f1f505675f482",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/stone_ring",
+   "catalogueTrigger": "SHOCKWAVE_CONFIRMED",
+   "catalogueSkillId": "SK-TC-02",
+   "catalogueClassId": "CLASS_THACH_CHUY",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/stone_ring",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/stone_ring_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "e55533af33e496dd0dc48ac15bc1c6d66f50c3b9423e15ebaa8dc1e193d7251e",
+    "sizeBytes": 27836,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2895
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/stone_armor",
+   "catalogueTrigger": "BUFF_STATE",
+   "catalogueSkillId": "SK-TC-03",
+   "catalogueClassId": "CLASS_THACH_CHUY",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/stone_armor",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/stone_armor_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "1b56e6bf4854ba10455463e97234b817c637532839c20373c6ef2f015f11c6cc",
+    "sizeBytes": 25984,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2702
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/stone_call",
+   "catalogueTrigger": "TAUNT_STATE",
+   "catalogueSkillId": "SK-TC-04",
+   "catalogueClassId": "CLASS_THACH_CHUY",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/stone_call",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/stone_call_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "cd3c46258ef27bbe1bb2e1a11a1c39032e94d3b3047b645e39a9219f188988fd",
+    "sizeBytes": 66744,
+    "codec": "pcm_s16le",
+    "duration_s": 0.6948
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/stone_charge",
+   "catalogueTrigger": "DASH_HIT_CONFIRMED",
+   "catalogueSkillId": "SK-TC-05",
+   "catalogueClassId": "CLASS_THACH_CHUY",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/stone_charge",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/stone_charge_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "463535e21e00a513528846e1181a11fd489423a03cf577bdcfc290c3d75a2833",
+    "sizeBytes": 25984,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2702
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/stone_sanctuary",
+   "catalogueTrigger": "SANCTUARY_STATE",
+   "catalogueSkillId": "SK-TC-06",
+   "catalogueClassId": "CLASS_THACH_CHUY",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/stone_sanctuary",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/stone_sanctuary_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "0eb4a58a490e58c50913b4b57c2f66995de2f4e87688d9328fec9c3ce5c73261",
+    "sizeBytes": 125108,
+    "codec": "pcm_s16le",
+    "duration_s": 1.3028
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/leaf_arrow",
+   "catalogueTrigger": "PROJECTILE_MARK_CONFIRMED",
+   "catalogueSkillId": "SK-LC-01",
+   "catalogueClassId": "CLASS_LINH_CUNG",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/leaf_arrow",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/leaf_arrow_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "00564ef7052ea3248d5423532299065ec624bf770442913688468180ce83b14b",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/root_grow",
+   "catalogueTrigger": "TRAP_STATE",
+   "catalogueSkillId": "SK-LC-02",
+   "catalogueClassId": "CLASS_LINH_CUNG",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/root_grow",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/root_grow_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "e640fef5b2a5517cae951ff2b5e97e270aee5cebfeb7879427b83b180f0ce09c",
+    "sizeBytes": 27836,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2895
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/leaf_volley",
+   "catalogueTrigger": "VOLLEY_PROJECTILE_STATE",
+   "catalogueSkillId": "SK-LC-03",
+   "catalogueClassId": "CLASS_LINH_CUNG",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/leaf_volley",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/leaf_volley_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "83c492416aefec1b55f21bd66af03bf412dd9f21e6fbea3e03b391f62c735b2e",
+    "sizeBytes": 25984,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2702
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/leaf_fan",
+   "catalogueTrigger": "FAN_HIT_CONFIRMED",
+   "catalogueSkillId": "SK-LC-04",
+   "catalogueClassId": "CLASS_LINH_CUNG",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/leaf_fan",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/leaf_fan_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "e4c0b25a39478244df6f31afd4ef034cf723d7d472f389f0fb76734c03205cb1",
+    "sizeBytes": 66744,
+    "codec": "pcm_s16le",
+    "duration_s": 0.6948
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/leaf_retreat",
+   "catalogueTrigger": "RETREAT_ARROW_STATE",
+   "catalogueSkillId": "SK-LC-05",
+   "catalogueClassId": "CLASS_LINH_CUNG",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/leaf_retreat",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/leaf_retreat_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "a1402d02f4412de5ded01d5b882e6be7a2497be0e5537b0e1e5e77ddf143766d",
+    "sizeBytes": 25984,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2702
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/SKILL/leaf_rain",
+   "catalogueTrigger": "ARROW_RAIN_STATE",
+   "catalogueSkillId": "SK-LC-06",
+   "catalogueClassId": "CLASS_LINH_CUNG",
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/SKILL/leaf_rain",
+    "path": "Client/Assets/Audio/PackV1/sfx/skill/leaf_rain_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "93d95e20cb4cbb9c5f0a67ba6b71df8167c6b1c1cd30ef331e69fac663e39ea9",
+    "sizeBytes": 125108,
+    "codec": "pcm_s16le",
+    "duration_s": 1.3028
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/COMBAT/basic_blade",
+   "catalogueTrigger": "BASIC_SWING_CONFIRMED",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/COMBAT/basic_blade",
+    "path": "Client/Assets/Audio/PackV1/sfx/combat/basic_blade_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "f5229470508129fe8c68da5649a91d97b6e7e428192f4c26088c60255b0974d6",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/COMBAT/heavy_hit",
+   "catalogueTrigger": "HP_DAMAGE_CONFIRMED_HEAVY",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/COMBAT/heavy_hit",
+    "path": "Client/Assets/Audio/PackV1/sfx/combat/heavy_hit_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "6760948479c2d45ab17d992e89e61d0288e714ab419dc0dc598e4f7858c819a3",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/COMBAT/projectile_hit",
+   "catalogueTrigger": "PROJECTILE_IMPACT_HIT",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/COMBAT/projectile_hit",
+    "path": "Client/Assets/Audio/PackV1/sfx/combat/projectile_hit_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "f0f883ab87fcfaf28c57a793c0d2e2c891c873b30e6851c1a369852726cec8ad",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/COMBAT/miss",
+   "catalogueTrigger": "IMPACT_MISS",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/COMBAT/miss",
+    "path": "Client/Assets/Audio/PackV1/sfx/combat/miss_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "1dc240b6774c7a974dfab21d9bc60578f2763e14c1309f5f4f978c7a609d2eb7",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/COMBAT/actor_hurt",
+   "catalogueTrigger": "SELF_HP_DAMAGE_CONFIRMED",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/COMBAT/actor_hurt",
+    "path": "Client/Assets/Audio/PackV1/sfx/combat/actor_hurt_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "74a454ed9647c5a2cd95f8cdaeb4aa41352759c4619cc05141e449d8e84da8d6",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/COMBAT/death",
+   "catalogueTrigger": "ENTITY_LIFE_DEATH_ONCE",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/COMBAT/death",
+    "path": "Client/Assets/Audio/PackV1/sfx/combat/death_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "12ad0f73466ed639badd06343c7f8429f7067c6664ab6260e727a9f37130516f",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/COMBAT/dodge",
+   "catalogueTrigger": "DODGE_ACCEPTED",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/COMBAT/dodge",
+    "path": "Client/Assets/Audio/PackV1/sfx/combat/dodge_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "3a70905108a1e9424771e502204d95f991f27b3d9392348dc5d09f389619e8c4",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/BOSS/mang_cot_sweep_warning",
+   "catalogueTrigger": "BOSS_SWEEP_TELEGRAPH_START",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/BOSS/mang_cot_sweep_warning",
+    "path": "Client/Assets/Audio/PackV1/sfx/boss/mang_cot_sweep_warning_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "84b97496788998d5504f9502b4acfc07ee7c0b2ed6cfd58185bb2da139a5149e",
+    "sizeBytes": 79714,
+    "codec": "pcm_s16le",
+    "duration_s": 0.8299
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/BOSS/mang_cot_emerge_warning",
+   "catalogueTrigger": "BOSS_EMERGE_TELEGRAPH_START",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/BOSS/mang_cot_emerge_warning",
+    "path": "Client/Assets/Audio/PackV1/sfx/boss/mang_cot_emerge_warning_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "7b5cc0fd2eb95b369347b3885b5d34ad2ac72bdd735c95911e8ffb3837b0b004",
+    "sizeBytes": 79714,
+    "codec": "pcm_s16le",
+    "duration_s": 0.8299
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/BOSS/mang_cot_bubble_warning",
+   "catalogueTrigger": "BOSS_ANNULUS_TELEGRAPH_START",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/BOSS/mang_cot_bubble_warning",
+    "path": "Client/Assets/Audio/PackV1/sfx/boss/mang_cot_bubble_warning_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "15d726459a8897f491002a1e75c7437b1cdf94aa9d35cfd12362a626ad88799c",
+    "sizeBytes": 79714,
+    "codec": "pcm_s16le",
+    "duration_s": 0.8299
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/UI/focus",
+   "catalogueTrigger": "LOCAL_UI_FOCUS_CHANGED",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/UI/focus",
+    "path": "Client/Assets/Audio/PackV1/sfx/ui/focus_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "27af9152b37753a5cfcbf888282513fba4829eba5ea583a900d3fbf6269ed26a",
+    "sizeBytes": 16720,
+    "codec": "pcm_s16le",
+    "duration_s": 0.1737
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/UI/confirm",
+   "catalogueTrigger": "LOCAL_UI_CLICK_ACCEPTED_NOT_TRANSACTION_SUCCESS",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/UI/confirm",
+    "path": "Client/Assets/Audio/PackV1/sfx/ui/confirm_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "11821e91c7cbc602dea11f835ae5c7e9e2a02b84caf74508b8f6c71db7397bbc",
+    "sizeBytes": 16720,
+    "codec": "pcm_s16le",
+    "duration_s": 0.1737
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/UI/error",
+   "catalogueTrigger": "LOCAL_UI_ERROR_SHOWN",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/UI/error",
+    "path": "Client/Assets/Audio/PackV1/sfx/ui/error_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "935819df87f0cec567120e412923c3b60cfd48813bc189695631159d2f7df0be",
+    "sizeBytes": 16720,
+    "codec": "pcm_s16le",
+    "duration_s": 0.1737
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/UI/panel_open",
+   "catalogueTrigger": "LOCAL_UI_PANEL_OPEN",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/UI/panel_open",
+    "path": "Client/Assets/Audio/PackV1/sfx/ui/panel_open_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "95294d0e802b5091a2c1edd694a4aa09e98c70b4c362903dd2e9c96252f3320b",
+    "sizeBytes": 16720,
+    "codec": "pcm_s16le",
+    "duration_s": 0.1737
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/UI/panel_close",
+   "catalogueTrigger": "LOCAL_UI_PANEL_CLOSE",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/UI/panel_close",
+    "path": "Client/Assets/Audio/PackV1/sfx/ui/panel_close_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "71508b0a61d50697830af4db0f3e71c8ea5b4570db1d87308ce70b683529a760",
+    "sizeBytes": 16720,
+    "codec": "pcm_s16le",
+    "duration_s": 0.1737
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/WORLD/step_stone",
+   "catalogueTrigger": "FOOT_CONTACT_STONE",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/WORLD/step_stone",
+    "path": "Client/Assets/Audio/PackV1/sfx/world/step_stone_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "66320ed3807ce8c2411e6fbcb5f5fbf38c431938a4820eadcdb3ed9e35c7668e",
+    "sizeBytes": 19498,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2026
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/WORLD/step_wood",
+   "catalogueTrigger": "FOOT_CONTACT_WOOD",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/WORLD/step_wood",
+    "path": "Client/Assets/Audio/PackV1/sfx/world/step_wood_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "7cefeb9b6e998fd66569a5d2a35cb9b50f7a6546ee0fa1843e1ec87a050fadc0",
+    "sizeBytes": 19498,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2026
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/WORLD/step_mud",
+   "catalogueTrigger": "FOOT_CONTACT_MUD",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/WORLD/step_mud",
+    "path": "Client/Assets/Audio/PackV1/sfx/world/step_mud_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "eeb83a8ed5e7e72d9f0e1933903d65f0404c39b5ca3b41c28d4acdb92baf8a47",
+    "sizeBytes": 19498,
+    "codec": "pcm_s16le",
+    "duration_s": 0.2026
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/WORLD/water_splash",
+   "catalogueTrigger": "WALKABLE_SHALLOW_WATER_CONTACT",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/WORLD/water_splash",
+    "path": "Client/Assets/Audio/PackV1/sfx/world/water_splash_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "1d091472e1af3cd002a81fc7f99896ec86c83e3fdbf7ac214b53982d26ebe3a8",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/WORLD/gather_herb",
+   "catalogueTrigger": "GATHER_NODE_SUCCESS_CONFIRMED",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/WORLD/gather_herb",
+    "path": "Client/Assets/Audio/PackV1/sfx/world/gather_herb_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "2431257a5942b7ea1fcbd85ead60599fa6ee781e2fa1b13b87858c8476fe228c",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/WORLD/mine_ore",
+   "catalogueTrigger": "GATHER_ORE_CONTACT_CONFIRMED",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/WORLD/mine_ore",
+    "path": "Client/Assets/Audio/PackV1/sfx/world/mine_ore_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "26d5bad4a8fe7296ea3980e6e183c86cea7c508e9e5482c528ef684ac62edfc9",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/WORLD/portal",
+   "catalogueTrigger": "MAP_TRANSITION_COMMITTED",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/WORLD/portal",
+    "path": "Client/Assets/Audio/PackV1/sfx/world/portal_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "038aaa17f242eac0ab228c56ffce759149420cedc948294b5fd02427fb9865b8",
+    "sizeBytes": 44512,
+    "codec": "pcm_s16le",
+    "duration_s": 0.4632
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/QUEST/discovery",
+   "catalogueTrigger": "DISCOVERY_COMMITTED",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/QUEST/discovery",
+    "path": "Client/Assets/Audio/PackV1/sfx/quest/discovery_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "b899a3e003275892ebde70f0d5aa96397c9d22e44bf338c568857dbadfe77fd6",
+    "sizeBytes": 16720,
+    "codec": "pcm_s16le",
+    "duration_s": 0.1737
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "SFX/QUEST/completed",
+   "catalogueTrigger": "QUEST_REWARD_COMMITTED",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "SFX_UI_pack_v1",
+   "variants": 3,
+   "verifiedFile": {
+    "cueKey": "SFX/QUEST/completed",
+    "path": "Client/Assets/Audio/PackV1/sfx/quest/completed_v01.wav",
+    "status": "VERIFIED",
+    "sha256": "35272b7f23c2b3b581c3bf7f0fa5e15795837df3ae5e4f92091518d9a302bf70",
+    "sizeBytes": 16720,
+    "codec": "pcm_s16le",
+    "duration_s": 0.1737
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "AMBIENCE/rain_light",
+   "catalogueTrigger": "LOCAL_WEATHER_RAIN_ACTIVE",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "MUSIC_AMBIENCE_pack_v1",
+   "verifiedFile": {
+    "cueKey": "AMBIENCE/rain_light",
+    "path": "Client/Assets/Audio/PackV1/ambience/rain_light.ogg",
+    "status": "VERIFIED",
+    "sha256": "8bbf339896ad52a8344e7f3e0b7f8af9be84272f794183481c222130f6806ec4",
+    "sizeBytes": 216305,
+    "codec": "vorbis",
+    "duration_s": 16.0
+   },
+   "composed": {
+    "cueKey": "AMBIENCE/rain_light [composed]",
+    "path": "ClientGodot/assets/audio/composed/ambience/rain_light.ogg",
+    "status": "VERIFIED",
+    "sha256": "0f1d0246a0e23ae6874ce1863993d731ee761cafe1d87b90429464ee77de125e",
+    "sizeBytes": 265427,
+    "codec": "vorbis",
+    "duration_s": 16.0
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "AMBIENCE/river_shore",
+   "catalogueTrigger": "LOCAL_SHORE_ZONE_ACTIVE",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "MUSIC_AMBIENCE_pack_v1",
+   "verifiedFile": {
+    "cueKey": "AMBIENCE/river_shore",
+    "path": "Client/Assets/Audio/PackV1/ambience/river_shore.ogg",
+    "status": "VERIFIED",
+    "sha256": "42e7983d4537e6b0323f310ba5f712761d9998884a607697b576c32c6a339f81",
+    "sizeBytes": 187736,
+    "codec": "vorbis",
+    "duration_s": 16.0
+   },
+   "composed": {
+    "cueKey": "AMBIENCE/river_shore [composed]",
+    "path": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+    "status": "VERIFIED",
+    "sha256": "00f6af8830cb4a1232f11cf8980f0839972bd635028b3ae3135b1b951bec1c1b",
+    "sizeBytes": 163971,
+    "codec": "vorbis",
+    "duration_s": 16.0
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "AMBIENCE/thang_long_crowd",
+   "catalogueTrigger": "LOCAL_CITY_CROWD_ZONE_ACTIVE",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "MUSIC_AMBIENCE_pack_v1",
+   "verifiedFile": {
+    "cueKey": "AMBIENCE/thang_long_crowd",
+    "path": "Client/Assets/Audio/PackV1/ambience/thang_long_crowd.ogg",
+    "status": "VERIFIED",
+    "sha256": "3169bbbedc55a1075b6a1a51070ed43366525269dfc228ca2261f10399e77ae5",
+    "sizeBytes": 138823,
+    "codec": "vorbis",
+    "duration_s": 16.0
+   },
+   "composed": {
+    "cueKey": "AMBIENCE/thang_long_crowd [composed]",
+    "path": "ClientGodot/assets/audio/composed/ambience/thang_long_crowd.ogg",
+    "status": "VERIFIED",
+    "sha256": "f137d6551d2ab5912d78b294ea3a539057ffb643988dbbad8425c0aeb8b9fe15",
+    "sizeBytes": 245560,
+    "codec": "vorbis",
+    "duration_s": 16.0
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "AMBIENCE/forge",
+   "catalogueTrigger": "LOCAL_FORGE_ZONE_ACTIVE",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "MUSIC_AMBIENCE_pack_v1",
+   "verifiedFile": {
+    "cueKey": "AMBIENCE/forge",
+    "path": "Client/Assets/Audio/PackV1/ambience/forge.ogg",
+    "status": "VERIFIED",
+    "sha256": "d482e42f3b14d03660f6718a4bf153800c93daf2ab08a20caca2d00d016c44b3",
+    "sizeBytes": 179756,
+    "codec": "vorbis",
+    "duration_s": 16.0
+   },
+   "composed": {
+    "cueKey": "AMBIENCE/forge [composed]",
+    "path": "ClientGodot/assets/audio/composed/ambience/forge.ogg",
+    "status": "VERIFIED",
+    "sha256": "66882abe905473f0cf1f27ff6b3b66cbfe8a458765105836fae83c586461e654",
+    "sizeBytes": 201706,
+    "codec": "vorbis",
+    "duration_s": 16.0
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "AMBIENCE/wind_canopy",
+   "catalogueTrigger": "LOCAL_FOREST_ZONE_ACTIVE",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "MUSIC_AMBIENCE_pack_v1",
+   "verifiedFile": {
+    "cueKey": "AMBIENCE/wind_canopy",
+    "path": "Client/Assets/Audio/PackV1/ambience/wind_canopy.ogg",
+    "status": "VERIFIED",
+    "sha256": "af24e394b74091af986d36b8cbc97249e3ed3f6642b4dcc297e52e09de085422",
+    "sizeBytes": 187410,
+    "codec": "vorbis",
+    "duration_s": 16.0
+   },
+   "composed": {
+    "cueKey": "AMBIENCE/wind_canopy [composed]",
+    "path": "ClientGodot/assets/audio/composed/ambience/wind_canopy.ogg",
+    "status": "VERIFIED",
+    "sha256": "c1bdd50d176b72c938cfdde992970d9f38037254c1666596327248ba32e36933",
+    "sizeBytes": 223109,
+    "codec": "vorbis",
+    "duration_s": 16.0
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "MUSIC/ben_mua",
+   "catalogueTrigger": "LOCAL_BEN_MUA_MUSIC_STATE",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "MUSIC_AMBIENCE_pack_v1",
+   "verifiedFile": {
+    "cueKey": "MUSIC/ben_mua",
+    "path": "Client/Assets/Audio/PackV1/music/ben_mua.ogg",
+    "status": "VERIFIED",
+    "sha256": "ad93ae036d3b2da91749783dba10d83b89e7655ea756f984f5fec69aab68a00c",
+    "sizeBytes": 542912,
+    "codec": "vorbis",
+    "duration_s": 56.4706
+   },
+   "composed": {
+    "cueKey": "MUSIC/ben_mua [composed]",
+    "path": "ClientGodot/assets/audio/composed/music/ben_mua.ogg",
+    "status": "VERIFIED",
+    "sha256": "2fd558ec7de84b5bd7099afb6cee12f49624f60330168e08c8abd3e2dca097db",
+    "sizeBytes": 491473,
+    "codec": "vorbis",
+    "duration_s": 56.6667
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "MUSIC/thang_long",
+   "catalogueTrigger": "LOCAL_THANG_LONG_MUSIC_STATE",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "MUSIC_AMBIENCE_pack_v1",
+   "verifiedFile": {
+    "cueKey": "MUSIC/thang_long",
+    "path": "Client/Assets/Audio/PackV1/music/thang_long.ogg",
+    "status": "VERIFIED",
+    "sha256": "1ed70afc63634706032b9c773d6e09d9d097ed850c77a1ea64667ff9a2d31aaa",
+    "sizeBytes": 465665,
+    "codec": "vorbis",
+    "duration_s": 41.7391
+   },
+   "composed": {
+    "cueKey": "MUSIC/thang_long [composed]",
+    "path": "ClientGodot/assets/audio/composed/music/thang_long.ogg",
+    "status": "VERIFIED",
+    "sha256": "8df21008d70a9e372656b1eb5edd11099079cdeb67fa19ccac826104768ea468",
+    "sizeBytes": 550827,
+    "codec": "vorbis",
+    "duration_s": 41.7391
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "MUSIC/boss_mang_cot",
+   "catalogueTrigger": "ENCOUNTER_MANG_COT_ACTIVE",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "MUSIC_AMBIENCE_pack_v1",
+   "verifiedFile": {
+    "cueKey": "MUSIC/boss_mang_cot",
+    "path": "Client/Assets/Audio/PackV1/music/boss_mang_cot.ogg",
+    "status": "VERIFIED",
+    "sha256": "9c8a4d88fd3c86058b49d33535c0717abee05e711b24f3f5f2aad1a14b106e6c",
+    "sizeBytes": 392833,
+    "codec": "vorbis",
+    "duration_s": 36.9231
+   },
+   "composed": {
+    "cueKey": "MUSIC/boss_mang_cot [composed]",
+    "path": "ClientGodot/assets/audio/composed/music/boss_mang_cot.ogg",
+    "status": "VERIFIED",
+    "sha256": "2762bc371f34ef46727002e1a4f0a963d0930b98f6b9437b1f9a185f65e116d1",
+    "sizeBytes": 225999,
+    "codec": "vorbis",
+    "duration_s": 36.3636
+   },
+   "status": "COVERED_VERIFIED"
+  },
+  {
+   "cueKey": "MUSIC/quiet_discovery",
+   "catalogueTrigger": "LOCAL_QUIET_DISCOVERY_STATE",
+   "catalogueSkillId": null,
+   "catalogueClassId": null,
+   "pack": "MUSIC_AMBIENCE_pack_v1",
+   "verifiedFile": {
+    "cueKey": "MUSIC/quiet_discovery",
+    "path": "Client/Assets/Audio/PackV1/music/quiet_discovery.ogg",
+    "status": "VERIFIED",
+    "sha256": "015e2494d4bc5ddb0248f12549f7f22392bdec5d6d1b22fe46914df80e053ae4",
+    "sizeBytes": 465121,
+    "codec": "vorbis",
+    "duration_s": 64.0
+   },
+   "composed": {
+    "cueKey": "MUSIC/quiet_discovery [composed]",
+    "path": "ClientGodot/assets/audio/composed/music/quiet_discovery.ogg",
+    "status": "VERIFIED",
+    "sha256": "3499555be5bbd30fe3bbee42ba092d3cb347a62e8501d1c129185a413066e2d3",
+    "sizeBytes": 370729,
+    "codec": "vorbis",
+    "duration_s": 64.0
+   },
+   "status": "COVERED_VERIFIED"
+  }
+ ],
+ "requirements": [
+  {
+   "reqId": "R-FOOTSTEP",
+   "wo37Phrase": "vật liệu bước chân",
+   "verdict": "COVERED",
+   "evidence": [
+    "SFX/WORLD/step_stone",
+    "SFX/WORLD/step_wood",
+    "SFX/WORLD/step_mud",
+    "SFX/WORLD/water_splash",
+    "SFX/WORLD/mount_step"
+   ],
+   "note": "Catalogue defines exactly 3 footstep materials (stone/wood/mud) + shallow-water contact; all 5 delivered and byte-verified. Grass has no cue in catalogue or delivered set — see question Q-GRASS."
+  },
+  {
+   "reqId": "R-WEAPON",
+   "wo37Phrase": "5 weapon",
+   "verdict": "QUESTION",
+   "evidence": [
+    "SFX/COMBAT/basic_blade"
+   ],
+   "note": "Catalogue defines ONE shared weapon cue (basic_blade, BASIC_SWING_CONFIRMED); all 5 class weapons (sword/đao/brush/mace/bow) share it. Whether WO37 '5 weapon' means per-weapon swings needs a Codex sound-direction decision — see proposal P-WEAPON (candidate IDs only, no audio)."
+  },
+  {
+   "reqId": "R-SKILL-PHASE",
+   "wo37Phrase": "30 skill cast-impact-miss",
+   "verdict": "COVERED_PER_CATALOGUE",
+   "evidence": [
+    "30 SFX/SKILL/* cues, 1 per skillId SK-MK/AD/HB/TC/LC-01..06",
+    "SFX/COMBAT/miss",
+    "SFX/COMBAT/projectile_hit",
+    "SFX/COMBAT/heavy_hit"
+   ],
+   "note": "Catalogue design is 1 cue per skill at its confirm semantic + shared combat impact/miss cues (direction doc §2: skill soundKey is the semantic reference; impact only from confirmed events). Per-skill cast+impact+miss triples would be +60 cues and contradict the catalogue — see question Q-PHASES. No IDs proposed for that reading."
+  },
+  {
+   "reqId": "R-GUARD",
+   "wo37Phrase": "guard-counter",
+   "verdict": "PARTIAL",
+   "evidence": [
+    "SFX/SKILL/metal_parry"
+   ],
+   "note": "Counter COVERED (metal_parry, SK-MK-01, COUNTER_CONFIRMED). Guard-expire is a GAP: direction doc §2 says guard gets a small transition sound 'nếu sau này bổ sung cue' and 'Cửa guard hết mà không bị đánh không có tiếng đỡ chuẩn'. See proposal P-GUARD."
+  },
+  {
+   "reqId": "R-BOSS-WARN",
+   "wo37Phrase": "boss warning",
+   "verdict": "COVERED",
+   "evidence": [
+    "14 SFX/BOSS/*_warning cues",
+    "12 bosses with intro/warning/success bindings"
+   ],
+   "note": "12 intro + 14 warning + 12 success = 38 BOSS cues. The 3 Mãng Cốt warnings (sweep/emerge/bubble) match direction doc §4 telegraphs with distinct semantics."
+  },
+  {
+   "reqId": "R-LOOT",
+   "wo37Phrase": "loot/equip/consume/inventory-full",
+   "verdict": "COVERED",
+   "evidence": [
+    "SFX/UI/item_pickup_common",
+    "SFX/UI/item_pickup_rare",
+    "SFX/UI/item_pickup_legendary",
+    "SFX/UI/item_equip",
+    "SFX/COSMETIC/equip",
+    "SFX/UI/potion_use",
+    "SFX/UI/inventory_full"
+   ],
+   "note": "All four moments have cues; pickup tiers are separate cues, not one cue with pitch shifts."
+  },
+  {
+   "reqId": "R-QUEST",
+   "wo37Phrase": "quest",
+   "verdict": "COVERED",
+   "evidence": [
+    "SFX/QUEST/discovery",
+    "SFX/QUEST/completed",
+    "SFX/QUEST/accepted",
+    "SFX/QUEST/journal_update"
+   ],
+   "note": "Plus SFX/TRADE/request for the quest-adjacent request moment."
+  },
+  {
+   "reqId": "R-NPC",
+   "wo37Phrase": "NPC",
+   "verdict": "COVERED_BY_SHARED_CUE",
+   "evidence": [
+    "83 NPC IDs bind openCue=SFX/UI/panel_open, closeCue=SFX/UI/panel_close",
+    "spokenVoice=null for all 83"
+   ],
+   "note": "NPC service open/close is a shared UI cue by design (delivery doc §1: '83 ID có cue mở/đóng dịch vụ'). Spoken NPC dialogue is a scope exclusion in game_audio_v1.json and is NOT proposed here."
+  },
+  {
+   "reqId": "R-CRAFT-FORGE",
+   "wo37Phrase": "craft/forge",
+   "verdict": "COVERED",
+   "evidence": [
+    "SFX/CRAFT/material_combine",
+    "SFX/CRAFT/recipe_unlock",
+    "7 SFX/FORGE/* cues"
+   ],
+   "note": "Forge: hammer_work, heat_ember, upgrade_success, upgrade_fail, socket_success, repair, salvage."
+  },
+  {
+   "reqId": "R-MARKET",
+   "wo37Phrase": "market",
+   "verdict": "COVERED",
+   "evidence": [
+    "SFX/TRADE/request",
+    "SFX/TRADE/offer_locked",
+    "SFX/TRADE/complete",
+    "SFX/TRADE/buy",
+    "SFX/TRADE/sell"
+   ],
+   "note": "Market moments use the TRADE cue family."
+  },
+  {
+   "reqId": "R-WATER-WEATHER",
+   "wo37Phrase": "water/weather",
+   "verdict": "COVERED",
+   "evidence": [
+    "SFX/WORLD/water_splash",
+    "SFX/SKILL/water_step",
+    "SFX/SKILL/water_glass",
+    "SFX/SKILL/water_rain_soft",
+    "13 AMBIENCE/* cues incl. rain_light/rain_heavy"
+   ],
+   "note": "Weather is carried by the ambience beds (LOCAL_WEATHER_RAIN_ACTIVE etc.), not by one-shots."
+  },
+  {
+   "reqId": "R-CINEMA",
+   "wo37Phrase": "cinema",
+   "verdict": "COVERED",
+   "evidence": [
+    "SFX/CINEMA/reveal",
+    "SFX/CINEMA/tension",
+    "SFX/CINEMA/resolve",
+    "SFX/CINEMA/transition",
+    "20 scene stinger bindings"
+   ],
+   "note": "Cinema stingers are presentation-only until picture lock (binding state in game manifest)."
+  }
+ ],
+ "proposals": [
+  {
+   "proposalId": "P-GUARD",
+   "kind": "GAP",
+   "proposedCueKey": "SFX/COMBAT/guard_expire",
+   "proposedTriggerSemantic": "GUARD_WINDOW_EXPIRED_UNHIT",
+   "status": "PROPOSED_NOT_RUNTIME",
+   "source": "docs/production/Audio_Production_Direction_v1_vi.md §2",
+   "rationale": "Direction doc names this cue as a future addition: guard window expiring without a hit has no standard block sound today; metal_parry plays only on counter confirmed and must NOT cover this moment.",
+   "decisionNeededFrom": "Codex (sound direction)"
+  },
+  {
+   "proposalId": "P-WEAPON",
+   "kind": "QUESTION",
+   "proposedCueKeys": [
+    "SFX/COMBAT/dao_swing",
+    "SFX/COMBAT/brush_stroke",
+    "SFX/COMBAT/mace_swing",
+    "SFX/COMBAT/bow_string"
+   ],
+   "status": "PROPOSED_NOT_RUNTIME",
+   "source": "WO37 M-E '5 weapon' vs catalogue (1 shared cue)",
+   "rationale": "Candidate IDs IF Codex wants per-weapon basic swings; basic_blade stays the shared default. Direction doc §1 gives per-class material identity (dry metal / wind+ember / brush on paper / stone+wood / string+leaf) that such cues would follow. No audio composed here.",
+   "decisionNeededFrom": "Codex (sound direction)"
+  },
+  {
+   "proposalId": "P-GRASS",
+   "kind": "QUESTION",
+   "proposedCueKey": "SFX/WORLD/step_grass",
+   "status": "PROPOSED_NOT_RUNTIME",
+   "source": "WO37 M-E 'vật liệu bước chân' vs production map (Bến Mưa grass terrain)",
+   "rationale": "Catalogue defines stone/wood/mud only; the production map has grass fields, so walking on grass has no footstep cue today. Whether grass needs one is a design decision, not an audit verdict.",
+   "decisionNeededFrom": "Codex (sound direction)"
+  }
+ ],
+ "questions": [
+  {
+   "questionId": "Q-PHASES",
+   "question": "Does WO37 '30 skill cast-impact-miss' mean 1 cue per skill (current catalogue design: 30 cues at confirm semantics + shared COMBAT miss/impact cues) or 3 phases per skill (cast + impact + miss = +60 cues)?",
+   "askedTo": "Codex",
+   "note": "No IDs proposed for the triples reading: inventing 60 IDs before the reading is decided would be scope fabrication."
+  },
+  {
+   "questionId": "Q-GRASS",
+   "question": "Does grass terrain need its own footstep cue (proposed SFX/WORLD/step_grass), or do grass steps stay silent / reuse mud?",
+   "askedTo": "Codex",
+   "proposalRef": "P-GRASS"
+  }
+ ],
+ "verdicts": {
+  "covered": 8,
+  "coveredPerCatalogue": 1,
+  "coveredBySharedCue": 1,
+  "partial": 1,
+  "question": 1,
+  "gap": 0
+ },
+ "verification": {
+  "union_vs_game_manifest": 1,
+  "files_checked": 72,
+  "files_verified": 72,
+  "catalogue_keys": 63,
+  "catalogue_covered_verified": 63,
+  "delivered_beyond_catalogue": 119
+ },
+ "notes": [
+  "No new audio was rendered in this checkpoint; runtime audio stays 783 files (composed 162, ported 541 unchanged, plus mixes/VO as before). No runtime file was modified.",
+  "Proposals are cueKey IDs + trigger semantics only, flagged PROPOSED_NOT_RUNTIME. They introduce no runtime key, no file, no binding. Composing them is M-E CP2 proper and still awaits the Codex decision.",
+  "The byte check here is scoped to the 63 catalogue keys' representative files (the evidence for the new coverage claim). It does not re-measure loudness or re-audit the CP08 SFX_UI pack, per Gói 38 (no repeat checkpoints over unchanged bytes without a binary/policy/tool delta).",
+  "All verdicts are coverage verdicts, not listening verdicts: NOT_AUDITIONED still holds for every cue."
+ ]
+}
