@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Text.Json;
 namespace Ngumach.VisualReboot;
 
@@ -12,6 +14,8 @@ public partial class SkillVfxPlayer : Node2D
         public Sprite2D Sprite=null!;
         public int Skill;
         public double Time;
+        public bool KiemTranArc;
+        public int SourceFrame=-1;
     }
     private readonly List<Playing> _playing=new();
     private readonly List<(Node2D Node,Tween Tween)> _transient=new();
@@ -20,9 +24,15 @@ public partial class SkillVfxPlayer : Node2D
     private readonly Queue<string> _seenOrder=new();
     private JsonDocument _manifest=null!;
     private Texture2D _texture=null!;
+    private ActorLibraryData.Direction? _kiemTranArc;
+    private Texture2D? _kiemTranTexture;
     public bool LowFx {get;set;}
     public bool ReviewFreeze {get;set;}
     public int ActiveCount=>_playing.Count;
+    public bool HasApprovedKiemTran=>_kiemTranArc!=null&&_kiemTranTexture!=null;
+    internal int[] ArcFrames=>_playing.Where(p=>p.KiemTranArc).Select(p=>p.SourceFrame).ToArray();
+    internal float[] ArcAngles=>_playing.Where(p=>p.KiemTranArc).Select(p=>p.Sprite.Rotation).ToArray();
+    internal float[] ArcScales=>_playing.Where(p=>p.KiemTranArc).Select(p=>p.Sprite.Scale.X).ToArray();
     private static readonly float[] Widths={88,110,96,54,120,140};
     private static readonly double[] Durations={.28,.20,.36,4,.16,1.05};
     public static readonly string[] Names={"Phản Quang","Tầm Long","Kiếm Trận","Thiết Y","Bạch Hồng","Vạn Tượng Quy Nhất"};
@@ -30,6 +40,13 @@ public partial class SkillVfxPlayer : Node2D
     {
         _manifest=JsonDocument.Parse(FileAccess.GetFileAsString("res://assets/combat_v1/manifest.json"));
         _texture=GD.Load<Texture2D>("res://assets/combat_v1/minh_kiem_vfx.png");
+        using var library=new ActorLibraryData();
+        if(library.Pages.TryGetValue("sk_mk_03_arc_component",out var page)&&page.Approved&&page.Directions.Length==1&&page.Directions[0].Frames.Length==16)
+        {
+            string source=page.Directions[0].Frames[0].File;
+            if(FileAccess.FileExists(source)&&Convert.ToHexString(SHA256.HashData(FileAccess.GetFileAsBytes(source))).ToLowerInvariant()==page.SourceSha256)
+            {_kiemTranArc=page.Directions[0];_kiemTranTexture=GD.Load<Texture2D>(source);}
+        }
     }
     public bool Play(int skill,Vector2 foot,Vector2 direction,string castToken)
     {
@@ -38,6 +55,7 @@ public partial class SkillVfxPlayer : Node2D
         while(_seenOrder.Count>256)_seen.Remove(_seenOrder.Dequeue());
         while(_playing.Count>=(LowFx?8:24)){_playing[0].Sprite.QueueFree();_playing.RemoveAt(0);}
         var face=direction==Vector2.Zero?Vector2.Right:direction.Normalized();
+        if(skill==2&&HasApprovedKiemTran){PlayKiemTran(foot,face);return true;}
         var offset=skill switch{0=>face*18+new Vector2(0,-18),1=>-face*28+new Vector2(0,-12),
             2=>face*24+new Vector2(0,-14),3=>new Vector2(0,-19),4=>-face*35+new Vector2(0,-8),
             _=>face*70+new Vector2(0,-16)};
@@ -45,6 +63,19 @@ public partial class SkillVfxPlayer : Node2D
             Rotation=skill==3?0:face.Angle(),Scale=Vector2.One*(Widths[skill]/209f),
             TextureFilter=TextureFilterEnum.Nearest,Modulate=new Color(1,1,1,LowFx ? .65f : 1f)};
         AddChild(sprite);_playing.Add(new Playing{Sprite=sprite,Skill=skill});Frame(_playing[^1]);return true;
+    }
+    private void PlayKiemTran(Vector2 foot,Vector2 face)
+    {
+        double[] starts={0,.12,.26};float[] angles={0,-35,35};
+        // Visual peaks at .10/.22/.36s. Each source arc lives .20s; damage remains server-owned.
+        for(int i=0;i<3;i++)
+        {
+            while(_playing.Count>=(LowFx?8:24)){_playing[0].Sprite.QueueFree();_playing.RemoveAt(0);}
+            var sprite=new Sprite2D{Texture=_kiemTranTexture,RegionEnabled=true,Centered=false,Position=foot+face*24+new Vector2(0,-14),
+                Rotation=face.Angle()+Mathf.DegToRad(angles[i]),Scale=Vector2.One*(96/Math.Max(1,_kiemTranArc!.Height))*(i==2?1.25f:1),
+                TextureFilter=TextureFilterEnum.Nearest,Modulate=new Color(1,1,1,LowFx ? .65f : 1f)};
+            AddChild(sprite);var p=new Playing{Sprite=sprite,Skill=2,Time=-starts[i],KiemTranArc=true};_playing.Add(p);Frame(p);
+        }
     }
     public void GuardCue(Vector2 foot,string castToken)
     {
@@ -84,14 +115,21 @@ public partial class SkillVfxPlayer : Node2D
         for(int i=_playing.Count-1;i>=0;i--)
         {
             var p=_playing[i];
-            if(ReviewFreeze){p.Time=p.Skill==3 ? .25 : p.Skill==5 ? .73 : Durations[p.Skill]*.45;Frame(p);continue;}
+            if(ReviewFreeze){p.Time=p.KiemTranArc ? .10 : p.Skill==3 ? .25 : p.Skill==5 ? .73 : Durations[p.Skill]*.45;Frame(p);continue;}
             p.Time+=delta;
-            if(p.Time>=Durations[p.Skill]){p.Sprite.QueueFree();_playing.RemoveAt(i);continue;}
+            if(p.Time>=(p.KiemTranArc ? .20 : Durations[p.Skill])){p.Sprite.QueueFree();_playing.RemoveAt(i);continue;}
             Frame(p);
         }
     }
     private void Frame(Playing p)
     {
+        if(p.KiemTranArc)
+        {
+            p.Sprite.Visible=p.Time>=0;
+            if(!p.Sprite.Visible){p.SourceFrame=-1;return;}
+            p.SourceFrame=Math.Clamp((int)(p.Time/.20*16+1e-7),0,15);var f=_kiemTranArc!.Frames[p.SourceFrame];
+            p.Sprite.RegionRect=f.Region;p.Sprite.Offset=-f.Pivot;return;
+        }
         int index;
         if(p.Skill==3)index=p.Time<.24?Math.Min(2,(int)(p.Time/.08)):p.Time<3.75?2:3+Math.Min(2,(int)((p.Time-3.75)/.083));
         else if(p.Skill==5)index=p.Time<.7?Math.Min(2,(int)(p.Time/.234)):3+Math.Min(2,(int)((p.Time-.7)/.117));

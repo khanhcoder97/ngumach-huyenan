@@ -23,6 +23,7 @@ public partial class ActorLibraryBrowser : Control
     private string _actor="",_clip="idle";
     private bool _paused,_sync,_staticCapture;
     private int _activeFrames=16;
+    private int _captureFrame=8;
     private double _refresh;
     private string? _benchmarkPath;
     private ulong _benchmarkStart,_lastTick;
@@ -69,6 +70,7 @@ public partial class ActorLibraryBrowser : Control
         {string id=args[actor+1],kind=_library.Actors[id].Kind;for(int i=0;i<_category.ItemCount;i++)if(_category.GetItemText(i)==kind)_category.Select(i);Filter();int index=_filtered.FindIndex(a=>a.Id==id);if(index>=0)_list.Select(index);SelectActor(id);}
         int clip=Array.IndexOf(args,"--clip");if(clip>=0&&clip+1<args.Length)SelectClip(args[clip+1]);
         if(args.Contains("--library-self-test"))SelfTest();
+        int shotFrame=Array.IndexOf(args,"--library-frame");if(shotFrame>=0&&shotFrame+1<args.Length&&int.TryParse(args[shotFrame+1],out int requestedFrame))_captureFrame=Math.Clamp(requestedFrame,0,_activeFrames-1);
         int capture=Array.IndexOf(args,"--library-capture");if(capture>=0&&capture+1<args.Length)Capture(args[capture+1]);
         int benchmark=Array.IndexOf(args,"--library-benchmark");if(benchmark>=0&&benchmark+1<args.Length){_benchmarkPath=args[benchmark+1];_benchmarkStart=Godot.Time.GetTicksUsec();_lastTick=_benchmarkStart;}
     }
@@ -100,7 +102,7 @@ public partial class ActorLibraryBrowser : Control
     private void Place()
     {if(_stage==null)return;for(int i=0;i<8;i++){float x=(_stage.Size.X/4)*(i%4+.5f),y=(_stage.Size.Y/2)*(i/4+.65f);if(_library.Actors.TryGetValue(_actor,out var actor)&&actor.Kind=="VFX"){x=_stage.Size.X/2;y=_stage.Size.Y/2+70;}_sprites[i].Position=new Vector2(x,y);_labels[i].Position=new Vector2(x-95,y+14);}}
     private void Pause(bool paused){_paused=paused;_play.Text=paused?"Phát animation":"Tạm dừng";foreach(var sprite in _sprites){sprite.Paused=paused;sprite.ManualFrame=paused?sprite.DisplayedFrame:-1;}}
-    private void Step(int delta){Pause(true);int frame=(_sprites[0].DisplayedFrame+delta+_activeFrames)%_activeFrames;foreach(var sprite in _sprites)sprite.Seek(frame);}
+    private void Step(int delta){Pause(true);int current=_sprites.FirstOrDefault(s=>s.Available)?.DisplayedFrame??0;int frame=(current+delta+_activeFrames)%_activeFrames;foreach(var sprite in _sprites)sprite.Seek(frame);}
     private void Reload(){var old=_library;_library=new ActorLibraryData(reviewMode:true);Filter();old.Dispose();}
     public override void _Process(double delta)
     {
@@ -121,7 +123,7 @@ public partial class ActorLibraryBrowser : Control
     public override void _UnhandledKeyInput(InputEvent ev)
     {if(ev is not InputEventKey key||!key.Pressed||key.Echo)return;if(key.Keycode==Key.Escape)GetTree().Quit();if(key.Keycode==Key.F5)Reload();if(key.Keycode==Key.Space)Pause(!_paused);}
     private async void Capture(string path)
-    {_staticCapture=true;Pause(true);foreach(var sprite in _sprites)sprite.ManualFrame=8;for(int i=0;i<5;i++)await ToSignal(GetTree(),SceneTree.SignalName.ProcessFrame);await ToSignal(RenderingServer.Singleton,RenderingServer.SignalName.FramePostDraw);var result=GetViewport().GetTexture().GetImage().SavePng(path);GD.Print("ACTOR_LIBRARY_CAPTURE "+result+" STATIC_FRAME_08_NOT_GAMEPLAY");GetTree().Quit(result==Error.Ok?0:1);}
+    {_staticCapture=true;Pause(true);foreach(var sprite in _sprites)sprite.ManualFrame=_captureFrame;for(int i=0;i<5;i++)await ToSignal(GetTree(),SceneTree.SignalName.ProcessFrame);await ToSignal(RenderingServer.Singleton,RenderingServer.SignalName.FramePostDraw);var result=GetViewport().GetTexture().GetImage().SavePng(path);GD.Print("ACTOR_LIBRARY_CAPTURE "+result+" STATIC_FRAME_"+_captureFrame+"_NOT_GAMEPLAY");GetTree().Quit(result==Error.Ok?0:1);}
     private void SelfTest()
     {
         int checks=0;

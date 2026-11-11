@@ -1,6 +1,8 @@
 {
   "schemaVersion": 1,
-  "productionApproved": [],
+  "productionApproved": [
+    "sk_mk_03_arc_component"
+  ],
   "holds": [
     {
       "id": "mob_carpling_idle_s",
@@ -75,5 +77,15 @@
       "reason": "VFX has noisy soft fringe and emblem-like silhouette; needs clean pixel-effect revision and comparison with canonical spell geometry."
     }
   ],
-  "policy": "Structure/export permits review only. No new generated actor is approved for live gameplay until visual/native motion QA."
+  "policy": "Structure/export permits review only. No new generated actor is approved for live gameplay until visual/native motion QA.",
+  "componentApprovals": [
+    {
+      "id": "sk_mk_03_arc_component",
+      "date": "2026-11-12",
+      "scope": "VISUAL_COMPONENT_ONLY",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112/kiem_tran_studio.png",
+      "notes": "Original 16-frame arc viewed in native Godot; alpha, silhouette, center pivot and growth/fade checked. Runtime composes three timed visual arcs. Does not approve the full skill body animation, damage logic, or obsolete sk_mk_03_vfx atlas.",
+      "sourceSha256": "a6da8c87d46e6c60ebf88397975caec3c174b36ed7c5173ba26b81a0123b1146"
+    }
+  ]
 }

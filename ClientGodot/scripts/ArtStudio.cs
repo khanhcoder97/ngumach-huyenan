@@ -44,6 +44,7 @@ public partial class ArtStudio : Control
     private void Build()
     {
         Engine.MaxFps = 60; Theme = MoonGlassTheme.Create();
+        GetWindow().Title = "Ngũ Mạch Huyền Ấn — Sprite & VFX Studio";
         GetTree().AutoAcceptQuit = false;
         GetWindow().CloseRequested += () => ConfirmDiscard(() => GetTree().Quit());
         GetWindow().MinSize = new Vector2I(1100, 680);
@@ -59,7 +60,7 @@ public partial class ArtStudio : Control
         _fileLabel = MoonGlassTheme.Label("", 11, MoonGlassTheme.Muted); root.AddChild(_fileLabel);
         var split = new HSplitContainer { SizeFlagsVertical = SizeFlags.ExpandFill }; root.AddChild(split); split.SplitOffsets = new[] { 215 };
         var left = new VBoxContainer { CustomMinimumSize = new(205, 0) }; split.AddChild(left);
-        left.AddChild(MoonGlassTheme.Label("THƯ VIỆN SPRITE CŨ", 14, MoonGlassTheme.Gold));
+        left.AddChild(MoonGlassTheme.Label("THƯ VIỆN ASSET", 14, MoonGlassTheme.Gold));
         _library = new OptionButton { ClipText = true, SizeFlagsHorizontal = SizeFlags.ExpandFill }; left.AddChild(_library);
         _entries = ArtStudioLibrary.Entries(); foreach (var e in _entries) _library.AddItem(e.Name);
         Button(left, "Mở mẫu đã chọn", () => ConfirmDiscard(() => SetDocument(ArtStudioLibrary.Load(_entries[_library.Selected].Id), "", "")));
@@ -71,7 +72,7 @@ public partial class ArtStudio : Control
         var fx = new OptionButton(); foreach (var n in SkillVfxPlayer.Names) fx.AddItem(n); left.AddChild(fx);
         Button(left, "+ VFX có sẵn", () => Change(() => { ArtStudioLibrary.AddVfx(_doc, fx.Selected); _selected = _doc.Layers.Last().Id; }));
         var history = Row(left); _undoButton = Button(history, "↶ Undo", Undo); _redoButton = Button(history, "↷ Redo", Redo);
-        left.AddChild(MoonGlassTheme.Label("Sprite nguyên khối. Ảnh paper-doll mới đã dừng. Không tự tách quần áo khỏi sprite.", 11, MoonGlassTheme.Muted));
+        left.AddChild(MoonGlassTheme.Label("Sprite nguyên khối · PNG gốc được giữ nguyên. Bản chỉnh animation/VFX lưu JSON riêng.", 11, MoonGlassTheme.Muted));
         var body = new HSplitContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; split.AddChild(body); body.SplitOffsets = new[] { 620 };
         var center = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new(480, 0) }; body.AddChild(center);
         var views = Row(center);
@@ -111,6 +112,14 @@ public partial class ArtStudio : Control
         SetDocument(ArtStudioLibrary.Load("npc_lyan_idle"), "", "");
         var args = OS.GetCmdlineUserArgs(); int project = Array.IndexOf(args, "--studio-project");
         if (project >= 0 && project + 1 < args.Length) LoadProject(args[project + 1]);
+        int entry = Array.IndexOf(args, "--studio-entry");
+        if (entry >= 0 && entry + 1 < args.Length) { SetDocument(ArtStudioLibrary.Load(args[entry + 1]), "", ""); int item = Array.FindIndex(_entries, e => e.Id == args[entry + 1]); if (item >= 0) _library.Select(item); }
+        int direction = Array.IndexOf(args, "--studio-direction");
+        if (direction >= 0 && direction + 1 < args.Length) { int at = _doc.Clips.FindIndex(c => c.Direction == args[direction + 1]); if (at >= 0) SelectClip(at); }
+        int frame = Array.IndexOf(args, "--studio-frame");
+        if (frame >= 0 && frame + 1 < args.Length && int.TryParse(args[frame + 1], out int atFrame)) Seek(atFrame);
+        if(args.Contains("--studio-loop"))Clip.Loop=true;
+        if(args.Contains("--studio-play"))TogglePlay();
         if (args.Contains("--studio-self-test")) { RunTests(); return; }
         FitAfterLayout();
         int capture = Array.IndexOf(args, "--studio-capture"); if (capture >= 0 && capture + 1 < args.Length) Capture(args[capture + 1], true);

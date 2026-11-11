@@ -12,7 +12,7 @@ public sealed class ActorLibraryData : IDisposable
     public sealed record Actor(string Id,string Name,string Kind,float Height,bool Mirror,string[] Clips);
     public sealed record Frame(string File,Rect2 Region,Vector2 Pivot);
     public sealed record Direction(string Name,bool Flip,float Height,Frame[] Frames);
-    public sealed record Page(string Id,string Status,Direction[] Directions,bool Approved,string VisualState,string Notes);
+    public sealed record Page(string Id,string Status,Direction[] Directions,bool Approved,string VisualState,string Notes,string SourceSha256);
     public readonly Dictionary<string,Actor> Actors=new(StringComparer.Ordinal);
     public readonly Dictionary<string,Page> Pages=new(StringComparer.Ordinal);
     private readonly Dictionary<string,Texture2D> _textures=new(StringComparer.Ordinal);
@@ -44,7 +44,7 @@ public sealed class ActorLibraryData : IDisposable
                 if(frames.Count<16||frames.Count>20)throw new InvalidOperationException("Actor clip requires16–20actual frames");
                 directions.Add(new Direction(d.GetProperty("direction").GetString()!,d.GetProperty("flip").GetBoolean(),d.TryGetProperty("referenceHeight",out var h)?h.GetSingle():height,frames.ToArray()));
             }
-            var id=p.GetProperty("id").GetString()!;Pages.Add(id,new Page(id,p.GetProperty("status").GetString()!,directions.ToArray(),p.GetProperty("productionApproved").GetBoolean(),p.GetProperty("visualState").GetString()!,p.GetProperty("visualNotes").GetString()!));
+            var id=p.GetProperty("id").GetString()!;Pages.Add(id,new Page(id,p.GetProperty("status").GetString()!,directions.ToArray(),p.GetProperty("productionApproved").GetBoolean(),p.GetProperty("visualState").GetString()!,p.GetProperty("visualNotes").GetString()!,p.GetProperty("sha256").GetString()!));
         }
     }
     public bool Resolve(string actorId,string clip,int direction,out Direction? result)
@@ -73,7 +73,11 @@ public sealed class ActorLibraryData : IDisposable
         return result!=null;
     }
     public string ReviewStatus(string actorId,string clip)
-    {string key=Actors[actorId].Kind=="VFX"?actorId.ToLowerInvariant().Replace('-','_')+"_vfx":actorId.ToLowerInvariant()+"_"+clip;return Pages.TryGetValue(key,out var page)?page.VisualState+(page.Notes.Length>0?" · "+page.Notes:""):"CHƯA CÓ DỮ LIỆU";}
+    {
+        string key=Actors[actorId].Kind=="VFX"?actorId.ToLowerInvariant().Replace('-','_')+"_vfx":actorId.ToLowerInvariant()+"_"+clip;
+        var pages=Pages.Values.Where(p=>p.Id==key||new[]{"n","ne","e","se","s","sw","w","nw"}.Any(d=>p.Id==key+"_"+d)).ToArray();
+        return pages.Length==0?"CHƯA CÓ DỮ LIỆU":string.Join("\n",pages.Select(p=>p.Id+": "+p.VisualState+(p.Notes.Length>0?" · "+p.Notes:"")));
+    }
     public Texture2D Texture(string file)
     {
         if(_textures.TryGetValue(file,out var texture))return texture;

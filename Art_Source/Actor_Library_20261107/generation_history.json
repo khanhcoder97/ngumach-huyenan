@@ -111,5 +111,39 @@
     "rows": 10,
     "status": "REJECTED_CLIPPED_ATLAS",
     "generator": "built-in image_gen"
+  },
+  {
+    "id": "class_thach_chuy_basic_attack",
+    "source": "Sheets/class_thach_chuy_basic_attack_v2.png",
+    "prompt": "Prompts/class_thach_chuy_basic_attack_v2.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack.png",
+    "status": "SUPERSEDED_20261112_LAYOUT_REPAIR"
+  },
+  {
+    "id": "sk_mk_03_arc_component",
+    "source": "Rejections/sk_mk_03_arc_component_v1_20261112.png",
+    "prompt": "Prompts/sk_mk_03_arc_component_v1_20261112.txt",
+    "columns": 4,
+    "rows": 4,
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_20261112_VFX_REPAIR",
+    "batch": "20261112",
+    "componentOnly": true
+  },
+  {
+    "id": "npc_boat_keeper_idle_s",
+    "source": "Rejections/npc_boat_keeper_idle_s_v1_20261112.png",
+    "prompt": "Prompts/npc_boat_keeper_idle_s_v1_20261112.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_OPAQUE_MATTE",
+    "batch": "20261112"
   }
 ]

@@ -6,6 +6,11 @@ param(
     [switch]$ArtSelfTest,
     [switch]$StudioSelfTest,
     [string]$StudioProject,
+    [string]$StudioEntry,
+    [ValidateRange(0,119)][int]$StudioFrame=0,
+    [string]$StudioDirection,
+    [switch]$StudioPlay,
+    [switch]$StudioLoop,
     [switch]$ArchivedArtReview,
     [switch]$FitTools,
     [ValidateRange(0,2)][int]$ArtView=2,
@@ -46,6 +51,11 @@ try {
     if($ArtSelfTest){$launchArgs+='--paperdoll-art-self-test'}
     if($StudioSelfTest){$launchArgs+='--studio-self-test'}
     if($StudioProject){$launchArgs+=@('--studio-project',$StudioProject)}
+    if($StudioEntry){$launchArgs+=@('--studio-entry',$StudioEntry)}
+    $launchArgs+=@('--studio-frame',[string]$StudioFrame)
+    if($StudioDirection){$launchArgs+=@('--studio-direction',$StudioDirection)}
+    if($StudioPlay){$launchArgs+='--studio-play'}
+    if($StudioLoop){$launchArgs+='--studio-loop'}
     if($ArchivedArtReview){$launchArgs+='--paperdoll-archived-review'}
     if($technical){$launchArgs+='--paperdoll-fit-tools'}
     if($ExportMaster){$launchArgs+='--paperdoll-registration-test'}

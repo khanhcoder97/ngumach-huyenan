@@ -1,17 +1,13 @@
 {
   "actors": 130,
   "requiredPages": 1008,
-  "structurePassed": 35,
-  "boundRequiredPages": 32,
+  "structurePassed": 49,
+  "boundRequiredPages": 38,
   "legacyClips": 3,
   "rejected": [
     {
       "id": "sk_mk_03_vfx",
       "reason": "rows expected 4, got 5"
-    },
-    {
-      "id": "class_thach_chuy_basic_attack",
-      "reason": "clipped/overlapping frame row7 col1"
     },
     {
       "id": "mob_shore_stalker_idle",
@@ -22,7 +18,7 @@
       "reason": "rows expected 10, got 9"
     }
   ],
-  "pendingPages": 976,
+  "pendingPages": 970,
   "pendingIds": [
     "class_minh_kiem_skill_01",
     "class_minh_kiem_skill_02",
@@ -30,9 +26,6 @@
     "class_minh_kiem_skill_04",
     "class_minh_kiem_skill_05",
     "class_minh_kiem_skill_06",
-    "class_minh_kiem_hurt",
-    "class_minh_kiem_death",
-    "class_minh_kiem_dodge",
     "class_anh_dao_skill_01",
     "class_anh_dao_skill_02",
     "class_anh_dao_skill_03",
@@ -47,7 +40,6 @@
     "class_huyen_but_skill_05",
     "class_huyen_but_skill_06",
     "class_huyen_but_dodge",
-    "class_thach_chuy_basic_attack",
     "class_thach_chuy_skill_01",
     "class_thach_chuy_skill_02",
     "class_thach_chuy_skill_03",
@@ -64,7 +56,6 @@
     "class_linh_cung_skill_06",
     "class_linh_cung_death",
     "class_linh_cung_dodge",
-    "mob_carpling_walk",
     "mob_carpling_hurt",
     "mob_carpling_death",
     "mob_carpling_telegraph_01",
@@ -610,7 +601,6 @@
     "npc_bm_rescue_02_interact",
     "npc_bm_rescue_02_rescue_wait",
     "npc_bm_rescue_02_rescue_free",
-    "npc_boat_keeper_idle",
     "npc_boat_keeper_walk",
     "npc_boat_keeper_interact",
     "npc_by_diver_01_idle",
@@ -1006,5 +996,5 @@
   "modularMigrationReferencePages": 0,
   "structureComplete": false,
   "complete": false,
-  "warning": "Structure pass is not visual/animation/native approval. Mirrored directions are frame references, not separately authored poses."
+  "warning": "Structure pass is not visual/animation/native approval. Partial directional pages do not complete a job until every required authored direction exists. Mirrored directions are frame references, not separately authored poses."
 }

@@ -1,0 +1,303 @@
+{
+  "schemaVersion": 1,
+  "scope": "CONTINUED_BAKED_CHIBI_ASSET_PRODUCTION",
+  "ownerStyleLocked": true,
+  "styleDecision": "USER_20261112_CONTINUE_EXISTING_CHIBI_SPRITE_SHEETS",
+  "generator": "built-in image_gen",
+  "originalsPreserved": 46,
+  "selectedSheets": 14,
+  "sourceCells": 568,
+  "boundSourceCells": 560,
+  "unusedSourceCells": 8,
+  "sourceFramesPerDirection": 16,
+  "renderTargetFps": 60,
+  "entries": [
+    {
+      "id": "class_thach_chuy_basic_attack",
+      "source": "Sheets/class_thach_chuy_basic_attack_v3_20261112.png",
+      "prompt": "Prompts/class_thach_chuy_basic_attack_v3_20261112.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/class_thach_chuy_basic_attack_v3_20261112.png",
+      "sha256": "7e5e56df4bb3bd8be6379637abaf62195d147d59e80235740877f499e9d186c7",
+      "sourceCells": 80,
+      "boundSourceCells": 80,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S"
+      ],
+      "mirroredDirections": [
+        "SW",
+        "W",
+        "NW"
+      ],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "AWAITING_VISUAL_REVIEW"
+    },
+    {
+      "id": "mob_waterroot_idle_s",
+      "source": "Sheets/mob_waterroot_idle_s_v1_20261112.png",
+      "prompt": "Prompts/mob_waterroot_idle_s_v1_20261112.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_idle_s_v1_20261112.png",
+      "sha256": "9e3878b5e4d1eee37cf55a723f5efa45d4726c155fcfc235ac8ff89eac35ed75",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "S"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "AWAITING_VISUAL_REVIEW"
+    },
+    {
+      "id": "mob_shore_stalker_idle_s",
+      "source": "Sheets/mob_shore_stalker_idle_s_v1_20261112.png",
+      "prompt": "Prompts/mob_shore_stalker_idle_s_v1_20261112.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_shore_stalker_idle_s_v1_20261112.png",
+      "sha256": "dd502592dcb7119cff01469314dcfc7b6817053421b3bc64f5ee1f1670a96415",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "S"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "AWAITING_VISUAL_REVIEW"
+    },
+    {
+      "id": "class_minh_kiem_hurt",
+      "source": "Sheets/class_minh_kiem_hurt_v1_20261112.png",
+      "prompt": "Prompts/class_minh_kiem_hurt_v1_20261112.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/class_minh_kiem_hurt_v1_20261112.png",
+      "sha256": "756380750f02a4ffc64dbc57ce38146f94dd2cc11d2574de489515847ab135c3",
+      "sourceCells": 80,
+      "boundSourceCells": 80,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S"
+      ],
+      "mirroredDirections": [
+        "SW",
+        "W",
+        "NW"
+      ],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "AWAITING_VISUAL_REVIEW"
+    },
+    {
+      "id": "class_minh_kiem_dodge",
+      "source": "Sheets/class_minh_kiem_dodge_partial_v1_20261112.png",
+      "prompt": "Prompts/class_minh_kiem_dodge_partial_v1_20261112.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/class_minh_kiem_dodge_partial_v1_20261112.png",
+      "sha256": "b718eedcffe6aa993a46d6139cd7184212c53820cbfcc8c15060ef5cc3e860e7",
+      "sourceCells": 64,
+      "boundSourceCells": 64,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "mirroredDirections": [
+        "SW",
+        "W",
+        "NW"
+      ],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "AWAITING_VISUAL_REVIEW"
+    },
+    {
+      "id": "class_minh_kiem_dodge_s",
+      "source": "Sheets/class_minh_kiem_dodge_s_v1_20261112.png",
+      "prompt": "Prompts/class_minh_kiem_dodge_s_v1_20261112.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/class_minh_kiem_dodge_s_v1_20261112.png",
+      "sha256": "8f1980cdc8e31f3e90761b4a3a9a54d683dad1b5d4dbd1910a2e2e3f624acbf4",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "S"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "AWAITING_VISUAL_REVIEW"
+    },
+    {
+      "id": "mob_carpling_walk",
+      "source": "Sheets/mob_carpling_walk_v1_20261112.png",
+      "prompt": "Prompts/mob_carpling_walk_v1_20261112.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_carpling_walk_v1_20261112.png",
+      "sha256": "6d826788ab43786e7b256c9ebf2ac446091033147c9e641baa21ffbf5fedcbfb",
+      "sourceCells": 80,
+      "boundSourceCells": 80,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S"
+      ],
+      "mirroredDirections": [
+        "SW",
+        "W",
+        "NW"
+      ],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "AWAITING_VISUAL_REVIEW"
+    },
+    {
+      "id": "sk_lc_01_projectile_component",
+      "source": "Sheets/sk_lc_01_projectile_component_v1_20261112.png",
+      "prompt": "Prompts/sk_lc_01_projectile_component_v1_20261112.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/sk_lc_01_projectile_component_v1_20261112.png",
+      "sha256": "302bc01735a5a285bbfcc58f2b1cb6ff54e77f676b4ec7c87059a65c65d58f5b",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "OMNI"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": true,
+      "productionApproved": false,
+      "visualState": "AWAITING_VISUAL_REVIEW"
+    },
+    {
+      "id": "sk_mk_03_arc_component",
+      "source": "Sheets/sk_mk_03_arc_component_v2_20261112.png",
+      "prompt": "Prompts/sk_mk_03_arc_component_v2_20261112.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/sk_mk_03_arc_component_v2_20261112.png",
+      "sha256": "a6da8c87d46e6c60ebf88397975caec3c174b36ed7c5173ba26b81a0123b1146",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "OMNI"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": true,
+      "productionApproved": true,
+      "visualState": "APPROVED"
+    },
+    {
+      "id": "sk_tc_01_crack_component",
+      "source": "Sheets/sk_tc_01_crack_component_v1_20261112.png",
+      "prompt": "Prompts/sk_tc_01_crack_component_v1_20261112.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/sk_tc_01_crack_component_v1_20261112.png",
+      "sha256": "845240f04d308d017ba66cb7433e95bf7d80aa4dda35c03c1fa67ca91326f7cf",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "OMNI"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": true,
+      "productionApproved": false,
+      "visualState": "AWAITING_VISUAL_REVIEW"
+    },
+    {
+      "id": "class_minh_kiem_death",
+      "source": "Sheets/class_minh_kiem_death_partial_v1_20261112.png",
+      "prompt": "Prompts/class_minh_kiem_death_partial_v1_20261112.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/class_minh_kiem_death_partial_v1_20261112.png",
+      "sha256": "828ca380ec902dbece2aa425a2b34eea06534644e09a1160464854df286f3af1",
+      "sourceCells": 64,
+      "boundSourceCells": 64,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "N",
+        "E",
+        "SE",
+        "S"
+      ],
+      "mirroredDirections": [
+        "SW",
+        "W"
+      ],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "AWAITING_VISUAL_REVIEW"
+    },
+    {
+      "id": "class_minh_kiem_death_ne",
+      "source": "Sheets/class_minh_kiem_death_ne_v1_20261112.png",
+      "prompt": "Prompts/class_minh_kiem_death_ne_v1_20261112.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/class_minh_kiem_death_ne_v1_20261112.png",
+      "sha256": "d26eb0f372806939594b6999f815f2c34212b9247242100ce6964cafcd53ad8f",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "NE"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "AWAITING_VISUAL_REVIEW"
+    },
+    {
+      "id": "npc_boat_keeper_idle",
+      "source": "Sheets/npc_boat_keeper_idle_partial_v1_20261112.png",
+      "prompt": "Prompts/npc_boat_keeper_idle_partial_v1_20261112.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/npc_boat_keeper_idle_partial_v1_20261112.png",
+      "sha256": "b363f01ba68335593288898e37bfc1a358c2c8d544e3be71d121ef649af2c4be",
+      "sourceCells": 72,
+      "boundSourceCells": 64,
+      "unboundSourceCells": 8,
+      "authoredDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "mirroredDirections": [
+        "SW",
+        "W",
+        "NW"
+      ],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "AWAITING_VISUAL_REVIEW"
+    },
+    {
+      "id": "npc_boat_keeper_idle_s",
+      "source": "Sheets/npc_boat_keeper_idle_s_v2_20261112.png",
+      "prompt": "Prompts/npc_boat_keeper_idle_s_v2_20261112.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/npc_boat_keeper_idle_s_v2_20261112.png",
+      "sha256": "da3257351e6d79b4b5cff8c70b30600445456fb39a76148052106aea976669a5",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "S"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "AWAITING_VISUAL_REVIEW"
+    }
+  ],
+  "fullGameComplete": false,
+  "requiredJobs": 1008,
+  "structurallyCompleteJobs": 38,
+  "pendingJobs": 970,
+  "note": "Cells/hashes do not certify anatomical pose uniqueness. Only the reviewed sword-arc component is approved for runtime use; full actors/skills retain per-clip review. 8 extra boatkeeper cells are preserved but never padded into a 16-frame sequence."
+}

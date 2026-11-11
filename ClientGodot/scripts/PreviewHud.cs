@@ -16,6 +16,7 @@ public partial class PreviewHud : Node2D
     public event Action? AttackPressed,InventoryPressed,InteractPressed,RetryPressed,JournalPressed;
     public event Action<string>? MenuPressed;
     private NativeOnlineFrame? _frame;
+    public bool StaticArtReview {get;set;}
     private CombatTargetInfo? _target;
     public CombatTargetInfo? CombatTarget=>_target;
     public event Action? TargetClearPressed;
@@ -261,7 +262,7 @@ public partial class PreviewHud : Node2D
         }
         if(_hintTime>0){Panel(new Rect2(900,420,355,47),.9f);Text(new Vector2(913,448),_combatHint.Length>42?_combatHint[..39]+"…":_combatHint,13,_hintColor);}
         Panel(new Rect2(22,650,327,53),.62f);
-        Text(new Vector2(34,670),$"{Coordinates.X:0.0}, {Coordinates.Y:0.0}    ·    {Engine.GetFramesPerSecond()} FPS",11,MoonGlassTheme.Muted);
+        Text(new Vector2(34,670),$"{Coordinates.X:0.0}, {Coordinates.Y:0.0}    ·    "+(StaticArtReview?"Ảnh tĩnh · không đo FPS":$"{Engine.GetFramesPerSecond()} FPS"),11,MoonGlassTheme.Muted);
         string status=Friendly(StatusText);Text(new Vector2(34,691),status.Length>43?status[..40]+"…":status,11);
         if(_chat){Panel(new Rect2(22,465,327,135),.86f);Text(new Vector2(35,486),"Nhật ký hệ thống",13,MoonGlassTheme.Gold);int y=509;foreach(var message in _messages.TakeLast(4)){Text(new Vector2(35,y),message.Length>42?message[..39]+"…":message,11,MoonGlassTheme.Muted);y+=21;}}
         string? tip=_hover>=0?SkillVfxPlayer.Names[_hover]:_buttons.Where(b=>b.Rect.HasPoint(GetLocalMousePosition())).Select(b=>b.Tip).FirstOrDefault();

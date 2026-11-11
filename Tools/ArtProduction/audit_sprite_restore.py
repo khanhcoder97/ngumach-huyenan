@@ -12,17 +12,27 @@ ROOT = Path(__file__).resolve().parents[2]
 ART = ROOT / 'Art_Source/Actor_Library_20261107'
 
 
-def audit():
-    paths = subprocess.check_output(['git', 'ls-files', 'Art_Source/Actor_Library_20261107/Sheets'], cwd=ROOT, text=True).splitlines()
-    stream = io.BytesIO(subprocess.check_output(['git', 'cat-file', '--batch'], cwd=ROOT,
-                                              input=''.join('HEAD:' + p + '\n' for p in paths).encode()))
+def audit(baseline_report=None):
+    expected_hashes={}
+    if baseline_report:
+        baseline=json.loads(Path(baseline_report).read_text(encoding='utf8'))
+        expected_hashes={r['file']:r['expectedSha256'] for r in baseline['files']}
+        paths=list(expected_hashes)
+        assert all(p.startswith('Art_Source/Actor_Library_20261107/Sheets/') and '..' not in p for p in paths)
+        stream=None
+    else:
+        paths = [p for p in subprocess.check_output(['git', 'ls-files', 'Art_Source/Actor_Library_20261107/Sheets'], cwd=ROOT, text=True).splitlines() if p.endswith('.png')]
+        stream = io.BytesIO(subprocess.check_output(['git', 'cat-file', '--batch'], cwd=ROOT,
+                                                  input=''.join('HEAD:' + p + '\n' for p in paths).encode()))
     entries = []
     for path in paths:
-        header = stream.readline().decode().split()
-        assert len(header) == 3 and header[1] == 'blob', 'missing HEAD source ' + path
-        blob = stream.read(int(header[2])); assert stream.read(1) == b'\n'
-        match = re.search(rb'oid sha256:([a-f0-9]{64})', blob)
-        expected = match[1].decode() if match else hashlib.sha256(blob).hexdigest()
+        if stream:
+            header = stream.readline().decode().split()
+            assert len(header) == 3 and header[1] == 'blob', 'missing HEAD source ' + path
+            blob = stream.read(int(header[2])); assert stream.read(1) == b'\n'
+            match = re.search(rb'oid sha256:([a-f0-9]{64})', blob)
+            expected = match[1].decode() if match else hashlib.sha256(blob).hexdigest()
+        else:expected=expected_hashes[path]
         local = ROOT / path
         row = dict(file=path, exists=local.is_file(), expectedSha256=expected)
         if local.is_file():
@@ -63,8 +73,8 @@ def audit():
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(); parser.add_argument('--output', type=Path); args = parser.parse_args()
-    result = audit()
+    parser = argparse.ArgumentParser(); parser.add_argument('--output', type=Path); parser.add_argument('--baseline-report',type=Path); args = parser.parse_args()
+    result = audit(args.baseline_report)
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf8')

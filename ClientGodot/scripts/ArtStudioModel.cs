@@ -214,6 +214,13 @@ public static class ArtStudioCodec
         var result = new List<string> { "Bản chỉnh hình ảnh; không tự thay nhân vật gameplay hoặc chỉ số." };
         foreach (var c in doc.Clips)
         {
+            if (!doc.Layers.Any(l => l.Kind == "sprite" && l.Visible))
+            {
+                result.Add($"{c.Name}/{c.Direction}: VFX · {c.DurationsMs.Count} ô timing; không chứa pose nhân vật.");
+                foreach (var l in doc.Layers.Where(l => l.Kind == "vfx" && l.Visible))
+                { int used = Enumerable.Range(0, c.DurationsMs.Count).Select(f => ArtStudioSampler.Pose(l, c, f).SourceFrame).Distinct().Count(); result.Add($"{l.Name}: {l.Regions.Count} vùng ảnh nguồn; timeline tham chiếu {used} vùng. Dùng lại nguồn không tạo thêm ảnh mới."); }
+                continue;
+            }
             int unique = doc.Layers.Where(l => l.Kind == "sprite" && l.Visible).Select(l =>
                 Enumerable.Range(0, c.DurationsMs.Count).Select(f => ArtStudioSampler.Pose(l, c, f).SourceFrame).Distinct().Count()).DefaultIfEmpty(0).Max();
             result.Add($"{c.Name}/{c.Direction}: {c.DurationsMs.Count} ô timeline · {unique} vùng ảnh sprite được dùng (chưa kiểm chứng pose khác nhau).");

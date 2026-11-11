@@ -12,25 +12,31 @@ public static class ArtStudioLibrary
     public static (string Id, string Name)[] Entries()
     {
         using var json = JsonDocument.Parse(FileAccess.GetFileAsString("res://assets/actor_library_v1/pages.json"));
-        return new[] { ("motion:idle", "Minh Kiếm / idle"), ("motion:walk", "Minh Kiếm / walk"), ("motion:attack", "Minh Kiếm / attack"), ("motion:cast", "Minh Kiếm / cast") }
+        using var library = new ActorLibraryData(reviewMode: true);
+        var grouped = library.Actors.Values.Where(a => a.Kind != "VFX").SelectMany(a => a.Clips.Where(c => Enumerable.Range(0, 8).Any(i => library.Resolve(a.Id, c, i, out _))).Select(c => ("actor:" + a.Id + ":" + c, "[Nhóm hướng] " + a.Name + " / " + c)));
+        return new[] { ("motion:idle", "Minh Kiếm / idle"), ("motion:walk", "Minh Kiếm / walk"), ("motion:attack", "Minh Kiếm / attack"), ("motion:cast", "Minh Kiếm / cast"), ("demo:kiem_tran", "[VFX] Kiếm Trận · 3 cung / demo") }
+            .Concat(grouped)
             .Concat(json.RootElement.GetProperty("pages").EnumerateArray().Where(p => p.GetProperty("file").GetString() != "")
             .Select(p => (p.GetProperty("id").GetString()!, p.GetProperty("id").GetString()!))).ToArray();
     }
     public static ArtStudioDocument Load(string id)
     {
         if (id.StartsWith("motion:", StringComparison.Ordinal)) return Motion(id[7..]);
+        if (id.StartsWith("actor:", StringComparison.Ordinal)) { var parts = id.Split(':'); return Actor(parts[1], parts[2]); }
+        if (id == "demo:kiem_tran") return KiemTran();
         using var json = JsonDocument.Parse(FileAccess.GetFileAsString("res://assets/actor_library_v1/pages.json"));
         var p = json.RootElement.GetProperty("pages").EnumerateArray().Single(p => p.GetProperty("id").GetString() == id);
-        bool vfx = id.EndsWith("_vfx", StringComparison.Ordinal);
+        bool vfx = id.StartsWith("sk_", StringComparison.Ordinal);
         var l = new ArtStudioLayer { Id = "sprite", Name = id, Kind = vfx ? "vfx" : "sprite", Texture = "res://assets/actor_library_v1/" + p.GetProperty("file").GetString() };
         var doc = new ArtStudioDocument { Name = id, Layers = new() { l } };
         foreach (var d in p.GetProperty("directions").EnumerateArray())
         {
             string direction = d.GetProperty("direction").GetString()!;
             float reference = d.TryGetProperty("referenceHeight", out var rh) ? rh.GetSingle() : p.GetProperty("referenceHeight").GetSingle();
-            float scale = 140 / Math.Max(1, reference); bool flip = d.GetProperty("flip").GetBoolean();
             var frames = d.GetProperty("frames").EnumerateArray().ToArray();
-            var c = new ArtStudioClip { Name = id, Direction = direction, SourceNote = (flip ? "Lật ngang theo metadata · " : "Nguồn sheet cũ · ") + p.GetProperty("visualState").GetString() + " · chưa nghiệm thu mới.", DurationsMs = Enumerable.Repeat(id.Contains("walk", StringComparison.Ordinal) ? 50f : 100f, frames.Length).ToList() };
+            float width = frames.Max(f => f.GetProperty("bounds")[2].GetSingle() - f.GetProperty("bounds")[0].GetSingle());
+            float scale = (vfx ? 160 : 140) / Math.Max(1, vfx ? Math.Max(width, reference) : reference); bool flip = d.GetProperty("flip").GetBoolean();
+            var c = new ArtStudioClip { Name = id, Direction = direction, Loop = !OneShot(id), SourceNote = (flip ? "Lật ngang theo metadata · " : "Nguồn sheet · ") + p.GetProperty("visualState").GetString() + " · chưa nghiệm thu mới.", DurationsMs = Enumerable.Repeat(id.Contains("walk", StringComparison.Ordinal) ? 50f : 100f, frames.Length).ToList() };
             var track = new ArtStudioTrack { LayerId = l.Id, Interpolate = false }; c.Tracks.Add(track);
             foreach (var f in frames)
             {
@@ -43,6 +49,47 @@ public static class ArtStudioLibrary
         l.Rest = doc.Clips.First().Tracks[0].Keys[0].Pose.Copy();
         ArtStudioCodec.Validate(doc); return doc;
     }
+    public static ArtStudioDocument Actor(string actor, string action)
+    {
+        using var library = new ActorLibraryData(reviewMode: true);
+        var doc = new ArtStudioDocument { Name = library.Actors[actor].Name + " / " + action + " · ghép hướng nguồn" };
+        for (int i = 0; i < 8; i++)
+        {
+            if (!library.Resolve(actor, action, i, out var d)) continue;
+            var frames = d!.Frames; string texture = frames[0].File;
+            if (frames.Any(f => f.File != texture)) throw new InvalidOperationException("Một hướng phải tham chiếu một sheet trong adapter hiện tại.");
+            var l = new ArtStudioLayer { Id = "dir_" + i, Name = library.Actors[actor].Name + " / " + d.Name, Kind = library.Actors[actor].Kind == "VFX" ? "vfx" : "sprite", Texture = texture };
+            foreach (var f in frames) l.Regions.Add(new[] { (int)f.Region.Position.X, (int)f.Region.Position.Y, (int)f.Region.Size.X, (int)f.Region.Size.Y });
+            l.Rest.Alpha = 0; doc.Layers.Add(l);
+            string note = (d.Flip ? "Hướng lật · " : "Hướng nguồn · ") + library.ReviewStatus(actor, action);
+            var c = new ArtStudioClip { Name = action, Direction = d.Name, Loop = !OneShot(action), SourceNote = note.Length > 480 ? note[..480] : note, DurationsMs = Enumerable.Repeat((float)(ActorLibraryData.Duration(action) * 1000 / frames.Length), frames.Length).ToList() };
+            var t = new ArtStudioTrack { LayerId = l.Id, Interpolate = false }; c.Tracks.Add(t);
+            for (int f = 0; f < frames.Length; f++)
+            { float scale = 140 / Math.Max(1, d.Height); var pv = frames[f].Pivot; t.Keys.Add(new() { Frame = f, Pose = new() { SourceFrame = f, PivotX = pv.X, PivotY = pv.Y, ScaleX = d.Flip ? -scale : scale, ScaleY = scale } }); }
+            doc.Clips.Add(c);
+        }
+        if (doc.Clips.Count == 0) throw new InvalidOperationException("Chưa có hướng nào cho action này.");
+        ArtStudioCodec.Validate(doc); return doc;
+    }
+    private static ArtStudioDocument KiemTran()
+    {
+        var doc = Load("sk_mk_03_arc_component"); doc.Name = "Kiếm Trận · demo 3 cung, chưa là toàn bộ animation kỹ năng";
+        var original = doc.Layers[0]; var sources = original.Regions; var basis = original.Rest.Copy();
+        doc.Layers.Clear(); doc.Clips.Clear();
+        // Exact visual beat boundaries .10/.22/.36 s; the underlying 16 source regions stay original.
+        double[] boundaries = { 0, .02, .04, .06, .08, .10, .12, .14, .16, .18, .20, .22, .24, .26, .28, .30, .32, .36, .40, .44, .46 };
+        var c = new ArtStudioClip { Name = "kiem_tran_vfx_demo", Direction = "OMNI", Loop = false, SourceNote = "3 lần dùng cùng thành phần cung 16 ảnh; 20 ô timing không phải 20 pose nhân vật mới.", DurationsMs = boundaries.Zip(boundaries.Skip(1), (a, b) => (float)((b - a) * 1000)).ToList() };
+        double[] starts = { 0, .12, .26 }; float[] angles = { 0, -35, 35 };
+        for (int i = 0; i < 3; i++)
+        {
+            var l = new ArtStudioLayer { Id = "arc_" + i, Name = "Cung " + (i + 1), Kind = "vfx", Texture = original.Texture, Regions = sources.Select(r => r.ToArray()).ToList(), Rest = basis.Copy(), Z = i };
+            l.Rest.Alpha = 0; doc.Layers.Add(l);
+            var t = new ArtStudioTrack { LayerId = l.Id, Interpolate = false }; c.Tracks.Add(t);
+            for (int f = 0; f < c.DurationsMs.Count; f++)
+            { double local = boundaries[f] - starts[i]; var p = basis.Copy(); p.X = 0; p.Y = -70; p.Angle = angles[i]; p.ScaleX *= i == 2 ? 1.25f : 1; p.ScaleY *= i == 2 ? 1.25f : 1; p.Alpha = local >= -.00001 && local < .20 ? 1 : 0; p.SourceFrame = Math.Clamp((int)(Math.Max(0, local) / .20 * 16), 0, 15); t.Keys.Add(new() { Frame = f, Pose = p }); }
+        }
+        doc.Clips.Add(c); ArtStudioCodec.Validate(doc); return doc;
+    }
     private static ArtStudioDocument Motion(string action)
     {
         using var json = JsonDocument.Parse(FileAccess.GetFileAsString("res://assets/motion16/manifest.json"));
@@ -54,7 +101,7 @@ public static class ArtStudioLibrary
             var l = new ArtStudioLayer { Id = "sprite_" + di, Name = "Minh Kiếm / " + ArtStudioCodec.Directions[di], Texture = "res://assets/motion16/" + frames[0].GetProperty("file").GetString() };
             foreach (var f in frames) l.Regions.Add(f.GetProperty("rect").EnumerateArray().Select(n => n.GetInt32()).ToArray());
             l.Rest.Alpha = 0; doc.Layers.Add(l);
-            var c = new ArtStudioClip { Name = action, Direction = ArtStudioCodec.Directions[di], SourceNote = frames[0].GetProperty("flip").GetBoolean() ? "Nguồn lật ngang theo metadata motion16." : "Minh Kiếm / bộ motion16 có sẵn, crop và pivot nguồn được giữ.", DurationsMs = Enumerable.Repeat(d.GetProperty("duration").GetSingle() * 1000 / frames.Length, frames.Length).ToList() };
+            var c = new ArtStudioClip { Name = action, Direction = ArtStudioCodec.Directions[di], Loop = !OneShot(action), SourceNote = frames[0].GetProperty("flip").GetBoolean() ? "Nguồn lật ngang theo metadata motion16." : "Minh Kiếm / bộ motion16 có sẵn, crop và pivot nguồn được giữ.", DurationsMs = Enumerable.Repeat(d.GetProperty("duration").GetSingle() * 1000 / frames.Length, frames.Length).ToList() };
             var t = new ArtStudioTrack { LayerId = l.Id, Interpolate = false }; c.Tracks.Add(t);
             for (int i = 0; i < frames.Length; i++)
             {
@@ -77,4 +124,5 @@ public static class ArtStudioLibrary
             for (int i = 0; i < clip.DurationsMs.Count; i++)
             { var pose = l.Rest.Copy(); pose.SourceFrame = Math.Min(frames.Length - 1, i * frames.Length / clip.DurationsMs.Count); ArtStudioSampler.SetKey(clip, l.Id, i, pose); }
     }
+    private static bool OneShot(string id) => new[] { "death", "hurt", "dodge", "attack", "cast", "skill_", "telegraph", "recovery", "arc_component", "crack_component" }.Any(t => id.Contains(t, StringComparison.Ordinal));
 }

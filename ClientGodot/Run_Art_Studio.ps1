@@ -2,6 +2,11 @@ param(
     [switch]$SkipBuild,
     [switch]$SelfTest,
     [string]$Project,
+    [string]$Entry,
+    [ValidateRange(0,119)][int]$Frame=0,
+    [string]$Direction,
+    [switch]$Play,
+    [switch]$Loop,
     [string]$Capture,
     [string]$GodotPath,
     [string]$DotnetPath
@@ -9,6 +14,11 @@ param(
 $ErrorActionPreference='Stop'
 $options=@{SkipBuild=$SkipBuild;StudioSelfTest=$SelfTest}
 if($Project){$options.StudioProject=$Project}
+if($Entry){$options.StudioEntry=$Entry}
+$options.StudioFrame=$Frame
+if($Direction){$options.StudioDirection=$Direction}
+if($Play){$options.StudioPlay=$true}
+if($Loop){$options.StudioLoop=$true}
 if($Capture){$options.Capture=$Capture}
 if($GodotPath){$options.GodotPath=$GodotPath}
 if($DotnetPath){$options.DotnetPath=$DotnetPath}

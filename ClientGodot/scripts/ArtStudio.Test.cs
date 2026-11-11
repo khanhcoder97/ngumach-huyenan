@@ -17,12 +17,12 @@ public partial class ArtStudio
             foreach (var e in _entries)
             {
                 var doc = ArtStudioLibrary.Load(e.Id); ArtStudioCodec.ValidateTextures(doc, "");
-                Check(doc.Clips.All(c => c.DurationsMs.Count == 16), "wrong source-frame count: " + e.Id);
+                Check(doc.Clips.All(c => c.DurationsMs.Count is >= 16 and <= 20), "wrong timeline count: " + e.Id);
                 foreach (var c in doc.Clips)
                     foreach (var l in doc.Layers)
                     {
-                        Check(ArtStudioSampler.FrameAt(c, 0) == 0 && ArtStudioSampler.FrameAt(c, c.Duration) == 0, "loop boundary");
-                        for (int f = 0; f < 16; f++) { var p = ArtStudioSampler.Pose(l, c, f); Check(p.SourceFrame >= 0 && p.SourceFrame < l.Regions.Count, "source binding"); }
+                        Check(ArtStudioSampler.FrameAt(c, 0) == 0 && ArtStudioSampler.FrameAt(c, c.Duration) == (c.Loop ? 0 : c.DurationsMs.Count - 1), "clip boundary");
+                        for (int f = 0; f < c.DurationsMs.Count; f++) { var p = ArtStudioSampler.Pose(l, c, f); Check(p.SourceFrame >= 0 && p.SourceFrame < l.Regions.Count, "source binding"); }
                     }
             }
             var original = ArtStudioCodec.Encode(_doc); var sourceHash = System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(ArtStudioCodec.Resolve(Layer.Texture, "")));
