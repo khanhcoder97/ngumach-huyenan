@@ -262,19 +262,30 @@ namespace NguMach.Client.Presentation
         }
 
         /// <summary>Canonical absolute path of a root-relative path, or null
-        /// when the path is empty, carries a URI scheme, is absolute, escapes
-        /// the root (traversal) or cannot be canonicalized.</summary>
+        /// when the path is empty, carries a URI scheme/drive/ADS colon, is
+        /// absolute, escapes the root (traversal) or cannot be canonicalized.
+        /// Two platform traps are closed BEFORE any OS-specific semantics
+        /// apply: a ':' is never legitimate in a root-relative delivery path
+        /// (URI scheme, Windows drive letter, NTFS alternate stream — and on
+        /// Unix it is a legal filename character, so "C:\Windows\evil.mp4"
+        /// would otherwise slip containment as an ordinary in-root name),
+        /// and separators are unified to '/' first so rooted, traversal and
+        /// containment checks see one shape whether the caller passed
+        /// manifest-style forward slashes or Path.Combine output. The
+        /// canonical root itself is exempt (CanonicalizeRoot): it is a real
+        /// filesystem path and ':'/'\' are its Windows shape.</summary>
         public static string TryCanonicalize(string contentRoot, string relativePath)
         {
             if (string.IsNullOrWhiteSpace(contentRoot) || string.IsNullOrWhiteSpace(relativePath)) return null;
-            if (UriScheme.IsMatch(relativePath)) return null;
-            if (Path.IsPathRooted(relativePath)) return null;
+            if (relativePath.IndexOf(':', StringComparison.Ordinal) >= 0) return null;
+            string unified = relativePath.Replace('\\', '/');
+            if (Path.IsPathRooted(unified)) return null;
             string rootFull;
             string full;
             try
             {
                 rootFull = Path.GetFullPath(contentRoot);
-                full = Path.GetFullPath(Path.Combine(rootFull, relativePath));
+                full = Path.GetFullPath(Path.Combine(rootFull, unified));
             }
             catch (Exception) { return null; }
             string prefix = rootFull.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
