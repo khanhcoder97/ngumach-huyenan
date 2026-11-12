@@ -1,0 +1,448 @@
+{
+ "packId": "NGM_SFX_COMPOSED_DRAFT_WEAPONS_V1",
+ "checkpoint": "MEDIA-02 WO39 M39-A CP2 - composed SFX draft: 4 weapon identities (second block of DEC-MEDIA-SFX-DRAFT-20261112)",
+ "decisionId": "DEC-MEDIA-SFX-DRAFT-20261112",
+ "approvalRef": "Implementation/Content/DesignBaselines/media_sfx_draft_execution_20261112.json @ e4b3e4b (PR #131, Codex Gói 39, issue #116 comment 6815238814, 2026-11-12); approval is DRAFT production of 18 variants, not runtime adoption",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "9ac73dc",
+ "provenance": "ORIGINAL_COMPOSED_BY_MUSE: weapon-identity cues authored as data in Tools/MediaProduction/Muse/build_composed_sfx_me_cp2b_weapons.py and rendered by procedural synthesis. No external samples, no ported bytes, no voices.",
+ "status": "DRAFT",
+ "auditionStatus": "NOT_AUDITIONED",
+ "runtime": {
+  "ingested": false,
+  "runtimeAudioCountUnchanged": 783,
+  "note": "SOURCE ONLY: no runtime file was written and no runtime manifest was touched. Runtime ingest is a Codex review decision (Gói 39 M39-C)."
+ },
+ "counts": {
+  "cues": 4,
+  "variants": 12
+ },
+ "cues": [
+  {
+   "cueKey": "SFX/COMBAT/dao_swing",
+   "candidateKey": "SFX/COMBAT/dao_swing",
+   "proposal": "P-WEAPON",
+   "nameVi": "Vung đao (Ảnh Đao)",
+   "category": "COMBAT",
+   "kind": "SFX",
+   "loop": false,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "triggerSemanticProposed": "WEAPON_SWING_DAO",
+   "triggerStatus": "UNSUPPORTED",
+   "binding": null,
+   "eventIntent": {
+    "playWhen": "Ảnh Đao swing, if the client/server exposes a per-weapon swing event.",
+    "neverPlayWhen": "Never as a fire roar covering the whole skill, and never as realistic blood/violence audio (Audio Direction §1).",
+    "mixRole": "Deep blade + cloth wind, two short beats; quieter than the shared default (LUFS -23.5 vs -22.25)."
+   },
+   "composition": {
+    "durationSeconds": 0.45,
+    "targetLufs": -23.5,
+    "structure": "Two cloth-wind whoosh beats + deep blade tone + ember crackle ticks; tail cuts fast.",
+    "rendering": "procedural synthesis, authored in build_composed_sfx_me_cp2b_weapons.py; no external samples, no voices"
+   },
+   "variants": [
+    {
+     "variantId": "v01",
+     "seed": 43000,
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v01.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.45,
+      "sizeBytes": 129702,
+      "sha256": "e01d21b8e226dbdf4ff93b25d8ff42eb87c3bad12f5ff7bc0feaff84ce35bb2c",
+      "integratedLufs": -23.55,
+      "truePeakDbtp": -9.05
+     },
+     "spectral": {
+      "spectralCentroidHz": 1161.7,
+      "bandEnergyLt500Hz": 0.0142,
+      "bandEnergy2500_5500Hz": 0.0003,
+      "bandEnergy3000_8000Hz": 0.0002,
+      "tonalProminence400_2000Hz": 20.1
+     },
+     "levelNote": "staged to integrated LUFS -23.5 (shared default basic_blade is -22.25 LUFS); TP ceiling -8 dBTP",
+     "recipe": "two cloth-wind whoosh beats 800-1800 Hz then 700-1600 Hz (0.13 s each, 0.17 s apart) + deep blade tone (200->130 Hz glide, gain 0.1) + 4 ember crackle ticks (5-8 kHz, gain 0.05); tail cuts fast",
+     "distinctness": {
+      "vs_v02": 1.3468,
+      "vs_v03": 1.3055
+     }
+    },
+    {
+     "variantId": "v02",
+     "seed": 43100,
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v02.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.45,
+      "sizeBytes": 129702,
+      "sha256": "a5d65730326c557e319353431d8710205fd3f8309a5e87cbd6b3ba7eed9d2720",
+      "integratedLufs": -23.45,
+      "truePeakDbtp": -10.96
+     },
+     "spectral": {
+      "spectralCentroidHz": 1227.4,
+      "bandEnergyLt500Hz": 0.0115,
+      "bandEnergy2500_5500Hz": 0.0005,
+      "bandEnergy3000_8000Hz": 0.0002,
+      "tonalProminence400_2000Hz": 15.2
+     },
+     "levelNote": "staged to integrated LUFS -23.5 (shared default basic_blade is -22.25 LUFS); TP ceiling -8 dBTP",
+     "recipe": "two cloth-wind whoosh beats 850-1900 Hz then 750-1700 Hz (0.13 s each, 0.17 s apart) + deep blade tone (200->130 Hz glide, gain 0.08) + 3 ember crackle ticks (5-8 kHz, gain 0.05); tail cuts fast",
+     "distinctness": {
+      "vs_v03": 1.3219
+     }
+    },
+    {
+     "variantId": "v03",
+     "seed": 43200,
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v03.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.45,
+      "sizeBytes": 129702,
+      "sha256": "8227fa4acb88e6eaa3198c570225d167f0444501e2914789d20c7ad30aaa6a77",
+      "integratedLufs": -23.45,
+      "truePeakDbtp": -9.56
+     },
+     "spectral": {
+      "spectralCentroidHz": 1078.8,
+      "bandEnergyLt500Hz": 0.0309,
+      "bandEnergy2500_5500Hz": 0.0003,
+      "bandEnergy3000_8000Hz": 0.0002,
+      "tonalProminence400_2000Hz": 20.6
+     },
+     "levelNote": "staged to integrated LUFS -23.5 (shared default basic_blade is -22.25 LUFS); TP ceiling -8 dBTP",
+     "recipe": "two cloth-wind whoosh beats 750-1700 Hz then 650-1500 Hz (0.13 s each, 0.17 s apart) + deep blade tone (200->130 Hz glide, gain 0.12) + 5 ember crackle ticks (5-8 kHz, gain 0.05); tail cuts fast"
+    }
+   ]
+  },
+  {
+   "cueKey": "SFX/COMBAT/brush_stroke",
+   "candidateKey": "SFX/COMBAT/brush_stroke",
+   "proposal": "P-WEAPON",
+   "nameVi": "Nét bút (Huyền Bút)",
+   "category": "COMBAT",
+   "kind": "SFX",
+   "loop": false,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "triggerSemanticProposed": "WEAPON_SWING_BRUSH",
+   "triggerStatus": "UNSUPPORTED",
+   "binding": null,
+   "eventIntent": {
+    "playWhen": "Huyền Bút stroke, if the client/server exposes a per-weapon swing event.",
+    "neverPlayWhen": "Never as looping bubbles, and never as an impact hit (Audio Direction §1: heal-soft, not an impact).",
+    "mixRole": "Airy paper/water swish, softest of the four (LUFS -24.0); lead-release-stop."
+   },
+   "composition": {
+    "durationSeconds": 0.55,
+    "targetLufs": -24.0,
+    "structure": "Paper swish (sustain 0.25 s) + thin water-breath sine + two porcelain pings.",
+    "rendering": "procedural synthesis, authored in build_composed_sfx_me_cp2b_weapons.py; no external samples, no voices"
+   },
+   "variants": [
+    {
+     "variantId": "v01",
+     "seed": 44000,
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v01.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.55,
+      "sizeBytes": 158502,
+      "sha256": "4c93eff5656bf47157bb43b025d21b2c502b79221e511cf6dc33bea6ccf1dd43",
+      "integratedLufs": -23.95,
+      "truePeakDbtp": -15.63
+     },
+     "spectral": {
+      "spectralCentroidHz": 3857.2,
+      "bandEnergyLt500Hz": 0.0,
+      "bandEnergy2500_5500Hz": 0.9514,
+      "bandEnergy3000_8000Hz": 0.809,
+      "tonalProminence400_2000Hz": 555.1
+     },
+     "levelNote": "staged to integrated LUFS -24.0 (shared default basic_blade is -22.25 LUFS); TP ceiling -8 dBTP",
+     "recipe": "paper swish band-noise 2600-5200 Hz (attack 0.03 s, sustain 0.25 s, decay 0.12 s) + thin water breath sine 2800 Hz glide + two porcelain pings (3.6/3.4 kHz, gain 0.06); soft, no impact",
+     "distinctness": {
+      "vs_v02": 1.424,
+      "vs_v03": 1.3955
+     }
+    },
+    {
+     "variantId": "v02",
+     "seed": 44100,
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v02.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.55,
+      "sizeBytes": 158502,
+      "sha256": "a5f16175dca6f883bd0c4ea8fdc717fd9112343ac6cc6b26b058e83876ef8b1c",
+      "integratedLufs": -24.05,
+      "truePeakDbtp": -15.67
+     },
+     "spectral": {
+      "spectralCentroidHz": 4164.0,
+      "bandEnergyLt500Hz": 0.0,
+      "bandEnergy2500_5500Hz": 0.9278,
+      "bandEnergy3000_8000Hz": 0.9135,
+      "tonalProminence400_2000Hz": 299.5
+     },
+     "levelNote": "staged to integrated LUFS -24.0 (shared default basic_blade is -22.25 LUFS); TP ceiling -8 dBTP",
+     "recipe": "paper swish band-noise 2800-5500 Hz (attack 0.03 s, sustain 0.25 s, decay 0.12 s) + thin water breath sine 3000 Hz glide + two porcelain pings (3.6/3.4 kHz, gain 0.05); soft, no impact",
+     "distinctness": {
+      "vs_v03": 1.4003
+     }
+    },
+    {
+     "variantId": "v03",
+     "seed": 44200,
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v03.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.55,
+      "sizeBytes": 158502,
+      "sha256": "0510a97c4346bc21d5aaab714ce978c6a447dd8b516fd3de567c19f4d2aae8f9",
+      "integratedLufs": -23.99,
+      "truePeakDbtp": -16.67
+     },
+     "spectral": {
+      "spectralCentroidHz": 3670.7,
+      "bandEnergyLt500Hz": 0.0,
+      "bandEnergy2500_5500Hz": 0.9021,
+      "bandEnergy3000_8000Hz": 0.7291,
+      "tonalProminence400_2000Hz": 1634.2
+     },
+     "levelNote": "staged to integrated LUFS -24.0 (shared default basic_blade is -22.25 LUFS); TP ceiling -8 dBTP",
+     "recipe": "paper swish band-noise 2400-5000 Hz (attack 0.03 s, sustain 0.25 s, decay 0.12 s) + thin water breath sine 2600 Hz glide + two porcelain pings (3.6/3.4 kHz, gain 0.07); soft, no impact"
+    }
+   ]
+  },
+  {
+   "cueKey": "SFX/COMBAT/mace_swing",
+   "candidateKey": "SFX/COMBAT/mace_swing",
+   "proposal": "P-WEAPON",
+   "nameVi": "Vung chùy (Thạch Chùy)",
+   "category": "COMBAT",
+   "kind": "SFX",
+   "loop": false,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "triggerSemanticProposed": "WEAPON_SWING_MACE",
+   "triggerStatus": "UNSUPPORTED",
+   "binding": null,
+   "eventIntent": {
+    "playWhen": "Thạch Chùy swing, if the client/server exposes a per-weapon swing event.",
+    "neverPlayWhen": "Never sub-bass only (phone speakers must keep the attack); never a stone-only thud without the wood knock (Audio Direction §1).",
+    "mixRole": "Weighty low swing with a clear attack before the deep tail (LUFS -23.5)."
+   },
+   "composition": {
+    "durationSeconds": 0.5,
+    "targetLufs": -23.5,
+    "structure": "Low whoosh + deep wood knock + stone-crack ticks + sand tail.",
+    "rendering": "procedural synthesis, authored in build_composed_sfx_me_cp2b_weapons.py; no external samples, no voices"
+   },
+   "variants": [
+    {
+     "variantId": "v01",
+     "seed": 45000,
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v01.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.5,
+      "sizeBytes": 144102,
+      "sha256": "6891d6390cbaed97ea9706937bd3ee44ab261b10e33baa7499092029db213374",
+      "integratedLufs": -24.19,
+      "truePeakDbtp": -8.0
+     },
+     "spectral": {
+      "spectralCentroidHz": 536.6,
+      "bandEnergyLt500Hz": 0.6072,
+      "bandEnergy2500_5500Hz": 0.0258,
+      "bandEnergy3000_8000Hz": 0.0159,
+      "tonalProminence400_2000Hz": 859.4
+     },
+     "levelNote": "staged to integrated LUFS -23.5 (shared default basic_blade is -22.25 LUFS); TP ceiling -8 dBTP",
+     "recipe": "low whoosh band-noise 200-700 Hz + deep wood knock (150->75 Hz glide, gain 0.35) + 3 stone-crack ticks (0.8 kHz high-pass) + sand tail (1.8-3.6 kHz, gain 0.06); attack clear before the deep tail",
+     "distinctness": {
+      "vs_v02": 1.0144,
+      "vs_v03": 0.9056
+     }
+    },
+    {
+     "variantId": "v02",
+     "seed": 45100,
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v02.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.5,
+      "sizeBytes": 144102,
+      "sha256": "4a92057ec76c1087a36c089e3aefa1afcd63b5498106524914315aef46f435a4",
+      "integratedLufs": -23.51,
+      "truePeakDbtp": -9.1
+     },
+     "spectral": {
+      "spectralCentroidHz": 560.8,
+      "bandEnergyLt500Hz": 0.6716,
+      "bandEnergy2500_5500Hz": 0.0361,
+      "bandEnergy3000_8000Hz": 0.0225,
+      "tonalProminence400_2000Hz": 1130.8
+     },
+     "levelNote": "staged to integrated LUFS -23.5 (shared default basic_blade is -22.25 LUFS); TP ceiling -8 dBTP",
+     "recipe": "low whoosh band-noise 180-650 Hz + deep wood knock (150->75 Hz glide, gain 0.3) + 2 stone-crack ticks (0.8 kHz high-pass) + sand tail (1.8-3.6 kHz, gain 0.07); attack clear before the deep tail",
+     "distinctness": {
+      "vs_v03": 0.9816
+     }
+    },
+    {
+     "variantId": "v03",
+     "seed": 45200,
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v03.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.5,
+      "sizeBytes": 144102,
+      "sha256": "1786011dedbb3d4fbf9f86d93579dc8d629730e0f8abf8bfd24c62be2424ae18",
+      "integratedLufs": -23.92,
+      "truePeakDbtp": -8.0
+     },
+     "spectral": {
+      "spectralCentroidHz": 605.0,
+      "bandEnergyLt500Hz": 0.599,
+      "bandEnergy2500_5500Hz": 0.0357,
+      "bandEnergy3000_8000Hz": 0.0205,
+      "tonalProminence400_2000Hz": 775.4
+     },
+     "levelNote": "staged to integrated LUFS -23.5 (shared default basic_blade is -22.25 LUFS); TP ceiling -8 dBTP",
+     "recipe": "low whoosh band-noise 220-750 Hz + deep wood knock (150->75 Hz glide, gain 0.4) + 4 stone-crack ticks (0.8 kHz high-pass) + sand tail (1.8-3.6 kHz, gain 0.07); attack clear before the deep tail"
+    }
+   ]
+  },
+  {
+   "cueKey": "SFX/COMBAT/bow_string",
+   "candidateKey": "SFX/COMBAT/bow_string",
+   "proposal": "P-WEAPON",
+   "nameVi": "Bật dây (Linh Cung)",
+   "category": "COMBAT",
+   "kind": "SFX",
+   "loop": false,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "triggerSemanticProposed": "WEAPON_SWING_BOW",
+   "triggerStatus": "UNSUPPORTED",
+   "binding": null,
+   "eventIntent": {
+    "playWhen": "Linh Cung release, once per confirmed arrow (Liên Châu: one cue per confirmed shot, never five at once).",
+    "neverPlayWhen": "Never one big explosion for five arrows, and never a dragon howl for a Mộc projectile (Audio Direction §1).",
+    "mixRole": "String twang + leaf wind, light tail (LUFS -23.5)."
+   },
+   "composition": {
+    "durationSeconds": 0.5,
+    "targetLufs": -23.5,
+    "structure": "Plucked-string partials + release snap + leaf wind + short flute-like blip.",
+    "rendering": "procedural synthesis, authored in build_composed_sfx_me_cp2b_weapons.py; no external samples, no voices"
+   },
+   "variants": [
+    {
+     "variantId": "v01",
+     "seed": 46000,
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v01.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.5,
+      "sizeBytes": 144102,
+      "sha256": "120b861ef510fc36c84ae1b1e9156f8c427c1fe7edd8912c03a8508481619d78",
+      "integratedLufs": -23.5,
+      "truePeakDbtp": -9.4
+     },
+     "spectral": {
+      "spectralCentroidHz": 2159.2,
+      "bandEnergyLt500Hz": 0.1485,
+      "bandEnergy2500_5500Hz": 0.4043,
+      "bandEnergy3000_8000Hz": 0.2036,
+      "tonalProminence400_2000Hz": 63.3
+     },
+     "levelNote": "staged to integrated LUFS -23.5 (shared default basic_blade is -22.25 LUFS); TP ceiling -8 dBTP",
+     "recipe": "plucked-string twang (f0 230 Hz, 8 harmonics, 1/k^1.5) + release snap + leaf-wind band-noise 1500-3500 Hz + short flute-like blip (1200->950 Hz glide, gain 0.06); one confirmed shot, light tail",
+     "distinctness": {
+      "vs_v02": 1.4,
+      "vs_v03": 1.3703
+     }
+    },
+    {
+     "variantId": "v02",
+     "seed": 46100,
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v02.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.5,
+      "sizeBytes": 144102,
+      "sha256": "fb549710c2e2f98634966921c9fdf4b8fe58fff6550164d3d7737812fe6d81b3",
+      "integratedLufs": -23.46,
+      "truePeakDbtp": -9.56
+     },
+     "spectral": {
+      "spectralCentroidHz": 2281.7,
+      "bandEnergyLt500Hz": 0.1341,
+      "bandEnergy2500_5500Hz": 0.475,
+      "bandEnergy3000_8000Hz": 0.2586,
+      "tonalProminence400_2000Hz": 95.3
+     },
+     "levelNote": "staged to integrated LUFS -23.5 (shared default basic_blade is -22.25 LUFS); TP ceiling -8 dBTP",
+     "recipe": "plucked-string twang (f0 245 Hz, 8 harmonics, 1/k^1.5) + release snap + leaf-wind band-noise 1550-3600 Hz + short flute-like blip (1200->950 Hz glide, gain 0.05); one confirmed shot, light tail",
+     "distinctness": {
+      "vs_v03": 1.4058
+     }
+    },
+    {
+     "variantId": "v03",
+     "seed": 46200,
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v03.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.5,
+      "sizeBytes": 144102,
+      "sha256": "f078fc060e3ad4fbfb9862ba968cb32158ce2a932c41c0e1149fa8cc0a3288f8",
+      "integratedLufs": -23.54,
+      "truePeakDbtp": -9.84
+     },
+     "spectral": {
+      "spectralCentroidHz": 2015.0,
+      "bandEnergyLt500Hz": 0.141,
+      "bandEnergy2500_5500Hz": 0.3596,
+      "bandEnergy3000_8000Hz": 0.1361,
+      "tonalProminence400_2000Hz": 38.4
+     },
+     "levelNote": "staged to integrated LUFS -23.5 (shared default basic_blade is -22.25 LUFS); TP ceiling -8 dBTP",
+     "recipe": "plucked-string twang (f0 215 Hz, 8 harmonics, 1/k^1.5) + release snap + leaf-wind band-noise 1400-3300 Hz + short flute-like blip (1200->950 Hz glide, gain 0.07); one confirmed shot, light tail"
+    }
+   ]
+  }
+ ],
+ "notes": [
+  "basic_blade stays the shared swing default; these four identities play only if Codex wants a swing per weapon (P-WEAPON, M-E CP2a). No runtime key or binding is created here.",
+  "Each weapon sits in its own spectral slot (mace 450-650 Hz, dao 1050-1400 Hz, bow 1750-2400 Hz, brush 3200-4200 Hz), >=300 Hz from every sibling weapon and >=400 Hz from basic_blade (2702 Hz). Mace is told apart from metal_parry (764 Hz, prominence ~1.49M) by its low-end weight (<500 Hz band >= 0.30 vs parry 0.00) and its prominence staying below 1% of parry's (recorded, not a <200 bound: mace energy sits below 700 Hz, so the 400-2000 Hz window median is near the noise floor; same note as the grass cue in CP1).",
+  "dao_swing never plays as a fire roar and never implies gore; brush_stroke never loops bubbles and is not an impact; mace_swing is never sub-bass only (phone speakers must keep the attack); bow_string plays once per confirmed arrow release, never five sounds at once and never one big explosion for five arrows (Audio Direction v1 §1).",
+  "All loudness/true-peak/spectral numbers are measured from the real rendered bytes; no ear audition has been done. Spectral distinctness vs the ported baselines is re-measured independently by check_composed_sfx_me_cp2b_weapons_v1.py."
+ ]
+}
