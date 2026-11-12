@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using NguMach.Client.P1;
@@ -690,59 +691,339 @@ namespace NguMach.Client.Core.Tests
             Assert.Equal("SK-MK-02", skill.skillId);
         }
 
-        private static MediaMetadata SampleMedia()
+        // ── gói39 O39-B: media bridge over the REAL Muse delivery ──
+        // Fixtures under Fixtures/MuseMedia/ are byte copies from the Muse
+        // branch (muse/media-production-20261104, pin b1472f2):
+        // PLAYBACK_METADATA_v1.json (21 scenes) + CIN_000/CIN_001 SRT.
+
+        private static string MuseMediaFixturePath(string name)
         {
-            return new MediaMetadata(
-                "CIN_001",
-                new[] { "Assets/Media/CIN_001.mp4" },
-                true,
-                new[]
-                {
-                    new MediaSubtitleCue(0, 10, "Bến Mưa lúc rạng đông..."),
-                    new MediaSubtitleCue(10, 20, "Một phong thư lạ lạc giữa bến trúc.")
-                });
+            var relative = Path.Combine("Shared", "ClientCore.Tests", "Fixtures", "MuseMedia", name);
+            var dir = new DirectoryInfo(AppContext.BaseDirectory);
+            for (int depth = 0; dir != null && depth < 12; depth++, dir = dir.Parent)
+            {
+                var candidate = Path.Combine(dir.FullName, relative);
+                if (File.Exists(candidate)) return candidate;
+            }
+            throw new FileNotFoundException("fixture not found: " + name);
+        }
+
+        /// <summary>The repo root doubles as the content root: canonical path
+        /// containment is validated against it, exactly like a deployment.</summary>
+        private static string MuseContentRoot()
+        {
+            var fixture = MuseMediaFixturePath("PLAYBACK_METADATA_v1.json");
+            return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(fixture), "..", "..", "..", ".."));
+        }
+
+        private static MediaMetadata MuseScene(string sceneId)
+        {
+            var doc = MediaMetadataLoader.LoadDocument(
+                MuseContentRoot(),
+                Path.Combine("Shared", "ClientCore.Tests", "Fixtures", "MuseMedia", "PLAYBACK_METADATA_v1.json"));
+            Assert.True(doc.Success, doc.Error);
+            for (int i = 0; i < doc.Scenes.Count; i++)
+                if (doc.Scenes[i].SceneId == sceneId) return doc.Scenes[i];
+            throw new InvalidOperationException("scene missing from fixture: " + sceneId);
+        }
+
+        /// <summary>Content root with the manifest's own directory layout:
+        /// ClientGodot/assets/cinematics/CIN_00x/ hosts the real SRT bytes so
+        /// the loader canonicalizes exactly like a deployment. Caller deletes.</summary>
+        private static string MuseSrtContentRoot()
+        {
+            var root = Path.Combine(MuseContentRoot(), "TestResults",
+                "MediaTests-" + Guid.NewGuid().ToString("N"));
+            var cin000 = Path.Combine(root, "ClientGodot", "assets", "cinematics", "CIN_000");
+            var cin001 = Path.Combine(root, "ClientGodot", "assets", "cinematics", "CIN_001");
+            Directory.CreateDirectory(cin000);
+            Directory.CreateDirectory(cin001);
+            File.Copy(MuseMediaFixturePath("CIN_000_vi.srt"), Path.Combine(cin000, "CIN_000_vi.srt"));
+            File.Copy(MuseMediaFixturePath("CIN_001_vi.srt"), Path.Combine(cin001, "CIN_001_vi.srt"));
+            return root;
+        }
+
+        [Fact]
+        public void MediaParser_LoadsActualMuseMetadata21Scenes()
+        {
+            var doc = MediaMetadataLoader.LoadDocument(
+                MuseContentRoot(),
+                Path.Combine("Shared", "ClientCore.Tests", "Fixtures", "MuseMedia", "PLAYBACK_METADATA_v1.json"));
+            Assert.True(doc.Success, doc.Error);
+            Assert.Equal(21, doc.Scenes.Count);
+            Assert.Equal(21, doc.WithEmbeddedSoundtrack);
+            Assert.Equal(0, doc.Silent);
+            Assert.StartsWith("sha256:", doc.Provenance);
+            Assert.Equal(64 + "sha256:".Length, doc.Provenance.IndexOf(" manifest=", StringComparison.Ordinal));
+            Assert.Equal("NGM_PLAYBACK_METADATA_V1", doc.ManifestId);
+
+            var cin000 = MuseScene("CIN_000");
+            Assert.Equal("prologue", cin000.Kind);
+            Assert.Equal(87.367, cin000.DurationSeconds, 3);
+            Assert.True(cin000.HasEmbeddedSoundtrack);
+            Assert.Equal("EMBEDDED_SOUNDTRACK_ONLY", cin000.AudioOwnership);
+            Assert.Equal("vorbis", cin000.VideoOgv.AudioCodec);
+            Assert.Equal(48000, cin000.VideoOgv.SampleRateHz);
+            Assert.Equal(2, cin000.VideoOgv.Channels);
+            Assert.Equal("aac", cin000.VideoMp4.AudioCodec);
+            Assert.Equal(0, cin000.VideoOgv.SubtitleStreamsEmbedded);
+            Assert.Equal("OVERLAY_SRT", cin000.Subtitle.Mode);
+            Assert.False(cin000.Subtitle.BurnedIntoRuntimeVideo);
+            Assert.Equal(6, cin000.Subtitle.CuesMeasured);
+            Assert.Equal("ClientGodot/assets/cinematics/CIN_000/CIN_000_vi.srt", cin000.Subtitle.SrtPath);
+            Assert.Equal("REVIEW_ONLY_NOT_RUNTIME", cin000.Subtitle.ReviewOnly.Status);
+            Assert.EndsWith("_sub_vi.mp4", cin000.Subtitle.ReviewOnly.Mp4SubVi);
+            Assert.Equal(3, cin000.RuntimeDeliveryPaths.Count);
+            Assert.Contains("ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.mp4", cin000.RuntimeDeliveryPaths);
+
+            var cin001 = MuseScene("CIN_001");
+            Assert.Equal(36.0, cin001.DurationSeconds, 3);
+            Assert.Null(cin001.Subtitle.ReviewOnly);
+            Assert.NotNull(cin001.EmbeddedMixSourceWavPath);
+            Assert.Equal("1463ce02d64fa35ba785c0911afdd6193fdafb697b6a3c4d52552516aa1e3320",
+                cin001.EmbeddedMixSourceSha256);
+            Assert.True(cin001.ExternalMixAlternates.Count > 0);
+        }
+
+        [Fact]
+        public void MediaParser_RejectsBadManifestWithoutWidening()
+        {
+            Assert.Equal("invalid_json", MediaPlaybackMetadataParser.Parse(null).Error);
+            Assert.Equal("invalid_json", MediaPlaybackMetadataParser.Parse("not json").Error);
+            Assert.Equal("unsupported_manifest", MediaPlaybackMetadataParser.Parse("{}").Error);
+
+            var raw = File.ReadAllText(MuseMediaFixturePath("PLAYBACK_METADATA_v1.json"));
+            Assert.Equal("unsupported_manifest",
+                MediaPlaybackMetadataParser.Parse(raw.Replace("NGM_PLAYBACK_METADATA_V1", "NGM_PLAYBACK_METADATA_V9")).Error);
+            Assert.Equal("missing_scenes",
+                MediaPlaybackMetadataParser.Parse("{\"manifestId\":\"NGM_PLAYBACK_METADATA_V1\"}").Error);
+            Assert.Equal("counts_mismatch_scenesTotal",
+                MediaPlaybackMetadataParser.Parse(raw.Replace("\"scenesTotal\": 21", "\"scenesTotal\": 22")).Error);
+        }
+
+        [Fact]
+        public void MediaPathPolicy_RejectsTraversalAbsoluteAndUri()
+        {
+            var root = MuseContentRoot();
+            Assert.Null(MediaPathPolicy.CanonicalizeRoot(null));
+            Assert.Null(MediaPathPolicy.CanonicalizeRoot(""));
+            Assert.Null(MediaPathPolicy.CanonicalizeRoot("file:///x"));
+            Assert.Equal(Path.GetFullPath(root), MediaPathPolicy.CanonicalizeRoot(root));
+
+            Assert.Null(MediaPathPolicy.TryCanonicalize(root, null));
+            Assert.Null(MediaPathPolicy.TryCanonicalize(root, ""));
+            Assert.Null(MediaPathPolicy.TryCanonicalize(root, "../../private.mp4"));
+            Assert.Null(MediaPathPolicy.TryCanonicalize(root, "C:\\Windows\\system32\\evil.mp4"));
+            Assert.Null(MediaPathPolicy.TryCanonicalize(root, "/absolute/evil.mp4"));
+            Assert.Null(MediaPathPolicy.TryCanonicalize(root, "file:///etc/passwd"));
+            Assert.Null(MediaPathPolicy.TryCanonicalize(root, "http://evil.example/x.mp4"));
+            Assert.NotNull(MediaPathPolicy.TryCanonicalize(
+                root, "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.mp4"));
+        }
+
+        [Fact]
+        public void Media_LoadActualSceneRejectsTraversalExternalMixAndReviewVariant()
+        {
+            // gói39 O39-B probe regressions: the old presenter accepted a
+            // traversal path because a caller had allowlisted it, and accepted
+            // a WAV mix file under EMBEDDED_SOUNDTRACK_ONLY. The typed rules
+            // reject both without any substring matching.
+            var root = MuseContentRoot();
+            var p = new MediaPlaybackPresenter(root);
+            var cin001 = MuseScene("CIN_001");
+
+            Assert.False(p.Load(cin001, 36, codecSupported: true, requestedPath: "../../private.mp4"));
+            Assert.Equal(MediaPlaybackPhase.Fallback, p.View.Phase);
+            Assert.Equal("path_outside_content_root", p.View.FallbackReason);
+
+            Assert.False(p.Load(cin001, 36, codecSupported: true,
+                requestedPath: cin001.EmbeddedMixSourceWavPath));
+            Assert.Equal("embedded_soundtrack_only", p.View.FallbackReason);
+
+            Assert.False(p.Load(cin001, 36, codecSupported: true,
+                requestedPath: cin001.ExternalMixAlternates[0].RuntimeCopyPath));
+            Assert.Equal("embedded_soundtrack_only", p.View.FallbackReason);
+
+            // Burned-subtitle review variant of CIN_000 never plays.
+            var cin000 = MuseScene("CIN_000");
+            Assert.False(p.Load(cin000, 87.367, codecSupported: true,
+                requestedPath: cin000.Subtitle.ReviewOnly.Mp4SubVi));
+            Assert.Equal("burned_subtitle_review_not_runtime", p.View.FallbackReason);
+
+            // Default delivery (clean mp4 video) plays.
+            Assert.True(p.Load(cin001, 36));
+            Assert.Equal(MediaPlaybackPhase.Playing, p.View.Phase);
+            Assert.Equal("CIN_001", p.View.SceneId);
+        }
+
+        [Fact]
+        public void Media_CleanVideoSrtOverlayNoDoubleCaption()
+        {
+            var root = MuseSrtContentRoot();
+            try
+            {
+                var cin000 = MuseScene("CIN_000");
+                var srt = MediaMetadataLoader.LoadSrtCues(root, cin000);
+                Assert.True(srt.Success, srt.Error);
+                Assert.Equal(6, srt.Cues.Count);
+                Assert.Equal(6, cin000.SubtitleCues.Count);
+
+                var p = new MediaPlaybackPresenter(root);
+                Assert.True(p.Load(cin000, 87.367));
+                p.Seek(5.0);
+                Assert.Contains("Xưa, Lạc Châu", p.View.CurrentSubtitle);
+                p.Seek(20.0);
+                Assert.Contains("Ba trăm năm trước", p.View.CurrentSubtitle);
+                p.Seek(82.0);
+                Assert.Contains("Đầu kia", p.View.CurrentSubtitle);
+
+                // A burned subtitle track would double the captions: overlay off.
+                var burnedJson = "{\"manifestId\":\"NGM_PLAYBACK_METADATA_V1\",\"scenes\":[{" +
+                    "\"sceneId\":\"CIN_TEST\",\"kind\":\"campaign\",\"durationSeconds\":10," +
+                    "\"hasEmbeddedSoundtrack\":true,\"audioOwnership\":\"EMBEDDED_SOUNDTRACK_ONLY\"," +
+                    "\"video\":{\"ogv\":{\"path\":\"a.ogv\",\"durationSecondsMeasured\":10," +
+                    "\"audioStream\":{\"codec\":\"vorbis\",\"sampleRateHz\":48000,\"channels\":2},\"subtitleStreamsEmbedded\":0}," +
+                    "\"mp4\":{\"path\":\"a.mp4\",\"durationSecondsMeasured\":10," +
+                    "\"audioStream\":{\"codec\":\"aac\",\"sampleRateHz\":48000,\"channels\":2},\"subtitleStreamsEmbedded\":0}}," +
+                    "\"subtitle\":{\"mode\":\"OVERLAY_SRT\",\"burnedIntoRuntimeVideo\":true,\"srtPath\":\"a.srt\",\"cuesMeasured\":1}}]}";
+                var burned = MediaPlaybackMetadataParser.Parse(burnedJson);
+                Assert.True(burned.Success, burned.Error);
+                var burnedScene = burned.Scenes[0];
+                burnedScene.AttachCues(new[] { new MediaSubtitleCue(0, 5, "captions would double") });
+                Assert.True(burnedScene.Subtitle.BurnedIntoRuntimeVideo);
+                Assert.True(p.Load(burnedScene, 10));
+                Assert.Equal("", p.View.CurrentSubtitle);
+            }
+            finally
+            {
+                Directory.Delete(root, true);
+            }
         }
 
         [Fact]
         public void Media_PlayingSeekCueSeenAndSkipArePresentationOnly()
         {
-            var p = new MediaPlaybackPresenter(reducedMotion: true);
-            Assert.True(p.Load(SampleMedia(), 36));
-            Assert.Equal(MediaPlaybackPhase.Playing, p.View.Phase);
-            Assert.True(p.View.ReducedMotion);
-            Assert.Equal("Bến Mưa lúc rạng đông...", p.View.CurrentSubtitle);
-            p.Seek(12);
-            Assert.Equal("Một phong thư lạ lạc giữa bến trúc.", p.View.CurrentSubtitle);
-            Assert.Equal(12.0, p.View.ElapsedSeconds);
-            Assert.Equal(36.0, p.Seek(999));
-            Assert.Equal(36.0, p.View.ElapsedSeconds);
-            Assert.Equal(1.0, p.View.ProgressNormalized);
-            p.Seek(5);
-            p.End(skipped: true);
-            Assert.True(p.View.HasSeen);
-            Assert.True(p.View.WasSkipped);
-            Assert.Equal(MediaPlaybackPhase.Ended, p.View.Phase);
-            p.Rewatch();
-            Assert.Equal(1, p.View.RewatchCount);
-            Assert.False(p.View.WasSkipped);
-            Assert.Equal(0.0, p.View.ElapsedSeconds);
+            var root = MuseSrtContentRoot();
+            try
+            {
+                var cin001 = MuseScene("CIN_001");
+                var srt = MediaMetadataLoader.LoadSrtCues(root, cin001);
+                Assert.True(srt.Success, srt.Error);
+                Assert.Single(cin001.SubtitleCues);
+
+                var p = new MediaPlaybackPresenter(root, reducedMotion: true);
+                Assert.True(p.Load(cin001, 36));
+                Assert.Equal(MediaPlaybackPhase.Playing, p.View.Phase);
+                Assert.True(p.View.ReducedMotion);
+                Assert.Equal("", p.View.CurrentSubtitle);
+                p.Seek(25.0);
+                Assert.Contains("Đầu kia", p.View.CurrentSubtitle);
+                Assert.Equal(25.0, p.View.ElapsedSeconds);
+                Assert.Equal(36.0, p.Seek(999));
+                Assert.Equal(36.0, p.View.ElapsedSeconds);
+                Assert.Equal(1.0, p.View.ProgressNormalized);
+                p.Seek(5);
+                p.End(skipped: true);
+                Assert.True(p.View.HasSeen);
+                Assert.True(p.View.WasSkipped);
+                Assert.Equal(MediaPlaybackPhase.Ended, p.View.Phase);
+                p.Rewatch();
+                Assert.Equal(1, p.View.RewatchCount);
+                Assert.False(p.View.WasSkipped);
+                Assert.Equal(0.0, p.View.ElapsedSeconds);
+            }
+            finally
+            {
+                Directory.Delete(root, true);
+            }
         }
 
         [Fact]
-        public void Media_FallbackOnUnsupportedCodecEmbeddedMixAndBadPath()
+        public void Media_FallbackOnUnsupportedCodecAndBadPath()
         {
-            var notAllowed = new MediaPlaybackPresenter();
-            Assert.False(notAllowed.Load(SampleMedia(), 36, codecSupported: true, requestedPath: "Assets/Media/other.mp4"));
+            var root = MuseContentRoot();
+            var cin001 = MuseScene("CIN_001");
+
+            var notAllowed = new MediaPlaybackPresenter(root);
+            Assert.False(notAllowed.Load(cin001, 36, codecSupported: true,
+                requestedPath: "ClientGodot/assets/cinematics/CIN_002/CIN_002_640x360_30fps.mp4"));
             Assert.Equal(MediaPlaybackPhase.Fallback, notAllowed.View.Phase);
             Assert.Equal("path_not_allowed", notAllowed.View.FallbackReason);
 
-            var vo = new MediaPlaybackPresenter();
-            Assert.False(vo.Load(SampleMedia(), 36, codecSupported: true, requestedPath: "Assets/Media/vo_001.mp4"));
-            Assert.Equal("embedded_soundtrack_only", vo.View.FallbackReason);
+            // A VO take outside the manifest delivery set is not special: it
+            // is just a path that never plays. No substring rule needed.
+            var vo = new MediaPlaybackPresenter(root);
+            Assert.False(vo.Load(cin001, 36, codecSupported: true,
+                requestedPath: "ClientGodot/assets/audio/vo/VO_CIN001_S05_LYAN_draft_v1.wav"));
+            Assert.Equal("path_not_allowed", vo.View.FallbackReason);
 
-            var codec = new MediaPlaybackPresenter();
-            Assert.False(codec.Load(SampleMedia(), 36, codecSupported: false, requestedPath: "Assets/Media/CIN_001.mp4"));
+            var codec = new MediaPlaybackPresenter(root);
+            Assert.False(codec.Load(cin001, 36, codecSupported: false,
+                requestedPath: "ClientGodot/assets/cinematics/CIN_001/CIN_001_640x360_30fps.mp4"));
             Assert.Equal("unsupported_codec", codec.View.FallbackReason);
+        }
+
+        [Fact]
+        public void MediaSrtParser_ParsesActualSrtAndRejectsMalformed()
+        {
+            var text = File.ReadAllText(MuseMediaFixturePath("CIN_000_vi.srt"));
+            var parsed = MediaSrtParser.Parse(text);
+            Assert.True(parsed.Success, parsed.Error);
+            Assert.Equal(6, parsed.Cues.Count);
+            Assert.Equal(1.4, parsed.Cues[0].StartSeconds, 3);
+            Assert.Equal(17.912, parsed.Cues[0].EndSeconds, 3);
+            Assert.Contains("Xưa, Lạc Châu", parsed.Cues[0].Text);
+            for (int i = 1; i < parsed.Cues.Count; i++)
+                Assert.True(parsed.Cues[i].StartSeconds >= parsed.Cues[i - 1].StartSeconds);
+
+            Assert.Equal("srt_block_too_short", MediaSrtParser.Parse("hello").Error);
+            Assert.Equal("srt_missing_index", MediaSrtParser.Parse("no index\n0 --> 1\ntext").Error);
+            Assert.Equal("srt_bad_timestamp_line", MediaSrtParser.Parse("1\n00:00:00,000 extra\ntext").Error);
+            Assert.Equal("srt_bad_timestamp", MediaSrtParser.Parse("1\nxx:00:00,000 --> 00:00:01,000\ntext").Error);
+            Assert.Equal("srt_bad_range", MediaSrtParser.Parse("1\n00:00:05,000 --> 00:00:04,000\ntext").Error);
+            Assert.Equal("srt_not_monotonic",
+                MediaSrtParser.Parse("1\n00:00:10,000 --> 00:00:12,000\na\n\n2\n00:00:09,000 --> 00:00:11,000\nb").Error);
+        }
+
+        [Fact]
+        public void MediaLoader_RejectsOutsideRootAndMissing()
+        {
+            var root = MuseContentRoot();
+            Assert.Equal("metadata_path_outside_content_root",
+                MediaMetadataLoader.LoadDocument(root, "../../outside.json").Error);
+            Assert.Equal("metadata_file_missing",
+                MediaMetadataLoader.LoadDocument(
+                    root, Path.Combine("Shared", "ClientCore.Tests", "Fixtures", "MuseMedia", "missing.json")).Error);
+
+            // Scenes for SRT-edge cases are built through the strict parser,
+            // exactly like a real host would.
+            string sceneJson(string srtPath) => "{\"manifestId\":\"NGM_PLAYBACK_METADATA_V1\",\"scenes\":[{" +
+                "\"sceneId\":\"CIN_TEST\",\"kind\":\"campaign\",\"durationSeconds\":10," +
+                "\"hasEmbeddedSoundtrack\":true,\"audioOwnership\":\"EMBEDDED_SOUNDTRACK_ONLY\"," +
+                "\"video\":{\"ogv\":{\"path\":\"a.ogv\",\"durationSecondsMeasured\":10," +
+                "\"audioStream\":{\"codec\":\"vorbis\",\"sampleRateHz\":48000,\"channels\":2},\"subtitleStreamsEmbedded\":0}," +
+                "\"mp4\":{\"path\":\"a.mp4\",\"durationSecondsMeasured\":10," +
+                "\"audioStream\":{\"codec\":\"aac\",\"sampleRateHz\":48000,\"channels\":2},\"subtitleStreamsEmbedded\":0}}," +
+                "\"subtitle\":{\"mode\":\"OVERLAY_SRT\",\"burnedIntoRuntimeVideo\":false,\"srtPath\":\"" + srtPath +
+                "\",\"cuesMeasured\":1}}]}";
+
+            var outside = MediaPlaybackMetadataParser.Parse(sceneJson("../../outside.srt"));
+            Assert.True(outside.Success, outside.Error);
+            Assert.Equal("srt_path_outside_content_root",
+                MediaMetadataLoader.LoadSrtCues(root, outside.Scenes[0]).Error);
+
+            var missing = MediaPlaybackMetadataParser.Parse(
+                sceneJson("Shared/ClientCore.Tests/Fixtures/MuseMedia/missing.srt"));
+            Assert.True(missing.Success, missing.Error);
+            Assert.Equal("srt_file_missing",
+                MediaMetadataLoader.LoadSrtCues(root, missing.Scenes[0]).Error);
+        }
+
+        [Fact]
+        public void MediaPresenter_RequiresCanonicalContentRoot()
+        {
+            Assert.Throws<ArgumentException>(() => new MediaPlaybackPresenter(null));
+            Assert.Throws<ArgumentException>(() => new MediaPlaybackPresenter("file:///x"));
         }
     }
 }
