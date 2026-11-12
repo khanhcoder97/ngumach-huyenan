@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using NguMach.Client.Core.Composition;
@@ -6,6 +7,7 @@ using NguMach.Client.Core.Encounter;
 using NguMach.Client.Core.Guards;
 using NguMach.Client.Core.Handshake;
 using NguMach.Client.P1;
+using NguMach.Client.Presentation;
 
 namespace ClientCoreSample
 {
@@ -23,9 +25,75 @@ namespace ClientCoreSample
             }
         }
 
+        // gói39 O39-D — the sample runs on the REAL Muse delivery metadata
+        // (branch muse/media-production-20261104, pin b1472f2) instead of a
+        // host-crafted DTO, and prints byte-level provenance so the numbers
+        // are traceable. The content root for path policy probes is the
+        // fixture directory; deliveries stay root-relative from there.
+        private static string FindUp(string relativeUnderShared)
+        {
+            string dir = AppContext.BaseDirectory;
+            for (int i = 0; i < 14; i++)
+            {
+                string candidate = Path.Combine(dir, "Shared", relativeUnderShared);
+                if (Directory.Exists(candidate)) return candidate;
+                var parent = Directory.GetParent(dir);
+                if (parent == null) break;
+                dir = parent.FullName;
+            }
+            return null;
+        }
+
+        private static void PrintMediaProvenance()
+        {
+            Console.WriteLine("== PLAYBACK_METADATA_v1 (real Muse delivery fixture, pin b1472f2) ==");
+            string museDir = FindUp(Path.Combine("ClientCore.Tests", "Fixtures", "MuseMedia"));
+            if (museDir == null)
+            {
+                Console.WriteLine("MuseMedia fixtures not found — skipping real-metadata demo.");
+                return;
+            }
+            var doc = MediaMetadataLoader.LoadDocument(museDir, "PLAYBACK_METADATA_v1.json");
+            if (!doc.Success)
+            {
+                Console.WriteLine("metadata load FAILED: " + doc.Error);
+                return;
+            }
+            Console.WriteLine("document: manifest=" + doc.ManifestId
+                + " scenes=" + doc.ScenesTotal
+                + " embeddedSoundtrack=" + doc.WithEmbeddedSoundtrack
+                + " silent=" + doc.Silent);
+            Console.WriteLine("provenance: " + doc.Provenance);
+            foreach (var scene in doc.Scenes)
+                Console.WriteLine("scene " + scene.SceneId + " " + scene.AudioOwnership
+                    + " burnedIntoRuntimeVideo=" + (scene.Subtitle != null && scene.Subtitle.BurnedIntoRuntimeVideo)
+                    + " runtimeDeliveries=" + scene.RuntimeDeliveryPaths.Count);
+            var scene0 = doc.Scenes.Count > 0 ? doc.Scenes[0] : null;
+            if (scene0 != null)
+                Console.WriteLine("first-scene provenance: " + (scene0.Provenance ?? "-"));
+
+            foreach (var srtName in new[] { "CIN_000_vi.srt", "CIN_001_vi.srt" })
+            {
+                string srtPath = Path.Combine(museDir, srtName);
+                if (!File.Exists(srtPath)) continue;
+                var parsed = MediaSrtParser.Parse(File.ReadAllText(srtPath));
+                Console.WriteLine("srt " + srtName + ": cues=" + (parsed.Success ? parsed.Cues.Count : -1)
+                    + " success=" + parsed.Success);
+            }
+
+            string delivery = scene0 != null && scene0.RuntimeDeliveryPaths.Count > 0
+                ? scene0.RuntimeDeliveryPaths[0]
+                : "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.mp4";
+            string accepted = MediaPathPolicy.TryCanonicalize(museDir, delivery);
+            string refused = MediaPathPolicy.TryCanonicalize(museDir, "../../private.mp4");
+            Console.WriteLine("policy: real delivery canonical in-root=" + (accepted != null)
+                + " traversal refused=" + (refused == null));
+        }
+
         private static async Task MainAsync()
         {
-            string baseUrl = Environment.GetEnvironmentVariable("P1_BASE_URL");
+            PrintMediaProvenance();
+string baseUrl = Environment.GetEnvironmentVariable("P1_BASE_URL");
             ClientSession session;
             if (!string.IsNullOrWhiteSpace(baseUrl))
             {
