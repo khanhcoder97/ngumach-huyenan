@@ -443,36 +443,183 @@ namespace NguMach.Client.Core.Tests
             };
         }
 
-        [Fact]
-        public void Escort_ProjectsAudienceRowAsImmutableView()
+        private static EscortPacket BoundEscortPacket(
+            string owner = "CHR_TEST_A", string actor = "ENT_NPC_LYAN_ESCORT",
+            string life = "ACTIVE", long attempt = 7, string instance = "MI_BEN_MUA_01",
+            string floor = "F1", long sampleTick = 500, string mapId = "MAP_BEN_MUA",
+            bool onRoad = true, string questId = "P00-04", string questStatus = "IN_PROGRESS")
         {
-            var a = new FakeUiAdapter { WorldV2 = EscortWorld(90, true), Self = EscortWorld(90, true).self };
+            return new EscortPacket(owner, actor, life, attempt, instance, floor, sampleTick,
+                mapId, onRoad, questId, questStatus);
+        }
+
+        [Fact]
+        public void Escort_NoPacketServesNothingEvenWithAudienceRow()
+        {
+            // gói39 O39-A: without an approved escort packet, a generic or
+            // static audience NPC is never promoted to an escorted owner NPC
+            // by substring or coordinate inference.
+            var world = EscortWorld(90, true);
+            var a = new FakeUiAdapter { WorldV2 = world, Self = world.self };
+            var v = new EscortPresenter(a).Refresh();
+            Assert.False(v.InAudience);
+            Assert.False(v.IsOnRoad);
+            Assert.Null(v.EntityId);
+            Assert.Null(v.OwnerCharacterId);
+            Assert.Equal(EscortProvenance.NotServed, v.Provenance);
+            Assert.Equal("escort_packet_not_bound", v.NotServedReason);
+            Assert.Equal("worldv2", v.SourceSnapshot);
+            Assert.Equal("MAP_BEN_MUA", v.MapId);
+            Assert.Equal(500, v.ServerTick);
+        }
+
+        [Fact]
+        public void Escort_PacketBoundProjectsAudienceRowAsImmutableView()
+        {
+            var world = EscortWorld(90, true);
+            var a = new FakeUiAdapter { WorldV2 = world, Self = world.self };
             var p = new EscortPresenter(a);
+            p.BindEscortPacket(BoundEscortPacket());
             var v = p.Refresh();
             Assert.True(v.InAudience);
             Assert.Equal("ENT_NPC_LYAN_ESCORT", v.EntityId);
             Assert.Equal(90, v.X);
             Assert.True(v.IsOnRoad);
             Assert.Equal(8, v.DistanceToSelfWu);
+            Assert.Equal(EscortProvenance.PacketBound, v.Provenance);
+            Assert.Null(v.NotServedReason);
+            Assert.Equal("worldv2", v.SourceSnapshot);
+            Assert.Equal("CHR_TEST_A", v.OwnerCharacterId);
+            Assert.Equal("ENT_NPC_LYAN_ESCORT", v.ActorEntityId);
+            Assert.Equal("ACTIVE", v.LifeState);
+            Assert.True(v.AttemptId == 7);
+            Assert.Equal("MI_BEN_MUA_01", v.InstanceId);
+            Assert.Equal("F1", v.FloorId);
+            Assert.True(v.SampleTick == 500);
+            Assert.Equal("P00-04", v.QuestId);
+            Assert.Equal("IN_PROGRESS", v.QuestStatus);
             // Immutable snapshot: mutating the audience row afterwards does
             // not rewrite the published view.
-            a.WorldV2.entities[0].x = 42;
+            world.entities[0].x = 42;
             Assert.Equal(90, v.X);
         }
 
         [Fact]
-        public void Escort_AbsentRowIsNotInAudienceAndAnchorIsNotOnRoad()
+        public void Escort_AbsentActorRowIsRejectedNotServed()
         {
-            var absent = new FakeUiAdapter { WorldV2 = EscortWorld(90, false), Self = EscortWorld(90, false).self };
-            var v = new EscortPresenter(absent).Refresh();
+            var world = EscortWorld(90, false);
+            var a = new FakeUiAdapter { WorldV2 = world, Self = world.self };
+            var p = new EscortPresenter(a);
+            p.BindEscortPacket(BoundEscortPacket());
+            var v = p.Refresh();
             Assert.False(v.InAudience);
             Assert.False(v.IsOnRoad);
-            Assert.False(string.IsNullOrEmpty(v.HintVi));
+            Assert.Equal(EscortProvenance.PacketRejected, v.Provenance);
+            Assert.Equal("packet_actor_absent_in_audience", v.NotServedReason);
+        }
 
-            var anchor = new FakeUiAdapter { WorldV2 = EscortWorld(42, true), Self = EscortWorld(42, true).self };
-            var av = new EscortPresenter(anchor).Refresh();
-            Assert.True(av.InAudience);
-            Assert.False(av.IsOnRoad);
+        [Fact]
+        public void Escort_V2AuthoritativeNeverMixesV1Row()
+        {
+            // gói39 O39-A probe: v2 ThanhLac/tick500 with no entities plus a
+            // v1 BenMua/tick10 static LYAN row must never surface as an
+            // escorted owner NPC under the v2 epoch. v1 rows are ignored
+            // entirely while v2 is live.
+            var v2 = new P1WorldV2
+            {
+                schemaVersion = 2, mapId = "MAP_THANH_LAC", mapInstanceId = "MI_THANH_LAC_01",
+                floorId = "F1", phase = "PVE", serverTimeUtc = "2026-11-12T00:00:00Z",
+                serverTick = 500, revision = 1,
+                audience = new P1Audience { aoiEnterWu = 40, aoiLeaveWu = 48 },
+                self = new P1Self { characterId = "CHR_TEST_A", classId = "CLASS_MINH_KIEM", x = 8, y = 0, hp = 100, maxHp = 100, mp = 50, maxMp = 50, swordIntent = 0 },
+                entities = new P1EntityV2[0]
+            };
+            var v1 = new P1World
+            {
+                mapId = "MAP_BEN_MUA", serverTick = 10, revision = 1,
+                self = new P1Self { characterId = "CHR_TEST_A", classId = "CLASS_MINH_KIEM", x = 82, y = 0, hp = 100, maxHp = 100, mp = 50, maxMp = 50, swordIntent = 0 },
+                entities = new[] { new P1Entity { entityId = "ENT_NPC_LYAN_STATIC", kind = "NPC", x = 90, y = 0 } }
+            };
+            var a = new FakeUiAdapter { WorldV2 = v2, World = v1, Self = v2.self };
+            var p = new EscortPresenter(a);
+            var noPacket = p.Refresh();
+            Assert.False(noPacket.InAudience);
+            Assert.False(noPacket.IsOnRoad);
+            Assert.Equal("MAP_THANH_LAC", noPacket.MapId);
+            Assert.Equal(500, noPacket.ServerTick);
+            Assert.Equal("worldv2", noPacket.SourceSnapshot);
+            Assert.Equal(EscortProvenance.NotServed, noPacket.Provenance);
+
+            // A packet forged for the old v1 row is rejected: wrong map and
+            // stale sample tick against the live v2 epoch.
+            p.BindEscortPacket(BoundEscortPacket(actor: "ENT_NPC_LYAN_STATIC", sampleTick: 10, mapId: "MAP_BEN_MUA"));
+            var rejected = p.Refresh();
+            Assert.False(rejected.InAudience);
+            Assert.Equal("MAP_THANH_LAC", rejected.MapId);
+            Assert.Equal(EscortProvenance.PacketRejected, rejected.Provenance);
+            Assert.Equal("packet_map_mismatch", rejected.NotServedReason);
+        }
+
+        [Fact]
+        public void Escort_V1LegacyEpochNeverBindsPacket()
+        {
+            // WorldV1 is a single legacy epoch used only when no v2 exists;
+            // every field comes from that same epoch and escort packets
+            // (a v2 route) never bind to it.
+            var v1 = new P1World
+            {
+                mapId = "MAP_BEN_MUA", serverTick = 10, revision = 1,
+                self = new P1Self { characterId = "CHR_TEST_A", classId = "CLASS_MINH_KIEM", x = 82, y = 0, hp = 100, maxHp = 100, mp = 50, maxMp = 50, swordIntent = 0 },
+                entities = new[] { new P1Entity { entityId = "ENT_NPC_LYAN_ESCORT", kind = "NPC", x = 90, y = 0 } }
+            };
+            var a = new FakeUiAdapter { World = v1, Self = v1.self };
+            var p = new EscortPresenter(a);
+            var noPacket = p.Refresh();
+            Assert.Equal("worldv1_legacy", noPacket.SourceSnapshot);
+            Assert.Equal("MAP_BEN_MUA", noPacket.MapId);
+            Assert.Equal(10, noPacket.ServerTick);
+            Assert.False(noPacket.InAudience);
+            Assert.Equal(EscortProvenance.NotServed, noPacket.Provenance);
+
+            p.BindEscortPacket(BoundEscortPacket(sampleTick: 10));
+            var rejected = p.Refresh();
+            Assert.False(rejected.InAudience);
+            Assert.Equal("worldv1_legacy", rejected.SourceSnapshot);
+            Assert.Equal(EscortProvenance.PacketRejected, rejected.Provenance);
+            Assert.Equal("packet_requires_worldv2", rejected.NotServedReason);
+        }
+
+        [Fact]
+        public void Escort_PacketGuardsRejectStaleOwnerInstanceAndFloor()
+        {
+            var world = EscortWorld(90, true);
+            var a = new FakeUiAdapter { WorldV2 = world, Self = world.self };
+            var p = new EscortPresenter(a);
+
+            p.BindEscortPacket(BoundEscortPacket(sampleTick: 499));
+            var stale = p.Refresh();
+            Assert.Equal(EscortProvenance.PacketRejected, stale.Provenance);
+            Assert.Equal("packet_stale_sample", stale.NotServedReason);
+
+            p.BindEscortPacket(BoundEscortPacket(owner: "CHR_FOREIGN"));
+            var foreign = p.Refresh();
+            Assert.Equal(EscortProvenance.PacketRejected, foreign.Provenance);
+            Assert.Equal("packet_owner_mismatch", foreign.NotServedReason);
+
+            p.BindEscortPacket(BoundEscortPacket(instance: "MI_OTHER"));
+            var instance = p.Refresh();
+            Assert.Equal(EscortProvenance.PacketRejected, instance.Provenance);
+            Assert.Equal("packet_instance_mismatch", instance.NotServedReason);
+
+            p.BindEscortPacket(BoundEscortPacket(floor: "F2"));
+            var floor = p.Refresh();
+            Assert.Equal(EscortProvenance.PacketRejected, floor.Provenance);
+            Assert.Equal("packet_floor_mismatch", floor.NotServedReason);
+
+            p.BindEscortPacket(BoundEscortPacket());
+            var bound = p.Refresh();
+            Assert.Equal(EscortProvenance.PacketBound, bound.Provenance);
+            Assert.True(bound.InAudience);
         }
 
         private static bool Hex32(string s)
