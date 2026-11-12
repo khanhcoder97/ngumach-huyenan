@@ -9,6 +9,8 @@ with inputs that must NOT produce a pass, and asserts the runner refuses:
   contract-pin-mismatch  - contract bytes differ from manifest -> exit 1
   contract-pin-unreadable- manifest missing/unparseable        -> exit 1
   content-root-missing   - content root does not exist         -> exit 1
+  content-fingerprint    - empty/partial/zero runtime
+                            fingerprint refused by the pure gate
   server-not-healthy     - a listener that never reports the
                            server identity on /health          -> exit 1
   decision-helpers       - decide_runner_exit / verify_contract_pin /
@@ -230,6 +232,39 @@ def control_decision_helpers(args, root):
             bad.append("verify_contract_pin rejected the real pinned tree: " + message)
     else:
         bad.append("server contract tree missing at " + source)
+    # verify_content_fingerprint (gói39 O39-C): an empty or partial
+    # fingerprint must be refused, a zero digest must be refused, and the
+    # real checkout root must be accepted. The alpha design baseline is
+    # required only for alpha runs: a gates-off root without it is fine,
+    # the same root under alpha must be refused.
+    ghost_root = os.path.join(root, "decision-helpers", "no-such-content")
+    ok, message = run_http.verify_content_fingerprint(ghost_root, run_http.content_fingerprint(ghost_root), alpha=False)
+    if ok:
+        bad.append("verify_content_fingerprint accepted an empty root: " + message)
+    zeroed = {name: "0" * 64 for name in run_http.CONTENT_FINGERPRINT_RUNTIME}
+    ok, _ = run_http.verify_content_fingerprint(ghost_root, zeroed, alpha=False)
+    if ok:
+        bad.append("verify_content_fingerprint accepted zero digests")
+    real_fingerprint = run_http.content_fingerprint(args.content_root)
+    if not real_fingerprint:
+        bad.append("content_fingerprint empty at the real content root: " + args.content_root)
+    else:
+        ok, message = run_http.verify_content_fingerprint(args.content_root, real_fingerprint, alpha=False)
+        if not ok:
+            bad.append("verify_content_fingerprint rejected the real gates-off root: " + message)
+    # Real client checkout has the runtime bundles but not the alpha design
+    # baseline (it lives on the server branch): when the baseline is absent
+    # from the root, alpha mode must refuse it. A root that only contains
+    # the Content subfolder must be refused in both modes (the exact
+    # wrong-root shape from the review run).
+    if run_http.CONTENT_FINGERPRINT_ALPHA_BASELINE not in real_fingerprint:
+        no_baseline_alpha = run_http.verify_content_fingerprint(args.content_root, real_fingerprint, alpha=True)
+        if no_baseline_alpha[0]:
+            bad.append("verify_content_fingerprint accepted an alpha root without the alpha baseline")
+    content_sub = os.path.join(args.content_root, "Implementation", "Content")
+    ok, _ = run_http.verify_content_fingerprint(content_sub, run_http.content_fingerprint(content_sub), alpha=False)
+    if ok:
+        bad.append("verify_content_fingerprint accepted the Content subfolder as root")
     # survivors: a live child must be reported, a reaped one must not.
     child = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(60)"])
     try:

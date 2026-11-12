@@ -18,8 +18,14 @@ namespace ClientCoreHttpRunner
     internal static class Program
     {
         private const string ChestTemplate = "EQ-MK-CHEST-T1-R-COMMON";
-        private const string CharacterA = "CHR_WO26_ALPHA_A";
-        private const string CharacterB = "CHR_WO26_ALPHA_B";
+        // gói39 O39-C: contract-conforming test identity. The frozen
+        // EncounterSnapshotV1.schema.json requires registeredCharacterIds
+        // items to match ^CHR_[A-Z0-9]+$ (no underscore), so the runner's
+        // characters must be spelled the same way the server generates its
+        // own ids — an underscore id would make every snapshot off-contract
+        // through no fault of the server wire.
+        private const string CharacterA = "CHR_ALPHAOWNER01";
+        private const string CharacterB = "CHR_ALPHAOWNER02";
         private const string TalkNpc = "NPC_LYAN";
         private const string TalkOfferNode = "DLG_P00_01_OFFER";
         private const string TalkClueNode = "DLG_P00_01_CLUE";
@@ -656,7 +662,9 @@ namespace ClientCoreHttpRunner
         // COMPLETED and P00-02 ACTIVE, standing at the portal anchor after the
         // refusal probes. Legs mirror the e2e alpha-p00 journey positions and
         // counters; timings are server ticks, never stopwatches.
-        private static async Task CheckAlphaFullTutorial(P1Client a, Http httpA, string baseUrl, P1Client b)
+        private static async Task CheckAlphaFullTutorial(
+            P1Client a, Http httpA, string baseUrl, P1Client b,
+            ClientSession sessionA, ClientSession sessionB)
         {
             string character = a.World.self.characterId;
             string sessionId = a.SessionId;
@@ -852,11 +860,30 @@ namespace ClientCoreHttpRunner
             var bossRow = a.WorldV2 != null ? Array.Find(a.WorldV2.entities, t => t.entityId == bossId) : null;
             Check(bossRow != null && bossRow.targetable && bossRow.healthState == "ALIVE", "FT quest boss owner-targetable");
             await EnsureAlive(a, "FT P00-05 boss");
+            await CheckEncounterActiveWindow(sessionA, sessionB, baseUrl);
             var boss = await KillEntity(a, bossId);
             Check(boss.Accepted > 20 && boss.Died, "FT quest boss killed (" + boss.Accepted + " casts, " + boss.Reason + ")");
             await a.ReadWorldAsync(CancellationToken.None);
             var deadRow = a.WorldV2 != null ? Array.Find(a.WorldV2.entities, t => t.entityId == bossId) : null;
             Check(deadRow != null && !deadRow.targetable && deadRow.healthState == "DEAD", "FT boss stays dead");
+            // Defeat is observable in the read model: the owner's snapshot
+            // stays DEFEATED while the attempt is held, and the foreign
+            // session still gets the owner-only not-found. The DEFEATED
+            // typed read shares the live read's wire, so the same honest
+            // UNVERIFIED-with-evidence applies when the frozen validator
+            // rejects it (Qoder Q39-B); a not-found here would be a real
+            // behavior change and must fail.
+            var defeated = await sessionA.ReadCurrentEncounterAsync();
+            var foreignAfter = await sessionB.ReadCurrentEncounterAsync();
+            Check(foreignAfter.Outcome == EncounterReadOutcome.NotFound,
+                "FT encounter current foreign still not found after boss death");
+            if (defeated.Outcome == EncounterReadOutcome.Error)
+                Console.WriteLine("UNVERIFIED FT encounter DEFEATED typed read: outcome=" + defeated.Outcome +
+                                  " code=" + defeated.ErrorCode + " status=" + defeated.StatusCode +
+                                  " (same off-contract wire as the live read — Qoder Q39-B)");
+            else
+                Check(defeated.Success && defeated.State != null && defeated.State.Status == EncounterStatus.Defeated,
+                    "FT encounter current DEFEATED after boss death");
             await RefreshQuests(a, "FT boss quests");
             Check(QuestCounter(a, "P00-05", "OBJ_P00_05_BOSS") == 1, "FT BOSS counter");
             var frag = await a.InteractAsync("ALPHA_OBJ_BM_FRAGMENT", CancellationToken.None);
@@ -975,15 +1002,76 @@ namespace ClientCoreHttpRunner
                 Check(false, "FT escort route should be unmapped, got " + (int)escort.StatusCode);
         }
 
-        private static async Task CheckEncounter(ClientSession session)
+        private static async Task CheckEncounter(ClientSession session, bool alpha)
         {
+            // gói39 O39-C: before P00-05 is accepted nobody holds an
+            // encounter. In private-alpha the route is mapped, so the
+            // owner-only not-found (404 encounter_not_found) is a verified
+            // negative; in gates-off the route itself is unmapped, so the
+            // same answer proves absence, not the owner-only rule, and
+            // stays UNVERIFIED here.
             var encounter = await session.ReadCurrentEncounterAsync();
             if (encounter.Outcome == EncounterReadOutcome.NotFound)
-                Console.WriteLine("UNVERIFIED encounter HTTP: route absent/encounter not found (404 " + encounter.ErrorCode + ")");
+            {
+                if (alpha)
+                    Check(true, "encounter current before activation is owner-only not found");
+                else
+                    Console.WriteLine("UNVERIFIED encounter current: route unmapped in gates-off (404)");
+            }
             else if (encounter.Success)
-                Check(true, "encounter current typed read");
+                Check(false, "encounter current should be not found before activation, got a snapshot");
             else
                 throw new Exception("encounter read failed: " + encounter.Outcome + " " + encounter.ErrorCode);
+        }
+
+        // gói39 O39-C: probe the encounter read model in the ACTIVE window.
+        // The boss is registered and alive; the instance is served to its
+        // owner by current and by id, and refused to every other session
+        // with the same owner-only not-found (the server discloses nothing
+        // about someone else's fight). The review finding this closes: the
+        // pre-activation 404 alone never proved the route works. When the
+        // typed read errors, the route is mapped and the instance exists
+        // (the boss row is targetable to its owner), so the strict frozen
+        // validator rejected the wire itself: record the outcome and the
+        // raw body as evidence and keep the leg UNVERIFIED — the fix
+        // belongs on the server wire (Qoder Q39-B), never in this parser.
+        private static async Task CheckEncounterActiveWindow(ClientSession owner, ClientSession foreign, string baseUrl)
+        {
+            string ownerCharacter = owner.Client.World.self.characterId;
+            var live = await owner.ReadCurrentEncounterAsync();
+            if (live.Outcome == EncounterReadOutcome.Error)
+            {
+                Console.WriteLine("UNVERIFIED FT encounter current typed read: outcome=" + live.Outcome +
+                                  " code=" + live.ErrorCode + " status=" + live.StatusCode +
+                                  " (route mapped, boss targetable for the owner; live JSON off the frozen contract — Qoder Q39-B)");
+                var raw = await RawGet(baseUrl, "/p1/encounters/current", owner.Client.SessionId);
+                Console.WriteLine("UNVERIFIED FT encounter raw body: " + await raw.Content.ReadAsStringAsync());
+                var foreignProbe = await foreign.ReadCurrentEncounterAsync();
+                Check(foreignProbe.Outcome == EncounterReadOutcome.NotFound,
+                    "FT encounter current foreign session not found");
+                return;
+            }
+            Check(live.Success, "FT encounter current typed read while boss alive");
+            Check(live.State != null && !string.IsNullOrEmpty(live.State.EncounterId), "FT encounter id present");
+            Check(live.State.QuestId == "P00-05", "FT encounter quest is P00-05");
+            Check(live.State.Status == EncounterStatus.Open || live.State.Status == EncounterStatus.Reset,
+                "FT encounter live status open/reset");
+            Check(live.State.BossHp > 0 && live.State.BossHp <= live.State.BossMaxHp, "FT encounter boss hp live");
+            Check(live.State.RegisteredCharacterIds != null &&
+                  live.State.RegisteredCharacterIds.Contains(ownerCharacter),
+                "FT encounter registers its owner");
+
+            var byId = await owner.ReadEncounterAsync(live.State.EncounterId);
+            Check(byId.Success && byId.State != null && byId.State.EncounterId == live.State.EncounterId,
+                "FT encounter by id matches current");
+
+            var foreignCurrent = await foreign.ReadCurrentEncounterAsync();
+            Check(foreignCurrent.Outcome == EncounterReadOutcome.NotFound,
+                "FT encounter current foreign session not found");
+
+            var foreignById = await foreign.ReadEncounterAsync(live.State.EncounterId);
+            Check(foreignById.Outcome == EncounterReadOutcome.NotFound,
+                "FT encounter by id foreign session not found");
         }
 
         private static async Task MainAsync(string baseUrl)
@@ -1135,7 +1223,7 @@ namespace ClientCoreHttpRunner
                     await CheckAlphaDeathAlive(sessionA.Client);
                     await CheckAlphaPortal(sessionA.Client);
                 }
-                await CheckEncounter(sessionA);
+                await CheckEncounter(sessionA, alpha);
 
                 // ---------- B: isolation + cross-session replay ----------
                 Check((await sessionB.ConnectAsync()).Success, "B connect");
@@ -1232,7 +1320,7 @@ namespace ClientCoreHttpRunner
 
                 if (alpha)
                 {
-                    await CheckAlphaFullTutorial(sessionA.Client, httpA, baseUrl, sessionB.Client);
+                    await CheckAlphaFullTutorial(sessionA.Client, httpA, baseUrl, sessionB.Client, sessionA, sessionB);
                     await CheckRouteProbes(sessionA.Client, baseUrl);
                 }
 

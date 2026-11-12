@@ -176,22 +176,63 @@ def sha256_contract_file(path):
     return hashlib.sha256(data.replace(b"\r\n", b"\n")).hexdigest()
 
 
+# The runtime bundles every checkpoint reads. All of them must exist under
+# the content root before a run starts; a partial fingerprint means the
+# caller pointed --content-root at the wrong tree (gói39 O39-C: the review
+# run passed checkout/Implementation/Content, the helper joins
+# Implementation/Content/Runtime/... under it, so pins.txt silently lost
+# its content lines — that must fail closed now).
+# The alpha design baseline is loaded by the server only when the alpha
+# profile is on (AlphaProfile), so it is required for private-alpha runs
+# and hashed-when-present otherwise.
+CONTENT_FINGERPRINT_RUNTIME = [
+    "Implementation/Content/Runtime/narrative_nodes_v1.json",
+    "Implementation/Content/Runtime/npc_anchors.json",
+    "Implementation/Content/Runtime/world_entities_bm.json",
+    "Implementation/Content/Runtime/world_records.json",
+    "Implementation/Content/Runtime/loot_recipe_v1.json",
+]
+CONTENT_FINGERPRINT_ALPHA_BASELINE = (
+    "Implementation/Content/DesignBaselines/ben_mua_alpha_20261103.json")
+CONTENT_FINGERPRINT_FILES = CONTENT_FINGERPRINT_RUNTIME + [
+    CONTENT_FINGERPRINT_ALPHA_BASELINE,
+]
+
+
 def content_fingerprint(content_root):
     """Hash the runtime bundles the checkpoint actually reads."""
-    candidates = [
-        "Implementation/Content/Runtime/narrative_nodes_v1.json",
-        "Implementation/Content/Runtime/npc_anchors.json",
-        "Implementation/Content/Runtime/world_entities_bm.json",
-        "Implementation/Content/Runtime/world_records.json",
-        "Implementation/Content/Runtime/loot_recipe_v1.json",
-        "Implementation/Content/DesignBaselines/ben_mua_alpha_20261103.json",
-    ]
     fingerprint = {}
-    for relative in candidates:
+    for relative in CONTENT_FINGERPRINT_FILES:
         path = os.path.join(content_root, relative)
         if os.path.isfile(path):
             fingerprint[relative] = sha256_file(path)
     return fingerprint
+
+
+def verify_content_fingerprint(content_root, fingerprint, alpha):
+    """Fail-closed gate for the runtime content fingerprint.
+
+    Every runtime bundle must exist under content_root and hash to a real,
+    non-zero digest; an alpha run additionally requires the alpha design
+    baseline the server actually loads. An empty or partial fingerprint is
+    a wrong-root error, never a silent pass. Returns (ok, message).
+    """
+    required = list(CONTENT_FINGERPRINT_RUNTIME)
+    if alpha:
+        required.append(CONTENT_FINGERPRINT_ALPHA_BASELINE)
+    missing = [relative for relative in required if relative not in fingerprint]
+    if missing:
+        shown = "; ".join(missing[:3])
+        if len(missing) > 3:
+            shown += " (+{} more)".format(len(missing) - 3)
+        return False, (
+            "content fingerprint incomplete under {}: missing {} — pass the "
+            "checkout root that contains Implementation/Content (the server "
+            "root), not the Content folder itself".format(content_root, shown))
+    for relative, digest in fingerprint.items():
+        if not digest or set(digest) == {"0"}:
+            return False, "content fingerprint zero digest for " + relative
+    return True, "{} runtime bundles fingerprinted".format(len(fingerprint))
 
 
 def wait_healthy(base_url, process, timeout_seconds=None):
@@ -400,6 +441,20 @@ def run_mode(args, mode):
         return 1
     health_hash = sha256_file(health_dll)
     content_hashes = content_fingerprint(args.content_root)
+    content_ok, content_message = verify_content_fingerprint(
+        args.content_root, content_hashes, alpha=(mode == "private-alpha"))
+    if not content_ok:
+        print("ERROR: " + content_message, file=sys.stderr)
+        return 1
+    # Negative control (gói39 O39-C): the same gate must refuse a root
+    # without the runtime bundles, so an empty fingerprint can never pass
+    # silently again.
+    negative_root = os.path.join(args.artifacts_root, mode, "fingerprint-negative-root")
+    negative_ok, _ = verify_content_fingerprint(negative_root, content_fingerprint(negative_root), alpha=False)
+    if negative_ok:
+        print("ERROR: content fingerprint negative control failed: an empty root was accepted",
+              file=sys.stderr)
+        return 1
 
     print("==> client dotnet: " + DOTNET_CLIENT, flush=True)
     print("==> server dotnet: " + DOTNET_SERVER, flush=True)
