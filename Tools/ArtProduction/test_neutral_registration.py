@@ -15,6 +15,7 @@ class NeutralRegistration(unittest.TestCase):
     def test_old_moss_value_is_preserved(self):
         self.assertEqual(registered_height({'pivotMode':'MOSS_CORE_ROOT','bodyReferenceHeight':180.5},self.frames,256),180.5)
         with self.assertRaises(AssertionError):registered_height({'pivotMode':'MOSS_CORE_ROOT'},self.frames,256)
+        with self.assertRaises(AssertionError):registered_height({'pivotMode':'BOOT_CORE_FOOT'},self.frames,256)
 
     def test_invalid_override_fails(self):
         for value in (True,None,'150',0,15,257,float('nan'),float('inf')):

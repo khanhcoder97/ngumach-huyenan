@@ -70,6 +70,25 @@ public partial class ArtStudio
                 Check(!guardClip.Loop && !raw.Loop && Math.Abs(guardClip.Duration - .8) < .00001 && Math.Abs(raw.Duration - guardClip.Duration) < .00001, "guard raw/group profile mismatch");
                 Check(ArtStudioSampler.FrameAt(guardClip, guardClip.Duration * 2) == 15, "guard did not hold final pose");
             }
+            foreach (string action in new[] { "skill_02", "skill_03", "skill_04" })
+            {
+                var grouped = ArtStudioLibrary.Load("actor:CLASS_MINH_KIEM:" + action);
+                Check(grouped.Clips.Count == 8, "missing timed skill directions");
+                foreach (var skillClip in grouped.Clips)
+                {
+                    string facing = skillClip.Direction switch { "SW" => "SE", "W" => "E", "NW" => "NE", _ => skillClip.Direction };
+                    var raw = ArtStudioLibrary.Load("class_minh_kiem_" + action + "_" + facing.ToLowerInvariant()).Clips.Single();
+                    Check(skillClip.DurationsMs.SequenceEqual(raw.DurationsMs) && !skillClip.Loop && !raw.Loop, "raw/group source timing differs");
+                    Check(Math.Abs(skillClip.Duration - ActorLibraryData.Duration("CLASS_MINH_KIEM", action)) < .00001, "skill preview duration differs");
+                    var visited = new System.Collections.Generic.HashSet<int>();
+                    for (int step = 0; step < Math.Ceiling(skillClip.Duration * 60) + 2; step++) visited.Add(ArtStudioSampler.FrameAt(skillClip, step / 60d));
+                    Check(visited.Count == 16 && ArtStudioSampler.FrameAt(skillClip, skillClip.Duration * 2) == 15, "timed source poses skipped/restarted");
+                    if (action == "skill_02") Check(ArtStudioSampler.FrameAt(skillClip, .15) == 4 && ArtStudioSampler.FrameAt(skillClip, .35) == 10, "Studio Tam Long phases");
+                    if (action == "skill_03") Check(ArtStudioSampler.FrameAt(skillClip, .1) == 4 && ArtStudioSampler.FrameAt(skillClip, .22) == 8 && ArtStudioSampler.FrameAt(skillClip, .36) == 12, "Studio Kiem Tran phases");
+                    var roundtrip = ArtStudioCodec.Decode(ArtStudioCodec.Encode(grouped));
+                    Check(roundtrip.Clips.Single(c => c.Direction == skillClip.Direction).DurationsMs.SequenceEqual(skillClip.DurationsMs), "timed JSON roundtrip changed durations");
+                }
+            }
             foreach (var component in ArtStudioLibrary.ComponentEntries())
             {
                 var composite = ArtStudioLibrary.Load("actor:CLASS_MINH_KIEM:skill_01");
@@ -100,6 +119,16 @@ public partial class ArtStudio
                 for (int step = 0; step < Math.Ceiling(component.Duration * 60); step++) visited.Add(ArtStudioSampler.FrameAt(component, step / 60d));
                 Check(visited.Count == 16, "60-step component preview skipped source poses: " + profile.Item1);
                 Check(ArtStudioSampler.FrameAt(component, component.Duration * 2) == (component.Loop ? 0 : 15), "component loop/end boundary: " + profile.Item1);
+            }
+            foreach (var profile in new[] { ("sk_mk_02_trail_component", .32), ("sk_mk_02_stop_dust_component", .32), ("sk_mk_04_gain_component", .4), ("sk_mk_04_break_component", .32), ("sk_mk_04_expire_component", .4) })
+            {
+                var source = ArtStudioLibrary.Load(profile.Item1);
+                var componentClip = source.Clips.Single();
+                Check(!componentClip.Loop && Math.Abs(componentClip.Duration - profile.Item2) < .00001, "new component profile mismatch");
+                var visited = new System.Collections.Generic.HashSet<int>();
+                for (int step = 0; step < Math.Ceiling(componentClip.Duration * 60) + 2; step++) visited.Add(ArtStudioSampler.FrameAt(componentClip, step / 60d));
+                Check(visited.Count == 16 && ArtStudioSampler.FrameAt(componentClip, componentClip.Duration * 2) == 15, "new component source skipped/restarted");
+                Check(ArtStudioCodec.Decode(ArtStudioCodec.Encode(source)).Clips.Single().DurationsMs.SequenceEqual(componentClip.DurationsMs), "component timing JSON changed");
             }
             foreach (string action in new[] { "walk", "interact" })
             {

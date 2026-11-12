@@ -25,7 +25,7 @@ def locate(values,expected,maximum_gap):
     return bands(occupied,maximum_gap)
 
 def clear_gutter_edges(groups,maximum,values):
-    # Opt-in for asymmetric whips: the thresholded projection can miss a thin
+    # Opt-in for long whips/weapon tips: thresholded projection can miss a thin
     # tip. Values count alpha>=200 pixels. Cut in a >=4px solid-core-free run;
     # keep the existing margin check to retain the tip and its edge pixels.
     result=[0]
@@ -54,7 +54,7 @@ def registered_height(record,frames,cell_height,vfx=False):
         assert record.get('scaleMode','HEIGHT')=='HEIGHT','body reference height requires HEIGHT mode'
         assert type(height) in (int,float) and math.isfinite(height) and 16<=height<=cell_height,'invalid neutral body reference height'
         return height
-    assert record.get('pivotMode')!='MOSS_CORE_ROOT','moss registration requires body reference height'
+    assert record.get('pivotMode') not in ('MOSS_CORE_ROOT','BOOT_CORE_FOOT'),'body-core registration requires neutral body reference height'
     return max(f['bounds'][3]-f['bounds'][1] for f in frames) if vfx else reference_height(frames,record.get('scaleMode','HEIGHT'))
 
 def silver_core_pivot(pixels,width):
@@ -69,7 +69,7 @@ def binding_sha256(page):
     payload={k:page.get(k) for k in ('directions','referenceHeight','scaleMode','pivotMode')}
     # A timing/loop edit changes what was reviewed. Preserve old pins on pages
     # with no explicit preview profile; new profiles must be reviewed again.
-    for key in ('previewDurationSeconds','previewLoop'):
+    for key in ('previewDurationSeconds','previewLoop','sourceFrameDurationsMs'):
         if key in page:payload[key]=page[key]
     return hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
@@ -83,6 +83,17 @@ def preview_profile(record):
     assert type(record['previewLoop']) is bool,'invalid preview loop flag'
     return {k:record[k] for k in keys}
 
+def source_timing(record):
+    if 'sourceFrameDurationsMs' not in record:return {}
+    durations=record['sourceFrameDurationsMs']
+    assert type(durations) is list and len(durations)==16,'source timing must bind exactly sixteen frames'
+    assert all(type(n) in (int,float) and math.isfinite(n) and 1000/60<=n<=10000 for n in durations),'invalid source-frame duration; 60-step review must visit each pose'
+    seconds=sum(durations)/1000
+    assert seconds<=60,'source timeline exceeds sixty seconds'
+    if 'previewDurationSeconds' in record:
+        assert abs(record['previewDurationSeconds']-seconds)<1e-6,'source and preview durations disagree'
+    return {'sourceFrameDurationsMs':durations}
+
 def moss_body_pivot(pixels,width,body_height,foot_offset):
     # Waterroot-only registration. A brown whip must not define the stump's
     # foot or scale. Read the green core; never alter source pixels.
@@ -93,12 +104,34 @@ def moss_body_pivot(pixels,width,body_height,foot_offset):
     assert len(points)>=8,'moss core absent; manual registration required'
     return [sum(p[axis] for p in points)/len(points)+foot_offset[axis]*body_height for axis in (0,1)]
 
+def boot_foot_pivot(pixels,width,height):
+    # Explicit Minh Kiem palette registration. Silver blade and gold hilt do
+    # not define the floor when the sword points below the character's boots.
+    points={(i%width,i//width) for i,(r,g,b,a) in enumerate(pixels)
+            if i//width>=height*.55 and a>=200 and 35<=r<=140 and 25<=g<=100 and 20<=b<=90 and r>=g*1.08 and g>=b*1.05}
+    groups=[]
+    while points:
+        stack=[points.pop()];group=[]
+        while stack:
+            x,y=stack.pop();group.append((x,y))
+            for dx in (-1,0,1):
+                for dy in (-1,0,1):
+                    p=(x+dx,y+dy)
+                    if p in points:points.remove(p);stack.append(p)
+        if len(group)>=8:groups.append(group)
+    assert groups,'brown boot core absent; manual registration required'
+    selected=[p for group in sorted(groups,key=lambda g:(-len(g),min(g)))[:2] for p in group]
+    bottom=max(y for x,y in selected)
+    low=[p for p in selected if p[1]>=bottom-max(3,height*.10)]
+    return [sum(x for x,y in low)/len(low),min(height-1,bottom+2)]
+
 def source_approval_matches(page,approval):
     return approval.get('sourceSha256')==page['sha256'] and approval.get('bindingSha256')==binding_sha256(page)
 
 def inspect(record, art_root=None):
     assert record.get('gutterPolicy') in (None,'SOLID_CORE_GUTTER'),'unreviewed gutter policy'
     preview=preview_profile(record)
+    timing=source_timing(record)
     path=(art_root or ART)/record['source']
     with Image.open(path) as im:
         assert im.mode=='RGBA','PNG must retain RGBA'
@@ -150,6 +183,11 @@ def inspect(record, art_root=None):
                     pixels=region.get_flattened_data() if hasattr(region,'get_flattened_data') else region.getdata()
                     pivot=moss_body_pivot(pixels,x1-x,body_height,record['rootFootOffset'])
                     assert 0<=pivot[0]<region.width and 0<=pivot[1]<region.height,'root anchor outside source cell'
+                elif record.get('pivotMode')=='BOOT_CORE_FOOT':
+                    assert record['id'].startswith('class_minh_kiem_'),'boot palette registration is Minh Kiem-only'
+                    region=im.crop((x,y,x1,y1))
+                    pixels=region.get_flattened_data() if hasattr(region,'get_flattened_data') else region.getdata()
+                    pivot=boot_foot_pivot(pixels,x1-x,y1-y)
                 frames.append(dict(rect=[x,y,x1-x,y1-y],bounds=list(bb),pivot=pivot))
                 hashes.append(hashlib.sha256(im.crop((x,y,x1,y1)).tobytes()).hexdigest())
         assert len(set(hashes))==len(hashes),'duplicate full-frame pixels; frame count cannot be padded'
@@ -181,6 +219,7 @@ def inspect(record, art_root=None):
         if record.get('scaleMode'):page['scaleMode']=record['scaleMode']
         if record.get('unboundRows'):page['unboundSourceFrames']=record['unboundRows']*record['columns']
         page.update(preview)
+        page.update(timing)
         return page
 
 def covers(job,accepted,approved_only=False):

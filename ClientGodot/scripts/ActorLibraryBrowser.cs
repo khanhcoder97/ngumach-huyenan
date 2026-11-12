@@ -71,6 +71,9 @@ public partial class ActorLibraryBrowser : Control
         int clip=Array.IndexOf(args,"--clip");if(clip>=0&&clip+1<args.Length)SelectClip(args[clip+1]);
         if(args.Contains("--library-self-test"))SelfTest();
         _offlineMovie=!string.IsNullOrEmpty(Engine.GetWriteMoviePath());
+        // Offline evidence needs the displayed pose's readout on the same
+        // rendered tick, after child sprites have sampled their source frame.
+        if(_offlineMovie)ProcessPriority=1;
         int shotFrame=Array.IndexOf(args,"--library-frame");if(shotFrame>=0&&shotFrame+1<args.Length&&int.TryParse(args[shotFrame+1],out int requestedFrame))_captureFrame=Math.Clamp(requestedFrame,0,_activeFrames-1);
         int capture=Array.IndexOf(args,"--library-capture");if(capture>=0&&capture+1<args.Length)Capture(args[capture+1]);
         int benchmark=Array.IndexOf(args,"--library-benchmark");if(benchmark>=0&&_offlineMovie)throw new InvalidOperationException("Offline movie cannot be used as a real-time FPS benchmark.");if(benchmark>=0&&benchmark+1<args.Length){_benchmarkPath=args[benchmark+1];_benchmarkStart=Godot.Time.GetTicksUsec();_lastTick=_benchmarkStart;}
@@ -122,6 +125,7 @@ public partial class ActorLibraryBrowser : Control
                 using var file=FileAccess.Open(_benchmarkPath,FileAccess.ModeFlags.Write);file.StoreString(JsonSerializer.Serialize(report,new JsonSerializerOptions{WriteIndented=true})+"\n");GD.Print("ACTOR_LIBRARY_BENCHMARK "+JsonSerializer.Serialize(report));_benchmarkPath=null;GetTree().Quit();
             }
         }
+        if(_offlineMovie){RefreshReadout();return;}
         _refresh+=delta;if(_refresh<.1)return;_refresh=0;RefreshReadout();
     }
     private void RefreshReadout()
@@ -178,6 +182,21 @@ public partial class ActorLibraryBrowser : Control
                 var poses=new HashSet<int>();for(int step=0;step<50;step++){probe._Process(1d/60);poses.Add(probe.DisplayedFrame);}
                 if(poses.Count!=16||probe.DisplayedFrame!=15)throw new Exception("guard skipped poses or restarted");checks++;
             }
+            foreach(string action in new[]{"skill_02","skill_03","skill_04"})
+            foreach(int facing in Enumerable.Range(0,8))
+            {
+                if(!_library.Resolve("CLASS_MINH_KIEM",action,facing,out var authored)||authored!.Frames.Length!=16||authored.SourceFrameDurationsMs?.Length!=16)throw new Exception("missing timed Minh Kiem source: "+action+"/"+facing);checks++;
+                if(authored.Flip!=(facing>=5))throw new Exception("Minh Kiem mirror mismatch");checks++;
+                probe.ActorId="CLASS_MINH_KIEM";probe.Clip=action;probe.Facing=facing;probe.Paused=false;probe.Loop=false;
+                for(int frame=0;frame<16;frame++)
+                {probe.Seek(frame);probe.ManualFrame=-1;probe._Process(0);if(probe.DisplayedFrame!=frame)throw new Exception("timed scrub/resume lost frame "+action+"/"+frame);checks++;}
+                probe.Restart();var poses=new HashSet<int>();double duration=ActorLibraryData.Duration(probe.ActorId,action,authored);
+                for(int step=0;step<Math.Ceiling(duration*60)+2;step++){probe._Process(1d/60);poses.Add(probe.DisplayedFrame);}
+                if(poses.Count!=16||probe.DisplayedFrame!=15)throw new Exception("timed one-shot skipped source pose or restarted");checks++;
+                if(ActorLibraryData.FrameAt(probe.ActorId,action,authored,duration,true)!=0)throw new Exception("timed loop boundary drift");checks++;
+                if(action=="skill_02"&&(ActorLibraryData.FrameAt(probe.ActorId,action,authored,.15,false)!=4||ActorLibraryData.FrameAt(probe.ActorId,action,authored,.35,false)!=10))throw new Exception("Tam Long phase timing changed");
+                if(action=="skill_03"&&(ActorLibraryData.FrameAt(probe.ActorId,action,authored,.10,false)!=4||ActorLibraryData.FrameAt(probe.ActorId,action,authored,.22,false)!=8||ActorLibraryData.FrameAt(probe.ActorId,action,authored,.36,false)!=12))throw new Exception("Kiem Tran phase timing changed");checks++;
+            }
             foreach(string action in new[]{"walk","interact"})
             foreach(int facing in Enumerable.Range(0,8))
             {
@@ -190,6 +209,8 @@ public partial class ActorLibraryBrowser : Control
                 if(action=="interact"){probe._Process(duration*2);if(probe.DisplayedFrame!=15)throw new Exception("boatkeeper interaction restarted");checks++;}
             }
             if(ActorLibraryData.Duration("MOB_CARPLING","telegraph_01")!=.45||ActorLibraryData.Duration("MOB_CARPLING","recovery_01")!=.5||ActorLibraryData.Duration("MOB_WATERROOT","telegraph_01")!=.7||ActorLibraryData.Duration("MOB_SHORE_STALKER","telegraph_01")!=ActorLibraryData.Duration("telegraph_01"))throw new Exception("presentation timing leaked between actors");checks++;
+            probe.Seek(5);probe._Process(0);_offlineMovie=true;_Process(0);
+            if(_timeline.Value!=5||!_frame.Text.StartsWith("Frame 6/16 · Video offline"))throw new Exception("offline readout did not follow displayed source frame");checks++;_offlineMovie=false;
             probe.Seek(10);probe._Process(0);_staticCapture=true;RefreshReadout();
             if(_timeline.Value!=10||!_frame.Text.StartsWith("Frame 11/16 · Ảnh tĩnh"))throw new Exception("static capture readout stale");checks++;
             GD.Print("ACTOR_LIBRARY_SELF_TEST PASS assertions="+checks+" partial catalogue allowed; not complete art acceptance");GetTree().Quit();

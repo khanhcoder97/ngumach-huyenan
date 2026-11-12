@@ -432,5 +432,42 @@
     "previewDurationSeconds": 0.7,
     "previewLoop": false,
     "reason": "Alternative only; original selection retained pending alpha/native review."
+  },
+  {
+    "id": "class_minh_kiem_skill_02_n",
+    "source": "Sheets/class_minh_kiem_skill_02_n_v1_20261113c.png",
+    "prompt": "Prompts/class_minh_kiem_skill_02_n_v1_20261113c.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113c",
+    "reference": "Art_Source/Motion_16F_20261106/idle_n.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_n_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "reason": "NORTH thrust blade points NE instead of NORTH; targeted forearm/blade aim repair."
+  },
+  {
+    "id": "sk_mk_04_break_component",
+    "source": "Sheets/sk_mk_04_break_component_v1_20261113c.png",
+    "prompt": "Prompts/sk_mk_04_break_component_v1_20261113c.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113c",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_04_gain_component_v1_20261113c.png",
+    "additionalReferences": [],
+    "inputRole": "IDENTITY_REFERENCE",
+    "componentOnly": true,
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "pivotMode": "CELL_CENTER",
+    "previewDurationSeconds": 0.32,
+    "previewLoop": false,
+    "reason": "First variant grows a ring like gain; break must begin at full rim size and fracture without rebuilding."
   }
 ]

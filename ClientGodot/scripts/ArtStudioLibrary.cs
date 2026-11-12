@@ -39,7 +39,7 @@ public static class ArtStudioLibrary
             double seconds = p.TryGetProperty("previewDurationSeconds", out var secondsJson) ? secondsJson.GetDouble() : SourceDuration(id);
             bool loop = p.TryGetProperty("previewLoop", out var loopJson) ? loopJson.GetBoolean() : !OneShot(id);
             string acceptance = p.GetProperty("productionApproved").GetBoolean() ? "Nguồn đã kiểm native; bản chỉnh Studio vẫn cần kiểm riêng." : "Nguồn chờ nghiệm thu.";
-            var c = new ArtStudioClip { Name = id, Direction = direction, Loop = loop, SourceNote = (flip ? "Lật ngang theo metadata · " : "Nguồn sheet · ") + p.GetProperty("visualState").GetString() + " · " + acceptance + (p.TryGetProperty("previewDurationSeconds", out _) ? " Timing xem nguồn, không phải cửa sổ gameplay." : ""), DurationsMs = Enumerable.Repeat((float)(seconds * 1000 / frames.Length), frames.Length).ToList() };
+            var c = new ArtStudioClip { Name = id, Direction = direction, Loop = loop, SourceNote = (flip ? "Lật ngang theo metadata · " : "Nguồn sheet · ") + p.GetProperty("visualState").GetString() + " · " + acceptance + (p.TryGetProperty("previewDurationSeconds", out _) || p.TryGetProperty("sourceFrameDurationsMs", out _) ? " Timing xem nguồn, không phải cửa sổ gameplay." : ""), DurationsMs = p.TryGetProperty("sourceFrameDurationsMs", out var sourceTiming) ? sourceTiming.EnumerateArray().Select(n => n.GetSingle()).ToList() : Enumerable.Repeat((float)(seconds * 1000 / frames.Length), frames.Length).ToList() };
             var track = new ArtStudioTrack { LayerId = l.Id, Interpolate = false }; c.Tracks.Add(track);
             foreach (var f in frames)
             {
@@ -55,7 +55,7 @@ public static class ArtStudioLibrary
     private static double SourceDuration(string id)
     {
         if (id == "sk_mob_waterroot_01_ripple_component") return .7;
-        string? owner = id.StartsWith("mob_carpling_", StringComparison.Ordinal) ? "MOB_CARPLING" : id.StartsWith("mob_waterroot_", StringComparison.Ordinal) ? "MOB_WATERROOT" : id.StartsWith("class_minh_kiem_skill_01_", StringComparison.Ordinal) ? "CLASS_MINH_KIEM" : null;
+        string? owner = id.StartsWith("mob_carpling_", StringComparison.Ordinal) ? "MOB_CARPLING" : id.StartsWith("mob_waterroot_", StringComparison.Ordinal) ? "MOB_WATERROOT" : new[] { "01", "02", "03", "04" }.Any(k => id.StartsWith("class_minh_kiem_skill_" + k + "_", StringComparison.Ordinal)) ? "CLASS_MINH_KIEM" : null;
         if (owner == null) return id.Contains("walk", StringComparison.Ordinal) ? .8 : 1.6;
         string action = id[(owner.Length+1)..];
         foreach (string facing in new[] { "_n", "_ne", "_e", "_se", "_s", "_sw", "_w", "_nw" })
@@ -75,7 +75,7 @@ public static class ArtStudioLibrary
             foreach (var f in frames) l.Regions.Add(new[] { (int)f.Region.Position.X, (int)f.Region.Position.Y, (int)f.Region.Size.X, (int)f.Region.Size.Y });
             l.Rest.Alpha = 0; doc.Layers.Add(l);
             string note = (d.Flip ? "Hướng lật · " : "Hướng nguồn · ") + library.ReviewStatus(actor, action);
-            var c = new ArtStudioClip { Name = action, Direction = d.Name, Loop = !OneShot(action), SourceNote = note.Length > 480 ? note[..480] : note, DurationsMs = Enumerable.Repeat((float)(ActorLibraryData.Duration(actor, action) * 1000 / frames.Length), frames.Length).ToList() };
+            var c = new ArtStudioClip { Name = action, Direction = d.Name, Loop = !OneShot(action), SourceNote = note.Length > 480 ? note[..480] : note, DurationsMs = d.SourceFrameDurationsMs?.Select(ms => (float)ms).ToList() ?? Enumerable.Repeat((float)(ActorLibraryData.Duration(actor, action) * 1000 / frames.Length), frames.Length).ToList() };
             var t = new ArtStudioTrack { LayerId = l.Id, Interpolate = false }; c.Tracks.Add(t);
             for (int f = 0; f < frames.Length; f++)
             { float scale = 140 / Math.Max(1, d.Height); var pv = frames[f].Pivot; t.Keys.Add(new() { Frame = f, Pose = new() { SourceFrame = f, PivotX = pv.X, PivotY = pv.Y, ScaleX = d.Flip ? -scale : scale, ScaleY = scale } }); }
