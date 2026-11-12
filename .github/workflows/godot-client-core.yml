@@ -1,0 +1,218 @@
+name: godot-client-core
+
+on:
+  push:
+    branches:
+      - 'opencode/opc-15-godot-client-core-20261103'
+    paths:
+      - 'Shared/**'
+      - 'Client/Assets/Scripts/Online/**'
+      - 'Server/Health/**'
+      - '.github/workflows/godot-client-core.yml'
+  pull_request:
+    branches:
+      - 'opencode/opc-14-ui-runtime-hardening-20261101'
+      - 'opencode/opc-15-godot-client-core-20261103'
+    paths:
+      - 'Shared/**'
+      - 'Client/Assets/Scripts/Online/**'
+      - 'Server/Health/**'
+      - '.github/workflows/godot-client-core.yml'
+
+jobs:
+  shared-core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+      - name: Restore Shared/ClientCore (locked to packages.lock.json)
+        run: dotnet restore Shared/ClientCore/ClientCore.csproj --locked-mode
+      - name: Assert every portable source on disk is packed (G4.3)
+        run: |
+          python3 - <<'PY'
+          import glob
+          import os
+          import re
+          import sys
+
+          CSPROJ = "Shared/ClientCore/ClientCore.csproj"
+          BASE = os.path.dirname(CSPROJ)
+          ROOTS = [
+              "Client/Assets/Scripts/Online/Core",
+              "Client/Assets/Scripts/Online/Presentation",
+          ]
+
+          try:
+              with open(CSPROJ, "r", encoding="utf-8") as handle:
+                  csproj = handle.read()
+          except OSError as exc:
+              print("cannot read %s: %s" % (CSPROJ, exc))
+              sys.exit(1)
+
+          patterns = re.findall(r'<Compile Include="([^"]+)"', csproj)
+          if not patterns:
+              print("no <Compile Include> entries found in %s" % CSPROJ)
+              sys.exit(1)
+
+          covered = set()
+          for pattern in patterns:
+              for path in glob.glob(os.path.join(BASE, pattern.replace("\\", "/"))):
+                  if path.endswith(".cs"):
+                      covered.add(os.path.normpath(path))
+
+          on_disk = []
+          for root in ROOTS:
+              on_disk.extend(glob.glob(os.path.join(root, "**", "*.cs"), recursive=True))
+
+          if not on_disk:
+              print("no sources found under %s" % ", ".join(ROOTS))
+              sys.exit(1)
+
+          missing = sorted(
+              os.path.normpath(path) for path in on_disk
+              if os.path.normpath(path) not in covered
+          )
+          if missing:
+              print("portable sources NOT covered by %s:" % CSPROJ)
+              for path in missing:
+                  print("  " + path)
+              sys.exit(1)
+
+          print(
+              "OK: %d on-disk sources covered by %d Compile Include globs"
+              % (len(on_disk), len(patterns))
+          )
+          PY
+      - name: Build Shared/ClientCore
+        run: dotnet build Shared/ClientCore/ClientCore.csproj -c Release --no-restore --nologo
+      - name: Build sample against the real portable API
+        run: dotnet build Shared/ClientCore.Sample/ClientCore.Sample.csproj -c Release --nologo
+      - name: Pack Shared/ClientCore (NuGet)
+        run: dotnet pack Shared/ClientCore/ClientCore.csproj -c Release --no-restore --nologo -o TestResults/packages
+      - name: Test Shared/ClientCore.Tests (TRX)
+        run: |
+          dotnet test Shared/ClientCore.Tests/ClientCore.Tests.csproj -c Release --nologo \
+            --logger "trx;LogFileName=clientcore.trx" \
+            --results-directory TestResults/clientcore
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clientcore-test-results
+          path: TestResults/clientcore/
+          if-no-files-found: warn
+      - name: Upload NuGet package
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clientcore-nuget
+          path: TestResults/packages/*.nupkg
+          if-no-files-found: error
+
+  paired-http-runner:
+    runs-on: ubuntu-latest
+    needs: shared-core
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [gates-off, private-alpha]
+    env:
+      # Successor of 6814126 on the same Qoder branch: docs, P00-05 class-confirm
+      # + public HTTP finale, portal positive BM->TL, MAP_VIEWED type + MAP_ENTER
+      # credit. Implementation/Contracts/P1 is byte-identical 6814126..4cada35,
+      # so the 70-file contract pin still verifies against this checkout.
+      PAIRED_SERVER_HEAD: 4cada354fc9efc1f1f4fff9c1d8acf9bccba6731
+      PAIRED_SERVER_BRANCH: qoder/qod-21-ben-mua-playable-alpha-20261103
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: client
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+      - name: Fetch the pinned Qoder server checkout
+        run: |
+          git -C client fetch --no-tags origin "refs/heads/${PAIRED_SERVER_BRANCH}"
+          git -C client worktree add --detach "$RUNNER_TEMP/paired-server" "$PAIRED_SERVER_HEAD"
+          test "$(git -C "$RUNNER_TEMP/paired-server" rev-parse HEAD)" = "$PAIRED_SERVER_HEAD"
+      - name: Run paired ${{ matrix.mode }} (real server, positive assertions)
+        # 30 not 20: the private-alpha full-tutorial journey walks ~1900 WU and
+        # casts through a 1200 HP boss over real HTTP (RUNNER_TIMEOUT_SECONDS
+        # defaults to 1200, so the step must outlast the runner itself).
+        timeout-minutes: 30
+        run: |
+          python3 client/Shared/ClientCore.HttpRunner/run_http.py \
+            --client-root client \
+            --server-root "$RUNNER_TEMP/paired-server" \
+            --server-head "$PAIRED_SERVER_HEAD" \
+            --contract-pin client/Shared/ClientCore.Tests/Fixtures/qoder-contract-pins.json \
+            --mode "${{ matrix.mode }}" \
+            --artifacts-root client/TestResults/clientcore-http-g32
+      - name: Negative controls (runner must refuse hostile inputs)
+        if: matrix.mode == 'gates-off'
+        timeout-minutes: 20
+        run: |
+          python3 client/Shared/ClientCore.HttpRunner/run_negative_controls.py \
+            --client-root client \
+            --server-root "$RUNNER_TEMP/paired-server" \
+            --contract-pin client/Shared/ClientCore.Tests/Fixtures/qoder-contract-pins.json \
+            --artifacts-root client/TestResults/clientcore-http-g32/negative-controls
+      - name: Enforce positive assertion count
+        if: always()
+        run: |
+          file="client/TestResults/clientcore-http-g32/${{ matrix.mode }}/assertions.txt"
+          test -s "$file"
+          count="$(tr -d '[:space:]' < "$file")"
+          test -n "$count"
+          test "$count" -gt 0
+          echo "HTTP assertions (${{ matrix.mode }}): $count"
+      - name: Upload paired artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clientcore-http-g32-${{ matrix.mode }}
+          path: client/TestResults/clientcore-http-g32/${{ matrix.mode }}/
+          if-no-files-found: warn
+      - name: Upload negative-control artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clientcore-http-g32-negative-controls
+          path: client/TestResults/clientcore-http-g32/negative-controls/
+          if-no-files-found: warn
+
+  shared-http-runner:
+    runs-on: ubuntu-latest
+    needs: shared-core
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+      - name: Run portable HTTP runner (private server, mandatory)
+        run: python3 Shared/ClientCore.HttpRunner/run_http.py
+      - name: Enforce positive assertion count
+        if: always()
+        run: |
+          file="TestResults/clientcore-http/gates-off/assertions.txt"
+          test -s "$file"
+          count="$(tr -d '[:space:]' < "$file")"
+          test -n "$count"
+          test "$count" -gt 0
+          echo "HTTP assertions: $count"
+      - name: Upload HTTP artifacts (raw logs + assertion count)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clientcore-http-results
+          path: TestResults/clientcore-http/
+          if-no-files-found: warn

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "eventId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "castId": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "eventType": "CAST_IMPACT",
+  "mapId": "MAP_BEN_MUA",
+  "floorId": "OVERWORLD",
+  "sourceId": "CHR_MINH_KIEM_01",
+  "targetId": "ENT_MAN_BM_SPAWN_BM_01",
+  "groundXWu": 84,
+  "groundYWu": 0,
+  "skillId": "SK-MK-01",
+  "serverTick": 1200,
+  "emittedAtUtc": "2026-10-29T01:00:00Z",
+  "revision": 42,
+  "vfxKey": "VFX/Skill/SK-MK-01"
+}

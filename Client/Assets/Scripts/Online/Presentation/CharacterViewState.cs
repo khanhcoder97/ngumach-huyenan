@@ -28,12 +28,14 @@ namespace NguMach.Client.Presentation
         public const string SlotCloak = "EQUIP_CLOAK";
         public const string SlotSeal = "EQUIP_SEAL";
 
-        public static readonly string[] AllCanonicalSlots = new[]
+        // Read-only wrapper over a private array: consumers can enumerate and
+        // index the canonical slot order but cannot rewrite it for the process.
+        public static readonly IReadOnlyList<string> AllCanonicalSlots = Array.AsReadOnly(new[]
         {
             SlotHat, SlotChest, SlotLegs, SlotWeapon,
             SlotGloves, SlotBoots, SlotNeck, SlotRingL,
             SlotRingR, SlotPendant, SlotCloak, SlotSeal
-        };
+        });
 
         // ── Authoritative character vitals ───────────────────────────────────
         public string CharacterId { get; }

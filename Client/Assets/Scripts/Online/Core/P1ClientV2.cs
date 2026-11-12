@@ -9,7 +9,16 @@ namespace NguMach.Client.P1
     public sealed partial class P1Client
     {
         public P1WorldV2 WorldV2 { get; private set; }
+        public P1InventorySnapshotV2 InventoryV2 { get; private set; }
+        public P1DeathReturnResultV1 LastDeathReturn { get; private set; }
+        public long? NextReturnAllowedAtTick { get; private set; }
         public P1TurnInResult LastTurnIn { get; private set; }
+        // OPC-16 O4 — last validated receipts for read-model presenters. These are
+        // historical wire results, not current world state: after a talk/portal/
+        // map-viewed the client needs a fresh read before rebuilding authoritative UI.
+        public P1QuestTalkResult LastTalk { get; private set; }
+        public P1WorldPortalResult LastPortal { get; private set; }
+        public P1QuestMapViewedResult LastMapViewed { get; private set; }
         public long EventCursor { get; private set; }
         public int EventResyncCount { get; private set; }
         private readonly Queue<P1EventV2> presentationEvents = new Queue<P1EventV2>();
@@ -17,12 +26,35 @@ namespace NguMach.Client.P1
         { lock (presentationEvents) { var result = presentationEvents.ToArray(); presentationEvents.Clear(); return result; } }
         private void ResetV2()
         {
-            WorldV2 = null; LastTurnIn = null; EventCursor = 0; EventResyncCount = 0;
+            WorldV2 = null; InventoryV2 = null; LastDeathReturn = null; NextReturnAllowedAtTick = null;
+            LastTurnIn = null; EventCursor = 0; EventResyncCount = 0;
+            LastTalk = null; LastPortal = null; LastMapViewed = null;
             lock (presentationEvents) presentationEvents.Clear();
         }
         private static bool Timestamp(string value)
         { return DateTimeOffset.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out _); }
         private static bool OneOf(string value, params string[] allowed) { return Array.IndexOf(allowed, value) >= 0; }
+
+        // DEC-ALPHA-INTERACT-IDS-20261105: the six published alpha interact
+        // targets kept beside the canonical ENT_ rule. The retired
+        // ALPHA_NPC_RESCUE* names are NOT canonical and are rejected.
+        private static readonly string[] AlphaInteractIds =
+        {
+            "ALPHA_OBJ_BM_FRAGMENT",
+            "ALPHA_OBJ_BM_RIPPLE_01",
+            "ALPHA_OBJ_BM_RIPPLE_02",
+            "ALPHA_OBJ_BM_RIPPLE_03",
+            "ALPHA_OBJ_BM_VILLAGER_01",
+            "ALPHA_OBJ_BM_VILLAGER_02"
+        };
+
+        internal static bool IsValidInteractTarget(string target)
+        {
+            if (string.IsNullOrWhiteSpace(target)) return false;
+            // "ENT_" alone is not an entity id; require a non-empty suffix.
+            if (target.Length > 4 && target.StartsWith("ENT_", StringComparison.Ordinal)) return true;
+            return Array.IndexOf(AlphaInteractIds, target) >= 0;
+        }
 
         private async Task<P1Result> ReadWorldV2(CancellationToken ct)
         {
@@ -70,7 +102,7 @@ namespace NguMach.Client.P1
                     e.mapInstanceId != w.mapInstanceId || e.floorId != w.floorId || e.phase != w.phase ||
                     !P1Wire.Finite(e.x) || !P1Wire.Finite(e.y) || e.revision < 0 || e.lifeId < 0 || e.maxHp < 0 || e.hp < 0 || e.hp > e.maxHp ||
                     !OneOf(e.kind, "MOB", "BOSS", "NPC", "GATHER_NODE", "INTERACTABLE") ||
-                    !OneOf(e.state, "IDLE", "AGGRO", "CHASE", "ATTACK", "RETURN", "DEAD", "ACTIVE", "AVAILABLE", "DEPLETED") ||
+                    !OneOf(e.state, "IDLE", "AGGRO", "CHASE", "TELEGRAPH", "ATTACK", "RECOVER", "RETURN", "DEAD", "ACTIVE", "AVAILABLE", "DEPLETED") ||
                     !OneOf(e.healthState, "ALIVE", "DEAD", "INVULNERABLE", "BLOCKED") ||
                     e.availability != null && !OneOf(e.availability, "AVAILABLE", "COOLDOWN")) return false;
                 bool hostile = e.kind == "MOB" || e.kind == "BOSS";
@@ -117,6 +149,9 @@ namespace NguMach.Client.P1
                 !Timestamp(result.cooldownEndUtc) || result.acceptedInputSequence != sent.inputSequence || result.events == null || result.events.Length == 0 ||
                 !ValidEvents(result.events, -1)) return Uncertain(reply.CorrelationId);
             foreach (var e in result.events) if (e.castId != result.castId || e.actorId != World.self.characterId) return Uncertain(reply.CorrelationId);
+            // Basic attack uses the canonical action key "BASIC_ATTACK" (matches
+            // server CombatV2Actions.BasicAttack); the wire carries skillId=null
+            // for a basic swing so skillId must not be used as the cooldown key.
             cooldowns[sent.actionKind == "BASIC_ATTACK" ? "BASIC_ATTACK" : sent.skillId] = result.cooldownEndUtc;
             sequence = Math.Max(sequence, result.acceptedInputSequence);
             foreach (var e in result.events) Present(e);
@@ -184,7 +219,7 @@ namespace NguMach.Client.P1
             try
             {
                 if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
-                if (string.IsNullOrWhiteSpace(target) || !target.StartsWith("ENT_", StringComparison.Ordinal)) return Fail("invalid_target");
+                if (!IsValidInteractTarget(target)) return Fail("invalid_target");
                 pending = Command("/p1/world/interact", new P1Interact { targetId = target }); pendingKind = PendingKind.Interact;
                 return await SubmitPending(ct);
             }
@@ -252,9 +287,435 @@ namespace NguMach.Client.P1
             if (Inventory == null || r.result.inventoryRevision >= Inventory.inventoryRevision) Inventory = r.result;
             return pending != null ? P1Result.Ok() : Ready();
         }
+        // ── Death-return (DEC-DEATH-RETURN-20261105, frozen schema at 4b59b08) ──
+        public async Task<P1Result> ReturnFromDeathAsync(CancellationToken ct, string expectedSessionId = null)
+        {
+            await lane.WaitAsync(ct);
+            try
+            {
+                if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
+                pending = Command("/p1/actor/death-return", new P1DeathReturnIntent());
+                pendingKind = PendingKind.DeathReturn;
+                return await SubmitPending(ct, expectedSessionId);
+            }
+            finally { lane.Release(); }
+        }
+
+        // ── Quest talk (TALK, gate P1:QuestTalk:Enabled + AlphaProfile) ──
+        public async Task<P1Result> TalkAsync(string npcId, string nodeId, CancellationToken ct)
+        {
+            await lane.WaitAsync(ct);
+            try
+            {
+                if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
+                if (string.IsNullOrWhiteSpace(npcId) || string.IsNullOrWhiteSpace(nodeId)) return Fail("invalid_input");
+                pending = Command("/p1/quests/talk", new P1QuestTalkIntent { npcId = npcId, nodeId = nodeId });
+                pendingKind = PendingKind.Talk;
+                return await SubmitPending(ct);
+            }
+            finally { lane.Release(); }
+        }
+
+        // ── World portal (gate P1:Portal:Enabled + AlphaProfile) ──
+        public async Task<P1Result> PortalAsync(string portalId, CancellationToken ct)
+        {
+            await lane.WaitAsync(ct);
+            try
+            {
+                if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
+                if (string.IsNullOrWhiteSpace(portalId)) return Fail("invalid_input");
+                pending = Command("/p1/world/portal", new P1WorldPortalIntent { portalId = portalId });
+                pendingKind = PendingKind.Portal;
+                return await SubmitPending(ct);
+            }
+            finally { lane.Release(); }
+        }
+
+        // ── Quest map-viewed (gate private-alpha) ──
+        public async Task<P1Result> MapViewedAsync(string questId, CancellationToken ct)
+        {
+            await lane.WaitAsync(ct);
+            try
+            {
+                if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
+                if (string.IsNullOrWhiteSpace(questId)) return Fail("invalid_input");
+                pending = Command("/p1/quests/map-viewed", new P1QuestMapViewedIntent { questId = questId });
+                pendingKind = PendingKind.MapViewed;
+                return await SubmitPending(ct);
+            }
+            finally { lane.Release(); }
+        }
+
+        private async Task<P1Result> ApplyDeathReturn(P1HttpReply reply, CancellationToken ct)
+        {
+            var r = Parse<P1DeathReturnResultV1>(reply);
+            if (IsExpired(r)) return Expire();
+            if (MissingRoute(reply, r)) return RejectPending("feature_unavailable");
+            // The two-gate mapping normally makes this a 404; the schema still
+            // names 503 death_return_disabled so a consumer never sees a mystery.
+            if (r != null && r.error != null && r.error.code == "death_return_disabled")
+                return RejectPending("death_return_disabled");
+            if (Ambiguous(reply, r)) return Uncertain(reply.CorrelationId);
+            if (r == null || r.requestId != pending.CorrelationId) return Uncertain(reply.CorrelationId);
+
+            if (!Good(reply, r))
+            {
+                if (r.error != null && r.error.nextReturnAllowedAtTick.HasValue)
+                    NextReturnAllowedAtTick = r.error.nextReturnAllowedAtTick;
+                return RejectPending(Error(reply, r));
+            }
+
+            var result = r.result;
+            if (r.sessionId != SessionId || !ValidDeathReturn(result)) return Uncertain(reply.CorrelationId);
+
+            // The receipt is authoritative for what the server committed; a
+            // replay repeats historical HP/anchor, so never apply it as current
+            // world state. Fresh-read the actor/world instead.
+            pending = null;
+            LastDeathReturn = result;
+            NextReturnAllowedAtTick = result.nextReturnAllowedAtTick;
+            State = P1ConnectionState.NeedsResync;
+            var sync = await ReadWorld(ct);
+            if (sync.Success) return P1Result.Ok();
+            return SessionId == null ? sync : Fail("death_return_refresh_pending", sync.CorrelationId);
+        }
+
+        private static bool ValidDeathReturn(P1DeathReturnResultV1 r)
+        {
+            if (r == null || (r.applied == r.replayed) || string.IsNullOrEmpty(r.mapId) ||
+                r.mapId.Length <= 4 || !r.mapId.StartsWith("MAP_", StringComparison.Ordinal) ||
+                !ValidUpperToken(r.mapId.Substring(4), false) ||
+                !P1Wire.Finite(r.xWu) || !P1Wire.Finite(r.yWu) ||
+                r.maxHp < 1 || r.hp < 1 || r.hp > r.maxHp ||
+                r.maxMp < 0 || r.mp < 0 || r.mp > r.maxMp ||
+                r.serverTick < 0 || r.revision < 0 || r.nextReturnAllowedAtTick < 0) return false;
+            if (r.cleared == null || r.cleared.inflightCasts < 0 || r.cleared.reservedCounters < 0) return false;
+            if (r.penalties == null || r.penalties.xp != 0 || r.penalties.currency != 0 || r.penalties.durability != 0)
+                return false;
+            return true;
+        }
+
         private static bool MissingRoute<T>(P1HttpReply h, P1Response<T> r)
         { return (h.StatusCode == 404 || h.StatusCode == 405) && r == null; }
         private P1Result RejectPending(string reason)
         { pending = null; State = P1ConnectionState.Ready; return Fail(reason); }
+        // A confirmed error envelope is a definite non-commit: release the
+        // pending slot and surface the server's own code/retryability/fieldErrors.
+        // A 4xx without an error object is malformed, not a refusal, so it keeps
+        // the key/body in UncertainMutation for a safe retry.
+        private P1Result RejectPendingError<T>(P1HttpReply reply, P1Response<T> r)
+        {
+            if (r == null || r.error == null) return Uncertain(reply.CorrelationId);
+            var code = string.IsNullOrEmpty(r.error.code) ? "invalid_response" : r.error.code;
+            pending = null;
+            State = P1ConnectionState.Ready;
+            LastError = code;
+            LastCorrelationId = reply.CorrelationId;
+            return P1Result.Fail(code, reply.CorrelationId, r.error.retryable, r.error.fieldErrors);
+        }
+
+        private async Task<P1Result> ApplyTalk(P1HttpReply reply, CancellationToken ct)
+        {
+            var r = Parse<P1QuestTalkResult>(reply);
+            if (IsExpired(r)) return Expire();
+            if (MissingRoute(reply, r)) return RejectPending("feature_unavailable");
+            if (Ambiguous(reply, r)) return Uncertain(reply.CorrelationId);
+            // TalkResponse.requestId is a server-issued trace id at the pinned
+            // contract, not an echo of the request envelope id (the server mints
+            // it). The transport reply already belongs to this lane's pending
+            // command; identity is proven below by sessionId plus the echoed
+            // npcId/nodeId, so requiring an echo here would reject every real
+            // success and refusal as an unknown outcome.
+            if (r == null) return Uncertain(reply.CorrelationId);
+            // A confirmed 4xx refusal is a definite non-commit. Surface the
+            // server's code/retryability/fieldErrors, clear pending and let the
+            // caller try again; only timeout/lost/malformed responses stay
+            // uncertain with the same key/body.
+            if (!Good(reply, r))
+            {
+                if (r.sessionId != null && r.sessionId != SessionId) return Uncertain(reply.CorrelationId);
+                return RejectPendingError(reply, r);
+            }
+            if (r.sessionId != SessionId || r.result == null || !ValidTalk(r.result))
+                return Uncertain(reply.CorrelationId);
+            // The receipt must describe the node the client actually asked for.
+            var sentTalk = P1Wire.Decode<P1Envelope<P1QuestTalkIntent>>(pending.Body).payload;
+            if (sentTalk == null || r.result.npcId != sentTalk.npcId || r.result.nodeId != sentTalk.nodeId)
+                return Uncertain(reply.CorrelationId);
+            pending = null; State = P1ConnectionState.NeedsResync;
+            // Monotonic receipt per quest: a late/replayed answer carrying a lower
+            // revision must not rewind the presenter, while a different quest is a
+            // fresh receipt and always wins.
+            if (LastTalk == null ||
+                !string.Equals(LastTalk.questId, r.result.questId, StringComparison.Ordinal) ||
+                r.result.revision >= LastTalk.revision)
+                LastTalk = r.result;
+            return P1Result.Ok();
+        }
+
+        private async Task<P1Result> ApplyPortal(P1HttpReply reply, CancellationToken ct)
+        {
+            var r = Parse<P1WorldPortalResult>(reply);
+            if (IsExpired(r)) return Expire();
+            if (MissingRoute(reply, r)) return RejectPending("feature_unavailable");
+            if (Ambiguous(reply, r)) return Uncertain(reply.CorrelationId);
+            // Same server-issued requestId semantics as TALK; the receipt is
+            // matched to the pending command by the lane, its sessionId and the
+            // echoed portalId below.
+            if (r == null) return Uncertain(reply.CorrelationId);
+            // Same refusal rule as TALK: a confirmed error is not an unknown
+            // outcome and must not keep a dead mutation pending.
+            if (!Good(reply, r))
+            {
+                if (r.sessionId != null && r.sessionId != SessionId) return Uncertain(reply.CorrelationId);
+                return RejectPendingError(reply, r);
+            }
+            if (r.sessionId != SessionId || r.result == null || !ValidPortal(r.result))
+                return Uncertain(reply.CorrelationId);
+            var sentPortal = P1Wire.Decode<P1Envelope<P1WorldPortalIntent>>(pending.Body).payload;
+            if (sentPortal == null || r.result.portalId != sentPortal.portalId)
+                return Uncertain(reply.CorrelationId);
+            pending = null; State = P1ConnectionState.NeedsResync;
+            // Same monotonic rule as TALK, scoped to the portal identity: a lower
+            // revision for the same portal never rewinds the receipt, another
+            // portal is a new transition and wins by arrival.
+            if (LastPortal == null ||
+                !string.Equals(LastPortal.portalId, r.result.portalId, StringComparison.Ordinal) ||
+                r.result.revision >= LastPortal.revision)
+                LastPortal = r.result;
+            return P1Result.Ok();
+        }
+
+        private async Task<P1Result> ApplyMapViewed(P1HttpReply reply, CancellationToken ct)
+        {
+            // MAP_VIEWED is approved for private-alpha but its wire schema is not
+            // frozen yet; this applies the same confirmed-error handling without
+            // treating acknowledged/serverTick as a frozen contract.
+            var r = Parse<P1QuestMapViewedResult>(reply);
+            if (IsExpired(r)) return Expire();
+            if (MissingRoute(reply, r)) return RejectPending("feature_unavailable");
+            if (Ambiguous(reply, r)) return Uncertain(reply.CorrelationId);
+            if (r == null || r.requestId != pending.CorrelationId) return Uncertain(reply.CorrelationId);
+            if (!Good(reply, r))
+            {
+                if (r.sessionId != null && r.sessionId != SessionId) return Uncertain(reply.CorrelationId);
+                return RejectPendingError(reply, r);
+            }
+            if (r.sessionId != SessionId || r.result == null || !ValidMapViewed(r.result))
+                return Uncertain(reply.CorrelationId);
+            pending = null; State = P1ConnectionState.NeedsResync;
+            // Interim acknowledgement, same monotonic rule scoped to the quest: a
+            // stale serverTick/revision from an older answer never rewinds it.
+            if (LastMapViewed == null ||
+                !string.Equals(LastMapViewed.questId, r.result.questId, StringComparison.Ordinal) ||
+                r.result.revision >= LastMapViewed.revision)
+                LastMapViewed = r.result;
+            return P1Result.Ok();
+        }
+
+        // Wire-level validators for the new gameplay receipts. They follow the
+        // pinned Qoder schema (patterns, ranges, finite values, replay/credit
+        // identity) instead of accepting loosely-shaped success payloads.
+        private static bool ValidTalk(P1QuestTalkResult r)
+        {
+            if (r == null || r.revision < 0) return false;
+            if (!Pattern(r.questId, "^[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{2}$")) return false;
+            if (!Pattern(r.npcId, "^NPC_[A-Z0-9_]+$")) return false;
+            if (!Pattern(r.nodeId, "^[A-Z][A-Z0-9_]{2,63}$")) return false;
+            if (r.objectiveId != null && !Pattern(r.objectiveId, "^OBJ_[A-Z0-9_]+$")) return false;
+            if (r.appliedFlag != null && !Pattern(r.appliedFlag, "^[A-Z][A-Z0-9_]{2,63}$")) return false;
+            if (r.eventId != null && !Pattern(r.eventId, "^PQTALK_[0-9a-f]{64}$")) return false;
+            // A credited node must carry its deterministic receipt id; a node
+            // that credits nothing legitimately carries eventId=null.
+            if (r.credited && string.IsNullOrEmpty(r.eventId)) return false;
+            return true;
+        }
+
+        private static bool ValidPortal(P1WorldPortalResult r)
+        {
+            if (r == null || r.revision < 0) return false;
+            if (r.portalId != "TP_BM_THANH_LAC" && r.portalId != "TP_TL_BEN_MUA") return false;
+            if (!Pattern(r.mapId, "^MAP_[A-Z0-9_]+$")) return false;
+            if (!P1Wire.Finite(r.xWu) || !P1Wire.Finite(r.yWu)) return false;
+            if (r.xWu < -100000 || r.xWu > 100000 || r.yWu < -100000 || r.yWu > 100000) return false;
+            if (!Pattern(r.eventId, "^P1PORTAL_[0-9a-f]{64}$")) return false;
+            if (r.inflightCastsCancelled < 0 || r.reservedCountersCancelled < 0) return false;
+            return true;
+        }
+
+        private static bool ValidMapViewed(P1QuestMapViewedResult r)
+        {
+            if (r == null || r.revision < 0 || r.serverTick < 0) return false;
+            if (!Pattern(r.questId, "^[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{2}$")) return false;
+            return true;
+        }
+
+        private static bool Pattern(string value, string pattern)
+        {
+            return value != null && System.Text.RegularExpressions.Regex.IsMatch(
+                value, pattern, System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+        }
+
+        // ── Inventory v2 (Qoder 77bc3a6: twelve closed slots beside frozen v1) ──
+        private static readonly string[] InventoryV2SlotOrder =
+        {
+            "HAT", "CHEST", "LEGS", "WEAPON", "GLOVES", "BOOTS",
+            "NECK", "RING_L", "RING_R", "PENDANT", "CLOAK", "SEAL"
+        };
+        private const string InventoryV2SlotSpec = "V2_SIDE_BY_SIDE_KEEP_V1_FIVE_SLOT_CONTRACT";
+
+        public async Task<P1Result> ReadInventoryV2Async(CancellationToken ct)
+        {
+            await lane.WaitAsync(ct);
+            try
+            {
+                if (SessionId == null) return Fail("not_connected");
+                var reply = await Send(Get("/p1/inventory/v2/" + SessionId), ct);
+                var r = Parse<P1InventorySnapshotV2>(reply, 2);
+                if (IsExpired(r)) return Expire();
+                if (MissingRoute(reply, r)) return Fail("feature_unavailable");
+                if (!Good(reply, r) || r.sessionId != SessionId || !ValidInventoryV2(r.result))
+                {
+                    State = pending != null ? P1ConnectionState.UncertainMutation : P1ConnectionState.NeedsResync;
+                    return Fail(Error(reply, r), reply.CorrelationId);
+                }
+                if (InventoryV2 == null || r.result.inventoryRevision >= InventoryV2.inventoryRevision)
+                    InventoryV2 = r.result;
+                LastError = null;
+                return P1Result.Ok();
+            }
+            finally { lane.Release(); }
+        }
+
+        public async Task<P1Result> EquipV2Async(string itemInstanceId, long expectedRevision, CancellationToken ct)
+        {
+            await lane.WaitAsync(ct);
+            try
+            {
+                if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
+                if (!ValidInstanceIdV2(itemInstanceId) || expectedRevision < 1) return Fail("invalid_input");
+                pending = Command("/p1/inventory/v2/equip",
+                    new P1EquipV2 { itemInstanceId = itemInstanceId, expectedRevision = expectedRevision }, 2);
+                pendingKind = PendingKind.InventoryV2;
+                return await SubmitPending(ct);
+            }
+            finally { lane.Release(); }
+        }
+
+        public async Task<P1Result> UnequipV2Async(string slotId, long expectedRevision, CancellationToken ct)
+        {
+            await lane.WaitAsync(ct);
+            try
+            {
+                if (State != P1ConnectionState.Ready || pending != null) return Fail("resync_required");
+                if (Array.IndexOf(InventoryV2SlotOrder, slotId) < 0 || expectedRevision < 1) return Fail("invalid_input");
+                pending = Command("/p1/inventory/v2/unequip",
+                    new P1UnequipV2 { slotId = slotId, expectedRevision = expectedRevision }, 2);
+                pendingKind = PendingKind.InventoryV2;
+                return await SubmitPending(ct);
+            }
+            finally { lane.Release(); }
+        }
+
+        private async Task<P1Result> ApplyInventoryV2(P1HttpReply reply)
+        {
+            var r = Parse<P1InventorySnapshotV2>(reply, 2);
+            if (IsExpired(r)) return Expire();
+            if (MissingRoute(reply, r)) return RejectPending("feature_unavailable");
+            if (Ambiguous(reply, r)) return Uncertain(reply.CorrelationId);
+            if (r == null || r.requestId != pending.CorrelationId) return Uncertain(reply.CorrelationId);
+            if (r.result != null && !ValidInventoryV2(r.result)) return Uncertain(reply.CorrelationId);
+
+            if (!Good(reply, r))
+            {
+                // A rejection may carry the current authoritative snapshot
+                // (revision_conflict / slot_occupied). Adopt it but never retry
+                // silently: the definite error reaches the UI with the server's
+                // own retryability and field list.
+                if (r.result != null && (InventoryV2 == null || r.result.inventoryRevision >= InventoryV2.inventoryRevision))
+                    InventoryV2 = r.result;
+                return RejectPendingError(reply, r);
+            }
+
+            long expected;
+            if (pending.Path.EndsWith("/equip", StringComparison.Ordinal))
+                expected = P1Wire.Decode<P1Envelope<P1EquipV2>>(pending.Body).payload.expectedRevision;
+            else
+                expected = P1Wire.Decode<P1Envelope<P1UnequipV2>>(pending.Body).payload.expectedRevision;
+
+            if (r.sessionId != SessionId || r.result == null ||
+                r.result.inventoryRevision <= expected) return Uncertain(reply.CorrelationId);
+            InventoryV2 = r.result;
+            pending = null;
+            LastError = null;
+            return Ready();
+        }
+
+        private static bool ValidInventoryV2(P1InventorySnapshotV2 inv)
+        {
+            if (inv == null || inv.schemaVersion != 2 || inv.slotSpec != InventoryV2SlotSpec ||
+                inv.inventoryRevision < 0 || inv.bagSlots != 100 || inv.slots == null || inv.slots.Length != 12 ||
+                inv.bag == null || inv.unsupported == null || inv.currencies == null) return false;
+
+            var ids = new HashSet<string>(StringComparer.Ordinal);
+            for (int i = 0; i < InventoryV2SlotOrder.Length; i++)
+            {
+                var slot = inv.slots[i];
+                if (slot == null || slot.slotId != InventoryV2SlotOrder[i]) return false;
+                if (slot.item == null) continue;
+                if (!ValidItemV2(slot.item) || slot.item.location != "EQUIPPED" || slot.item.slotId != slot.slotId) return false;
+                if (!ids.Add(slot.item.instanceId)) return false;
+            }
+            foreach (var item in inv.bag)
+            {
+                if (!ValidItemV2(item) || !ids.Add(item.instanceId)) return false;
+            }
+            foreach (var unsupported in inv.unsupported)
+            {
+                if (unsupported == null || !ValidInstanceIdV2(unsupported.instanceId) ||
+                    !ValidTemplateIdV2(unsupported.templateId) || unsupported.reason != "UNMAPPED_SLOT" ||
+                    (unsupported.sourceSlot != null && unsupported.sourceSlot.Length == 0) ||
+                    !ids.Add(unsupported.instanceId)) return false;
+            }
+            var currencies = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var currency in inv.currencies)
+                if (currency == null || currency.amount < 0 || !ValidUpperToken(currency.currencyId, false) ||
+                    !currencies.Add(currency.currencyId)) return false;
+            return true;
+        }
+
+        private static bool ValidItemV2(P1ItemV2 item)
+        {
+            return item != null && ValidInstanceIdV2(item.instanceId) && ValidTemplateIdV2(item.templateId) &&
+                   item.stack >= 1 && OneOf(item.location, "BAG", "EQUIPPED", "BANK") &&
+                   (item.slotId == null || Array.IndexOf(InventoryV2SlotOrder, item.slotId) >= 0) &&
+                   item.durability >= 0 && item.version >= 1;
+        }
+
+        private static bool ValidInstanceIdV2(string value)
+        {
+            return value != null && value.Length > 4 && value.StartsWith("ITM_", StringComparison.Ordinal) &&
+                   ValidUpperToken(value, false);
+        }
+
+        // ^[A-Z0-9_]+(?:-[A-Z0-9_]+)*$ — v2 templateId accepts underscores (catalog correction).
+        private static bool ValidTemplateIdV2(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return false;
+            foreach (var part in value.Split('-'))
+                if (!ValidUpperToken(part, false)) return false;
+            return true;
+        }
+
+        private static bool ValidUpperToken(string value, bool allowHyphen)
+        {
+            if (string.IsNullOrEmpty(value)) return false;
+            foreach (char c in value)
+            {
+                bool ok = (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || (allowHyphen && c == '-');
+                if (!ok) return false;
+            }
+            return true;
+        }
     }
 }

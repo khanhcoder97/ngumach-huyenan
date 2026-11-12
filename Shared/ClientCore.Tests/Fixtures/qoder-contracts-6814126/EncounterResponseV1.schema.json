@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ngumach.local/contracts/p1/EncounterResponseV1.schema.json",
+  "title": "P1 alpha encounter read response (owner-only snapshot or a closed error set)",
+  "description": "Returned by GET /p1/encounters/current and GET /p1/encounters/{encounterId}. Both routes exist only while P1:AlphaProfile is enabled; with the gate off they are not mapped and the pipeline answers 404. A session that owns no live encounter, an unknown id and another owner's id all answer the same encounter_not_found, so the response never discloses that someone else is fighting.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "requestId", "serverTimeUtc"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "requestId": { "type": "string", "pattern": "^[0-9a-f]{32}$" },
+    "sessionId": { "type": "string", "pattern": "^[0-9a-f]{32}$" },
+    "serverTimeUtc": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$" },
+    "result": { "$ref": "EncounterSnapshotV1.schema.json" },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "messageKey", "retryable", "fieldErrors", "correlationId"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "invalid_payload",
+            "session_not_found",
+            "encounter_not_found"
+          ]
+        },
+        "messageKey": { "type": "string", "pattern": "^P1\\.ERROR\\.[A-Z_]+$" },
+        "retryable": { "type": "boolean" },
+        "fieldErrors": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "correlationId": { "type": "string" }
+      }
+    }
+  }
+}

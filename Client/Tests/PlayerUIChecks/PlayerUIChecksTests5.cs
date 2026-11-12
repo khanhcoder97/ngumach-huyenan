@@ -295,6 +295,7 @@ namespace PlayerUIChecks
 
             public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> ReadWorldAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> AcceptQuestAsync(string q, string n, CancellationToken ct)
             { AcceptCalls++; LastAcceptedNpcId = n; return Task.FromResult(P1Result.Ok()); }
             public Task<P1Result> InteractAsync(string t, CancellationToken ct)
@@ -668,6 +669,7 @@ namespace PlayerUIChecks
             public P1Quest[] Quests { get; set; } = Array.Empty<P1Quest>();
             public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> ReadWorldAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> AcceptQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> InteractAsync(string target, CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> TurnInQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());

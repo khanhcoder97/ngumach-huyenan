@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 2,
+  "slotSpec": "V2_SIDE_BY_SIDE_KEEP_V1_FIVE_SLOT_CONTRACT",
+  "inventoryRevision": 4,
+  "bagSlots": 100,
+  "slots": [
+    {
+      "slotId": "HAT",
+      "item": {
+        "instanceId": "ITM_SELFCHECK_V2_HAT",
+        "templateId": "EQ-MK-HAT-T1-R-COMMON",
+        "stack": 1,
+        "location": "EQUIPPED",
+        "slotId": "HAT",
+        "durability": 0,
+        "version": 1
+      }
+    },
+    {
+      "slotId": "CHEST",
+      "item": null
+    },
+    {
+      "slotId": "LEGS",
+      "item": {
+        "instanceId": "ITM_SELFCHECK_V2_LEGS",
+        "templateId": "EQ-MK-LEGS-T1-R-COMMON",
+        "stack": 1,
+        "location": "EQUIPPED",
+        "slotId": "LEGS",
+        "durability": 0,
+        "version": 1
+      }
+    },
+    {
+      "slotId": "WEAPON",
+      "item": {
+        "instanceId": "ITM_SELFCHECK_V2_WEAPON",
+        "templateId": "EQ-MK-WEAPON-T1-R-COMMON",
+        "stack": 1,
+        "location": "EQUIPPED",
+        "slotId": "WEAPON",
+        "durability": 0,
+        "version": 1
+      }
+    },
+    {
+      "slotId": "GLOVES",
+      "item": null
+    },
+    {
+      "slotId": "BOOTS",
+      "item": null
+    },
+    {
+      "slotId": "NECK",
+      "item": null
+    },
+    {
+      "slotId": "RING_L",
+      "item": {
+        "instanceId": "ITM_SELFCHECK_V2_RING_L",
+        "templateId": "EQ-MK-RING_L-T1-R-COMMON",
+        "stack": 1,
+        "location": "EQUIPPED",
+        "slotId": "RING_L",
+        "durability": 0,
+        "version": 1
+      }
+    },
+    {
+      "slotId": "RING_R",
+      "item": null
+    },
+    {
+      "slotId": "PENDANT",
+      "item": null
+    },
+    {
+      "slotId": "CLOAK",
+      "item": null
+    },
+    {
+      "slotId": "SEAL",
+      "item": null
+    }
+  ],
+  "bag": [
+    {
+      "instanceId": "ITM_SELFCHECK_V2_POTION",
+      "templateId": "POT-HP-01",
+      "stack": 5,
+      "location": "BAG",
+      "slotId": null,
+      "durability": 0,
+      "version": 1
+    }
+  ],
+  "unsupported": [],
+  "currencies": [
+    {
+      "currencyId": "COIN",
+      "amount": 80
+    }
+  ]
+}

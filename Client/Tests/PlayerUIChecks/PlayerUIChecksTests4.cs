@@ -242,6 +242,7 @@ namespace PlayerUIChecks
 
             public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => NextRead != null ? NextRead.Task : Task.FromResult(P1Result.Ok());
             public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => NextRead != null ? NextRead.Task : Task.FromResult(P1Result.Ok());
+            public Task<P1Result> ReadWorldAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> AcceptQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> TurnInQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> InteractAsync(string targetId, CancellationToken ct) => NextRead != null ? NextRead.Task : Task.FromResult(P1Result.Ok());
@@ -444,6 +445,7 @@ namespace PlayerUIChecks
 
             public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> ReadWorldAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> AcceptQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> TurnInQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> InteractAsync(string targetId, CancellationToken ct) => Task.FromResult(P1Result.Ok());

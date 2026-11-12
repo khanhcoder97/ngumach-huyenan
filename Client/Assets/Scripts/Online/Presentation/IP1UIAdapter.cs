@@ -37,6 +37,12 @@ namespace NguMach.Client.Presentation
         /// <summary>Read server inventory into Inventory property.</summary>
         Task<P1Result> ReadInventoryAsync(CancellationToken ct);
 
+        /// <summary>
+        /// Fresh authoritative world read. This is the only supported way for a
+        /// presenter/host to leave NeedsResync through the adapter contract.
+        /// </summary>
+        Task<P1Result> ReadWorldAsync(CancellationToken ct);
+
         /// <summary>Accept a quest from an NPC. Idempotent via core.</summary>
         Task<P1Result> AcceptQuestAsync(string questId, string npcId, CancellationToken ct);
 

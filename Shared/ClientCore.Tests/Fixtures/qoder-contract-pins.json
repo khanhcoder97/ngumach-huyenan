@@ -1,0 +1,433 @@
+{
+    "pin":  "server-6814126e2def8a1c4270a1016f0ab85404cba46e",
+    "source":  "Implementation/Contracts/P1 at the pinned server checkout",
+    "vendoredRoot":  "Shared/ClientCore.Tests/Fixtures/qoder-contracts-6814126",
+    "generated":  "2026-11-08",
+    "files":  [
+                  {
+                      "kind":  "example",
+                      "name":  "CombatCastEvent.example.json",
+                      "sha256":  "31750ee98672929fc27dadfb7b13478e39c0af0346c2f205bee99b07087c6b68",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "CombatEvent.example.json",
+                      "sha256":  "ea1e54fe06e584f270724ce7d5e6acf7fd835da44bc39dd7671c9a6e703c853d",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "CombatEventPageV2.example.json",
+                      "sha256":  "80ed78e9c1c113322aa9475d08b6de56d1960f675679e0fec9c8bf74f5b3e85b",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "CombatEventV2.example.json",
+                      "sha256":  "182a8bff855499df05826e3e1c7773fcd97ed7cd9b52342ebea259d16e2d07c8",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "CombatInput.example.json",
+                      "sha256":  "2f96e4aa9b2e1e5254ea598b870ead61e869af5e11bd8d9192bea3c3231198e8",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "CombatInputV2.example.json",
+                      "sha256":  "482556d3a7e912025f937cddf29f339119e4d7d334ba650781df168b4c9b57ce",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "CombatResultV2.example.json",
+                      "sha256":  "1485c03b553a013dac640b6de26dcc5d4515fe818c0fd7e5ee8d2a3a375b1f62",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "DeathReturnRequest.example.json",
+                      "sha256":  "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "DeathReturnResponse.example.json",
+                      "sha256":  "dc9f42038ec4c9c63396e8d8864a202bac518cbee3bb61d7c04d3c2212c464df",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "EncounterResponseV1.example.json",
+                      "sha256":  "52380911f2c854cc34146e02d05b51f2a100554eeac7ee2a8a80ecf4361dc817",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "EncounterSnapshotV1.example.json",
+                      "sha256":  "2974ecfc98a6a57535f3f70cfed83d43356a6b9a7f39aaadfa75736de6903c26",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "Envelope.example.json",
+                      "sha256":  "a26c67276fe5927e6f14036809edc6ac34898a9c308d5fd265423401ea250e14",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "EquipmentResponse.example.json",
+                      "sha256":  "75362108d8f747b5dba0ada0457d8cb301e8a0e7ab3b9371568df3d0845ae7c6",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "EquipRequest.example.json",
+                      "sha256":  "133e07765fdefb434932da6a398cdc7f8586b28e9f0cb21e268307561f63b939",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "EquipV2Request.example.json",
+                      "sha256":  "1d913037dc59edf3a84a89f7a8dfbc7ae21fee36d7f9f996ed4568f24b3cf6e6",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "InteractRequest.example.json",
+                      "sha256":  "7d4da1f2496f737bc703c480159503afa4c7ed0736e0c975346018908e8e1ac9",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "InteractResponse.example.json",
+                      "sha256":  "d3ae4fac2c66fa4d2506644596c59eb2e2f3477b96c5a47c0d17cf857b1bfad2",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "InventorySnapshot.example.json",
+                      "sha256":  "ce808713bf09fcce02b7974faa7980491fe903f2d588dead25fd81418df19d6d",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "InventorySnapshotV2.example.json",
+                      "sha256":  "e57517bd6e6173e28f64f6b8a0fb9b6140b43b80b2743e0d9bc7c4b7d56ccfcb",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "InventoryV2Response.example.json",
+                      "sha256":  "ee973b3a8b97d850bb8722e07fc97216a68b294bfb04024d6d776b60245e1388",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "MoveIntent.example.json",
+                      "sha256":  "e9db14e16bef5589a82c3c4eb054fde23efe3ea577a781350b133ef1fe13bcd6",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "PortalRequest.example.json",
+                      "sha256":  "0dc097e8133844405623fcec87230da6614a62768db9716c1e09d13348fd1982",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "PortalResponse.example.json",
+                      "sha256":  "d0144b0314ce8499cb0c51b7dc02290cd01d57163d23f1a3991f8a7dd13c14c5",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "QuestAcceptRequest.example.json",
+                      "sha256":  "640f05cb116106fe1cef9af91a4ab4dae6ab22b9d7a3201fd8185d270b44a88a",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "QuestAcceptResponse.example.json",
+                      "sha256":  "bbb3206acc6470889dcf02624d7855167332a2340863c3dbee73a40a2e5a0522",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "QuestState.example.json",
+                      "sha256":  "c681d0fca202c469dded0b346380f6c4d7be002a18591c114ace280526a5c897",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "TalkRequest.example.json",
+                      "sha256":  "4de7a669d16df1b2ea1dc2946ff6400be4bd4b5004efc4270675077e2fba8375",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "TalkResponse.example.json",
+                      "sha256":  "153c27d53ff27faee9de86192a8e0c65592119886d57d247b689ea530e9511a9",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "TeleportRequest.example.json",
+                      "sha256":  "639c523d00f2c5afb39fb67efad96d2937e2848566e4f1e2e173edd8a0197557",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "TurnInRequest.example.json",
+                      "sha256":  "2a4af6d61aaf7ac7fefb831a0f6b26f542e48f8cfab3a1d1f60feabc2e1b774a",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "TurnInResponse.example.json",
+                      "sha256":  "a93c7cf6b5658a078cf4aa8886fbb7e8d237b1fb7379ce3929db6feda37b0ffa",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "UnequipRequest.example.json",
+                      "sha256":  "953a1951b8f0b6ba4777c84727743772ad4cbe6f7d79b6e020e0fc23bf4512d8",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "UnequipV2Request.example.json",
+                      "sha256":  "0e1dc8d99c0b06bf6bf0cc77cc71e979065f5eb90312a3cfbaa900581e52bcbf",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "WorldSnapshot.example.json",
+                      "sha256":  "2e41c5889f1a34cad5c1d2bd50dc58317a80f92b2448e52b7cbfec8ed3fcd84b",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "example",
+                      "name":  "WorldSnapshotV2.example.json",
+                      "sha256":  "c9e356c0eacf2475bb5ee1defb39c16afcfbc021e8993017431b0f64c71eab99",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "CombatCastEvent.schema.json",
+                      "sha256":  "a0e81443d10f60a235671410b76cb7c5058e208cd9b1f4defd0a93c22e94f6f9",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "CombatEvent.schema.json",
+                      "sha256":  "af375952bfcd1b945516dabf5672a0a2db2d036ec5bc662bb00803e0a03a47fa",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "CombatEventPageV2.schema.json",
+                      "sha256":  "8d125a2354255e938f6628e6f36316137681ff0a49a22e92bf9c6b30288854ce",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "CombatEventV2.schema.json",
+                      "sha256":  "22dd22ae36915c6aa3bad54bd9434c033fa0b628c6331b15f6a6c065153ad131",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "CombatInput.schema.json",
+                      "sha256":  "421a9bdae75670e92bd44f2583fb9ec5dd32ab35a0d90d095898e940a7aa4eb4",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "CombatInputV2.schema.json",
+                      "sha256":  "faf8a03cb48d671624f21b0e4deb40d8a6d39340afd3ffef82d5edde85fe2624",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "CombatResultV2.schema.json",
+                      "sha256":  "a327533c5279afca6eae30f0805f9e419bdaf34f78d0bff6e08e73dbb3da1e3b",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "DeathReturnRequest.schema.json",
+                      "sha256":  "785cf2769e26ccc44e505e9c737c7735adf32f0795e93a8c8fc8102715a59ce5",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "DeathReturnResponse.schema.json",
+                      "sha256":  "4ed8cb4385416d29e29871b02e011495a0ba4664a85fe03c4ebc97f088316161",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "EncounterResponseV1.schema.json",
+                      "sha256":  "25c470c68f3c082d14182f5a118f346c26c00cf757b20554a8269402a0dfaaff",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "EncounterSnapshotV1.schema.json",
+                      "sha256":  "aaa4302cc849e8b233c8cf092fda27192de7c3c0b1de6439189d0c9994103a0e",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "Envelope.schema.json",
+                      "sha256":  "cd343f280b1231fd3937ad0a445723076a3a801dab282b5b8c6c2a5c9e95ff07",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "EquipmentResponse.schema.json",
+                      "sha256":  "a18e68e2aca3a6e3d27ee7ab36d25be3df01a5df4476a65a9f32c77af90be538",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "EquipRequest.schema.json",
+                      "sha256":  "ea7a2dda517ff2836ecc0f2b53e365873dad4cfdd6653e055dadad8fbe4e7c10",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "EquipV2Request.schema.json",
+                      "sha256":  "4d5b39159be8460b4849d1cf024f23d87725ce6920d1d84f5e21857661eb6cd2",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "InteractRequest.schema.json",
+                      "sha256":  "63e01ca5a148124e0941bcb940bfdf59a4f5de8b66aa0ce04dd08ee9c5ccf37f",
+                      "location":  "drift",
+                      "inTreeSha256":  "d562c6b380d05a72506d09d731a3cf9defd938dc7276fd9d46219498d0003d72"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "InteractResponse.schema.json",
+                      "sha256":  "901859fa1d63e11f591d7c1b1220fcba59a5c66ed39e6d495d1fa7c40b9d9576",
+                      "location":  "drift",
+                      "inTreeSha256":  "155b081d17eebb96332166b2f0223491e0a1072b8ef93425b8558ba44fae632d"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "InventorySnapshot.schema.json",
+                      "sha256":  "1c6e3b95cb6a426c4f38299e3e29399289df861776adf34e7998e9c539adb9c5",
+                      "location":  "drift",
+                      "inTreeSha256":  "bd1bdbd4ab9a7f9892930221527c0f2f534e1dc8b0c146c210b6acd516f097ad"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "InventorySnapshotV2.schema.json",
+                      "sha256":  "cae2470a5977f99093a91d8aa64fe21f2c2d670e972488d7918b43314b71af58",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "InventoryV2Response.schema.json",
+                      "sha256":  "cc42f09dcdf81be5391b4ddc91b62cfe0d13c094a21b4f019000a5585f7906a0",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "MoveIntent.schema.json",
+                      "sha256":  "b6627e8595cdbd1323f69842f40311c1b38688bddbd97ad9debe6cb43cb16b34",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "PortalRequest.schema.json",
+                      "sha256":  "197d1e3a2e12840c591d81469c194fcc0b699cbaa1b164a4a63b0a83e485aa58",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "PortalResponse.schema.json",
+                      "sha256":  "56265742e0f0672f6d373565fe97d966f958e37fcb5305c4f9236e74a31f959f",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "QuestAcceptRequest.schema.json",
+                      "sha256":  "88f7bd238b87da15a02222bc98847a6dd4d118766e7aa9ecc57ab37450b2d48f",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "QuestAcceptResponse.schema.json",
+                      "sha256":  "b2c57933ca44bd79d18ab924e37fbfa13b2aa431620f69ef0ff1513628af9269",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "QuestState.schema.json",
+                      "sha256":  "75dbf5014457853d46ef8f715cf91c514359c88cdff5edd507f0386f0a25d70c",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "TalkRequest.schema.json",
+                      "sha256":  "fa5b4bfa19ff2df4851f20d610147e013b67b8867b7bcd2a6eca17ddbb587c91",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "TalkResponse.schema.json",
+                      "sha256":  "c9981248988bd911302635e8693a5f48c06176e29fc5d19f0c7c6e5055df1e2d",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "TeleportRequest.schema.json",
+                      "sha256":  "e56afe7921a394e33d2467dc5cb7c5b7b7ede5ea8127ab2163091260a637c8e2",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "TurnInRequest.schema.json",
+                      "sha256":  "782fa649d88b74a3c477a6c8124603ab913604139e2766623ec085ade8c121af",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "TurnInResponse.schema.json",
+                      "sha256":  "2905ae49c50a8760aa657dab73055b01fd10f9c5343dcebf7d42e110f46d86f3",
+                      "location":  "drift",
+                      "inTreeSha256":  "1fbee84bfc121c030c285fbdcf7bc10e705c3e642881f394456d45adfaa1f17e"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "UnequipRequest.schema.json",
+                      "sha256":  "7cc7961a84a9a6acfce62be0c0423c87b9a40e163a8da920ebce746a88ef4f36",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "UnequipV2Request.schema.json",
+                      "sha256":  "92a47bcab3dfa9a4d6d3878f6ed487a52ea9632c82bc0c0ab6fb6c6f73b28fbd",
+                      "location":  "vendored"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "WorldSnapshot.schema.json",
+                      "sha256":  "8efab20fd3064fcbc70889dfdc468aa1d89029d09ebbf024f03a9d969494504e",
+                      "location":  "in-tree"
+                  },
+                  {
+                      "kind":  "schema",
+                      "name":  "WorldSnapshotV2.schema.json",
+                      "sha256":  "073289689b9e2b842d67b536fca77bd73975687b8f5c3629b98221f8241ed8fb",
+                      "location":  "drift",
+                      "inTreeSha256":  "a4d1faded0e154d2453e5416b6bb5b51c4c51b4d95d0f2feb09d5c2395d3711d"
+                  }
+              ]
+}

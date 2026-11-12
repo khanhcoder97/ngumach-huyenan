@@ -25,6 +25,8 @@ namespace NguMach.Client.P1
         public string code, messageKey, correlationId;
         public bool retryable;
         public string[] fieldErrors;
+        // Death-return cooldown carries the server tick a retry is allowed from.
+        public long? nextReturnAllowedAtTick;
     }
     [Serializable] public sealed class P1World
     {
@@ -80,7 +82,7 @@ namespace NguMach.Client.P1
         public int? damage;
         public bool? hit;
     }
-    [Serializable] public sealed class P1SessionRequest { public string classId = "CLASS_MINH_KIEM"; }
+    [Serializable] public sealed class P1SessionRequest { public string classId = "CLASS_MINH_KIEM"; public string characterId; }
     [Serializable] public sealed class P1Move { public int inputSequence; public double moveX, moveY; }
     [Serializable] public sealed class P1Cast
     {
@@ -101,6 +103,13 @@ namespace NguMach.Client.P1
         public string CorrelationId { get; private set; }
         public P1Request(string method, string path, string body, string session, string correlation)
         { Method = method; Path = path; Body = body; SessionId = session; CorrelationId = correlation; }
+
+        // Rebinds an ambiguous mutation to a fresh session after relogin without
+        // changing its body, request id or idempotency key.
+        public P1Request WithSession(string session)
+        {
+            return new P1Request(Method, Path, Body, session, CorrelationId);
+        }
     }
     public sealed class P1HttpReply
     {
@@ -111,8 +120,22 @@ namespace NguMach.Client.P1
     {
         public bool Success;
         public string Code, CorrelationId;
+        // Confirmed server refusals carry the server's own retryability and
+        // fieldErrors. A definite rejection must never be downgraded to an
+        // unknown outcome by the caller.
+        public bool Retryable;
+        public string[] FieldErrors;
         public static P1Result Ok() { return new P1Result { Success = true }; }
         public static P1Result Fail(string code, string correlation = null)
         { return new P1Result { Code = code, CorrelationId = correlation }; }
+        public static P1Result Fail(string code, string correlation, bool retryable, string[] fieldErrors)
+        {
+            return new P1Result
+            {
+                Code = code, CorrelationId = correlation,
+                Retryable = retryable,
+                FieldErrors = fieldErrors ?? Array.Empty<string>()
+            };
+        }
     }
 }

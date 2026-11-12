@@ -39,6 +39,7 @@ namespace PlayerUIChecks
 
         public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => OnReadQuests?.Invoke() ?? Task.FromResult(P1Result.Ok());
         public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => OnReadInventory?.Invoke() ?? Task.FromResult(P1Result.Ok());
+        public Task<P1Result> ReadWorldAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
         public Task<P1Result> AcceptQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
         public Task<P1Result> InteractAsync(string t, CancellationToken ct) => Task.FromResult(P1Result.Ok());
         public Task<P1Result> TurnInQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());

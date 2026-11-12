@@ -40,6 +40,7 @@ namespace PlayerUIChecks
 
             public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> ReadWorldAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
 
             public Task<P1Result> AcceptQuestAsync(string q, string n, CancellationToken ct)
             {
@@ -183,6 +184,7 @@ namespace PlayerUIChecks
             public P1Quest[] Quests => null;
             public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> ReadWorldAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> AcceptQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> InteractAsync(string id, CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> TurnInQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
@@ -452,6 +454,7 @@ namespace PlayerUIChecks
             public P1Quest[] Quests { get; set; }
             public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> ReadWorldAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> AcceptQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> InteractAsync(string id, CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> TurnInQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
@@ -544,6 +547,7 @@ namespace PlayerUIChecks
             public P1Quest[] Quests => null;
             public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> ReadWorldAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> AcceptQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> InteractAsync(string id, CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> TurnInQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
@@ -635,6 +639,7 @@ namespace PlayerUIChecks
 
             public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
+            public Task<P1Result> ReadWorldAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
 
             public Task<P1Result> AcceptQuestAsync(string q, string n, CancellationToken ct)
             {
@@ -807,6 +812,7 @@ namespace PlayerUIChecks
             public TaskCompletionSource<P1Result> DelayedRead;
             public Task<P1Result> ReadInventoryAsync(CancellationToken ct) => DelayedRead?.Task ?? Task.FromResult(P1Result.Ok());
             public Task<P1Result> ReadQuestsAsync(CancellationToken ct) => DelayedRead?.Task ?? Task.FromResult(P1Result.Ok());
+            public Task<P1Result> ReadWorldAsync(CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> AcceptQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> TurnInQuestAsync(string q, string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
             public Task<P1Result> InteractAsync(string n, CancellationToken ct) => Task.FromResult(P1Result.Ok());
