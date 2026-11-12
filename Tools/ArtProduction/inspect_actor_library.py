@@ -30,6 +30,21 @@ def reference_height(frames,scale_mode='HEIGHT'):
                              if scale_mode=='LONGEST_AXIS' else f['bounds'][3]-f['bounds'][1]
                              for f in frames[:3])
 
+def silver_core_pivot(pixels,width):
+    # Explicit fish-only registration: the silver torso defines its root, not
+    # the green flexible tail. Read coordinates only; never alter source pixels.
+    points=[(i%width,i//width) for i,(r,g,b,a) in enumerate(pixels)
+            if a>=200 and r>=110 and r>=g*.82 and b>=g*.95]
+    assert len(points)>=8,'silver torso core absent; manual registration required'
+    return [sum(x for x,y in points)/len(points),sum(y for x,y in points)/len(points)]
+
+def binding_sha256(page):
+    payload={k:page.get(k) for k in ('directions','referenceHeight','scaleMode','pivotMode')}
+    return hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+
+def source_approval_matches(page,approval):
+    return approval.get('sourceSha256')==page['sha256'] and approval.get('bindingSha256')==binding_sha256(page)
+
 def inspect(record, art_root=None):
     path=(art_root or ART)/record['source']
     with Image.open(path) as im:
@@ -65,6 +80,11 @@ def inspect(record, art_root=None):
                 if record.get('pivotMode')=='CELL_CENTER':
                     assert record['id'].startswith('sk_'),'cell-center mode is VFX-only'
                     pivot=[(x1-x)/2,(y1-y)/2]
+                elif record.get('pivotMode')=='SILVER_CORE_CENTER':
+                    assert record['id'].startswith('mob_carpling_'),'silver-core registration is fish-only'
+                    region=im.crop((x,y,x1,y1))
+                    pixels=region.get_flattened_data() if hasattr(region,'get_flattened_data') else region.getdata()
+                    pivot=silver_core_pivot(pixels,x1-x)
                 frames.append(dict(rect=[x,y,x1-x,y1-y],bounds=list(bb),pivot=pivot))
                 hashes.append(hashlib.sha256(im.crop((x,y,x1,y1)).tobytes()).hexdigest())
         assert len(set(hashes))==len(hashes),'duplicate full-frame pixels; frame count cannot be padded'
@@ -92,6 +112,8 @@ def inspect(record, art_root=None):
         else:raise AssertionError('unreviewed atlas layout')
         page=dict(id=record['id'],file='sheets/'+path.name,source=record['source'],sha256=hashlib.sha256(path.read_bytes()).hexdigest(),imageSize=[w,h],directions=directions,
             sourceFrames=len(frames),framesPerDirection=16,referenceHeight=statistics.median(f['bounds'][3]-f['bounds'][1] for f in frames),status='STRUCTURE_PASS_NOT_VISUAL_APPROVAL')
+        if record.get('pivotMode'):page['pivotMode']=record['pivotMode']
+        if record.get('scaleMode'):page['scaleMode']=record['scaleMode']
         if record.get('unboundRows'):page['unboundSourceFrames']=record['unboundRows']*record['columns']
         return page
 
@@ -122,12 +144,14 @@ def main(export,require_complete,check=False):
     review=json.loads((ART/'visual_review.json').read_text(encoding='utf8'))
     holds={h['id']:h['reason'] for h in review['holds']};approved=set(review['productionApproved'])
     component_hashes={r['id']:r.get('sourceSha256') for r in review.get('componentApprovals',[])}
+    source_approvals={r['id']:r for r in review.get('sourceApprovals',[])}
     for page in accepted:
-        source_changed=page['id'] in component_hashes and page['sha256']!=component_hashes[page['id']]
+        page['bindingSha256']=binding_sha256(page)
+        source_changed=(page['id'] in component_hashes and page['sha256']!=component_hashes[page['id']]) or (page['id'] in source_approvals and not source_approval_matches(page,source_approvals[page['id']]))
         page['productionApproved']=bool(page.get('legacy') or (page['id'] in approved and not source_changed))
         page['visualState']='EXISTING_NATIVE_APPROVED' if page.get('legacy') else 'HOLD' if source_changed else 'APPROVED' if page['id'] in approved else 'HOLD' if page['id'] in holds else 'AWAITING_VISUAL_REVIEW'
         page['visualNotes']=holds.get(page['id'],'')
-        if source_changed:page['visualNotes']='Approved component source hash changed; native visual review required again.'
+        if source_changed:page['visualNotes']='Approved source or registration changed; native visual review required again.'
         # 12/11 owner returned to baked sheets. Keep actual visual holds/review states;
         # changing art direction does NOT approve a candidate or manufacture missing clips.
     def save(path,value):

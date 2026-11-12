@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 namespace Ngumach.VisualReboot;
 
@@ -11,36 +12,45 @@ public partial class CarplingCombatReview : Control
     private Label _phase = null!;
     private double _clock;
     private bool _capture;
+    private int _facing = 4;
+    private readonly List<ActorLibrarySprite> _sprites = new();
     private static readonly string[] Actions = { "telegraph_01", "attack_01", "recovery_01", "hurt", "death" };
     public override void _Ready()
     {
         Engine.MaxFps = 60; Theme = MoonGlassTheme.Create();
         _library = new ActorLibraryData(reviewMode: true);
+        var args = OS.GetCmdlineUserArgs(); int direction = Array.IndexOf(args, "--combat-direction");
+        if (direction >= 0 && direction + 1 < args.Length)
+        { int requested = Array.IndexOf(ArtStudioCodec.Directions, args[direction + 1]); if (requested >= 0 && requested < 8) _facing = requested; }
         var bg = new ColorRect { Color = Color.FromHtml("#20243b"), MouseFilter = MouseFilterEnum.Ignore };
         bg.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect); AddChild(bg);
         var margin = new MarginContainer(); margin.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         foreach (string edge in new[] { "left", "right", "top", "bottom" }) margin.AddThemeConstantOverride("margin_" + edge, 24);
         AddChild(margin); var stack = new VBoxContainer(); margin.AddChild(stack);
         stack.AddChild(MoonGlassTheme.Label("CÁ LINH / KIỂM CHUỖI COMBAT", 24, MoonGlassTheme.Gold));
-        stack.AddChild(MoonGlassTheme.Label("SOUTH · 16 ảnh nguồn/động tác · candidate chưa duyệt gameplay · ESC: đóng", 14));
+        var directions = new OptionButton();
+        for (int i = 0; i < 8; i++) directions.AddItem(ArtStudioCodec.Directions[i] + (i >= 5 ? " · lật ảnh nguồn" : " · góc vẽ nguồn"));
+        directions.Select(_facing); stack.AddChild(directions);
+        directions.ItemSelected += i => { _facing = (int)i; foreach (var sprite in _sprites) { sprite.Facing = _facing; sprite.Restart(); } };
+        stack.AddChild(MoonGlassTheme.Label("16 ảnh nguồn/động tác · xem theo hướng · nguồn chưa tự duyệt gameplay · ESC: đóng", 13));
         var grid = new GridContainer { Columns = 3, SizeFlagsVertical = SizeFlags.ExpandFill }; stack.AddChild(grid);
         grid.AddThemeConstantOverride("h_separation", 18); grid.AddThemeConstantOverride("v_separation", 16);
         for (int i = 0; i < 6; i++)
         {
-            var card = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(300, 250) }; grid.AddChild(card);
+            var card = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(300, 225) }; grid.AddChild(card);
             string action = i < 5 ? Actions[i] : "telegraph_01";
             string title = i < 5 ? action + " · " + ActorLibraryData.Duration("MOB_CARPLING", action).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + " s" : "NỐI BA PHA · 0,45 / 0,30 / 0,50 s";
             card.AddChild(MoonGlassTheme.Label(title, 16, MoonGlassTheme.Blue));
-            var stage = new Control { SizeFlagsVertical = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(300, 200) }; card.AddChild(stage);
-            var sprite = new ActorLibrarySprite { Library = _library, ActorId = "MOB_CARPLING", Clip = action, Facing = 4, DisplayHeight = 140, Loop = i < 3 };
-            stage.AddChild(sprite); stage.Resized += () => sprite.Position = new Vector2(stage.Size.X / 2, stage.Size.Y / 2 + 65);
-            sprite.Position = new Vector2(150, 165);
+            var stage = new Control { SizeFlagsVertical = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(300, 170) }; card.AddChild(stage);
+            var sprite = new ActorLibrarySprite { Library = _library, ActorId = "MOB_CARPLING", Clip = action, Facing = _facing, DisplayHeight = 120, Loop = i < 3 };
+            _sprites.Add(sprite); stage.AddChild(sprite); stage.Resized += () => sprite.Position = stage.Size / 2;
+            sprite.Position = new Vector2(150, 85);
             if (i == 5) { _sequence = sprite; _phase = MoonGlassTheme.Label("", 13); card.AddChild(_phase); }
             else card.AddChild(MoonGlassTheme.Label(i < 3 ? "Lặp riêng để soi pose; không phải nhịp AI." : "Một lần · giữ khung cuối", 12, MoonGlassTheme.Muted));
         }
         stack.AddChild(MoonGlassTheme.Label("0,45 s báo / 0,50 s hồi theo visual bible. 0,30 s đánh là timing thử, chỉnh được trong Studio; không quy định cửa sổ damage.", 12, MoonGlassTheme.Muted));
         stack.AddChild(MoonGlassTheme.Label("Review hình ảnh; video --fixed-fps 60 là xuất offline, không chứng nhận FPS gameplay. Góc còn thiếu không được thay bằng ảnh SOUTH.", 12, MoonGlassTheme.Muted));
-        var args = OS.GetCmdlineUserArgs(); int capture = Array.IndexOf(args, "--combat-capture");
+        int capture = Array.IndexOf(args, "--combat-capture");
         if (capture >= 0 && capture + 1 < args.Length) Capture(args[capture + 1]);
     }
     public override void _Process(double delta)

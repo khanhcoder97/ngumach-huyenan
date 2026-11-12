@@ -25,7 +25,8 @@ def build(batch='20261112'):
                             sha256=p['sha256'],sourceCells=p['sourceFrames'],boundSourceCells=sum(len(d['frames']) for d in native),
                             unboundSourceCells=p.get('unboundSourceFrames',0),authoredDirections=[d['direction'] for d in native],
                             mirroredDirections=[d['direction'] for d in p['directions'] if d['flip']],componentOnly=bool(r.get('componentOnly')),
-                            productionApproved=p['productionApproved'],visualState=p['visualState']))
+                            productionApproved=p['productionApproved'],visualState=p['visualState'],bindingSha256=p['bindingSha256'],
+                            replacesSource=r.get('replacesSource'),scaleMode=r.get('scaleMode','HEIGHT'),pivotMode=r.get('pivotMode','FOOT')))
     baseline=json.loads((ROOT/'Implementation/Reports/Evidence/Sprite_Studio_20261112/sprite_restore_audit.json').read_text(encoding='utf8'))
     preserved=all((ROOT/r['file']).is_file() and hashlib.sha256((ROOT/r['file']).read_bytes()).hexdigest()==r['expectedSha256'] for r in baseline['files'])
     assert preserved,'owner-selected old sheet changed'

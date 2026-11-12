@@ -223,5 +223,87 @@
     "batch": "20261112b",
     "inputRole": "IDENTITY_REFERENCE",
     "reference": "Art_Source/Actor_Library_20261107/Rejections/mob_carpling_attack_01_s_v1_20261112b.png"
+  },
+  {
+    "id": "mob_carpling_hurt_ne",
+    "source": "Rejections/mob_carpling_hurt_ne_v1_20261112c.png",
+    "prompt": "Prompts/mob_carpling_hurt_ne_v1_20261112c.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "scaleMode": "LONGEST_AXIS",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_HURT_START_MOUTH_OPEN",
+    "batch": "20261112c",
+    "inputRole": "IDENTITY_REFERENCE",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_attack_01_ne_v1_20261112c.png"
+  },
+  {
+    "id": "mob_carpling_telegraph_01_atlas_trial",
+    "source": "Rejections/mob_carpling_telegraph_01_atlas_trial_20261112c.png",
+    "prompt": "Prompts/mob_carpling_telegraph_01_atlas_trial_20261112c.txt",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_DIAGONAL_COMPASS_DRIFT",
+    "batch": "20261112c"
+  },
+  {
+    "id": "mob_carpling_telegraph_01_atlas_extraction_trial",
+    "source": "Rejections/mob_carpling_telegraph_01_atlas_extraction_trial_20261112c.png",
+    "prompt": "Prompts/mob_carpling_telegraph_01_atlas_extraction_trial_20261112c.txt",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_DIAGONAL_COMPASS_DRIFT",
+    "batch": "20261112c"
+  },
+  {
+    "id": "mob_carpling_attack_01_atlas_trial",
+    "source": "Rejections/mob_carpling_attack_01_atlas_trial_20261112c.png",
+    "prompt": "Prompts/mob_carpling_attack_01_atlas_trial_20261112c.txt",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_OPENING_INSTEAD_OF_CLOSING_ATTACK",
+    "batch": "20261112c"
+  },
+  {
+    "id": "mob_waterroot_idle_ne",
+    "source": "Sheets/mob_waterroot_idle_ne_v1_20261112b.png",
+    "prompt": "Prompts/mob_waterroot_idle_ne_v1_20261112b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_20261112C_REAR_DIAGONAL_SILHOUETTE",
+    "batch": "20261112b",
+    "inputRole": "IDENTITY_REFERENCE",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_n_v1_20261112b.png"
+  },
+  {
+    "id": "mob_carpling_recovery_01_n",
+    "source": "Rejections/mob_carpling_recovery_01_n_v1_20261112c.png",
+    "prompt": "Prompts/mob_carpling_recovery_01_n_v1_20261112c.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_RECOVERY_START_TAIL_COIL",
+    "batch": "20261112c",
+    "inputRole": "IDENTITY_REFERENCE",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_attack_01_n_v1_20261112c.png",
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SILVER_CORE_CENTER"
+  },
+  {
+    "id": "npc_boat_keeper_walk_s",
+    "source": "Rejections/npc_boat_keeper_walk_s_v1_20261112c.png",
+    "prompt": "Prompts/npc_boat_keeper_walk_s_v1_20261112c.txt",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_OPAQUE_BACKGROUND_AND_SAME_LEADING_FOOT",
+    "batch": "20261112c"
+  },
+  {
+    "id": "npc_boat_keeper_walk_s",
+    "source": "Rejections/npc_boat_keeper_walk_s_v2_20261112c.png",
+    "prompt": "Prompts/npc_boat_keeper_walk_s_v2_20261112c.txt",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_SAME_LEADING_FOOT_BOTH_HALVES",
+    "batch": "20261112c"
   }
 ]

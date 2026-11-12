@@ -21,7 +21,7 @@ public partial class ActorLibraryBrowser : Control
     private HSlider _timeline=null!;
     private Button _play=null!;
     private string _actor="",_clip="idle";
-    private bool _paused,_sync,_staticCapture;
+    private bool _paused,_sync,_staticCapture,_offlineMovie;
     private int _activeFrames=16;
     private int _captureFrame=8;
     private double _refresh;
@@ -70,15 +70,16 @@ public partial class ActorLibraryBrowser : Control
         {string id=args[actor+1],kind=_library.Actors[id].Kind;for(int i=0;i<_category.ItemCount;i++)if(_category.GetItemText(i)==kind)_category.Select(i);Filter();int index=_filtered.FindIndex(a=>a.Id==id);if(index>=0)_list.Select(index);SelectActor(id);}
         int clip=Array.IndexOf(args,"--clip");if(clip>=0&&clip+1<args.Length)SelectClip(args[clip+1]);
         if(args.Contains("--library-self-test"))SelfTest();
+        _offlineMovie=!string.IsNullOrEmpty(Engine.GetWriteMoviePath());
         int shotFrame=Array.IndexOf(args,"--library-frame");if(shotFrame>=0&&shotFrame+1<args.Length&&int.TryParse(args[shotFrame+1],out int requestedFrame))_captureFrame=Math.Clamp(requestedFrame,0,_activeFrames-1);
         int capture=Array.IndexOf(args,"--library-capture");if(capture>=0&&capture+1<args.Length)Capture(args[capture+1]);
-        int benchmark=Array.IndexOf(args,"--library-benchmark");if(benchmark>=0&&benchmark+1<args.Length){_benchmarkPath=args[benchmark+1];_benchmarkStart=Godot.Time.GetTicksUsec();_lastTick=_benchmarkStart;}
+        int benchmark=Array.IndexOf(args,"--library-benchmark");if(benchmark>=0&&_offlineMovie)throw new InvalidOperationException("Offline movie cannot be used as a real-time FPS benchmark.");if(benchmark>=0&&benchmark+1<args.Length){_benchmarkPath=args[benchmark+1];_benchmarkStart=Godot.Time.GetTicksUsec();_lastTick=_benchmarkStart;}
     }
     private void Filter()
     {
         _filtered.Clear();_list.Clear();string kind=_category.Selected==0?"":_category.GetItemText(_category.Selected);
         foreach(var actor in _library.Actors.Values.Where(a=>(kind.Length==0||a.Kind==kind)&&(a.Name.Contains(_search.Text,StringComparison.OrdinalIgnoreCase)||a.Id.Contains(_search.Text,StringComparison.OrdinalIgnoreCase))).OrderBy(a=>a.Kind).ThenBy(a=>a.Id,StringComparer.Ordinal))
-        {_filtered.Add(actor);int available=actor.Clips.Count(c=>_library.Resolve(actor.Id,c,4,out _));_list.AddItem($"[{available}/{actor.Clips.Length}] {actor.Name}");}
+        {_filtered.Add(actor);int available=actor.Clips.Count(c=>Enumerable.Range(0,8).All(d=>_library.Resolve(actor.Id,c,d,out _)));int row=_list.AddItem($"[{available}/{actor.Clips.Length}] {actor.Name}");_list.SetItemTooltip(row,"Số clip đủ hướng xem; không phải chứng nhận hoàn thiện actor. "+actor.Id);}
         if(_filtered.Count>0){_list.Select(0);SelectActor(_filtered[0].Id);}
     }
     private void SelectActor(string id)
@@ -104,7 +105,7 @@ public partial class ActorLibraryBrowser : Control
         Place();
     }
     private void Place()
-    {if(_stage==null)return;for(int i=0;i<8;i++){float x=(_stage.Size.X/4)*(i%4+.5f),y=(_stage.Size.Y/2)*(i/4+.65f);if(_library.Actors.TryGetValue(_actor,out var actor)&&actor.Kind=="VFX"){x=_stage.Size.X/2;y=_stage.Size.Y/2+70;}_sprites[i].Position=new Vector2(x,y);_labels[i].Position=new Vector2(x-95,y+14);}}
+    {if(_stage==null)return;for(int i=0;i<8;i++){float x=(_stage.Size.X/4)*(i%4+.5f),y=(_stage.Size.Y/2)*(i/4+.65f);if(_library.Actors.TryGetValue(_actor,out var actor)&&actor.Kind=="VFX"){x=_stage.Size.X/2;y=_stage.Size.Y/2+70;}_sprites[i].Position=new Vector2(x,y);_labels[i].Position=new Vector2(x-95,y+14+(_actor=="MOB_CARPLING"?_sprites[i].DisplayHeight*.6f:0));}}
     private void Pause(bool paused){_paused=paused;_play.Text=paused?"Phát animation":"Tạm dừng";foreach(var sprite in _sprites){sprite.Paused=paused;sprite.ManualFrame=paused?sprite.DisplayedFrame:-1;}}
     private void Step(int delta){Pause(true);int current=_sprites.FirstOrDefault(s=>s.Available)?.DisplayedFrame??0;int frame=(current+delta+_activeFrames)%_activeFrames;foreach(var sprite in _sprites)sprite.Seek(frame);}
     private void Reload(){var old=_library;_library=new ActorLibraryData(reviewMode:true);Filter();old.Dispose();}
@@ -122,7 +123,7 @@ public partial class ActorLibraryBrowser : Control
             }
         }
         _refresh+=delta;if(_refresh<.1)return;_refresh=0;var sprite=_sprites.FirstOrDefault(s=>s.Available);
-        if(sprite==null){_frame.Text="CHƯA CÓ SPRITE CHO CLIP NÀY";return;}_sync=true;_timeline.Value=sprite.DisplayedFrame;_sync=false;_frame.Text=$"Frame {sprite.DisplayedFrame+1}/{_activeFrames} · "+(_staticCapture?"Ảnh tĩnh · không đo FPS":$"{Engine.GetFramesPerSecond()}FPS · {_library.CachedTextures}/8 texture cache");
+        if(sprite==null){_frame.Text="CHƯA CÓ SPRITE CHO CLIP NÀY";return;}_sync=true;_timeline.Value=sprite.DisplayedFrame;_sync=false;_frame.Text=$"Frame {sprite.DisplayedFrame+1}/{_activeFrames} · "+(_staticCapture?"Ảnh tĩnh · không đo FPS":_offlineMovie?"Video offline · không đo FPS":$"{Engine.GetFramesPerSecond()}FPS · {_library.CachedTextures}/8 texture cache");
     }
     public override void _UnhandledKeyInput(InputEvent ev)
     {if(ev is not InputEventKey key||!key.Pressed||key.Echo)return;if(key.Keycode==Key.Escape)GetTree().Quit();if(key.Keycode==Key.F5)Reload();if(key.Keycode==Key.Space)Pause(!_paused);}
@@ -145,8 +146,10 @@ public partial class ActorLibraryBrowser : Control
             probe.Seek(7);probe.ManualFrame=-1;probe._Process(0);if(probe.DisplayedFrame!=7)throw new Exception("scrub resume lost phase");checks++;
             probe.Loop=true;probe.Restart();var visited=new HashSet<int>();for(int i=0;i<60;i++){probe._Process(1d/60);visited.Add(probe.DisplayedFrame);}if(visited.Count!=16)throw new Exception("60FPS clock skipped source poses");checks++;
             foreach(string action in new[]{"telegraph_01","attack_01","recovery_01","hurt","death"})
+            foreach(int facing in Enumerable.Range(0,8))
             {
-                probe.ActorId="MOB_CARPLING";probe.Clip=action;probe.Facing=4;probe.ManualFrame=-1;probe.Restart();
+                if(!_library.Resolve("MOB_CARPLING",action,facing,out var authored)||authored!.Frames.Length!=16)throw new Exception("missing Carpling combat direction: "+action+"/"+facing);checks++;
+                probe.ActorId="MOB_CARPLING";probe.Clip=action;probe.Facing=facing;probe.ManualFrame=-1;probe.Restart();
                 double duration=ActorLibraryData.Duration(probe.ActorId,action);var poses=new HashSet<int>();
                 for(int i=0;i<Math.Ceiling(duration*60)+2;i++){probe._Process(1d/60);poses.Add(probe.DisplayedFrame);}
                 if(poses.Count!=16)throw new Exception("Carpling review clock skipped source poses: "+action);checks++;

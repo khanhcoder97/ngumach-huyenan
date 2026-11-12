@@ -37,7 +37,8 @@ public static class ArtStudioLibrary
             float width = frames.Max(f => f.GetProperty("bounds")[2].GetSingle() - f.GetProperty("bounds")[0].GetSingle());
             float scale = (vfx ? 160 : 140) / Math.Max(1, vfx ? Math.Max(width, reference) : reference); bool flip = d.GetProperty("flip").GetBoolean();
             double seconds = SourceDuration(id);
-            var c = new ArtStudioClip { Name = id, Direction = direction, Loop = !OneShot(id), SourceNote = (flip ? "Lật ngang theo metadata · " : "Nguồn sheet · ") + p.GetProperty("visualState").GetString() + " · chưa nghiệm thu mới.", DurationsMs = Enumerable.Repeat((float)(seconds * 1000 / frames.Length), frames.Length).ToList() };
+            string acceptance = p.GetProperty("productionApproved").GetBoolean() ? "Nguồn đã kiểm native; bản chỉnh Studio vẫn cần kiểm riêng." : "Nguồn chờ nghiệm thu.";
+            var c = new ArtStudioClip { Name = id, Direction = direction, Loop = !OneShot(id), SourceNote = (flip ? "Lật ngang theo metadata · " : "Nguồn sheet · ") + p.GetProperty("visualState").GetString() + " · " + acceptance, DurationsMs = Enumerable.Repeat((float)(seconds * 1000 / frames.Length), frames.Length).ToList() };
             var track = new ArtStudioTrack { LayerId = l.Id, Interpolate = false }; c.Tracks.Add(track);
             foreach (var f in frames)
             {
@@ -133,5 +134,5 @@ public static class ArtStudioLibrary
             for (int i = 0; i < clip.DurationsMs.Count; i++)
             { var pose = l.Rest.Copy(); pose.SourceFrame = Math.Min(frames.Length - 1, i * frames.Length / clip.DurationsMs.Count); ArtStudioSampler.SetKey(clip, l.Id, i, pose); }
     }
-    private static bool OneShot(string id) => new[] { "death", "hurt", "dodge", "attack", "cast", "skill_", "telegraph", "recovery", "arc_component", "crack_component" }.Any(t => id.Contains(t, StringComparison.Ordinal));
+    private static bool OneShot(string id) => new[] { "death", "hurt", "dodge", "attack", "cast", "skill_", "telegraph", "recovery", "interact", "arc_component", "crack_component" }.Any(t => id.Contains(t, StringComparison.Ordinal));
 }

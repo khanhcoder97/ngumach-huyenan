@@ -37,7 +37,11 @@
       ],
       "componentOnly": false,
       "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW"
+      "visualState": "AWAITING_VISUAL_REVIEW",
+      "bindingSha256": "96f1bdc5bc94b0202c4f8c5cedeefb124cf13b74bcfc82623d6d6e5b60075b58",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "FOOT"
     },
     {
       "id": "mob_waterroot_idle_s",
@@ -53,8 +57,12 @@
       ],
       "mirroredDirections": [],
       "componentOnly": false,
-      "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW"
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "01ac7036e7f082feee86993e1ff8d4a4c8d7e58eab99404f9784891162cd79cf",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "FOOT"
     },
     {
       "id": "mob_shore_stalker_idle_s",
@@ -71,7 +79,11 @@
       "mirroredDirections": [],
       "componentOnly": false,
       "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW"
+      "visualState": "AWAITING_VISUAL_REVIEW",
+      "bindingSha256": "4a93defdbca3fb0ac01ba6626f7399d2dbbcc815049015a325c75768883f20f4",
+      "replacesSource": null,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "FOOT"
     },
     {
       "id": "class_minh_kiem_hurt",
@@ -96,7 +108,11 @@
       ],
       "componentOnly": false,
       "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW"
+      "visualState": "AWAITING_VISUAL_REVIEW",
+      "bindingSha256": "4b0921ba92d6ada171d187e509c72170978bf1e0e65c6e7f9604f6b86371093d",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "FOOT"
     },
     {
       "id": "class_minh_kiem_dodge",
@@ -120,7 +136,11 @@
       ],
       "componentOnly": false,
       "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW"
+      "visualState": "AWAITING_VISUAL_REVIEW",
+      "bindingSha256": "552a58b6f430bbef6ef2e7556ff68986cd6184f99f65309d2d224a93a7990750",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "FOOT"
     },
     {
       "id": "class_minh_kiem_dodge_s",
@@ -137,7 +157,11 @@
       "mirroredDirections": [],
       "componentOnly": false,
       "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW"
+      "visualState": "AWAITING_VISUAL_REVIEW",
+      "bindingSha256": "4009218ecb222855ebbeae5f24a045307edecba3ff2860adde5f079a3fa78138",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "FOOT"
     },
     {
       "id": "mob_carpling_walk",
@@ -162,7 +186,11 @@
       ],
       "componentOnly": false,
       "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW"
+      "visualState": "AWAITING_VISUAL_REVIEW",
+      "bindingSha256": "c52eba106bd22caa02f4f11ff9deab472eecc6f9fa7502464782ca923ca5c029",
+      "replacesSource": null,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "SILVER_CORE_CENTER"
     },
     {
       "id": "sk_lc_01_projectile_component",
@@ -179,7 +207,11 @@
       "mirroredDirections": [],
       "componentOnly": true,
       "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW"
+      "visualState": "AWAITING_VISUAL_REVIEW",
+      "bindingSha256": "647bd11d8a379501e7d7f52bddb83b8ccfaacf7cf0b19038b36bb94c479b1099",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "CELL_CENTER"
     },
     {
       "id": "sk_mk_03_arc_component",
@@ -196,7 +228,11 @@
       "mirroredDirections": [],
       "componentOnly": true,
       "productionApproved": true,
-      "visualState": "APPROVED"
+      "visualState": "APPROVED",
+      "bindingSha256": "1c2f136baec35ca16ebcd5f15ed858dcbe557233e22adf69e3a9b710f9b1e45a",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "CELL_CENTER"
     },
     {
       "id": "sk_tc_01_crack_component",
@@ -213,7 +249,11 @@
       "mirroredDirections": [],
       "componentOnly": true,
       "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW"
+      "visualState": "AWAITING_VISUAL_REVIEW",
+      "bindingSha256": "a7c70741db8c7552b3c764b6d09f20c04124f7b8d3482c76a2afb8df0c8ade8d",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "CELL_CENTER"
     },
     {
       "id": "class_minh_kiem_death",
@@ -236,7 +276,11 @@
       ],
       "componentOnly": false,
       "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW"
+      "visualState": "AWAITING_VISUAL_REVIEW",
+      "bindingSha256": "7c35f8f716008835921ab63ae104508867228ed0e8521f0d0064c7fb9efca583",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "FOOT"
     },
     {
       "id": "class_minh_kiem_death_ne",
@@ -253,7 +297,11 @@
       "mirroredDirections": [],
       "componentOnly": false,
       "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW"
+      "visualState": "AWAITING_VISUAL_REVIEW",
+      "bindingSha256": "7f0eeaa4f0c8efbe58534394811dec716d5102d10a74f0b2b7154d5b75d2474a",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "FOOT"
     },
     {
       "id": "npc_boat_keeper_idle",
@@ -277,7 +325,11 @@
       ],
       "componentOnly": false,
       "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW"
+      "visualState": "AWAITING_VISUAL_REVIEW",
+      "bindingSha256": "0e98e05c45a7f1360b53386a5d3ab764392203f62ddc906a819db7feb8cfbcec",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "FOOT"
     },
     {
       "id": "npc_boat_keeper_idle_s",
@@ -294,12 +346,16 @@
       "mirroredDirections": [],
       "componentOnly": false,
       "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW"
+      "visualState": "AWAITING_VISUAL_REVIEW",
+      "bindingSha256": "8791bb94be5dd9ac20820df637cb125d5464bfc1fdbca4b0a49c97b2c59d82d4",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "FOOT"
     }
   ],
   "fullGameComplete": false,
   "requiredJobs": 1008,
-  "structurallyCompleteJobs": 40,
-  "pendingJobs": 968,
+  "structurallyCompleteJobs": 45,
+  "pendingJobs": 963,
   "note": "Cells/hashes do not certify anatomical pose uniqueness. Production approval remains per source/clip. Unbound cells are never padded into a sequence. Coverage fields describe the current catalogue, not historical progress on the batch date."
 }

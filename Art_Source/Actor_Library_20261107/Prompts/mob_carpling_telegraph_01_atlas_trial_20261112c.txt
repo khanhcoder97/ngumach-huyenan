@@ -1,0 +1,9 @@
+Use case: identity-preserve
+Game asset: MOB_CARPLING telegraph_01 multi-angle sprite sheet. Reference is SOUTH windup; retain same silver-blue cute broad-headed fish, round cheeks, teal leaf fins, curved flowing tail, finely shaded cohesive CHIBI PIXEL ART, overhead RPG camera. Never stretch/narrow body into needle.
+EXACT8COLUMNS x8ROWS =64 small complete fish, generous TRANSPARENT gutters/margins, each within55%cell. Four directional blocks, TWO ROWS per block,16chronological poses row-major:
+ROWS1-2 NORTH: head/nostrils TOP, eyeless tail BOTTOM, camera sees back, mouth hidden on far side; NOT south upside-down bitmap.
+ROWS3-4 NORTHEAST: head/nostrils UPPER RIGHT, tail LOWER LEFT, back-left flank.
+ROWS5-6 EAST: broad face and nostrils RIGHT, tail LEFT, left flank.
+ROWS7-8 SOUTHEAST: face LOWER RIGHT, tail UPPER LEFT, front-left flank.
+Every block contains16UNIQUE original poses of ONE progressive anticipation:0neutral;1-4fins brace;5-8tail curls and cheeks inflate;9-12mouth progressively opens;13-15widest mouth/tense fins. For NORTH show tail/fin tension, no front-face pasted onto back. Keep compass direction and scale throughout each16frame block. No SOUTH block. No repeated8frame cycle or idle renamed windup. Head/belly width remain consistent, no global squash/stretch. Pose order strictly left-right then next row. Full fins/tail never cut/touch adjacent fish.
+Genuine transparent RGBA, no text/labels/numbers/grid, no scene/ground/water/shadow/VFX. Preserve reference pixel shading and palette. Layout must be8across on EVERY one of8rows.
