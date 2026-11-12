@@ -1,0 +1,1627 @@
+{
+ "validator": "check_composed_sfx_me_cp2b_weapons_v1.py",
+ "checkpoint": "MEDIA-02 WO39 M39-A CP2 - 4 weapon identities SFX draft",
+ "decisionId": "DEC-MEDIA-SFX-DRAFT-20261112",
+ "branch": "muse/media-production-20261104",
+ "checksTotal": 296,
+ "checksPassed": 296,
+ "failures": [],
+ "pass": true,
+ "baselinesReMeasured": {
+  "metal_parry": {
+   "centroidHz": 764.13,
+   "bandLt500": 0.0,
+   "band2500_5500": 0.01,
+   "band3000_8000": 0.0,
+   "lufsMean": -24.18,
+   "prominenceMax": 1491503.8,
+   "rmsMean": -25.0
+  },
+  "basic_blade": {
+   "centroidHz": 2701.87,
+   "bandLt500": 0.15,
+   "band2500_5500": 0.45,
+   "band3000_8000": 0.43,
+   "lufsMean": -22.25,
+   "prominenceMax": 21.3,
+   "rmsMean": -25.18
+  }
+ },
+ "measured": {
+  "SFX/COMBAT/dao_swing v01": {
+   "lufs": -23.55,
+   "tp": -9.05,
+   "centroidHz": 1161.7,
+   "bandLt500": 0.0142,
+   "band2500_5500": 0.0003,
+   "band3000_8000": 0.0002,
+   "prominence400_2000": 20.1
+  },
+  "SFX/COMBAT/dao_swing v02": {
+   "lufs": -23.45,
+   "tp": -10.96,
+   "centroidHz": 1227.4,
+   "bandLt500": 0.0115,
+   "band2500_5500": 0.0005,
+   "band3000_8000": 0.0002,
+   "prominence400_2000": 15.2
+  },
+  "SFX/COMBAT/dao_swing v03": {
+   "lufs": -23.45,
+   "tp": -9.56,
+   "centroidHz": 1078.8,
+   "bandLt500": 0.0309,
+   "band2500_5500": 0.0003,
+   "band3000_8000": 0.0002,
+   "prominence400_2000": 20.6
+  },
+  "SFX/COMBAT/brush_stroke v01": {
+   "lufs": -23.95,
+   "tp": -15.63,
+   "centroidHz": 3857.2,
+   "bandLt500": 0.0,
+   "band2500_5500": 0.9514,
+   "band3000_8000": 0.809,
+   "prominence400_2000": 555.1
+  },
+  "SFX/COMBAT/brush_stroke v02": {
+   "lufs": -24.05,
+   "tp": -15.67,
+   "centroidHz": 4164.0,
+   "bandLt500": 0.0,
+   "band2500_5500": 0.9278,
+   "band3000_8000": 0.9135,
+   "prominence400_2000": 299.5
+  },
+  "SFX/COMBAT/brush_stroke v03": {
+   "lufs": -23.99,
+   "tp": -16.67,
+   "centroidHz": 3670.7,
+   "bandLt500": 0.0,
+   "band2500_5500": 0.9021,
+   "band3000_8000": 0.7291,
+   "prominence400_2000": 1634.2
+  },
+  "SFX/COMBAT/mace_swing v01": {
+   "lufs": -24.19,
+   "tp": -8.0,
+   "centroidHz": 536.6,
+   "bandLt500": 0.6072,
+   "band2500_5500": 0.0258,
+   "band3000_8000": 0.0159,
+   "prominence400_2000": 859.4
+  },
+  "SFX/COMBAT/mace_swing v02": {
+   "lufs": -23.51,
+   "tp": -9.1,
+   "centroidHz": 560.8,
+   "bandLt500": 0.6716,
+   "band2500_5500": 0.0361,
+   "band3000_8000": 0.0225,
+   "prominence400_2000": 1130.8
+  },
+  "SFX/COMBAT/mace_swing v03": {
+   "lufs": -23.92,
+   "tp": -8.0,
+   "centroidHz": 605.0,
+   "bandLt500": 0.599,
+   "band2500_5500": 0.0357,
+   "band3000_8000": 0.0205,
+   "prominence400_2000": 775.4
+  },
+  "SFX/COMBAT/bow_string v01": {
+   "lufs": -23.5,
+   "tp": -9.4,
+   "centroidHz": 2159.2,
+   "bandLt500": 0.1485,
+   "band2500_5500": 0.4043,
+   "band3000_8000": 0.2036,
+   "prominence400_2000": 63.3
+  },
+  "SFX/COMBAT/bow_string v02": {
+   "lufs": -23.46,
+   "tp": -9.56,
+   "centroidHz": 2281.7,
+   "bandLt500": 0.1341,
+   "band2500_5500": 0.475,
+   "band3000_8000": 0.2586,
+   "prominence400_2000": 95.3
+  },
+  "SFX/COMBAT/bow_string v03": {
+   "lufs": -23.54,
+   "tp": -9.84,
+   "centroidHz": 2015.0,
+   "bandLt500": 0.141,
+   "band2500_5500": 0.3596,
+   "band3000_8000": 0.1361,
+   "prominence400_2000": 38.4
+  }
+ },
+ "measurementNotes": [
+  "Baseline RMS is measured from a true mono decode (-ac 1): ffmpeg's mono->stereo upmix scales each channel by 0.707, so a -ac 2 decode under-reads a mono file by 3.01 dB.",
+  "Weapon-vs-parry LUFS comparison is conservative: a stereo render measures ~+3 LU over the same mono content (BS.1770 channel sum), so the real gap between the stereo weapon drafts and the mono metal_parry is wider than the headline LUFS numbers show.",
+  "Brush/mace tonal prominence (400-2000 Hz) is recorded, not asserted: brush energy sits above 2400 Hz and mace energy below 700 Hz, so the median in 400-2000 Hz is near the noise floor and the ratio is not a tonality claim (same note as the grass cue in CP1). The decisive parry discriminator for mace is its <500 Hz band (>= parry + 0.20) and centroid <= 700 Hz; for brush it is the 3200-4200 Hz centroid slot."
+ ],
+ "checks": [
+  {
+   "name": "manifest parses",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "decision id",
+   "pass": true,
+   "detail": "DEC-MEDIA-SFX-DRAFT-20261112"
+  },
+  {
+   "name": "approval ref names PR131/e4b3e4b",
+   "pass": true,
+   "detail": "Implementation/Content/DesignBaselines/media_sfx_draft_execution_20261112.json @ e4b3e4b (PR #131, Codex Gói 39, issue #116 comment 6815238814, 2026-11-12); approval is DRAFT production of 18 variants, not runtime adoption"
+  },
+  {
+   "name": "status DRAFT / NOT_AUDITIONED",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "runtime not ingested, count 783",
+   "pass": true,
+   "detail": "{'ingested': False, 'runtimeAudioCountUnchanged': 783, 'note': 'SOURCE ONLY: no runtime file was written and no runtime manifest was touched. Runtime ingest is a Codex review decision (Gói 39 M39-C).'}"
+  },
+  {
+   "name": "counts 4 cues / 12 variants",
+   "pass": true,
+   "detail": "{'cues': 4, 'variants': 12}"
+  },
+  {
+   "name": "cue keys",
+   "pass": true,
+   "detail": "['SFX/COMBAT/dao_swing', 'SFX/COMBAT/brush_stroke', 'SFX/COMBAT/mace_swing', 'SFX/COMBAT/bow_string']"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing trigger UNSUPPORTED, no binding",
+   "pass": true,
+   "detail": "UNSUPPORTED"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing provenance composed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing proposal P-WEAPON",
+   "pass": true,
+   "detail": "P-WEAPON"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke trigger UNSUPPORTED, no binding",
+   "pass": true,
+   "detail": "UNSUPPORTED"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke provenance composed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke proposal P-WEAPON",
+   "pass": true,
+   "detail": "P-WEAPON"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing trigger UNSUPPORTED, no binding",
+   "pass": true,
+   "detail": "UNSUPPORTED"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing provenance composed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing proposal P-WEAPON",
+   "pass": true,
+   "detail": "P-WEAPON"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string trigger UNSUPPORTED, no binding",
+   "pass": true,
+   "detail": "UNSUPPORTED"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string provenance composed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/bow_string proposal P-WEAPON",
+   "pass": true,
+   "detail": "P-WEAPON"
+  },
+  {
+   "name": "baseline file exists metal_parry_v01",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack metal_parry_v01",
+   "pass": true,
+   "detail": "f039557ea520"
+  },
+  {
+   "name": "baseline file exists metal_parry_v02",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack metal_parry_v02",
+   "pass": true,
+   "detail": "8d3c9e3ffca8"
+  },
+  {
+   "name": "baseline file exists metal_parry_v03",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack metal_parry_v03",
+   "pass": true,
+   "detail": "2b0790322861"
+  },
+  {
+   "name": "baseline metal_parry RMS -25.0 dBFS (CP08 family staging)",
+   "pass": true,
+   "detail": "-25.0"
+  },
+  {
+   "name": "baseline file exists basic_blade_v01",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack basic_blade_v01",
+   "pass": true,
+   "detail": "f52294705081"
+  },
+  {
+   "name": "baseline file exists basic_blade_v02",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack basic_blade_v02",
+   "pass": true,
+   "detail": "ff7cb8e005e5"
+  },
+  {
+   "name": "baseline file exists basic_blade_v03",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "baseline sha matches CP08 pack basic_blade_v03",
+   "pass": true,
+   "detail": "fdd2e9284084"
+  },
+  {
+   "name": "baseline basic_blade RMS -25.0 dBFS (CP08 family staging)",
+   "pass": true,
+   "detail": "-25.18"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing has 3 variants",
+   "pass": true,
+   "detail": "3"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v01 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v01 real WAV bytes",
+   "pass": true,
+   "detail": "129702"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v01 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 21600, 'duration': '0.450000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v01 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v01.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.450000', 'size': '129702', 'bit_rate': '2305813', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v01 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v01 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v01 duration 0.45s",
+   "pass": true,
+   "detail": "0.45"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v01 LUFS -23.5 +/- 1.0",
+   "pass": true,
+   "detail": "-23.55"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v01 manifest LUFS matches",
+   "pass": true,
+   "detail": "-23.55"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v01 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-9.05"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v01 centroid 1050.0-1400.0 Hz",
+   "pass": true,
+   "detail": "1161.7"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v01 prominence < 200.0",
+   "pass": true,
+   "detail": "20.1"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v01 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 1161.7, 'bandEnergyLt500Hz': 0.0142, 'bandEnergy2500_5500Hz': 0.0003, 'bandEnergy3000_8000Hz': 0.0002, 'tonalProminence400_2000Hz': 20.1}"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v01 3-8k band < 0.10 (no bright ring)",
+   "pass": true,
+   "detail": "0.0002"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v02 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v02 real WAV bytes",
+   "pass": true,
+   "detail": "129702"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v02 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 21600, 'duration': '0.450000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v02 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v02.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.450000', 'size': '129702', 'bit_rate': '2305813', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v02 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v02 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v02 duration 0.45s",
+   "pass": true,
+   "detail": "0.45"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v02 LUFS -23.5 +/- 1.0",
+   "pass": true,
+   "detail": "-23.45"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v02 manifest LUFS matches",
+   "pass": true,
+   "detail": "-23.45"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v02 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-10.96"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v02 centroid 1050.0-1400.0 Hz",
+   "pass": true,
+   "detail": "1227.4"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v02 prominence < 200.0",
+   "pass": true,
+   "detail": "15.2"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v02 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 1227.4, 'bandEnergyLt500Hz': 0.0115, 'bandEnergy2500_5500Hz': 0.0005, 'bandEnergy3000_8000Hz': 0.0002, 'tonalProminence400_2000Hz': 15.2}"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v02 3-8k band < 0.10 (no bright ring)",
+   "pass": true,
+   "detail": "0.0002"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v03 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v03 real WAV bytes",
+   "pass": true,
+   "detail": "129702"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v03 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 21600, 'duration': '0.450000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v03 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v03.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.450000', 'size': '129702', 'bit_rate': '2305813', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v03 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v03 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v03 duration 0.45s",
+   "pass": true,
+   "detail": "0.45"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v03 LUFS -23.5 +/- 1.0",
+   "pass": true,
+   "detail": "-23.45"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v03 manifest LUFS matches",
+   "pass": true,
+   "detail": "-23.45"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v03 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-9.56"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v03 centroid 1050.0-1400.0 Hz",
+   "pass": true,
+   "detail": "1078.8"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v03 prominence < 200.0",
+   "pass": true,
+   "detail": "20.6"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v03 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 1078.8, 'bandEnergyLt500Hz': 0.0309, 'bandEnergy2500_5500Hz': 0.0003, 'bandEnergy3000_8000Hz': 0.0002, 'tonalProminence400_2000Hz': 20.6}"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing v03 3-8k band < 0.10 (no bright ring)",
+   "pass": true,
+   "detail": "0.0002"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing diff-RMS v01 vs v02 >= 0.05",
+   "pass": true,
+   "detail": "1.3468"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing diff-RMS v01 vs v03 >= 0.05",
+   "pass": true,
+   "detail": "1.3055"
+  },
+  {
+   "name": "SFX/COMBAT/dao_swing diff-RMS v02 vs v03 >= 0.05",
+   "pass": true,
+   "detail": "1.3219"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke has 3 variants",
+   "pass": true,
+   "detail": "3"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v01 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v01 real WAV bytes",
+   "pass": true,
+   "detail": "158502"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v01 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 26400, 'duration': '0.550000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v01 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v01.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.550000', 'size': '158502', 'bit_rate': '2305483', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v01 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v01 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v01 duration 0.55s",
+   "pass": true,
+   "detail": "0.55"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v01 LUFS -24.0 +/- 1.0",
+   "pass": true,
+   "detail": "-23.95"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v01 manifest LUFS matches",
+   "pass": true,
+   "detail": "-23.95"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v01 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-15.63"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v01 centroid 3200.0-4200.0 Hz",
+   "pass": true,
+   "detail": "3857.2"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v01 prominence recorded (not asserted: energy outside 400-2000 Hz)",
+   "pass": true,
+   "detail": "555.1"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v01 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 3857.2, 'bandEnergyLt500Hz': 0.0, 'bandEnergy2500_5500Hz': 0.9514, 'bandEnergy3000_8000Hz': 0.809, 'tonalProminence400_2000Hz': 555.1}"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v01 3-8k band >= 0.35 (airy paper/water identity)",
+   "pass": true,
+   "detail": "0.809"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v02 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v02 real WAV bytes",
+   "pass": true,
+   "detail": "158502"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v02 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 26400, 'duration': '0.550000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v02 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v02.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.550000', 'size': '158502', 'bit_rate': '2305483', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v02 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v02 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v02 duration 0.55s",
+   "pass": true,
+   "detail": "0.55"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v02 LUFS -24.0 +/- 1.0",
+   "pass": true,
+   "detail": "-24.05"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v02 manifest LUFS matches",
+   "pass": true,
+   "detail": "-24.05"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v02 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-15.67"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v02 centroid 3200.0-4200.0 Hz",
+   "pass": true,
+   "detail": "4164.0"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v02 prominence recorded (not asserted: energy outside 400-2000 Hz)",
+   "pass": true,
+   "detail": "299.5"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v02 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 4164.0, 'bandEnergyLt500Hz': 0.0, 'bandEnergy2500_5500Hz': 0.9278, 'bandEnergy3000_8000Hz': 0.9135, 'tonalProminence400_2000Hz': 299.5}"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v02 3-8k band >= 0.35 (airy paper/water identity)",
+   "pass": true,
+   "detail": "0.9135"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v03 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v03 real WAV bytes",
+   "pass": true,
+   "detail": "158502"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v03 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 26400, 'duration': '0.550000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v03 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v03.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.550000', 'size': '158502', 'bit_rate': '2305483', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v03 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v03 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v03 duration 0.55s",
+   "pass": true,
+   "detail": "0.55"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v03 LUFS -24.0 +/- 1.0",
+   "pass": true,
+   "detail": "-23.99"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v03 manifest LUFS matches",
+   "pass": true,
+   "detail": "-23.99"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v03 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-16.67"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v03 centroid 3200.0-4200.0 Hz",
+   "pass": true,
+   "detail": "3670.7"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v03 prominence recorded (not asserted: energy outside 400-2000 Hz)",
+   "pass": true,
+   "detail": "1634.2"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v03 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 3670.7, 'bandEnergyLt500Hz': 0.0, 'bandEnergy2500_5500Hz': 0.9021, 'bandEnergy3000_8000Hz': 0.7291, 'tonalProminence400_2000Hz': 1634.2}"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke v03 3-8k band >= 0.35 (airy paper/water identity)",
+   "pass": true,
+   "detail": "0.7291"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke diff-RMS v01 vs v02 >= 0.05",
+   "pass": true,
+   "detail": "1.424"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke diff-RMS v01 vs v03 >= 0.05",
+   "pass": true,
+   "detail": "1.3955"
+  },
+  {
+   "name": "SFX/COMBAT/brush_stroke diff-RMS v02 vs v03 >= 0.05",
+   "pass": true,
+   "detail": "1.4003"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing has 3 variants",
+   "pass": true,
+   "detail": "3"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 real WAV bytes",
+   "pass": true,
+   "detail": "144102"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 24000, 'duration': '0.500000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v01.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.500000', 'size': '144102', 'bit_rate': '2305632', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 duration 0.5s",
+   "pass": true,
+   "detail": "0.5"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 LUFS -23.5 +/- 1.0",
+   "pass": true,
+   "detail": "-24.19"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 manifest LUFS matches",
+   "pass": true,
+   "detail": "-24.19"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-8.0"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 centroid 450.0-650.0 Hz",
+   "pass": true,
+   "detail": "536.6"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 prominence recorded (not asserted: energy outside 400-2000 Hz)",
+   "pass": true,
+   "detail": "859.4"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 536.6, 'bandEnergyLt500Hz': 0.6072, 'bandEnergy2500_5500Hz': 0.0258, 'bandEnergy3000_8000Hz': 0.0159, 'tonalProminence400_2000Hz': 859.4}"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 <500 Hz band >= 0.30 (low-end weight)",
+   "pass": true,
+   "detail": "0.6072"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v01 2.5-5.5k band >= 0.02 (not sub-bass only)",
+   "pass": true,
+   "detail": "0.0258"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 real WAV bytes",
+   "pass": true,
+   "detail": "144102"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 24000, 'duration': '0.500000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v02.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.500000', 'size': '144102', 'bit_rate': '2305632', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 duration 0.5s",
+   "pass": true,
+   "detail": "0.5"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 LUFS -23.5 +/- 1.0",
+   "pass": true,
+   "detail": "-23.51"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 manifest LUFS matches",
+   "pass": true,
+   "detail": "-23.51"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-9.1"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 centroid 450.0-650.0 Hz",
+   "pass": true,
+   "detail": "560.8"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 prominence recorded (not asserted: energy outside 400-2000 Hz)",
+   "pass": true,
+   "detail": "1130.8"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 560.8, 'bandEnergyLt500Hz': 0.6716, 'bandEnergy2500_5500Hz': 0.0361, 'bandEnergy3000_8000Hz': 0.0225, 'tonalProminence400_2000Hz': 1130.8}"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 <500 Hz band >= 0.30 (low-end weight)",
+   "pass": true,
+   "detail": "0.6716"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v02 2.5-5.5k band >= 0.02 (not sub-bass only)",
+   "pass": true,
+   "detail": "0.0361"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 real WAV bytes",
+   "pass": true,
+   "detail": "144102"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 24000, 'duration': '0.500000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v03.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.500000', 'size': '144102', 'bit_rate': '2305632', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 duration 0.5s",
+   "pass": true,
+   "detail": "0.5"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 LUFS -23.5 +/- 1.0",
+   "pass": true,
+   "detail": "-23.92"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 manifest LUFS matches",
+   "pass": true,
+   "detail": "-23.92"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-8.0"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 centroid 450.0-650.0 Hz",
+   "pass": true,
+   "detail": "605.0"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 prominence recorded (not asserted: energy outside 400-2000 Hz)",
+   "pass": true,
+   "detail": "775.4"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 605.0, 'bandEnergyLt500Hz': 0.599, 'bandEnergy2500_5500Hz': 0.0357, 'bandEnergy3000_8000Hz': 0.0205, 'tonalProminence400_2000Hz': 775.4}"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 <500 Hz band >= 0.30 (low-end weight)",
+   "pass": true,
+   "detail": "0.599"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing v03 2.5-5.5k band >= 0.02 (not sub-bass only)",
+   "pass": true,
+   "detail": "0.0357"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing diff-RMS v01 vs v02 >= 0.05",
+   "pass": true,
+   "detail": "1.0144"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing diff-RMS v01 vs v03 >= 0.05",
+   "pass": true,
+   "detail": "0.9056"
+  },
+  {
+   "name": "SFX/COMBAT/mace_swing diff-RMS v02 vs v03 >= 0.05",
+   "pass": true,
+   "detail": "0.9816"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string has 3 variants",
+   "pass": true,
+   "detail": "3"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v01 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v01 real WAV bytes",
+   "pass": true,
+   "detail": "144102"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v01 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 24000, 'duration': '0.500000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v01 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v01.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.500000', 'size': '144102', 'bit_rate': '2305632', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v01 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v01 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v01 duration 0.5s",
+   "pass": true,
+   "detail": "0.5"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v01 LUFS -23.5 +/- 1.0",
+   "pass": true,
+   "detail": "-23.5"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v01 manifest LUFS matches",
+   "pass": true,
+   "detail": "-23.5"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v01 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-9.4"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v01 centroid 1750.0-2400.0 Hz",
+   "pass": true,
+   "detail": "2159.2"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v01 prominence < 5000.0",
+   "pass": true,
+   "detail": "63.3"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v01 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 2159.2, 'bandEnergyLt500Hz': 0.1485, 'bandEnergy2500_5500Hz': 0.4043, 'bandEnergy3000_8000Hz': 0.2036, 'tonalProminence400_2000Hz': 63.3}"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v01 2.5-5.5k band >= 0.10 (leaf-wind presence)",
+   "pass": true,
+   "detail": "0.4043"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v02 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v02 real WAV bytes",
+   "pass": true,
+   "detail": "144102"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v02 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 24000, 'duration': '0.500000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v02 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v02.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.500000', 'size': '144102', 'bit_rate': '2305632', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v02 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v02 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v02 duration 0.5s",
+   "pass": true,
+   "detail": "0.5"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v02 LUFS -23.5 +/- 1.0",
+   "pass": true,
+   "detail": "-23.46"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v02 manifest LUFS matches",
+   "pass": true,
+   "detail": "-23.46"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v02 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-9.56"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v02 centroid 1750.0-2400.0 Hz",
+   "pass": true,
+   "detail": "2281.7"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v02 prominence < 5000.0",
+   "pass": true,
+   "detail": "95.3"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v02 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 2281.7, 'bandEnergyLt500Hz': 0.1341, 'bandEnergy2500_5500Hz': 0.475, 'bandEnergy3000_8000Hz': 0.2586, 'tonalProminence400_2000Hz': 95.3}"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v02 2.5-5.5k band >= 0.10 (leaf-wind presence)",
+   "pass": true,
+   "detail": "0.475"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v03 master exists",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v03 real WAV bytes",
+   "pass": true,
+   "detail": "144102"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v03 codec pcm_s24le 48k stereo",
+   "pass": true,
+   "detail": "{'index': 0, 'codec_name': 'pcm_s24le', 'codec_long_name': 'PCM signed 24-bit little-endian', 'codec_type': 'audio', 'codec_tag_string': '[1][0][0][0]', 'codec_tag': '0x0001', 'sample_fmt': 's32', 'sample_rate': '48000', 'channels': 2, 'channel_layout': 'stereo', 'bits_per_sample': 24, 'initial_padding': 0, 'r_frame_rate': '0/0', 'avg_frame_rate': '0/0', 'time_base': '1/48000', 'duration_ts': 24000, 'duration': '0.500000', 'bit_rate': '2304000', 'bits_per_raw_sample': '24', 'disposition': {'default': 0, 'dub': 0, 'original': 0, 'comment': 0, 'lyrics': 0, 'karaoke': 0, 'forced': 0, 'hearing_impaired': 0, 'visual_impaired': 0, 'clean_effects': 0, 'attached_pic': 0, 'timed_thumbnails': 0, 'non_diegetic': 0, 'captions': 0, 'descriptions': 0, 'metadata': 0, 'dependent': 0, 'still_image': 0, 'multilayer': 0}}"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v03 duration matches manifest",
+   "pass": true,
+   "detail": "{'filename': '/home/hatch/workspace/projects/ngumach-media02/Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v03.wav', 'nb_streams': 1, 'nb_programs': 0, 'nb_stream_groups': 0, 'format_name': 'wav', 'format_long_name': 'WAV / WAVE (Waveform Audio)', 'duration': '0.500000', 'size': '144102', 'bit_rate': '2305632', 'probe_score': 99, 'tags': {'encoder': 'Lavf62.12.102'}}"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v03 sha matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v03 size matches manifest",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v03 duration 0.5s",
+   "pass": true,
+   "detail": "0.5"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v03 LUFS -23.5 +/- 1.0",
+   "pass": true,
+   "detail": "-23.54"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v03 manifest LUFS matches",
+   "pass": true,
+   "detail": "-23.54"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v03 TP <= -7 dBTP",
+   "pass": true,
+   "detail": "-9.84"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v03 centroid 1750.0-2400.0 Hz",
+   "pass": true,
+   "detail": "2015.0"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v03 prominence < 5000.0",
+   "pass": true,
+   "detail": "38.4"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v03 manifest spectral matches",
+   "pass": true,
+   "detail": "{'spectralCentroidHz': 2015.0, 'bandEnergyLt500Hz': 0.141, 'bandEnergy2500_5500Hz': 0.3596, 'bandEnergy3000_8000Hz': 0.1361, 'tonalProminence400_2000Hz': 38.4}"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string v03 2.5-5.5k band >= 0.10 (leaf-wind presence)",
+   "pass": true,
+   "detail": "0.3596"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string diff-RMS v01 vs v02 >= 0.05",
+   "pass": true,
+   "detail": "1.4"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string diff-RMS v01 vs v03 >= 0.05",
+   "pass": true,
+   "detail": "1.3703"
+  },
+  {
+   "name": "SFX/COMBAT/bow_string diff-RMS v02 vs v03 >= 0.05",
+   "pass": true,
+   "detail": "1.4058"
+  },
+  {
+   "name": "centroid gap dao_swing vs brush_stroke >= 300 Hz",
+   "pass": true,
+   "detail": "2443.2999999999997"
+  },
+  {
+   "name": "centroid gap dao_swing vs mace_swing >= 300 Hz",
+   "pass": true,
+   "detail": "473.79999999999995"
+  },
+  {
+   "name": "centroid gap dao_swing vs bow_string >= 300 Hz",
+   "pass": true,
+   "detail": "787.5999999999999"
+  },
+  {
+   "name": "centroid gap brush_stroke vs mace_swing >= 300 Hz",
+   "pass": true,
+   "detail": "3065.7"
+  },
+  {
+   "name": "centroid gap brush_stroke vs bow_string >= 300 Hz",
+   "pass": true,
+   "detail": "1389.0"
+  },
+  {
+   "name": "centroid gap mace_swing vs bow_string >= 300 Hz",
+   "pass": true,
+   "detail": "1410.0"
+  },
+  {
+   "name": "dao_swing v01 centroid >=400 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "1161.7"
+  },
+  {
+   "name": "dao_swing v01 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "20.1"
+  },
+  {
+   "name": "dao_swing v01 centroid >=250 Hz from metal_parry (764.13 Hz)",
+   "pass": true,
+   "detail": "1161.7"
+  },
+  {
+   "name": "dao_swing v02 centroid >=400 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "1227.4"
+  },
+  {
+   "name": "dao_swing v02 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "15.2"
+  },
+  {
+   "name": "dao_swing v02 centroid >=250 Hz from metal_parry (764.13 Hz)",
+   "pass": true,
+   "detail": "1227.4"
+  },
+  {
+   "name": "dao_swing v03 centroid >=400 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "1078.8"
+  },
+  {
+   "name": "dao_swing v03 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "20.6"
+  },
+  {
+   "name": "dao_swing v03 centroid >=250 Hz from metal_parry (764.13 Hz)",
+   "pass": true,
+   "detail": "1078.8"
+  },
+  {
+   "name": "brush_stroke v01 centroid >=400 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "3857.2"
+  },
+  {
+   "name": "brush_stroke v01 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "555.1"
+  },
+  {
+   "name": "brush_stroke v01 centroid >=250 Hz from metal_parry (764.13 Hz)",
+   "pass": true,
+   "detail": "3857.2"
+  },
+  {
+   "name": "brush_stroke v02 centroid >=400 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "4164.0"
+  },
+  {
+   "name": "brush_stroke v02 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "299.5"
+  },
+  {
+   "name": "brush_stroke v02 centroid >=250 Hz from metal_parry (764.13 Hz)",
+   "pass": true,
+   "detail": "4164.0"
+  },
+  {
+   "name": "brush_stroke v03 centroid >=400 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "3670.7"
+  },
+  {
+   "name": "brush_stroke v03 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "1634.2"
+  },
+  {
+   "name": "brush_stroke v03 centroid >=250 Hz from metal_parry (764.13 Hz)",
+   "pass": true,
+   "detail": "3670.7"
+  },
+  {
+   "name": "mace_swing v01 centroid >=400 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "536.6"
+  },
+  {
+   "name": "mace_swing v01 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "859.4"
+  },
+  {
+   "name": "mace v01 <500 Hz band >= parry + 0.20 (parry 0.0)",
+   "pass": true,
+   "detail": "0.6072"
+  },
+  {
+   "name": "mace v01 centroid <= 700 Hz (low slot, not a parry ring)",
+   "pass": true,
+   "detail": "536.6"
+  },
+  {
+   "name": "mace_swing v02 centroid >=400 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "560.8"
+  },
+  {
+   "name": "mace_swing v02 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "1130.8"
+  },
+  {
+   "name": "mace v02 <500 Hz band >= parry + 0.20 (parry 0.0)",
+   "pass": true,
+   "detail": "0.6716"
+  },
+  {
+   "name": "mace v02 centroid <= 700 Hz (low slot, not a parry ring)",
+   "pass": true,
+   "detail": "560.8"
+  },
+  {
+   "name": "mace_swing v03 centroid >=400 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "605.0"
+  },
+  {
+   "name": "mace_swing v03 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "775.4"
+  },
+  {
+   "name": "mace v03 <500 Hz band >= parry + 0.20 (parry 0.0)",
+   "pass": true,
+   "detail": "0.599"
+  },
+  {
+   "name": "mace v03 centroid <= 700 Hz (low slot, not a parry ring)",
+   "pass": true,
+   "detail": "605.0"
+  },
+  {
+   "name": "bow_string v01 centroid >=400 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "2159.2"
+  },
+  {
+   "name": "bow_string v01 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "63.3"
+  },
+  {
+   "name": "bow_string v01 centroid >=250 Hz from metal_parry (764.13 Hz)",
+   "pass": true,
+   "detail": "2159.2"
+  },
+  {
+   "name": "bow_string v02 centroid >=400 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "2281.7"
+  },
+  {
+   "name": "bow_string v02 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "95.3"
+  },
+  {
+   "name": "bow_string v02 centroid >=250 Hz from metal_parry (764.13 Hz)",
+   "pass": true,
+   "detail": "2281.7"
+  },
+  {
+   "name": "bow_string v03 centroid >=400 Hz from basic_blade (2701.87 Hz)",
+   "pass": true,
+   "detail": "2015.0"
+  },
+  {
+   "name": "bow_string v03 prominence < 1% of parry's (1491503.8)",
+   "pass": true,
+   "detail": "38.4"
+  },
+  {
+   "name": "bow_string v03 centroid >=250 Hz from metal_parry (764.13 Hz)",
+   "pass": true,
+   "detail": "2015.0"
+  },
+  {
+   "name": "playlist is M3U text",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist says NOT_AUDITIONED",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists 14 files (12 drafts + 2 baselines)",
+   "pass": true,
+   "detail": "14"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v01.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v01.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v02.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v02.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v03.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v03.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v01.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v01.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v02.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v02.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v03.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v03.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v01.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v01.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v02.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v02.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v03.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v03.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v01.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v01.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v02.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v02.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v03.wav",
+   "pass": true,
+   "detail": "../../../../Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v03.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../ClientGodot/assets/audio/sfx/skill/metal_parry_v01.wav",
+   "pass": true,
+   "detail": "../../../../ClientGodot/assets/audio/sfx/skill/metal_parry_v01.wav"
+  },
+  {
+   "name": "playlist file exists: ../../../../ClientGodot/assets/audio/sfx/combat/basic_blade_v01.wav",
+   "pass": true,
+   "detail": "../../../../ClientGodot/assets/audio/sfx/combat/basic_blade_v01.wav"
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/dao_swing_v03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/brush_stroke_v03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/mace_swing_v03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v01.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v02.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "playlist lists Art_Source/Audio/Muse/COMPOSED/sfx/bow_string_v03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "runtime tree untouched (git status ClientGodot/ empty)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "checkpoint paths in scope (0 violations)",
+   "pass": true,
+   "detail": "[]"
+  }
+ ]
+}
