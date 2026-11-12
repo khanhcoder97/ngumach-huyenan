@@ -368,7 +368,15 @@
     "batch": "20261112",
     "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_v2.png",
     "inputRole": "IDENTITY_REFERENCE",
-    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER",
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 152,
+    "rootFootOffset": [
+      0.01239614766626162,
+      0.48685785693283484
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_s"
   },
   {
     "id": "mob_shore_stalker_idle_s",
@@ -567,7 +575,15 @@
     "batch": "20261112b",
     "inputRole": "IDENTITY_REFERENCE",
     "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png",
-    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER",
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 157,
+    "rootFootOffset": [
+      -0.03713386074973529,
+      0.48023216372064975
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_n"
   },
   {
     "id": "mob_waterroot_idle_ne",
@@ -583,7 +599,15 @@
     "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_e_v1_20261112b.png",
     "replacesBatch": "20261112b",
     "replacesSource": "Sheets/mob_waterroot_idle_ne_v1_20261112b.png",
-    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER",
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 175,
+    "rootFootOffset": [
+      0.20293746414228345,
+      0.46607917383821
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_ne"
   },
   {
     "id": "mob_waterroot_idle_e",
@@ -597,7 +621,15 @@
     "batch": "20261112b",
     "inputRole": "IDENTITY_REFERENCE",
     "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png",
-    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER",
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 165,
+    "rootFootOffset": [
+      0.13435762115537395,
+      0.4506071955510158
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_e"
   },
   {
     "id": "mob_waterroot_idle_se",
@@ -611,7 +643,15 @@
     "batch": "20261112b",
     "inputRole": "IDENTITY_REFERENCE",
     "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png",
-    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER",
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 157,
+    "rootFootOffset": [
+      0.01900307097361246,
+      0.47669187898089166
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_se"
   },
   {
     "id": "mob_shore_stalker_idle_n",
@@ -1237,5 +1277,399 @@
       "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_interact_s_v1_20261112c.png"
     ],
     "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_telegraph_01_s",
+    "source": "Sheets/mob_waterroot_telegraph_01_s_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_telegraph_01_s_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [],
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 154,
+    "rootFootOffset": [
+      0.01239614766626162,
+      0.48685785693283484
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_s",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_attack_01_s",
+    "source": "Sheets/mob_waterroot_attack_01_s_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_attack_01_s_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_01_s_v1_20261112e.png"
+    ],
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 151,
+    "rootFootOffset": [
+      0.01239614766626162,
+      0.48685785693283484
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_s",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_recovery_01_s",
+    "source": "Sheets/mob_waterroot_recovery_01_s_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_recovery_01_s_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_attack_01_s_v1_20261112e.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png"
+    ],
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 146,
+    "rootFootOffset": [
+      0.01239614766626162,
+      0.48685785693283484
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_s",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_telegraph_01_n",
+    "source": "Sheets/mob_waterroot_telegraph_01_n_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_telegraph_01_n_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_n_v1_20261112b.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_01_s_v1_20261112e.png"
+    ],
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 154,
+    "rootFootOffset": [
+      -0.03713386074973529,
+      0.48023216372064975
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_n",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_attack_01_n",
+    "source": "Sheets/mob_waterroot_attack_01_n_v2_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_attack_01_n_v2_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_attack_01_n_v1_20261112e.png",
+    "inputRole": "BACKGROUND_EXTRACTION_EDIT",
+    "additionalReferences": [],
+    "replacesSource": "Sheets/mob_waterroot_attack_01_n_v1_20261112e.png",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 154,
+    "rootFootOffset": [
+      -0.03713386074973529,
+      0.48023216372064975
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_n",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_recovery_01_n",
+    "source": "Sheets/mob_waterroot_recovery_01_n_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_recovery_01_n_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_attack_01_n_v2_20261112e.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_n_v1_20261112b.png"
+    ],
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 143,
+    "rootFootOffset": [
+      -0.03713386074973529,
+      0.48023216372064975
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_n",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_telegraph_01_ne",
+    "source": "Sheets/mob_waterroot_telegraph_01_ne_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_telegraph_01_ne_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_ne_v2_20261112c.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_01_n_v1_20261112e.png"
+    ],
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 161,
+    "rootFootOffset": [
+      0.20293746414228345,
+      0.46607917383821
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_ne",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_attack_01_ne",
+    "source": "Sheets/mob_waterroot_attack_01_ne_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_attack_01_ne_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_ne_v2_20261112c.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_01_ne_v1_20261112e.png"
+    ],
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 165,
+    "rootFootOffset": [
+      0.20293746414228345,
+      0.46607917383821
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_ne",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_recovery_01_ne",
+    "source": "Sheets/mob_waterroot_recovery_01_ne_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_recovery_01_ne_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_attack_01_ne_v1_20261112e.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_ne_v2_20261112c.png"
+    ],
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 146,
+    "rootFootOffset": [
+      0.20293746414228345,
+      0.46607917383821
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_ne",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_telegraph_01_e",
+    "source": "Sheets/mob_waterroot_telegraph_01_e_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_telegraph_01_e_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_e_v1_20261112b.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_01_s_v1_20261112e.png"
+    ],
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 155,
+    "rootFootOffset": [
+      0.13435762115537395,
+      0.4506071955510158
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_e",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_attack_01_e",
+    "source": "Sheets/mob_waterroot_attack_01_e_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_attack_01_e_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_e_v1_20261112b.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_01_e_v1_20261112e.png"
+    ],
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 136,
+    "rootFootOffset": [
+      0.13435762115537395,
+      0.4506071955510158
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_e",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_recovery_01_e",
+    "source": "Sheets/mob_waterroot_recovery_01_e_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_recovery_01_e_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_attack_01_e_v1_20261112e.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_e_v1_20261112b.png"
+    ],
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 143,
+    "rootFootOffset": [
+      0.13435762115537395,
+      0.4506071955510158
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_e",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_telegraph_01_se",
+    "source": "Sheets/mob_waterroot_telegraph_01_se_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_telegraph_01_se_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_se_v1_20261112b.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_01_s_v1_20261112e.png"
+    ],
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 160,
+    "rootFootOffset": [
+      0.01900307097361246,
+      0.47669187898089166
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_se",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_attack_01_se",
+    "source": "Sheets/mob_waterroot_attack_01_se_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_attack_01_se_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_se_v1_20261112b.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_01_se_v1_20261112e.png"
+    ],
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 152,
+    "rootFootOffset": [
+      0.01900307097361246,
+      0.47669187898089166
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_se",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "mob_waterroot_recovery_01_se",
+    "source": "Sheets/mob_waterroot_recovery_01_se_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_recovery_01_se_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "NATIVE_SOURCE_CLIP_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_attack_01_se_v1_20261112e.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_se_v1_20261112b.png"
+    ],
+    "pivotMode": "MOSS_CORE_ROOT",
+    "bodyReferenceHeight": 150,
+    "rootFootOffset": [
+      0.01900307097361246,
+      0.47669187898089166
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261112e.json",
+    "rootOffsetBasis": "mob_waterroot_idle_se",
+    "reviewScope": "SOURCE_CLIP_ONLY_NOT_FULL_ACTOR_OR_ENCOUNTER"
+  },
+  {
+    "id": "sk_mob_waterroot_01_ripple_component",
+    "source": "Sheets/sk_mob_waterroot_01_ripple_component_v2_20261112e.png",
+    "prompt": "Prompts/sk_mob_waterroot_01_ripple_component_v2_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "pivotMode": "CELL_CENTER",
+    "cellCenterOffset": [
+      0,
+      16
+    ],
+    "componentOnly": true,
+    "generator": "built-in image_gen",
+    "status": "COMPONENT_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Rejections/sk_mob_waterroot_01_ripple_component_v1_20261112e.png",
+    "inputRole": "BACKGROUND_EXTRACTION_EDIT",
+    "reviewScope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_ENCOUNTER"
   }
 ]

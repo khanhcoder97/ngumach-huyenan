@@ -33,7 +33,10 @@
       "bindingSha256": "538ea8b624c2c9d15e8cacdaf81790d2801b66f9c04c46ae3d2ebdd2c9b51e07",
       "replacesSource": null,
       "scaleMode": "HEIGHT",
-      "pivotMode": "FOOT"
+      "pivotMode": "FOOT",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "npc_boat_keeper_walk_ne",
@@ -54,7 +57,10 @@
       "bindingSha256": "7e6495b3c8d6400d0ce0130bb3718eb0873456c9f5626ecf5cb5fbbbde055074",
       "replacesSource": null,
       "scaleMode": "HEIGHT",
-      "pivotMode": "FOOT"
+      "pivotMode": "FOOT",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "npc_boat_keeper_walk_e",
@@ -75,7 +81,10 @@
       "bindingSha256": "721fb360a346f6b6ac4b688d41f2b3c77f8127eeaff653526df167fc478fd2cb",
       "replacesSource": "Sheets/npc_boat_keeper_walk_e_v1_20261112d.png",
       "scaleMode": "HEIGHT",
-      "pivotMode": "FOOT"
+      "pivotMode": "FOOT",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "npc_boat_keeper_walk_se",
@@ -96,7 +105,10 @@
       "bindingSha256": "a1f37bf3d8ba3079522fef9f28b486d8d8f7db724f062988ce91947a418dd590",
       "replacesSource": "Sheets/npc_boat_keeper_walk_se_v1_20261112d.png",
       "scaleMode": "HEIGHT",
-      "pivotMode": "FOOT"
+      "pivotMode": "FOOT",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "npc_boat_keeper_interact_n",
@@ -117,7 +129,10 @@
       "bindingSha256": "039ebfffdfc7269eb76988e0960166c35ce944eb2b66c9cd62c496b67dcd2c22",
       "replacesSource": null,
       "scaleMode": "HEIGHT",
-      "pivotMode": "FOOT"
+      "pivotMode": "FOOT",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "npc_boat_keeper_interact_ne",
@@ -138,7 +153,10 @@
       "bindingSha256": "cb31b47d41f7d2fa0190c8bc52b4f0d6e8b2a6dd7191244934546aa9e8abb0b8",
       "replacesSource": null,
       "scaleMode": "HEIGHT",
-      "pivotMode": "FOOT"
+      "pivotMode": "FOOT",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "npc_boat_keeper_interact_e",
@@ -159,7 +177,10 @@
       "bindingSha256": "dff3e4a564d506f3227d445cb732a0a7c207f1375a82ac9d30b4f3cfdb75f0a6",
       "replacesSource": null,
       "scaleMode": "HEIGHT",
-      "pivotMode": "FOOT"
+      "pivotMode": "FOOT",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "npc_boat_keeper_interact_se",
@@ -180,12 +201,15 @@
       "bindingSha256": "96fb5a957db85ae8d6fa2f2f2cbc50689a4f251ee7737476ec3df668f49dc100",
       "replacesSource": null,
       "scaleMode": "HEIGHT",
-      "pivotMode": "FOOT"
+      "pivotMode": "FOOT",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     }
   ],
   "fullGameComplete": false,
   "requiredJobs": 1008,
-  "structurallyCompleteJobs": 47,
-  "pendingJobs": 961,
+  "structurallyCompleteJobs": 50,
+  "pendingJobs": 958,
   "note": "Cells/hashes do not certify anatomical pose uniqueness. Production approval remains per source/clip. Unbound cells are never padded into a sequence. Coverage fields describe the current catalogue, not historical progress on the batch date."
 }

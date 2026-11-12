@@ -159,6 +159,17 @@ public partial class ActorLibraryBrowser : Control
                 if(poses.Count!=16)throw new Exception("Carpling review clock skipped source poses: "+action);checks++;
                 probe.Loop=false;probe.Restart();probe._Process(duration*2);if(probe.DisplayedFrame!=15)throw new Exception("Carpling one-shot restarted: "+action);checks++;probe.Loop=true;
             }
+            foreach(string action in new[]{"idle","telegraph_01","attack_01","recovery_01"})
+            foreach(int facing in Enumerable.Range(0,8))
+            {
+                if(!_library.Resolve("MOB_WATERROOT",action,facing,out var authored)||authored!.Frames.Length!=16)throw new Exception("missing Waterroot direction: "+action+"/"+facing);checks++;
+                if(authored.Flip!=(facing>=5))throw new Exception("Waterroot mirror binding mismatch");checks++;
+                probe.ActorId="MOB_WATERROOT";probe.Clip=action;probe.Facing=facing;probe.ManualFrame=-1;probe.Loop=action=="idle";probe.Restart();
+                double duration=ActorLibraryData.Duration(probe.ActorId,action);var poses=new HashSet<int>();
+                for(int i=0;i<Math.Ceiling(duration*60)+2;i++){probe._Process(1d/60);poses.Add(probe.DisplayedFrame);}
+                if(poses.Count!=16)throw new Exception("Waterroot clock skipped source poses: "+action);checks++;
+                if(action!="idle"){probe._Process(duration*2);if(probe.DisplayedFrame!=15)throw new Exception("Waterroot one-shot restarted");checks++;}
+            }
             foreach(string action in new[]{"walk","interact"})
             foreach(int facing in Enumerable.Range(0,8))
             {
@@ -170,7 +181,7 @@ public partial class ActorLibraryBrowser : Control
                 if(poses.Count!=16)throw new Exception("boatkeeper clock skipped source poses: "+action);checks++;
                 if(action=="interact"){probe._Process(duration*2);if(probe.DisplayedFrame!=15)throw new Exception("boatkeeper interaction restarted");checks++;}
             }
-            if(ActorLibraryData.Duration("MOB_CARPLING","telegraph_01")!=.45||ActorLibraryData.Duration("MOB_CARPLING","recovery_01")!=.5||ActorLibraryData.Duration("MOB_WATERROOT","telegraph_01")!=ActorLibraryData.Duration("telegraph_01"))throw new Exception("presentation timing leaked between actors");checks++;
+            if(ActorLibraryData.Duration("MOB_CARPLING","telegraph_01")!=.45||ActorLibraryData.Duration("MOB_CARPLING","recovery_01")!=.5||ActorLibraryData.Duration("MOB_WATERROOT","telegraph_01")!=.7||ActorLibraryData.Duration("MOB_SHORE_STALKER","telegraph_01")!=ActorLibraryData.Duration("telegraph_01"))throw new Exception("presentation timing leaked between actors");checks++;
             probe.Seek(10);probe._Process(0);_staticCapture=true;RefreshReadout();
             if(_timeline.Value!=10||!_frame.Text.StartsWith("Frame 11/16 · Ảnh tĩnh"))throw new Exception("static capture readout stale");checks++;
             GD.Print("ACTOR_LIBRARY_SELF_TEST PASS assertions="+checks+" partial catalogue allowed; not complete art acceptance");GetTree().Quit();

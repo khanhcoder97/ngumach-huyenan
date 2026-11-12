@@ -1,8 +1,8 @@
 {
   "actors": 130,
   "requiredPages": 1008,
-  "structurePassed": 92,
-  "boundRequiredPages": 47,
+  "structurePassed": 108,
+  "boundRequiredPages": 50,
   "legacyClips": 3,
   "rejected": [
     {
@@ -10,7 +10,7 @@
       "reason": "rows expected 4, got 5"
     }
   ],
-  "pendingPages": 961,
+  "pendingPages": 958,
   "pendingIds": [
     "class_minh_kiem_skill_01",
     "class_minh_kiem_skill_02",
@@ -56,9 +56,6 @@
     "mob_waterroot_walk",
     "mob_waterroot_hurt",
     "mob_waterroot_death",
-    "mob_waterroot_telegraph_01",
-    "mob_waterroot_attack_01",
-    "mob_waterroot_recovery_01",
     "mob_waterroot_telegraph_02",
     "mob_waterroot_attack_02",
     "mob_waterroot_recovery_02",
@@ -974,7 +971,7 @@
     "mob_stone_automaton_elite_run",
     "mob_stone_automaton_elite_turn"
   ],
-  "productionApprovedPages": 11,
+  "productionApprovedPages": 14,
   "visualHoldPages": 21,
   "modularMigrationReferencePages": 0,
   "structureComplete": false,

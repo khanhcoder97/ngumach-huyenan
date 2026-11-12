@@ -41,7 +41,23 @@
     "npc_boat_keeper_interact_n",
     "npc_boat_keeper_interact_ne",
     "npc_boat_keeper_interact_e",
-    "npc_boat_keeper_interact_se"
+    "npc_boat_keeper_interact_se",
+    "mob_waterroot_telegraph_01_s",
+    "mob_waterroot_attack_01_s",
+    "mob_waterroot_recovery_01_s",
+    "mob_waterroot_telegraph_01_n",
+    "mob_waterroot_attack_01_n",
+    "mob_waterroot_recovery_01_n",
+    "mob_waterroot_telegraph_01_ne",
+    "mob_waterroot_attack_01_ne",
+    "mob_waterroot_recovery_01_ne",
+    "mob_waterroot_telegraph_01_e",
+    "mob_waterroot_attack_01_e",
+    "mob_waterroot_recovery_01_e",
+    "mob_waterroot_telegraph_01_se",
+    "mob_waterroot_attack_01_se",
+    "mob_waterroot_recovery_01_se",
+    "sk_mob_waterroot_01_ripple_component"
   ],
   "holds": [
     {
@@ -142,79 +158,18 @@
       "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112/kiem_tran_studio.png",
       "notes": "Original 16-frame arc viewed in native Godot; alpha, silhouette, center pivot and growth/fade checked. Runtime composes three timed visual arcs. Does not approve the full skill body animation, damage logic, or obsolete sk_mk_03_vfx atlas.",
       "sourceSha256": "a6da8c87d46e6c60ebf88397975caec3c174b36ed7c5173ba26b81a0123b1146"
+    },
+    {
+      "id": "sk_mob_waterroot_01_ripple_component",
+      "date": "2026-11-12",
+      "scope": "VISUAL_COMPONENT_ONLY",
+      "sourceSha256": "54a4ccbed25673134d124b0ddf3624c3e2e5942b65e30f676062027a3e2231e7",
+      "bindingSha256": "a2e477ebcf73eb992492542ec51ae5313426a8a2947904e530bf444ae6167c98",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/root_ripple_studio.png",
+      "notes": "Hollow warning ring sixteen source frames; previewed under the stump during .70s anticipation only. Review-scene integration, not full skill/danger-zone gameplay acceptance."
     }
   ],
   "sourceApprovals": [
-    {
-      "id": "mob_waterroot_idle_s",
-      "sourceSha256": "9e3878b5e4d1eee37cf55a723f5efa45d4726c155fcfc235ac8ff89eac35ed75",
-      "bindingSha256": "01ac7036e7f082feee86993e1ff8d4a4c8d7e58eab99404f9784891162cd79cf",
-      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
-      "reviewedSourceFrames": 16,
-      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
-      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
-      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png",
-      "nativeEvidence": [
-        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
-      ],
-      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
-    },
-    {
-      "id": "mob_waterroot_idle_n",
-      "sourceSha256": "d1e14c0ad6c81979e37c81ac92d2daaaf470fd4a81fcbbfe400a077f80efc79f",
-      "bindingSha256": "fc4fcea4d3fc83f23a96ea357d8d91d5a0924881fecd2e21d396f06d09d4a9a7",
-      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
-      "reviewedSourceFrames": 16,
-      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
-      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
-      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_n_v1_20261112b.png",
-      "nativeEvidence": [
-        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
-      ],
-      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
-    },
-    {
-      "id": "mob_waterroot_idle_ne",
-      "sourceSha256": "f3ed3d193dcd55c182f363d80e5dac3c4fb48d093a2b1e430d88ef67ab413fbe",
-      "bindingSha256": "06957ad242ae7ce530bed69f5e2b98a5d6c9b589f6b35e5b270bd84ad604c6a6",
-      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
-      "reviewedSourceFrames": 16,
-      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
-      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
-      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_ne_v2_20261112c.png",
-      "nativeEvidence": [
-        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
-      ],
-      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
-    },
-    {
-      "id": "mob_waterroot_idle_e",
-      "sourceSha256": "57ba5ad15bb7d6503a55d19411e67aabe069ef82c086c5b4b48820cf309b3fc3",
-      "bindingSha256": "b81af627c1bbebd3e1fc6b73e4bfcc34e089fe9959fcf2eb58944934da959bde",
-      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
-      "reviewedSourceFrames": 16,
-      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
-      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
-      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_e_v1_20261112b.png",
-      "nativeEvidence": [
-        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
-      ],
-      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
-    },
-    {
-      "id": "mob_waterroot_idle_se",
-      "sourceSha256": "954d3fa4c8a4d10472dccae81d4b50fc2245f796e62e334a1b27b000d9afcd2e",
-      "bindingSha256": "7291e464db3d8ea1773b4dee96aa0ab600f3e93f4e6f4c599cd4109fb4682d59",
-      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
-      "reviewedSourceFrames": 16,
-      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
-      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
-      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_se_v1_20261112b.png",
-      "nativeEvidence": [
-        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
-      ],
-      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio"
-    },
     {
       "id": "mob_carpling_telegraph_01_s",
       "sourceSha256": "d419a07558a8830e984138028d851d416bd329d3d4b4be9c86c61826e8d15b29",
@@ -738,6 +693,343 @@
         "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_interact_eight_angles.png"
       ],
       "reviewScale": "88px eight-direction library; 140px Studio"
+    },
+    {
+      "id": "mob_waterroot_idle_s",
+      "sourceSha256": "9e3878b5e4d1eee37cf55a723f5efa45d4726c155fcfc235ac8ff89eac35ed75",
+      "bindingSha256": "adeedececb5b8ecfd6f56113ddf4c82e008e51a9ddff8763b3ffd9d99f805d3f",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_idle_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_s.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_idle_n",
+      "sourceSha256": "d1e14c0ad6c81979e37c81ac92d2daaaf470fd4a81fcbbfe400a077f80efc79f",
+      "bindingSha256": "5c83e3d052dd6e6fc979f5681fdd7f56b42adc8e5eb5c463ff821935a54049c1",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_idle_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_n_v1_20261112b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_n.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_idle_ne",
+      "sourceSha256": "f3ed3d193dcd55c182f363d80e5dac3c4fb48d093a2b1e430d88ef67ab413fbe",
+      "bindingSha256": "a2641e7ba9daa65feea80260d43c1c015c2611433e590dfe64f0d977fb0884cc",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_idle_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_ne_v2_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_ne.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_idle_e",
+      "sourceSha256": "57ba5ad15bb7d6503a55d19411e67aabe069ef82c086c5b4b48820cf309b3fc3",
+      "bindingSha256": "4717ea1d3f62baa22b9262cc6ecd74aa237c00a72c4fec74d33dd69c37977509",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_idle_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_e_v1_20261112b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_e.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_idle_se",
+      "sourceSha256": "954d3fa4c8a4d10472dccae81d4b50fc2245f796e62e334a1b27b000d9afcd2e",
+      "bindingSha256": "b8a304d0bb8be9eb3df8b5c199494cf82fe12f58e88dce38419444aa2d189293",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_idle_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_se_v1_20261112b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_se.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_s",
+      "sourceSha256": "6170980e85bb45068a95e926174a763e872fa1f0342d3ae309223dbd885aa94c",
+      "bindingSha256": "793bc400fbfec078f7384e0cec278b4c2587c040847bf37eb07333857cbd85d7",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_telegraph_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_01_s_v1_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_telegraph_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_s.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_attack_01_s",
+      "sourceSha256": "b140a6e7f698d87fa0aaef0739c348d206ef9c0e2585bd95f4ffe3dbacf0a306",
+      "bindingSha256": "8a1296f88147f53e954ae549c6a8d8a34fa84ef5a4c4c717d951772ac3b94372",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_attack_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_attack_01_s_v1_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_attack_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_s.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_recovery_01_s",
+      "sourceSha256": "8837f959f49c308232432633255d586e3cf93f827c7a9b36619b5accd0f6639b",
+      "bindingSha256": "edadff47dc91e17a43a20d6d59d97f2c269173fca0578c5b1b82a9f3fb651776",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_recovery_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_recovery_01_s_v1_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_recovery_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_s.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_n",
+      "sourceSha256": "271faf4952aa022d0db4ee049cc40b155188a3d4cea46c816df00bf48c5979eb",
+      "bindingSha256": "4107abebdd1840c923ac1d82894776e6a915497f5eef28a3f3e7bb0a0030b8c5",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_telegraph_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_01_n_v1_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_telegraph_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_n.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_attack_01_n",
+      "sourceSha256": "17bcdfea58216c2c331549e547dc1b1bed71d6a95cd02d51337538ea6cc33105",
+      "bindingSha256": "308569866d5e1ba2c86847ee0e65978f50688697b11c4958a6014dc4e08698df",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_attack_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_attack_01_n_v2_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_attack_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_n.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_recovery_01_n",
+      "sourceSha256": "9963bb262d3295d09fe0f91b23944b30a4288bcb3a6a7cdbbb531d6316019e49",
+      "bindingSha256": "00322e899594dfab4b637498dffa0e1a87efa48ba95a5c0910d93928640d9518",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_recovery_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_recovery_01_n_v1_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_recovery_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_n.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_ne",
+      "sourceSha256": "52d72cf4a627bb704fd3d18667320c5d441a24e526a8fb177cc389359fd28a5a",
+      "bindingSha256": "8388ce79e1985db82b3e9cd8f759ced580aa1cda45a346052b9c215931178d81",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_telegraph_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_01_ne_v1_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_telegraph_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_ne.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_attack_01_ne",
+      "sourceSha256": "5fa69702e069c1f2f731e88c8cc1aa851daa433a009057b33769f59f70965e8c",
+      "bindingSha256": "0f7d810aaf00e03ae67393dfc5a29c6841d5ee63126d55da2faa277fae004106",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_attack_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_attack_01_ne_v1_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_attack_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_ne.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_recovery_01_ne",
+      "sourceSha256": "363b69f351a94904bf13e7560f869cfdc3de38635ed7671539fe429e7adead7b",
+      "bindingSha256": "a692d567db090004f5bc0178b8439ab3e4825746762d7096029adca97b1255e7",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_recovery_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_recovery_01_ne_v1_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_recovery_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_ne.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_e",
+      "sourceSha256": "6ae2258df3124d985bf774106434ff5a4069316752290dfaeeefd925ba9e5730",
+      "bindingSha256": "cbba00b245dfae0877c5df8376cde68e1a0ce63f2960771e7be7efea8d5be5d7",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_telegraph_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_01_e_v1_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_telegraph_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_e.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_attack_01_e",
+      "sourceSha256": "52d673ccc041ceb0138ca87463bd9c4a31b683a1391ff60a5be3d624a5442785",
+      "bindingSha256": "99351bf24b9c3516ae76d6cd9838f0c7e2f8d607dd5278e894ce065a6f31e571",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_attack_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_attack_01_e_v1_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_attack_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_e.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_recovery_01_e",
+      "sourceSha256": "cc7a8dc59d98a33652fc832d2a21a758afb0a26eace6e6f2395594a10a4e5940",
+      "bindingSha256": "8a454a9a78a0d0eadfa5f1ca6d3cb6f7c2bf962ae9adbe46d482beb793bc4a19",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_recovery_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_recovery_01_e_v1_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_recovery_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_e.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_se",
+      "sourceSha256": "d0c9796427c0d089764569dc219ac5d6ef7cb952abe52f31ede8004dfcdc047e",
+      "bindingSha256": "7586ffc18ffd209866dec94f382dac905f5630a6694c0755822f51d4a2044f6b",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_telegraph_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_01_se_v1_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_telegraph_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_se.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_attack_01_se",
+      "sourceSha256": "7ee1f1f3ca6cb0ce7ad300587d7756b9a717ef0013a7dc81db5cc173a618ad36",
+      "bindingSha256": "d9f496b83b938e22f32ac31cc905b131cfea1460969544f6dc93ab3f79cfa99d",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_attack_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_attack_01_se_v1_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_attack_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_se.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "mob_waterroot_recovery_01_se",
+      "sourceSha256": "a70901129667bbfc3c33d6a6f4b7c6d239f29b91a19bda96d366272c13abee45",
+      "bindingSha256": "653fc793010c7d46aaa1e647399427ebcda87aafdca2bc0504378fa35d8422ac",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_recovery_01_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_recovery_01_se_v1_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_recovery_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_se.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "88px library and chained combat review",
+      "batch": "20261112e"
+    },
+    {
+      "id": "sk_mob_waterroot_01_ripple_component",
+      "sourceSha256": "54a4ccbed25673134d124b0ddf3624c3e2e5942b65e30f676062027a3e2231e7",
+      "bindingSha256": "a2e477ebcf73eb992492542ec51ae5313426a8a2947904e530bf444ae6167c98",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112e/root_ripple.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_mob_waterroot_01_ripple_component_v2_20261112e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/root_ripple.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/root_ripple_studio.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112e/waterroot_combat_s.mp4"
+      ],
+      "method": "Viewed original sixteen-frame source and native nearest-filtered image/movie samples. Root body core registration reviewed after sharing the per-angle idle offset. Source/clip only; no AI, damage or full actor acceptance.",
+      "reviewScale": "160px Studio effect preview / root chain review",
+      "batch": "20261112e"
     }
   ],
   "historicalHolds": [
@@ -750,6 +1042,88 @@
       "id": "mob_shore_stalker_idle",
       "reason": "V2 still has seven columns, not eight. Hold.",
       "status": "RETIRED_INVALID_ATLAS_REPLACED_BY_DIRECTIONAL_SOURCES"
+    }
+  ],
+  "sourceApprovalHistory": [
+    {
+      "id": "mob_waterroot_idle_s",
+      "sourceSha256": "9e3878b5e4d1eee37cf55a723f5efa45d4726c155fcfc235ac8ff89eac35ed75",
+      "bindingSha256": "01ac7036e7f082feee86993e1ff8d4a4c8d7e58eab99404f9784891162cd79cf",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio",
+      "supersededByBatch": "20261112e",
+      "reason": "Original PNG unchanged; registered pivot/scale changed and was reviewed again."
+    },
+    {
+      "id": "mob_waterroot_idle_n",
+      "sourceSha256": "d1e14c0ad6c81979e37c81ac92d2daaaf470fd4a81fcbbfe400a077f80efc79f",
+      "bindingSha256": "fc4fcea4d3fc83f23a96ea357d8d91d5a0924881fecd2e21d396f06d09d4a9a7",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_n_v1_20261112b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio",
+      "supersededByBatch": "20261112e",
+      "reason": "Original PNG unchanged; registered pivot/scale changed and was reviewed again."
+    },
+    {
+      "id": "mob_waterroot_idle_ne",
+      "sourceSha256": "f3ed3d193dcd55c182f363d80e5dac3c4fb48d093a2b1e430d88ef67ab413fbe",
+      "bindingSha256": "06957ad242ae7ce530bed69f5e2b98a5d6c9b589f6b35e5b270bd84ad604c6a6",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_ne_v2_20261112c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio",
+      "supersededByBatch": "20261112e",
+      "reason": "Original PNG unchanged; registered pivot/scale changed and was reviewed again."
+    },
+    {
+      "id": "mob_waterroot_idle_e",
+      "sourceSha256": "57ba5ad15bb7d6503a55d19411e67aabe069ef82c086c5b4b48820cf309b3fc3",
+      "bindingSha256": "b81af627c1bbebd3e1fc6b73e4bfcc34e089fe9959fcf2eb58944934da959bde",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_e_v1_20261112b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio",
+      "supersededByBatch": "20261112e",
+      "reason": "Original PNG unchanged; registered pivot/scale changed and was reviewed again."
+    },
+    {
+      "id": "mob_waterroot_idle_se",
+      "sourceSha256": "954d3fa4c8a4d10472dccae81d4b50fc2245f796e62e334a1b27b000d9afcd2e",
+      "bindingSha256": "7291e464db3d8ea1773b4dee96aa0ab600f3e93f4e6f4c599cd4109fb4682d59",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4",
+      "method": "Viewed original sixteen-frame sheet and native point-filtered Godot captures/movie; source/registration pinned. Native 60-step clock and one-shot tests checked separately.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_se_v1_20261112b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112c/waterroot_idle.mp4"
+      ],
+      "reviewScale": "Point-filtered native 88px library /120px combat review; NPC140px Studio",
+      "supersededByBatch": "20261112e",
+      "reason": "Original PNG unchanged; registered pivot/scale changed and was reviewed again."
     }
   ]
 }

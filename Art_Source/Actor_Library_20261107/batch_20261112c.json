@@ -30,10 +30,16 @@
       "componentOnly": false,
       "productionApproved": true,
       "visualState": "APPROVED",
-      "bindingSha256": "06957ad242ae7ce530bed69f5e2b98a5d6c9b589f6b35e5b270bd84ad604c6a6",
+      "bindingSha256": "a2641e7ba9daa65feea80260d43c1c015c2611433e590dfe64f0d977fb0884cc",
       "replacesSource": "Sheets/mob_waterroot_idle_ne_v1_20261112b.png",
       "scaleMode": "HEIGHT",
-      "pivotMode": "FOOT"
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 175,
+      "rootFootOffset": [
+        0.20293746414228345,
+        0.46607917383821
+      ],
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_telegraph_01_e",
@@ -54,7 +60,10 @@
       "bindingSha256": "60b9e7d97a43dba9a21db67ba4596e36492e3b24ce49e280f8e941ab0e7c480f",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_attack_01_e",
@@ -75,7 +84,10 @@
       "bindingSha256": "f460c55cb527d689b1939dc5e6eba890cc3673241c42bd43f64a7b9123c0658a",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_recovery_01_e",
@@ -96,7 +108,10 @@
       "bindingSha256": "12295e361c3393e517182430f6ad65dd9e3085b7b9077afe6fa65cbf026dd16d",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_hurt_e",
@@ -117,7 +132,10 @@
       "bindingSha256": "1d0162d8abf603253ddd6f97bd9910ba71bea093db1e0ec695ea87ddcffb73bd",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_death_e",
@@ -138,7 +156,10 @@
       "bindingSha256": "24e47c275b190cc8d6c47be4bc4ff9e49bd7cdceef8005e5842f6087aed7fc7d",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_telegraph_01_n",
@@ -159,7 +180,10 @@
       "bindingSha256": "8896783da155335272343df6da8ee806c0380de4eae7cf96aa2f6412fb2281e0",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_attack_01_n",
@@ -180,7 +204,10 @@
       "bindingSha256": "03fe7f9690eebc2b78cd8e5cd452c31d0003b8d3c8acf269807b27e4103c7737",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_recovery_01_n",
@@ -201,7 +228,10 @@
       "bindingSha256": "2acf0d37b781e1267911394e02bed02e7e7413b8a05101446fb495a690c6184c",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_hurt_n",
@@ -222,7 +252,10 @@
       "bindingSha256": "d9d2a98b1e3845cba95734a0701de45290ce2cc7cc911b4127938391a5de0c42",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_death_n",
@@ -243,7 +276,10 @@
       "bindingSha256": "b47d994f41484a1e2a7ecaf6e81754e082d6475909aa7d0d72f5eaedae3b66f9",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_telegraph_01_ne",
@@ -264,7 +300,10 @@
       "bindingSha256": "74fdc92dc51f1ae36771494ac01a2fb8905c8ac9b2cff2288b9fd6aa68ee27a5",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_attack_01_ne",
@@ -285,7 +324,10 @@
       "bindingSha256": "39cde2686379516a860a72f8acfa6c9631f45663c7ac4f0bb751406f4a7385e8",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_recovery_01_ne",
@@ -306,7 +348,10 @@
       "bindingSha256": "f97f489e519adaa8ee5637a52971f0119e405c63a387d9ffd3a72ac2a1492f28",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_hurt_ne",
@@ -327,7 +372,10 @@
       "bindingSha256": "f86b72b1719ae07af5c7c3c8d2846e9f37fb322c8334f5d49559fe5f2123c840",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_death_ne",
@@ -348,7 +396,10 @@
       "bindingSha256": "d1f3744bae016b983757ffd57ebae134d05d8b64836a5fec2c7afd0f58dce19a",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_telegraph_01_se",
@@ -369,7 +420,10 @@
       "bindingSha256": "f09896c48fed26e626926d58938167d9a50f627935b418cf244e6b9329d8e4fe",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_attack_01_se",
@@ -390,7 +444,10 @@
       "bindingSha256": "eed717ee79d1e015be7cad591ac0f6473faa1a81226fda79dd3b79aff49db2a1",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_recovery_01_se",
@@ -411,7 +468,10 @@
       "bindingSha256": "3163a6dfd0eb7aedaea8df63931cc61d577b52f7e2615b5524bde3cbeafb9239",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_hurt_se",
@@ -432,7 +492,10 @@
       "bindingSha256": "067b27ce1bbd41a949f1d7c6c6951eb33bcfce4edbb3f8119f940e26ecd0e197",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_death_se",
@@ -453,7 +516,10 @@
       "bindingSha256": "886b1b4130c0235271c2803514ad870fac6cb280f916753ea16cdb0202ce7df7",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "npc_boat_keeper_walk_s",
@@ -474,7 +540,10 @@
       "bindingSha256": "ba26f3f6606b85368c7afae446891eb4b23484e0c5b4e0671c30229bbff1825a",
       "replacesSource": null,
       "scaleMode": "HEIGHT",
-      "pivotMode": "FOOT"
+      "pivotMode": "FOOT",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "npc_boat_keeper_interact_s",
@@ -495,12 +564,15 @@
       "bindingSha256": "d55a6414d712046cee92228a6b6b70a31df5cb5e0718d1f5e34a0e6697b8df5a",
       "replacesSource": null,
       "scaleMode": "HEIGHT",
-      "pivotMode": "FOOT"
+      "pivotMode": "FOOT",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     }
   ],
   "fullGameComplete": false,
   "requiredJobs": 1008,
-  "structurallyCompleteJobs": 47,
-  "pendingJobs": 961,
+  "structurallyCompleteJobs": 50,
+  "pendingJobs": 958,
   "note": "Cells/hashes do not certify anatomical pose uniqueness. Production approval remains per source/clip. Unbound cells are never padded into a sequence. Coverage fields describe the current catalogue, not historical progress on the batch date."
 }

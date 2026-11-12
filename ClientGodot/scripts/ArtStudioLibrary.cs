@@ -53,11 +53,13 @@ public static class ArtStudioLibrary
     }
     private static double SourceDuration(string id)
     {
-        if (!id.StartsWith("mob_carpling_", StringComparison.Ordinal)) return id.Contains("walk", StringComparison.Ordinal) ? .8 : 1.6;
-        string action = id[13..];
+        if (id == "sk_mob_waterroot_01_ripple_component") return .7;
+        string? owner = id.StartsWith("mob_carpling_", StringComparison.Ordinal) ? "MOB_CARPLING" : id.StartsWith("mob_waterroot_", StringComparison.Ordinal) ? "MOB_WATERROOT" : null;
+        if (owner == null) return id.Contains("walk", StringComparison.Ordinal) ? .8 : 1.6;
+        string action = id[(owner.Length+1)..];
         foreach (string facing in new[] { "_n", "_ne", "_e", "_se", "_s", "_sw", "_w", "_nw" })
             if (action.EndsWith(facing, StringComparison.Ordinal)) { action = action[..^facing.Length]; break; }
-        return ActorLibraryData.Duration("MOB_CARPLING", action);
+        return ActorLibraryData.Duration(owner, action);
     }
     public static ArtStudioDocument Actor(string actor, string action)
     {
@@ -134,5 +136,5 @@ public static class ArtStudioLibrary
             for (int i = 0; i < clip.DurationsMs.Count; i++)
             { var pose = l.Rest.Copy(); pose.SourceFrame = Math.Min(frames.Length - 1, i * frames.Length / clip.DurationsMs.Count); ArtStudioSampler.SetKey(clip, l.Id, i, pose); }
     }
-    private static bool OneShot(string id) => new[] { "death", "hurt", "dodge", "attack", "cast", "skill_", "telegraph", "recovery", "interact", "arc_component", "crack_component" }.Any(t => id.Contains(t, StringComparison.Ordinal));
+    private static bool OneShot(string id) => new[] { "death", "hurt", "dodge", "attack", "cast", "skill_", "telegraph", "recovery", "interact", "arc_component", "crack_component", "ripple_component" }.Any(t => id.Contains(t, StringComparison.Ordinal));
 }

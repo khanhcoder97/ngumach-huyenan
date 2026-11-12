@@ -339,5 +339,43 @@
       "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_s_v3_20261112c.png"
     ],
     "reason": "Replace with v2 for clearer opposing-boot silhouette; original PNG retained unchanged."
+  },
+  {
+    "id": "mob_waterroot_attack_01_n",
+    "source": "Sheets/mob_waterroot_attack_01_n_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_attack_01_n_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_ALPHA_BACKGROUND_RESIDUE",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_n_v1_20261112b.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_attack_01_s_v1_20261112e.png"
+    ],
+    "reason": "Low-alpha grey/yellow background residue across gutters; replaced by background-extracted v2."
+  },
+  {
+    "id": "sk_mob_waterroot_01_ripple_component",
+    "source": "Rejections/sk_mob_waterroot_01_ripple_component_v1_20261112e.png",
+    "prompt": "Prompts/sk_mob_waterroot_01_ripple_component_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "pivotMode": "CELL_CENTER",
+    "cellCenterOffset": [
+      0,
+      16
+    ],
+    "componentOnly": true,
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_ALPHA_EXTRACTION",
+    "batch": "20261112e",
+    "reference": null,
+    "inputRole": "NEW_EFFECT_GENERATION",
+    "reason": "v2 lowers residual background alpha and retains hollow ring strokes; only v2 goes to native review."
   }
 ]

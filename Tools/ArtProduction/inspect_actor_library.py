@@ -1,5 +1,5 @@
 """Read-only raster inspection and metadata export. Never edits/resamples a bitmap."""
-import argparse,hashlib,json,statistics
+import argparse,hashlib,json,statistics,math
 from pathlib import Path
 from PIL import Image
 
@@ -24,6 +24,20 @@ def locate(values,expected,maximum_gap):
         if len(found)==expected and min(b-a for a,b in found)>=len(values)/expected*.2:return found
     return bands(occupied,maximum_gap)
 
+def clear_gutter_edges(groups,maximum,values):
+    # Opt-in for asymmetric whips: the thresholded projection can miss a thin
+    # tip. Values count alpha>=200 pixels. Cut in a >=4px solid-core-free run;
+    # keep the existing margin check to retain the tip and its edge pixels.
+    result=[0]
+    for left,right in zip(groups,groups[1:]):
+        start,end=left[1],right[0]
+        empty=bands([v==0 for v in values[start:end]],0)
+        assert empty,'no clear gutter between source cells'
+        a,b=max(empty,key=lambda run:run[1]-run[0])
+        assert b-a>=4,'gutter too narrow for an intact source frame'
+        result.append(start+(a+b)//2)
+    return result+[maximum]
+
 def reference_height(frames,scale_mode='HEIGHT'):
     assert scale_mode in ('HEIGHT','LONGEST_AXIS'),'unreviewed source scale mode'
     return statistics.median(max(f['bounds'][2]-f['bounds'][0],f['bounds'][3]-f['bounds'][1])
@@ -42,10 +56,21 @@ def binding_sha256(page):
     payload={k:page.get(k) for k in ('directions','referenceHeight','scaleMode','pivotMode')}
     return hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
+def moss_body_pivot(pixels,width,body_height,foot_offset):
+    # Waterroot-only registration. A brown whip must not define the stump's
+    # foot or scale. Read the green core; never alter source pixels.
+    assert math.isfinite(body_height) and body_height>=16,'invalid root body height'
+    assert len(foot_offset)==2 and all(math.isfinite(v) and abs(v)<=1 for v in foot_offset),'invalid root foot offset'
+    points=[(i%width,i//width) for i,(r,g,b,a) in enumerate(pixels)
+            if a>=200 and g>=60 and g>r*1.05 and g>=b*.9]
+    assert len(points)>=8,'moss core absent; manual registration required'
+    return [sum(p[axis] for p in points)/len(points)+foot_offset[axis]*body_height for axis in (0,1)]
+
 def source_approval_matches(page,approval):
     return approval.get('sourceSha256')==page['sha256'] and approval.get('bindingSha256')==binding_sha256(page)
 
 def inspect(record, art_root=None):
+    assert record.get('gutterPolicy') in (None,'SOLID_CORE_GUTTER'),'unreviewed gutter policy'
     path=(art_root or ART)/record['source']
     with Image.open(path) as im:
         assert im.mode=='RGBA','PNG must retain RGBA'
@@ -68,6 +93,8 @@ def inspect(record, art_root=None):
             assert len(rows)==record['rows'],f"rows expected {record['rows']}, got {len(rows)}"
             edges=lambda groups,maximum:[0]+[round((a[1]+b[0])/2) for a,b in zip(groups,groups[1:])]+[maximum]
             xx=edges(cols,w);yy=edges(rows,h)
+            if record.get('gutterPolicy')=='SOLID_CORE_GUTTER':
+                xx=clear_gutter_edges(cols,w,xs);yy=clear_gutter_edges(rows,h,ys)
         frames=[];hashes=[]
         for row in range(len(rows)):
             for col in range(len(cols)):
@@ -79,12 +106,22 @@ def inspect(record, art_root=None):
                 pivot=[(bb[0]+bb[2])/2,bb[3]] if not foot else [int((x1-x)*.25)+(foot[0]+foot[2])/2,int((y1-y)*.6)+foot[3]]
                 if record.get('pivotMode')=='CELL_CENTER':
                     assert record['id'].startswith('sk_'),'cell-center mode is VFX-only'
-                    pivot=[(x1-x)/2,(y1-y)/2]
+                    offset=record.get('cellCenterOffset',[0,0])
+                    assert len(offset)==2 and all(math.isfinite(v) for v in offset),'invalid VFX center offset'
+                    pivot=[(x1-x)/2+offset[0],(y1-y)/2+offset[1]]
+                    assert 0<=pivot[0]<x1-x and 0<=pivot[1]<y1-y,'VFX pivot outside cell'
                 elif record.get('pivotMode')=='SILVER_CORE_CENTER':
                     assert record['id'].startswith('mob_carpling_'),'silver-core registration is fish-only'
                     region=im.crop((x,y,x1,y1))
                     pixels=region.get_flattened_data() if hasattr(region,'get_flattened_data') else region.getdata()
                     pivot=silver_core_pivot(pixels,x1-x)
+                elif record.get('pivotMode')=='MOSS_CORE_ROOT':
+                    assert record['id'].startswith('mob_waterroot_'),'moss registration is Waterroot-only'
+                    region=im.crop((x,y,x1,y1));body_height=record['bodyReferenceHeight']
+                    assert body_height<=h/record['rows'],'root body height exceeds cell'
+                    pixels=region.get_flattened_data() if hasattr(region,'get_flattened_data') else region.getdata()
+                    pivot=moss_body_pivot(pixels,x1-x,body_height,record['rootFootOffset'])
+                    assert 0<=pivot[0]<region.width and 0<=pivot[1]<region.height,'root anchor outside source cell'
                 frames.append(dict(rect=[x,y,x1-x,y1-y],bounds=list(bb),pivot=pivot))
                 hashes.append(hashlib.sha256(im.crop((x,y,x1,y1)).tobytes()).hexdigest())
         assert len(set(hashes))==len(hashes),'duplicate full-frame pixels; frame count cannot be padded'
@@ -98,7 +135,7 @@ def inspect(record, art_root=None):
                 block=frames[source*16:source*16+16];assert len(block)==16
                 # Page resolution varies. Calibrate from the neutral first poses, never
                 # scale a lying death pose back up to standing height.
-                height=reference_height(block,record.get('scaleMode','HEIGHT'))
+                height=record['bodyReferenceHeight'] if record.get('pivotMode')=='MOSS_CORE_ROOT' else reference_height(block,record.get('scaleMode','HEIGHT'))
                 directions.append(dict(direction=name,flip=False,referenceHeight=height,frames=block))
             if record.get('mirrorAllowed',True):
                 for target,source in [('SW','SE'),('W','E'),('NW','NE')]:
@@ -107,7 +144,7 @@ def inspect(record, art_root=None):
                         directions.append(dict(direction=target,flip=True,referenceHeight=original['referenceHeight'],frames=original['frames']))
             directions.sort(key=lambda d:['N','NE','E','SE','S','SW','W','NW'].index(d['direction']))
         elif (len(cols),len(rows))==(4,4):
-            vfx=record['id'].startswith('sk_');height=max(f['bounds'][3]-f['bounds'][1] for f in frames) if vfx else reference_height(frames,record.get('scaleMode','HEIGHT'))
+            vfx=record['id'].startswith('sk_');height=record['bodyReferenceHeight'] if record.get('pivotMode')=='MOSS_CORE_ROOT' else max(f['bounds'][3]-f['bounds'][1] for f in frames) if vfx else reference_height(frames,record.get('scaleMode','HEIGHT'))
             directions=[dict(direction=record.get('direction') or ('OMNI' if vfx else 'S'),flip=False,referenceHeight=height,frames=frames)]
         else:raise AssertionError('unreviewed atlas layout')
         page=dict(id=record['id'],file='sheets/'+path.name,source=record['source'],sha256=hashlib.sha256(path.read_bytes()).hexdigest(),imageSize=[w,h],directions=directions,
@@ -126,6 +163,7 @@ def covers(job,accepted,approved_only=False):
 
 def main(export,require_complete,check=False):
     records=json.loads((ART/'generation_records.json').read_text(encoding='utf8'));accepted=[];rejected=[]
+    assert len({r['id'] for r in records})==len(records),'duplicate active source IDs; move superseded versions to history'
     for r in records:
         try:accepted.append(inspect(r))
         except (AssertionError,OSError) as e:rejected.append(dict(id=r['id'],reason=str(e)))

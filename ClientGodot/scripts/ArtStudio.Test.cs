@@ -44,6 +44,22 @@ public partial class ArtStudio
                     Check(Math.Abs(previewClip.Duration - raw.Duration) < .00001 && !previewClip.Loop, "combat timing/loop mismatch: " + action + "/" + previewClip.Direction);
                 }
             }
+            foreach (string action in new[] { "idle", "telegraph_01", "attack_01", "recovery_01" })
+            {
+                var group = ArtStudioLibrary.Load("actor:MOB_WATERROOT:" + action);
+                Check(group.Clips.Count == 8, "missing Waterroot direction: " + action);
+                foreach (var rootClip in group.Clips)
+                {
+                    string source = rootClip.Direction switch { "SW" => "SE", "W" => "E", "NW" => "NE", _ => rootClip.Direction };
+                    var raw = ArtStudioLibrary.Load("mob_waterroot_" + action + "_" + source.ToLowerInvariant()).Clips.Single();
+                    Check(rootClip.Loop == (action == "idle") && raw.Loop == rootClip.Loop, "Waterroot loop mismatch");
+                    Check(Math.Abs(rootClip.Duration - raw.Duration) < .00001 && Math.Abs(rootClip.Duration - ActorLibraryData.Duration("MOB_WATERROOT", action)) < .00001, "Waterroot raw/group timing mismatch");
+                    if (action != "idle") Check(ArtStudioSampler.FrameAt(rootClip, rootClip.Duration * 2) == 15, "Waterroot recovery/attack did not hold final pose");
+                }
+            }
+            var rootRipple = ArtStudioLibrary.Load("sk_mob_waterroot_01_ripple_component").Clips.Single();
+            Check(!rootRipple.Loop && Math.Abs(rootRipple.Duration - .7) < .00001, "root warning cue duration/loop mismatch");
+            Check(ArtStudioSampler.FrameAt(rootRipple, rootRipple.Duration * 2) == 15, "root cue final pose");
             foreach (string action in new[] { "walk", "interact" })
             {
                 var group = ArtStudioLibrary.Load("actor:NPC_BOAT_KEEPER:" + action);

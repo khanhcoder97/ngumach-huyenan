@@ -30,10 +30,16 @@
       "componentOnly": false,
       "productionApproved": true,
       "visualState": "APPROVED",
-      "bindingSha256": "fc4fcea4d3fc83f23a96ea357d8d91d5a0924881fecd2e21d396f06d09d4a9a7",
+      "bindingSha256": "5c83e3d052dd6e6fc979f5681fdd7f56b42adc8e5eb5c463ff821935a54049c1",
       "replacesSource": null,
       "scaleMode": "HEIGHT",
-      "pivotMode": "FOOT"
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 157,
+      "rootFootOffset": [
+        -0.03713386074973529,
+        0.48023216372064975
+      ],
+      "gutterPolicy": null
     },
     {
       "id": "mob_waterroot_idle_e",
@@ -51,10 +57,16 @@
       "componentOnly": false,
       "productionApproved": true,
       "visualState": "APPROVED",
-      "bindingSha256": "b81af627c1bbebd3e1fc6b73e4bfcc34e089fe9959fcf2eb58944934da959bde",
+      "bindingSha256": "4717ea1d3f62baa22b9262cc6ecd74aa237c00a72c4fec74d33dd69c37977509",
       "replacesSource": null,
       "scaleMode": "HEIGHT",
-      "pivotMode": "FOOT"
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 165,
+      "rootFootOffset": [
+        0.13435762115537395,
+        0.4506071955510158
+      ],
+      "gutterPolicy": null
     },
     {
       "id": "mob_waterroot_idle_se",
@@ -72,10 +84,16 @@
       "componentOnly": false,
       "productionApproved": true,
       "visualState": "APPROVED",
-      "bindingSha256": "7291e464db3d8ea1773b4dee96aa0ab600f3e93f4e6f4c599cd4109fb4682d59",
+      "bindingSha256": "b8a304d0bb8be9eb3df8b5c199494cf82fe12f58e88dce38419444aa2d189293",
       "replacesSource": null,
       "scaleMode": "HEIGHT",
-      "pivotMode": "FOOT"
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 157,
+      "rootFootOffset": [
+        0.01900307097361246,
+        0.47669187898089166
+      ],
+      "gutterPolicy": null
     },
     {
       "id": "mob_shore_stalker_idle_n",
@@ -96,7 +114,10 @@
       "bindingSha256": "fc089965cdd2f76c57072a72075d24cdb2fb6045a8b65898cd6533b89f70caa8",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "FOOT"
+      "pivotMode": "FOOT",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_shore_stalker_idle_ne",
@@ -117,7 +138,10 @@
       "bindingSha256": "1905f767ca419897587e59969e006c3522337d74a23128584f664a89cfa296d1",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "FOOT"
+      "pivotMode": "FOOT",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_shore_stalker_idle_e",
@@ -138,7 +162,10 @@
       "bindingSha256": "0389589b4e0f5483b8d79e0f46fb83d6f8cece93d656e65275e538b110c3141b",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "FOOT"
+      "pivotMode": "FOOT",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_shore_stalker_idle_se",
@@ -159,7 +186,10 @@
       "bindingSha256": "a58a6db8ec0da522a2eab9560e24320fdb62659a6ca3c7655d3fbe1e7870d670",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "FOOT"
+      "pivotMode": "FOOT",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_telegraph_01_s",
@@ -180,7 +210,10 @@
       "bindingSha256": "83dbb3d82092e8aa69a54f45f40037447c630e610f0f0c1a24270744e0a97402",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_attack_01_s",
@@ -201,7 +234,10 @@
       "bindingSha256": "4666c27e9d7bc215f2b3f16a5d1366adaaada15b344c354a4a909b2a9d659e32",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_recovery_01_s",
@@ -222,7 +258,10 @@
       "bindingSha256": "e84edb8f87638b24da4885b63717319673febbfa4b0fc4030ee0ad49ad22b7fe",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_hurt_s",
@@ -243,7 +282,10 @@
       "bindingSha256": "01aee24a04df2b3d9a07f9a5ab3e77978563696771d5eb36448c778c487a135e",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     },
     {
       "id": "mob_carpling_death_s",
@@ -264,12 +306,15 @@
       "bindingSha256": "a3b2806224de2e89891bfb573363ef73323b0ba8e51d998c250cbb6c00f0166c",
       "replacesSource": null,
       "scaleMode": "LONGEST_AXIS",
-      "pivotMode": "SILVER_CORE_CENTER"
+      "pivotMode": "SILVER_CORE_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
     }
   ],
   "fullGameComplete": false,
   "requiredJobs": 1008,
-  "structurallyCompleteJobs": 47,
-  "pendingJobs": 961,
+  "structurallyCompleteJobs": 50,
+  "pendingJobs": 958,
   "note": "Cells/hashes do not certify anatomical pose uniqueness. Production approval remains per source/clip. Unbound cells are never padded into a sequence. Coverage fields describe the current catalogue, not historical progress on the batch date."
 }
