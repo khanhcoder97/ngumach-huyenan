@@ -4,7 +4,9 @@
 
 **Đang sản xuất; chưa hoàn thành toàn bộ thư viện.** Chuẩn16–20pose thực/clip/hướng, renderer60FPS. PNG mới là ứng viên review, chưa tự thay asset gameplay.
 
-Đợt mới nhất: [20261113a — vận động Rễ Nước, Phản Quang và chèn component](../../docs/production/Actor_Batch_20261113a_vi.md), 20 sheet chọn / 320 ô nguồn mới. Rễ Nước có chín action đủ nguồn tám hướng xem, còn ba pha chồi đất; Minh Kiếm thêm động tác thủ skill_01. [Đợt f](../../docs/production/Actor_Batch_20261112f_vi.md) có hurt/death và VFX năm lớp; [đợt e](../../docs/production/Actor_Batch_20261112e_vi.md) giữ roi rễ/vòng gợn; [đợt d](../../docs/production/Actor_Batch_20261112d_vi.md) có Người Giữ Thuyền, walk E/NE còn HOLD. Inventory các đợt phản ánh lựa chọn hiện hành; báo cáo từng đợt giữ số giao lịch sử.
+Đợt mới nhất: [20261113b — ba pha Chồi Đất và VFX rễ](../../docs/production/Actor_Batch_20261113b_vi.md), **18 sheet /288 ô nguồn**. Rễ Nước12/12 action đủ nguồn và kiểm source; còn tinh chỉnh nối pha, tích hợp gameplay/AI/hitbox. Thêm chiều cao đứng tường minh cho clip bắt đầu thấp, review biến thể2 và Studio phát sau fit. Catalogue còn949/1008 job thiếu; mục tiêu toàn thư viện tiếp tục.
+
+Đợt trước: [20261113a — vận động Rễ Nước, Phản Quang và chèn component](../../docs/production/Actor_Batch_20261113a_vi.md), 20 sheet chọn / 320 ô nguồn mới. Rễ Nước có chín action đủ nguồn tám hướng xem, còn ba pha chồi đất; Minh Kiếm thêm động tác thủ skill_01. [Đợt f](../../docs/production/Actor_Batch_20261112f_vi.md) có hurt/death và VFX năm lớp; [đợt e](../../docs/production/Actor_Batch_20261112e_vi.md) giữ roi rễ/vòng gợn; [đợt d](../../docs/production/Actor_Batch_20261112d_vi.md) có Người Giữ Thuyền, walk E/NE còn HOLD. Inventory các đợt phản ánh lựa chọn hiện hành; báo cáo từng đợt giữ số giao lịch sử.
 
 ## Phạm vi và nguồn
 

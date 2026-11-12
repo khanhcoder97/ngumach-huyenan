@@ -92,7 +92,7 @@ public sealed class ActorLibraryData : IDisposable
         "MOB_CARPLING"=>clip switch{"telegraph_01"=>.45,"attack_01"=>.30,"recovery_01"=>.50,_=>Duration(clip)},
         // .70 anticipation follows the visual bible's root cue. Attack/recovery
         // are editable presentation assumptions, not combat authority.
-        "MOB_WATERROOT"=>clip switch{"telegraph_01"=>.70,"attack_01"=>.35,"recovery_01"=>.55,_=>Duration(clip)},
+        "MOB_WATERROOT"=>clip switch{"telegraph_01"=>.70,"attack_01"=>.35,"recovery_01"=>.55,"telegraph_02"=>.70,"attack_02"=>.40,"recovery_02"=>.60,_=>Duration(clip)},
         // Full physical guard preview includes raise/settle. The authoritative
         // .4s parry window is not inferred from this .8s art-review timeline.
         "CLASS_MINH_KIEM" when clip=="skill_01"=>.8,

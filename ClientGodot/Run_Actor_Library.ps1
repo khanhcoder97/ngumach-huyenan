@@ -1,6 +1,7 @@
 param(
     [switch]$Test,[string]$GodotPath,[string]$DotnetPath,[switch]$SkipBuild,
     [switch]$CombatReview,[string]$Actor,[string]$Clip,
+    [ValidateRange(1,2)][int]$CombatVariant=1,
     [ValidateSet('N','NE','E','SE','S','SW','W','NW')][string]$Direction,
     [ValidateRange(0,15)][int]$Frame=7,[string]$Capture
 )
@@ -20,12 +21,14 @@ try {
     if($CombatReview -and -not $Actor){$Actor='MOB_WATERROOT'}
     if($CombatReview -and $Actor -notin @('MOB_WATERROOT','MOB_CARPLING')){throw 'Combat review supports Waterroot or Carpling.'}
     if($CombatReview -and $Test -and $Actor -ne 'MOB_WATERROOT'){throw 'The cue self-test requires MOB_WATERROOT.'}
+    if($CombatVariant -eq 2 -and (-not $CombatReview -or $Actor -ne 'MOB_WATERROOT')){throw 'Variant 2 requires Waterroot combat review.'}
     $scene=if($CombatReview){'CarplingCombatReview.tscn'}else{'ActorLibrary.tscn'}
     $launchArgs=@('--path',$PSScriptRoot,$scene,'--')
     if($Test){$launchArgs=@('--headless')+$launchArgs;$launchArgs+=@($(if($CombatReview){'--combat-self-test'}else{'--library-self-test'}))}
     if($Actor){$launchArgs+=@($(if($CombatReview){'--combat-actor'}else{'--actor'}),$Actor)}
     if($Clip -and -not $CombatReview){$launchArgs+=@('--clip',$Clip)}
     if($Direction -and $CombatReview){$launchArgs+=@('--combat-direction',$Direction)}
+    if($CombatReview){$launchArgs+=@('--combat-variant',[string]$CombatVariant)}
     if($Capture){
         $launchArgs+=@($(if($CombatReview){'--combat-capture'}else{'--library-capture'}),$Capture)
         if(-not $CombatReview){$launchArgs+=@('--library-frame',[string]$Frame)}

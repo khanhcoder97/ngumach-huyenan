@@ -124,10 +124,10 @@ public partial class ArtStudio : Control
         int frame = Array.IndexOf(args, "--studio-frame");
         if (frame >= 0 && frame + 1 < args.Length && int.TryParse(args[frame + 1], out int atFrame)) Seek(atFrame);
         if(args.Contains("--studio-loop"))Clip.Loop=true;
-        if(args.Contains("--studio-play"))TogglePlay();
         if (args.Contains("--studio-self-test")) { RunTests(); return; }
-        FitAfterLayout();
-        int capture = Array.IndexOf(args, "--studio-capture"); if (capture >= 0 && capture + 1 < args.Length) Capture(args[capture + 1], true);
+        int capture = Array.IndexOf(args, "--studio-capture");
+        FitAfterLayout(args.Contains("--studio-play") && capture < 0);
+        if (capture >= 0 && capture + 1 < args.Length) Capture(args[capture + 1], true);
     }
     private void BuildLayerTab(VBoxContainer tab)
     {
@@ -321,8 +321,8 @@ public partial class ArtStudio : Control
         var active = Clip.Tracks.Select(t => _doc.Layers.First(l => l.Id == t.LayerId)).FirstOrDefault(l => l.Kind == "sprite" && ArtStudioSampler.Pose(l, Clip, 0).Alpha > 0);
         if (active != null) _selected = active.Id; Refresh();
     }
-    private async void FitAfterLayout()
-    { for (int i = 0; i < 2; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); _stage.FitContent(); }
+    private async void FitAfterLayout(bool play = false)
+    { for (int i = 0; i < 2; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); _stage.FitContent(); if (play) TogglePlay(); }
     private void Seek(int frame) { _playing = false; _frame = Math.Clamp(frame, 0, Clip.DurationsMs.Count - 1); _time = ArtStudioSampler.TimeAt(Clip, _frame); Refresh(); }
     private void TogglePlay()
     {

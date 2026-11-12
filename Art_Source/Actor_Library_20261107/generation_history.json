@@ -395,5 +395,42 @@
     "previewLoop": true,
     "reviewScope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL",
     "reason": "Native review: bottom row restarts growth; frame15 to0 causes a size pop. Source and native v1 evidence retained."
+  },
+  {
+    "id": "mob_waterroot_attack_02_s",
+    "source": "Sheets/mob_waterroot_attack_02_s_v1_20261113b.png",
+    "prompt": "Prompts/mob_waterroot_attack_02_s_v1_20261113b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_PHASE_CONTINUITY_REPAIR",
+    "batch": "20261113b",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_02_s_v1_20261113b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png"
+    ],
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "reason": "Initial source starts upright after low windup; would jump at phase boundary."
+  },
+  {
+    "id": "sk_mob_waterroot_02_line_component",
+    "source": "Sheets/sk_mob_waterroot_02_line_component_v2_20261113b.png",
+    "prompt": "Prompts/sk_mob_waterroot_02_line_component_v2_20261113b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "generator": "built-in image_gen",
+    "status": "UNSELECTED_WARNING_VARIANT",
+    "batch": "20261113b",
+    "reference": "Sheets/sk_mob_waterroot_02_line_component_v1_20261113b.png",
+    "additionalReferences": [],
+    "inputRole": "PRECISE_OBJECT_EDIT",
+    "componentOnly": true,
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "pivotMode": "CELL_CENTER",
+    "previewDurationSeconds": 0.7,
+    "previewLoop": false,
+    "reason": "Alternative only; original selection retained pending alpha/native review."
   }
 ]

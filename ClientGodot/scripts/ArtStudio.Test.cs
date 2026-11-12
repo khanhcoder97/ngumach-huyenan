@@ -44,7 +44,7 @@ public partial class ArtStudio
                     Check(Math.Abs(previewClip.Duration - raw.Duration) < .00001 && !previewClip.Loop, "combat timing/loop mismatch: " + action + "/" + previewClip.Direction);
                 }
             }
-            foreach (string action in new[] { "idle", "walk", "run", "turn", "telegraph_01", "attack_01", "recovery_01", "hurt", "death" })
+            foreach (string action in new[] { "idle", "walk", "run", "turn", "telegraph_01", "attack_01", "recovery_01", "telegraph_02", "attack_02", "recovery_02", "hurt", "death" })
             {
                 var group = ArtStudioLibrary.Load("actor:MOB_WATERROOT:" + action);
                 Check(group.Clips.Count == 8, "missing Waterroot direction: " + action);
@@ -92,7 +92,7 @@ public partial class ArtStudio
             Check(ArtStudioCodec.Encode(guard) == guardBefore, "rejected component changed document");
             foreach (var guardClip in guard.Clips) ArtStudioSampler.Resize(guardClip, 8);
             Reject(() => ArtStudioLibrary.AddComponent(guard, "sk_mk_01_parry_component"), "short timeline silently dropped component poses");
-            foreach (var profile in new[] { ("sk_mk_01_parry_component", .4, false), ("sk_ad_01_cut_component", .32, false), ("sk_hb_01_ink_hit_component", .32, false), ("sk_tc_01_dust_component", .35, false), ("sk_lc_01_mark_component", 1d, true) })
+            foreach (var profile in new[] { ("sk_mk_01_parry_component", .4, false), ("sk_ad_01_cut_component", .32, false), ("sk_hb_01_ink_hit_component", .32, false), ("sk_tc_01_dust_component", .35, false), ("sk_lc_01_mark_component", 1d, true), ("sk_mob_waterroot_02_line_component", .7, false), ("sk_mob_waterroot_02_spike_component", .4, false), ("sk_mob_waterroot_02_retract_component", .6, false) })
             {
                 var component = ArtStudioLibrary.Load(profile.Item1).Clips.Single();
                 Check(component.Loop == profile.Item3 && Math.Abs(component.Duration - profile.Item2) < .00001, "component preview profile mismatch: " + profile.Item1);

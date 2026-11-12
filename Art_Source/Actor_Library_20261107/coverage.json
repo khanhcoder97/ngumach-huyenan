@@ -1,8 +1,8 @@
 {
   "actors": 130,
   "requiredPages": 1008,
-  "structurePassed": 143,
-  "boundRequiredPages": 56,
+  "structurePassed": 161,
+  "boundRequiredPages": 59,
   "legacyClips": 3,
   "rejected": [
     {
@@ -10,7 +10,7 @@
       "reason": "rows expected 4, got 5"
     }
   ],
-  "pendingPages": 952,
+  "pendingPages": 949,
   "pendingIds": [
     "class_minh_kiem_skill_02",
     "class_minh_kiem_skill_03",
@@ -52,9 +52,6 @@
     "mob_carpling_recovery_02",
     "mob_carpling_run",
     "mob_carpling_turn",
-    "mob_waterroot_telegraph_02",
-    "mob_waterroot_attack_02",
-    "mob_waterroot_recovery_02",
     "mob_shore_stalker_walk",
     "mob_shore_stalker_hurt",
     "mob_shore_stalker_death",
@@ -965,7 +962,7 @@
     "mob_stone_automaton_elite_run",
     "mob_stone_automaton_elite_turn"
   ],
-  "productionApprovedPages": 20,
+  "productionApprovedPages": 23,
   "visualHoldPages": 21,
   "modularMigrationReferencePages": 0,
   "structureComplete": false,

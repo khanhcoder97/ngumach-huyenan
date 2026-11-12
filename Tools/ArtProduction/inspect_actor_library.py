@@ -44,6 +44,19 @@ def reference_height(frames,scale_mode='HEIGHT'):
                              if scale_mode=='LONGEST_AXIS' else f['bounds'][3]-f['bounds'][1]
                              for f in frames[:3])
 
+def registered_height(record,frames,cell_height,vfx=False):
+    # Charged clips can start crouched. An explicitly reviewed neutral height
+    # prevents their first low pose being enlarged back to standing size.
+    # This changes metadata only, and remains part of the source approval hash.
+    if 'bodyReferenceHeight' in record:
+        height=record['bodyReferenceHeight']
+        assert not vfx,'body reference height is actor-only'
+        assert record.get('scaleMode','HEIGHT')=='HEIGHT','body reference height requires HEIGHT mode'
+        assert type(height) in (int,float) and math.isfinite(height) and 16<=height<=cell_height,'invalid neutral body reference height'
+        return height
+    assert record.get('pivotMode')!='MOSS_CORE_ROOT','moss registration requires body reference height'
+    return max(f['bounds'][3]-f['bounds'][1] for f in frames) if vfx else reference_height(frames,record.get('scaleMode','HEIGHT'))
+
 def silver_core_pivot(pixels,width):
     # Explicit fish-only registration: the silver torso defines its root, not
     # the green flexible tail. Read coordinates only; never alter source pixels.
@@ -150,7 +163,7 @@ def inspect(record, art_root=None):
                 block=frames[source*16:source*16+16];assert len(block)==16
                 # Page resolution varies. Calibrate from the neutral first poses, never
                 # scale a lying death pose back up to standing height.
-                height=record['bodyReferenceHeight'] if record.get('pivotMode')=='MOSS_CORE_ROOT' else reference_height(block,record.get('scaleMode','HEIGHT'))
+                height=registered_height(record,block,h/record['rows'])
                 directions.append(dict(direction=name,flip=False,referenceHeight=height,frames=block))
             if record.get('mirrorAllowed',True):
                 for target,source in [('SW','SE'),('W','E'),('NW','NE')]:
@@ -159,7 +172,7 @@ def inspect(record, art_root=None):
                         directions.append(dict(direction=target,flip=True,referenceHeight=original['referenceHeight'],frames=original['frames']))
             directions.sort(key=lambda d:['N','NE','E','SE','S','SW','W','NW'].index(d['direction']))
         elif (len(cols),len(rows))==(4,4):
-            vfx=record['id'].startswith('sk_');height=record['bodyReferenceHeight'] if record.get('pivotMode')=='MOSS_CORE_ROOT' else max(f['bounds'][3]-f['bounds'][1] for f in frames) if vfx else reference_height(frames,record.get('scaleMode','HEIGHT'))
+            vfx=record['id'].startswith('sk_');height=registered_height(record,frames,h/record['rows'],vfx)
             directions=[dict(direction=record.get('direction') or ('OMNI' if vfx else 'S'),flip=False,referenceHeight=height,frames=frames)]
         else:raise AssertionError('unreviewed atlas layout')
         page=dict(id=record['id'],file='sheets/'+path.name,source=record['source'],sha256=hashlib.sha256(path.read_bytes()).hexdigest(),imageSize=[w,h],directions=directions,
