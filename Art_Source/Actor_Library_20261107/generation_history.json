@@ -377,5 +377,23 @@
     "reference": null,
     "inputRole": "NEW_EFFECT_GENERATION",
     "reason": "v2 lowers residual background alpha and retains hollow ring strokes; only v2 goes to native review."
+  },
+  {
+    "id": "sk_lc_01_mark_component",
+    "source": "Sheets/sk_lc_01_mark_component_v1_20261112f.png",
+    "prompt": "Prompts/sk_lc_01_mark_component_v1_20261112f.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "pivotMode": "CELL_CENTER",
+    "componentOnly": true,
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_LOOP_CLOSURE_REPAIR",
+    "batch": "20261112f",
+    "previewDurationSeconds": 1,
+    "previewLoop": true,
+    "reviewScope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL",
+    "reason": "Native review: bottom row restarts growth; frame15 to0 causes a size pop. Source and native v1 evidence retained."
   }
 ]

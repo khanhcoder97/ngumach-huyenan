@@ -1,0 +1,118 @@
+{
+  "scope": "OFFLINE_NATIVE_VISUAL_REVIEW_NOT_GAMEPLAY_PERFORMANCE",
+  "selectedVideos": 9,
+  "supersededVideos": 2,
+  "files": [
+    {
+      "file": "sk_ad_01_cut_component.mp4",
+      "bytes": 295769,
+      "sha256": "8ef2f91f91d2c37ae0e000e466f7194b98796f64cb85be4fb78c742645cd8854",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "sk_hb_01_ink_hit_component.mp4",
+      "bytes": 366486,
+      "sha256": "d0d19e01ab83377935da2f788fa60c2dec54c57d4c2ac5c738bbaa5b2b373b22",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "sk_lc_01_mark_component.mp4",
+      "bytes": 211548,
+      "sha256": "c5caf4b675ced0c211bb272ae28c4f89bc7ebdc7b1102e4853bd11b1e76ab41a",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "sk_mk_01_parry_component.mp4",
+      "bytes": 254225,
+      "sha256": "5063970ee6246e4062d9332a688ce595e9add1871771ba3d3ef91f83cf881eb8",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "sk_tc_01_dust_component.mp4",
+      "bytes": 321280,
+      "sha256": "a7e8160d5944ebcd3ffffb578a194fbfc4631f11bab5cc00cc3414b5ad35709e",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "Superseded_Registration_Or_Loop_v1/sk_lc_01_mark_component.mp4",
+      "bytes": 227716,
+      "sha256": "449719af3c9c75cab870b8b650fcd61b90e76607aa89ef8ce5843dcad1779938",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": false,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "Superseded_Registration_Or_Loop_v1/sk_tc_01_dust_component.mp4",
+      "bytes": 298661,
+      "sha256": "74f9c2eb8498fff690139ef0e64d81bef1d3036e5866557f2fce0a087141a703",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": false,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "waterroot_combat_n.mp4",
+      "bytes": 788084,
+      "sha256": "fcab87cd5d47cfa42d970091cba8778e8a544a7e366e78c1fe458fb3dceabc16",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "waterroot_combat_se.mp4",
+      "bytes": 835876,
+      "sha256": "49414eafa32380ad7beb60245f4e478f1ed5667c782848bbbc1a05c619d21803",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "waterroot_death_eight_angles.mp4",
+      "bytes": 673449,
+      "sha256": "4599c327238bd60af001e3a7299d8975042540a7de2a66fa52cd64018effd89d",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "waterroot_hurt_eight_angles.mp4",
+      "bytes": 1968725,
+      "sha256": "42fb65b06b681d9c368d67d7615bbd3350179e1bb406c35c1792c0bab6b36589",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    }
+  ],
+  "note": "Source-sheet and native timeline checks are separate. Movie Maker is offline; these rates cannot certify real-time gameplay FPS."
+}

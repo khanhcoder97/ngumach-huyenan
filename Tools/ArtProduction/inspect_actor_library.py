@@ -54,7 +54,21 @@ def silver_core_pivot(pixels,width):
 
 def binding_sha256(page):
     payload={k:page.get(k) for k in ('directions','referenceHeight','scaleMode','pivotMode')}
+    # A timing/loop edit changes what was reviewed. Preserve old pins on pages
+    # with no explicit preview profile; new profiles must be reviewed again.
+    for key in ('previewDurationSeconds','previewLoop'):
+        if key in page:payload[key]=page[key]
     return hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+
+def preview_profile(record):
+    keys=('previewDurationSeconds','previewLoop')
+    if not any(k in record for k in keys):return {}
+    assert record['id'].startswith('sk_') and record.get('componentOnly'),'preview profile is component-only'
+    assert all(k in record for k in keys),'incomplete preview profile'
+    seconds=record['previewDurationSeconds']
+    assert type(seconds) in (int,float) and math.isfinite(seconds) and 16/60<=seconds<=60,'invalid preview duration; 60-step review must visit all16 frames'
+    assert type(record['previewLoop']) is bool,'invalid preview loop flag'
+    return {k:record[k] for k in keys}
 
 def moss_body_pivot(pixels,width,body_height,foot_offset):
     # Waterroot-only registration. A brown whip must not define the stump's
@@ -71,6 +85,7 @@ def source_approval_matches(page,approval):
 
 def inspect(record, art_root=None):
     assert record.get('gutterPolicy') in (None,'SOLID_CORE_GUTTER'),'unreviewed gutter policy'
+    preview=preview_profile(record)
     path=(art_root or ART)/record['source']
     with Image.open(path) as im:
         assert im.mode=='RGBA','PNG must retain RGBA'
@@ -152,6 +167,7 @@ def inspect(record, art_root=None):
         if record.get('pivotMode'):page['pivotMode']=record['pivotMode']
         if record.get('scaleMode'):page['scaleMode']=record['scaleMode']
         if record.get('unboundRows'):page['unboundSourceFrames']=record['unboundRows']*record['columns']
+        page.update(preview)
         return page
 
 def covers(job,accepted,approved_only=False):

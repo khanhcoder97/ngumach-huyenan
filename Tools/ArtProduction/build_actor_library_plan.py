@@ -29,6 +29,20 @@ ACTION={
 def read(name):return (ROOT/'docs/production'/name).read_text(encoding='utf-8-sig')
 def dump(path,value):path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 
+def creature_action(actor,clip,default):
+    """The human fall/walk template must not invent hands or knees on creatures."""
+    if actor['kind'] not in ('MOB','BOSS'):return default
+    base=actor.get('variantOf',actor['id'])
+    if base=='MOB_WATERROOT' and clip=='death':
+        return 'ONE16-pose root-stump defeat: neutral0-2; seed dims and crown roots sag3-5; braided stump buckles6-8; SAME collapse continues into a low wood-and-moss heap9-11; inert heap settles12-15. No human limbs, no second fall, no return upright, no disappearing sprite'
+    if base=='MOB_WATERROOT' and clip=='hurt':
+        return 'ONE16-pose planted root-stump recoil: brace0-3, root forks and leaf mass flex once4-7, recover from that SAME bend8-11, neutral12-15. Keep basal roots grounded; do not lock the moving crown, add human limbs, release a root whip or repeat the flinch'
+    if clip=='death':
+        return 'ONE16-pose species-appropriate defeat using the authored anatomy: rest0-2, body loses support3-7, SAME non-gory collapse or inert settling8-11, final defeated pose12-15. Preserve the creature silhouette; do not invent limbs absent from the reference, restart the fall, return upright or disappear'
+    if clip in ('walk','run'):
+        return 'Sixteen distinct consecutive poses of species-appropriate '+clip+' locomotion using only the authored anatomy (walk, creep, slither, swim or hover as described). Preserve body mass, actual appendages and declared view; complete a seamless cycle at a stable ground/body anchor. Do not invent human arms or feet on a creature without them'
+    return default
+
 def build():
     bible=read('Art_Entity_Weather_UI_Visual_Bible_vi.md');skill_text=read('Combat_Skills_VFX_Animation_Spec_vi.md')
     npcs=list(csv.DictReader(read('NPC_Actor_Production_Registry_vi.csv').splitlines()))
@@ -48,6 +62,7 @@ def build():
                 description={'CLASS_LINH_CUNG':'16-pose bow draw and release: nock0-3, draw4-7, aim8, release9-10, follow-through11-13, recover14-15. Never swing the bow like a sword.', 'CLASS_HUYEN_BUT':'16-pose physical calligraphy brush sweep: prepare0-3, lift4-7, draw one invisible ink stroke8-10, follow-through11-13, recover14-15. No detached VFX.', 'CLASS_THACH_CHUY':'16-pose weighty square stone-hammer downswing: ready0-2, both hands raise shaft3-7, drive downward8-10, follow-through11-13, recover14-15.'}.get(actor['id'],description)
             elif re.match(r'(telegraph|attack|recovery)_\d+',clip):
                 phase=clip.split('_')[0];description='Sixteen-pose '+phase+' sequence for attack variant '+clip[-2:]+'. Follow the authored tell/action in the creature description. Telegraph anticipates without hitting, attack releases, recovery settles. No separate magical VFX, environment or targets.'
+            description=creature_action(actor,clip,description)
             key=actor['id'].lower()+'_'+clip
             jobs.append(dict(id=key,ownerId=actor['id'],kind=actor['kind'],clip=clip,columns=8,rows=10,framesPerDirection=16,directions=['N','NE','E','SE','S'],status='REQUESTED',referenceJob=None if clip=='idle' else actor['id'].lower()+'_idle',prompt='Subject '+actor['id']+' — '+actor['name']+'. Identity: '+actor['appearance']+'. Animation: '+description+'.'+LAYOUT))
             if not actor['mirrorAllowed']:

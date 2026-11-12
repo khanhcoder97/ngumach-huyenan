@@ -36,9 +36,10 @@ public static class ArtStudioLibrary
             var frames = d.GetProperty("frames").EnumerateArray().ToArray();
             float width = frames.Max(f => f.GetProperty("bounds")[2].GetSingle() - f.GetProperty("bounds")[0].GetSingle());
             float scale = (vfx ? 160 : 140) / Math.Max(1, vfx ? Math.Max(width, reference) : reference); bool flip = d.GetProperty("flip").GetBoolean();
-            double seconds = SourceDuration(id);
+            double seconds = p.TryGetProperty("previewDurationSeconds", out var secondsJson) ? secondsJson.GetDouble() : SourceDuration(id);
+            bool loop = p.TryGetProperty("previewLoop", out var loopJson) ? loopJson.GetBoolean() : !OneShot(id);
             string acceptance = p.GetProperty("productionApproved").GetBoolean() ? "Nguồn đã kiểm native; bản chỉnh Studio vẫn cần kiểm riêng." : "Nguồn chờ nghiệm thu.";
-            var c = new ArtStudioClip { Name = id, Direction = direction, Loop = !OneShot(id), SourceNote = (flip ? "Lật ngang theo metadata · " : "Nguồn sheet · ") + p.GetProperty("visualState").GetString() + " · " + acceptance, DurationsMs = Enumerable.Repeat((float)(seconds * 1000 / frames.Length), frames.Length).ToList() };
+            var c = new ArtStudioClip { Name = id, Direction = direction, Loop = loop, SourceNote = (flip ? "Lật ngang theo metadata · " : "Nguồn sheet · ") + p.GetProperty("visualState").GetString() + " · " + acceptance + (p.TryGetProperty("previewDurationSeconds", out _) ? " Timing xem nguồn, không phải cửa sổ gameplay." : ""), DurationsMs = Enumerable.Repeat((float)(seconds * 1000 / frames.Length), frames.Length).ToList() };
             var track = new ArtStudioTrack { LayerId = l.Id, Interpolate = false }; c.Tracks.Add(track);
             foreach (var f in frames)
             {

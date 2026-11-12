@@ -159,7 +159,7 @@ public partial class ActorLibraryBrowser : Control
                 if(poses.Count!=16)throw new Exception("Carpling review clock skipped source poses: "+action);checks++;
                 probe.Loop=false;probe.Restart();probe._Process(duration*2);if(probe.DisplayedFrame!=15)throw new Exception("Carpling one-shot restarted: "+action);checks++;probe.Loop=true;
             }
-            foreach(string action in new[]{"idle","telegraph_01","attack_01","recovery_01"})
+            foreach(string action in new[]{"idle","telegraph_01","attack_01","recovery_01","hurt","death"})
             foreach(int facing in Enumerable.Range(0,8))
             {
                 if(!_library.Resolve("MOB_WATERROOT",action,facing,out var authored)||authored!.Frames.Length!=16)throw new Exception("missing Waterroot direction: "+action+"/"+facing);checks++;

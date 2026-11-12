@@ -44,7 +44,7 @@ public partial class ArtStudio
                     Check(Math.Abs(previewClip.Duration - raw.Duration) < .00001 && !previewClip.Loop, "combat timing/loop mismatch: " + action + "/" + previewClip.Direction);
                 }
             }
-            foreach (string action in new[] { "idle", "telegraph_01", "attack_01", "recovery_01" })
+            foreach (string action in new[] { "idle", "telegraph_01", "attack_01", "recovery_01", "hurt", "death" })
             {
                 var group = ArtStudioLibrary.Load("actor:MOB_WATERROOT:" + action);
                 Check(group.Clips.Count == 8, "missing Waterroot direction: " + action);
@@ -60,6 +60,15 @@ public partial class ArtStudio
             var rootRipple = ArtStudioLibrary.Load("sk_mob_waterroot_01_ripple_component").Clips.Single();
             Check(!rootRipple.Loop && Math.Abs(rootRipple.Duration - .7) < .00001, "root warning cue duration/loop mismatch");
             Check(ArtStudioSampler.FrameAt(rootRipple, rootRipple.Duration * 2) == 15, "root cue final pose");
+            foreach (var profile in new[] { ("sk_mk_01_parry_component", .4, false), ("sk_ad_01_cut_component", .32, false), ("sk_hb_01_ink_hit_component", .32, false), ("sk_tc_01_dust_component", .35, false), ("sk_lc_01_mark_component", 1d, true) })
+            {
+                var component = ArtStudioLibrary.Load(profile.Item1).Clips.Single();
+                Check(component.Loop == profile.Item3 && Math.Abs(component.Duration - profile.Item2) < .00001, "component preview profile mismatch: " + profile.Item1);
+                var visited = new System.Collections.Generic.HashSet<int>();
+                for (int step = 0; step < Math.Ceiling(component.Duration * 60); step++) visited.Add(ArtStudioSampler.FrameAt(component, step / 60d));
+                Check(visited.Count == 16, "60-step component preview skipped source poses: " + profile.Item1);
+                Check(ArtStudioSampler.FrameAt(component, component.Duration * 2) == (component.Loop ? 0 : 15), "component loop/end boundary: " + profile.Item1);
+            }
             foreach (string action in new[] { "walk", "interact" })
             {
                 var group = ArtStudioLibrary.Load("actor:NPC_BOAT_KEEPER:" + action);

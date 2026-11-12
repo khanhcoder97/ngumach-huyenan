@@ -4,7 +4,7 @@
 
 **Đang sản xuất; chưa hoàn thành toàn bộ thư viện.** Chuẩn16–20pose thực/clip/hướng, renderer60FPS. PNG mới là ứng viên review, chưa tự thay asset gameplay.
 
-Đợt mới nhất: [20261112e — Rễ Nước và vòng gợn](../../docs/production/Actor_Batch_20261112e_vi.md), 16 sheet chọn / 256 ô nguồn mới. Rễ Nước có idle và ba pha roi rễ đủ nguồn tám hướng xem; còn tám action chưa có nguồn. [Đợt d](../../docs/production/Actor_Batch_20261112d_vi.md) có Người Giữ Thuyền; walk E/NE còn HOLD. Inventory a/b/c/d/e phản ánh lựa chọn hiện hành, báo cáo từng đợt giữ số giao lịch sử.
+Đợt mới nhất: [20261112f — bị thương/gục Rễ Nước và VFX năm lớp](../../docs/production/Actor_Batch_20261112f_vi.md), 15 sheet chọn / 240 ô nguồn mới. Rễ Nước có sáu action đủ nguồn tám hướng xem; còn walk/run/turn và ba pha chồi đất. [Đợt e](../../docs/production/Actor_Batch_20261112e_vi.md) giữ ba pha roi rễ/vòng gợn; [đợt d](../../docs/production/Actor_Batch_20261112d_vi.md) có Người Giữ Thuyền, walk E/NE còn HOLD. Inventory a/b/c/d/e/f phản ánh lựa chọn hiện hành, báo cáo từng đợt giữ số giao lịch sử.
 
 ## Phạm vi và nguồn
 
@@ -36,7 +36,7 @@ Hoặc nhấp ClientGodot/Xem_Thu_Vien_Asset.cmd. ActorLibrary.tscn chạy offli
 
 `--require-complete` là cổng hoàn tất và hiện **phải thất bại**. `--check` chỉ kiểm đồng bộ batch hiện hữu. visual_review.json ghi HOLD. ActorLibraryData mặc định chặn ảnh chưa production-approved; browser bật reviewMode để xem ứng viên.
 
-referenceHeight thường hiệu chỉnh theo từng page/hướng từ pose đầu; không lấy pose nằm làm chuẩn đứng. Cá Linh đăng ký tâm thân bạc. Rễ Nước dùng lõi rêu, chiều cao thân trung tính và offset chân idle chung theo góc để ngọn roi không kéo thân. Recovery lấy chiều cao từ pose cuối đã thu rễ. VFX có pivot giữa ô và offset nguồn nếu cần. Tất cả là metadata phải kiểm native, không sửa collider hoặc PNG.
+referenceHeight thường hiệu chỉnh theo từng page/hướng từ pose đầu; không lấy pose nằm làm chuẩn đứng. Cá Linh đăng ký tâm thân bạc. Idle/báo/đánh/hồi roi Rễ Nước dùng lõi rêu, chiều cao thân trung tính và offset chân idle chung theo góc; hurt/death dùng FOOT để giữ chuyển động oằn/sụp của tán. Recovery roi lấy chiều cao từ pose cuối đã thu rễ. VFX dùng tâm ô cố định hoặc FOOT nếu là bụi sát đất. Profile preview component xuất thời lượng/chế độ vòng vào metadata, được Studio đọc và pin binding kiểm lại khi đổi. Tất cả là trình bày phải kiểm native, không sửa collider hoặc PNG.
 
 ## Bằng chứng và giới hạn
 
