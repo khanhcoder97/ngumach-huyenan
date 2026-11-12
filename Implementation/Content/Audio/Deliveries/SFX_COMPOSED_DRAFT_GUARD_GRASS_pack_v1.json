@@ -1,0 +1,248 @@
+{
+ "packId": "NGM_SFX_COMPOSED_DRAFT_GUARD_GRASS_V1",
+ "checkpoint": "MEDIA-02 WO39 M39-A CP1 - composed SFX draft: guard + grass (first block of DEC-MEDIA-SFX-DRAFT-20261112)",
+ "decisionId": "DEC-MEDIA-SFX-DRAFT-20261112",
+ "approvalRef": "Implementation/Content/DesignBaselines/media_sfx_draft_execution_20261112.json @ e4b3e4b (PR #131, Codex Gói 39, issue #116 comment 6815238814, 2026-11-12); approval is DRAFT production of 18 variants, not runtime adoption",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "9ac73dc",
+ "provenance": "ORIGINAL_COMPOSED_BY_MUSE: guard-expire and grass-footstep cues authored as data in Tools/MediaProduction/Muse/build_composed_sfx_me_cp2b_guard_grass.py and rendered by procedural synthesis. No external samples, no ported bytes, no voices.",
+ "status": "DRAFT",
+ "auditionStatus": "NOT_AUDITIONED",
+ "runtime": {
+  "ingested": false,
+  "runtimeAudioCountUnchanged": 783,
+  "note": "SOURCE ONLY: no runtime file was written and no runtime manifest was touched. Runtime ingest is a Codex review decision (Gói 39 M39-C)."
+ },
+ "counts": {
+  "cues": 2,
+  "variants": 6
+ },
+ "cues": [
+  {
+   "cueKey": "SFX/COMBAT/guard_expire",
+   "candidateKey": "SFX/COMBAT/guard_expire",
+   "proposal": "P-GUARD",
+   "nameVi": "Hết thế thủ (không bị đánh)",
+   "category": "COMBAT",
+   "kind": "SFX",
+   "loop": false,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "triggerSemanticProposed": "GUARD_WINDOW_EXPIRED_UNHIT",
+   "triggerStatus": "UNSUPPORTED",
+   "binding": null,
+   "eventIntent": {
+    "playWhen": "Guard window expires with no hit landing, if the client/server exposes that event.",
+    "neverPlayWhen": "A counter/parry is confirmed (that is metal_parry, trigger COUNTER_CONFIRMED). Never imply a successful block.",
+    "mixRole": "Small stance-release cue, quieter than the confirmed counter."
+   },
+   "composition": {
+    "durationSeconds": 0.5,
+    "targetLufs": -27.5,
+    "structure": "Breathy band-noise release + soft low settle thump + faint cloth rustle; no metallic partials, no sharp attack.",
+    "rendering": "procedural synthesis, authored in build_composed_sfx_me_cp2b_guard_grass.py; no external samples, no voices"
+   },
+   "variants": [
+    {
+     "variantId": "v01",
+     "seed": 41000,
+     "recipe": "breath band-noise 700-1600 Hz (tau 0.12 s) + pitch-glide settle thump (110->70 Hz, gain 0.18) + faint cloth rustle (2.8-6 kHz, gain 0.08); no metallic partials, no sharp attack",
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v01.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.5,
+      "sizeBytes": 144102,
+      "sha256": "8b7673db489c5f4b561efc86585c28cbacacb8a2e5f3d1501239e789cfe1cbd5",
+      "integratedLufs": -28.03,
+      "truePeakDbtp": -10.0
+     },
+     "spectral": {
+      "spectralCentroidHz": 1151.3,
+      "bandEnergyLt500Hz": 0.0508,
+      "bandEnergy2500_5500Hz": 0.0003,
+      "bandEnergy3000_8000Hz": 0.0001,
+      "tonalProminence400_2000Hz": 25.3,
+      "tailEnergyFractionAfter030s": 0.004
+     },
+     "levelNote": "staged to integrated LUFS -27.5 (quieter than metal_parry -24.2 LUFS: a small release, not a confirmed counter); TP ceiling -10 dBTP",
+     "distinctness": {
+      "vs_v02": 1.2328,
+      "vs_v03": 1.1478
+     }
+    },
+    {
+     "variantId": "v02",
+     "seed": 41100,
+     "recipe": "breath band-noise 700-1500 Hz (tau 0.14 s) + pitch-glide settle thump (110->70 Hz, gain 0.14) + faint cloth rustle (2.8-6 kHz, gain 0.06); no metallic partials, no sharp attack",
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v02.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.5,
+      "sizeBytes": 144102,
+      "sha256": "deb17650655fad7850d798904ac85b89623b671f4884b4b311b7d7d76c7043f9",
+      "integratedLufs": -27.5,
+      "truePeakDbtp": -10.81
+     },
+     "spectral": {
+      "spectralCentroidHz": 1070.4,
+      "bandEnergyLt500Hz": 0.0271,
+      "bandEnergy2500_5500Hz": 0.0002,
+      "bandEnergy3000_8000Hz": 0.0,
+      "tonalProminence400_2000Hz": 45.4,
+      "tailEnergyFractionAfter030s": 0.0097
+     },
+     "levelNote": "staged to integrated LUFS -27.5 (quieter than metal_parry -24.2 LUFS: a small release, not a confirmed counter); TP ceiling -10 dBTP",
+     "distinctness": {
+      "vs_v03": 1.1525
+     }
+    },
+    {
+     "variantId": "v03",
+     "seed": 41200,
+     "recipe": "breath band-noise 800-1800 Hz (tau 0.10 s) + pitch-glide settle thump (110->70 Hz, gain 0.22) + faint cloth rustle (2.8-6 kHz, gain 0.1); no metallic partials, no sharp attack",
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v03.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.5,
+      "sizeBytes": 144102,
+      "sha256": "c6eed65ce9e90ac0eedd31ebd15474d5f5e0ba04334a46b61ca6675cbb9b85f7",
+      "integratedLufs": -27.76,
+      "truePeakDbtp": -10.0
+     },
+     "spectral": {
+      "spectralCentroidHz": 1173.1,
+      "bandEnergyLt500Hz": 0.1235,
+      "bandEnergy2500_5500Hz": 0.0013,
+      "bandEnergy3000_8000Hz": 0.0002,
+      "tonalProminence400_2000Hz": 14.3,
+      "tailEnergyFractionAfter030s": 0.0012
+     },
+     "levelNote": "staged to integrated LUFS -27.5 (quieter than metal_parry -24.2 LUFS: a small release, not a confirmed counter); TP ceiling -10 dBTP"
+    }
+   ]
+  },
+  {
+   "cueKey": "SFX/WORLD/step_grass",
+   "candidateKey": "SFX/WORLD/step_grass",
+   "proposal": "P-GRASS",
+   "nameVi": "Bước trên cỏ",
+   "category": "WORLD",
+   "kind": "SFX",
+   "loop": false,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "triggerSemanticProposed": "FOOT_CONTACT_GRASS",
+   "triggerStatus": "UNSUPPORTED",
+   "binding": null,
+   "eventIntent": {
+    "playWhen": "Foot contact on a grass surface, if the map exposes an authoritative grass-surface flag.",
+    "neverPlayWhen": "On stone, wood or wet mud (those keep their ported cues).",
+    "mixRole": "Footstep family member, level-matched to step_stone/wood/mud (RMS -25 dBFS)."
+   },
+   "composition": {
+    "durationSeconds": 0.21,
+    "targetRmsDbfs": -25.0,
+    "structure": "Dry rustle (1.6-4.5 kHz band noise, short ground thud + sparse dry blade snaps.",
+    "rendering": "procedural synthesis, authored in build_composed_sfx_me_cp2b_guard_grass.py; no external samples, no voices"
+   },
+   "variants": [
+    {
+     "variantId": "v01",
+     "seed": 42000,
+     "recipe": "dry rustle band-noise 1700-3800 Hz + pitch-glide ground thud (95->60 Hz, gain 0.08) + 3 dry blade snaps in the first 80 ms",
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v01.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.21,
+      "sizeBytes": 60582,
+      "sha256": "a8f5aca98e7f103884319e57818c640c7e02bd9155ef2fb896c32f716f14c3bd",
+      "integratedLufs": null,
+      "truePeakDbtp": -8.86,
+      "loudnormNote": "integrated LUFS not measurable: clip shorter than the 400 ms EBU R128 gate (same note as the ported footstep cues in SFX_UI_pack_v1.json); level is staged and recorded as RMS dBFS instead"
+     },
+     "spectral": {
+      "spectralCentroidHz": 2809.5,
+      "bandEnergyLt500Hz": 0.0085,
+      "bandEnergy2500_5500Hz": 0.6333,
+      "bandEnergy3000_8000Hz": 0.4385,
+      "tonalProminence400_2000Hz": 1514.9
+     },
+     "rmsDbfs": -25.0,
+     "levelNote": "staged to RMS -25.0 dBFS like the ported footstep family (step_stone/wood/mud); integrated LUFS not measurable under 400 ms",
+     "distinctness": {
+      "vs_v02": 1.4163,
+      "vs_v03": 1.4259
+     }
+    },
+    {
+     "variantId": "v02",
+     "seed": 42100,
+     "recipe": "dry rustle band-noise 1500-3500 Hz + pitch-glide ground thud (95->60 Hz, gain 0.1) + 2 dry blade snaps in the first 80 ms",
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v02.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.21,
+      "sizeBytes": 60582,
+      "sha256": "ec3f5a9f11a5258a2371571abeb1417997aa690ddc9bdc228eb2c6a83f9aa55d",
+      "integratedLufs": null,
+      "truePeakDbtp": -8.0,
+      "loudnormNote": "integrated LUFS not measurable: clip shorter than the 400 ms EBU R128 gate (same note as the ported footstep cues in SFX_UI_pack_v1.json); level is staged and recorded as RMS dBFS instead"
+     },
+     "spectral": {
+      "spectralCentroidHz": 2540.2,
+      "bandEnergyLt500Hz": 0.0165,
+      "bandEnergy2500_5500Hz": 0.4968,
+      "bandEnergy3000_8000Hz": 0.2986,
+      "tonalProminence400_2000Hz": 468.3
+     },
+     "rmsDbfs": -25.08,
+     "levelNote": "staged to RMS -25.0 dBFS like the ported footstep family (step_stone/wood/mud); integrated LUFS not measurable under 400 ms",
+     "distinctness": {
+      "vs_v03": 1.3926
+     }
+    },
+    {
+     "variantId": "v03",
+     "seed": 42200,
+     "recipe": "dry rustle band-noise 1800-3900 Hz + pitch-glide ground thud (95->60 Hz, gain 0.06) + 4 dry blade snaps in the first 80 ms",
+     "master": {
+      "path": "Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v03.wav",
+      "codec": "pcm_s24le",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "durationSeconds": 0.21,
+      "sizeBytes": 60582,
+      "sha256": "b0e7bccde2f31cc636587bbbf6e864febec055a69cd76cf9a7b60d448bf14c80",
+      "integratedLufs": null,
+      "truePeakDbtp": -9.17,
+      "loudnormNote": "integrated LUFS not measurable: clip shorter than the 400 ms EBU R128 gate (same note as the ported footstep cues in SFX_UI_pack_v1.json); level is staged and recorded as RMS dBFS instead"
+     },
+     "spectral": {
+      "spectralCentroidHz": 2867.6,
+      "bandEnergyLt500Hz": 0.0072,
+      "bandEnergy2500_5500Hz": 0.6411,
+      "bandEnergy3000_8000Hz": 0.4186,
+      "tonalProminence400_2000Hz": 4847.2
+     },
+     "rmsDbfs": -25.0,
+     "levelNote": "staged to RMS -25.0 dBFS like the ported footstep family (step_stone/wood/mud); integrated LUFS not measurable under 400 ms"
+    }
+   ]
+  }
+ ],
+ "notes": [
+  "guard_expire must NEVER be played when a counter is confirmed -- that is SFX/SKILL/metal_parry's job (trigger COUNTER_CONFIRMED). It plays only on an unhit guard-window expiry, if the client/server ever exposes that trigger; until then binding is UNSUPPORTED.",
+  "basic_blade stays the shared swing default and metal_parry stays the confirmed-counter cue; the 4 weapon identities (dao_swing, brush_stroke, mace_swing, bow_string) are the next block (M39-A CP2), not this checkpoint.",
+  "step_grass plays only on grass surfaces; stone, wood and wet mud keep their ported cues. If the map has no authoritative grass-surface flag, binding is UNSUPPORTED, not guessed.",
+  "No phase-specific skill keys were created: the catalogue stays 1 cue/skill with shared miss/impact (Gói 39 rules, Q-PHASES unanswered).",
+  "All loudness/true-peak/spectral numbers are measured from the real rendered bytes; no ear audition has been done. Spectral distinctness vs the ported baselines is re-measured independently by check_composed_sfx_me_cp2b_guard_grass_v1.py."
+ ]
+}
