@@ -1,0 +1,20 @@
+{
+ "checker": "check_ear_audition_pack_cp10_v1",
+ "checkpoint": "MEDIA-02 WO37 M-D CP10",
+ "checksTotal": 633,
+ "checksPassed": 633,
+ "failures": [],
+ "status": "PASS",
+ "runtimeClientGodotDirty": false,
+ "counts": {
+  "items": 58,
+  "mixesV2": 14,
+  "ambienceVariants": 26,
+  "sfxDrafts": 18
+ },
+ "totalDurationSeconds": 745.497,
+ "notes": [
+  "All 58 items re-measured from real bytes (own probe code); v1 pack bytes NOT re-hashed (Gói 38 delta discipline).",
+  "SFX drafts and M39-B A/B renders keep their already-delivered playlists; referenced, not duplicated."
+ ]
+}
