@@ -4694,10 +4694,14 @@ def check_prologue():
     if vo_n != 5 or mix_n != 1:
         err(f"PROLOGUE: runtime audio registrations vo={vo_n} "
             f"mix={mix_n} (want 5/1)")
-    # WO37 M-F checkpoint 1: 737 + 20 palette pickups = 757.
-    if am.get("totalFiles") != 757:
+    # WO37 M-F checkpoint 1: 737 + 20 palette pickups = 757;
+    # WO37 M-E checkpoint 1 then added 26 composed-ambience
+    # variants -> 783 (constant corrected at the prologue v1
+    # plumbing fix, 2026-11-13: the 757 expectation was stale
+    # and flagged every full run since M-E CP1).
+    if am.get("totalFiles") != 783:
         err(f"PROLOGUE: runtime audio total {am.get('totalFiles')}"
-            f" != 757")
+            f" != 783")
     COUNTS["prologue_files_checked"] = checked
     COUNTS["audio_files_checked"] = \
         COUNTS.get("audio_files_checked", 0) + 6

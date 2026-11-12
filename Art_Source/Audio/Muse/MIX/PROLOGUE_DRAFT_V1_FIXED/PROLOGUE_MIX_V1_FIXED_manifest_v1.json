@@ -1,0 +1,132 @@
+{
+ "manifestId": "NGM_PROLOGUE_MIX_V1_FIXED",
+ "checkpoint": "MEDIA-02 prologue v1 plumbing fix (owner order 2026-11-13)",
+ "status": "DRAFT_NOT_FINAL",
+ "auditionStatus": "NOT_AUDITIONED",
+ "file": "PROLOGUE_mix_v1_fixed.wav",
+ "sha256": "4f8224e108fd86ecec4deb8b950344ed7c526ef4bd6bd66a79b58c9a71122e63",
+ "sizeBytes": 16774542,
+ "durationSeconds": 87.367,
+ "integratedLufs": -22.37,
+ "truePeakDbtp": -3.11,
+ "peakTrimDb": 0.0,
+ "assetState": "DRAFT_MIX_NOT_FINAL",
+ "defect": {
+  "foundAt": "MEDIA-02 WO37 M-F CP2 (2026-11-12), report section 5; independently verified by cross-correlation in the main thread",
+  "rootCause": "build_prologue_film.py (CP27) fed the single ffmpeg label [vo] to both the sidechaincompress key input and the final amix; ffmpeg frame-stealing between the two consumers drops / shifts narration frames in the mix",
+  "brokenMixSha256": "f026ed3e10499b42ea4fcc39ada9a1b42e0b5b749d16ab77208afd54016ffb54",
+  "brokenMixMeasurements": {
+   "seg01TakeVsMixMaxAbsCorr": 0.02,
+   "seg03TakeVsMixMaxAbsCorr": 0.017,
+   "finalLineTakeVsMixMaxAbsCorr": -0.063,
+   "integratedLufs": -20.81,
+   "note": "loudness read healthy; the VO chain was effectively absent"
+  },
+  "brokenRendersNonReproducible": "-20.30 vs -20.51 LUFS on two renders of the CP27 graph"
+ },
+ "fix": {
+  "change": "Graph plumbing only: the VO bus is apad'ed to the full timeline and asplit so each consumer (sidechain key / final amix) gets its own copy -- the same fix the M-F CP2 prologue v2 render proved (take-vs-mix correlations 0.983-0.989 there)",
+  "recipeDeltaVsCp27": "NONE: same takes, same unity narration gain, same timeline, same bed gains, ducking, stinger, fades and peak guard",
+  "reproducible": true,
+  "renderSha256Run1": "4f8224e108fd86ecec4deb8b950344ed7c526ef4bd6bd66a79b58c9a71122e63",
+  "renderSha256Run2": "4f8224e108fd86ecec4deb8b950344ed7c526ef4bd6bd66a79b58c9a71122e63"
+ },
+ "ownerApproval": "Main chat 2026-11-13 02:58 JST: owner answered the pending decision widget with 'va luon di' (fix it now)",
+ "segments": [
+  {
+   "segment": 1,
+   "takeId": "VO_CIN000_SEG01",
+   "file": "Art_Source/Audio/Muse/VO/PROLOGUE_DRAFT/VO_CIN000_SEG01_NARRATOR.wav",
+   "sha256": "66d66345c9919fbe4af30dafd2933bee56ad9aef44233420786e98eb3c71d6a5",
+   "durationSeconds": 16.512,
+   "startSeconds": 1.4,
+   "gainDb": 0.0,
+   "voice": "avocado_v2:MAI_03 (Helio) -- CP27 draft narration, unchanged"
+  },
+  {
+   "segment": 2,
+   "takeId": "VO_CIN000_SEG02",
+   "file": "Art_Source/Audio/Muse/VO/PROLOGUE_DRAFT/VO_CIN000_SEG02_NARRATOR.wav",
+   "sha256": "12419c46408bf9524e3bb861a36b2b8d2570eadf12a6fa6bb2c176df00df0f8f",
+   "durationSeconds": 15.528,
+   "startSeconds": 19.033,
+   "gainDb": 0.0,
+   "voice": "avocado_v2:MAI_03 (Helio) -- CP27 draft narration, unchanged"
+  },
+  {
+   "segment": 3,
+   "takeId": "VO_CIN000_SEG03",
+   "file": "Art_Source/Audio/Muse/VO/PROLOGUE_DRAFT/VO_CIN000_SEG03_NARRATOR.wav",
+   "sha256": "61687706a3556d8219d8bc520b6b150d1f268e0fbd631fcf7923decc539ddfe4",
+   "durationSeconds": 19.752,
+   "startSeconds": 35.667,
+   "gainDb": 0.0,
+   "voice": "avocado_v2:MAI_03 (Helio) -- CP27 draft narration, unchanged"
+  },
+  {
+   "segment": 4,
+   "takeId": "VO_CIN000_SEG04",
+   "file": "Art_Source/Audio/Muse/VO/PROLOGUE_DRAFT/VO_CIN000_SEG04_NARRATOR.wav",
+   "sha256": "86b4252335c268c53925d001ee3c5fd998ee5e6f722e548009f76e7a4420eadc",
+   "durationSeconds": 14.928,
+   "startSeconds": 55.133,
+   "gainDb": 0.0,
+   "voice": "avocado_v2:MAI_03 (Helio) -- CP27 draft narration, unchanged"
+  },
+  {
+   "segment": 5,
+   "takeId": "VO_CIN000_SEG05",
+   "file": "Art_Source/Audio/Muse/VO/PROLOGUE_DRAFT/VO_CIN000_SEG05_NARRATOR.wav",
+   "sha256": "293acb5bb397cbb611bd712ca58cdd689259eab07b11d9c629f67a035fa647cd",
+   "durationSeconds": 8.04,
+   "startSeconds": 71.167,
+   "gainDb": 0.0,
+   "voice": "avocado_v2:MAI_03 (Helio) -- CP27 draft narration, unchanged"
+  }
+ ],
+ "finalLine": {
+  "file": "Art_Source/Audio/Muse/VO/P0_DRAFT/VO_CIN001_S05_LYAN_draft_v1.wav",
+  "sha256": "51fc65de235916c3c8b4a002564db7a6e484298f11567af803ff0437b4c1d113",
+  "startSeconds": 80.907,
+  "gainDb": -5.0,
+  "note": "Checkpoint-04 take reused byte-for-byte, as in CP27"
+ },
+ "stems": [
+  {
+   "role": "narration",
+   "source": "PROLOGUE_VO_manifest_v1.json (checkpoint 27 draft TTS)",
+   "provenance": "NEW_DRAFT_VO"
+  },
+  {
+   "role": "final line",
+   "source": "VO_CIN001_S05_LYAN_draft_v1.wav (checkpoint 04 take, reused bytes)",
+   "provenance": "REUSED_CP04"
+  },
+  {
+   "role": "music bed",
+   "source": "MUSIC/ben_mua composed runtime OGG (checkpoint 26)",
+   "gainDb": -9.07,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE_CP26"
+  },
+  {
+   "role": "ambience",
+   "source": "AMBIENCE/rain_light + AMBIENCE/river_shore runtime OGGs (checkpoint 07 pack)",
+   "gainDb": [
+    -8.52,
+    -8.47
+   ],
+   "provenance": "PORTED_CODEX_PACKV1"
+  },
+  {
+   "role": "title stinger",
+   "source": "SFX/CINEMA/resolve composed runtime OGG (checkpoint 26)",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE_CP26"
+  }
+ ],
+ "ducking": "sidechaincompress on the music+ambience bed, keyed by the VO bus: threshold 0.03, ratio 4, attack 15 ms, release 350 ms (checkpoint 20 settled values); peak guard trims the whole mix only above -1.0 dBTP",
+ "delivery": "build_prologue_v1_fix_delivery.py installs this render at the canonical v1 paths (Art_Source PROLOGUE_DRAFT + runtime mix copy) and re-muxes the runtime CIN_000 film and its subtitled / 720p variants. The broken bytes remain in git history at 7f461da (sha f026ed3e...).",
+ "notes": [
+  "DRAFT_NOT_FINAL, NOT_AUDITIONED: same draft mix, defect corrected; no content, casting or level decision is changed by this fix.",
+  "The M-F CP2 palette v2 mix (CIN000_DRAFT_V2) is a separate alternate and is NOT touched."
+ ]
+}

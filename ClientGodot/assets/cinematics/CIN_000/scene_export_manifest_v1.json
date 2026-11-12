@@ -7,14 +7,14 @@
  "durationSeconds": 87.3667,
  "mp4": {
   "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.mp4",
-  "sha256": "8804931743e31d21c46c269f86b3deb65800668e3ec9c3e7c38d6a73057c2806",
-  "sizeBytes": 12249759,
+  "sha256": "86b7cdd95f942a0a2507837494f649461ddde30d20932a37425a00e76157f578",
+  "sizeBytes": 12248889,
   "durationSeconds": 87.2667
  },
  "ogv": {
   "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.ogv",
-  "sha256": "f7323bcf0ec35a81357e2cfc80ba029f55df09b4a16492cf9001273f19c2cb4d",
-  "sizeBytes": 25267547,
+  "sha256": "50e6ca450da7da031143559b71abcaed92e6b2b2763e070f5c8076233fa5f2b2",
+  "sizeBytes": 25245216,
   "durationSeconds": 87.2667
  },
  "poster": {
@@ -89,12 +89,13 @@
  "notes": [
   "Standalone pre-game prologue; NOT part of the 20-scene campaign pack or its totals.",
   "Picture is cinematic panels with Ken Burns motion; character/spoiler guardrails per the timing JSON staging note.",
-  "Checkpoint 28 adds mp4SubVi: a subtitled viewing variant (burned-in + embedded readable subtitles, narration at +5 dB presentation gain). Canonical files unchanged."
+  "Checkpoint 28 adds mp4SubVi: a subtitled viewing variant (burned-in + embedded readable subtitles, narration at +5 dB presentation gain). Canonical files unchanged.",
+  "Prologue v1 plumbing fix (2026-11-13, owner order): the CP27 mix graph fed one ffmpeg label to two consumers and lost the narration; the mix was re-rendered with the plumbing corrected (apad + asplit), same takes / recipe / timeline, and the runtime film + variants were re-derived from it. Broken mix sha f026ed3e... stays in git history."
  ],
  "mp4SubVi": {
   "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps_sub_vi.mp4",
-  "sha256": "2aae25e418c5c264efc494ac117a1416c555e8bb09efe0f55a4fb63f9d0ba25b",
-  "sizeBytes": 11918592,
+  "sha256": "50ec6a9853bf98054777c5d93fdf118312ce4887f0c6271e4b09d2780f1f1b9d",
+  "sizeBytes": 11917676,
   "durationSeconds": 87.2667,
   "streams": [
    "video:h264",
@@ -109,12 +110,12 @@
    "chunks": 26
   },
   "audio": {
-   "source": "checkpoint 27 embedded mix of the canonical MP4 (mix file itself unchanged)",
-   "presentationGainDb": 5.0,
-   "loudnessLufs": -15.83,
-   "truePeakDbtp": -4.09
+   "source": "plumbing-fixed checkpoint 27 mix embedded in the canonical MP4 (mix file at PROLOGUE_DRAFT, fixed render PROLOGUE_DRAFT_V1_FIXED)",
+   "presentationGainDb": 2.0,
+   "loudnessLufs": -20.39,
+   "truePeakDbtp": -1.19
   },
-  "note": "Owner-requested viewing variant (2026-11-06): on-screen Vietnamese subtitles + clearly audible narration. Canonical MP4 / OGV / SRT unchanged."
+  "note": "Owner-requested viewing variant (2026-11-06): on-screen Vietnamese subtitles + clearly audible narration. Re-rendered 2026-11-13 from the plumbing-fixed mix; subtitle content unchanged. Canonical MP4 / OGV carry the same fixed mix without the presentation gain."
  },
  "readableSrt": {
   "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_vi_readable.srt",

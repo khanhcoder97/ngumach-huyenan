@@ -33,27 +33,27 @@
    "video": {
     "ogv": {
      "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.ogv",
-     "durationSecondsMeasured": 87.381,
+     "durationSecondsMeasured": 87.267,
      "audioStream": {
       "codec": "vorbis",
       "sampleRateHz": 48000,
       "channels": 2
      },
      "subtitleStreamsEmbedded": 0,
-     "embeddedLoudnessLUFS": -20.76,
-     "embeddedTruePeakDBTP": -9.07
+     "embeddedLoudnessLUFS": -22.41,
+     "embeddedTruePeakDBTP": -3.52
     },
     "mp4": {
      "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.mp4",
-     "durationSecondsMeasured": 87.367,
+     "durationSecondsMeasured": 87.267,
      "audioStream": {
       "codec": "aac",
       "sampleRateHz": 48000,
       "channels": 2
      },
      "subtitleStreamsEmbedded": 0,
-     "embeddedLoudnessLUFS": -20.81,
-     "embeddedTruePeakDBTP": -9.08
+     "embeddedLoudnessLUFS": -22.39,
+     "embeddedTruePeakDBTP": -3.12
     }
    },
    "embeddedMix": {
@@ -94,10 +94,10 @@
      "status": "DRAFT_VO_NOT_FINAL"
     },
     "sourceMixWav": "Art_Source/Audio/Muse/MIX/PROLOGUE_DRAFT/PROLOGUE_mix_v1.wav",
-    "sourceMixSha256": "f026ed3e10499b42ea4fcc39ada9a1b42e0b5b749d16ab77208afd54016ffb54",
-    "sourceMixMeasuredLUFS": -20.81,
-    "sourceMixMeasuredTruePeakDBTP": -9.08,
-    "embeddedVsSourceDeltaLUFS": 0.05
+    "sourceMixSha256": "4f8224e108fd86ecec4deb8b950344ed7c526ef4bd6bd66a79b58c9a71122e63",
+    "sourceMixMeasuredLUFS": -22.37,
+    "sourceMixMeasuredTruePeakDBTP": -3.11,
+    "embeddedVsSourceDeltaLUFS": 0.02
    },
    "subtitle": {
     "mode": "OVERLAY_SRT",

@@ -1,0 +1,25 @@
+{
+ "id": "STANDARD720_SUBTITLED_PROLOGUE_FIX_v1",
+ "checkpoint": "MEDIA-02 prologue v1 plumbing fix (2026-11-13)",
+ "status": "DRAFT_STANDARD_VERSION_NOT_IN_RUNTIME",
+ "method": "integer 2x nearest-neighbour upscale of the re-rendered 640x360 subtitled viewing variant; NOT a native 720p capture; H.264 crf26; audio stream-copied bit-exact; embedded mov_text subtitle track stream-copied (CP3 recipe, unchanged)",
+ "reason": "The CP28 subtitled variant derived from the broken CP27 mix; after the plumbing fix it was re-rendered from the fixed mix, so its 720p standard version is re-derived here. The CP3 manifest (STANDARD720_SUBTITLED_MB_CP3_v1) stays as the historical record of the pre-fix bytes.",
+ "entries": [
+  {
+   "sceneId": "CIN_000_subtitled",
+   "sourcePath": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps_sub_vi.mp4",
+   "sourceSha256": "50ec6a9853bf98054777c5d93fdf118312ce4887f0c6271e4b09d2780f1f1b9d",
+   "sourceBytes": 11917676,
+   "sourceDuration": 87.2667,
+   "outPath": "Art_Source/Cinematics/Standard720/CIN_000_subtitled/CIN_000_1280x720_30fps_sub_vi.mp4",
+   "outSha256": "086d48b5e3d246989145c27dc11dd655860e4c1ec57173c83b43e103d7d2dfbc",
+   "outBytes": 32071927,
+   "outDuration": 87.2667,
+   "supersedesCp3OutSha256": "a3c1f16d3cbb50b01c44bbc1ef082999457dcb70c229d3b257c24e3d78b8348b"
+  }
+ ],
+ "runtimeTreeModified": false,
+ "notes": [
+  "Prologue v1 plumbing fix (2026-11-13, owner order): the CP27 mix graph fed one ffmpeg label to two consumers and lost the narration; the mix was re-rendered with the plumbing corrected (apad + asplit), same takes / recipe / timeline, and the runtime film + variants were re-derived from it. Broken mix sha f026ed3e... stays in git history."
+ ]
+}
