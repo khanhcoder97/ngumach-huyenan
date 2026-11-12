@@ -24,6 +24,12 @@ def locate(values,expected,maximum_gap):
         if len(found)==expected and min(b-a for a,b in found)>=len(values)/expected*.2:return found
     return bands(occupied,maximum_gap)
 
+def reference_height(frames,scale_mode='HEIGHT'):
+    assert scale_mode in ('HEIGHT','LONGEST_AXIS'),'unreviewed source scale mode'
+    return statistics.median(max(f['bounds'][2]-f['bounds'][0],f['bounds'][3]-f['bounds'][1])
+                             if scale_mode=='LONGEST_AXIS' else f['bounds'][3]-f['bounds'][1]
+                             for f in frames[:3])
+
 def inspect(record, art_root=None):
     path=(art_root or ART)/record['source']
     with Image.open(path) as im:
@@ -63,6 +69,7 @@ def inspect(record, art_root=None):
                 hashes.append(hashlib.sha256(im.crop((x,y,x1,y1)).tobytes()).hexdigest())
         assert len(set(hashes))==len(hashes),'duplicate full-frame pixels; frame count cannot be padded'
         directions=[]
+        assert record.get('scaleMode','HEIGHT') in ('HEIGHT','LONGEST_AXIS'),'unreviewed source scale mode'
         if len(cols)==8 and (len(rows) in (2,4,6,8,10) or record.get('unboundRows')==1):
             authored=record.get('authoredDirections') or ['N','NE','E','SE','S']
             assert len(authored)*2+record.get('unboundRows',0)==len(rows) and len(set(authored))==len(authored),'partial atlas must declare its actual direction blocks and unused rows'
@@ -71,7 +78,7 @@ def inspect(record, art_root=None):
                 block=frames[source*16:source*16+16];assert len(block)==16
                 # Page resolution varies. Calibrate from the neutral first poses, never
                 # scale a lying death pose back up to standing height.
-                height=statistics.median(f['bounds'][3]-f['bounds'][1] for f in block[:3])
+                height=reference_height(block,record.get('scaleMode','HEIGHT'))
                 directions.append(dict(direction=name,flip=False,referenceHeight=height,frames=block))
             if record.get('mirrorAllowed',True):
                 for target,source in [('SW','SE'),('W','E'),('NW','NE')]:
@@ -80,7 +87,7 @@ def inspect(record, art_root=None):
                         directions.append(dict(direction=target,flip=True,referenceHeight=original['referenceHeight'],frames=original['frames']))
             directions.sort(key=lambda d:['N','NE','E','SE','S','SW','W','NW'].index(d['direction']))
         elif (len(cols),len(rows))==(4,4):
-            vfx=record['id'].startswith('sk_');height=max(f['bounds'][3]-f['bounds'][1] for f in frames) if vfx else statistics.median(f['bounds'][3]-f['bounds'][1] for f in frames[:3])
+            vfx=record['id'].startswith('sk_');height=max(f['bounds'][3]-f['bounds'][1] for f in frames) if vfx else reference_height(frames,record.get('scaleMode','HEIGHT'))
             directions=[dict(direction=record.get('direction') or ('OMNI' if vfx else 'S'),flip=False,referenceHeight=height,frames=frames)]
         else:raise AssertionError('unreviewed atlas layout')
         page=dict(id=record['id'],file='sheets/'+path.name,source=record['source'],sha256=hashlib.sha256(path.read_bytes()).hexdigest(),imageSize=[w,h],directions=directions,

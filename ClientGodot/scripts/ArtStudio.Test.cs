@@ -25,6 +25,14 @@ public partial class ArtStudio
                         for (int f = 0; f < c.DurationsMs.Count; f++) { var p = ArtStudioSampler.Pose(l, c, f); Check(p.SourceFrame >= 0 && p.SourceFrame < l.Regions.Count, "source binding"); }
                     }
             }
+            foreach (string action in new[] { "idle", "walk", "telegraph_01", "attack_01", "recovery_01", "hurt", "death" })
+            {
+                var grouped = ArtStudioLibrary.Load("actor:MOB_CARPLING:" + action).Clips.Single(c => c.Direction == "S");
+                string page = "mob_carpling_" + action + (action is "idle" or "walk" ? "" : "_s");
+                var raw = ArtStudioLibrary.Load(page).Clips.Single(c => c.Direction == "S");
+                Check(Math.Abs(grouped.Duration - raw.Duration) < .00001 && Math.Abs(grouped.Duration - ActorLibraryData.Duration("MOB_CARPLING", action)) < .00001, "raw/group timing mismatch: " + action);
+                if (action != "idle" && action != "walk") Check(!grouped.Loop && !raw.Loop, "combat source must default to one shot");
+            }
             var original = ArtStudioCodec.Encode(_doc); var sourceHash = System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(ArtStudioCodec.Resolve(Layer.Texture, "")));
             _keyMode.ButtonPressed = true; _numbers["x"].Value = 17;
             Check(Math.Abs(Pose().X - 17) < .001, "inspector signal did not edit a key");

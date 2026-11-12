@@ -6,11 +6,11 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
 ART=ROOT/'Art_Source/Actor_Library_20261107'
-TARGET=ART/'batch_20261112.json'
 
 
-def build():
-    records=[r for r in json.loads((ART/'generation_records.json').read_text(encoding='utf8')) if r.get('batch')=='20261112']
+def build(batch='20261112'):
+    records=[r for r in json.loads((ART/'generation_records.json').read_text(encoding='utf8')) if r.get('batch')==batch]
+    assert records,'unknown or empty batch'
     pages={p['id']:p for p in json.loads((ART/'structure_report.json').read_text(encoding='utf8'))['pages']}
     entries=[]
     for r in records:
@@ -30,18 +30,20 @@ def build():
     preserved=all((ROOT/r['file']).is_file() and hashlib.sha256((ROOT/r['file']).read_bytes()).hexdigest()==r['expectedSha256'] for r in baseline['files'])
     assert preserved,'owner-selected old sheet changed'
     coverage=json.loads((ART/'coverage.json').read_text(encoding='utf8'))
-    return dict(schemaVersion=1,scope='CONTINUED_BAKED_CHIBI_ASSET_PRODUCTION',ownerStyleLocked=True,
+    return dict(schemaVersion=2,batch=batch,coverageSnapshotPolicy='CURRENT_CATALOG_AT_INVENTORY_BUILD',scope='CONTINUED_BAKED_CHIBI_ASSET_PRODUCTION',ownerStyleLocked=True,
                 styleDecision='USER_20261112_CONTINUE_EXISTING_CHIBI_SPRITE_SHEETS',generator='built-in image_gen',
                 originalsPreserved=len(baseline['files']),selectedSheets=len(entries),sourceCells=sum(e['sourceCells'] for e in entries),
                 boundSourceCells=sum(e['boundSourceCells'] for e in entries),unusedSourceCells=sum(e['unboundSourceCells'] for e in entries),
                 sourceFramesPerDirection=16,renderTargetFps=60,entries=entries,
                 fullGameComplete=False,requiredJobs=coverage['requiredPages'],structurallyCompleteJobs=coverage['boundRequiredPages'],pendingJobs=coverage['pendingPages'],
-                note='Cells/hashes do not certify anatomical pose uniqueness. Only the reviewed sword-arc component is approved for runtime use; full actors/skills retain per-clip review. 8 extra boatkeeper cells are preserved but never padded into a 16-frame sequence.')
+                note='Cells/hashes do not certify anatomical pose uniqueness. Production approval remains per source/clip. Unbound cells are never padded into a sequence. Coverage fields describe the current catalogue, not historical progress on the batch date.')
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--check',action='store_true');args=parser.parse_args()
-    result=build();text=json.dumps(result,ensure_ascii=False,indent=2)+'\n'
-    if args.check:assert TARGET.read_text(encoding='utf8')==text,'stale batch inventory'
-    else:TARGET.write_text(text,encoding='utf8')
+    parser=argparse.ArgumentParser();parser.add_argument('--check',action='store_true');parser.add_argument('--batch',default='20261112');args=parser.parse_args()
+    assert args.batch.isalnum(),'batch must be an alphanumeric identifier'
+    target=ART/('batch_'+args.batch+'.json')
+    result=build(args.batch);text=json.dumps(result,ensure_ascii=False,indent=2)+'\n'
+    if args.check:assert target.read_text(encoding='utf8')==text,'stale batch inventory'
+    else:target.write_text(text,encoding='utf8')
     print(json.dumps({k:result[k] for k in ['selectedSheets','sourceCells','boundSourceCells','unusedSourceCells','originalsPreserved','pendingJobs']}))

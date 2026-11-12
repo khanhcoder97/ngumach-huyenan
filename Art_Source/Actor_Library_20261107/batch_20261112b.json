@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 2,
+  "batch": "20261112b",
+  "coverageSnapshotPolicy": "CURRENT_CATALOG_AT_INVENTORY_BUILD",
+  "scope": "CONTINUED_BAKED_CHIBI_ASSET_PRODUCTION",
+  "ownerStyleLocked": true,
+  "styleDecision": "USER_20261112_CONTINUE_EXISTING_CHIBI_SPRITE_SHEETS",
+  "generator": "built-in image_gen",
+  "originalsPreserved": 46,
+  "selectedSheets": 13,
+  "sourceCells": 208,
+  "boundSourceCells": 208,
+  "unusedSourceCells": 0,
+  "sourceFramesPerDirection": 16,
+  "renderTargetFps": 60,
+  "entries": [
+    {
+      "id": "mob_waterroot_idle_n",
+      "source": "Sheets/mob_waterroot_idle_n_v1_20261112b.png",
+      "prompt": "Prompts/mob_waterroot_idle_n_v1_20261112b.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_idle_n_v1_20261112b.png",
+      "sha256": "d1e14c0ad6c81979e37c81ac92d2daaaf470fd4a81fcbbfe400a077f80efc79f",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "N"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "HOLD"
+    },
+    {
+      "id": "mob_waterroot_idle_ne",
+      "source": "Sheets/mob_waterroot_idle_ne_v1_20261112b.png",
+      "prompt": "Prompts/mob_waterroot_idle_ne_v1_20261112b.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_idle_ne_v1_20261112b.png",
+      "sha256": "dc5a6457c9ef5f0d3ebe72c1c058f66f619363d947b1812e29259c11e8af37ac",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "NE"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "HOLD"
+    },
+    {
+      "id": "mob_waterroot_idle_e",
+      "source": "Sheets/mob_waterroot_idle_e_v1_20261112b.png",
+      "prompt": "Prompts/mob_waterroot_idle_e_v1_20261112b.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_idle_e_v1_20261112b.png",
+      "sha256": "57ba5ad15bb7d6503a55d19411e67aabe069ef82c086c5b4b48820cf309b3fc3",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "E"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "HOLD"
+    },
+    {
+      "id": "mob_waterroot_idle_se",
+      "source": "Sheets/mob_waterroot_idle_se_v1_20261112b.png",
+      "prompt": "Prompts/mob_waterroot_idle_se_v1_20261112b.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_idle_se_v1_20261112b.png",
+      "sha256": "954d3fa4c8a4d10472dccae81d4b50fc2245f796e62e334a1b27b000d9afcd2e",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "SE"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "HOLD"
+    },
+    {
+      "id": "mob_shore_stalker_idle_n",
+      "source": "Sheets/mob_shore_stalker_idle_n_v1_20261112b.png",
+      "prompt": "Prompts/mob_shore_stalker_idle_n_v1_20261112b.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_shore_stalker_idle_n_v1_20261112b.png",
+      "sha256": "30046532822d9d19f36a7abff291ff64c5ead57d251a28961dc5d13be6452371",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "N"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "HOLD"
+    },
+    {
+      "id": "mob_shore_stalker_idle_ne",
+      "source": "Sheets/mob_shore_stalker_idle_ne_v1_20261112b.png",
+      "prompt": "Prompts/mob_shore_stalker_idle_ne_v1_20261112b.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_shore_stalker_idle_ne_v1_20261112b.png",
+      "sha256": "16ee6e8efab5015c823a5cf452e64a359d6657b8a5d0b5ace5eb784ae8d52acb",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "NE"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "HOLD"
+    },
+    {
+      "id": "mob_shore_stalker_idle_e",
+      "source": "Sheets/mob_shore_stalker_idle_e_v1_20261112b.png",
+      "prompt": "Prompts/mob_shore_stalker_idle_e_v1_20261112b.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_shore_stalker_idle_e_v1_20261112b.png",
+      "sha256": "253eba15cd216107084fb408f4b87089e4ee0da3c6051d04f8245215cb230580",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "E"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "HOLD"
+    },
+    {
+      "id": "mob_shore_stalker_idle_se",
+      "source": "Sheets/mob_shore_stalker_idle_se_v1_20261112b.png",
+      "prompt": "Prompts/mob_shore_stalker_idle_se_v1_20261112b.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_shore_stalker_idle_se_v1_20261112b.png",
+      "sha256": "423f6688ae19d14544af6be700e44e89d28308638a5ebbfc634853e5078daa20",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "SE"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "HOLD"
+    },
+    {
+      "id": "mob_carpling_telegraph_01_s",
+      "source": "Sheets/mob_carpling_telegraph_01_s_v1_20261112b.png",
+      "prompt": "Prompts/mob_carpling_telegraph_01_s_v1_20261112b.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_carpling_telegraph_01_s_v1_20261112b.png",
+      "sha256": "d419a07558a8830e984138028d851d416bd329d3d4b4be9c86c61826e8d15b29",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "S"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "HOLD"
+    },
+    {
+      "id": "mob_carpling_attack_01_s",
+      "source": "Sheets/mob_carpling_attack_01_s_v2_20261112b.png",
+      "prompt": "Prompts/mob_carpling_attack_01_s_v2_20261112b.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_carpling_attack_01_s_v2_20261112b.png",
+      "sha256": "7802b2ca3b9a41e42a2da77d57ac8e2a9ac89976b812f88bda7f610867a94afd",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "S"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "HOLD"
+    },
+    {
+      "id": "mob_carpling_recovery_01_s",
+      "source": "Sheets/mob_carpling_recovery_01_s_v2_20261112b.png",
+      "prompt": "Prompts/mob_carpling_recovery_01_s_v2_20261112b.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_carpling_recovery_01_s_v2_20261112b.png",
+      "sha256": "6e546ee375564e81ab35a50ad06e838fde2823d3af075a012fd2d0a52afd510a",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "S"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "HOLD"
+    },
+    {
+      "id": "mob_carpling_hurt_s",
+      "source": "Sheets/mob_carpling_hurt_s_v1_20261112b.png",
+      "prompt": "Prompts/mob_carpling_hurt_s_v1_20261112b.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_carpling_hurt_s_v1_20261112b.png",
+      "sha256": "c2d4b766e2c1344ef35150adf64a714d0da30f05a1d4f427f85a4d3706eeb94c",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "S"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "HOLD"
+    },
+    {
+      "id": "mob_carpling_death_s",
+      "source": "Sheets/mob_carpling_death_s_v1_20261112b.png",
+      "prompt": "Prompts/mob_carpling_death_s_v1_20261112b.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_carpling_death_s_v1_20261112b.png",
+      "sha256": "8d7b7a8bac534c2eb9cf1c730e1d5e7a10a26987d9b655d98fc1dddcc63f1301",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "S"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": false,
+      "visualState": "HOLD"
+    }
+  ],
+  "fullGameComplete": false,
+  "requiredJobs": 1008,
+  "structurallyCompleteJobs": 40,
+  "pendingJobs": 968,
+  "note": "Cells/hashes do not certify anatomical pose uniqueness. Production approval remains per source/clip. Unbound cells are never padded into a sequence. Coverage fields describe the current catalogue, not historical progress on the batch date."
+}

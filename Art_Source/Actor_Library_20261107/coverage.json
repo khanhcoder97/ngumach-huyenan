@@ -1,24 +1,16 @@
 {
   "actors": 130,
   "requiredPages": 1008,
-  "structurePassed": 49,
-  "boundRequiredPages": 38,
+  "structurePassed": 62,
+  "boundRequiredPages": 40,
   "legacyClips": 3,
   "rejected": [
     {
       "id": "sk_mk_03_vfx",
       "reason": "rows expected 4, got 5"
-    },
-    {
-      "id": "mob_shore_stalker_idle",
-      "reason": "columns expected 8, got 7"
-    },
-    {
-      "id": "mob_waterroot_idle",
-      "reason": "rows expected 10, got 9"
     }
   ],
-  "pendingPages": 970,
+  "pendingPages": 968,
   "pendingIds": [
     "class_minh_kiem_skill_01",
     "class_minh_kiem_skill_02",
@@ -66,7 +58,6 @@
     "mob_carpling_recovery_02",
     "mob_carpling_run",
     "mob_carpling_turn",
-    "mob_waterroot_idle",
     "mob_waterroot_walk",
     "mob_waterroot_hurt",
     "mob_waterroot_death",
@@ -78,7 +69,6 @@
     "mob_waterroot_recovery_02",
     "mob_waterroot_run",
     "mob_waterroot_turn",
-    "mob_shore_stalker_idle",
     "mob_shore_stalker_walk",
     "mob_shore_stalker_hurt",
     "mob_shore_stalker_death",
@@ -992,7 +982,7 @@
     "mob_stone_automaton_elite_turn"
   ],
   "productionApprovedPages": 3,
-  "visualHoldPages": 15,
+  "visualHoldPages": 28,
   "modularMigrationReferencePages": 0,
   "structureComplete": false,
   "complete": false,

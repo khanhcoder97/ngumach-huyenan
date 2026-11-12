@@ -85,6 +85,10 @@ public sealed class ActorLibraryData : IDisposable
         texture=ResourceLoader.Load<Texture2D>(file,cacheMode:ResourceLoader.CacheMode.Ignore);_textures.Add(file,texture);_order.Enqueue(file);return texture;
     }
     public static double Duration(string clip)=>clip switch{"idle"=>1,"walk"=>.8,"run"=>.64,"basic_attack"=>.6,"hurt"=>.3,"death"=>1.2,"dodge"=>.48,"turn"=>.5,"interact"=>1.6,_=>.9};
+    // Presentation only. Telegraph/recovery come from the visual bible; .30 attack
+    // is an editable review assumption, never an authoritative combat/hit window.
+    public static double Duration(string actorId,string clip)=>actorId=="MOB_CARPLING"
+        ?clip switch{"telegraph_01"=>.45,"attack_01"=>.30,"recovery_01"=>.50,_=>Duration(clip)}:Duration(clip);
     public float ReferenceHeight(string id,int direction,Direction current)=>current.Height;
     public void Dispose(){foreach(var texture in _textures.Values)texture.Dispose();_textures.Clear();}
 }
@@ -102,13 +106,13 @@ public partial class ActorLibrarySprite : Sprite2D
     public bool Available=>Library!=null&&Library.Resolve(ActorId,Clip,Facing,out _);
     public void Restart(){_clock=0;_shown=null;}
     public void Seek(int frame)
-    {if(Library!=null&&Library.Resolve(ActorId,Clip,Facing,out var direction)){ManualFrame=Math.Clamp(frame,0,direction!.Frames.Length-1);_clock=ActorLibraryData.Duration(Clip)*ManualFrame/direction.Frames.Length;_shown=null;}}
+    {if(Library!=null&&Library.Resolve(ActorId,Clip,Facing,out var direction)){ManualFrame=Math.Clamp(frame,0,direction!.Frames.Length-1);_clock=ActorLibraryData.Duration(ActorId,Clip)*ManualFrame/direction.Frames.Length;_shown=null;}}
     public override void _Ready(){RegionEnabled=true;Centered=false;TextureFilter=TextureFilterEnum.Nearest;}
     public override void _Process(double delta)
     {
         if(Library==null||!Library.Resolve(ActorId,Clip,Facing,out var direction)){Visible=false;return;}
         Visible=true;if(!Paused)_clock+=delta;
-        int count=direction!.Frames.Length;int elapsed=(int)(_clock/ActorLibraryData.Duration(Clip)*count);
+        int count=direction!.Frames.Length;int elapsed=(int)(_clock/ActorLibraryData.Duration(ActorId,Clip)*count);
         int frame=ManualFrame>=0?Math.Clamp(ManualFrame,0,count-1):Loop?elapsed%count:Math.Min(elapsed,count-1);
         DisplayedFrame=frame;var pose=direction.Frames[frame];
         if(ReferenceEquals(pose,_shown))return;_shown=pose;

@@ -1,5 +1,7 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
+  "batch": "20261112",
+  "coverageSnapshotPolicy": "CURRENT_CATALOG_AT_INVENTORY_BUILD",
   "scope": "CONTINUED_BAKED_CHIBI_ASSET_PRODUCTION",
   "ownerStyleLocked": true,
   "styleDecision": "USER_20261112_CONTINUE_EXISTING_CHIBI_SPRITE_SHEETS",
@@ -297,7 +299,7 @@
   ],
   "fullGameComplete": false,
   "requiredJobs": 1008,
-  "structurallyCompleteJobs": 38,
-  "pendingJobs": 970,
-  "note": "Cells/hashes do not certify anatomical pose uniqueness. Only the reviewed sword-arc component is approved for runtime use; full actors/skills retain per-clip review. 8 extra boatkeeper cells are preserved but never padded into a 16-frame sequence."
+  "structurallyCompleteJobs": 40,
+  "pendingJobs": 968,
+  "note": "Cells/hashes do not certify anatomical pose uniqueness. Production approval remains per source/clip. Unbound cells are never padded into a sequence. Coverage fields describe the current catalogue, not historical progress on the batch date."
 }

@@ -36,7 +36,8 @@ public static class ArtStudioLibrary
             var frames = d.GetProperty("frames").EnumerateArray().ToArray();
             float width = frames.Max(f => f.GetProperty("bounds")[2].GetSingle() - f.GetProperty("bounds")[0].GetSingle());
             float scale = (vfx ? 160 : 140) / Math.Max(1, vfx ? Math.Max(width, reference) : reference); bool flip = d.GetProperty("flip").GetBoolean();
-            var c = new ArtStudioClip { Name = id, Direction = direction, Loop = !OneShot(id), SourceNote = (flip ? "Lật ngang theo metadata · " : "Nguồn sheet · ") + p.GetProperty("visualState").GetString() + " · chưa nghiệm thu mới.", DurationsMs = Enumerable.Repeat(id.Contains("walk", StringComparison.Ordinal) ? 50f : 100f, frames.Length).ToList() };
+            double seconds = SourceDuration(id);
+            var c = new ArtStudioClip { Name = id, Direction = direction, Loop = !OneShot(id), SourceNote = (flip ? "Lật ngang theo metadata · " : "Nguồn sheet · ") + p.GetProperty("visualState").GetString() + " · chưa nghiệm thu mới.", DurationsMs = Enumerable.Repeat((float)(seconds * 1000 / frames.Length), frames.Length).ToList() };
             var track = new ArtStudioTrack { LayerId = l.Id, Interpolate = false }; c.Tracks.Add(track);
             foreach (var f in frames)
             {
@@ -48,6 +49,14 @@ public static class ArtStudioLibrary
         }
         l.Rest = doc.Clips.First().Tracks[0].Keys[0].Pose.Copy();
         ArtStudioCodec.Validate(doc); return doc;
+    }
+    private static double SourceDuration(string id)
+    {
+        if (!id.StartsWith("mob_carpling_", StringComparison.Ordinal)) return id.Contains("walk", StringComparison.Ordinal) ? .8 : 1.6;
+        string action = id[13..];
+        foreach (string facing in new[] { "_n", "_ne", "_e", "_se", "_s", "_sw", "_w", "_nw" })
+            if (action.EndsWith(facing, StringComparison.Ordinal)) { action = action[..^facing.Length]; break; }
+        return ActorLibraryData.Duration("MOB_CARPLING", action);
     }
     public static ArtStudioDocument Actor(string actor, string action)
     {
@@ -62,7 +71,7 @@ public static class ArtStudioLibrary
             foreach (var f in frames) l.Regions.Add(new[] { (int)f.Region.Position.X, (int)f.Region.Position.Y, (int)f.Region.Size.X, (int)f.Region.Size.Y });
             l.Rest.Alpha = 0; doc.Layers.Add(l);
             string note = (d.Flip ? "Hướng lật · " : "Hướng nguồn · ") + library.ReviewStatus(actor, action);
-            var c = new ArtStudioClip { Name = action, Direction = d.Name, Loop = !OneShot(action), SourceNote = note.Length > 480 ? note[..480] : note, DurationsMs = Enumerable.Repeat((float)(ActorLibraryData.Duration(action) * 1000 / frames.Length), frames.Length).ToList() };
+            var c = new ArtStudioClip { Name = action, Direction = d.Name, Loop = !OneShot(action), SourceNote = note.Length > 480 ? note[..480] : note, DurationsMs = Enumerable.Repeat((float)(ActorLibraryData.Duration(actor, action) * 1000 / frames.Length), frames.Length).ToList() };
             var t = new ArtStudioTrack { LayerId = l.Id, Interpolate = false }; c.Tracks.Add(t);
             for (int f = 0; f < frames.Length; f++)
             { float scale = 140 / Math.Max(1, d.Height); var pv = frames[f].Pivot; t.Keys.Add(new() { Frame = f, Pose = new() { SourceFrame = f, PivotX = pv.X, PivotY = pv.Y, ScaleX = d.Flip ? -scale : scale, ScaleY = scale } }); }

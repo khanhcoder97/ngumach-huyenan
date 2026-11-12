@@ -96,7 +96,11 @@ public partial class ActorLibraryBrowser : Control
         for(int i=0;i<8;i++){bool available=_library.Resolve(_actor,clip,i,out var direction);_labels[i].Text=actor.Kind=="VFX"?(i==0?"VFX ·"+_activeFrames+"frame":""):(new[]{"N","NE","E","SE","S","SW","W","NW"}[i]+(available?(direction!.Flip?" · lật ảnh":" · nguồn"):" · CHƯA CÓ"));_sprites[i].DisplayHeight=actor.Kind=="BOSS"?130:actor.Kind=="VFX"?160:88;}
         if(actor.Kind=="VFX")for(int i=1;i<8;i++)_sprites[i].ActorId="";
         int ready=actor.Clips.Count(c=>Enumerable.Range(0,8).All(d=>_library.Resolve(_actor,c,d,out _)));
-        _status.Text=$"Clip có dữ liệu đủ hướng: {ready}/{actor.Clips.Length} · {_clip} · Phát lặp để kiểm tra, kể cả clip một lần.\n"+_library.ReviewStatus(_actor,clip);
+        var reviews=_library.ReviewStatus(_actor,clip).Split('\n');
+        int sourceCount=reviews[0]=="CHƯA CÓ DỮ LIỆU"?0:reviews.Length;
+        int holds=reviews.Count(r=>r.Contains(": HOLD",StringComparison.Ordinal));
+        _status.Text=$"Clip có dữ liệu đủ hướng: {ready}/{actor.Clips.Length} · {_clip} · Phát lặp để kiểm tra, kể cả clip một lần.\n"+
+            $"{sourceCount} nguồn · {holds} HOLD cần kiểm/sửa · Đủ nguồn không có nghĩa đã duyệt hình ảnh. Chi tiết từng nguồn trong Studio.";
         Place();
     }
     private void Place()
@@ -140,6 +144,15 @@ public partial class ActorLibraryBrowser : Control
             probe._Process(ActorLibraryData.Duration("walk")*2);if(probe.DisplayedFrame!=15)throw new Exception("one-shot did not hold final pose");checks++;
             probe.Seek(7);probe.ManualFrame=-1;probe._Process(0);if(probe.DisplayedFrame!=7)throw new Exception("scrub resume lost phase");checks++;
             probe.Loop=true;probe.Restart();var visited=new HashSet<int>();for(int i=0;i<60;i++){probe._Process(1d/60);visited.Add(probe.DisplayedFrame);}if(visited.Count!=16)throw new Exception("60FPS clock skipped source poses");checks++;
+            foreach(string action in new[]{"telegraph_01","attack_01","recovery_01","hurt","death"})
+            {
+                probe.ActorId="MOB_CARPLING";probe.Clip=action;probe.Facing=4;probe.ManualFrame=-1;probe.Restart();
+                double duration=ActorLibraryData.Duration(probe.ActorId,action);var poses=new HashSet<int>();
+                for(int i=0;i<Math.Ceiling(duration*60)+2;i++){probe._Process(1d/60);poses.Add(probe.DisplayedFrame);}
+                if(poses.Count!=16)throw new Exception("Carpling review clock skipped source poses: "+action);checks++;
+                probe.Loop=false;probe.Restart();probe._Process(duration*2);if(probe.DisplayedFrame!=15)throw new Exception("Carpling one-shot restarted: "+action);checks++;probe.Loop=true;
+            }
+            if(ActorLibraryData.Duration("MOB_CARPLING","telegraph_01")!=.45||ActorLibraryData.Duration("MOB_CARPLING","recovery_01")!=.5||ActorLibraryData.Duration("MOB_WATERROOT","telegraph_01")!=ActorLibraryData.Duration("telegraph_01"))throw new Exception("presentation timing leaked between actors");checks++;
             GD.Print("ACTOR_LIBRARY_SELF_TEST PASS assertions="+checks+" partial catalogue allowed; not complete art acceptance");GetTree().Quit();
         }
         catch(Exception e){GD.PushError("ACTOR_LIBRARY_SELF_TEST FAIL "+e);GetTree().Quit(1);}

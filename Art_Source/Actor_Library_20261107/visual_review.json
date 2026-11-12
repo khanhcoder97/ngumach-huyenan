@@ -75,6 +75,58 @@
     {
       "id": "sk_lc_01_vfx",
       "reason": "VFX has noisy soft fringe and emblem-like silhouette; needs clean pixel-effect revision and comparison with canonical spell geometry."
+    },
+    {
+      "id": "mob_waterroot_idle_n",
+      "reason": "New directional idle candidate; native motion, edge, anatomy and compass continuity review required."
+    },
+    {
+      "id": "mob_waterroot_idle_ne",
+      "reason": "Rear diagonal silhouette is too close to NORTH; retain for Studio comparison, not production approval."
+    },
+    {
+      "id": "mob_waterroot_idle_e",
+      "reason": "New directional idle candidate; native motion, edge, anatomy and compass continuity review required."
+    },
+    {
+      "id": "mob_waterroot_idle_se",
+      "reason": "New directional idle candidate; native motion, edge, anatomy and compass continuity review required."
+    },
+    {
+      "id": "mob_shore_stalker_idle_n",
+      "reason": "New directional idle candidate; native motion, edge, anatomy and compass continuity review required."
+    },
+    {
+      "id": "mob_shore_stalker_idle_ne",
+      "reason": "New directional idle candidate; native motion, edge, anatomy and compass continuity review required."
+    },
+    {
+      "id": "mob_shore_stalker_idle_e",
+      "reason": "New directional idle candidate; native motion, edge, anatomy and compass continuity review required."
+    },
+    {
+      "id": "mob_shore_stalker_idle_se",
+      "reason": "New directional idle candidate; native motion, edge, anatomy and compass continuity review required."
+    },
+    {
+      "id": "mob_carpling_telegraph_01_s",
+      "reason": "SOUTH-only combat candidate; cross-sheet scale/pivot/edge and transition review required. Other four authored directions absent."
+    },
+    {
+      "id": "mob_carpling_attack_01_s",
+      "reason": "SOUTH-only combat candidate; cross-sheet scale/pivot/edge and transition review required. Other four authored directions absent."
+    },
+    {
+      "id": "mob_carpling_recovery_01_s",
+      "reason": "SOUTH-only combat candidate; cross-sheet scale/pivot/edge and transition review required. Other four authored directions absent."
+    },
+    {
+      "id": "mob_carpling_hurt_s",
+      "reason": "SOUTH-only combat candidate; cross-sheet scale/pivot/edge and transition review required. Other four authored directions absent."
+    },
+    {
+      "id": "mob_carpling_death_s",
+      "reason": "SOUTH-only combat candidate; cross-sheet scale/pivot/edge and transition review required. Other four authored directions absent."
     }
   ],
   "policy": "Structure/export permits review only. No new generated actor is approved for live gameplay until visual/native motion QA.",
