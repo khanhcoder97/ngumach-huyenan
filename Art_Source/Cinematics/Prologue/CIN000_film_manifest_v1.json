@@ -117,5 +117,16 @@
   "supersededMixSha256": "f026ed3e10499b42ea4fcc39ada9a1b42e0b5b749d16ab77208afd54016ffb54",
   "fixedMixSha256": "4f8224e108fd86ecec4deb8b950344ed7c526ef4bd6bd66a79b58c9a71122e63",
   "note": "Prologue v1 plumbing fix (2026-11-13, owner order): the CP27 mix graph fed one ffmpeg label to two consumers and lost the narration; the mix was re-rendered with the plumbing corrected (apad + asplit), same takes / recipe / timeline, and the runtime film + variants were re-derived from it. Broken mix sha f026ed3e... stays in git history."
+ },
+ "subtitledVariantV2": {
+  "file": "CIN_000_640x360_30fps_sub_vi_v2.mp4",
+  "sha256": "f8d6ac322c9123113eedb080a0c464ce2d2e297ee9921b092b59317b2f8ca0be",
+  "sizeBytes": 11927191,
+  "checkpoint": "MEDIA-02 WO37 M-B CP5",
+  "readableSrtSha256": "b4495c2506295535df3a0c6508ccfee28d3a61c3236f66942b22a8515185b0d0",
+  "presentationGainDb": 0.9,
+  "loudnessLufs": -20.87,
+  "truePeakDbtp": -1.24,
+  "manifest": "STANDARD720_SUBTITLED_V2_MB_CP5_v1"
  }
 }
