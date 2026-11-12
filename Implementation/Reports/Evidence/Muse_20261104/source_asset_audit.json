@@ -1,0 +1,826 @@
+{
+  "head": "765a0d62ac597b8b9fbc07ae2a5a89a8a1f60b46",
+  "pngs": [
+    {
+      "path": "ClientGodot/assets/ben_mua_full_map.png",
+      "width": 7200,
+      "height": 960,
+      "bytes": 10092148,
+      "sha256": "60a879be697dcb0862bf82afb39d81244f34dd21af4f1433efff626d7d1639fb"
+    },
+    {
+      "path": "ClientGodot/assets/chars/anh_dao/attack1.png",
+      "width": 240,
+      "height": 512,
+      "bytes": 157582,
+      "sha256": "58f69e3eb21dc1c411e06330d0a19c516f62c7a7a4a84d5e47ea4d9abb89eb9c",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        240,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/anh_dao/death.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 91210,
+      "sha256": "7de509b99f5415231c98a29a44661eff4d428c55c67c67f3fb6b92dcfc3c6d23",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/anh_dao/hurt.png",
+      "width": 96,
+      "height": 512,
+      "bytes": 58796,
+      "sha256": "2ffece12a89783b04e24807e26907615f34562da462f2efe69c0c1220782f0e2",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        96,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/anh_dao/idle.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 133571,
+      "sha256": "83f5e88f047206b91fdedf78ba231d84c0374ec834b9f4b4209e59cc5a63c049",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/anh_dao/walk.png",
+      "width": 288,
+      "height": 512,
+      "bytes": 198435,
+      "sha256": "1248ea9edb35ad70e2d55e2fc4a1bcdd0b28d40768f6e98704499de8bbaf5b40",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        288,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/huyen_but/attack1.png",
+      "width": 240,
+      "height": 512,
+      "bytes": 186165,
+      "sha256": "41b4dbe0fc6f3650ab8d24241d878823a26d897b144c0ebff4fd4356737d8c00",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        240,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/huyen_but/death.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 90319,
+      "sha256": "a5c595fab4ace289df42db7ddae6ed96dc17c3a65c357d4e3e9120f61b773887",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/huyen_but/hurt.png",
+      "width": 96,
+      "height": 512,
+      "bytes": 64682,
+      "sha256": "22417559b6f321dfe228286c781cca7b2edc2ad539ac63f9cdf7b5025ae9686b",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        96,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/huyen_but/idle.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 152884,
+      "sha256": "ade57bf69e507782edb8e64f1f2487ba7c01055d84591b969daa36bdda523c02",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/huyen_but/walk.png",
+      "width": 288,
+      "height": 512,
+      "bytes": 240041,
+      "sha256": "7b1904a3faccd5fac3e814c4a4bf1674f92c988136a1f634304547386a6ab527",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        288,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/linh_cung/attack1.png",
+      "width": 240,
+      "height": 512,
+      "bytes": 175336,
+      "sha256": "8c1e8eb896b26d106bc974603ba8bcc154b030e00051f16aca51cf86cfb567c3",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        240,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/linh_cung/death.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 104329,
+      "sha256": "60da51c8e61b2e000826631cb365f24f504464526e2f11ad97b3b22774417ab2",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/linh_cung/hurt.png",
+      "width": 96,
+      "height": 512,
+      "bytes": 67839,
+      "sha256": "733784ec71111182a0fb0532332bcaf82cb6eab08faaa03708ac22cd38ff736a",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        96,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/linh_cung/idle.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 141228,
+      "sha256": "e5fa3080dd22ea528f53dc38c9ce856d5378ae3ae48af2710f83d864a536a970",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/linh_cung/walk.png",
+      "width": 288,
+      "height": 512,
+      "bytes": 212414,
+      "sha256": "ba605379c9c90b049628c37ae1f00488218c67f17713a0d64d97ca5057a502a5",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        288,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/attack1.png",
+      "width": 240,
+      "height": 512,
+      "bytes": 79175,
+      "sha256": "1aa947c8fea952009d35bb504b06e85d239d72a8074679d197fbdf836869b2d8",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        240,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/attack2.png",
+      "width": 240,
+      "height": 512,
+      "bytes": 81885,
+      "sha256": "5fad652519aa8ac71cbb119f181c88449f4159afd9aab4d206a15a7673a914b7",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        240,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/attack3.png",
+      "width": 240,
+      "height": 512,
+      "bytes": 75211,
+      "sha256": "92e4c88f85f083907b2518a7dedfcc25a1d4fd614b66fa244afbeb815b0c536b",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        240,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/death.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 61960,
+      "sha256": "8b2d4abee0dda132355cd817e3aec861b5e2c1041f5b31b3858164eabde662d6",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/dodge.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 63028,
+      "sha256": "402e0043acbcd4b481411672e30c5f2fd70c84706d90ebceffebf0266c2b5079",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/fall.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 62606,
+      "sha256": "67a7fee4a1f5447273aa5cec763c03aab3feb9e53710d4c4fef777989f580808",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/hurt.png",
+      "width": 96,
+      "height": 512,
+      "bytes": 37069,
+      "sha256": "0651f0810318cea01258ce70ef53918caf24465e84ceb9442be43c1708debb68",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        96,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/idle.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 60720,
+      "sha256": "1a90671a554e965c0c3c5082664fe1b1cdf597e70d0a16458b1994345b8afb53",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/interact.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 69497,
+      "sha256": "f570cdd4c3d81445f1c7b41b8126cf6c7d54586cf600eadf54d82d3a29ac11b2",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/jump.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 59215,
+      "sha256": "e4e0aa1b87fbcee8861a4d25e980d0d818092e085d0f27bc3c0218d13ad1d3f1",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/land.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 65529,
+      "sha256": "88726d274adf21e62c32fd87b8fff413cccc3ddcc7a9d7ff137610d513a6d202",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/run.png",
+      "width": 288,
+      "height": 512,
+      "bytes": 103869,
+      "sha256": "d53231cc44d8e018f100050e335f4da6327d61e349a98589a6442c7424091c8a",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        288,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/skill1.png",
+      "width": 288,
+      "height": 512,
+      "bytes": 110892,
+      "sha256": "082a3d44133527b30726a4bf09c50401d8492b34d77c0d184d4d6979e3eddc6d",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        288,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/skill2.png",
+      "width": 288,
+      "height": 512,
+      "bytes": 101790,
+      "sha256": "6214a63b34a4d641f92d4e742f3cbf9c616b88dad6a2b73f91fc0fcecec668ca",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        288,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/skill3.png",
+      "width": 288,
+      "height": 512,
+      "bytes": 87649,
+      "sha256": "9d4fbec0b948a4276636acd6828d25bafeb4e84f2cd2158c569ec289af57f896",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        288,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/minh_kiem/walk.png",
+      "width": 288,
+      "height": 512,
+      "bytes": 108265,
+      "sha256": "7b1e3976c86a14e3b45f2f6e8c510a24e31763c8a46162b98321a1e4d6828732",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        288,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/thach_chuy/attack1.png",
+      "width": 240,
+      "height": 512,
+      "bytes": 149985,
+      "sha256": "ea3abae70c466709f9f25f05432f2774ce52d6c097b6d8b7ea038f02f27f2abb",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        240,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/thach_chuy/death.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 93554,
+      "sha256": "f36845f49f9735e19c084862be897858501002d8c04f7effc5af61b0081af306",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/thach_chuy/hurt.png",
+      "width": 96,
+      "height": 512,
+      "bytes": 59143,
+      "sha256": "82ce9ba61d53e2bd72cdede82b38ca7c6b43d7fa31504f491715a12b7b34cb10",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        96,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/thach_chuy/idle.png",
+      "width": 192,
+      "height": 512,
+      "bytes": 139282,
+      "sha256": "0b435e77783191204bf184ca5ac7a846f97b55c658c35ad2eabe6d96ca25108d",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        192,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/chars/thach_chuy/walk.png",
+      "width": 288,
+      "height": 512,
+      "bytes": 205547,
+      "sha256": "e74d79482688dfd3300e00c65c485005c97a488311515bfbf89774874116205f",
+      "runtime_cell": [
+        48,
+        64
+      ],
+      "expected_size_by_runtime": [
+        288,
+        512
+      ]
+    },
+    {
+      "path": "ClientGodot/assets/hud/attack_button.png",
+      "width": 617,
+      "height": 610,
+      "bytes": 190681,
+      "sha256": "f374d7a17a3b806976a047c29a193d35a0955e41244036892a8321da185bbfe4"
+    },
+    {
+      "path": "ClientGodot/assets/hud/bag_button.png",
+      "width": 129,
+      "height": 130,
+      "bytes": 12499,
+      "sha256": "9bc8e57a6be0bac3026949e18b3640c2380ea6d10186b25069295b84fadf49de"
+    },
+    {
+      "path": "ClientGodot/assets/hud/exp_bar.png",
+      "width": 1033,
+      "height": 113,
+      "bytes": 55544,
+      "sha256": "95d22bfda4cca1b642f34de05fd9354a4313b46cdbd6d43c0ec4ea12061b2642"
+    },
+    {
+      "path": "ClientGodot/assets/hud/hp_bar_frame.png",
+      "width": 916,
+      "height": 180,
+      "bytes": 53278,
+      "sha256": "6482cfc5183be9eed38d01178b46dd73834fa1e0617600c2f628039125eef260"
+    },
+    {
+      "path": "ClientGodot/assets/hud/icon_pouch.png",
+      "width": 550,
+      "height": 587,
+      "bytes": 176611,
+      "sha256": "4554fb3b8c87cf8cfb58ec8729c4071779393183506911a3a12bcff805d13784"
+    },
+    {
+      "path": "ClientGodot/assets/hud/icon_sword.png",
+      "width": 595,
+      "height": 606,
+      "bytes": 200884,
+      "sha256": "f09e2693f69b085a9e0b92c84f2dc0853d19519a7fa84381a087ae092fe566d6"
+    },
+    {
+      "path": "ClientGodot/assets/hud/joystick_active.png",
+      "width": 599,
+      "height": 572,
+      "bytes": 144903,
+      "sha256": "5b94cdafc493755c8fed58a2f2c54613b88b4d236d586418e9fcfa0a4908808f"
+    },
+    {
+      "path": "ClientGodot/assets/hud/joystick_idle.png",
+      "width": 599,
+      "height": 572,
+      "bytes": 144894,
+      "sha256": "bd31d280df207a327224c73d4ff82b9ecda7e659dcc08d55d197271f452ccbf9"
+    },
+    {
+      "path": "ClientGodot/assets/hud/minimap_frame.png",
+      "width": 754,
+      "height": 303,
+      "bytes": 124031,
+      "sha256": "fad2d0a57ea49e0e2445ebbadaa6a3485f78c0961aa22badb00c3db7f4524d14"
+    },
+    {
+      "path": "ClientGodot/assets/hud/mp_bar_frame.png",
+      "width": 912,
+      "height": 179,
+      "bytes": 54791,
+      "sha256": "6bdaaf9f6a45d2b7ae64c6c21d459214847b2cc6c6f59ff1a6121035ea42c2da"
+    },
+    {
+      "path": "ClientGodot/assets/hud/pips.png",
+      "width": 334,
+      "height": 68,
+      "bytes": 33693,
+      "sha256": "f6b2acde40d560c59b20d90173555972155d8f9739f64542872992351b0e00fc"
+    },
+    {
+      "path": "ClientGodot/assets/hud/portrait_ring_filled.png",
+      "width": 735,
+      "height": 717,
+      "bytes": 419233,
+      "sha256": "59efe08fa410c1431266f9a50bc915f596830ce495e041984b218bbb84cdeb37"
+    },
+    {
+      "path": "ClientGodot/assets/hud/portraits/portrait_anh_dao.png",
+      "width": 735,
+      "height": 717,
+      "bytes": 420014,
+      "sha256": "e3577ab28171d62a4ac61e9ef1439a90ee99c66e56eaa792ba75fbbb80211da1"
+    },
+    {
+      "path": "ClientGodot/assets/hud/portraits/portrait_huyen_but.png",
+      "width": 735,
+      "height": 717,
+      "bytes": 419806,
+      "sha256": "c9d263cdff0d0a1d416ffc16db47b0f1cc9e1c96e2856196901e9fd3bfd74917"
+    },
+    {
+      "path": "ClientGodot/assets/hud/portraits/portrait_linh_cung.png",
+      "width": 735,
+      "height": 717,
+      "bytes": 420595,
+      "sha256": "240dab2479371d1698eba3c80d43be37ab2b8f3984bd99f1d49e1112464447c3"
+    },
+    {
+      "path": "ClientGodot/assets/hud/portraits/portrait_minh_kiem.png",
+      "width": 735,
+      "height": 717,
+      "bytes": 419233,
+      "sha256": "59efe08fa410c1431266f9a50bc915f596830ce495e041984b218bbb84cdeb37"
+    },
+    {
+      "path": "ClientGodot/assets/hud/portraits/portrait_thach_chuy.png",
+      "width": 735,
+      "height": 717,
+      "bytes": 420798,
+      "sha256": "3d9cc7b8fca2a38c20a165fb0f5764f65a95ac101abc8372ac1616b848e347eb"
+    },
+    {
+      "path": "ClientGodot/assets/hud/quest_panel.png",
+      "width": 751,
+      "height": 266,
+      "bytes": 49585,
+      "sha256": "4298dadfb81660d04e6208ad0349a59d0dd3e8a3da778e218b881f9045f8b13c"
+    },
+    {
+      "path": "ClientGodot/assets/hud/skill_button.png",
+      "width": 503,
+      "height": 496,
+      "bytes": 128130,
+      "sha256": "2932fb13aa4c908a36ffc85022bc76c4d6456d28fd753f3b9e443b2ab05fecaa"
+    },
+    {
+      "path": "ClientGodot/assets/hud/skill_icon_1.png",
+      "width": 470,
+      "height": 461,
+      "bytes": 160342,
+      "sha256": "ce4efa97dd646a658eddb921065617baabd1ef35c3ae075a250af058a81adeb8"
+    },
+    {
+      "path": "ClientGodot/assets/hud/skill_icon_2.png",
+      "width": 541,
+      "height": 514,
+      "bytes": 305565,
+      "sha256": "577eddf58286f4db27e8916f830a029f96833d1521876dce0b03f030d40da937"
+    },
+    {
+      "path": "ClientGodot/assets/hud/skill_icon_3.png",
+      "width": 509,
+      "height": 534,
+      "bytes": 209951,
+      "sha256": "9632c46f4567b5c05bede814ef355d35aa286c42f3f25e8a3900e8d016235a54"
+    },
+    {
+      "path": "ClientGodot/assets/hud/skill_icon_4.png",
+      "width": 440,
+      "height": 571,
+      "bytes": 199977,
+      "sha256": "3263311b2ccd07c28c309755eb55ee951115cf45223a90c96b5d62fff32b9a6b"
+    },
+    {
+      "path": "ClientGodot/assets/hud/skill_icon_5.png",
+      "width": 569,
+      "height": 426,
+      "bytes": 167994,
+      "sha256": "9feec63a3b8c486a91e06bcde334fcbefebc7f1ee6ff78fe706571ae9764292b"
+    },
+    {
+      "path": "ClientGodot/assets/hud/skill_icon_6.png",
+      "width": 458,
+      "height": 494,
+      "bytes": 131081,
+      "sha256": "eb7a73f8537cfee9a8072710c85cedbbd70c38b80f97f45c2c3f0f2882e1a0a7"
+    },
+    {
+      "path": "ClientGodot/assets/tilemap/full_map/atlas.png",
+      "width": 128,
+      "height": 96,
+      "bytes": 4655,
+      "sha256": "7b80bce1467114a6a01b9ab2792fffabff3a05788b048c410cb909c970dacc07"
+    },
+    {
+      "path": "ClientGodot/assets/tilemap/full_map/detail_over.png",
+      "width": 7200,
+      "height": 960,
+      "bytes": 11305462,
+      "sha256": "a6f41b8dc01599d1b0080cba755153dfe94d36cce9ff9645370e994d2630e49a"
+    },
+    {
+      "path": "ClientGodot/assets/tilemap/full_map/detail_under.png",
+      "width": 7200,
+      "height": 960,
+      "bytes": 11438356,
+      "sha256": "b5a69a9e84d967a7c65cf66288776134c15243beb8fd787076b21c1c9a8007db"
+    },
+    {
+      "path": "ClientGodot/assets/tilemap/full_map/reconstruction_full.png",
+      "width": 7200,
+      "height": 960,
+      "bytes": 238905,
+      "sha256": "182c7e5aaafd4268bff5b71ba8e7b1a1ec6877d5e618e478360d7017924ce2fd"
+    },
+    {
+      "path": "ClientGodot/assets/tilemap/full_map/reconstruction_preview.png",
+      "width": 1800,
+      "height": 240,
+      "bytes": 25145,
+      "sha256": "1389220aaedc82afbc475745355b7a7c8538cd24df2bb05ccffd3a3c6a659599"
+    },
+    {
+      "path": "ClientGodot/assets/tilemap/strip_000_064/atlas.png",
+      "width": 128,
+      "height": 32,
+      "bytes": 1490,
+      "sha256": "ba8190c2b993f5ae490a752da54df09f5dfe016d403c8ed2ab270c6ec23c7b35"
+    },
+    {
+      "path": "ClientGodot/assets/tilemap/strip_000_064/reconstruction.png",
+      "width": 1280,
+      "height": 960,
+      "bytes": 46588,
+      "sha256": "a7a060bd60181dce1f4da65a13895ab953bf01e97ba87817895123ac703f3d40"
+    },
+    {
+      "path": "ClientGodot/docs/evidence_water_block_20261104/water_block_evidence_annotated_20261104.png",
+      "width": 7200,
+      "height": 960,
+      "bytes": 10090976,
+      "sha256": "8f4d08cf04d7f8ee5bb3be8619dff0249302d859e4578ed77c6825460d05f587"
+    },
+    {
+      "path": "ClientGodot/docs/evidence_water_block_20261104/water_block_evidence_river_crop_20261104.png",
+      "width": 5600,
+      "height": 896,
+      "bytes": 588722,
+      "sha256": "15522b8b136af064296604abaf67a2a74a70403ab7f948055206db8c7928b8df"
+    }
+  ],
+  "unhydrated": [],
+  "scene_missing_references": [
+    {
+      "scene": "ClientGodot/Main.tscn",
+      "ref": "assets/placeholders/fantasy_party/mage-sheet.png"
+    },
+    {
+      "scene": "ClientGodot/Main.tscn",
+      "ref": "assets/placeholders/fantasy_party/archer-sheet.png"
+    },
+    {
+      "scene": "ClientGodot/Main.tscn",
+      "ref": "assets/placeholders/fantasy_party/priest-sheet.png"
+    },
+    {
+      "scene": "ClientGodot/Main.tscn",
+      "ref": "assets/placeholders/fantasy_party/swordsman-sheet.png"
+    }
+  ],
+  "sprite_table_mismatch": [],
+  "tilemap": {
+    "cols": 450,
+    "rows": 60,
+    "blocked": 5069,
+    "blocked_unique": 5069,
+    "originWU": [
+      0.0,
+      36.0
+    ],
+    "cellWU": 0.8
+  },
+  "water_evidence": {
+    "count": 306,
+    "unique": 306,
+    "invalid_layers": 0
+  }
+}

@@ -14,7 +14,7 @@ Mỗi shot có seed/model/version nếu tool hỗ trợ, prompt nguyên văn, re
 
 - Master composition640×360 logical, 16:9; export1280×720 scale2 hoặc1920×1080 scale3 nearest-neighbor. Master editing30fps, giữ pose8–12fps theo cadence đã chọn và không optical-flow. Dùng PNG lossless keyframes và master lossless nếu công cụ cho phép; delivery H.264 MP4 yuv420p, audio AAC48kHz, giữ master/source. Codec có thể làm cạnh màu sai, phải xem bản encode thật.
 - Giữ pixel art đã chốt, cluster/palette/outline có chủ ý. Camera cinematic được cận/trung/toàn theo shot, nhưng shot thoát phải về top-down XY như gameplay. Không suy cinematic close-up thành đổi góc gameplay.
-- Ly An tóc buộc lệch, áo khoác mưa xanh/viền vàng đất, túi chéo; Tạ áo xanh đen/tay băng/kiếm gãy; Hạ Mặc áo xám giấy-lam mực, kính lúp; Sầm áo đỏ nâu/cân gỗ; Tống giáp ghép/vai lệch/cờ rách; Cơ hiện tại lõi đồng/khung lưng/mặt nạ sứ nứt. Dùng ảnh chuẩn trong Art Bible và reference của Muse, không dùng chiều cao WU cũ làm scale cinema.
+- Ly An tóc buộc lệch, áo khoác mưa xanh/viền vàng đất, túi chéo; Tạ áo xanh đen/tay băng/kiếm gãy; Hạ Mặc áo xám giấy-lam mực, kính lúp; Sầm áo đỏ nâu/cân gỗ; Tống giáp ghép/vai lệch/cờ rách; Cơ hiện tại lõi đồng/khung lưng/mặt nạ sứ nứt. Dùng ảnh chuẩn trong Art Bible và reference của Codex, không dùng chiều cao WU cũ làm scale cinema.
 - Cơ30 năm trước là người trưởng thành, chưa có khung máy/mặt nạ hiện tại; Tạ thời ký lệnh là người trẻ trưởng thành. Không làm Ly An xuất hiện30 năm trước hoặc người chơi đứng trong lịch sử đó.
 - Avatar người chơi không hardcode thành Minh Kiếm nam. Các video chung ưu tiên POV/offscreen/không mặt; câu người chơi dùng subtitle, không tự chọn voice. Nếu cần avatar có hình, game compositing lớp sprite đã chọn hoặc Muse giao đủ variant được duyệt. Chưa có variant thì dùng master không avatar, không khóa người chơi vào trang phục khác.
 
@@ -38,7 +38,7 @@ Mục tiêu: người chơi muốn giúp Ly An và muốn biết tiếng chuông
 | 06–12 | S02 | dây kiện trượt và mắc chốt, không rơi mất | dây cọ gỗ, giọt rơi tách riêng | cho thấy việc nhỏ có thể giúp |
 | 12–18 | S03 | bóng chuông dưới mặt nước nhưng phía trên trống | một âm đồng thiếu đuôi, không tiếng nói ma | bí ẩn cảm giác |
 | 18–24 | S04 | sáp năm vạch trên thư còn niêm trong túi | tiếng mưa thấp đi0,5s, không chữ tiên tri | thư chưa vỡ, không lộ nội dung |
-| 24–30 | S05 | Ly An giữ kiện, nhìn người ngoài khung | 25–29s: “Giữ giúp tôi đầu dây. Đừng để kiện ấy trôi.” | không gọi tên/giới tính avatar |
+| 24–30 | S05 | Ly An giữ kiện, nhìn người ngoài khung | 25–29s: “Đầu kia! Giữ giúp tôi đầu kia!” | không gọi tên/giới tính avatar |
 | 30–36 | S06 | về top-down bến; kiện đã tựa chốt, Ly An hướng chỗ đứng người chơi | tiếng làng trở lại, nhạc hai nốt rất nhỏ | fade0,25s vào vị trí server spawn; sau khi quay lại gameplay Ly An mới trao thư/accept |
 
 Câu thoại nhận thư sau video vẫn thuộc dialogue tương tác: “Nếu họ hỏi, cô chưa từng giữ lá thư này.” Skip video trả recap “Một người đưa thư cần giúp ở Bến Mưa. Tiếng chuông chỉ vang trọn khi nhìn xuống nước.” Không tự ACCEPT_QUEST vì clip đã hết.

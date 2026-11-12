@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "32d57bcc4ad76e7a8cc1545bb73240fa454402ae",
+  "fixture": "fresh loopback DEV session at spawn; no target in range",
+  "case": "Replay exact BASIC_ATTACK after its END",
+  "sameCastId": true,
+  "eventsBefore": [
+    [
+      "CAST_START",
+      1
+    ],
+    [
+      "END",
+      2
+    ]
+  ],
+  "eventsEmittedAfterReplay": [
+    [
+      "END",
+      3
+    ]
+  ],
+  "acceptance": "No newly scheduled lifecycle/effect for cached command",
+  "result": "FAIL",
+  "scope": "Duplicate END proves rescheduling; this probe does not measure HP damage."
+}

@@ -1,0 +1,28 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+TILEMAP layer GroundLayer: 16879 cells
+TILEMAP layer WaterLayer: 4960 cells
+TILEMAP layer PathLayer: 5161 cells
+TILEMAP collision tile polygons: 1
+TILEMAP built: 450x60, tiles=47, blocked=5069
+TILEMAP detail layers on: under z=5, over z=15 (7200x960)
+ONLINETEST PASS: session_class_minh_kiem class=CLASS_MINH_KIEM spawn=(18,0)
+ONLINETEST PASS: session_class_anh_dao_rejected_clean 400 classId (server P1 scope)
+ONLINETEST PASS: session_class_huyen_but_rejected_clean 400 classId (server P1 scope)
+ONLINETEST PASS: session_class_thach_chuy_rejected_clean 400 classId (server P1 scope)
+ONLINETEST PASS: session_class_linh_cung_rejected_clean 400 classId (server P1 scope)
+ONLINE connected: class=CLASS_MINH_KIEM session=16436ae0a10c495fa377169263ec3e2d spawn=(18,0) rev=1
+ONLINETEST PASS: connected 
+ONLINETEST PASS: spawn_server_18_0 (18,0)
+ONLINETEST PASS: spawn_render_at_360_720 render=(360, 720) err=0,0px
+ONLINETEST PASS: east_distance_server dx=8,28 WU accepted=7
+ONLINETEST PASS: render_tracks_snapshot_east err=0,0px
+ONLINETEST PASS: north_distance_server_y_up dy=6,37 WU (Y-flip correct)
+ONLINETEST PASS: phase_north_progress accepted=12
+ONLINETEST PASS: clamp_stops_at_water_edge final y=-2,59 (water edge -4.0; unclamped server bound -12)
+ONLINETEST PASS: clamp_counter_fired clamped=6
+ONLINETEST FAIL: clamp_wall_slide_east dx=8,35 dy=-1,06
+ONLINETEST PASS: no_snapshot_in_blocked_cell violations=0
+ONLINETEST PASS: no_rejected_intents accepted=26 rejected=0 err=
+ONLINETEST PASS: revision_equals_accepted rev=27 accepted=26
+ONLINETEST RESULT: FAIL (1)

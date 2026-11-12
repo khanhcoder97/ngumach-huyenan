@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "decisionId": "DESIGN-BM-Q3-20261104",
+  "status": "APPROVED_FOR_IMPLEMENTATION_PRIVATE_ALPHA_NOT_PLAYTEST_BALANCED",
+  "authority": "Codex coordination: user explicitly requests resolution of Qoder blockers and continued work",
+  "extendsDecisionId": "DESIGN-BM-ALPHA-20261103",
+  "xp": {
+    "rounding": "FLOOR_NONNEGATIVE",
+    "nextLevelXp": "100 + 50*L + 25*L*L for integer accepted level L",
+    "formula": "floor(nextLevelXp * numerator / 100)",
+    "normalNumerator": 25,
+    "bossNumerator": 55,
+    "denominator": 100,
+    "snapshotAt": "QUEST_ACCEPT_COMMIT",
+    "snapshotScope": "characterId + questId + questAttemptId",
+    "baseIsRemainingXp": false,
+    "absoluteSourceRewardWins": true,
+    "zeroRewardStaysZero": true,
+    "examples": [
+      {"acceptedLevel": 1, "nextLevelXp": 175, "normalXp": 43, "bossXp": 96},
+      {"acceptedLevel": 2, "nextLevelXp": 300, "normalXp": 75, "bossXp": 165},
+      {"acceptedLevel": 3, "nextLevelXp": 475, "normalXp": 118, "bossXp": 261}
+    ]
+  },
+  "loot": {
+    "defaultGrantEnabled": false,
+    "privateGrantFlag": "P1:AlphaLoot:GrantEnabled",
+    "privateGrantFlagDefault": false,
+    "effectiveGrant": "AlphaProfile.Enabled AND explicit private alpha profile AND AlphaLoot.GrantEnabled",
+    "offMode": "DRY_RUN_NON_PAYABLE",
+    "noBackfillDryRunDeathsWhenFlagTurnsOn": true,
+    "noRerollOnRetry": true,
+    "grantAndReceiptAtomic": true,
+    "scope": "existing approved character + death + life + group roll key",
+    "productionDefaultUnchanged": true
+  },
+  "inventory": {
+    "decision": "V2_SIDE_BY_SIDE_KEEP_V1_FIVE_SLOT_CONTRACT",
+    "v1EnumUnchanged": true,
+    "v2ClosedSlots": ["HAT", "CHEST", "LEGS", "WEAPON", "GLOVES", "BOOTS", "NECK", "RING_L", "RING_R", "PENDANT", "CLOAK", "SEAL"],
+    "bagSlots": 100,
+    "readRoute": "GET /p1/inventory/v2/{sessionId}",
+    "equipRoute": "POST /p1/inventory/v2/equip",
+    "unequipRoute": "POST /p1/inventory/v2/unequip",
+    "incompatibleV1Projection": "explicit unsupported representation; never silently discard equipped slots",
+    "runtimeContractApproval": "approved to implement new v2 DTO/schema/examples; publish exact fixtures to OpenCode and Muse"
+  },
+  "encounterApproval": {
+    "alreadyEffective": true,
+    "source": "docs/production/Encounter_Snapshot_Review_Decisions_20261103_vi.md",
+    "questionsAnswered": "stable per-character quest-attempt id, no late join, owner-only",
+    "routes": ["GET /p1/encounters/current", "GET /p1/encounters/{encounterId}"],
+    "productionDefaultEnabled": false
+  }
+}

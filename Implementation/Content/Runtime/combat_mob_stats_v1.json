@@ -1,0 +1,186 @@
+{
+  "activation": "DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION",
+  "archetypes": [
+    {
+      "aggroRadiusMeters": 7,
+      "attacks": [
+        {
+          "attackId": "BITE",
+          "attackMultiplier": 0.8,
+          "nameVi": "đớp",
+          "rangeMeters": 2.0,
+          "telegraphSeconds": 0.45
+        },
+        {
+          "attackId": "LEAP",
+          "attackMultiplier": 1.1,
+          "nameVi": "nhảy",
+          "rangeMeters": null,
+          "telegraphSeconds": 0.45
+        }
+      ],
+      "mobId": "MOB_CARPLING",
+      "moveSpeedMetersPerSecond": 3.0,
+      "multipliers": {
+        "attack": 0.75,
+        "defense": 0.7,
+        "hp": 0.8
+      },
+      "referenceLevel5": {
+        "attack": 15.0,
+        "defense": 4.2,
+        "hp": 192
+      },
+      "sourceRef": "docs/production/Art_Entity_Weather_UI_Visual_Bible_vi.md#12"
+    },
+    {
+      "aggroRadiusMeters": 5,
+      "attacks": [
+        {
+          "attackId": "VINE",
+          "attackMultiplier": 1.0,
+          "nameVi": "roi rễ",
+          "rangeMeters": 2.6,
+          "telegraphSeconds": 0.45
+        },
+        {
+          "attackId": "SPROUT",
+          "attackMultiplier": 1.5,
+          "lineMeters": 4.0,
+          "nameVi": "chồi đất",
+          "rangeMeters": 4.0,
+          "telegraphSeconds": 0.7
+        }
+      ],
+      "mobId": "MOB_WATERROOT",
+      "moveSpeedMetersPerSecond": 0.5,
+      "multipliers": {
+        "attack": 1.0,
+        "defense": 1.1,
+        "hp": 1.1
+      },
+      "referenceLevel5": {
+        "attack": 20.0,
+        "defense": 6.6,
+        "hp": 264
+      },
+      "sourceRef": "docs/production/Art_Entity_Weather_UI_Visual_Bible_vi.md#12"
+    },
+    {
+      "aggroRadiusMeters": 8,
+      "attacks": [
+        {
+          "attackId": "POUNCE",
+          "attackMultiplier": 1.0,
+          "nameVi": "vồ",
+          "rangeMeters": null,
+          "telegraphSeconds": 0.45
+        },
+        {
+          "attackId": "DASH_BITE",
+          "attackMultiplier": 1.4,
+          "nameVi": "lao",
+          "rangeMeters": null,
+          "telegraphSeconds": 0.6
+        }
+      ],
+      "mobId": "MOB_SHORE_STALKER",
+      "moveSpeedMetersPerSecond": 3.4,
+      "multipliers": {
+        "attack": 1.15,
+        "defense": 0.8,
+        "hp": 0.9
+      },
+      "referenceLevel5": {
+        "attack": 23.0,
+        "defense": 4.8,
+        "hp": 216
+      },
+      "sourceRef": "docs/production/Art_Entity_Weather_UI_Visual_Bible_vi.md#12"
+    }
+  ],
+  "baseFormulas": {
+    "attack": {
+      "base": 10,
+      "perLevel": 2
+    },
+    "defense": {
+      "base": 2,
+      "perLevel": 0.8
+    },
+    "hp": {
+      "base": 120,
+      "perLevel": 24
+    }
+  },
+  "bosses": [
+    {
+      "activation": "BOSSDATA_BLOCKED",
+      "attackMultiplier": 2.0,
+      "attacks": [
+        {
+          "angleDegrees": 120,
+          "attackId": "A_BODY_SWEEP",
+          "attackMultiplier": 1.2,
+          "cooldownSeconds": 4.0,
+          "rangeWu": 8.0,
+          "recoverySeconds": 0.8,
+          "shape": "CONE",
+          "telegraphSeconds": 0.9
+        },
+        {
+          "atLockedTarget": true,
+          "attackId": "B_DIVE_SURFACE",
+          "attackMultiplier": 1.5,
+          "cooldownSeconds": 9.0,
+          "radiusWu": 4.0,
+          "recoverySeconds": 1.0,
+          "shape": "CIRCLE",
+          "telegraphSeconds": 1.2
+        },
+        {
+          "attackId": "C_BUBBLE_RING",
+          "attackMultiplier": 1.3,
+          "cooldownSeconds": 12.0,
+          "innerRadiusWu": 3.0,
+          "outerRadiusWu": 7.0,
+          "recoverySeconds": 1.0,
+          "shape": "ANNULUS",
+          "telegraphSeconds": 1.0
+        }
+      ],
+      "blockedReason": "phaseGuard/interruptible not specified; Production_Rules §4 requires full numeric data before boss export",
+      "bossId": "BOSS_MANG_COT",
+      "hpMultiplier": 35.0,
+      "partyHpMultiplierPerAdditionalPlayer": 0.65,
+      "referenceLevel": 10,
+      "referenceStats": {
+        "attack": 60.0,
+        "defense": 10.0,
+        "hp": 12600
+      },
+      "sourceRef": "docs/production/Art_Entity_Weather_UI_Visual_Bible_vi.md#12; docs/production/Production_Rules_Complete_v1_vi.md#4"
+    }
+  ],
+  "bundleId": "COMBAT_MOB_STATS_V1",
+  "elite": {
+    "attackMultiplier": 1.6,
+    "defenseMultiplier": 1.8,
+    "hpMultiplier": 6.0
+  },
+  "eliteReferenceLevel5": {
+    "attack": 24.0,
+    "defense": 7.56,
+    "hp": 1152
+  },
+  "levelPolicy": "REFERENCE_L5",
+  "levelPolicyNote": "Per-spawn mob level has no source in World_Spawn_Gathering_Manifest_vi.csv (only character_level_min/max bands); owner decision pending (QOD-16 proposal Q1).",
+  "referenceLevel": 5,
+  "schemaVersion": 1,
+  "sourceRef": "docs/production/Art_Entity_Weather_UI_Visual_Bible_vi.md#12; docs/production/Production_Rules_Complete_v1_vi.md#4; docs/production/P1_Design_Resolution_20261029_vi.md",
+  "units": {
+    "distance": "WU",
+    "metersPerWu": 0.5,
+    "time": "seconds"
+  }
+}

@@ -1,0 +1,20 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+TILEMAP layer GroundLayer: 3160 cells
+TILEMAP layer WaterLayer: 800 cells
+TILEMAP layer PathLayer: 840 cells
+TILEMAP collision tile polygons: 1
+TILEMAP built: 80x60, tiles=16, blocked=1008
+TILEMTEST PASS: grid_80x60 80x60
+TILEMTEST PASS: unique_tiles_16 =16
+TILEMTEST PASS: layer_ground_3160 =3160
+TILEMTEST PASS: layer_water_800 =800
+TILEMTEST PASS: layer_path_840 =840
+TILEMTEST PASS: blocked_1008 =1008
+TILEMTEST PASS: tilemap_cells_match ground used=3160
+TILEMTEST PASS: data_water_blocked 
+TILEMTEST PASS: data_footprint_grass_blocked cell (64,30) is a grass tile but blocked=1 in tiledata
+TILEMTEST PASS: water_stops_player y 776 -> 799,99963 (water edge 800)
+TILEMTEST PASS: footprint_stops_player x 984 -> 1011,9982 (wall 1024)
+TILEMTEST PASS: open_walk_free moved 64,0 px
+TILEMTEST RESULT: PASS

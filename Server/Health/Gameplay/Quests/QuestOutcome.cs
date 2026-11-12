@@ -22,6 +22,4 @@ public static class QuestErrorCodes
     public const string UnknownQuest = "unknown_quest";
     public const string QuestNotFound = "quest_not_found";
     public const string InvalidTransition = "invalid_transition";
-    public const string UnknownObjective = "unknown_objective";
-    public const string InvalidAmount = "invalid_amount";
 }

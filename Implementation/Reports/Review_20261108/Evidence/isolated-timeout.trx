@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="6d4458b3-e38c-42b2-ba4c-945c1885944d" name="KHANH SAMA@KHANHSAMA 2026-11-08 06:41:45" runUser="KHANHSAMA\KHANH SAMA" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-11-08T06:41:45.5586006+09:00" queuing="2026-11-08T06:41:45.5586010+09:00" start="2026-11-08T06:41:42.1095196+09:00" finish="2026-11-08T06:41:45.6488378+09:00" />
+  <TestSettings name="default" id="61cc4a4a-04e7-4123-a1b1-9396f14decc9">
+    <Deployment runDeploymentRoot="KHANH_SAMA_KHANHSAMA_2026-11-08_06_41_45" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="dc7350c7-4424-40bb-9086-91be6db7f52f" testId="0e39c370-8e39-73d7-ea42-be6e9685a696" testName="NguMach.Client.Core.Tests.TimeoutTransportTests.IgnoringInner_TimesOutOnDeadlineWithinBudget" computerName="KHANHSAMA" duration="00:00:00.1036628" startTime="2026-11-08T06:41:45.2978848+09:00" endTime="2026-11-08T06:41:45.2979468+09:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dc7350c7-4424-40bb-9086-91be6db7f52f" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="NguMach.Client.Core.Tests.TimeoutTransportTests.IgnoringInner_TimesOutOnDeadlineWithinBudget" storage="d:\project\ngumachhuyenan-review-opc-20261108\shared\clientcore.tests\bin\release\net8.0\ngumach.client.core.tests.dll" id="0e39c370-8e39-73d7-ea42-be6e9685a696">
+      <Execution id="dc7350c7-4424-40bb-9086-91be6db7f52f" />
+      <TestMethod codeBase="D:\Project\NGUMACHHUYENAN-review-opc-20261108\Shared\ClientCore.Tests\bin\Release\net8.0\NguMach.Client.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="NguMach.Client.Core.Tests.TimeoutTransportTests" name="IgnoringInner_TimesOutOnDeadlineWithinBudget" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="0e39c370-8e39-73d7-ea42-be6e9685a696" executionId="dc7350c7-4424-40bb-9086-91be6db7f52f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.01] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.11)&#xD;
+[xUnit.net 00:00:00.40]   Discovering: NguMach.Client.Core.Tests&#xD;
+[xUnit.net 00:00:00.83]   Discovered:  NguMach.Client.Core.Tests&#xD;
+[xUnit.net 00:00:00.86]   Starting:    NguMach.Client.Core.Tests&#xD;
+[xUnit.net 00:00:01.19]   Finished:    NguMach.Client.Core.Tests&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

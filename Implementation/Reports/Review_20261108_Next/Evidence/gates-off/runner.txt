@@ -1,0 +1,209 @@
+PASS A connect
+
+PASS A ready
+
+PASS A identity
+
+PASS A availability quests
+
+PASS A availability world-v2
+
+PASS A availability map-viewed held
+
+PASS A availability encounter disabled
+
+PASS A availability inventory-v2 off
+
+PASS A availability death-return off
+
+PASS A availability quest-talk off
+
+PASS A availability portal off
+
+PASS gates-off inventory v2 absent
+
+PASS gates-off inventory v2 cleans pending
+
+PASS gates-off talk absent
+
+PASS gates-off talk cleans pending
+
+PASS gates-off portal absent
+
+PASS gates-off portal cleans pending
+
+PASS gates-off death-return absent
+
+PASS gates-off death-return cleans pending
+
+PASS gates-off equip absent
+
+PASS gates-off equip cleans pending
+
+PASS gates-off unequip absent
+
+PASS gates-off unequip cleans pending
+
+PASS A tutorial quests read
+
+PASS A tutorial chain authoritative
+
+PASS A tutorial chain P00-01..05
+
+PASS A P00-01 available packages step
+
+PASS A P00-01 counter starts at 0
+
+PASS A P00-02..05 locked by source
+
+PASS A next actionable P00-01
+
+PASS A first incomplete P00-01
+
+PASS A P00-02 blocked by activation
+
+PASS A blocked accept clears pending
+
+PASS A inv pre
+
+PASS A pre coin 0
+
+PASS A accept
+
+PASS A parcel ENT_MAN_BM_OBJ_BM_PACKAGE_01
+
+PASS A parcel ENT_MAN_BM_OBJ_BM_PACKAGE_02
+
+PASS A parcel ENT_MAN_BM_OBJ_BM_PACKAGE_03
+
+PASS A read quests
+
+PASS A inv before turnin
+
+PASS A lost response
+
+PASS A pending
+
+PASS A captured mutation body
+
+PASS A retry same key success
+
+PASS A inv post
+
+PASS A 20 coin
+
+PASS A 1 chest
+
+PASS A tutorial quests after turn-in
+
+PASS A P00-01 completed
+
+PASS A P00-01 counter 3
+
+PASS A first incomplete P00-02
+
+PASS A server unlock claim P00-02
+
+PASS A P00-02..05 still locked
+
+PASS A no client-side unlock
+
+PASS A P00-02 still not activatable
+
+PASS A blocked P00-02 clears pending
+
+PASS A repeat rejected
+
+PASS A inv read after reject
+
+PASS A no double grant
+
+PASS A no double chest
+
+UNVERIFIED encounter HTTP: route absent/encounter not found (404 encounter_not_found)
+
+PASS B connect
+
+PASS B identity
+
+PASS A/B different characters
+
+PASS B read quests
+
+PASS B quest not completed by A
+
+PASS B tutorial quests read
+
+PASS B tutorial chain authoritative
+
+PASS B tutorial chain P00-01..05
+
+PASS B P00-01 available
+
+PASS B P00-02..05 locked by source
+
+PASS B next actionable P00-01
+
+PASS B P00-02 blocked by activation
+
+PASS B blocked accept clears pending
+
+PASS B inv pre
+
+PASS B pre coin 0
+
+PASS cross-session replay rejected
+
+PASS cross-session replay error is structured
+
+PASS B inv after cross-session replay
+
+PASS B no coin from A replay
+
+PASS B no chest from A replay
+
+PASS B accept
+
+PASS B parcel ENT_MAN_BM_OBJ_BM_PACKAGE_01
+
+PASS B parcel ENT_MAN_BM_OBJ_BM_PACKAGE_02
+
+PASS B parcel ENT_MAN_BM_OBJ_BM_PACKAGE_03
+
+PASS B read quests
+
+PASS B inv before turnin
+
+PASS B expiry on mutation rejected
+
+PASS B pending survives expiry
+
+PASS B relogin monotonic epoch
+
+PASS B pending carried across relogin
+
+PASS B retry same key after relogin
+
+PASS B inv post
+
+PASS B 20 coin once
+
+PASS B 1 chest once
+
+EXPIRING world request: /p1/v2/world/4d3df44a484446a98d01025e781a6366
+
+PASS B read expiry observed
+
+PASS B read relogin
+
+PASS B world after relogin
+
+PASS replay after commit rejected
+
+PASS A inv after replay
+
+PASS A replay no double grant
+
+PASS A replay no double chest
+
+PASS ClientCore HTTP assertions: 102

@@ -8,6 +8,7 @@
 *.mp3 filter=lfs diff=lfs merge=lfs -text
 *.mp4 filter=lfs diff=lfs merge=lfs -text
 *.webm filter=lfs diff=lfs merge=lfs -text
+*.ogv filter=lfs diff=lfs merge=lfs -text
 *.flac filter=lfs diff=lfs merge=lfs -text
 
 # Stable textual provenance for the authored audio generator and music scores.
@@ -22,3 +23,14 @@ Implementation/Tools/ContentPipeline/*.json text eol=lf
 Implementation/Tools/ContentPipeline/schemas/*.json text eol=lf
 Implementation/Tools/MuseMapAdapter/fixtures/*.json text eol=lf
 Implementation/Tools/MuseMapAdapter/schemas/*.json text eol=lf
+
+# Media delivery SHA256 is over UTF-8 LF bytes on every checkout/platform.
+Art_Source/Cinematics/**/*.json text eol=lf
+Art_Source/Audio/Muse/**/*.json text eol=lf
+Implementation/Content/Narrative/Deliveries/**/*.json text eol=lf
+Implementation/Content/Narrative/Deliveries/**/*.srt text eol=lf
+ClientGodot/assets/cinematics/**/*.json text eol=lf
+ClientGodot/assets/cinematics/**/*.srt text eol=lf
+ClientGodot/assets/audio/**/*.json text eol=lf
+Implementation/Content/Audio/Deliveries/**/*.json text eol=lf
+Implementation/Reports/MuseMedia/**/*.json text eol=lf

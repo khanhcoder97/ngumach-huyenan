@@ -32,3 +32,9 @@ Khi nguồn thay đổi: đọc diff nguồn → cập nhật transcription nế
 Qoder có thể đọc definition/fieldProvenance/unresolved để triển khai loader/adapter; phải kiểm digests và nguồn rồi review/migration riêng. Không tự copy một bundle blocked vào runtime, không bỏ required fields do thấy schema suppression dành cho unresolved candidate. Thay schemaVersion/targetSchema/kind hoặc runtime gate bị validator từ chối. Report/source snapshots lịch sử được giữ, không rewrite thành PASS.
 
 P00-03 footwear được tìm đúng trong catalog (5class templates), còn cần class/rarity policy. Macro weapon P00-05 xuất CLASS_CONDITIONAL với5mapping canonical, không tự chọn class người chơi. Gear vectors đã có ở CSV; equipped-profile adapter vẫn là implementation gap, không được báo là thiếu stat source.
+
+## Ghép QOD-18 và narrative gameplay v3
+
+QOD-18 thêm `activation` bắt buộc vào QuestDefinition, enum ACTIVE/BLOCKED, cùng dữ liệu blockedSteps; P00-01 chỉ thêm ACTIVE và đổi cách xuống dòng, giữ nguyên mục tiêu, số lượng, thưởng và unlock. Hai source hashes đã được đối chiếu semantic rồi cập nhật lock; bằng chứng ở `Implementation/Reports/Narrative_Gameplay_V3_20261031/candidate-source-review.json`.
+
+P00-01 candidate sao đúng example có ACTIVE nhưng gate ngoài vẫn `runtimeActivationAllowed=false`. Bốn design graph đầy đủ P00-02..05 chưa được đánh đồng với các runtime record một phần của server: để activation chưa xác định, thêm blocking unresolved `/activation` có provenance schema. Snapshot hiện tại vẫn21candidates/4ready/17blocked, nay60unresolved. Không tự điền ACTIVE để làm hết cảnh báo. Hai regression kiểm gate ngoài không bật và không được bỏ unresolved để che field bắt buộc. Đây là cập nhật tương thích candidate, không thay runtime loader/schema hoặc cân bằng của Qoder.

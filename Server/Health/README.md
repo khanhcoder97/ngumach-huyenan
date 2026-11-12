@@ -1,6 +1,6 @@
 # Ngu Mach Huyen An — Health Server
 
-Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritative movement slice, and the QOD-03 combat, quest, inventory and teleport service skeletons.
+Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritative movement slice, the QOD-03 combat, quest, inventory and teleport service skeletons, the QOD-13 quest-progress/interact slice, and the QOD-14 turn-in/reward slice.
 
 ## Endpoints
 
@@ -14,6 +14,8 @@ Minimal ASP.NET Core API (net10.0) exposing the health check, the P1 authoritati
 | GET | `/p1/quests/{sessionId}` | Read the authoritative quest states for the session character |
 | GET | `/p1/inventory/{sessionId}` | Read the authoritative `InventorySnapshot` for the session character |
 | POST | `/p1/quests/accept` | Accept an `AVAILABLE` quest for the session in `X-Session-ID` (feature-flagged, off by default) |
+| POST | `/p1/world/interact` | Claim an `INTERACTABLE` or gather from a `GATHER_NODE` world entity (feature-flagged, off by default) |
+| POST | `/p1/quests/turnin` | Turn in a `READY_TO_TURN_IN` quest and receive atomic rewards (feature-flagged, off by default) |
 
 Every response, including errors, carries `X-Correlation-ID`. A safe incoming value (1–64 characters of ASCII letters, digits, `-`, `_`, `.`) is echoed; otherwise a new GUID is generated.
 
@@ -25,7 +27,7 @@ dotnet run --project Server/Health/Health.csproj
 
 The service listens on `http://localhost:5000` unless `ASPNETCORE_URLS` or launch settings override it.
 
-The server loads `Implementation/Content/map_bounds.json` at startup by walking up from the working directory, content root and application base directory. Override with `Content__MapBoundsPath=/absolute/path/map_bounds.json` if needed. It likewise loads canonical `QuestDefinition` content from `Implementation/Content/Examples/QuestDefinition` (override with `Content__QuestsPath`) and canonical combat skills from `Implementation/Content/Examples/SkillDefinition` (override with `Content__SkillsPath`). Startup fails if the configured map is unknown, the spawn is outside bounds, the movement configuration is inconsistent, or a quest or skill definition is invalid.
+The server loads `Implementation/Content/map_bounds.json` at startup by walking up from the working directory, content root and application base directory. Override with `Content__MapBoundsPath=/absolute/path/map_bounds.json` if needed. It likewise loads canonical `QuestDefinition` content from `Implementation/Content/Examples/QuestDefinition` (override with `Content__QuestsPath`), canonical combat skills from `Implementation/Content/Examples/SkillDefinition` (override with `Content__SkillsPath`), and the built world record catalog from `Implementation/Content/Runtime/world_records.json` (override with `Content__WorldRecordsPath`). Startup fails if the configured map is unknown, the spawn is outside bounds, the movement configuration is inconsistent, a quest or skill definition is invalid, or a quest objective target has no matching world record/NPC anchor.
 
 ```bash
 dotnet build Server/Health/Health.csproj
@@ -222,7 +224,7 @@ Unknown session IDs return `404 session_not_found`. Reading quest state creates 
 
 ## Quest accept (feature-flagged)
 
-`POST /p1/quests/accept` is mapped only when `P1:QuestAccept:Enabled=true`; otherwise the route does not exist (`404`). It is **off by default** because the interaction line-of-sight guard has no walkability bundle yet — enabling it logs `DEV STUB: P1:QuestAccept is enabled...` at startup. Contract: `Implementation/Contracts/P1/QuestAcceptRequest.schema.json` + `QuestAcceptResponse.schema.json`; proposal and guard order in `Implementation/Work_Orders/Proposals/QOD-08_QuestAcceptRequest_vi.md`.
+`POST /p1/quests/accept` is mapped only when `P1:QuestAccept:Enabled=true`; otherwise the POST handler is not mapped and the request falls through to the `GET /p1/quests/{sessionId}` read route template, which answers `405`. It is **off by default** because the interaction line-of-sight guard has no walkability bundle yet — enabling it logs `DEV STUB: P1:QuestAccept is enabled...` at startup. Contract: `Implementation/Contracts/P1/QuestAcceptRequest.schema.json` + `QuestAcceptResponse.schema.json`; proposal and guard order in `Implementation/Work_Orders/Proposals/QOD-08_QuestAcceptRequest_vi.md`.
 
 ```bash
 curl -i -X POST http://localhost:5000/p1/quests/accept \
@@ -249,31 +251,103 @@ NPC anchors come from `Implementation/Content/Runtime/npc_anchors.json`, generat
 python Implementation/Tools/build_npc_anchors.py
 ```
 
+## Interact (feature-flagged)
+
+`POST /p1/world/interact` is mapped only when `P1:Interact:Enabled=true`; otherwise the POST handler is not mapped and the request falls through to the `GET /p1/world/{sessionId}` read route template, which answers `405`. It is **off by default** because no reviewed walkability bundle exists yet — enabling it logs `DEV FIXTURE: P1:Interact is enabled...` at startup. Contract: `Implementation/Contracts/P1/InteractRequest.schema.json` + `InteractResponse.schema.json`; proposal and guard order in `Implementation/Work_Orders/Proposals/QOD-13_QuestProgressGathering_vi.md`.
+
+```bash
+curl -i -X POST http://localhost:5000/p1/world/interact \
+  -H "Content-Type: application/json" \
+  -H "X-Session-ID: <SESSION_ID>" \
+  -H "X-Correlation-ID: demo-interact" \
+  -d '{
+    "schemaVersion": 1,
+    "requestId": "66666666666666666666666666666666",
+    "idempotencyKey": "77777777777777777777777777777777",
+    "sentAtUtc": "2026-10-29T07:00:00Z",
+    "characterId": "CHR_MINH_KIEM_01",
+    "payload": { "targetId": "ENT_MAN_BM_OBJ_BM_PACKAGE_01" }
+  }'
+```
+
+A successful claim returns `200` with an `InteractResult`: `interactionId` (hex32), `targetId`, `recordId` (the world record the entity resolved to), `kind` (`INTERACTABLE` or `GATHER_NODE`), `outcome` (`collected` or `gathered`), `targetState` (`DEPLETED` for shared interactables, `AVAILABLE` for per-character claims — gather nodes and the P00-01 packages), `claimedAtUtc`, optional `respawnAtUtc`, optional `yield` (`itemId` + `quantity` for gather nodes) and `questUpdates` — the changed `QuestState` rows from the server-owned `RecordVerifiedEvent` call:
+
+```json
+{
+  "schemaVersion": 1,
+  "requestId": "66666666666666666666666666666666",
+  "sessionId": "<SESSION_ID>",
+  "serverTimeUtc": "2026-10-29T07:00:00Z",
+  "result": {
+    "interactionId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "targetId": "ENT_MAN_BM_OBJ_BM_PACKAGE_01",
+    "recordId": "MAN-BM-OBJ_BM_PACKAGE_01",
+    "kind": "INTERACTABLE",
+    "outcome": "collected",
+    "targetState": "AVAILABLE",
+    "claimedAtUtc": "2026-10-29T07:00:00Z",
+    "respawnAtUtc": "2026-10-29T07:00:20Z",
+    "questUpdates": [
+      {
+        "questId": "P00-01",
+        "state": "ACTIVE",
+        "stepId": "STEP_P00_01_PACKAGES",
+        "objectiveCounters": { "OBJ_P00_01_PACKAGES": 1 },
+        "revision": 3
+      }
+    ]
+  }
+}
+```
+
+Guards run in order: idempotency replay (`idempotencyKey` scoped to the character; same key + same payload returns the stored result, same key + different payload → `409 idempotency_conflict`) → target exists in the world entity registry → kind is `INTERACTABLE` or `GATHER_NODE` → same map/floor → foot distance ≤ `MaxInteractionDistanceWu` (5) → line of sight (only with a `REVIEWED` topology bundle; otherwise `not_enforced`) → profession gate (`AssumedProfessionLevel` vs the record's `professionLevelRequired`; a DEV-fixture stand-in until character professions exist) → claim (`SHARED` interactables despawn the shared registry entry; `PER_CHARACTER` interactables and gather nodes use a per-character claim window in `GatherClaimStore`) → yield roll and inventory grant for gather nodes → `RecordVerifiedEvent` for quest progress. Rejected claims change no state and grant no items.
+
+The `P00-01` packages (`ENT_MAN_BM_OBJ_BM_PACKAGE_01..03` at x=36/44/52) are the minimal acceptance slice: collecting all three flips the quest to `READY_TO_TURN_IN`. They carry `claimPolicy: PER_CHARACTER` in `world_entities_bm.json` (source: `Production_Rules_Complete_v1_vi.md` §5 — each package counts at most once per character and never removes the world item for other characters), so two characters can collect all three without waiting for a global respawn; the 20 s window is a **labelled DEV fixture**, not canonical balance. World records come from `Implementation/Content/Runtime/world_records.json` (352 records built by `python Implementation/Tools/build_world_records.py`); entity registries are rebuilt by `python Implementation/Tools/build_world_entities.py`, and CI verifies both files have no drift from their sources.
+
+Failure codes: `invalid_payload` (400), `session_not_found` (404), `target_not_found` (404, retryable), `invalid_target` (400), `out_of_range` (422, retryable), `target_not_available` (409), `profession_level_insufficient` (422), `idempotency_conflict` (409).
+
 ## Combat internals (QOD-03/QOD-06)
 
 `POST /p1/combat` exposes `ICombatService` for the self-targeting `SK-MK-01` path. The service stays the server-side seam for future `combat.input` work:
 
-- `ICombatSkillCatalog` loads `SK-MK-01..03` from canonical `SkillDefinition` content (class, cooldown, MP cost, targeting type, range, max targets). No balance values are duplicated in C#.
+- `ICombatSkillCatalog` loads `SK-MK-01..03` from canonical `SkillDefinition` content (class, cooldown, MP cost, targeting type, range, angle, max targets, per-mode coefficients, telegraph and VFX key). No balance values are duplicated in C#.
 - `ICombatTargetProvider` is a composite: the world-entity registry resolves alive mobs/bosses by entity instance ID (map/floor/position from canonical placements), plus an in-memory registry used by dev/test. Non-self skills still return `target_not_found` for dead, NPC or unregistered IDs.
 - `InMemoryCombatService.Resolve(PlayerSession, CombatCommand)` validates the command, then applies gates in order: skill/class, per-actor `inputSequence`, target existence/map/alive/range, cooldown, and MP cost. Accepted casts decrement MP, advance `LastInputSequence` and `Revision`, and return a schema-shaped `combat.effect` `CombatEvent`. `LastInputSequence` is shared with movement, so clients must keep one monotonic input sequence per actor.
-- Client `aimX`/`aimY` and `clientTimeUtc` are validated but not trusted. Damage and hit resolution are intentionally not implemented because no canonical damage formula or character stats exist yet; the returned event carries no `damage` or `hit`.
+- Client `aimX`/`aimY` and `clientTimeUtc` are validated but not trusted. The canonical damage formula now exists as pure domain (`DamageFormula` + seeded `CombatRng`, QOD-16 phase 1) behind the `P1:CombatDamage` gate, but casts still return no `damage` or `hit`: nothing applies the formula until the QOD-16 proposal is approved.
 - `combat.effect` is returned to the caller, not broadcast; transport and persistence arrive with the real-time layer.
 - `idempotencyKey` is scoped to the character: replaying an accepted cast with the same key and payload returns the stored outcome before the stale-sequence guard; the same key with a different payload returns `409 idempotency_conflict`.
 
 Internal failure codes: `unknown_skill`, `skill_not_available`, `invalid_target`, `target_not_found`, `target_not_alive`, `out_of_range`, `cooldown_active`, `insufficient_resource`, `unsupported_resource`, plus the shared `invalid_payload` and `stale_sequence`.
+
+## Combat damage domain (QOD-16, phase 1)
+
+The first QOD-16 slice lands the combat subset as internal domain only — no wire change and no damage applied until the proposal `Implementation/Work_Orders/Proposals/QOD-16_WorldProjectionCombatSubset_vi.md` is approved:
+
+- `DamageFormula` implements Production Rules §2 exactly: hit roll `clamp(0.90 + accuracy − dodge, 0.05, 0.98)`, capped crit roll, `raw = (attack + flat) × coefficient × rankMultiplier × (1 + bonus)`, `mitigation = 100/(100 + max(0, armor))`, element `1 − clamp(resist, 0, 0.5 PvE / 0.3 PvP)`, crit ×1.5, DR cap 0.8, final `max(1, floor(...))`. The locked oracle holds: attack 20, coefficient 1.5, armor 10 → 27; crit → 40. `CombatRng` is seeded per `(castId, targetId, hitIndex)` with `combat-rng-v1` for reproducible audits.
+- `Implementation/Tools/build_combat_mob_stats.py` deterministically exports `Implementation/Content/Runtime/combat_mob_stats_v1.json` from Art Bible §12 + Production Rules §4 (3 archetypes with the owner-locked `REFERENCE_L5` table, elite ×6/×1.6/×1.8, Mãng Cốt boss `BOSSDATA_BLOCKED` because `phaseGuard`/`interruptible` data does not exist yet). CI rebuilds the bundle and fails on drift.
+- `SK-MK-03` range comes from the `combat.skillRangeMigrationWu` migration in `completion_v1.json` (4.4 WU) — the skill example intentionally has no `rangeWu`. Loaded only when the gate is on.
+- `GuardPrecisionLoader` reads the owner-locked DEC-022 bundle (`Implementation/Content/DesignBaselines/p1_guard_precision_v1.json`, `DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION`) behind the same gate and validates window `[T, T+8)`, whiff `[T+8, T+28)`, counter-on-next-tick, 120°/4.4 WU cone, DR bucket cap and the 27/8/21/5 + counter 32/49 oracle arithmetic at load. `GuardTimeline` provides the pure window/cone/DR-bucket/deterministic-ordering helpers; `COUNTER_CONFIRMED` is a v2 event semantic (confirmation + one reserved counter, **not** counter damage).
+
+**DEC-022 runtime (QOD-17, same gate).** `GuardWindowStore` keeps one window per character; `CombatTickEngine` opens it when `SK-MK-01` is accepted (cast-start tick and aim snapshot, baseline attack snapshot and the PvE coefficient 1.8) and resolves the reserved counter on the next tick. `GuardDefenseService` is the incoming side: a mob impact inside `[T,T+8)` from the front region (4.4 WU / 120°, inclusive edges, defender's current foot, cast-start facing) is reduced by 0.70 before the final floor, and the first valid front hit commits one confirmation per `guardCastId` — `COUNTER_CONFIRMED` in the session stream, `+2` Kiếm Ý capped at 5, one reserved counter. A lethal hit pays nothing: the window closes, resource drops to 0 and no counter exists. Natural expiry with no confirmation grants the whiff buff (0.20 DR for `[T+8,T+28)` on all incoming damage, never a confirmation) and the guard cast's `END` does not clear it. The counter re-runs every DEC-022 recheck at its own tick (both alive, same instance/floor, hostile, range, cone, LOS, invulnerability), rolls on its own seeded RNG channel `guardCastId|counter`, emits `IMPACT`/`MISS`/`CANCEL` against the confirmed source only (no retarget, no refund, no extra resource, no recursive counter, no boss hard control) and uses the same death/kill-credit path as a cast. Still unsupported: the guard window and `WHIFF_GUARD` are not snapshot status fields (a v2 contract proposal is required), player-vs-player counters cannot be exercised because no player-sourced hostile damage exists, and DoT/projectile/elemental sources have no content.
+
+- `CombatEventStore` is the internal reliable event read for v2: typed events (`CAST_START`/`COUNTER_CONFIRMED`/`IMPACT`/`MISS`/`CANCEL`/`END`/`DEATH`), a monotonic per-session cursor starting at 1, a bounded per-session buffer (`P1:CombatEventStream`, DEV budget 512/page 200) and explicit resync instead of silent drops — readers behind the evicted range get `BUFFER_OVERFLOW`, stale cursors from a previous stream lifetime get `CURSOR_TOO_OLD`, both with no events (reconcile from the next snapshot). Appending the same `eventId` is a replay-safe no-op; reconnect cleanup is `RemoveSession`. The v2 read endpoint and combat tick engine land with QOD-17.
+- `WorldAoiProjectionService` is the v2 audience filter: internal candidates stay full-map, while each session receives MOB/BOSS/NPC/GATHER_NODE/INTERACTABLE only within the same map instance/floor/phase and AOI **enter 40 WU / leave 48 WU** (8 WU hysteresis), sourced from Online_Persistence_Release_Complete §2. NPCs project as `INVULNERABLE`/`targetable:false`/hp 0, the blocked boss as `BLOCKED` (never `DEAD`, not targetable), mobs with `REFERENCE_L5` hp and `ALIVE`/`DEAD`; claimables expose only a per-caller `availability` (`AVAILABLE`/`COOLDOWN`, per-character claim windows, no quest flags). Reconnect cleanup is `RemoveSession`, which also forgets the hysteresis memory. Phase/instance are labelled DEV placeholders (`OPEN_WORLD`, `#1`); the v2 snapshot endpoint lands with QOD-17.
+- `CombatDamageFeature` gates everything: `P1:CombatDamage:Enabled=false` by default, and touching the bundle or migration while disabled throws. Enabling it logs a `DEV STUB` warning and changes nothing on the wire.
+- `WorldEntityProjectionService` is the internal entity read-model (entityId, kind, map, floor, x, y, state, revision, lifeId, hp/maxHp): NPCs stay invulnerable with hp 0 (Art Bible §13), bosses stay hp 0 while `BOSSDATA_BLOCKED`, mobs use the `REFERENCE_L5` archetype stats (elite suffix applies the elite multipliers), and `lifeId` bumps on respawn. It is not yet wired into the world snapshot.
 
 ## Quest skeleton (QOD-03)
 
 `GET /p1/quests/{sessionId}` exposes the state list read-only. No accept/turn-in command is exposed yet; `IQuestService` remains the server-side seam for those:
 
 - `IQuestCatalog` loads canonical `QuestDefinition` files (currently `P00-01`) from `Implementation/Content/Examples/QuestDefinition`; unknown quest IDs are rejected.
-- `InMemoryQuestService` keeps per-character state behind `IQuestStateStore` and supports `GetState`, `GetStates`, `Accept`, `RecordObjective`, `TurnIn` and `Fail`.
+- `InMemoryQuestService` keeps per-character state behind `IQuestStateStore` and supports `GetState`, `GetStates`, `Accept`, `RecordVerifiedEvent`, `TurnIn` and `Fail`.
 - Allowed transitions: `LOCKED → AVAILABLE` when all prerequisites are `COMPLETED`, `AVAILABLE → ACTIVE` on accept, `ACTIVE → READY_TO_TURN_IN` when every canonical objective counter reaches its count, `READY_TO_TURN_IN → COMPLETED` on turn-in, and `ACTIVE`/`READY_TO_TURN_IN → FAILED` on failure.
 - Objective progress is clamped to the canonical objective count and updates `revision`; invalid transitions return the current snapshot with `invalid_transition`. State rows are created lazily on first query/accept, and prerequisite availability is refreshed lazily on read.
-- `RecordObjective` is an internal seam for server-side gameplay events (kill, collect, interact), not raw client input; a future endpoint must derive the amount from authoritative events.
+- `RecordVerifiedEvent(actor, eventId, eventType, recordId, mapId)` is the only progress path: server-verified gameplay events (interact/gather claims, talks, kills) advance objective counters. Each event contributes **once**: `COLLECT`/`INTERACT`/`TALK` objectives are keyed by distinct `recordId` (`R:{recordId}`), `KILL` objectives by event (`E:{eventId}`). No event can double-count the same record, and events on another map never contribute. It is an internal seam for server-side events, not raw client input.
+- Startup validation rejects quests whose `COLLECT`/`INTERACT` objective targets resolve to no world record on the objective's map, or whose `TALK` targets have no NPC anchor (`QuestCatalogValidator`); dangling IDs fail the boot instead of silently blocking progress.
 - Canonical `QuestDefinition` has no step graph, so the initial `stepId` is derived from the first objective (`OBJ_…` → `STEP_…`); `P00-01` yields `STEP_P00_01_PACKAGES`.
 - Rewards, XP, currency and items are not granted. Level-band eligibility is not enforced because `PlayerSession` has no level field yet.
-- Internal failure codes: `unknown_quest`, `quest_not_found`, `invalid_transition`, `unknown_objective`, `invalid_amount`, plus the shared `invalid_payload`.
+- Internal failure codes: `unknown_quest`, `quest_not_found`, `invalid_transition`, plus the shared `invalid_payload`.
 
 ## Movement rules
 
@@ -313,6 +387,59 @@ State is in memory and there is no seed inventory; a new character starts with n
 - On success the session map, position and revision are updated under the session lock, and `LastMoveAtUtc` is reset so elapsed time before the teleport cannot be spent as movement.
 - Teleport does not revive, heal or reset the movement sequence; respawn and death behavior stay in separate services.
 
+## Quest turn-in (feature-flagged)
+
+`POST /p1/quests/turnin` is mapped only when `P1:QuestTurnIn:Enabled=true`; otherwise the POST handler is not mapped and the request falls through to the `GET /p1/quests/{sessionId}` read route template, which answers `405`. It is **off by default** because no walkability bundle is reviewed yet — enabling it logs `DEV STUB: P1:QuestTurnIn is enabled...` at startup. Contract: `Implementation/Contracts/P1/TurnInRequest.schema.json` + `TurnInResponse.schema.json`; proposal in `Implementation/Work_Orders/Proposals/QOD-14_TurnInReward_vi.md`.
+
+```bash
+curl -i -X POST http://localhost:5000/p1/quests/turnin \
+  -H "Content-Type: application/json" \
+  -H "X-Session-ID: 8a7b6c5d4e3f4a2b1c0d9e8f7a6b5c4d" \
+  -H "X-Correlation-ID: demo-turnin" \
+  -d '{
+    "schemaVersion": 1,
+    "requestId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "idempotencyKey": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "sentAtUtc": "2026-10-29T00:05:00Z",
+    "characterId": "CHR_MINH_KIEM_01",
+    "payload": {"questId":"P00-01","npcId":"NPC_TA_VAN_KHANH"}
+  }'
+```
+
+```json
+{
+  "schemaVersion": 1,
+  "requestId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "sessionId": "8a7b6c5d4e3f4a2b1c0d9e8f7a6b5c4d",
+  "serverTimeUtc": "2026-10-29T00:05:00Z",
+  "result": {
+    "questState": {
+      "questId": "P00-01",
+      "state": "COMPLETED",
+      "stepId": "STEP_P00_01_PACKAGES",
+      "objectiveCounters": {"OBJ_P00_01_PACKAGES": 3},
+      "revision": 7
+    },
+    "rewards": {
+      "currency": [{"currencyId": "COIN", "amount": 20}],
+      "items": [{"templateId": "EQ-MK-CHEST-T1-R-COMMON", "stack": 1, "location": "BAG"}],
+      "xp": {"xpRule": "LEVEL_BAND_BASE", "applied": false}
+    },
+    "unlocks": ["P00-02"]
+  }
+}
+```
+
+Service `IQuestTurnInService` orchestrates an atomic transaction under the session lock:
+
+1. **Idempotency** — `(characterId, idempotencyKey)` scoped like accept. Replay returns the first outcome; a different payload under the same key returns `409 idempotency_conflict`.
+2. **Validate** — catalog → `npcId == turnInNpcId` → same map/floor → distance ≤ 5 WU → LOS (not enforced without REVIEWED topology) → state `READY_TO_TURN_IN`.
+3. **Grant** — `IInventoryService.Apply` with canonical `rewards.currency` and `rewards.itemIds` (stack 1, `BAG`). All-or-nothing; failure aborts with no partial reward.
+4. **Flip** — `IQuestService.TurnIn` transitions to `COMPLETED` (+1 revision).
+5. **Ledger** — `RewardLedgerStore` records `(characterId, questId)` for reward-once audit.
+
+Rewards use canonical data from the `QuestDefinition.rewards` block. XP is echoed with `applied: false` (no XP system yet). `unlocks` lists quest IDs enabled by the completion; their state refreshes lazily. The ledger is in-memory (lost on restart) and labelled as a dev fixture.
+
 ## Configuration (`appsettings.json`)
 
 | Key | Value | Source |
@@ -328,10 +455,21 @@ State is in memory and there is no seed inventory; a new character starts with n
 | `P1World:StartingLevel` | `1` | Session level used by the quest level-band guard |
 | `P1:QuestAccept:Enabled` | `false` | Maps `/p1/quests/accept`; dev stub until walkability exists |
 | `P1:QuestAccept:MaxInteractionDistanceWu` | `5` | DEC-016 NPC interaction distance |
-| `P1:MobBehavior:Enabled` | `false` | Enables the labelled mob-behaviour fixture (no tick loop yet) |
+| `P1:Interact:Enabled` | `false` | Maps `/p1/world/interact`; dev fixture until walkability exists |
+| `P1:Interact:MaxInteractionDistanceWu` | `5` | DEC-016 interaction distance for interactables and gather nodes |
+| `P1:Interact:AssumedProfessionLevel` | `1` | **DEV FIXTURE** stand-in for the character's gather profession level |
+| `P1:QuestTurnIn:Enabled` | `false` | Maps `/p1/quests/turnin`; dev stub until walkability exists |
+| `P1:QuestTurnIn:MaxInteractionDistanceWu` | `5` | DEC-016 NPC interaction distance for turn-in |
+| `P1:MobBehavior:Enabled` | `false` | Enables the labelled mob-behaviour fixture on the 20 Hz world tick |
 | `P1:MobBehavior:AggroRadiusWu` / `LeashRadiusWu` | `6` / `12` | **DEV FIXTURE**, not canonical balance |
 | `P1:MobBehavior:AttackRangeWu` / `AttackCooldownSeconds` | `1.2` / `2` | **DEV FIXTURE** |
 | `P1:MobBehavior:MoveSpeedWuPerSecond` | `2` | **DEV FIXTURE** |
+| `P1:MobBehavior:TelegraphSeconds` / `RecoverySeconds` | `0.45` / `0.5` | **DEV FIXTURE** — transcribed from the Art Bible §12 melee floor (≥0,45s) and the §6 CARPLING bite ("báo 0,45s; hồi 0,5s"); one pair drives every archetype because per-move recovery is not exported yet |
+| `P1:CombatDamage:Enabled` | `false` | Loads the mob-stat, SK-MK-03 range-migration and DEC-022 guard-precision bundles; domain only, no damage applied until the QOD-16 proposal is approved |
+| `P1:CombatEventStream:CapacityPerSession` / `MaxPageSize` | `512` / `200` | DEV budget for the v2 event-read buffer per session; overflow reports `BUFFER_OVERFLOW` instead of dropping silently |
+| `P1:CombatV2:Enabled` | `false` | Maps the opt-in `/p1/v2` world/combat/events prototype routes; v1 stays untouched |
+| `P1:DeathReturn:Enabled` | `false` | **DEV FIXTURE** — allows the in-process downed-state return to the server anchor; no route is mapped, so nothing reaches it over HTTP yet |
+| `P1:DeathReturn:RestoreHpFixture` | `0` | **DEV FIXTURE** — `0` restores nothing; any value above `P1World:StartingMaxHp` fails startup, because no source defines a restore-on-return amount |
 
 Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond=8` or `P1__QuestAccept__Enabled=true`.
 
@@ -343,6 +481,7 @@ Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond
 | `Content:NpcAnchorsPath` | Optional absolute/relative override for `Implementation/Content/Runtime/npc_anchors.json` |
 | `Content:TopologyPath` | Optional absolute/relative override for the `MapTopology` bundle directory |
 | `Content:WorldEntitiesPath` | Optional absolute/relative override for `Implementation/Content/Runtime/world_entities_bm.json` |
+| `Content:WorldRecordsPath` | Optional absolute/relative override for `Implementation/Content/Runtime/world_records.json` |
 
 ## Errors
 
@@ -364,13 +503,18 @@ Environment overrides use the standard form, e.g. `P1World__MoveSpeedWuPerSecond
 | 422 | `out_of_range` | Quest accept: different map/floor, or farther than 5 WU |
 | 422 | `prerequisite_not_met` | Quest accept: prerequisites incomplete or level outside the band |
 | 409 | `invalid_transition` | Quest accept: state is not `AVAILABLE` |
-| 409 | `idempotency_conflict` | Quest accept or combat cast: same `idempotencyKey` with a different payload |
+| 409 | `idempotency_conflict` | Quest accept, combat cast or interact: same `idempotencyKey` with a different payload |
+| 400 | `invalid_target` | Interact: target exists but is not an `INTERACTABLE` or `GATHER_NODE` |
+| 404 | `target_not_found` | Interact: target ID is not in the world entity registry |
+| 409 | `target_not_available` | Interact: target is depleted or on per-character gather cooldown |
+| 422 | `out_of_range` | Interact: different map/floor, farther than 5 WU, or line of sight blocked |
+| 422 | `profession_level_insufficient` | Interact: gather node requires a higher profession level |
 
-All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and `correlationId`. Quest, inventory and teleport service codes listed above are domain results; they have no HTTP mapping yet.
+All error envelopes include `code`, `messageKey`, `retryable`, `fieldErrors` and `correlationId`. Inventory and teleport service codes listed above are domain results; they have no HTTP mapping yet.
 
 ## Runtime smoke test
 
-The `server-smoke` GitHub Actions workflow builds the server, starts it on `127.0.0.1:5080`, and runs `Server/Health/Smoke/smoke_p1.py`. The script uses only the Python standard library and verifies:
+The `server-smoke` GitHub Actions workflow builds the server, starts it on `127.0.0.1:5080` with `P1__QuestAccept__Enabled=true`, `P1__Interact__Enabled=true` and `P1__QuestTurnIn__Enabled=true`, and runs `Server/Health/Smoke/smoke_p1.py`. The v2 section also casts `SK-MK-02` and waits (bounded, 3 s) for the actor's position to move the canonical 11 WU with the MP cost intact, which is the HTTP proof that a dash is movement rather than an accepted-cast label. The reported check total is deterministic: a bounded wait polls without counting a check per iteration and asserts once after the loop, so the printed number means the same list of assertions on every run. On branches that carry the review tooling, the same job then runs `Tools/ProducerReview/review_qoder_replay.py` and `review_qoder_guard_queue.py` unmodified against the built binary, so the two negative probes from `Qoder_Progress_Review_20261030` must stay green in CI; their JSON evidence is uploaded as the `qoder-review-probes` artifact and never written into the repository. The script uses only the Python standard library and verifies:
 
 - `/health` returns `200` and echoes `X-Correlation-ID`.
 - Session creation returns `201`, a `Location` header, the canonical spawn and `revision=1`.
@@ -378,6 +522,9 @@ The `server-smoke` GitHub Actions workflow builds the server, starts it on `127.
 - Replaying that sequence returns `409 stale_sequence`; the snapshot position and revision do not change.
 - Wrong character, missing session header, unknown session and a 31-character `requestId` return the expected errors.
 - A later move with sequence `2` succeeds, proving rejected requests did not consume the sequence.
+- The full `P00-01` collect flow: walk to each Atlas package and claim it via `/p1/world/interact`, watching the quest reach `ACTIVE` (counter 1) → `ACTIVE` (counter 2) → `READY_TO_TURN_IN` (counter 3), with idempotent replays, `idempotency_conflict`, depleted retries (`409 target_not_available`) and out-of-range rejection (`422`) covered along the way.
+- A second character gathers from `ENT_MAN_BM_NODE_BM_ORE_01`, verifying the `gather` outcome, the yield grant in `/p1/inventory` (correct item, stack and `BAG` location), replay without double-collection, and the per-character cooldown.
+- The full `P00-01` turn-in flow: walk to `NPC_TA_VAN_KHANH` at x=64, turn in with `questId=P00-01` and `npcId=NPC_TA_VAN_KHANH`, verify `COMPLETED` quest state, 20 COIN + 1 chest item in inventory, `applied: false` XP, `P00-02` unlock, idempotent replay, and `409 invalid_transition` on a second turn-in attempt with a new key.
 
 Run the same flow locally:
 
@@ -397,8 +544,19 @@ Quest and inventory HTTP surfaces are read-only, teleport has no endpoint, and c
 dotnet Server/Health/bin/Release/net10.0/Health.dll --self-check
 ```
 
-The flag boots the DI container and canonical content, then runs 88 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), world-target resolution and floor checks, the full `P00-01` quest flow through `COMPLETED`, quest accept guards, idempotency, line-of-sight and swept-walk geometry (clear, wall, large step, hole, corner, floor, non-finite, outside, footprint, not-enforced), the NPC anchor registry, the Bến Mưa world-entity registry with despawn/respawn under a manual clock, inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
+The flag boots the DI container and canonical content, then runs 346 assertions covering combat gating (skill/class, sequence, cooldown, MP, target and range), the QOD-16 combat domain (skill coefficients/targeting/telegraph/VFX keys, the versioned `REFERENCE_L5` mob-stat bundle with elite multipliers and the `BOSSDATA_BLOCKED` boss, the SK-MK-03 range migration, the Production Rules §2 damage-formula oracle with seeded RNG, the DEC-022 guard precision bundle (window `[T,T+8)`, whiff `[T+8,T+28)`, inclusive 120°/4.4 WU cone edges, DR bucket cap 0.8, oracle 27/8/21/5, counter 32/49 and deterministic impact ordering), the v2 event store (monotonic cursors, replay-safe append, bounded buffer with `BUFFER_OVERFLOW`/`CURSOR_TOO_OLD` resync, session isolation/lifetime reset, barrier-parallel appends), the AOI audience filter (enter 40/leave 48 WU hysteresis, floor/instance filtering, NPC/blocked-boss policy, per-caller node availability, reconnect reset), the v2 combat accept path (basic/skill casts, CAST_START events in the store, idempotent replay, cooldown/sequence/MP/class gates, invalid payloads, unknown skills), the tick engine (schedule dedupe, windup timing, basic 19 and MK03 8/10/17 impacts, MISS, range/cone rejection, END events, death once per life with kill credit, respawn as life 2), the loot recipe bundle (57 sources, one-roll-per-group + weighted SELECT_ONE, deterministic RNG, stable dry-run receipts, grant OFF), manifest spawn groups (44 spawned entities, 8 groups/25 mob members, partial-death hold, clear-group respawn with lifeId bumps, mixed round-robin composition), the mob AI attack cycle (chase opens a telegraph that holds, emits one ATTACK impact frame and settles into recovery, cooldown-gated re-telegraph, telegraph cancelled when the target is lost, the gated damage oracle 10 from attack 15 x BITE 0,8 against armor 10 with the session revision bump, waterroot 18, elite shore stalker 33, out-of-range whiff, gate-off / unknown-template / downed-target blocks), the DEC-022 guard runtime (window opens on accept with the accepted facing/attack snapshots, 0.70 front reduction with inclusive 4.4 WU and 60° edges, back hits unreduced, one confirmation + 2 Kiếm Ý per guardCastId across two same-tick hits, counter on the next tick for 34 against CARPLING defense with no extra resource and no second resolution, cancel when the source leaves the cone keeping cost, miss with no refund, lethal hit closing the window at zero resource, whiff 0.20 surviving the cast END for 20 ticks then full damage, refresh replacing the one window without stacking (and the confirmation belonging to the new castId), lethal counter emitting one DEATH, counter cancel when the source dies after the confirmation or when line of sight is broken at the counter tick, and no window at all with the gate off), the Q-A regressions from the progress review (a cached replay of an ended cast never re-schedules so no second END/hit/death/kill or guard refresh appears, concurrent same/different payload under one actor lock yields exactly one fresh charge, overdue counters stay eligible and catch up in deadline order resolving exactly once at the processed tick, a downed defender's own cast cancelling exactly once with CANCEL+END and no damage, basic and MK03 impacts re-run line of sight against a REVIEWED synthetic bundle while the unreviewed production bundle stays NotEnforced, and a barrier race of guard refreshes against mob impacts proves one impact never mixes two windows)), the swept SK-MK-02 dash and the combat status read model (see Current limits), the Q-B3 death-return policy (the composition-root gate is OFF, alive/downed/bad-key/unknown-session/unknown-map refusals move nobody and bump no revision, one return clears cast + guard window + reserved counter with exactly two `CANCEL` and one `END` and the next tick emitting nothing, the same key replays the recorded answer without a second move or event, another character presenting that key is refused, four barrier threads on one key apply exactly once, HP only moves through the configured fixture value, and the ledger stays bounded), the Q-B5 mob telegraph read model (idle entities report nothing, a committed swing reports its target, reach and a nine-tick countdown measured on the server clock, the countdown shrinks tick by tick, the swing stays readable when the target steps out of attack range, and after the impact it reports recovery plus the cooldown instead of an impact), the Q-C quest graph (the shipped catalog is the five-quest opening chain, P00-02..05 are blocked and every gap names a `.md`/`.csv` source, a blocked quest with a completed prerequisite still stays `LOCKED` and its accept carries the blocked-step field errors, and the validator accepts the shipped chain while rejecting a prerequisite cycle, a dangling prerequisite, a one-sided unlock, a dangling KILL target and a blocked quest without a named gap), and the internal entity read-model: 44 projected entities, NPC invulnerability, elite stats, blocked-boss hp 0, gate-off hp 0 and lifeId/revision bumps on respawn), world-target resolution and floor checks, the full `P00-01` quest flow through `COMPLETED` driven by server-verified events, quest accept guards, idempotency, line-of-sight and swept-walk geometry (clear, wall, large step, hole, corner, floor, non-finite, outside, footprint, not-enforced), the NPC anchor registry, the world record catalog (352 records, `TryResolveTarget` by record ID and by entity ID per map), the Bến Mưa world-entity registry with despawn/respawn under a manual clock, interact claims (collect, depleted, idempotent replay/conflict, out-of-range, LOS-blocked, respawn and distinct-record dedupe), per-character package ownership (`PER_CHARACTER` claims: two characters collect all three packages under a barrier with no global respawn, world state stays `AVAILABLE`, per-character claim window and respawn), objective-scoped progress dedupe (two objectives sharing one record, duplicate events, sequential-step guard, KILL event scope) and gather claims (yield grant, per-character cooldown and respawn, profession gate), barrier-coordinated interact/gather races (same key replays one result, two keys grant once, per-character shards stay independent, shared interactable despawn grants once, claim released by token when the grant fails so a retry grants exactly once), turn-in atomic reward (npc-mismatch, wrong-floor, out-of-range, success + inventory verification, replay same key, same-key-different-npc conflict, invalid-transition after completed, double-reward guard, idempotency, ledger recording, grant/flip/ledger failure injection with full rollback, currency overflow with no partial commit, and barrier-coordinated parallel turn-ins granting exactly once with same-key replays), inventory grants/equips/removals with revision, slot and currency guards, and teleport map/bounds/reason/death-return validation. Each check prints `PASS` or `FAIL` and the process exits non-zero if any check fails; no network listener is opened.
 
+## V2 opt-in surface (QOD-16 phase 2)
+
+`P1:CombatV2:Enabled=true` maps three prototype routes; with the gate off they are not mapped (requests fall through to the v1 routes or `404`). v1 messages and gates are unchanged, and no impact/damage is applied yet — the tick engine is QOD-17.
+
+- `GET /p1/v2/world/{sessionId}` returns the audience snapshot (`WorldSnapshotV2`): `schemaVersion: 2`, `mapInstanceId`/`floorId`/`phase`, `audience { aoiEnterWu: 40, aoiLeaveWu: 48 }`, `self` (hp drops when a mob impact lands, and `revision` moves with it) and the AOI-filtered entity read model (NPC `INVULNERABLE`, blocked boss `BLOCKED`, mobs with `REFERENCE_L5` hp whose `state` is the AI lifecycle `IDLE`/`AGGRO`/`CHASE`/`TELEGRAPH`/`ATTACK`/`RECOVER`/`RETURN`/`DEAD`, per-caller node `availability`).
+- `POST /p1/v2/combat` accepts `BASIC_ATTACK | SKILL` (v2 envelope, `schemaVersion: 2`) and returns `castId`, `mp`/`mpCost`, `cooldownEndUtc`, `nextInputSequence` and **only the events that already occurred** (`CAST_START`); future impacts are read through the event cursor. Basic attack is Minh Kiếm-only (P1 subset), costs no MP and has a 0.25 s recovery cooldown; skills reuse the v1 guards (class, sequence, cooldown, MP) and idempotency replays return the same cast without a new event.
+- `GET /p1/v2/events/{sessionId}?cursor=N&max=M` returns `{ nextCursor, resyncRequired, resyncReason?, events }` from the bounded per-session stream; stale cursors report `CURSOR_TOO_OLD`, evicted ranges `BUFFER_OVERFLOW`, and reconciliation is silent (no audio/VFX replay).
+- Responses reuse the v1 error envelope (`error.code` values stay in `CombatErrorCodes`), and a successful v2 combat response carries `schemaVersion: 2`.
+- **Tick resolution (QOD-17 core):** accepted v2 casts are scheduled on the 20 Hz `CombatTickEngine` (`WorldTickBackgroundService`). A basic attack lands one impact on tick +3 (windup 0.15 s) with coefficient 1.0; `SK-MK-03` lands its three authored hits on ticks +2/+5/+8 with coefficients 0.45/0.55/0.90 against up to 5 targets in the 4.4 WU/100° cone; `SK-MK-01` opens a DEC-022 guard window whose counter resolves on the following tick, and `SK-MK-02` resolves its swept movement on tick +7 (prep 0,15s + dash 0,20s at 20 Hz): the actor walks the ray with the accepted facing, stops flush before a blocker or the map edge, and never moves when the sweep is blocked at the start. Damages use the labelled completion_v1 baseline (attack 20, armor 10, accuracy 0.0025, crit 0.0525) plus the `REFERENCE_L5` mob defense through `DamageFormula` — the basic oracle is 19 against CARPLING (4.2 armor) and MK03 is 8/10/17. Mob HP is life-scoped (`MobCombatStateStore`), a death is emitted once per `lifeId`, the killer (last HP-damage source, DEV policy) receives the KILL quest event keyed by the death event id, and respawn bumps `lifeId` with fresh HP. Impact re-checks alive target, same `lifeId`, instance/floor, range, cone and **line of sight** at the scheduled tick (only a `REVIEWED` topology bundle can block; the shipped synthetic bundle answers `NotEnforced`), and a cast whose actor died or changed map/floor is cancelled once with `CANCEL` + `END` before any damage or kill credit. Misses emit `MISS` with no damage. A cached command replay is returned as `Replayed` and the endpoint must not schedule it again, so a retry after `END` cannot add a second `END`, hit, death, kill credit or guard window. Remaining QOD-17 work is exposing guard/whiff status in the v2 snapshot (contract proposal) plus the XP and loot grant paths.
+
+- **Loot recipes (QOD-17, dry-run):** `python Implementation/Tools/build_loot_recipe.py` exports the canonical `Loot_Recipe_Reward_Production_Data_vi.csv` (57 sources / 184 entries) into `Implementation/Content/Runtime/loot_recipe_v1.json` with `grantEnabled: false` and `grantBlockedReason: COIN_BAND_MISSING`. The runtime rolls once per group (`1200` bps for ordinary pools) and then `SELECT_ONE` by weight using the versioned `loot-rng-v1` server RNG; the same kill key reproduces the same receipt, the ledger dedupes retries, and the P1 mob→source mapping is explicit (`MOB_CARPLING`→`LT_MOB_CARPLING`, elite and boss pools included, boss flagged blocked). Receipts are dry-run only — no item/currency is granted until the coin-band reward bundle exists and is reviewed.
 ## Manual verification
 
 `dotnet` and Unity are not installed in the current authoring environment. The `server-build` workflow compiles this project on .NET 10, and `server-smoke` runs the runtime checks above plus the domain self-check. Both Python validators pass locally. The table below remains the manual equivalent for a machine with the .NET SDK.
@@ -428,16 +586,42 @@ The flag boots the DI container and canonical content, then runs 88 assertions c
 | 21 | Accept again with a new key | `409 invalid_transition`; state/revision unchanged |
 | 22 | Same key with `npcId = NPC_TA_VAN_KHANH` | `409 idempotency_conflict` |
 | 23 | Accept `P00-01` from a fresh session at spawn | `422 out_of_range`, `retryable: true` |
-| 24 | Any request | Response always has `X-Correlation-ID` |
+| 24 | With the quest `ACTIVE`, walk to `x >= 36` and claim `ENT_MAN_BM_OBJ_BM_PACKAGE_01` via `/p1/world/interact` | `200`, `outcome: collected`, `targetState: AVAILABLE`, counter `1` |
+| 25 | Repeat the same claim before respawn | `409 target_not_available` |
+| 26 | Gather `ENT_MAN_BM_NODE_BM_ORE_01` within 5 WU | `200`, `outcome: gathered`, `yield` granted in `/p1/inventory` |
+| 27 | Any request | Response always has `X-Correlation-ID` |
+
+## Headless E2E scenario (QOD-15)
+
+One command builds the server, starts it and drives the whole gameplay loop:
+
+```bash
+bash Server/Health/Smoke/run_e2e_p1.sh default      # production gates OFF: expects blocked output
+bash Server/Health/Smoke/run_e2e_p1.sh dev          # dev synthetic scenario: full golden loop
+bash Server/Health/Smoke/run_e2e_p1.sh mob-combat   # live mob combat: combat gates only
+```
+
+- `default` starts the server without the P1 feature flags and asserts the expected blocked output: session/movement/read endpoints work, while `/p1/quests/accept`, `/p1/world/interact` and `/p1/quests/turnin` return `404` because the routes are not mapped.
+- `dev` starts the server with `P1__QuestAccept__Enabled`, `P1__Interact__Enabled` and `P1__QuestTurnIn__Enabled` set to `true` and runs the golden loop in one session: create session → valid move → wall-crossing attempt → accept `P00-01` → collect the three Atlas packages (`ACTIVE` → `READY_TO_TURN_IN`) → turn-in at `NPC_TA_VAN_KHANH` (`COMPLETED`, COIN 20 + chest, XP `applied: false`, unlock `P00-02`) → replay same key returns the stored result → a new key returns `409 invalid_transition` → inventory/quest readback shows exactly one reward → two parallel turn-ins with different keys yield exactly one winner → two fresh characters claim the same package concurrently (`concurrent_package_claim=OK`, no respawn wait) → wrong character/unknown session guards.
+- `mob-combat` (Q-B4) starts the server with **only** `P1__CombatV2__Enabled`, `P1__CombatDamage__Enabled` and `P1__MobBehavior__Enabled`, so it is a separate fixture rather than the dev scenario with more flags on. It gives the actor larger starting HP/MP purely so one run can live through every phase (walk, escape, take hits, guard, die); every per-hit number still comes from the shipped formula and the shipped `P1:MobBehavior` values. The scenario clears the mob line in `y` first (every group on this map stands on `y=0`, so a corridor at `y=7,5` is outside the 6 WU aggro radius whatever its `x`) and only then drops onto the road beside `ENT_MAN_BM_SPAWN_BM_01*` (three CARPLING at x=84) at x=87; walking the road itself engages two groups, which is exactly what this profile's first CI run showed. It asserts the corridor engages nothing and costs no HP, that descending engages that group and nothing else, then reads the live 20 Hz fight through `/p1/v2/world` and `/p1/v2/events` with conditional waits: a mob enters `TELEGRAPH` → step out of the 1,2 WU attack range before the committed impact frame and prove HP is untouched → stand still and take whole CARPLING hits (a multiple of the formula's 10) → cast `SK-MK-01` facing the attacker (west, into the incoming group) until a `COUNTER_CONFIRMED` lands, then read that guard's own counter `IMPACT`/`MISS` — same target, never a retarget — and cross-check it against the mob's snapshot HP (`maxHp - hp == hpDamage`) → stay until HP reaches 0, and prove the server does not paper over death: a fresh cast is refused `actor_not_alive`, HP is still 0 seconds later (no auto-heal), and the group drops the target and walks home. `mob_damage`/`guard_confirm`/`counter`/`death_stays_down` are printed as one summary line. Measured on CI at `f3210a3`: **85 checks**, `telegraph=OK escape_whiff=OK mob_damage=30 guard_confirm=OK counter=IMPACT death_stays_down=OK mob_states=RETURN` with `counter=IMPACT counter_damage=34 on ENT_MAN_BM_SPAWN_BM_01` — three plain CARPLING hits in the damage leg, the counter's own damage equal to the DEC-022 oracle and matching the mob's snapshot HP, and the group walking home over a downed actor. The total is pinned: no check sits inside the guard-retry loop and the counter leg makes exactly one claim whether the roll hit (snapshot HP must match) or missed (the mob must be untouched) — an earlier run's 84-vs-85 was exactly that branch-dependent check, not a server difference.
+
+The Bến Mưa topology fixture is `SYNTHETIC_TEST_ONLY`, so wall enforcement is `not_enforced` on the dev server: the wall-crossing move succeeds and the scenario records `wall_enforcement=not_enforced`. When a `REVIEWED` bundle lands, the same move must return `422 movement_blocked`; the scenario accepts exactly those two outcomes and fails on anything else. The wall/sweep logic itself is verified deterministically by the self-check's reviewed synthetic bundle. `server-e2e` runs all three profiles in CI, each in its own job with its own server process and port.
 
 ## Current limits
 
 - Sessions are in memory and lost on restart; there is no database, authentication or real-time transport.
-- `entities` is always empty in snapshots; combat can target alive world mobs/bosses by instance ID, but there is still no damage, death or loot.
-- Mob behaviour (`MobLifecycleService`) exists as a tickable state machine (IDLE/AGGRO/CHASE/ATTACK/RETURN/DEAD) with LOS, leash and attack-cooldown gates, but it is driven only by tests — there is no background tick loop, damage or loot yet, and every radius/speed is a labelled DEV fixture. Teleport has no endpoint.
-- The Bến Mưa world-entity registry (`world_entities_bm.json`: 24 canonical placements, 19 templates) is loaded with despawn/respawn state, but no endpoint, combat target or HP/stat wiring uses it yet.
-- Combat has no damage, hit chance, telegraphs, death or loot: `combat.effect` only records an accepted cast and its cooldown.
-- Quest state is in memory; accept exists but is feature-flagged off by default. Line-of-sight runs only for `REVIEWED` topology bundles; the shipped bundle is synthetic, so it is `not_enforced` until Muse delivers the Bến Mưa layout. Turn-in, rewards, party progress and multi-step graphs are not implemented.
+- v1 `entities` stays empty (frozen contract); the v2 opt-in snapshot (`P1:CombatV2`) returns the AOI entity read model and the tick engine applies basic/MK03 damage, death and respawn, the DEC-022 guard window with its confirmation, whiff and next-tick counter, and mob AI impacts. Loot rolls are dry-run receipts only (no grant until the coin band exists) and XP is still missing, as is group-clear spawn composition beyond the timer. The QOD-16 phase-1 domain (damage formula, seeded RNG, mob-stat bundle, internal entity projection) is applied by the tick engine and by mob attacks, both behind the `P1:CombatDamage` gate.
+- Dash outcomes (landed position, achieved distance and `COMPLETE`/`BLOCKED_BY_GEOMETRY`/`ZERO_DISTANCE`) live in `DashLedger`, a bounded 512-entry audit keyed by castId. They are **not** on the wire: `CombatEventV2` has no movement type and `WorldSnapshotV2.self` has no stop reason, and the design resolution forbids stuffing fields into `additionalProperties=false` schemas, so the ledger plus the position/revision change in the snapshot is what P1 proves today. The Content Bible row for Tầm Long also lists 150% damage on the first target and +1 Kiếm Ý; with no dash hit-shape field in any canonical content (design resolution §4) and no resource rule approved for it, the dash deals no damage and grants no resource — both recorded as open cases rather than implemented off a narrative table.
+- A mob's committed swing has an authoritative **read model** too, and it is also not on the wire: `MobTelegraphProjection.Project(entities)` reports only engaged entities with `state`, the `targetCharacterId` the AI is swinging at, `impactInTicks` / `recoverInTicks` / `nextAttackInTicks` counted down against the server clock in 20 Hz ticks, the absolute `impactAtUtc` for clients that pair it with `serverTimeUtc`, and the mob's `rangeWu`. Timing is computed with integer ceiling on 100 ns ticks because the windows are exact multiples like 0,45 s, and double arithmetic on `TotalSeconds` turns that into 9,0000000000000002. `angleDegrees` is deliberately `null`: no canonical content exports a per-move telegraph shape (width/length/arc), and the defender-side 120° from DEC-022 describes the *guard*, not the swing, so borrowing it would be a fabricated number. What a client can do with it once published: start a warning ring on `TELEGRAPH`, time the lean-back on `impactInTicks`, and know that a swing stays committed even after the target steps out of reach (the impact frame still happens; only the damage check knows it will whiff). The contract ask — an optional versioned `telegraph` block on the v2 snapshot's entities — is in `Implementation/Work_Orders/Proposals/QOD-16_WorldProjectionCombatSubset_vi.md` §9.15 and **not** applied.
+- Combat status has an authoritative **read model** but no wire field yet: `CombatStatusProjection.Project(session, tick, now)` answers guard `NONE`/`GUARD`/`WHIFF`/`EXPIRED` with the owning `guardCastId` and window end ticks, whether a counter is still reserved and how it resolved, the actor's HP/MP/Kiếm Ý, the action keys still inside cooldown, and the last dash outcome (achieved vs requested WU, stop reason, landing point). That is what a reconnecting client would need instead of replaying events that already left the bounded buffer. Publishing it means an optional versioned `combat` object on `WorldSnapshotV2` plus a capability flag — drafted in `Implementation/Work_Orders/Proposals/QOD-16_WorldProjectionCombatSubset_vi.md` §9.12 and **not** applied, because both v1 and v2 forbid fields nobody approved.
+- Returning from a downed state is a server-owned **policy with no route**: `DeathReturnService.ReturnToAnchor(sessionId, idempotencyKey)` takes no coordinates at all, so a client-chosen revive point is not merely rejected, it is unrepresentable. It applies only to a downed actor on a map with known bounds, moves it to the server's own anchor (`P1World:SpawnX/SpawnY` clamped into that map's bounds — a labelled DEV fixture, because canonical content has no per-map `safe_anchor` field and map bounds say nothing about walkability), bumps the actor revision once, and cleans the previous life up as events: the guard window closes as `DEFENDER_DOWN` (reduction stops, whiff reward lost, Kiếm Ý zeroed per DEC-022 §3), every in-flight cast emits `CANCEL` + `END` exactly once with no damage and no kill credit, and a counter reserved for a later tick is cancelled with `CounterOutcome=RETURNED_TO_ANCHOR` instead of being left to swing. Mob aggro needs no separate ledger: `MobLifecycleService.FindTarget` re-runs each tick and skips a player at `Hp <= 0`, so a mob mid-telegraph drops the pending impact. Idempotency is keyed by request in a bounded 256-entry ledger — a repeated key replays the recorded answer (no second move, no second revision, no extra events), a key already used by another character is refused with `idempotency_key_conflict`, refusals are never recorded so the same key stays usable for the retry, and four threads on one key produce exactly one return. Nothing is restored unless `P1:DeathReturn:RestoreHpFixture` is configured (default `0` = the return relocates and clears state but leaves HP alone), and **no penalty is applied**: Production_Rules has no XP/durability/currency/death-timer value to transcribe. `P1:DeathReturn:Enabled` stays `false` and the endpoint contract, the missing anchor/restore/penalty/transition sources and the overlap with the unrouted `ITeleportService` `DEATH_RETURN` reason (which asks the client for `mapId/xWu/yWu`, i.e. exactly the thing this policy refuses) are filed in proposal §9.13.
+- Mob behaviour (`MobLifecycleService`) exists as a tickable state machine (IDLE/AGGRO/CHASE/TELEGRAPH/ATTACK/RECOVER/RETURN/DEAD, the Art Bible §6 bestiary cycle) with LOS, leash, attack-range, telegraph and cooldown gates, driven by the 20 Hz `WorldTickBackgroundService` when `P1:MobBehavior:Enabled=true` (off by default). TELEGRAPH holds for `TelegraphSeconds`, then the same tick emits the ATTACK impact frame and settles into RECOVER; losing the target or crossing the leash cancels a pending impact. `MobAttackService` turns an impact frame into player damage only when `P1:CombatDamage:Enabled=true`: it uses the archetype's basic move (the "Đòn thường" column of Art Bible §12) against the completion_v1 player armor baseline and re-checks range, floor and alive state at impact, so outrunning the telegraph whiffs. Every radius, speed, telegraph and recovery duration is a labelled DEV fixture, mob impacts never roll hit or crit (no mob accuracy/crit source exists), and there is no mob loot on death yet. A mob impact is also the DEC-022 trigger: while the defender holds a guard window the damage is reduced by 0.70 from the front (0.20 during the whiff buff) and the first valid front hit reserves the counter. Teleport has no endpoint.
+- The Bến Mưa world-entity registry (`world_entities_bm.json`: 44 spawned entities (25 mob members across 8 manifest groups, 2 bosses, 8 NPCs, 5 nodes, 4 interactables), 22 templates) is loaded with despawn/respawn state; interact uses it for shared `INTERACTABLE` claims and per-character (`claimPolicy: PER_CHARACTER`) package claims, and combat resolves alive mobs/bosses by instance ID. The 352-entry world record catalog (`world_records.json`) maps entities to `recordId`s for interact claims and quest progress.
+- Combat casts still have no damage, hit chance, telegraphs, death or loot on the wire: `combat.effect` only records an accepted cast and its cooldown. The canonical damage formula and mob stats exist as gated domain (see the QOD-16 section) awaiting proposal approval.
+- Quest state is in memory; accept, interact and turn-in are feature-flagged off by default. Progress advances only from server-verified events (`RecordVerifiedEvent`); `P00-01` reaches `READY_TO_TURN_IN` by collecting the three Atlas packages. The opening chain is now the full graph `P00-01 → P00-02 → P00-03 → P00-04 → P00-05` (level band 1–10 from the production spec), but only P00-01 is playable: the other four load as **BLOCKED**, each with a `blockedSteps` list naming the exact field and the document that must supply it (water-ripple and villager interactables, the escort/checkpoint and wave-dodge mechanics, the missing turn-in NPCs, the boss's `BOSSDATA_BLOCKED` stats, the fragment interactable, and the `C1-01` unlock target). A blocked quest keeps its place in the graph — prerequisites and unlocks are validated both ways — but never becomes `AVAILABLE` however complete the player's prerequisites are, and accepting it returns `prerequisite_not_met` with `activation.blocked.<DESIGN_STEP>` field errors, so "walk closer" is never the advice for a quest that cannot open. The loader now requires `activation` explicitly (no silent ACTIVE default) and rejects a BLOCKED quest without a named gap; the startup validator checks prerequisites and unlocks resolve, the unlock edges match the prerequisite edges, the prerequisite graph is acyclic, KILL/BOSS/ESCORT targets resolve to real spawn/boss records, TALK targets resolve to NPC anchors, and every blocked step carries a `.md`/`.csv` source pointer. `P1:QuestTurnIn:Enabled` gates the turn-in endpoint; rewards use canonical `rewards` data from the QuestDefinition, XP is echoed with `applied: false` (no XP system), and the reward ledger is in-memory only (lost on restart). Turn-in commits grant → quest flip → ledger under the actor lock and re-checks state inside the lock, so parallel turn-ins grant exactly once (one winner, the other `invalid_transition`; same-key contention never double-grants). Line-of-sight runs only for `REVIEWED` topology bundles; the shipped bundle is synthetic, so it is `not_enforced` until Muse delivers the Bến Mưa layout.
+- Quest dialogue has a runtime **node catalog** built from `Quest_Dialogue_Production_Data_vi.csv` (`build_narrative_nodes.py` → `narrative_nodes_v1.json`, 229 nodes, checked for drift in CI like the other bundles). A node is only visible when the character's own quest state matches its `conditionKey` (`QUEST_AVAILABLE`/`QUEST_ACTIVE`/`QUEST_READY_TO_TURN_IN`) — that is the reveal gate, evaluated server-side — and the server never composes prose: only the node's `textKey` leaves it. Entering a node can set exactly one flag from the bundle's closed vocabulary (two today, both from chapter III) into a bounded per-character store, and a node whose `onEnterEvent` is `OBJECTIVE_PROGRESS` records a `TALK` verified event so a talk objective progresses from dialogue rather than from an endpoint call. A `CHOICE` node must be answered with one of its own options, and the choice decides which flag is set. Party progression is labelled `SOLO_ONLY` (`PartyPolicies`) because P1 has no party runtime and must not imply shared credit. There is **no HTTP route** for dialogue yet: the service is domain-only until a talk/flag contract is approved (proposal §9.17).
+- The DEC-022 guard/whiff/counter runtime is now exercised end-to-end over HTTP by the `mob-combat` E2E profile (live mob impacts, a front hit that confirms, and the counter's own resolution cross-checked against the mob's snapshot HP); `server-smoke` still keeps `P1:MobBehavior` off so the quest/reward scenario is untouched. The sub-50 ms interleavings stay in the self-check, because a client cannot hit them on schedule: the source dying between the confirmation and the counter tick, an overdue counter after a skipped timer callback, two hits in the same tick sharing one confirmation, and a guard refresh racing an impact. Player-vs-player counters, DoT/projectile/elemental incoming sources and hard-control cancels have no P1 content, so they are unsupported rather than skipped; guard and whiff windows are not exposed as snapshot status fields until a v2 contract proposal is approved.
+- Interact gather yields (item IDs, quantity ranges, respawn seconds, profession levels) are DEV fixtures from the supplement records, not canonical economy data; the profession gate uses a configured `AssumedProfessionLevel` until character progression exists.
 - Inventory is read-only over HTTP and starts empty: no item catalog, stack-limit enforcement, durability rules, seeded starting items or mutation endpoint.
 - Teleport uses map bounds only; there is no walkability, portal, cooldown or respawn logic.
 - Movement speed and starting HP/MP are slice defaults, not locked balance values.

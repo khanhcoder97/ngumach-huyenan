@@ -1,0 +1,94 @@
+{
+  "quests": [
+    {
+      "questId": "P00-01",
+      "title": "Thư qua bến",
+      "startNpc": "Ly An",
+      "turnInNpc": "Tạ Vân Khanh",
+      "offer": "Nước mưa chảy qua các khe ván. Ly An ghì một sợi dây vào cọc, chặn kiện hàng vừa trượt tới mép bến.\n\nLy An: Khoan, giữ giúp tôi đầu kia!",
+      "clue": "Ly An nhìn khoảng trống giữa những kiện đã gom, dò theo sợi dây mắc dưới ván.\n\nLy An: Vẫn còn đồ dạt ra xa. Quanh bến có ba kiện cần mang về; ông Khanh nhận ở chỗ khô trước kho. Thư thì để riêng, đừng tì lên niêm.",
+      "completed": "Tạ Vân Khanh ghi xong dòng nhận hàng, chừa ngòi bút trên đầu trang. Ngoài mái kho, tiếng giọt rơi từ hiên đã thưa dần.\n\nTạ Vân Khanh: Ban nãy ở bến, có nghe gì ngoài tiếng mưa không?\n\nLy An nhìn ra hàng cọc, nơi vòng sắt vẫn treo im.\n\nLy An: Tôi tưởng tiếng vòng sắt va cọc.\n\nÔng Khanh khép sổ nhưng giữ một ngón tay giữa hai trang. Việc ở bến vẫn chưa xong.",
+      "objectives": [
+        {
+          "objectiveId": "OBJ_P00_01_PACKAGES",
+          "label": "Kiện hàng",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "questId": "P00-02",
+      "title": "Chuông không người",
+      "startNpc": "Tạ Vân Khanh",
+      "turnInNpc": "Tạ Vân Khanh",
+      "offer": "Tạ Vân Khanh kẹp một ngón tay giữa hai trang sổ khi tiếng giọt rơi từ mái thưa dần.",
+      "clue": "Ông đưa ngòi bút tới dòng trống nhưng chưa viết.",
+      "completed": "",
+      "objectives": [
+        {
+          "objectiveId": "OBJ_P00_02_CARPLING",
+          "label": "Cá Linh",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "questId": "P00-03",
+      "title": "Dưới mặt đầm",
+      "startNpc": "Ly An",
+      "turnInNpc": "Ly An",
+      "offer": "Một bàn tay vỗ lên mặt nước giữa đám lau. Ly An nằm rạp trên ván, đầu dây trong tay cô bị giật lệch.",
+      "clue": "Ly An thu một đoạn dây vừa chùng, cúi nhìn dưới mép ván.",
+      "completed": "",
+      "objectives": [
+        {
+          "objectiveId": "OBJ_P00_03_WATERROOT",
+          "label": "Rễ Nước",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "questId": "P00-04",
+      "title": "Người giữ bờ",
+      "startNpc": "Tạ Vân Khanh",
+      "turnInNpc": "Tạ Vân Khanh",
+      "offer": "Tạ Vân Khanh đã ra khỏi mái kho. Ông nhìn đường bờ về Đầm Chuông rồi hỏi cả bạn lẫn Ly An có đi được nữa không.",
+      "clue": "Ly An quỳ gỡ nút túi đã ngấm nước. Cô kéo thử hai lần, dừng lại để nghe một tiếng gỗ gãy bên kia bờ.",
+      "completed": "",
+      "objectives": [
+        {
+          "objectiveId": "OBJ_P00_04_WAVE_A",
+          "label": "Đợt Cá Linh",
+          "count": 3
+        },
+        {
+          "objectiveId": "OBJ_P00_04_WAVE_B",
+          "label": "Đợt Rễ Nước",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "questId": "P00-05",
+      "title": "Mảnh ấn đầu tiên",
+      "startNpc": "Tạ Vân Khanh",
+      "turnInNpc": "Tạ Vân Khanh",
+      "offer": "Mãng Cốt trồi giữa các cọc, một mảng rễ ướt còn bám trên lưng. Nước dồn theo thân nó, phủ qua lối vừa đi.",
+      "clue": "Ông giữ người phía ngoài đường ván, không gọi bạn tiến sâu hơn.",
+      "completed": "",
+      "objectives": [
+        {
+          "objectiveId": "OBJ_P00_05_BOSS",
+          "label": "Mãng Cốt",
+          "count": 1
+        },
+        {
+          "objectiveId": "OBJ_P00_05_CLASS_CONFIRM",
+          "label": "Xác nhận nhập môn",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

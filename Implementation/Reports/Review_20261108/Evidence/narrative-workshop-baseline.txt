@@ -1,0 +1,16 @@
+{"status":"PASS_COMPILE","scenes":39,"sourceDigest":"3b3e04a6a5c4bf093804c6a3e228faaee2531ce4a07eff29525562faf3b86658","runtimeActivationAllowed":false,"warnings":[]}
+{
+  "status": "PASS_BRANCH_EXECUTION",
+  "sourceDigest": "3b3e04a6a5c4bf093804c6a3e228faaee2531ce4a07eff29525562faf3b86658",
+  "reachableScenes": 38,
+  "choiceEdges": 2398,
+  "uniqueDecisionStates": 992,
+  "explicitEnds": 31,
+  "repeatRead": "PASS",
+  "sealRevealGate": "PASS",
+  "thangLongEvidenceOrder": "PASS",
+  "thangLongRestart": "PASS",
+  "runtimeActivationAllowed": false,
+  "nativeGame": "UNVERIFIED",
+  "literaryQuality": "EDITORIAL_JUDGMENT_NOT_SCORED"
+}

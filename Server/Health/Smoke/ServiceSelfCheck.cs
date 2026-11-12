@@ -1,6 +1,8 @@
+using System.Threading;
 using Microsoft.Extensions.Options;
 using Server.Health.Contracts;
 using Server.Health.Gameplay.Combat;
+using Server.Health.Gameplay.Interactions;
 using Server.Health.Gameplay.Inventory;
 using Server.Health.Gameplay.Quests;
 using Server.Health.Gameplay.Teleport;
@@ -25,6 +27,8 @@ public static class ServiceSelfCheck
         var teleport = services.GetRequiredService<ITeleportService>();
         var questAccept = services.GetRequiredService<IQuestAcceptService>();
         var npcAnchors = services.GetRequiredService<NpcAnchorCatalog>();
+        var questTurnIn = services.GetRequiredService<IQuestTurnInService>();
+        var rewardLedger = services.GetRequiredService<RewardLedgerStore>();
 
         var results = new List<(string Name, bool Passed, string? Detail)>();
         void Check(string name, bool passed, string? detail = null) =>
@@ -204,10 +208,1427 @@ public static class ServiceSelfCheck
             noMpCast.Failure?.Code == CombatErrorCodes.InsufficientResource,
             noMpCast.Failure?.Code);
 
-        Check("quest.catalog", questCatalog.Count == 1, $"count={questCatalog.Count}");
+        // ─── QOD-16: combat subset domain + entity read-model projection ───
+
+        var configuration = services.GetRequiredService<IConfiguration>();
+        var hostEnvironment = services.GetRequiredService<IHostEnvironment>();
+        bool Near(double actual, double expected) => Math.Abs(actual - expected) < 1e-9;
+        DashMovementService NewDashes(IWorldGeometryService service) =>
+            new(service, options, maps);
+
+        var combatDamage = services.GetRequiredService<CombatDamageFeature>();
+        Check(
+            "combat.damage_gate_off_by_default",
+            !combatDamage.Enabled,
+            $"enabled={combatDamage.Enabled}");
+        var gateBlockedLoad = false;
+        try
+        {
+            _ = combatDamage.MobStats;
+        }
+        catch (InvalidOperationException)
+        {
+            gateBlockedLoad = true;
+        }
+
+        Check("combat.damage_gate_blocks_load", gateBlockedLoad);
+
+        var enabledCombat = new CombatDamageFeature(
+            new P1CombatDamageOptions { Enabled = true },
+            configuration,
+            hostEnvironment);
+
+        combatSkills.TryGet("SK-MK-01", out var mk01);
+        combatSkills.TryGet("SK-MK-02", out var mk02);
+        combatSkills.TryGet("SK-MK-03", out var mk03);
+        Check(
+            "combat.skill_coefficients",
+            mk01 is
+            {
+                TargetingType: CombatTargetingTypes.Self,
+                RangeWu: 4.4,
+                AngleDegrees: 120,
+                MaxTargets: 1,
+                TelegraphSeconds: 0.4,
+                VfxKey: "VFX/Skill/SK-MK-01"
+            } &&
+            mk01.Coefficients is { Pve: 1.8, Boss: 1.8, Pvp: 0.65 } &&
+            mk02 is
+            {
+                TargetingType: CombatTargetingTypes.Dash,
+                RangeWu: 11,
+                AngleDegrees: null,
+                MaxTargets: 1,
+                TelegraphSeconds: 0.15,
+                VfxKey: "VFX/Skill/SK-MK-02"
+            } &&
+            mk02.Coefficients is { Pve: 1.5, Boss: 1.5, Pvp: 0.65 } &&
+            mk03 is
+            {
+                TargetingType: CombatTargetingTypes.Cone,
+                RangeWu: null,
+                AngleDegrees: 100,
+                MaxTargets: 5,
+                TelegraphSeconds: 0.1,
+                VfxKey: "VFX/Skill/SK-MK-03"
+            } &&
+            mk03.Coefficients is { Pve: 1.9, Boss: 1.9, Pvp: 0.65 },
+            $"{mk01?.SkillId}/{mk02?.SkillId}/{mk03?.SkillId}");
+
+        var rangeMigration = enabledCombat.RangeMigration;
+        Check(
+            "combat.skill_range_migration",
+            Near(rangeMigration.RangeWuBySkillId["SK-MK-01"], 4.4) &&
+            Near(rangeMigration.RangeWuBySkillId["SK-MK-02"], 11.0) &&
+            Near(rangeMigration.RangeWuBySkillId["SK-MK-03"], 4.4),
+            string.Join(
+                ",",
+                rangeMigration.RangeWuBySkillId
+                    .OrderBy(pair => pair.Key, StringComparer.Ordinal)
+                    .Select(pair => $"{pair.Key}={pair.Value}")));
+
+        var mobStats = enabledCombat.MobStats;
+        Check(
+            "combat.mob_stats_bundle",
+            mobStats is
+            {
+                SchemaVersion: 1,
+                BundleId: "COMBAT_MOB_STATS_V1",
+                Activation: CombatMobStatLoader.DesignOnlyActivation,
+                ReferenceLevel: 5,
+                LevelPolicy: "REFERENCE_L5"
+            } &&
+            mobStats.Archetypes.Count == 3 &&
+            mobStats.Bosses.Count == 1,
+            $"bundle={mobStats.BundleId} archetypes={mobStats.Archetypes.Count}");
+
+        Check(
+            "combat.mob_stats_elite_multipliers",
+            mobStats.Elite is { Hp: 6.0, Attack: 1.6, Defense: 1.8 },
+            $"{mobStats.Elite.Hp}/{mobStats.Elite.Attack}/{mobStats.Elite.Defense}");
+
+        var carpling = mobStats.Archetypes.First(stats => stats.MobId == "MOB_CARPLING");
+        Check(
+            "combat.mob_stats_carpling_l5",
+            carpling.ReferenceLevel5 is { Hp: 192, Attack: 15, Defense: 4.2 },
+            $"{carpling.ReferenceLevel5.Hp}/{carpling.ReferenceLevel5.Attack}/{carpling.ReferenceLevel5.Defense}");
+
+        var shoreStalker = mobStats.Archetypes.First(stats => stats.MobId == "MOB_SHORE_STALKER");
+        Check(
+            "combat.mob_stats_shore_stalker_l5",
+            shoreStalker.ReferenceLevel5 is { Hp: 216, Attack: 23, Defense: 4.8 },
+            $"{shoreStalker.ReferenceLevel5.Hp}/{shoreStalker.ReferenceLevel5.Attack}/{shoreStalker.ReferenceLevel5.Defense}");
+
+        var mangCot = mobStats.Bosses.Single();
+        Check(
+            "combat.mob_stats_boss_blocked",
+            mangCot is
+            {
+                BossId: "BOSS_MANG_COT",
+                HpMultiplier: 35,
+                AttackMultiplier: 2.0,
+                PartyHpMultiplierPerAdditionalPlayer: 0.65,
+                ReferenceLevel: 10,
+                Activation: "BOSSDATA_BLOCKED"
+            } &&
+            mangCot.ReferenceStats is { Hp: 12600, Attack: 60, Defense: 10 } &&
+            mangCot.Attacks.Count == 3 &&
+            mangCot.BlockedReason.Length > 0,
+            $"activation={mangCot.Activation} attacks={mangCot.Attacks.Count}");
+
+        var carplingL6 = CombatMobStatLoader.EffectiveAt(mobStats, "MOB_CARPLING", 6);
+        Check(
+            "combat.mob_stats_level_formula",
+            carplingL6.Hp == 211 &&
+            Near(carplingL6.Attack, 16.5) &&
+            Near(carplingL6.Defense, 4.76),
+            $"{carplingL6.Hp}/{carplingL6.Attack}/{carplingL6.Defense}");
+
+        // DEC-022 guard precision: versioned bundle + pure timeline/oracle.
+        var guardMitigation = DamageFormula.MitigationMultiplier(10);
+        var guardPrecision = enabledCombat.GuardPrecision;
+        combatSkills.TryGet("SK-MK-01", out var guardSkill);
+        Check(
+            "guard.precision_bundle",
+            guardPrecision is
+            {
+                SchemaVersion: 1,
+                BundleId: "DESIGN_P1_GUARD_PRECISION_V1",
+                DecisionId: "DEC-022",
+                Activation: "DESIGN_ONLY_REQUIRES_RUNTIME_MIGRATION",
+                TickHz: 20
+            } &&
+            guardPrecision.Guard is
+            {
+                DurationTicks: 8,
+                AngleDegrees: 120,
+                RangeWu: 4.4,
+                DamageReduction: 0.7,
+                MaxConfirmations: 1,
+                SwordIntentGain: 2,
+                SwordIntentCap: 5
+            },
+            $"{guardPrecision.DecisionId} tickHz={guardPrecision.TickHz}");
+
+        var gateBlockedGuard = false;
+        try
+        {
+            _ = combatDamage.GuardPrecision;
+        }
+        catch (InvalidOperationException)
+        {
+            gateBlockedGuard = true;
+        }
+
+        Check("guard.gate_blocks_load", gateBlockedGuard);
+
+        Check(
+            "guard.window_boundary",
+            GuardTimeline.IsGuardActive(100, 8, 100) &&
+            GuardTimeline.IsGuardActive(100, 8, 107) &&
+            !GuardTimeline.IsGuardActive(100, 8, 108) &&
+            GuardTimeline.GuardEndExclusiveTick(100, 8) ==
+            guardPrecision.Oracle.GuardEndExclusiveTick);
+
+        Check(
+            "guard.whiff_window",
+            GuardTimeline.WhiffStartTick(100, 8) == 108 &&
+            GuardTimeline.WhiffEndExclusiveTick(100, 8, 20) == 128 &&
+            !GuardTimeline.IsWhiffActive(100, 8, 20, 107) &&
+            GuardTimeline.IsWhiffActive(100, 8, 20, 108) &&
+            GuardTimeline.IsWhiffActive(100, 8, 20, 127) &&
+            !GuardTimeline.IsWhiffActive(100, 8, 20, 128) &&
+            guardPrecision.Oracle.WhiffEndExclusiveTick == 128);
+
+        var edgeX = 4.4 * Math.Cos(Math.PI / 3);
+        var edgeY = 4.4 * Math.Sin(Math.PI / 3);
+        var wideX = 4.4 * Math.Cos(61 * Math.PI / 180);
+        var wideY = 4.4 * Math.Sin(61 * Math.PI / 180);
+        Check(
+            "guard.cone_boundary",
+            GuardTimeline.InFront(0, 0, 1, 0, edgeX, edgeY, 4.4, 120) &&
+            GuardTimeline.InFront(0, 0, 1, 0, 4.4, 0, 4.4, 120) &&
+            !GuardTimeline.InFront(0, 0, 1, 0, 4.41, 0, 4.4, 120) &&
+            !GuardTimeline.InFront(0, 0, 1, 0, wideX, wideY, 4.4, 120) &&
+            !GuardTimeline.InFront(0, 0, 1, 0, -1, 0, 4.4, 120) &&
+            GuardTimeline.InFront(5, 5, 1, 0, 5, 5, 4.4, 120) &&
+            !GuardTimeline.InFront(0, 0, 0, 0, 1, 0, 4.4, 120));
+
+        Check(
+            "guard.dr_bucket_cap",
+            Near(GuardTimeline.CombineReduction(0.7), 0.7) &&
+            Near(GuardTimeline.CombineReduction(0.7, 0.2), 0.8) &&
+            Near(GuardTimeline.CombineReduction(0.2, 0.2), 0.4) &&
+            Near(guardPrecision.Oracle.GuardAndOtherReductionAtCap, 0.8));
+
+        Check(
+            "guard.oracle_reduction",
+            DamageFormula.FinalDamage(
+                30, guardMitigation, 1, 1,
+                DamageFormula.DamageReductionMultiplier(0.7)) == 8 &&
+            DamageFormula.FinalDamage(
+                30, guardMitigation, 1, 1,
+                DamageFormula.DamageReductionMultiplier(0.2)) == 21 &&
+            DamageFormula.FinalDamage(30, guardMitigation, 1, 1, 1) == 27 &&
+            DamageFormula.FinalDamage(
+                30, guardMitigation, 1, 1,
+                DamageFormula.DamageReductionMultiplier(0.8)) == 5 &&
+            guardPrecision.Oracle is
+            {
+                GuardFinalDamage: 8,
+                WhiffFinalDamage: 21,
+                OutsideFinalDamage: 27,
+                CappedFinalDamage: 5
+            });
+
+        var guardSkillPve = guardSkill?.Coefficients.Pve ?? 0;
+        var counterRaw = guardPrecision.Oracle.CounterAttack * guardSkillPve;
+        Check(
+            "guard.counter_oracle",
+            guardSkill is not null &&
+            Near(guardPrecision.Oracle.CounterPveCoefficient, guardSkill.Coefficients.Pve) &&
+            DamageFormula.FinalDamage(counterRaw, guardMitigation, 1, 1, 1) == 32 &&
+            DamageFormula.FinalDamage(
+                counterRaw, guardMitigation, 1, DamageFormula.CritMultiplier, 1) == 49 &&
+            guardPrecision.Oracle is
+            {
+                CounterNonCritFinalDamage: 32,
+                CounterCritFinalDamage: 49
+            },
+            $"{counterRaw}");
+
+        Check(
+            "guard.skill_timing_matches",
+            guardSkill is not null &&
+            Near(
+                guardSkill.TelegraphSeconds,
+                guardPrecision.Guard.DurationTicks / (double)guardPrecision.TickHz) &&
+            Near(guardSkill.RangeWu!.Value, guardPrecision.Guard.RangeWu) &&
+            Near(guardSkill.AngleDegrees!.Value, guardPrecision.Guard.AngleDegrees));
+
+        var impactA = new ImpactOrderKey(
+            10, 5, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 0, "ENT_A");
+        var impactB = new ImpactOrderKey(
+            10, 5, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 0, "ENT_B");
+        var impactC = new ImpactOrderKey(
+            10, 5, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 1, "ENT_A");
+        var impactD = new ImpactOrderKey(
+            10, 6, "00000000000000000000000000000000", 0, "ENT_A");
+        var impactE = new ImpactOrderKey(
+            11, 3, "00000000000000000000000000000000", 0, "ENT_A");
+        Check(
+            "guard.ordering_deterministic",
+            GuardTimeline.CompareImpacts(impactA, impactB) < 0 &&
+            GuardTimeline.CompareImpacts(impactB, impactC) < 0 &&
+            GuardTimeline.CompareImpacts(impactC, impactD) < 0 &&
+            GuardTimeline.CompareImpacts(impactD, impactE) < 0 &&
+            GuardTimeline.CompareImpacts(impactE, impactA) > 0);
+
+        Check(
+            "guard.confirmation_keys",
+            guardPrecision.Ordering.ConfirmationUniqueKey.SequenceEqual(
+                new[] { "guardCastId" }, StringComparer.Ordinal) &&
+            guardPrecision.Ordering.CounterUniqueKey.SequenceEqual(
+                new[] { "guardCastId", "confirmationEventId" }, StringComparer.Ordinal) &&
+            guardPrecision.Counter is { DelayTicks: 1, MaxTargets: 1 } &&
+            guardPrecision.Whiff is { DurationTicks: 20, DamageReduction: 0.2 });
+
+        // QOD-16 ph2 reliable event read: monotonic cursor, bounded buffer,
+        // explicit resync and replay-safe appends.
+        var eventStore = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 4,
+            MaxPageSize = 2
+        });
+        var eventSession = "e2e00000000000000000000000000000";
+        CombatEventV2 MakeOutcomeEvent(string eventId, string castId, long tick) =>
+            new(
+                eventId,
+                CombatEventTypesV2.Impact,
+                castId,
+                "CHR_SELFCHECK_EVENTS",
+                "ENT_MAN_BM_SPAWN_BM_01",
+                1,
+                0,
+                "MAP_BEN_MUA#1",
+                "OVERWORLD",
+                1,
+                2,
+                tick,
+                new DateTimeOffset(2026, 10, 30, 2, 0, 0, TimeSpan.Zero),
+                new CombatEventResultV2(true, false, false, 27, 0, 27));
+
+        var appendedEvents = new List<CombatEventV2>();
+        for (var index = 1; index <= 3; index++)
+        {
+            appendedEvents.Add(eventStore.Append(
+                eventSession,
+                MakeOutcomeEvent(index.ToString("x32"), new string('c', 32), 100 + index)));
+        }
+
+        var firstEventPage = eventStore.Read(eventSession, 0, 0);
+        Check(
+            "eventstore.append_monotonic",
+            appendedEvents.Select(item => item.Cursor).SequenceEqual(new long[] { 1, 2, 3 }) &&
+            firstEventPage.Events.Select(item => item.Cursor).SequenceEqual(new long[] { 1, 2 }) &&
+            firstEventPage.NextCursor == 2 &&
+            !firstEventPage.ResyncRequired,
+            $"cursors={string.Join(",", appendedEvents.Select(item => item.Cursor))} " +
+            $"page={firstEventPage.Events.Count}");
+
+        var sinceFirstEvent = eventStore.Read(eventSession, 1, 10);
+        Check(
+            "eventstore.read_since_cursor",
+            sinceFirstEvent.Events.Select(item => item.Cursor).SequenceEqual(new long[] { 2, 3 }) &&
+            sinceFirstEvent.NextCursor == 3,
+            $"next={sinceFirstEvent.NextCursor}");
+
+        var upToDatePage = eventStore.Read(eventSession, 3, 0);
+        Check(
+            "eventstore.read_up_to_date",
+            upToDatePage.Events.Count == 0 &&
+            upToDatePage.NextCursor == 3 &&
+            !upToDatePage.ResyncRequired);
+
+        var replayedEvent = eventStore.Append(
+            eventSession, MakeOutcomeEvent(1.ToString("x32"), new string('c', 32), 105));
+        Check(
+            "eventstore.replay_idempotent",
+            replayedEvent.Cursor == 1 &&
+            eventStore.Read(eventSession, 2, 0).Events.Select(item => item.Cursor)
+                .SequenceEqual(new long[] { 3 }) &&
+            eventStore.Read(eventSession, 0, 0).NextCursor == 2,
+            $"replayCursor={replayedEvent.Cursor}");
+
+        var invalidEventRejected = false;
+        try
+        {
+            eventStore.Append(
+                eventSession,
+                MakeOutcomeEvent(new string('f', 32), new string('c', 32), 106) with
+                {
+                    Type = CombatEventTypesV2.CounterConfirmed
+                });
+        }
+        catch (InvalidOperationException)
+        {
+            invalidEventRejected = true;
+        }
+
+        Check("eventstore.invalid_event_shape", invalidEventRejected);
+
+        for (var index = 4; index <= 6; index++)
+        {
+            eventStore.Append(
+                eventSession,
+                MakeOutcomeEvent(index.ToString("x32"), new string('c', 32), 100 + index));
+        }
+
+        var overflowPage = eventStore.Read(eventSession, 0, 0);
+        Check(
+            "eventstore.buffer_overflow",
+            overflowPage.ResyncRequired &&
+            overflowPage.ResyncReason == CombatEventResyncReasons.BufferOverflow &&
+            overflowPage.Events.Count == 0 &&
+            overflowPage.NextCursor == 6,
+            $"{overflowPage.ResyncReason} next={overflowPage.NextCursor}");
+
+        var retainedPage = eventStore.Read(eventSession, 2, 0);
+        Check(
+            "eventstore.retained_window_read",
+            !retainedPage.ResyncRequired &&
+            retainedPage.Events.Select(item => item.Cursor).SequenceEqual(new long[] { 3, 4 }) &&
+            retainedPage.NextCursor == 4,
+            $"next={retainedPage.NextCursor}");
+
+        var aheadPage = eventStore.Read(eventSession, 99, 0);
+        Check(
+            "eventstore.cursor_too_old",
+            aheadPage.ResyncRequired &&
+            aheadPage.ResyncReason == CombatEventResyncReasons.CursorTooOld &&
+            aheadPage.Events.Count == 0 &&
+            aheadPage.NextCursor == 6);
+
+        Check(
+            "eventstore.page_limit",
+            eventStore.Read(eventSession, 2, 100).Events.Count == 2 &&
+            eventStore.Read(eventSession, 4, 1).Events.Count == 1);
+
+        var otherEventSession = "e2e11111111111111111111111111111";
+        var otherEvent = eventStore.Append(
+            otherEventSession, MakeOutcomeEvent(new string('a', 32), new string('c', 32), 200));
+        Check(
+            "eventstore.session_isolation",
+            otherEvent.Cursor == 1 &&
+            eventStore.Read(otherEventSession, 0, 0).Events.Single().Cursor == 1);
+
+        eventStore.RemoveSession(otherEventSession);
+        var freshLifetimeEvent = eventStore.Append(
+            otherEventSession, MakeOutcomeEvent(new string('b', 32), new string('c', 32), 210));
+        Check(
+            "eventstore.session_lifetime_reset",
+            freshLifetimeEvent.Cursor == 1 &&
+            eventStore.Read(otherEventSession, 0, 0).NextCursor == 1);
+
+        var invalidOptionsRejected = false;
+        try
+        {
+            _ = new CombatEventStore(new CombatEventStreamOptions
+            {
+                CapacityPerSession = 4,
+                MaxPageSize = 5
+            });
+        }
+        catch (InvalidOperationException)
+        {
+            invalidOptionsRejected = true;
+        }
+
+        Check("eventstore.options_validated", invalidOptionsRejected);
+
+        var parallelEventStore = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 128,
+            MaxPageSize = 128
+        });
+        var parallelEventSession = "e2e22222222222222222222222222222";
+        RunBarrierParallel(4, slot =>
+        {
+            for (var index = 0; index < 25; index++)
+            {
+                var ordinal = (slot * 25) + index + 1;
+                parallelEventStore.Append(
+                    parallelEventSession,
+                    MakeOutcomeEvent(ordinal.ToString("x32"), new string('d', 32), 300 + ordinal));
+            }
+        });
+        var parallelEventPage = parallelEventStore.Read(parallelEventSession, 0, 0);
+        Check(
+            "eventstore.parallel_append_monotonic",
+            parallelEventPage.Events.Count == 100 &&
+            parallelEventPage.Events.Select(item => item.Cursor).Distinct().Count() == 100 &&
+            parallelEventPage.Events.Select(item => item.Cursor).SequenceEqual(
+                Enumerable.Range(1, 100).Select(value => (long)value)) &&
+            parallelEventPage.NextCursor == 100,
+            $"count={parallelEventPage.Events.Count} next={parallelEventPage.NextCursor}");
+
+        // QOD-16 ph2 audience policy: AOI 40 WU enter / 48 WU leave hysteresis,
+        // same instance/floor/phase, per-caller availability, NPC/boss policy.
+        var aoiClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 30, 3, 0, 0, TimeSpan.Zero));
+        WorldEntityInstance MakeAoiEntity(
+            string entityId,
+            string kind,
+            string templateId,
+            double x,
+            string floorId = "OVERWORLD",
+            string claimPolicy = WorldEntityClaimPolicies.Shared,
+            int respawnSeconds = 0)
+        {
+            var entity = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = "MAN-TEST-" + entityId,
+                Kind = kind,
+                TemplateIds = new[] { templateId },
+                MapId = options.DefaultMapId,
+                FloorId = floorId,
+                X = x,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = respawnSeconds,
+                ClaimPolicy = claimPolicy
+            };
+            entity.Initialize();
+            return entity;
+        }
+
+        var aoiRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_EDGE40", WorldEntityKinds.Mob, "MOB_CARPLING", 40),
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_EDGE41", WorldEntityKinds.Mob, "MOB_CARPLING", 41),
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_HYST45", WorldEntityKinds.Mob, "MOB_CARPLING", 45),
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_FLOOR", WorldEntityKinds.Mob, "MOB_CARPLING", 1,
+                        "UNDERGROUND"),
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_NPC", WorldEntityKinds.Npc, "NPC_LYAN", 2),
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_BOSS", WorldEntityKinds.Boss, "BOSS_MANG_COT", 3),
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_NODE", WorldEntityKinds.GatherNode,
+                        "NODE_BM_ORE_01", 4,
+                        claimPolicy: WorldEntityClaimPolicies.PerCharacter,
+                        respawnSeconds: 20),
+                    MakeAoiEntity(
+                        "ENT_SELFCHECK_AOI_SHARED", WorldEntityKinds.Interactable,
+                        "OBJ_BM_PACKAGE_01", 5, respawnSeconds: 20)
+                ]),
+            aoiClock);
+        var aoiMobOptions = new MobBehaviorOptions
+        {
+            AggroRadiusWu = 6,
+            LeashRadiusWu = 12,
+            AttackRangeWu = 1.2,
+            AttackCooldownSeconds = 2,
+            MoveSpeedWuPerSecond = 2
+        };
+        var aoiMobs = new MobLifecycleService(
+            aoiRegistry,
+            services.GetRequiredService<IWorldGeometryService>(),
+            aoiMobOptions,
+            aoiClock);
+        var aoiClaims = new GatherClaimStore(aoiClock);
+        aoiClaims.TryClaim(
+            "CHR_SELFCHECK_AOI_A", "ENT_SELFCHECK_AOI_NODE", 20, out _, out _);
+        var aoiProjection = new WorldAoiProjectionService(
+            aoiRegistry, aoiMobs, enabledCombat, aoiClaims, new MobCombatStateStore());
+
+        var aoiViewerA = NewPlayer("CHR_SELFCHECK_AOI_A");
+        aoiViewerA.X = 0;
+        aoiViewerA.Y = 0;
+        var aoiIdsA = aoiProjection.Project(aoiViewerA)
+            .Select(entity => entity.EntityId)
+            .ToHashSet(StringComparer.Ordinal);
+        Check(
+            "aoi.enter_radius",
+            aoiIdsA.Contains("ENT_SELFCHECK_AOI_EDGE40") &&
+            !aoiIdsA.Contains("ENT_SELFCHECK_AOI_EDGE41") &&
+            !aoiIdsA.Contains("ENT_SELFCHECK_AOI_HYST45") &&
+            aoiIdsA.Contains("ENT_SELFCHECK_AOI_NPC") &&
+            aoiIdsA.Contains("ENT_SELFCHECK_AOI_BOSS") &&
+            aoiIdsA.Contains("ENT_SELFCHECK_AOI_NODE") &&
+            aoiIdsA.Contains("ENT_SELFCHECK_AOI_SHARED"),
+            $"visible={aoiIdsA.Count}");
+
+        Check(
+            "aoi.floor_filter",
+            !aoiIdsA.Contains("ENT_SELFCHECK_AOI_FLOOR"));
+
+        aoiViewerA.X = 5;
+        var aoiIdsNear = aoiProjection.Project(aoiViewerA)
+            .Select(entity => entity.EntityId)
+            .ToHashSet(StringComparer.Ordinal);
+        Check(
+            "aoi.hysteresis_enter",
+            aoiIdsNear.Contains("ENT_SELFCHECK_AOI_HYST45") &&
+            aoiIdsNear.Contains("ENT_SELFCHECK_AOI_EDGE41"),
+            $"visible={aoiIdsNear.Count}");
+
+        aoiViewerA.X = 0;
+        var aoiIdsBack = aoiProjection.Project(aoiViewerA)
+            .Select(entity => entity.EntityId)
+            .ToHashSet(StringComparer.Ordinal);
+        Check(
+            "aoi.hysteresis_keep",
+            aoiIdsBack.Contains("ENT_SELFCHECK_AOI_HYST45") &&
+            aoiIdsBack.Contains("ENT_SELFCHECK_AOI_EDGE41"),
+            $"visible={aoiIdsBack.Count}");
+
+        aoiViewerA.X = -4;
+        var aoiIdsFar = aoiProjection.Project(aoiViewerA)
+            .Select(entity => entity.EntityId)
+            .ToHashSet(StringComparer.Ordinal);
+        Check(
+            "aoi.hysteresis_leave",
+            !aoiIdsFar.Contains("ENT_SELFCHECK_AOI_HYST45") &&
+            aoiIdsFar.Contains("ENT_SELFCHECK_AOI_EDGE41") &&
+            aoiIdsFar.Contains("ENT_SELFCHECK_AOI_EDGE40"),
+            $"visible={aoiIdsFar.Count}");
+
+        aoiProjection.RemoveSession("CHR_SELFCHECK_AOI_A");
+        var aoiFreshA = NewPlayer("CHR_SELFCHECK_AOI_A");
+        aoiFreshA.X = 0;
+        aoiFreshA.Y = 0;
+        var aoiFreshPage = aoiProjection.Project(aoiFreshA);
+        var aoiFreshIds = aoiFreshPage
+            .Select(entity => entity.EntityId)
+            .ToHashSet(StringComparer.Ordinal);
+        Check(
+            "aoi.session_reset",
+            !aoiFreshIds.Contains("ENT_SELFCHECK_AOI_HYST45") &&
+            aoiFreshIds.Contains("ENT_SELFCHECK_AOI_EDGE40"));
+
+        var aoiViewerB = NewPlayer("CHR_SELFCHECK_AOI_B");
+        aoiViewerB.X = 0;
+        aoiViewerB.Y = 0;
+        var aoiPageB = aoiProjection.Project(aoiViewerB);
+        var aoiById = aoiPageB.ToDictionary(
+            entity => entity.EntityId, StringComparer.Ordinal);
+        Check(
+            "aoi.npc_policy",
+            aoiById["ENT_SELFCHECK_AOI_NPC"] is
+            {
+                Kind: WorldEntityKinds.Npc,
+                State: WorldEntityStates.Active,
+                HealthState: WorldHealthStates.Invulnerable,
+                Targetable: false,
+                Hp: 0,
+                MaxHp: 0,
+                LifeId: 1,
+                Revision: 1
+            });
+        Check(
+            "aoi.boss_blocked_policy",
+            aoiById["ENT_SELFCHECK_AOI_BOSS"] is
+            {
+                Kind: WorldEntityKinds.Boss,
+                HealthState: WorldHealthStates.Blocked,
+                Targetable: false,
+                Hp: 0,
+                MaxHp: 0
+            });
+        Check(
+            "aoi.mob_reference_stats",
+            aoiById["ENT_SELFCHECK_AOI_EDGE40"] is
+            {
+                Kind: WorldEntityKinds.Mob,
+                State: MobBehaviorStates.Idle,
+                HealthState: WorldHealthStates.Alive,
+                Targetable: true,
+                Hp: 192,
+                MaxHp: 192,
+                MapInstanceId: "MAP_BEN_MUA#1",
+                Phase: "OPEN_WORLD",
+                LifeId: 1
+            });
+        Check(
+            "aoi.availability_per_character",
+            aoiById["ENT_SELFCHECK_AOI_NODE"].Availability == WorldAvailability.Available &&
+            aoiById["ENT_SELFCHECK_AOI_SHARED"].Availability == WorldAvailability.Available);
+        Check(
+            "aoi.availability_claimed_cooldown",
+            aoiFreshPage
+                .First(entity => entity.EntityId == "ENT_SELFCHECK_AOI_NODE")
+                .Availability == WorldAvailability.Cooldown);
+        Check(
+            "aoi.internal_candidates_not_wire",
+            aoiRegistry.Count == 8 && aoiPageB.Count == 5,
+            $"candidates={aoiRegistry.Count} visible={aoiPageB.Count}");
+
+        // QOD-16 ph2 v2 combat accept path: cast id, cost/cooldown state and
+        // only the events that already occurred (no future impacts).
+        var combatV2Store = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 64,
+            MaxPageSize = 64
+        });
+        var combatV2 = new InMemoryCombatV2Service(
+            combatSkills, combatV2Store, new ServerClock());
+        var combatV2Actor = NewPlayer("CHR_SELFCHECK_COMBAT_V2");
+        var combatV2Session = combatV2Actor.SessionId;
+        var basicIntent = new CombatV2Intent(
+            CombatV2Actions.BasicAttack, null, null, 1, 1, 0, null);
+        var basicCast = combatV2.Resolve(
+            combatV2Actor, combatV2Session, basicIntent, new string('a', 32));
+        var basicStored = combatV2Store.Read(combatV2Session, 0, 0);
+        Check(
+            "combatv2.basic_accept",
+            basicCast.Accepted &&
+            basicCast.Result is
+            {
+                ActionKind: CombatV2Actions.BasicAttack,
+                Mp: 50,
+                MpCost: 0,
+                NextInputSequence: 1
+            } basicResult &&
+            basicResult.CastId.Length == 32 &&
+            basicResult.Events.SingleOrDefault() is
+            {
+                Type: CombatEventTypesV2.CastStart,
+                Cursor: 1
+            } basicStart &&
+            basicStart.CastId == basicResult.CastId &&
+            basicStored.Events.Single().Cursor == 1 &&
+            basicStored.NextCursor == 1,
+            basicCast.Failure?.Code);
+
+        var basicReplay = combatV2.Resolve(
+            combatV2Actor, combatV2Session, basicIntent, new string('a', 32));
+        Check(
+            "combatv2.replay_same_cast",
+            basicReplay.Accepted &&
+            ReferenceEquals(basicReplay.Result, basicCast.Result) &&
+            combatV2Store.Read(combatV2Session, 0, 0).NextCursor == 1,
+            basicReplay.Failure?.Code);
+
+        Check("combatv2.replay_marker", !basicCast.Replayed && basicReplay.Replayed,
+            "Cached accepted receipt cannot be scheduled as a new cast.");
+        CombatCommandRaceChecks.Run(combatSkills, id => NewPlayer(id), Check);
+        var deadV2Actor = NewPlayer("CHR_V2_DEAD", hp: 0);
+        var deadV2Cast = combatV2.Resolve(deadV2Actor, deadV2Actor.SessionId,
+            new CombatV2Intent(CombatV2Actions.Skill, "SK-MK-01", null, 1, 1, 0, null), new string('9', 32));
+        Check("combatv2.dead_actor_no_cost", deadV2Cast.Failure?.Code == CombatErrorCodes.ActorNotAlive &&
+            deadV2Actor.Mp == 50 && deadV2Actor.LastInputSequence == 0 && deadV2Actor.Revision == 1 &&
+            combatV2Store.Read(deadV2Actor.SessionId, 0, 100).Events.Count == 0,
+            "Dead sources cannot start fresh casts or spend resources.");
+
+        var basicConflict = combatV2.Resolve(
+            combatV2Actor, combatV2Session, basicIntent with { AimX = -1 }, new string('a', 32));
+        Check(
+            "combatv2.replay_conflict",
+            basicConflict.Failure?.Code == CombatErrorCodes.IdempotencyConflict,
+            basicConflict.Failure?.Code);
+
+        var skillIntent = new CombatV2Intent(
+            CombatV2Actions.Skill, "SK-MK-01", null, 2, 1, 0, null);
+        var skillCast = combatV2.Resolve(
+            combatV2Actor, combatV2Session, skillIntent, new string('b', 32));
+        Check(
+            "combatv2.skill_accept",
+            skillCast.Accepted &&
+            skillCast.Result is
+            {
+                SkillId: "SK-MK-01",
+                Mp: 38,
+                MpCost: 12,
+                NextInputSequence: 2
+            } skillResult &&
+            skillResult.Events.SingleOrDefault() is { Type: CombatEventTypesV2.CastStart, Cursor: 2 },
+            skillCast.Failure?.Code);
+
+        var skillAgain = combatV2.Resolve(
+            combatV2Actor, combatV2Session,
+            skillIntent with { InputSequence = 3 }, new string('c', 32));
+        Check(
+            "combatv2.skill_cooldown",
+            skillAgain.Failure is { Code: CombatErrorCodes.CooldownActive, Retryable: true },
+            skillAgain.Failure?.Code);
+
+        var staleV2Cast = combatV2.Resolve(
+            combatV2Actor, combatV2Session,
+            basicIntent with { InputSequence = 2 }, new string('d', 32));
+        Check(
+            "combatv2.stale_sequence",
+            staleV2Cast.Failure?.Code == P1ErrorCodes.StaleSequence,
+            staleV2Cast.Failure?.Code);
+
+        var poorActor = NewPlayer("CHR_SELFCHECK_COMBAT_V2_POOR", mp: 0);
+        var poorCast = combatV2.Resolve(
+            poorActor, poorActor.SessionId,
+            new CombatV2Intent(CombatV2Actions.Skill, "SK-MK-01", null, 1, 1, 0, null),
+            new string('e', 32));
+        Check(
+            "combatv2.insufficient_mp",
+            poorCast.Failure?.Code == CombatErrorCodes.InsufficientResource,
+            poorCast.Failure?.Code);
+
+        var otherClassActor = NewPlayer("CHR_SELFCHECK_COMBAT_V2_CLASS", "CLASS_OTHER");
+        var otherClassCast = combatV2.Resolve(
+            otherClassActor, otherClassActor.SessionId,
+            new CombatV2Intent(CombatV2Actions.BasicAttack, null, null, 1, 1, 0, null),
+            new string('f', 32));
+        Check(
+            "combatv2.class_gate",
+            otherClassCast.Failure?.Code == CombatErrorCodes.SkillNotAvailable,
+            otherClassCast.Failure?.Code);
+
+        var badAction = combatV2.Resolve(
+            combatV2Actor, combatV2Session,
+            basicIntent with { InputSequence = 9, ActionKind = "HEAVY" }, new string('1', 32));
+        var basicWithSkill = combatV2.Resolve(
+            combatV2Actor, combatV2Session,
+            basicIntent with { InputSequence = 9, SkillId = "SK-MK-01" }, new string('2', 32));
+        var badAim = combatV2.Resolve(
+            combatV2Actor, combatV2Session,
+            basicIntent with { InputSequence = 9, AimX = 2 }, new string('3', 32));
+        Check(
+            "combatv2.invalid_payload",
+            badAction.Failure?.Code == P1ErrorCodes.InvalidPayload &&
+            basicWithSkill.Failure?.Code == P1ErrorCodes.InvalidPayload &&
+            badAim.Failure?.Code == P1ErrorCodes.InvalidPayload,
+            $"{badAction.Failure?.Code}/{basicWithSkill.Failure?.Code}/{badAim.Failure?.Code}");
+
+        combatSkills.TryGet("SK-MK-01", out var onlySkill);
+        var narrowV2 = new InMemoryCombatV2Service(
+            new CombatSkillCatalog(
+                new Dictionary<string, CombatSkillDefinition>(StringComparer.Ordinal)
+                {
+                    ["SK-MK-01"] = onlySkill!
+                }),
+            new CombatEventStore(new CombatEventStreamOptions()),
+            new ServerClock());
+        var narrowActor = NewPlayer("CHR_SELFCHECK_COMBAT_V2_NARROW");
+        var unknownSkill = narrowV2.Resolve(
+            narrowActor, narrowActor.SessionId,
+            new CombatV2Intent(CombatV2Actions.Skill, "SK-MK-02", null, 1, 1, 0, null),
+            new string('4', 32));
+        Check(
+            "combatv2.unknown_skill",
+            unknownSkill.Failure?.Code == CombatErrorCodes.UnknownSkill,
+            unknownSkill.Failure?.Code);
+
+        // QOD-17 tick engine: impacts resolve on the real tick with the
+        // labelled baseline actor stats, life-scoped mob HP, death and kill
+        // credit keyed by the death event.
+        var tickRecords = services.GetRequiredService<WorldRecordCatalog>();
+        var tickClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 30, 4, 0, 0, TimeSpan.Zero));
+        WorldEntityInstance MakeTickMob(string entityId, double x)
+        {
+            var mob = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = "MAN-TEST-" + entityId,
+                Kind = WorldEntityKinds.Mob,
+                TemplateIds = new[] { "MOB_CARPLING" },
+                MapId = options.DefaultMapId,
+                FloorId = "OVERWORLD",
+                X = x,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = 18
+            };
+            mob.Initialize();
+            return mob;
+        }
+
+        if (!questCatalog.TryGet("P00-01", out var tickQuestBase))
+        {
+            throw new InvalidOperationException("P00-01 must exist for the tick self-check.");
+        }
+
+        var tickQuest = tickQuestBase with
+        {
+            QuestId = "TEST-TICK-01",
+            Objectives =
+            [
+                new QuestObjectiveDefinition(
+                    "OBJ_TEST_TICK_KILL", QuestObjectiveTypes.Kill,
+                    ["MAN-TEST-ENT_SELFCHECK_TICK_MOB"], 3, options.DefaultMapId)
+            ],
+            InitialStepId = "STEP_TEST_TICK_KILL",
+            PrerequisiteQuestIds = []
+        };
+        QuestCatalog TickCatalog() => new(
+            new Dictionary<string, QuestDefinition>(StringComparer.Ordinal)
+            {
+                ["TEST-TICK-01"] = tickQuest
+            });
+
+        var tickQuestActor = NewPlayer("CHR_SELFCHECK_TICK");
+        tickQuestActor.X = 0;
+        tickQuestActor.Y = 0;
+        var tickQuests = new InMemoryQuestService(
+            TickCatalog(), new InMemoryQuestStateStore(), tickRecords, tickClock);
+        tickQuests.Accept(tickQuestActor, "TEST-TICK-01");
+
+        var tickRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_TICK_MOB", 3)]),
+            tickClock);
+        var tickEventStore = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var tickStateStore = new MobCombatStateStore();
+        var tickGuardWindows = new GuardWindowStore();
+        var tickGeometry = services.GetRequiredService<IWorldGeometryService>();
+        var tickEngine = new CombatTickEngine(
+            tickRegistry,
+            enabledCombat,
+            combatSkills,
+            tickEventStore,
+            tickStateStore,
+            tickQuests,
+            new FixedCombatRolls(hit: true, crit: false),
+            tickGuardWindows,
+            tickGeometry,
+            NewDashes(tickGeometry),
+            new ServerClock());
+
+        var basicTickCastId = new string('a', 32);
+        Check(
+            "tick.schedule",
+            tickEngine.Schedule(
+                tickQuestActor, tickQuestActor.SessionId, basicTickCastId,
+                CombatV2Actions.BasicAttack, null, 1, 0, 100) &&
+            !tickEngine.Schedule(
+                tickQuestActor, tickQuestActor.SessionId, basicTickCastId,
+                CombatV2Actions.BasicAttack, null, 1, 0, 100) &&
+            tickEngine.ScheduledCastCount == 1,
+            $"scheduled={tickEngine.ScheduledCastCount}");
+
+        tickEngine.Tick(102);
+        Check(
+            "tick.windup_no_impact",
+            (tickStateStore.TryGet("ENT_SELFCHECK_TICK_MOB", 1)?.Hp ?? 192) == 192);
+
+        var basicTickEvents = tickEngine.Tick(103);
+        var basicImpact = basicTickEvents.SingleOrDefault(
+            combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        Check(
+            "tick.basic_impact",
+            basicImpact is { HitIndex: 0, TargetLifeId: 1 } &&
+            basicImpact.Result is { Hit: true, Crit: false, Amount: 19, HpDamage: 19 } &&
+            (tickStateStore.TryGet("ENT_SELFCHECK_TICK_MOB", 1)?.Hp ?? 0) == 173,
+            $"{basicImpact?.Result?.Amount}");
+
+        tickEngine.Tick(104);
+        var tickedTypes = tickEventStore.Read(tickQuestActor.SessionId, 0, 0).Events
+            .Select(combatEvent => combatEvent.Type)
+            .ToArray();
+        Check(
+            "tick.end_event",
+            tickedTypes.SequenceEqual(
+                new[] { CombatEventTypesV2.Impact, CombatEventTypesV2.End },
+                StringComparer.Ordinal) &&
+            tickEngine.ScheduledCastCount == 0,
+            string.Join(",", tickedTypes));
+
+        tickEngine.Schedule(
+            tickQuestActor, tickQuestActor.SessionId, new string('b', 32),
+            CombatV2Actions.Skill, "SK-MK-03", 1, 0, 200);
+        var mk03Hit1 = tickEngine.Tick(202)
+            .Single(combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        var mk03Hit2 = tickEngine.Tick(205)
+            .Single(combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        var mk03Hit3 = tickEngine.Tick(208)
+            .Single(combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        tickEngine.Tick(209);
+        Check(
+            "tick.mk03_multi_hit",
+            mk03Hit1.HitIndex == 0 && mk03Hit1.Result?.Amount == 8 &&
+            mk03Hit2.HitIndex == 1 && mk03Hit2.Result?.Amount == 10 &&
+            mk03Hit3.HitIndex == 2 && mk03Hit3.Result?.Amount == 17 &&
+            (tickStateStore.TryGet("ENT_SELFCHECK_TICK_MOB", 1)?.Hp ?? 0) == 138,
+            $"{mk03Hit1.Result?.Amount}/{mk03Hit2.Result?.Amount}/{mk03Hit3.Result?.Amount}");
+
+        foreach (var cancelReason in new[] { "DEAD", "MAP", "FLOOR" })
+        {
+            var cancelledSource = NewPlayer("CHR_CANCEL_" + cancelReason);
+            cancelledSource.X = 0; cancelledSource.Y = 0;
+            var cancelRegistry = new WorldEntityRegistry(
+                new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_CANCEL_MOB", 3)]), tickClock);
+            var cancelHp = new MobCombatStateStore();
+            var cancelEngine = new CombatTickEngine(cancelRegistry, enabledCombat, combatSkills,
+                new CombatEventStore(new CombatEventStreamOptions()), cancelHp, tickQuests,
+                new FixedCombatRolls(hit: true, crit: false),
+                new GuardWindowStore(), tickGeometry, NewDashes(tickGeometry), new ServerClock());
+            cancelEngine.Schedule(cancelledSource, cancelledSource.SessionId, Guid.NewGuid().ToString("N"),
+                CombatV2Actions.BasicAttack, null, 1, 0, 100);
+            if (cancelReason == "DEAD") cancelledSource.Hp = 0;
+            else if (cancelReason == "MAP") cancelledSource.MapId = "MAP_THANH_LAC";
+            else cancelledSource.FloorId = "OTHER_FLOOR";
+            var cancelledEvents = cancelEngine.Tick(103);
+            Check("tick.cancel_source_" + cancelReason.ToLowerInvariant(),
+                cancelledEvents.Count(e => e.Type == CombatEventTypesV2.Cancel) == 1 &&
+                cancelledEvents.Count(e => e.Type == CombatEventTypesV2.End) == 1 &&
+                !cancelledEvents.Any(e => e.Type is CombatEventTypesV2.Impact or CombatEventTypesV2.Death) &&
+                cancelHp.TryGet("ENT_SELFCHECK_CANCEL_MOB", 1) is null && cancelEngine.ScheduledCastCount == 0,
+                "Source invalidated before impact; no damage or reward.");
+        }
+
+        var missRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_TICK_MOB", 3)]),
+            tickClock);
+        var missStore = new MobCombatStateStore();
+        var missEngine = new CombatTickEngine(
+            missRegistry, enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions()), missStore,
+            tickQuests, new FixedCombatRolls(hit: false, crit: false),
+            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock());
+        missEngine.Schedule(
+            tickQuestActor, "e2e33333333333333333333333333333",
+            new string('c', 32), CombatV2Actions.BasicAttack, null, 1, 0, 300);
+        var missEvents = missEngine.Tick(303);
+        Check(
+            "tick.miss",
+            missEvents.SingleOrDefault(
+                combatEvent => combatEvent.Type == CombatEventTypesV2.Miss)?.Result is
+            { Hit: false, Amount: 0, HpDamage: 0 } &&
+            (missStore.TryGet("ENT_SELFCHECK_TICK_MOB", 1)?.Hp ?? 192) == 192,
+            "miss roll");
+
+        var rangeRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_TICK_MOB", 5)]),
+            tickClock);
+        var rangeEngine = new CombatTickEngine(
+            rangeRegistry, enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock());
+        rangeEngine.Schedule(
+            tickQuestActor, "e2e44444444444444444444444444444",
+            new string('d', 32), CombatV2Actions.BasicAttack, null, 1, 0, 400);
+        var rangeEvents = rangeEngine.Tick(403);
+        Check(
+            "tick.out_of_range",
+            rangeEvents.All(combatEvent => combatEvent.Type != CombatEventTypesV2.Impact),
+            string.Join(",", rangeEvents.Select(combatEvent => combatEvent.Type)));
+
+        var behindRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_TICK_MOB", -3)]),
+            tickClock);
+        var behindEngine = new CombatTickEngine(
+            behindRegistry, enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock());
+        behindEngine.Schedule(
+            tickQuestActor, "e2e55555555555555555555555555555",
+            new string('e', 32), CombatV2Actions.BasicAttack, null, 1, 0, 500);
+        var behindEvents = behindEngine.Tick(503);
+        Check(
+            "tick.behind_no_impact",
+            behindEvents.All(combatEvent => combatEvent.Type != CombatEventTypesV2.Impact));
+
+        var deathRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeTickMob("ENT_SELFCHECK_TICK_MOB", 3)]),
+            tickClock);
+        var deathStore = new MobCombatStateStore();
+        var deathActor = NewPlayer("CHR_SELFCHECK_TICK_KILL");
+        deathActor.X = 0;
+        deathActor.Y = 0;
+        var deathQuests = new InMemoryQuestService(
+            TickCatalog(), new InMemoryQuestStateStore(), tickRecords, tickClock);
+        deathQuests.Accept(deathActor, "TEST-TICK-01");
+        var deathEngine = new CombatTickEngine(
+            deathRegistry, enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions()), deathStore,
+            deathQuests, new FixedCombatRolls(hit: true, crit: false),
+            tickGuardWindows, tickGeometry, NewDashes(tickGeometry), new ServerClock());
+
+        var deathCount = 0;
+        for (var castIndex = 0; castIndex < 6; castIndex++)
+        {
+            var startTick = 1000 + (castIndex * 20);
+            deathEngine.Schedule(
+                deathActor, deathActor.SessionId, castIndex.ToString("x32"),
+                CombatV2Actions.Skill, "SK-MK-03", 1, 0, startTick);
+            for (var tick = startTick; tick <= startTick + 10; tick++)
+            {
+                deathCount += deathEngine.Tick(tick)
+                    .Count(combatEvent => combatEvent.Type == CombatEventTypesV2.Death);
+            }
+        }
+
+        deathRegistry.TryGet("ENT_SELFCHECK_TICK_MOB", out var deadTickMob);
+        var killState = deathQuests.GetState(deathActor.CharacterId, "TEST-TICK-01").State;
+        Check(
+            "tick.death_once_and_credit",
+            deathCount == 1 &&
+            deadTickMob.State == WorldEntityStates.Dead &&
+            deadTickMob.LifeId == 1 &&
+            killState is { State: QuestStates.Active } &&
+            killState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL") == 1,
+            $"deaths={deathCount} state={deadTickMob.State} " +
+            $"kills={killState?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL")}");
+
+        tickClock.Advance(TimeSpan.FromSeconds(18));
+        var tickRespawnCount = deathRegistry.Update();
+        deathRegistry.TryGet("ENT_SELFCHECK_TICK_MOB", out var tickRespawnedMob);
+        deathEngine.Schedule(
+            deathActor, deathActor.SessionId, new string('f', 32),
+            CombatV2Actions.BasicAttack, null, 1, 0, 2000);
+        var respawnImpact = deathEngine.Tick(2003)
+            .SingleOrDefault(combatEvent => combatEvent.Type == CombatEventTypesV2.Impact);
+        var killStateAfterRespawn = deathQuests
+            .GetState(deathActor.CharacterId, "TEST-TICK-01").State;
+        Check(
+            "tick.respawn_new_life",
+            tickRespawnCount == 1 &&
+            tickRespawnedMob.LifeId == 2 &&
+            tickRespawnedMob.State == WorldEntityStates.Alive &&
+            respawnImpact is { TargetLifeId: 2, HitIndex: 0 } &&
+            (deathStore.TryGet("ENT_SELFCHECK_TICK_MOB", 2)?.Hp ?? 0) == 173 &&
+            killStateAfterRespawn.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_TICK_KILL") == 1,
+            $"life={tickRespawnedMob.LifeId} hp={deathStore.TryGet("ENT_SELFCHECK_TICK_MOB", 2)?.Hp}");
+
+        // QOD-17 loot: versioned CSV export, one roll per group then weighted
+        // SELECT_ONE, deterministic server RNG and dry-run receipts (grant OFF
+        // until the mob coin band source exists).
+        var lootRecipes = enabledCombat.LootRecipes;
+        Check(
+            "loot.bundle",
+            lootRecipes is
+            {
+                SchemaVersion: 1,
+                BundleId: "LOOT_RECIPE_V1",
+                GrantEnabled: false,
+                GrantBlockedReason: "COIN_BAND_MISSING"
+            } &&
+            lootRecipes.Sources.Count == 57 &&
+            lootRecipes.MobTemplateToSource.Count == 5 &&
+            lootRecipes.MobTemplateToSource["MOB_CARPLING"] == "LT_MOB_CARPLING",
+            $"sources={lootRecipes.Sources.Count} mapping={lootRecipes.MobTemplateToSource.Count}");
+
+        var lootGateBlocked = false;
+        try
+        {
+            _ = combatDamage.LootRecipes;
+        }
+        catch (InvalidOperationException)
+        {
+            lootGateBlocked = true;
+        }
+
+        Check("loot.gate_blocks_load", lootGateBlocked);
+
+        var carplingGroup = lootRecipes.Sources["LT_MOB_CARPLING"].Groups.Single();
+        Check(
+            "loot.carpling_source",
+            carplingGroup is
+            {
+                GroupId: "MATERIAL_POOL",
+                Mode: LootGroupModes.SelectOne,
+                ChanceBps: 1200
+            } &&
+            carplingGroup.Entries.Count == 5 &&
+            carplingGroup.Entries.All(entry =>
+                entry.QuantityMin == 1 && entry.QuantityMax == 1 && entry.Weight == 1),
+            $"{carplingGroup.Entries.Count} entries");
+
+        var passLootroller = new LootRoller(lootRecipes, new FixedLootRolls(0.0));
+        var firstLootReceipt = passLootroller.Roll("MOB_CARPLING", new string('a', 32));
+        Check(
+            "loot.select_one_first",
+            firstLootReceipt is
+            {
+                Granted: false,
+                BlockedReason: "COIN_BAND_MISSING",
+                SourceId: "LT_MOB_CARPLING"
+            } &&
+            firstLootReceipt.Groups.Single() is { Passed: true, Quantity: 1 } firstLootGroup &&
+            firstLootGroup.EntryId == carplingGroup.Entries[0].EntryId,
+            firstLootReceipt.Groups.SingleOrDefault()?.EntryId);
+
+        var lootMissReceipt = new LootRoller(lootRecipes, new FixedLootRolls(0.5))
+            .Roll("MOB_CARPLING", "kill-miss");
+        Check(
+            "loot.chance_miss",
+            lootMissReceipt.Groups.Single() is
+            {
+                Passed: false,
+                EntryId: null,
+                ItemId: null,
+                Quantity: 0
+            });
+
+        var lastLootReceipt = new LootRoller(
+                lootRecipes, new ChanceThenSelectionRolls(chance: 0.0, selection: 0.999))
+            .Roll("MOB_CARPLING", "kill-last");
+        Check(
+            "loot.select_one_weighted_last",
+            lastLootReceipt.Groups.Single() is { Passed: true } lastLootGroup &&
+            lastLootGroup.EntryId == carplingGroup.Entries[^1].EntryId,
+            lastLootReceipt.Groups.SingleOrDefault()?.EntryId);
+
+        var realLootRoller = new LootRoller(lootRecipes, new LootRngRollSource());
+        var realLootA = realLootRoller.Roll("MOB_CARPLING", "kill-deterministic");
+        var realLootB = realLootRoller.Roll("MOB_CARPLING", "kill-deterministic");
+        Check(
+            "loot.roll_deterministic",
+            realLootA.Groups.Single().ChanceRoll == realLootB.Groups.Single().ChanceRoll &&
+            realLootA.Groups.Single().EntryId == realLootB.Groups.Single().EntryId &&
+            realLootA.Groups.Single().Quantity == realLootB.Groups.Single().Quantity &&
+            realLootA.Groups.Single().ChanceRoll is >= 0 and < 1);
+
+        var lootLedger = new LootReceiptLedger();
+        var recordedReceipt = lootLedger.Record(realLootA);
+        var recordedAgainReceipt = lootLedger.Record(realLootB);
+        Check(
+            "loot.ledger_stable",
+            ReferenceEquals(recordedReceipt, recordedAgainReceipt) &&
+            lootLedger.TryGet("kill-deterministic", "LT_MOB_CARPLING", out var storedReceipt) &&
+            ReferenceEquals(storedReceipt, recordedReceipt) &&
+            lootLedger.Count == 1);
+
+        var unknownLootReceipt = passLootroller.Roll("MOB_UNKNOWN", "kill-unknown");
+        Check(
+            "loot.unsupported_source",
+            unknownLootReceipt is { SourceId: null, BlockedReason: "NO_SOURCE", Granted: false } &&
+            unknownLootReceipt.Groups.Count == 0);
+
+        Check(
+            "loot.grant_off",
+            firstLootReceipt.Granted == false &&
+            firstLootReceipt.BlockedReason == LootRecipeLoader.CoinBandBlockedReason);
+
+        // QOD-17 manifest spawn groups: members respawn only after the whole
+        // group is cleared; partial deaths keep the group down.
+        var groupClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 30, 5, 0, 0, TimeSpan.Zero));
+        WorldEntityInstance MakeGroupMember(string entityId, int memberIndex)
+        {
+            var member = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = "MAN-TEST-GROUP",
+                Kind = WorldEntityKinds.Mob,
+                TemplateIds = new[] { "MOB_CARPLING" },
+                MapId = options.DefaultMapId,
+                FloorId = "OVERWORLD",
+                X = 3,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = 0,
+                GroupId = "MAN-TEST-GROUP",
+                MemberIndex = memberIndex,
+                GroupRespawnSeconds = 10
+            };
+            member.Initialize();
+            return member;
+        }
+
+        var groupRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [
+                    MakeGroupMember("ENT_SELFCHECK_GROUP_1", 1),
+                    MakeGroupMember("ENT_SELFCHECK_GROUP_2", 2)
+                ]),
+            groupClock);
+        var groupService = new MobSpawnGroupService(groupRegistry, groupClock);
+        groupRegistry.Despawn("ENT_SELFCHECK_GROUP_1");
+        var individualGroupRespawn = groupRegistry.Update();
+        groupClock.Advance(TimeSpan.FromSeconds(10));
+        var partialGroupTick = groupService.Tick();
+        groupRegistry.TryGet("ENT_SELFCHECK_GROUP_1", out var partialGroupMember);
+        Check(
+            "spawn.partial_group_no_respawn",
+            individualGroupRespawn == 0 &&
+            partialGroupTick == 0 &&
+            partialGroupMember.State == WorldEntityStates.Dead,
+            $"individual={individualGroupRespawn} group={partialGroupTick} " +
+            $"state={partialGroupMember.State}");
+
+        groupRegistry.Despawn("ENT_SELFCHECK_GROUP_2");
+        groupClock.Advance(TimeSpan.FromSeconds(9));
+        var earlyGroupTick = groupService.Tick();
+        groupClock.Advance(TimeSpan.FromSeconds(10));
+        var clearedGroupTick = groupService.Tick();
+        groupRegistry.TryGet("ENT_SELFCHECK_GROUP_1", out var respawnedGroupMember1);
+        groupRegistry.TryGet("ENT_SELFCHECK_GROUP_2", out var respawnedGroupMember2);
+        Check(
+            "spawn.clear_group_respawn",
+            earlyGroupTick == 0 &&
+            clearedGroupTick == 2 &&
+            respawnedGroupMember1.State == WorldEntityStates.Alive &&
+            respawnedGroupMember2.State == WorldEntityStates.Alive &&
+            respawnedGroupMember1.LifeId == 2 &&
+            respawnedGroupMember2.LifeId == 2,
+            $"early={earlyGroupTick} cleared={clearedGroupTick} " +
+            $"life={respawnedGroupMember1.LifeId}/{respawnedGroupMember2.LifeId}");
+
+        var spawnRegistry = services.GetRequiredService<WorldEntityRegistry>();
+        var registryGroups = new MobSpawnGroupService(
+            spawnRegistry, services.GetRequiredService<IServerClock>());
+        spawnRegistry.TryGet("ENT_MAN_BM_SPAWN_BM_04_M2", out var mixedGroupMember);
+        Check(
+            "spawn.real_bundle_composition",
+            spawnRegistry.Count == 44 &&
+            registryGroups.GroupCount == 8 &&
+            registryGroups.MemberCount("MAN-BM-SPAWN_BM_01") == 3 &&
+            registryGroups.MemberCount("MAN-BM-SPAWN_BM_02") == 4 &&
+            mixedGroupMember is { GroupId: "MAN-BM-SPAWN_BM_04" } &&
+            mixedGroupMember.TemplateIds.Single() == "MOB_WATERROOT",
+            $"groups={registryGroups.GroupCount} " +
+            $"mixed={mixedGroupMember?.TemplateIds.FirstOrDefault()}");
+
+        Check(
+            "damage.oracle_raw",
+            Near(DamageFormula.RawDamage(20, 0, 1.5, 1, 0), 30),
+            $"{DamageFormula.RawDamage(20, 0, 1.5, 1, 0)}");
+
+        var oracleMitigation = DamageFormula.MitigationMultiplier(10);
+        Check(
+            "damage.oracle_noncrit",
+            DamageFormula.FinalDamage(30, oracleMitigation, 1, 1, 1) == 27,
+            $"{DamageFormula.FinalDamage(30, oracleMitigation, 1, 1, 1)}");
+        Check(
+            "damage.oracle_crit",
+            DamageFormula.FinalDamage(30, oracleMitigation, 1, DamageFormula.CritMultiplier, 1) == 40,
+            $"{DamageFormula.FinalDamage(30, oracleMitigation, 1, DamageFormula.CritMultiplier, 1)}");
+        Check("damage.armor_zero", Near(DamageFormula.MitigationMultiplier(0), 1));
+        Check(
+            "damage.reduction_cap",
+            Near(DamageFormula.DamageReductionMultiplier(0.9), 0.2),
+            $"{DamageFormula.DamageReductionMultiplier(0.9)}");
+        Check(
+            "damage.resist_pve_cap",
+            Near(DamageFormula.ElementMultiplier(0.7, pvp: false), 0.5) &&
+            Near(DamageFormula.ElementMultiplier(0.7, pvp: true), 0.7),
+            $"{DamageFormula.ElementMultiplier(0.7, pvp: false)}/{DamageFormula.ElementMultiplier(0.7, pvp: true)}");
+        Check(
+            "damage.final_min_one",
+            DamageFormula.FinalDamage(0.001, 1, 1, 1, 1) == 1);
+        Check(
+            "damage.hit_clamp",
+            Near(DamageFormula.HitProbability(1, 0), 0.98) &&
+            Near(DamageFormula.HitProbability(0, 1), 0.05),
+            $"{DamageFormula.HitProbability(1, 0)}/{DamageFormula.HitProbability(0, 1)}");
+        Check(
+            "damage.attribute_derived",
+            Near(DamageFormula.AttributeCritChance(5, 0, 1), 0.0525) &&
+            Near(DamageFormula.AttributeAccuracy(5, 0), 0.0025) &&
+            Near(DamageFormula.AttributeDodge(5, 0, 1), 0.0015));
+
+        var rngSameSeed = CombatRng.Uniform01("CAST_1", "TGT_1", 0);
+        var rngRepeat = CombatRng.Uniform01("CAST_1", "TGT_1", 0);
+        var rngNextHit = CombatRng.Uniform01("CAST_1", "TGT_1", 1);
+        Check(
+            "damage.rng_deterministic",
+            rngSameSeed == rngRepeat &&
+            rngNextHit != rngSameSeed &&
+            rngSameSeed is >= 0 and < 1,
+            $"hit0={rngSameSeed} hit1={rngNextHit}");
+
+        var registry = services.GetRequiredService<WorldEntityRegistry>();
+        var projection = services.GetRequiredService<WorldEntityProjectionService>();
+        var projectedGateOff = projection.Project();
+        Check(
+            "projection.all_entities",
+            projectedGateOff.Count == registry.Count && registry.Count == 44,
+            $"projected={projectedGateOff.Count} registry={registry.Count}");
+
+        var mobGateOff = projectedGateOff.First(entity => entity.EntityId == "ENT_MAN_BM_SPAWN_BM_01");
+        Check(
+            "projection.mob_zero_when_gate_off",
+            mobGateOff is { Kind: WorldEntityKinds.Mob, Hp: 0, MaxHp: 0, LifeId: 1 },
+            $"hp={mobGateOff.Hp}");
+
+        var enabledProjection = new WorldEntityProjectionService(
+            registry,
+            services.GetRequiredService<MobLifecycleService>(),
+            enabledCombat);
+        var projected = enabledProjection.Project();
+
+        var npcLyan = projected.First(entity => entity.EntityId == "ENT_MAN_BM_NPC_LYAN");
+        Check(
+            "projection.npc_invulnerable",
+            npcLyan is
+            {
+                Kind: WorldEntityKinds.Npc,
+                Hp: 0,
+                MaxHp: 0,
+                LifeId: 1,
+                Revision: 1,
+                State: WorldEntityStates.Active
+            },
+            $"hp={npcLyan.Hp} state={npcLyan.State}");
+
+        var spawn01 = projected.First(entity => entity.EntityId == "ENT_MAN_BM_SPAWN_BM_01");
+        Check(
+            "projection.mob_reference_stats",
+            spawn01 is
+            {
+                Kind: WorldEntityKinds.Mob,
+                Hp: 192,
+                MaxHp: 192,
+                LifeId: 1,
+                State: MobBehaviorStates.Idle
+            },
+            $"hp={spawn01.Hp} state={spawn01.State}");
+
+        var spawn07 = projected.First(entity => entity.EntityId == "ENT_MAN_BM_SPAWN_BM_07");
+        Check(
+            "projection.elite_stats",
+            spawn07 is { Kind: WorldEntityKinds.Mob, Hp: 1296, MaxHp: 1296 },
+            $"hp={spawn07.Hp}");
+
+        var bossSpawn = projected.First(entity => entity.EntityId == "ENT_MAN_BM_SPAWN_BM_05_QUEST");
+        Check(
+            "projection.boss_zero_blocked",
+            bossSpawn is { Kind: WorldEntityKinds.Boss, Hp: 0, MaxHp: 0 },
+            $"hp={bossSpawn.Hp}");
+
+        var lifeIdClock = new ManualServerClock(DateTimeOffset.UtcNow);
+        var lifeIdRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [MakeFixtureNode("ENT_SELFCHECK_LIFEID_NODE", "MAN-BM-NODE_BM_ORE_01", 21, 60)]),
+            lifeIdClock);
+        var lifeIdProjection = new WorldEntityProjectionService(
+            lifeIdRegistry,
+            services.GetRequiredService<MobLifecycleService>(),
+            enabledCombat);
+        lifeIdRegistry.Despawn("ENT_SELFCHECK_LIFEID_NODE");
+        lifeIdClock.Advance(TimeSpan.FromSeconds(60));
+        lifeIdRegistry.Update();
+        var lifeIdProjected = lifeIdProjection.Project().Single();
+        Check(
+            "projection.life_id_bump",
+            lifeIdProjected is
+            {
+                State: WorldEntityStates.Available,
+                Revision: 3,
+                LifeId: 2,
+                Hp: 0
+            },
+            $"state={lifeIdProjected.State} revision={lifeIdProjected.Revision} lifeId={lifeIdProjected.LifeId}");
+
+        Check("quest.catalog", questCatalog.Count == 5, $"count={questCatalog.Count}");
         Check(
             "quest.catalog_ids",
-            questCatalog.QuestIds.SequenceEqual(new[] { "P00-01" }, StringComparer.Ordinal),
+            questCatalog.QuestIds.SequenceEqual(
+                new[] { "P00-01", "P00-02", "P00-03", "P00-04", "P00-05" },
+                StringComparer.Ordinal),
             string.Join(",", questCatalog.QuestIds));
 
         var questActor = NewPlayer("CHR_SELFCHECK_QUEST");
@@ -223,28 +1644,44 @@ public static class ServiceSelfCheck
             questAccepted.Accepted && questAccepted.State?.State == QuestStates.Active,
             questAccepted.State?.State);
 
-        var badObjective = quests.RecordObjective(
-            questActor, "P00-01", "OBJ_SELFCHECK_UNKNOWN", 1);
-        Check(
-            "quest.unknown_objective",
-            badObjective.Failure?.Code == QuestErrorCodes.UnknownObjective,
-            badObjective.Failure?.Code);
+        var eventP1 = new string('a', 32);
+        var eventP2 = new string('b', 32);
+        var eventP3 = new string('c', 32);
 
-        var questProgressed = quests.RecordObjective(
-            questActor, "P00-01", "OBJ_P00_01_PACKAGES", 3);
+        var progress1 = quests.RecordVerifiedEvent(
+            questActor, eventP1, QuestProgressEventTypes.InteractClaim,
+            "MAN-BM-OBJ_BM_PACKAGE_01", options.DefaultMapId);
+        var progress2 = quests.RecordVerifiedEvent(
+            questActor, eventP2, QuestProgressEventTypes.InteractClaim,
+            "MAN-BM-OBJ_BM_PACKAGE_02", options.DefaultMapId);
+        var progress3 = quests.RecordVerifiedEvent(
+            questActor, eventP3, QuestProgressEventTypes.InteractClaim,
+            "MAN-BM-OBJ_BM_PACKAGE_03", options.DefaultMapId);
         Check(
             "quest.ready_to_turn_in",
-            questProgressed.State?.State == QuestStates.ReadyToTurnIn &&
-            questProgressed.State.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 3,
-            questProgressed.State?.State);
+            progress1.SingleOrDefault() is { State: QuestStates.Active, Revision: 3 } p1 &&
+            p1.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 1 &&
+            progress2.SingleOrDefault() is { State: QuestStates.Active, Revision: 4 } &&
+            progress3.SingleOrDefault() is { State: QuestStates.ReadyToTurnIn, Revision: 5 } p3 &&
+            p3.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 3,
+            progress3.SingleOrDefault()?.State);
 
-        var overProgress = quests.RecordObjective(
-            questActor, "P00-01", "OBJ_P00_01_PACKAGES", 10);
-        var overCount = overProgress.State?.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES");
+        var duplicateProgress = quests.RecordVerifiedEvent(
+            questActor, new string('d', 32), QuestProgressEventTypes.InteractClaim,
+            "MAN-BM-OBJ_BM_PACKAGE_01", options.DefaultMapId);
         Check(
-            "quest.progress_clamped",
-            overCount == 3,
-            overCount?.ToString());
+            "quest.distinct_record_dedupe",
+            duplicateProgress.Count == 0,
+            duplicateProgress.Count.ToString());
+
+        var inactiveActor = NewPlayer("CHR_SELFCHECK_QUEST_IDLE");
+        var inactiveProgress = quests.RecordVerifiedEvent(
+            inactiveActor, new string('e', 32), QuestProgressEventTypes.InteractClaim,
+            "MAN-BM-OBJ_BM_PACKAGE_01", options.DefaultMapId);
+        Check(
+            "quest.progress_ignored_when_inactive",
+            inactiveProgress.Count == 0,
+            inactiveProgress.Count.ToString());
 
         var questCompleted = quests.TurnIn(questActor, "P00-01");
         Check(
@@ -264,6 +1701,177 @@ public static class ServiceSelfCheck
             unknownQuest.Failure?.Code == QuestErrorCodes.UnknownQuest,
             unknownQuest.Failure?.Code);
 
+        // Q-C: the opening chain exists as a graph, but four of its quests are
+        // blocked because the source does not define every field they need. A
+        // blocked quest keeps its place (prerequisite/unlock edges) and can never
+        // open; each gap names the field and the document that must fill it.
+        var blockedDefinitions = questCatalog.QuestIds
+            .Select(questId => questCatalog.TryGet(questId, out var definition) ? definition : null)
+            .Where(definition => definition is { IsBlocked: true })
+            .ToArray();
+        Check(
+            "quest.blocked_chain_named",
+            blockedDefinitions
+                .Select(definition => definition!.QuestId)
+                .SequenceEqual(
+                    new[] { "P00-02", "P00-03", "P00-04", "P00-05" }, StringComparer.Ordinal) &&
+            blockedDefinitions.All(definition =>
+                definition!.Blocked.Count > 0 &&
+                definition.Blocked.All(step =>
+                    step.MissingField.Length > 0 &&
+                    (step.Source.Contains(".md", StringComparison.OrdinalIgnoreCase) ||
+                     step.Source.Contains(".csv", StringComparison.OrdinalIgnoreCase)))),
+            string.Join(",", blockedDefinitions.Select(definition => definition!.QuestId)));
+
+        // The actor completed P00-01 just above, so the prerequisite is met —
+        // and P00-02 still must not open.
+        var chainLockedState = quests.GetState(questActor.CharacterId, "P00-02");
+        var chainAccept = questAccept.Accept(
+            questActor, "P00-02", "NPC_TA_VAN_KHANH", new string('c', 32));
+        Check(
+            "quest.blocked_never_available_and_reports_gap",
+            chainLockedState.State?.State == QuestStates.Locked &&
+            chainAccept.Failure?.Code == QuestAcceptErrorCodes.PrerequisiteNotMet &&
+            (chainAccept.Failure.FieldErrors.Contains(
+                "activation.blocked.P00_02_RIPPLES", StringComparer.Ordinal)),
+            $"{chainLockedState.State?.State}/{string.Join(",", chainAccept.Failure?.FieldErrors ?? [])}");
+
+        QuestDefinition FixtureQuest(
+            string questId,
+            string[] prerequisites,
+            string[] unlocks,
+            IReadOnlyList<QuestObjectiveDefinition>? objectives = null,
+            string activation = QuestActivations.Active,
+            IReadOnlyList<QuestBlockedStep>? blocked = null)
+        {
+            var objectiveId = "OBJ_" + questId.Replace("-", "_", StringComparison.Ordinal) + "_TALK";
+            return new QuestDefinition(
+                questId,
+                QuestTypes.Main,
+                "NPC_LYAN",
+                1,
+                10,
+                prerequisites,
+                objectives ?? [new QuestObjectiveDefinition(
+                    objectiveId, QuestObjectiveTypes.Talk, ["NPC_LYAN"], 1, options.DefaultMapId)],
+                QuestStepIds.FromObjectiveId(objectiveId),
+                "NPC_LYAN",
+                new QuestRewards([], [], "LEVEL_BAND_BASE"),
+                unlocks,
+                activation,
+                blocked);
+        }
+
+        bool ValidatorRejects(WorldRecordCatalog records, params QuestDefinition[] definitions)
+        {
+            var catalog = definitions.ToDictionary(
+                definition => definition.QuestId, StringComparer.Ordinal);
+            try
+            {
+                QuestCatalogValidator.Validate(new QuestCatalog(catalog), records, npcAnchors);
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+                return true;
+            }
+        }
+
+        var shippedRecords = services.GetRequiredService<WorldRecordCatalog>();
+        var shippedDefinitions = questCatalog.QuestIds
+            .Select(questId => questCatalog.TryGet(questId, out var definition) ? definition : null)
+            .Where(definition => definition is not null)
+            .Select(definition => definition!)
+            .ToArray();
+        Check(
+            "quest.validator_accepts_the_shipped_chain",
+            !ValidatorRejects(shippedRecords, shippedDefinitions),
+            "shipped catalog rejected");
+        Check(
+            "quest.validator_rejects_cycle",
+            ValidatorRejects(
+                shippedRecords,
+                FixtureQuest("Q01-01", ["Q01-02"], ["Q01-02"]),
+                FixtureQuest("Q01-02", ["Q01-01"], ["Q01-01"])),
+            "cycle accepted");
+        Check(
+            "quest.validator_rejects_dangling_prerequisite",
+            ValidatorRejects(shippedRecords, FixtureQuest("Q01-01", ["Q01-99"], [])),
+            "dangling prerequisite accepted");
+        Check(
+            "quest.validator_rejects_unlock_without_prerequisite",
+            ValidatorRejects(
+                shippedRecords,
+                FixtureQuest("Q01-01", [], ["Q01-02"]),
+                FixtureQuest("Q01-02", [], ["Q01-01"])),
+            "one-sided unlock accepted");
+        Check(
+            "quest.validator_rejects_dangling_kill_target",
+            ValidatorRejects(
+                shippedRecords,
+                FixtureQuest(
+                    "Q01-01",
+                    [],
+                    [],
+                    [new QuestObjectiveDefinition(
+                        "OBJ_Q01_01_KILL",
+                        QuestObjectiveTypes.Kill,
+                        ["MAN-BM-NO_SUCH_SPAWN"],
+                        1,
+                        options.DefaultMapId)])),
+            "dangling KILL target accepted");
+        Check(
+            "quest.validator_rejects_blocked_without_gap",
+            ValidatorRejects(
+                shippedRecords,
+                FixtureQuest("Q01-01", [], [], activation: QuestActivations.Blocked)),
+            "blocked quest without a named gap accepted");
+
+        // Q-C2: a narrative node is only visible when the character's own quest
+        // state matches its condition, and entering it is the only thing that can
+        // set a flag or progress a talk objective. Only a text key leaves the
+        // server; the server never composes prose.
+        var narrative = services.GetRequiredService<NarrativeService>();
+        var narrativeCatalog = services.GetRequiredService<NarrativeNodeCatalog>();
+        var narrativeActor = NewPlayer("CHR_SELFCHECK_NARRATIVE");
+        var narrativeOffer = narrative.Offer(narrativeActor, "P00-01");
+        var clueBeforeActive = narrative.Enter(
+            narrativeActor, "P00-01", "NPC_LYAN", "DLG_P00_01_CLUE");
+        var wrongSpeaker = narrative.Enter(
+            narrativeActor, "P00-01", "NPC_TA_VAN_KHANH", "DLG_P00_01_OFFER");
+        var enteredOffer = narrative.Enter(
+            narrativeActor, "P00-01", "NPC_LYAN", "DLG_P00_01_OFFER");
+        Check(
+            "narrative.reveal_gate_follows_quest_state",
+            narrative.PartyPolicy == PartyPolicies.SoloOnly &&
+            narrativeOffer is { Entered: true, Node.NodeId: "DLG_P00_01_OFFER" } &&
+            narrativeOffer.Node.TextKey == "DLG_P00_01_OFFER_TEXT" &&
+            clueBeforeActive.ErrorCode == NarrativeErrorCodes.NotRevealed &&
+            wrongSpeaker.ErrorCode == NarrativeErrorCodes.WrongSpeaker &&
+            enteredOffer is { Entered: true, NextNodeId: "DLG_P00_01_CLUE" },
+            $"{narrativeOffer.Node?.NodeId}/{clueBeforeActive.ErrorCode}/{enteredOffer.NextNodeId}");
+
+        Check(
+            "narrative.catalog_choices_and_flags",
+            narrativeCatalog.Count == 229 &&
+            narrativeCatalog.Flags.SetEquals(new[] { "C3_05_COUNCIL_ONLY", "C3_05_PUBLISHED" }) &&
+            narrativeCatalog.TryGet("DLG_C3_05_CHOICE", out var choiceNode) &&
+            choiceNode.Choices.Count == 2 &&
+            choiceNode.Choices.Select(choice => choice.Flag).SequenceEqual(
+                new[] { "C3_05_PUBLISHED", "C3_05_COUNCIL_ONLY" }, StringComparer.Ordinal),
+            $"nodes={narrativeCatalog.Count}");
+
+        var flagStore = new NarrativeFlagStore();
+        for (var flagIndex = 0; flagIndex < NarrativeFlagStore.Capacity + 4; flagIndex++)
+        {
+            flagStore.Set("CHR_SELFCHECK_FLAGS", $"FLAG_{flagIndex}");
+        }
+
+        Check(
+            "narrative.flags_are_bounded",
+            flagStore.For("CHR_SELFCHECK_FLAGS").Count == NarrativeFlagStore.Capacity,
+            $"flags={flagStore.For("CHR_SELFCHECK_FLAGS").Count}");
+
         Check(
             "npc.registry",
             npcAnchors.Count > 0 &&
@@ -273,7 +1881,7 @@ public static class ServiceSelfCheck
             $"count={npcAnchors.Count}");
 
         var worldEntities = services.GetRequiredService<WorldEntityRegistry>();
-        Check("world.registry", worldEntities.Count == 24, $"count={worldEntities.Count}");
+        Check("world.registry", worldEntities.Count == 44, $"count={worldEntities.Count}");
 
         var npcEntity = worldEntities.TryGet("ENT_MAN_BM_NPC_LYAN", out var foundNpc)
             ? foundNpc
@@ -294,8 +1902,11 @@ public static class ServiceSelfCheck
             {
                 Kind: WorldEntityKinds.Mob,
                 State: WorldEntityStates.Alive,
-                Quantity: 3,
-                RespawnSeconds: 18
+                Quantity: 1,
+                RespawnSeconds: 0,
+                GroupId: "MAN-BM-SPAWN_BM_01",
+                MemberIndex: 1,
+                GroupRespawnSeconds: 18
             } &&
             mobEntity.X == 84,
             mobEntity?.Kind);
@@ -313,6 +1924,11 @@ public static class ServiceSelfCheck
                         deadMob.Revision == 2;
         Check("world.despawn_mob", despawned);
 
+        var groupMembersCleared =
+            manualWorld.Despawn("ENT_MAN_BM_SPAWN_BM_01_M2") &&
+            manualWorld.Despawn("ENT_MAN_BM_SPAWN_BM_01_M3");
+        Check("world.group_cleared", groupMembersCleared);
+
         var beforeRespawn = manualWorld.Update();
         Check(
             "world.respawn_wait",
@@ -321,15 +1937,22 @@ public static class ServiceSelfCheck
             waitingMob.State == WorldEntityStates.Dead,
             $"respawned={beforeRespawn}");
 
+        var groupRespawnService = new MobSpawnGroupService(manualWorld, manualClock);
+        var earlyGroupRespawn = groupRespawnService.Tick();
         manualClock.Advance(TimeSpan.FromSeconds(18));
-        var respawned = manualWorld.Update();
+        var individualMobRespawn = manualWorld.Update();
+        var respawned = groupRespawnService.Tick();
+        manualWorld.TryGet("ENT_MAN_BM_SPAWN_BM_01_M2", out var revivedMember2);
         Check(
             "world.respawn",
-            respawned == 1 &&
+            earlyGroupRespawn == 0 &&
+            individualMobRespawn == 0 &&
+            respawned == 3 &&
             manualWorld.TryGet("ENT_MAN_BM_SPAWN_BM_01", out var revivedMob) &&
             revivedMob.State == WorldEntityStates.Alive &&
-            revivedMob.Revision == 3,
-            $"respawned={respawned}");
+            revivedMob.Revision == 3 &&
+            revivedMember2.LifeId == 2,
+            $"individual={individualMobRespawn} group={respawned}");
 
         Check("world.despawn_npc_rejected", !manualWorld.Despawn("ENT_MAN_BM_NPC_LYAN"));
 
@@ -540,14 +2163,15 @@ public static class ServiceSelfCheck
             notEnforced.Status == LineOfSightStatus.NotEnforced,
             notEnforced.Reason?.ToString());
 
-        WorldEntityInstance MakeFixtureMob(string entityId, double x, double y)
+        WorldEntityInstance MakeFixtureMob(
+            string entityId, double x, double y, string templateId = "MOB_CARPLING")
         {
             var mob = new WorldEntityInstance
             {
                 EntityId = entityId,
                 RecordId = "MAN-TEST-" + entityId,
                 Kind = WorldEntityKinds.Mob,
-                TemplateIds = new[] { "MOB_CARPLING" },
+                TemplateIds = new[] { templateId },
                 MapId = options.DefaultMapId,
                 FloorId = "OVERWORLD",
                 X = x,
@@ -567,41 +2191,262 @@ public static class ServiceSelfCheck
             LeashRadiusWu = 12,
             AttackRangeWu = 1.2,
             AttackCooldownSeconds = 2,
-            MoveSpeedWuPerSecond = 2
+            MoveSpeedWuPerSecond = 2,
+            TelegraphSeconds = 0.45,
+            RecoverySeconds = 0.5
         };
+        MobAttackService NewMobAttacks(WorldEntityRegistry registry, CombatDamageFeature feature) =>
+            new(registry, feature, mobOptions, new GuardDefenseService(
+                new GuardWindowStore(), feature, new CombatEventStore(new CombatEventStreamOptions())));
+        MobLifecycleEvent Impact(string entityId, string targetCharacterId) =>
+            new(entityId, MobBehaviorStates.Telegraph, MobBehaviorStates.Attack,
+                mobClock.UtcNow, targetCharacterId);
+        int ImpactCount(IReadOnlyList<MobLifecycleEvent> lifecycleEvents) =>
+            lifecycleEvents.Count(lifecycle =>
+                lifecycle.ToState == MobBehaviorStates.Attack);
+
         var mobRegistry = new WorldEntityRegistry(
             new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_MOB", 43, 0)]),
             mobClock);
         var mobAi = new MobLifecycleService(mobRegistry, geometry, mobOptions, mobClock);
+        var mobAttacks = NewMobAttacks(mobRegistry, enabledCombat);
         var prey = NewPlayer("CHR_SELFCHECK_PREY");
         prey.X = 44;
         prey.Y = 0;
 
-        mobAi.Tick([prey]);
+        var aggroTick = mobAi.Tick([prey]);
         Check(
             "mob.aggro",
-            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Aggro,
+            aggroTick.Any(lifecycle =>
+                lifecycle.FromState == MobBehaviorStates.Idle &&
+                lifecycle.ToState == MobBehaviorStates.Aggro),
+            string.Join(",", aggroTick.Select(lifecycle => lifecycle.ToState)));
+
+        // One acquisition edge per tick: AGGRO on the first tick, then CHASE and
+        // the telegraph it walks into. Impact therefore lands 0.45s after the
+        // telegraph opens, never on the tick that opened it.
+        mobClock.Advance(TimeSpan.FromSeconds(0.05));
+        var openTick = mobAi.Tick([prey]);
+        Check(
+            "mob.telegraph_opens",
+            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Telegraph &&
+            openTick.Any(lifecycle =>
+                lifecycle.FromState == MobBehaviorStates.Aggro &&
+                lifecycle.ToState == MobBehaviorStates.Chase) &&
+            openTick.Any(lifecycle =>
+                lifecycle.FromState == MobBehaviorStates.Chase &&
+                lifecycle.ToState == MobBehaviorStates.Telegraph) &&
+            ImpactCount(openTick) == 0,
             mobAi.GetState("ENT_SELFCHECK_MOB"));
 
-        mobClock.Advance(TimeSpan.FromSeconds(0.5));
+        mobClock.Advance(TimeSpan.FromSeconds(0.30));
+        var holdingTick = mobAi.Tick([prey]);
+        Check(
+            "mob.telegraph_holds",
+            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Telegraph &&
+            ImpactCount(holdingTick) == 0,
+            mobAi.GetState("ENT_SELFCHECK_MOB"));
+
+        mobClock.Advance(TimeSpan.FromSeconds(0.30));
         var attackTick = mobAi.Tick([prey]);
-        var attackEvents = attackTick.Count(
-            lifecycle => lifecycle.FromState == MobBehaviorStates.Attack &&
-                         lifecycle.ToState == MobBehaviorStates.Attack);
+        var impactOrder = attackTick
+            .Where(lifecycle => lifecycle.FromState == MobBehaviorStates.Telegraph ||
+                                lifecycle.ToState == MobBehaviorStates.Recover)
+            .Select(lifecycle => $"{lifecycle.FromState}>{lifecycle.ToState}")
+            .ToArray();
         Check(
             "mob.attack",
-            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Attack &&
-            attackEvents == 1,
+            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Recover &&
+            impactOrder.SequenceEqual(
+                new[] { "TELEGRAPH>ATTACK", "ATTACK>RECOVER" }, StringComparer.Ordinal),
+            string.Join(",", impactOrder));
+
+        var firstImpact = mobAttacks.ApplyImpacts(attackTick, [prey], mobClock.Tick);
+        Check(
+            "mob.damage_lands",
+            firstImpact.Count == 1 &&
+            firstImpact[0] is { Applied: true, AttackId: "BITE", Damage: 10, HpBefore: 100, HpAfter: 90 } &&
+            prey.Hp == 90,
+            firstImpact.Count == 1 ? firstImpact[0].ToString() : "no resolution");
+
+        // Art Bible §12 CARPLING attack 15 x BITE 0,8 = 12 raw; Rules §2 floor
+        // (12 * 100 / (100 + armor 10)) = 10.
+        Check(
+            "mob.damage_revision_bumps",
+            prey.Revision == 2,
+            $"revision={prey.Revision}");
+
+        mobClock.Advance(TimeSpan.FromSeconds(0.30));
+        var recoveryTick = mobAi.Tick([prey]);
+        Check(
+            "mob.recovery_holds",
+            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Recover &&
+            recoveryTick.All(lifecycle => lifecycle.ToState != MobBehaviorStates.Telegraph),
             mobAi.GetState("ENT_SELFCHECK_MOB"));
 
-        mobClock.Advance(TimeSpan.FromSeconds(0.5));
+        mobClock.Advance(TimeSpan.FromSeconds(0.30));
+        var recoverTick = mobAi.Tick([prey]);
+        Check(
+            "mob.recovery_ends_to_chase",
+            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Chase &&
+            recoverTick.Any(lifecycle =>
+                lifecycle.FromState == MobBehaviorStates.Recover &&
+                lifecycle.ToState == MobBehaviorStates.Chase),
+            mobAi.GetState("ENT_SELFCHECK_MOB"));
+
         var cooldownTick = mobAi.Tick([prey]);
         Check(
             "mob.attack_cooldown",
-            cooldownTick.All(lifecycle =>
-                lifecycle.FromState != MobBehaviorStates.Attack ||
-                lifecycle.ToState != MobBehaviorStates.Attack),
-            "attack fired during cooldown");
+            ImpactCount(cooldownTick) == 0 &&
+            cooldownTick.All(lifecycle => lifecycle.ToState != MobBehaviorStates.Telegraph),
+            "impact fired during cooldown");
+
+        mobClock.Advance(TimeSpan.FromSeconds(1.50));
+        var readyTick = mobAi.Tick([prey]);
+        Check(
+            "mob.telegraph_repeats_after_cooldown",
+            mobAi.GetState("ENT_SELFCHECK_MOB") == MobBehaviorStates.Telegraph &&
+            readyTick.Any(lifecycle =>
+                lifecycle.FromState == MobBehaviorStates.Chase &&
+                lifecycle.ToState == MobBehaviorStates.Telegraph),
+            mobAi.GetState("ENT_SELFCHECK_MOB"));
+
+        mobClock.Advance(TimeSpan.FromSeconds(0.60));
+        var secondAttackTick = mobAi.Tick([prey]);
+        var secondImpact = mobAttacks.ApplyImpacts(secondAttackTick, [prey], mobClock.Tick);
+        Check(
+            "mob.damage_second_impact",
+            secondImpact.Count == 1 && secondImpact[0].Damage == 10 && prey.Hp == 80,
+            $"hp={prey.Hp}");
+
+        var whiffClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 29, 5, 0, 0, TimeSpan.Zero));
+        var whiffRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_WHIFF_MOB", 43, 0)]),
+            whiffClock);
+        var whiffAi = new MobLifecycleService(whiffRegistry, geometry, mobOptions, whiffClock);
+        var whiffAttacks = NewMobAttacks(whiffRegistry, enabledCombat);
+        var runner = NewPlayer("CHR_SELFCHECK_RUNNER");
+        runner.X = 44;
+        runner.Y = 0;
+        whiffAi.Tick([runner]);
+        whiffAi.Tick([runner]);
+        // The telegraph only opens while the target is in range; the player
+        // escapes during the read window, and the mob holds its ground.
+        runner.X = 44.6;
+        whiffClock.Advance(TimeSpan.FromSeconds(0.60));
+        var whiffTick = whiffAi.Tick([runner]);
+        var whiffImpact = whiffAttacks.ApplyImpacts(whiffTick, [runner], whiffClock.Tick);
+        Check(
+            "mob.impact_whiffs_out_of_range",
+            ImpactCount(whiffTick) == 1 &&
+            whiffImpact.Count == 1 &&
+            !whiffImpact[0].Applied &&
+            whiffImpact[0].BlockedReason == MobAttackBlockedReasons.OutOfRangeAtImpact &&
+            runner.Hp == 100,
+            whiffImpact.Count == 1 ? whiffImpact[0].BlockedReason : "no resolution");
+
+        var telegraphCancelClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 29, 6, 0, 0, TimeSpan.Zero));
+        var telegraphCancelRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_CANCEL_MOB", 43, 0)]),
+            telegraphCancelClock);
+        var telegraphCancelAi = new MobLifecycleService(
+            telegraphCancelRegistry, geometry, mobOptions, telegraphCancelClock);
+        var telegraphCancelAttacks = NewMobAttacks(telegraphCancelRegistry, enabledCombat);
+        var bait = NewPlayer("CHR_SELFCHECK_BAIT");
+        bait.X = 44;
+        bait.Y = 0;
+        telegraphCancelAi.Tick([bait]);
+        telegraphCancelClock.Advance(TimeSpan.FromSeconds(0.05));
+        telegraphCancelAi.Tick([bait]);
+        // Past the impact deadline, but with no target: the pending impact is
+        // cancelled, so the mob never swings.
+        telegraphCancelClock.Advance(TimeSpan.FromSeconds(0.60));
+        var telegraphCancelTick = telegraphCancelAi.Tick([]);
+        telegraphCancelClock.Advance(TimeSpan.FromSeconds(1));
+        var afterTelegraphCancelTick = telegraphCancelAi.Tick([]);
+        Check(
+            "mob.telegraph_cancel_on_lost_target",
+            telegraphCancelAi.GetState("ENT_SELFCHECK_CANCEL_MOB") == MobBehaviorStates.Idle &&
+            telegraphCancelTick.Any(lifecycle =>
+                lifecycle.FromState == MobBehaviorStates.Telegraph &&
+                lifecycle.ToState == MobBehaviorStates.Return) &&
+            ImpactCount(telegraphCancelTick) == 0 &&
+            ImpactCount(afterTelegraphCancelTick) == 0 &&
+            telegraphCancelAttacks.ApplyImpacts(afterTelegraphCancelTick, [], telegraphCancelClock.Tick).Count == 0 &&
+            bait.Hp == 100,
+            telegraphCancelAi.GetState("ENT_SELFCHECK_CANCEL_MOB"));
+
+        var gateOffAttacks = NewMobAttacks(mobRegistry, combatDamage);
+        var gateOffImpact = gateOffAttacks.ApplyImpacts(
+            [Impact("ENT_SELFCHECK_MOB", prey.CharacterId)], [prey], mobClock.Tick);
+        Check(
+            "mob.damage_gate_off",
+            gateOffImpact.Count == 1 &&
+            !gateOffImpact[0].Applied &&
+            gateOffImpact[0].BlockedReason == MobAttackBlockedReasons.GateOff &&
+            prey.Hp == 80,
+            gateOffImpact.Count == 1 ? gateOffImpact[0].BlockedReason : "no resolution");
+
+        var oracleRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([],
+            [
+                MakeFixtureMob("ENT_SELFCHECK_WATERROOT", 43, 0, "MOB_WATERROOT"),
+                MakeFixtureMob("ENT_SELFCHECK_STALKER_ELITE", 43, 0, "MOB_SHORE_STALKER_ELITE"),
+                MakeFixtureMob("ENT_SELFCHECK_MOSS_BEAST", 43, 0, "MOB_MOSS_BEAST")
+            ]),
+            mobClock);
+        var oracleAttacks = NewMobAttacks(oracleRegistry, enabledCombat);
+        var waterrootPrey = NewPlayer("CHR_SELFCHECK_WATERROOT_PREY");
+        waterrootPrey.X = 43.5;
+        var elitePrey = NewPlayer("CHR_SELFCHECK_ELITE_PREY");
+        elitePrey.X = 43.5;
+        var unknownPrey = NewPlayer("CHR_SELFCHECK_UNKNOWN_PREY");
+        unknownPrey.X = 43.5;
+        var oracleImpacts = oracleAttacks.ApplyImpacts(
+            [
+                Impact("ENT_SELFCHECK_WATERROOT", waterrootPrey.CharacterId),
+                Impact("ENT_SELFCHECK_STALKER_ELITE", elitePrey.CharacterId),
+                Impact("ENT_SELFCHECK_MOSS_BEAST", unknownPrey.CharacterId)
+            ],
+            [waterrootPrey, elitePrey, unknownPrey], mobClock.Tick);
+        Check(
+            "mob.damage_waterroot_basic_move",
+            waterrootPrey.Hp == 82 &&
+            oracleImpacts.Single(resolution =>
+                resolution.EntityId == "ENT_SELFCHECK_WATERROOT") is
+                { Damage: 18, AttackId: "VINE" },
+            $"hp={waterrootPrey.Hp}");
+        Check(
+            "mob.damage_elite_scaling",
+            elitePrey.Hp == 67 &&
+            oracleImpacts.Single(resolution =>
+                resolution.EntityId == "ENT_SELFCHECK_STALKER_ELITE") is
+                { Damage: 33, AttackId: "POUNCE" },
+            $"hp={elitePrey.Hp}");
+        var unknownResolution = oracleImpacts.Single(resolution =>
+            resolution.EntityId == "ENT_SELFCHECK_MOSS_BEAST");
+        Check(
+            "mob.damage_unknown_template",
+            unknownPrey.Hp == 100 &&
+            !unknownResolution.Applied &&
+            unknownResolution.BlockedReason == MobAttackBlockedReasons.UnknownTemplate,
+            $"hp={unknownPrey.Hp}");
+
+        var downedPrey = NewPlayer("CHR_SELFCHECK_DOWNED_PREY", hp: 0);
+        downedPrey.X = 44;
+        downedPrey.Y = 0;
+        var downedTick = mobAi.Tick([downedPrey]);
+        var downedImpact = mobAttacks.ApplyImpacts(
+            [Impact("ENT_SELFCHECK_MOB", downedPrey.CharacterId)], [downedPrey], mobClock.Tick);
+        var downedResolution = downedImpact.Single();
+        Check(
+            "mob.downed_target_untouched",
+            ImpactCount(downedTick) == 0 &&
+            !downedResolution.Applied &&
+            downedResolution.BlockedReason == MobAttackBlockedReasons.TargetDown,
+            downedResolution.BlockedReason);
 
         var wallClock = new ManualServerClock(
             new DateTimeOffset(2026, 10, 29, 2, 0, 0, TimeSpan.Zero));
@@ -658,6 +2503,1055 @@ public static class ServiceSelfCheck
             floorAi.GetState("ENT_SELFCHECK_FLOOR_MOB") == MobBehaviorStates.Idle,
             floorAi.GetState("ENT_SELFCHECK_FLOOR_MOB"));
 
+        // Q-B5: the telegraph read model. A client deciding "lean back or eat it"
+        // needs the committed frame, its target and its reach in ticks — the
+        // state name alone is not a read window.
+        var telegraphClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 30, 2, 0, 0, TimeSpan.Zero));
+        var telegraphRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_READ_MOB", 43, 0)]),
+            telegraphClock);
+        var telegraphAi = new MobLifecycleService(
+            telegraphRegistry, geometry, mobOptions, telegraphClock);
+        var telegraphReads = new MobTelegraphProjection(
+            telegraphAi, Options.Create(mobOptions), telegraphClock);
+        var readPrey = NewPlayer("CHR_SELFCHECK_READ_PREY");
+        readPrey.X = 44;
+        readPrey.Y = 0;
+        // Two different questions: "is there anything to read about this mob"
+        // and "is a swing committed right now". The acquisition states are
+        // readable too, so the helpers must not be conflated.
+        MobTelegraphReading? ReadEngaged() =>
+            telegraphReads.Project(telegraphRegistry.All)
+                .FirstOrDefault(reading => reading.State != MobBehaviorStates.Idle);
+        MobTelegraphReading? ReadTelegraph() =>
+            telegraphReads.Project(telegraphRegistry.All)
+                .FirstOrDefault(reading => reading.State == MobBehaviorStates.Telegraph);
+
+        Check(
+            "telegraph.idle_has_nothing_to_read",
+            telegraphReads.Project(telegraphRegistry.All).Count == 0,
+            string.Join(",", telegraphReads.Project(telegraphRegistry.All)
+                .Select(reading => reading.State)));
+
+        MobTelegraphReading? committed = null;
+        for (var step = 0; step < 12 && committed is null; step++)
+        {
+            telegraphAi.Tick([readPrey]);
+            committed = ReadTelegraph();
+            if (committed is null)
+            {
+                telegraphClock.Advance(TimeSpan.FromSeconds(0.05));
+            }
+        }
+
+        Check(
+            "telegraph.reading_carries_target_timing_and_reach",
+            committed is { State: MobBehaviorStates.Telegraph, ImpactInTicks: 9, RangeWu: 1.2 } &&
+            committed.AngleDegrees is null &&
+            committed.LifeId > 0 &&
+            committed.EntityId == "ENT_SELFCHECK_READ_MOB" &&
+            committed.TargetCharacterId == readPrey.CharacterId &&
+            committed.ImpactAtUtc == telegraphClock.UtcNow.AddSeconds(0.45),
+            committed is null ? "never telegraphed" : $"{committed.State}/{committed.ImpactInTicks}");
+
+        telegraphClock.Advance(TimeSpan.FromSeconds(0.1));
+        var counting = ReadTelegraph();
+        Check(
+            "telegraph.countdown_moves_with_the_server_clock",
+            counting?.ImpactInTicks == 7 && counting?.State == MobBehaviorStates.Telegraph,
+            $"{counting?.ImpactInTicks}");
+
+        // Out of *attack* range while still acquired does not un-commit the
+        // swing: the impact frame still happens and only the damage check knows
+        // it will whiff, so the client has to keep drawing it. 44,6 stays inside
+        // the open area — the reviewed fixture's wall starts at 45, and stepping
+        // the prey behind it would drop the target for line of sight instead.
+        readPrey.X = 44.6;
+        telegraphClock.Advance(TimeSpan.FromSeconds(0.3));
+        telegraphAi.Tick([readPrey]);
+        var escaped = ReadTelegraph();
+        Check(
+            "telegraph.stays_committed_when_the_target_leaves_range",
+            escaped?.State == MobBehaviorStates.Telegraph &&
+            escaped.ImpactInTicks == 1 &&
+            escaped.TargetCharacterId == readPrey.CharacterId,
+            $"{escaped?.State}/{escaped?.ImpactInTicks}");
+
+        telegraphClock.Advance(TimeSpan.FromSeconds(0.05));
+        telegraphAi.Tick([readPrey]);
+        var recovered = ReadEngaged();
+        Check(
+            "telegraph_after_impact_reads_recovery_and_cooldown",
+            recovered?.State == MobBehaviorStates.Recover &&
+            recovered.ImpactInTicks is null &&
+            recovered.RecoverInTicks == 10 &&
+            recovered.NextAttackInTicks == 40,
+            $"{recovered?.State}/{recovered?.RecoverInTicks}/{recovered?.NextAttackInTicks}");
+
+        readPrey.X = 300;
+        telegraphClock.Advance(TimeSpan.FromSeconds(0.55));
+        telegraphAi.Tick([readPrey]);
+        var dropped = telegraphReads.Project(telegraphRegistry.All);
+        var droppedReading = dropped.Count > 0 ? dropped[0] : null;
+        Check(
+            "telegraph_lost_target_reports_no_committed_frame",
+            dropped.Count == 1 &&
+            droppedReading!.ImpactInTicks is null &&
+            droppedReading.RecoverInTicks is null &&
+            droppedReading.TargetCharacterId is null,
+            $"count={dropped.Count}/{droppedReading?.State}/{droppedReading?.ImpactInTicks}");
+
+        // ─── DEC-022: guard window, whiff buff and counter runtime ───
+
+        var guardClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 30, 1, 0, 0, TimeSpan.Zero));
+        var guardRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([],
+            [
+                MakeFixtureMob("ENT_SELFCHECK_GUARD_MOB", 41, 0),
+                MakeFixtureMob("ENT_SELFCHECK_GUARD_MOB2", 40.9, 0.6),
+                MakeFixtureMob("ENT_SELFCHECK_GUARD_MOB3", 41.1, 0.2)
+            ]),
+            guardClock);
+        var guardWindows = new GuardWindowStore();
+        var guardEvents = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var guardDefense = new GuardDefenseService(guardWindows, enabledCombat, guardEvents);
+        var guardAttacks = new MobAttackService(
+            guardRegistry, enabledCombat, mobOptions, guardDefense);
+        var guardStates = new MobCombatStateStore();
+        var guardEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            guardWindows, geometry, NewDashes(geometry), new ServerClock());
+        var guardMissEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
+            tickQuests, new FixedCombatRolls(hit: false, crit: false),
+            guardWindows, geometry, NewDashes(geometry), new ServerClock());
+
+        MobLifecycleEvent GuardImpact(string entityId, PlayerSession victim) =>
+            new(entityId, MobBehaviorStates.Telegraph, MobBehaviorStates.Attack,
+                guardClock.UtcNow, victim.CharacterId);
+        int CountEvent(string sessionId, string type) => guardEvents
+            .Read(sessionId, 0, 256).Events
+            .Count(stored => stored.Type == type);
+        PlayerSession NewGuardHero(string suffix, int hp = 100)
+        {
+            var hero = NewPlayer("CHR_SELFCHECK_GUARD_" + suffix, hp: hp);
+            hero.X = 40;
+            hero.Y = 0;
+            return hero;
+        }
+
+        var hero1 = NewGuardHero("ONE");
+        var policyCastId = new string('f', 32);
+        guardEngine.Schedule(
+            hero1, hero1.SessionId, policyCastId, CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 0);
+        var policyWindow = guardWindows.Find(hero1.CharacterId);
+        Check(
+            "guard.window_opens_on_accept",
+            policyWindow is not null &&
+            policyWindow.GuardCastId == policyCastId &&
+            policyWindow is
+            {
+                CastStartTick: 0,
+                GuardEndExclusiveTick: 8,
+                WhiffEndExclusiveTick: 28,
+                CounterCoefficient: 1.8,
+                AttackSnapshot: 20
+            } &&
+            guardWindows.Count == 1,
+            policyWindow is null ? "no window" : $"{policyWindow.GuardEndExclusiveTick}");
+
+        Check(
+            "guard.front_hit_inside_window",
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 7, 41, 0)
+                is { Phase: GuardPhases.Guard, DamageReduction: 0.7, FrontHit: true, CounterEligible: true },
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 7, 41, 0).Phase);
+        Check(
+            "guard.back_hit_gets_no_reduction",
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 5, 39, 0)
+                is { Phase: GuardPhases.Guard, DamageReduction: 0, FrontHit: false, CounterEligible: false },
+            "behind hit reduced");
+        Check(
+            "guard.range_edge_is_inclusive",
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 5, 44.4, 0).FrontHit &&
+            !guardDefense.EvaluateIncoming(hero1.CharacterId, 5, 44.5, 0).FrontHit,
+            "4.4 WU edge");
+        Check(
+            "guard.angle_edge_is_inclusive",
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 5, 41, 1.7320508075688772).FrontHit &&
+            !guardDefense.EvaluateIncoming(hero1.CharacterId, 5, 41, 1.8).FrontHit,
+            "60 degree edge");
+        Check(
+            "guard.window_end_is_exclusive_whiff_starts",
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 8, 41, 0)
+                is { Phase: GuardPhases.Whiff, DamageReduction: 0.2, CounterEligible: false },
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 8, 41, 0).Phase);
+
+        // The guard cast itself has no impacts, so its END lands at start+2 while
+        // the whiff buff still has 20 ticks to live (DEC-022 §4).
+        var guardEndEvents = guardEngine.Tick(2);
+        var whiffResolutions = guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB2", hero1)], [hero1], 20);
+        Check(
+            "guard.cast_end_keeps_whiff",
+            guardEndEvents.Any(stored => stored.Type == CombatEventTypesV2.End) &&
+            whiffResolutions.Single() is { Applied: true, Damage: 8, GuardPhase: GuardPhases.Whiff } &&
+            hero1.Hp == 92 &&
+            hero1.SwordIntent == 0 &&
+            CountEvent(hero1.SessionId, CombatEventTypesV2.CounterConfirmed) == 0,
+            whiffResolutions.Single().Damage.ToString());
+
+        var expiredResolutions = guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB2", hero1)], [hero1], 30);
+        Check(
+            "guard.whiff_expires_full_damage",
+            guardDefense.EvaluateIncoming(hero1.CharacterId, 28, 41, 0).Phase == GuardPhases.Expired &&
+            expiredResolutions.Single() is { Damage: 10, GuardPhase: GuardPhases.Expired } &&
+            hero1.Hp == 82,
+            expiredResolutions.Single().Damage.ToString());
+
+        var hero2 = NewGuardHero("TWO");
+        var counterCastId = new string('e', 32);
+        guardEngine.Schedule(
+            hero2, hero2.SessionId, counterCastId, CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 0);
+        var twoHits = guardAttacks.ApplyImpacts(
+            [
+                GuardImpact("ENT_SELFCHECK_GUARD_MOB", hero2),
+                GuardImpact("ENT_SELFCHECK_GUARD_MOB2", hero2)
+            ],
+            [hero2],
+            tick: 5);
+        var counterWindow = guardWindows.Find(hero2.CharacterId);
+        Check(
+            "guard.two_hits_one_confirmation_one_counter",
+            twoHits.Count == 2 &&
+            twoHits.All(resolution => resolution.Damage == 3) &&
+            hero2.Hp == 94 &&
+            counterWindow is { ConfirmationCount: 1 } &&
+            hero2.SwordIntent == 2 &&
+            twoHits[0].Confirmation is not null &&
+            twoHits[1].Confirmation is null &&
+            CountEvent(hero2.SessionId, CombatEventTypesV2.CounterConfirmed) == 1,
+            $"hp={hero2.Hp} intent={hero2.SwordIntent}");
+        Check(
+            "guard.counter_reserved_for_next_tick",
+            counterWindow is { CounterTick: 6, CounterResolved: false } &&
+            counterWindow.CounterSourceEntityId == "ENT_SELFCHECK_GUARD_MOB",
+            counterWindow?.CounterTick?.ToString() ?? "none");
+
+        var counterEvents = guardEngine.Tick(6);
+        var counterImpact = counterEvents.SingleOrDefault(
+            stored => stored.Type == CombatEventTypesV2.Impact);
+        Check(
+            "guard.counter_impact_next_tick",
+            counterImpact is { HitIndex: 0 } &&
+            counterImpact.CastId == counterCastId &&
+            counterImpact.Result is { Hit: true, Crit: false, Amount: 34, HpDamage: 34 } &&
+            counterWindow is { CounterOutcome: "DAMAGE" } &&
+            (guardStates.TryGet("ENT_SELFCHECK_GUARD_MOB", 1)?.Hp ?? 0) == 158 &&
+            counterEvents.Count(stored => stored.Type == CombatEventTypesV2.Impact) == 1 &&
+            counterImpact.TargetId == "ENT_SELFCHECK_GUARD_MOB",
+            counterImpact?.Result?.Amount.ToString() ?? "no impact");
+        Check(
+            "guard.counter_pays_no_extra_resource_and_resolves_once",
+            hero2.SwordIntent == 2 &&
+            !guardEngine.Tick(6).Any(stored => stored.Type == CombatEventTypesV2.Impact) &&
+            (guardStates.TryGet("ENT_SELFCHECK_GUARD_MOB", 1)?.Hp ?? 0) == 158,
+            "counter resolved twice");
+
+        var hero3 = NewGuardHero("THREE");
+        var cancelCastId = new string('d', 32);
+        guardEngine.Schedule(
+            hero3, hero3.SessionId, cancelCastId, CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 10);
+        guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB", hero3)], [hero3], tick: 11);
+        var cancelWindow = guardWindows.Find(hero3.CharacterId);
+        // The confirmed source steps out of the cone before the counter lands:
+        // the counter cancels, keeps the committed cost and never retargets.
+        guardRegistry.TryGet("ENT_SELFCHECK_GUARD_MOB", out var counterSource);
+        counterSource.MoveTo(60, 0);
+        var mpBeforeCancel = hero3.Mp;
+        var intentBeforeCancel = hero3.SwordIntent;
+        var cancelEvents = guardEngine.Tick(12);
+        counterSource.MoveTo(41, 0);
+        Check(
+            "guard.counter_cancelled_keeps_cost_no_retarget",
+            cancelWindow is
+            {
+                CounterTick: 12,
+                CounterResolved: true,
+                ConfirmationCount: 1,
+                CounterOutcome: "OUT_OF_RANGE_OR_CONE"
+            } &&
+            cancelEvents.Any(stored => stored.Type == CombatEventTypesV2.Cancel) &&
+            !cancelEvents.Any(stored => stored.Type == CombatEventTypesV2.Impact) &&
+            hero3.Mp == mpBeforeCancel &&
+            hero3.SwordIntent == intentBeforeCancel &&
+            guardStates.TryGet("ENT_SELFCHECK_GUARD_MOB", 1)?.Hp == 158,
+            cancelWindow?.CounterOutcome ?? "none");
+
+        var hero5 = NewGuardHero("MISS");
+        guardMissEngine.Schedule(
+            hero5, hero5.SessionId, new string('b', 32), CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 40);
+        guardMissEngine.Tick(41);
+        var missResolutions = guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB", hero5)], [hero5], tick: 41);
+        var missWindow = guardWindows.Find(hero5.CharacterId);
+        var mobHpBeforeMiss = guardStates.TryGet("ENT_SELFCHECK_GUARD_MOB", 1)?.Hp ?? 0;
+        var counterMissEvents = guardMissEngine.Tick(42);
+        Check(
+            "guard.counter_miss_no_refund_no_damage",
+            missResolutions.Single().Confirmation is not null &&
+            counterMissEvents.Any(stored => stored.Type == CombatEventTypesV2.Miss) &&
+            missWindow is { CounterOutcome: "MISS" } &&
+            (guardStates.TryGet("ENT_SELFCHECK_GUARD_MOB", 1)?.Hp ?? 0) == mobHpBeforeMiss &&
+            hero5.Mp == 50,
+            missWindow?.CounterOutcome ?? "none");
+
+        var hero4 = NewGuardHero("DOWN", hp: 3);
+        guardEngine.Schedule(
+            hero4, hero4.SessionId, new string('c', 32), CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 20);
+        var lethalResolutions = guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB", hero4)], [hero4], tick: 21);
+        var downTick = guardEngine.Tick(22);
+        Check(
+            "guard.defender_death_clears_resource_no_confirmation",
+            hero4.Hp == 0 &&
+            hero4.SwordIntent == 0 &&
+            lethalResolutions.Single().Damage == 3 &&
+            lethalResolutions.Single().Confirmation is null &&
+            guardWindows.Find(hero4.CharacterId) is null &&
+            CountEvent(hero4.SessionId, CombatEventTypesV2.CounterConfirmed) == 0 &&
+            lethalResolutions.Single().GuardWindowCastId == new string('c', 32) &&
+            lethalResolutions.Single().DamageReduction == 0.7,
+            $"hp={hero4.Hp} intent={hero4.SwordIntent}");
+        // A down defender's own cast is cancelled once, and nothing of it lands.
+        Check(
+            "guard.down_defender_cast_cancels_once",
+            downTick.Count(stored => stored.Type == CombatEventTypesV2.Cancel) == 1 &&
+            downTick.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
+            !downTick.Any(stored =>
+                stored.Type is CombatEventTypesV2.Impact or CombatEventTypesV2.Death) &&
+            !guardEngine.Tick(23).Any(stored =>
+                stored.Type is CombatEventTypesV2.Cancel or CombatEventTypesV2.Impact) &&
+            guardWindows.Find(hero4.CharacterId) is null,
+            string.Join(",", downTick.Select(stored => stored.Type)));
+
+        var hero6 = NewGuardHero("REFRESH");
+        guardEngine.Schedule(
+            hero6, hero6.SessionId, new string('1', 32), CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 50);
+        var refreshCastId = new string('2', 32);
+        guardEngine.Schedule(
+            hero6, hero6.SessionId, refreshCastId, CombatV2Actions.Skill, "SK-MK-01",
+            2, 0, startTick: 51);
+        var refreshWindow = guardWindows.Find(hero6.CharacterId);
+        Check(
+            "guard.refresh_replaces_window_without_stacking",
+            refreshWindow is not null &&
+            refreshWindow.GuardCastId == refreshCastId &&
+            refreshWindow.CastStartTick == 51 &&
+            guardDefense.EvaluateIncoming(hero6.CharacterId, 55, 41, 0).DamageReduction == 0.7);
+        var refreshResolutions = guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB", hero6)], [hero6], tick: 55);
+        Check(
+            "guard.refresh_confirmation_belongs_to_new_window",
+            refreshResolutions.Single() is { Damage: 3 } &&
+            refreshResolutions.Single().Confirmation?.GuardCastId == refreshCastId,
+            refreshResolutions.Single().Confirmation?.GuardCastId ?? "none");
+
+        var hero8 = NewGuardHero("LETHAL");
+        var lethalMobId = "ENT_SELFCHECK_GUARD_MOB3";
+        guardStates.ApplyDamage(lethalMobId, lifeId: 1, maxHp: 192, damage: 158, actorId: hero8.CharacterId);
+        guardEngine.Schedule(
+            hero8, hero8.SessionId, new string('3', 32), CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 60);
+        guardAttacks.ApplyImpacts(
+            [GuardImpact(lethalMobId, hero8)], [hero8], tick: 61);
+        var deathEvents = guardEngine.Tick(62);
+        Check(
+            "guard.counter_lethal_hit_death_once",
+            deathEvents.Count(stored => stored.Type == CombatEventTypesV2.Death) == 1 &&
+            guardRegistry.TryGet(lethalMobId, out var killedMob) &&
+            killedMob.State == WorldEntityStates.Dead &&
+            guardWindows.Find(hero8.CharacterId) is { ConfirmationCount: 1 },
+            string.Join(",", deathEvents.Select(stored => stored.Type)));
+
+        var hero7 = NewGuardHero("GATEOFF");
+        var gateOffWindows = new GuardWindowStore();
+        var gateOffDefense = new GuardDefenseService(
+            gateOffWindows, combatDamage, new CombatEventStore(new CombatEventStreamOptions()));
+        var gateOffEngine = new CombatTickEngine(
+            guardRegistry, combatDamage, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions()), new MobCombatStateStore(),
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            gateOffWindows, geometry, NewDashes(geometry), new ServerClock());
+        gateOffEngine.Schedule(
+            hero7, hero7.SessionId, new string('9', 32), CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 70);
+        Check(
+            "guard.gate_off_never_opens_window",
+            gateOffWindows.Count == 0 &&
+            gateOffWindows.Find(hero7.CharacterId) is null &&
+            gateOffDefense.EvaluateIncoming(hero7.CharacterId, 71, 41, 0)
+                is { Phase: GuardPhases.None, DamageReduction: 0 },
+            $"windows={gateOffWindows.Count}");
+
+        // DEC-022 §3: a source that dies after the confirmation keeps the
+        // confirmation and the resource, but the reserved counter cancels.
+        var hero9 = NewGuardHero("SOURCEDOWN");
+        guardEngine.Schedule(
+            hero9, hero9.SessionId, new string('4', 32), CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 80);
+        var sourceDownResolutions = guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB", hero9)], [hero9], tick: 81);
+        var sourceDownWindow = guardWindows.Find(hero9.CharacterId);
+        guardRegistry.Despawn("ENT_SELFCHECK_GUARD_MOB");
+        var sourceDownEvents = guardEngine.Tick(82);
+        Check(
+            "guard.counter_source_death_after_confirm_cancels",
+            sourceDownResolutions.Single().Confirmation is not null &&
+            sourceDownWindow is { ConfirmationCount: 1, CounterTick: 82, CounterResolved: true } &&
+            hero9.SwordIntent == 2 &&
+            sourceDownEvents.Any(stored => stored.Type == CombatEventTypesV2.Cancel) &&
+            !sourceDownEvents.Any(stored => stored.Type == CombatEventTypesV2.Impact) &&
+            sourceDownWindow.CounterOutcome is "SOURCE_NOT_ALIVE" or "SOURCE_NEW_LIFE",
+            sourceDownWindow?.CounterOutcome ?? "none");
+
+        // DEC-022 §3: the counter re-runs line of sight at its own tick; walking
+        // behind cover cancels it instead of hitting through the wall.
+        var hero10 = NewPlayer("CHR_SELFCHECK_GUARD_BLOCKED");
+        hero10.X = 43;
+        hero10.Y = 0;
+        guardEngine.Schedule(
+            hero10, hero10.SessionId, new string('5', 32), CombatV2Actions.Skill, "SK-MK-01",
+            -1, 0, startTick: 90);
+        guardRegistry.TryGet("ENT_SELFCHECK_GUARD_MOB3", out var coveringMob);
+        coveringMob.ForceRespawn();
+        coveringMob.MoveTo(42.5, 0);
+        var blockedHpBefore = guardStates.Ensure(
+            "ENT_SELFCHECK_GUARD_MOB3", coveringMob.LifeId, 192).Hp;
+        var blockedResolutions = guardAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB3", hero10)], [hero10], tick: 91);
+        hero10.X = 46.5;
+        var blockedEvents = guardEngine.Tick(92);
+        Check(
+            "guard.counter_los_block_cancels",
+            blockedResolutions.Single() is { Damage: 3, Confirmation: not null } &&
+            blockedEvents.Any(stored => stored.Type == CombatEventTypesV2.Cancel) &&
+            !blockedEvents.Any(stored => stored.Type == CombatEventTypesV2.Impact) &&
+            guardWindows.Find(hero10.CharacterId) is { CounterOutcome: "LOS_BLOCKED" } &&
+            guardStates.TryGet("ENT_SELFCHECK_GUARD_MOB3", coveringMob.LifeId)?.Hp == blockedHpBefore,
+            guardWindows.Find(hero10.CharacterId)?.CounterOutcome ?? "none");
+
+        // QREV-02: a coalesced timer callback can skip the tick a reserved
+        // counter was due on. Overdue work must stay eligible, resolve exactly
+        // once in deadline order, and be stamped with the tick that actually
+        // processed it instead of a backdated one.
+        var lateClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 30, 2, 0, 0, TimeSpan.Zero));
+        var lateRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([],
+            [
+                MakeFixtureMob("ENT_SELFCHECK_LATE_MOB_A", 41, 0),
+                MakeFixtureMob("ENT_SELFCHECK_LATE_MOB_B", 41, 0.4)
+            ]),
+            lateClock);
+        var lateWindows = new GuardWindowStore();
+        var lateEvents = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var lateDefense = new GuardDefenseService(lateWindows, enabledCombat, lateEvents);
+        var lateAttacks = new MobAttackService(
+            lateRegistry, enabledCombat, mobOptions, lateDefense);
+        var lateStates = new MobCombatStateStore();
+        var lateEngine = new CombatTickEngine(
+            lateRegistry, enabledCombat, combatSkills, lateEvents, lateStates,
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            lateWindows, geometry, NewDashes(geometry), new ServerClock());
+        var lateHeroA = NewGuardHero("LATE_A");
+        var lateHeroB = NewGuardHero("LATE_B");
+        lateEngine.Schedule(
+            lateHeroA, lateHeroA.SessionId, new string('6', 32), CombatV2Actions.Skill,
+            "SK-MK-01", 1, 0, startTick: 0);
+        lateEngine.Schedule(
+            lateHeroB, lateHeroB.SessionId, new string('7', 32), CombatV2Actions.Skill,
+            "SK-MK-01", 1, 0, startTick: 0);
+        MobLifecycleEvent LateImpact(string entityId, PlayerSession victim) =>
+            new(entityId, MobBehaviorStates.Telegraph, MobBehaviorStates.Attack,
+                lateClock.UtcNow, victim.CharacterId);
+        lateAttacks.ApplyImpacts(
+            [LateImpact("ENT_SELFCHECK_LATE_MOB_A", lateHeroA)], [lateHeroA], tick: 1);
+        lateAttacks.ApplyImpacts(
+            [LateImpact("ENT_SELFCHECK_LATE_MOB_B", lateHeroB)], [lateHeroB], tick: 2);
+        var overdueQueue = lateWindows.PendingCounters(4);
+        Check(
+            "tick.counter_overdue_stays_eligible_in_deadline_order",
+            overdueQueue.Count == 2 &&
+            overdueQueue[0].CounterTick == 2 &&
+            overdueQueue[1].CounterTick == 3 &&
+            overdueQueue.All(state => !state.CounterResolved),
+            $"pending={overdueQueue.Count}");
+
+        var catchUpEvents = lateEngine.Tick(10);
+        var catchUpImpacts = catchUpEvents
+            .Where(stored => stored.Type == CombatEventTypesV2.Impact)
+            .ToArray();
+        var catchUpAgain = lateEngine.Tick(10);
+        Check(
+            "tick.counter_catchup_resolves_once_at_processed_tick",
+            catchUpImpacts.Length == 2 &&
+            catchUpImpacts[0].ActorId == lateHeroA.CharacterId &&
+            catchUpImpacts[1].ActorId == lateHeroB.CharacterId &&
+            catchUpImpacts.All(stored => stored.ServerTick == 10) &&
+            !catchUpAgain.Any(stored => stored.Type == CombatEventTypesV2.Impact) &&
+            lateWindows.PendingCounters(10).Count == 0 &&
+            lateStates.TryGet("ENT_SELFCHECK_LATE_MOB_A", 1)?.Hp == 158 &&
+            lateStates.TryGet("ENT_SELFCHECK_LATE_MOB_B", 1)?.Hp == 158,
+            string.Join(",", catchUpImpacts.Select(stored => stored.ActorId)));
+
+        // QREV-04: basic and MK03 impacts re-run line of sight at the impact
+        // tick, on the reviewed synthetic bundle only. Production topology stays
+        // SYNTHETIC_TEST_ONLY and answers NotEnforced, which is not a wall test.
+        var losRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([],
+            [
+                MakeFixtureMob("ENT_SELFCHECK_WALL_MOB_EAST", 46.5, 0),
+                MakeFixtureMob("ENT_SELFCHECK_WALL_MOB_WEST", 42.5, 0)
+            ]),
+            lateClock);
+        var losEngine = new CombatTickEngine(
+            losRegistry, enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions
+            {
+                CapacityPerSession = 256,
+                MaxPageSize = 256
+            }),
+            new MobCombatStateStore(), tickQuests,
+            new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(), geometry, NewDashes(geometry), new ServerClock());
+        var losCaster = NewPlayer("CHR_SELFCHECK_LOS_CASTER");
+        losCaster.X = 43.5;
+        losCaster.Y = 0;
+        losEngine.Schedule(
+            losCaster, losCaster.SessionId, new string('8', 32),
+            CombatV2Actions.BasicAttack, null, 1, 0, startTick: 0);
+        losEngine.Schedule(
+            losCaster, losCaster.SessionId, new string('a', 32),
+            CombatV2Actions.BasicAttack, null, -1, 0, startTick: 0);
+        var losTickEvents = losEngine.Tick(3);
+        var losImpacts = losTickEvents
+            .Where(stored => stored.Type == CombatEventTypesV2.Impact)
+            .ToArray();
+        Check(
+            "tick.impact_blocked_by_cover_on_reviewed_bundle",
+            losImpacts.Length == 1 &&
+            losImpacts[0].TargetId == "ENT_SELFCHECK_WALL_MOB_WEST" &&
+            losImpacts[0].Result is { Amount: 19, HpDamage: 19 } &&
+            losEngine.Tick(4).Any(stored => stored.Type == CombatEventTypesV2.End),
+            string.Join(",", losImpacts.Select(stored => stored.TargetId)));
+
+        var shippedLos = services.GetRequiredService<IWorldGeometryService>()
+            .CheckLineOfSight(options.DefaultMapId, "OVERWORLD", 43.5, 0, 46.5, 0);
+        Check(
+            "tick.impact_not_blocked_when_geometry_unreviewed",
+            shippedLos.Status == LineOfSightStatus.NotEnforced,
+            shippedLos.Status.ToString());
+
+        // QREV-05: refreshes and impacts race on the same defender. One impact is
+        // one critical section, so the window that paid the reduction is always
+        // the window that owns the confirmation, and no window pays twice.
+        var raceRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog([], [MakeFixtureMob("ENT_SELFCHECK_RACE_MOB", 41, 0)]),
+            lateClock);
+        var raceWindows = new GuardWindowStore();
+        var raceEvents = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 512,
+            MaxPageSize = 512
+        });
+        var raceEngine = new CombatTickEngine(
+            raceRegistry, enabledCombat, combatSkills, raceEvents, new MobCombatStateStore(),
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            raceWindows, geometry, NewDashes(geometry), new ServerClock());
+        var raceAttacks = new MobAttackService(
+            raceRegistry, enabledCombat, mobOptions,
+            new GuardDefenseService(raceWindows, enabledCombat, raceEvents));
+        var raceHero = NewGuardHero("RACE");
+        var raceResolutions = new System.Collections.Concurrent.ConcurrentBag<MobAttackResolution>();
+        RunBarrierParallel(8, index =>
+        {
+            if (index % 2 == 0)
+            {
+                raceEngine.Schedule(
+                    raceHero, raceHero.SessionId, index.ToString("x32"),
+                    CombatV2Actions.Skill, "SK-MK-01", 1, 0, startTick: 0);
+                return;
+            }
+
+            raceResolutions.Add(raceAttacks.ApplyImpacts(
+                [new MobLifecycleEvent(
+                    "ENT_SELFCHECK_RACE_MOB",
+                    MobBehaviorStates.Telegraph,
+                    MobBehaviorStates.Attack,
+                    lateClock.UtcNow,
+                    raceHero.CharacterId)],
+                [raceHero],
+                tick: 1).Single());
+        });
+
+        var raceList = raceResolutions.ToArray();
+        var raceConfirmed = raceList
+            .Select(resolution => resolution.Confirmation?.GuardCastId)
+            .Where(castId => castId is not null)
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+        var raceConfirmationEvents = raceEvents
+            .Read(raceHero.SessionId, 0, 512).Events
+            .Count(stored => stored.Type == CombatEventTypesV2.CounterConfirmed);
+        Check(
+            "guard.impact_never_mixes_two_windows",
+            raceList.Length == 4 &&
+            raceList.All(resolution => resolution.Applied) &&
+            raceList.All(resolution =>
+                resolution.DamageReduction is 0 or 0.7 &&
+                resolution.Damage == (resolution.DamageReduction > 0 ? 3 : 10)) &&
+            raceList.All(resolution =>
+                resolution.Confirmation is null ||
+                resolution.Confirmation.GuardCastId == resolution.GuardWindowCastId) &&
+            raceConfirmed.Length == raceConfirmationEvents &&
+            raceHero.SwordIntent == Math.Min(5, 2 * raceConfirmed.Length) &&
+            raceHero.Hp == 100 - raceList.Sum(resolution => resolution.Damage),
+            $"confirmed={raceConfirmed.Length} events={raceConfirmationEvents} intent={raceHero.SwordIntent}");
+
+        // Q-B: SK-MK-02 Tầm Long is swept movement, not a claim of a completed
+        // dash. On the unreviewed production bundle the sweep is NotEnforced, so
+        // the dash runs its canonical 11 WU (= 5,5 m) and that is reported as
+        // Complete, never as proof that walls work.
+        var dashHero = NewPlayer("CHR_SELFCHECK_DASH_OPEN");
+        dashHero.X = 33;
+        dashHero.Y = 0;
+        var dashEngine = new CombatTickEngine(
+            new WorldEntityRegistry(new WorldEntityCatalog([], []), lateClock),
+            enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions { CapacityPerSession = 256, MaxPageSize = 256 }),
+            new MobCombatStateStore(), tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(), tickGeometry, NewDashes(tickGeometry), new ServerClock());
+        var openDashCast = new string('1', 32);
+        dashEngine.Schedule(
+            dashHero, dashHero.SessionId, openDashCast, CombatV2Actions.Skill, "SK-MK-02",
+            1, 0, startTick: 0);
+        dashEngine.Tick(6);
+        var openDashPosition = dashHero.X;
+        var openDashEvents = dashEngine.Tick(7);
+        var openDash = dashEngine.DashLedger.Find(openDashCast);
+        Check(
+            "dash.unenforced_geometry_runs_full_range",
+            openDashPosition == 33 &&
+            openDash is { AchievedWu: 11, StopReason: DashStopReasons.Complete, AppliedTick: 7 } &&
+            dashHero.X == 44 && dashHero.Y == 0 &&
+            !openDashEvents.Any(stored =>
+                stored.Type is CombatEventTypesV2.Impact or CombatEventTypesV2.Miss),
+            openDash?.StopReason ?? "no resolution");
+        var openEndEvents = dashEngine.Tick(8);
+        Check(
+            "dash_ends_the_tick_after_it_moved",
+            !openDashEvents.Any(stored => stored.Type == CombatEventTypesV2.End) &&
+            openEndEvents.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
+            openEndEvents.Single(stored => stored.Type == CombatEventTypesV2.End).ServerTick == 8,
+            string.Join(",", openEndEvents.Select(stored => $"{stored.Type}@{stored.ServerTick}")));
+
+        // On the reviewed synthetic bundle the same dash stops in front of the
+        // 45–46 wall instead of teleporting the actor through it.
+        var wallDashHero = NewPlayer("CHR_SELFCHECK_DASH_WALL");
+        wallDashHero.X = 43.5;
+        wallDashHero.Y = 0;
+        var wallDashEngine = new CombatTickEngine(
+            new WorldEntityRegistry(new WorldEntityCatalog([], []), lateClock),
+            enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions { CapacityPerSession = 256, MaxPageSize = 256 }),
+            new MobCombatStateStore(), tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(), geometry, NewDashes(geometry), new ServerClock());
+        var wallDashCast = new string('2', 32);
+        wallDashEngine.Schedule(
+            wallDashHero, wallDashHero.SessionId, wallDashCast, CombatV2Actions.Skill,
+            "SK-MK-02", 1, 0, startTick: 0);
+        wallDashEngine.Tick(7);
+        var wallDash = wallDashEngine.DashLedger.Find(wallDashCast);
+        Check(
+            "dash_stops_short_of_reviewed_wall",
+            wallDash is not null &&
+            wallDash.StopReason == DashStopReasons.BlockedByGeometry &&
+            wallDash.AchievedWu > 0.2 && wallDash.AchievedWu < 1.1 &&
+            wallDashHero.X < 44.5 && wallDashHero.X > 43.5 && wallDashHero.Y == 0 &&
+            wallDash.RequestedWu == 11,
+            wallDash is null ? "no resolution" : $"{wallDash.AchievedWu}/{wallDash.StopReason}");
+        var revisionBeforeSecond = wallDashHero.Revision;
+        var secondDashCast = new string('3', 32);
+        wallDashEngine.Schedule(
+            wallDashHero, wallDashHero.SessionId, secondDashCast, CombatV2Actions.Skill,
+            "SK-MK-02", 1, 0, startTick: 20);
+        wallDashEngine.Tick(27);
+        var secondDash = wallDashEngine.DashLedger.Find(secondDashCast);
+        Check(
+            "dash_blocked_at_start_reports_no_travel",
+            secondDash is not null &&
+            secondDash.AchievedWu < 0.05 &&
+            secondDash.StopReason is DashStopReasons.ZeroDistance or DashStopReasons.BlockedByGeometry &&
+            wallDashHero.X == wallDash.X &&
+            wallDashHero.Revision == revisionBeforeSecond,
+            secondDash is null ? "no resolution" : $"{secondDash.AchievedWu}/{secondDash.StopReason}");
+
+        // A dash that is scheduled and then invalidated moves nobody and is
+        // cancelled once; the committed MP/cooldown are never refunded.
+        var deadDashHero = NewPlayer("CHR_SELFCHECK_DASH_DEAD");
+        deadDashHero.X = 33;
+        deadDashHero.Y = 0;
+        var deadDashEngine = new CombatTickEngine(
+            new WorldEntityRegistry(new WorldEntityCatalog([], []), lateClock),
+            enabledCombat, combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions { CapacityPerSession = 256, MaxPageSize = 256 }),
+            new MobCombatStateStore(), tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            new GuardWindowStore(), tickGeometry, NewDashes(tickGeometry), new ServerClock());
+        var deadDashCast = new string('4', 32);
+        deadDashEngine.Schedule(
+            deadDashHero, deadDashHero.SessionId, deadDashCast, CombatV2Actions.Skill,
+            "SK-MK-02", 1, 0, startTick: 0);
+        var mpBeforeDeath = deadDashHero.Mp;
+        deadDashHero.Hp = 0;
+        var deadDashEvents = deadDashEngine.Tick(7);
+        Check(
+            "dash_cancelled_when_actor_down_before_movement",
+            deadDashHero.X == 33 &&
+            deadDashEngine.DashLedger.Find(deadDashCast) is null &&
+            deadDashHero.Mp == mpBeforeDeath &&
+            deadDashEvents.Count(stored => stored.Type == CombatEventTypesV2.Cancel) == 1 &&
+            deadDashEvents.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
+            !deadDashEvents.Any(stored => stored.Type == CombatEventTypesV2.Impact),
+            string.Join(",", deadDashEvents.Select(stored => stored.Type)));
+
+        var dashLedger = new DashLedger();
+        for (var ledgerIndex = 0; ledgerIndex < 600; ledgerIndex++)
+        {
+            dashLedger.Record(new DashResolution(
+                ledgerIndex.ToString("x32"), "CHR_LEDGER", ledgerIndex, 11, 11, 0, 0,
+                DashStopReasons.Complete, 1));
+        }
+
+        Check(
+            "dash_ledger_is_bounded",
+            dashLedger.Count == DashLedger.Capacity &&
+            dashLedger.Find(87.ToString("x32")) is null &&
+            dashLedger.Find(88.ToString("x32")) is not null &&
+            dashLedger.Find(599.ToString("x32")) is { AchievedWu: 11 },
+            $"count={dashLedger.Count}");
+
+        // Q-B: status read model. A client that lost its event cursor (or
+        // reconnected after the buffer rolled over) still has to be able to ask
+        // what is active. Nothing here is on the wire yet.
+        var statusHero = NewGuardHero("STATUS");
+        var statusWindows = new GuardWindowStore();
+        var statusDashes = NewDashes(geometry);
+        var statusCommands = new InMemoryCombatV2Service(
+            combatSkills,
+            new CombatEventStore(new CombatEventStreamOptions
+            {
+                CapacityPerSession = 256,
+                MaxPageSize = 256
+            }),
+            new ServerClock());
+        var statusEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, guardEvents, guardStates,
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            statusWindows, geometry, statusDashes, new ServerClock());
+        var statusProjection = new CombatStatusProjection(
+            statusWindows, statusCommands, statusDashes);
+        var statusAttacks = new MobAttackService(
+            guardRegistry, enabledCombat, mobOptions,
+            new GuardDefenseService(statusWindows, enabledCombat, guardEvents));
+        var statusAccept = statusCommands.Resolve(
+            statusHero, statusHero.SessionId,
+            new CombatV2Intent(CombatV2Actions.Skill, "SK-MK-01", null, 1, 1, 0, null),
+            new string('6', 32));
+        var statusCastId = new string('7', 32);
+        statusEngine.Schedule(
+            statusHero, statusHero.SessionId, statusCastId, CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 0);
+        statusEngine.Schedule(
+            statusHero, statusHero.SessionId, new string('8', 31) + "a",
+            CombatV2Actions.Skill, "SK-MK-02", 1, 0, startTick: 0);
+        statusAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB2", statusHero)], [statusHero], tick: 1);
+        var guardingStatus = statusProjection.Project(
+            statusHero, tick: 1, nowUtc: guardClock.UtcNow);
+        Check(
+            "status.guard_phase_counter_and_cooldown",
+            statusAccept.Accepted &&
+            guardingStatus is
+            {
+                GuardPhase: GuardPhases.Guard,
+                CounterReserved: true,
+                CounterTick: 2,
+                SwordIntent: 2,
+                Hp: 97,
+                Mp: 38,
+                LastDash: null
+            } &&
+            guardingStatus.GuardCastId == statusCastId &&
+            guardingStatus.GuardEndExclusiveTick == 8 &&
+            guardingStatus.WhiffEndExclusiveTick == 28 &&
+            guardingStatus.CounterSourceEntityId == "ENT_SELFCHECK_GUARD_MOB2" &&
+            guardingStatus.Cooldowns.Single(cooldown => cooldown.ActionKey == "SK-MK-01").Active &&
+            statusEngine.Tick(2).Any(stored => stored.Type == CombatEventTypesV2.Impact),
+            $"{guardingStatus.GuardPhase}/{guardingStatus.Cooldowns.Count}");
+
+        var resolvedStatus = statusProjection.Project(
+            statusHero, tick: 3, nowUtc: guardClock.UtcNow);
+        Check(
+            "status_reports_resolved_counter_and_keeps_cooldown",
+            resolvedStatus is { CounterReserved: false, CounterOutcome: "DAMAGE", Mp: 38 } &&
+            resolvedStatus.Cooldowns.Any(cooldown => cooldown.ActionKey == "SK-MK-01"),
+            resolvedStatus.CounterOutcome ?? "none");
+
+        // The dash of the same hero is visible without any event replay.
+        statusEngine.Tick(7);
+        var dashStatus = statusProjection.Project(
+            statusHero, tick: 8, nowUtc: guardClock.UtcNow);
+        Check(
+            "status_carries_last_dash_outcome_without_events",
+            dashStatus.LastDash is { StopReason: DashStopReasons.BlockedByGeometry } &&
+            dashStatus.LastDash.AchievedWu > 4.0 && dashStatus.LastDash.AchievedWu < 4.45 &&
+            dashStatus.LastDash.X < 44.5 &&
+            dashStatus.GuardPhase == GuardPhases.Expired &&
+            dashStatus.Hp == 97,
+            dashStatus.LastDash?.StopReason ?? "no dash");
+
+        // The earlier guard fixtures live in their own store, so the same
+        // projection is pointed at it to read whiff and closed-window states.
+        var guardStatus = new CombatStatusProjection(
+            guardWindows, statusCommands, statusDashes);
+        var whiffStatus = guardStatus.Project(hero1, tick: 20, nowUtc: guardClock.UtcNow);
+        var expiredStatus = guardStatus.Project(hero1, tick: 40, nowUtc: guardClock.UtcNow);
+        var downStatus = guardStatus.Project(hero4, tick: 21, nowUtc: guardClock.UtcNow);
+        Check(
+            "status_tracks_whiff_expiry_and_closed_window",
+            whiffStatus.GuardPhase == GuardPhases.Whiff &&
+            expiredStatus.GuardPhase == GuardPhases.Expired &&
+            downStatus is { GuardPhase: GuardPhases.None, SwordIntent: 0, CounterReserved: false },
+            $"{whiffStatus.GuardPhase}/{expiredStatus.GuardPhase}/{downStatus.GuardPhase}");
+
+        // Q-B3: return from a downed state. Server-owned anchor only, one apply
+        // per idempotency key, and the previous life's cast, guard window and
+        // reserved counter all cleaned up as events rather than silently dropped.
+        var returnSessions = new InMemorySessionStore();
+        var returnWindows = new GuardWindowStore();
+        var returnEvents = new CombatEventStore(new CombatEventStreamOptions
+        {
+            CapacityPerSession = 256,
+            MaxPageSize = 256
+        });
+        var returnStates = new MobCombatStateStore();
+        var returnEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, returnEvents, returnStates,
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            returnWindows, geometry, NewDashes(geometry), new ServerClock());
+        var returnAttacks = new MobAttackService(
+            guardRegistry, enabledCombat, mobOptions,
+            new GuardDefenseService(returnWindows, enabledCombat, returnEvents));
+        DeathReturnService NewDeathReturn(int restoreHp) => new(
+            returnSessions, maps, options,
+            new DeathReturnOptions { Enabled = true, RestoreHpFixture = restoreHp },
+            returnWindows, returnEngine);
+        var deathReturnService = NewDeathReturn(0);
+        var downHero = NewGuardHero("RETURN");
+        returnSessions.Add(downHero);
+        var downCastId = new string('9', 31) + "a";
+        returnEngine.Schedule(
+            downHero, downHero.SessionId, downCastId, CombatV2Actions.Skill, "SK-MK-01",
+            1, 0, startTick: 0);
+        returnAttacks.ApplyImpacts(
+            [GuardImpact("ENT_SELFCHECK_GUARD_MOB2", downHero)], [downHero], tick: 1);
+        var revisionBeforeReturn = downHero.Revision;
+        var intentBeforeReturn = downHero.SwordIntent;
+        downHero.Hp = 0;
+        // The registered service is the one the composition root builds with the
+        // shipped appsettings, so this also proves the gate defaults OFF on boot.
+        var wiredDeathReturn = services.GetRequiredService<DeathReturnService>();
+        var disabledReturn = wiredDeathReturn
+            .ReturnToAnchor(downHero.SessionId, new string('9', 31) + "0");
+        var aliveKey = new string('9', 31) + "b";
+        downHero.Hp = 100;
+        var aliveReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, aliveKey);
+        var badKeyReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, "not-a-key");
+        downHero.Hp = 0;
+        Check(
+            "death_return.gate_off_and_refuses_alive_and_bad_key",
+            wiredDeathReturn.Enabled == false &&
+            services.GetRequiredService<DeathReturnOptions>() is { Enabled: false } &&
+            disabledReturn.ErrorCode == DeathReturnErrorCodes.Disabled &&
+            aliveReturn.ErrorCode == DeathReturnErrorCodes.NotDowned &&
+            badKeyReturn.ErrorCode == DeathReturnErrorCodes.InvalidKey &&
+            downHero.X == 40 && downHero.Y == 0 &&
+            downHero.Revision == revisionBeforeReturn &&
+            disabledReturn.CancelledEventCount == 0 && aliveReturn.CancelledEventCount == 0,
+            $"{disabledReturn.ErrorCode}/{aliveReturn.ErrorCode}/{badKeyReturn.ErrorCode}");
+
+        var unknownMapHero = NewGuardHero("RETURN_NOMAP");
+        unknownMapHero.MapId = "MAP_NOT_IN_BOUNDS";
+        unknownMapHero.Hp = 0;
+        returnSessions.Add(unknownMapHero);
+        var unknownSessionReturn = deathReturnService
+            .ReturnToAnchor("SES_DOES_NOT_EXIST", new string('9', 31) + "c");
+        var unknownMapReturn = deathReturnService
+            .ReturnToAnchor(unknownMapHero.SessionId, new string('9', 31) + "d");
+        Check(
+            "death_return.unknown_session_and_map_do_not_move_anyone",
+            unknownSessionReturn.ErrorCode == DeathReturnErrorCodes.UnknownSession &&
+            unknownMapReturn.ErrorCode == DeathReturnErrorCodes.UnknownMap &&
+            unknownMapHero.X == 40 && unknownMapHero.Y == 0 &&
+            returnEngine.ScheduledCastCount == 1,
+            $"{unknownSessionReturn.ErrorCode}/{unknownMapReturn.ErrorCode}");
+
+        var deathKey = new string('9', 32);
+        var firstReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, deathKey);
+        var afterReturnEvents = returnEvents.Read(downHero.SessionId, 0, 256).Events;
+        var returnWindow = returnWindows.FindAny(downHero.CharacterId);
+        var lateTickEvents = returnEngine.Tick(2);
+        Check(
+            "death_return.clears_cast_window_and_counter_once",
+            firstReturn is { Applied: true, Replayed: false, ErrorCode: null, Hp: 0 } &&
+            firstReturn.CancelledEventCount == 3 &&
+            firstReturn.SessionId == downHero.SessionId &&
+            firstReturn.Revision == revisionBeforeReturn + 1 &&
+            firstReturn.X == options.SpawnX && firstReturn.Y == options.SpawnY &&
+            downHero.X == options.SpawnX && downHero.Y == options.SpawnY &&
+            returnEngine.ScheduledCastCount == 0 &&
+            returnWindows.Find(downHero.CharacterId) is null &&
+            downHero.SwordIntent == 0 &&
+            intentBeforeReturn == 2 &&
+            returnWindow is { CounterResolved: true, CounterOutcome: "RETURNED_TO_ANCHOR" } &&
+            afterReturnEvents.Count(stored => stored.Type == CombatEventTypesV2.Cancel) == 2 &&
+            afterReturnEvents.Count(stored => stored.Type == CombatEventTypesV2.End) == 1 &&
+            lateTickEvents.Count == 0,
+            $"{firstReturn.ErrorCode}/{firstReturn.CancelledEventCount}/{lateTickEvents.Count}");
+
+        var replayReturn = deathReturnService.ReturnToAnchor(downHero.SessionId, deathKey);
+        var otherHero = NewGuardHero("RETURN_OTHER");
+        otherHero.Hp = 0;
+        returnSessions.Add(otherHero);
+        var stolenKeyReturn = deathReturnService.ReturnToAnchor(otherHero.SessionId, deathKey);
+        var eventsAfterReplay = returnEvents.Read(downHero.SessionId, 0, 256).Events.Count;
+        Check(
+            "death_return_replays_the_recorded_answer",
+            replayReturn is { Applied: true, Replayed: true } &&
+            replayReturn.Revision == firstReturn.Revision &&
+            replayReturn.X == firstReturn.X && replayReturn.Y == firstReturn.Y &&
+            downHero.Revision == firstReturn.Revision &&
+            downHero.X == options.SpawnX &&
+            stolenKeyReturn.ErrorCode == DeathReturnErrorCodes.KeyConflict &&
+            stolenKeyReturn.Applied == false &&
+            otherHero.X == 40 && otherHero.Y == 0 &&
+            returnEvents.Read(downHero.SessionId, 0, 256).Events.Count == eventsAfterReplay,
+            $"{replayReturn.Replayed}/{stolenKeyReturn.ErrorCode}");
+
+        // Two clients racing one key must produce one return, not two moves and
+        // two revision bumps.
+        var racedHero = NewGuardHero("RETURN_RACE");
+        racedHero.Hp = 0;
+        returnSessions.Add(racedHero);
+        var racedService = NewDeathReturn(options.StartingMaxHp);
+        var racedResults = new System.Collections.Concurrent.ConcurrentBag<DeathReturnResult>();
+        RunBarrierParallel(4, _ => racedResults.Add(
+            racedService.ReturnToAnchor(racedHero.SessionId, new string('9', 31) + "e")));
+        var racedApplied = racedResults.Count(result => result.Applied && !result.Replayed);
+        var racedReplayed = racedResults.Count(result => result.Replayed);
+        Check(
+            "death_return.one_key_applies_once_under_contention",
+            racedApplied == 1 && racedReplayed == 3 &&
+            racedHero.X == options.SpawnX && racedHero.Revision == 2 &&
+            racedResults.All(result => result.Revision == racedHero.Revision),
+            $"applied={racedApplied} replayed={racedReplayed} x={racedHero.X}");
+
+        // A configured restore value is the only thing that refills HP, and a
+        // returned actor is no longer downed: a second key cannot farm returns.
+        racedHero.Hp = 0;
+        racedHero.X = 40;
+        var refilledReturn = racedService.ReturnToAnchor(
+            racedHero.SessionId, new string('9', 31) + "0");
+        var secondKeyReturn = racedService.ReturnToAnchor(
+            racedHero.SessionId, new string('9', 31) + "f");
+        Check(
+            "death_return.restores_only_the_configured_fixture_value",
+            refilledReturn is { Applied: true } &&
+            refilledReturn.Hp == options.StartingMaxHp &&
+            racedHero.Hp == options.StartingMaxHp &&
+            refilledReturn.Revision == 3 &&
+            secondKeyReturn.ErrorCode == DeathReturnErrorCodes.NotDowned &&
+            racedHero.X == options.SpawnX,
+            $"{refilledReturn.Hp}/{secondKeyReturn.ErrorCode}");
+
+        var ledgerService = NewDeathReturn(0);
+        for (var ledgerIndex = 0; ledgerIndex < 300; ledgerIndex++)
+        {
+            var ledgerHero = NewPlayer("CHR_SELFCHECK_RETURN_" + ledgerIndex, hp: 0);
+            returnSessions.Add(ledgerHero);
+            ledgerService.ReturnToAnchor(
+                ledgerHero.SessionId, ledgerIndex.ToString("x32"));
+        }
+
+        Check(
+            "death_return_ledger_is_bounded",
+            ledgerService.LedgerCount == DeathReturnService.LedgerCapacity,
+            $"count={ledgerService.LedgerCount}");
+
+        // The non-death half of the same rule: a window belongs to the instance it
+        // opened on, so an actor who changes map with no hit and no cast in
+        // flight must not keep one open — the read model would report GUARD/WHIFF
+        // forever and the whiff reward would survive an instance change.
+        var sweepHero = NewGuardHero("SWEEP");
+        returnSessions.Add(sweepHero);
+        var sweepWindows = new GuardWindowStore();
+        var sweepEngine = new CombatTickEngine(
+            guardRegistry, enabledCombat, combatSkills, returnEvents, returnStates,
+            tickQuests, new FixedCombatRolls(hit: true, crit: false),
+            sweepWindows, geometry, NewDashes(geometry), new ServerClock());
+        sweepEngine.Schedule(
+            sweepHero, sweepHero.SessionId, new string('8', 31) + "f",
+            CombatV2Actions.Skill, "SK-MK-01", 1, 0, startTick: 0);
+        var sweepCastEvents = sweepEngine.Tick(12);
+        sweepHero.MapId = "MAP_KHO_CUA_LUYEN";
+        var sweepMapEvents = sweepEngine.Tick(13);
+        var sweepProjection = new CombatStatusProjection(
+            sweepWindows, statusCommands, statusDashes);
+        Check(
+            "guard.window_closes_on_map_change_without_a_hit",
+            sweepCastEvents.Any(stored => stored.Type == CombatEventTypesV2.End) &&
+            sweepEngine.ScheduledCastCount == 0 &&
+            sweepWindows.Find(sweepHero.CharacterId) is null &&
+            sweepWindows.FindAny(sweepHero.CharacterId) is
+            {
+                EndReason: GuardWindowEndReasons.MapOrFloorChange,
+                WhiffGranted: false
+            } &&
+            sweepMapEvents.Count == 0 &&
+            sweepProjection.Project(sweepHero, tick: 13, nowUtc: guardClock.UtcNow).GuardPhase
+                == GuardPhases.None,
+            $"{sweepWindows.FindAny(sweepHero.CharacterId)?.EndReason}/" +
+            $"{sweepProjection.Project(sweepHero, tick: 13, nowUtc: guardClock.UtcNow).GuardPhase}");
+
         var losAccept = new InMemoryQuestAcceptService(
             questCatalog, quests, npcAnchors, geometry,
             services.GetRequiredService<QuestAcceptOptions>());
@@ -688,6 +3582,811 @@ public static class ServiceSelfCheck
             "quest_accept.los_allowed",
             clearAccept.Accepted && clearAccept.State?.State == QuestStates.Active,
             clearAccept.Failure?.Code);
+
+        var worldRecords = services.GetRequiredService<WorldRecordCatalog>();
+        Check("world.records", worldRecords.Count == 352, $"count={worldRecords.Count}");
+        Check(
+            "world.records_resolve_target",
+            worldRecords.TryResolveTarget("OBJ_BM_PACKAGE_01", options.DefaultMapId, out var packageRecord) &&
+            packageRecord.RecordId == "MAN-BM-OBJ_BM_PACKAGE_01" &&
+            packageRecord.RecordType == WorldEntityKinds.Interactable &&
+            worldRecords.TryResolveTarget(
+                "MAN-BM-OBJ_BM_PACKAGE_02", options.DefaultMapId, out _),
+            packageRecord?.RecordId);
+
+        WorldEntityInstance MakeFixtureInteractable(
+            string entityId,
+            string recordId,
+            double x,
+            int respawnSeconds,
+            string claimPolicy = WorldEntityClaimPolicies.Shared)
+        {
+            var interactable = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = recordId,
+                Kind = WorldEntityKinds.Interactable,
+                TemplateIds = new[] { "OBJ_BM_PACKAGE_01" },
+                MapId = options.DefaultMapId,
+                FloorId = "OVERWORLD",
+                X = x,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = respawnSeconds,
+                ClaimPolicy = claimPolicy
+            };
+            interactable.Initialize();
+            return interactable;
+        }
+
+        WorldEntityInstance MakeFixtureNpc(string entityId)
+        {
+            var npc = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = "MAN-BM-NPC_LYAN",
+                Kind = WorldEntityKinds.Npc,
+                TemplateIds = new[] { "NPC_LYAN" },
+                MapId = options.DefaultMapId,
+                FloorId = "OVERWORLD",
+                X = 42,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = 0
+            };
+            npc.Initialize();
+            return npc;
+        }
+
+        var interactClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 29, 5, 0, 0, TimeSpan.Zero));
+        var interactRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [
+                    MakeFixtureInteractable(
+                        "ENT_SELFCHECK_PKG_1", "MAN-BM-OBJ_BM_PACKAGE_01", 36, 20),
+                    MakeFixtureInteractable(
+                        "ENT_SELFCHECK_PKG_2", "MAN-BM-OBJ_BM_PACKAGE_02", 44, 20),
+                    MakeFixtureInteractable(
+                        "ENT_SELFCHECK_PKG_3", "MAN-BM-OBJ_BM_PACKAGE_03", 52, 20),
+                    MakeFixtureNpc("ENT_SELFCHECK_NPC")
+                ]),
+            interactClock);
+        var interactStates = new InMemoryQuestStateStore();
+        var interactQuests = new InMemoryQuestService(
+            questCatalog, interactStates, worldRecords, interactClock);
+        var interactInventory = new InMemoryInventoryService(new InMemoryInventoryStateStore());
+        var fixedRoller = new FixedYieldRoller(2);
+        var interactOptions = new InteractionOptions
+        {
+            Enabled = true,
+            MaxInteractionDistanceWu = 5,
+            AssumedProfessionLevel = 1
+        };
+        var interactions = new InMemoryInteractionService(
+            interactRegistry,
+            worldRecords,
+            interactQuests,
+            interactInventory,
+            services.GetRequiredService<IWorldGeometryService>(),
+            interactClock,
+            fixedRoller,
+            new GatherClaimStore(interactClock),
+            interactOptions);
+
+        var interactActor = NewPlayer("CHR_SELFCHECK_INTERACT");
+        interactActor.X = 36;
+        interactActor.Y = 0;
+        var interactAccepted = interactQuests.Accept(interactActor, "P00-01");
+        Check(
+            "interact.quest_accepted",
+            interactAccepted.Accepted && interactAccepted.State?.State == QuestStates.Active,
+            interactAccepted.Failure?.Code);
+
+        var badTargetShape = interactions.Interact(
+            interactActor, "not-an-entity", new string('0', 32));
+        Check(
+            "interact.invalid_payload",
+            badTargetShape.Failure?.Code == P1ErrorCodes.InvalidPayload,
+            badTargetShape.Failure?.Code);
+
+        var missingInteractTarget = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_MISSING", new string('1', 31) + "a");
+        Check(
+            "interact.target_not_found",
+            missingInteractTarget.Failure?.Code == InteractionErrorCodes.TargetNotFound,
+            missingInteractTarget.Failure?.Code);
+
+        var npcTarget = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_NPC", new string('1', 31) + "b");
+        Check(
+            "interact.invalid_target",
+            npcTarget.Failure?.Code == InteractionErrorCodes.InvalidTarget,
+            npcTarget.Failure?.Code);
+
+        var collect1 = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_PKG_1", new string('1', 31) + "c");
+        Check(
+            "interact.collect_package",
+            collect1.Accepted &&
+            collect1.Result is
+            {
+                Kind: WorldEntityKinds.Interactable,
+                Outcome: "collected",
+                TargetState: WorldEntityStates.Depleted,
+                RecordId: "MAN-BM-OBJ_BM_PACKAGE_01",
+                Yield: null,
+                RespawnAtUtc: not null
+            } &&
+            collect1.Result.QuestUpdates.SingleOrDefault() is
+            {
+                State: QuestStates.Active,
+                Revision: 3
+            } collect1Quest &&
+            collect1Quest.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 1,
+            collect1.Failure?.Code ?? collect1.Result?.TargetState);
+
+        var collect1Replay = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_PKG_1", new string('1', 31) + "c");
+        Check(
+            "interact.idempotency_replay",
+            collect1Replay.Accepted && ReferenceEquals(collect1Replay.Result, collect1.Result),
+            collect1Replay.Failure?.Code);
+
+        var collectConflict = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_PKG_2", new string('1', 31) + "c");
+        Check(
+            "interact.idempotency_conflict",
+            collectConflict.Failure?.Code == InteractionErrorCodes.IdempotencyConflict,
+            collectConflict.Failure?.Code);
+
+        var collectDepleted = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_PKG_1", new string('1', 31) + "d");
+        Check(
+            "interact.target_depleted",
+            collectDepleted.Failure?.Code == InteractionErrorCodes.TargetNotAvailable,
+            collectDepleted.Failure?.Code);
+
+        var farInteractor = NewPlayer("CHR_SELFCHECK_INTERACT_FAR");
+        var farCollect = interactions.Interact(
+            farInteractor, "ENT_SELFCHECK_PKG_3", new string('1', 31) + "e");
+        Check(
+            "interact.out_of_range",
+            farCollect.Failure is
+            {
+                Code: InteractionErrorCodes.OutOfRange,
+                Retryable: true
+            },
+            farCollect.Failure?.Code);
+
+        interactActor.X = 44;
+        var collect2 = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_PKG_2", new string('2', 31) + "a");
+        Check(
+            "interact.collect_second",
+            collect2.Accepted &&
+            collect2.Result!.QuestUpdates.SingleOrDefault() is
+            {
+                State: QuestStates.Active,
+                Revision: 4
+            },
+            collect2.Failure?.Code);
+
+        interactActor.X = 52;
+        var collect3 = interactions.Interact(
+            interactActor, "ENT_SELFCHECK_PKG_3", new string('3', 31) + "a");
+        Check(
+            "interact.ready_to_turn_in",
+            collect3.Accepted &&
+            collect3.Result!.QuestUpdates.SingleOrDefault() is
+            {
+                State: QuestStates.ReadyToTurnIn,
+                Revision: 5
+            } collect3Quest &&
+            collect3Quest.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 3,
+            collect3.Failure?.Code ?? collect3.Result?.QuestUpdates.SingleOrDefault()?.State);
+
+        var interactTurnIn = interactQuests.TurnIn(interactActor, "P00-01");
+        Check(
+            "interact.turn_in_completed",
+            interactTurnIn.Accepted &&
+            interactTurnIn.State is { State: QuestStates.Completed, Revision: 6 },
+            interactTurnIn.Failure?.Code ?? interactTurnIn.State?.State);
+
+        interactClock.Advance(TimeSpan.FromSeconds(20));
+        var sharedRespawn = interactRegistry.Update();
+        Check("interact.respawn_shared", sharedRespawn == 3, $"respawned={sharedRespawn}");
+
+        var dedupeActor = NewPlayer("CHR_SELFCHECK_DEDUPE");
+        dedupeActor.X = 36;
+        dedupeActor.Y = 0;
+        interactQuests.Accept(dedupeActor, "P00-01");
+        var dedupe1 = interactions.Interact(
+            dedupeActor, "ENT_SELFCHECK_PKG_1", new string('4', 31) + "a");
+        interactClock.Advance(TimeSpan.FromSeconds(20));
+        interactRegistry.Update();
+        var dedupe2 = interactions.Interact(
+            dedupeActor, "ENT_SELFCHECK_PKG_1", new string('5', 31) + "a");
+        var dedupeState = interactQuests.GetState(dedupeActor.CharacterId, "P00-01").State;
+        Check(
+            "interact.distinct_record_dedupe",
+            dedupe1.Accepted &&
+            dedupe2.Accepted &&
+            dedupe2.Result!.QuestUpdates.Count == 0 &&
+            dedupeState is { State: QuestStates.Active } &&
+            dedupeState.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 1,
+            $"{dedupe2.Failure?.Code} updates={dedupe2.Result?.QuestUpdates.Count}");
+
+        // Production Rules §5: P00-01 packages are per-character claims — two
+        // characters collect all three at the same time without waiting for a
+        // global respawn, and the shared registry state never leaves AVAILABLE.
+        var packageClock = new ManualServerClock(
+            new DateTimeOffset(2026, 10, 29, 6, 0, 0, TimeSpan.Zero));
+        var packageRegistry = new WorldEntityRegistry(
+            new WorldEntityCatalog(
+                [],
+                [
+                    MakeFixtureInteractable(
+                        "ENT_SELFCHECK_PKG1", "MAN-BM-OBJ_BM_PACKAGE_01", 36, 20,
+                        WorldEntityClaimPolicies.PerCharacter),
+                    MakeFixtureInteractable(
+                        "ENT_SELFCHECK_PKG2", "MAN-BM-OBJ_BM_PACKAGE_02", 44, 20,
+                        WorldEntityClaimPolicies.PerCharacter),
+                    MakeFixtureInteractable(
+                        "ENT_SELFCHECK_PKG3", "MAN-BM-OBJ_BM_PACKAGE_03", 52, 20,
+                        WorldEntityClaimPolicies.PerCharacter)
+                ]),
+            packageClock);
+        var packageQuests = new InMemoryQuestService(
+            questCatalog, new InMemoryQuestStateStore(), worldRecords, packageClock);
+        var packageInteractions = new InMemoryInteractionService(
+            packageRegistry,
+            worldRecords,
+            packageQuests,
+            new InMemoryInventoryService(new InMemoryInventoryStateStore()),
+            services.GetRequiredService<IWorldGeometryService>(),
+            packageClock,
+            fixedRoller,
+            new GatherClaimStore(packageClock),
+            interactOptions);
+
+        var packageActorA = NewPlayer("CHR_SELFCHECK_PACKAGE_A");
+        var packageActorB = NewPlayer("CHR_SELFCHECK_PACKAGE_B");
+        packageQuests.Accept(packageActorA, "P00-01");
+        packageQuests.Accept(packageActorB, "P00-01");
+
+        var packageTargets = new[]
+        {
+            ("ENT_SELFCHECK_PKG1", 36.0),
+            ("ENT_SELFCHECK_PKG2", 44.0),
+            ("ENT_SELFCHECK_PKG3", 52.0)
+        };
+        var packageOutcomes = new InteractionOutcome?[packageTargets.Length, 2];
+        using (var packageBarrier = new Barrier(2))
+        {
+            RunBarrierParallel(2, index =>
+            {
+                var session = index == 0 ? packageActorA : packageActorB;
+                var keyStem = index == 0 ? 'a' : 'b';
+                for (var step = 0; step < packageTargets.Length; step++)
+                {
+                    session.X = packageTargets[step].Item2;
+                    session.Y = 0;
+                    packageBarrier.SignalAndWait();
+                    packageOutcomes[step, index] = packageInteractions.Interact(
+                        session,
+                        packageTargets[step].Item1,
+                        $"{keyStem}{step}{new string('0', 30)}");
+                }
+            });
+        }
+
+        var packageAccepted = packageOutcomes
+            .Cast<InteractionOutcome?>()
+            .Count(outcome => outcome is { Accepted: true });
+        var packageStateA = packageQuests.GetState(packageActorA.CharacterId, "P00-01").State;
+        var packageStateB = packageQuests.GetState(packageActorB.CharacterId, "P00-01").State;
+        Check(
+            "interact.package_per_character_parallel",
+            packageAccepted == 6 &&
+            packageStateA is { State: QuestStates.ReadyToTurnIn } &&
+            packageStateB is { State: QuestStates.ReadyToTurnIn } &&
+            packageStateA.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 3 &&
+            packageStateB.ObjectiveCounters.GetValueOrDefault("OBJ_P00_01_PACKAGES") == 3,
+            $"accepted={packageAccepted}/6 a={packageStateA?.State} b={packageStateB?.State}");
+
+        packageRegistry.TryGet("ENT_SELFCHECK_PKG1", out var packageEntity);
+        Check(
+            "interact.package_state_stays_available",
+            packageEntity.State == WorldEntityStates.Available &&
+            packageRegistry.Update() == 0,
+            packageEntity.State);
+
+        packageActorA.X = 36;
+        packageActorA.Y = 0;
+        var packageReclaim = packageInteractions.Interact(
+            packageActorA, "ENT_SELFCHECK_PKG1", new string('7', 32));
+        Check(
+            "interact.package_per_character_window",
+            packageReclaim.Failure?.Code == InteractionErrorCodes.TargetNotAvailable,
+            packageReclaim.Failure?.Code);
+
+        packageClock.Advance(TimeSpan.FromSeconds(20));
+        var packageReclaimAfterWindow = packageInteractions.Interact(
+            packageActorA, "ENT_SELFCHECK_PKG1", new string('8', 32));
+        Check(
+            "interact.package_per_character_respawn",
+            packageReclaimAfterWindow.Accepted &&
+            packageReclaimAfterWindow.Result!.QuestUpdates.Count == 0 &&
+            packageQuests.GetState(packageActorA.CharacterId, "P00-01").State is
+            {
+                State: QuestStates.ReadyToTurnIn
+            },
+            packageReclaimAfterWindow.Failure?.Code);
+
+        // Progress dedupe scope: unique(actor, quest, objective, event-or-record)
+        // — state is per character + quest, so the objective scope keeps two
+        // valid objectives that reference the same record independent.
+        if (!questCatalog.TryGet("P00-01", out var dedupeBaseQuest))
+        {
+            throw new InvalidOperationException("P00-01 must exist for the dedupe self-check.");
+        }
+
+        QuestDefinition MakeSyntheticQuest(
+            string questId, params QuestObjectiveDefinition[] objectives) =>
+            dedupeBaseQuest with
+            {
+                QuestId = questId,
+                Objectives = objectives,
+                InitialStepId = QuestStepIds.FromObjectiveId(objectives[0].ObjectiveId),
+                PrerequisiteQuestIds = []
+            };
+
+        var syntheticDefinitions = new Dictionary<string, QuestDefinition>(StringComparer.Ordinal)
+        {
+            ["TEST-DEDUPE-01"] = MakeSyntheticQuest(
+                "TEST-DEDUPE-01",
+                new QuestObjectiveDefinition(
+                    "OBJ_TEST_SHARE_A", QuestObjectiveTypes.Collect,
+                    ["MAN-BM-OBJ_BM_PACKAGE_01"], 1, options.DefaultMapId),
+                new QuestObjectiveDefinition(
+                    "OBJ_TEST_SHARE_B", QuestObjectiveTypes.Collect,
+                    ["MAN-BM-OBJ_BM_PACKAGE_01", "MAN-BM-OBJ_BM_PACKAGE_02"], 2,
+                    options.DefaultMapId)),
+            ["TEST-SEQ-01"] = MakeSyntheticQuest(
+                "TEST-SEQ-01",
+                new QuestObjectiveDefinition(
+                    "OBJ_TEST_SEQ_A", QuestObjectiveTypes.Collect,
+                    ["MAN-BM-OBJ_BM_PACKAGE_01"], 1, options.DefaultMapId),
+                new QuestObjectiveDefinition(
+                    "OBJ_TEST_SEQ_B", QuestObjectiveTypes.Collect,
+                    ["MAN-BM-OBJ_BM_PACKAGE_03"], 1, options.DefaultMapId)),
+            ["TEST-KILL-01"] = MakeSyntheticQuest(
+                "TEST-KILL-01",
+                new QuestObjectiveDefinition(
+                    "OBJ_TEST_KILL_A", QuestObjectiveTypes.Kill,
+                    ["MAN-BM-SPAWN_BM_01"], 2, options.DefaultMapId),
+                new QuestObjectiveDefinition(
+                    "OBJ_TEST_KILL_B", QuestObjectiveTypes.Kill,
+                    ["MAN-BM-SPAWN_BM_01"], 2, options.DefaultMapId))
+        };
+        var syntheticQuests = new InMemoryQuestService(
+            new QuestCatalog(syntheticDefinitions),
+            new InMemoryQuestStateStore(),
+            worldRecords,
+            interactClock);
+        var dedupeScopeActor = NewPlayer("CHR_SELFCHECK_DEDUPE_SCOPE");
+
+        syntheticQuests.Accept(dedupeScopeActor, "TEST-DEDUPE-01");
+        syntheticQuests.RecordVerifiedEvent(
+            dedupeScopeActor, new string('a', 32),
+            QuestProgressEventTypes.InteractClaim, "MAN-BM-OBJ_BM_PACKAGE_01",
+            options.DefaultMapId);
+        var sharedRecordState = syntheticQuests.GetState(
+            dedupeScopeActor.CharacterId, "TEST-DEDUPE-01").State;
+        Check(
+            "quest.dedupe_two_objectives_share_record",
+            sharedRecordState is { State: QuestStates.Active } &&
+            sharedRecordState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_A") == 1 &&
+            sharedRecordState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_B") == 1,
+            $"{sharedRecordState?.State} " +
+            $"a={sharedRecordState?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_A")} " +
+            $"b={sharedRecordState?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_B")}");
+
+        var duplicateEvent = syntheticQuests.RecordVerifiedEvent(
+            dedupeScopeActor, new string('b', 32),
+            QuestProgressEventTypes.InteractClaim, "MAN-BM-OBJ_BM_PACKAGE_01",
+            options.DefaultMapId);
+        var duplicateState = syntheticQuests.GetState(
+            dedupeScopeActor.CharacterId, "TEST-DEDUPE-01").State;
+        Check(
+            "quest.dedupe_duplicate_event",
+            duplicateEvent.Count == 0 &&
+            duplicateState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_A") == 1 &&
+            duplicateState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_B") == 1,
+            $"updates={duplicateEvent.Count}");
+
+        syntheticQuests.RecordVerifiedEvent(
+            dedupeScopeActor, new string('c', 32),
+            QuestProgressEventTypes.InteractClaim, "MAN-BM-OBJ_BM_PACKAGE_02",
+            options.DefaultMapId);
+        var secondRecordState = syntheticQuests.GetState(
+            dedupeScopeActor.CharacterId, "TEST-DEDUPE-01").State;
+        Check(
+            "quest.dedupe_second_record",
+            secondRecordState is { State: QuestStates.ReadyToTurnIn } &&
+            secondRecordState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SHARE_B") == 2,
+            secondRecordState?.State);
+
+        syntheticQuests.Accept(dedupeScopeActor, "TEST-SEQ-01");
+        syntheticQuests.RecordVerifiedEvent(
+            dedupeScopeActor, new string('d', 32),
+            QuestProgressEventTypes.InteractClaim, "MAN-BM-OBJ_BM_PACKAGE_01",
+            options.DefaultMapId);
+        var sequentialState = syntheticQuests.GetState(
+            dedupeScopeActor.CharacterId, "TEST-SEQ-01").State;
+        Check(
+            "quest.dedupe_sequential_step_guard",
+            sequentialState is { State: QuestStates.Active } &&
+            sequentialState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SEQ_A") == 1 &&
+            sequentialState.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SEQ_B") == 0,
+            $"{sequentialState?.State} " +
+            $"b={sequentialState?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_SEQ_B")}");
+
+        syntheticQuests.Accept(dedupeScopeActor, "TEST-KILL-01");
+        syntheticQuests.RecordVerifiedEvent(
+            dedupeScopeActor, new string('e', 32),
+            QuestProgressEventTypes.Kill, "MAN-BM-SPAWN_BM_01", options.DefaultMapId);
+        var killFirst = syntheticQuests.GetState(
+            dedupeScopeActor.CharacterId, "TEST-KILL-01").State;
+        var killReplay = syntheticQuests.RecordVerifiedEvent(
+            dedupeScopeActor, new string('e', 32),
+            QuestProgressEventTypes.Kill, "MAN-BM-SPAWN_BM_01", options.DefaultMapId);
+        syntheticQuests.RecordVerifiedEvent(
+            dedupeScopeActor, new string('f', 32),
+            QuestProgressEventTypes.Kill, "MAN-BM-SPAWN_BM_01", options.DefaultMapId);
+        var killSecond = syntheticQuests.GetState(
+            dedupeScopeActor.CharacterId, "TEST-KILL-01").State;
+        Check(
+            "quest.dedupe_kill_event_scope",
+            killFirst.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_A") == 1 &&
+            killFirst.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_B") == 1 &&
+            killReplay.Count == 0 &&
+            killSecond is { State: QuestStates.ReadyToTurnIn } &&
+            killSecond.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_A") == 2 &&
+            killSecond.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_B") == 2,
+            $"{killSecond?.State} " +
+            $"a={killSecond?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_A")} " +
+            $"b={killSecond?.ObjectiveCounters.GetValueOrDefault("OBJ_TEST_KILL_B")}");
+
+        var losInteractions = new InMemoryInteractionService(
+            new WorldEntityRegistry(
+                new WorldEntityCatalog(
+                    [],
+                    [
+                        MakeFixtureInteractable(
+                            "ENT_SELFCHECK_LOS_BLOCKED", "MAN-BM-OBJ_BM_PACKAGE_01", 46.5, 60),
+                        MakeFixtureInteractable(
+                            "ENT_SELFCHECK_LOS_CLEAR", "MAN-BM-OBJ_BM_PACKAGE_01", 40, 60)
+                    ]),
+                interactClock),
+            worldRecords,
+            interactQuests,
+            interactInventory,
+            geometry,
+            interactClock,
+            fixedRoller,
+            new GatherClaimStore(interactClock),
+            interactOptions);
+
+        var losBlockedActor = NewPlayer("CHR_SELFCHECK_INTERACT_LOS");
+        losBlockedActor.X = 44;
+        losBlockedActor.Y = 0;
+        var losBlocked = losInteractions.Interact(
+            losBlockedActor, "ENT_SELFCHECK_LOS_BLOCKED", new string('6', 31) + "a");
+        Check(
+            "interact.los_blocked",
+            losBlocked.Failure is
+            {
+                Code: InteractionErrorCodes.OutOfRange,
+                Retryable: true
+            },
+            losBlocked.Failure?.Code);
+
+        losBlockedActor.X = 36;
+        var losClear = losInteractions.Interact(
+            losBlockedActor, "ENT_SELFCHECK_LOS_CLEAR", new string('7', 31) + "a");
+        Check(
+            "interact.los_allowed",
+            losClear.Accepted &&
+            losClear.Result is { Outcome: "collected", TargetState: WorldEntityStates.Depleted },
+            losClear.Failure?.Code);
+
+        WorldEntityInstance MakeFixtureNode(
+            string entityId,
+            string recordId,
+            double x,
+            int respawnSeconds)
+        {
+            var node = new WorldEntityInstance
+            {
+                EntityId = entityId,
+                RecordId = recordId,
+                Kind = WorldEntityKinds.GatherNode,
+                TemplateIds = new[] { "NODE_BM_ORE_01" },
+                MapId = options.DefaultMapId,
+                FloorId = "OVERWORLD",
+                X = x,
+                Y = 0,
+                Quantity = 1,
+                RespawnSeconds = respawnSeconds
+            };
+            node.Initialize();
+            return node;
+        }
+
+        var gatherInteractions = new InMemoryInteractionService(
+            new WorldEntityRegistry(
+                new WorldEntityCatalog(
+                    [],
+                    [
+                        MakeFixtureNode("ENT_SELFCHECK_NODE_ORE", "MAN-BM-NODE_BM_ORE_01", 21, 60),
+                        MakeFixtureNode("ENT_SELFCHECK_NODE_T2", "MAN-BM-NODE_BM_HERB_02", 132, 120)
+                    ]),
+                interactClock),
+            worldRecords,
+            interactQuests,
+            interactInventory,
+            services.GetRequiredService<IWorldGeometryService>(),
+            interactClock,
+            fixedRoller,
+            new GatherClaimStore(interactClock),
+            interactOptions);
+
+        var gatherer1 = NewPlayer("CHR_SELFCHECK_GATHER_1");
+        gatherer1.X = 21;
+        gatherer1.Y = 0;
+        var gather1 = gatherInteractions.Interact(
+            gatherer1, "ENT_SELFCHECK_NODE_ORE", new string('8', 31) + "a");
+        Check(
+            "interact.gather_claim",
+            gather1.Accepted &&
+            gather1.Result is
+            {
+                Kind: WorldEntityKinds.GatherNode,
+                Outcome: "gathered",
+                TargetState: WorldEntityStates.Available,
+                RecordId: "MAN-BM-NODE_BM_ORE_01",
+                RespawnAtUtc: not null
+            } &&
+            gather1.Result.Yield is { ItemId: "MAT-ORE-01", Quantity: 2 },
+            gather1.Failure?.Code ?? gather1.Result?.Outcome);
+
+        var gather1Inventory = interactInventory.GetSnapshot(gatherer1.CharacterId);
+        Check(
+            "interact.gather_inventory",
+            gather1Inventory.InventoryRevision == 1 &&
+            gather1Inventory.Items.Single() is
+            {
+                TemplateId: "MAT-ORE-01",
+                Stack: 2,
+                Location: InventoryLocations.Bag
+            },
+            $"revision={gather1Inventory.InventoryRevision} items={gather1Inventory.Items.Count}");
+
+        var gather1Replay = gatherInteractions.Interact(
+            gatherer1, "ENT_SELFCHECK_NODE_ORE", new string('8', 31) + "a");
+        Check(
+            "interact.gather_replay_no_double",
+            gather1Replay.Accepted && ReferenceEquals(gather1Replay.Result, gather1.Result) &&
+            interactInventory.GetSnapshot(gatherer1.CharacterId).Items.Count == 1,
+            gather1Replay.Failure?.Code);
+
+        var gather1Cooldown = gatherInteractions.Interact(
+            gatherer1, "ENT_SELFCHECK_NODE_ORE", new string('9', 31) + "a");
+        Check(
+            "interact.gather_shard_cooldown",
+            gather1Cooldown.Failure?.Code == InteractionErrorCodes.TargetNotAvailable &&
+            interactInventory.GetSnapshot(gatherer1.CharacterId).Items.Count == 1,
+            gather1Cooldown.Failure?.Code);
+
+        var gatherer2 = NewPlayer("CHR_SELFCHECK_GATHER_2");
+        gatherer2.X = 21;
+        gatherer2.Y = 0;
+        var gather2 = gatherInteractions.Interact(
+            gatherer2, "ENT_SELFCHECK_NODE_ORE", new string('a', 32));
+        Check(
+            "interact.gather_shard_other_character",
+            gather2.Accepted &&
+            interactInventory.GetSnapshot(gatherer2.CharacterId).Items.Count == 1 &&
+            interactInventory.GetSnapshot(gatherer1.CharacterId).Items.Count == 1,
+            gather2.Failure?.Code);
+
+        interactClock.Advance(TimeSpan.FromSeconds(60));
+        var gather1Again = gatherInteractions.Interact(
+            gatherer1, "ENT_SELFCHECK_NODE_ORE", new string('b', 32));
+        Check(
+            "interact.gather_respawn_per_character",
+            gather1Again.Accepted &&
+            interactInventory.GetSnapshot(gatherer1.CharacterId) is
+            {
+                InventoryRevision: 2,
+                Items: { Count: 2 }
+            },
+            $"{gather1Again.Failure?.Code} revision={interactInventory.GetSnapshot(gatherer1.CharacterId).InventoryRevision}");
+
+        var professionActor = NewPlayer("CHR_SELFCHECK_GATHER_GATE");
+        professionActor.X = 132;
+        professionActor.Y = 0;
+        var professionGate = gatherInteractions.Interact(
+            professionActor, "ENT_SELFCHECK_NODE_T2", new string('c', 32));
+        Check(
+            "interact.profession_gate",
+            professionGate.Failure?.Code == InteractionErrorCodes.ProfessionLevelInsufficient &&
+            interactInventory.GetSnapshot(professionActor.CharacterId).Items.Count == 0,
+            professionGate.Failure?.Code);
+
+        // ─── barrier-coordinated concurrency + failure injection (QOD-A) ───
+
+        var raceInventory = new InMemoryInventoryService(new InMemoryInventoryStateStore());
+        var raceInteractions = new InMemoryInteractionService(
+            new WorldEntityRegistry(
+                new WorldEntityCatalog(
+                    [],
+                    [
+                        MakeFixtureNode("ENT_SELFCHECK_RACE_NODE", "MAN-BM-NODE_BM_ORE_01", 21, 60),
+                        MakeFixtureInteractable(
+                            "ENT_SELFCHECK_RACE_PKG", "MAN-BM-OBJ_BM_PACKAGE_01", 36, 20)
+                    ]),
+                interactClock),
+            worldRecords,
+            interactQuests,
+            raceInventory,
+            services.GetRequiredService<IWorldGeometryService>(),
+            interactClock,
+            fixedRoller,
+            new GatherClaimStore(interactClock),
+            interactOptions);
+
+        // Same key, same payload in parallel: both requests must replay the
+        // winner's stored result — one interactionId, one yield.
+        var raceActor = NewPlayer("CHR_SELFCHECK_RACE_GATHER");
+        raceActor.X = 21;
+        raceActor.Y = 0;
+        var sameKeyRace = Guid.NewGuid().ToString("N");
+        var sameKeyRaceOutcomes = new InteractionOutcome[2];
+        RunBarrierParallel(2, index =>
+        {
+            sameKeyRaceOutcomes[index] = raceInteractions.Interact(
+                raceActor, "ENT_SELFCHECK_RACE_NODE", sameKeyRace);
+        });
+        var sameKeyRaceAccepted = sameKeyRaceOutcomes.Count(outcome => outcome.Accepted);
+        var sameKeyRaceIds = sameKeyRaceOutcomes
+            .Where(outcome => outcome.Accepted)
+            .Select(outcome => outcome.Result!.InteractionId)
+            .Distinct()
+            .Count();
+        Check(
+            "interact.parallel_same_key_single_result",
+            sameKeyRaceAccepted == 2 &&
+            sameKeyRaceIds == 1 &&
+            ReferenceEquals(sameKeyRaceOutcomes[0].Result, sameKeyRaceOutcomes[1].Result) &&
+            raceInventory.GetSnapshot(raceActor.CharacterId).Items.Count == 1,
+            $"accepted={sameKeyRaceAccepted} distinctIds={sameKeyRaceIds} " +
+            $"codes={string.Join(",", sameKeyRaceOutcomes.Select(o => o.Failure?.Code ?? "ok"))}");
+
+        // Two different keys, same character/node in parallel: exactly one
+        // claim wins, the other gets the per-character cooldown.
+        var twoKeyActor = NewPlayer("CHR_SELFCHECK_RACE_2KEY");
+        twoKeyActor.X = 21;
+        twoKeyActor.Y = 0;
+        var twoKeyOutcomes = new InteractionOutcome[2];
+        RunBarrierParallel(2, index =>
+        {
+            twoKeyOutcomes[index] = raceInteractions.Interact(
+                twoKeyActor, "ENT_SELFCHECK_RACE_NODE", Guid.NewGuid().ToString("N"));
+        });
+        var twoKeyAccepted = twoKeyOutcomes.Count(outcome => outcome.Accepted);
+        var twoKeyCooldown = twoKeyOutcomes.Count(outcome =>
+            !outcome.Accepted &&
+            outcome.Failure?.Code == InteractionErrorCodes.TargetNotAvailable);
+        Check(
+            "interact.parallel_two_keys_single_grant",
+            twoKeyAccepted == 1 && twoKeyCooldown == 1 &&
+            raceInventory.GetSnapshot(twoKeyActor.CharacterId).Items.Count == 1,
+            $"accepted={twoKeyAccepted} " +
+            $"codes={string.Join(",", twoKeyOutcomes.Select(o => o.Failure?.Code ?? "ok"))}");
+
+        // Two characters claim the same node in parallel: per-character
+        // shards mean both win independently.
+        var shardA = NewPlayer("CHR_SELFCHECK_SHARD_A");
+        shardA.X = 21;
+        shardA.Y = 0;
+        var shardB = NewPlayer("CHR_SELFCHECK_SHARD_B");
+        shardB.X = 21;
+        shardB.Y = 0;
+        var shardActors = new[] { shardA, shardB };
+        var shardOutcomes = new InteractionOutcome[2];
+        RunBarrierParallel(2, index =>
+        {
+            shardOutcomes[index] = raceInteractions.Interact(
+                shardActors[index], "ENT_SELFCHECK_RACE_NODE", Guid.NewGuid().ToString("N"));
+        });
+        Check(
+            "interact.parallel_two_characters_independent",
+            shardOutcomes.All(outcome => outcome.Accepted) &&
+            raceInventory.GetSnapshot(shardA.CharacterId).Items.Count == 1 &&
+            raceInventory.GetSnapshot(shardB.CharacterId).Items.Count == 1,
+            $"codes={string.Join(",", shardOutcomes.Select(o => o.Failure?.Code ?? "ok"))}");
+
+        // Two characters race for one shared INTERACTABLE: the registry's
+        // atomic check-and-set lets exactly one collect.
+        var pkgA = NewPlayer("CHR_SELFCHECK_RACE_PKG_A");
+        pkgA.X = 36;
+        pkgA.Y = 0;
+        var pkgB = NewPlayer("CHR_SELFCHECK_RACE_PKG_B");
+        pkgB.X = 36;
+        pkgB.Y = 0;
+        var pkgActors = new[] { pkgA, pkgB };
+        var pkgOutcomes = new InteractionOutcome[2];
+        RunBarrierParallel(2, index =>
+        {
+            pkgOutcomes[index] = raceInteractions.Interact(
+                pkgActors[index], "ENT_SELFCHECK_RACE_PKG", Guid.NewGuid().ToString("N"));
+        });
+        var pkgAccepted = pkgOutcomes.Count(outcome => outcome.Accepted);
+        var pkgDepleted = pkgOutcomes.Count(outcome =>
+            !outcome.Accepted &&
+            outcome.Failure?.Code == InteractionErrorCodes.TargetNotAvailable);
+        Check(
+            "interact.parallel_shared_interactable_single_claim",
+            pkgAccepted == 1 && pkgDepleted == 1,
+            $"accepted={pkgAccepted} " +
+            $"codes={string.Join(",", pkgOutcomes.Select(o => o.Failure?.Code ?? "ok"))}");
+
+        // Failure after the reservation: the claim is released by token, the
+        // node stays claimable and the retry grants exactly once.
+        var failInventory = new InMemoryInventoryService(new InMemoryInventoryStateStore());
+        var raceFailOnceInventory = new FailOnceInventoryDecorator(failInventory);
+        var failInteractions = new InMemoryInteractionService(
+            new WorldEntityRegistry(
+                new WorldEntityCatalog(
+                    [],
+                    [MakeFixtureNode("ENT_SELFCHECK_FAIL_NODE", "MAN-BM-NODE_BM_ORE_01", 21, 60)]),
+                interactClock),
+            worldRecords,
+            interactQuests,
+            raceFailOnceInventory,
+            services.GetRequiredService<IWorldGeometryService>(),
+            interactClock,
+            fixedRoller,
+            new GatherClaimStore(interactClock),
+            interactOptions);
+
+        var failGatherer = NewPlayer("CHR_SELFCHECK_GATHER_FAIL");
+        failGatherer.X = 21;
+        failGatherer.Y = 0;
+        var failedGather = failInteractions.Interact(
+            failGatherer, "ENT_SELFCHECK_FAIL_NODE", Guid.NewGuid().ToString("N"));
+        Check(
+            "interact.fail_after_reserve_rejected",
+            !failedGather.Accepted &&
+            failedGather.Failure is
+            {
+                Code: InteractionErrorCodes.TargetNotAvailable,
+                Retryable: true
+            } &&
+            failInventory.GetSnapshot(failGatherer.CharacterId).Items.Count == 0,
+            failedGather.Failure?.Code);
+
+        var retriedGather = failInteractions.Interact(
+            failGatherer, "ENT_SELFCHECK_FAIL_NODE", Guid.NewGuid().ToString("N"));
+        Check(
+            "interact.fail_after_reserve_retry_grants_once",
+            retriedGather.Accepted &&
+            failInventory.GetSnapshot(failGatherer.CharacterId) is { Items: { Count: 1 } },
+            retriedGather.Failure?.Code);
 
         var inventoryActor = NewPlayer("CHR_SELFCHECK_INVENTORY");
         var emptyInventory = inventory.GetSnapshot(inventoryActor.CharacterId);
@@ -806,6 +4505,508 @@ public static class ServiceSelfCheck
             removed.Snapshot.InventoryRevision == 3,
             removed.ErrorCode ?? $"revision={removed.Snapshot?.InventoryRevision}");
 
+        // ─── turn-in ───────────────────────────────────────────
+
+        var turnInActor = NewPlayer("CHR_SELFCHECK_TURNIN");
+        var turnInQuestId = "P00-01";
+
+        // set up objectives complete → READY_TO_TURN_IN
+        var turnInAccept = quests.Accept(turnInActor, turnInQuestId);
+        Check(
+            "turnin.accept_setup",
+            turnInAccept.Accepted,
+            turnInAccept.Failure?.Code);
+
+        foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
+        {
+            var eventId = Guid.NewGuid().ToString("N");
+            quests.RecordVerifiedEvent(
+                turnInActor, eventId, QuestProgressEventTypes.InteractClaim,
+                targetId, "MAP_BEN_MUA");
+        }
+
+        var readyState = quests.GetState(turnInActor.CharacterId, turnInQuestId);
+        Check(
+            "turnin.ready_state",
+            readyState.Accepted &&
+            string.Equals(readyState.State!.State, QuestStates.ReadyToTurnIn, StringComparison.Ordinal),
+            readyState.State?.State);
+
+        // walk to turn-in NPC anchor
+        npcAnchors.TryResolve("NPC_TA_VAN_KHANH", "MAP_BEN_MUA", out var turnInAnchor);
+        turnInActor.X = turnInAnchor.X;
+        turnInActor.Y = turnInAnchor.Y;
+
+        // NPC mismatch
+        var turnInWrongNpc = questTurnIn.TurnIn(
+            turnInActor, turnInQuestId, "NPC_LYAN", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.npc_mismatch",
+            !turnInWrongNpc.Accepted &&
+            string.Equals(turnInWrongNpc.Failure!.Code, QuestTurnInErrorCodes.NpcMismatch, StringComparison.Ordinal),
+            turnInWrongNpc.Failure?.Code);
+
+        // unknown quest
+        var turnInUnknownQuest = questTurnIn.TurnIn(
+            turnInActor, "QQ-99", "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.quest_not_found",
+            !turnInUnknownQuest.Accepted &&
+            string.Equals(turnInUnknownQuest.Failure!.Code, QuestErrorCodes.QuestNotFound, StringComparison.Ordinal),
+            turnInUnknownQuest.Failure?.Code);
+
+        // wrong floor: actor on a different floor than the NPC anchor
+        turnInActor.FloorId = "MAP_BEN_MUA_F1";
+        var wrongFloor = questTurnIn.TurnIn(
+            turnInActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.wrong_floor",
+            !wrongFloor.Accepted &&
+            string.Equals(wrongFloor.Failure!.Code, QuestTurnInErrorCodes.OutOfRange, StringComparison.Ordinal),
+            wrongFloor.Failure?.Code);
+        turnInActor.FloorId = "OVERWORLD";
+
+        // out of range
+        turnInActor.X = 0;
+        turnInActor.Y = 0;
+        var outOfRange = questTurnIn.TurnIn(
+            turnInActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.out_of_range",
+            !outOfRange.Accepted &&
+            string.Equals(outOfRange.Failure!.Code, QuestTurnInErrorCodes.OutOfRange, StringComparison.Ordinal),
+            outOfRange.Failure?.Code);
+
+        // back in range
+        turnInActor.X = turnInAnchor.X;
+        turnInActor.Y = turnInAnchor.Y;
+
+        // successful turn-in
+        var turnInKey = Guid.NewGuid().ToString("N");
+        var result = questTurnIn.TurnIn(turnInActor, turnInQuestId, "NPC_TA_VAN_KHANH", turnInKey);
+        Check(
+            "turnin.success",
+            result.Accepted &&
+            string.Equals(result.Result!.QuestState.State, QuestStates.Completed, StringComparison.Ordinal) &&
+            result.Result!.Rewards.Currency.Any(c =>
+                string.Equals(c.CurrencyId, "COIN", StringComparison.Ordinal) && c.Amount == 20) &&
+            result.Result!.Rewards.Items.Count == 1 &&
+            string.Equals(result.Result!.Rewards.Items[0].TemplateId, "EQ-MK-CHEST-T1-R-COMMON", StringComparison.Ordinal) &&
+            !result.Result!.Rewards.Xp.Applied &&
+            result.Result!.Unlocks.Count == 1 &&
+            string.Equals(result.Result!.Unlocks[0], "P00-02", StringComparison.Ordinal),
+            result.Failure?.Code);
+
+        // verify inventory was granted
+        var postTurnInInv = inventory.GetSnapshot(turnInActor.CharacterId);
+        Check(
+            "turnin.inventory_granted",
+            postTurnInInv.Currencies.Any(c =>
+                string.Equals(c.CurrencyId, "COIN", StringComparison.Ordinal) && c.Amount == 20) &&
+            postTurnInInv.Items.Any(i =>
+                string.Equals(i.TemplateId, "EQ-MK-CHEST-T1-R-COMMON", StringComparison.Ordinal)),
+            $"currencies={postTurnInInv.Currencies.Count} items={postTurnInInv.Items.Count}");
+
+        // replay same key returns identical result
+        var replay = questTurnIn.TurnIn(turnInActor, turnInQuestId, "NPC_TA_VAN_KHANH", turnInKey);
+        Check(
+            "turnin.replay_same_key",
+            replay.Accepted &&
+            string.Equals(replay.Result!.QuestState.State, QuestStates.Completed, StringComparison.Ordinal),
+            replay.Failure?.Code);
+
+        // second turn-in with new key → invalid_transition
+        var newKey = Guid.NewGuid().ToString("N");
+        var secondTurnIn = questTurnIn.TurnIn(
+            turnInActor, turnInQuestId, "NPC_TA_VAN_KHANH", newKey);
+        Check(
+            "turnin.invalid_transition_after_completed",
+            !secondTurnIn.Accepted &&
+            string.Equals(secondTurnIn.Failure!.Code, QuestErrorCodes.InvalidTransition, StringComparison.Ordinal),
+            secondTurnIn.Failure?.Code);
+
+        // inventory unchanged after rejected second turn-in
+        var unchangedInv = inventory.GetSnapshot(turnInActor.CharacterId);
+        Check(
+            "turnin.inventory_no_double_reward",
+            unchangedInv.Currencies.Count == 1 &&
+            unchangedInv.Items.Count == 1,
+            $"currencies={unchangedInv.Currencies.Count} items={unchangedInv.Items.Count}");
+
+        // idempotency conflict: same key, different payload (different npcId)
+        var wrongNpcReplay = questTurnIn.TurnIn(
+            turnInActor, turnInQuestId, "NPC_LYAN", turnInKey);
+        Check(
+            "turnin.same_key_different_npc_conflict",
+            !wrongNpcReplay.Accepted &&
+            string.Equals(
+                wrongNpcReplay.Failure!.Code,
+                QuestTurnInErrorCodes.IdempotencyConflict,
+                StringComparison.Ordinal),
+            wrongNpcReplay.Failure?.Code);
+
+        var turnInIdemActor = NewPlayer("CHR_SELFCHECK_IDEM");
+        quests.Accept(turnInIdemActor, "P00-01");
+        // progress to READY_TO_TURN_IN
+        foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
+        {
+            quests.RecordVerifiedEvent(
+                turnInIdemActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
+                targetId, "MAP_BEN_MUA");
+        }
+        turnInIdemActor.X = turnInAnchor.X;
+        turnInIdemActor.Y = turnInAnchor.Y;
+
+        var conflictKey2 = Guid.NewGuid().ToString("N");
+        var firstCall = questTurnIn.TurnIn(turnInIdemActor, turnInQuestId, "NPC_TA_VAN_KHANH", conflictKey2);
+        Check(
+            "turnin.idempotency_setup",
+            firstCall.Accepted,
+            firstCall.Failure?.Code);
+
+        // Data integrity: reward-once via ledger
+        var ledgerResult = rewardLedger.Find(turnInIdemActor.CharacterId, turnInQuestId);
+        Check(
+            "turnin.reward_ledger_recorded",
+            ledgerResult is not null &&
+            string.Equals(ledgerResult.QuestState.State, QuestStates.Completed, StringComparison.Ordinal),
+            ledgerResult?.QuestState.State);
+
+        // ─── failure injection: reward transaction must not partially commit ───
+
+        var failOnceInventory = new FailOnceInventoryDecorator(inventory);
+        var failOnceLedger = new RewardLedgerStore();
+        var failOnceTurnIn = new InMemoryQuestTurnInService(
+            questCatalog,
+            quests,
+            failOnceInventory,
+            npcAnchors,
+            services.GetRequiredService<IWorldGeometryService>(),
+            failOnceLedger,
+            services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
+
+        var failActor = NewPlayer("CHR_SELFCHECK_FAILONCE");
+        quests.Accept(failActor, turnInQuestId);
+        foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
+        {
+            quests.RecordVerifiedEvent(
+                failActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
+                targetId, "MAP_BEN_MUA");
+        }
+        failActor.X = turnInAnchor.X;
+        failActor.Y = turnInAnchor.Y;
+
+        var failedTurnIn = failOnceTurnIn.TurnIn(
+            failActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.failure_injection_rejected",
+            !failedTurnIn.Accepted &&
+            string.Equals(failedTurnIn.Failure!.Code, InventoryErrorCodes.SlotOccupied, StringComparison.Ordinal) &&
+            failedTurnIn.Failure.Retryable,
+            failedTurnIn.Failure?.Code);
+
+        var stateAfterFail = quests.GetState(failActor.CharacterId, turnInQuestId);
+        Check(
+            "turnin.failure_injection_state_kept",
+            stateAfterFail.Accepted &&
+            string.Equals(stateAfterFail.State!.State, QuestStates.ReadyToTurnIn, StringComparison.Ordinal),
+            stateAfterFail.State?.State);
+
+        var inventoryAfterFail = inventory.GetSnapshot(failActor.CharacterId);
+        Check(
+            "turnin.failure_injection_no_partial_reward",
+            inventoryAfterFail.Items.Count == 0 && inventoryAfterFail.Currencies.Count == 0,
+            $"items={inventoryAfterFail.Items.Count} currencies={inventoryAfterFail.Currencies.Count}");
+
+        Check(
+            "turnin.failure_injection_ledger_empty",
+            failOnceLedger.Find(failActor.CharacterId, turnInQuestId) is null,
+            "ledger entry must not exist after failed grant");
+
+        var retriedTurnIn = failOnceTurnIn.TurnIn(
+            failActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.failure_injection_retry_succeeds",
+            retriedTurnIn.Accepted &&
+            string.Equals(retriedTurnIn.Result!.QuestState.State, QuestStates.Completed, StringComparison.Ordinal),
+            retriedTurnIn.Failure?.Code);
+
+        var inventoryAfterRetry = inventory.GetSnapshot(failActor.CharacterId);
+        Check(
+            "turnin.failure_injection_single_reward",
+            inventoryAfterRetry.Currencies.Count == 1 &&
+            inventoryAfterRetry.Currencies[0].Amount == 20 &&
+            inventoryAfterRetry.Items.Count == 1,
+            $"items={inventoryAfterRetry.Items.Count} currencies={inventoryAfterRetry.Currencies.Count}");
+
+        // ─── failure injection: quest flip failure must roll back the grant ───
+
+        var failOnceQuests = new FailOnceQuestDecorator(quests);
+        var flipFailLedger = new RewardLedgerStore();
+        var flipFailTurnIn = new InMemoryQuestTurnInService(
+            questCatalog,
+            failOnceQuests,
+            inventory,
+            npcAnchors,
+            services.GetRequiredService<IWorldGeometryService>(),
+            flipFailLedger,
+            services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
+
+        var flipFailActor = NewPlayer("CHR_SELFCHECK_FLIPFAIL");
+        quests.Accept(flipFailActor, turnInQuestId);
+        foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
+        {
+            quests.RecordVerifiedEvent(
+                flipFailActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
+                targetId, "MAP_BEN_MUA");
+        }
+        flipFailActor.X = turnInAnchor.X;
+        flipFailActor.Y = turnInAnchor.Y;
+
+        var flipFailed = flipFailTurnIn.TurnIn(
+            flipFailActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.flip_failure_rejected",
+            !flipFailed.Accepted &&
+            string.Equals(flipFailed.Failure!.Code, QuestErrorCodes.InvalidTransition, StringComparison.Ordinal),
+            flipFailed.Failure?.Code);
+
+        var flipStateAfter = quests.GetState(flipFailActor.CharacterId, turnInQuestId);
+        Check(
+            "turnin.flip_failure_state_kept",
+            flipStateAfter.Accepted &&
+            string.Equals(flipStateAfter.State!.State, QuestStates.ReadyToTurnIn, StringComparison.Ordinal),
+            flipStateAfter.State?.State);
+
+        var flipInventoryAfter = inventory.GetSnapshot(flipFailActor.CharacterId);
+        Check(
+            "turnin.flip_failure_grant_rolled_back",
+            flipInventoryAfter.Items.Count == 0 && flipInventoryAfter.Currencies.Count == 0,
+            $"items={flipInventoryAfter.Items.Count} currencies={flipInventoryAfter.Currencies.Count}");
+
+        Check(
+            "turnin.flip_failure_ledger_empty",
+            flipFailLedger.Find(flipFailActor.CharacterId, turnInQuestId) is null,
+            "ledger entry must not exist after failed flip");
+
+        var flipRetried = flipFailTurnIn.TurnIn(
+            flipFailActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.flip_failure_retry_succeeds",
+            flipRetried.Accepted &&
+            string.Equals(flipRetried.Result!.QuestState.State, QuestStates.Completed, StringComparison.Ordinal),
+            flipRetried.Failure?.Code);
+
+        var flipInventoryRetry = inventory.GetSnapshot(flipFailActor.CharacterId);
+        Check(
+            "turnin.flip_failure_single_reward",
+            flipInventoryRetry.Currencies.Count == 1 &&
+            flipInventoryRetry.Currencies[0].Amount == 20 &&
+            flipInventoryRetry.Items.Count == 1,
+            $"items={flipInventoryRetry.Items.Count} currencies={flipInventoryRetry.Currencies.Count}");
+
+        // ─── failure injection: ledger failure must roll back grant and flip ───
+
+        var failOnceLedgerStore = new FailOnceLedgerStore();
+        var ledgerFailTurnIn = new InMemoryQuestTurnInService(
+            questCatalog,
+            quests,
+            inventory,
+            npcAnchors,
+            services.GetRequiredService<IWorldGeometryService>(),
+            failOnceLedgerStore,
+            services.GetRequiredService<IOptions<QuestTurnInOptions>>().Value);
+
+        var ledgerFailActor = NewPlayer("CHR_SELFCHECK_LEDGERFAIL");
+        quests.Accept(ledgerFailActor, turnInQuestId);
+        foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
+        {
+            quests.RecordVerifiedEvent(
+                ledgerFailActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
+                targetId, "MAP_BEN_MUA");
+        }
+        ledgerFailActor.X = turnInAnchor.X;
+        ledgerFailActor.Y = turnInAnchor.Y;
+
+        var ledgerFailed = ledgerFailTurnIn.TurnIn(
+            ledgerFailActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.ledger_failure_rejected",
+            !ledgerFailed.Accepted &&
+            string.Equals(
+                ledgerFailed.Failure!.Code,
+                QuestTurnInErrorCodes.IdempotencyConflict,
+                StringComparison.Ordinal) &&
+            ledgerFailed.Failure.Retryable,
+            ledgerFailed.Failure?.Code);
+
+        var ledgerStateAfter = quests.GetState(ledgerFailActor.CharacterId, turnInQuestId);
+        Check(
+            "turnin.ledger_failure_state_kept",
+            ledgerStateAfter.Accepted &&
+            string.Equals(ledgerStateAfter.State!.State, QuestStates.ReadyToTurnIn, StringComparison.Ordinal),
+            ledgerStateAfter.State?.State);
+
+        var ledgerInventoryAfter = inventory.GetSnapshot(ledgerFailActor.CharacterId);
+        Check(
+            "turnin.ledger_failure_grant_rolled_back",
+            ledgerInventoryAfter.Items.Count == 0 && ledgerInventoryAfter.Currencies.Count == 0,
+            $"items={ledgerInventoryAfter.Items.Count} currencies={ledgerInventoryAfter.Currencies.Count}");
+
+        Check(
+            "turnin.ledger_failure_ledger_empty",
+            failOnceLedgerStore.Find(ledgerFailActor.CharacterId, turnInQuestId) is null,
+            "ledger entry must not exist after failed record");
+
+        var ledgerRetried = ledgerFailTurnIn.TurnIn(
+            ledgerFailActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.ledger_failure_retry_succeeds",
+            ledgerRetried.Accepted &&
+            string.Equals(ledgerRetried.Result!.QuestState.State, QuestStates.Completed, StringComparison.Ordinal),
+            ledgerRetried.Failure?.Code);
+
+        var ledgerInventoryRetry = inventory.GetSnapshot(ledgerFailActor.CharacterId);
+        Check(
+            "turnin.ledger_failure_single_reward",
+            ledgerInventoryRetry.Currencies.Count == 1 &&
+            ledgerInventoryRetry.Currencies[0].Amount == 20 &&
+            ledgerInventoryRetry.Items.Count == 1,
+            $"items={ledgerInventoryRetry.Items.Count} currencies={ledgerInventoryRetry.Currencies.Count}");
+
+        // ─── overflow: balance near long.MaxValue rejects without partial commit ───
+
+        var overflowActor = NewPlayer("CHR_SELFCHECK_OVERFLOW");
+        quests.Accept(overflowActor, turnInQuestId);
+        foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
+        {
+            quests.RecordVerifiedEvent(
+                overflowActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
+                targetId, "MAP_BEN_MUA");
+        }
+        overflowActor.X = turnInAnchor.X;
+        overflowActor.Y = turnInAnchor.Y;
+
+        // Seed the near-max balance directly in the state store: mutation
+        // validation caps currency deltas at 10^12, so the overflow boundary
+        // can only be reached by writing the stored balance itself.
+        var overflowStateStore = services.GetRequiredService<IInventoryStateStore>();
+        var overflowBalanceState = overflowStateStore.GetOrAdd(overflowActor.CharacterId);
+        lock (overflowBalanceState.SyncRoot)
+        {
+            overflowBalanceState.Currencies["COIN"] = long.MaxValue - 10;
+        }
+
+        var seedOverflow = inventory.GetSnapshot(overflowActor.CharacterId);
+        Check(
+            "turnin.overflow_seed",
+            seedOverflow.Currencies.Count == 1 &&
+            seedOverflow.Currencies[0].Amount == long.MaxValue - 10,
+            seedOverflow.Currencies.Count.ToString());
+
+        var overflowTurnIn = questTurnIn.TurnIn(
+            overflowActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        Check(
+            "turnin.overflow_rejected_no_partial",
+            !overflowTurnIn.Accepted &&
+            string.Equals(overflowTurnIn.Failure!.Code, P1ErrorCodes.InvalidPayload, StringComparison.Ordinal) &&
+            overflowTurnIn.Failure.FieldErrors.Contains("currencyDeltas", StringComparer.Ordinal),
+            overflowTurnIn.Failure?.Code);
+
+        var overflowState = quests.GetState(overflowActor.CharacterId, turnInQuestId);
+        Check(
+            "turnin.overflow_state_kept",
+            overflowState.Accepted &&
+            string.Equals(overflowState.State!.State, QuestStates.ReadyToTurnIn, StringComparison.Ordinal),
+            overflowState.State?.State);
+
+        var overflowInventory = inventory.GetSnapshot(overflowActor.CharacterId);
+        Check(
+            "turnin.overflow_inventory_unchanged",
+            overflowInventory.Currencies.Count == 1 &&
+            overflowInventory.Currencies[0].Amount == long.MaxValue - 10 &&
+            overflowInventory.Items.Count == 0,
+            $"items={overflowInventory.Items.Count} currencies={overflowInventory.Currencies.Count}");
+
+        // ─── concurrency: parallel turn-ins must grant exactly once ───
+
+        var parallelActor = NewPlayer("CHR_SELFCHECK_PARALLEL");
+        quests.Accept(parallelActor, turnInQuestId);
+        foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
+        {
+            quests.RecordVerifiedEvent(
+                parallelActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
+                targetId, "MAP_BEN_MUA");
+        }
+        parallelActor.X = turnInAnchor.X;
+        parallelActor.Y = turnInAnchor.Y;
+
+        var parallelOutcomes = new TurnInOutcome[2];
+        RunBarrierParallel(2, index =>
+        {
+            parallelOutcomes[index] = questTurnIn.TurnIn(
+                parallelActor, turnInQuestId, "NPC_TA_VAN_KHANH", Guid.NewGuid().ToString("N"));
+        });
+
+        var parallelAccepted = parallelOutcomes.Count(outcome => outcome.Accepted);
+        var parallelInvalid = parallelOutcomes.Count(outcome =>
+            !outcome.Accepted &&
+            string.Equals(outcome.Failure?.Code, QuestErrorCodes.InvalidTransition, StringComparison.Ordinal));
+        Check(
+            "turnin.parallel_exactly_one_win",
+            parallelAccepted == 1 && parallelInvalid == 1,
+            $"accepted={parallelAccepted} invalid={parallelInvalid} " +
+            $"codes={string.Join(",", parallelOutcomes.Select(o => o.Failure?.Code ?? "ok"))}");
+
+        var parallelInventory = inventory.GetSnapshot(parallelActor.CharacterId);
+        Check(
+            "turnin.parallel_single_reward",
+            parallelInventory.Currencies.Count == 1 &&
+            parallelInventory.Currencies[0].Amount == 20 &&
+            parallelInventory.Items.Count == 1,
+            $"items={parallelInventory.Items.Count} currencies={parallelInventory.Currencies.Count}");
+
+        // same key in parallel: contention must never double-grant; both threads
+        // either replay the stored result or one gets invalid_transition.
+        var replayActor = NewPlayer("CHR_SELFCHECK_PARALLEL_REPLAY");
+        quests.Accept(replayActor, turnInQuestId);
+        foreach (var targetId in new[] { "OBJ_BM_PACKAGE_01", "OBJ_BM_PACKAGE_02", "OBJ_BM_PACKAGE_03" })
+        {
+            quests.RecordVerifiedEvent(
+                replayActor, Guid.NewGuid().ToString("N"), QuestProgressEventTypes.InteractClaim,
+                targetId, "MAP_BEN_MUA");
+        }
+        replayActor.X = turnInAnchor.X;
+        replayActor.Y = turnInAnchor.Y;
+
+        var sameKey = Guid.NewGuid().ToString("N");
+        var sameKeyOutcomes = new TurnInOutcome[2];
+        RunBarrierParallel(2, index =>
+        {
+            sameKeyOutcomes[index] = questTurnIn.TurnIn(
+                replayActor, turnInQuestId, "NPC_TA_VAN_KHANH", sameKey);
+        });
+
+        var sameKeyAccepted = sameKeyOutcomes.Count(outcome => outcome.Accepted);
+        var sameKeyRevisions = sameKeyOutcomes
+            .Where(outcome => outcome.Accepted)
+            .Select(outcome => outcome.Result!.QuestState.Revision)
+            .Distinct()
+            .Count();
+        Check(
+            "turnin.parallel_same_key_contention",
+            sameKeyAccepted == 2 && sameKeyRevisions == 1,
+            $"accepted={sameKeyAccepted} distinctRevisions={sameKeyRevisions} " +
+            $"codes={string.Join(",", sameKeyOutcomes.Select(o => o.Failure?.Code ?? "ok"))}");
+
+        var sameKeyInventory = inventory.GetSnapshot(replayActor.CharacterId);
+        Check(
+            "turnin.parallel_same_key_single_reward",
+            sameKeyInventory.Currencies.Count == 1 &&
+            sameKeyInventory.Currencies[0].Amount == 20 &&
+            sameKeyInventory.Items.Count == 1,
+            $"items={sameKeyInventory.Items.Count} currencies={sameKeyInventory.Currencies.Count}");
+
         var teleportActor = NewPlayer("CHR_SELFCHECK_TELEPORT");
         var badMapShape = teleport.Teleport(
             teleportActor,
@@ -888,5 +5089,169 @@ public static class ServiceSelfCheck
             results.Count);
 
         return failures == 0 ? 0 : 1;
+    }
+
+    private sealed class FixedYieldRoller : IYieldRoller
+    {
+        private readonly int _value;
+
+        public FixedYieldRoller(int value)
+        {
+            _value = value;
+        }
+
+        public int Roll(int minInclusive, int maxInclusive) => _value;
+    }
+
+    private sealed class FailOnceInventoryDecorator : IInventoryService
+    {
+        private readonly IInventoryService _inner;
+        private bool _failed;
+
+        public FailOnceInventoryDecorator(IInventoryService inner)
+        {
+            _inner = inner;
+        }
+
+        public InventorySnapshot GetSnapshot(string characterId) =>
+            _inner.GetSnapshot(characterId);
+
+        public InventoryOutcome Apply(PlayerSession actor, InventoryMutation? mutation)
+        {
+            if (!_failed)
+            {
+                _failed = true;
+                return InventoryOutcome.Rejected(
+                    InventoryErrorCodes.SlotOccupied, retryable: true, "rewards");
+            }
+
+            return _inner.Apply(actor, mutation);
+        }
+    }
+
+    private sealed class FailOnceQuestDecorator : IQuestService
+    {
+        private readonly IQuestService _inner;
+        private bool _failed;
+
+        public FailOnceQuestDecorator(IQuestService inner)
+        {
+            _inner = inner;
+        }
+
+        public QuestOutcome GetState(string characterId, string questId) =>
+            _inner.GetState(characterId, questId);
+
+        public IReadOnlyList<QuestState> GetStates(string characterId) =>
+            _inner.GetStates(characterId);
+
+        public QuestOutcome Accept(PlayerSession actor, string questId) =>
+            _inner.Accept(actor, questId);
+
+        public IReadOnlyList<QuestState> RecordVerifiedEvent(
+            PlayerSession actor,
+            string eventId,
+            string eventType,
+            string recordId,
+            string mapId) =>
+            _inner.RecordVerifiedEvent(actor, eventId, eventType, recordId, mapId);
+
+        public QuestOutcome TurnIn(PlayerSession actor, string questId)
+        {
+            if (!_failed)
+            {
+                _failed = true;
+                return QuestOutcome.Rejected(
+                    QuestErrorCodes.InvalidTransition, retryable: false, "state");
+            }
+
+            return _inner.TurnIn(actor, questId);
+        }
+
+        public QuestOutcome RevertTurnIn(PlayerSession actor, string questId) =>
+            _inner.RevertTurnIn(actor, questId);
+
+        public QuestOutcome Fail(PlayerSession actor, string questId) =>
+            _inner.Fail(actor, questId);
+    }
+
+    private sealed class FailOnceLedgerStore : RewardLedgerStore
+    {
+        private bool _failed;
+
+        public override bool TryRecord(string characterId, string questId, TurnInResult result)
+        {
+            if (!_failed)
+            {
+                _failed = true;
+                return false;
+            }
+
+            return base.TryRecord(characterId, questId, result);
+        }
+    }
+
+    private sealed class ChanceThenSelectionRolls : ILootRollSource
+    {
+        private readonly double _chance;
+        private readonly double _selection;
+
+        public ChanceThenSelectionRolls(double chance, double selection)
+        {
+            _chance = chance;
+            _selection = selection;
+        }
+
+        public double Uniform01(string seed) =>
+            seed.Contains("|chance", StringComparison.Ordinal) ? _chance : _selection;
+    }
+
+    private sealed class FixedLootRolls : ILootRollSource
+    {
+        private readonly double _value;
+
+        public FixedLootRolls(double value)
+        {
+            _value = value;
+        }
+
+        public double Uniform01(string seed) => _value;
+    }
+
+    private sealed class FixedCombatRolls : ICombatRollSource
+    {
+        private readonly bool _hit;
+        private readonly bool _crit;
+
+        public FixedCombatRolls(bool hit, bool crit)
+        {
+            _hit = hit;
+            _crit = crit;
+        }
+
+        public bool Roll(
+            string castId, string targetId, int hitIndex, CombatRollKind kind, double probability) =>
+            kind == CombatRollKind.Crit ? _crit : _hit;
+    }
+
+    private static void RunBarrierParallel(int count, Action<int> body)
+    {
+        using var barrier = new Barrier(count);
+        var threads = new Thread[count];
+        for (var index = 0; index < count; index++)
+        {
+            var captured = index;
+            threads[index] = new Thread(() =>
+            {
+                barrier.SignalAndWait();
+                body(captured);
+            });
+            threads[index].Start();
+        }
+
+        foreach (var thread in threads)
+        {
+            thread.Join();
+        }
     }
 }

@@ -1,0 +1,24 @@
+  Determining projects to restore...
+  Restored D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj (in 2,83 sec).
+D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\BenMuaTilemapBuilder.cs(88,21): warning CS0618: 'Image.Create(int, int, bool, Image.Format)' is obsolete: 'Use 'Godot.Image.CreateEmpty(int, int, bool, Image.Format)'.' [D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj]
+D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\AnimTest.cs(54,28): warning CS0618: 'SpriteFrames.GetAnimationLoop(StringName)' is obsolete: 'Use 'Godot.SpriteFrames.GetAnimationLoopMode(StringName)' instead.' [D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj]
+D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\AnimTest.cs(55,28): warning CS0618: 'SpriteFrames.GetAnimationLoop(StringName)' is obsolete: 'Use 'Godot.SpriteFrames.GetAnimationLoopMode(StringName)' instead.' [D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj]
+D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\AnimTest.cs(56,34): warning CS0618: 'SpriteFrames.GetAnimationLoop(StringName)' is obsolete: 'Use 'Godot.SpriteFrames.GetAnimationLoopMode(StringName)' instead.' [D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj]
+D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\AnimTest.cs(57,32): warning CS0618: 'SpriteFrames.GetAnimationLoop(StringName)' is obsolete: 'Use 'Godot.SpriteFrames.GetAnimationLoopMode(StringName)' instead.' [D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj]
+D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\DirectionalAnimator2D.cs(202,13): warning CS0618: 'SpriteFrames.SetAnimationLoop(StringName, bool)' is obsolete: 'Use 'Godot.SpriteFrames.SetAnimationLoopMode(StringName, SpriteFrames.LoopMode)' instead.' [D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj]
+D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\PlaceholderNpc.cs(40,13): warning CS0618: 'SpriteFrames.SetAnimationLoop(StringName, bool)' is obsolete: 'Use 'Godot.SpriteFrames.SetAnimationLoopMode(StringName, SpriteFrames.LoopMode)' instead.' [D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj]
+  NgumachPrototype -> D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\.godot\mono\temp\bin\Debug\NgumachPrototype.dll
+
+Build succeeded.
+
+D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\BenMuaTilemapBuilder.cs(88,21): warning CS0618: 'Image.Create(int, int, bool, Image.Format)' is obsolete: 'Use 'Godot.Image.CreateEmpty(int, int, bool, Image.Format)'.' [D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj]
+D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\AnimTest.cs(54,28): warning CS0618: 'SpriteFrames.GetAnimationLoop(StringName)' is obsolete: 'Use 'Godot.SpriteFrames.GetAnimationLoopMode(StringName)' instead.' [D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj]
+D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\AnimTest.cs(55,28): warning CS0618: 'SpriteFrames.GetAnimationLoop(StringName)' is obsolete: 'Use 'Godot.SpriteFrames.GetAnimationLoopMode(StringName)' instead.' [D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj]
+D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\AnimTest.cs(56,34): warning CS0618: 'SpriteFrames.GetAnimationLoop(StringName)' is obsolete: 'Use 'Godot.SpriteFrames.GetAnimationLoopMode(StringName)' instead.' [D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj]
+D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\AnimTest.cs(57,32): warning CS0618: 'SpriteFrames.GetAnimationLoop(StringName)' is obsolete: 'Use 'Godot.SpriteFrames.GetAnimationLoopMode(StringName)' instead.' [D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj]
+D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\DirectionalAnimator2D.cs(202,13): warning CS0618: 'SpriteFrames.SetAnimationLoop(StringName, bool)' is obsolete: 'Use 'Godot.SpriteFrames.SetAnimationLoopMode(StringName, SpriteFrames.LoopMode)' instead.' [D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj]
+D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\scripts\PlaceholderNpc.cs(40,13): warning CS0618: 'SpriteFrames.SetAnimationLoop(StringName, bool)' is obsolete: 'Use 'Godot.SpriteFrames.SetAnimationLoopMode(StringName, SpriteFrames.LoopMode)' instead.' [D:\Project\NGUMACHHUYENAN-muse-review-20261104\ClientGodot\NgumachPrototype.csproj]
+    7 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:17.76

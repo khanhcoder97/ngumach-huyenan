@@ -1,0 +1,1589 @@
+{
+  "schemaVersion": 1,
+  "mapId": "ART_BM_STAGING_A2",
+  "mapPixels": [
+    2560,
+    1920
+  ],
+  "pixelsPerWU": 20,
+  "districtOrigin": [
+    640,
+    536
+  ],
+  "spawn": [
+    640,
+    360
+  ],
+  "cameraDefaultWU": [
+    64,
+    36
+  ],
+  "reference": "ben_mua_topdown_wide_v2.png",
+  "layoutKind": "authored_placements_not_grid_scatter",
+  "canonicalGameMapUnchanged": true,
+  "river": {
+    "upper": [
+      [
+        -640,
+        598
+      ],
+      [
+        -200,
+        582
+      ],
+      [
+        0,
+        568
+      ],
+      [
+        190,
+        554
+      ],
+      [
+        390,
+        539
+      ],
+      [
+        590,
+        519
+      ],
+      [
+        790,
+        489
+      ],
+      [
+        960,
+        458
+      ],
+      [
+        1120,
+        424
+      ],
+      [
+        1280,
+        382
+      ],
+      [
+        1530,
+        346
+      ],
+      [
+        1920,
+        316
+      ]
+    ],
+    "lower": [
+      [
+        -640,
+        719
+      ],
+      [
+        -200,
+        695
+      ],
+      [
+        0,
+        681
+      ],
+      [
+        200,
+        667
+      ],
+      [
+        390,
+        649
+      ],
+      [
+        590,
+        627
+      ],
+      [
+        790,
+        602
+      ],
+      [
+        960,
+        567
+      ],
+      [
+        1120,
+        532
+      ],
+      [
+        1280,
+        489
+      ],
+      [
+        1530,
+        450
+      ],
+      [
+        1920,
+        410
+      ]
+    ]
+  },
+  "roads": [
+    {
+      "id": "MAIN_STREET",
+      "width": 30,
+      "tile": 2,
+      "points": [
+        [
+          -640,
+          365
+        ],
+        [
+          0,
+          350
+        ],
+        [
+          280,
+          367
+        ],
+        [
+          600,
+          351
+        ],
+        [
+          890,
+          329
+        ],
+        [
+          1240,
+          306
+        ],
+        [
+          1920,
+          281
+        ]
+      ]
+    },
+    {
+      "id": "NORTH_LANE",
+      "width": 21,
+      "tile": 1,
+      "points": [
+        [
+          665,
+          -536
+        ],
+        [
+          658,
+          -120
+        ],
+        [
+          648,
+          110
+        ],
+        [
+          627,
+          260
+        ],
+        [
+          640,
+          359
+        ]
+      ]
+    },
+    {
+      "id": "DOCK_LANE",
+      "width": 21,
+      "tile": 1,
+      "points": [
+        [
+          640,
+          355
+        ],
+        [
+          647,
+          419
+        ],
+        [
+          650,
+          472
+        ],
+        [
+          657,
+          513
+        ]
+      ]
+    },
+    {
+      "id": "WEST_LANE",
+      "width": 17,
+      "tile": 1,
+      "points": [
+        [
+          72,
+          -200
+        ],
+        [
+          65,
+          90
+        ],
+        [
+          78,
+          240
+        ],
+        [
+          56,
+          350
+        ],
+        [
+          91,
+          452
+        ],
+        [
+          140,
+          535
+        ]
+      ]
+    },
+    {
+      "id": "EAST_LANE",
+      "width": 17,
+      "tile": 1,
+      "points": [
+        [
+          1277,
+          -150
+        ],
+        [
+          1210,
+          80
+        ],
+        [
+          1175,
+          219
+        ],
+        [
+          1197,
+          310
+        ],
+        [
+          1162,
+          381
+        ]
+      ]
+    },
+    {
+      "id": "NW_HOUSE_PATH",
+      "width": 14,
+      "tile": 1,
+      "points": [
+        [
+          291,
+          145
+        ],
+        [
+          300,
+          209
+        ],
+        [
+          313,
+          283
+        ],
+        [
+          353,
+          365
+        ]
+      ]
+    },
+    {
+      "id": "HALL_PATH",
+      "width": 17,
+      "tile": 1,
+      "points": [
+        [
+          458,
+          314
+        ],
+        [
+          457,
+          337
+        ],
+        [
+          445,
+          365
+        ]
+      ]
+    },
+    {
+      "id": "INN_PATH",
+      "width": 17,
+      "tile": 1,
+      "points": [
+        [
+          789,
+          171
+        ],
+        [
+          776,
+          210
+        ],
+        [
+          788,
+          288
+        ],
+        [
+          800,
+          337
+        ]
+      ]
+    },
+    {
+      "id": "SW_HOUSE_PATH",
+      "width": 14,
+      "tile": 1,
+      "points": [
+        [
+          190,
+          491
+        ],
+        [
+          193,
+          512
+        ],
+        [
+          185,
+          546
+        ],
+        [
+          183,
+          570
+        ]
+      ]
+    },
+    {
+      "id": "BANK_PATH",
+      "width": 17,
+      "tile": 1,
+      "points": [
+        [
+          -520,
+          578
+        ],
+        [
+          -60,
+          583
+        ],
+        [
+          195,
+          540
+        ],
+        [
+          428,
+          523
+        ],
+        [
+          650,
+          486
+        ],
+        [
+          885,
+          464
+        ],
+        [
+          1050,
+          434
+        ],
+        [
+          1280,
+          396
+        ],
+        [
+          1800,
+          332
+        ]
+      ]
+    },
+    {
+      "id": "LOWER_BANK_PATH",
+      "width": 17,
+      "tile": 1,
+      "points": [
+        [
+          -640,
+          729
+        ],
+        [
+          0,
+          709
+        ],
+        [
+          200,
+          695
+        ],
+        [
+          470,
+          672
+        ],
+        [
+          660,
+          649
+        ],
+        [
+          830,
+          622
+        ],
+        [
+          1000,
+          586
+        ],
+        [
+          1200,
+          533
+        ],
+        [
+          1540,
+          476
+        ],
+        [
+          1920,
+          433
+        ]
+      ]
+    },
+    {
+      "id": "E_COTTAGE_PATH",
+      "width": 12,
+      "tile": 1,
+      "points": [
+        [
+          1045,
+          415
+        ],
+        [
+          1040,
+          429
+        ],
+        [
+          1034,
+          440
+        ]
+      ]
+    },
+    {
+      "id": "S_HOUSE_PATH",
+      "width": 12,
+      "tile": 1,
+      "points": [
+        [
+          495,
+          499
+        ],
+        [
+          497,
+          511
+        ],
+        [
+          491,
+          523
+        ]
+      ]
+    },
+    {
+      "id": "SE_HOUSE_PATH",
+      "width": 12,
+      "tile": 1,
+      "points": [
+        [
+          811,
+          459
+        ],
+        [
+          809,
+          473
+        ]
+      ]
+    }
+  ],
+  "placements": [
+    {
+      "id": "ART_BM_HOUSE_NW",
+      "asset": "townhouse",
+      "at": [
+        290,
+        148
+      ],
+      "width": 152,
+      "solid": true
+    },
+    {
+      "id": "ART_BM_HOUSE_N",
+      "asset": "hall",
+      "at": [
+        790,
+        177
+      ],
+      "width": 181,
+      "solid": true
+    },
+    {
+      "id": "ART_BM_HOUSE_NE",
+      "asset": "cottage",
+      "at": [
+        1040,
+        95
+      ],
+      "width": 115,
+      "solid": true
+    },
+    {
+      "id": "ART_BM_COTTAGE_W",
+      "asset": "cottage",
+      "at": [
+        167,
+        315
+      ],
+      "width": 128,
+      "solid": true
+    },
+    {
+      "id": "ART_BM_HALL_CENTRE",
+      "asset": "hall",
+      "at": [
+        458,
+        319
+      ],
+      "width": 196,
+      "solid": true
+    },
+    {
+      "id": "ART_BM_WORKSHOP_SW",
+      "asset": "workshop",
+      "at": [
+        190,
+        498
+      ],
+      "width": 169,
+      "solid": true
+    },
+    {
+      "id": "ART_BM_HOUSE_S",
+      "asset": "townhouse",
+      "at": [
+        495,
+        505
+      ],
+      "width": 139,
+      "solid": true
+    },
+    {
+      "id": "ART_BM_HOUSE_SE",
+      "asset": "townhouse",
+      "at": [
+        811,
+        465
+      ],
+      "width": 147,
+      "solid": true
+    },
+    {
+      "id": "ART_BM_COTTAGE_E",
+      "asset": "cottage",
+      "at": [
+        1046,
+        419
+      ],
+      "width": 127,
+      "solid": true
+    },
+    {
+      "id": "ART_BM_HOUSE_OUT_W",
+      "asset": "cottage",
+      "at": [
+        -205,
+        335
+      ],
+      "width": 142,
+      "solid": true
+    },
+    {
+      "id": "ART_BM_HOUSE_OUT_E",
+      "asset": "townhouse",
+      "at": [
+        1465,
+        277
+      ],
+      "width": 151,
+      "solid": true
+    },
+    {
+      "id": "ART_BM_HOUSE_OUT_NE",
+      "asset": "cottage",
+      "at": [
+        1650,
+        140
+      ],
+      "width": 123,
+      "solid": true
+    },
+    {
+      "id": "ART_BM_GARDEN_NW",
+      "asset": "garden",
+      "at": [
+        191,
+        221
+      ],
+      "width": 103
+    },
+    {
+      "id": "ART_BM_GARDEN_NE",
+      "asset": "garden",
+      "at": [
+        939,
+        152
+      ],
+      "width": 93
+    },
+    {
+      "id": "ART_BM_GARDEN_SE",
+      "asset": "garden",
+      "at": [
+        928,
+        445
+      ],
+      "width": 75
+    },
+    {
+      "id": "ART_BM_GARDEN_SW",
+      "asset": "garden",
+      "at": [
+        62,
+        485
+      ],
+      "width": 83
+    },
+    {
+      "id": "ART_BM_GARDEN_OUT_W",
+      "asset": "garden",
+      "at": [
+        -342,
+        352
+      ],
+      "width": 94
+    },
+    {
+      "id": "ART_BM_MARKET",
+      "asset": "market",
+      "at": [
+        930,
+        285
+      ],
+      "width": 257,
+      "solid": true,
+      "footprint": [
+        -118,
+        -30,
+        236,
+        26
+      ]
+    },
+    {
+      "id": "ART_BM_SMALL_STALL",
+      "asset": "stall",
+      "at": [
+        791,
+        297
+      ],
+      "width": 61,
+      "solid": true
+    },
+    {
+      "id": "ART_BM_WELL",
+      "asset": "well",
+      "at": [
+        339,
+        414
+      ],
+      "width": 45,
+      "solid": true,
+      "footprint": [
+        -16,
+        -15,
+        32,
+        14
+      ]
+    },
+    {
+      "id": "ART_BM_JARS_HALL",
+      "asset": "jars",
+      "at": [
+        367,
+        319
+      ],
+      "width": 34
+    },
+    {
+      "id": "ART_BM_JARS_WORKSHOP",
+      "asset": "jars",
+      "at": [
+        280,
+        499
+      ],
+      "width": 31
+    },
+    {
+      "id": "ART_BM_JARS_BANK",
+      "asset": "jars",
+      "at": [
+        885,
+        467
+      ],
+      "width": 30
+    },
+    {
+      "id": "ART_BM_FENCE_SOUTH",
+      "asset": "fence",
+      "at": [
+        1120,
+        688
+      ],
+      "width": 180
+    },
+    {
+      "id": "ART_BM_MAIN_DOCK_A",
+      "asset": "dock",
+      "at": [
+        660,
+        551
+      ],
+      "width": 42,
+      "pier": true,
+      "footprint": [
+        -17,
+        -67,
+        34,
+        70
+      ]
+    },
+    {
+      "id": "ART_BM_MAIN_DOCK_B",
+      "asset": "dock",
+      "at": [
+        660,
+        604
+      ],
+      "width": 42,
+      "pier": true,
+      "footprint": [
+        -17,
+        -64,
+        34,
+        66
+      ]
+    },
+    {
+      "id": "ART_BM_SMALL_DOCK",
+      "asset": "dock",
+      "at": [
+        184,
+        605
+      ],
+      "width": 31,
+      "pier": true,
+      "footprint": [
+        -13,
+        -62,
+        26,
+        65
+      ]
+    },
+    {
+      "id": "ART_BM_ROOF_BOAT",
+      "asset": "roof_boat",
+      "at": [
+        607,
+        589
+      ],
+      "width": 109
+    },
+    {
+      "id": "ART_BM_SKIFF_1",
+      "asset": "skiff",
+      "at": [
+        807,
+        573
+      ],
+      "width": 65,
+      "rotation": -0.12
+    },
+    {
+      "id": "ART_BM_SKIFF_2",
+      "asset": "skiff",
+      "at": [
+        1100,
+        507
+      ],
+      "width": 60,
+      "rotation": 0.16
+    },
+    {
+      "id": "ART_BM_LOTUS_1",
+      "asset": "lotus",
+      "at": [
+        225,
+        625
+      ],
+      "width": 45
+    },
+    {
+      "id": "ART_BM_LOTUS_2",
+      "asset": "lotus",
+      "at": [
+        460,
+        584
+      ],
+      "width": 39
+    },
+    {
+      "id": "ART_BM_LOTUS_3",
+      "asset": "lotus",
+      "at": [
+        859,
+        560
+      ],
+      "width": 40
+    },
+    {
+      "id": "ART_BM_LOTUS_4",
+      "asset": "lotus",
+      "at": [
+        1080,
+        486
+      ],
+      "width": 36
+    },
+    {
+      "id": "ART_BM_LOTUS_5",
+      "asset": "lotus",
+      "at": [
+        1240,
+        481
+      ],
+      "width": 37
+    },
+    {
+      "id": "ART_BM_TREE_0",
+      "asset": "banyan",
+      "at": [
+        35,
+        115
+      ],
+      "width": 170
+    },
+    {
+      "id": "ART_BM_TREE_1",
+      "asset": "canopy",
+      "at": [
+        168,
+        47
+      ],
+      "width": 135
+    },
+    {
+      "id": "ART_BM_TREE_2",
+      "asset": "bamboo",
+      "at": [
+        417,
+        127
+      ],
+      "width": 102
+    },
+    {
+      "id": "ART_BM_TREE_3",
+      "asset": "bamboo",
+      "at": [
+        520,
+        171
+      ],
+      "width": 106
+    },
+    {
+      "id": "ART_BM_TREE_4",
+      "asset": "bamboo",
+      "at": [
+        560,
+        61
+      ],
+      "width": 94
+    },
+    {
+      "id": "ART_BM_TREE_5",
+      "asset": "canopy",
+      "at": [
+        925,
+        42
+      ],
+      "width": 135
+    },
+    {
+      "id": "ART_BM_TREE_6",
+      "asset": "bamboo",
+      "at": [
+        1165,
+        128
+      ],
+      "width": 105
+    },
+    {
+      "id": "ART_BM_TREE_7",
+      "asset": "canopy",
+      "at": [
+        1255,
+        108
+      ],
+      "width": 155
+    },
+    {
+      "id": "ART_BM_TREE_8",
+      "asset": "banyan",
+      "at": [
+        -30,
+        278
+      ],
+      "width": 149
+    },
+    {
+      "id": "ART_BM_TREE_9",
+      "asset": "canopy",
+      "at": [
+        48,
+        371
+      ],
+      "width": 130
+    },
+    {
+      "id": "ART_BM_TREE_10",
+      "asset": "willow",
+      "at": [
+        337,
+        311
+      ],
+      "width": 132
+    },
+    {
+      "id": "ART_BM_TREE_11",
+      "asset": "bamboo",
+      "at": [
+        590,
+        304
+      ],
+      "width": 85
+    },
+    {
+      "id": "ART_BM_TREE_12",
+      "asset": "canopy",
+      "at": [
+        1109,
+        270
+      ],
+      "width": 123
+    },
+    {
+      "id": "ART_BM_TREE_13",
+      "asset": "banyan",
+      "at": [
+        1260,
+        287
+      ],
+      "width": 153
+    },
+    {
+      "id": "ART_BM_TREE_14",
+      "asset": "canopy",
+      "at": [
+        -5,
+        505
+      ],
+      "width": 150
+    },
+    {
+      "id": "ART_BM_TREE_15",
+      "asset": "bamboo",
+      "at": [
+        83,
+        571
+      ],
+      "width": 77
+    },
+    {
+      "id": "ART_BM_TREE_16",
+      "asset": "canopy",
+      "at": [
+        349,
+        511
+      ],
+      "width": 112
+    },
+    {
+      "id": "ART_BM_TREE_17",
+      "asset": "bamboo",
+      "at": [
+        700,
+        499
+      ],
+      "width": 106
+    },
+    {
+      "id": "ART_BM_TREE_18",
+      "asset": "canopy",
+      "at": [
+        1148,
+        408
+      ],
+      "width": 101
+    },
+    {
+      "id": "ART_BM_TREE_19",
+      "asset": "banyan",
+      "at": [
+        1228,
+        383
+      ],
+      "width": 139
+    },
+    {
+      "id": "ART_BM_TREE_20",
+      "asset": "bamboo",
+      "at": [
+        43,
+        746
+      ],
+      "width": 112
+    },
+    {
+      "id": "ART_BM_TREE_21",
+      "asset": "canopy",
+      "at": [
+        358,
+        748
+      ],
+      "width": 129
+    },
+    {
+      "id": "ART_BM_TREE_22",
+      "asset": "bamboo",
+      "at": [
+        630,
+        729
+      ],
+      "width": 111
+    },
+    {
+      "id": "ART_BM_TREE_23",
+      "asset": "bamboo",
+      "at": [
+        804,
+        709
+      ],
+      "width": 105
+    },
+    {
+      "id": "ART_BM_TREE_24",
+      "asset": "canopy",
+      "at": [
+        1215,
+        694
+      ],
+      "width": 122
+    },
+    {
+      "id": "ART_BM_TREE_25",
+      "asset": "canopy",
+      "at": [
+        -177,
+        91
+      ],
+      "width": 151
+    },
+    {
+      "id": "ART_BM_TREE_26",
+      "asset": "bamboo",
+      "at": [
+        -290,
+        190
+      ],
+      "width": 102
+    },
+    {
+      "id": "ART_BM_TREE_27",
+      "asset": "banyan",
+      "at": [
+        -456,
+        395
+      ],
+      "width": 159
+    },
+    {
+      "id": "ART_BM_TREE_28",
+      "asset": "canopy",
+      "at": [
+        1427,
+        96
+      ],
+      "width": 161
+    },
+    {
+      "id": "ART_BM_TREE_29",
+      "asset": "bamboo",
+      "at": [
+        1537,
+        387
+      ],
+      "width": 111
+    },
+    {
+      "id": "ART_BM_TREE_30",
+      "asset": "banyan",
+      "at": [
+        1750,
+        271
+      ],
+      "width": 168
+    },
+    {
+      "id": "ART_BM_TREE_31",
+      "asset": "banyan",
+      "at": [
+        375,
+        -90
+      ],
+      "width": 173
+    },
+    {
+      "id": "ART_BM_TREE_32",
+      "asset": "bamboo",
+      "at": [
+        733,
+        -110
+      ],
+      "width": 113
+    },
+    {
+      "id": "ART_BM_TREE_33",
+      "asset": "canopy",
+      "at": [
+        1069,
+        -85
+      ],
+      "width": 153
+    },
+    {
+      "id": "ART_BM_SHRUB_0",
+      "asset": "shrub",
+      "at": [
+        117,
+        250
+      ],
+      "width": 48
+    },
+    {
+      "id": "ART_BM_SHRUB_1",
+      "asset": "shrub",
+      "at": [
+        350,
+        155
+      ],
+      "width": 39
+    },
+    {
+      "id": "ART_BM_SHRUB_2",
+      "asset": "shrub",
+      "at": [
+        407,
+        365
+      ],
+      "width": 38
+    },
+    {
+      "id": "ART_BM_SHRUB_3",
+      "asset": "shrub",
+      "at": [
+        523,
+        322
+      ],
+      "width": 36
+    },
+    {
+      "id": "ART_BM_SHRUB_4",
+      "asset": "shrub",
+      "at": [
+        753,
+        170
+      ],
+      "width": 30
+    },
+    {
+      "id": "ART_BM_SHRUB_5",
+      "asset": "shrub",
+      "at": [
+        877,
+        193
+      ],
+      "width": 36
+    },
+    {
+      "id": "ART_BM_SHRUB_6",
+      "asset": "shrub",
+      "at": [
+        1054,
+        182
+      ],
+      "width": 42
+    },
+    {
+      "id": "ART_BM_SHRUB_7",
+      "asset": "shrub",
+      "at": [
+        1171,
+        304
+      ],
+      "width": 36
+    },
+    {
+      "id": "ART_BM_SHRUB_8",
+      "asset": "shrub",
+      "at": [
+        282,
+        519
+      ],
+      "width": 39
+    },
+    {
+      "id": "ART_BM_SHRUB_9",
+      "asset": "shrub",
+      "at": [
+        578,
+        509
+      ],
+      "width": 47
+    },
+    {
+      "id": "ART_BM_SHRUB_10",
+      "asset": "shrub",
+      "at": [
+        752,
+        480
+      ],
+      "width": 45
+    },
+    {
+      "id": "ART_BM_SHRUB_11",
+      "asset": "shrub",
+      "at": [
+        992,
+        442
+      ],
+      "width": 40
+    },
+    {
+      "id": "ART_BM_SHRUB_12",
+      "asset": "shrub",
+      "at": [
+        1110,
+        428
+      ],
+      "width": 42
+    },
+    {
+      "id": "ART_BM_SHRUB_13",
+      "asset": "shrub",
+      "at": [
+        134,
+        550
+      ],
+      "width": 40
+    },
+    {
+      "id": "ART_BM_SHRUB_14",
+      "asset": "shrub",
+      "at": [
+        385,
+        528
+      ],
+      "width": 38
+    },
+    {
+      "id": "ART_BM_SHRUB_15",
+      "asset": "shrub",
+      "at": [
+        476,
+        702
+      ],
+      "width": 46
+    },
+    {
+      "id": "ART_BM_SHRUB_16",
+      "asset": "shrub",
+      "at": [
+        975,
+        647
+      ],
+      "width": 43
+    },
+    {
+      "id": "ART_BM_SHRUB_17",
+      "asset": "shrub",
+      "at": [
+        1100,
+        618
+      ],
+      "width": 42
+    },
+    {
+      "id": "ART_BM_SHRUB_18",
+      "asset": "shrub",
+      "at": [
+        -40,
+        410
+      ],
+      "width": 55
+    },
+    {
+      "id": "ART_BM_FLOWERS_0",
+      "asset": "flowers",
+      "at": [
+        133,
+        132
+      ],
+      "width": 24
+    },
+    {
+      "id": "ART_BM_FLOWERS_1",
+      "asset": "flowers",
+      "at": [
+        398,
+        183
+      ],
+      "width": 29
+    },
+    {
+      "id": "ART_BM_FLOWERS_2",
+      "asset": "flowers",
+      "at": [
+        236,
+        343
+      ],
+      "width": 34
+    },
+    {
+      "id": "ART_BM_FLOWERS_3",
+      "asset": "flowers",
+      "at": [
+        514,
+        346
+      ],
+      "width": 24
+    },
+    {
+      "id": "ART_BM_FLOWERS_4",
+      "asset": "flowers",
+      "at": [
+        583,
+        434
+      ],
+      "width": 29
+    },
+    {
+      "id": "ART_BM_FLOWERS_5",
+      "asset": "flowers",
+      "at": [
+        775,
+        337
+      ],
+      "width": 34
+    },
+    {
+      "id": "ART_BM_FLOWERS_6",
+      "asset": "flowers",
+      "at": [
+        1077,
+        305
+      ],
+      "width": 24
+    },
+    {
+      "id": "ART_BM_FLOWERS_7",
+      "asset": "flowers",
+      "at": [
+        1145,
+        355
+      ],
+      "width": 29
+    },
+    {
+      "id": "ART_BM_FLOWERS_8",
+      "asset": "flowers",
+      "at": [
+        290,
+        421
+      ],
+      "width": 34
+    },
+    {
+      "id": "ART_BM_FLOWERS_9",
+      "asset": "flowers",
+      "at": [
+        410,
+        486
+      ],
+      "width": 24
+    },
+    {
+      "id": "ART_BM_FLOWERS_10",
+      "asset": "flowers",
+      "at": [
+        562,
+        530
+      ],
+      "width": 29
+    },
+    {
+      "id": "ART_BM_FLOWERS_11",
+      "asset": "flowers",
+      "at": [
+        737,
+        507
+      ],
+      "width": 34
+    },
+    {
+      "id": "ART_BM_FLOWERS_12",
+      "asset": "flowers",
+      "at": [
+        952,
+        456
+      ],
+      "width": 24
+    },
+    {
+      "id": "ART_BM_FLOWERS_13",
+      "asset": "flowers",
+      "at": [
+        97,
+        537
+      ],
+      "width": 29
+    },
+    {
+      "id": "ART_BM_FLOWERS_14",
+      "asset": "flowers",
+      "at": [
+        1050,
+        639
+      ],
+      "width": 34
+    },
+    {
+      "id": "ART_BM_FLOWERS_15",
+      "asset": "flowers",
+      "at": [
+        893,
+        689
+      ],
+      "width": 24
+    },
+    {
+      "id": "ART_BM_VILLAGER_0",
+      "asset": "villager_0",
+      "at": [
+        65,
+        340
+      ],
+      "width": 30,
+      "height": 32,
+      "ambient": true
+    },
+    {
+      "id": "ART_BM_VILLAGER_1",
+      "asset": "villager_1",
+      "at": [
+        920,
+        315
+      ],
+      "width": 30,
+      "height": 32,
+      "ambient": true
+    },
+    {
+      "id": "ART_BM_VILLAGER_2",
+      "asset": "villager_2",
+      "at": [
+        1090,
+        324
+      ],
+      "width": 30,
+      "height": 32,
+      "ambient": true
+    },
+    {
+      "id": "ART_BM_VILLAGER_3",
+      "asset": "villager_3",
+      "at": [
+        839,
+        344
+      ],
+      "width": 30,
+      "height": 32,
+      "ambient": true
+    },
+    {
+      "id": "ART_BM_VILLAGER_4",
+      "asset": "villager_4",
+      "at": [
+        644,
+        180
+      ],
+      "width": 30,
+      "height": 32,
+      "ambient": true
+    },
+    {
+      "id": "ART_BM_VILLAGER_5",
+      "asset": "villager_5",
+      "at": [
+        647,
+        491
+      ],
+      "width": 30,
+      "height": 32,
+      "ambient": true
+    },
+    {
+      "id": "ART_BM_VILLAGER_6",
+      "asset": "villager_0",
+      "at": [
+        194,
+        555
+      ],
+      "width": 30,
+      "height": 32,
+      "ambient": true
+    },
+    {
+      "id": "ART_BM_VILLAGER_7",
+      "asset": "villager_2",
+      "at": [
+        429,
+        368
+      ],
+      "width": 30,
+      "height": 32,
+      "ambient": true
+    },
+    {
+      "id": "ART_BM_VILLAGER_8",
+      "asset": "villager_1",
+      "at": [
+        1190,
+        317
+      ],
+      "width": 30,
+      "height": 32,
+      "ambient": true
+    }
+  ]
+}

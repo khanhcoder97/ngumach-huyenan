@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AssemblyName>Ngumach.P1NativeCore</AssemblyName>
+    <RootNamespace>NguMach.Client.P1</RootNamespace>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <!-- Portable is two directories below the repository root. -->
+    <Compile Include="../../Client/Assets/Scripts/Online/Core/*.cs" Link="Core/%(Filename)%(Extension)" />
+    <Compile Include="vendor/HttpClientTransport.cs" />
+  </ItemGroup>
+</Project>

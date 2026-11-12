@@ -140,6 +140,41 @@ public static class CombatSkillCatalogLoader
                     $"{path}: targeting.rangeWu must be a non-negative finite number.");
             }
 
+            if (targeting.AngleDegrees is { } angle &&
+                (!double.IsFinite(angle) || angle < 0 || angle > 360))
+            {
+                throw new InvalidOperationException(
+                    $"{path}: targeting.angleDegrees must be between 0 and 360.");
+            }
+
+            var coefficients = file.Coefficients;
+            if (coefficients is null ||
+                !IsFiniteNonNegative(coefficients.Pve) ||
+                !IsFiniteNonNegative(coefficients.Boss) ||
+                !IsFiniteNonNegative(coefficients.Pvp))
+            {
+                throw new InvalidOperationException(
+                    $"{path}: coefficients.pve/boss/pvp must be finite non-negative numbers.");
+            }
+
+            if (coefficients.Pvp is { } pvp && pvp > 1)
+            {
+                throw new InvalidOperationException(
+                    $"{path}: coefficients.pvp must not exceed 1.");
+            }
+
+            if (file.TelegraphSeconds is not { } telegraph ||
+                !double.IsFinite(telegraph) || telegraph < 0)
+            {
+                throw new InvalidOperationException(
+                    $"{path}: telegraphSeconds must be a non-negative finite number.");
+            }
+
+            if (string.IsNullOrWhiteSpace(file.VfxKey))
+            {
+                throw new InvalidOperationException($"{path}: vfxKey is required.");
+            }
+
             var skill = new CombatSkillDefinition(
                 file.SkillId!,
                 file.ClassId,
@@ -148,7 +183,14 @@ public static class CombatSkillCatalogLoader
                 resourceCost.Amount.Value,
                 targeting.Type,
                 targeting.RangeWu,
-                targeting.MaxTargets.Value);
+                targeting.AngleDegrees,
+                targeting.MaxTargets.Value,
+                new SkillCoefficients(
+                    coefficients.Pve!.Value,
+                    coefficients.Boss!.Value,
+                    coefficients.Pvp!.Value),
+                telegraph,
+                file.VfxKey);
 
             if (!skills.TryAdd(skill.SkillId, skill))
             {
@@ -159,6 +201,9 @@ public static class CombatSkillCatalogLoader
         return new CombatSkillCatalog(skills);
     }
 
+    private static bool IsFiniteNonNegative(double? value) =>
+        value is { } v && double.IsFinite(v) && v >= 0;
+
     private sealed class SkillFile
     {
         public int SchemaVersion { get; init; }
@@ -167,6 +212,16 @@ public static class CombatSkillCatalogLoader
         public int? CooldownSeconds { get; init; }
         public ResourceCostFile? ResourceCost { get; init; }
         public TargetingFile? Targeting { get; init; }
+        public CoefficientsFile? Coefficients { get; init; }
+        public double? TelegraphSeconds { get; init; }
+        public string? VfxKey { get; init; }
+    }
+
+    private sealed class CoefficientsFile
+    {
+        public double? Pve { get; init; }
+        public double? Boss { get; init; }
+        public double? Pvp { get; init; }
     }
 
     private sealed class ResourceCostFile
@@ -179,6 +234,7 @@ public static class CombatSkillCatalogLoader
     {
         public string? Type { get; init; }
         public double? RangeWu { get; init; }
+        public double? AngleDegrees { get; init; }
         public int? MaxTargets { get; init; }
     }
 }

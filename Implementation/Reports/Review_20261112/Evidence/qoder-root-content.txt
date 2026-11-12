@@ -1,0 +1,56 @@
+
+FAILED: 37 problem(s) found:
+  - ClassDefinition/CLASS_ANH_DAO.json.role: value 'DAMAGE_DEALER' not in enum
+  - ClassDefinition/CLASS_ANH_DAO.json.weaponType: value 'DAGGER' not in enum
+  - ClassDefinition/CLASS_HUYEN_BUT.json.role: value 'CONTROLLER' not in enum
+  - ClassDefinition/CLASS_LINH_CUNG.json.role: value 'RANGED' not in enum
+  - ClassDefinition/CLASS_THACH_CHUY.json.weaponType: value 'CLUB' not in enum
+  - QuestDefinition/C1-01.json.objectives[0]: unexpected property 'floorId'
+  - QuestDefinition/C1-01.json.objectives[1]: unexpected property 'floorId'
+  - QuestDefinition/C1-01.json.objectives[2].type: value 'MAP_VIEWED' not in enum
+  - QuestDefinition/C1-01.json.objectives[2].targetIds: array has fewer than minItems
+  - QuestDefinition/C1-01.json.objectives[2]: unexpected property 'floorId'
+  - QuestDefinition/C1-01.json.objectives[2]: unexpected property 'requiredCompletedObjectiveIds'
+  - QuestDefinition/C1-01.json.objectives[2]: unexpected property 'attemptOneShot'
+  - QuestDefinition/C1-01.json.unlocks[0]: expected string
+  - SkillDefinition/SK-AD-01.json.targeting.type: value 'TARGETED' not in enum
+  - SkillDefinition/SK-AD-02.json.targeting.type: value 'TARGETED' not in enum
+  - SkillDefinition/SK-AD-03.json.targeting.type: value 'TWO_HIT' not in enum
+  - SkillDefinition/SK-AD-04.json.targeting.type: value 'TARGETED' not in enum
+  - SkillDefinition/SK-AD-06.json.targeting.type: value 'CIRCLE' not in enum
+  - SkillDefinition/SK-HB-02.json.targeting.type: value 'TARGETED' not in enum
+  - SkillDefinition/SK-HB-03.json.targeting.type: value 'TARGETED' not in enum
+  - SkillDefinition/SK-HB-04.json.targeting.type: value 'CIRCLE' not in enum
+  - SkillDefinition/SK-HB-05.json.targeting.type: value 'DASH_BACKWARD' not in enum
+  - SkillDefinition/SK-HB-06.json.targeting.type: value 'CIRCLE_AREA' not in enum
+  - SkillDefinition/SK-LC-01.json.targeting.type: value 'TARGETED_MARK' not in enum
+  - SkillDefinition/SK-LC-02.json.targeting.type: value 'TRAP_AREA' not in enum
+  - SkillDefinition/SK-LC-03.json.targeting.type: value 'MULTISHOT' not in enum
+  - SkillDefinition/SK-LC-04.json.targeting.type: value 'FANNED_CONE' not in enum
+  - SkillDefinition/SK-LC-05.json.targeting.type: value 'DASH_BACKWARD_ATTACK' not in enum
+  - SkillDefinition/SK-LC-06.json.targeting.type: value 'AREA_RAIN' not in enum
+  - SkillDefinition/SK-TC-01.json.targeting.type: value 'FAN' not in enum
+  - SkillDefinition/SK-TC-02.json.targeting.type: value 'CIRCLE_AREA' not in enum
+  - SkillDefinition/SK-TC-04.json.targeting.type: value 'SELF_AURA' not in enum
+  - SkillDefinition/SK-TC-05.json.targeting.type: value 'DASH_TARGETED' not in enum
+  - SkillDefinition/SK-TC-06.json.targeting.type: value 'ZONE' not in enum
+  - QuestDefinition/C1-01.json: a BLOCKED quest must name its gaps
+  - QuestDefinition/C1-01.json: missing turnInNpcId is not named as a blocked step
+  - QuestDefinition/C1-01.json: startNpcId 'NPC_MASTER_BY_PLAYER_CLASS' does not resolve
+Docs directory: D:\Project\NGUMACHHUYENAN-review-qod-root-20261112\docs\production
+Content directory: D:\Project\NGUMACHHUYENAN-review-qod-root-20261112\Implementation\Content
+Manifest: World_Spawn_Gathering_Manifest_vi.csv
+Item_Master_Catalog_vi.csv: ID column = item_id
+Item_Rarity_Variant_Catalog_vi.csv: ID column = item_id
+NPC_Actor_Production_Registry_vi.csv: ID column = npc_id
+Currency_Production_Data_vi.csv: ID column = currency_id
+Class_Passive_Production_Data_vi.csv: ID column = passive_id
+Definition schemas: 8
+  ClassDefinition: 5 example(s)
+  GatheringNodeDefinition: 1 example(s)
+  ItemDefinition: 1 example(s)
+  MapDefinition: 1 example(s)
+  MapTopology: 1 example(s)
+  QuestDefinition: 6 example(s)
+  SkillDefinition: 30 example(s)
+  SpawnDefinition: 1 example(s)

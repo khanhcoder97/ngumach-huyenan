@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "questId": "P00-04",
+  "titleKey": "QUEST.P00-04.TITLE",
+  "graphId": "GRAPH_P00_04",
+  "questType": "MAIN",
+  "activation": "BLOCKED",
+  "levelBand": {
+    "min": 1,
+    "max": 10
+  },
+  "startNpcId": "NPC_TA_VAN_KHANH",
+  "prerequisiteQuestIds": [
+    "P00-03"
+  ],
+  "objectives": [
+    {
+      "objectiveId": "OBJ_P00_04_WAVE_A",
+      "type": "KILL",
+      "targetIds": [
+        "MOB_CARPLING"
+      ],
+      "count": 3,
+      "mapId": "MAP_BEN_MUA"
+    },
+    {
+      "objectiveId": "OBJ_P00_04_WAVE_B",
+      "type": "KILL",
+      "targetIds": [
+        "MOB_WATERROOT"
+      ],
+      "count": 3,
+      "mapId": "MAP_BEN_MUA"
+    }
+  ],
+  "blockedSteps": [
+    {
+      "designStep": "P00_04_TURN_IN_NPC",
+      "missingField": "turnInNpcId",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-04 — the row names the start NPC but not who receives the report"
+    },
+    {
+      "designStep": "P00_04_ESCORT",
+      "missingField": "escortObjective",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-04 (hộ tống Ly An qua checkpoint x=80/x=120) — no escort/checkpoint runtime exists in P1"
+    },
+    {
+      "designStep": "P00_04_WAVE_ATTRIBUTION",
+      "missingField": "waveAttribution",
+      "source": "Quest_and_Narrative_Production_Spec_vi.md#P00-04 (2 đợt 3 quái) — targetIds pattern cannot carry the group record id, so kills count by species until the escort runtime lands"
+    }
+  ],
+  "rewards": {
+    "currency": [
+      {
+        "currencyId": "COIN",
+        "amount": 30
+      }
+    ],
+    "itemIds": [
+      "POT-HP-01"
+    ],
+    "xpRule": "LEVEL_BAND_BASE"
+  },
+  "unlocks": [
+    "P00-05"
+  ],
+  "sourceRef": "Quest_and_Narrative_Production_Spec_vi.md#P00-04"
+}

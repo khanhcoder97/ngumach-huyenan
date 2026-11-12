@@ -1,0 +1,30 @@
+; Codex visual staging: separate from the unaccepted historical Muse client.
+config_version=5
+
+[application]
+config/name="Ngũ Mạch Huyền Ấn — Bến Mưa Alpha"
+run/main_scene="res://Preview.tscn"
+config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
+
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+window/stretch/scale_mode="integer"
+
+[physics]
+common/physics_ticks_per_second=60
+common/physics_interpolation=true
+
+[dotnet]
+project/assembly_name="VisualReboot"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/canvas_textures/default_texture_filter=0
+textures/default_filters/use_nearest_mipmap_filter=false
+environment/defaults/default_clear_color=Color(0.06, 0.10, 0.09, 1)

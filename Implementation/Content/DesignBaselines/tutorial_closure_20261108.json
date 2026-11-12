@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "decisionId": "DEC-TUTORIAL-CLOSURE-20261108",
+  "status": "APPROVED_FOR_PRIVATE_ALPHA_IMPLEMENTATION",
+  "activation": "REQUIRES_LOADER_SCHEMA_AND_HTTP_CHECKPOINT",
+  "productionEnabled": false,
+  "sourceRefs": [
+    "Quest_and_Narrative_Production_Spec_vi.md#P00-05",
+    "NPC_Actor_Production_Registry_vi.csv#NPC_CLASS_TRIAL",
+    "Ben_Mua_Alpha_Implementation_Decisions_20261103_vi.md",
+    "DEC-TUTORIAL-TRANSPORT-20261106"
+  ],
+  "narrativeOverlay": {
+    "nodeId": "DLG_P00_05_CLASS_CONFIRM",
+    "questId": "P00-05",
+    "graphId": "GRAPH_P00_05",
+    "order": 3,
+    "type": "CLUE",
+    "speakerNpcId": "NPC_CLASS_TRIAL",
+    "conditionKey": "QUEST_ACTIVE",
+    "textKey": "DLG_P00_05_CLASS_CONFIRM_TEXT",
+    "textVi": "Ta ghi đúng môn phái ngươi đã chọn. Mảnh ấn cứ giữ bên mình; trở lại gặp Tạ Vân Khanh đi.",
+    "onEnterEvent": "OBJECTIVE_PROGRESS",
+    "nextNodeId": "DLG_P00_05_TURN_IN",
+    "setFlag": null,
+    "choiceGroupId": null,
+    "choices": [],
+    "sourceStatus": "VI_EDITED_ALPHA_20261108",
+    "bindObjectiveId": "OBJ_P00_05_CLASS_CONFIRM",
+    "requiredCompletedObjectiveIds": ["OBJ_P00_05_BOSS", "OBJ_P00_05_FRAGMENT"],
+    "requiredMapId": "MAP_BEN_MUA",
+    "requiredFloorId": "OVERWORLD",
+    "graphPatch": {
+      "DLG_P00_05_CLUE.nextNodeId": "DLG_P00_05_CLASS_CONFIRM",
+      "DLG_P00_05_TURN_IN.order": 4
+    },
+    "classPolicy": "CONFIRM_SERVER_CHARACTER_CLASS_NO_SELECTION_OR_RESPEC",
+    "rewardPolicy": "NO_GRANT_NO_TURNIN_NO_UNLOCK"
+  },
+  "mapViewed": {
+    "questId": "C1-01",
+    "objectiveId": "OBJ_C1_01_MAP_VIEWED",
+    "type": "MAP_VIEWED",
+    "targetId": "MAP_THANH_LAC",
+    "mapId": "MAP_THANH_LAC",
+    "floorId": "OVERWORLD",
+    "count": 1,
+    "positionInQuest": "APPEND_AFTER_EXISTING_TWO_TALK_OBJECTIVES",
+    "requiredForReadyToTurnIn": true,
+    "gate": "P1:QuestMapViewed:Enabled",
+    "requiresAlphaProfile": true,
+    "payloadFields": ["questId"],
+    "attemptPolicy": "FIRST_ATTEMPT_1_ONE_SHOT_NO_REACCEPT",
+    "eventIdentity": ["characterId", "questId", "questAttemptId", "objectiveId"],
+    "noImplicitCreditFrom": ["GET_WORLD", "GET_MAP", "PORTAL", "TALK", "CINEMA"],
+    "migration": {
+      "ACTIVE": "PRESERVE_EXISTING_COUNTERS_ADD_ZERO_NEW_OBJECTIVE_UNDER_NEW_CONTENT_VERSION",
+      "READY_TO_TURN_IN": "PRESERVE_STATE_AND_OLD_OBJECTIVE_SET_UNTIL_TURNIN",
+      "COMPLETED": "PRESERVE_NO_RELOCK_NO_REWARD_REPLAY",
+      "newAttempts": "UNSUPPORTED_UNTIL_ALLOCATOR_AND_RECEIPT_MIGRATION_REVIEW"
+    }
+  },
+  "escortProjection": {
+    "route": "GET /p1/quests/escort/current",
+    "schemaId": "EscortProjectionV1",
+    "gate": "P1:EscortProjection:Enabled",
+    "requiresAlphaProfile": true,
+    "floorId": "OVERWORLD",
+    "attemptPolicy": "FIRST_ATTEMPT_1_ONE_SHOT",
+    "samplePolicy": "ONE_DOMAIN_SAMPLE_COORDINATES_AND_IDENTITIES_THEN_AOI_ON_SAME_SAMPLE",
+    "ownerLifePolicy": "SAMPLE_CURRENT_COMMITTED_LIFE_FROM_PLAYER_LIFE_LEDGER_REJECT_STALE_ON_USE",
+    "offAoiPolicy": "RETURN_NO_SAMPLE_WITHOUT_HIDDEN_COORDINATES",
+    "movementRevision": "NOT_INTRODUCED_USE_SERVER_TICK_AND_IDENTITY",
+    "frozenContractsChanged": false
+  },
+  "numericBalanceChanges": [],
+  "doesNotBypass": ["C1_LEVEL_11", "PREREQUISITE_QUESTS", "OWNER", "MAP_FLOOR", "NPC_DISTANCE", "SERVER_COMMIT", "CONTENT_VERSION"]
+}

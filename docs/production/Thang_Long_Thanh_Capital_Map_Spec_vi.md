@@ -1,3 +1,5 @@
+> Cập nhật05/11/2026: camera/map tuân CAM-TOPDOWN-WIDE-20261105, default64×36WU/1280×720/20PPU, gần nhìn thẳng từ trên; HUD độc lập. Các default32×18 và chỉ hub48×27 bên dưới là lịch sử. Art/Godot runtime do Codex; Muse chỉ media theo work28. Không thay canonical geometry từ ảnh.
+
 # ĐẶC TẢ SẢN XUẤT MAP THĂNG LONG THÀNH
 ## Ngũ Mạch: Huyền Ấn — trung tâm đô hội và cửa ngõ liên vùng v1.0
 
