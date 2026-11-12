@@ -305,5 +305,39 @@
     "generator": "built-in image_gen",
     "status": "REJECTED_SAME_LEADING_FOOT_BOTH_HALVES",
     "batch": "20261112c"
+  },
+  {
+    "id": "npc_boat_keeper_walk_e",
+    "source": "Sheets/npc_boat_keeper_walk_e_v1_20261112d.png",
+    "prompt": "Prompts/npc_boat_keeper_walk_e_v1_20261112d.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_DURING_NATIVE_GAIT_REVIEW",
+    "batch": "20261112d",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_idle_partial_v1_20261112.png",
+    "inputRole": "IDENTITY_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_s_v3_20261112c.png"
+    ],
+    "reason": "Replace with v2 for clearer opposing-boot silhouette; original PNG retained unchanged."
+  },
+  {
+    "id": "npc_boat_keeper_walk_se",
+    "source": "Sheets/npc_boat_keeper_walk_se_v1_20261112d.png",
+    "prompt": "Prompts/npc_boat_keeper_walk_se_v1_20261112d.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_DURING_NATIVE_GAIT_REVIEW",
+    "batch": "20261112d",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_idle_partial_v1_20261112.png",
+    "inputRole": "IDENTITY_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_s_v3_20261112c.png"
+    ],
+    "reason": "Replace with v2 for clearer opposing-boot silhouette; original PNG retained unchanged."
   }
 ]

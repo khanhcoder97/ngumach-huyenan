@@ -44,12 +44,19 @@ public partial class ArtStudio
                     Check(Math.Abs(previewClip.Duration - raw.Duration) < .00001 && !previewClip.Loop, "combat timing/loop mismatch: " + action + "/" + previewClip.Direction);
                 }
             }
-            var boatWalk = ArtStudioLibrary.Load("actor:NPC_BOAT_KEEPER:walk").Clips.Single();
-            var boatInteract = ArtStudioLibrary.Load("actor:NPC_BOAT_KEEPER:interact").Clips.Single();
-            Check(boatWalk.Loop, "NPC walk must loop");
-            Check(!boatInteract.Loop, "NPC interaction must default to one shot");
-            Check(!ArtStudioLibrary.Load("npc_boat_keeper_interact_s").Clips.Single().Loop, "raw NPC interaction must be one shot");
-            Check(ArtStudioSampler.FrameAt(boatInteract, boatInteract.Duration * 2) == 15, "NPC interaction did not hold final pose");
+            foreach (string action in new[] { "walk", "interact" })
+            {
+                var group = ArtStudioLibrary.Load("actor:NPC_BOAT_KEEPER:" + action);
+                Check(group.Clips.Count == 8, "missing NPC direction: " + action);
+                foreach (var npcClip in group.Clips)
+                {
+                    string source = npcClip.Direction switch { "SW" => "SE", "W" => "E", "NW" => "NE", _ => npcClip.Direction };
+                    var raw = ArtStudioLibrary.Load("npc_boat_keeper_" + action + "_" + source.ToLowerInvariant()).Clips.Single();
+                    Check(npcClip.Loop == (action == "walk") && raw.Loop == npcClip.Loop, "NPC loop mismatch: " + action + "/" + npcClip.Direction);
+                    Check(Math.Abs(npcClip.Duration - raw.Duration) < .00001 && Math.Abs(npcClip.Duration - ActorLibraryData.Duration("NPC_BOAT_KEEPER", action)) < .00001, "NPC duration mismatch");
+                    if (action == "interact") Check(ArtStudioSampler.FrameAt(npcClip, npcClip.Duration * 2) == 15, "NPC interaction did not hold final pose");
+                }
+            }
             var original = ArtStudioCodec.Encode(_doc); var sourceHash = System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(ArtStudioCodec.Resolve(Layer.Texture, "")));
             _keyMode.ButtonPressed = true; _numbers["x"].Value = 17;
             Check(Math.Abs(Pose().X - 17) < .001, "inspector signal did not edit a key");

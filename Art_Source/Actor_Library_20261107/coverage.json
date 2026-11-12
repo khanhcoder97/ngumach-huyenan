@@ -1,8 +1,8 @@
 {
   "actors": 130,
   "requiredPages": 1008,
-  "structurePassed": 84,
-  "boundRequiredPages": 45,
+  "structurePassed": 92,
+  "boundRequiredPages": 47,
   "legacyClips": 3,
   "rejected": [
     {
@@ -10,7 +10,7 @@
       "reason": "rows expected 4, got 5"
     }
   ],
-  "pendingPages": 963,
+  "pendingPages": 961,
   "pendingIds": [
     "class_minh_kiem_skill_01",
     "class_minh_kiem_skill_02",
@@ -586,8 +586,6 @@
     "npc_bm_rescue_02_interact",
     "npc_bm_rescue_02_rescue_wait",
     "npc_bm_rescue_02_rescue_free",
-    "npc_boat_keeper_walk",
-    "npc_boat_keeper_interact",
     "npc_by_diver_01_idle",
     "npc_by_diver_01_walk",
     "npc_by_diver_01_interact",
@@ -976,8 +974,8 @@
     "mob_stone_automaton_elite_run",
     "mob_stone_automaton_elite_turn"
   ],
-  "productionApprovedPages": 9,
-  "visualHoldPages": 19,
+  "productionApprovedPages": 11,
+  "visualHoldPages": 21,
   "modularMigrationReferencePages": 0,
   "structureComplete": false,
   "complete": false,

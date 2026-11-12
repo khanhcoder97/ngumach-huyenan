@@ -324,8 +324,8 @@
         "NW"
       ],
       "componentOnly": false,
-      "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW",
+      "productionApproved": true,
+      "visualState": "APPROVED",
       "bindingSha256": "0e98e05c45a7f1360b53386a5d3ab764392203f62ddc906a819db7feb8cfbcec",
       "replacesSource": null,
       "scaleMode": "HEIGHT",
@@ -345,8 +345,8 @@
       ],
       "mirroredDirections": [],
       "componentOnly": false,
-      "productionApproved": false,
-      "visualState": "AWAITING_VISUAL_REVIEW",
+      "productionApproved": true,
+      "visualState": "APPROVED",
       "bindingSha256": "8791bb94be5dd9ac20820df637cb125d5464bfc1fdbca4b0a49c97b2c59d82d4",
       "replacesSource": null,
       "scaleMode": "HEIGHT",
@@ -355,7 +355,7 @@
   ],
   "fullGameComplete": false,
   "requiredJobs": 1008,
-  "structurallyCompleteJobs": 45,
-  "pendingJobs": 963,
+  "structurallyCompleteJobs": 47,
+  "pendingJobs": 961,
   "note": "Cells/hashes do not certify anatomical pose uniqueness. Production approval remains per source/clip. Unbound cells are never padded into a sequence. Coverage fields describe the current catalogue, not historical progress on the batch date."
 }

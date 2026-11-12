@@ -122,13 +122,17 @@ public partial class ActorLibraryBrowser : Control
                 using var file=FileAccess.Open(_benchmarkPath,FileAccess.ModeFlags.Write);file.StoreString(JsonSerializer.Serialize(report,new JsonSerializerOptions{WriteIndented=true})+"\n");GD.Print("ACTOR_LIBRARY_BENCHMARK "+JsonSerializer.Serialize(report));_benchmarkPath=null;GetTree().Quit();
             }
         }
-        _refresh+=delta;if(_refresh<.1)return;_refresh=0;var sprite=_sprites.FirstOrDefault(s=>s.Available);
+        _refresh+=delta;if(_refresh<.1)return;_refresh=0;RefreshReadout();
+    }
+    private void RefreshReadout()
+    {
+        var sprite=_sprites.FirstOrDefault(s=>s.Available);
         if(sprite==null){_frame.Text="CHƯA CÓ SPRITE CHO CLIP NÀY";return;}_sync=true;_timeline.Value=sprite.DisplayedFrame;_sync=false;_frame.Text=$"Frame {sprite.DisplayedFrame+1}/{_activeFrames} · "+(_staticCapture?"Ảnh tĩnh · không đo FPS":_offlineMovie?"Video offline · không đo FPS":$"{Engine.GetFramesPerSecond()}FPS · {_library.CachedTextures}/8 texture cache");
     }
     public override void _UnhandledKeyInput(InputEvent ev)
     {if(ev is not InputEventKey key||!key.Pressed||key.Echo)return;if(key.Keycode==Key.Escape)GetTree().Quit();if(key.Keycode==Key.F5)Reload();if(key.Keycode==Key.Space)Pause(!_paused);}
     private async void Capture(string path)
-    {_staticCapture=true;Pause(true);foreach(var sprite in _sprites)sprite.ManualFrame=_captureFrame;for(int i=0;i<5;i++)await ToSignal(GetTree(),SceneTree.SignalName.ProcessFrame);await ToSignal(RenderingServer.Singleton,RenderingServer.SignalName.FramePostDraw);var result=GetViewport().GetTexture().GetImage().SavePng(path);GD.Print("ACTOR_LIBRARY_CAPTURE "+result+" STATIC_FRAME_"+_captureFrame+"_NOT_GAMEPLAY");GetTree().Quit(result==Error.Ok?0:1);}
+    {_staticCapture=true;Pause(true);foreach(var sprite in _sprites)sprite.Seek(_captureFrame);for(int i=0;i<5;i++)await ToSignal(GetTree(),SceneTree.SignalName.ProcessFrame);if(_sprites.Where(s=>s.Available).Any(s=>s.DisplayedFrame!=_captureFrame)){GD.PushError("Capture frame differs from requested frame");GetTree().Quit(1);return;}RefreshReadout();await ToSignal(RenderingServer.Singleton,RenderingServer.SignalName.FramePostDraw);var result=GetViewport().GetTexture().GetImage().SavePng(path);GD.Print("ACTOR_LIBRARY_CAPTURE "+result+" STATIC_FRAME_"+_captureFrame+"_NOT_GAMEPLAY");GetTree().Quit(result==Error.Ok?0:1);}
     private void SelfTest()
     {
         int checks=0;
@@ -155,7 +159,20 @@ public partial class ActorLibraryBrowser : Control
                 if(poses.Count!=16)throw new Exception("Carpling review clock skipped source poses: "+action);checks++;
                 probe.Loop=false;probe.Restart();probe._Process(duration*2);if(probe.DisplayedFrame!=15)throw new Exception("Carpling one-shot restarted: "+action);checks++;probe.Loop=true;
             }
+            foreach(string action in new[]{"walk","interact"})
+            foreach(int facing in Enumerable.Range(0,8))
+            {
+                if(!_library.Resolve("NPC_BOAT_KEEPER",action,facing,out var authored)||authored!.Frames.Length!=16)throw new Exception("missing boatkeeper direction: "+action+"/"+facing);checks++;
+                if(authored.Flip!=(facing>=5))throw new Exception("boatkeeper mirror binding mismatch: "+facing);checks++;
+                probe.ActorId="NPC_BOAT_KEEPER";probe.Clip=action;probe.Facing=facing;probe.ManualFrame=-1;probe.Loop=action=="walk";probe.Restart();
+                double duration=ActorLibraryData.Duration(probe.ActorId,action);var poses=new HashSet<int>();
+                for(int i=0;i<Math.Ceiling(duration*60)+2;i++){probe._Process(1d/60);poses.Add(probe.DisplayedFrame);}
+                if(poses.Count!=16)throw new Exception("boatkeeper clock skipped source poses: "+action);checks++;
+                if(action=="interact"){probe._Process(duration*2);if(probe.DisplayedFrame!=15)throw new Exception("boatkeeper interaction restarted");checks++;}
+            }
             if(ActorLibraryData.Duration("MOB_CARPLING","telegraph_01")!=.45||ActorLibraryData.Duration("MOB_CARPLING","recovery_01")!=.5||ActorLibraryData.Duration("MOB_WATERROOT","telegraph_01")!=ActorLibraryData.Duration("telegraph_01"))throw new Exception("presentation timing leaked between actors");checks++;
+            probe.Seek(10);probe._Process(0);_staticCapture=true;RefreshReadout();
+            if(_timeline.Value!=10||!_frame.Text.StartsWith("Frame 11/16 · Ảnh tĩnh"))throw new Exception("static capture readout stale");checks++;
             GD.Print("ACTOR_LIBRARY_SELF_TEST PASS assertions="+checks+" partial catalogue allowed; not complete art acceptance");GetTree().Quit();
         }
         catch(Exception e){GD.PushError("ACTOR_LIBRARY_SELF_TEST FAIL "+e);GetTree().Quit(1);}
