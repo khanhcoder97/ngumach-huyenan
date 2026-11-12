@@ -1914,5 +1914,339 @@
     "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_lc_01_mark_component_v1_20261112f.png",
     "inputRole": "IDENTITY_AND_CADENCE_REPAIR",
     "replacesSource": "Sheets/sk_lc_01_mark_component_v1_20261112f.png"
+  },
+  {
+    "id": "mob_waterroot_walk_s",
+    "source": "Sheets/mob_waterroot_walk_s_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_walk_s_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png",
+    "additionalReferences": [],
+    "inputRole": "IDENTITY_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "mob_waterroot_run_s",
+    "source": "Sheets/mob_waterroot_run_s_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_run_s_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_walk_s_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "mob_waterroot_turn_s",
+    "source": "Sheets/mob_waterroot_turn_s_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_turn_s_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png",
+    "additionalReferences": [],
+    "inputRole": "IDENTITY_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "mob_waterroot_walk_n",
+    "source": "Sheets/mob_waterroot_walk_n_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_walk_n_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_n_v1_20261112b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_walk_s_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "mob_waterroot_run_n",
+    "source": "Sheets/mob_waterroot_run_n_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_run_n_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_n_v1_20261112b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_run_s_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "mob_waterroot_turn_n",
+    "source": "Sheets/mob_waterroot_turn_n_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_turn_n_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_n_v1_20261112b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_turn_s_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "mob_waterroot_walk_ne",
+    "source": "Sheets/mob_waterroot_walk_ne_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_walk_ne_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_ne_v2_20261112c.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_walk_n_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "mob_waterroot_run_ne",
+    "source": "Sheets/mob_waterroot_run_ne_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_run_ne_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_ne_v2_20261112c.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_run_n_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "mob_waterroot_turn_ne",
+    "source": "Sheets/mob_waterroot_turn_ne_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_turn_ne_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_ne_v2_20261112c.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_turn_n_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "mob_waterroot_walk_e",
+    "source": "Sheets/mob_waterroot_walk_e_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_walk_e_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_e_v1_20261112b.png",
+    "additionalReferences": [],
+    "inputRole": "IDENTITY_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "mob_waterroot_run_e",
+    "source": "Sheets/mob_waterroot_run_e_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_run_e_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_e_v1_20261112b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_run_s_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "mob_waterroot_turn_e",
+    "source": "Sheets/mob_waterroot_turn_e_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_turn_e_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_e_v1_20261112b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_turn_s_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "mob_waterroot_walk_se",
+    "source": "Sheets/mob_waterroot_walk_se_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_walk_se_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_se_v1_20261112b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_walk_s_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "mob_waterroot_run_se",
+    "source": "Sheets/mob_waterroot_run_se_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_run_se_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_se_v1_20261112b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_run_s_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "mob_waterroot_turn_se",
+    "source": "Sheets/mob_waterroot_turn_se_v1_20261113a.png",
+    "prompt": "Prompts/mob_waterroot_turn_se_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_se_v1_20261112b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_turn_s_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_skill_01_s",
+    "source": "Sheets/class_minh_kiem_skill_01_s_v1_20261113a.png",
+    "prompt": "Prompts/class_minh_kiem_skill_01_s_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Motion_16F_20261106/idle_s.png",
+    "additionalReferences": [
+      "Art_Source/Motion_16F_20261106/attack_s.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_skill_01_n",
+    "source": "Sheets/class_minh_kiem_skill_01_n_v1_20261113a.png",
+    "prompt": "Prompts/class_minh_kiem_skill_01_n_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Motion_16F_20261106/idle_n.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_s_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_skill_01_ne",
+    "source": "Sheets/class_minh_kiem_skill_01_ne_v1_20261113a.png",
+    "prompt": "Prompts/class_minh_kiem_skill_01_ne_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Motion_16F_20261106/idle_ne_v2.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_s_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_skill_01_e",
+    "source": "Sheets/class_minh_kiem_skill_01_e_v1_20261113a.png",
+    "prompt": "Prompts/class_minh_kiem_skill_01_e_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Motion_16F_20261106/idle_e.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_s_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_skill_01_se",
+    "source": "Sheets/class_minh_kiem_skill_01_se_v1_20261113a.png",
+    "prompt": "Prompts/class_minh_kiem_skill_01_se_v1_20261113a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113a",
+    "reference": "Art_Source/Motion_16F_20261106/idle_se.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_s_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_MOTION_REFERENCE",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
   }
 ]

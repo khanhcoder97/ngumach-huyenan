@@ -33,6 +33,10 @@ def creature_action(actor,clip,default):
     """The human fall/walk template must not invent hands or knees on creatures."""
     if actor['kind'] not in ('MOB','BOSS'):return default
     base=actor.get('variantOf',actor['id'])
+    if base=='MOB_WATERROOT' and clip in ('walk','run'):
+        return 'ONE16-pose '+('quick low root-scuttle' if clip=='run' else 'slow root-creeping')+' cycle: alternating SHORT basal-root bundles contact, grip/load/pull, pass, extend and replant; opposite contact at8 and smooth15to0. Preserve rooted stump anatomy, moss, crown curls and front-seed occlusion for the declared view. Some roots stay grounded; no human limbs, hopping, long attack whip or leaf-only idle. Visual source only; does not authorize AI movement or assign world speed'
+    if base=='MOB_WATERROOT' and clip=='turn':
+        return 'ONE16-pose alert root replant/weight-shift: neutral0-3, one basal bundle grips while the opposite loosens4-7, slight braid/crown torsion and opposite replant8-11, settle original declared facing12-15. Keep camera/facing fixed, no spin into another direction, walking stride or humanoid limbs. Preparation only; heading changes remain renderer/gameplay state'
     if base=='MOB_WATERROOT' and clip=='death':
         return 'ONE16-pose root-stump defeat: neutral0-2; seed dims and crown roots sag3-5; braided stump buckles6-8; SAME collapse continues into a low wood-and-moss heap9-11; inert heap settles12-15. No human limbs, no second fall, no return upright, no disappearing sprite'
     if base=='MOB_WATERROOT' and clip=='hurt':

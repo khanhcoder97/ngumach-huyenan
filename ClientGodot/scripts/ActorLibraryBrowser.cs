@@ -159,16 +159,24 @@ public partial class ActorLibraryBrowser : Control
                 if(poses.Count!=16)throw new Exception("Carpling review clock skipped source poses: "+action);checks++;
                 probe.Loop=false;probe.Restart();probe._Process(duration*2);if(probe.DisplayedFrame!=15)throw new Exception("Carpling one-shot restarted: "+action);checks++;probe.Loop=true;
             }
-            foreach(string action in new[]{"idle","telegraph_01","attack_01","recovery_01","hurt","death"})
+            foreach(string action in new[]{"idle","walk","run","turn","telegraph_01","attack_01","recovery_01","hurt","death"})
             foreach(int facing in Enumerable.Range(0,8))
             {
                 if(!_library.Resolve("MOB_WATERROOT",action,facing,out var authored)||authored!.Frames.Length!=16)throw new Exception("missing Waterroot direction: "+action+"/"+facing);checks++;
                 if(authored.Flip!=(facing>=5))throw new Exception("Waterroot mirror binding mismatch");checks++;
-                probe.ActorId="MOB_WATERROOT";probe.Clip=action;probe.Facing=facing;probe.ManualFrame=-1;probe.Loop=action=="idle";probe.Restart();
+                bool loop=action is "idle" or "walk" or "run";
+                probe.ActorId="MOB_WATERROOT";probe.Clip=action;probe.Facing=facing;probe.ManualFrame=-1;probe.Loop=loop;probe.Restart();
                 double duration=ActorLibraryData.Duration(probe.ActorId,action);var poses=new HashSet<int>();
                 for(int i=0;i<Math.Ceiling(duration*60)+2;i++){probe._Process(1d/60);poses.Add(probe.DisplayedFrame);}
                 if(poses.Count!=16)throw new Exception("Waterroot clock skipped source poses: "+action);checks++;
-                if(action!="idle"){probe._Process(duration*2);if(probe.DisplayedFrame!=15)throw new Exception("Waterroot one-shot restarted");checks++;}
+                if(!loop){probe._Process(duration*2);if(probe.DisplayedFrame!=15)throw new Exception("Waterroot one-shot restarted");checks++;}
+            }
+            foreach(int facing in Enumerable.Range(0,8))
+            {
+                if(!_library.Resolve("CLASS_MINH_KIEM","skill_01",facing,out var guard)||guard!.Frames.Length!=16||guard.Flip!=(facing>=5))throw new Exception("guard source/mirror missing: "+facing);checks++;
+                probe.ActorId="CLASS_MINH_KIEM";probe.Clip="skill_01";probe.Facing=facing;probe.ManualFrame=-1;probe.Loop=false;probe.Restart();
+                var poses=new HashSet<int>();for(int step=0;step<50;step++){probe._Process(1d/60);poses.Add(probe.DisplayedFrame);}
+                if(poses.Count!=16||probe.DisplayedFrame!=15)throw new Exception("guard skipped poses or restarted");checks++;
             }
             foreach(string action in new[]{"walk","interact"})
             foreach(int facing in Enumerable.Range(0,8))

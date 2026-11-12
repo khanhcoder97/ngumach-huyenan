@@ -55,7 +55,7 @@ public static class ArtStudioLibrary
     private static double SourceDuration(string id)
     {
         if (id == "sk_mob_waterroot_01_ripple_component") return .7;
-        string? owner = id.StartsWith("mob_carpling_", StringComparison.Ordinal) ? "MOB_CARPLING" : id.StartsWith("mob_waterroot_", StringComparison.Ordinal) ? "MOB_WATERROOT" : null;
+        string? owner = id.StartsWith("mob_carpling_", StringComparison.Ordinal) ? "MOB_CARPLING" : id.StartsWith("mob_waterroot_", StringComparison.Ordinal) ? "MOB_WATERROOT" : id.StartsWith("class_minh_kiem_skill_01_", StringComparison.Ordinal) ? "CLASS_MINH_KIEM" : null;
         if (owner == null) return id.Contains("walk", StringComparison.Ordinal) ? .8 : 1.6;
         string action = id[(owner.Length+1)..];
         foreach (string facing in new[] { "_n", "_ne", "_e", "_se", "_s", "_sw", "_w", "_nw" })
@@ -137,5 +137,36 @@ public static class ArtStudioLibrary
             for (int i = 0; i < clip.DurationsMs.Count; i++)
             { var pose = l.Rest.Copy(); pose.SourceFrame = Math.Min(frames.Length - 1, i * frames.Length / clip.DurationsMs.Count); ArtStudioSampler.SetKey(clip, l.Id, i, pose); }
     }
-    private static bool OneShot(string id) => new[] { "death", "hurt", "dodge", "attack", "cast", "skill_", "telegraph", "recovery", "interact", "arc_component", "crack_component", "ripple_component" }.Any(t => id.Contains(t, StringComparison.Ordinal));
+    public static (string Id, string Name)[] ComponentEntries()
+    {
+        using var json = JsonDocument.Parse(FileAccess.GetFileAsString("res://assets/actor_library_v1/pages.json"));
+        return json.RootElement.GetProperty("pages").EnumerateArray()
+            .Where(p => p.GetProperty("id").GetString()!.StartsWith("sk_", StringComparison.Ordinal) && p.GetProperty("id").GetString()!.EndsWith("_component", StringComparison.Ordinal))
+            .Select(p => (p.GetProperty("id").GetString()!, p.GetProperty("id").GetString()! + " · " + p.GetProperty("visualState").GetString())).ToArray();
+    }
+    public static void AddComponent(ArtStudioDocument doc, string id)
+    {
+        if (!ComponentEntries().Any(e => e.Id == id)) throw new InvalidOperationException("Chọn component VFX trong thư viện nguồn.");
+        // Keep all original regions, pivots and source order. This is a manual
+        // placement starting point, not a complete skill or combat event binding.
+        var source = Load(id); var original = source.Layers.Single(); var sequence = source.Clips.Single();
+        if (sequence.DurationsMs.Count != 16) throw new InvalidOperationException("Component cần đủ 16 khung nguồn.");
+        if (doc.Clips.Any(c => c.DurationsMs.Count < 16)) throw new InvalidOperationException("Timeline cần ít nhất 16 ô để không bỏ khung component.");
+        var layer = new ArtStudioLayer { Id = Guid.NewGuid().ToString("N"), Name = "Component / " + id, Kind = "vfx", Texture = original.Texture,
+            Regions = original.Regions.Select(r => r.ToArray()).ToList(), Z = 20, Rest = original.Rest.Copy() };
+        layer.Rest.Alpha = 0; doc.Layers.Add(layer);
+        foreach (var clip in doc.Clips)
+        {
+            for (int frame = 0; frame < clip.DurationsMs.Count; frame++)
+            {
+                int sourceFrame = Math.Min(15, frame * 16 / clip.DurationsMs.Count);
+                var pose = ArtStudioSampler.Pose(original, sequence, sourceFrame).Copy();
+                pose.X = 45; pose.Y = -75; pose.ScaleX *= .5f; pose.ScaleY *= .5f;
+                ArtStudioSampler.SetKey(clip, layer.Id, frame, pose);
+            }
+            clip.SourceNote += " Component nguồn trải đều trên timeline để chỉnh tay; timing/lớp/vị trí chưa gắn sự kiện gameplay.";
+        }
+        ArtStudioCodec.Validate(doc);
+    }
+    private static bool OneShot(string id) => id == "turn" || id.Contains("_turn_", StringComparison.Ordinal) || new[] { "death", "hurt", "dodge", "attack", "cast", "skill_", "telegraph", "recovery", "interact", "arc_component", "crack_component", "ripple_component" }.Any(t => id.Contains(t, StringComparison.Ordinal));
 }

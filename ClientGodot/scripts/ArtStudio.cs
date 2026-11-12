@@ -71,6 +71,9 @@ public partial class ArtStudio : Control
         var layerButtons = Row(left); Button(layerButtons, "+ PNG", () => Import(false)); Button(layerButtons, "Nhân đôi", DuplicateLayer); Button(layerButtons, "Xóa", DeleteLayer);
         var fx = new OptionButton(); foreach (var n in SkillVfxPlayer.Names) fx.AddItem(n); left.AddChild(fx);
         Button(left, "+ VFX có sẵn", () => Change(() => { ArtStudioLibrary.AddVfx(_doc, fx.Selected); _selected = _doc.Layers.Last().Id; }));
+        var components = ArtStudioLibrary.ComponentEntries(); var component = new OptionButton { ClipText = true, FitToLongestItem = false };
+        foreach (var item in components) component.AddItem(item.Name); left.AddChild(component);
+        Button(left, "+ Component 16 khung nguồn", () => Change(() => { if (component.Selected < 0) return; ArtStudioLibrary.AddComponent(_doc, components[component.Selected].Id); _selected = _doc.Layers.Last().Id; }));
         var history = Row(left); _undoButton = Button(history, "↶ Undo", Undo); _redoButton = Button(history, "↷ Redo", Redo);
         left.AddChild(MoonGlassTheme.Label("Sprite nguyên khối · PNG gốc được giữ nguyên. Bản chỉnh animation/VFX lưu JSON riêng.", 11, MoonGlassTheme.Muted));
         var body = new HSplitContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; split.AddChild(body); body.SplitOffsets = new[] { 620 };
@@ -85,7 +88,7 @@ public partial class ArtStudio : Control
         _stage = new ArtStudioCanvas { CustomMinimumSize = new(440, 260), SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ExpandFill, Zoom = 1.7f };
         center.AddChild(_stage); _stage.BeginEdit = BeginDrag; _stage.DragEdit = Drag; _stage.EndEdit = EndDrag;
         _stage.ViewChanged = () => Status($"Zoom {_stage.Zoom:0.00}× · cuộn để zoom, giữ chuột giữa để pan.");
-        _scope = MoonGlassTheme.Label("", 11, MoonGlassTheme.Muted); center.AddChild(_scope);
+        _scope = MoonGlassTheme.Label("", 11, MoonGlassTheme.Muted); _scope.MaxLinesVisible = 3; center.AddChild(_scope);
         var transport = Row(center);
         Button(transport, "|◀", () => Seek(0)); Button(transport, "◀", () => Seek(_frame - 1));
         _play = Button(transport, "▶ Phát", TogglePlay); Button(transport, "▶|", () => Seek(_frame + 1));
@@ -116,6 +119,8 @@ public partial class ArtStudio : Control
         if (entry >= 0 && entry + 1 < args.Length) { SetDocument(ArtStudioLibrary.Load(args[entry + 1]), "", ""); int item = Array.FindIndex(_entries, e => e.Id == args[entry + 1]); if (item >= 0) _library.Select(item); }
         int direction = Array.IndexOf(args, "--studio-direction");
         if (direction >= 0 && direction + 1 < args.Length) { int at = _doc.Clips.FindIndex(c => c.Direction == args[direction + 1]); if (at >= 0) SelectClip(at); }
+        int componentArg = Array.IndexOf(args, "--studio-component");
+        if (componentArg >= 0 && componentArg + 1 < args.Length) { ArtStudioLibrary.AddComponent(_doc, args[componentArg + 1]); component.Select(Array.FindIndex(components, e => e.Id == args[componentArg + 1])); _selected = _doc.Layers.Last().Id; Refresh(); }
         int frame = Array.IndexOf(args, "--studio-frame");
         if (frame >= 0 && frame + 1 < args.Length && int.TryParse(args[frame + 1], out int atFrame)) Seek(atFrame);
         if(args.Contains("--studio-loop"))Clip.Loop=true;
@@ -277,7 +282,7 @@ public partial class ArtStudio : Control
         {
             _clip = Math.Clamp(_clip, 0, _doc.Clips.Count - 1); _frame = Math.Clamp(_frame, 0, Clip.DurationsMs.Count - 1);
             if (_doc.Layers.All(l => l.Id != _selected)) _selected = _doc.Layers[0].Id;
-            _layers.Clear(); foreach (var l in _doc.Layers) _layers.AddItem((l.Visible ? "● " : "○ ") + l.Name + (l.Locked ? " [khóa]" : "")); _layers.Select(_doc.Layers.IndexOf(Layer));
+            _layers.Clear(); foreach (var l in _doc.Layers) _layers.AddItem((l.Visible ? "● " : "○ ") + l.Name + (l.Locked ? " [khóa]" : "")); _layers.Select(_doc.Layers.IndexOf(Layer)); _layers.EnsureCurrentIsVisible();
             _clips.Clear(); foreach (var c in _doc.Clips) _clips.AddItem(c.Name + " / " + c.Direction); _clips.Select(_clip);
             _layerName.Text = Layer.Name; _source.Text = Layer.Texture; _visible.ButtonPressed = Layer.Visible; _locked.ButtonPressed = Layer.Locked;
             var p = _keyMode.ButtonPressed ? Pose() : Layer.Rest;
@@ -297,7 +302,8 @@ public partial class ArtStudio : Control
             _timeline.MaxValue = Clip.DurationsMs.Count - 1; _timeline.Value = _frame;
             _dirty = ArtStudioCodec.Encode(_doc) != _saved; _fileLabel.Text = (_dirty ? "● Chưa lưu · " : "Đã lưu/nạp · ") + ProjectSettings.GlobalizePath(_path);
             _undoButton.Disabled = _undo.Count == 0; _redoButton.Disabled = _redo.Count == 0; _play.Text = _playing ? "Ⅱ Dừng" : "▶ Phát";
-            _report.Text = string.Join("\n\n", ArtStudioCodec.Readiness(_doc)); _scope.Text = $"{Clip.Direction} · {Clip.DurationsMs.Count} frame · clip {Clip.Duration:0.00}s · +X phải / +Y xuống\n{Clip.SourceNote}";
+            _report.Text = string.Join("\n\n", ArtStudioCodec.Readiness(_doc)) + "\n\nNguồn / phạm vi:\n" + Clip.SourceNote;
+            _scope.Text = $"{Clip.Direction} · {Clip.DurationsMs.Count} frame · clip {Clip.Duration:0.00}s · +X phải / +Y xuống\n{Clip.SourceNote}"; _scope.TooltipText = Clip.SourceNote;
             SyncStage();
         }
         finally { _sync = false; }

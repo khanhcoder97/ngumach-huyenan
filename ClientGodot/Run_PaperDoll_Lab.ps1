@@ -7,6 +7,7 @@ param(
     [switch]$StudioSelfTest,
     [string]$StudioProject,
     [string]$StudioEntry,
+    [string]$StudioComponent,
     [ValidateRange(0,119)][int]$StudioFrame=0,
     [string]$StudioDirection,
     [switch]$StudioPlay,
@@ -52,6 +53,7 @@ try {
     if($StudioSelfTest){$launchArgs+='--studio-self-test'}
     if($StudioProject){$launchArgs+=@('--studio-project',$StudioProject)}
     if($StudioEntry){$launchArgs+=@('--studio-entry',$StudioEntry)}
+    if($StudioComponent){$launchArgs+=@('--studio-component',$StudioComponent)}
     $launchArgs+=@('--studio-frame',[string]$StudioFrame)
     if($StudioDirection){$launchArgs+=@('--studio-direction',$StudioDirection)}
     if($StudioPlay){$launchArgs+='--studio-play'}

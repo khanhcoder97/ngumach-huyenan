@@ -18,5 +18,14 @@ class CreaturePrompt(unittest.TestCase):
     def test_human_template_is_preserved_for_characters(self):
         self.assertEqual(creature_action(dict(kind='CLASS',id='CLASS_MINH_KIEM'),'death',ACTION['death']),ACTION['death'])
 
+    def test_root_motion_preserves_root_anatomy_and_does_not_authorize_ai(self):
+        actor=dict(kind='MOB',id='MOB_WATERROOT')
+        for clip in ('walk','run'):
+            description=creature_action(actor,clip,ACTION[clip])
+            self.assertIn('basal-root bundles',description)
+            self.assertIn('does not authorize AI movement',description)
+            self.assertNotIn('opposite arms',description)
+        self.assertIn('heading changes remain renderer/gameplay state',creature_action(actor,'turn',ACTION['turn']))
+
 
 if __name__=='__main__':unittest.main()

@@ -44,7 +44,7 @@ public partial class ArtStudio
                     Check(Math.Abs(previewClip.Duration - raw.Duration) < .00001 && !previewClip.Loop, "combat timing/loop mismatch: " + action + "/" + previewClip.Direction);
                 }
             }
-            foreach (string action in new[] { "idle", "telegraph_01", "attack_01", "recovery_01", "hurt", "death" })
+            foreach (string action in new[] { "idle", "walk", "run", "turn", "telegraph_01", "attack_01", "recovery_01", "hurt", "death" })
             {
                 var group = ArtStudioLibrary.Load("actor:MOB_WATERROOT:" + action);
                 Check(group.Clips.Count == 8, "missing Waterroot direction: " + action);
@@ -52,14 +52,46 @@ public partial class ArtStudio
                 {
                     string source = rootClip.Direction switch { "SW" => "SE", "W" => "E", "NW" => "NE", _ => rootClip.Direction };
                     var raw = ArtStudioLibrary.Load("mob_waterroot_" + action + "_" + source.ToLowerInvariant()).Clips.Single();
-                    Check(rootClip.Loop == (action == "idle") && raw.Loop == rootClip.Loop, "Waterroot loop mismatch");
+                    bool loop = action is "idle" or "walk" or "run";
+                    Check(rootClip.Loop == loop && raw.Loop == rootClip.Loop, "Waterroot loop mismatch");
                     Check(Math.Abs(rootClip.Duration - raw.Duration) < .00001 && Math.Abs(rootClip.Duration - ActorLibraryData.Duration("MOB_WATERROOT", action)) < .00001, "Waterroot raw/group timing mismatch");
-                    if (action != "idle") Check(ArtStudioSampler.FrameAt(rootClip, rootClip.Duration * 2) == 15, "Waterroot recovery/attack did not hold final pose");
+                    if (!loop) Check(ArtStudioSampler.FrameAt(rootClip, rootClip.Duration * 2) == 15, "Waterroot one-shot did not hold final pose");
                 }
             }
             var rootRipple = ArtStudioLibrary.Load("sk_mob_waterroot_01_ripple_component").Clips.Single();
             Check(!rootRipple.Loop && Math.Abs(rootRipple.Duration - .7) < .00001, "root warning cue duration/loop mismatch");
             Check(ArtStudioSampler.FrameAt(rootRipple, rootRipple.Duration * 2) == 15, "root cue final pose");
+            var guard = ArtStudioLibrary.Load("actor:CLASS_MINH_KIEM:skill_01");
+            Check(guard.Clips.Count == 8, "guard missing directions");
+            foreach (var guardClip in guard.Clips)
+            {
+                string facing = guardClip.Direction switch { "SW" => "SE", "W" => "E", "NW" => "NE", _ => guardClip.Direction };
+                var raw = ArtStudioLibrary.Load("class_minh_kiem_skill_01_" + facing.ToLowerInvariant()).Clips.Single();
+                Check(!guardClip.Loop && !raw.Loop && Math.Abs(guardClip.Duration - .8) < .00001 && Math.Abs(raw.Duration - guardClip.Duration) < .00001, "guard raw/group profile mismatch");
+                Check(ArtStudioSampler.FrameAt(guardClip, guardClip.Duration * 2) == 15, "guard did not hold final pose");
+            }
+            foreach (var component in ArtStudioLibrary.ComponentEntries())
+            {
+                var composite = ArtStudioLibrary.Load("actor:CLASS_MINH_KIEM:skill_01");
+                var source = ArtStudioLibrary.Load(component.Id); var componentLayer = source.Layers.Single();
+                int layers = composite.Layers.Count;
+                ArtStudioLibrary.AddComponent(composite, component.Id); ArtStudioCodec.ValidateTextures(composite, "");
+                var inserted = composite.Layers.Last();
+                Check(composite.Layers.Count == layers + 1 && inserted.Kind == "vfx" && inserted.Texture == componentLayer.Texture, "component layer did not retain source");
+                Check(inserted.Regions.Count == 16 && inserted.Regions.Zip(componentLayer.Regions).All(pair => pair.First.SequenceEqual(pair.Second)), "component source regions changed");
+                foreach (var compositeClip in composite.Clips)
+                {
+                    var frames = Enumerable.Range(0, compositeClip.DurationsMs.Count).Select(f => ArtStudioSampler.Pose(inserted, compositeClip, f).SourceFrame).ToArray();
+                    Check(frames.SequenceEqual(Enumerable.Range(0, 16)), "component insertion skipped/reordered poses");
+                }
+                var roundtrip = ArtStudioCodec.Decode(ArtStudioCodec.Encode(composite));
+                Check(!roundtrip.ProductionApproved && roundtrip.Layers.Last().Texture == componentLayer.Texture, "manual component insertion promoted approval or lost texture");
+            }
+            string guardBefore = ArtStudioCodec.Encode(guard);
+            Reject(() => ArtStudioLibrary.AddComponent(guard, "mob_waterroot_idle_s"), "non-component source inserted as VFX");
+            Check(ArtStudioCodec.Encode(guard) == guardBefore, "rejected component changed document");
+            foreach (var guardClip in guard.Clips) ArtStudioSampler.Resize(guardClip, 8);
+            Reject(() => ArtStudioLibrary.AddComponent(guard, "sk_mk_01_parry_component"), "short timeline silently dropped component poses");
             foreach (var profile in new[] { ("sk_mk_01_parry_component", .4, false), ("sk_ad_01_cut_component", .32, false), ("sk_hb_01_ink_hit_component", .32, false), ("sk_tc_01_dust_component", .35, false), ("sk_lc_01_mark_component", 1d, true) })
             {
                 var component = ArtStudioLibrary.Load(profile.Item1).Clips.Single();

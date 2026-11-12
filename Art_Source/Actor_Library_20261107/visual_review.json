@@ -72,7 +72,27 @@
     "sk_ad_01_cut_component",
     "sk_hb_01_ink_hit_component",
     "sk_tc_01_dust_component",
-    "sk_lc_01_mark_component"
+    "sk_lc_01_mark_component",
+    "mob_waterroot_walk_s",
+    "mob_waterroot_run_s",
+    "mob_waterroot_turn_s",
+    "mob_waterroot_walk_n",
+    "mob_waterroot_run_n",
+    "mob_waterroot_turn_n",
+    "mob_waterroot_walk_ne",
+    "mob_waterroot_run_ne",
+    "mob_waterroot_turn_ne",
+    "mob_waterroot_walk_e",
+    "mob_waterroot_run_e",
+    "mob_waterroot_turn_e",
+    "mob_waterroot_walk_se",
+    "mob_waterroot_run_se",
+    "mob_waterroot_turn_se",
+    "class_minh_kiem_skill_01_s",
+    "class_minh_kiem_skill_01_n",
+    "class_minh_kiem_skill_01_ne",
+    "class_minh_kiem_skill_01_e",
+    "class_minh_kiem_skill_01_se"
   ],
   "holds": [
     {
@@ -1345,6 +1365,386 @@
       "decision": "APPROVE_VISUAL_COMPONENT",
       "componentOnly": true,
       "notes": "Selected v2 removes the second growth pulse in last row; leaf brackets relax near starting extent for loop wrap. v1 retained with native evidence. Presentation loop1s is not authoritative5s mark lifetime."
+    },
+    {
+      "id": "mob_waterroot_walk_s",
+      "sourceSha256": "7a4d60da1aeab139ad733f96c8f94f70f91a76ee812461b9a1cdc38ebeed2591",
+      "bindingSha256": "86513313932c2c464301cd8578e4baadaf948b30c9d99f56dcb8d9c753c1d9b6",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_walk_s_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Short basal-root bundles alternate visible reach/grip/pull/replant; no humanoid limbs or long attack whip. Authored facing and front-seed occlusion reviewed."
+    },
+    {
+      "id": "mob_waterroot_run_s",
+      "sourceSha256": "cd08dec710d015885976b54c6ed908f932a4c2696e1fab14dc3049318d8cbb6e",
+      "bindingSha256": "d6532284b7eb846dedcd1a45b8a702b3aaf3ed176b885deca345e9d7ba1734cb",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_run_s_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Low quick root-scuttle with greater basal-root reach/compression than walk; grounded root contacts and declared facing retained. Does not authorize AI movement or assign world speed."
+    },
+    {
+      "id": "mob_waterroot_turn_s",
+      "sourceSha256": "2efa9c176c6ddf2cbad6c9046c2a109893dede9034e9265fe2a793a09784eb47",
+      "bindingSha256": "9022db6d89b96a4ec8995657950bf9184da67f34997002a3c97e61c6a474ef8c",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_turn_s_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "One grounded replant/weight-shift returns to declared facing. Turn-preparation source, not a rendered rotation between heading blocks."
+    },
+    {
+      "id": "mob_waterroot_walk_n",
+      "sourceSha256": "995a111ac512f5269b3b990108d9e1beb55026558858f57d665e23849b682b6a",
+      "bindingSha256": "7faf8715d224c5bc732151ae56a4e5868b925701bd9c3f007c15321794cc9863",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_walk_n_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Short basal-root bundles alternate visible reach/grip/pull/replant; no humanoid limbs or long attack whip. Authored facing and front-seed occlusion reviewed."
+    },
+    {
+      "id": "mob_waterroot_run_n",
+      "sourceSha256": "63e398af6559c7b4be612fa88a0db92e5860a4f3da2e505ec5ab5344aae91302",
+      "bindingSha256": "2d3a2bdc2269f0f2c0bd38b7e403f7ccf660703475d5e3225cb363f3a7c49c83",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_run_n_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Low quick root-scuttle with greater basal-root reach/compression than walk; grounded root contacts and declared facing retained. Does not authorize AI movement or assign world speed."
+    },
+    {
+      "id": "mob_waterroot_turn_n",
+      "sourceSha256": "df8f0764560e2296f26d2087fa88468d9cb8f3a7c244932aa71ef16666e477ec",
+      "bindingSha256": "68e3bd07f908bafd7df95bda0c7b88ca0bd9b8f1c15e434ad9277aad7f3de7d0",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_turn_n_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "One grounded replant/weight-shift returns to declared facing. Turn-preparation source, not a rendered rotation between heading blocks."
+    },
+    {
+      "id": "mob_waterroot_walk_ne",
+      "sourceSha256": "afa87a7ed790daaba73fe9d9ef9f5a7d0f9d4d1f8a1e149123c8f9009dde8ca2",
+      "bindingSha256": "b56fc2d1cba137d4153090b1e93f4e154288b1adb43322dc3e2eb408bfa25840",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_walk_ne_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Short basal-root bundles alternate visible reach/grip/pull/replant; no humanoid limbs or long attack whip. Authored facing and front-seed occlusion reviewed."
+    },
+    {
+      "id": "mob_waterroot_run_ne",
+      "sourceSha256": "fab5581fe52c56f73c5ea034b1359328e9c420b5b362e464fee5527db5b9c6c1",
+      "bindingSha256": "03fb8f4bec5c5b69ee14621764d6e5c3952e9cc9f8aed280a9175531c9df9515",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_run_ne_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Low quick root-scuttle with greater basal-root reach/compression than walk; grounded root contacts and declared facing retained. Does not authorize AI movement or assign world speed."
+    },
+    {
+      "id": "mob_waterroot_turn_ne",
+      "sourceSha256": "2e121771132306c9fe0abf03a8ae4590039d54063f217af8cdf98ae0760e9f6a",
+      "bindingSha256": "0ae3ac2a4ff10288ca47efb6505d63bb86b5849617b81ac153d4655918547769",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_turn_ne_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "One grounded replant/weight-shift returns to declared facing. Turn-preparation source, not a rendered rotation between heading blocks."
+    },
+    {
+      "id": "mob_waterroot_walk_e",
+      "sourceSha256": "799afb9f11d8565e7971f807dba4c920a1ee87c7081ce992b481b63fb94d736e",
+      "bindingSha256": "bf13e99f569442540ab2e907067b508af094fe7ae5ad6270b62a238cd5eff4fa",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_walk_e_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Short basal-root bundles alternate visible reach/grip/pull/replant; no humanoid limbs or long attack whip. Authored facing and front-seed occlusion reviewed."
+    },
+    {
+      "id": "mob_waterroot_run_e",
+      "sourceSha256": "8bf00f0c5ea7160ae1121928108ac751f910f194f199d07f33490d786d6d0e39",
+      "bindingSha256": "814f788b41a79faa1c1fd9016b81d9d01e3217dd0803edcf1ffc9f107a885776",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_run_e_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Low quick root-scuttle with greater basal-root reach/compression than walk; grounded root contacts and declared facing retained. Does not authorize AI movement or assign world speed."
+    },
+    {
+      "id": "mob_waterroot_turn_e",
+      "sourceSha256": "73242b7bafbdf38d6a68726edd5e9c2d7f9392cd724baa766cbefc94d0189dae",
+      "bindingSha256": "6ba7667b69d3050ee52095511d6ddbae42ddec80a32f6e8d52d2599dbd92a307",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_turn_e_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "One grounded replant/weight-shift returns to declared facing. Turn-preparation source, not a rendered rotation between heading blocks."
+    },
+    {
+      "id": "mob_waterroot_walk_se",
+      "sourceSha256": "499428b6b53d208009119fbbadeda9dbb348d76449a4ea442dfb02eb0e96d381",
+      "bindingSha256": "439d7788bcc629845193541f763e408b3c80d9f16e6208aa38ae88baba03d535",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_walk_se_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_walk_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Short basal-root bundles alternate visible reach/grip/pull/replant; no humanoid limbs or long attack whip. Authored facing and front-seed occlusion reviewed."
+    },
+    {
+      "id": "mob_waterroot_run_se",
+      "sourceSha256": "8da5a03b2564267040e8340e6156e2619722bd179948afded2fc4573e784deb4",
+      "bindingSha256": "192fe8e7fcdc996c73b79d9b0e9a13100c2e6f0d0753c903b402ebfdfa13207f",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_run_se_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_run_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Low quick root-scuttle with greater basal-root reach/compression than walk; grounded root contacts and declared facing retained. Does not authorize AI movement or assign world speed."
+    },
+    {
+      "id": "mob_waterroot_turn_se",
+      "sourceSha256": "e56df23197f25bffcc941c51a9437cd0a79d343991759644fc92a7d7275dd5d7",
+      "bindingSha256": "78b0910e920cde77059f227deecbc83558db1f24920a0dd2544219cb47597610",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_turn_se_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/waterroot_turn_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "One grounded replant/weight-shift returns to declared facing. Turn-preparation source, not a rendered rotation between heading blocks."
+    },
+    {
+      "id": "class_minh_kiem_skill_01_s",
+      "sourceSha256": "5d495f3fd4393476eb0d79370e9d1f2513907d3c3a3c4c9acb58cd09df3fbabb",
+      "bindingSha256": "f162f50025be9c6beb2ed4bd426d14d15f7410df272357eb300c1d9e280c9012",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_s_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Physical diagonal chestguard: raise, brace, hold, settle; identity follows approved Motion16. N torso occludes front blade; no baked success VFX or counterattack. .8s source preview is not the authoritative .4s parry window."
+    },
+    {
+      "id": "class_minh_kiem_skill_01_n",
+      "sourceSha256": "da1abf4b7c9b79adc24cc221e116ffcfc755f36da20fec110cf4a34e278512f9",
+      "bindingSha256": "c6700eedb585f35faaa26d68ad77db2a339eb4f2c1f2f50ac7dfbbc0ca9b731f",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_n_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Physical diagonal chestguard: raise, brace, hold, settle; identity follows approved Motion16. N torso occludes front blade; no baked success VFX or counterattack. .8s source preview is not the authoritative .4s parry window."
+    },
+    {
+      "id": "class_minh_kiem_skill_01_ne",
+      "sourceSha256": "0cb7b70288f650ba98ce966224f85ba3cd71e9808780d9b46a65ba74573b63ce",
+      "bindingSha256": "9bb8a675b6aeecffb0a1c8cc33cee5d047883f58dbad241ca6873c24245e50f9",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_ne_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Physical diagonal chestguard: raise, brace, hold, settle; identity follows approved Motion16. N torso occludes front blade; no baked success VFX or counterattack. .8s source preview is not the authoritative .4s parry window."
+    },
+    {
+      "id": "class_minh_kiem_skill_01_e",
+      "sourceSha256": "64cc2cdb0fe7e6f80b5158078229c4e3971307fbcf0c5c63a0e4f82f9ac21e78",
+      "bindingSha256": "9c7cdf08976d68a18b81cd4452a485c6c50bf5b5fed16f009cf309b2b6d50623",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_e_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Physical diagonal chestguard: raise, brace, hold, settle; identity follows approved Motion16. N torso occludes front blade; no baked success VFX or counterattack. .8s source preview is not the authoritative .4s parry window."
+    },
+    {
+      "id": "class_minh_kiem_skill_01_se",
+      "sourceSha256": "915e3d51e261626eefe224bb681e6e0b713898e747628c8cb46000d6a931d8a9",
+      "bindingSha256": "1fc1e040123cdf38eb0a7c213658606ab16166941ef0782b2cf58e4946aa2437",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_se_v1_20261113a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113a/minh_kiem_guard_eight_angles_native_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples; separately tested60-step clock, direction/mirror binding, raw/group duration and one-shot/loop boundary. No source raster alteration.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio",
+      "batch": "20261113a",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Physical diagonal chestguard: raise, brace, hold, settle; identity follows approved Motion16. N torso occludes front blade; no baked success VFX or counterattack. .8s source preview is not the authoritative .4s parry window."
     }
   ],
   "historicalHolds": [

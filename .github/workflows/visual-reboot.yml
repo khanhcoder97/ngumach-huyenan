@@ -54,6 +54,7 @@ jobs:
       - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261112d --check
       - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261112e --check
       - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261112f --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261113a --check
       - run: python -m unittest discover -s Tools/ArtProduction -p 'test_*.py' -v
       - run: python Tools/ArtProduction/inspect_modular_candidates.py --check
       - run: python Tools/ArtProduction/export_paperdoll_lab.py --check

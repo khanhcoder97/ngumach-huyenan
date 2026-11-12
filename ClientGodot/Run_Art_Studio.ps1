@@ -3,6 +3,7 @@ param(
     [switch]$SelfTest,
     [string]$Project,
     [string]$Entry,
+    [string]$Component,
     [ValidateRange(0,119)][int]$Frame=0,
     [string]$Direction,
     [switch]$Play,
@@ -15,6 +16,7 @@ $ErrorActionPreference='Stop'
 $options=@{SkipBuild=$SkipBuild;StudioSelfTest=$SelfTest}
 if($Project){$options.StudioProject=$Project}
 if($Entry){$options.StudioEntry=$Entry}
+if($Component){$options.StudioComponent=$Component}
 $options.StudioFrame=$Frame
 if($Direction){$options.StudioDirection=$Direction}
 if($Play){$options.StudioPlay=$true}
