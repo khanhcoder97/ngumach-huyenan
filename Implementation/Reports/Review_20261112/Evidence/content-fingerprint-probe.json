@@ -1,0 +1,13 @@
+{
+  "serverHead": "4cada354fc9efc1f1f4fff9c1d8acf9bccba6731",
+  "checkoutRootFingerprint": {
+    "Implementation/Content/Runtime/narrative_nodes_v1.json": "eae4d69b0b0882c013a50f5873079950b41c5891a6e62930fb27916976c331d2",
+    "Implementation/Content/Runtime/npc_anchors.json": "b00b20ec7095e6f921d063ab241db1ce2c2ea0d8c2dd0bccd180ecadb485ba1d",
+    "Implementation/Content/Runtime/world_entities_bm.json": "ad97a784b662fee6632d2246f994f1aafa51c7ac73c554a1fbc285f443a24890",
+    "Implementation/Content/Runtime/world_records.json": "a25aaee2105d4b77befe185caa0384878f11e6b1b1b62f9bfde8dcf21fdf8102",
+    "Implementation/Content/Runtime/loot_recipe_v1.json": "1790ef911a43d538c81aac21fef75c820aa8a85ce0ad27ab5bdac541fa7f584d",
+    "Implementation/Content/DesignBaselines/ben_mua_alpha_20261103.json": "80a003f48236850cca4b2941b07f002f1eb26354dd102eb6d485071c8a6b3185"
+  },
+  "nestedContentFingerprint": {},
+  "note": "Nested root is the first review-run argument; server discovery can ascend parents, but runner fingerprint is empty. This is not a complete runtime content pin."
+}

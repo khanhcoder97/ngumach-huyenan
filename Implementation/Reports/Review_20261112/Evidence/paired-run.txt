@@ -1,0 +1,596 @@
+========================================================================
+MODE private-alpha
+========================================================================
+==> contract pin: 70 pinned contract files verified
++ D:/Project/NGUMACHHUYENAN-tools/dotnet10/dotnet.exe build D:\Project\NGUMACHHUYENAN-review-qod-20261109\Server\Health\Health.csproj -c Release --nologo
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Health -> D:\Project\NGUMACHHUYENAN-review-qod-20261109\Server\Health\bin\Release\net10.0\Health.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:14.50
++ D:/Project/NGUMACHHUYENAN-tools/dotnet8/dotnet.exe build D:\Project\NGUMACHHUYENAN-review-opc-20261112\Shared\ClientCore.HttpRunner\ClientCore.HttpRunner.csproj -c Release --nologo
+  Determining projects to restore...
+  Restored D:\Project\NGUMACHHUYENAN-review-opc-20261112\Shared\ClientCore.HttpRunner\ClientCore.HttpRunner.csproj (in 2,21 sec).
+  1 of 2 projects are up-to-date for restore.
+  ClientCore -> D:\Project\NGUMACHHUYENAN-review-opc-20261112\Shared\ClientCore\bin\Release\net8.0\NguMach.Client.Core.dll
+  ClientCore.HttpRunner -> D:\Project\NGUMACHHUYENAN-review-opc-20261112\Shared\ClientCore.HttpRunner\bin\Release\net8.0\ClientCoreHttpRunner.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:08.17
+==> client dotnet: D:/Project/NGUMACHHUYENAN-tools/dotnet8/dotnet.exe
+==> server dotnet: D:/Project/NGUMACHHUYENAN-tools/dotnet10/dotnet.exe
+==> mode: private-alpha
+==> client root: D:\Project\NGUMACHHUYENAN-review-opc-20261112
+==> server root: D:\Project\NGUMACHHUYENAN-review-qod-20261109
+==> content root: D:\Project\NGUMACHHUYENAN-review-qod-20261109\Implementation\Content
+==> client head: 85719a7ecdaa10d3ad2d20d32077a78cea88b92b
+==> server head: 4cada354fc9efc1f1f4fff9c1d8acf9bccba6731
+==> health sha256: 100e9478c6050c4a762d7c5e61e3dabae26e5476b97d19225964e7a188545a47
+==> starting private server at http://127.0.0.1:61415
+==> server healthy pid=9428
+==> running portable HTTP runner (mandatory)
+PASS A connect
+
+PASS A ready
+
+PASS A identity
+
+PASS A availability quests
+
+PASS A availability world-v2
+
+PASS A availability map-viewed held
+
+PASS A availability encounter
+
+PASS A availability inventory-v2
+
+PASS A availability death-return
+
+PASS A availability quest-talk
+
+PASS A availability portal
+
+PASS A tutorial quests read
+
+PASS A tutorial chain authoritative in alpha catalog
+
+PASS A alpha catalog adds only C1-01
+
+PASS A C1-01 low-level locked
+
+PASS A tutorial chain P00-01..05
+
+PASS A P00-01 available packages step
+
+PASS A P00-01 counter starts at 0
+
+PASS A P00-02..05 locked by source
+
+PASS A next actionable P00-01
+
+PASS A first incomplete P00-01
+
+PASS A P00-02 far refusal
+
+PASS A blocked accept clears pending
+
+PASS A inv pre
+
+PASS A pre coin 0
+
+PASS A accept
+
+PASS A parcel ENT_MAN_BM_OBJ_BM_PACKAGE_01
+
+PASS A parcel ENT_MAN_BM_OBJ_BM_PACKAGE_02
+
+PASS A parcel ENT_MAN_BM_OBJ_BM_PACKAGE_03
+
+PASS A read quests
+
+PASS A inv before turnin
+
+PASS A lost response
+
+PASS A pending
+
+PASS A captured mutation body
+
+PASS A retry same key success
+
+PASS A inv post
+
+PASS A 20 coin
+
+PASS A 1 chest
+
+PASS A tutorial quests after turn-in
+
+PASS A P00-01 completed
+
+PASS A P00-01 counter 3
+
+PASS A first incomplete P00-02
+
+PASS A server unlock claim P00-02
+
+PASS A P00-02 available after server unlock
+
+PASS A P00-03..05 still locked
+
+PASS A next actionable P00-02 in alpha
+
+PASS A P00-02 accepted after server unlock: ok
+
+PASS A P00-02 active from server
+
+PASS A repeat rejected
+
+PASS A inv read after reject
+
+PASS A no double grant
+
+PASS A no double chest
+
+PASS alpha inventory v2 read
+
+PASS alpha inventory v2 twelve slots
+
+PASS alpha inventory v2 bagSlots 100
+
+PASS alpha inventory v2 slotSpec
+
+PASS alpha inventory v2 bag present
+
+PASS alpha chest in bag
+
+PASS alpha equip chest accepted: ok
+
+PASS alpha equip advances revision
+
+PASS alpha chest in CHEST slot
+
+PASS alpha captured equip body
+
+PASS alpha equip replay accepted
+
+PASS alpha equip replay same snapshot
+
+PASS alpha inventory after replay
+
+PASS alpha equip replay no state change
+
+PASS alpha chest still equipped
+
+PASS alpha stale revision refused
+
+PASS alpha stale revision retryable field
+
+PASS alpha stale revision cleans pending
+
+PASS alpha unequip chest accepted: ok
+
+PASS alpha unequip advances revision
+
+PASS alpha CHEST slot empty
+
+PASS alpha chest back in bag
+
+PASS alpha death-return alive refused
+
+PASS alpha death-return refusal cleans pending
+
+PASS alpha portal far refused
+
+PASS alpha portal far retryable
+
+PASS alpha portal far cleans pending
+
+PASS alpha portal locked refused
+
+PASS alpha portal locked chapter field
+
+PASS alpha portal locked cleans pending
+
+UNVERIFIED encounter HTTP: route absent/encounter not found (404 encounter_not_found)
+
+PASS B connect
+
+PASS B identity
+
+PASS A/B different characters
+
+PASS B read quests
+
+PASS B quest not completed by A
+
+PASS B tutorial quests read
+
+PASS B tutorial chain authoritative in alpha catalog
+
+PASS B tutorial chain P00-01..05
+
+PASS B P00-01 available
+
+PASS B P00-02..05 locked by source
+
+PASS B next actionable P00-01
+
+PASS B P00-02 far refusal
+
+PASS B blocked accept clears pending
+
+PASS B inv pre
+
+PASS B pre coin 0
+
+PASS cross-session replay rejected
+
+PASS cross-session replay error is structured
+
+PASS B inv after cross-session replay
+
+PASS B no coin from A replay
+
+PASS B no chest from A replay
+
+PASS alpha talk far refused
+
+PASS alpha talk far retryable
+
+PASS alpha talk far cleans pending
+
+PASS alpha talk wrong speaker refused
+
+PASS alpha talk wrong speaker field
+
+PASS alpha talk wrong speaker cleans pending
+
+PASS alpha talk closed reveal refused
+
+PASS alpha talk reveal gate field
+
+PASS alpha talk reveal gate cleans pending
+
+PASS alpha talk offer accepted: ok
+
+PASS alpha talk receipt identity
+
+PASS alpha talk narrative node credits nothing
+
+PASS alpha talk requires fresh read
+
+PASS alpha talk fresh world read
+
+PASS alpha captured talk body
+
+PASS alpha talk replay accepted
+
+PASS alpha talk replay receipt
+
+PASS B accept
+
+PASS B parcel ENT_MAN_BM_OBJ_BM_PACKAGE_01
+
+PASS B parcel ENT_MAN_BM_OBJ_BM_PACKAGE_02
+
+PASS B parcel ENT_MAN_BM_OBJ_BM_PACKAGE_03
+
+PASS B read quests
+
+PASS B inv before turnin
+
+PASS B expiry on mutation rejected
+
+PASS B pending survives expiry
+
+PASS B relogin monotonic epoch
+
+PASS B pending carried across relogin
+
+PASS B retry same key after relogin
+
+PASS B inv post
+
+PASS B 20 coin once
+
+PASS B 1 chest once
+
+EXPIRING world request: /p1/v2/world/76b7fb10016f4cb68081ede8859af22a
+
+PASS B read expiry observed
+
+PASS B read relogin
+
+PASS B world after relogin
+
+PASS replay after commit rejected
+
+PASS A inv after replay
+
+PASS A replay no double grant
+
+PASS A replay no double chest
+
+PASS FT entry quests read
+
+PASS FT entry P00-01 completed
+
+PASS FT entry P00-02 active
+
+PASS approach 42,0 no failing moves:
+
+PASS approach 42,0 within 3 (stopped 2,65 away)
+
+PASS FT C1 refusal field
+
+PASS FT C1 refusal cleans pending
+
+PASS FT C1 quests read after refusal
+
+PASS FT C1 locked unchanged
+
+PASS approach 70,3 no failing moves:
+
+PASS approach 70,3 within 3 (stopped 2,67 away)
+
+PASS FT ripple ALPHA_OBJ_BM_RIPPLE_01: ok
+
+PASS FT ripple ALPHA_OBJ_BM_RIPPLE_01 quests
+
+PASS FT ripple counter 1
+
+PASS approach 86,-3 no failing moves:
+
+PASS approach 86,-3 within 3 (stopped 2,96 away)
+
+PASS FT ripple ALPHA_OBJ_BM_RIPPLE_02: ok
+
+PASS FT ripple ALPHA_OBJ_BM_RIPPLE_02 quests
+
+PASS FT ripple counter 2
+
+PASS approach 104,3 no failing moves:
+
+PASS approach 104,3 within 3 (stopped 2,69 away)
+
+PASS FT ripple ALPHA_OBJ_BM_RIPPLE_03: ok
+
+PASS FT ripple ALPHA_OBJ_BM_RIPPLE_03 quests
+
+PASS FT ripple counter 3
+
+PASS FT loot inv before
+
+PASS FT P00-02 CARPLING: witnessed 4 of 4 deaths (attempts 4, refusals 1 kinds, walks 0)
+
+PASS FT loot inv after
+
+PASS FT CARPLING loot paid (coin +28, rev +4)
+
+PASS FT carpling quests
+
+PASS FT CARPLING counter
+
+PASS approach 64,0 no failing moves:
+
+PASS approach 64,0 within 3 (stopped 2,80 away)
+
+PASS FT turn-in P00-02 unlocks P00-03
+
+PASS approach 42,0 no failing moves:
+
+PASS approach 42,0 within 3 (stopped 2,54 away)
+
+PASS FT accept P00-03: ok
+
+PASS approach 138,3 no failing moves:
+
+PASS approach 138,3 within 3 (stopped 2,75 away)
+
+PASS FT villager ALPHA_OBJ_BM_VILLAGER_01: ok
+
+PASS FT villager quests ALPHA_OBJ_BM_VILLAGER_01
+
+PASS FT villager counter 1
+
+PASS approach 146,3 no failing moves:
+
+PASS approach 146,3 within 3 (stopped 2,99 away)
+
+PASS FT villager ALPHA_OBJ_BM_VILLAGER_02: ok
+
+PASS FT villager quests ALPHA_OBJ_BM_VILLAGER_02
+
+PASS FT villager counter 2
+
+PASS FT P00-03 WATERROOT: witnessed 3 of 3 deaths (attempts 3, refusals 1 kinds, walks 0)
+
+PASS FT wave trial probe
+
+PASS FT wave trial dodge credited
+
+PASS approach 42,0 no failing moves:
+
+PASS approach 42,0 within 3 (stopped 2,66 away)
+
+PASS FT turn-in P00-03 to LYAN
+
+PASS FT talk reveal gate expected 409 invalid_transition naming revealGate with no result
+
+PASS FT talk wrong speaker expected 422 npc_mismatch naming payload.npcId with no result
+
+PASS FT talk unpublished node expected 404 narrative_unknown_node naming payload.nodeId with no result
+
+PASS FT talk refusal quests
+
+PASS FT refused talk changed nothing
+
+PASS approach 64,0 no failing moves:
+
+PASS approach 64,0 within 3 (stopped 2,94 away)
+
+PASS FT accept P00-04: ok
+
+PASS approach 42,0 no failing moves:
+
+PASS approach 42,0 within 3 (stopped 2,76 away)
+
+PASS FT wave A activated
+
+PASS FT escorted NPC in audience
+
+PASS FT P00-04 wave A: witnessed 3 of 3 deaths (attempts 3, refusals 1 kinds, walks 0)
+
+PASS FT escorted NPC moved in read model
+
+PASS FT AOI walk away had no failing moves
+
+PASS FT escort row left audience 60 WU away
+
+PASS FT AOI walk back had no failing moves
+
+PASS FT escort row returned to the road
+
+PASS FT wave B activated
+
+PASS FT P00-04 wave B: witnessed 3 of 3 deaths (attempts 3, refusals 1 kinds, walks 0)
+
+PASS FT escort quests
+
+FT escort diagnostic: state=READY_TO_TURN_IN waveA=3 waveB=3 actor=121,8,1,5 hp=2956
+
+PASS FT escort wave counters
+
+PASS approach 64,0 no failing moves:
+
+PASS approach 64,0 within 3 (stopped 2,83 away)
+
+PASS FT turn-in P00-04 unlocks P00-05
+
+PASS approach 64,0 no failing moves:
+
+PASS approach 64,0 within 3 (stopped 2,83 away)
+
+PASS FT accept P00-05: ok
+
+PASS FT CLUE talk grant-free receipt
+
+PASS FT portal far refused
+
+PASS FT refused portal moved nobody
+
+PASS approach 178,0 no failing moves:
+
+PASS approach 178,0 within 3 (stopped 2,90 away)
+
+PASS FT talk replay stored receipt
+
+PASS FT talk changed-body conflict
+
+PASS FT talk replay quests
+
+PASS FT talk replay changed nothing
+
+PASS FT quest boss owner-targetable
+
+PASS FT quest boss killed (77 casts, witnessed-dead)
+
+PASS FT boss stays dead
+
+PASS FT boss quests
+
+PASS FT BOSS counter
+
+PASS FT fragment interact: ok
+
+PASS FT fragment quests
+
+PASS FT FRAGMENT counter
+
+PASS FT premature turn-in quests
+
+PASS FT P00-05 turn-in stopped early
+
+PASS FT C1 still locked before finale
+
+PASS approach 188,0 no failing moves:
+
+PASS approach 188,0 within 3 (stopped 2,70 away)
+
+PASS FT CLASS_CONFIRM talk: ok
+
+PASS FT CLASS_CONFIRM typed receipt
+
+PASS FT talk fresh world read
+
+PASS FT class-confirm quests
+
+PASS FT class confirm credited
+
+PASS approach 64,0 no failing moves:
+
+PASS approach 64,0 within 3 (stopped 2,65 away)
+
+PASS FT turn-in P00-05
+
+PASS FT finale quests
+
+PASS FT chapter unlocked, C1 still level-locked
+
+PASS approach 348,0 no failing moves:
+
+PASS approach 348,0 within 3 (stopped 2,84 away)
+
+PASS FT portal transported
+
+PASS FT portal raw receipt behavioral
+
+UNVERIFIED portal-positive contract shape: wire has no mapId/xWu/yWu; typed LastPortal null
+
+PASS FT portal typed strict (no fabricated receipt)
+
+PASS FT portal wire destination matches registry
+
+PASS FT portal world read
+
+PASS FT portal arrival MAP_THANH_LAC (8,0)
+
+PASS FT portal replay stored receipt
+
+PASS FT fresh-key portal refused
+
+PASS FT fresh-key portal moved nobody
+
+PASS FT final quests
+
+PASS FT all tutorial completed, C1 locked
+
+PASS FT B isolation quests read
+
+PASS FT B inherited none of A's P00-02
+
+PASS FT B isolation states
+
+UNVERIFIED inventory consume: route unmapped (405)
+
+UNVERIFIED quest map-viewed: route unmapped (405)
+
+UNVERIFIED quest escort current: route unmapped (404)
+
+PASS ClientCore HTTP assertions: 268
+
+==> runner exit 0
+==> assertions: 268
+artifacts: D:\Project\NGUMACHHUYENAN-tools\handoff-20261112\evidence\paired\private-alpha
+==> cleanup server pid=9428
+==> server pid=9428 reaped exit=1
+==> mode=private-alpha exit=0
