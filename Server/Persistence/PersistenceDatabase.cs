@@ -63,6 +63,34 @@ public sealed class PersistenceDatabase
         return await ReadStateAsync(connection, null, characterId, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Ownership-gated read for the command boundary. Returns null both when the character
+    /// does not exist and when it belongs to another account, so a caller cannot probe for
+    /// foreign character ids. The internal no-principal overload is for admin/export tools.
+    /// </summary>
+    public async Task<StateRecord?> ReadStateAsync(string characterId, string principalAccountId, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(characterId);
+        ArgumentException.ThrowIfNullOrWhiteSpace(principalAccountId);
+        await using var connection = await OpenInitializedAsync(cancellationToken).ConfigureAwait(false);
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+            SELECT s.revision, s.state_json, s.state_hash
+            FROM player_state s
+            JOIN characters c ON c.character_id = s.character_id
+            WHERE s.character_id = $character AND c.account_id = $account;
+            """;
+        command.Parameters.AddWithValue("$character", characterId);
+        command.Parameters.AddWithValue("$account", principalAccountId);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false);
+        if (!await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
+        {
+            return null;
+        }
+
+        return new StateRecord(reader.GetInt64(0), reader.GetString(1), reader.GetString(2));
+    }
+
     public async Task<ReceiptRecord?> ReadReceiptAsync(string idempotencyKey, CancellationToken cancellationToken = default)
     {
         await using var connection = await OpenAsync(cancellationToken).ConfigureAwait(false);
@@ -72,6 +100,39 @@ public sealed class PersistenceDatabase
             FROM receipts WHERE idempotency_key = $key;
             """;
         command.Parameters.AddWithValue("$key", idempotencyKey);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false);
+        if (!await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
+        {
+            return null;
+        }
+
+        return new ReceiptRecord(
+            reader.GetString(0),
+            reader.GetString(1),
+            reader.GetString(2),
+            reader.GetString(3),
+            reader.GetString(4),
+            reader.GetString(5),
+            reader.GetInt64(6),
+            reader.GetString(7));
+    }
+
+    /// <summary>Ownership-gated receipt read; foreign-owner receipts are indistinguishable from missing.</summary>
+    public async Task<ReceiptRecord?> ReadReceiptAsync(string idempotencyKey, string principalAccountId, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(idempotencyKey);
+        ArgumentException.ThrowIfNullOrWhiteSpace(principalAccountId);
+        await using var connection = await OpenInitializedAsync(cancellationToken).ConfigureAwait(false);
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+            SELECT r.idempotency_key, r.owner_character_id, r.operation, r.request_hash, r.result_json,
+                   r.result_hash, r.revision, r.committed_at
+            FROM receipts r
+            JOIN characters c ON c.character_id = r.owner_character_id
+            WHERE r.idempotency_key = $key AND c.account_id = $account;
+            """;
+        command.Parameters.AddWithValue("$key", idempotencyKey);
+        command.Parameters.AddWithValue("$account", principalAccountId);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false);
         if (!await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
         {

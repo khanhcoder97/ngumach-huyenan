@@ -18,7 +18,7 @@ public sealed class LifeReceiptTests
         var death = await CommitDeathAsync(fixture, lease, "key-death", lifeVersion: 1, expected: 0, revision: 1);
         Assert.Equal(MutationStatus.Committed, death.Status);
 
-        var before = new LifeSnapshot("char-a", 1, DeathRecord(1, 1));
+        var before = new LifeSnapshot("char-a", 1, DeathRecord("char-a", 1, 1));
         var request = fixture.Request("key-return", "char-a", lease.FencingToken, expected: 1);
         var outcome = await fixture.UnitOfWork.ExecuteAsync(
             request,
@@ -31,7 +31,7 @@ public sealed class LifeReceiptTests
         var life = await fixture.Life.ReadLifeAsync("char-a");
         Assert.NotNull(life);
         Assert.Equal(2, life!.LifeVersion);
-        Assert.Equal("PDEATH_test_1_1", life.LatestDeath!.DeathEventId);
+        Assert.Equal("PDEATH_test_char-a_1_1", life.LatestDeath!.DeathEventId);
 
         var lookup = await fixture.Life.LookupReturnAsync("key-return");
         Assert.Equal(ReturnLookupKind.Committed, lookup.Kind);
@@ -103,9 +103,9 @@ public sealed class LifeReceiptTests
             _ => PlanDecision.Accept(new MutationPlan("{\"hp\":999}", Array.Empty<LedgerEntry>(), new[] { new OutboxMessage("bad", "{}") })
             {
                 Life = LifeTransition.ForReturn(
-                    new LifeSnapshot("char-a", 1, DeathRecord(1, 1)),
-                    new LifeSnapshot("char-a", 2, DeathRecord(1, 1)),
-                    ReturnCommit(stale, new LifeSnapshot("char-a", 1, DeathRecord(1, 1)), revision: 3))
+                    new LifeSnapshot("char-a", 1, DeathRecord("char-a", 1, 1)),
+                    new LifeSnapshot("char-a", 2, DeathRecord("char-a", 1, 1)),
+                    ReturnCommit(stale, new LifeSnapshot("char-a", 1, DeathRecord("char-a", 1, 1)), revision: 3))
             }));
 
         Assert.Equal(MutationStatus.RevisionConflict, outcome.Status);
@@ -209,6 +209,79 @@ public sealed class LifeReceiptTests
         Assert.NotNull((await fixture.Life.LookupReturnAsync("key-return")).Commit);
     }
 
+    [Fact]
+    public async Task DeathLootReceipt_ReplayKeepsRollAndDoesNotDoubleGrant()
+    {
+        await using var fixture = await TestFixture.CreateAsync("char-a");
+        var lease = await fixture.AcquireAsync("char-a");
+        var death = DeathRecord("char-a", 1, 1);
+        var request = fixture.Request("key-death-loot", "char-a", lease.FencingToken, expected: 0);
+
+        var committed = await fixture.UnitOfWork.ExecuteAsync(
+            request,
+            _ => PlanDecision.Accept(new MutationPlan(
+                "{\"hp\":0}",
+                new[] { new LedgerEntry("death-loot", "{\"item\":\"sword\"}") },
+                new[] { new OutboxMessage("death-loot", "{\"item\":\"sword\"}") })
+            {
+                Life = LifeTransition.ForDeath(
+                    new LifeSnapshot("char-a", 1, null),
+                    new LifeSnapshot("char-a", 1, death),
+                    death)
+            }));
+        Assert.Equal(MutationStatus.Committed, committed.Status);
+        var before = await fixture.Database.GetTableCountsAsync();
+
+        var replay = await fixture.UnitOfWork.ExecuteAsync(
+            request,
+            _ => throw new Xunit.Sdk.XunitException("death replay must not roll again"));
+
+        Assert.Equal(MutationStatus.Replayed, replay.Status);
+        Assert.Equal(0, replay.LedgerEntries);
+        var after = await fixture.Database.GetTableCountsAsync();
+        Assert.Equal(1, after["ledger"]);
+        Assert.Equal(before["outbox"], after["outbox"]);
+        Assert.Equal(1, (await fixture.Life.ReadLifeAsync("char-a"))!.LifeVersion);
+    }
+
+    [Fact]
+    public async Task ThreeHundredCharacters_MultipleLivesAndRestart_DoNotReuseOldKeys()
+    {
+        await using var fixture = await TestFixture.CreateAsync("char-a");
+        var lease = await fixture.AcquireAsync("char-a");
+        await CommitDeathAsync(fixture, lease, "key-death-original", 1, 0, 1);
+        var originalReturn = fixture.Request("key-return-original", "char-a", lease.FencingToken, expected: 1);
+        await CommitReturnAsync(fixture, originalReturn, beforeLife: 1, revision: 2);
+
+        for (var index = 0; index < 300; index++)
+        {
+            var character = "char-life-" + index;
+            await fixture.Identity.CreateCharacterAsync(character, "account-1");
+            var churnLease = await fixture.AcquireAsync(character);
+            var death = await CommitDeathAsync(fixture, churnLease, "key-death-life-" + index, 1, 0, 1);
+            Assert.Equal(MutationStatus.Committed, death.Status);
+            var ret = await CommitReturnAsync(
+                fixture,
+                fixture.Request("key-return-life-" + index, character, churnLease.FencingToken, expected: 1),
+                beforeLife: 1,
+                revision: 2);
+            Assert.Equal(MutationStatus.Committed, ret.Status);
+        }
+
+        // Restart: brand-new database/store objects over the same file.
+        var reopened = new PersistenceDatabase(PersistenceOptions.ForFile(fixture.Workspace.DatabasePath));
+        var lifeStore = new LifeReceiptStore(reopened);
+        Assert.Equal(2, (await lifeStore.ReadLifeAsync("char-life-299"))!.LifeVersion);
+        Assert.Equal(ReturnLookupKind.Committed, (await lifeStore.LookupReturnAsync("key-return-life-0")).Kind);
+
+        var replay = await new DurableUnitOfWork(reopened).ExecuteAsync(
+            originalReturn,
+            _ => throw new Xunit.Sdk.XunitException("old key must not heal a later life"));
+        Assert.Equal(MutationStatus.Replayed, replay.Status);
+        Assert.Equal(2, (await lifeStore.ReadLifeAsync("char-a"))!.LifeVersion);
+        Assert.Equal(301, (await reopened.GetTableCountsAsync())["life_receipts"]);
+    }
+
     private static async Task<MutationOutcome> CommitDeathAsync(
         TestFixture fixture,
         LeaseGrant lease,
@@ -217,14 +290,15 @@ public sealed class LifeReceiptTests
         long expected,
         long revision)
     {
-        var before = await fixture.Life.ReadLifeAsync("char-a") ?? new LifeSnapshot("char-a", 1, null);
-        var death = DeathRecord(lifeVersion, revision);
-        var request = fixture.Request(key, "char-a", lease.FencingToken, expected);
+        var character = lease.CharacterId;
+        var before = await fixture.Life.ReadLifeAsync(character) ?? new LifeSnapshot(character, 1, null);
+        var death = DeathRecord(character, lifeVersion, revision);
+        var request = fixture.Request(key, character, lease.FencingToken, expected);
         return await fixture.UnitOfWork.ExecuteAsync(
             request,
             _ => PlanDecision.Accept(new MutationPlan("{\"hp\":0}", Array.Empty<LedgerEntry>(), Array.Empty<OutboxMessage>())
             {
-                Life = LifeTransition.ForDeath(before, new LifeSnapshot("char-a", lifeVersion, death), death)
+                Life = LifeTransition.ForDeath(before, new LifeSnapshot(character, lifeVersion, death), death)
             }));
     }
 
@@ -278,7 +352,7 @@ public sealed class LifeReceiptTests
             DateTimeOffset.UtcNow);
     }
 
-    private static PlayerDeathSnapshot DeathRecord(int lifeVersion, long revision) =>
-        new("char-a", lifeVersion, revision, "PDEATH_test_" + lifeVersion + "_" + revision,
+    private static PlayerDeathSnapshot DeathRecord(string character, int lifeVersion, long revision) =>
+        new(character, lifeVersion, revision, "PDEATH_test_" + character + "_" + lifeVersion + "_" + revision,
             new DateTimeOffset(2026, 11, 14, 0, 0, 0, TimeSpan.Zero));
 }

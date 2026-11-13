@@ -152,5 +152,74 @@ public sealed class BackupRecoveryTests
         Assert.Equal("{\"gold\":1}", (await restored.ReadStateAsync("char-a"))!.StateJson);
         Assert.Null(await restored.ReadReceiptAsync("key-target"));
         Assert.NotNull(await restored.ReadReceiptAsync("key-source"));
+        Assert.False(File.Exists(target.Workspace.DatabasePath + ".restore.tmp"));
+        Assert.False(File.Exists(target.Workspace.DatabasePath + ".restore-old"));
+    }
+
+    [Fact]
+    public async Task Restore_WhenTargetIoIsDenied_KeepsExistingDatabaseIntact()
+    {
+        await using var source = await TestFixture.CreateAsync("char-a");
+        var sourceLease = await source.AcquireAsync("char-a");
+        await source.CommitAsync(source.Request("key-source", "char-a", sourceLease.FencingToken), "{\"gold\":1}");
+        var backupPath = source.Workspace.File("io-source.sqlite");
+        await source.Backups.CreateBackupAsync(backupPath);
+
+        await using var target = await TestFixture.CreateAsync("char-a");
+        var targetLease = await target.AcquireAsync("char-a");
+        await target.CommitAsync(target.Request("key-target", "char-a", targetLease.FencingToken), "{\"gold\":2}");
+
+        // Hold the target open with FileShare.Read: Windows refuses the delete/replace that
+        // a "copy over the live file" restore would need. The original must survive.
+        using (new FileStream(target.Workspace.DatabasePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+        {
+            await Assert.ThrowsAnyAsync<Exception>(() => source.Backups.RestoreAsync(backupPath, target.Workspace.DatabasePath));
+        }
+
+        var unchanged = new PersistenceDatabase(PersistenceOptions.ForFile(target.Workspace.DatabasePath));
+        Assert.Equal("{\"gold\":2}", (await unchanged.ReadStateAsync("char-a"))!.StateJson);
+        Assert.NotNull(await unchanged.ReadReceiptAsync("key-target"));
+        Assert.False(File.Exists(target.Workspace.DatabasePath + ".restore.tmp"));
+        Assert.False(File.Exists(target.Workspace.DatabasePath + ".restore-old"));
+    }
+
+    [Fact]
+    public async Task Backup_WhenSourceIoIsDenied_PublishesNothing()
+    {
+        await using var fixture = await TestFixture.CreateAsync("char-a");
+        var lease = await fixture.AcquireAsync("char-a");
+        await fixture.CommitAsync(fixture.Request("key-io", "char-a", lease.FencingToken), "{\"gold\":1}");
+        var backupPath = fixture.Workspace.File("denied-backup.sqlite");
+
+        using (new FileStream(fixture.Workspace.DatabasePath, FileMode.Open, FileAccess.Read, FileShare.None))
+        {
+            await Assert.ThrowsAnyAsync<Exception>(() => fixture.Backups.CreateBackupAsync(backupPath));
+        }
+
+        Assert.False(File.Exists(backupPath));
+        Assert.False(File.Exists(backupPath + ".manifest.json"));
+        Assert.False(File.Exists(backupPath + ".tmp"));
+    }
+
+    [Fact]
+    public async Task Restore_SameBackupTwice_IsRepeatable()
+    {
+        await using var fixture = await TestFixture.CreateAsync("char-a");
+        var lease = await fixture.AcquireAsync("char-a");
+        await fixture.CommitAsync(fixture.Request("key-repeat", "char-a", lease.FencingToken), "{\"gold\":9}", ("currency", "{\"gold\":9}"));
+        var backupPath = fixture.Workspace.File("repeat.sqlite");
+        var backup = await fixture.Backups.CreateBackupAsync(backupPath);
+        var targetPath = fixture.Workspace.File("repeat-target.sqlite");
+
+        var first = await fixture.Backups.RestoreAsync(backupPath, targetPath);
+        var second = await fixture.Backups.RestoreAsync(backupPath, targetPath);
+
+        Assert.Equal(first.Sha256, second.Sha256);
+        Assert.Equal(backup.TableCounts["receipts"], second.TableCounts["receipts"]);
+        Assert.Equal(backup.TableCounts["outbox"], second.TableCounts["outbox"]);
+        var restored = new PersistenceDatabase(PersistenceOptions.ForFile(targetPath));
+        Assert.Equal("{\"gold\":9}", (await restored.ReadStateAsync("char-a"))!.StateJson);
+        Assert.False(File.Exists(targetPath + ".restore.tmp"));
+        Assert.False(File.Exists(targetPath + ".restore-old"));
     }
 }

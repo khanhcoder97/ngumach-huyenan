@@ -196,4 +196,20 @@ public sealed class UnitOfWorkTests
         Assert.Equal(MutationStatus.OwnershipDenied, denied.Status);
         Assert.Equal("account-does-not-own-character", denied.ErrorCode);
     }
+
+    [Fact]
+    public async Task OwnershipGatedReads_HideForeignCharacterAndReceipt()
+    {
+        await using var fixture = await TestFixture.CreateAsync("char-a");
+        await fixture.Identity.CreateAccountAsync("account-2");
+        await fixture.Identity.CreateCharacterAsync("char-b", "account-2");
+        var lease = await fixture.AcquireAsync("char-a");
+        await fixture.CommitAsync(fixture.Request("key-read", "char-a", lease.FencingToken), "{\"gold\":1}");
+
+        Assert.NotNull(await fixture.Database.ReadStateAsync("char-a", "account-1"));
+        Assert.Null(await fixture.Database.ReadStateAsync("char-a", "account-2"));
+        Assert.NotNull(await fixture.Database.ReadReceiptAsync("key-read", "account-1"));
+        Assert.Null(await fixture.Database.ReadReceiptAsync("key-read", "account-2"));
+        Assert.Null(await fixture.Database.ReadStateAsync("char-missing", "account-1"));
+    }
 }

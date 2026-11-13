@@ -82,48 +82,12 @@ public sealed class MigrationTests
     }
 
     [Fact]
-    public async Task Upgrade_FromV1_AppliesV2AndKeepsExistingData()
+    public async Task Upgrade_FromV1_AppliesV2AndV3AndKeepsExistingData()
     {
         var workspace = TempWorkspace.Create();
         await using (workspace)
         {
-            await using (var connection = new SqliteConnection($"Data Source={workspace.DatabasePath}"))
-            {
-                await connection.OpenAsync();
-                await using (var pragma = connection.CreateCommand())
-                {
-                    pragma.CommandText = "PRAGMA journal_mode=WAL;";
-                    await pragma.ExecuteNonQueryAsync();
-                }
-
-                await using (var create = connection.CreateCommand())
-                {
-                    create.CommandText = "CREATE TABLE schema_migrations (version INTEGER PRIMARY KEY, name TEXT NOT NULL, checksum TEXT NOT NULL, applied_at TEXT NOT NULL);";
-                    await create.ExecuteNonQueryAsync();
-                }
-
-                await using (var v1 = connection.CreateCommand())
-                {
-                    v1.CommandText = PersistenceMigrations.All[0].Sql;
-                    await v1.ExecuteNonQueryAsync();
-                }
-
-                await using (var record = connection.CreateCommand())
-                {
-                    record.CommandText = "INSERT INTO schema_migrations (version, name, checksum, applied_at) VALUES (1, $name, $checksum, $applied);";
-                    record.Parameters.AddWithValue("$name", PersistenceMigrations.All[0].Name);
-                    record.Parameters.AddWithValue("$checksum", PersistenceMigrations.Checksum(PersistenceMigrations.All[0]));
-                    record.Parameters.AddWithValue("$applied", DateTimeOffset.UtcNow.ToString("O"));
-                    await record.ExecuteNonQueryAsync();
-                }
-
-                await using (var seed = connection.CreateCommand())
-                {
-                    seed.CommandText = "INSERT INTO accounts (account_id, created_at) VALUES ('account-v1', $now); INSERT INTO characters (character_id, account_id, created_at) VALUES ('char-v1', 'account-v1', $now);";
-                    seed.Parameters.AddWithValue("$now", DateTimeOffset.UtcNow.ToString("O"));
-                    await seed.ExecuteNonQueryAsync();
-                }
-            }
+            await CreateV1Async(workspace);
 
             var database = new PersistenceDatabase(PersistenceOptions.ForFile(workspace.DatabasePath));
             Assert.Equal(1, await database.GetSchemaVersionAsync());
@@ -142,6 +106,95 @@ public sealed class MigrationTests
             await using var lifeTable = verify.CreateCommand();
             lifeTable.CommandText = "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name IN ('life_state', 'life_receipts');";
             Assert.Equal(2L, (long)(await lifeTable.ExecuteScalarAsync() ?? 0L));
+        }
+    }
+
+    [Fact]
+    public async Task FailedMigration_RollsBackEveryPendingStepAndKeepsV1Data()
+    {
+        var workspace = TempWorkspace.Create();
+        await using (workspace)
+        {
+            // A pre-existing life_state makes the v3 CREATE TABLE fail after v2 has already
+            // run inside the same migration transaction.
+            await CreateV1Async(workspace, createLifeStateCollision: true);
+            var database = new PersistenceDatabase(PersistenceOptions.ForFile(workspace.DatabasePath));
+
+            await Assert.ThrowsAnyAsync<Exception>(() => database.MigrateAsync());
+
+            Assert.Equal(1, await database.GetSchemaVersionAsync());
+
+            await using var verify = new SqliteConnection($"Data Source={workspace.DatabasePath}");
+            await verify.OpenAsync();
+            await using (var accounts = verify.CreateCommand())
+            {
+                accounts.CommandText = "SELECT COUNT(*) FROM accounts;";
+                Assert.Equal(1L, (long)(await accounts.ExecuteScalarAsync() ?? 0L));
+            }
+
+            await using (var characters = verify.CreateCommand())
+            {
+                characters.CommandText = "SELECT COUNT(*) FROM characters;";
+                Assert.Equal(1L, (long)(await characters.ExecuteScalarAsync() ?? 0L));
+            }
+
+            await using (var receipts = verify.CreateCommand())
+            {
+                receipts.CommandText = "SELECT COUNT(*) FROM receipts;";
+                Assert.Equal(0L, (long)(await receipts.ExecuteScalarAsync() ?? 0L));
+            }
+
+            await using (var deadAt = verify.CreateCommand())
+            {
+                deadAt.CommandText = "SELECT COUNT(*) FROM pragma_table_info('outbox') WHERE name = 'dead_at';";
+                Assert.Equal(0L, (long)(await deadAt.ExecuteScalarAsync() ?? 0L));
+            }
+        }
+    }
+
+    private static async Task CreateV1Async(TempWorkspace workspace, bool createLifeStateCollision = false)
+    {
+        await using var connection = new SqliteConnection($"Data Source={workspace.DatabasePath}");
+        await connection.OpenAsync();
+        await using (var pragma = connection.CreateCommand())
+        {
+            pragma.CommandText = "PRAGMA journal_mode=WAL;";
+            await pragma.ExecuteNonQueryAsync();
+        }
+
+        await using (var create = connection.CreateCommand())
+        {
+            create.CommandText = "CREATE TABLE schema_migrations (version INTEGER PRIMARY KEY, name TEXT NOT NULL, checksum TEXT NOT NULL, applied_at TEXT NOT NULL);";
+            await create.ExecuteNonQueryAsync();
+        }
+
+        await using (var v1 = connection.CreateCommand())
+        {
+            v1.CommandText = PersistenceMigrations.All[0].Sql;
+            await v1.ExecuteNonQueryAsync();
+        }
+
+        await using (var record = connection.CreateCommand())
+        {
+            record.CommandText = "INSERT INTO schema_migrations (version, name, checksum, applied_at) VALUES (1, $name, $checksum, $applied);";
+            record.Parameters.AddWithValue("$name", PersistenceMigrations.All[0].Name);
+            record.Parameters.AddWithValue("$checksum", PersistenceMigrations.Checksum(PersistenceMigrations.All[0]));
+            record.Parameters.AddWithValue("$applied", DateTimeOffset.UtcNow.ToString("O"));
+            await record.ExecuteNonQueryAsync();
+        }
+
+        await using (var seed = connection.CreateCommand())
+        {
+            seed.CommandText = "INSERT INTO accounts (account_id, created_at) VALUES ('account-v1', $now); INSERT INTO characters (character_id, account_id, created_at) VALUES ('char-v1', 'account-v1', $now);";
+            seed.Parameters.AddWithValue("$now", DateTimeOffset.UtcNow.ToString("O"));
+            await seed.ExecuteNonQueryAsync();
+        }
+
+        if (createLifeStateCollision)
+        {
+            await using var collision = connection.CreateCommand();
+            collision.CommandText = "CREATE TABLE life_state (character_id TEXT PRIMARY KEY);";
+            await collision.ExecuteNonQueryAsync();
         }
     }
 }

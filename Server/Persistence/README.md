@@ -65,7 +65,9 @@ dotnet Server/Persistence.Harness/bin/Release/net10.0/NguMach.Server.Persistence
   the library.
 - **Backup/restore** — SQLite online backup API only (never a raw copy of a live WAL
   database), integrity/schema/count verification, SHA-256 manifest, corrupt/truncated and
-  digest-mismatch refusal.
+  digest-mismatch refusal. Restore copies into a sibling temp file, verifies it, swaps the
+  target, and restores the previous target if the swap or post-verification fails; a locked
+  target is refused rather than overwritten.
 - **Migrations** — versioned scripts recorded with SHA-256 checksums; tampering and
   newer-than-supported schema versions fail closed.
 - **Ops surface** — `PersistenceDiagnostics` returns real readiness (integrity, foreign keys,
@@ -98,12 +100,16 @@ receipts. Both upgrades are exercised from a synthetic v1 database.
 | Outbox claim/retry/ack/dedupe/cursor | IMPLEMENTED + TESTED |
 | Outbox dispatcher: bounded batch, retry budget, poison dead-letter | IMPLEMENTED + TESTED |
 | Life/death/return before/after + full result receipt | IMPLEMENTED + TESTED (library-owned DTO; Health not wired) |
+| Ownership-gated state/receipt reads | IMPLEMENTED + TESTED |
+| Health integration guide / feature-gate review pack | `docs/production/Qoder_Remote_Persistence_Handoff_vi.md` (review input, not integration) |
 | 10.000 replays and 300-character churn | TESTED (no life/receipt/ledger/outbox growth) |
 | Migration checksum/future version, v1→v3 upgrade, integrity | IMPLEMENTED + TESTED |
 | Backup/restore/corrupt/truncated/digest | IMPLEMENTED + TESTED |
+| Restore staged/replace, locked target preserved, repeat restore | IMPLEMENTED + TESTED |
+| IO-denied via real file lock (backup and restore) | TESTED; ACL/disk-full still UNVERIFIED |
 | Readiness/metrics with redacted output | IMPLEMENTED + TESTED |
 | Benchmark commit/replay/outbox/contention | MEASURED on this machine (see R2 report) |
-| Disk-full / IO-denied / ACL-denied recovery | UNVERIFIED (no isolated environment in this checkpoint) |
+| Disk-full / IO-denied / ACL-denied recovery | IO-denied TESTED with a locked file; disk-full and ACL UNVERIFIED |
 | PostgreSQL provider | NOT IMPLEMENTED (production target unchanged) |
 | Health/gameplay adapter integration | NOT IMPLEMENTED (waits for Codex review; library passing is not Health durability) |
 | Domain capability adapters for gameplay owners | DTO/interface/version registry IMPLEMENTED; handlers unsupported by design |

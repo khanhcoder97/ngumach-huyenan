@@ -53,10 +53,15 @@ public sealed class BackupService
 
         if (File.Exists(fullBackupPath))
         {
-            File.Delete(fullBackupPath);
+            // Replace the previous manifest-bearing backup only after a verified new file
+            // exists; File.Move(overwrite) keeps the old backup if the move itself fails.
+            File.Move(temporaryPath, fullBackupPath, overwrite: true);
+        }
+        else
+        {
+            File.Move(temporaryPath, fullBackupPath);
         }
 
-        File.Move(temporaryPath, fullBackupPath);
         var hash = await ComputeFileHashAsync(fullBackupPath, cancellationToken).ConfigureAwait(false);
         var manifest = new BackupManifest(fullBackupPath, hash, DateTimeOffset.UtcNow, verification.SchemaVersion, verification.TableCounts!);
         await WriteManifestAsync(fullBackupPath, manifest, cancellationToken).ConfigureAwait(false);
@@ -108,7 +113,7 @@ public sealed class BackupService
             }
 
             var counts = new Dictionary<string, long>(StringComparer.Ordinal);
-            foreach (var table in new[] { "accounts", "characters", "player_state", "receipts", "ledger", "outbox", "leases", "outbox_consumers", "consumer_effects" })
+            foreach (var table in new[] { "accounts", "characters", "player_state", "receipts", "ledger", "outbox", "leases", "outbox_consumers", "consumer_effects", "life_state", "life_receipts" })
             {
                 await using var countCommand = connection.CreateCommand();
                 countCommand.CommandText = $"SELECT COUNT(*) FROM {table};";
@@ -156,36 +161,116 @@ public sealed class BackupService
         }
 
         Directory.CreateDirectory(Path.GetDirectoryName(fullTarget)!);
-        File.Delete(fullTarget);
-        File.Delete(fullTarget + "-wal");
-        File.Delete(fullTarget + "-shm");
+        var temporaryTarget = fullTarget + ".restore.tmp";
+        var previousTarget = fullTarget + ".restore-old";
+        TryDelete(temporaryTarget);
+        TryDelete(temporaryTarget + "-wal");
+        TryDelete(temporaryTarget + "-shm");
+        TryDelete(previousTarget);
+        TryDelete(previousTarget + "-wal");
+        TryDelete(previousTarget + "-shm");
 
-        await using (var source = new SqliteConnection(new SqliteConnectionStringBuilder
+        try
         {
-            DataSource = fullBackup,
-            Mode = SqliteOpenMode.ReadOnly,
-            Pooling = false
-        }.ToString()))
-        await using (var target = new SqliteConnection(new SqliteConnectionStringBuilder
-        {
-            DataSource = fullTarget,
-            Mode = SqliteOpenMode.ReadWriteCreate,
-            Pooling = false
-        }.ToString()))
-        {
-            await source.OpenAsync(cancellationToken).ConfigureAwait(false);
-            await target.OpenAsync(cancellationToken).ConfigureAwait(false);
-            source.BackupDatabase(target);
+            // Copy into a sibling temp file first. The live target (and its WAL sidecars)
+            // are only touched after the copy has been verified, so a failed or partial
+            // restore cannot destroy the existing database.
+            await using (var source = new SqliteConnection(new SqliteConnectionStringBuilder
+            {
+                DataSource = fullBackup,
+                Mode = SqliteOpenMode.ReadOnly,
+                Pooling = false
+            }.ToString()))
+            await using (var target = new SqliteConnection(new SqliteConnectionStringBuilder
+            {
+                DataSource = temporaryTarget,
+                Mode = SqliteOpenMode.ReadWriteCreate,
+                Pooling = false
+            }.ToString()))
+            {
+                await source.OpenAsync(cancellationToken).ConfigureAwait(false);
+                await target.OpenAsync(cancellationToken).ConfigureAwait(false);
+                source.BackupDatabase(target);
+            }
+
+            var staged = await ValidateAsync(temporaryTarget, cancellationToken).ConfigureAwait(false);
+            if (!staged.IsValid)
+            {
+                throw new PersistenceException(PersistenceErrorCodes.RestoreFailed, "Restored database verification failed: " + string.Join("; ", staged.Errors));
+            }
+
+            try
+            {
+                if (File.Exists(fullTarget))
+                {
+                    File.Move(fullTarget, previousTarget);
+                }
+
+                MoveIfExists(fullTarget + "-wal", previousTarget + "-wal");
+                MoveIfExists(fullTarget + "-shm", previousTarget + "-shm");
+
+                File.Move(temporaryTarget, fullTarget);
+                var restored = await ValidateAsync(fullTarget, cancellationToken).ConfigureAwait(false);
+                if (!restored.IsValid)
+                {
+                    throw new PersistenceException(PersistenceErrorCodes.RestoreFailed, "Restored database verification failed: " + string.Join("; ", restored.Errors));
+                }
+
+                TryDelete(previousTarget);
+                TryDelete(previousTarget + "-wal");
+                TryDelete(previousTarget + "-shm");
+                var restoredHash = await ComputeFileHashAsync(fullTarget, cancellationToken).ConfigureAwait(false);
+                return new BackupReport(fullTarget, restoredHash, DateTimeOffset.UtcNow, restored.SchemaVersion, restored.TableCounts!, restored);
+            }
+            catch
+            {
+                TryDelete(fullTarget);
+                TryDelete(fullTarget + "-wal");
+                TryDelete(fullTarget + "-shm");
+                if (File.Exists(previousTarget))
+                {
+                    File.Move(previousTarget, fullTarget);
+                    MoveIfExists(previousTarget + "-wal", fullTarget + "-wal");
+                    MoveIfExists(previousTarget + "-shm", fullTarget + "-shm");
+                }
+
+                throw;
+            }
         }
-
-        var restored = await ValidateAsync(fullTarget, cancellationToken).ConfigureAwait(false);
-        if (!restored.IsValid)
+        finally
         {
-            throw new PersistenceException(PersistenceErrorCodes.RestoreFailed, "Restored database verification failed: " + string.Join("; ", restored.Errors));
+            TryDelete(temporaryTarget);
+            TryDelete(temporaryTarget + "-wal");
+            TryDelete(temporaryTarget + "-shm");
         }
+    }
 
-        var restoredHash = await ComputeFileHashAsync(fullTarget, cancellationToken).ConfigureAwait(false);
-        return new BackupReport(fullTarget, restoredHash, DateTimeOffset.UtcNow, restored.SchemaVersion, restored.TableCounts!, restored);
+    private static void MoveIfExists(string source, string destination)
+    {
+        if (File.Exists(source))
+        {
+            File.Move(source, destination, overwrite: true);
+        }
+    }
+
+    private static void TryDelete(string path)
+    {
+        try
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+        }
+        catch (IOException)
+        {
+            // A concurrent reader still holds the file; leaving it is safer than deleting
+            // anything outside this restore's own paths.
+        }
+        catch (UnauthorizedAccessException)
+        {
+            // Same: fail closed without touching unrelated files.
+        }
     }
 
     public static async Task<string> ComputeFileHashAsync(string path, CancellationToken cancellationToken = default)
