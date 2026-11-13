@@ -69,6 +69,8 @@ public sealed class TestFixture : IAsyncDisposable
         Outbox = new OutboxStore(database);
         Backups = new BackupService(database);
         Recovery = new RecoveryService(database);
+        Life = new LifeReceiptStore(database);
+        Diagnostics = new PersistenceDiagnostics(database);
     }
 
     public TempWorkspace Workspace { get; }
@@ -86,6 +88,10 @@ public sealed class TestFixture : IAsyncDisposable
     public BackupService Backups { get; }
 
     public RecoveryService Recovery { get; }
+
+    public LifeReceiptStore Life { get; }
+
+    public PersistenceDiagnostics Diagnostics { get; }
 
     public static async Task<TestFixture> CreateAsync(params string[] characters)
     {
@@ -117,6 +123,14 @@ public sealed class TestFixture : IAsyncDisposable
             state,
             ledger.Select(entry => new LedgerEntry(entry.Type, entry.Json)).ToArray(),
             new[] { new OutboxMessage("test-topic", "{\"key\":\"" + request.IdempotencyKey + "\"}") })));
+
+    public async Task ExecuteAsync(string sql)
+    {
+        await using var connection = await Database.OpenAsync();
+        await using var command = connection.CreateCommand();
+        command.CommandText = sql;
+        await command.ExecuteNonQueryAsync();
+    }
 
     public async ValueTask DisposeAsync()
     {

@@ -132,7 +132,7 @@ public sealed class PersistenceDatabase
     {
         var tables = new[]
         {
-            "accounts", "characters", "player_state", "receipts", "ledger", "outbox", "leases", "outbox_consumers", "consumer_effects", "schema_migrations"
+            "accounts", "characters", "player_state", "receipts", "ledger", "outbox", "leases", "outbox_consumers", "consumer_effects", "life_state", "life_receipts", "schema_migrations"
         };
 
         await using var connection = await OpenAsync(cancellationToken).ConfigureAwait(false);

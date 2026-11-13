@@ -66,6 +66,16 @@ public sealed class IdentityStore
         return await ExistsAsync(connection, transaction, "characters", "character_id", characterId, cancellationToken).ConfigureAwait(false);
     }
 
+    internal static async Task<string?> AccountForCharacterAsync(SqliteConnection connection, SqliteTransaction? transaction, string characterId, CancellationToken cancellationToken)
+    {
+        await using var command = connection.CreateCommand();
+        command.Transaction = transaction;
+        command.CommandText = "SELECT account_id FROM characters WHERE character_id = $character;";
+        command.Parameters.AddWithValue("$character", characterId);
+        var value = await command.ExecuteScalarAsync(cancellationToken).ConfigureAwait(false);
+        return value is null or DBNull ? null : (string)value;
+    }
+
     private static async Task<bool> ExistsAsync(SqliteConnection connection, SqliteTransaction transaction, string table, string column, string value, CancellationToken cancellationToken)
     {
         await using var command = connection.CreateCommand();

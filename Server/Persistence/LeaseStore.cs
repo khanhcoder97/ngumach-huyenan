@@ -22,7 +22,8 @@ public sealed class LeaseStore
         string characterId,
         string ownerToken,
         DateTimeOffset? now = null,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        string? principalAccountId = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(characterId);
         ArgumentException.ThrowIfNullOrWhiteSpace(ownerToken);
@@ -33,7 +34,16 @@ public sealed class LeaseStore
 
         if (!await IdentityStore.CharacterExistsAsync(connection, transaction, characterId, cancellationToken).ConfigureAwait(false))
         {
-            return LeaseResult.Failed(characterId, MutationStatus.OwnershipDenied, PersistenceErrorCodes.CharacterNotFound);
+            return LeaseResult.Failed(MutationStatus.OwnershipDenied, PersistenceErrorCodes.CharacterNotFound);
+        }
+
+        if (principalAccountId is not null)
+        {
+            var account = await IdentityStore.AccountForCharacterAsync(connection, transaction, characterId, cancellationToken).ConfigureAwait(false);
+            if (!string.Equals(account, principalAccountId, StringComparison.Ordinal))
+            {
+                return LeaseResult.Failed(MutationStatus.OwnershipDenied, "account-does-not-own-character");
+            }
         }
 
         var existing = await ReadLeaseAsync(connection, transaction, characterId, cancellationToken).ConfigureAwait(false);
@@ -56,7 +66,7 @@ public sealed class LeaseStore
                 return LeaseResult.Acquired(renewed, true);
             }
 
-            return LeaseResult.Failed(characterId, MutationStatus.LeaseHeld, "lease-held", existing);
+            return LeaseResult.Failed(MutationStatus.LeaseHeld, "lease-held", existing);
         }
 
         // The lease has expired. Inside the reconnect grace window the same owner token
@@ -94,17 +104,17 @@ public sealed class LeaseStore
         var existing = await ReadLeaseAsync(connection, transaction, characterId, cancellationToken).ConfigureAwait(false);
         if (existing is null)
         {
-            return LeaseResult.Failed(characterId, MutationStatus.LeaseMissing, "lease-missing");
+            return LeaseResult.Failed(MutationStatus.LeaseMissing, "lease-missing");
         }
 
         if (!string.Equals(existing.OwnerToken, ownerToken, StringComparison.Ordinal) || existing.FencingToken != fencingToken)
         {
-            return LeaseResult.Failed(characterId, MutationStatus.StaleFencingToken, "stale-fencing-token", existing);
+            return LeaseResult.Failed(MutationStatus.StaleFencingToken, "stale-fencing-token", existing);
         }
 
         if (existing.ExpiresAt <= clock)
         {
-            return LeaseResult.Failed(characterId, MutationStatus.LeaseExpired, "lease-expired", existing);
+            return LeaseResult.Failed(MutationStatus.LeaseExpired, "lease-expired", existing);
         }
 
         var renewed = existing with { ExpiresAt = clock + _options.LeaseTtl };
@@ -183,6 +193,6 @@ public sealed record LeaseResult(bool Succeeded, MutationStatus Status, string? 
     public static LeaseResult Acquired(LeaseGrant lease, bool renewed) =>
         new(true, renewed ? MutationStatus.LeaseRenewed : MutationStatus.LeaseAcquired, null, lease);
 
-    public static LeaseResult Failed(string characterId, MutationStatus status, string errorCode, LeaseGrant? current = null) =>
+    public static LeaseResult Failed(MutationStatus status, string errorCode, LeaseGrant? current = null) =>
         new(false, status, errorCode, current);
 }

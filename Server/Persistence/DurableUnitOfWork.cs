@@ -54,6 +54,15 @@ public sealed class DurableUnitOfWork
             return MutationOutcome.Rejected(MutationStatus.OwnershipDenied, PersistenceErrorCodes.CharacterNotFound);
         }
 
+        if (request.PrincipalAccountId is not null)
+        {
+            var account = await IdentityStore.AccountForCharacterAsync(connection, transaction, request.OwnerCharacterId, cancellationToken).ConfigureAwait(false);
+            if (!string.Equals(account, request.PrincipalAccountId, StringComparison.Ordinal))
+            {
+                return MutationOutcome.Rejected(MutationStatus.OwnershipDenied, "account-does-not-own-character");
+            }
+        }
+
         var lease = await LeaseStore.ReadLeaseAsync(connection, transaction, request.OwnerCharacterId, cancellationToken).ConfigureAwait(false);
         if (lease is null)
         {
@@ -130,6 +139,27 @@ public sealed class DurableUnitOfWork
             var message = plan.Outbox[index] ?? throw new ArgumentException("Outbox messages must not be null.", nameof(planner));
             ArgumentException.ThrowIfNullOrWhiteSpace(message.Topic);
             await InsertOutboxAsync(connection, transaction, request.IdempotencyKey, message, timestamp, cancellationToken).ConfigureAwait(false);
+        }
+
+        if (plan.Life is not null)
+        {
+            try
+            {
+                await LifeReceiptStore.WriteTransitionAsync(
+                    connection,
+                    transaction,
+                    request,
+                    plan.Life,
+                    requestHash,
+                    timestamp,
+                    cancellationToken).ConfigureAwait(false);
+            }
+            catch (PersistenceException exception) when (exception.ErrorCode == PersistenceErrorCodes.LifeVersionConflict)
+            {
+                // Nothing below this point committed; disposing the transaction rolls the
+                // whole command back so state, receipt, ledger and life stay together.
+                return MutationOutcome.Rejected(MutationStatus.RevisionConflict, exception.ErrorCode);
+            }
         }
 
         await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);

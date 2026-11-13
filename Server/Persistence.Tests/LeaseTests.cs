@@ -90,4 +90,16 @@ public sealed class LeaseTests
         Assert.False(result.Succeeded);
         Assert.Equal(MutationStatus.OwnershipDenied, result.Status);
     }
+
+    [Fact]
+    public async Task PrincipalAccount_MustOwnCharacter()
+    {
+        await using var fixture = await TestFixture.CreateAsync("char-a");
+        var denied = await fixture.Leases.AcquireAsync("char-a", "owner-a", principalAccountId: "account-other");
+        Assert.False(denied.Succeeded);
+        Assert.Equal(MutationStatus.OwnershipDenied, denied.Status);
+
+        var allowed = await fixture.Leases.AcquireAsync("char-a", "owner-a", principalAccountId: "account-1");
+        Assert.True(allowed.Succeeded);
+    }
 }

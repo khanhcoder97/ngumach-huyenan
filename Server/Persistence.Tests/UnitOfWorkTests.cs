@@ -180,4 +180,20 @@ public sealed class UnitOfWorkTests
         Assert.Equal(MutationStatus.Failed, outcome.Status);
         Assert.Equal(0, (await fixture.Database.GetTableCountsAsync())["receipts"]);
     }
+
+    [Fact]
+    public async Task PrincipalAccount_MustOwnCharacter()
+    {
+        await using var fixture = await TestFixture.CreateAsync("char-a");
+        var lease = await fixture.AcquireAsync("char-a");
+        var request = fixture.Request("key-principal", "char-a", lease.FencingToken) with { PrincipalAccountId = "account-1" };
+        var committed = await fixture.CommitAsync(request, "{\"gold\":1}");
+        Assert.Equal(MutationStatus.Committed, committed.Status);
+
+        var otherLease = await fixture.AcquireAsync("char-a");
+        var foreign = fixture.Request("key-principal-foreign", "char-a", otherLease.FencingToken) with { PrincipalAccountId = "account-other" };
+        var denied = await fixture.CommitAsync(foreign, "{\"gold\":2}");
+        Assert.Equal(MutationStatus.OwnershipDenied, denied.Status);
+        Assert.Equal("account-does-not-own-character", denied.ErrorCode);
+    }
 }

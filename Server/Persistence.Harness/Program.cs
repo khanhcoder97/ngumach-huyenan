@@ -1,4 +1,6 @@
 using System.Data;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using Microsoft.Data.Sqlite;
 using NguMach.Server.Persistence;
@@ -38,8 +40,10 @@ public static class Program
                 "crash-before-commit" => await CrashBeforeCommitAsync(options),
                 "contend" => await ContendAsync(options),
                 "hold-lease" => await HoldLeaseAsync(options),
+                "hold-lease-then-commit" => await HoldLeaseThenCommitAsync(options),
                 "try-lease" => await TryLeaseAsync(options),
                 "read-state" => await ReadStateAsync(options),
+                "benchmark" => await BenchmarkAsync(options),
                 _ => Fail("unknown-mode:" + mode)
             };
         }
@@ -51,7 +55,16 @@ public static class Program
     }
 
     private static PersistenceDatabase Database(Dictionary<string, string> options) =>
-        new(PersistenceOptions.ForFile(Required(options, "db")));
+        new(new PersistenceOptions
+        {
+            DatabasePath = Required(options, "db"),
+            LeaseTtl = Milliseconds(options, "lease-ttl-ms", 60_000),
+            ReconnectGrace = Milliseconds(options, "grace-ms", 120_000),
+            BusyTimeout = Milliseconds(options, "busy-timeout-ms", 10_000)
+        });
+
+    private static TimeSpan Milliseconds(Dictionary<string, string> options, string name, int fallback) =>
+        TimeSpan.FromMilliseconds(int.Parse(options.GetValueOrDefault(name, fallback.ToString(System.Globalization.CultureInfo.InvariantCulture)), System.Globalization.CultureInfo.InvariantCulture));
 
     private static async Task<int> InitAsync(Dictionary<string, string> options)
     {
@@ -236,7 +249,246 @@ public static class Program
         return 0;
     }
 
+    private static async Task<int> HoldLeaseThenCommitAsync(Dictionary<string, string> options)
+    {
+        var database = Database(options);
+        await database.InitializeAsync();
+        var character = Required(options, "character");
+        var leases = new LeaseStore(database);
+        var lease = await leases.AcquireAsync(character, Required(options, "owner"));
+        Console.WriteLine(JsonSerializer.Serialize(new { status = lease.Status.ToString(), fencing = lease.Lease?.FencingToken ?? 0 }));
+        if (!lease.Succeeded)
+        {
+            return 10;
+        }
+
+        await Task.Delay(int.Parse(options.GetValueOrDefault("delay-ms", "1000"), System.Globalization.CultureInfo.InvariantCulture));
+
+        var request = new MutationRequest(
+            Required(options, "key"),
+            character,
+            options.GetValueOrDefault("operation", "harness-commit"),
+            options.GetValueOrDefault("request", "{}"),
+            long.Parse(options.GetValueOrDefault("expected", "0"), System.Globalization.CultureInfo.InvariantCulture),
+            lease.Lease!.FencingToken);
+
+        var unitOfWork = new DurableUnitOfWork(database);
+        var outcome = await unitOfWork.ExecuteAsync(request, _ => PlanDecision.Accept(new MutationPlan(
+            options.GetValueOrDefault("state", "{\"status\":\"late-writer\"}"),
+            Array.Empty<LedgerEntry>(),
+            Array.Empty<OutboxMessage>())));
+
+        Console.WriteLine(JsonSerializer.Serialize(new
+        {
+            status = outcome.Status.ToString(),
+            error = outcome.ErrorCode,
+            revision = outcome.Revision,
+            fencing = lease.Lease.FencingToken
+        }));
+        return outcome.Succeeded ? 0 : 11;
+    }
+
+    /// <summary>
+    /// R8 benchmark: real file DB, real fenced commits and real receipt replays. Reports
+    /// hardware, configured load, database size and latency percentiles. It does not remove
+    /// fencing, fsync or the receipt path to make numbers look better.
+    /// </summary>
+    private static async Task<int> BenchmarkAsync(Dictionary<string, string> options)
+    {
+        var database = Database(options);
+        await database.InitializeAsync();
+        var character = Required(options, "character");
+        var identity = new IdentityStore(database);
+        var account = options.GetValueOrDefault("account", "benchmark-account");
+        await identity.CreateAccountAsync(account);
+        await identity.CreateCharacterAsync(character, account);
+
+        var iterations = int.Parse(options.GetValueOrDefault("iterations", "200"), System.Globalization.CultureInfo.InvariantCulture);
+        var replays = int.Parse(options.GetValueOrDefault("replays", "2000"), System.Globalization.CultureInfo.InvariantCulture);
+        var concurrency = int.Parse(options.GetValueOrDefault("concurrency", "0"), System.Globalization.CultureInfo.InvariantCulture);
+        var contentionIterations = int.Parse(options.GetValueOrDefault("contention-iterations", "50"), System.Globalization.CultureInfo.InvariantCulture);
+        var leases = new LeaseStore(database);
+        var lease = await leases.AcquireAsync(character, "benchmark-owner");
+        if (!lease.Succeeded)
+        {
+            return Fail("benchmark-lease-failed:" + lease.ErrorCode);
+        }
+
+        var unitOfWork = new DurableUnitOfWork(database);
+        var commitLatencies = new List<double>(iterations);
+        var errors = 0;
+        for (var index = 0; index < iterations; index++)
+        {
+            var request = new MutationRequest(
+                "bench-key-" + index.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                character,
+                "benchmark",
+                "{\"amount\":1}",
+                index,
+                lease.Lease!.FencingToken);
+
+            var stopwatch = Stopwatch.StartNew();
+            var outcome = await unitOfWork.ExecuteAsync(request, context => PlanDecision.Accept(new MutationPlan(
+                "{\"revision\":" + (context.CurrentRevision + 1).ToString(System.Globalization.CultureInfo.InvariantCulture) + "}",
+                new[] { new LedgerEntry("benchmark", "{\"index\":" + index.ToString(System.Globalization.CultureInfo.InvariantCulture) + "}") },
+                new[] { new OutboxMessage("benchmark", "{\"index\":" + index.ToString(System.Globalization.CultureInfo.InvariantCulture) + "}") })));
+            stopwatch.Stop();
+            commitLatencies.Add(stopwatch.Elapsed.TotalMilliseconds);
+            if (!outcome.Committed)
+            {
+                errors++;
+            }
+        }
+
+        var replayLatencies = new List<double>(replays);
+        for (var index = 0; index < replays; index++)
+        {
+            var request = new MutationRequest(
+                "bench-key-0",
+                character,
+                "benchmark",
+                "{\"amount\":1}",
+                0,
+                lease.Lease!.FencingToken);
+            var stopwatch = Stopwatch.StartNew();
+            var outcome = await unitOfWork.ExecuteAsync(request, _ => throw new InvalidOperationException("replay must not plan"));
+            stopwatch.Stop();
+            replayLatencies.Add(stopwatch.Elapsed.TotalMilliseconds);
+            if (outcome.Status != MutationStatus.Replayed)
+            {
+                errors++;
+            }
+        }
+
+        var dispatcher = new OutboxDispatcher(new OutboxStore(database));
+        var dispatched = 0;
+        var dispatchStopwatch = Stopwatch.StartNew();
+        for (var batch = 0; batch < 10_000; batch++)
+        {
+            var report = await dispatcher.DispatchBatchAsync(
+                "benchmark-consumer",
+                "benchmark-worker",
+                (_, applyOnce, cancellationToken) => applyOnce((_, _, _) => Task.CompletedTask),
+                batchSize: PersistenceLimits.OutboxMaxBatch);
+            dispatched += report.Applied;
+            if (report.Claimed == 0)
+            {
+                break;
+            }
+        }
+
+        dispatchStopwatch.Stop();
+
+        var contention = new List<double>();
+        var contentionErrors = 0;
+        if (concurrency > 0)
+        {
+            var tasks = new List<Task>(concurrency);
+            for (var worker = 0; worker < concurrency; worker++)
+            {
+                var workerIndex = worker;
+                tasks.Add(Task.Run(async () =>
+                {
+                    var workerCharacter = character + "-c" + workerIndex.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    await identity.CreateCharacterAsync(workerCharacter, account);
+                    var workerLease = await leases.AcquireAsync(workerCharacter, "benchmark-owner-" + workerIndex.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                    if (!workerLease.Succeeded)
+                    {
+                        Interlocked.Increment(ref contentionErrors);
+                        return;
+                    }
+
+                    for (var index = 0; index < contentionIterations; index++)
+                    {
+                        var request = new MutationRequest(
+                            "bench-c" + workerIndex.ToString(System.Globalization.CultureInfo.InvariantCulture) + "-" + index.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                            workerCharacter,
+                            "benchmark",
+                            "{\"amount\":1}",
+                            index,
+                            workerLease.Lease!.FencingToken);
+                        var stopwatch = Stopwatch.StartNew();
+                        var outcome = await unitOfWork.ExecuteAsync(request, context => PlanDecision.Accept(new MutationPlan(
+                            "{\"revision\":" + (context.CurrentRevision + 1).ToString(System.Globalization.CultureInfo.InvariantCulture) + "}",
+                            Array.Empty<LedgerEntry>(),
+                            Array.Empty<OutboxMessage>())));
+                        stopwatch.Stop();
+                        if (outcome.Committed)
+                        {
+                            lock (contention)
+                            {
+                                contention.Add(stopwatch.Elapsed.TotalMilliseconds);
+                            }
+                        }
+                        else
+                        {
+                            Interlocked.Increment(ref contentionErrors);
+                        }
+                    }
+                }));
+            }
+
+            await Task.WhenAll(tasks);
+        }
+
+        var databasePath = database.DatabasePath;
+        var result = new
+        {
+            mode = "benchmark",
+            hardware = new
+            {
+                os = RuntimeInformation.OSDescription,
+                architecture = RuntimeInformation.ProcessArchitecture.ToString(),
+                processorCount = Environment.ProcessorCount,
+                dotnet = Environment.Version.ToString()
+            },
+            database = new
+            {
+                schemaVersion = await database.GetSchemaVersionAsync(),
+                sizeBytes = new FileInfo(databasePath).Length,
+                walBytes = File.Exists(databasePath + "-wal") ? new FileInfo(databasePath + "-wal").Length : 0,
+                busyTimeoutMs = database.Options.BusyTimeout.TotalMilliseconds
+            },
+            config = new { iterations, replays, concurrency, contentionIterations },
+            commit = Percentiles(commitLatencies),
+            replay = Percentiles(replayLatencies),
+            outbox = new { applied = dispatched, totalMs = Math.Round(dispatchStopwatch.Elapsed.TotalMilliseconds, 2) },
+            contention = Percentiles(contention),
+            contentionErrors,
+            errors
+        };
+
+        Console.WriteLine(JsonSerializer.Serialize(result));
+        return errors == 0 && contentionErrors == 0 ? 0 : 12;
+    }
+
+    private static object Percentiles(List<double> values)
+    {
+        if (values.Count == 0)
+        {
+            return new { count = 0, p50Ms = 0d, p95Ms = 0d, p99Ms = 0d, maxMs = 0d, totalMs = 0d };
+        }
+
+        values.Sort();
+        return new
+        {
+            count = values.Count,
+            p50Ms = Math.Round(Percentile(values, 0.50), 3),
+            p95Ms = Math.Round(Percentile(values, 0.95), 3),
+            p99Ms = Math.Round(Percentile(values, 0.99), 3),
+            maxMs = Math.Round(values[^1], 3),
+            totalMs = Math.Round(values.Sum(), 2)
+        };
+    }
+
+    private static double Percentile(List<double> sorted, double percentile)
+    {
+        var rank = (int)Math.Ceiling(percentile * sorted.Count) - 1;
+        return sorted[Math.Clamp(rank, 0, sorted.Count - 1)];
+    }
+
     private static int Fail(string message)
+
     {
         Console.Error.WriteLine(message);
         return 2;

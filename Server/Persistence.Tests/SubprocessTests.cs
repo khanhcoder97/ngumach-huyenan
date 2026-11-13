@@ -115,6 +115,72 @@ public sealed class SubprocessTests
     }
 
     [Fact]
+    public async Task ExpiredLease_NewOwnerCommits_OldOwnerIsRefusedAsStale()
+    {
+        await using var fixture = await TestFixture.CreateAsync("char-a");
+
+        // The old process owns fencing token 1 and waits past its 200 ms lease TTL.
+        var oldWriter = StartHarness(
+            "hold-lease-then-commit",
+            "--db", fixture.Workspace.DatabasePath,
+            "--character", "char-a",
+            "--owner", "owner-old",
+            "--lease-ttl-ms", "200",
+            "--grace-ms", "0",
+            "--delay-ms", "1500",
+            "--key", "key-old-writer",
+            "--state", "{\"writer\":\"old\"}");
+
+        await Task.Delay(600);
+
+        // A real second process takes over with a higher fencing token and commits first.
+        var takeover = await RunHarnessAsync(
+            "try-lease",
+            "--db", fixture.Workspace.DatabasePath,
+            "--character", "char-a",
+            "--owner", "owner-new",
+            "--lease-ttl-ms", "200",
+            "--grace-ms", "0");
+        Assert.Equal(0, takeover.ExitCode);
+        Assert.Contains("\"fencing\":2", takeover.StandardOutput);
+
+        var newLease = await fixture.Leases.AcquireAsync("char-a", "owner-new", DateTimeOffset.UtcNow);
+        Assert.True(newLease.Succeeded);
+        var committed = await fixture.CommitAsync(
+            fixture.Request("key-new-writer", "char-a", newLease.Lease!.FencingToken, expected: 0),
+            "{\"writer\":\"new\"}");
+        Assert.Equal(MutationStatus.Committed, committed.Status);
+
+        var oldResult = await oldWriter;
+        Assert.Equal(11, oldResult.ExitCode);
+        Assert.Contains("StaleFencingToken", oldResult.StandardOutput);
+        Assert.Equal("{\"writer\":\"new\"}", (await fixture.Database.ReadStateAsync("char-a"))!.StateJson);
+        Assert.Null(await fixture.Database.ReadReceiptAsync("key-old-writer"));
+    }
+
+    [Fact]
+    public async Task BenchmarkMode_MeasuresRealCommitAndReplay()
+    {
+        await using var fixture = await TestFixture.CreateAsync("char-bench");
+        var result = await RunHarnessAsync(
+            "benchmark",
+            "--db", fixture.Workspace.DatabasePath,
+            "--character", "char-bench",
+            "--iterations", "5",
+            "--replays", "20",
+            "--concurrency", "2",
+            "--contention-iterations", "3");
+
+        Assert.Equal(0, result.ExitCode);
+        using var document = JsonDocument.Parse(result.StandardOutput.Trim());
+        var root = document.RootElement;
+        Assert.Equal(5, root.GetProperty("commit").GetProperty("count").GetInt32());
+        Assert.Equal(20, root.GetProperty("replay").GetProperty("count").GetInt32());
+        Assert.Equal(5, root.GetProperty("outbox").GetProperty("applied").GetInt32());
+        Assert.Equal(PersistenceMigrations.CurrentVersion, root.GetProperty("database").GetProperty("schemaVersion").GetInt32());
+    }
+
+    [Fact]
     public async Task ManyCharacters_OldKeyStillReplaysWithoutNewGrant()
     {
         await using var fixture = await TestFixture.CreateAsync("char-original");

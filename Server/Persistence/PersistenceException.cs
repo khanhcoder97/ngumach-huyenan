@@ -27,5 +27,6 @@ public static class PersistenceErrorCodes
     public const string InvalidArgument = "invalid-argument";
     public const string CharacterNotFound = "character-not-found";
     public const string AccountNotFound = "account-not-found";
+    public const string LifeVersionConflict = "life-version-conflict";
     public const string Busy = "database-busy";
 }

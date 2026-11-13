@@ -47,6 +47,7 @@ public sealed class OutboxStore
             select.CommandText = """
                 SELECT outbox_id FROM outbox
                 WHERE acked_at IS NULL
+                  AND dead_at IS NULL
                   AND available_at <= $now
                   AND (claimed_by IS NULL OR claim_expires_at IS NULL OR claim_expires_at <= $now)
                 ORDER BY outbox_id
@@ -95,7 +96,7 @@ public sealed class OutboxStore
         await using var command = connection.CreateCommand();
         command.CommandText = """
             UPDATE outbox SET acked_at = $acked, claimed_by = NULL, claim_expires_at = NULL
-            WHERE outbox_id = $id AND claimed_by = $worker AND acked_at IS NULL;
+            WHERE outbox_id = $id AND claimed_by = $worker AND acked_at IS NULL AND dead_at IS NULL;
             """;
         command.Parameters.AddWithValue("$acked", PersistenceDatabase.Timestamp(clock));
         command.Parameters.AddWithValue("$id", outboxId);
@@ -117,7 +118,7 @@ public sealed class OutboxStore
         command.CommandText = """
             UPDATE outbox
             SET claimed_by = NULL, claim_expires_at = NULL, available_at = $available, last_error = $error
-            WHERE outbox_id = $id AND claimed_by = $worker AND acked_at IS NULL;
+            WHERE outbox_id = $id AND claimed_by = $worker AND acked_at IS NULL AND dead_at IS NULL;
             """;
         command.Parameters.AddWithValue("$available", PersistenceDatabase.Timestamp(clock + backoff));
         command.Parameters.AddWithValue("$error", error);
@@ -210,16 +211,58 @@ public sealed class OutboxStore
         var clock = now ?? DateTimeOffset.UtcNow;
         await using var connection = await _database.OpenInitializedAsync(cancellationToken).ConfigureAwait(false);
         await using var command = connection.CreateCommand();
-        command.CommandText = "SELECT COUNT(*) FROM outbox WHERE acked_at IS NULL AND available_at <= $now AND (claimed_by IS NULL OR claim_expires_at <= $now);";
+        command.CommandText = "SELECT COUNT(*) FROM outbox WHERE acked_at IS NULL AND dead_at IS NULL AND available_at <= $now AND (claimed_by IS NULL OR claim_expires_at <= $now);";
         command.Parameters.AddWithValue("$now", PersistenceDatabase.Timestamp(clock));
         return Convert.ToInt64(await command.ExecuteScalarAsync(cancellationToken).ConfigureAwait(false) ?? 0L);
+    }
+
+    /// <summary>Marks a poison message as dead-lettered; it stops being claimable.</summary>
+    public async Task<bool> DeadLetterAsync(string workerId, long outboxId, string error, DateTimeOffset? now = null, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(workerId);
+        var clock = now ?? DateTimeOffset.UtcNow;
+
+        await using var connection = await _database.OpenInitializedAsync(cancellationToken).ConfigureAwait(false);
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+            UPDATE outbox
+            SET dead_at = $dead, claimed_by = NULL, claim_expires_at = NULL, last_error = $error
+            WHERE outbox_id = $id AND acked_at IS NULL AND dead_at IS NULL;
+            """;
+        command.Parameters.AddWithValue("$dead", PersistenceDatabase.Timestamp(clock));
+        command.Parameters.AddWithValue("$error", error);
+        command.Parameters.AddWithValue("$id", outboxId);
+        return await command.ExecuteNonQueryAsync(cancellationToken).ConfigureAwait(false) > 0;
+    }
+
+    public async Task<long> GetDeadLetterCountAsync(CancellationToken cancellationToken = default)
+    {
+        await using var connection = await _database.OpenInitializedAsync(cancellationToken).ConfigureAwait(false);
+        await using var command = connection.CreateCommand();
+        command.CommandText = "SELECT COUNT(*) FROM outbox WHERE dead_at IS NOT NULL AND acked_at IS NULL;";
+        return Convert.ToInt64(await command.ExecuteScalarAsync(cancellationToken).ConfigureAwait(false) ?? 0L);
+    }
+
+    public async Task<IReadOnlyList<OutboxItem>> ReadDeadLettersAsync(CancellationToken cancellationToken = default)
+    {
+        await using var connection = await _database.OpenInitializedAsync(cancellationToken).ConfigureAwait(false);
+        await using var command = connection.CreateCommand();
+        command.CommandText = "SELECT outbox_id, idempotency_key, topic, payload_json, created_at, available_at, attempts, claimed_by, claim_expires_at, acked_at, last_error, dead_at FROM outbox WHERE dead_at IS NOT NULL ORDER BY outbox_id;";
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false);
+        var items = new List<OutboxItem>();
+        while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
+        {
+            items.Add(ReadItem(reader));
+        }
+
+        return items;
     }
 
     public async Task<IReadOnlyList<OutboxItem>> ReadAllAsync(CancellationToken cancellationToken = default)
     {
         await using var connection = await _database.OpenInitializedAsync(cancellationToken).ConfigureAwait(false);
         await using var command = connection.CreateCommand();
-        command.CommandText = "SELECT outbox_id, idempotency_key, topic, payload_json, created_at, available_at, attempts, claimed_by, claim_expires_at, acked_at, last_error FROM outbox ORDER BY outbox_id;";
+        command.CommandText = "SELECT outbox_id, idempotency_key, topic, payload_json, created_at, available_at, attempts, claimed_by, claim_expires_at, acked_at, last_error, dead_at FROM outbox ORDER BY outbox_id;";
         await using var reader = await command.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false);
         var items = new List<OutboxItem>();
         while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
@@ -234,7 +277,7 @@ public sealed class OutboxStore
     {
         await using var command = connection.CreateCommand();
         command.Transaction = transaction;
-        command.CommandText = "SELECT outbox_id, idempotency_key, topic, payload_json, created_at, available_at, attempts, claimed_by, claim_expires_at, acked_at, last_error FROM outbox WHERE outbox_id = $id;";
+        command.CommandText = "SELECT outbox_id, idempotency_key, topic, payload_json, created_at, available_at, attempts, claimed_by, claim_expires_at, acked_at, last_error, dead_at FROM outbox WHERE outbox_id = $id;";
         command.Parameters.AddWithValue("$id", id);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false);
         return await reader.ReadAsync(cancellationToken).ConfigureAwait(false) ? ReadItem(reader) : null;
@@ -251,7 +294,8 @@ public sealed class OutboxStore
         reader.IsDBNull(7) ? null : reader.GetString(7),
         reader.IsDBNull(8) ? null : PersistenceDatabase.ParseTimestamp(reader.GetString(8)),
         reader.IsDBNull(9) ? null : PersistenceDatabase.ParseTimestamp(reader.GetString(9)),
-        reader.IsDBNull(10) ? null : reader.GetString(10));
+        reader.IsDBNull(10) ? null : reader.GetString(10),
+        reader.IsDBNull(11) ? null : PersistenceDatabase.ParseTimestamp(reader.GetString(11)));
 }
 
 public sealed record OutboxItem(
@@ -265,4 +309,5 @@ public sealed record OutboxItem(
     string? ClaimedBy,
     DateTimeOffset? ClaimExpiresAt,
     DateTimeOffset? AckedAt,
-    string? LastError);
+    string? LastError,
+    DateTimeOffset? DeadAt);

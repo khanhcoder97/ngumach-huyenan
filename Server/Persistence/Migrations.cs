@@ -7,7 +7,7 @@ namespace NguMach.Server.Persistence;
 /// </summary>
 public static class PersistenceMigrations
 {
-    public const int CurrentVersion = 1;
+    public const int CurrentVersion = 3;
 
     public static IReadOnlyList<MigrationScript> All { get; } = new[]
     {
@@ -87,10 +87,39 @@ public static class PersistenceMigrations
                 consumer TEXT NOT NULL,
                 applied_at TEXT NOT NULL
             );
+            """),
+        new MigrationScript(2, "qr01-outbox-dead-letter", """
+            ALTER TABLE outbox ADD COLUMN dead_at TEXT;
+            CREATE INDEX ix_outbox_dead ON outbox(dead_at, outbox_id);
+            """),
+        new MigrationScript(3, "qr01-life-receipts", """
+            CREATE TABLE life_state (
+                character_id TEXT PRIMARY KEY REFERENCES characters(character_id),
+                life_version INTEGER NOT NULL CHECK (life_version >= 1),
+                latest_death_json TEXT,
+                latest_death_hash TEXT,
+                updated_at TEXT NOT NULL
+            );
+
+            CREATE TABLE life_receipts (
+                idempotency_key TEXT PRIMARY KEY REFERENCES receipts(idempotency_key),
+                owner_character_id TEXT NOT NULL REFERENCES characters(character_id),
+                request_hash TEXT NOT NULL,
+                committed_life_version INTEGER NOT NULL CHECK (committed_life_version >= 1),
+                before_json TEXT NOT NULL,
+                before_hash TEXT NOT NULL,
+                after_json TEXT NOT NULL,
+                after_hash TEXT NOT NULL,
+                result_json TEXT NOT NULL,
+                result_hash TEXT NOT NULL,
+                committed_at TEXT NOT NULL,
+                tombstoned_at TEXT
+            );
+            CREATE INDEX ix_life_receipts_owner ON life_receipts(owner_character_id, committed_at);
             """)
     };
 
-    internal static string Checksum(MigrationScript script) => CanonicalJson.Hash(script.Sql);
+    public static string Checksum(MigrationScript script) => CanonicalJson.Hash(script.Sql);
 }
 
 public sealed record MigrationScript(int Version, string Name, string Sql);

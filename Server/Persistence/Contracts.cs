@@ -32,7 +32,8 @@ public sealed record MutationRequest(
     string Operation,
     string RequestJson,
     long ExpectedRevision,
-    long FencingToken);
+    long FencingToken,
+    string? PrincipalAccountId = null);
 
 /// <summary>One ledger row produced by a mutation plan.</summary>
 public sealed record LedgerEntry(string EntryType, string PayloadJson);
@@ -73,7 +74,14 @@ public sealed record PlanDecision
 }
 
 /// <summary>Validated, ready-to-commit plan. The library hashes and stores it atomically.</summary>
-public sealed record MutationPlan(string NextStateJson, IReadOnlyList<LedgerEntry> Ledger, IReadOnlyList<OutboxMessage> Outbox);
+public sealed record MutationPlan(string NextStateJson, IReadOnlyList<LedgerEntry> Ledger, IReadOnlyList<OutboxMessage> Outbox)
+{
+    /// <summary>
+    /// Optional life/death/return provenance written by the same fenced transaction.
+    /// A replay never applies it, because the receipt path returns before the planner.
+    /// </summary>
+    public LifeTransition? Life { get; init; }
+}
 
 /// <summary>Context handed to a planner after all fenced checks have passed.</summary>
 public sealed record MutationContext(

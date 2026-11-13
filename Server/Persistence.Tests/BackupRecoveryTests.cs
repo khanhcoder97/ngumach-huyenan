@@ -26,7 +26,7 @@ public sealed class BackupRecoveryTests
         var report = await fixture.Recovery.RecoverAsync();
         Assert.True(report.Healthy);
         Assert.True(report.WalCheckpointSucceeded);
-        Assert.Equal(1, report.SchemaVersion);
+        Assert.Equal(PersistenceMigrations.CurrentVersion, report.SchemaVersion);
         Assert.Equal(1, report.PendingOutbox);
         Assert.Equal(1, report.TableCounts["receipts"]);
     }
@@ -110,5 +110,47 @@ public sealed class BackupRecoveryTests
         await fixture.Backups.CreateBackupAsync(backupPath);
 
         await Assert.ThrowsAnyAsync<Exception>(() => fixture.Backups.RestoreAsync(backupPath, "\0invalid\0path.sqlite"));
+    }
+
+    [Fact]
+    public async Task MissingBackup_IsRejected()
+    {
+        await using var fixture = await TestFixture.CreateAsync("char-a");
+        var exception = await Assert.ThrowsAsync<PersistenceException>(() =>
+            fixture.Backups.RestoreAsync(fixture.Workspace.File("missing.sqlite"), fixture.Workspace.File("target.sqlite")));
+        Assert.Equal(PersistenceErrorCodes.BackupInvalid, exception.ErrorCode);
+    }
+
+    [Fact]
+    public async Task Backup_IntoFileAsDirectory_FailsClosed()
+    {
+        await using var fixture = await TestFixture.CreateAsync("char-a");
+        var blocker = fixture.Workspace.File("blocker");
+        await File.WriteAllTextAsync(blocker, "not a directory");
+
+        await Assert.ThrowsAnyAsync<Exception>(() => fixture.Backups.CreateBackupAsync(Path.Combine(blocker, "backup.sqlite")));
+        Assert.False(File.Exists(Path.Combine(blocker, "backup.sqlite")));
+    }
+
+    [Fact]
+    public async Task Restore_ReplacesExistingTargetDataAtomically()
+    {
+        await using var source = await TestFixture.CreateAsync("char-a");
+        var sourceLease = await source.AcquireAsync("char-a");
+        await source.CommitAsync(source.Request("key-source", "char-a", sourceLease.FencingToken), "{\"gold\":1}");
+        var backupPath = source.Workspace.File("source-backup.sqlite");
+        await source.Backups.CreateBackupAsync(backupPath);
+
+        await using var target = await TestFixture.CreateAsync("char-a");
+        var targetLease = await target.AcquireAsync("char-a");
+        await target.CommitAsync(target.Request("key-target", "char-a", targetLease.FencingToken), "{\"gold\":2}");
+        Assert.Equal("{\"gold\":2}", (await target.Database.ReadStateAsync("char-a"))!.StateJson);
+
+        await source.Backups.RestoreAsync(backupPath, target.Workspace.DatabasePath);
+
+        var restored = new PersistenceDatabase(PersistenceOptions.ForFile(target.Workspace.DatabasePath));
+        Assert.Equal("{\"gold\":1}", (await restored.ReadStateAsync("char-a"))!.StateJson);
+        Assert.Null(await restored.ReadReceiptAsync("key-target"));
+        Assert.NotNull(await restored.ReadReceiptAsync("key-source"));
     }
 }
