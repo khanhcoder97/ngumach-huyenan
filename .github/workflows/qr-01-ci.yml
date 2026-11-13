@@ -1,0 +1,97 @@
+name: QR-01 Persistence
+
+on:
+  push:
+    branches:
+      - main
+      - 'qoder-remote/**'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qr-01-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOTNET_VERSION: '10.0.x'
+  DOTNET_NOLOGO: 'true'
+  DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
+  NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+
+jobs:
+  test:
+    name: Restore, build and test QR-01 persistence
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore (locked dependencies)
+        run: |
+          dotnet restore Server/Persistence/Server.Persistence.csproj --locked-mode
+          dotnet restore Server/Persistence.Harness/Server.Persistence.Harness.csproj --locked-mode
+          dotnet restore Server/Persistence.Tests/Server.Persistence.Tests.csproj --locked-mode
+
+      - name: Build
+        run: dotnet build Server/Persistence.Tests/Server.Persistence.Tests.csproj --configuration Release --no-restore
+
+      - name: Test (real SQLite files, two-process crash coverage)
+        env:
+          TMPDIR: ${{ runner.temp }}/qr01-tmp
+        run: |
+          mkdir -p "$TMPDIR"
+          dotnet test Server/Persistence.Tests/Server.Persistence.Tests.csproj \
+            --configuration Release \
+            --no-build \
+            --logger "trx;LogFileName=qr01-persistence.trx" \
+            --results-directory "${{ runner.temp }}/qr01-results" \
+            --collect:"XPlat Code Coverage"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qr01-persistence-results
+          path: |
+            ${{ runner.temp }}/qr01-results/**/*.trx
+            ${{ runner.temp }}/qr01-results/**/coverage.cobertura.xml
+          retention-days: 14
+
+      - name: Clean bounded test databases
+        if: always()
+        run: |
+          target="${{ runner.temp }}/qr01-tmp/ngumach-qr01-tests"
+          if [ -n "$target" ] && [ -d "$target" ]; then
+            rm -rf -- "$target"
+          fi
+
+  summary:
+    name: Summary
+    needs: [test]
+    if: always()
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Report actual job result
+        run: |
+          {
+            echo "## QR-01 persistence"
+            echo
+            echo "- Test job: \`${{ needs.test.result }}\`"
+            echo "- Commit: \`${{ github.sha }}\`"
+            if [ "${{ needs.test.result }}" != "success" ]; then
+              echo "- See the failing job for the TRX artifact and logs."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

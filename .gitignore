@@ -35,3 +35,9 @@ __pycache__/
 
 # Keep the server project file; Unity-generated client projects stay ignored
 !Server/Health/Health.csproj
+
+# QR-01 Qoder Remote persistence module: library, tests and subprocess harness.
+!Server/Persistence/Server.Persistence.csproj
+!Server/Persistence.Tests/Server.Persistence.Tests.csproj
+!Server/Persistence.Harness/Server.Persistence.Harness.csproj
+Server/**/bin/

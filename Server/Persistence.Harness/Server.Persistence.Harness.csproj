@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>NguMach.Server.Persistence.Harness</RootNamespace>
+    <AssemblyName>NguMach.Server.Persistence.Harness</AssemblyName>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Persistence\Server.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>
