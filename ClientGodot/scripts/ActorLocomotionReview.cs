@@ -10,15 +10,15 @@ namespace Ngumach.VisualReboot;
 public partial class ActorLocomotionReview : Control
 {
     private const string Actor = "CLASS_ANH_DAO";
-    private static readonly string[] Clips = { "idle", "walk", "idle", "basic_attack", "idle" };
-    private readonly double[] _durations = Clips.Select(c => ActorLibraryData.Duration(Actor, c)).ToArray();
+    private string[] Clips = { "idle", "walk", "idle", "basic_attack", "idle" };
+    private double[] _durations = Array.Empty<double>();
     private double Cycle => _durations.Sum();
     private ActorLibraryData _library = null!;
     private readonly List<ActorLibrarySprite> _sprites = new();
     private readonly List<CanvasItem> _markers = new();
     private Label _readout = null!;
     private double _clock, _speed = 1;
-    private bool _paused;
+    private bool _paused, _extended;
     private readonly record struct Sample(int Phase, string Clip, double Local);
 
     private Sample At(double clock)
@@ -36,14 +36,17 @@ public partial class ActorLocomotionReview : Control
     public override void _Ready()
     {
         Engine.MaxFps = 60; ProcessPriority = -1; Theme = MoonGlassTheme.Create();
+        _extended = Array.IndexOf(OS.GetCmdlineUserArgs(), "--mobility-review") >= 0;
+        if (_extended) Clips = new[] { "idle", "walk", "run", "idle", "basic_attack", "basic_attack_02", "basic_attack_03", "idle", "interact", "idle" };
+        _durations = Clips.Select(c => ActorLibraryData.Duration(Actor, c)).ToArray();
         _library = new ActorLibraryData(reviewMode: true);
         var background = new ColorRect { Color = Color.FromHtml("#1d2639"), MouseFilter = MouseFilterEnum.Ignore };
         background.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect); AddChild(background);
         var margin = new MarginContainer(); margin.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         foreach (string side in new[] { "left", "right", "top", "bottom" }) margin.AddThemeConstantOverride("margin_" + side, 20);
         AddChild(margin); var stack = new VBoxContainer(); margin.AddChild(stack);
-        stack.AddChild(MoonGlassTheme.Label("ẢNH ĐAO / KIỂM NỐI ĐỨNG – ĐI – CHÉM THƯỜNG", 22, MoonGlassTheme.Gold));
-        stack.AddChild(MoonGlassTheme.Label("Đứng 1,0 → đi 0,8 → đứng 1,0 → chém nhát 1 0,6 → đứng 1,0 s. Mỗi clip 16 pose nguồn.", 14));
+        stack.AddChild(MoonGlassTheme.Label(_extended ? "ẢNH ĐAO / CHẠY – COMBO BA NHÁT – TƯƠNG TÁC" : "ẢNH ĐAO / KIỂM NỐI ĐỨNG – ĐI – CHÉM THƯỜNG", 22, MoonGlassTheme.Gold));
+        stack.AddChild(MoonGlassTheme.Label(_extended ? "Đứng → đi → chạy → đứng → 3 nhát combo → đứng → tương tác → đứng · 8,84 s · mỗi clip 16 pose nguồn." : "Đứng 1,0 → đi 0,8 → đứng 1,0 → chém nhát 1 0,6 → đứng 1,0 s. Mỗi clip 16 pose nguồn.", 14));
         var controls = new HBoxContainer(); stack.AddChild(controls);
         var pause = new Button { Text = "Tạm dừng" }; controls.AddChild(pause);
         pause.Pressed += () => { _paused = !_paused; pause.Text = _paused ? "Phát tiếp" : "Tạm dừng"; };
@@ -68,13 +71,22 @@ public partial class ActorLocomotionReview : Control
             Action place = () => { sprite.Position = new Vector2(stage.Size.X / 2, stage.Size.Y - 28); floor.Position = sprite.Position - new Vector2(80, 0); root.Position = sprite.Position - new Vector2(4, 0); stem.Position = sprite.Position - new Vector2(0, 4); };
             stage.Resized += () => place(); place();
             string label = ArtStudioCodec.Directions[facing] + (facing >= 5 ? " · lật ảnh" : " · góc nguồn");
-            if (facing is 2 or 6) label += " · WALK HOLD";
-            card.AddChild(MoonGlassTheme.Label(label, 13, facing is 2 or 6 ? MoonGlassTheme.Gold : MoonGlassTheme.Muted));
+            var sources = Clips.Distinct().Select(clip => SourcePage(clip, facing)).ToArray();
+            bool held = sources.Any(p => p.VisualState == "HOLD"), pending = sources.Any(p => !p.Approved);
+            if (held) label += " · HOLD"; else if (pending) label += " · CHỜ DUYỆT";
+            card.AddChild(MoonGlassTheme.Label(label, 13, pending ? MoonGlassTheme.Gold : MoonGlassTheme.Muted));
         }
-        stack.AddChild(MoonGlassTheme.Label("Mốc vàng cố định: soi chân, kích thước đầu, tay/đao và đường nối clip; chém thường chỉ là nhát 1 của combo.", 13, MoonGlassTheme.Muted));
+        stack.AddChild(MoonGlassTheme.Label(_extended ? "Mốc vàng = root ảnh, không phải mặt phẳng vật lý. Soi chân bay, tỉ lệ, tay/đao, combo và tương tác." : "Mốc vàng cố định: soi chân, kích thước đầu, tay/đao và đường nối clip; chém thường chỉ là nhát 1 của combo.", 13, MoonGlassTheme.Muted));
         stack.AddChild(MoonGlassTheme.Label("Review cho phép xem HOLD; không cấp quyền gameplay. Xuất offline 60 bước/s không đo FPS gameplay. ESC: đóng.", 12, MoonGlassTheme.Muted));
         Apply();
         if (Array.IndexOf(OS.GetCmdlineUserArgs(), "--locomotion-self-test") >= 0) SelfTest();
+    }
+
+    private ActorLibraryData.Page SourcePage(string clip, int facing)
+    {
+        string source = facing >= 5 ? new[] { "SE", "E", "NE" }[facing - 5] : ArtStudioCodec.Directions[facing];
+        string id = "class_anh_dao_" + clip + "_" + source.ToLowerInvariant();
+        return _library.Pages.TryGetValue(id, out var page) ? page : throw new InvalidOperationException("Missing authored source: " + id);
     }
 
     private void Apply()
@@ -99,7 +111,7 @@ public partial class ActorLocomotionReview : Control
         try
         {
             void Check(bool value, string reason) { if (!value) throw new Exception(reason); checks++; }
-            Check(Math.Abs(Cycle - 4.4) < 1e-9, "sequence duration");
+            Check(Math.Abs(Cycle - (_extended ? 8.84 : 4.4)) < 1e-9, "sequence duration");
             double boundary = 0;
             for (int i = 0; i < Clips.Length; i++)
             {
@@ -121,9 +133,16 @@ public partial class ActorLocomotionReview : Control
                 foreach (var frames in visited.Values) Check(frames.Count == 16, "60-step sequence skipped a source pose");
             }
             using var approved = new ActorLibraryData();
-            Check(!approved.Resolve(Actor, "walk", 2, out _), "E walk HOLD escaped review gate");
-            Check(!approved.Resolve(Actor, "walk", 6, out _), "mirrored W walk HOLD escaped review gate");
-            GD.Print("ACTOR_LOCOMOTION_SELF_TEST PASS assertions=" + checks + " source timing/transition only; E/W walk remains HOLD"); GetTree().Quit();
+            IEnumerable<string> policyClips = _extended ? _library.Actors[Actor].Clips : Clips.Distinct();
+            if (_extended) Check(_library.Actors[Actor].Clips.Length == 16, "canonical sixteen-action class scope");
+            foreach (string clip in policyClips) foreach (int facing in Enumerable.Range(0, 8))
+            {
+                var source = SourcePage(clip, facing);
+                Check(_library.Resolve(Actor, clip, facing, out var direction), "missing canonical source or permitted mirror");
+                Check(direction!.Frames.Length == 16, "canonical action source count");
+                Check(approved.Resolve(Actor, clip, facing, out _) == source.Approved, "source/mirror approval gate mismatch");
+            }
+            GD.Print("ACTOR_LOCOMOTION_SELF_TEST PASS profile=" + (_extended ? "MOBILITY" : "BASE") + " assertions=" + checks + " source timing/transition only; approval gates follow current source records"); GetTree().Quit();
         }
         catch (Exception error) { GD.PushError("ACTOR_LOCOMOTION_SELF_TEST FAIL " + error); GetTree().Quit(1); }
     }

@@ -4,7 +4,9 @@
 
 **Đang sản xuất; chưa hoàn thành toàn bộ thư viện.** Chuẩn16–20pose thực/clip/hướng, renderer60FPS. PNG mới là ứng viên review, chưa tự thay asset gameplay.
 
-Đợt mới nhất: [20261113i — đứng, đi và chém thường có đao](../../docs/production/Actor_Batch_20261113i_vi.md), **15 sheet /240 pose nguồn**, 14 nguồn duyệt và walk E/W còn HOLD. Thêm phòng nối chuyển động tám hướng; 19 video native. Ảnh Đao11/16action đủ góc đã kiểm source theo phạm vi mới. Đã bổ sung20job class bị thiếu (chạy, tương tác, combo nhát2/3), toàn hàng đợi1028job còn957job chưa đủ nguồn. Xem [quy định16action/class](../../docs/production/Actor_Action_Scope_20261113_vi.md). Chưa nghiệm thu toàn class hoặc gameplay.
+Đợt mới nhất: [20261113j — chạy, combo và tương tác Ảnh Đao](../../docs/production/Actor_Batch_20261113j_vi.md), **21 sheet /336 pose nguồn**, đủ năm góc cho bốn action bổ sung và sửa walk E/W. Cả21 nguồn đã kiểm sheet gốc/native; 27 video chọn và25 video căn ảnh cũ giữ riêng. Ảnh Đao16/16action đủ góc đã duyệt source, chưa nghiệm thu toàn class hoặc gameplay. Catalogue1028job còn953job chưa đủ nguồn,48job đủ hướng đã duyệt source. Xem [quy định16action/class](../../docs/production/Actor_Action_Scope_20261113_vi.md).
+
+Đợt trước: [20261113i — đứng, đi và chém thường có đao](../../docs/production/Actor_Batch_20261113i_vi.md), **15 sheet /240 pose nguồn tại thời điểm giao**, 14 nguồn duyệt; walk E/W đã được thay/sửa trong đợt J. Thêm phòng nối chuyển động tám hướng; 19 video native. Đợt I bổ sung20job class bị thiếu (chạy, tương tác, combo nhát2/3), đổi catalogue1008→1028. Các số trong báo cáo I giữ mốc lịch sử, inventory phản ánh selection hiện hành.
 
 Đợt trước: [20261113h — phản ứng có đao của Ảnh Đao](../../docs/production/Actor_Batch_20261113h_vi.md), **10 sheet /160 khung nguồn**. Trúng đòn và ngã ×5 góc, gốc chân riêng từng frame và kiểm nối phản ứng tám hướng; Studio thêm Fit clip. Hai atlas HOLD chuyển lịch sử sau khi nguồn thay được kiểm native. Ảnh Đao9/12action đủ góc đã kiểm source; idle/walk/basic cũ và chuyển thế vẫn cần xử lý. Catalogue còn937/1008job thiếu,17source HOLD hiện trong catalogue. Chưa nghiệm thu toàn class/skill assembly hoặc gameplay.
 
@@ -44,6 +46,7 @@ Từ repo:
 python Tools/ArtProduction/build_actor_library_plan.py --check
 python Tools/ArtProduction/inspect_actor_library.py --export --check
 ClientGodot/Run_Actor_Library.ps1 -LocomotionReview
+ClientGodot/Run_Actor_Library.ps1 -MobilityReview
 ClientGodot/Run_Actor_Library.ps1 -Test
 ClientGodot/Run_Actor_Library.ps1
 ClientGodot/Run_Actor_Library.ps1 -ReactionReview

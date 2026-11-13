@@ -1,11 +1,12 @@
 param(
     [switch]$Test,[string]$GodotPath,[string]$DotnetPath,[switch]$SkipBuild,
-    [switch]$CombatReview,[switch]$ReactionReview,[switch]$LocomotionReview,[string]$Actor,[string]$Clip,
+    [switch]$CombatReview,[switch]$ReactionReview,[switch]$LocomotionReview,[switch]$MobilityReview,[string]$Actor,[string]$Clip,
     [ValidateRange(1,2)][int]$CombatVariant=1,
     [ValidateSet('N','NE','E','SE','S','SW','W','NW')][string]$Direction,
     [ValidateRange(0,15)][int]$Frame=7,[string]$Capture
 )
 $ErrorActionPreference='Stop'
+if($MobilityReview){$LocomotionReview=$true}
 if(@($CombatReview,$ReactionReview,$LocomotionReview | Where-Object {$_}).Count -gt 1){throw 'Choose one review mode.'}
 if($LocomotionReview -and (($Actor -and $Actor -ne 'CLASS_ANH_DAO') -or $Clip -or $Direction -or $Capture)){throw 'Locomotion review supports Anh Dao; use Studio for a single clip/direction/capture.'}
 if($ReactionReview -and (($Actor -and $Actor -notin @('CLASS_MINH_KIEM','CLASS_ANH_DAO')) -or $Clip -or $Direction -or $Capture)){throw 'Reaction review supports Minh Kiem or Anh Dao; use Studio for a single clip/direction/capture.'}
@@ -27,6 +28,7 @@ try {
     if($CombatVariant -eq 2 -and (-not $CombatReview -or $Actor -ne 'MOB_WATERROOT')){throw 'Variant 2 requires Waterroot combat review.'}
     $scene=if($LocomotionReview){'ActorLocomotionReview.tscn'}elseif($ReactionReview){'ActorReactionReview.tscn'}elseif($CombatReview){'CarplingCombatReview.tscn'}else{'ActorLibrary.tscn'}
     $launchArgs=@('--path',$PSScriptRoot,$scene,'--')
+    if($MobilityReview){$launchArgs+='--mobility-review'}
     if($Test){$launchArgs=@('--headless')+$launchArgs;$launchArgs+=@($(if($LocomotionReview){'--locomotion-self-test'}elseif($ReactionReview){'--reaction-self-test'}elseif($CombatReview){'--combat-self-test'}else{'--library-self-test'}))}
     if($Actor -and -not $ReactionReview -and -not $LocomotionReview){$launchArgs+=@($(if($CombatReview){'--combat-actor'}else{'--actor'}),$Actor)}
     if($ReactionReview -and $Actor){$launchArgs+=@('--reaction-actor',$Actor)}

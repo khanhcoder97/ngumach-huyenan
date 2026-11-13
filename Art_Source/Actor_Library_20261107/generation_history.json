@@ -1128,5 +1128,158 @@
     "reason": "Near/far support at0 and8 still insufficiently reversed. Retain selectedv1 as HOLD candidate, not production approval.",
     "supersededByBatch": "20261113i",
     "archiveStatus": "GAIT_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_walk_e",
+    "source": "Sheets/class_anh_dao_walk_e_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_e_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "batch": "20261113i",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 225.40322580645162,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_e_v1_20261113i.png"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_e_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "gaitReviewNote": "HOLD: E near/far contact/overlap at0/8 not convincingly opposite; mirroredW inherits hold.",
+    "supersededByBatch": "20261113j",
+    "archiveStatus": "HELD_SOURCE_PRESERVED_NOT_RENDERED",
+    "reason": "New E gait source ready for native review; do not transfer old source approval or clear HOLD before review."
+  },
+  {
+    "id": "class_anh_dao_basic_attack_03_se",
+    "source": "Sheets/class_anh_dao_basic_attack_03_se_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_03_se_v1_20261113j.txt",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "reason": "Remove frame7 white flare and reverse blade motion: cross-waist screen-right load3 to near screen-left outward release7. v2 still awaits other directions and native review.",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "supersededByBatch": "20261113j",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_run_se",
+    "source": "Sheets/class_anh_dao_run_se_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_run_se_v1_20261113j.txt",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "reason": "v1 may repeat lead/occlusion at0/8. v2 redraws second half toward opposite near/right foot; requires native gait/flight review and a virtual ground root, not lowest airborne boot anchoring.",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "supersededByBatch": "20261113j",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_basic_attack_03_n",
+    "source": "Sheets/class_anh_dao_basic_attack_03_n_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_03_n_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png"
+    ],
+    "comboStage": 3,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES",
+    "reason": "Raise clearly empty left hand during crossed load; dao tip stays below it and right-hand grip remains occluded at front of waist. Prevent false left-hand weapon reading at3-4; native review pending.",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+        "sourceSha256": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+        "sourceSha256": "c5be664008acc0a84f35e58c291acc019272f655e44eb0f737a254092bc102a8",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_basic_attack_03_se_v2_20261113j.png"
+      }
+    ],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+        "sourceSha256": "c5be664008acc0a84f35e58c291acc019272f655e44eb0f737a254092bc102a8"
+      }
+    ],
+    "supersededByBatch": "20261113j",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
   }
 ]

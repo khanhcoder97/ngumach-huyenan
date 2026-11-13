@@ -383,14 +383,14 @@
   },
   {
     "id": "class_anh_dao_walk_e",
-    "source": "Sheets/class_anh_dao_walk_e_v1_20261113i.png",
-    "prompt": "Prompts/class_anh_dao_walk_e_v1_20261113i.txt",
+    "source": "Sheets/class_anh_dao_walk_e_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_walk_e_v1_20261113j.txt",
     "columns": 4,
     "rows": 4,
     "direction": "E",
-    "batch": "20261113i",
+    "batch": "20261113j",
     "generator": "built-in image_gen",
-    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
     "sourceFrameDurationsMs": [
       50,
       50,
@@ -410,29 +410,88 @@
       50
     ],
     "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
-    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
-    "bodyReferenceHeight": 225.40322580645162,
-    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "inputRole": "IDENTITY_REFERENCE_NEW_GAIT_REPAIR",
+    "replacesSource": "Sheets/class_anh_dao_walk_e_v1_20261113i.png",
+    "bodyReferenceHeight": 230.6048387096774,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
     "gutterPolicy": "SOLID_CORE_GUTTER",
-    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
     "generationInputs": [
       {
-        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "role": "IDENTITY_REFERENCE_NEW_GAIT_REPAIR",
         "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
-        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919",
-        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_e_v1_20261113i.png"
-      }
-    ],
-    "additionalReferences": [],
-    "referenceRelocations": [
-      {
-        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_e_v1_20261113i.png",
-        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
         "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919"
       }
     ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
     "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
-    "gaitReviewNote": "HOLD: E near/far contact/overlap at0/8 not convincingly opposite; mirroredW inherits hold."
+    "sourceFootPivots": [
+      [
+        187.12944248779317,
+        259.0
+      ],
+      [
+        178.12944248779317,
+        258.0
+      ],
+      [
+        180.12944248779317,
+        258.0
+      ],
+      [
+        180.62944248779317,
+        258.0
+      ],
+      [
+        186.62944248779317,
+        252.0
+      ],
+      [
+        179.62944248779317,
+        252.0
+      ],
+      [
+        181.12944248779317,
+        251.0
+      ],
+      [
+        180.62944248779317,
+        247.0
+      ],
+      [
+        186.62944248779317,
+        249.0
+      ],
+      [
+        180.62944248779317,
+        252.0
+      ],
+      [
+        181.62944248779317,
+        253.0
+      ],
+      [
+        182.62944248779317,
+        253.0
+      ],
+      [
+        188.12944248779317,
+        253.0
+      ],
+      [
+        181.62944248779317,
+        252.0
+      ],
+      [
+        182.12944248779317,
+        253.0
+      ],
+      [
+        182.12944248779317,
+        252.0
+      ]
+    ]
   },
   {
     "id": "class_anh_dao_walk_se",
@@ -8202,6 +8261,2333 @@
         "sourceSha256": "0d731921f7456c61f97a2061f9561cc246339bbd3f3aa33a4dcf5041b72fdb17",
         "byteIdenticalRelocation": true
       }
+    ]
+  },
+  {
+    "id": "class_anh_dao_run_n",
+    "source": "Sheets/class_anh_dao_run_n_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_run_n_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 202.47272727272727,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        193.04804360521706,
+        257.0
+      ],
+      [
+        177.04804360521706,
+        256.125
+      ],
+      [
+        177.54804360521706,
+        253.25
+      ],
+      [
+        177.54804360521706,
+        249.375
+      ],
+      [
+        193.54804360521706,
+        236.5
+      ],
+      [
+        177.54804360521706,
+        239.625
+      ],
+      [
+        177.54804360521706,
+        238.75
+      ],
+      [
+        177.54804360521706,
+        237.875
+      ],
+      [
+        193.54804360521706,
+        241.0
+      ],
+      [
+        177.54804360521706,
+        240.875
+      ],
+      [
+        178.04804360521706,
+        238.75
+      ],
+      [
+        178.04804360521706,
+        237.625
+      ],
+      [
+        193.54804360521706,
+        240.5
+      ],
+      [
+        177.04804360521706,
+        243.375
+      ],
+      [
+        177.54804360521706,
+        246.25
+      ],
+      [
+        177.04804360521706,
+        248.125
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+        "sourceSha256": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_run_ne",
+    "source": "Sheets/class_anh_dao_run_ne_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_run_ne_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_ne_v3_20261113i.png"
+    ],
+    "bodyReferenceHeight": 248.83464566929135,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        179.29768125239275,
+        292.0
+      ],
+      [
+        145.29768125239275,
+        292.875
+      ],
+      [
+        146.79768125239275,
+        290.75
+      ],
+      [
+        147.79768125239275,
+        287.625
+      ],
+      [
+        176.29768125239275,
+        282.5
+      ],
+      [
+        142.29768125239275,
+        279.375
+      ],
+      [
+        145.79768125239275,
+        278.25
+      ],
+      [
+        148.79768125239275,
+        276.125
+      ],
+      [
+        171.29768125239275,
+        286.0
+      ],
+      [
+        141.79768125239275,
+        286.125
+      ],
+      [
+        144.79768125239275,
+        286.25
+      ],
+      [
+        149.79768125239275,
+        282.375
+      ],
+      [
+        175.29768125239275,
+        281.5
+      ],
+      [
+        141.79768125239275,
+        279.625
+      ],
+      [
+        144.29768125239275,
+        281.75
+      ],
+      [
+        147.29768125239275,
+        280.875
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+        "sourceSha256": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_ne_v3_20261113i.png",
+        "sourceSha256": "4477c25759961624b10ee1340943880610710fbad2625b96cf1b5e6787e097f7"
+      }
+    ],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_run_e",
+    "source": "Sheets/class_anh_dao_run_e_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_run_e_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 234.07258064516128,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        190.13890778836148,
+        256.0
+      ],
+      [
+        188.63890778836148,
+        256.5
+      ],
+      [
+        181.13890778836148,
+        257.0
+      ],
+      [
+        184.13890778836148,
+        254.5
+      ],
+      [
+        185.13890778836148,
+        246.0
+      ],
+      [
+        186.63890778836148,
+        247.5
+      ],
+      [
+        181.63890778836148,
+        248.0
+      ],
+      [
+        184.13890778836148,
+        248.5
+      ],
+      [
+        186.63890778836148,
+        249.0
+      ],
+      [
+        187.13890778836148,
+        246.5
+      ],
+      [
+        180.13890778836148,
+        246.0
+      ],
+      [
+        182.13890778836148,
+        244.5
+      ],
+      [
+        186.63890778836148,
+        248.0
+      ],
+      [
+        189.13890778836148,
+        248.5
+      ],
+      [
+        182.63890778836148,
+        249.0
+      ],
+      [
+        184.63890778836148,
+        250.5
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_run_se",
+    "source": "Sheets/class_anh_dao_run_se_v2_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_run_se_v2_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_run_se_v1_20261113j.png",
+    "inputRole": "EDIT_TARGET_RUN_GAIT_CORRECTION",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_se_v2_20261113i.png"
+    ],
+    "replacesSource": "Sheets/class_anh_dao_run_se_v1_20261113j.png",
+    "bodyReferenceHeight": 225.91735537190084,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        200.93153609222043,
+        260.0
+      ],
+      [
+        180.93153609222043,
+        259.25
+      ],
+      [
+        178.93153609222043,
+        259.5
+      ],
+      [
+        174.43153609222043,
+        253.75
+      ],
+      [
+        200.43153609222043,
+        249.0
+      ],
+      [
+        180.43153609222043,
+        248.25
+      ],
+      [
+        182.93153609222043,
+        250.5
+      ],
+      [
+        178.43153609222043,
+        247.75
+      ],
+      [
+        201.93153609222043,
+        255.0
+      ],
+      [
+        181.93153609222043,
+        255.75
+      ],
+      [
+        181.93153609222043,
+        253.5
+      ],
+      [
+        175.43153609222043,
+        246.25
+      ],
+      [
+        200.43153609222043,
+        245.0
+      ],
+      [
+        179.93153609222043,
+        243.75
+      ],
+      [
+        182.93153609222043,
+        248.5
+      ],
+      [
+        179.43153609222043,
+        245.25
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "EDIT_TARGET_RUN_GAIT_CORRECTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_run_se_v1_20261113j.png",
+        "sourceSha256": "7e586be9cfbd166f630b783b040a68e5afd4272bc7fbb355805c64198c818a75",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_run_se_v1_20261113j.png"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_se_v2_20261113i.png",
+        "sourceSha256": "45a6c0872a8eea624b91f8de0f3be4096645e727c961829efec97b452c595d4a"
+      }
+    ],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_run_se_v1_20261113j.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_run_se_v1_20261113j.png",
+        "sourceSha256": "7e586be9cfbd166f630b783b040a68e5afd4272bc7fbb355805c64198c818a75"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_run_s",
+    "source": "Sheets/class_anh_dao_run_s_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_run_s_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_s_v1_20261113i.png"
+    ],
+    "bodyReferenceHeight": 220.09734513274336,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        178.6564369029255,
+        292.0
+      ],
+      [
+        157.1564369029255,
+        290.875
+      ],
+      [
+        156.6564369029255,
+        291.75
+      ],
+      [
+        155.6564369029255,
+        289.625
+      ],
+      [
+        179.6564369029255,
+        262.5
+      ],
+      [
+        157.1564369029255,
+        264.375
+      ],
+      [
+        157.1564369029255,
+        263.25
+      ],
+      [
+        157.6564369029255,
+        262.125
+      ],
+      [
+        180.1564369029255,
+        262.0
+      ],
+      [
+        158.6564369029255,
+        263.125
+      ],
+      [
+        157.1564369029255,
+        262.25
+      ],
+      [
+        157.1564369029255,
+        262.375
+      ],
+      [
+        181.1564369029255,
+        263.5
+      ],
+      [
+        159.1564369029255,
+        261.625
+      ],
+      [
+        158.1564369029255,
+        260.75
+      ],
+      [
+        156.6564369029255,
+        260.875
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+        "sourceSha256": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_s_v1_20261113i.png",
+        "sourceSha256": "b4b245ca48d07e1eee2fea10b73947c5b891c4abc8f66ef316cceca1166746d5"
+      }
+    ],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_basic_attack_02_n",
+    "source": "Sheets/class_anh_dao_basic_attack_02_n_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_02_n_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "comboStage": 2,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES",
+    "bodyReferenceHeight": 197.23636363636365,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+        "sourceSha256": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        193.40385438972163,
+        243
+      ],
+      [
+        163.90385438972163,
+        244
+      ],
+      [
+        168.40385438972163,
+        243
+      ],
+      [
+        168.40385438972163,
+        243
+      ],
+      [
+        193.90385438972163,
+        235
+      ],
+      [
+        164.40385438972163,
+        235
+      ],
+      [
+        168.40385438972163,
+        235
+      ],
+      [
+        167.40385438972163,
+        235
+      ],
+      [
+        193.40385438972163,
+        234
+      ],
+      [
+        163.90385438972163,
+        234
+      ],
+      [
+        168.40385438972163,
+        233
+      ],
+      [
+        167.40385438972163,
+        234
+      ],
+      [
+        193.40385438972163,
+        233
+      ],
+      [
+        163.90385438972163,
+        233
+      ],
+      [
+        167.90385438972163,
+        233
+      ],
+      [
+        167.40385438972163,
+        232
+      ]
+    ]
+  },
+  {
+    "id": "class_anh_dao_basic_attack_02_ne",
+    "source": "Sheets/class_anh_dao_basic_attack_02_ne_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_02_ne_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "comboStage": 2,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES",
+    "bodyReferenceHeight": 248.83464566929135,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+        "sourceSha256": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        168.1441379453061,
+        279
+      ],
+      [
+        135.1441379453061,
+        280
+      ],
+      [
+        150.6441379453061,
+        276
+      ],
+      [
+        147.6441379453061,
+        279
+      ],
+      [
+        174.1441379453061,
+        269
+      ],
+      [
+        144.1441379453061,
+        272
+      ],
+      [
+        154.1441379453061,
+        275
+      ],
+      [
+        148.1441379453061,
+        276
+      ],
+      [
+        172.6441379453061,
+        273
+      ],
+      [
+        142.6441379453061,
+        274
+      ],
+      [
+        151.1441379453061,
+        275
+      ],
+      [
+        146.1441379453061,
+        275
+      ],
+      [
+        169.1441379453061,
+        274
+      ],
+      [
+        140.6441379453061,
+        275
+      ],
+      [
+        148.1441379453061,
+        274
+      ],
+      [
+        140.1441379453061,
+        274
+      ]
+    ]
+  },
+  {
+    "id": "class_anh_dao_basic_attack_02_e",
+    "source": "Sheets/class_anh_dao_basic_attack_02_e_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_02_e_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "comboStage": 2,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES",
+    "bodyReferenceHeight": 223.66935483870967,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        185.67099575762427,
+        252
+      ],
+      [
+        160.17099575762427,
+        252
+      ],
+      [
+        172.67099575762427,
+        252
+      ],
+      [
+        166.67099575762427,
+        252
+      ],
+      [
+        186.17099575762427,
+        246
+      ],
+      [
+        161.17099575762427,
+        246
+      ],
+      [
+        172.67099575762427,
+        246
+      ],
+      [
+        163.17099575762427,
+        246
+      ],
+      [
+        187.17099575762427,
+        246
+      ],
+      [
+        160.67099575762427,
+        246
+      ],
+      [
+        172.17099575762427,
+        246
+      ],
+      [
+        163.67099575762427,
+        246
+      ],
+      [
+        187.17099575762427,
+        246
+      ],
+      [
+        159.17099575762427,
+        245
+      ],
+      [
+        171.17099575762427,
+        245
+      ],
+      [
+        161.67099575762427,
+        245
+      ]
+    ]
+  },
+  {
+    "id": "class_anh_dao_basic_attack_02_se",
+    "source": "Sheets/class_anh_dao_basic_attack_02_se_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_02_se_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "comboStage": 2,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES",
+    "bodyReferenceHeight": 201.0,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        187.93173431734317,
+        259
+      ],
+      [
+        174.93173431734317,
+        259
+      ],
+      [
+        176.93173431734317,
+        258
+      ],
+      [
+        177.93173431734317,
+        258
+      ],
+      [
+        188.93173431734317,
+        239
+      ],
+      [
+        175.43173431734317,
+        239
+      ],
+      [
+        176.93173431734317,
+        239
+      ],
+      [
+        178.93173431734317,
+        239
+      ],
+      [
+        188.43173431734317,
+        240
+      ],
+      [
+        175.43173431734317,
+        240
+      ],
+      [
+        177.43173431734317,
+        241
+      ],
+      [
+        182.93173431734317,
+        241
+      ],
+      [
+        188.43173431734317,
+        240
+      ],
+      [
+        175.43173431734317,
+        240
+      ],
+      [
+        177.43173431734317,
+        239
+      ],
+      [
+        177.43173431734317,
+        240
+      ]
+    ]
+  },
+  {
+    "id": "class_anh_dao_basic_attack_02_s",
+    "source": "Sheets/class_anh_dao_basic_attack_02_s_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_02_s_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "comboStage": 2,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES",
+    "bodyReferenceHeight": 209.0,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+        "sourceSha256": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        180.95107033639144,
+        288
+      ],
+      [
+        153.95107033639144,
+        288
+      ],
+      [
+        155.45107033639144,
+        288
+      ],
+      [
+        153.45107033639144,
+        288
+      ],
+      [
+        175.95107033639144,
+        257
+      ],
+      [
+        153.95107033639144,
+        256
+      ],
+      [
+        146.45107033639144,
+        256
+      ],
+      [
+        151.45107033639144,
+        257
+      ],
+      [
+        176.45107033639144,
+        257
+      ],
+      [
+        147.45107033639144,
+        260
+      ],
+      [
+        153.45107033639144,
+        258
+      ],
+      [
+        150.95107033639144,
+        259
+      ],
+      [
+        180.95107033639144,
+        261
+      ],
+      [
+        154.45107033639144,
+        262
+      ],
+      [
+        155.45107033639144,
+        261
+      ],
+      [
+        153.95107033639144,
+        262
+      ]
+    ]
+  },
+  {
+    "id": "class_anh_dao_basic_attack_03_n",
+    "source": "Sheets/class_anh_dao_basic_attack_03_n_v2_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_03_n_v2_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_n_v1_20261113j.png",
+    "inputRole": "EDIT_TARGET_EMPTY_HAND_DEPTH_CORRECTION",
+    "additionalReferences": [],
+    "comboStage": 3,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES",
+    "replacesSource": "Sheets/class_anh_dao_basic_attack_03_n_v1_20261113j.png",
+    "bodyReferenceHeight": 195.4909090909091,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "EDIT_TARGET_EMPTY_HAND_DEPTH_CORRECTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_n_v1_20261113j.png",
+        "sourceSha256": "40afe4df6c37d84128b43d55cf2aa850f83aa6a02dc3b5247d061124d90a2e02",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_basic_attack_03_n_v1_20261113j.png"
+      }
+    ],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_basic_attack_03_n_v1_20261113j.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_n_v1_20261113j.png",
+        "sourceSha256": "40afe4df6c37d84128b43d55cf2aa850f83aa6a02dc3b5247d061124d90a2e02"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        191.86488222698074,
+        243
+      ],
+      [
+        167.36488222698074,
+        243
+      ],
+      [
+        168.86488222698074,
+        243
+      ],
+      [
+        169.36488222698074,
+        243
+      ],
+      [
+        193.36488222698074,
+        237
+      ],
+      [
+        161.36488222698074,
+        237
+      ],
+      [
+        171.36488222698074,
+        237
+      ],
+      [
+        169.36488222698074,
+        237
+      ],
+      [
+        191.86488222698074,
+        236
+      ],
+      [
+        161.86488222698074,
+        236
+      ],
+      [
+        172.86488222698074,
+        236
+      ],
+      [
+        168.86488222698074,
+        236
+      ],
+      [
+        194.36488222698074,
+        236
+      ],
+      [
+        161.36488222698074,
+        236
+      ],
+      [
+        173.36488222698074,
+        236
+      ],
+      [
+        169.86488222698074,
+        236
+      ]
+    ]
+  },
+  {
+    "id": "class_anh_dao_basic_attack_03_ne",
+    "source": "Sheets/class_anh_dao_basic_attack_03_ne_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_03_ne_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_n_v2_20261113j.png"
+    ],
+    "comboStage": 3,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES",
+    "bodyReferenceHeight": 234.40944881889763,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+        "sourceSha256": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_n_v2_20261113j.png",
+        "sourceSha256": "b8a8a34e6b498bf5efbd8c45ad61c545095fec4d6bc6f78bc7c117862ea57d44",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_basic_attack_03_n_v2_20261113j.png"
+      }
+    ],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_basic_attack_03_n_v2_20261113j.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_n_v2_20261113j.png",
+        "sourceSha256": "b8a8a34e6b498bf5efbd8c45ad61c545095fec4d6bc6f78bc7c117862ea57d44"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        176.70099951369417,
+        275
+      ],
+      [
+        145.20099951369417,
+        275
+      ],
+      [
+        148.20099951369417,
+        275
+      ],
+      [
+        157.70099951369417,
+        273
+      ],
+      [
+        184.70099951369417,
+        270
+      ],
+      [
+        151.20099951369417,
+        268
+      ],
+      [
+        150.20099951369417,
+        269
+      ],
+      [
+        155.20099951369417,
+        269
+      ],
+      [
+        184.70099951369417,
+        270
+      ],
+      [
+        150.20099951369417,
+        270
+      ],
+      [
+        149.70099951369417,
+        272
+      ],
+      [
+        155.70099951369417,
+        272
+      ],
+      [
+        180.20099951369417,
+        272
+      ],
+      [
+        151.70099951369417,
+        272
+      ],
+      [
+        150.70099951369417,
+        273
+      ],
+      [
+        153.70099951369417,
+        272
+      ]
+    ]
+  },
+  {
+    "id": "class_anh_dao_basic_attack_03_e",
+    "source": "Sheets/class_anh_dao_basic_attack_03_e_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_03_e_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png"
+    ],
+    "comboStage": 3,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES",
+    "bodyReferenceHeight": 216.73387096774192,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+        "sourceSha256": "c5be664008acc0a84f35e58c291acc019272f655e44eb0f737a254092bc102a8",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_basic_attack_03_se_v2_20261113j.png"
+      }
+    ],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+        "sourceSha256": "c5be664008acc0a84f35e58c291acc019272f655e44eb0f737a254092bc102a8"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        184.60367805971345,
+        251
+      ],
+      [
+        169.10367805971345,
+        251
+      ],
+      [
+        174.60367805971345,
+        251
+      ],
+      [
+        182.10367805971345,
+        251
+      ],
+      [
+        192.10367805971345,
+        244
+      ],
+      [
+        174.60367805971345,
+        244
+      ],
+      [
+        173.10367805971345,
+        244
+      ],
+      [
+        175.60367805971345,
+        244
+      ],
+      [
+        186.10367805971345,
+        245
+      ],
+      [
+        170.10367805971345,
+        246
+      ],
+      [
+        172.10367805971345,
+        245
+      ],
+      [
+        177.60367805971345,
+        246
+      ],
+      [
+        186.60367805971345,
+        245
+      ],
+      [
+        169.10367805971345,
+        245
+      ],
+      [
+        172.10367805971345,
+        245
+      ],
+      [
+        177.60367805971345,
+        245
+      ]
+    ]
+  },
+  {
+    "id": "class_anh_dao_basic_attack_03_se",
+    "source": "Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_03_se_v2_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v1_20261113j.png",
+    "inputRole": "EDIT_TARGET_REVERSE_CUT_CORRECTION",
+    "comboStage": 3,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES",
+    "additionalReferences": [],
+    "replacesSource": "Sheets/class_anh_dao_basic_attack_03_se_v1_20261113j.png",
+    "bodyReferenceHeight": 217.61157024793388,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "EDIT_TARGET_REVERSE_CUT_CORRECTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v1_20261113j.png",
+        "sourceSha256": "05d174d6fda47d3dc1a39d6d6fc2195886844c0360a3b93a2d1d907fb1117235",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_basic_attack_03_se_v1_20261113j.png"
+      }
+    ],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_basic_attack_03_se_v1_20261113j.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v1_20261113j.png",
+        "sourceSha256": "05d174d6fda47d3dc1a39d6d6fc2195886844c0360a3b93a2d1d907fb1117235"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        192.59551401299137,
+        261
+      ],
+      [
+        176.09551401299137,
+        262
+      ],
+      [
+        197.09551401299137,
+        261
+      ],
+      [
+        196.09551401299137,
+        261
+      ],
+      [
+        185.09551401299137,
+        243
+      ],
+      [
+        178.59551401299137,
+        243
+      ],
+      [
+        197.09551401299137,
+        243
+      ],
+      [
+        198.59551401299137,
+        243
+      ],
+      [
+        180.59551401299137,
+        244
+      ],
+      [
+        178.59551401299137,
+        244
+      ],
+      [
+        198.59551401299137,
+        244
+      ],
+      [
+        197.09551401299137,
+        244
+      ],
+      [
+        186.09551401299137,
+        244
+      ],
+      [
+        180.59551401299137,
+        244
+      ],
+      [
+        199.09551401299137,
+        244
+      ],
+      [
+        198.09551401299137,
+        244
+      ]
+    ]
+  },
+  {
+    "id": "class_anh_dao_basic_attack_03_s",
+    "source": "Sheets/class_anh_dao_basic_attack_03_s_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_03_s_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png"
+    ],
+    "comboStage": 3,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES",
+    "bodyReferenceHeight": 212.69911504424778,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+        "sourceSha256": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+        "sourceSha256": "c5be664008acc0a84f35e58c291acc019272f655e44eb0f737a254092bc102a8",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_basic_attack_03_se_v2_20261113j.png"
+      }
+    ],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+        "sourceSha256": "c5be664008acc0a84f35e58c291acc019272f655e44eb0f737a254092bc102a8"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        177.83516007685856,
+        288
+      ],
+      [
+        157.83516007685856,
+        289
+      ],
+      [
+        167.33516007685856,
+        289
+      ],
+      [
+        172.33516007685856,
+        289
+      ],
+      [
+        177.33516007685856,
+        258
+      ],
+      [
+        160.33516007685856,
+        258
+      ],
+      [
+        167.33516007685856,
+        258
+      ],
+      [
+        175.83516007685856,
+        258
+      ],
+      [
+        176.83516007685856,
+        260
+      ],
+      [
+        157.33516007685856,
+        261
+      ],
+      [
+        167.83516007685856,
+        261
+      ],
+      [
+        176.83516007685856,
+        260
+      ],
+      [
+        177.83516007685856,
+        260
+      ],
+      [
+        161.33516007685856,
+        260
+      ],
+      [
+        171.33516007685856,
+        261
+      ],
+      [
+        180.83516007685856,
+        261
+      ]
+    ]
+  },
+  {
+    "id": "class_anh_dao_interact_n",
+    "source": "Sheets/class_anh_dao_interact_n_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_interact_n_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 198.98181818181817,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+        "sourceSha256": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        191.94282655246252,
+        244
+      ],
+      [
+        175.44282655246252,
+        244
+      ],
+      [
+        181.44282655246252,
+        244
+      ],
+      [
+        186.44282655246252,
+        244
+      ],
+      [
+        196.44282655246252,
+        230
+      ],
+      [
+        183.94282655246252,
+        230
+      ],
+      [
+        192.44282655246252,
+        230
+      ],
+      [
+        196.94282655246252,
+        230
+      ],
+      [
+        203.94282655246252,
+        235
+      ],
+      [
+        184.94282655246252,
+        235
+      ],
+      [
+        187.94282655246252,
+        236
+      ],
+      [
+        187.94282655246252,
+        237
+      ],
+      [
+        193.44282655246252,
+        237
+      ],
+      [
+        178.94282655246252,
+        236
+      ],
+      [
+        184.44282655246252,
+        236
+      ],
+      [
+        187.44282655246252,
+        237
+      ]
+    ]
+  },
+  {
+    "id": "class_anh_dao_interact_ne",
+    "source": "Sheets/class_anh_dao_interact_ne_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_interact_ne_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 232.60629921259843,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+        "sourceSha256": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        175.64560720974268,
+        275
+      ],
+      [
+        147.64560720974268,
+        275
+      ],
+      [
+        146.64560720974268,
+        275
+      ],
+      [
+        149.64560720974268,
+        275
+      ],
+      [
+        161.64560720974268,
+        268
+      ],
+      [
+        134.64560720974268,
+        268
+      ],
+      [
+        130.64560720974268,
+        268
+      ],
+      [
+        128.14560720974268,
+        268
+      ],
+      [
+        141.64560720974268,
+        271
+      ],
+      [
+        126.14560720974268,
+        271
+      ],
+      [
+        133.14560720974268,
+        271
+      ],
+      [
+        143.14560720974268,
+        271
+      ],
+      [
+        172.64560720974268,
+        274
+      ],
+      [
+        152.64560720974268,
+        274
+      ],
+      [
+        152.14560720974268,
+        274
+      ],
+      [
+        159.14560720974268,
+        274
+      ]
+    ]
+  },
+  {
+    "id": "class_anh_dao_interact_e",
+    "source": "Sheets/class_anh_dao_interact_e_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_interact_e_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 221.93548387096774,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        187.15416633314655,
+        252
+      ],
+      [
+        162.15416633314655,
+        252
+      ],
+      [
+        164.65416633314655,
+        252
+      ],
+      [
+        157.65416633314655,
+        252
+      ],
+      [
+        171.65416633314655,
+        245
+      ],
+      [
+        151.65416633314655,
+        244
+      ],
+      [
+        155.65416633314655,
+        244
+      ],
+      [
+        151.65416633314655,
+        244
+      ],
+      [
+        163.15416633314655,
+        247
+      ],
+      [
+        155.15416633314655,
+        247
+      ],
+      [
+        160.65416633314655,
+        247
+      ],
+      [
+        162.65416633314655,
+        247
+      ],
+      [
+        180.15416633314655,
+        247
+      ],
+      [
+        166.65416633314655,
+        248
+      ],
+      [
+        174.15416633314655,
+        248
+      ],
+      [
+        174.65416633314655,
+        248
+      ]
+    ]
+  },
+  {
+    "id": "class_anh_dao_interact_se",
+    "source": "Sheets/class_anh_dao_interact_se_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_interact_se_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 201.0,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        187.43173431734317,
+        257
+      ],
+      [
+        181.93173431734317,
+        258
+      ],
+      [
+        171.43173431734317,
+        258
+      ],
+      [
+        167.93173431734317,
+        258
+      ],
+      [
+        171.93173431734317,
+        236
+      ],
+      [
+        166.93173431734317,
+        236
+      ],
+      [
+        159.43173431734317,
+        236
+      ],
+      [
+        151.93173431734317,
+        236
+      ],
+      [
+        171.93173431734317,
+        241
+      ],
+      [
+        169.93173431734317,
+        241
+      ],
+      [
+        171.93173431734317,
+        242
+      ],
+      [
+        173.93173431734317,
+        242
+      ],
+      [
+        184.43173431734317,
+        245
+      ],
+      [
+        181.43173431734317,
+        245
+      ],
+      [
+        179.93173431734317,
+        245
+      ],
+      [
+        178.93173431734317,
+        245
+      ]
+    ]
+  },
+  {
+    "id": "class_anh_dao_interact_s",
+    "source": "Sheets/class_anh_dao_interact_s_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_interact_s_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 209.0,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113j.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+        "sourceSha256": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourceFootPivots": [
+      [
+        178.45107033639144,
+        284
+      ],
+      [
+        156.95107033639144,
+        285
+      ],
+      [
+        158.95107033639144,
+        285
+      ],
+      [
+        161.45107033639144,
+        285
+      ],
+      [
+        179.45107033639144,
+        252
+      ],
+      [
+        154.95107033639144,
+        252
+      ],
+      [
+        157.95107033639144,
+        255
+      ],
+      [
+        161.95107033639144,
+        255
+      ],
+      [
+        178.45107033639144,
+        252
+      ],
+      [
+        154.45107033639144,
+        253
+      ],
+      [
+        156.95107033639144,
+        252
+      ],
+      [
+        159.95107033639144,
+        253
+      ],
+      [
+        175.95107033639144,
+        259
+      ],
+      [
+        158.95107033639144,
+        259
+      ],
+      [
+        162.45107033639144,
+        259
+      ],
+      [
+        165.95107033639144,
+        259
+      ]
     ]
   }
 ]

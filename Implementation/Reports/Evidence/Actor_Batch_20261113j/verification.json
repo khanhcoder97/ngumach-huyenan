@@ -1,0 +1,23 @@
+{
+  "batch": "20261113j",
+  "reviewDate": "2026-11-14",
+  "pythonTests": 82,
+  "pythonResult": "PASS",
+  "fullInspectorExportCheck": "PASS",
+  "dotnetBuild": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "nativeAssertions": {
+    "library": 17800,
+    "studio": 86814,
+    "studioEntries": 359,
+    "mobility": 9029,
+    "locomotion": 4367,
+    "anhDaoReaction": 3034
+  },
+  "inventoryCount": 16,
+  "sourcePins": 250,
+  "sourceReviewedJobs": 48,
+  "allGameComplete": false
+}

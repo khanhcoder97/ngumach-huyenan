@@ -230,7 +230,28 @@
     "class_anh_dao_basic_attack_e",
     "class_anh_dao_idle_s",
     "class_anh_dao_walk_s",
-    "class_anh_dao_basic_attack_s"
+    "class_anh_dao_basic_attack_s",
+    "class_anh_dao_walk_e",
+    "class_anh_dao_run_n",
+    "class_anh_dao_run_ne",
+    "class_anh_dao_run_e",
+    "class_anh_dao_run_se",
+    "class_anh_dao_run_s",
+    "class_anh_dao_basic_attack_02_n",
+    "class_anh_dao_basic_attack_02_ne",
+    "class_anh_dao_basic_attack_02_e",
+    "class_anh_dao_basic_attack_02_se",
+    "class_anh_dao_basic_attack_02_s",
+    "class_anh_dao_basic_attack_03_n",
+    "class_anh_dao_basic_attack_03_ne",
+    "class_anh_dao_basic_attack_03_e",
+    "class_anh_dao_basic_attack_03_se",
+    "class_anh_dao_basic_attack_03_s",
+    "class_anh_dao_interact_n",
+    "class_anh_dao_interact_ne",
+    "class_anh_dao_interact_e",
+    "class_anh_dao_interact_se",
+    "class_anh_dao_interact_s"
   ],
   "holds": [
     {
@@ -304,10 +325,6 @@
     {
       "id": "mob_shore_stalker_idle_se",
       "reason": "New directional idle candidate; native motion, edge, anatomy and compass continuity review required."
-    },
-    {
-      "id": "class_anh_dao_walk_e",
-      "reason": "Near/far leg support and boot overlap do not clearly reverse between source0 and8; repeated half-cycle suspected. Native review only; E and mirroredW blocked from approved renderer."
     }
   ],
   "policy": "Structure/export permits review only. No new generated actor is approved for live gameplay until visual/native motion QA.",
@@ -4443,6 +4460,447 @@
       "reviewScale": "88px library;100px locomotion chain;Studio whole-clip fit",
       "batch": "20261113i",
       "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_anh_dao_walk_e",
+      "sourceSha256": "0b3f6659a4039d17092f46903843305a5963a674b93bf1f95404a638fc13c873",
+      "bindingSha256": "4b4ace3972558df772fa6e9f1c967d0d991bb04d27f4e5b8297e836c7adfecad",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_e_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/walk_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/walk_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/walk_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/walk_eight_angles.mp4",
+      "method": "Repaired E source and native16-phase canvas captures viewed. Near boot trails at0 and leads at8; passing/overlap4/12 reverses. Head/contact registration removes prior single-sole horizontal root switch. E plus mirroredW release this old gait HOLD; old I source remains historical and unapproved.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_run_n",
+      "sourceSha256": "087e3320386eaf81468f73683a2bade1524ea825a31d362a94e299ef40137549",
+      "bindingSha256": "1be57e764203f6891ea7bf7c2121cef6353dff0acad063c39093f07e61e3d178",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_run_n_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_raw_n_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles.mp4",
+      "method": "Full original16-pose source and native pixel-scale temporal captures viewed. Opposite near/far contacts0/8, folded/extended legs and closed gait retained; right hand holds one low dao. Head/contact virtual-ground attachment removes atlas packing drift without changing PNG pixels. Five authored facings and permitted mirrors checked in native grid/transition chain.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_run_ne",
+      "sourceSha256": "023ce5094b5b762134756e28ec9349cf16fc4eba01466d4f81b068395625b7b5",
+      "bindingSha256": "8a81c2b6bec7f883ab7a14df93309b4c9b1195e6df942d94f5151e8952fe69e1",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_run_ne_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles.mp4",
+      "method": "Full original16-pose source and native pixel-scale temporal captures viewed. Opposite near/far contacts0/8, folded/extended legs and closed gait retained; right hand holds one low dao. Head/contact virtual-ground attachment removes atlas packing drift without changing PNG pixels. Five authored facings and permitted mirrors checked in native grid/transition chain.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_run_e",
+      "sourceSha256": "6013059fe946e692560ea22cbf348b7f3781abb0cbc516cc2f90c26859928ec7",
+      "bindingSha256": "b249a1affd80665bd70b57254e5a05b878d5219578917bc4a71124369cfba1ef",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_run_e_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles.mp4",
+      "method": "Full original16-pose source and native pixel-scale temporal captures viewed. Opposite near/far contacts0/8, folded/extended legs and closed gait retained; right hand holds one low dao. Head/contact virtual-ground attachment removes atlas packing drift without changing PNG pixels. Five authored facings and permitted mirrors checked in native grid/transition chain.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_run_se",
+      "sourceSha256": "39973341691dd9d45c46d270f0ba7956d93f1bd7629a796c9b20218bf9a4905c",
+      "bindingSha256": "98dd99887f8d07f4ad4bfd7fd476996f2f1a336562b80a02e4a28a711b9b2916",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_run_se_v2_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_raw_se_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles.mp4",
+      "method": "Full original16-pose source and native pixel-scale temporal captures viewed. Opposite near/far contacts0/8, folded/extended legs and closed gait retained; right hand holds one low dao. Head/contact virtual-ground attachment removes atlas packing drift without changing PNG pixels. Five authored facings and permitted mirrors checked in native grid/transition chain.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_run_s",
+      "sourceSha256": "f0537e9a48eed5aa4a157ae9e7c9e0ac9ad6e9d054261ecc796ab4231d855ca2",
+      "bindingSha256": "7b39c5c9ca83ef532e2affb578c21ea795b0db2adaa7080f21adc49391959d1f",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_run_s_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_raw_s_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/run_eight_angles.mp4",
+      "method": "Full original16-pose source and native pixel-scale temporal captures viewed. Opposite near/far contacts0/8, folded/extended legs and closed gait retained; right hand holds one low dao. Head/contact virtual-ground attachment removes atlas packing drift without changing PNG pixels. Five authored facings and permitted mirrors checked in native grid/transition chain.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_basic_attack_02_n",
+      "sourceSha256": "5e2a5cdd9bec623fb08a95a58980d86f4848f3b83b722cfa209980c3061dc88a",
+      "bindingSha256": "21efb86d1cd8d9f19e39aaa339e26af0ab771aab87776abcbaf98d66ac5c5391",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_02_n_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_raw_n_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles.mp4",
+      "method": "Full original16-pose source and native point-filtered temporal captures viewed. One wrist-roll cut followed by low recovery; no second strike in recovery. Single right-hand dao grip, planted weight change, whole-clip head size and eight-facing binding checked. Bilateral plum-boot root excludes warm silver blade; authored torso lean remains.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_basic_attack_02_ne",
+      "sourceSha256": "cb89f37246cb89e7304ebbb7f5ec7c0bbc5177ea280186c4fac0774197eca724",
+      "bindingSha256": "2614c7b7d9164cd802c3f23615097e98e223027d856602a9cd3a99275eb100c2",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_02_ne_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles.mp4",
+      "method": "Full original16-pose source and native point-filtered temporal captures viewed. One wrist-roll cut followed by low recovery; no second strike in recovery. Single right-hand dao grip, planted weight change, whole-clip head size and eight-facing binding checked. Bilateral plum-boot root excludes warm silver blade; authored torso lean remains.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_basic_attack_02_e",
+      "sourceSha256": "fa587bbad81a816d390b87440e3ee0d2a982fca42b713c103664f8862850142e",
+      "bindingSha256": "426623b46ebe518cb32e7f4a37e2a38f0bd095b87d5c0267e09dcaff8e3c3f0e",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_02_e_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles.mp4",
+      "method": "Full original16-pose source and native point-filtered temporal captures viewed. One wrist-roll cut followed by low recovery; no second strike in recovery. Single right-hand dao grip, planted weight change, whole-clip head size and eight-facing binding checked. Bilateral plum-boot root excludes warm silver blade; authored torso lean remains.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_basic_attack_02_se",
+      "sourceSha256": "7034e3cd0e517a4e84e3bce442ed442e85c69bd972e4984e1955a769ad7ef86f",
+      "bindingSha256": "8225cc84b88437015e1bf5467a88fda38d05f4835715eb18b3a4e5f07a481c0b",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_02_se_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_raw_se_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles.mp4",
+      "method": "Full original16-pose source and native point-filtered temporal captures viewed. One wrist-roll cut followed by low recovery; no second strike in recovery. Single right-hand dao grip, planted weight change, whole-clip head size and eight-facing binding checked. Bilateral plum-boot root excludes warm silver blade; authored torso lean remains.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_basic_attack_02_s",
+      "sourceSha256": "4357f38e89f4bfe525955b8f45a8ac6c873273fb28e9296db05c4bca791a3fcb",
+      "bindingSha256": "6c6df7e87013e482f7195386a47e47dae8ced44807b2e4e4de336e372d9d61e6",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_02_s_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_raw_s_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_02_eight_angles.mp4",
+      "method": "Full original16-pose source and native point-filtered temporal captures viewed. One wrist-roll cut followed by low recovery; no second strike in recovery. Single right-hand dao grip, planted weight change, whole-clip head size and eight-facing binding checked. Bilateral plum-boot root excludes warm silver blade; authored torso lean remains.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_basic_attack_03_n",
+      "sourceSha256": "b8a8a34e6b498bf5efbd8c45ad61c545095fec4d6bc6f78bc7c117862ea57d44",
+      "bindingSha256": "1c73be0fadd79b1f444333d39d04151930082847b10f6948c530c350133dd6d8",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_n_v2_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_raw_n_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles.mp4",
+      "method": "Full original16-pose source and native point-filtered temporal captures viewed. Cross-body/far-side load then one outward reverse cut and low recovery. Empty left guard hand remains distinguishable from right-hand dao; rear-view blade can be naturally occluded in front of body. Repaired N/SE selected. Eight facings and three-strike transition chain checked; no painted VFX baked into body.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_basic_attack_03_ne",
+      "sourceSha256": "0e35054fc6b40d4266780b55d0465590ebf51176838f835942d6761735b67fcb",
+      "bindingSha256": "b0f03eed09a1981216a2a1fe93237ee83c93f64ce726aff398b21d7ade94ceca",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_ne_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles.mp4",
+      "method": "Full original16-pose source and native point-filtered temporal captures viewed. Cross-body/far-side load then one outward reverse cut and low recovery. Empty left guard hand remains distinguishable from right-hand dao; rear-view blade can be naturally occluded in front of body. Repaired N/SE selected. Eight facings and three-strike transition chain checked; no painted VFX baked into body.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_basic_attack_03_e",
+      "sourceSha256": "b5ab108a64fe7eb3c250c0e58ff7aa8e29ff9c1d1d8314422d291b2007788c89",
+      "bindingSha256": "42cf47ec18f818e8dc87648b9de5e221b6eaa81eefe6a7a31bf957a19a830bff",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_e_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles.mp4",
+      "method": "Full original16-pose source and native point-filtered temporal captures viewed. Cross-body/far-side load then one outward reverse cut and low recovery. Empty left guard hand remains distinguishable from right-hand dao; rear-view blade can be naturally occluded in front of body. Repaired N/SE selected. Eight facings and three-strike transition chain checked; no painted VFX baked into body.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_basic_attack_03_se",
+      "sourceSha256": "c5be664008acc0a84f35e58c291acc019272f655e44eb0f737a254092bc102a8",
+      "bindingSha256": "c4f94082dcf173cb11f0da4d200defc5702f1164c19d5904fa34c89fa589ea75",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_raw_se_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles.mp4",
+      "method": "Full original16-pose source and native point-filtered temporal captures viewed. Cross-body/far-side load then one outward reverse cut and low recovery. Empty left guard hand remains distinguishable from right-hand dao; rear-view blade can be naturally occluded in front of body. Repaired N/SE selected. Eight facings and three-strike transition chain checked; no painted VFX baked into body.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_basic_attack_03_s",
+      "sourceSha256": "a13d22a37faa5faa743b636506c16efff84f97b75096ca8214b0b4db95064c4d",
+      "bindingSha256": "29de3be616e6c39d945ace307effd8eed944db4f5f3dbbd8e4022c46f5802972",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_s_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_raw_s_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/basic_attack_03_eight_angles.mp4",
+      "method": "Full original16-pose source and native point-filtered temporal captures viewed. Cross-body/far-side load then one outward reverse cut and low recovery. Empty left guard hand remains distinguishable from right-hand dao; rear-view blade can be naturally occluded in front of body. Repaired N/SE selected. Eight facings and three-strike transition chain checked; no painted VFX baked into body.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_interact_n",
+      "sourceSha256": "f2ccb7db551d008b2709b233dbee38cb4282df20a5e4363ee76b3d5c6f45dd3b",
+      "bindingSha256": "8d9ed3653190224c36fafd41c934032a4ac4779e81c43772fafd3034f7c857b3",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_interact_n_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_raw_n_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles.mp4",
+      "method": "Full original16-pose source and native pixel-scale temporal captures viewed. One empty-left-hand reach with nod/lean and return; right hand keeps dao low. Grounded attachment retains authored head nod, with no drawn pickup or implied item grant. Native five facings, permitted mirrors and return to idle checked.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_interact_ne",
+      "sourceSha256": "a21378eedd5902591d371a22d791ecc2236d141cbfc35dc836db80017d32f811",
+      "bindingSha256": "668d1e8ab615f3ab69fc188fde8bfcfd2ccc2d8bb32bd69dd1d8632e05e7f312",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_interact_ne_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles.mp4",
+      "method": "Full original16-pose source and native pixel-scale temporal captures viewed. One empty-left-hand reach with nod/lean and return; right hand keeps dao low. Grounded attachment retains authored head nod, with no drawn pickup or implied item grant. Native five facings, permitted mirrors and return to idle checked.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_interact_e",
+      "sourceSha256": "d4a8b0c143d4731cff2000f56cee8ddfe0cb5b84bde931e41ed33c8781b31d23",
+      "bindingSha256": "16e2d5266f73f59bbf047db4511b7b8c581a95ac2458289db3513cea4a118720",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_interact_e_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles.mp4",
+      "method": "Full original16-pose source and native pixel-scale temporal captures viewed. One empty-left-hand reach with nod/lean and return; right hand keeps dao low. Grounded attachment retains authored head nod, with no drawn pickup or implied item grant. Native five facings, permitted mirrors and return to idle checked.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_interact_se",
+      "sourceSha256": "d873fadb72efd232843e1e0920b37a0ba232118820941eddb4262189e9be0de6",
+      "bindingSha256": "bafa9ea4c3a8f09b44cff1b151478a996a6f70b171304040140d33ae5efc4998",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_interact_se_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_raw_se_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles.mp4",
+      "method": "Full original16-pose source and native pixel-scale temporal captures viewed. One empty-left-hand reach with nod/lean and return; right hand keeps dao low. Grounded attachment retains authored head nod, with no drawn pickup or implied item grant. Native five facings, permitted mirrors and return to idle checked.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_anh_dao_interact_s",
+      "sourceSha256": "c07a038c9437660db10d4049c38d8b95bdea605f8c4d8790fc6863dcdfadd68f",
+      "bindingSha256": "a82413f69577769932c0276f8c50a075a5b60ee761f5bad9c2fa482a5d224670",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_interact_s_v1_20261113j.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_raw_s_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113j/mobility_chain_samples.png"
+      ],
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113j/interact_eight_angles.mp4",
+      "method": "Full original16-pose source and native pixel-scale temporal captures viewed. One empty-left-hand reach with nod/lean and return; right hand keeps dao low. Grounded attachment retains authored head nod, with no drawn pickup or implied item grant. Native five facings, permitted mirrors and return to idle checked.",
+      "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
+      "batch": "20261113j",
+      "reviewDate": "2026-11-14"
     }
   ],
   "historicalHolds": [
@@ -4513,6 +4971,14 @@
       ],
       "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_reaction_chain.mp4",
       "scope": "SOURCE_REACTION_APPEARANCE_AND_TRANSITIONS_ONLY_NOT_GAMEPLAY"
+    },
+    {
+      "id": "class_anh_dao_walk_e",
+      "reason": "New J E gait replaces held I source. Near/far boot position0/8 and passing4/12 require native review; E and mirroredW remain HOLD.",
+      "resolvedByBatch": "20261113j",
+      "replacementSourceSha256": "0b3f6659a4039d17092f46903843305a5963a674b93bf1f95404a638fc13c873",
+      "resolution": "Repaired E source and native16-phase canvas captures viewed. Near boot trails at0 and leads at8; passing/overlap4/12 reverses. Head/contact registration removes prior single-sole horizontal root switch. E plus mirroredW release this old gait HOLD; old I source remains historical and unapproved.",
+      "originalHeldSource": "Sheets/class_anh_dao_walk_e_v1_20261113i.png"
     }
   ],
   "sourceApprovalHistory": [
