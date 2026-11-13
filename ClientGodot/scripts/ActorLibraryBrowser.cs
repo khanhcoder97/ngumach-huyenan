@@ -200,6 +200,21 @@ public partial class ActorLibraryBrowser : Control
                 if(action=="skill_06"&&(ActorLibraryData.FrameAt(probe.ActorId,action,authored,.70,false)!=6||ActorLibraryData.FrameAt(probe.ActorId,action,authored,1.05,false)!=10))throw new Exception("Van Tuong phase timing changed");checks++;
                 if(action=="dodge"&&(ActorLibraryData.FrameAt(probe.ActorId,action,authored,.08,false)!=4||ActorLibraryData.FrameAt(probe.ActorId,action,authored,.26,false)!=10))throw new Exception("Dodge presentation phase timing changed");checks++;
             }
+            foreach(string action in new[]{"skill_01","skill_02","skill_03"})
+            foreach(int facing in Enumerable.Range(0,8))
+            {
+                if(!_library.Resolve("CLASS_ANH_DAO",action,facing,out var authored)||authored!.Frames.Length!=16||authored.SourceFrameDurationsMs?.Length!=16||authored.Flip!=(facing>=5))throw new Exception("missing timed Anh Dao source/mirror");checks++;
+                probe.ActorId="CLASS_ANH_DAO";probe.Clip=action;probe.Facing=facing;probe.Paused=false;probe.Loop=false;
+                for(int frame=0;frame<16;frame++){probe.Seek(frame);probe.ManualFrame=-1;probe._Process(0);if(probe.DisplayedFrame!=frame)throw new Exception("Anh Dao seek/resume lost source frame");checks++;}
+                probe.Restart();double duration=ActorLibraryData.Duration(probe.ActorId,action,authored);var poses=new HashSet<int>();
+                for(int tick=0;tick<Math.Ceiling(duration*60)+2;tick++){probe._Process(1d/60);poses.Add(probe.DisplayedFrame);}
+                if(poses.Count!=16||probe.DisplayedFrame!=15||ActorLibraryData.FrameAt(probe.ActorId,action,authored,duration,true)!=0)throw new Exception("Anh Dao source-frame or loop boundary");checks++;
+                bool phase=action switch{
+                    "skill_01"=>ActorLibraryData.FrameAt(probe.ActorId,action,authored,.12,false)==4&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.32,false)==10,
+                    "skill_02"=>ActorLibraryData.FrameAt(probe.ActorId,action,authored,.16,false)==4&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.40,false)==10,
+                    _=>ActorLibraryData.FrameAt(probe.ActorId,action,authored,.14,false)==4&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.24,false)==7&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.32,false)==9&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.42,false)==12};
+                if(!phase)throw new Exception("Anh Dao presentation phases changed");checks++;
+            }
             foreach(string action in new[]{"walk","interact"})
             foreach(int facing in Enumerable.Range(0,8))
             {

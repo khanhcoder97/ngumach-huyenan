@@ -4,7 +4,9 @@
 
 **Đang sản xuất; chưa hoàn thành toàn bộ thư viện.** Chuẩn16–20pose thực/clip/hướng, renderer60FPS. PNG mới là ứng viên review, chưa tự thay asset gameplay.
 
-Đợt mới nhất: [20261113e — phản ứng có kiếm và phòng kiểm nối hoạt ảnh](../../docs/production/Actor_Batch_20261113e_vi.md), **17 sheet /272 khung nguồn**. Hurt/death/dodge Minh Kiếm năm góc nguồn và walk E/NE Người Giữ Thuyền được kiểm source/native; hai HOLD gait NPC đã chuyển lịch sử. Thêm phòng kiểm tám hướng, mốc chân và chỉnh tốc độ. Catalogue còn944/1008 job thiếu;32 job đủ nguồn đã kiểm source,19 HOLD. Minh Kiếm12/12 clip đã kiểm source vẫn chưa nghiệm thu toàn class hoặc chuyển thế có kiếm/không kiếm.
+Đợt mới nhất: [20261113f — Huyết Nguyệt, Tàn Hỏa và Xích Ảnh](../../docs/production/Actor_Batch_20261113f_vi.md), **20 sheet /320 khung nguồn**. Ba body skill Ảnh Đao ×5 góc, năm VFX dấu/nổ/tắt và hai chiều chém. Timing raw/nhóm, neo giày tối, grid directional và đuôi RGBA được kiểm riêng. Catalogue còn941/1008 job thiếu;35 job đủ nguồn đã kiểm source,19 HOLD. Chưa nghiệm thu toàn class/skill assembly hoặc gameplay.
+
+Đợt trước: [20261113e — phản ứng có kiếm và phòng kiểm nối hoạt ảnh](../../docs/production/Actor_Batch_20261113e_vi.md), **17 sheet /272 khung nguồn**. Hurt/death/dodge Minh Kiếm năm góc nguồn và walk E/NE Người Giữ Thuyền được kiểm source/native; hai HOLD gait NPC đã chuyển lịch sử. Thêm phòng kiểm tám hướng, mốc chân và chỉnh tốc độ. Minh Kiếm12/12 clip đã kiểm source vẫn chưa nghiệm thu toàn class hoặc chuyển thế có kiếm/không kiếm.
 
 Đợt trước: [20261113d — Bạch Hồng, Vạn Tượng và VFX](../../docs/production/Actor_Batch_20261113d_vi.md), **13 sheet /208 khung nguồn**. Hai body skill còn thiếu có năm góc nguồn và ba góc lật, timing riêng; ba component tách rời, neo hội tụ và kích thước xem vệt dài được kiểm native.
 

@@ -55,7 +55,7 @@ public static class ArtStudioLibrary
     private static double SourceDuration(string id)
     {
         if (id == "sk_mob_waterroot_01_ripple_component") return .7;
-        string? owner = id.StartsWith("mob_carpling_", StringComparison.Ordinal) ? "MOB_CARPLING" : id.StartsWith("mob_waterroot_", StringComparison.Ordinal) ? "MOB_WATERROOT" : id.StartsWith("class_minh_kiem_", StringComparison.Ordinal) ? "CLASS_MINH_KIEM" : null;
+        string? owner = id.StartsWith("mob_carpling_", StringComparison.Ordinal) ? "MOB_CARPLING" : id.StartsWith("mob_waterroot_", StringComparison.Ordinal) ? "MOB_WATERROOT" : id.StartsWith("class_minh_kiem_", StringComparison.Ordinal) ? "CLASS_MINH_KIEM" : id.StartsWith("class_anh_dao_", StringComparison.Ordinal) ? "CLASS_ANH_DAO" : null;
         if (owner == null) return id.Contains("walk", StringComparison.Ordinal) ? .8 : 1.6;
         string action = id[(owner.Length+1)..];
         foreach (string facing in new[] { "_n", "_ne", "_e", "_se", "_s", "_sw", "_w", "_nw" })

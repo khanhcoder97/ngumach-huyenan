@@ -62,7 +62,7 @@ def registered_height(record,frames,cell_height,vfx=False):
         assert record.get('scaleMode','HEIGHT')=='HEIGHT','body reference height requires HEIGHT mode'
         assert type(height) in (int,float) and math.isfinite(height) and 16<=height<=cell_height,'invalid neutral body reference height'
         return height
-    assert record.get('pivotMode') not in ('MOSS_CORE_ROOT','BOOT_CORE_FOOT'),'body-core registration requires neutral body reference height'
+    assert record.get('pivotMode') not in ('MOSS_CORE_ROOT','BOOT_CORE_FOOT','DARK_BOOT_CORE_FOOT'),'body-core registration requires neutral body reference height'
     if vfx:
         # Long narrow components use their maximum visible span for the
         # editor's nominal display size. Existing HEIGHT sources keep pins.
@@ -138,6 +138,31 @@ def boot_foot_pivot(pixels,width,height):
     low=[p for p in selected if p[1]>=bottom-max(3,height*.10)]
     return [sum(x for x,y in low)/len(low),min(height-1,bottom+2)]
 
+def dark_boot_foot_pivot(pixels,width,height):
+    # Anh Dao boots are dark plum/brown, unlike Minh Kiem's warmer boots.
+    # Dense fill components reject thin dark blade contours; bright steel and
+    # gold are outside the palette. This selects coordinates, never edits PNG.
+    candidates={(i%width,i//width) for i,(r,g,b,a) in enumerate(pixels)
+                if i//width>=height*.55 and a>=200 and 18<=r<=130 and 12<=g<=110 and 10<=b<=115
+                and r>=g*1.02 and r>=b*.9 and g>=b*.7}
+    points={p for p in candidates if sum((p[0]+dx,p[1]+dy) in candidates for dx in (-1,0,1) for dy in (-1,0,1))>=5}
+    groups=[]
+    while points:
+        stack=[points.pop()];group=[]
+        while stack:
+            x,y=stack.pop();group.append((x,y))
+            for dx in (-1,0,1):
+                for dy in (-1,0,1):
+                    p=(x+dx,y+dy)
+                    if p in points:points.remove(p);stack.append(p)
+        if len(group)>=16:groups.append(group)
+    assert groups,'dark boot fill absent; manual registration required'
+    selected=[p for group in sorted(groups,key=lambda g:(-len(g),min(g)))[:2] for p in group]
+    bottom=max(y for x,y in selected)
+    low=[p for p in selected if p[1]>=bottom-max(3,height*.06)]
+    return [sum(x for x,y in low)/len(low),min(height-1,bottom+2)]
+
+
 def source_approval_matches(page,approval):
     return approval.get('sourceSha256')==page['sha256'] and approval.get('bindingSha256')==binding_sha256(page)
 
@@ -145,17 +170,35 @@ def inspect(record, art_root=None):
     assert record.get('gutterPolicy') in (None,'SOLID_CORE_GUTTER'),'unreviewed gutter policy'
     preview=preview_profile(record)
     timing=source_timing(record)
+    translucent_tail=record.get('translucentTailFromFrame')
+    if translucent_tail is not None:
+        assert record['id'].startswith('sk_') and record.get('componentOnly') and record.get('layout')=='VISUALLY_VERIFIED_UNIFORM_GRID','translucent tail requires a reviewed VFX component grid'
+        assert type(translucent_tail) is int and 12<=translucent_tail<=15,'translucent tail is limited to the last four source frames'
     path=(art_root or ART)/record['source']
     with Image.open(path) as im:
         assert im.mode=='RGBA','PNG must retain RGBA'
         w,h=im.size;a=im.getchannel('A');assert a.getextrema()[0]==0,'opaque fake background'
         # Projection locates the actual transparent gutters instead of assuming a cropped output retained equal cells.
         mask=a.point(lambda x:255 if x>=200 else 0);xs,ys=binary_projection(mask)
-        if record.get('layout')=='VISUALLY_VERIFIED_UNIFORM_GRID':
+        if record.get('layout') in ('VISUALLY_VERIFIED_UNIFORM_GRID','VISUALLY_VERIFIED_DIRECTIONAL_GRID'):
             # Particle islands do not define extra columns/rows. Only opt in after
             # viewing the whole sheet; per-cell emptiness, edge and hash checks remain.
-            assert (record['columns'],record['rows'])==(4,4) and record['id'].startswith('sk_'),'explicit grid currently restricted to reviewed 16-frame effects'
+            assert (record['columns'],record['rows'])==(4,4),'explicit grid requires sixteen source cells'
+            if record['layout']=='VISUALLY_VERIFIED_DIRECTIONAL_GRID':
+                # A thin held blade can split the projection into extra islands.
+                # Opt in only after inspecting an actual equal-cell actor page;
+                # retain empty-cell, full source-edge and duplicate-frame gates.
+                assert record['id'].startswith('class_') and record.get('direction') in ('N','NE','E','SE','S','SW','W','NW'),'directional grid requires a declared class facing'
+            else:
+                assert record['id'].startswith('sk_'),'uniform effect grid is VFX-only'
             xx=[round(i*w/4) for i in range(5)];yy=[round(i*h/4) for i in range(5)]
+            if record['layout']=='VISUALLY_VERIFIED_DIRECTIONAL_GRID' and 'gridEdges' in record:
+                # Explicit atlas regions preserve wide weapon follow-throughs
+                # that cross an ideal equal-cell boundary into a clear gutter.
+                grid=record['gridEdges'];xx=grid['columns'];yy=grid['rows']
+                for edges,maximum in ((xx,w),(yy,h)):
+                    assert len(edges)==5 and all(type(v) is int for v in edges),'invalid explicit directional edges'
+                    assert edges[0]==0 and edges[-1]==maximum and all(a<b for a,b in zip(edges,edges[1:])),'non-monotonic/out-of-image directional edges'
             cols=list(zip(xx,xx[1:]));rows=list(zip(yy,yy[1:]))
         else:
             cols=locate(xs,record['columns'],max(2,int(w/100)))
@@ -170,7 +213,13 @@ def inspect(record, art_root=None):
         for row in range(len(rows)):
             for col in range(len(cols)):
                 x,y,x1,y1=xx[col],yy[row],xx[col+1],yy[row+1]
-                alpha=mask.crop((x,y,x1,y1));bb=alpha.getbbox();assert bb,'empty frame'
+                tail_frame=translucent_tail is not None and row*len(cols)+col>=translucent_tail
+                alpha=a.crop((x,y,x1,y1)).point(lambda value:255 if value>=64 else 0) if tail_frame else mask.crop((x,y,x1,y1))
+                # A deliberately fading RGBA tail need not contain alpha200.
+                # Require a visible cluster, retain crop gates and full pixel
+                # uniqueness; missing/fully transparent cells still fail.
+                if tail_frame:assert alpha.histogram()[255]>=4,'translucent tail lacks a visible source cluster'
+                bb=alpha.getbbox();assert bb,'empty frame'
                 margin=min(bb[0],bb[1],x1-x-bb[2],y1-y-bb[3]);assert margin>=2,f'clipped/overlapping frame row{row} col{col}'
                 # Foot-ground anchor is metadata only. Source pixels remain byte-identical.
                 foot=alpha.crop((int((x1-x)*.25),int((y1-y)*.6),int((x1-x)*.75),y1-y)).getbbox()
@@ -204,7 +253,13 @@ def inspect(record, art_root=None):
                     region=im.crop((x,y,x1,y1))
                     pixels=region.get_flattened_data() if hasattr(region,'get_flattened_data') else region.getdata()
                     pivot=boot_foot_pivot(pixels,x1-x,y1-y)
+                elif record.get('pivotMode')=='DARK_BOOT_CORE_FOOT':
+                    assert record['id'].startswith('class_anh_dao_'),'dark boot registration is Anh Dao-only'
+                    region=im.crop((x,y,x1,y1))
+                    pixels=region.get_flattened_data() if hasattr(region,'get_flattened_data') else region.getdata()
+                    pivot=dark_boot_foot_pivot(pixels,x1-x,y1-y)
                 frames.append(dict(rect=[x,y,x1-x,y1-y],bounds=list(bb),pivot=pivot))
+                if tail_frame:frames[-1]['boundsAlphaThreshold']=64
                 hashes.append(hashlib.sha256(im.crop((x,y,x1,y1)).tobytes()).hexdigest())
         assert len(set(hashes))==len(hashes),'duplicate full-frame pixels; frame count cannot be padded'
         directions=[]

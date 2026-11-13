@@ -1,0 +1,396 @@
+{
+  "scope": "SOURCE_NATIVE_REVIEW_NOT_FULL_CLASS_SKILL_ASSEMBLY_OR_GAMEPLAY",
+  "batch": "20261113f",
+  "newSourcePages": 20,
+  "newSourceCells": 320,
+  "decisions": [
+    {
+      "id": "class_anh_dao_skill_01_e",
+      "sourceSha256": "d825839b675069ccef363bb98be16d2b32c6cda910e74bf955728712946d4b47",
+      "bindingSha256": "4f49a576c0ef2defe3ff9071676ecdb7aec89eda52bfffdbcfad27d7d97443cb",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_01_e_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "class_anh_dao_skill_01_n",
+      "sourceSha256": "14eb6c95fb798bc7b695d726b7c98d009288be2c434466c9bff0422f443a2b71",
+      "bindingSha256": "c52b795b8d71e330c78c273914a726c89e28486bfc8d607fb64dec8f20edaa97",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_01_n_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "class_anh_dao_skill_01_ne",
+      "sourceSha256": "3fd7be8d2e7414a6f2f30d4bb109b34bd1c5df23d814fcb2704607c75c121ef9",
+      "bindingSha256": "0423ffc64331737379334ffb5f5c4f54744ad0bc565f0bac4e41132260139933",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_01_ne_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "class_anh_dao_skill_01_s",
+      "sourceSha256": "4fbc45849c405c93a442db96c6c192b90cd2bc124d394b66b6ffc7e1eec8eb26",
+      "bindingSha256": "1c2f4811a5d48fceaa0e953a25b8f82b2fb9a7d1b9a264d9dea7a879e306b369",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_01_s_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "class_anh_dao_skill_01_se",
+      "sourceSha256": "5bbfcf8aaf1532e47d7ec335ff07fce74c2fba6f906190ed74f59d88267e67ff",
+      "bindingSha256": "fc334d54e2954d9d229fa5a3a89d48fab41e069c50d49de39173f0b912de72a6",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_01_se_v2_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/huyet_nguyet_raw_se_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "class_anh_dao_skill_02_e",
+      "sourceSha256": "8e2ebeb53181dd5a6382c827d61212f7f04aeb7add5b769ff543e6f53e04b200",
+      "bindingSha256": "c5df3aae80f29489079330a230382bf82751e71592c50d66aff55d9656e93990",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_02_e_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "class_anh_dao_skill_02_n",
+      "sourceSha256": "b244294a0126a547eef865d870028e0d717bdceb1dcef9698f2322f9c9027424",
+      "bindingSha256": "09c84a1f0262c3d9f819814b9736f35d134f88adcefd8cb1d0e711edb2bb7d5b",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_02_n_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "class_anh_dao_skill_02_ne",
+      "sourceSha256": "c68d12e5c268886208878775b71b172bbfe4f6ef3f1f52c68a5b600b9c0ac030",
+      "bindingSha256": "43cf0f428f7de202541e807c094b5d7b99d96460739c185f27c47911232a3310",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_02_ne_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "class_anh_dao_skill_02_s",
+      "sourceSha256": "be145ceb95f9d9a6a7f5028a0667dda04074d2f6953a90bdd9fe1ef8cd04c74f",
+      "bindingSha256": "7c3c174708e347c58ce3be718025ac9c350d5bd7f1e09c215d2ee1e795feeed5",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_02_s_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "class_anh_dao_skill_02_se",
+      "sourceSha256": "d57da613c945c3e2f5714da7ad0b4e0cba8d225764d629555f4f7866553bd8bb",
+      "bindingSha256": "7b37294bd6727389284740d3eb561da3a192fa741b6158d4f13f16de9e0c8796",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_02_se_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "class_anh_dao_skill_03_e",
+      "sourceSha256": "113ee3a767df765345839a5fccd9d33285946f605ba9d7f820ad79fea560abba",
+      "bindingSha256": "fa32f28e1b170e70b536f2cd5bb8868357d65f838e3f1f7c3f8e261a6f739ac5",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_e_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "class_anh_dao_skill_03_n",
+      "sourceSha256": "2d6f8c99b552dd9044917e61a7ad3ebfd9aaa978ca08e27be93aec4d15a1fa5d",
+      "bindingSha256": "9ae7ee6741a88c4aff08d112aaccb4b100fa13551bee6bdd0a3f41507c8e2510",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_n_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "class_anh_dao_skill_03_ne",
+      "sourceSha256": "5c2a7da343acb21af4c7813becf7877f365f28b18a76f67617eeebc4b13383e8",
+      "bindingSha256": "e71abd7e1a6399a581a4441d3812b1249a4d1cc2e47fca6bd87db0dc2a22a9c9",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_ne_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "class_anh_dao_skill_03_s",
+      "sourceSha256": "3cb256d7cc21c0f21c255f312bca9bd5adced22c8b58ba1ae33e132b03f3ddf0",
+      "bindingSha256": "e5879fcc865ac530f2e9407ad54bfb9ddd59d5be319bfc4bb13ae5ceeb470b49",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_s_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "class_anh_dao_skill_03_se",
+      "sourceSha256": "154921ea392ab3faabb1156cd64c64d0d47723e43a4995fb168f85d0c0890bf4",
+      "bindingSha256": "15fd0c3e5f13823e3c720c4c76ad5c5eda38328fc06f45a541a0cdf5c259c984",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_se_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Dark-boot root and fixed neutral-height reviewed. Physical source only; no movement/hit/resource authority. Armed/unarmed stance transitions are not accepted."
+    },
+    {
+      "id": "sk_ad_02_expire_component",
+      "sourceSha256": "dbaed04743a4ae39fcf91ecd54b5d19e85681a32fd44e95725beadc40f8077d1",
+      "bindingSha256": "1501ae208f6c804d83ca2250f0c1b061f4127ec5ea6d8b4f4db25951a7e205da",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_expire.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_02_expire_component_v2_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_expire.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_expire_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_COMPONENT",
+      "notes": "Quiet crumbling mark. FinalRGBA pose maxAlpha199 remains genuinely authored/nonempty; last four bounds use explicitalpha64 threshold. No opacity edit, padding or explosion."
+    },
+    {
+      "id": "sk_ad_02_mark_component",
+      "sourceSha256": "df54382855a823ed3b6654a54c1c826965e82b2a55fc952b14811e1a64d3db47",
+      "bindingSha256": "a59b79cca6b7c462ac382f00ffdaef5c65ab07a5f8233b78ff4ed550131cb97f",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_mark.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_02_mark_component_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_mark.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_mark_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_COMPONENT",
+      "notes": "Persistent five-fissure ellipse pulse, no auto-detonation. Target-foot attachment and server lifetime still require assembly."
+    },
+    {
+      "id": "sk_ad_02_pop_component",
+      "sourceSha256": "d77b11fe7f9bf13e30d9d2880947e0de2fc95e3f1f51bc2e0cb26dab1683d4d0",
+      "bindingSha256": "fac7625a65bd4cf02ae8038217f6777343900800bb427303b493134071910232",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_pop.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_02_pop_component_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_pop.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/tan_hoa_pop_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_COMPONENT",
+      "notes": "Single compact outward ember pulse; only a source component, not mark trigger authority."
+    },
+    {
+      "id": "sk_ad_03_first_cut_component",
+      "sourceSha256": "7d1f31f9f826ad34354faaef597934cc27ebd765b98ab5f6b3a960dcba319b90",
+      "bindingSha256": "3603a9db05bf307d5804e641b30a022c13c8bf6de4852411d5323fb2b6c42570",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_first.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_03_first_cut_component_v2_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_first.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_first_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_COMPONENT",
+      "notes": "Independently authored downward cut with hot lower lip; v2 fixes v1 rising-leading-edge duplication."
+    },
+    {
+      "id": "sk_ad_03_reverse_cut_component",
+      "sourceSha256": "e6899533f67b783a3ef8e896b4eea3f02b0b9b9218cd2ed57509d8443138a1e1",
+      "bindingSha256": "775085397ac17d189e0984fc6720c6f3a0a9ecf348b7a00e3a420e9ba1772071",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_reverse.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_03_reverse_cut_component_v1_20261113f.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_reverse.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113f/xich_anh_reverse_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame selected sheet and native Godot point-filtered captures/temporal samples. Independently tested source timing/phase boundaries,60-step sampling,seek/resume,one-shot/mirrors and JSON. Original RGBA unmodified.",
+      "reviewScale": "88px eight-angle body;140px raw SE;160px VFX reference span",
+      "batch": "20261113f",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_COMPONENT",
+      "notes": "Rising/reverse hot upper lip clearly differs from first-cut source; no actor clone."
+    }
+  ],
+  "remainingLimitations": [
+    "Anh Dao still lacks skill04/05/06,dodge and source/transition acceptance of older actions.",
+    "VFX target/caster attachment,orientation,trigger/expire adapter,LowFX and full-skill assembly pending.",
+    "Raw art review clocks do not authorize damage,root motion,Heat,MP,CD or mark lifetime.",
+    "Offline60-step video is not a real-time gameplay performance benchmark."
+  ]
+}

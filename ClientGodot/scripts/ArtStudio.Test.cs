@@ -92,6 +92,26 @@ public partial class ArtStudio
                     Check(roundtrip.Clips.Single(c => c.Direction == skillClip.Direction).DurationsMs.SequenceEqual(skillClip.DurationsMs), "timed JSON roundtrip changed durations");
                 }
             }
+            foreach (string action in new[] { "skill_01", "skill_02", "skill_03" })
+            {
+                var grouped = ArtStudioLibrary.Load("actor:CLASS_ANH_DAO:" + action);
+                Check(grouped.Clips.Count == 8, "Anh Dao directions missing");
+                foreach (var anhClip in grouped.Clips)
+                {
+                    string facing = anhClip.Direction switch { "SW" => "SE", "W" => "E", "NW" => "NE", _ => anhClip.Direction };
+                    var raw = ArtStudioLibrary.Load("class_anh_dao_" + action + "_" + facing.ToLowerInvariant()).Clips.Single();
+                    Check(anhClip.DurationsMs.SequenceEqual(raw.DurationsMs) && !anhClip.Loop && !raw.Loop, "Anh Dao raw/group timing or one-shot differs");
+                    Check(Math.Abs(anhClip.Duration - ActorLibraryData.Duration("CLASS_ANH_DAO", action)) < .00001, "Anh Dao duration differs");
+                    var visited = new System.Collections.Generic.HashSet<int>();
+                    for (int tick = 0; tick < Math.Ceiling(anhClip.Duration * 60) + 2; tick++) visited.Add(ArtStudioSampler.FrameAt(anhClip, tick / 60d));
+                    Check(visited.Count == 16 && ArtStudioSampler.FrameAt(anhClip, anhClip.Duration * 2) == 15, "Anh Dao source frames skipped/restarted");
+                    if (action == "skill_01") Check(ArtStudioSampler.FrameAt(anhClip, .12) == 4 && ArtStudioSampler.FrameAt(anhClip, .32) == 10, "Studio Huyet Nguyet phases");
+                    if (action == "skill_02") Check(ArtStudioSampler.FrameAt(anhClip, .16) == 4 && ArtStudioSampler.FrameAt(anhClip, .40) == 10, "Studio Tan Hoa phases");
+                    if (action == "skill_03") Check(ArtStudioSampler.FrameAt(anhClip, .14) == 4 && ArtStudioSampler.FrameAt(anhClip, .24) == 7 && ArtStudioSampler.FrameAt(anhClip, .32) == 9 && ArtStudioSampler.FrameAt(anhClip, .42) == 12, "Studio Xich Anh two-cut phases");
+                    var roundtrip = ArtStudioCodec.Decode(ArtStudioCodec.Encode(grouped));
+                    Check(roundtrip.Clips.Single(c => c.Direction == anhClip.Direction).DurationsMs.SequenceEqual(anhClip.DurationsMs), "Anh Dao timing JSON roundtrip");
+                }
+            }
             foreach (var component in ArtStudioLibrary.ComponentEntries())
             {
                 var composite = ArtStudioLibrary.Load("actor:CLASS_MINH_KIEM:skill_01");
