@@ -1,0 +1,88 @@
+{
+  "scope": "OFFLINE_NATIVE_VISUAL_REVIEW_NOT_GAMEPLAY_PERFORMANCE",
+  "selectedVideos": 7,
+  "supersededVideos": 1,
+  "files": [
+    {
+      "file": "bach_hong_raw_s.mp4",
+      "bytes": 196008,
+      "sha256": "f974bf6876e9561fde11a1cde377bb53bd08a68202bfd8efc6cb266ad038338c",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "bach_hong_trail.mp4",
+      "bytes": 127337,
+      "sha256": "6944bda0ac39e2922e42c23eaa618472df8b5c74f86422c27fc6fabe75789f7f",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "minh_kiem_bach_hong_eight_angles.mp4",
+      "bytes": 838047,
+      "sha256": "6e36bdc59cc990d02b88943cc455845dc1f43822bb726b0650d5ad3be3c4bb3f",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "minh_kiem_van_tuong_eight_angles.mp4",
+      "bytes": 403255,
+      "sha256": "b890eb3fa5f97313a3235eef422e4ae2b24249493a6bdc68b22985509bc0bc43",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "Superseded_Charge_Registration/van_tuong_charge.mp4",
+      "bytes": 139936,
+      "sha256": "99f5f26c2b84c6f1f47d4f2872bda546838f7a959694550e927869d7a09e34a1",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": false,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "van_tuong_charge.mp4",
+      "bytes": 151517,
+      "sha256": "2bce6b7ddd709220ef04c857232a8e1247ff379764277fd2e9aa2f4e0d255518",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "van_tuong_cut.mp4",
+      "bytes": 124056,
+      "sha256": "23d042f89334cc2afe493894e46e361ed39b1ea64d47f624e0f2e7461296ef4b",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "van_tuong_raw_n.mp4",
+      "bytes": 227606,
+      "sha256": "ebb6810a4fd81e2581726348ad8d02880c5a9f547e87c916b4d4cee96a4377ff",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    }
+  ],
+  "note": "Source-sheet and native timeline checks are separate. Movie Maker is offline; these rates cannot certify real-time gameplay FPS."
+}

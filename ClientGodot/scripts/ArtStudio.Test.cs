@@ -70,7 +70,7 @@ public partial class ArtStudio
                 Check(!guardClip.Loop && !raw.Loop && Math.Abs(guardClip.Duration - .8) < .00001 && Math.Abs(raw.Duration - guardClip.Duration) < .00001, "guard raw/group profile mismatch");
                 Check(ArtStudioSampler.FrameAt(guardClip, guardClip.Duration * 2) == 15, "guard did not hold final pose");
             }
-            foreach (string action in new[] { "skill_02", "skill_03", "skill_04" })
+            foreach (string action in new[] { "skill_02", "skill_03", "skill_04", "skill_05", "skill_06" })
             {
                 var grouped = ArtStudioLibrary.Load("actor:CLASS_MINH_KIEM:" + action);
                 Check(grouped.Clips.Count == 8, "missing timed skill directions");
@@ -85,6 +85,8 @@ public partial class ArtStudio
                     Check(visited.Count == 16 && ArtStudioSampler.FrameAt(skillClip, skillClip.Duration * 2) == 15, "timed source poses skipped/restarted");
                     if (action == "skill_02") Check(ArtStudioSampler.FrameAt(skillClip, .15) == 4 && ArtStudioSampler.FrameAt(skillClip, .35) == 10, "Studio Tam Long phases");
                     if (action == "skill_03") Check(ArtStudioSampler.FrameAt(skillClip, .1) == 4 && ArtStudioSampler.FrameAt(skillClip, .22) == 8 && ArtStudioSampler.FrameAt(skillClip, .36) == 12, "Studio Kiem Tran phases");
+                    if (action == "skill_05") Check(ArtStudioSampler.FrameAt(skillClip, .08) == 4 && ArtStudioSampler.FrameAt(skillClip, .24) == 10, "Studio Bach Hong presentation phases");
+                    if (action == "skill_06") Check(ArtStudioSampler.FrameAt(skillClip, .70) == 6 && ArtStudioSampler.FrameAt(skillClip, 1.05) == 10, "Studio Van Tuong phases");
                     var roundtrip = ArtStudioCodec.Decode(ArtStudioCodec.Encode(grouped));
                     Check(roundtrip.Clips.Single(c => c.Direction == skillClip.Direction).DurationsMs.SequenceEqual(skillClip.DurationsMs), "timed JSON roundtrip changed durations");
                 }
@@ -120,7 +122,7 @@ public partial class ArtStudio
                 Check(visited.Count == 16, "60-step component preview skipped source poses: " + profile.Item1);
                 Check(ArtStudioSampler.FrameAt(component, component.Duration * 2) == (component.Loop ? 0 : 15), "component loop/end boundary: " + profile.Item1);
             }
-            foreach (var profile in new[] { ("sk_mk_02_trail_component", .32), ("sk_mk_02_stop_dust_component", .32), ("sk_mk_04_gain_component", .4), ("sk_mk_04_break_component", .32), ("sk_mk_04_expire_component", .4) })
+            foreach (var profile in new[] { ("sk_mk_02_trail_component", .32), ("sk_mk_02_stop_dust_component", .32), ("sk_mk_04_gain_component", .4), ("sk_mk_04_break_component", .32), ("sk_mk_04_expire_component", .4), ("sk_mk_05_trail_component", .32), ("sk_mk_06_charge_component", .7), ("sk_mk_06_cut_component", .35) })
             {
                 var source = ArtStudioLibrary.Load(profile.Item1);
                 var componentClip = source.Clips.Single();

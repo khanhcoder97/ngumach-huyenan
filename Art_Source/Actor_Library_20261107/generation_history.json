@@ -469,5 +469,56 @@
     "previewDurationSeconds": 0.32,
     "previewLoop": false,
     "reason": "First variant grows a ring like gain; break must begin at full rim size and fracture without rebuilding."
+  },
+  {
+    "id": "class_minh_kiem_skill_06_e",
+    "source": "Sheets/class_minh_kiem_skill_06_e_v1_20261113d.png",
+    "prompt": "Prompts/class_minh_kiem_skill_06_e_v1_20261113d.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_CHOREOGRAPHY_THUST_INSTEAD_OF_DRAW_CUT",
+    "batch": "20261113d",
+    "reference": "Art_Source/Motion_16F_20261106/idle_e.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_02_e_v1_20261113c.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "reason": "Frames4-10 point almost continuously forward; v2 repairs sweep angles."
+  },
+  {
+    "id": "class_minh_kiem_skill_06_ne",
+    "source": "Sheets/class_minh_kiem_skill_06_ne_v1_20261113d.png",
+    "prompt": "Prompts/class_minh_kiem_skill_06_ne_v1_20261113d.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_PENDING_NATIVE_REVIEW",
+    "batch": "20261113d",
+    "reference": "Art_Source/Motion_16F_20261106/idle_ne_v2.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_06_e_v2_20261113d.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "reason": "v1 opens chest/front shoulders during windup and resembles E; v2 keeps broad coat BACK through all16poses"
+  },
+  {
+    "id": "class_minh_kiem_skill_06_se",
+    "source": "Sheets/class_minh_kiem_skill_06_se_v1_20261113d.png",
+    "prompt": "Prompts/class_minh_kiem_skill_06_se_v1_20261113d.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_PENDING_NATIVE_REVIEW",
+    "batch": "20261113d",
+    "reference": "Art_Source/Motion_16F_20261106/idle_se.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_06_e_v2_20261113d.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "reason": "v1 has extra free palms behind left silhouette at release; v2 removes duplicate limbs while preserving sword choreography"
   }
 ]

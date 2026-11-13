@@ -21,6 +21,16 @@
     "class_minh_kiem_skill_04_ne",
     "class_minh_kiem_skill_04_s",
     "class_minh_kiem_skill_04_se",
+    "class_minh_kiem_skill_05_e",
+    "class_minh_kiem_skill_05_n",
+    "class_minh_kiem_skill_05_ne",
+    "class_minh_kiem_skill_05_s",
+    "class_minh_kiem_skill_05_se",
+    "class_minh_kiem_skill_06_e",
+    "class_minh_kiem_skill_06_n",
+    "class_minh_kiem_skill_06_ne",
+    "class_minh_kiem_skill_06_s",
+    "class_minh_kiem_skill_06_se",
     "mob_carpling_attack_01_e",
     "mob_carpling_attack_01_n",
     "mob_carpling_attack_01_ne",
@@ -126,6 +136,9 @@
     "sk_mk_04_break_component",
     "sk_mk_04_expire_component",
     "sk_mk_04_gain_component",
+    "sk_mk_05_trail_component",
+    "sk_mk_06_charge_component",
+    "sk_mk_06_cut_component",
     "sk_mob_waterroot_01_ripple_component",
     "sk_mob_waterroot_02_line_component",
     "sk_mob_waterroot_02_retract_component",
@@ -2537,6 +2550,229 @@
       "reviewDate": "2026-11-13",
       "decision": "APPROVE_SOURCE_COMPONENT",
       "notes": "Independent sixteen-source VFX component: shape/growth/fracture/fade and alpha viewed in native Studio. Does not approve full ability composition, damage, movement, shield lifetime or UI event binding."
+    },
+    {
+      "id": "class_minh_kiem_skill_05_e",
+      "sourceSha256": "87330191213bcb77ded2ea83a51f149754cd487b815189473044fa6b66371d6b",
+      "bindingSha256": "0cc47f2e3f34e1add1deb227db44edb1af2c2e283f697371132bb340cba346b3",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_05_e_v1_20261113d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame source and native point-filtered Godot captures/temporal samples. Tested60-step sampling, per-frame timing, phase boundaries, seek/resume, mirrors, one-shot end and JSON separately. PNG unmodified.",
+      "reviewScale": "88px eight-angle library;140px raw Studio N ultimate/S evade",
+      "batch": "20261113d",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_minh_kiem_skill_05_n",
+      "sourceSha256": "4bf6b69eafdc63734008922b1dd21852e1beed9947c137634491d49ca2c0232c",
+      "bindingSha256": "26a88409c363e9adcb813a9903f9ae34fcd18e88bbc588043c0ad7bdfd13db14",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_05_n_v1_20261113d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame source and native point-filtered Godot captures/temporal samples. Tested60-step sampling, per-frame timing, phase boundaries, seek/resume, mirrors, one-shot end and JSON separately. PNG unmodified.",
+      "reviewScale": "88px eight-angle library;140px raw Studio N ultimate/S evade",
+      "batch": "20261113d",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_minh_kiem_skill_05_ne",
+      "sourceSha256": "86056a7d1b0356101ab99ea2cfbf7b03238b996e89aa08a3a1d626bd0bda9a34",
+      "bindingSha256": "dad9706a1618cb6015436e0f076fda19f84d55a9bccb8d3ef7dc4959f446c422",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_05_ne_v1_20261113d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame source and native point-filtered Godot captures/temporal samples. Tested60-step sampling, per-frame timing, phase boundaries, seek/resume, mirrors, one-shot end and JSON separately. PNG unmodified.",
+      "reviewScale": "88px eight-angle library;140px raw Studio N ultimate/S evade",
+      "batch": "20261113d",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_minh_kiem_skill_05_s",
+      "sourceSha256": "b8000214be8ca3968d1fba1d150fe4be4719ca45ae8987e22268409585a88fea",
+      "bindingSha256": "458adc5053169fb643a2da4111321eac3e4796dfb103678b4f7a27f53544dc18",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_05_s_v1_20261113d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/bach_hong_raw_s.mp4"
+      ],
+      "method": "Viewed complete selected original16-frame source and native point-filtered Godot captures/temporal samples. Tested60-step sampling, per-frame timing, phase boundaries, seek/resume, mirrors, one-shot end and JSON separately. PNG unmodified.",
+      "reviewScale": "88px eight-angle library;140px raw Studio N ultimate/S evade",
+      "batch": "20261113d",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_minh_kiem_skill_05_se",
+      "sourceSha256": "f94eae12f59eeeb4d8d9f30c5b3e4c164c4b02449780df5ca2ff4ac3dd7a8242",
+      "bindingSha256": "ccfa241e71656ee037309da10d3ef014c1abffc7c3696b3b8eced4d5af21901f",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_05_se_v1_20261113d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_bach_hong_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame source and native point-filtered Godot captures/temporal samples. Tested60-step sampling, per-frame timing, phase boundaries, seek/resume, mirrors, one-shot end and JSON separately. PNG unmodified.",
+      "reviewScale": "88px eight-angle library;140px raw Studio N ultimate/S evade",
+      "batch": "20261113d",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_minh_kiem_skill_06_e",
+      "sourceSha256": "ee17217d394395a58ac16dcd31f06e7e9a7e10434bcdb834a97cc7c158ab3bd2",
+      "bindingSha256": "1d13bfa08aec3d5f87827787f3bd923ee552302b1bf6007e11529482d7466d7f",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_06_e_v2_20261113d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame source and native point-filtered Godot captures/temporal samples. Tested60-step sampling, per-frame timing, phase boundaries, seek/resume, mirrors, one-shot end and JSON separately. PNG unmodified.",
+      "reviewScale": "88px eight-angle library;140px raw Studio N ultimate/S evade",
+      "batch": "20261113d",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_minh_kiem_skill_06_n",
+      "sourceSha256": "044127a880e249657764c52f303ed68d1d74d49a5069af3313809c9e4b04c36e",
+      "bindingSha256": "1fc12e31bed889c14c76af7de310b7979a233726195ff339b9aafa95a287c6b5",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_06_n_v1_20261113d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/van_tuong_raw_n.mp4"
+      ],
+      "method": "Viewed complete selected original16-frame source and native point-filtered Godot captures/temporal samples. Tested60-step sampling, per-frame timing, phase boundaries, seek/resume, mirrors, one-shot end and JSON separately. PNG unmodified.",
+      "reviewScale": "88px eight-angle library;140px raw Studio N ultimate/S evade",
+      "batch": "20261113d",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_minh_kiem_skill_06_ne",
+      "sourceSha256": "0da1e8bad5016323f7da84fa2f57fa069e74dc1942e854f996573ba972a9c4bd",
+      "bindingSha256": "118716ea5a90d34bbdb40e771b81522fa8c0be599c714854338c1a792375bea0",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_06_ne_v2_20261113d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame source and native point-filtered Godot captures/temporal samples. Tested60-step sampling, per-frame timing, phase boundaries, seek/resume, mirrors, one-shot end and JSON separately. PNG unmodified.",
+      "reviewScale": "88px eight-angle library;140px raw Studio N ultimate/S evade",
+      "batch": "20261113d",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_minh_kiem_skill_06_s",
+      "sourceSha256": "303f56e08055f910d2399a920c4e1207a9b9dc156cac47363d97b5ece0571252",
+      "bindingSha256": "1b559c62a7587e32a1562434e63343e3d718b1aabc025449325ebe8a4b4e1841",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_06_s_v1_20261113d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame source and native point-filtered Godot captures/temporal samples. Tested60-step sampling, per-frame timing, phase boundaries, seek/resume, mirrors, one-shot end and JSON separately. PNG unmodified.",
+      "reviewScale": "88px eight-angle library;140px raw Studio N ultimate/S evade",
+      "batch": "20261113d",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_minh_kiem_skill_06_se",
+      "sourceSha256": "75596074a9172456da7a6376c169de5c1c27bad06905433d47c9ef9d5b1a4bd0",
+      "bindingSha256": "7dd0452078957d44719e8bea789dae56c8f35b52658580d6d27a6f184fde9168",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_06_se_v2_20261113d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/minh_kiem_van_tuong_eight_angles_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame source and native point-filtered Godot captures/temporal samples. Tested60-step sampling, per-frame timing, phase boundaries, seek/resume, mirrors, one-shot end and JSON separately. PNG unmodified.",
+      "reviewScale": "88px eight-angle library;140px raw Studio N ultimate/S evade",
+      "batch": "20261113d",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "sk_mk_05_trail_component",
+      "sourceSha256": "ad8e5c1f788eaa3079baea25a786d30ffadcaa924bcc51d58766913b6334181a",
+      "bindingSha256": "17077843ae8c83999f8a010218536fb1cba10f60baf77eaff4b8816faac54576",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113d/bach_hong_trail.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_05_trail_component_v1_20261113d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/bach_hong_trail.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/bach_hong_trail_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame source and native point-filtered Godot captures/temporal samples. Tested60-step sampling, per-frame timing, phase boundaries, seek/resume, mirrors, one-shot end and JSON separately. PNG unmodified.",
+      "reviewScale": "140px editor reference span; longest-axis for narrow trail/cut",
+      "batch": "20261113d",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "sk_mk_06_charge_component",
+      "sourceSha256": "a3925f8252474bcc55996c0140f6c277101d18f0289f23b062ad050ade76cab7",
+      "bindingSha256": "2a4c4d27da8e12f8ed92843abf31dd000c0c814a4d591ef3cef9184a87bc6db0",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113d/van_tuong_charge.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_06_charge_component_v1_20261113d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/van_tuong_charge.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/van_tuong_charge_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame source and native point-filtered Godot captures/temporal samples. Tested60-step sampling, per-frame timing, phase boundaries, seek/resume, mirrors, one-shot end and JSON separately. PNG unmodified.",
+      "reviewScale": "140px editor reference span; longest-axis for narrow trail/cut",
+      "batch": "20261113d",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "sk_mk_06_cut_component",
+      "sourceSha256": "2fcdb9378678ff84cc3752e818cb54c725dc8da3f47d14580551111d4f420714",
+      "bindingSha256": "69cb260e28ceeed6f3637b506c39cb1c73437aba7a5b6e1debd81f21d5b091a3",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113d/van_tuong_cut.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_06_cut_component_v1_20261113d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/van_tuong_cut.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113d/van_tuong_cut_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame source and native point-filtered Godot captures/temporal samples. Tested60-step sampling, per-frame timing, phase boundaries, seek/resume, mirrors, one-shot end and JSON separately. PNG unmodified.",
+      "reviewScale": "140px editor reference span; longest-axis for narrow trail/cut",
+      "batch": "20261113d",
+      "reviewDate": "2026-11-13"
     }
   ],
   "historicalHolds": [

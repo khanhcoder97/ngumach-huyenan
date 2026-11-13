@@ -98,7 +98,7 @@ public sealed class ActorLibraryData : IDisposable
         "MOB_WATERROOT"=>clip switch{"telegraph_01"=>.70,"attack_01"=>.35,"recovery_01"=>.55,"telegraph_02"=>.70,"attack_02"=>.40,"recovery_02"=>.60,_=>Duration(clip)},
         // Full physical guard preview includes raise/settle. The authoritative
         // .4s parry window is not inferred from this .8s art-review timeline.
-        "CLASS_MINH_KIEM"=>clip switch{"skill_01"=>.8,"skill_02"=>.59,"skill_03"=>.60,"skill_04"=>.8,_=>Duration(clip)},
+        "CLASS_MINH_KIEM"=>clip switch{"skill_01"=>.8,"skill_02"=>.59,"skill_03"=>.60,"skill_04"=>.8,"skill_05"=>.48,"skill_06"=>1.55,_=>Duration(clip)},
         _=>Duration(clip)
     };
     public static double Duration(string actor,string clip,Direction direction)=>direction.SourceFrameDurationsMs?.Sum()/1000??Duration(actor,clip);

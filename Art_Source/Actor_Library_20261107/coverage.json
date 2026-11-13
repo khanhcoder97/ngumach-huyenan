@@ -1,8 +1,8 @@
 {
   "actors": 130,
   "requiredPages": 1008,
-  "structurePassed": 181,
-  "boundRequiredPages": 62,
+  "structurePassed": 194,
+  "boundRequiredPages": 64,
   "legacyClips": 3,
   "rejected": [
     {
@@ -10,10 +10,8 @@
       "reason": "rows expected 4, got 5"
     }
   ],
-  "pendingPages": 946,
+  "pendingPages": 944,
   "pendingIds": [
-    "class_minh_kiem_skill_05",
-    "class_minh_kiem_skill_06",
     "class_anh_dao_skill_01",
     "class_anh_dao_skill_02",
     "class_anh_dao_skill_03",
@@ -959,7 +957,7 @@
     "mob_stone_automaton_elite_run",
     "mob_stone_automaton_elite_turn"
   ],
-  "productionApprovedPages": 26,
+  "productionApprovedPages": 28,
   "visualHoldPages": 21,
   "modularMigrationReferencePages": 0,
   "structureComplete": false,

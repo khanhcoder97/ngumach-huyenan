@@ -4,6 +4,14 @@ from pathlib import Path
 from PIL import Image
 
 ROOT=Path(__file__).resolve().parents[2];ART=ROOT/'Art_Source/Actor_Library_20261107';RUN=ROOT/'ClientGodot/assets/actor_library_v1'
+
+def binary_projection(mask):
+    # The caller supplies the alpha>=200 L mask (only 0/255). Pillow counts
+    # exact solid pixels in native code; avoid millions of Python pixel reads.
+    # Counts and resulting source rectangles remain byte-for-byte identical.
+    w,h=mask.size
+    return ([mask.crop((x,0,x+1,h)).histogram()[255] for x in range(w)],
+            [mask.crop((0,y,w,y+1)).histogram()[255] for y in range(h)])
 def bands(values,gap):
     result=[];start=None;last=-999
     for i,v in enumerate(values):
@@ -55,7 +63,12 @@ def registered_height(record,frames,cell_height,vfx=False):
         assert type(height) in (int,float) and math.isfinite(height) and 16<=height<=cell_height,'invalid neutral body reference height'
         return height
     assert record.get('pivotMode') not in ('MOSS_CORE_ROOT','BOOT_CORE_FOOT'),'body-core registration requires neutral body reference height'
-    return max(f['bounds'][3]-f['bounds'][1] for f in frames) if vfx else reference_height(frames,record.get('scaleMode','HEIGHT'))
+    if vfx:
+        # Long narrow components use their maximum visible span for the
+        # editor's nominal display size. Existing HEIGHT sources keep pins.
+        return max(max(f['bounds'][2]-f['bounds'][0],f['bounds'][3]-f['bounds'][1])
+                   if record.get('scaleMode')=='LONGEST_AXIS' else f['bounds'][3]-f['bounds'][1] for f in frames)
+    return reference_height(frames,record.get('scaleMode','HEIGHT'))
 
 def silver_core_pivot(pixels,width):
     # Explicit fish-only registration: the silver torso defines its root, not
@@ -137,10 +150,7 @@ def inspect(record, art_root=None):
         assert im.mode=='RGBA','PNG must retain RGBA'
         w,h=im.size;a=im.getchannel('A');assert a.getextrema()[0]==0,'opaque fake background'
         # Projection locates the actual transparent gutters instead of assuming a cropped output retained equal cells.
-        mask=a.point(lambda x:255 if x>=200 else 0);pix=mask.load();xs=[0]*w;ys=[0]*h
-        for y in range(h):
-            for x in range(w):
-                if pix[x,y]:xs[x]+=1;ys[y]+=1
+        mask=a.point(lambda x:255 if x>=200 else 0);xs,ys=binary_projection(mask)
         if record.get('layout')=='VISUALLY_VERIFIED_UNIFORM_GRID':
             # Particle islands do not define extra columns/rows. Only opt in after
             # viewing the whole sheet; per-cell emptiness, edge and hash checks remain.
@@ -171,6 +181,12 @@ def inspect(record, art_root=None):
                     assert len(offset)==2 and all(math.isfinite(v) for v in offset),'invalid VFX center offset'
                     pivot=[(x1-x)/2+offset[0],(y1-y)/2+offset[1]]
                     assert 0<=pivot[0]<x1-x and 0<=pivot[1]<y1-y,'VFX pivot outside cell'
+                elif record.get('pivotMode')=='SYMMETRIC_BOUNDS_CENTER':
+                    # Opt-in for a reviewed symmetric converging glint. Its
+                    # actual drawn center can drift within AI-generated cells.
+                    # Never apply to travelling projectiles or asymmetric dust.
+                    assert record['id'].startswith('sk_'),'symmetric center is VFX-only'
+                    pivot=[(bb[0]+bb[2])/2,(bb[1]+bb[3])/2]
                 elif record.get('pivotMode')=='SILVER_CORE_CENTER':
                     assert record['id'].startswith('mob_carpling_'),'silver-core registration is fish-only'
                     region=im.crop((x,y,x1,y1))

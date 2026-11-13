@@ -24,5 +24,13 @@ class NeutralRegistration(unittest.TestCase):
         with self.assertRaises(AssertionError):registered_height({'bodyReferenceHeight':150},self.frames,256,True)
         with self.assertRaises(AssertionError):registered_height({'bodyReferenceHeight':150,'scaleMode':'LONGEST_AXIS'},self.frames,256)
 
+    def test_narrow_vfx_uses_largest_span_only_when_opted_in(self):
+        frames=[dict(bounds=[4,8,244,26])]*15+[dict(bounds=[4,8,324,22])]
+        self.assertEqual(registered_height({'scaleMode':'LONGEST_AXIS'},frames,256,True),320)
+        self.assertEqual(registered_height({},frames,256,True),18)
+
+    def test_tall_vfx_keeps_vertical_span_in_longest_mode(self):
+        self.assertEqual(registered_height({'scaleMode':'LONGEST_AXIS'},self.frames,256,True),150)
+
 
 if __name__=='__main__':unittest.main()

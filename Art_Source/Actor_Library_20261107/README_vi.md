@@ -4,7 +4,9 @@
 
 **Đang sản xuất; chưa hoàn thành toàn bộ thư viện.** Chuẩn16–20pose thực/clip/hướng, renderer60FPS. PNG mới là ứng viên review, chưa tự thay asset gameplay.
 
-Đợt mới nhất: [20261113c — Tầm Long, Kiếm Trận, Thiết Y và VFX](../../docs/production/Actor_Batch_20261113c_vi.md), **20 sheet /320 khung nguồn**. Timing từng khung, neo giày tránh mũi kiếm, ba động tác đủ tám hướng xem và năm component độc lập. Catalogue còn946/1008 job thiếu; thư viện toàn game đang làm.
+Đợt mới nhất: [20261113d — Bạch Hồng, Vạn Tượng và VFX](../../docs/production/Actor_Batch_20261113d_vi.md), **13 sheet /208 khung nguồn**. Hai body skill còn thiếu có năm góc nguồn và ba góc lật, timing riêng; ba component tách rời, neo hội tụ và kích thước xem vệt dài được kiểm native. Catalogue còn944/1008 job thiếu; Minh Kiếm12/12 clip đủ dữ liệu xem vẫn chưa nghiệm thu toàn class.
+
+Đợt trước: [20261113c — Tầm Long, Kiếm Trận, Thiết Y và VFX](../../docs/production/Actor_Batch_20261113c_vi.md), **20 sheet /320 khung nguồn**. Timing từng khung, neo giày tránh mũi kiếm, ba động tác đủ tám hướng xem và năm component độc lập. Catalogue còn946/1008 job thiếu; thư viện toàn game đang làm.
 
 Đợt trước: [20261113b — ba pha Chồi Đất và VFX rễ](../../docs/production/Actor_Batch_20261113b_vi.md), **18 sheet /288 ô nguồn**. Rễ Nước12/12 action đủ nguồn và kiểm source; còn tinh chỉnh nối pha, tích hợp gameplay/AI/hitbox. Thêm chiều cao đứng tường minh cho clip bắt đầu thấp, review biến thể2 và Studio phát sau fit. Catalogue còn949/1008 job thiếu; mục tiêu toàn thư viện tiếp tục.
 
