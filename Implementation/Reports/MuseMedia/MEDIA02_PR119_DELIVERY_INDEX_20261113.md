@@ -1,4 +1,4 @@
-# MEDIA-02 — PR #119 Delivery Index (head `443d3e4`)
+# MEDIA-02 — PR #119 Delivery Index (head `286787b`)
 
 Chi tiết đầy đủ từng khối bàn giao của PR #119, chuyển ra khỏi mô tả PR
 khi mô tả cũ (114.929 ký tự tại head `be9ccb8`) chạm trần truyền của connector
@@ -7,14 +7,14 @@ khi mô tả cũ (114.929 ký tự tại head `be9ccb8`) chạm trần truyền 
 
 ## Mốc xác minh
 
-- Head nhánh `muse/media-production-20261104`: `443d3e4d0f9af7bbdbf4785bbd197ea513d454c0`
-- Commit trên nhánh (diff từ merge-base `cf17178`): **187 commit / 2381 file** (khớp API PR: commits 187, changed_files 2381, additions 221756, deletions 0)
-- Integration: `f3db6b3` (ls-remote 2026-11-13 ~04:44 JST, không đổi)
-- Mergeable: true / clean (API đọc 2026-11-13 ~04:44 JST tại head `443d3e4`; `git merge-tree --write-tree` vs `f3db6b3` exit 0, 0 conflict, tree `11f94b94cc932c00cb191f85788180672fc687c3`)
+- Head nhánh `muse/media-production-20261104`: `286787bcb3624bc9218653cbb1162eb6ba1bb19c`
+- Commit trên nhánh (diff từ merge-base `cf17178`): **193 commit / 2398 file** (khớp API PR: commits 193, changed_files 2398, additions 224498, deletions 0)
+- Integration: `f3db6b3` (ls-remote 2026-11-13 ~15:10 JST, không đổi)
+- Mergeable: true (API đọc 2026-11-13 ~15:10 JST tại head `286787b`, mergeable_state unstable — GitHub đang tính lại sau push; `git merge-tree --write-tree` vs `f3db6b3` exit 0, 0 conflict, tree `a2dd5643b76bf24a30f646cf2080a9bacdb279fc`)
 - Issue #116: 33 comment, mới nhất ACK `6833806995` (SCENE-CLIPS FIX + WO37 M-G CP9, đăng 2026-11-13 ~04:32 JST); trước đó Gói 39 của Codex `6815238814`, không chỉ đạo mới.
 - Scope audit toàn nhánh: 1 violation duy nhất là `.gitattributes` — artifact của cách tính diff từ merge-base `cf17178` (chưa có các dòng LF); file này byte-identical với integration, không phải lệch nội dung thật.
 
-## Tổng quan bàn giao (số thật tại head `443d3e4`)
+## Tổng quan bàn giao (số thật tại head `286787b`)
 
 | Hạng mục | Số liệu |
 |---|---|
@@ -25,9 +25,9 @@ khi mô tả cũ (114.929 ký tự tại head `be9ccb8`) chạm trần truyền 
 | SFX | coverage 63/63 key; 18/18 draft variant đã duyệt (source-only, binding UNSUPPORTED) |
 | Runtime audio | 783 file (composed 162, ported 541) |
 | Standard 720p | 21 MP4, tổng 148.002.469 B (integer 2× NN, không phải 720p native); 14 entry mang soundtrack v2 |
-| Prologue CIN_000 | film 87,367 s + bản phụ đề + bản 720p phụ đề |
+| Prologue CIN_000 | film 87,367 s + bản phụ đề + bản 720p phụ đề + bản phụ đề v2 theo narration History (M-B CP5, 640 + 720p) |
 | Ear-audition pack | v1 196 item + v2 delta 58 item = 254 item; NOT_AUDITIONED |
-| QA | `validate_media_deliveries` PASS 0 mismatch; `verify_runtime_delivery` PASS; fresh-checkout baseline `14b588c` |
+| QA | `validate_media_deliveries` PASS 0 mismatch; `verify_runtime_delivery` PASS; fresh-checkout baseline `14b588c` + verification scoped cho delta M-B CP4 + prologue fix (M-G CP9) và delta M-B CP5 (M-G CP10) |
 
 Mốc quyết định DEC-MEDIA-P0-20261105: Q1 CIN_001_S05 bản B “Đầu kia! Giữ giúp tôi đầu kia!”, VO 24.8–28.5 s; Q2 Ly An voice off-screen trong CIN_004, characters chỉ `BOSS_MANG_COT`; Q3 alternate CIN006 có takeId/version riêng, không thay canon; Q4 Hạ Mặc/Sầm cinematic-only staging, không nhân đôi persistent ID. Tên canonical “Tạ Vân Khanh”.
 
@@ -138,9 +138,13 @@ Cột Nội dung = commit chứa asset/tool; cột Báo cáo/Head = commit báo 
 | PROLOGUE V1 FIX | `962b6df` | `be9ccb8` | narration restored in the CP27 mix (plumbing-only fix, reproducible render), runtime CIN_000 + variants re-derived; checker 50/50 PASS, runtime verify PASS, validate_media prologue clean (8 pre-existing SCENE-CLIPS misma… | PASS 0 mismatches |
 | SCENE-CLIPS MANIFEST FIX | `53472cf` | `6df7e24` | 8 pre-existing validator mismatches closed ; scope audit block 5 paths / 0 violations, Scope audit: 2376 changed paths, 1 violations | — |
 | WO37 M-G CP9 | `923b5ba` | `443d3e4` | fresh-checkout verification of the M-B CP4 + prologue-fix delta (validator PASS 126/126, scope audit block 2 paths / 0 violations, cumulative 2380 / 1 known artifact) | PASS 126/126 |
+| PR119 BODY RESTRUCTURE R1 | `50cc042` | `5dece1f` | compact PR body v2 (8.454 B / 7.594 ký tự) + delivery index này; validator PASS 9/9; mô tả v2 đã đăng 2026-11-13 ~05:50 JST, đọc lại byte-exact; scope audit block 5 paths / 0 violations, cumulative 2386 / 1 known artifact | PASS 9/9 |
+| WO37 M-B CP5 | `257c985` | `8f7120a` | bản phụ đề v2 prologue CIN_000 theo narration History: SRT v2 26 chunk (text giống v1, chỉ dời thời gian), 640 sha f8d6ac32… / 11.927.191 B (−20,87 LUFS / −1,24 dBTP), 720p sha 472c1167… / 32.342.539 B, SRT sha b4495c25…; checker PASS 55/55, validate_media_deliveries PASS 0 mismatch; runtime không đổi; scope audit block 7 paths / 0 violations, cumulative 2392 / 1 known artifact | PASS 55/55 |
+| WO37 M-G CP10 | `7bba119` | `286787b` | fresh-checkout verification của delta M-B CP5 (fresh clone tại 8f7120a, pull LFS thuần mạng, sha/size khớp tuyệt đối); validator độc lập PASS 40/40 + checker CP5 chạy lại 55/55 (JSON giống hệt bản commit), 0 defect; scope audit block 4 paths / 0 violations, cumulative 2395 / 1 known artifact | PASS 40/40 + 55/55 |
 
 ## Ghi chú
 
+- Cập nhật R2 (2026-11-13): index bao phủ tới head `286787b` (193 commit) — đã gộp 2 commit của R1, khối M-B CP5 và khối M-G CP10; 2 commit của chính R2 sẽ gộp vào index ở lần cập nhật tiếp theo (R3).
 - Cách đếm commit/file: `git rev-list --count cf17178..HEAD` và `git diff --name-only cf17178 HEAD | wc -l` (cách đếm của mọi payload trước). Một commit báo cáo làm head tăng thêm 4 file so với con số 'cumulative' trong chính báo cáo đó (báo cáo md + 3 JSON) — luôn dùng head count cho payload.
 - Trường `base.sha` mà API pull trả về (`f383233…`) là giá trị cũ (merge PR #118), không phải integration hiện tại; integration hiện tại xác minh bằng ls-remote.
 - Trạng thái: mọi VO/mix DRAFT_NOT_FINAL, NOT_AUDITIONED; final picture 32 shot chờ character lock; 3 VO overrun để Codex quyết ở review; full OGV 720p deferred (Gói 39).
