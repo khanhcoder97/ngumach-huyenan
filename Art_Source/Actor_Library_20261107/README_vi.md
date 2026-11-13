@@ -4,7 +4,9 @@
 
 **Đang sản xuất; chưa hoàn thành toàn bộ thư viện.** Chuẩn16–20pose thực/clip/hướng, renderer60FPS. PNG mới là ứng viên review, chưa tự thay asset gameplay.
 
-Đợt mới nhất: [20261113f — Huyết Nguyệt, Tàn Hỏa và Xích Ảnh](../../docs/production/Actor_Batch_20261113f_vi.md), **20 sheet /320 khung nguồn**. Ba body skill Ảnh Đao ×5 góc, năm VFX dấu/nổ/tắt và hai chiều chém. Timing raw/nhóm, neo giày tối, grid directional và đuôi RGBA được kiểm riêng. Catalogue còn941/1008 job thiếu;35 job đủ nguồn đã kiểm source,19 HOLD. Chưa nghiệm thu toàn class/skill assembly hoặc gameplay.
+Đợt mới nhất: [20261113g — Tước Mạch, Ảnh Bộ, Tử Diệm và né](../../docs/production/Actor_Batch_20261113g_vi.md), **26 sheet /416 khung nguồn**. Bốn action ×5 góc và sáu VFX component, timing từng pha và điểm gắn từng frame được kiểm trong Godot/Studio. Ảnh Đao đủ12 action về cấu trúc, chỉ bảy action có đủ góc nguồn đã kiểm source; năm action cũ vẫn cần xử lý/duyệt. Catalogue còn937/1008 job thiếu,19 HOLD. Chưa nghiệm thu toàn class/skill assembly hoặc gameplay.
+
+Đợt trước: [20261113f — Huyết Nguyệt, Tàn Hỏa và Xích Ảnh](../../docs/production/Actor_Batch_20261113f_vi.md), **20 sheet /320 khung nguồn**. Ba body skill Ảnh Đao ×5 góc, năm VFX dấu/nổ/tắt và hai chiều chém. Timing raw/nhóm, neo giày tối, grid directional và đuôi RGBA được kiểm riêng.
 
 Đợt trước: [20261113e — phản ứng có kiếm và phòng kiểm nối hoạt ảnh](../../docs/production/Actor_Batch_20261113e_vi.md), **17 sheet /272 khung nguồn**. Hurt/death/dodge Minh Kiếm năm góc nguồn và walk E/NE Người Giữ Thuyền được kiểm source/native; hai HOLD gait NPC đã chuyển lịch sử. Thêm phòng kiểm tám hướng, mốc chân và chỉnh tốc độ. Minh Kiếm12/12 clip đã kiểm source vẫn chưa nghiệm thu toàn class hoặc chuyển thế có kiếm/không kiếm.
 

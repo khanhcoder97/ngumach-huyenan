@@ -92,7 +92,7 @@ public partial class ArtStudio
                     Check(roundtrip.Clips.Single(c => c.Direction == skillClip.Direction).DurationsMs.SequenceEqual(skillClip.DurationsMs), "timed JSON roundtrip changed durations");
                 }
             }
-            foreach (string action in new[] { "skill_01", "skill_02", "skill_03" })
+            foreach (string action in new[] { "skill_01", "skill_02", "skill_03", "skill_04", "skill_05", "skill_06", "dodge" })
             {
                 var grouped = ArtStudioLibrary.Load("actor:CLASS_ANH_DAO:" + action);
                 Check(grouped.Clips.Count == 8, "Anh Dao directions missing");
@@ -108,6 +108,10 @@ public partial class ArtStudio
                     if (action == "skill_01") Check(ArtStudioSampler.FrameAt(anhClip, .12) == 4 && ArtStudioSampler.FrameAt(anhClip, .32) == 10, "Studio Huyet Nguyet phases");
                     if (action == "skill_02") Check(ArtStudioSampler.FrameAt(anhClip, .16) == 4 && ArtStudioSampler.FrameAt(anhClip, .40) == 10, "Studio Tan Hoa phases");
                     if (action == "skill_03") Check(ArtStudioSampler.FrameAt(anhClip, .14) == 4 && ArtStudioSampler.FrameAt(anhClip, .24) == 7 && ArtStudioSampler.FrameAt(anhClip, .32) == 9 && ArtStudioSampler.FrameAt(anhClip, .42) == 12, "Studio Xich Anh two-cut phases");
+                    if (action == "skill_04") Check(ArtStudioSampler.FrameAt(anhClip, .20) == 6 && ArtStudioSampler.FrameAt(anhClip, .36) == 10, "Studio Tuoc Mach phases");
+                    if (action == "skill_05") Check(ArtStudioSampler.FrameAt(anhClip, .08) == 4 && ArtStudioSampler.FrameAt(anhClip, .30) == 12, "Studio Anh Bo phases");
+                    if (action == "skill_06") Check(ArtStudioSampler.FrameAt(anhClip, .55) == 4 && ArtStudioSampler.FrameAt(anhClip, .80) == 12, "Studio Tu Diem charge/release");
+                    if (action == "dodge") Check(ArtStudioSampler.FrameAt(anhClip, .08) == 4 && ArtStudioSampler.FrameAt(anhClip, .26) == 10, "Studio Anh Dao dodge phases");
                     var roundtrip = ArtStudioCodec.Decode(ArtStudioCodec.Encode(grouped));
                     Check(roundtrip.Clips.Single(c => c.Direction == anhClip.Direction).DurationsMs.SequenceEqual(anhClip.DurationsMs), "Anh Dao timing JSON roundtrip");
                 }

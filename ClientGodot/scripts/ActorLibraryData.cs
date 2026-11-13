@@ -101,7 +101,7 @@ public sealed class ActorLibraryData : IDisposable
         "CLASS_MINH_KIEM"=>clip switch{"skill_01"=>.8,"skill_02"=>.59,"skill_03"=>.60,"skill_04"=>.8,"skill_05"=>.48,"skill_06"=>1.55,_=>Duration(clip)},
         // Art-review assumptions: mark gesture is separate from the target's
         // five-second mark lifetime; two cuts keep their own .10s pose beats.
-        "CLASS_ANH_DAO"=>clip switch{"skill_01"=>.64,"skill_02"=>.72,"skill_03"=>.66,_=>Duration(clip)},
+        "CLASS_ANH_DAO"=>clip switch{"skill_01"=>.64,"skill_02"=>.72,"skill_03"=>.66,"skill_04"=>.68,"skill_05"=>.50,"skill_06"=>1.10,_=>Duration(clip)},
         _=>Duration(clip)
     };
     public static double Duration(string actor,string clip,Direction direction)=>direction.SourceFrameDurationsMs?.Sum()/1000??Duration(actor,clip);

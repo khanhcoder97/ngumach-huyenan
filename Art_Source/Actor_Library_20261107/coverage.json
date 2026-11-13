@@ -1,8 +1,8 @@
 {
   "actors": 130,
   "requiredPages": 1008,
-  "structurePassed": 224,
-  "boundRequiredPages": 67,
+  "structurePassed": 250,
+  "boundRequiredPages": 71,
   "legacyClips": 3,
   "rejected": [
     {
@@ -10,12 +10,8 @@
       "reason": "rows expected 4, got 5"
     }
   ],
-  "pendingPages": 941,
+  "pendingPages": 937,
   "pendingIds": [
-    "class_anh_dao_skill_04",
-    "class_anh_dao_skill_05",
-    "class_anh_dao_skill_06",
-    "class_anh_dao_dodge",
     "class_huyen_but_skill_01",
     "class_huyen_but_skill_02",
     "class_huyen_but_skill_03",
@@ -954,7 +950,7 @@
     "mob_stone_automaton_elite_run",
     "mob_stone_automaton_elite_turn"
   ],
-  "productionApprovedPages": 35,
+  "productionApprovedPages": 39,
   "visualHoldPages": 19,
   "modularMigrationReferencePages": 0,
   "structureComplete": false,

@@ -1,0 +1,316 @@
+{
+  "scope": "GEOMETRY_ONLY_REQUIRES_NATIVE_ATTACHMENT_REVIEW",
+  "sourcePages": 6,
+  "entries": [
+    {
+      "id": "sk_ad_04_down_cut_component",
+      "source": "Sheets/sk_ad_04_down_cut_component_v1_20261113g.png",
+      "sourceSha256": "f6e56d3c1dbef8f1745cf3a65890d604a3b8abc59237723a33080a4c25486428",
+      "pivotMode": "SOURCE_PIVOTS",
+      "sourcePivots": [
+        [
+          187.0,
+          199.75
+        ],
+        [
+          163.0,
+          212.75
+        ],
+        [
+          144.5,
+          232.0
+        ],
+        [
+          120.5,
+          259.0
+        ],
+        [
+          190.28571428571428,
+          224.85714285714286
+        ],
+        [
+          167.5,
+          240.0
+        ],
+        [
+          145.0,
+          256.7142857142857
+        ],
+        [
+          120.5,
+          269.0
+        ],
+        [
+          189.5,
+          240.0
+        ],
+        [
+          165.25,
+          234.625
+        ],
+        [
+          146.5,
+          224.0
+        ],
+        [
+          125.0,
+          212.0
+        ],
+        [
+          193.2,
+          190.9
+        ],
+        [
+          170.2,
+          185.9
+        ],
+        [
+          145.5,
+          177
+        ],
+        [
+          110.33333333333333,
+          162.5
+        ]
+      ],
+      "method": "LOWER_HOT_IMPACT_TIP",
+      "note": "Attachment recipe only; inspect native origin continuity before source pin. No raster edits or gameplay/collision authority."
+    },
+    {
+      "id": "sk_ad_04_slow_mark_component",
+      "source": "Sheets/sk_ad_04_slow_mark_component_v1_20261113g.png",
+      "sourceSha256": "b41c683080425c5d05b9f4a76164a42c84510343f625f3f5b3e8da23fe3695e3",
+      "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+      "method": "DRAWN_SYMMETRIC_MARK_OR_CONVERGENCE_CENTER"
+    },
+    {
+      "id": "sk_ad_05_smoke_component",
+      "source": "Sheets/sk_ad_05_smoke_component_v1_20261113g.png",
+      "sourceSha256": "8691ee984ba47a6067e66c9bbbd772ff5045140fd7a5d188fe620d82e74b88db",
+      "pivotMode": "SOURCE_PIVOTS",
+      "sourcePivots": [
+        [
+          192,
+          216.0
+        ],
+        [
+          202,
+          210.0
+        ],
+        [
+          201.0,
+          229.83333333333334
+        ],
+        [
+          214.0,
+          228.4
+        ],
+        [
+          262.2,
+          197.8
+        ],
+        [
+          269.5,
+          195.5
+        ],
+        [
+          255.8,
+          188.6
+        ],
+        [
+          243.8,
+          179.4
+        ],
+        [
+          277.0,
+          166.5
+        ],
+        [
+          264.5,
+          173.0
+        ],
+        [
+          252.0,
+          172.0
+        ],
+        [
+          248.75,
+          172.25
+        ],
+        [
+          252.875,
+          154.875
+        ],
+        [
+          224.75,
+          162.25
+        ],
+        [
+          209.14285714285714,
+          164.71428571428572
+        ],
+        [
+          169.0,
+          159.5
+        ]
+      ],
+      "method": "RIGHT_HOT_TRAIL_HEAD_DARK_BOUND_FALLBACK",
+      "note": "Attachment recipe only; inspect native origin continuity before source pin. No raster edits or gameplay/collision authority."
+    },
+    {
+      "id": "sk_ad_06_charge_component",
+      "source": "Sheets/sk_ad_06_charge_component_v1_20261113g.png",
+      "sourceSha256": "7664f8ffbc8929194903720f47fb17717302d31e54e3337b4c3c7c0341d59afa",
+      "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+      "method": "DRAWN_SYMMETRIC_MARK_OR_CONVERGENCE_CENTER"
+    },
+    {
+      "id": "sk_ad_06_sweep_component",
+      "source": "Sheets/sk_ad_06_sweep_component_v2_20261113g.png",
+      "sourceSha256": "b208945a8b82a3ddee4a2acbd02e70e5de679935e851c648bdb479734fc6acae",
+      "pivotMode": "SOURCE_PIVOTS",
+      "sourcePivots": [
+        [
+          184.0,
+          221.75
+        ],
+        [
+          165.25,
+          221.75
+        ],
+        [
+          148.0,
+          221.75
+        ],
+        [
+          126.5,
+          221.75
+        ],
+        [
+          184.0,
+          181.5
+        ],
+        [
+          165.25,
+          181.5
+        ],
+        [
+          148.0,
+          181.5
+        ],
+        [
+          126.5,
+          181.5
+        ],
+        [
+          184.0,
+          141.25
+        ],
+        [
+          165.25,
+          141.25
+        ],
+        [
+          148.0,
+          141.25
+        ],
+        [
+          126.5,
+          141.25
+        ],
+        [
+          184.0,
+          102.0
+        ],
+        [
+          165.25,
+          102.0
+        ],
+        [
+          148.0,
+          102.0
+        ],
+        [
+          126.5,
+          102.0
+        ]
+      ],
+      "method": "PEAK_GRID_ORIGIN_EXTRAPOLATED_ACROSS_OPENING_AND_FADE",
+      "note": "Attachment recipe only; inspect native origin continuity before source pin. No raster edits or gameplay/collision authority."
+    },
+    {
+      "id": "sk_ad_06_heat_petal_component",
+      "source": "Sheets/sk_ad_06_heat_petal_component_v1_20261113g.png",
+      "sourceSha256": "4b0b52e5ce4e6a49ddb5ebc56789859cc26bd9e917a165e4408b69639b25229b",
+      "pivotMode": "SOURCE_PIVOTS",
+      "sourcePivots": [
+        [
+          168.0,
+          186.5
+        ],
+        [
+          149.25,
+          186.5
+        ],
+        [
+          138.0,
+          186.5
+        ],
+        [
+          126.5,
+          186.5
+        ],
+        [
+          168.0,
+          168.5
+        ],
+        [
+          149.25,
+          168.5
+        ],
+        [
+          138.0,
+          168.5
+        ],
+        [
+          126.5,
+          168.5
+        ],
+        [
+          168.0,
+          150.5
+        ],
+        [
+          149.25,
+          150.5
+        ],
+        [
+          138.0,
+          150.5
+        ],
+        [
+          126.5,
+          150.5
+        ],
+        [
+          168.0,
+          133.5
+        ],
+        [
+          149.25,
+          133.5
+        ],
+        [
+          138.0,
+          133.5
+        ],
+        [
+          126.5,
+          133.5
+        ]
+      ],
+      "method": "PEAK_GRID_ORIGIN_EXTRAPOLATED_ACROSS_OPENING_AND_FADE",
+      "note": "Attachment recipe only; inspect native origin continuity before source pin. No raster edits or gameplay/collision authority."
+    }
+  ]
+}

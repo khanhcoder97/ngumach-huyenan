@@ -5029,5 +5029,1225 @@
     "scaleMode": "LONGEST_AXIS",
     "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
     "reviewScope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY"
+  },
+  {
+    "id": "class_anh_dao_skill_04_e",
+    "source": "Sheets/class_anh_dao_skill_04_e_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_04_e_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_e_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      40,
+      40,
+      40,
+      40,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 191,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_skill_05_e",
+    "source": "Sheets/class_anh_dao_skill_05_e_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_05_e_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_e_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      50,
+      50,
+      50,
+      50
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 193,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_skill_06_e",
+    "source": "Sheets/class_anh_dao_skill_06_e_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_06_e_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_e_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      137.5,
+      137.5,
+      137.5,
+      137.5,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      75,
+      75,
+      75,
+      75
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 191,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_dodge_e",
+    "source": "Sheets/class_anh_dao_dodge_e_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_dodge_e_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_e_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 188,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_skill_04_ne",
+    "source": "Sheets/class_anh_dao_skill_04_ne_v2_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_04_ne_v2_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_ne_v1_20261113g.png",
+    "additionalReferences": [],
+    "inputRole": "PRECISE_OBJECT_REPAIR_EDIT",
+    "sourceFrameDurationsMs": [
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      40,
+      40,
+      40,
+      40,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336
+    ],
+    "replacesSource": "Sheets/class_anh_dao_skill_04_ne_v1_20261113g.png",
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 190,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_skill_05_ne",
+    "source": "Sheets/class_anh_dao_skill_05_ne_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_05_ne_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_ne_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      50,
+      50,
+      50,
+      50
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 180,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_skill_06_ne",
+    "source": "Sheets/class_anh_dao_skill_06_ne_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_06_ne_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_ne_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      137.5,
+      137.5,
+      137.5,
+      137.5,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      75,
+      75,
+      75,
+      75
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 194,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_dodge_ne",
+    "source": "Sheets/class_anh_dao_dodge_ne_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_dodge_ne_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_ne_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 206,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_skill_04_n",
+    "source": "Sheets/class_anh_dao_skill_04_n_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_04_n_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_e_v1_20261113g.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      40,
+      40,
+      40,
+      40,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 178,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_skill_05_n",
+    "source": "Sheets/class_anh_dao_skill_05_n_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_05_n_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_n_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      50,
+      50,
+      50,
+      50
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 172,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_skill_06_n",
+    "source": "Sheets/class_anh_dao_skill_06_n_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_06_n_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_n_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      137.5,
+      137.5,
+      137.5,
+      137.5,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      75,
+      75,
+      75,
+      75
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 169,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_dodge_n",
+    "source": "Sheets/class_anh_dao_dodge_n_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_dodge_n_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_n_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 178,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_skill_04_se",
+    "source": "Sheets/class_anh_dao_skill_04_se_v2_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_04_se_v2_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_se_v1_20261113g.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_se_v1_20261113f.png"
+    ],
+    "inputRole": "PRECISE_OBJECT_REPAIR_EDIT",
+    "sourceFrameDurationsMs": [
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      40,
+      40,
+      40,
+      40,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336
+    ],
+    "replacesSource": "Sheets/class_anh_dao_skill_04_se_v1_20261113g.png",
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 194,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_skill_05_se",
+    "source": "Sheets/class_anh_dao_skill_05_se_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_05_se_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_se_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      50,
+      50,
+      50,
+      50
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 191,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_skill_06_se",
+    "source": "Sheets/class_anh_dao_skill_06_se_v2_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_06_se_v2_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_06_se_v1_20261113g.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_06_e_v1_20261113g.png"
+    ],
+    "inputRole": "PRECISE_OBJECT_REPAIR_EDIT",
+    "sourceFrameDurationsMs": [
+      137.5,
+      137.5,
+      137.5,
+      137.5,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      75,
+      75,
+      75,
+      75
+    ],
+    "replacesSource": "Sheets/class_anh_dao_skill_06_se_v1_20261113g.png",
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 192,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_dodge_se",
+    "source": "Sheets/class_anh_dao_dodge_se_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_dodge_se_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_se_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 200,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_skill_04_s",
+    "source": "Sheets/class_anh_dao_skill_04_s_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_04_s_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_s_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_ne_v2_20261113g.png",
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      40,
+      40,
+      40,
+      40,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 201,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_skill_05_s",
+    "source": "Sheets/class_anh_dao_skill_05_s_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_05_s_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_s_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      27.5,
+      50,
+      50,
+      50,
+      50
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 207,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_skill_06_s",
+    "source": "Sheets/class_anh_dao_skill_06_s_v2_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_06_s_v2_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_06_s_v1_20261113g.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_06_se_v2_20261113g.png"
+    ],
+    "inputRole": "PRECISE_OBJECT_REPAIR_EDIT",
+    "sourceFrameDurationsMs": [
+      137.5,
+      137.5,
+      137.5,
+      137.5,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      75,
+      75,
+      75,
+      75
+    ],
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "replacesSource": "Sheets/class_anh_dao_skill_06_s_v1_20261113g.png",
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "bodyReferenceHeight": 210,
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_dodge_s",
+    "source": "Sheets/class_anh_dao_dodge_s_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_dodge_s_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_s_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 204,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "sk_ad_04_down_cut_component",
+    "source": "Sheets/sk_ad_04_down_cut_component_v1_20261113g.png",
+    "prompt": "Prompts/sk_ad_04_down_cut_component_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_03_first_cut_component_v2_20261113f.png",
+    "additionalReferences": [],
+    "inputRole": "STYLE_REFERENCE_NEW_COMPONENT",
+    "componentOnly": true,
+    "previewDurationSeconds": 0.32,
+    "previewLoop": false,
+    "pivotMode": "SOURCE_PIVOTS",
+    "scaleMode": "LONGEST_AXIS",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "translucentTailFromFrame": 12,
+    "sourcePivots": [
+      [
+        187.0,
+        199.75
+      ],
+      [
+        163.0,
+        212.75
+      ],
+      [
+        144.5,
+        232.0
+      ],
+      [
+        120.5,
+        259.0
+      ],
+      [
+        190.28571428571428,
+        224.85714285714286
+      ],
+      [
+        167.5,
+        240.0
+      ],
+      [
+        145.0,
+        256.7142857142857
+      ],
+      [
+        120.5,
+        269.0
+      ],
+      [
+        189.5,
+        240.0
+      ],
+      [
+        165.25,
+        234.625
+      ],
+      [
+        146.5,
+        224.0
+      ],
+      [
+        125.0,
+        212.0
+      ],
+      [
+        193.2,
+        190.9
+      ],
+      [
+        170.2,
+        185.9
+      ],
+      [
+        145.5,
+        177
+      ],
+      [
+        110.33333333333333,
+        162.5
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261113g.json",
+    "reviewScope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY"
+  },
+  {
+    "id": "sk_ad_04_slow_mark_component",
+    "source": "Sheets/sk_ad_04_slow_mark_component_v1_20261113g.png",
+    "prompt": "Prompts/sk_ad_04_slow_mark_component_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_03_first_cut_component_v2_20261113f.png",
+    "additionalReferences": [],
+    "inputRole": "STYLE_REFERENCE_NEW_COMPONENT",
+    "componentOnly": true,
+    "previewDurationSeconds": 0.8,
+    "previewLoop": true,
+    "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+    "scaleMode": "LONGEST_AXIS",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261113g.json",
+    "reviewScope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY"
+  },
+  {
+    "id": "sk_ad_05_smoke_component",
+    "source": "Sheets/sk_ad_05_smoke_component_v1_20261113g.png",
+    "prompt": "Prompts/sk_ad_05_smoke_component_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_03_first_cut_component_v2_20261113f.png",
+    "additionalReferences": [],
+    "inputRole": "STYLE_REFERENCE_NEW_COMPONENT",
+    "componentOnly": true,
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      31.428571428571427,
+      31.428571428571427,
+      31.428571428571427,
+      31.428571428571427,
+      31.428571428571427,
+      31.428571428571427,
+      31.428571428571427,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30
+    ],
+    "previewDurationSeconds": 0.46,
+    "previewLoop": false,
+    "pivotMode": "SOURCE_PIVOTS",
+    "scaleMode": "LONGEST_AXIS",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "translucentTailFromFrame": 12,
+    "sourcePivots": [
+      [
+        192,
+        216.0
+      ],
+      [
+        202,
+        210.0
+      ],
+      [
+        201.0,
+        229.83333333333334
+      ],
+      [
+        214.0,
+        228.4
+      ],
+      [
+        262.2,
+        197.8
+      ],
+      [
+        269.5,
+        195.5
+      ],
+      [
+        255.8,
+        188.6
+      ],
+      [
+        243.8,
+        179.4
+      ],
+      [
+        277.0,
+        166.5
+      ],
+      [
+        264.5,
+        173.0
+      ],
+      [
+        252.0,
+        172.0
+      ],
+      [
+        248.75,
+        172.25
+      ],
+      [
+        252.875,
+        154.875
+      ],
+      [
+        224.75,
+        162.25
+      ],
+      [
+        209.14285714285714,
+        164.71428571428572
+      ],
+      [
+        169.0,
+        159.5
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261113g.json",
+    "reviewScope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY"
+  },
+  {
+    "id": "sk_ad_06_charge_component",
+    "source": "Sheets/sk_ad_06_charge_component_v1_20261113g.png",
+    "prompt": "Prompts/sk_ad_06_charge_component_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_03_first_cut_component_v2_20261113f.png",
+    "additionalReferences": [],
+    "inputRole": "STYLE_REFERENCE_NEW_COMPONENT",
+    "componentOnly": true,
+    "previewDurationSeconds": 0.55,
+    "previewLoop": false,
+    "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+    "scaleMode": "LONGEST_AXIS",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261113g.json",
+    "reviewScope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY"
+  },
+  {
+    "id": "sk_ad_06_sweep_component",
+    "source": "Sheets/sk_ad_06_sweep_component_v2_20261113g.png",
+    "prompt": "Prompts/sk_ad_06_sweep_component_v2_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_06_sweep_component_v1_20261113g.png",
+    "additionalReferences": [],
+    "inputRole": "PRECISE_OBJECT_REPAIR_EDIT",
+    "componentOnly": true,
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      41.666666666666664,
+      41.666666666666664,
+      41.666666666666664,
+      41.666666666666664,
+      41.666666666666664,
+      41.666666666666664,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25
+    ],
+    "previewDurationSeconds": 0.48,
+    "previewLoop": false,
+    "scaleMode": "LONGEST_AXIS",
+    "translucentTailFromFrame": 12,
+    "replacesSource": "Sheets/sk_ad_06_sweep_component_v1_20261113g.png",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "pivotMode": "SOURCE_PIVOTS",
+    "sourcePivots": [
+      [
+        184.0,
+        221.75
+      ],
+      [
+        165.25,
+        221.75
+      ],
+      [
+        148.0,
+        221.75
+      ],
+      [
+        126.5,
+        221.75
+      ],
+      [
+        184.0,
+        181.5
+      ],
+      [
+        165.25,
+        181.5
+      ],
+      [
+        148.0,
+        181.5
+      ],
+      [
+        126.5,
+        181.5
+      ],
+      [
+        184.0,
+        141.25
+      ],
+      [
+        165.25,
+        141.25
+      ],
+      [
+        148.0,
+        141.25
+      ],
+      [
+        126.5,
+        141.25
+      ],
+      [
+        184.0,
+        102.0
+      ],
+      [
+        165.25,
+        102.0
+      ],
+      [
+        148.0,
+        102.0
+      ],
+      [
+        126.5,
+        102.0
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261113g.json",
+    "reviewScope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY"
+  },
+  {
+    "id": "sk_ad_06_heat_petal_component",
+    "source": "Sheets/sk_ad_06_heat_petal_component_v1_20261113g.png",
+    "prompt": "Prompts/sk_ad_06_heat_petal_component_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_03_first_cut_component_v2_20261113f.png",
+    "additionalReferences": [],
+    "inputRole": "STYLE_REFERENCE_NEW_COMPONENT",
+    "componentOnly": true,
+    "previewDurationSeconds": 0.4,
+    "previewLoop": false,
+    "pivotMode": "SOURCE_PIVOTS",
+    "scaleMode": "LONGEST_AXIS",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "translucentTailFromFrame": 12,
+    "sourcePivots": [
+      [
+        168.0,
+        186.5
+      ],
+      [
+        149.25,
+        186.5
+      ],
+      [
+        138.0,
+        186.5
+      ],
+      [
+        126.5,
+        186.5
+      ],
+      [
+        168.0,
+        168.5
+      ],
+      [
+        149.25,
+        168.5
+      ],
+      [
+        138.0,
+        168.5
+      ],
+      [
+        126.5,
+        168.5
+      ],
+      [
+        168.0,
+        150.5
+      ],
+      [
+        149.25,
+        150.5
+      ],
+      [
+        138.0,
+        150.5
+      ],
+      [
+        126.5,
+        150.5
+      ],
+      [
+        168.0,
+        133.5
+      ],
+      [
+        149.25,
+        133.5
+      ],
+      [
+        138.0,
+        133.5
+      ],
+      [
+        126.5,
+        133.5
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261113g.json",
+    "reviewScope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY"
   }
 ]

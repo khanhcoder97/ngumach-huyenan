@@ -200,7 +200,7 @@ public partial class ActorLibraryBrowser : Control
                 if(action=="skill_06"&&(ActorLibraryData.FrameAt(probe.ActorId,action,authored,.70,false)!=6||ActorLibraryData.FrameAt(probe.ActorId,action,authored,1.05,false)!=10))throw new Exception("Van Tuong phase timing changed");checks++;
                 if(action=="dodge"&&(ActorLibraryData.FrameAt(probe.ActorId,action,authored,.08,false)!=4||ActorLibraryData.FrameAt(probe.ActorId,action,authored,.26,false)!=10))throw new Exception("Dodge presentation phase timing changed");checks++;
             }
-            foreach(string action in new[]{"skill_01","skill_02","skill_03"})
+            foreach(string action in new[]{"skill_01","skill_02","skill_03","skill_04","skill_05","skill_06","dodge"})
             foreach(int facing in Enumerable.Range(0,8))
             {
                 if(!_library.Resolve("CLASS_ANH_DAO",action,facing,out var authored)||authored!.Frames.Length!=16||authored.SourceFrameDurationsMs?.Length!=16||authored.Flip!=(facing>=5))throw new Exception("missing timed Anh Dao source/mirror");checks++;
@@ -212,7 +212,11 @@ public partial class ActorLibraryBrowser : Control
                 bool phase=action switch{
                     "skill_01"=>ActorLibraryData.FrameAt(probe.ActorId,action,authored,.12,false)==4&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.32,false)==10,
                     "skill_02"=>ActorLibraryData.FrameAt(probe.ActorId,action,authored,.16,false)==4&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.40,false)==10,
-                    _=>ActorLibraryData.FrameAt(probe.ActorId,action,authored,.14,false)==4&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.24,false)==7&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.32,false)==9&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.42,false)==12};
+                    "skill_03"=>ActorLibraryData.FrameAt(probe.ActorId,action,authored,.14,false)==4&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.24,false)==7&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.32,false)==9&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.42,false)==12,
+                    "skill_04"=>ActorLibraryData.FrameAt(probe.ActorId,action,authored,.20,false)==6&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.36,false)==10,
+                    "skill_05"=>ActorLibraryData.FrameAt(probe.ActorId,action,authored,.08,false)==4&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.30,false)==12,
+                    "skill_06"=>ActorLibraryData.FrameAt(probe.ActorId,action,authored,.55,false)==4&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.80,false)==12,
+                    _=>ActorLibraryData.FrameAt(probe.ActorId,action,authored,.08,false)==4&&ActorLibraryData.FrameAt(probe.ActorId,action,authored,.26,false)==10};
                 if(!phase)throw new Exception("Anh Dao presentation phases changed");checks++;
             }
             foreach(string action in new[]{"walk","interact"})

@@ -25,15 +25,16 @@ def calibrate(record):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--apply',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--apply',action='store_true');parser.add_argument('--batch',choices=('20261113f','20261113g'),default='20261113f');args=parser.parse_args()
     path=ART/'generation_records.json';records=json.loads(path.read_text(encoding='utf8'))
-    selected=[r for r in records if r.get('batch')=='20261113f' and r['id'].startswith('class_anh_dao_')]
-    assert len(selected)==15 and len({r['id'] for r in selected})==15,'requires three selected skills x five source angles'
+    selected=[r for r in records if r.get('batch')==args.batch and r['id'].startswith('class_anh_dao_')]
+    expected=15 if args.batch=='20261113f' else 20
+    assert len(selected)==expected and len({r['id'] for r in selected})==expected,'requires every selected action x five source angles'
     entries=[calibrate(r) for r in selected]
     if args.apply:
         for record,entry in zip(selected,entries):
             for key in ('pivotMode','gutterPolicy','bodyReferenceHeight'):record[key]=entry[key]
-            record['registrationCalibration']='Art_Source/Actor_Library_20261107/body_registration_20261113f.json'
+            record['registrationCalibration']='Art_Source/Actor_Library_20261107/body_registration_'+args.batch+'.json'
         path.write_text(json.dumps(records,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-        (ART/'body_registration_20261113f.json').write_text(json.dumps(dict(scope='GEOMETRY_ONLY_REQUIRES_NATIVE_REVIEW',sourcePages=15,entries=entries),ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+        (ART/('body_registration_'+args.batch+'.json')).write_text(json.dumps(dict(scope='GEOMETRY_ONLY_REQUIRES_NATIVE_REVIEW',sourcePages=expected,entries=entries),ensure_ascii=False,indent=2)+'\n',encoding='utf8')
     print(json.dumps(dict(applied=args.apply,pages=len(entries),heights={r['id']:r['bodyReferenceHeight'] for r in entries})))
