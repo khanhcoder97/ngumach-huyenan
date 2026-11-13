@@ -4,6 +4,10 @@ Ngày 14/11/2026. Người nhận vai trò: OpenCode thay Qoder Remote tại iss
 Nhánh mới tách từ `origin/main`, không sửa nhánh Qoder local/Codex/Antigravity và không
 force-push PR #98.
 
+> Checkpoint tiếp theo: `QR-01_R2_Atomic_Life_Ops_20261114_vi.md` (life/return receipt,
+> poison outbox, ownership, readiness/benchmark). Các mục "chưa làm" dưới đây là trạng thái
+> tại R1, không phải trạng thái hiện hành.
+
 ## 1. Trạng thái Qoder Remote trước khi bàn giao
 
 - PR #98 giữ nguyên head `5371a4675fbd8fc4b41b4748f2b1732ef2d81824`; không có commit mới
