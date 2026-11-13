@@ -14666,5 +14666,306 @@
     ],
     "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
     "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "sk_mk_01_guard_ready_component",
+    "source": "Sheets/sk_mk_01_guard_ready_component_v1_20261114d.png",
+    "prompt": "Prompts/sk_mk_01_guard_ready_component_v1_20261114d.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114d",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+    "previewDurationSeconds": 0.4,
+    "previewLoop": true,
+    "sourceFrameDurationsMs": [
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_01_parry_component_v1_20261112f.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_VFX_PALETTE_AND_LINE_WEIGHT_REFERENCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_VFX_PALETTE_AND_LINE_WEIGHT_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_01_parry_component_v1_20261112f.png",
+        "sourceSha256": "e22d76fba1b62474e829840ff9cecd736afac894fb252c6e37b8d06fc6a44526"
+      }
+    ],
+    "sourceSha256": "e0f6e4bd3b7bc59da80ff59a9c4cf3917f66fcf580b89bedb33133184cec33d9",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "layoutReviewNote": "Full original visually reviewed:4x4 effect cells, split brackets/fading islands do not define extra rows. Empty/crop/duplicate gates remain.",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114d.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "sk_mk_02_aim_component",
+    "source": "Sheets/sk_mk_02_aim_component_v1_20261114d.png",
+    "prompt": "Prompts/sk_mk_02_aim_component_v1_20261114d.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114d",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SOURCE_PIVOTS",
+    "previewDurationSeconds": 0.32,
+    "previewLoop": false,
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_01_guard_ready_component_v1_20261114d.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_VFX_PALETTE_AND_LINE_WEIGHT_REFERENCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_VFX_PALETTE_AND_LINE_WEIGHT_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_01_guard_ready_component_v1_20261114d.png",
+        "sourceSha256": "e0f6e4bd3b7bc59da80ff59a9c4cf3917f66fcf580b89bedb33133184cec33d9",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114d/sk_mk_01_guard_ready_component_v1_20261114d.png"
+      }
+    ],
+    "sourceSha256": "c11a91a5fb2a53a24e230ec43766b5380d11ac98f6cb3dfa9016b0df195b3029",
+    "sourcePivots": [
+      [
+        240,
+        192.0
+      ],
+      [
+        174,
+        191.5
+      ],
+      [
+        181,
+        191.5
+      ],
+      [
+        192,
+        191.5
+      ],
+      [
+        265,
+        141.0
+      ],
+      [
+        204,
+        140.0
+      ],
+      [
+        211,
+        140.0
+      ],
+      [
+        220,
+        140.0
+      ],
+      [
+        280,
+        140.5
+      ],
+      [
+        211,
+        141.0
+      ],
+      [
+        211,
+        142.0
+      ],
+      [
+        209,
+        142.0
+      ],
+      [
+        250,
+        138.5
+      ],
+      [
+        173,
+        139.5
+      ],
+      [
+        172,
+        138.0
+      ],
+      [
+        178,
+        139.0
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114d.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "sk_mk_04_sustain_component",
+    "source": "Sheets/sk_mk_04_sustain_component_v1_20261114d.png",
+    "prompt": "Prompts/sk_mk_04_sustain_component_v1_20261114d.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114d",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+    "previewDurationSeconds": 0.8,
+    "previewLoop": true,
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_04_gain_component_v1_20261113c.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_VFX_PALETTE_AND_LINE_WEIGHT_REFERENCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_VFX_PALETTE_AND_LINE_WEIGHT_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_04_gain_component_v1_20261113c.png",
+        "sourceSha256": "5fd3b89dfb9b7cd8e1cd4af8b8f1128f1a4422b7975059cd4cf37c45d18c8593"
+      }
+    ],
+    "sourceSha256": "0fb20b8c2044dc0d5655b4e6009622b3170152b33b35fe82df7b766f819d1f39",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114d.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "sk_ad_01_bleed_status_component",
+    "source": "Sheets/sk_ad_01_bleed_status_component_v1_20261114d.png",
+    "prompt": "Prompts/sk_ad_01_bleed_status_component_v1_20261114d.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114d",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+    "previewDurationSeconds": 0.8,
+    "previewLoop": true,
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_04_slow_mark_component_v1_20261113g.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_VFX_PALETTE_AND_LINE_WEIGHT_REFERENCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_VFX_PALETTE_AND_LINE_WEIGHT_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_04_slow_mark_component_v1_20261113g.png",
+        "sourceSha256": "b41c683080425c5d05b9f4a76164a42c84510343f625f3f5b3e8da23fe3695e3"
+      }
+    ],
+    "sourceSha256": "de037ba91f9e8b8829777d4340f94036dc993a57a080f61d43047a960df6f7b1",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114d.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "sk_ad_04_expire_component",
+    "source": "Sheets/sk_ad_04_expire_component_v1_20261114d.png",
+    "prompt": "Prompts/sk_ad_04_expire_component_v1_20261114d.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114d",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+    "previewDurationSeconds": 0.4,
+    "previewLoop": false,
+    "sourceFrameDurationsMs": [
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_04_slow_mark_component_v1_20261113g.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_VFX_PALETTE_AND_LINE_WEIGHT_REFERENCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_VFX_PALETTE_AND_LINE_WEIGHT_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_04_slow_mark_component_v1_20261113g.png",
+        "sourceSha256": "b41c683080425c5d05b9f4a76164a42c84510343f625f3f5b3e8da23fe3695e3"
+      }
+    ],
+    "sourceSha256": "54aca5a97e36d067d750458a9a6d505d0a9c339c0aa448b10d59fc877d75be0d",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "layoutReviewNote": "Full original visually reviewed:4x4 effect cells, split brackets/fading islands do not define extra rows. Empty/crop/duplicate gates remain.",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114d.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
   }
 ]

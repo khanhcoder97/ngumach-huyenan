@@ -11,7 +11,7 @@ def audit(batch,ffmpeg):
         result=subprocess.run([str(ffmpeg),'-v','error','-nostats','-i',str(p),'-map','0:v:0','-an','-progress','pipe:1','-f','null','-'],capture_output=True,text=True)
         counts=re.findall(r'^frame=(\d+)$',result.stdout,re.M)
         assert result.returncode==0 and not result.stderr and counts and 'progress=end' in result.stdout,'decode failed: '+p.name
-        count=int(counts[-1]);expected=600 if p.stem=='mobility_chain' else 180
+        count=int(counts[-1]);expected=600 if p.stem=='mobility_chain' or p.stem.startswith('assembly_') else 180
         assert count==expected,'unexpected native capture length: '+p.name
         files.append(dict(file=p.name,sha256=hashlib.sha256(p.read_bytes()).hexdigest(),decodedFrames=count,decodedWithoutDiagnostics=True))
     assert files,'no selected native captures'

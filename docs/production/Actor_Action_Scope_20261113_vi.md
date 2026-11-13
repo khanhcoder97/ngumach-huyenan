@@ -51,3 +51,5 @@ Tại thời điểm đợt I, run/interact/basic_attack_02/basic_attack_03 củ
 [Đợt 20261114b](Actor_Batch_20261114b_vi.md) thêm nguồn nền có kiếm, duyệt 8/15 sheet và giữ 7 HOLD. Đi/chém đầu còn thiếu góc đạt; cộng chạy NE trước đó, Minh Kiếm hiện 13/16 action đủ hướng duyệt. Coverage chọn page riêng trước rồi xét duyệt như client; không dùng approval legacy đã bị nguồn mới che để báo hoàn chỉnh.
 
 [Đợt 20261114c](Actor_Batch_20261114c_vi.md) giải quyết bốn góc nhát chém đầu và đi E. Minh Kiếm hiện 14/16 action đủ hướng đã duyệt; chạy NE, đi NE/SE còn HOLD. Lần sửa vận động tiếp theo cần kiểm riêng hai contact đối nhau trước khi dựng lại chu kỳ. Không đổi tên nhát chém ngang thành đâm để né yêu cầu.
+
+[Đợt 20261114d](Actor_Batch_20261114d_vi.md) bổ sung năm component trạng thái và bàn chỉnh ghép thân–VFX cho 12 skill/20 tình huống. Timeline là ví dụ presentation chưa duyệt, không phải server event hoặc bằng chứng hoàn chỉnh skill. Coverage actor không tăng nhờ thêm component: vẫn 50 job đủ hướng đã duyệt, 949 job thiếu nguồn.

@@ -1,4 +1,4 @@
-> **Asset mới 12/11:** thêm 14 sheet chibi/animation/VFX; nhóm hướng trong Studio; Kiếm Trận dùng cung 16 khung đã kiểm native. [Danh mục và cách mở](../docs/production/Actor_Batch_20261112_vi.md). Giữ nguyên 46 PNG cũ; thư viện toàn game vẫn còn thiếu.
+> **Asset/công cụ 14/11:** thêm năm nguồn VFX 16 pose và bàn chỉnh ghép 12 kỹ năng/20 tình huống, tám hướng, chỉnh vị trí/lớp/nhịp và xuất JSON. Mở `Run_Skill_Assembly.ps1`. [Phạm vi và cách dùng](../docs/production/Actor_Batch_20261114d_vi.md). Timeline hiện là bản authoring chưa nối chiến đấu; giữ nguyên sprite chibi cũ và Studio.
 
 > **Hiện hành 12/11/2026:** dùng sprite sheet chibi nguyên khối cũ; hủy hướng vẽ paper-doll mới. `Run_Art_Studio.ps1` và `Run_PaperDoll_Lab.ps1` mặc định mở Sprite/VFX Studio với Lý An. [Hướng dẫn chỉnh tay](../docs/production/Sprite_Studio_20261112_vi.md). Equipment slots/chỉ số giữ nguyên; bản chỉnh chưa tự áp vào gameplay.
 
