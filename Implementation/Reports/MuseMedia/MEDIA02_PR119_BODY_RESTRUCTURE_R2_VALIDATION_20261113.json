@@ -1,0 +1,80 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R2",
+ "validator": "check_pr119_restructure_r2_v1.py",
+ "checks": {
+  "total": 17,
+  "passed": 17
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == 286787b": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 50cc042": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 5dece1f": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 257c985": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 8f7120a": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 7bba119": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 286787b": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 193/2398": {
+   "pass": true,
+   "detail": ""
+  },
+  "git commits cf17178..286787b == 193": {
+   "pass": true,
+   "detail": "193"
+  },
+  "git files cf17178..286787b == 2398": {
+   "pass": true,
+   "detail": "2398"
+  },
+  "git additions == 224498, deletions 0": {
+   "pass": true,
+   "detail": "2398 files changed, 224498 insertions(+)"
+  },
+  "merge-tree 286787b vs integration exit 0": {
+   "pass": true,
+   "detail": "a2dd5643b76bf24a30f646cf2080a9bacdb279fc"
+  },
+  "body head line 286787b/193/2398": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has M-G CP10 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has M-B CP5 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body index reference at 286787b": {
+   "pass": true,
+   "detail": ""
+  }
+ },
+ "status": "PASS"
+}
