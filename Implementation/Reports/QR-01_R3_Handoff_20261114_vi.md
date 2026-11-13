@@ -58,10 +58,11 @@ contracts, canonical XY, art; production gate OFF; không merge PR #132/#98.
 ### R4 — churn nhiều đời + restart
 
 - `ExpiredLease_NewOwnerCommits_OldOwnerIsRefusedAsStale` bỏ `Task.Delay` cố định: harness
-  ghi `--ready-file` sau khi acquire lease, rồi chờ `--barrier` do test ghi sau khi process
-  thứ hai commit. Kết quả stale fencing là tất định, không phụ thuộc tốc độ khởi động máy.
-  Đây là sửa lỗi flaky phát hiện trên CI Linux (2 test IO-denied fail vì share mode của Unix
-  chỉ advisory; xem mục 3).
+  ghi `--ready-file` sau khi acquire lease, test đọc DB chờ đúng `ExpiresAt` của lease hết
+  hạn, rồi process thứ hai takeover/commit, cuối cùng test ghi `--barrier` để process cũ thử
+  commit. Kết quả stale fencing là tất định, không phụ thuộc tốc độ khởi động máy.
+  Đây là sửa lỗi CI Linux (2 test IO-denied fail vì share mode của Unix chỉ advisory; và
+  takeover chạy trước khi lease 200 ms hết hạn nên nhận `LeaseHeld`; xem mục 3).
 
 - `DeathLootReceipt_ReplayKeepsRollAndDoesNotDoubleGrant`: death có loot ledger/outbox; replay
   không roll lại, ledger/outbox/life không đổi.

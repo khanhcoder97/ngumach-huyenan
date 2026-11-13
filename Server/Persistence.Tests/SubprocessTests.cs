@@ -135,6 +135,7 @@ public sealed class SubprocessTests
             "--state", "{\"writer\":\"old\"}");
 
         await WaitForFileAsync(ready, "old writer did not acquire its lease");
+        await WaitForLeaseExpiryAsync(fixture, "char-a");
 
         // A real second process takes over with a higher fencing token and commits first.
         var takeover = await RunHarnessAsync(
@@ -213,6 +214,23 @@ public sealed class SubprocessTests
         var counts = await fixture.Database.GetTableCountsAsync();
         Assert.Equal(301, counts["receipts"]);
         Assert.Equal(301, counts["outbox"]);
+    }
+
+    private static async Task WaitForLeaseExpiryAsync(TestFixture fixture, string characterId)
+    {
+        var deadline = DateTimeOffset.UtcNow.AddSeconds(15);
+        while (DateTimeOffset.UtcNow <= deadline)
+        {
+            var lease = await fixture.Leases.ReadAsync(characterId);
+            if (lease is not null && lease.ExpiresAt <= DateTimeOffset.UtcNow)
+            {
+                return;
+            }
+
+            await Task.Delay(25);
+        }
+
+        throw new Xunit.Sdk.XunitException("lease did not expire within 15 seconds.");
     }
 
     private static async Task WaitForFileAsync(string path, string failureMessage)
