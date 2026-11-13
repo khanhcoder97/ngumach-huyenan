@@ -92,7 +92,7 @@ public partial class ArtStudio
                     Check(roundtrip.Clips.Single(c => c.Direction == skillClip.Direction).DurationsMs.SequenceEqual(skillClip.DurationsMs), "timed JSON roundtrip changed durations");
                 }
             }
-            foreach (string action in new[] { "skill_01", "skill_02", "skill_03", "skill_04", "skill_05", "skill_06", "dodge" })
+            foreach (string action in new[] { "skill_01", "skill_02", "skill_03", "skill_04", "skill_05", "skill_06", "dodge", "hurt", "death" })
             {
                 var grouped = ArtStudioLibrary.Load("actor:CLASS_ANH_DAO:" + action);
                 Check(grouped.Clips.Count == 8, "Anh Dao directions missing");
@@ -112,6 +112,8 @@ public partial class ArtStudio
                     if (action == "skill_05") Check(ArtStudioSampler.FrameAt(anhClip, .08) == 4 && ArtStudioSampler.FrameAt(anhClip, .30) == 12, "Studio Anh Bo phases");
                     if (action == "skill_06") Check(ArtStudioSampler.FrameAt(anhClip, .55) == 4 && ArtStudioSampler.FrameAt(anhClip, .80) == 12, "Studio Tu Diem charge/release");
                     if (action == "dodge") Check(ArtStudioSampler.FrameAt(anhClip, .08) == 4 && ArtStudioSampler.FrameAt(anhClip, .26) == 10, "Studio Anh Dao dodge phases");
+                    if (action == "hurt") Check(ArtStudioSampler.FrameAt(anhClip, .075) == 4 && ArtStudioSampler.FrameAt(anhClip, .15) == 8 && ArtStudioSampler.FrameAt(anhClip, .225) == 12, "Studio Anh Dao recoil timeline");
+                    if (action == "death") Check(ArtStudioSampler.FrameAt(anhClip, .30) == 4 && ArtStudioSampler.FrameAt(anhClip, .60) == 8 && ArtStudioSampler.FrameAt(anhClip, .90) == 12, "Studio Anh Dao continuous fall timeline");
                     var roundtrip = ArtStudioCodec.Decode(ArtStudioCodec.Encode(grouped));
                     Check(roundtrip.Clips.Single(c => c.Direction == anhClip.Direction).DurationsMs.SequenceEqual(anhClip.DurationsMs), "Anh Dao timing JSON roundtrip");
                 }
@@ -170,6 +172,19 @@ public partial class ArtStudio
                     if (action == "interact") Check(ArtStudioSampler.FrameAt(npcClip, npcClip.Duration * 2) == 15, "NPC interaction did not hold final pose");
                 }
             }
+            // A later prone pose can extend below the standing root. Fitting only
+            // frame0 clips it even though every source region is intact.
+            var fitDocument = new ArtStudioDocument
+            {
+                Layers = new() { new ArtStudioLayer { Id = "fit-fall", Texture = Layer.Texture, Regions = new() { new[] { 0, 0, 24, 24 } }, Rest = new() { PivotY = 21 } } },
+                Clips = new() { new ArtStudioClip { Name = "fit-fall", Loop = false, Tracks = new() { new ArtStudioTrack { LayerId = "fit-fall", Interpolate = false, Keys = new() { new ArtStudioKey { Frame = 0, Pose = new() { PivotY = 21 } }, new ArtStudioKey { Frame = 15, Pose = new() { PivotY = 9 } } } } } } }
+            };
+            ArtStudioCodec.Validate(fitDocument);
+            var fitCanvas = new ArtStudioCanvas { Document = fitDocument, ClipIndex = 0, Frame = 0 };
+            Check(fitCanvas.ContentBounds().End.Y == 3, "current-frame fit fixture");
+            Check(fitCanvas.ContentBounds(wholeClip: true).End.Y == 15, "whole-clip fit excludes the later forward fall");
+            fitDocument.Layers[0].Visible = false;
+            Check(fitCanvas.ContentBounds(wholeClip: true).Size == Vector2.Zero, "hidden layer extends fit bounds"); fitCanvas.Free();
             var original = ArtStudioCodec.Encode(_doc); var sourceHash = System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(ArtStudioCodec.Resolve(Layer.Texture, "")));
             _keyMode.ButtonPressed = true; _numbers["x"].Value = 17;
             Check(Math.Abs(Pose().X - 17) < .001, "inspector signal did not edit a key");

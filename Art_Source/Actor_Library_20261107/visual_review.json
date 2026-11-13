@@ -206,7 +206,17 @@
     "sk_ad_05_smoke_component",
     "sk_ad_06_charge_component",
     "sk_ad_06_heat_petal_component",
-    "sk_ad_06_sweep_component"
+    "sk_ad_06_sweep_component",
+    "class_anh_dao_death_e",
+    "class_anh_dao_death_n",
+    "class_anh_dao_death_ne",
+    "class_anh_dao_death_s",
+    "class_anh_dao_death_se",
+    "class_anh_dao_hurt_e",
+    "class_anh_dao_hurt_n",
+    "class_anh_dao_hurt_ne",
+    "class_anh_dao_hurt_s",
+    "class_anh_dao_hurt_se"
   ],
   "holds": [
     {
@@ -214,16 +224,8 @@
       "reason": "Idle source angles exist, but this older neutral silhouette still awaits full native idle/locomotion acceptance under the updated fish registration; combat-source acceptance does not approve it."
     },
     {
-      "id": "class_anh_dao_death",
-      "reason": "SE has a separate16-frame continuous-fall repair, also used by permitted SW mirror. Full clip awaits native transition review."
-    },
-    {
       "id": "class_huyen_but_death",
       "reason": "SE has a separate16-frame continuous-fall repair, also used by permitted SW mirror. Full clip awaits native transition review."
-    },
-    {
-      "id": "class_anh_dao_hurt",
-      "reason": "Suspected two 8-frame reactions; must verify single recoil across both rows."
     },
     {
       "id": "class_huyen_but_hurt",
@@ -3935,6 +3937,200 @@
       "reviewScale": "88px eight-angle body;140px raw spin S/SE;160px VFX reference span",
       "batch": "20261113g",
       "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_anh_dao_death_e",
+      "sourceSha256": "6a3ebf0ed947c8bc7b32498ea13fa7f8feb8b992467899203ff8efbbe11e5d35",
+      "bindingSha256": "c490a9162ad2ca6b7064f91490ac7c8afbd55f367b6924168fced84cecfc3317",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_death_e_v1_20261113h.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/death_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/death_raw_e_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame sheet and native Godot point-filtered temporal captures, full fall at every source facing and reaction-chain transitions. Checked one recoil/no frame8 fall restart, held dao contact, authored foot origins, fixed neutral scale, timeline/seek/one-shot/mirrors and whole-clip fit. Original RGBA unmodified.",
+      "reviewScale": "88px library;100px reaction chain;Studio nominal140px with whole-clip fit",
+      "batch": "20261113h",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_anh_dao_death_n",
+      "sourceSha256": "defbbbe28dee1a5a252f0a1d5bf14f8bcdea1d36dcdb26cbe78c14e7f6f42ead",
+      "bindingSha256": "6ee66df3abe1e279f96d6292ba06526a02cadc9d9ede3a2a0ff3895493678246",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_death_n_v1_20261113h.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/death_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/death_raw_n_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame sheet and native Godot point-filtered temporal captures, full fall at every source facing and reaction-chain transitions. Checked one recoil/no frame8 fall restart, held dao contact, authored foot origins, fixed neutral scale, timeline/seek/one-shot/mirrors and whole-clip fit. Original RGBA unmodified.",
+      "reviewScale": "88px library;100px reaction chain;Studio nominal140px with whole-clip fit",
+      "batch": "20261113h",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_anh_dao_death_ne",
+      "sourceSha256": "9b827a3afd0137753a18270033aebce2e7abc891e6648f5488d05fae8cd3b7c1",
+      "bindingSha256": "9c32763f1105719a28e2b0f8d7ab62a6f6e87b0b37a1cb10cdc0c3387922350b",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_death_ne_v1_20261113h.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/death_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/death_raw_ne_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame sheet and native Godot point-filtered temporal captures, full fall at every source facing and reaction-chain transitions. Checked one recoil/no frame8 fall restart, held dao contact, authored foot origins, fixed neutral scale, timeline/seek/one-shot/mirrors and whole-clip fit. Original RGBA unmodified.",
+      "reviewScale": "88px library;100px reaction chain;Studio nominal140px with whole-clip fit",
+      "batch": "20261113h",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_anh_dao_death_s",
+      "sourceSha256": "68a505c229e7bc52e2ad123385ad94e3dfcd894ca66208aec44f5ac1abfd4bac",
+      "bindingSha256": "d2a37fd19cd2fc987551e7fabec30f519681891a4d213662bafab4649a468fa9",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_death_s_v1_20261113h.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/death_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/death_raw_s_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame sheet and native Godot point-filtered temporal captures, full fall at every source facing and reaction-chain transitions. Checked one recoil/no frame8 fall restart, held dao contact, authored foot origins, fixed neutral scale, timeline/seek/one-shot/mirrors and whole-clip fit. Original RGBA unmodified.",
+      "reviewScale": "88px library;100px reaction chain;Studio nominal140px with whole-clip fit",
+      "batch": "20261113h",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_anh_dao_death_se",
+      "sourceSha256": "0d731921f7456c61f97a2061f9561cc246339bbd3f3aa33a4dcf5041b72fdb17",
+      "bindingSha256": "91afbece98d8a6b7bcab0f10d3744424b87ba85c5c80f95b18fd9d6c12c82c5b",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_death_se_v1_20261113h.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_death_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/death_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/death_raw_se_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame sheet and native Godot point-filtered temporal captures, full fall at every source facing and reaction-chain transitions. Checked one recoil/no frame8 fall restart, held dao contact, authored foot origins, fixed neutral scale, timeline/seek/one-shot/mirrors and whole-clip fit. Original RGBA unmodified.",
+      "reviewScale": "88px library;100px reaction chain;Studio nominal140px with whole-clip fit",
+      "batch": "20261113h",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_anh_dao_hurt_e",
+      "sourceSha256": "414e687285154c05704ffd992f82fb3d072353fcee1a8a5258be64228dd622d9",
+      "bindingSha256": "7542a6c01c79402dd2d14a2bf2f902e6483d4bdb6c30bef2f801c6f09acb5c6f",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_hurt_e_v1_20261113h.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/hurt_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/hurt_raw_e_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame sheet and native Godot point-filtered temporal captures, full fall at every source facing and reaction-chain transitions. Checked one recoil/no frame8 fall restart, held dao contact, authored foot origins, fixed neutral scale, timeline/seek/one-shot/mirrors and whole-clip fit. Original RGBA unmodified.",
+      "reviewScale": "88px library;100px reaction chain;Studio nominal140px with whole-clip fit",
+      "batch": "20261113h",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_anh_dao_hurt_n",
+      "sourceSha256": "a0e4b89ad7128236640cb8c6ff0f65608d84908ce2d0467d1204cadbe9982871",
+      "bindingSha256": "595347e4d3722aa97203323aa3547772b5f0d4bbc42f499417c3814faddcd3b6",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_hurt_n_v1_20261113h.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_reaction_chain.mp4"
+      ],
+      "method": "Viewed complete original sixteen-frame sheet and native Godot point-filtered temporal captures, full fall at every source facing and reaction-chain transitions. Checked one recoil/no frame8 fall restart, held dao contact, authored foot origins, fixed neutral scale, timeline/seek/one-shot/mirrors and whole-clip fit. Original RGBA unmodified.",
+      "reviewScale": "88px library;100px reaction chain;Studio nominal140px with whole-clip fit",
+      "batch": "20261113h",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_anh_dao_hurt_ne",
+      "sourceSha256": "ef0b9591faaa27b3fd24cce10d8b51f6c2890a7bd0432cd3ba5b8183a65d4b23",
+      "bindingSha256": "abedaf4f2b504bdcba5748a6432ce68ed035fdd7493e0380a3cb6ff84dce0700",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_hurt_ne_v1_20261113h.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_reaction_chain.mp4"
+      ],
+      "method": "Viewed complete original sixteen-frame sheet and native Godot point-filtered temporal captures, full fall at every source facing and reaction-chain transitions. Checked one recoil/no frame8 fall restart, held dao contact, authored foot origins, fixed neutral scale, timeline/seek/one-shot/mirrors and whole-clip fit. Original RGBA unmodified.",
+      "reviewScale": "88px library;100px reaction chain;Studio nominal140px with whole-clip fit",
+      "batch": "20261113h",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_anh_dao_hurt_s",
+      "sourceSha256": "b4a8583e032d87c0a5f951825528879253daeb727044527604b50b4c129110dc",
+      "bindingSha256": "eaab1147e3ea8a598b085e5f24d2a24a3d06874f57b12d2975ef0f8a4ea8b8b6",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_hurt_s_v1_20261113h.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_reaction_chain.mp4"
+      ],
+      "method": "Viewed complete original sixteen-frame sheet and native Godot point-filtered temporal captures, full fall at every source facing and reaction-chain transitions. Checked one recoil/no frame8 fall restart, held dao contact, authored foot origins, fixed neutral scale, timeline/seek/one-shot/mirrors and whole-clip fit. Original RGBA unmodified.",
+      "reviewScale": "88px library;100px reaction chain;Studio nominal140px with whole-clip fit",
+      "batch": "20261113h",
+      "reviewDate": "2026-11-13"
+    },
+    {
+      "id": "class_anh_dao_hurt_se",
+      "sourceSha256": "a2519532fb3a2a971e19348b8d76c1675f990cc0b963c6105ecb68f84cac8c52",
+      "bindingSha256": "f570a207b7cb93a1faaa99930e5b0d7d1cb31fa838db3dea682380044dd8b3b7",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_hurt_se_v1_20261113h.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_hurt_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/hurt_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113h/hurt_raw_se_samples.png"
+      ],
+      "method": "Viewed complete original sixteen-frame sheet and native Godot point-filtered temporal captures, full fall at every source facing and reaction-chain transitions. Checked one recoil/no frame8 fall restart, held dao contact, authored foot origins, fixed neutral scale, timeline/seek/one-shot/mirrors and whole-clip fit. Original RGBA unmodified.",
+      "reviewScale": "88px library;100px reaction chain;Studio nominal140px with whole-clip fit",
+      "batch": "20261113h",
+      "reviewDate": "2026-11-13"
     }
   ],
   "historicalHolds": [
@@ -3971,6 +4167,40 @@
       "newSourceSha256": "362e85c3df247691a0e2216eef68a90c16cab8eac4f2cdd39026dde00c0b9672",
       "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/boatkeeper_walk_ne_contacts.png",
       "scope": "SOURCE_GAIT_APPEARANCE_ONLY_NOT_AI_ESCORT_OR_WORLD_FOOTFALL"
+    },
+    {
+      "id": "class_anh_dao_death",
+      "reason": "SE has a separate16-frame continuous-fall repair, also used by permitted SW mirror. Full clip awaits native transition review.",
+      "status": "SUPERSEDED_HELD_ATLAS_REPLACED_BY_FIVE_REVIEWED_ARMED_SOURCES",
+      "batch": "20261113h",
+      "oldSource": "Sheets/class_anh_dao_death.png",
+      "oldSourceSha256": "d690026528545918f60f420161cc1a941284a0ac6155505aa6c4d7ab42c58100",
+      "replacementSourceIds": [
+        "class_anh_dao_death_e",
+        "class_anh_dao_death_n",
+        "class_anh_dao_death_ne",
+        "class_anh_dao_death_s",
+        "class_anh_dao_death_se"
+      ],
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_reaction_chain.mp4",
+      "scope": "SOURCE_REACTION_APPEARANCE_AND_TRANSITIONS_ONLY_NOT_GAMEPLAY"
+    },
+    {
+      "id": "class_anh_dao_hurt",
+      "reason": "Suspected two 8-frame reactions; must verify single recoil across both rows.",
+      "status": "SUPERSEDED_HELD_ATLAS_REPLACED_BY_FIVE_REVIEWED_ARMED_SOURCES",
+      "batch": "20261113h",
+      "oldSource": "Sheets/class_anh_dao_hurt.png",
+      "oldSourceSha256": "4e79a820d1d3bc35179ee0ffddae83051e31db0a80f532cf8fcab60fa69275f7",
+      "replacementSourceIds": [
+        "class_anh_dao_hurt_e",
+        "class_anh_dao_hurt_n",
+        "class_anh_dao_hurt_ne",
+        "class_anh_dao_hurt_s",
+        "class_anh_dao_hurt_se"
+      ],
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113h/anh_dao_reaction_chain.mp4",
+      "scope": "SOURCE_REACTION_APPEARANCE_AND_TRANSITIONS_ONLY_NOT_GAMEPLAY"
     }
   ],
   "sourceApprovalHistory": [

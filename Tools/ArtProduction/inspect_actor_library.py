@@ -175,6 +175,12 @@ def inspect(record, art_root=None):
         assert record['id'].startswith('sk_') and record.get('componentOnly') and record.get('pivotMode')=='SOURCE_PIVOTS','source pivots require an explicitly registered VFX component'
         assert type(source_pivots) is list and len(source_pivots)==16,'source pivots must bind sixteen real frames'
         assert all(type(pair) is list and len(pair)==2 and all(type(v) in (int,float) and math.isfinite(v) for v in pair) for pair in source_pivots),'invalid source pivot coordinates'
+    foot_pivots=record.get('sourceFootPivots')
+    if foot_pivots is not None or record.get('pivotMode')=='SOURCE_FOOT_PIVOTS':
+        assert record['id'].startswith(('class_','mob_','boss_','npc_')) and not record.get('componentOnly') and record.get('pivotMode')=='SOURCE_FOOT_PIVOTS','source foot pivots require an explicitly registered actor'
+        assert 'bodyReferenceHeight' in record and record.get('scaleMode','HEIGHT')=='HEIGHT','authored foot origins require a fixed neutral body height'
+        assert type(foot_pivots) is list and len(foot_pivots)==16,'source foot pivots must bind sixteen real frames'
+        assert all(type(pair) is list and len(pair)==2 and all(type(v) in (int,float) and math.isfinite(v) for v in pair) for pair in foot_pivots),'invalid source foot coordinates'
     translucent_tail=record.get('translucentTailFromFrame')
     if translucent_tail is not None:
         assert record['id'].startswith('sk_') and record.get('componentOnly') and record.get('layout')=='VISUALLY_VERIFIED_UNIFORM_GRID','translucent tail requires a reviewed VFX component grid'
@@ -266,6 +272,9 @@ def inspect(record, art_root=None):
                 elif record.get('pivotMode')=='SOURCE_PIVOTS':
                     pivot=source_pivots[row*len(cols)+col]
                     assert 0<=pivot[0]<x1-x and 0<=pivot[1]<y1-y,'registered source pivot outside its original cell'
+                elif record.get('pivotMode')=='SOURCE_FOOT_PIVOTS':
+                    pivot=foot_pivots[row*len(cols)+col]
+                    assert 0<=pivot[0]<x1-x and 0<=pivot[1]<y1-y,'registered foot origin outside its original cell'
                 frames.append(dict(rect=[x,y,x1-x,y1-y],bounds=list(bb),pivot=pivot))
                 if tail_frame:frames[-1]['boundsAlphaThreshold']=64
                 hashes.append(hashlib.sha256(im.crop((x,y,x1,y1)).tobytes()).hexdigest())

@@ -1010,5 +1010,48 @@
     "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
     "translucentTailFromFrame": 12,
     "reason": "v1 solid ember fringe reaches a source-cell edge in row1 col2. v2 repacks ring/embers with clean wide gutters and intact tips."
+  },
+  {
+    "id": "class_anh_dao_hurt",
+    "source": "Sheets/class_anh_dao_hurt.png",
+    "prompt": "Prompts/class_anh_dao_hurt.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION",
+    "sha256": "4e79a820d1d3bc35179ee0ffddae83051e31db0a80f532cf8fcab60fa69275f7",
+    "reason": "Replaced by five new armed source angles per reaction; previous whole atlas had a repeated recoil or incompatible fall and the standalone SE repair lacked the held dao.",
+    "supersededByBatch": "20261113h",
+    "archiveStatus": "UNAPPROVED_OR_HELD_SOURCE_PRESERVED_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_death",
+    "source": "Sheets/class_anh_dao_death.png",
+    "prompt": "Prompts/class_anh_dao_death.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION",
+    "sha256": "d690026528545918f60f420161cc1a941284a0ac6155505aa6c4d7ab42c58100",
+    "reason": "Replaced by five new armed source angles per reaction; previous whole atlas had a repeated recoil or incompatible fall and the standalone SE repair lacked the held dao.",
+    "supersededByBatch": "20261113h",
+    "archiveStatus": "UNAPPROVED_OR_HELD_SOURCE_PRESERVED_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_death_se",
+    "source": "Sheets/class_anh_dao_death_se_v1.png",
+    "prompt": "Prompts/class_anh_dao_death_se_v1.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_death.png",
+    "status": "GENERATED_PENDING_INSPECTION",
+    "sha256": "2806b302885bb3f58cfb1455ff1deb99e09810a9fb7ec827b2129e1ef044a3b8",
+    "reason": "Replaced by five new armed source angles per reaction; previous whole atlas had a repeated recoil or incompatible fall and the standalone SE repair lacked the held dao.",
+    "supersededByBatch": "20261113h",
+    "archiveStatus": "UNAPPROVED_OR_HELD_SOURCE_PRESERVED_NOT_RENDERED"
   }
 ]

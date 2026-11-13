@@ -7,7 +7,7 @@ param(
 )
 $ErrorActionPreference='Stop'
 if($ReactionReview -and $CombatReview){throw 'Choose either combat review or reaction review.'}
-if($ReactionReview -and (($Actor -and $Actor -ne 'CLASS_MINH_KIEM') -or $Clip -or $Direction -or $Capture)){throw 'Reaction review shows all Minh Kiem angles; use Studio for a single clip/direction/capture.'}
+if($ReactionReview -and (($Actor -and $Actor -notin @('CLASS_MINH_KIEM','CLASS_ANH_DAO')) -or $Clip -or $Direction -or $Capture)){throw 'Reaction review supports Minh Kiem or Anh Dao; use Studio for a single clip/direction/capture.'}
 $toolRoot=Join-Path (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) 'NGUMACHHUYENAN-tools'
 if(-not $GodotPath){$GodotPath=Join-Path $toolRoot 'godot-4.7.2/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe'}
 if(-not $DotnetPath){$DotnetPath=Join-Path $toolRoot 'dotnet8/dotnet.exe'}
@@ -28,6 +28,7 @@ try {
     $launchArgs=@('--path',$PSScriptRoot,$scene,'--')
     if($Test){$launchArgs=@('--headless')+$launchArgs;$launchArgs+=@($(if($ReactionReview){'--reaction-self-test'}elseif($CombatReview){'--combat-self-test'}else{'--library-self-test'}))}
     if($Actor -and -not $ReactionReview){$launchArgs+=@($(if($CombatReview){'--combat-actor'}else{'--actor'}),$Actor)}
+    if($ReactionReview -and $Actor){$launchArgs+=@('--reaction-actor',$Actor)}
     if($Clip -and -not $CombatReview){$launchArgs+=@('--clip',$Clip)}
     if($Direction -and $CombatReview){$launchArgs+=@('--combat-direction',$Direction)}
     if($CombatReview){$launchArgs+=@('--combat-variant',[string]$CombatVariant)}

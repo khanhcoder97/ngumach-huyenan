@@ -4,7 +4,9 @@
 
 **Đang sản xuất; chưa hoàn thành toàn bộ thư viện.** Chuẩn16–20pose thực/clip/hướng, renderer60FPS. PNG mới là ứng viên review, chưa tự thay asset gameplay.
 
-Đợt mới nhất: [20261113g — Tước Mạch, Ảnh Bộ, Tử Diệm và né](../../docs/production/Actor_Batch_20261113g_vi.md), **26 sheet /416 khung nguồn**. Bốn action ×5 góc và sáu VFX component, timing từng pha và điểm gắn từng frame được kiểm trong Godot/Studio. Ảnh Đao đủ12 action về cấu trúc, chỉ bảy action có đủ góc nguồn đã kiểm source; năm action cũ vẫn cần xử lý/duyệt. Catalogue còn937/1008 job thiếu,19 HOLD. Chưa nghiệm thu toàn class/skill assembly hoặc gameplay.
+Đợt mới nhất: [20261113h — phản ứng có đao của Ảnh Đao](../../docs/production/Actor_Batch_20261113h_vi.md), **10 sheet /160 khung nguồn**. Trúng đòn và ngã ×5 góc, gốc chân riêng từng frame và kiểm nối phản ứng tám hướng; Studio thêm Fit clip. Hai atlas HOLD chuyển lịch sử sau khi nguồn thay được kiểm native. Ảnh Đao9/12action đủ góc đã kiểm source; idle/walk/basic cũ và chuyển thế vẫn cần xử lý. Catalogue còn937/1008job thiếu,17source HOLD hiện trong catalogue. Chưa nghiệm thu toàn class/skill assembly hoặc gameplay.
+
+Đợt trước: [20261113g — Tước Mạch, Ảnh Bộ, Tử Diệm và né](../../docs/production/Actor_Batch_20261113g_vi.md), **26 sheet /416 khung nguồn**. Bốn action ×5 góc và sáu VFX component, timing từng pha và điểm gắn từng frame được kiểm trong Godot/Studio.
 
 Đợt trước: [20261113f — Huyết Nguyệt, Tàn Hỏa và Xích Ảnh](../../docs/production/Actor_Batch_20261113f_vi.md), **20 sheet /320 khung nguồn**. Ba body skill Ảnh Đao ×5 góc, năm VFX dấu/nổ/tắt và hai chiều chém. Timing raw/nhóm, neo giày tối, grid directional và đuôi RGBA được kiểm riêng.
 

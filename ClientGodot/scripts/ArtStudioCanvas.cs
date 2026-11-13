@@ -34,19 +34,27 @@ public partial class ArtStudioCanvas : Control
     public ArtStudioClip Clip => Document.Clips[ClipIndex];
     public override void _Ready() { ClipContents = true; MouseDefaultCursorShape = CursorShape.Cross; }
     public void ClearTextures() { foreach (var t in _textures.Values) t.Dispose(); _textures.Clear(); }
-    public void FitContent()
+    public Rect2 ContentBounds(bool wholeClip = false)
     {
-        if (Document == null || Size.X < 40 || Size.Y < 40) return;
         Rect2 bounds = default; bool first = true;
+        if (Document == null) return bounds;
+        var frames = wholeClip ? Enumerable.Range(0, Clip.DurationsMs.Count).Select(i => (double)i) : new[] { Frame };
+        foreach (double frame in frames)
         foreach (var l in Document.Layers.Where(l => l.Visible))
         {
-            var p = ArtStudioSampler.Pose(l, Clip, Frame); if (p.Alpha <= 0) continue;
-            var r = l.Regions[p.SourceFrame]; var t = ArtStudioSampler.Transform(Document, Clip, l, Frame);
+            var p = ArtStudioSampler.Pose(l, Clip, frame); if (p.Alpha <= 0) continue;
+            var r = l.Regions[p.SourceFrame]; var t = ArtStudioSampler.Transform(Document, Clip, l, frame);
             var corner = -new Vector2(p.PivotX, p.PivotY);
             foreach (var point in new[] { corner, corner + new Vector2(r[2], 0), corner + new Vector2(r[2], r[3]), corner + new Vector2(0, r[3]) })
             { Vector2 world = t * point; if (first) { bounds = new Rect2(world, Vector2.Zero); first = false; } else bounds = bounds.Expand(world); }
         }
-        if (first || bounds.Size.X <= 0 || bounds.Size.Y <= 0) return;
+        return bounds;
+    }
+    public void FitContent(bool wholeClip = false)
+    {
+        if (Document == null || Size.X < 40 || Size.Y < 40) return;
+        var bounds = ContentBounds(wholeClip);
+        if (bounds.Size.X <= 0 || bounds.Size.Y <= 0) return;
         Zoom = Math.Clamp(Math.Min((Size.X - 30) / bounds.Size.X, (Size.Y - 30) / bounds.Size.Y), .1f, 8);
         Pan = Size / 2 - new Vector2(Size.X / 2, Size.Y * .86f) - bounds.GetCenter() * Zoom; QueueRedraw();
     }

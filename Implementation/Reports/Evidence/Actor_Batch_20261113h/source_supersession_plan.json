@@ -1,0 +1,43 @@
+{
+  "batch": "20261113h",
+  "retiredActiveSources": [
+    {
+      "id": "class_anh_dao_hurt",
+      "source": "Sheets/class_anh_dao_hurt.png",
+      "prompt": "Prompts/class_anh_dao_hurt.txt",
+      "columns": 8,
+      "rows": 10,
+      "generator": "built-in image_gen",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+      "status": "GENERATED_PENDING_INSPECTION"
+    },
+    {
+      "id": "class_anh_dao_death",
+      "source": "Sheets/class_anh_dao_death.png",
+      "prompt": "Prompts/class_anh_dao_death.txt",
+      "columns": 8,
+      "rows": 10,
+      "generator": "built-in image_gen",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+      "status": "GENERATED_PENDING_INSPECTION"
+    },
+    {
+      "id": "class_anh_dao_death_se",
+      "source": "Sheets/class_anh_dao_death_se_v1.png",
+      "prompt": "Prompts/class_anh_dao_death_se_v1.txt",
+      "columns": 4,
+      "rows": 4,
+      "direction": "SE",
+      "generator": "built-in image_gen",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_death.png",
+      "status": "GENERATED_PENDING_INSPECTION"
+    }
+  ],
+  "selectedNewSources": 10,
+  "newSourceFrames": 160,
+  "oldSourcePngsRetained": true,
+  "priorApprovalPinsRetired": 0,
+  "holdResolutionPendingNativeReview": false,
+  "newSourcesNativeReviewed": 10,
+  "heldAtlasRecordsMovedToHistory": 2
+}

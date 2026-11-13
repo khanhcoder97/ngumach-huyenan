@@ -84,7 +84,8 @@ public partial class ArtStudio : Control
         Toggle(views, "Lưới", true, v => { _stage.Guides = v; _stage.QueueRedraw(); });
         Toggle(views, "Onion", false, v => { _stage.Onion = v; _stage.QueueRedraw(); });
         Toggle(views, "Nền sáng", true, v => { _stage.Light = v; _stage.QueueRedraw(); });
-        Button(views, "Fit", () => _stage.FitContent());
+        Button(views, "Fit khung", () => _stage.FitContent());
+        Button(views, "Fit clip", () => _stage.FitContent(wholeClip: true));
         _stage = new ArtStudioCanvas { CustomMinimumSize = new(440, 260), SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ExpandFill, Zoom = 1.7f };
         center.AddChild(_stage); _stage.BeginEdit = BeginDrag; _stage.DragEdit = Drag; _stage.EndEdit = EndDrag;
         _stage.ViewChanged = () => Status($"Zoom {_stage.Zoom:0.00}× · cuộn để zoom, giữ chuột giữa để pan.");
@@ -322,7 +323,7 @@ public partial class ArtStudio : Control
         if (active != null) _selected = active.Id; Refresh();
     }
     private async void FitAfterLayout(bool play = false)
-    { for (int i = 0; i < 2; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); _stage.FitContent(); if (play) TogglePlay(); }
+    { for (int i = 0; i < 2; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); _stage.FitContent(wholeClip: play); if (play) TogglePlay(); }
     private void Seek(int frame) { _playing = false; _frame = Math.Clamp(frame, 0, Clip.DurationsMs.Count - 1); _time = ArtStudioSampler.TimeAt(Clip, _frame); Refresh(); }
     private void TogglePlay()
     {
