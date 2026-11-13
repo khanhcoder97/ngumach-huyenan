@@ -87,7 +87,7 @@ public sealed class ActorLibraryData : IDisposable
         while(_textures.Count>=8){string old=_order.Dequeue();if(_textures.Remove(old,out var resource))resource.Dispose();}
         texture=ResourceLoader.Load<Texture2D>(file,cacheMode:ResourceLoader.CacheMode.Ignore)??throw new InvalidOperationException("PNG unavailable or not imported: "+file);_textures.Add(file,texture);_order.Enqueue(file);return texture;
     }
-    public static double Duration(string clip)=>clip switch{"idle"=>1,"walk"=>.8,"run"=>.64,"basic_attack"=>.6,"hurt"=>.3,"death"=>1.2,"dodge"=>.48,"turn"=>.5,"interact"=>1.6,_=>.9};
+    public static double Duration(string clip)=>clip switch{"idle"=>1,"walk"=>.8,"run"=>.64,"basic_attack" or "basic_attack_02" or "basic_attack_03"=>.6,"hurt"=>.3,"death"=>1.2,"dodge"=>.48,"turn"=>.5,"interact"=>1.6,_=>.9};
     // Presentation-only review profiles, never authoritative combat/hit windows.
     public static double Duration(string actorId,string clip)=>actorId switch
     {

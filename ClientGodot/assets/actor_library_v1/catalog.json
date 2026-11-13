@@ -37,7 +37,10 @@
       "requiredClips": [
         "idle",
         "walk",
+        "run",
         "basic_attack",
+        "basic_attack_02",
+        "basic_attack_03",
         "skill_01",
         "skill_02",
         "skill_03",
@@ -46,7 +49,8 @@
         "skill_06",
         "hurt",
         "death",
-        "dodge"
+        "dodge",
+        "interact"
       ],
       "newProductionStrategy": "BAKED_SPRITE_SHEETS_V1",
       "bakedAssetUsage": "PRIMARY_ART_DIRECTION_REVIEW_PER_SHEET",
@@ -62,7 +66,10 @@
       "requiredClips": [
         "idle",
         "walk",
+        "run",
         "basic_attack",
+        "basic_attack_02",
+        "basic_attack_03",
         "skill_01",
         "skill_02",
         "skill_03",
@@ -71,7 +78,8 @@
         "skill_06",
         "hurt",
         "death",
-        "dodge"
+        "dodge",
+        "interact"
       ],
       "newProductionStrategy": "BAKED_SPRITE_SHEETS_V1",
       "bakedAssetUsage": "PRIMARY_ART_DIRECTION_REVIEW_PER_SHEET",
@@ -87,7 +95,10 @@
       "requiredClips": [
         "idle",
         "walk",
+        "run",
         "basic_attack",
+        "basic_attack_02",
+        "basic_attack_03",
         "skill_01",
         "skill_02",
         "skill_03",
@@ -96,7 +107,8 @@
         "skill_06",
         "hurt",
         "death",
-        "dodge"
+        "dodge",
+        "interact"
       ],
       "newProductionStrategy": "BAKED_SPRITE_SHEETS_V1",
       "bakedAssetUsage": "PRIMARY_ART_DIRECTION_REVIEW_PER_SHEET",
@@ -112,7 +124,10 @@
       "requiredClips": [
         "idle",
         "walk",
+        "run",
         "basic_attack",
+        "basic_attack_02",
+        "basic_attack_03",
         "skill_01",
         "skill_02",
         "skill_03",
@@ -121,7 +136,8 @@
         "skill_06",
         "hurt",
         "death",
-        "dodge"
+        "dodge",
+        "interact"
       ],
       "newProductionStrategy": "BAKED_SPRITE_SHEETS_V1",
       "bakedAssetUsage": "PRIMARY_ART_DIRECTION_REVIEW_PER_SHEET",
@@ -137,7 +153,10 @@
       "requiredClips": [
         "idle",
         "walk",
+        "run",
         "basic_attack",
+        "basic_attack_02",
+        "basic_attack_03",
         "skill_01",
         "skill_02",
         "skill_03",
@@ -146,7 +165,8 @@
         "skill_06",
         "hurt",
         "death",
-        "dodge"
+        "dodge",
+        "interact"
       ],
       "newProductionStrategy": "BAKED_SPRITE_SHEETS_V1",
       "bakedAssetUsage": "PRIMARY_ART_DIRECTION_REVIEW_PER_SHEET",

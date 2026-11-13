@@ -11,6 +11,24 @@ CLASSES={
  'CLASS_THACH_CHUY':('Thạch Chùy','TC','sturdy stocky guardian, medium tan skin, dark short hair and bronze headband, ochre and stone-grey quilted armour, squared shoulder plates, brown boots, rust sash and broad square stone hammer'),
  'CLASS_LINH_CUNG':('Linh Cung','LC','lean woodland archer, dark high ponytail, moss-green crossed tunic, short jade-and-oat layered shoulder cape, ochre wrist wraps, forest trousers, soft boots, compact bent wooden leaf-tip bow and short quiver')}
 
+# Canonical combat requires three distinct normal-hit motions plus running and
+# interaction. The earlier twelve-clip baseline omitted four class jobs.
+CLASS_BASE_CLIPS=['idle','walk','run','basic_attack','basic_attack_02','basic_attack_03',
+                  *[f'skill_{i:02}' for i in range(1,7)],'hurt','death','dodge','interact']
+
+
+def class_basic_action(actor_id,stage):
+    motions={
+        'CLASS_MINH_KIEM':('one horizontal jian forehand','one diagonal jian follow-up','one forward jian thrust'),
+        'CLASS_ANH_DAO':('one compact low dao forehand','one low wrist-roll dao follow-up','one low reverse dao cut'),
+        'CLASS_HUYEN_BUT':('the first physical brush stroke','the second distinct physical brush stroke','the third physical brush stroke with a clear finishing wrist pose'),
+        'CLASS_THACH_CHUY':('one slow horizontal stone-hammer sweep','one low stone-hammer strike','one vertical overhead stone-hammer slam'),
+        'CLASS_LINH_CUNG':('the first bow draw and arrow release','the second bow draw and arrow release','the third bow draw and arrow release')}
+    return ('Sixteen genuinely authored source poses for normal-combo stage '+str(stage)+' of three: '+motions[actor_id][stage-1]+'. '
+            'This clip contains exactly ONE hit motion, not all three hits compressed into sixteen poses. '
+            'Keep the primary prop physically gripped, correct anticipation/release/recovery and an armed ready pose for the next stage. '
+            'No detached VFX, projectiles, targets, resource grants or damage events. Combo index is presentation metadata; the server owns combat timing and outcomes.')
+
 LAYOUT=(' ORIGINAL frame-based pixel-art asset for a Vietnamese fantasy MMORPG. Crisp hard pixel clusters, dark contour, limited stepped palette; no soft paint, blur, smooth AA or gradient. High overhead top-down camera, not isometric. Genuine transparent RGBA. Exactly EIGHT columns and TEN rows, all80 whole-body sprites fully inside the canvas, wide outer transparent margin and15% gutters. Each direction spans two rows of8frames: rows1-2 NORTH/back,3-4 NORTHEAST/back-right,5-6 EAST/right profile,7-8 SOUTHEAST/front-right,9-10 SOUTH/front. Sixteen genuinely distinct consecutive animation poses per direction, read left to right then next row. Never omit the eighth column or tenth row. Same identity, outfit, proportions and camera in all80cells. Stable ground anchor, no travel across cells. No text, labels, grid lines, borders, scenery, ground or cast shadows. All props and limbs fit inside their own cell. Shrink drawings uniformly to fit; never crop.')
 ACTION={
  'idle':'calm16-pose breathing/blink/cloth or fin settle loop, seamless16to0, no walking',
@@ -62,13 +80,17 @@ def build():
             if clip.startswith('skill_'):
                 sk=next(s for s in skills if s['classId']==actor['id'] and s['slot']==int(clip[-2:]))
                 description='Sixteen-pose body/weapon casting choreography for '+sk['name']+'. Canonical description: '+sk['description']+' Render ONLY the actor and carried prop, no detached magic, attack shape, particles or target.'
-            elif clip=='basic_attack':
-                description={'CLASS_LINH_CUNG':'16-pose bow draw and release: nock0-3, draw4-7, aim8, release9-10, follow-through11-13, recover14-15. Never swing the bow like a sword.', 'CLASS_HUYEN_BUT':'16-pose physical calligraphy brush sweep: prepare0-3, lift4-7, draw one invisible ink stroke8-10, follow-through11-13, recover14-15. No detached VFX.', 'CLASS_THACH_CHUY':'16-pose weighty square stone-hammer downswing: ready0-2, both hands raise shaft3-7, drive downward8-10, follow-through11-13, recover14-15.'}.get(actor['id'],description)
+            elif actor['kind']=='CLASS' and clip in ('basic_attack','basic_attack_02','basic_attack_03'):
+                stage=1 if clip=='basic_attack' else int(clip[-2:])
+                description=class_basic_action(actor['id'],stage)
             elif re.match(r'(telegraph|attack|recovery)_\d+',clip):
                 phase=clip.split('_')[0];description='Sixteen-pose '+phase+' sequence for attack variant '+clip[-2:]+'. Follow the authored tell/action in the creature description. Telegraph anticipates without hitting, attack releases, recovery settles. No separate magical VFX, environment or targets.'
             description=creature_action(actor,clip,description)
             key=actor['id'].lower()+'_'+clip
             jobs.append(dict(id=key,ownerId=actor['id'],kind=actor['kind'],clip=clip,columns=8,rows=10,framesPerDirection=16,directions=['N','NE','E','SE','S'],status='REQUESTED',referenceJob=None if clip=='idle' else actor['id'].lower()+'_idle',prompt='Subject '+actor['id']+' — '+actor['name']+'. Identity: '+actor['appearance']+'. Animation: '+description+'.'+LAYOUT))
+            if actor['kind']=='CLASS' and clip in ('basic_attack','basic_attack_02','basic_attack_03'):
+                jobs[-1]['comboStage']=1 if clip=='basic_attack' else int(clip[-2:])
+                jobs[-1]['combatAuthority']='PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES'
             if not actor['mirrorAllowed']:
                 for direction in ['SW','W','NW']:
                     jobs.append(dict(id=key+'_'+direction.lower(),ownerId=actor['id'],kind=actor['kind'],clip=clip,direction=direction,columns=4,rows=4,framesPerDirection=16,directions=[direction],status='REQUESTED',referenceJob=actor['id'].lower()+'_idle',prompt='Original anatomically consistent '+direction+' view of '+actor['name']+'. Identity: '+actor['appearance']+'. '+description+'. EXACT4columns4rows16consecutive full-body frames, one direction ONLY: '+direction+'. Preserve the correct anatomical side of bandages, broken horn, mask, armour and held props: redraw this angle, do NOT horizontally mirror another view. All sixteen frames whole, padded and separate; stable ground anchor. Top-down crisp pixel art, limited stepped palette, genuine transparent alpha. No text/grid/border/background/ground/shadow.'))
@@ -76,7 +98,7 @@ def build():
         sid,code,slot,name,body=match.groups();cid=next(k for k,v in CLASSES.items() if v[1]==code)
         skills.append(dict(id=sid,classId=cid,slot=int(slot),name=name,description=body.strip()))
     for cid,(name,code,appearance) in CLASSES.items():
-        add(dict(id=cid,name=name,kind='CLASS',appearance=appearance,uniqueFace=True,renderHeightPx=36,requiredClips=['idle','walk','basic_attack',*[f'skill_{i:02}' for i in range(1,7)],'hurt','death','dodge']))
+        add(dict(id=cid,name=name,kind='CLASS',appearance=appearance,uniqueFace=True,renderHeightPx=36,requiredClips=list(CLASS_BASE_CLIPS)))
     # Only table definition rows create actors. Regex references elsewhere are not new species.
     creatures=[]
     for line in bible.splitlines():

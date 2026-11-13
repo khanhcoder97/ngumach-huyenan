@@ -4,7 +4,9 @@
 
 **Đang sản xuất; chưa hoàn thành toàn bộ thư viện.** Chuẩn16–20pose thực/clip/hướng, renderer60FPS. PNG mới là ứng viên review, chưa tự thay asset gameplay.
 
-Đợt mới nhất: [20261113h — phản ứng có đao của Ảnh Đao](../../docs/production/Actor_Batch_20261113h_vi.md), **10 sheet /160 khung nguồn**. Trúng đòn và ngã ×5 góc, gốc chân riêng từng frame và kiểm nối phản ứng tám hướng; Studio thêm Fit clip. Hai atlas HOLD chuyển lịch sử sau khi nguồn thay được kiểm native. Ảnh Đao9/12action đủ góc đã kiểm source; idle/walk/basic cũ và chuyển thế vẫn cần xử lý. Catalogue còn937/1008job thiếu,17source HOLD hiện trong catalogue. Chưa nghiệm thu toàn class/skill assembly hoặc gameplay.
+Đợt mới nhất: [20261113i — đứng, đi và chém thường có đao](../../docs/production/Actor_Batch_20261113i_vi.md), **15 sheet /240 pose nguồn**, 14 nguồn duyệt và walk E/W còn HOLD. Thêm phòng nối chuyển động tám hướng; 19 video native. Ảnh Đao11/16action đủ góc đã kiểm source theo phạm vi mới. Đã bổ sung20job class bị thiếu (chạy, tương tác, combo nhát2/3), toàn hàng đợi1028job còn957job chưa đủ nguồn. Xem [quy định16action/class](../../docs/production/Actor_Action_Scope_20261113_vi.md). Chưa nghiệm thu toàn class hoặc gameplay.
+
+Đợt trước: [20261113h — phản ứng có đao của Ảnh Đao](../../docs/production/Actor_Batch_20261113h_vi.md), **10 sheet /160 khung nguồn**. Trúng đòn và ngã ×5 góc, gốc chân riêng từng frame và kiểm nối phản ứng tám hướng; Studio thêm Fit clip. Hai atlas HOLD chuyển lịch sử sau khi nguồn thay được kiểm native. Ảnh Đao9/12action đủ góc đã kiểm source; idle/walk/basic cũ và chuyển thế vẫn cần xử lý. Catalogue còn937/1008job thiếu,17source HOLD hiện trong catalogue. Chưa nghiệm thu toàn class/skill assembly hoặc gameplay.
 
 Đợt trước: [20261113g — Tước Mạch, Ảnh Bộ, Tử Diệm và né](../../docs/production/Actor_Batch_20261113g_vi.md), **26 sheet /416 khung nguồn**. Bốn action ×5 góc và sáu VFX component, timing từng pha và điểm gắn từng frame được kiểm trong Godot/Studio.
 
@@ -24,7 +26,7 @@
 
 Catalogue130actor:5class,30quái (21gốc+9tinh anh),12boss,83NPC; thêm30kỹ năng. Nguồn là NPC_Actor_Production_Registry_vi.csv, Art Bible, World_Spawn_Gathering_Manifest_vi.csv và Combat_Skills_VFX_Animation_Spec_vi.md. BOSS_WEEKLY_ROTATION trỏ các boss thật.
 
-Hàng đợi1008page bắt buộc chỉ bao phủ base actor animation và timeline VFX. Chưa gồm biến thể trang bị/ngoại trang/cơ thể, portrait/icon tĩnh, thú cưỡi/pet, map/UI hoặc VFX thành phần tách thêm theo cơ chế. Đây là công việc cần làm, không phải1008ảnh đã sinh. production_catalog.json/generation_jobs.json là kế hoạch. generation_jobs.json chứa prompt dự kiến; **Prompts + generation_records/history** ghi prompt thực đã dùng. Lịch sử và Rejections giữ bản bị thay/loại.
+Hàng đợi1028job bắt buộc (16action/class; baseline1008 thiếu20job) chỉ bao phủ base actor animation và timeline VFX. Chưa gồm biến thể trang bị/ngoại trang/cơ thể, portrait/icon tĩnh, thú cưỡi/pet, map/UI hoặc VFX thành phần tách thêm theo cơ chế. Đây là công việc cần làm, không phải1028ảnh đã sinh. production_catalog.json/generation_jobs.json là kế hoạch. generation_jobs.json chứa prompt dự kiến; **Prompts + generation_records/history** ghi prompt thực đã dùng. Lịch sử và Rejections giữ bản bị thay/loại.
 
 coverage.json báo số page qua cấu trúc, pending và approval. Có3clip Minh Kiếm kế thừa Motion16; nguồn mới được duyệt riêng theo PNG/binding sau kiểm native. Duyệt source/clip không phải nghiệm thu toàn actor. Pilot một hướng/page sửa riêng không được cộng thành actor hoàn chỉnh. Còn thiếu phần lớn class/skill/quái/boss/NPC và chuỗi VFX nhiều thành phần.
 
@@ -41,6 +43,7 @@ Từ repo:
 ```powershell
 python Tools/ArtProduction/build_actor_library_plan.py --check
 python Tools/ArtProduction/inspect_actor_library.py --export --check
+ClientGodot/Run_Actor_Library.ps1 -LocomotionReview
 ClientGodot/Run_Actor_Library.ps1 -Test
 ClientGodot/Run_Actor_Library.ps1
 ClientGodot/Run_Actor_Library.ps1 -ReactionReview

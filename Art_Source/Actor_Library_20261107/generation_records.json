@@ -1,13 +1,256 @@
 [
   {
-    "id": "class_anh_dao_idle",
-    "source": "Sheets/class_anh_dao_idle.png",
-    "prompt": "Prompts/class_anh_dao_idle.txt",
-    "columns": 8,
-    "rows": 10,
+    "id": "class_anh_dao_idle_n",
+    "source": "Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_idle_n_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261113i",
     "generator": "built-in image_gen",
-    "status": "GENERATED_PENDING_INSPECTION",
-    "reference": "Art_Source/Actor_Library_20261107/Rejections/class_anh_dao_idle_v0.png"
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_n_v1_20261113g.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png"
+    ],
+    "inputRole": "IDENTITY_FACING_AND_ARMED_IDLE_RHYTHM",
+    "bodyReferenceHeight": 192.0,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_AND_ARMED_IDLE_RHYTHM",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_n_v1_20261113g.png",
+        "sourceSha256": "7fc6a3a86d635137a03d37ac6ebf3e9a0815fafd429c054d1be5782a4f9f8357"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_se_v1_20261113i.png"
+      }
+    ],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_se_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_idle_ne",
+    "source": "Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_idle_ne_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261113i",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_ne_v2_20261113g.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png"
+    ],
+    "bodyReferenceHeight": 229.0,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_ne_v2_20261113g.png",
+        "sourceSha256": "f8f22db390354274d71db76ad51c6f11373e0c0d8ab5f71791dad0b645b35fe0"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_se_v1_20261113i.png"
+      }
+    ],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_se_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_idle_e",
+    "source": "Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_idle_e_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "batch": "20261113i",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_e_v1_20261113g.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 215.0,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_e_v1_20261113g.png",
+        "sourceSha256": "45ca7114b11a7bbb2b376aad546038a726ed3f450417f44eaffbac2c4180b018"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_idle_se",
+    "source": "Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_idle_se_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "batch": "20261113i",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "bodyReferenceHeight": 201.0,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_se_v2_20261113g.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_ARMED_IDLE",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_ARMED_IDLE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_se_v2_20261113g.png",
+        "sourceSha256": "6b6f5dcb882c0394d9757fd7844e622f149a8e05bd74413fe4794abd073e5414"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_idle_s",
+    "source": "Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_idle_s_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "batch": "20261113i",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_s_v1_20261113g.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 209.0,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_s_v1_20261113g.png",
+        "sourceSha256": "8a8a175c060876419ec55bcee53f043fd9b00ecb1991e61e98539d3365b41af1"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
   },
   {
     "id": "mob_carpling_idle_s",
@@ -21,14 +264,279 @@
     "pivotMode": "SILVER_CORE_CENTER"
   },
   {
-    "id": "class_anh_dao_walk",
-    "source": "Sheets/class_anh_dao_walk.png",
-    "prompt": "Prompts/class_anh_dao_walk.txt",
-    "columns": 8,
-    "rows": 10,
+    "id": "class_anh_dao_walk_n",
+    "source": "Sheets/class_anh_dao_walk_n_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_n_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261113i",
     "generator": "built-in image_gen",
-    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
-    "status": "GENERATED_PENDING_INSPECTION"
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 188.5090909090909,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+        "sourceSha256": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_n_v1_20261113i.png"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_n_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+        "sourceSha256": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_walk_ne",
+    "source": "Sheets/class_anh_dao_walk_ne_v3_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_ne_v3_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261113i",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+    "inputRole": "NEW_GAIT_FROM_IDENTITY_AND_OPPOSITE_LEG_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_s_v1_20261113i.png"
+    ],
+    "replacesSource": "Sheets/class_anh_dao_walk_ne_v1_20261113i.png",
+    "bodyReferenceHeight": 245.22834645669292,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "NEW_GAIT_FROM_IDENTITY_AND_OPPOSITE_LEG_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+        "sourceSha256": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_ne_v1_20261113i.png"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_s_v1_20261113i.png",
+        "sourceSha256": "b4b245ca48d07e1eee2fea10b73947c5b891c4abc8f66ef316cceca1166746d5",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_walk_s_v1_20261113i.png"
+      }
+    ],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_ne_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+        "sourceSha256": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd"
+      },
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_walk_s_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_s_v1_20261113i.png",
+        "sourceSha256": "b4b245ca48d07e1eee2fea10b73947c5b891c4abc8f66ef316cceca1166746d5"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_walk_e",
+    "source": "Sheets/class_anh_dao_walk_e_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_e_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "batch": "20261113i",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 225.40322580645162,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_e_v1_20261113i.png"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_e_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "gaitReviewNote": "HOLD: E near/far contact/overlap at0/8 not convincingly opposite; mirroredW inherits hold."
+  },
+  {
+    "id": "class_anh_dao_walk_se",
+    "source": "Sheets/class_anh_dao_walk_se_v2_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_se_v2_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "batch": "20261113i",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "bodyReferenceHeight": 214.28925619834712,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_se_v1_20261113i.png",
+    "inputRole": "EDIT_TARGET_GAIT_CORRECTION",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "EDIT_TARGET_GAIT_CORRECTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_se_v1_20261113i.png",
+        "sourceSha256": "db0befdbecd80caf1c78957705391fee9f69e1f60787cb5823ec8f0f03d0c202",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_walk_se_v1_20261113i.png"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_walk_se_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_walk_se_v1_20261113i.png",
+        "sourceSha256": "db0befdbecd80caf1c78957705391fee9f69e1f60787cb5823ec8f0f03d0c202"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_anh_dao_walk_s",
+    "source": "Sheets/class_anh_dao_walk_s_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_s_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "batch": "20261113i",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 209.0,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+        "sourceSha256": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_s_v1_20261113i.png"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_s_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+        "sourceSha256": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
   },
   {
     "id": "class_huyen_but_idle",
@@ -61,14 +569,274 @@
     "status": "GENERATED_PENDING_INSPECTION"
   },
   {
-    "id": "class_anh_dao_basic_attack",
-    "source": "Sheets/class_anh_dao_basic_attack.png",
-    "prompt": "Prompts/class_anh_dao_basic_attack.txt",
-    "columns": 8,
-    "rows": 10,
+    "id": "class_anh_dao_basic_attack_n",
+    "source": "Sheets/class_anh_dao_basic_attack_n_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_n_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261113i",
     "generator": "built-in image_gen",
-    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
-    "status": "GENERATED_PENDING_INSPECTION"
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 198.98181818181817,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+        "sourceSha256": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_n_v1_20261113i.png"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_n_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+        "sourceSha256": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "comboStage": 1,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES"
+  },
+  {
+    "id": "class_anh_dao_basic_attack_ne",
+    "source": "Sheets/class_anh_dao_basic_attack_ne_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_ne_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261113i",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 252.44094488188978,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+        "sourceSha256": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_ne_v1_20261113i.png"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_ne_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_ne_v1_20261113i.png",
+        "sourceSha256": "06a32779cb9dfef579ac84a5a8dacde205fa9d5eff450175c05e3acf7a03c8cd"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "comboStage": 1,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES"
+  },
+  {
+    "id": "class_anh_dao_basic_attack_e",
+    "source": "Sheets/class_anh_dao_basic_attack_e_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_e_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "batch": "20261113i",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 223.66935483870967,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_e_v1_20261113i.png"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_e_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "comboStage": 1,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES"
+  },
+  {
+    "id": "class_anh_dao_basic_attack_se",
+    "source": "Sheets/class_anh_dao_basic_attack_se_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_se_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "batch": "20261113i",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "bodyReferenceHeight": 207.64462809917356,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+    "inputRole": "ARMED_IDLE_IDENTITY_REFERENCE_NEW_BASIC_ATTACK",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "ARMED_IDLE_IDENTITY_REFERENCE_NEW_BASIC_ATTACK",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_se_v1_20261113i.png"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_se_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "comboStage": 1,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES"
+  },
+  {
+    "id": "class_anh_dao_basic_attack_s",
+    "source": "Sheets/class_anh_dao_basic_attack_s_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_s_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "batch": "20261113i",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 218.24778761061947,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+        "sourceSha256": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_s_v1_20261113i.png"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_s_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_s_v1_20261113i.png",
+        "sourceSha256": "e5acbcbb625dbe1c54c8ac4a40094c68a1264e1468ffaad040bfa353a98d472c"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "comboStage": 1,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES"
   },
   {
     "id": "class_huyen_but_walk",

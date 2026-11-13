@@ -1,12 +1,13 @@
 param(
     [switch]$Test,[string]$GodotPath,[string]$DotnetPath,[switch]$SkipBuild,
-    [switch]$CombatReview,[switch]$ReactionReview,[string]$Actor,[string]$Clip,
+    [switch]$CombatReview,[switch]$ReactionReview,[switch]$LocomotionReview,[string]$Actor,[string]$Clip,
     [ValidateRange(1,2)][int]$CombatVariant=1,
     [ValidateSet('N','NE','E','SE','S','SW','W','NW')][string]$Direction,
     [ValidateRange(0,15)][int]$Frame=7,[string]$Capture
 )
 $ErrorActionPreference='Stop'
-if($ReactionReview -and $CombatReview){throw 'Choose either combat review or reaction review.'}
+if(@($CombatReview,$ReactionReview,$LocomotionReview | Where-Object {$_}).Count -gt 1){throw 'Choose one review mode.'}
+if($LocomotionReview -and (($Actor -and $Actor -ne 'CLASS_ANH_DAO') -or $Clip -or $Direction -or $Capture)){throw 'Locomotion review supports Anh Dao; use Studio for a single clip/direction/capture.'}
 if($ReactionReview -and (($Actor -and $Actor -notin @('CLASS_MINH_KIEM','CLASS_ANH_DAO')) -or $Clip -or $Direction -or $Capture)){throw 'Reaction review supports Minh Kiem or Anh Dao; use Studio for a single clip/direction/capture.'}
 $toolRoot=Join-Path (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) 'NGUMACHHUYENAN-tools'
 if(-not $GodotPath){$GodotPath=Join-Path $toolRoot 'godot-4.7.2/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe'}
@@ -24,10 +25,10 @@ try {
     if($CombatReview -and $Actor -notin @('MOB_WATERROOT','MOB_CARPLING')){throw 'Combat review supports Waterroot or Carpling.'}
     if($CombatReview -and $Test -and $Actor -ne 'MOB_WATERROOT'){throw 'The cue self-test requires MOB_WATERROOT.'}
     if($CombatVariant -eq 2 -and (-not $CombatReview -or $Actor -ne 'MOB_WATERROOT')){throw 'Variant 2 requires Waterroot combat review.'}
-    $scene=if($ReactionReview){'ActorReactionReview.tscn'}elseif($CombatReview){'CarplingCombatReview.tscn'}else{'ActorLibrary.tscn'}
+    $scene=if($LocomotionReview){'ActorLocomotionReview.tscn'}elseif($ReactionReview){'ActorReactionReview.tscn'}elseif($CombatReview){'CarplingCombatReview.tscn'}else{'ActorLibrary.tscn'}
     $launchArgs=@('--path',$PSScriptRoot,$scene,'--')
-    if($Test){$launchArgs=@('--headless')+$launchArgs;$launchArgs+=@($(if($ReactionReview){'--reaction-self-test'}elseif($CombatReview){'--combat-self-test'}else{'--library-self-test'}))}
-    if($Actor -and -not $ReactionReview){$launchArgs+=@($(if($CombatReview){'--combat-actor'}else{'--actor'}),$Actor)}
+    if($Test){$launchArgs=@('--headless')+$launchArgs;$launchArgs+=@($(if($LocomotionReview){'--locomotion-self-test'}elseif($ReactionReview){'--reaction-self-test'}elseif($CombatReview){'--combat-self-test'}else{'--library-self-test'}))}
+    if($Actor -and -not $ReactionReview -and -not $LocomotionReview){$launchArgs+=@($(if($CombatReview){'--combat-actor'}else{'--actor'}),$Actor)}
     if($ReactionReview -and $Actor){$launchArgs+=@('--reaction-actor',$Actor)}
     if($Clip -and -not $CombatReview){$launchArgs+=@('--clip',$Clip)}
     if($Direction -and $CombatReview){$launchArgs+=@('--combat-direction',$Direction)}

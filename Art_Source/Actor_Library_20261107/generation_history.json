@@ -1053,5 +1053,80 @@
     "reason": "Replaced by five new armed source angles per reaction; previous whole atlas had a repeated recoil or incompatible fall and the standalone SE repair lacked the held dao.",
     "supersededByBatch": "20261113h",
     "archiveStatus": "UNAPPROVED_OR_HELD_SOURCE_PRESERVED_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_idle",
+    "source": "Sheets/class_anh_dao_idle.png",
+    "prompt": "Prompts/class_anh_dao_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_INSPECTION",
+    "reference": "Art_Source/Actor_Library_20261107/Rejections/class_anh_dao_idle_v0.png",
+    "reason": "Replace unapproved whole base atlas with armed five-angle I sources; old PNG/prompt bytes retained.",
+    "supersededByBatch": "20261113i",
+    "archiveStatus": "UNAPPROVED_SOURCE_PRESERVED_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_walk",
+    "source": "Sheets/class_anh_dao_walk.png",
+    "prompt": "Prompts/class_anh_dao_walk.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION",
+    "reason": "Replace unapproved whole base atlas with armed five-angle I sources; old PNG/prompt bytes retained.",
+    "supersededByBatch": "20261113i",
+    "archiveStatus": "UNAPPROVED_SOURCE_PRESERVED_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_basic_attack",
+    "source": "Sheets/class_anh_dao_basic_attack.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION",
+    "reason": "Replace unapproved whole base atlas with armed five-angle I sources; old PNG/prompt bytes retained.",
+    "supersededByBatch": "20261113i",
+    "archiveStatus": "UNAPPROVED_SOURCE_PRESERVED_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_walk_se",
+    "source": "Sheets/class_anh_dao_walk_se_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_se_v1_20261113i.txt",
+    "status": "SUPERSEDED_GAIT_SOURCE_REPAIR",
+    "reason": "Source0 and8 repeat the same leading leg; v2 redraws the opposite near/far support pattern across16poses. Still needs native gait review.",
+    "supersededByBatch": "20261113i",
+    "archiveStatus": "GAIT_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_walk_ne",
+    "source": "Sheets/class_anh_dao_walk_ne_v2_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_ne_v2_20261113i.txt",
+    "status": "REJECTED_GAIT_REVISION",
+    "reason": "Still repeats far trailing boot at source0 and8. Keep v1 selected WIP; neither passes native gait review.",
+    "supersededByBatch": "20261113i",
+    "archiveStatus": "GAIT_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_walk_ne",
+    "source": "Sheets/class_anh_dao_walk_ne_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_ne_v1_20261113i.txt",
+    "status": "SUPERSEDED_GAIT_SOURCE_REPAIR",
+    "reason": "v1/v2 same trailing boot at0/8; v3 source0 right/down-right vs8 left/down-left with intermediate passing legs. Native review still required.",
+    "supersededByBatch": "20261113i",
+    "archiveStatus": "GAIT_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_walk_e",
+    "source": "Sheets/class_anh_dao_walk_e_v2_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_e_v2_20261113i.txt",
+    "status": "REJECTED_GAIT_REVISION",
+    "reason": "Near/far support at0 and8 still insufficiently reversed. Retain selectedv1 as HOLD candidate, not production approval.",
+    "supersededByBatch": "20261113i",
+    "archiveStatus": "GAIT_REPAIR_HISTORY_NOT_RENDERED"
   }
 ]
