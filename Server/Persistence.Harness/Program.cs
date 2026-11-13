@@ -262,7 +262,31 @@ public static class Program
             return 10;
         }
 
-        await Task.Delay(int.Parse(options.GetValueOrDefault("delay-ms", "1000"), System.Globalization.CultureInfo.InvariantCulture));
+        if (options.TryGetValue("ready-file", out var readyFile))
+        {
+            await File.WriteAllTextAsync(readyFile, "ready");
+        }
+
+        if (options.TryGetValue("barrier", out var barrierPath))
+        {
+            // Deterministic test handshake: wait until the test has committed a takeover,
+            // instead of racing a fixed delay against process startup and machine load.
+            var deadline = DateTimeOffset.UtcNow.AddSeconds(15);
+            while (!File.Exists(barrierPath))
+            {
+                if (DateTimeOffset.UtcNow > deadline)
+                {
+                    Console.WriteLine(JsonSerializer.Serialize(new { status = "barrier-timeout" }));
+                    return 12;
+                }
+
+                await Task.Delay(10);
+            }
+        }
+        else
+        {
+            await Task.Delay(int.Parse(options.GetValueOrDefault("delay-ms", "1000"), System.Globalization.CultureInfo.InvariantCulture));
+        }
 
         var request = new MutationRequest(
             Required(options, "key"),

@@ -34,11 +34,13 @@ contracts, canonical XY, art; production gate OFF; không merge PR #132/#98.
 - Restore đổi sang **staged swap**: copy backup vào `<target>.restore.tmp`, verify, mới
   chuyển target cũ sang `<target>.restore-old`, publish temp, verify lại, rồi xóa bản cũ.
   Nếu bất kỳ bước swap/verify nào lỗi, target cũ được đưa lại; temp luôn được dọn.
-- `Restore_WhenTargetIoIsDenied_KeepsExistingDatabaseIntact`: giữ file target bằng
-  `FileStream(FileShare.Read)`; restore bị từ chối, DB cũ vẫn đọc được state/receipt, không
-  còn `.restore.tmp`/`.restore-old`.
-- `Backup_WhenSourceIoIsDenied_PublishesNothing`: khóa source; backup fail, không tạo file
-  backup/manifest/tmp.
+- `Restore_WhenTargetIoIsDenied_KeepsExistingDatabaseIntact`: trên Windows giữ file target
+  bằng `FileStream(FileShare.Read)`; trên Linux/macOS share mode chỉ là advisory nên test
+  chmod thư mục target thành read-only (giữ lại mode cũ trong `finally`). Restore bị từ chối,
+  DB cũ vẫn đọc được state/receipt, không còn `.restore.tmp`/`.restore-old`.
+- `Backup_WhenSourceIoIsDenied_PublishesNothing`: trên Windows khóa source
+  (`FileShare.None`); trên Linux/macOS chmod file DB thành `None`, sau đó trả mode cũ.
+  Backup fail, không tạo file backup/manifest/tmp.
 - `Restore_SameBackupTwice_IsRepeatable`: restore hai lần cho cùng hash/counts/state.
 - Backup đè file cũ dùng `File.Move(overwrite)` sau khi file mới đã verify, không xóa bản cũ
   trước khi có bản thay thế.
@@ -54,6 +56,12 @@ contracts, canonical XY, art; production gate OFF; không merge PR #132/#98.
   `null`.
 
 ### R4 — churn nhiều đời + restart
+
+- `ExpiredLease_NewOwnerCommits_OldOwnerIsRefusedAsStale` bỏ `Task.Delay` cố định: harness
+  ghi `--ready-file` sau khi acquire lease, rồi chờ `--barrier` do test ghi sau khi process
+  thứ hai commit. Kết quả stale fencing là tất định, không phụ thuộc tốc độ khởi động máy.
+  Đây là sửa lỗi flaky phát hiện trên CI Linux (2 test IO-denied fail vì share mode của Unix
+  chỉ advisory; xem mục 3).
 
 - `DeathLootReceipt_ReplayKeepsRollAndDoesNotDoubleGrant`: death có loot ledger/outbox; replay
   không roll lại, ledger/outbox/life không đổi.
@@ -84,6 +92,15 @@ dotnet test Server/Persistence.Tests/Server.Persistence.Tests.csproj -c Release
 TRX: `C:\Users\khanh\AppData\Local\Temp\opencode\qr01-results-r3\qr01-r3.trx`
 (không commit TRX; CI upload artifact riêng).
 
+Clean-clone tại commit `97af4ec3` (export `git archive HEAD`, không dùng working tree):
+restore `--locked-mode`, build 0 warning/0 error, test **77/77 passed** trong 1 m 22 s.
+
+CI Linux tại chính commit `97af4ec3` đã **fail 2 test IO-denied** vì `FileShare` trên Unix
+chỉ là advisory; 75/77 pass. Đã sửa test để dùng chmod trên Unix và thay `Task.Delay` bằng
+handshake ready/barrier cho stale-fencing; chạy lại local 2 lần liên tiếp **77/77** và
+`SubprocessTests` 3 lần liên tiếp **7/7**. Kết quả CI của commit sửa lỗi được ghi ở issue #79
+và PR #132 sau khi workflow hoàn tất.
+
 Lưu ý vận hành: trong lúc chạy test lần đầu, ổ C hết chỗ do các bản clean-clone tạm trước đó;
 test dừng với `IOException: There is not enough space on the disk` tại `TempWorkspace.Create`.
 Đã xóa đúng các thư mục tạm do mình tạo (`ngumach-qr01-tests`, `opencode\qr01-clean*`,
@@ -95,7 +112,8 @@ test dừng với `IOException: There is not enough space on the disk` tại `Te
 - **R9 blocked:** cần Codex review gói interface và Qoder local nối adapter sau feature gate;
   sau đó mới chạy restart HTTP thật. Không thể tự review/tự merge hoặc sửa `Server/Health`
   trong checkpoint này.
-- Disk-full và ACL-denied: chưa có môi trường cô lập; IO-denied bằng file lock đã test.
+- Disk-full và ACL-denied: chưa có môi trường cô lập; IO-denied đã test bằng file lock trên
+  Windows và chmod trên Unix (CI Linux), không phải disk-full.
 - Crash kill đúng điểm migration: mới mô phỏng bằng DDL fail trong transaction.
 - Tombstone expiry/reclaim chờ quyết định expiry; không giảm 30 ngày thành capacity.
 - PostgreSQL provider, rate-limit quota, auth edge: ngoài module này.

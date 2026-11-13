@@ -169,12 +169,8 @@ public sealed class BackupRecoveryTests
         var targetLease = await target.AcquireAsync("char-a");
         await target.CommitAsync(target.Request("key-target", "char-a", targetLease.FencingToken), "{\"gold\":2}");
 
-        // Hold the target open with FileShare.Read: Windows refuses the delete/replace that
-        // a "copy over the live file" restore would need. The original must survive.
-        using (new FileStream(target.Workspace.DatabasePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-        {
-            await Assert.ThrowsAnyAsync<Exception>(() => source.Backups.RestoreAsync(backupPath, target.Workspace.DatabasePath));
-        }
+        await DenyTargetWriteAsync(target.Workspace.DatabasePath, () =>
+            Assert.ThrowsAnyAsync<Exception>(() => source.Backups.RestoreAsync(backupPath, target.Workspace.DatabasePath)));
 
         var unchanged = new PersistenceDatabase(PersistenceOptions.ForFile(target.Workspace.DatabasePath));
         Assert.Equal("{\"gold\":2}", (await unchanged.ReadStateAsync("char-a"))!.StateJson);
@@ -191,14 +187,64 @@ public sealed class BackupRecoveryTests
         await fixture.CommitAsync(fixture.Request("key-io", "char-a", lease.FencingToken), "{\"gold\":1}");
         var backupPath = fixture.Workspace.File("denied-backup.sqlite");
 
-        using (new FileStream(fixture.Workspace.DatabasePath, FileMode.Open, FileAccess.Read, FileShare.None))
-        {
-            await Assert.ThrowsAnyAsync<Exception>(() => fixture.Backups.CreateBackupAsync(backupPath));
-        }
+        await DenySourceReadAsync(fixture.Workspace.DatabasePath, () =>
+            Assert.ThrowsAnyAsync<Exception>(() => fixture.Backups.CreateBackupAsync(backupPath)));
 
         Assert.False(File.Exists(backupPath));
         Assert.False(File.Exists(backupPath + ".manifest.json"));
         Assert.False(File.Exists(backupPath + ".tmp"));
+    }
+
+    // Windows: an open handle with FileShare.None/Read blocks the delete/replace SQLite needs.
+    // Unix: share modes are advisory, so deny access through the filesystem instead: chmod the
+    // database file (backup) or its directory (restore) and restore the mode afterwards.
+    private static async Task DenySourceReadAsync(string databasePath, Func<Task> action)
+    {
+        if (OperatingSystem.IsWindows())
+        {
+            using (new FileStream(databasePath, FileMode.Open, FileAccess.Read, FileShare.None))
+            {
+                await action();
+            }
+
+            return;
+        }
+
+        var original = File.GetUnixFileMode(databasePath);
+        File.SetUnixFileMode(databasePath, UnixFileMode.None);
+        try
+        {
+            await action();
+        }
+        finally
+        {
+            File.SetUnixFileMode(databasePath, original);
+        }
+    }
+
+    private static async Task DenyTargetWriteAsync(string databasePath, Func<Task> action)
+    {
+        if (OperatingSystem.IsWindows())
+        {
+            using (new FileStream(databasePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                await action();
+            }
+
+            return;
+        }
+
+        var directory = Path.GetDirectoryName(Path.GetFullPath(databasePath))!;
+        var original = File.GetUnixFileMode(directory);
+        File.SetUnixFileMode(directory, UnixFileMode.UserRead | UnixFileMode.UserExecute);
+        try
+        {
+            await action();
+        }
+        finally
+        {
+            File.SetUnixFileMode(directory, original);
+        }
     }
 
     [Fact]

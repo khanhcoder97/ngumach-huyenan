@@ -106,7 +106,7 @@ receipts. Both upgrades are exercised from a synthetic v1 database.
 | Migration checksum/future version, v1→v3 upgrade, integrity | IMPLEMENTED + TESTED |
 | Backup/restore/corrupt/truncated/digest | IMPLEMENTED + TESTED |
 | Restore staged/replace, locked target preserved, repeat restore | IMPLEMENTED + TESTED |
-| IO-denied via real file lock (backup and restore) | TESTED; ACL/disk-full still UNVERIFIED |
+| IO-denied via real file lock on Windows / chmod on Unix (backup and restore) | TESTED in CI Linux and locally; ACL/disk-full still UNVERIFIED |
 | Readiness/metrics with redacted output | IMPLEMENTED + TESTED |
 | Benchmark commit/replay/outbox/contention | MEASURED on this machine (see R2 report) |
 | Disk-full / IO-denied / ACL-denied recovery | IO-denied TESTED with a locked file; disk-full and ACL UNVERIFIED |

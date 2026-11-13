@@ -118,6 +118,8 @@ public sealed class SubprocessTests
     public async Task ExpiredLease_NewOwnerCommits_OldOwnerIsRefusedAsStale()
     {
         await using var fixture = await TestFixture.CreateAsync("char-a");
+        var ready = fixture.Workspace.File("old-ready");
+        var barrier = fixture.Workspace.File("old-go");
 
         // The old process owns fencing token 1 and waits past its 200 ms lease TTL.
         var oldWriter = StartHarness(
@@ -127,11 +129,12 @@ public sealed class SubprocessTests
             "--owner", "owner-old",
             "--lease-ttl-ms", "200",
             "--grace-ms", "0",
-            "--delay-ms", "1500",
+            "--ready-file", ready,
+            "--barrier", barrier,
             "--key", "key-old-writer",
             "--state", "{\"writer\":\"old\"}");
 
-        await Task.Delay(600);
+        await WaitForFileAsync(ready, "old writer did not acquire its lease");
 
         // A real second process takes over with a higher fencing token and commits first.
         var takeover = await RunHarnessAsync(
@@ -151,6 +154,8 @@ public sealed class SubprocessTests
             "{\"writer\":\"new\"}");
         Assert.Equal(MutationStatus.Committed, committed.Status);
 
+        // Only now let the old writer attempt its stale commit.
+        await File.WriteAllTextAsync(barrier, "go");
         var oldResult = await oldWriter;
         Assert.Equal(11, oldResult.ExitCode);
         Assert.Contains("StaleFencingToken", oldResult.StandardOutput);
@@ -208,6 +213,20 @@ public sealed class SubprocessTests
         var counts = await fixture.Database.GetTableCountsAsync();
         Assert.Equal(301, counts["receipts"]);
         Assert.Equal(301, counts["outbox"]);
+    }
+
+    private static async Task WaitForFileAsync(string path, string failureMessage)
+    {
+        var deadline = DateTimeOffset.UtcNow.AddSeconds(15);
+        while (!File.Exists(path))
+        {
+            if (DateTimeOffset.UtcNow > deadline)
+            {
+                throw new Xunit.Sdk.XunitException(failureMessage + " within 15 seconds.");
+            }
+
+            await Task.Delay(10);
+        }
     }
 
     private static string ParseStatus(string output)
