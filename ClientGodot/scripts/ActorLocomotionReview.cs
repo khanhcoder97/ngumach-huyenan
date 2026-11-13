@@ -86,7 +86,13 @@ public partial class ActorLocomotionReview : Control
         }
         stack.AddChild(MoonGlassTheme.Label(_extended ? "Mốc vàng = root ảnh, không phải mặt phẳng vật lý. Soi chân bay, tỉ lệ, tay/đao, combo và tương tác." : "Mốc vàng cố định: soi chân, kích thước đầu, tay/đao và đường nối clip; chém thường chỉ là nhát 1 của combo.", 13, MoonGlassTheme.Muted));
         stack.AddChild(MoonGlassTheme.Label("Review cho phép xem HOLD; không cấp quyền gameplay. Xuất offline 60 bước/s không đo FPS gameplay. ESC: đóng.", 12, MoonGlassTheme.Muted));
-        if (Actor == "CLASS_MINH_KIEM") stack.AddChild(MoonGlassTheme.Label("Ba clip nền cũ không cầm kiếm: còn kiểm/sửa chuyển thế; chưa nghiệm thu class.", 12, MoonGlassTheme.Gold));
+        if (Actor == "CLASS_MINH_KIEM")
+        {
+            bool usesUnarmedBase = new[] { "idle", "walk", "basic_attack" }.Any(clip => Enumerable.Range(0, 5).Any(facing => SourcePage(clip, facing).Status == "EXISTING_NATIVE_MOTION16"));
+            stack.AddChild(MoonGlassTheme.Label(usesUnarmedBase
+                ? "Còn clip nền cũ không cầm kiếm: cần sửa chuyển thế; chưa nghiệm thu class."
+                : "Đang kiểm nguồn nền có kiếm mới; HOLD/chờ duyệt vẫn bị chặn ở chế độ chỉ dùng nguồn đã duyệt.", 12, MoonGlassTheme.Gold));
+        }
         Apply();
         if (Array.IndexOf(OS.GetCmdlineUserArgs(), "--locomotion-self-test") >= 0) SelfTest();
     }

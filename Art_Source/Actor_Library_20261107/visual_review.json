@@ -270,7 +270,15 @@
     "class_minh_kiem_interact_ne",
     "class_minh_kiem_interact_e",
     "class_minh_kiem_interact_se",
-    "class_minh_kiem_interact_s"
+    "class_minh_kiem_interact_s",
+    "class_minh_kiem_idle_n",
+    "class_minh_kiem_idle_ne",
+    "class_minh_kiem_idle_e",
+    "class_minh_kiem_idle_se",
+    "class_minh_kiem_idle_s",
+    "class_minh_kiem_walk_n",
+    "class_minh_kiem_walk_s",
+    "class_minh_kiem_basic_attack_s"
   ],
   "holds": [
     {
@@ -348,6 +356,34 @@
     {
       "id": "class_minh_kiem_run_ne",
       "reason": "HOLD: native NE run0/8 foreground/far boot ownership remains unclear; V2 repair still gives a similar rear-sole silhouette. Neither variant approved. NW mirror inherits hold. Native chain also exposes separate unarmed base-clip continuity work."
+    },
+    {
+      "id": "class_minh_kiem_walk_ne",
+      "reason": "HOLD: two opposite anatomical lead-leg contacts are not clear enough in native temporal review; repeating near/far boot ownership must be repaired, not accepted from sixteen unequal hashes."
+    },
+    {
+      "id": "class_minh_kiem_walk_e",
+      "reason": "HOLD: two opposite anatomical lead-leg contacts are not clear enough in native temporal review; repeating near/far boot ownership must be repaired, not accepted from sixteen unequal hashes."
+    },
+    {
+      "id": "class_minh_kiem_walk_se",
+      "reason": "HOLD: two opposite anatomical lead-leg contacts are not clear enough in native temporal review; repeating near/far boot ownership must be repaired, not accepted from sixteen unequal hashes."
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_n",
+      "reason": "HOLD: v2 improves early right-hand chamber but crossing frames still appear to transfer sword grip toward the left-side arm; right-hand continuity/depth requires repair."
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_ne",
+      "reason": "HOLD: chamber-to-extension sequence reads too much like a forward thrust; waist-level lateral arc and constant long-blade silhouette must be made distinct from basic_attack_03."
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_e",
+      "reason": "HOLD: chamber-to-extension sequence reads too much like a forward thrust; waist-level lateral arc and constant long-blade silhouette must be made distinct from basic_attack_03."
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_se",
+      "reason": "HOLD: chamber-to-extension sequence reads too much like a forward thrust; waist-level lateral arc and constant long-blade silhouette must be made distinct from basic_attack_03."
     }
   ],
   "policy": "Structure/export permits review only. No new generated actor is approved for live gameplay until visual/native motion QA.",
@@ -5474,6 +5510,270 @@
       "method": "Full original16-pose sheet and native focused temporal capture viewed. One calm empty-left-palm reach/nod and return, right hand holds low straight jian throughout. No pickup object or implied grant. Brown-boot attachment retains head nod/lean; N/E uniform4x4 regions preserve extended palms. Five facings, mirrors and native return-to-idle viewed.",
       "reviewScale": "88px library;100px mobility chain;Studio fit plus native pixel-scale canvas crop",
       "batch": "20261114a",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_minh_kiem_idle_n",
+      "sourceSha256": "1d36ae46ba252e161db05bb898e9f5e71264d891c8097c2ce25aeb280c8c710c",
+      "bindingSha256": "9c96f008710d2d55633b4411c926821283945274701f955e37d764ddcbe90818",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_n_v1_20261114b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n.mp4": "692c21252165c2990c3ac2835ab57474e8043da883d4ea84d8bd8c7db56c69eb",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n.png": "51a822de28f343c1263b5a5a6037eca63b9fae6cf2ccca1919c99cf98c9a4793",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n_actor_samples.png": "218764e2b33e6883a4ea0fff7c7c1f3a2d2d75c05a9fcb5f53d7866515be0e6d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n_samples.png": "394a3d411418d4ee02231efbee7dc55bc6b0de5dc5812dedc2a4ca5e8ab1785a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4": "f4def00d1a9e600a446baa68edd90e2c7f7470934cf5eee7c34474465cd8f74f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png": "e9ca96fb3853c0dfc064dd51d71c8313944d0ff43b8e9798d3244a83a5c37896",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_n_actor_samples.png",
+      "method": "Source/native: sixteen quiet breathing/eyelid/empty-hand/cloth poses; low right-hand straight jian stays connected, feet planted, consistent silhouette and alpha-zero gutters.",
+      "reviewScale": "Full original 4x4 sheets, all15 focused native temporal mosaics, three eight-angle grid stills and8.84s chain temporal/still. Source/native review only, not class/gameplay acceptance.",
+      "batch": "20261114b",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_minh_kiem_idle_ne",
+      "sourceSha256": "466cbb9b9014031c833111ab6450a7f2c0d537aa319824294692def29eb2ecba",
+      "bindingSha256": "1ce3394d16ff7a6238a28394e9407c40786589c68e8351af908c000e4deb27ca",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_ne_v1_20261114b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne.mp4": "f24cd2c20976cee72cbd1350892616940b90f55270251efb267a2da32aa5eb04",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne.png": "425e5cb5570fea2fc71936305f9a428d5f4d21f21e3851abf621a40c26f03f2e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne_actor_samples.png": "303afcde48b9598080be0229128e7e2a34b6fe8d59d87a2af3f880a1bb66d451",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne_samples.png": "40ec893b3872a92738b577bd7f81e8b884954846dd767934f8f6ce98597fa2a3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4": "f4def00d1a9e600a446baa68edd90e2c7f7470934cf5eee7c34474465cd8f74f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png": "e9ca96fb3853c0dfc064dd51d71c8313944d0ff43b8e9798d3244a83a5c37896",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_ne_actor_samples.png",
+      "method": "Source/native: sixteen quiet breathing/eyelid/empty-hand/cloth poses; low right-hand straight jian stays connected, feet planted, consistent silhouette and alpha-zero gutters.",
+      "reviewScale": "Full original 4x4 sheets, all15 focused native temporal mosaics, three eight-angle grid stills and8.84s chain temporal/still. Source/native review only, not class/gameplay acceptance.",
+      "batch": "20261114b",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_minh_kiem_idle_e",
+      "sourceSha256": "d3e952b4f6baf3c92ac881645ba27f6728890c2fb6ade1abc7a43cd4daf1a6a0",
+      "bindingSha256": "5167ad84a55c1fa8b1414f4acd73482038bde414177e62d4798534b934f524aa",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_e_v1_20261114b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e.mp4": "e4bff86b1af6c5bf5ef3339b902ebb1a2b0ce52844ebeff9b9ee3d9fd84c13c2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e.png": "25b177d040f0f8c496873f283b31ab71f38fa8458b595b163bc9d8b6ca5fafa8",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e_actor_samples.png": "ecce10e05f6f8c0c98ab575d8288c764d069d26309031faead065ec165e67a1a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e_samples.png": "ff4169f79f9e7ffc35ce2b2944612229516c806fac419914b252246c28a1b7b3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4": "f4def00d1a9e600a446baa68edd90e2c7f7470934cf5eee7c34474465cd8f74f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png": "e9ca96fb3853c0dfc064dd51d71c8313944d0ff43b8e9798d3244a83a5c37896",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_e_actor_samples.png",
+      "method": "Source/native: sixteen quiet breathing/eyelid/empty-hand/cloth poses; low right-hand straight jian stays connected, feet planted, consistent silhouette and alpha-zero gutters.",
+      "reviewScale": "Full original 4x4 sheets, all15 focused native temporal mosaics, three eight-angle grid stills and8.84s chain temporal/still. Source/native review only, not class/gameplay acceptance.",
+      "batch": "20261114b",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_minh_kiem_idle_se",
+      "sourceSha256": "772cf9a16e17900dd2f5f8c8ecd783e0e10964862acb1219ef8942ca78c9b0d6",
+      "bindingSha256": "819e476b06cc100301d8adc20acf974ca0f1614ea159af105ffbf617d36f025d",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_se_v1_20261114b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se.mp4": "958ad4027ccb55fada0161fcea4afac8dcbd248093a8c86ad375af4953578655",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se.png": "45ec805fe0a69c7acc271e0a77ec38d73d2bf6ff00786d3750fade995db2144a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se_actor_samples.png": "ab8a4dbb8758f4e57823ea380b066ba819c19a87bcbc268a723d9e1a5cf0b7d6",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se_samples.png": "5bb56c24050d67dfb354f63170f57075a63d53b6667e11a607f7fb639a02c344",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4": "f4def00d1a9e600a446baa68edd90e2c7f7470934cf5eee7c34474465cd8f74f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png": "e9ca96fb3853c0dfc064dd51d71c8313944d0ff43b8e9798d3244a83a5c37896",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_se_actor_samples.png",
+      "method": "Source/native: sixteen quiet breathing/eyelid/empty-hand/cloth poses; low right-hand straight jian stays connected, feet planted, consistent silhouette and alpha-zero gutters.",
+      "reviewScale": "Full original 4x4 sheets, all15 focused native temporal mosaics, three eight-angle grid stills and8.84s chain temporal/still. Source/native review only, not class/gameplay acceptance.",
+      "batch": "20261114b",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_minh_kiem_idle_s",
+      "sourceSha256": "99af76a54f6202f9871e51aa4957a8721b157b1180ce332441ac8cdc5cb2fd32",
+      "bindingSha256": "f10c5b9f14cf8977a9e644586395b4c7689406ad3ef8c872625d24645ac428c2",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_s_v1_20261114b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s.mp4": "34d3374918c34fd63bb9ab868798741303d82d0ad6a7f93c667a86a9eb2234b2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s.png": "7e6b1a15fdd8e0cd0935f4b9d3e9fb5cd9ef622b9229b5c735221a58fdc66eca",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s_actor_samples.png": "914f47c1c1d0c20289155dad2390c2addd3c9ca90e333de3c22afdac5764de82",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s_samples.png": "aa08859a30630e8aaae37f388151a0e5cbb6f0c8dc7f63672bd14a88b6ec0690",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.mp4": "f4def00d1a9e600a446baa68edd90e2c7f7470934cf5eee7c34474465cd8f74f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_eight_angles.png": "e9ca96fb3853c0dfc064dd51d71c8313944d0ff43b8e9798d3244a83a5c37896",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114b/idle_raw_s_actor_samples.png",
+      "method": "Source/native: sixteen quiet breathing/eyelid/empty-hand/cloth poses; low right-hand straight jian stays connected, feet planted, consistent silhouette and alpha-zero gutters.",
+      "reviewScale": "Full original 4x4 sheets, all15 focused native temporal mosaics, three eight-angle grid stills and8.84s chain temporal/still. Source/native review only, not class/gameplay acceptance.",
+      "batch": "20261114b",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_minh_kiem_walk_n",
+      "sourceSha256": "4d4e0d44d0f509755c39ebcf4aecec339eae7b9be51e9c835a2f57c1be4f2aa3",
+      "bindingSha256": "122e014fe3a38f2e224247fa754cf6b982cca070f24724929316ffb32ef00be5",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_walk_n_v1_20261114b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n.mp4": "04fb96f70c918abfa7d0e74fb0d86932d9e71bbd55d01f9b975cc24eb3c5ddc6",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n.png": "c9fe357717db3f3010f07ee2a9198144a56fee516e0ac19620aaae3503d475d9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n_actor_samples.png": "e106d08fc2db04f6f608da142f5162bcbdb2b92052eee1ccb4d50478758dec4e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n_samples.png": "718004270cc4024714755bb91d5cb112b584af9a7cfa5607ac9e632f68fba68a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.mp4": "9d84e98cda651756b42584ed0cc611f4acb45534c9f730c1f5b7d0ac18969864",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.png": "588dbfb0d1dd0fb6cf839733160a808e890dca6cae73141d93b9b1f337377b12",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_n_actor_samples.png",
+      "method": "Source/native: clear opposite left/right boot ownership across two halves, grounded walk support and low right-hand jian; root registration stable in review.",
+      "reviewScale": "Full original 4x4 sheets, all15 focused native temporal mosaics, three eight-angle grid stills and8.84s chain temporal/still. Source/native review only, not class/gameplay acceptance.",
+      "batch": "20261114b",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_minh_kiem_walk_s",
+      "sourceSha256": "57923b8e66f16b9f2f9ca7475ac2d00480795bff9b36838f462624eb57d139ed",
+      "bindingSha256": "d4c003037ff7221ce0f43f2f1842db1cb41518145a6a5399a62730ca353a7d95",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_walk_s_v1_20261114b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s.mp4": "4382cb922e7d5c8626fc27d027ac44d8bc4addfd7c3221b5e9dabff5a069ace6",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s.png": "b4b1dd70c7479e91102de0ca94f2e9210099dbe17c94b8073436000cb784448a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s_actor_samples.png": "b362f6414248d95e08eca420f84c0746e4e5bcc8fdf0429bf4e70df750dfa066",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s_samples.png": "1eb02c080ba110874450d080854cdef393f5add39d6532fce76727c406d01258",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.mp4": "9d84e98cda651756b42584ed0cc611f4acb45534c9f730c1f5b7d0ac18969864",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_eight_angles.png": "588dbfb0d1dd0fb6cf839733160a808e890dca6cae73141d93b9b1f337377b12",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114b/walk_raw_s_actor_samples.png",
+      "method": "Source/native: clear opposite left/right boot ownership across two halves, grounded walk support and low right-hand jian; root registration stable in review.",
+      "reviewScale": "Full original 4x4 sheets, all15 focused native temporal mosaics, three eight-angle grid stills and8.84s chain temporal/still. Source/native review only, not class/gameplay acceptance.",
+      "batch": "20261114b",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_minh_kiem_basic_attack_s",
+      "sourceSha256": "b14bb4e7d59c77ebd98b75140156ddb6b23af38128a1f75c8ca5b522237fac2a",
+      "bindingSha256": "fa052c2a8b85df66c27ad740787571a33fc4c57af60b58635cbb5a500a8da8d7",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_s_v1_20261114b.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s_actor_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s.mp4": "a0fe14b8299cedaf7687326789b1295b5bd23fde491fe900dc1b941228cfa440",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s.png": "884b0121be682dd06434129fca9aa3bdcdf718bc04ab2610141d7eef8eab6198",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s_actor_samples.png": "64ee3984e517526dc0c266a94bf118dd5f101df1300e62fffbc6f6b8d7a6d085",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s_samples.png": "a8cc9dd8d0d4e7dbf40b99cf105f9e4c4c3d426de17baf6f8452dda449621167",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.mp4": "f732a596d821337b77f8ebf87c71d4c1a40e66be2cb0d2644ee51d034d5ff37b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_eight_angles.png": "f7bd9fab18c7ebff63cf89dcbd691501ab56d4d0ab09499c6a6780e764738611",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.mp4": "07566755e727e68b99268c5b5a0caae399291296dfca69b1a08e7c8e2c2a9cd1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114b/mobility_chain.png": "73283b7bc935cfd5faeb6b44a0fc31da0459c0002e91d7a6850fc4495c6e2d95"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114b/basic_attack_raw_s_actor_samples.png",
+      "method": "Source/native: one continuous waist-level lateral sweep from left through front to right, with perspective foreshortening and return to low right-hand grip; planted feet.",
+      "reviewScale": "Full original 4x4 sheets, all15 focused native temporal mosaics, three eight-angle grid stills and8.84s chain temporal/still. Source/native review only, not class/gameplay acceptance.",
+      "batch": "20261114b",
       "reviewDate": "2026-11-14"
     }
   ],

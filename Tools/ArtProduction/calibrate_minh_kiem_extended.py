@@ -1,4 +1,4 @@
-"""Register twenty new Minh Kiem candidates without changing PNGs or granting approval."""
+"""Register Minh Kiem candidates without changing PNGs or granting approval."""
 import argparse,hashlib,json,math
 from PIL import Image
 from inspect_actor_library import ART,inspect,boot_foot_pivot
@@ -31,7 +31,7 @@ def brown_boot_landmark(region,bounds):
                 bottom=min(h-1,max(y for x,y in solid)+2),componentSizes=[len(g) for g in selected],cutoffY=cutoff)
 
 
-def calibrate(records):
+def calibrate(records,walk_ground_trace=False):
     active={r['id']:r for r in json.loads((ART/'generation_records.json').read_text(encoding='utf8'))}
     pages={p['id']:p for p in json.loads((ART/'structure_report.json').read_text(encoding='utf8'))['pages']}
     references={}
@@ -52,7 +52,7 @@ def calibrate(records):
                 boots.append(brown_boot_landmark(region,f['bounds']))
                 data=region.get_flattened_data() if hasattr(region,'get_flattened_data') else region.getdata();visible.append(boot_foot_pivot(data,w,h))
         ratio=heads[0]['span']/ref['head']['span'];height=head_registered_height(ref['referenceHeight'],ref['head']['span'],heads[0]['span'])
-        movement='_run_' in r['id']
+        movement='_run_' in r['id'] or (walk_ground_trace and '_walk_' in r['id'])
         pivots=run_ground_trace([[h['centerX'],h['top']] for h in heads],visible[0][1],visible[8][1],ref['headHorizontalOffset']*ratio) if movement else [[b['centerX']+ref['bootHorizontalOffset']*ratio,b['bottom']] for b in boots]
         assert all(all(math.isfinite(v) for v in p) for p in pivots)
         entries.append(dict(id=r['id'],source=r['source'],sourceSha256=page['sha256'],bodyReferenceHeight=height,
@@ -65,14 +65,14 @@ def calibrate(records):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--apply',action='store_true');args=parser.parse_args()
-    path=ART/'Candidates_20261114a/candidate_manifest.json';m=json.loads(path.read_text(encoding='utf8'));assert len(m['records'])==20
-    entries=calibrate(m['records'])
+    parser=argparse.ArgumentParser();parser.add_argument('--apply',action='store_true');parser.add_argument('--batch',choices=('20261114a','20261114b'),default='20261114a');args=parser.parse_args()
+    path=ART/('Candidates_'+args.batch+'/candidate_manifest.json');m=json.loads(path.read_text(encoding='utf8'));assert len(m['records'])==(20 if args.batch=='20261114a' else 15)
+    entries=calibrate(m['records'],walk_ground_trace=args.batch=='20261114b')
     if args.apply:
         for r,e in zip(m['records'],entries):
             assert r['id']==e['id']
             for key in ('bodyReferenceHeight','pivotMode','gutterPolicy','sourceFootPivots'):r[key]=e[key]
-            r['registrationCalibration']='Art_Source/Actor_Library_20261107/body_registration_20261114a.json';inspect(r)
+            r['registrationCalibration']='Art_Source/Actor_Library_20261107/body_registration_'+args.batch+'.json';inspect(r)
         path.write_text(json.dumps(m,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-        (ART/'body_registration_20261114a.json').write_text(json.dumps(dict(scope='WIP_GEOMETRY_ONLY_NOT_VISUAL_APPROVAL',entries=entries),ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+        (ART/('body_registration_'+args.batch+'.json')).write_text(json.dumps(dict(scope='WIP_GEOMETRY_ONLY_NOT_VISUAL_APPROVAL',entries=entries),ensure_ascii=False,indent=2)+'\n',encoding='utf8')
     print(json.dumps(dict(applied=args.apply,candidatePages=len(entries),sourcePixelsChanged=False,productionApprovals=0)))

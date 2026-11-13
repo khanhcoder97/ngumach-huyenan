@@ -1428,5 +1428,99 @@
     ],
     "supersededByBatch": "20261114a",
     "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_walk_ne",
+    "source": "Sheets/class_minh_kiem_walk_ne_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_walk_ne_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_GEOMETRY_NATIVE_REVIEW",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_ne_v1_20261114b.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_ne_v1_20261114b.png",
+        "sourceSha256": "466cbb9b9014031c833111ab6450a7f2c0d537aa319824294692def29eb2ecba",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_ne_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "ebb779cbc34589e1036f54c84ecb61ff0651170ce02685a7c8dc16dcac714542",
+    "supersededByBatch": "20261114b",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_basic_attack_n",
+    "source": "Sheets/class_minh_kiem_basic_attack_n_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_basic_attack_n_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_GEOMETRY_NATIVE_REVIEW",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_n_v1_20261114b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_s_v1_20261114b.png"
+    ],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_n_v1_20261114b.png",
+        "sourceSha256": "1d36ae46ba252e161db05bb898e9f5e71264d891c8097c2ce25aeb280c8c710c",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_n_v1_20261114b.png"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_s_v1_20261114b.png",
+        "sourceSha256": "b14bb4e7d59c77ebd98b75140156ddb6b23af38128a1f75c8ca5b522237fac2a",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_basic_attack_s_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "e8b5e17b93b3d72460f0a9c6d3c87fa396b812a0e0972a6f4108dad3f0a36fe7",
+    "supersededByBatch": "20261114b",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
   }
 ]

@@ -12933,5 +12933,1703 @@
       }
     ],
     "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_idle_n",
+    "source": "Sheets/class_minh_kiem_idle_n_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_idle_n_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_n_v1_20261114a.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_n_v1_20261114a.png",
+        "sourceSha256": "3c715d6ca2670ce1b1f028bb1c99787ba3f55ef2543d8eadee388016786a8e93"
+      }
+    ],
+    "sourceSha256": "1d36ae46ba252e161db05bb898e9f5e71264d891c8097c2ce25aeb280c8c710c",
+    "bodyReferenceHeight": 247.57798165137615,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        161.41743119266056,
+        293
+      ],
+      [
+        144.41743119266056,
+        293
+      ],
+      [
+        142.91743119266056,
+        293
+      ],
+      [
+        142.91743119266056,
+        293
+      ],
+      [
+        162.41743119266056,
+        282
+      ],
+      [
+        144.41743119266056,
+        283
+      ],
+      [
+        141.41743119266056,
+        282
+      ],
+      [
+        142.91743119266056,
+        282
+      ],
+      [
+        162.41743119266056,
+        281
+      ],
+      [
+        144.91743119266056,
+        282
+      ],
+      [
+        142.91743119266056,
+        282
+      ],
+      [
+        142.91743119266056,
+        282
+      ],
+      [
+        161.91743119266056,
+        281
+      ],
+      [
+        144.41743119266056,
+        281
+      ],
+      [
+        141.41743119266056,
+        282
+      ],
+      [
+        143.41743119266056,
+        281
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_idle_ne",
+    "source": "Sheets/class_minh_kiem_idle_ne_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_idle_ne_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_ne_v1_20261114a.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_ne_v1_20261114a.png",
+        "sourceSha256": "0e92641ab0a89181cc1650860ca959d7d2259bb82ab1bac45f5a71cab47078b5"
+      }
+    ],
+    "sourceSha256": "466cbb9b9014031c833111ab6450a7f2c0d537aa319824294692def29eb2ecba",
+    "bodyReferenceHeight": 269.3693693693694,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        161.14414414414415,
+        282
+      ],
+      [
+        152.64414414414415,
+        280
+      ],
+      [
+        151.64414414414415,
+        282
+      ],
+      [
+        152.64414414414415,
+        291
+      ],
+      [
+        163.64414414414415,
+        283
+      ],
+      [
+        152.64414414414415,
+        283
+      ],
+      [
+        153.14414414414415,
+        278
+      ],
+      [
+        154.14414414414415,
+        276
+      ],
+      [
+        161.14414414414415,
+        282
+      ],
+      [
+        153.14414414414415,
+        280
+      ],
+      [
+        151.64414414414415,
+        277
+      ],
+      [
+        144.14414414414415,
+        277
+      ],
+      [
+        161.64414414414415,
+        283
+      ],
+      [
+        152.14414414414415,
+        286
+      ],
+      [
+        152.14414414414415,
+        286
+      ],
+      [
+        151.64414414414415,
+        277
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_idle_e",
+    "source": "Sheets/class_minh_kiem_idle_e_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_idle_e_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_e_v1_20261114a.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_e_v1_20261114a.png",
+        "sourceSha256": "eb2711dc4446765d92feede34c0f771b009d7f3dc4d144e0e6abcc242f74678c"
+      }
+    ],
+    "sourceSha256": "d3e952b4f6baf3c92ac881645ba27f6728890c2fb6ade1abc7a43cd4daf1a6a0",
+    "bodyReferenceHeight": 247.5,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        135.75,
+        288
+      ],
+      [
+        127.75,
+        289
+      ],
+      [
+        129.75,
+        284
+      ],
+      [
+        128.75,
+        284
+      ],
+      [
+        127.25,
+        272
+      ],
+      [
+        136.75,
+        272
+      ],
+      [
+        128.25,
+        272
+      ],
+      [
+        137.75,
+        271
+      ],
+      [
+        136.25,
+        271
+      ],
+      [
+        137.75,
+        271
+      ],
+      [
+        138.75,
+        272
+      ],
+      [
+        128.75,
+        271
+      ],
+      [
+        136.75,
+        272
+      ],
+      [
+        138.25,
+        272
+      ],
+      [
+        131.25,
+        272
+      ],
+      [
+        137.75,
+        271
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_idle_se",
+    "source": "Sheets/class_minh_kiem_idle_se_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_idle_se_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_se_v1_20261114a.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_se_v1_20261114a.png",
+        "sourceSha256": "5809f825bd07042d711c961ebd7bc176fb4d237b567b2c8234d30248de8aee3c"
+      }
+    ],
+    "sourceSha256": "772cf9a16e17900dd2f5f8c8ecd783e0e10964862acb1219ef8942ca78c9b0d6",
+    "bodyReferenceHeight": 262.23214285714283,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        149.21428571428572,
+        287
+      ],
+      [
+        150.71428571428572,
+        283
+      ],
+      [
+        151.71428571428572,
+        281
+      ],
+      [
+        152.21428571428572,
+        283
+      ],
+      [
+        148.71428571428572,
+        275
+      ],
+      [
+        150.21428571428572,
+        275
+      ],
+      [
+        151.21428571428572,
+        276
+      ],
+      [
+        152.21428571428572,
+        276
+      ],
+      [
+        148.71428571428572,
+        275
+      ],
+      [
+        150.71428571428572,
+        278
+      ],
+      [
+        151.71428571428572,
+        280
+      ],
+      [
+        152.21428571428572,
+        280
+      ],
+      [
+        149.21428571428572,
+        278
+      ],
+      [
+        151.71428571428572,
+        274
+      ],
+      [
+        151.21428571428572,
+        278
+      ],
+      [
+        151.71428571428572,
+        280
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_idle_s",
+    "source": "Sheets/class_minh_kiem_idle_s_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_idle_s_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_s_v1_20261114a.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_interact_s_v1_20261114a.png",
+        "sourceSha256": "449e82f454e8ee8931ca2fdb331a5f9a6f3bbb6e79e1b15b80f8995ef19791d4"
+      }
+    ],
+    "sourceSha256": "99af76a54f6202f9871e51aa4957a8721b157b1180ce332441ac8cdc5cb2fd32",
+    "bodyReferenceHeight": 254.48039215686273,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        156.51960784313727,
+        290
+      ],
+      [
+        162.01960784313727,
+        289
+      ],
+      [
+        162.51960784313727,
+        290
+      ],
+      [
+        163.01960784313727,
+        289
+      ],
+      [
+        157.51960784313727,
+        276
+      ],
+      [
+        163.51960784313727,
+        275
+      ],
+      [
+        163.51960784313727,
+        276
+      ],
+      [
+        162.51960784313727,
+        275
+      ],
+      [
+        158.01960784313727,
+        275
+      ],
+      [
+        163.01960784313727,
+        275
+      ],
+      [
+        163.51960784313727,
+        275
+      ],
+      [
+        163.01960784313727,
+        274
+      ],
+      [
+        157.51960784313727,
+        276
+      ],
+      [
+        163.51960784313727,
+        275
+      ],
+      [
+        163.01960784313727,
+        276
+      ],
+      [
+        162.01960784313727,
+        275
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_walk_n",
+    "source": "Sheets/class_minh_kiem_walk_n_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_walk_n_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_n_v1_20261114b.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_n_v1_20261114b.png",
+        "sourceSha256": "1d36ae46ba252e161db05bb898e9f5e71264d891c8097c2ce25aeb280c8c710c",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_n_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "4d4e0d44d0f509755c39ebcf4aecec339eae7b9be51e9c835a2f57c1be4f2aa3",
+    "bodyReferenceHeight": 235.55963302752295,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        160.0,
+        290.0
+      ],
+      [
+        145.5,
+        288.0
+      ],
+      [
+        146.0,
+        287.0
+      ],
+      [
+        145.5,
+        286.0
+      ],
+      [
+        160.0,
+        276.0
+      ],
+      [
+        145.5,
+        276.0
+      ],
+      [
+        146.0,
+        274.0
+      ],
+      [
+        145.5,
+        274.0
+      ],
+      [
+        160.0,
+        275.0
+      ],
+      [
+        145.5,
+        276.0
+      ],
+      [
+        146.0,
+        277.0
+      ],
+      [
+        145.5,
+        277.0
+      ],
+      [
+        160.5,
+        277.0
+      ],
+      [
+        145.5,
+        278.0
+      ],
+      [
+        146.0,
+        280.0
+      ],
+      [
+        145.5,
+        280.0
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_walk_ne",
+    "source": "Sheets/class_minh_kiem_walk_ne_v2_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_walk_ne_v2_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_walk_ne_v1_20261114b.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_walk_ne_v1_20261114b.png",
+        "sourceSha256": "ebb779cbc34589e1036f54c84ecb61ff0651170ce02685a7c8dc16dcac714542",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_walk_ne_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "cce05ae787b5ee41e5656bf154bee8a4844c194c9da799a6fe3aba9ce9a7bb58",
+    "bodyReferenceHeight": 257.65765765765764,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        167.018018018018,
+        290.0
+      ],
+      [
+        143.018018018018,
+        289.125
+      ],
+      [
+        142.018018018018,
+        288.25
+      ],
+      [
+        144.018018018018,
+        288.375
+      ],
+      [
+        167.518018018018,
+        277.5
+      ],
+      [
+        143.018018018018,
+        276.625
+      ],
+      [
+        142.518018018018,
+        275.75
+      ],
+      [
+        144.018018018018,
+        274.875
+      ],
+      [
+        167.018018018018,
+        278.0
+      ],
+      [
+        143.018018018018,
+        278.875
+      ],
+      [
+        143.018018018018,
+        279.75
+      ],
+      [
+        144.518018018018,
+        280.625
+      ],
+      [
+        167.018018018018,
+        280.5
+      ],
+      [
+        143.018018018018,
+        281.375
+      ],
+      [
+        143.018018018018,
+        282.25
+      ],
+      [
+        144.018018018018,
+        283.125
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_walk_e",
+    "source": "Sheets/class_minh_kiem_walk_e_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_walk_e_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_e_v1_20261114b.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_e_v1_20261114b.png",
+        "sourceSha256": "d3e952b4f6baf3c92ac881645ba27f6728890c2fb6ade1abc7a43cd4daf1a6a0",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_e_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "4391e704fec18c3a593e251b44cafb9b9ef1b7f6b631a0e79ba0339c1d863caf",
+    "bodyReferenceHeight": 236.25,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        152.875,
+        283.0
+      ],
+      [
+        148.875,
+        282.375
+      ],
+      [
+        144.875,
+        281.75
+      ],
+      [
+        148.875,
+        281.125
+      ],
+      [
+        152.875,
+        266.5
+      ],
+      [
+        149.375,
+        265.875
+      ],
+      [
+        144.875,
+        265.25
+      ],
+      [
+        148.875,
+        264.625
+      ],
+      [
+        152.875,
+        265.0
+      ],
+      [
+        149.375,
+        265.625
+      ],
+      [
+        144.875,
+        266.25
+      ],
+      [
+        148.875,
+        266.875
+      ],
+      [
+        152.875,
+        268.5
+      ],
+      [
+        149.375,
+        269.125
+      ],
+      [
+        144.875,
+        269.75
+      ],
+      [
+        148.875,
+        270.375
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_walk_se",
+    "source": "Sheets/class_minh_kiem_walk_se_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_walk_se_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_se_v1_20261114b.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_se_v1_20261114b.png",
+        "sourceSha256": "772cf9a16e17900dd2f5f8c8ecd783e0e10964862acb1219ef8942ca78c9b0d6",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_se_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "7d380ad354a3de37d7a88cd6290ef8be1a3df49b5474de957e548370f2f9c2f0",
+    "bodyReferenceHeight": 257.4642857142857,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        154.55357142857142,
+        294.0
+      ],
+      [
+        151.55357142857142,
+        293.125
+      ],
+      [
+        155.55357142857142,
+        292.25
+      ],
+      [
+        156.55357142857142,
+        291.375
+      ],
+      [
+        155.05357142857142,
+        279.5
+      ],
+      [
+        151.55357142857142,
+        278.625
+      ],
+      [
+        156.05357142857142,
+        277.75
+      ],
+      [
+        156.55357142857142,
+        276.875
+      ],
+      [
+        155.05357142857142,
+        276.0
+      ],
+      [
+        151.55357142857142,
+        277.875
+      ],
+      [
+        155.55357142857142,
+        277.75
+      ],
+      [
+        156.55357142857142,
+        279.625
+      ],
+      [
+        155.55357142857142,
+        279.5
+      ],
+      [
+        151.55357142857142,
+        280.375
+      ],
+      [
+        156.05357142857142,
+        281.25
+      ],
+      [
+        156.55357142857142,
+        282.125
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_walk_s",
+    "source": "Sheets/class_minh_kiem_walk_s_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_walk_s_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_s_v1_20261114b.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_s_v1_20261114b.png",
+        "sourceSha256": "99af76a54f6202f9871e51aa4957a8721b157b1180ce332441ac8cdc5cb2fd32",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_s_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "57923b8e66f16b9f2f9ca7475ac2d00480795bff9b36838f462624eb57d139ed",
+    "bodyReferenceHeight": 249.44117647058823,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        157.0441176470588,
+        300.0
+      ],
+      [
+        161.5441176470588,
+        299.375
+      ],
+      [
+        162.5441176470588,
+        298.75
+      ],
+      [
+        162.5441176470588,
+        298.125
+      ],
+      [
+        157.0441176470588,
+        280.5
+      ],
+      [
+        161.5441176470588,
+        278.875
+      ],
+      [
+        162.0441176470588,
+        279.25
+      ],
+      [
+        162.5441176470588,
+        278.625
+      ],
+      [
+        157.0441176470588,
+        278.0
+      ],
+      [
+        161.5441176470588,
+        278.625
+      ],
+      [
+        162.0441176470588,
+        279.25
+      ],
+      [
+        163.0441176470588,
+        279.875
+      ],
+      [
+        157.0441176470588,
+        282.5
+      ],
+      [
+        161.5441176470588,
+        283.125
+      ],
+      [
+        162.0441176470588,
+        283.75
+      ],
+      [
+        162.0441176470588,
+        284.375
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_basic_attack_n",
+    "source": "Sheets/class_minh_kiem_basic_attack_n_v2_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_basic_attack_n_v2_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_n_v1_20261114b.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_n_v1_20261114b.png",
+        "sourceSha256": "e8b5e17b93b3d72460f0a9c6d3c87fa396b812a0e0972a6f4108dad3f0a36fe7",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_basic_attack_n_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "3a09756638b356eecf53f3b477c7d97e38329c91ab2ffedb0dec90070ab8c87a",
+    "bodyReferenceHeight": 223.54128440366972,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        158.27981651376146,
+        290
+      ],
+      [
+        128.27981651376146,
+        285
+      ],
+      [
+        134.77981651376146,
+        285
+      ],
+      [
+        151.27981651376146,
+        289
+      ],
+      [
+        160.77981651376146,
+        265
+      ],
+      [
+        127.77981651376147,
+        267
+      ],
+      [
+        131.77981651376146,
+        267
+      ],
+      [
+        151.77981651376146,
+        265
+      ],
+      [
+        159.27981651376146,
+        266
+      ],
+      [
+        126.77981651376147,
+        268
+      ],
+      [
+        133.77981651376146,
+        270
+      ],
+      [
+        151.27981651376146,
+        268
+      ],
+      [
+        158.27981651376146,
+        269
+      ],
+      [
+        126.77981651376147,
+        269
+      ],
+      [
+        134.27981651376146,
+        272
+      ],
+      [
+        152.27981651376146,
+        272
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_basic_attack_ne",
+    "source": "Sheets/class_minh_kiem_basic_attack_ne_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_basic_attack_ne_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_ne_v1_20261114b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_s_v1_20261114b.png"
+    ],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_ne_v1_20261114b.png",
+        "sourceSha256": "466cbb9b9014031c833111ab6450a7f2c0d537aa319824294692def29eb2ecba",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_ne_v1_20261114b.png"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_s_v1_20261114b.png",
+        "sourceSha256": "b14bb4e7d59c77ebd98b75140156ddb6b23af38128a1f75c8ca5b522237fac2a",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_basic_attack_s_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "885cb4cfee7f6371cbd14dc23638c5c0b316e4a97c8dc7f30d9e4fbcf8540d53",
+    "bodyReferenceHeight": 220.18018018018017,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        157.38738738738738,
+        284
+      ],
+      [
+        131.38738738738738,
+        284
+      ],
+      [
+        119.38738738738739,
+        284
+      ],
+      [
+        133.88738738738738,
+        277
+      ],
+      [
+        160.38738738738738,
+        259
+      ],
+      [
+        133.38738738738738,
+        263
+      ],
+      [
+        124.38738738738739,
+        265
+      ],
+      [
+        134.38738738738738,
+        264
+      ],
+      [
+        158.38738738738738,
+        266
+      ],
+      [
+        132.88738738738738,
+        266
+      ],
+      [
+        122.38738738738739,
+        265
+      ],
+      [
+        135.38738738738738,
+        266
+      ],
+      [
+        160.88738738738738,
+        267
+      ],
+      [
+        133.38738738738738,
+        267
+      ],
+      [
+        124.38738738738739,
+        267
+      ],
+      [
+        133.38738738738738,
+        267
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_basic_attack_e",
+    "source": "Sheets/class_minh_kiem_basic_attack_e_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_basic_attack_e_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_e_v1_20261114b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_02_e_v1_20261114a.png"
+    ],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_e_v1_20261114b.png",
+        "sourceSha256": "d3e952b4f6baf3c92ac881645ba27f6728890c2fb6ade1abc7a43cd4daf1a6a0",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_e_v1_20261114b.png"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_02_e_v1_20261114a.png",
+        "sourceSha256": "14d82ea1192bb83c605584a773ff527cdb97f2b37f06bd8f00e21cf7ab925e18"
+      }
+    ],
+    "sourceSha256": "6e155f3a89d17060ead16f69b8df537b761310bf278b28e1a6e5c68f5de89ec6",
+    "bodyReferenceHeight": 229.5,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        144.15,
+        280
+      ],
+      [
+        97.15,
+        284
+      ],
+      [
+        126.65,
+        285
+      ],
+      [
+        141.15,
+        285
+      ],
+      [
+        145.65,
+        269
+      ],
+      [
+        133.15,
+        269
+      ],
+      [
+        131.15,
+        264
+      ],
+      [
+        140.15,
+        261
+      ],
+      [
+        138.15,
+        266
+      ],
+      [
+        119.65,
+        271
+      ],
+      [
+        136.65,
+        271
+      ],
+      [
+        147.15,
+        269
+      ],
+      [
+        145.15,
+        266
+      ],
+      [
+        119.65,
+        270
+      ],
+      [
+        117.65,
+        270
+      ],
+      [
+        129.15,
+        266
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_basic_attack_se",
+    "source": "Sheets/class_minh_kiem_basic_attack_se_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_basic_attack_se_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_se_v1_20261114b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_e_v1_20261114b.png"
+    ],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_se_v1_20261114b.png",
+        "sourceSha256": "772cf9a16e17900dd2f5f8c8ecd783e0e10964862acb1219ef8942ca78c9b0d6",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_se_v1_20261114b.png"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_e_v1_20261114b.png",
+        "sourceSha256": "6e155f3a89d17060ead16f69b8df537b761310bf278b28e1a6e5c68f5de89ec6",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_basic_attack_e_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "9dab0e54c665ccd856bfba77dc8b47480bcb16c3628e772a53623bca1a132bfd",
+    "bodyReferenceHeight": 228.85714285714286,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        149.71428571428572,
+        281
+      ],
+      [
+        133.71428571428572,
+        281
+      ],
+      [
+        140.71428571428572,
+        283
+      ],
+      [
+        149.71428571428572,
+        279
+      ],
+      [
+        125.21428571428572,
+        253
+      ],
+      [
+        138.21428571428572,
+        256
+      ],
+      [
+        142.71428571428572,
+        263
+      ],
+      [
+        154.21428571428572,
+        257
+      ],
+      [
+        125.21428571428572,
+        263
+      ],
+      [
+        139.71428571428572,
+        261
+      ],
+      [
+        147.71428571428572,
+        264
+      ],
+      [
+        155.21428571428572,
+        265
+      ],
+      [
+        154.21428571428572,
+        264
+      ],
+      [
+        139.21428571428572,
+        264
+      ],
+      [
+        144.71428571428572,
+        265
+      ],
+      [
+        153.21428571428572,
+        263
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_minh_kiem_basic_attack_s",
+    "source": "Sheets/class_minh_kiem_basic_attack_s_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_basic_attack_s_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_s_v1_20261114b.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_s_v1_20261114b.png",
+        "sourceSha256": "99af76a54f6202f9871e51aa4957a8721b157b1180ce332441ac8cdc5cb2fd32",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_s_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "b14bb4e7d59c77ebd98b75140156ddb6b23af38128a1f75c8ca5b522237fac2a",
+    "bodyReferenceHeight": 257.0,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        159.0,
+        285
+      ],
+      [
+        150.5,
+        285
+      ],
+      [
+        136.5,
+        284
+      ],
+      [
+        177.0,
+        285
+      ],
+      [
+        164.5,
+        262
+      ],
+      [
+        152.5,
+        262
+      ],
+      [
+        134.0,
+        263
+      ],
+      [
+        176.0,
+        262
+      ],
+      [
+        162.5,
+        266
+      ],
+      [
+        150.5,
+        264
+      ],
+      [
+        136.0,
+        264
+      ],
+      [
+        177.5,
+        267
+      ],
+      [
+        163.5,
+        265
+      ],
+      [
+        147.5,
+        264
+      ],
+      [
+        132.5,
+        266
+      ],
+      [
+        174.0,
+        267
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
   }
 ]

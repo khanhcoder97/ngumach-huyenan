@@ -312,8 +312,19 @@ def inspect(record, art_root=None):
 
 def covers(job,accepted,approved_only=False):
     pages=[p for p in accepted if p['id']==job['id'] or any(p['id']==job['id']+'_'+d for d in ['n','ne','e','se','s','sw','w','nw'])]
-    if approved_only:pages=[p for p in pages if p['productionApproved']]
-    have={d['direction'] for p in pages for d in p['directions'] if not d['flip']}
+    # Match ActorLibraryData.Resolve: a directional replacement shadows the
+    # inherited common page even while the replacement is held/unreviewed.
+    # Filtering before selecting would incorrectly count an approved legacy
+    # source that the runtime cannot resolve in approval-only mode.
+    effective={}
+    for page in pages:
+        priority=0 if page['id']==job['id'] else 1
+        for direction in page['directions']:
+            if direction['flip']:continue
+            name=direction['direction']
+            if name not in effective or priority>effective[name][0]:
+                effective[name]=(priority,page['productionApproved'])
+    have={name for name,(_,approved) in effective.items() if not approved_only or approved}
     need={'OMNI' if d=='OMNI_OR_ROTATED' else d for d in job['directions']}
     return need<=have
 
