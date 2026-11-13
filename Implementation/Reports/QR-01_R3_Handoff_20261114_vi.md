@@ -93,14 +93,20 @@ dotnet test Server/Persistence.Tests/Server.Persistence.Tests.csproj -c Release
 TRX: `C:\Users\khanh\AppData\Local\Temp\opencode\qr01-results-r3\qr01-r3.trx`
 (không commit TRX; CI upload artifact riêng).
 
-Clean-clone tại commit `97af4ec3` (export `git archive HEAD`, không dùng working tree):
-restore `--locked-mode`, build 0 warning/0 error, test **77/77 passed** trong 1 m 22 s.
+Clean-clone tại `87c61bd4cb1fe1bec3f75ac4776af06e021e222c` (export `git archive`, không
+dùng working tree): restore `--locked-mode`, build **0 warning/0 error**, test **77/77
+passed** trong 1 m 22 s.
 
-CI Linux tại chính commit `97af4ec3` đã **fail 2 test IO-denied** vì `FileShare` trên Unix
-chỉ là advisory; 75/77 pass. Đã sửa test để dùng chmod trên Unix và thay `Task.Delay` bằng
-handshake ready/barrier cho stale-fencing; chạy lại local 2 lần liên tiếp **77/77** và
-`SubprocessTests` 3 lần liên tiếp **7/7**. Kết quả CI của commit sửa lỗi được ghi ở issue #79
-và PR #132 sau khi workflow hoàn tất.
+Lịch sử CI Linux:
+
+- Commit `97af4ec3` — QR-01 CI fail 2 test IO-denied vì `FileShare` trên Unix chỉ là
+  advisory; 75/77 pass.
+- Commit `df9b01fb` — IO-denied đã chuyển sang chmod; IO-denied pass, nhưng stale-fencing fail
+  vì takeover chạy trước khi lease 200 ms hết hạn (`LeaseHeld`, exit 10).
+- Commit `87c61bd4` — test chờ đúng `ExpiresAt` trong DB trước takeover; **cả hai QR-01 CI
+  run đều success**: `43475921557` và `43475909049`, log hiển thị
+  `Passed! - Failed: 0, Passed: 77, Total: 77, Duration: 10 s`.
+  TRX artifact của run `43475921557`: `total=77, passed=77, failed=0`.
 
 Lưu ý vận hành: trong lúc chạy test lần đầu, ổ C hết chỗ do các bản clean-clone tạm trước đó;
 test dừng với `IOException: There is not enough space on the disk` tại `TempWorkspace.Create`.
