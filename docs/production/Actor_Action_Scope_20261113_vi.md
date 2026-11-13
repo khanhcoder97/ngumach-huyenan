@@ -49,3 +49,5 @@ Tại thời điểm đợt I, run/interact/basic_attack_02/basic_attack_03 củ
 [Đợt 20261114a](Actor_Batch_20261114a_vi.md) bổ sung bốn action Minh Kiếm: 19 nguồn duyệt, chạy NE/NW còn HOLD nên class mới15/16action đủ hướng đã duyệt source. Ba clip nền Motion16 cũ không cầm kiếm vẫn cần nguồn có kiếm và kiểm chuyển thế; đầy đủ tên action không đồng nghĩa đã nghiệm thu class. Phòng mobility hiện chọn được cả Minh Kiếm và Ảnh Đao.
 
 [Đợt 20261114b](Actor_Batch_20261114b_vi.md) thêm nguồn nền có kiếm, duyệt 8/15 sheet và giữ 7 HOLD. Đi/chém đầu còn thiếu góc đạt; cộng chạy NE trước đó, Minh Kiếm hiện 13/16 action đủ hướng duyệt. Coverage chọn page riêng trước rồi xét duyệt như client; không dùng approval legacy đã bị nguồn mới che để báo hoàn chỉnh.
+
+[Đợt 20261114c](Actor_Batch_20261114c_vi.md) giải quyết bốn góc nhát chém đầu và đi E. Minh Kiếm hiện 14/16 action đủ hướng đã duyệt; chạy NE, đi NE/SE còn HOLD. Lần sửa vận động tiếp theo cần kiểm riêng hai contact đối nhau trước khi dựng lại chu kỳ. Không đổi tên nhát chém ngang thành đâm để né yêu cầu.

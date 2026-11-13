@@ -1,0 +1,79 @@
+{
+  "scope": "OFFLINE_NATIVE_SOURCE_REVIEW_NOT_GAMEPLAY_FPS",
+  "selectedVideos": 12,
+  "supersededVideos": 0,
+  "files": [
+    {
+      "file": "basic_attack_eight_angles.mp4",
+      "sha256": "e7b61ea1189591b3fe3171bb3aef80dec04842f00259235cbcd42545532cbcc3",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "basic_attack_raw_e.mp4",
+      "sha256": "90de51c026271f458c7ea6137bd401ab46de196997f6806d2c62e6e95fcff1c8",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "basic_attack_raw_n.mp4",
+      "sha256": "097b52f937d7f7ab028dea37d42a24f14e145b1769915b6c3dc20a05e7d55f67",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "basic_attack_raw_ne.mp4",
+      "sha256": "dc18eee01b101dad1c4528b80e6f9bd6d57801765f901502aa7a56b7f5c9a382",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "basic_attack_raw_se.mp4",
+      "sha256": "b86b7dd74ca100678f0be549935a9a60375734e22c5dcfca21dade307739a4c5",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "mobility_chain.mp4",
+      "sha256": "fd6817696c5d814a7cf8acfdd92bd5719c9c78802d8b93209b0c8127f1a7d0ae",
+      "decodedFrames": 600,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "run_eight_angles.mp4",
+      "sha256": "7d7439f03244a96325f5373e9aa3f9759ec65b23699c5259ad3bae8e3b3fe9c7",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "run_raw_ne.mp4",
+      "sha256": "e54de0c4f775b6a414936ef7145f537395634e51f7ddb5599da98474de8aafd1",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "walk_eight_angles.mp4",
+      "sha256": "49f43441fa12f4860c2055349042ca51c269d0c742806364cb3782bbba30cf19",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "walk_raw_e.mp4",
+      "sha256": "50f84e5a0978fa45201c9f468750a401b0851228ce2d466a7ec0f1db4e30de4f",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "walk_raw_ne.mp4",
+      "sha256": "031475965c3511e095f6242fb889950779db496547139baec89951a243fd4b18",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "walk_raw_se.mp4",
+      "sha256": "ae8aeb734d60eb15ccfccd0ea839550430f0399d34d9e498ba21bb4cb3ed4292",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    }
+  ]
+}

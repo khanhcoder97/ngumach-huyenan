@@ -65,9 +65,9 @@ def calibrate(records,walk_ground_trace=False):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--apply',action='store_true');parser.add_argument('--batch',choices=('20261114a','20261114b'),default='20261114a');args=parser.parse_args()
-    path=ART/('Candidates_'+args.batch+'/candidate_manifest.json');m=json.loads(path.read_text(encoding='utf8'));assert len(m['records'])==(20 if args.batch=='20261114a' else 15)
-    entries=calibrate(m['records'],walk_ground_trace=args.batch=='20261114b')
+    parser=argparse.ArgumentParser();parser.add_argument('--apply',action='store_true');parser.add_argument('--batch',choices=('20261114a','20261114b','20261114c'),default='20261114a');args=parser.parse_args()
+    path=ART/('Candidates_'+args.batch+'/candidate_manifest.json');m=json.loads(path.read_text(encoding='utf8'));assert len(m['records'])=={'20261114a':20,'20261114b':15,'20261114c':8}[args.batch]
+    entries=calibrate(m['records'],walk_ground_trace=args.batch!='20261114a')
     if args.apply:
         for r,e in zip(m['records'],entries):
             assert r['id']==e['id']
