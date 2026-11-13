@@ -70,7 +70,7 @@ public partial class ArtStudio
                 Check(!guardClip.Loop && !raw.Loop && Math.Abs(guardClip.Duration - .8) < .00001 && Math.Abs(raw.Duration - guardClip.Duration) < .00001, "guard raw/group profile mismatch");
                 Check(ArtStudioSampler.FrameAt(guardClip, guardClip.Duration * 2) == 15, "guard did not hold final pose");
             }
-            foreach (string action in new[] { "skill_02", "skill_03", "skill_04", "skill_05", "skill_06" })
+            foreach (string action in new[] { "skill_02", "skill_03", "skill_04", "skill_05", "skill_06", "hurt", "death", "dodge" })
             {
                 var grouped = ArtStudioLibrary.Load("actor:CLASS_MINH_KIEM:" + action);
                 Check(grouped.Clips.Count == 8, "missing timed skill directions");
@@ -87,6 +87,7 @@ public partial class ArtStudio
                     if (action == "skill_03") Check(ArtStudioSampler.FrameAt(skillClip, .1) == 4 && ArtStudioSampler.FrameAt(skillClip, .22) == 8 && ArtStudioSampler.FrameAt(skillClip, .36) == 12, "Studio Kiem Tran phases");
                     if (action == "skill_05") Check(ArtStudioSampler.FrameAt(skillClip, .08) == 4 && ArtStudioSampler.FrameAt(skillClip, .24) == 10, "Studio Bach Hong presentation phases");
                     if (action == "skill_06") Check(ArtStudioSampler.FrameAt(skillClip, .70) == 6 && ArtStudioSampler.FrameAt(skillClip, 1.05) == 10, "Studio Van Tuong phases");
+                    if (action == "dodge") Check(ArtStudioSampler.FrameAt(skillClip, .08) == 4 && ArtStudioSampler.FrameAt(skillClip, .26) == 10, "Studio dodge presentation phases");
                     var roundtrip = ArtStudioCodec.Decode(ArtStudioCodec.Encode(grouped));
                     Check(roundtrip.Clips.Single(c => c.Direction == skillClip.Direction).DurationsMs.SequenceEqual(skillClip.DurationsMs), "timed JSON roundtrip changed durations");
                 }

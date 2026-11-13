@@ -9,24 +9,29 @@ def calibrate(record):
     raw['gutterPolicy']='SOLID_CORE_GUTTER'
     page=inspect(raw);frames=page['directions'][0]['frames']
     assert len(page['directions'])==1 and len(frames)==16,'directional sixteen-frame source required'
-    frame=frames[0];x,y,w,h=frame['rect']
+    neutral=record.get('neutralSourceFrame',0)
+    assert type(neutral) is int and 0<=neutral<len(frames),'invalid neutral source frame'
+    frame=frames[neutral];x,y,w,h=frame['rect']
     with Image.open(ART/record['source']) as image:
         region=image.crop((x,y,x+w,y+h))
         pixels=region.get_flattened_data() if hasattr(region,'get_flattened_data') else region.getdata()
         pivot=boot_foot_pivot(pixels,w,h)
     height=pivot[1]-frame['bounds'][1]
     assert 16<=height<=h,'invalid neutral head-to-boots height'
+    # A defeated body settles onto its side; do not anchor the final prone
+    # pose to a boot that is now lifted above the body/floor contact.
+    floor_mode='FOOT' if record['id'].startswith('class_minh_kiem_death_') else 'BOOT_CORE_FOOT'
     return dict(id=record['id'],source=record['source'],sourceSha256=page['sha256'],
-                pivotMode='BOOT_CORE_FOOT',gutterPolicy='SOLID_CORE_GUTTER',bodyReferenceHeight=height,
-                neutralSourceFrames=[0],method='NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET',
-                note='Lower brown boot/pants components only. Silver sword/gold guard excluded; no raster warp. Native ground/contact review still required.')
+                pivotMode=floor_mode,gutterPolicy='SOLID_CORE_GUTTER',bodyReferenceHeight=height,
+                neutralSourceFrames=[neutral],method='EXPLICIT_NEUTRAL_FRAME_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET',
+                note='Standing height from the declared neutral source frame (default0), excluding steel/gold. Prone death uses floor contact, not a lifted boot. No raster warp; native contact review required.')
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--apply',action='store_true');parser.add_argument('--batch',choices=('20261113c','20261113d'),default='20261113c');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--apply',action='store_true');parser.add_argument('--batch',choices=('20261113c','20261113d','20261113e'),default='20261113c');args=parser.parse_args()
     path=ART/'generation_records.json';records=json.loads(path.read_text(encoding='utf8'))
     selected=[r for r in records if r.get('batch')==args.batch and r['id'].startswith('class_minh_kiem_')]
-    expected=15 if args.batch=='20261113c' else 10
+    expected=10 if args.batch=='20261113d' else 15
     assert len(selected)==expected and len({r['id'] for r in selected})==expected,'requires all selected skills x five authored angles'
     entries=[calibrate(r) for r in selected]
     if args.apply:

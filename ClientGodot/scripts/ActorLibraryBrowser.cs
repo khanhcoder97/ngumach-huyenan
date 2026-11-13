@@ -182,7 +182,7 @@ public partial class ActorLibraryBrowser : Control
                 var poses=new HashSet<int>();for(int step=0;step<50;step++){probe._Process(1d/60);poses.Add(probe.DisplayedFrame);}
                 if(poses.Count!=16||probe.DisplayedFrame!=15)throw new Exception("guard skipped poses or restarted");checks++;
             }
-            foreach(string action in new[]{"skill_02","skill_03","skill_04","skill_05","skill_06"})
+            foreach(string action in new[]{"skill_02","skill_03","skill_04","skill_05","skill_06","hurt","death","dodge"})
             foreach(int facing in Enumerable.Range(0,8))
             {
                 if(!_library.Resolve("CLASS_MINH_KIEM",action,facing,out var authored)||authored!.Frames.Length!=16||authored.SourceFrameDurationsMs?.Length!=16)throw new Exception("missing timed Minh Kiem source: "+action+"/"+facing);checks++;
@@ -198,6 +198,7 @@ public partial class ActorLibraryBrowser : Control
                 if(action=="skill_03"&&(ActorLibraryData.FrameAt(probe.ActorId,action,authored,.10,false)!=4||ActorLibraryData.FrameAt(probe.ActorId,action,authored,.22,false)!=8||ActorLibraryData.FrameAt(probe.ActorId,action,authored,.36,false)!=12))throw new Exception("Kiem Tran phase timing changed");checks++;
                 if(action=="skill_05"&&(ActorLibraryData.FrameAt(probe.ActorId,action,authored,.08,false)!=4||ActorLibraryData.FrameAt(probe.ActorId,action,authored,.24,false)!=10))throw new Exception("Bach Hong presentation phase timing changed");
                 if(action=="skill_06"&&(ActorLibraryData.FrameAt(probe.ActorId,action,authored,.70,false)!=6||ActorLibraryData.FrameAt(probe.ActorId,action,authored,1.05,false)!=10))throw new Exception("Van Tuong phase timing changed");checks++;
+                if(action=="dodge"&&(ActorLibraryData.FrameAt(probe.ActorId,action,authored,.08,false)!=4||ActorLibraryData.FrameAt(probe.ActorId,action,authored,.26,false)!=10))throw new Exception("Dodge presentation phase timing changed");checks++;
             }
             foreach(string action in new[]{"walk","interact"})
             foreach(int facing in Enumerable.Range(0,8))

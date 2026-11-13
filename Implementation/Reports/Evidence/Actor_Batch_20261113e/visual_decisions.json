@@ -1,0 +1,396 @@
+{
+  "scope": "SOURCE_NATIVE_REVIEW_NOT_FULL_LIBRARY_OR_GAMEPLAY",
+  "batch": "20261113e",
+  "newSourcePages": 17,
+  "newSourceCells": 272,
+  "decisions": [
+    {
+      "id": "class_minh_kiem_death_e",
+      "sourceSha256": "7e765c376da8e88fb64e3080b0e21ed604e053a3165e6b864228495dd31516b0",
+      "bindingSha256": "4d479e886bec5a983424ed8cb727eb56118a6b46e4dda8cbfe9e69fe5fc78f8b",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_death_e_v1_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Continuous collapse to held prone frame15; no restart/respawn event."
+    },
+    {
+      "id": "class_minh_kiem_death_n",
+      "sourceSha256": "fa2b96e25fe6e773c64aec375074b49825f38d9c9da6774d3a736c01f52ca498",
+      "bindingSha256": "17ace8df122188bb30806ff77c819822873ef7fd5e52b5a8b92dd9ae79d07aba",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_death_n_v1_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Continuous collapse to held prone frame15; no restart/respawn event."
+    },
+    {
+      "id": "class_minh_kiem_death_ne",
+      "sourceSha256": "3a9729430f8dcda5e23755815903c8b79c9b94168a33cff814fb6511ee631bc3",
+      "bindingSha256": "2b40775205abc23276930293eecf14ae21bb4e9faca4cd9b232ed4035c1a8ef8",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_death_ne_v1_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Continuous collapse to held prone frame15; no restart/respawn event."
+    },
+    {
+      "id": "class_minh_kiem_death_s",
+      "sourceSha256": "352061e3ebec14524f14aeb3fd3cde8f28509728df7186dfe6bd5ebca6656a2b",
+      "bindingSha256": "4c025d9bb7fb9dde32bfe101580c65e76830aac2a317adf52f3f3fde356eb0b2",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_death_s_v2_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Continuous collapse to held prone frame15; no restart/respawn event."
+    },
+    {
+      "id": "class_minh_kiem_death_se",
+      "sourceSha256": "b096553595dd27486e18a49fc018ad93589b90f025014e9258ced5892884be19",
+      "bindingSha256": "8705e9370caa400405341e7ecac1a3eca4c16c28c76db15efaee7cd01da6f054",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_death_se_v1_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_death_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Continuous collapse to held prone frame15; no restart/respawn event."
+    },
+    {
+      "id": "class_minh_kiem_dodge_e",
+      "sourceSha256": "bf17c6ceac9bb97a78937d6ba4b13938030944276bf4bc048b4baf6510f3887f",
+      "bindingSha256": "068bb86413a8579b21af354e0b2ad1b6b5114c179b88275637f6757d2e270694",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_dodge_e_v2_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Low evasive coil/travel pose/recovery, with E/SE corrected end posture. Visual0.48s does not extend i-frame or move world root."
+    },
+    {
+      "id": "class_minh_kiem_dodge_n",
+      "sourceSha256": "7b5b85b1808de1ec7a33dc384bdea9d698ffad8f6ce6bc624c5fe9b9e54dd844",
+      "bindingSha256": "76ce075c305f3d64aa46e7b29a9c7db15a3d23d0165dee61a7a8c3449b6e6d3e",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_dodge_n_v1_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Low evasive coil/travel pose/recovery, with E/SE corrected end posture. Visual0.48s does not extend i-frame or move world root."
+    },
+    {
+      "id": "class_minh_kiem_dodge_ne",
+      "sourceSha256": "c6e39618e185c805cb2994b0ac7a6731150932ef607de45c09b948c4fc011a4c",
+      "bindingSha256": "33230fc6a93966650c3b25ce34b811b92fad66ac947be0bb239cfc20393c934a",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_dodge_ne_v1_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Low evasive coil/travel pose/recovery, with E/SE corrected end posture. Visual0.48s does not extend i-frame or move world root."
+    },
+    {
+      "id": "class_minh_kiem_dodge_s",
+      "sourceSha256": "b287f5be01e48f7a4bb58aed86bafa13c1ffd72bd07832092bd867882df47dbd",
+      "bindingSha256": "8f34611d4ac14df64a6a3416a291d00473e2129a8af8bbd852f756a908aa1628",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_dodge_s_v1_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Low evasive coil/travel pose/recovery, with E/SE corrected end posture. Visual0.48s does not extend i-frame or move world root."
+    },
+    {
+      "id": "class_minh_kiem_dodge_se",
+      "sourceSha256": "2da9ad1af730f3f37de61b5ae9df8b65b46ed0e534abbfcfe4bfcbf48e0cf3e0",
+      "bindingSha256": "68372bc80d09c8aa2177479e61b1421ad0a436578ef74974f1b53caf23a721bc",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_dodge_se_v2_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_dodge_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Low evasive coil/travel pose/recovery, with E/SE corrected end posture. Visual0.48s does not extend i-frame or move world root."
+    },
+    {
+      "id": "class_minh_kiem_hurt_e",
+      "sourceSha256": "f873c24523f93ce04e894af536b67a2fa8031d73207c2651174a4d356e5a158b",
+      "bindingSha256": "0ba473241b41019b0d2d3bdf413b567015a293896ff98eacdb4470495d4aac8b",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_hurt_e_v1_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Single continuous recoil/recovery; right hand keeps one jian."
+    },
+    {
+      "id": "class_minh_kiem_hurt_n",
+      "sourceSha256": "c2d5c2083ad260c30f33452348ced6c2e7f8129f76def4985cdb70bdf5e4a8dd",
+      "bindingSha256": "4b8a8747dd6a98342a76988182043be304b88a27a2be8461f9851f0b59a62588",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_hurt_n_v1_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Single continuous recoil/recovery; right hand keeps one jian."
+    },
+    {
+      "id": "class_minh_kiem_hurt_ne",
+      "sourceSha256": "6f2acb4bc6bfaffb65fd94908d1d65c90baacea2b1675bebaa1914204a7c2a96",
+      "bindingSha256": "8fc91afe73c2c019c5603f471bc0f6afbe461802029762cfb7afe660b571e622",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_hurt_ne_v1_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Single continuous recoil/recovery; right hand keeps one jian."
+    },
+    {
+      "id": "class_minh_kiem_hurt_s",
+      "sourceSha256": "30627d2aaba909b9c2cf648de922af5775987107c94de0aadd891e4836b7b1cb",
+      "bindingSha256": "d304cd735d468f0dc902ece61657d71c6a8bcd47695bbbf49658da4cd1ca5632",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_hurt_s_v1_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Single continuous recoil/recovery; right hand keeps one jian."
+    },
+    {
+      "id": "class_minh_kiem_hurt_se",
+      "sourceSha256": "a6cf3215b16406d0650d081b54fbf4ae6519dc770dc7905cfb3239c950000a27",
+      "bindingSha256": "842e54d7fb0449e8c6f4a8e01263b794e46c33c393146d038c5c314b04958357",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_hurt_se_v1_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_hurt_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/minh_kiem_reaction_chain_samples.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Single continuous recoil/recovery; right hand keeps one jian."
+    },
+    {
+      "id": "npc_boat_keeper_walk_e",
+      "sourceSha256": "5470076e2e354e9fc4d1bc08670adc212f710a2b58688a655ded1a77b21353e4",
+      "bindingSha256": "4b30dd978020d6d44f1f2d4d97f02ceb52714587be9f75d43c82bdf5f244a1f4",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/boatkeeper_walk_e.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_e_v1_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/boatkeeper_walk_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/boatkeeper_walk_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/boatkeeper_walk_e_contacts.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "New opposing foot contacts and pass/occlusion reviewed at source0/4/8/12. Ground-free selected source; pole and rope stay consistent. Only source walk appearance accepted, not AI escort/world speed or footfall authority."
+    },
+    {
+      "id": "npc_boat_keeper_walk_ne",
+      "sourceSha256": "362e85c3df247691a0e2216eef68a90c16cab8eac4f2cdd39026dde00c0b9672",
+      "bindingSha256": "284181183b70c1e5ba0d304d81c77fe83cb4b6c50659583829b8ee31243fc74e",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/boatkeeper_walk_ne.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_ne_v2_20261113e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/boatkeeper_walk_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/boatkeeper_walk_ne_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113e/boatkeeper_walk_ne_contacts.png"
+      ],
+      "method": "Viewed complete selected original16-frame sheet and native point-filtered Godot temporal samples. Checked phase/time/one-shot/mirror separately. PNG preserved byte-for-byte.",
+      "reviewScale": "88px library;110px reaction-chain;140px raw Studio",
+      "batch": "20261113e",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "New opposing foot contacts and pass/occlusion reviewed at source0/4/8/12. Ground-free selected source; pole and rope stay consistent. Only source walk appearance accepted, not AI escort/world speed or footfall authority."
+    }
+  ],
+  "resolvedHolds": [
+    {
+      "id": "npc_boat_keeper_walk_e",
+      "reason": "Native gait review: opposing-leg pass/occlusion remains too similar between half cycles; revise or manually review leg choreography before gameplay use. Sixteen nonidentical PNG cells do not establish an acceptable walk cycle.",
+      "status": "REPLACED_SOURCE_GAIT_VISUALLY_REVIEWED",
+      "batch": "20261113e",
+      "oldSource": "Sheets/npc_boat_keeper_walk_e_v2_20261112d.png",
+      "oldSourceSha256": "4fc15295c846c883ff391c95a5e702802e648168d0195708a475ae7760b68a80",
+      "newSource": "Sheets/npc_boat_keeper_walk_e_v1_20261113e.png",
+      "newSourceSha256": "5470076e2e354e9fc4d1bc08670adc212f710a2b58688a655ded1a77b21353e4",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/boatkeeper_walk_e_contacts.png",
+      "scope": "SOURCE_GAIT_APPEARANCE_ONLY_NOT_AI_ESCORT_OR_WORLD_FOOTFALL"
+    },
+    {
+      "id": "npc_boat_keeper_walk_ne",
+      "reason": "Native gait review: opposing-leg pass/occlusion remains too similar between half cycles; revise or manually review leg choreography before gameplay use. Sixteen nonidentical PNG cells do not establish an acceptable walk cycle.",
+      "status": "REPLACED_SOURCE_GAIT_VISUALLY_REVIEWED",
+      "batch": "20261113e",
+      "oldSource": "Sheets/npc_boat_keeper_walk_ne_v1_20261112d.png",
+      "oldSourceSha256": "331686a2a9c9ed32c21a890bda8d1a7930e7cdee98480a27d447ef1449acf21e",
+      "newSource": "Sheets/npc_boat_keeper_walk_ne_v2_20261113e.png",
+      "newSourceSha256": "362e85c3df247691a0e2216eef68a90c16cab8eac4f2cdd39026dde00c0b9672",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113e/boatkeeper_walk_ne_contacts.png",
+      "scope": "SOURCE_GAIT_APPEARANCE_ONLY_NOT_AI_ESCORT_OR_WORLD_FOOTFALL"
+    }
+  ],
+  "remainingLimitations": [
+    "Opaque-top screening is not full silhouette/transition acceptance.",
+    "Legacy idle/walk unarmed, armed/unarmed handoff still needs integration review.",
+    "NPC source gait accepted, not world-speed/escort/collision authority.",
+    "Offline60-step recordings do not certify real-time gameplay60FPS.",
+    "Full skill body/VFX assembly and renderer/server integration remain incomplete."
+  ]
+}

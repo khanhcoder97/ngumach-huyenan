@@ -1,0 +1,98 @@
+{
+  "scope": "OFFLINE_NATIVE_VISUAL_REVIEW_NOT_GAMEPLAY_PERFORMANCE",
+  "selectedVideos": 7,
+  "supersededVideos": 2,
+  "files": [
+    {
+      "file": "boatkeeper_walk_e.mp4",
+      "bytes": 346780,
+      "sha256": "97b00f7833b0e77bbcfb6a890352e498a5db51d276c19763c4274835b0676b9a",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "boatkeeper_walk_ne.mp4",
+      "bytes": 341871,
+      "sha256": "d69f81d038d9ce58fedfdd17fd913bc96146e4e5b2a3c613a6579a681393fe17",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "death_raw_e.mp4",
+      "bytes": 194987,
+      "sha256": "24f0142ff5c482779e332940433a37230275df469994fd6d480c8abd1b952ad2",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "minh_kiem_death_eight_angles.mp4",
+      "bytes": 442847,
+      "sha256": "c297e5b22ba1cdea954464cfc1f3560c1fc3b156d753a23c307617de9a18e5f3",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "minh_kiem_dodge_eight_angles.mp4",
+      "bytes": 825762,
+      "sha256": "7c78f955279d6c268f08b9d9b82eb50f4e6ca33774770ca703b7e76daecab9d8",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "minh_kiem_hurt_eight_angles.mp4",
+      "bytes": 1123401,
+      "sha256": "9967a056f283bc54c1178d344d929722b2be3f4911d5e73b8cc12c00bcbe969e",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "minh_kiem_reaction_chain.mp4",
+      "bytes": 974248,
+      "sha256": "c1b2b2da0d35cd195b08ed500c38fb7419d25ee2706290d5e69ab801a1d7db5f",
+      "decodedFrames": 240,
+      "decodedSeconds": 4.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "Superseded_Dodge_EndHeight/minh_kiem_dodge_eight_angles.mp4",
+      "bytes": 844864,
+      "sha256": "343b16a7427b7417a82c84eaad824d4444fed5aee9e923f9b9a2363baf0732e6",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": false,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "Superseded_Dodge_EndHeight/minh_kiem_reaction_chain.mp4",
+      "bytes": 974679,
+      "sha256": "51eee368d0bc7c11a70422904b42a4b77a8bba302e4ec68236267692c30ab56d",
+      "decodedFrames": 240,
+      "decodedSeconds": 4.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": false,
+      "decodedWithoutDiagnostics": true
+    }
+  ],
+  "note": "Source-sheet and native timeline checks are separate. Movie Maker is offline; these rates cannot certify real-time gameplay FPS."
+}

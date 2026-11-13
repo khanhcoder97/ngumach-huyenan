@@ -1,0 +1,201 @@
+{
+  "scope": "GEOMETRY_ONLY_REQUIRES_NATIVE_REVIEW",
+  "sourcePages": 15,
+  "entries": [
+    {
+      "id": "class_minh_kiem_hurt_e",
+      "source": "Sheets/class_minh_kiem_hurt_e_v1_20261113e.png",
+      "sourceSha256": "f873c24523f93ce04e894af536b67a2fa8031d73207c2651174a4d356e5a158b",
+      "pivotMode": "BOOT_CORE_FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 261,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    },
+    {
+      "id": "class_minh_kiem_death_e",
+      "source": "Sheets/class_minh_kiem_death_e_v1_20261113e.png",
+      "sourceSha256": "7e765c376da8e88fb64e3080b0e21ed604e053a3165e6b864228495dd31516b0",
+      "pivotMode": "FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 235,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    },
+    {
+      "id": "class_minh_kiem_dodge_e",
+      "source": "Sheets/class_minh_kiem_dodge_e_v1_20261113e.png",
+      "sourceSha256": "01de9a90615f6601ada4478f3ca906008cd26c2db8d70543e6eff42b1d3995d3",
+      "pivotMode": "BOOT_CORE_FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 258,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    },
+    {
+      "id": "class_minh_kiem_hurt_ne",
+      "source": "Sheets/class_minh_kiem_hurt_ne_v1_20261113e.png",
+      "sourceSha256": "6f2acb4bc6bfaffb65fd94908d1d65c90baacea2b1675bebaa1914204a7c2a96",
+      "pivotMode": "BOOT_CORE_FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 254,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    },
+    {
+      "id": "class_minh_kiem_death_ne",
+      "source": "Sheets/class_minh_kiem_death_ne_v1_20261113e.png",
+      "sourceSha256": "3a9729430f8dcda5e23755815903c8b79c9b94168a33cff814fb6511ee631bc3",
+      "pivotMode": "FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 239,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    },
+    {
+      "id": "class_minh_kiem_dodge_ne",
+      "source": "Sheets/class_minh_kiem_dodge_ne_v1_20261113e.png",
+      "sourceSha256": "c6e39618e185c805cb2994b0ac7a6731150932ef607de45c09b948c4fc011a4c",
+      "pivotMode": "BOOT_CORE_FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 259,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    },
+    {
+      "id": "class_minh_kiem_hurt_n",
+      "source": "Sheets/class_minh_kiem_hurt_n_v1_20261113e.png",
+      "sourceSha256": "c2d5c2083ad260c30f33452348ced6c2e7f8129f76def4985cdb70bdf5e4a8dd",
+      "pivotMode": "BOOT_CORE_FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 243,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    },
+    {
+      "id": "class_minh_kiem_death_n",
+      "source": "Sheets/class_minh_kiem_death_n_v1_20261113e.png",
+      "sourceSha256": "fa2b96e25fe6e773c64aec375074b49825f38d9c9da6774d3a736c01f52ca498",
+      "pivotMode": "FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 217,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    },
+    {
+      "id": "class_minh_kiem_dodge_n",
+      "source": "Sheets/class_minh_kiem_dodge_n_v1_20261113e.png",
+      "sourceSha256": "7b5b85b1808de1ec7a33dc384bdea9d698ffad8f6ce6bc624c5fe9b9e54dd844",
+      "pivotMode": "BOOT_CORE_FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 236,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    },
+    {
+      "id": "class_minh_kiem_hurt_se",
+      "source": "Sheets/class_minh_kiem_hurt_se_v1_20261113e.png",
+      "sourceSha256": "a6cf3215b16406d0650d081b54fbf4ae6519dc770dc7905cfb3239c950000a27",
+      "pivotMode": "BOOT_CORE_FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 248,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    },
+    {
+      "id": "class_minh_kiem_death_se",
+      "source": "Sheets/class_minh_kiem_death_se_v1_20261113e.png",
+      "sourceSha256": "b096553595dd27486e18a49fc018ad93589b90f025014e9258ced5892884be19",
+      "pivotMode": "FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 242,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    },
+    {
+      "id": "class_minh_kiem_dodge_se",
+      "source": "Sheets/class_minh_kiem_dodge_se_v1_20261113e.png",
+      "sourceSha256": "782816423dc82941ef37afcc46053fb1189443b175894515b973e911f6aa4452",
+      "pivotMode": "BOOT_CORE_FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 257,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    },
+    {
+      "id": "class_minh_kiem_hurt_s",
+      "source": "Sheets/class_minh_kiem_hurt_s_v1_20261113e.png",
+      "sourceSha256": "30627d2aaba909b9c2cf648de922af5775987107c94de0aadd891e4836b7b1cb",
+      "pivotMode": "BOOT_CORE_FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 241,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    },
+    {
+      "id": "class_minh_kiem_death_s",
+      "source": "Sheets/class_minh_kiem_death_s_v2_20261113e.png",
+      "sourceSha256": "352061e3ebec14524f14aeb3fd3cde8f28509728df7186dfe6bd5ebca6656a2b",
+      "pivotMode": "FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 235,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    },
+    {
+      "id": "class_minh_kiem_dodge_s",
+      "source": "Sheets/class_minh_kiem_dodge_s_v1_20261113e.png",
+      "sourceSha256": "b287f5be01e48f7a4bb58aed86bafa13c1ffd72bd07832092bd867882df47dbd",
+      "pivotMode": "BOOT_CORE_FOOT",
+      "gutterPolicy": "SOLID_CORE_GUTTER",
+      "bodyReferenceHeight": 233,
+      "neutralSourceFrames": [
+        0
+      ],
+      "method": "NEUTRAL_FRAME_ZERO_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET",
+      "note": "Neutral height from frame0 brown boots, excluding steel/gold. Prone death uses floor contact rather than a lifted boot. No raster warp; native contact review required."
+    }
+  ]
+}
