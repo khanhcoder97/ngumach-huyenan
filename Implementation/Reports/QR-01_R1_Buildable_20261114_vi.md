@@ -88,3 +88,25 @@ R2–R6 đã có phần lõi trong checkpoint này (transaction/receipt/outbox/f
 Các phần còn thiếu sẽ làm tiếp trên cùng nhánh: migration nâng cấp/thử rollback, fault
 injection có kiểm soát, benchmark, adapter DTO và gói interface gửi Codex/Qoder local sau
 review.
+
+## 7. Exact SHA và clean-clone
+
+- Source checkpoint: `e3cc38b9fbda3d16426a56c2fd53c35709a8a4b4`
+  (`feat(qr-01): deliver buildable persistence library, tests and harness [R1]`).
+- Nhánh: `qoder-remote/qr-01-r1-buildable-20261114`, tách từ `origin/main`.
+- Clean-clone: `git archive --format=zip HEAD` → thư mục trống, sau đó:
+
+```text
+dotnet restore Server/Persistence.Tests/Server.Persistence.Tests.csproj --locked-mode
+  Restored 3/3 projects
+dotnet build ... -c Release --no-restore
+  Build succeeded. 0 Warning(s), 0 Error(s)
+dotnet test  ... -c Release --no-build --logger "trx;LogFileName=clean.trx"
+  Passed! - Failed: 0, Passed: 42, Skipped: 0, Total: 42, Duration: 17 s
+```
+
+- Toolchain: .NET SDK `10.0.404`, Windows, `Microsoft.Data.Sqlite 10.0.0` +
+  `SQLitePCLRaw.lib.e_sqlite3 2.1.13` (ghim để tránh GHSA-2m69-gcr7-jv3q).
+- TRX: `clean.trx` sinh trong thư mục kết quả của bản clean-clone; CI sẽ upload artifact
+  `qr01-persistence-results` khi workflow chạy trên GitHub.
+
