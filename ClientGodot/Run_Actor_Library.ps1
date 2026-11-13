@@ -8,7 +8,7 @@ param(
 $ErrorActionPreference='Stop'
 if($MobilityReview){$LocomotionReview=$true}
 if(@($CombatReview,$ReactionReview,$LocomotionReview | Where-Object {$_}).Count -gt 1){throw 'Choose one review mode.'}
-if($LocomotionReview -and (($Actor -and $Actor -ne 'CLASS_ANH_DAO') -or $Clip -or $Direction -or $Capture)){throw 'Locomotion review supports Anh Dao; use Studio for a single clip/direction/capture.'}
+if($LocomotionReview -and (($Actor -and $Actor -notin @('CLASS_ANH_DAO','CLASS_MINH_KIEM')) -or $Clip -or $Direction -or $Capture)){throw 'Locomotion review supports Anh Dao or Minh Kiem; use Studio for a single clip/direction/capture.'}
 if($ReactionReview -and (($Actor -and $Actor -notin @('CLASS_MINH_KIEM','CLASS_ANH_DAO')) -or $Clip -or $Direction -or $Capture)){throw 'Reaction review supports Minh Kiem or Anh Dao; use Studio for a single clip/direction/capture.'}
 $toolRoot=Join-Path (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) 'NGUMACHHUYENAN-tools'
 if(-not $GodotPath){$GodotPath=Join-Path $toolRoot 'godot-4.7.2/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe'}
@@ -29,6 +29,7 @@ try {
     $scene=if($LocomotionReview){'ActorLocomotionReview.tscn'}elseif($ReactionReview){'ActorReactionReview.tscn'}elseif($CombatReview){'CarplingCombatReview.tscn'}else{'ActorLibrary.tscn'}
     $launchArgs=@('--path',$PSScriptRoot,$scene,'--')
     if($MobilityReview){$launchArgs+='--mobility-review'}
+    if($LocomotionReview -and $Actor){$launchArgs+=@('--actor',$Actor)}
     if($Test){$launchArgs=@('--headless')+$launchArgs;$launchArgs+=@($(if($LocomotionReview){'--locomotion-self-test'}elseif($ReactionReview){'--reaction-self-test'}elseif($CombatReview){'--combat-self-test'}else{'--library-self-test'}))}
     if($Actor -and -not $ReactionReview -and -not $LocomotionReview){$launchArgs+=@($(if($CombatReview){'--combat-actor'}else{'--actor'}),$Actor)}
     if($ReactionReview -and $Actor){$launchArgs+=@('--reaction-actor',$Actor)}

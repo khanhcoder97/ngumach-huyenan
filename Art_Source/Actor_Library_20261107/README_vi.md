@@ -4,7 +4,9 @@
 
 **Đang sản xuất; chưa hoàn thành toàn bộ thư viện.** Chuẩn16–20pose thực/clip/hướng, renderer60FPS. PNG mới là ứng viên review, chưa tự thay asset gameplay.
 
-Đợt mới nhất: [20261113j — chạy, combo và tương tác Ảnh Đao](../../docs/production/Actor_Batch_20261113j_vi.md), **21 sheet /336 pose nguồn**, đủ năm góc cho bốn action bổ sung và sửa walk E/W. Cả21 nguồn đã kiểm sheet gốc/native; 27 video chọn và25 video căn ảnh cũ giữ riêng. Ảnh Đao16/16action đủ góc đã duyệt source, chưa nghiệm thu toàn class hoặc gameplay. Catalogue1028job còn953job chưa đủ nguồn,48job đủ hướng đã duyệt source. Xem [quy định16action/class](../../docs/production/Actor_Action_Scope_20261113_vi.md).
+Đợt mới nhất: [20261114a — chạy, kiếm chéo, đâm kiếm và tương tác Minh Kiếm](../../docs/production/Actor_Batch_20261114a_vi.md), **20 sheet /320 pose nguồn**. Duyệt19 nguồn; chạy NE/NW còn HOLD, bản sửa v2 cũng chưa đạt. Phòng nối hỗ trợ cả Minh Kiếm/Ảnh Đao;25video native. Minh Kiếm15/16action đủ hướng đã duyệt source, vẫn còn ba clip nền cũ không cầm kiếm cần thay/kiểm chuyển thế. Catalogue1028job còn949job chưa đủ nguồn,51job đủ hướng đã duyệt source. Xem [quy định16action/class](../../docs/production/Actor_Action_Scope_20261113_vi.md). Chưa nghiệm thu toàn class hoặc gameplay.
+
+Đợt trước: [20261113j — chạy, combo và tương tác Ảnh Đao](../../docs/production/Actor_Batch_20261113j_vi.md), **21 sheet /336 pose nguồn**, đủ năm góc cho bốn action bổ sung và sửa walk E/W. Cả21 nguồn đã kiểm sheet gốc/native;27video chọn và25video căn ảnh cũ giữ riêng. Ảnh Đao16/16action đủ góc đã duyệt source, chưa nghiệm thu toàn class hoặc gameplay. Số liệu trong báo cáo J giữ mốc lịch sử.
 
 Đợt trước: [20261113i — đứng, đi và chém thường có đao](../../docs/production/Actor_Batch_20261113i_vi.md), **15 sheet /240 pose nguồn tại thời điểm giao**, 14 nguồn duyệt; walk E/W đã được thay/sửa trong đợt J. Thêm phòng nối chuyển động tám hướng; 19 video native. Đợt I bổ sung20job class bị thiếu (chạy, tương tác, combo nhát2/3), đổi catalogue1008→1028. Các số trong báo cáo I giữ mốc lịch sử, inventory phản ánh selection hiện hành.
 
@@ -47,6 +49,7 @@ python Tools/ArtProduction/build_actor_library_plan.py --check
 python Tools/ArtProduction/inspect_actor_library.py --export --check
 ClientGodot/Run_Actor_Library.ps1 -LocomotionReview
 ClientGodot/Run_Actor_Library.ps1 -MobilityReview
+ClientGodot/Run_Actor_Library.ps1 -MobilityReview -Actor CLASS_MINH_KIEM
 ClientGodot/Run_Actor_Library.ps1 -Test
 ClientGodot/Run_Actor_Library.ps1
 ClientGodot/Run_Actor_Library.ps1 -ReactionReview

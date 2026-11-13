@@ -45,3 +45,5 @@ Năm góc vẽ gốc N/NE/E/SE/S; ba góc SW/W/NW chỉ dùng lật khi actor ch
 Phòng `ActorLocomotionReview.tscn` dùng để xem đứng→đi→đứng→chém nhát 1→đứng ở tám hướng, dừng/phát/chỉnh tốc độ và bật mốc chân. Chế độ review được xem HOLD để sửa; renderer mặc định vẫn chặn HOLD và cả hướng lật phụ thuộc nó. Xuất video 60 bước/giây không chứng nhận game chạy ổn định 60 FPS.
 
 Tại thời điểm đợt I, run/interact/basic_attack_02/basic_attack_03 của Ảnh Đao còn thiếu. [Đợt J](Actor_Batch_20261113j_vi.md) đã bổ sung cả bốn cùng bản sửa walk E/W và kiểm nguồn/native: Ảnh Đao hiện đủ nguồn được duyệt cho 16 action. Đây là đủ nguồn cơ bản; còn ghép VFX, chuyển thế và tích hợp gameplay. Các class khác vẫn phải đáp ứng đủ 16 action, không dùng số 12/12 lịch sử để nghiệm thu toàn class. Toàn thư viện và gameplay vẫn đang phát triển.
+
+[Đợt 20261114a](Actor_Batch_20261114a_vi.md) bổ sung bốn action Minh Kiếm: 19 nguồn duyệt, chạy NE/NW còn HOLD nên class mới15/16action đủ hướng đã duyệt source. Ba clip nền Motion16 cũ không cầm kiếm vẫn cần nguồn có kiếm và kiểm chuyển thế; đầy đủ tên action không đồng nghĩa đã nghiệm thu class. Phòng mobility hiện chọn được cả Minh Kiếm và Ảnh Đao.

@@ -1281,5 +1281,152 @@
     ],
     "supersededByBatch": "20261113j",
     "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_run_n",
+    "source": "Sheets/class_minh_kiem_run_n_v1_20261114a.png",
+    "prompt": "Prompts/class_minh_kiem_run_n_v1_20261114a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261114a",
+    "generator": "built-in image_gen",
+    "status": "UNBOUND_CANDIDATE_AWAITING_ALL_ANGLES_AND_NATIVE_REVIEW",
+    "sourceFrameDurationsMs": [
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_n_v1_20261113a.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_se_v1_20261114a.png"
+    ],
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceReviewNote": "HOLD before native:0/8 both appear to expose the right/down boot; redraw lower eight leg poses with left/down contact. No automatic approval.",
+    "reason": "HOLD before native:0/8 both appear to expose the right/down boot; redraw lower eight leg poses with left/down contact. No automatic approval.",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_n_v1_20261113a.png",
+        "sourceSha256": "da1abf4b7c9b79adc24cc221e116ffcfc755f36da20fec110cf4a34e278512f9"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_se_v1_20261114a.png",
+        "sourceSha256": "fa74ce67dce056424d5f62d9b3319cd3cb46e40dc2d7c252a2830100ecd96b3f",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114a/class_minh_kiem_run_se_v1_20261114a.png"
+      }
+    ],
+    "supersededByBatch": "20261114a",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_basic_attack_02_s",
+    "source": "Sheets/class_minh_kiem_basic_attack_02_s_v1_20261114a.png",
+    "prompt": "Prompts/class_minh_kiem_basic_attack_02_s_v1_20261114a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "batch": "20261114a",
+    "generator": "built-in image_gen",
+    "status": "UNBOUND_CANDIDATE_AWAITING_ALL_ANGLES_AND_NATIVE_REVIEW",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_s_v1_20261113a.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_02_se_v1_20261114a.png"
+    ],
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "comboStage": 2,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES",
+    "reason": "Rejected alpha haze/soft white ground shadow; imagegen transparency repair v2",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_s_v1_20261113a.png",
+        "sourceSha256": "5d495f3fd4393476eb0d79370e9d1f2513907d3c3a3c4c9acb58cd09df3fbabb"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_02_se_v1_20261114a.png",
+        "sourceSha256": "c291f60075657246de0718d6f74ecce98417c90a6290be86c8cc70c128367cfa",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114a/class_minh_kiem_basic_attack_02_se_v1_20261114a.png"
+      }
+    ],
+    "supersededByBatch": "20261114a",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_run_ne",
+    "source": "Sheets/class_minh_kiem_run_ne_v2_20261114a.png",
+    "prompt": "Prompts/class_minh_kiem_run_ne_v2_20261114a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261114a",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_GAIT_REPAIR_REJECTED_BEFORE_NATIVE",
+    "sourceFrameDurationsMs": [
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_ne_v1_20261114a.png",
+    "inputRole": "EDIT_TARGET_GAIT_REPAIR",
+    "reason": "Foreground boot at0/8 still not convincingly opposite; keep active v1 pending/HOLD, do not approve either variant.",
+    "sourceSha256": "24120a70a5beccd85691fdff38ccdd9533f1d974ae1819c4902f6b65df00c936",
+    "generationInputs": [
+      {
+        "role": "EDIT_TARGET_GAIT_REPAIR",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_ne_v1_20261114a.png",
+        "sourceSha256": "3b67087507f17e90c3843299b821316fff9c3ed53f39e09315df3febb2a2041f"
+      }
+    ],
+    "supersededByBatch": "20261114a",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
   }
 ]
