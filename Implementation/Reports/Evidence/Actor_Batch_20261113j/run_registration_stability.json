@@ -1,0 +1,70 @@
+{
+  "scope": "REGISTERED_HEAD_ANCHOR_GEOMETRY_NOT_GAMEPLAY_FPS_OR_WHOLE_POSE_STABILITY",
+  "entries": [
+    {
+      "id": "class_anh_dao_run_n",
+      "sourceSha256": "087e3320386eaf81468f73683a2bade1524ea825a31d362a94e299ef40137549",
+      "before": {
+        "maxAdjacentHeadDeltaXAt100px": 5.679777298850575,
+        "maxAdjacentHeadDeltaYAt100px": 3.518992456896555
+      },
+      "after": {
+        "maxAdjacentHeadDeltaXAt100px": 0.0,
+        "maxAdjacentHeadDeltaYAt100px": 0.43215696839081374
+      },
+      "sourcePixelsChanged": false
+    },
+    {
+      "id": "class_anh_dao_run_ne",
+      "sourceSha256": "023ce5094b5b762134756e28ec9349cf16fc4eba01466d4f81b068395625b7b5",
+      "before": {
+        "maxAdjacentHeadDeltaXAt100px": 24.313334599076008,
+        "maxAdjacentHeadDeltaYAt100px": 8.790978419087395
+      },
+      "after": {
+        "maxAdjacentHeadDeltaXAt100px": 0.0,
+        "maxAdjacentHeadDeltaYAt100px": 0.35163913676349523
+      },
+      "sourcePixelsChanged": false
+    },
+    {
+      "id": "class_anh_dao_run_e",
+      "sourceSha256": "6013059fe946e692560ea22cbf348b7f3781abb0cbc516cc2f90c26859928ec7",
+      "before": {
+        "maxAdjacentHeadDeltaXAt100px": 5.98105081826012,
+        "maxAdjacentHeadDeltaYAt100px": 6.7286821705426405
+      },
+      "after": {
+        "maxAdjacentHeadDeltaXAt100px": 0.0,
+        "maxAdjacentHeadDeltaYAt100px": 0.2136089577950031
+      },
+      "sourcePixelsChanged": false
+    },
+    {
+      "id": "class_anh_dao_run_se",
+      "sourceSha256": "39973341691dd9d45c46d270f0ba7956d93f1bd7629a796c9b20218bf9a4905c",
+      "before": {
+        "maxAdjacentHeadDeltaXAt100px": 3.7624378109452743,
+        "maxAdjacentHeadDeltaYAt100px": 10.844673690371678
+      },
+      "after": {
+        "maxAdjacentHeadDeltaXAt100px": 0.0,
+        "maxAdjacentHeadDeltaYAt100px": 0.1106599356160416
+      },
+      "sourcePixelsChanged": false
+    },
+    {
+      "id": "class_anh_dao_run_s",
+      "sourceSha256": "f0537e9a48eed5aa4a157ae9e7c9e0ac9ad6e9d054261ecc796ab4231d855ca2",
+      "before": {
+        "maxAdjacentHeadDeltaXAt100px": 8.632543926661574,
+        "maxAdjacentHeadDeltaYAt100px": 5.054581641268939
+      },
+      "after": {
+        "maxAdjacentHeadDeltaXAt100px": 0.0,
+        "maxAdjacentHeadDeltaYAt100px": 0.39755136504362554
+      },
+      "sourcePixelsChanged": false
+    }
+  ]
+}

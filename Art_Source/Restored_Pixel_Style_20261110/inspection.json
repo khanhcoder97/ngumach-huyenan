@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "scope": "STYLE_AND_PROPORTION_REVIEW_ONLY",
+  "preferredStyle": "RESTORED_ILLUSTRATIVE_PIXEL_ART",
+  "rejectedStyle": "PROCEDURAL_BLOCK_MASTER_V2",
+  "entries": [
+    {
+      "id": "body_base_mf_v3",
+      "name": "Base nam/nữ",
+      "file": "res://assets/paperdoll_style_v3/body_base_mf_v3.png",
+      "sha256": "4a87c8608f8161e5a66c33209baef0a2bd61417b191fa7b2b547e103600df979",
+      "size": [
+        1312,
+        1199
+      ],
+      "alphaBounds": [
+        195,
+        39,
+        1075,
+        1102
+      ],
+      "posesPerActor": 1,
+      "actors": 2,
+      "direction": "S",
+      "layerPackReady": false,
+      "animationReady": false,
+      "productionApproved": false
+    },
+    {
+      "id": "outfit_ivory_mf_v3",
+      "name": "Bộ trang phục theo base",
+      "file": "res://assets/paperdoll_style_v3/outfit_ivory_mf_v3.png",
+      "sha256": "a138970a5cc62a8e076974ed1cf86c29eb00e944d07cb11a06ea8ea3cba71e05",
+      "size": [
+        1312,
+        1199
+      ],
+      "alphaBounds": [
+        197,
+        37,
+        1074,
+        1105
+      ],
+      "posesPerActor": 1,
+      "actors": 2,
+      "direction": "S",
+      "layerPackReady": false,
+      "animationReady": false,
+      "productionApproved": false
+    },
+    {
+      "id": "appearance_ivory_mf_v3",
+      "name": "Mẫu diện mạo hoàn chỉnh",
+      "file": "res://assets/paperdoll_style_v3/appearance_ivory_mf_v3.png",
+      "sha256": "f67de154ff017f934f0e457b37b202d61c0b6214c653d63bd0374c900bc565cd",
+      "size": [
+        1312,
+        1199
+      ],
+      "alphaBounds": [
+        199,
+        26,
+        1197,
+        1106
+      ],
+      "posesPerActor": 1,
+      "actors": 2,
+      "direction": "S",
+      "layerPackReady": false,
+      "animationReady": false,
+      "productionApproved": false
+    }
+  ],
+  "productionApproved": false,
+  "warning": "Whole artwork masters only. Generated in sequence from the same base; no pixel-exact layer-fit or animation acceptance is claimed."
+}

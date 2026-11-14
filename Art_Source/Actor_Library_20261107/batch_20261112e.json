@@ -1,0 +1,452 @@
+{
+  "schemaVersion": 2,
+  "batch": "20261112e",
+  "coverageSnapshotPolicy": "CURRENT_CATALOG_AT_INVENTORY_BUILD",
+  "scope": "CONTINUED_BAKED_CHIBI_ASSET_PRODUCTION",
+  "ownerStyleLocked": true,
+  "styleDecision": "USER_20261112_CONTINUE_EXISTING_CHIBI_SPRITE_SHEETS",
+  "generator": "built-in image_gen",
+  "originalsPreserved": 46,
+  "selectedSheets": 16,
+  "sourceCells": 256,
+  "boundSourceCells": 256,
+  "unusedSourceCells": 0,
+  "sourceFramesPerDirection": 16,
+  "renderTargetFps": 60,
+  "entries": [
+    {
+      "id": "mob_waterroot_telegraph_01_s",
+      "source": "Sheets/mob_waterroot_telegraph_01_s_v1_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_telegraph_01_s_v1_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_telegraph_01_s_v1_20261112e.png",
+      "sha256": "6170980e85bb45068a95e926174a763e872fa1f0342d3ae309223dbd885aa94c",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "S"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "793bc400fbfec078f7384e0cec278b4c2587c040847bf37eb07333857cbd85d7",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 154,
+      "rootFootOffset": [
+        0.01239614766626162,
+        0.48685785693283484
+      ],
+      "gutterPolicy": null
+    },
+    {
+      "id": "mob_waterroot_attack_01_s",
+      "source": "Sheets/mob_waterroot_attack_01_s_v1_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_attack_01_s_v1_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_attack_01_s_v1_20261112e.png",
+      "sha256": "b140a6e7f698d87fa0aaef0739c348d206ef9c0e2585bd95f4ffe3dbacf0a306",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "S"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "8a1296f88147f53e954ae549c6a8d8a34fa84ef5a4c4c717d951772ac3b94372",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 151,
+      "rootFootOffset": [
+        0.01239614766626162,
+        0.48685785693283484
+      ],
+      "gutterPolicy": null
+    },
+    {
+      "id": "mob_waterroot_recovery_01_s",
+      "source": "Sheets/mob_waterroot_recovery_01_s_v1_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_recovery_01_s_v1_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_recovery_01_s_v1_20261112e.png",
+      "sha256": "8837f959f49c308232432633255d586e3cf93f827c7a9b36619b5accd0f6639b",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "S"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "edadff47dc91e17a43a20d6d59d97f2c269173fca0578c5b1b82a9f3fb651776",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 146,
+      "rootFootOffset": [
+        0.01239614766626162,
+        0.48685785693283484
+      ],
+      "gutterPolicy": null
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_n",
+      "source": "Sheets/mob_waterroot_telegraph_01_n_v1_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_telegraph_01_n_v1_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_telegraph_01_n_v1_20261112e.png",
+      "sha256": "271faf4952aa022d0db4ee049cc40b155188a3d4cea46c816df00bf48c5979eb",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "N"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "4107abebdd1840c923ac1d82894776e6a915497f5eef28a3f3e7bb0a0030b8c5",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 154,
+      "rootFootOffset": [
+        -0.03713386074973529,
+        0.48023216372064975
+      ],
+      "gutterPolicy": null
+    },
+    {
+      "id": "mob_waterroot_attack_01_n",
+      "source": "Sheets/mob_waterroot_attack_01_n_v2_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_attack_01_n_v2_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_attack_01_n_v2_20261112e.png",
+      "sha256": "17bcdfea58216c2c331549e547dc1b1bed71d6a95cd02d51337538ea6cc33105",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "N"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "308569866d5e1ba2c86847ee0e65978f50688697b11c4958a6014dc4e08698df",
+      "replacesSource": "Sheets/mob_waterroot_attack_01_n_v1_20261112e.png",
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 154,
+      "rootFootOffset": [
+        -0.03713386074973529,
+        0.48023216372064975
+      ],
+      "gutterPolicy": "SOLID_CORE_GUTTER"
+    },
+    {
+      "id": "mob_waterroot_recovery_01_n",
+      "source": "Sheets/mob_waterroot_recovery_01_n_v1_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_recovery_01_n_v1_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_recovery_01_n_v1_20261112e.png",
+      "sha256": "9963bb262d3295d09fe0f91b23944b30a4288bcb3a6a7cdbbb531d6316019e49",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "N"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "00322e899594dfab4b637498dffa0e1a87efa48ba95a5c0910d93928640d9518",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 143,
+      "rootFootOffset": [
+        -0.03713386074973529,
+        0.48023216372064975
+      ],
+      "gutterPolicy": null
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_ne",
+      "source": "Sheets/mob_waterroot_telegraph_01_ne_v1_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_telegraph_01_ne_v1_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_telegraph_01_ne_v1_20261112e.png",
+      "sha256": "52d72cf4a627bb704fd3d18667320c5d441a24e526a8fb177cc389359fd28a5a",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "NE"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "8388ce79e1985db82b3e9cd8f759ced580aa1cda45a346052b9c215931178d81",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 161,
+      "rootFootOffset": [
+        0.20293746414228345,
+        0.46607917383821
+      ],
+      "gutterPolicy": null
+    },
+    {
+      "id": "mob_waterroot_attack_01_ne",
+      "source": "Sheets/mob_waterroot_attack_01_ne_v1_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_attack_01_ne_v1_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_attack_01_ne_v1_20261112e.png",
+      "sha256": "5fa69702e069c1f2f731e88c8cc1aa851daa433a009057b33769f59f70965e8c",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "NE"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "0f7d810aaf00e03ae67393dfc5a29c6841d5ee63126d55da2faa277fae004106",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 165,
+      "rootFootOffset": [
+        0.20293746414228345,
+        0.46607917383821
+      ],
+      "gutterPolicy": null
+    },
+    {
+      "id": "mob_waterroot_recovery_01_ne",
+      "source": "Sheets/mob_waterroot_recovery_01_ne_v1_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_recovery_01_ne_v1_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_recovery_01_ne_v1_20261112e.png",
+      "sha256": "363b69f351a94904bf13e7560f869cfdc3de38635ed7671539fe429e7adead7b",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "NE"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "a692d567db090004f5bc0178b8439ab3e4825746762d7096029adca97b1255e7",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 146,
+      "rootFootOffset": [
+        0.20293746414228345,
+        0.46607917383821
+      ],
+      "gutterPolicy": null
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_e",
+      "source": "Sheets/mob_waterroot_telegraph_01_e_v1_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_telegraph_01_e_v1_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_telegraph_01_e_v1_20261112e.png",
+      "sha256": "6ae2258df3124d985bf774106434ff5a4069316752290dfaeeefd925ba9e5730",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "E"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "cbba00b245dfae0877c5df8376cde68e1a0ce63f2960771e7be7efea8d5be5d7",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 155,
+      "rootFootOffset": [
+        0.13435762115537395,
+        0.4506071955510158
+      ],
+      "gutterPolicy": null
+    },
+    {
+      "id": "mob_waterroot_attack_01_e",
+      "source": "Sheets/mob_waterroot_attack_01_e_v1_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_attack_01_e_v1_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_attack_01_e_v1_20261112e.png",
+      "sha256": "52d673ccc041ceb0138ca87463bd9c4a31b683a1391ff60a5be3d624a5442785",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "E"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "99351bf24b9c3516ae76d6cd9838f0c7e2f8d607dd5278e894ce065a6f31e571",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 136,
+      "rootFootOffset": [
+        0.13435762115537395,
+        0.4506071955510158
+      ],
+      "gutterPolicy": null
+    },
+    {
+      "id": "mob_waterroot_recovery_01_e",
+      "source": "Sheets/mob_waterroot_recovery_01_e_v1_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_recovery_01_e_v1_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_recovery_01_e_v1_20261112e.png",
+      "sha256": "cc7a8dc59d98a33652fc832d2a21a758afb0a26eace6e6f2395594a10a4e5940",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "E"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "8a454a9a78a0d0eadfa5f1ca6d3cb6f7c2bf962ae9adbe46d482beb793bc4a19",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 143,
+      "rootFootOffset": [
+        0.13435762115537395,
+        0.4506071955510158
+      ],
+      "gutterPolicy": null
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_se",
+      "source": "Sheets/mob_waterroot_telegraph_01_se_v1_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_telegraph_01_se_v1_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_telegraph_01_se_v1_20261112e.png",
+      "sha256": "d0c9796427c0d089764569dc219ac5d6ef7cb952abe52f31ede8004dfcdc047e",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "SE"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "7586ffc18ffd209866dec94f382dac905f5630a6694c0755822f51d4a2044f6b",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 160,
+      "rootFootOffset": [
+        0.01900307097361246,
+        0.47669187898089166
+      ],
+      "gutterPolicy": null
+    },
+    {
+      "id": "mob_waterroot_attack_01_se",
+      "source": "Sheets/mob_waterroot_attack_01_se_v1_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_attack_01_se_v1_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_attack_01_se_v1_20261112e.png",
+      "sha256": "7ee1f1f3ca6cb0ce7ad300587d7756b9a717ef0013a7dc81db5cc173a618ad36",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "SE"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "d9f496b83b938e22f32ac31cc905b131cfea1460969544f6dc93ab3f79cfa99d",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 152,
+      "rootFootOffset": [
+        0.01900307097361246,
+        0.47669187898089166
+      ],
+      "gutterPolicy": null
+    },
+    {
+      "id": "mob_waterroot_recovery_01_se",
+      "source": "Sheets/mob_waterroot_recovery_01_se_v1_20261112e.png",
+      "prompt": "Prompts/mob_waterroot_recovery_01_se_v1_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/mob_waterroot_recovery_01_se_v1_20261112e.png",
+      "sha256": "a70901129667bbfc3c33d6a6f4b7c6d239f29b91a19bda96d366272c13abee45",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "SE"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": false,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "653fc793010c7d46aaa1e647399427ebcda87aafdca2bc0504378fa35d8422ac",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "MOSS_CORE_ROOT",
+      "bodyReferenceHeight": 150,
+      "rootFootOffset": [
+        0.01900307097361246,
+        0.47669187898089166
+      ],
+      "gutterPolicy": null
+    },
+    {
+      "id": "sk_mob_waterroot_01_ripple_component",
+      "source": "Sheets/sk_mob_waterroot_01_ripple_component_v2_20261112e.png",
+      "prompt": "Prompts/sk_mob_waterroot_01_ripple_component_v2_20261112e.txt",
+      "runtime": "ClientGodot/assets/actor_library_v1/sheets/sk_mob_waterroot_01_ripple_component_v2_20261112e.png",
+      "sha256": "54a4ccbed25673134d124b0ddf3624c3e2e5942b65e30f676062027a3e2231e7",
+      "sourceCells": 16,
+      "boundSourceCells": 16,
+      "unboundSourceCells": 0,
+      "authoredDirections": [
+        "OMNI"
+      ],
+      "mirroredDirections": [],
+      "componentOnly": true,
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "bindingSha256": "a2e477ebcf73eb992492542ec51ae5313426a8a2947904e530bf444ae6167c98",
+      "replacesSource": null,
+      "scaleMode": "HEIGHT",
+      "pivotMode": "CELL_CENTER",
+      "bodyReferenceHeight": null,
+      "rootFootOffset": null,
+      "gutterPolicy": null
+    }
+  ],
+  "fullGameComplete": false,
+  "requiredJobs": 1028,
+  "structurallyCompleteJobs": 81,
+  "pendingJobs": 947,
+  "note": "Cells/hashes do not certify anatomical pose uniqueness. Production approval remains per source/clip. Unbound cells are never padded into a sequence. Coverage fields describe the current catalogue, not historical progress on the batch date."
+}

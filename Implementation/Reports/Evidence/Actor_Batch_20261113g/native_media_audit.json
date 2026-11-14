@@ -1,0 +1,128 @@
+{
+  "scope": "OFFLINE_NATIVE_VISUAL_REVIEW_NOT_GAMEPLAY_PERFORMANCE",
+  "selectedVideos": 12,
+  "supersededVideos": 0,
+  "files": [
+    {
+      "file": "anh_bo_eight_angles.mp4",
+      "bytes": 763486,
+      "sha256": "afc0ebd685534cf14f35d85b5e70897c44f3e988cb8d575cb5e10e60a71ad6e2",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "anh_bo_smoke.mp4",
+      "bytes": 144755,
+      "sha256": "517c98f0c38657c54ab9e9daa4e7e7922d92bc092b5167cb37fa7cc6b625160f",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "dodge_eight_angles.mp4",
+      "bytes": 711865,
+      "sha256": "c553b3c6c7b5d95276ae82f8add491b30b30a9eff4de5044d22fc6d76c49f716",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tu_diem_charge.mp4",
+      "bytes": 142952,
+      "sha256": "23078bc86ffd9d661ddd7ab530fcc708556773b47639ad740a1d7dd9c04eaa69",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tu_diem_eight_angles.mp4",
+      "bytes": 478415,
+      "sha256": "e1b5a92ccc56bc143d3178a0769b59664bfebcce93dcd451f6e22566a416bde5",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tu_diem_heat_petal.mp4",
+      "bytes": 140518,
+      "sha256": "3cfc36a375af035bd92c5b363d021ac5ed1726fa3cbcf4f9f1a60a472f96cf8e",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tu_diem_raw_s.mp4",
+      "bytes": 189615,
+      "sha256": "af8cddc4fb5922168745059aa4c99b920f8427dce6b645b47f37e04e747cfd9b",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tu_diem_raw_se.mp4",
+      "bytes": 175179,
+      "sha256": "f0c345a8cb83c8862234da01697ccd6381f6537400ce63228100f3849f24559e",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tu_diem_sweep.mp4",
+      "bytes": 151530,
+      "sha256": "cc1771142c40fcb2a89c0e8cb7e0fac7380f1c35e6c5060265c69ee003fa8201",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tuoc_mach_cut.mp4",
+      "bytes": 135938,
+      "sha256": "a4c878522d5b300adb28e30dc7d88c84d6baa51f1a9cf93890ad3f5816a71e46",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tuoc_mach_eight_angles.mp4",
+      "bytes": 686028,
+      "sha256": "1c5a76045c26aaeaab3cdf7606c69494419bf2926f22cde744d6b7491b4fdfd9",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tuoc_mach_mark.mp4",
+      "bytes": 230424,
+      "sha256": "0966ba347927822ab16632271875265c821bdd228b5aa96f294f37690cf6827e",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    }
+  ],
+  "note": "Source-sheet and native timeline checks are separate. Movie Maker is offline; these rates cannot certify real-time gameplay FPS."
+}

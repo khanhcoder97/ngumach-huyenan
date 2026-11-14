@@ -66,3 +66,8 @@ Codex chốt phần thiết kế còn thiếu theo yêu cầu chủ dự án ho�
 ## DEC-023 — Nhất quán catalog, túi và trạng thái nhân vật (2026-10-30)
 
 `Runtime_State_and_Catalog_Precision_vi.md` chốt túi5×5/25ô mỗi trang, turn-in đầy túi giữ READY; weapon_power/armor và primary tương ứng là alias, không cộng hai lần. Fixed item phải được giữ đầy đủ khi xuất rarity catalog. Maximum HP/MP thay đổi giữ current tuyệt đối và clamp, không heal/revive do equip/level/respec; migration refill là ngoại lệ một lần đã có. Auto-potion không có Undo sau commit; tiêu vé boss và ACTIVE dùng một activation transaction/outbox. Đây là design baseline mới ở phần HP/MP và phân xử/precision ở các phần còn lại, chưa sửa runtime schema/loader hoặc migration save. Các gap số liệu còn lại ghi rõ ở §6; không tự điền thành config production.
+
+
+## DEC-024 — Sprite16–20khung và render60FPS (2026-11-07)
+
+Chủ dự án nhắc lại yêu cầu16–20khung nguồn thực cho từng hành động/hướng của nhân vật, quái và NPC, phù hợp render60FPS. Không lặp4/8pose để báo đủ16. Chuẩn Actor_Animation_16_20F_60FPS_20261107_vi.md và Pixel_Art_Production_Standard_vi.md thay các mức số khung thấp cũ; timeline gameplay vẫn theo server. Kế thừa góc rộng Godot1280×720/64×36WU của TopDown_Wide_Camera_20261105_vi.md và UI MoonGlass hiện hành. Các lựa chọn atlas80pose/5nguồn+3lật có khai báo, scene ActorLibrary và cổng nghiệm thu riêng là phương án triển khai của Codex; chúng không phải bằng chứng cả thư viện đã hoàn thành. Asset bất đối xứng cần góc riêng; số ô/SHA khác nhau không tự chứng minh chuyển động đạt.

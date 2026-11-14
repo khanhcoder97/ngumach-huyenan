@@ -1,0 +1,127 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Khởi tạo dự án (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Đang quét các tệp tin...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Đang tải các tên lớp toàn cục (global class names)...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Đang xác thực các GDExtension...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Đang tạo các tập lệnh tự động tải (autoload scripts)...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Đang khởi tạo plugin...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Bắt đầu quét hệ thống tệp...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started Đang đăng ký các lớp toàn cục (global classes)... (2 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  33% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1m_update_scan_actions[22m | Started Đang quét các hành động (actions)... (89 steps)[39m[0m
+[   0% ] [90m[1m_update_scan_actions[22m | class_anh_dao_basic_attack.png[39m[0m
+[   1% ] [90m[1m_update_scan_actions[22m | class_anh_dao_death.png[39m[0m
+[   2% ] [90m[1m_update_scan_actions[22m | class_anh_dao_death_se_v1.png[39m[0m
+[   3% ] [90m[1m_update_scan_actions[22m | class_anh_dao_hurt.png[39m[0m
+[   4% ] [90m[1m_update_scan_actions[22m | class_anh_dao_idle.png[39m[0m
+[   5% ] [90m[1m_update_scan_actions[22m | class_anh_dao_walk.png[39m[0m
+[   6% ] [90m[1m_update_scan_actions[22m | class_huyen_but_basic_attack.png[39m[0m
+[   7% ] [90m[1m_update_scan_actions[22m | class_huyen_but_death.png[39m[0m
+[   8% ] [90m[1m_update_scan_actions[22m | class_huyen_but_death_se_v1.png[39m[0m
+[  10% ] [90m[1m_update_scan_actions[22m | class_huyen_but_hurt.png[39m[0m
+[  11% ] [90m[1m_update_scan_actions[22m | class_huyen_but_idle_v2.png[39m[0m
+[  12% ] [90m[1m_update_scan_actions[22m | class_huyen_but_walk.png[39m[0m
+[  13% ] [90m[1m_update_scan_actions[22m | class_linh_cung_basic_attack.png[39m[0m
+[  14% ] [90m[1m_update_scan_actions[22m | class_linh_cung_hurt.png[39m[0m
+[  15% ] [90m[1m_update_scan_actions[22m | class_linh_cung_idle_v2.png[39m[0m
+[  16% ] [90m[1m_update_scan_actions[22m | class_linh_cung_walk.png[39m[0m
+[  17% ] [90m[1m_update_scan_actions[22m | class_minh_kiem_death_ne_v1_20261112.png[39m[0m
+[  18% ] [90m[1m_update_scan_actions[22m | class_minh_kiem_death_partial_v1_20261112.png[39m[0m
+[  20% ] [90m[1m_update_scan_actions[22m | class_minh_kiem_dodge_partial_v1_20261112.png[39m[0m
+[  21% ] [90m[1m_update_scan_actions[22m | class_minh_kiem_dodge_s_v1_20261112.png[39m[0m
+[  22% ] [90m[1m_update_scan_actions[22m | class_minh_kiem_hurt_v1_20261112.png[39m[0m
+[  23% ] [90m[1m_update_scan_actions[22m | class_thach_chuy_basic_attack_v3_20261112.png[39m[0m
+[  24% ] [90m[1m_update_scan_actions[22m | class_thach_chuy_hurt.png[39m[0m
+[  25% ] [90m[1m_update_scan_actions[22m | class_thach_chuy_idle_v2.png[39m[0m
+[  26% ] [90m[1m_update_scan_actions[22m | class_thach_chuy_walk.png[39m[0m
+[  27% ] [90m[1m_update_scan_actions[22m | mob_carpling_attack_01_e_v1_20261112c.png[39m[0m
+[  28% ] [90m[1m_update_scan_actions[22m | mob_carpling_attack_01_ne_v1_20261112c.png[39m[0m
+[  30% ] [90m[1m_update_scan_actions[22m | mob_carpling_attack_01_n_v1_20261112c.png[39m[0m
+[  31% ] [90m[1m_update_scan_actions[22m | mob_carpling_attack_01_se_v1_20261112c.png[39m[0m
+[  32% ] [90m[1m_update_scan_actions[22m | mob_carpling_attack_01_s_v2_20261112b.png[39m[0m
+[  33% ] [90m[1m_update_scan_actions[22m | mob_carpling_death_e_v1_20261112c.png[39m[0m
+[  34% ] [90m[1m_update_scan_actions[22m | mob_carpling_death_ne_v1_20261112c.png[39m[0m
+[  35% ] [90m[1m_update_scan_actions[22m | mob_carpling_death_n_v1_20261112c.png[39m[0m
+[  36% ] [90m[1m_update_scan_actions[22m | mob_carpling_death_se_v1_20261112c.png[39m[0m
+[  37% ] [90m[1m_update_scan_actions[22m | mob_carpling_death_s_v1_20261112b.png[39m[0m
+[  38% ] [90m[1m_update_scan_actions[22m | mob_carpling_hurt_e_v1_20261112c.png[39m[0m
+[  40% ] [90m[1m_update_scan_actions[22m | mob_carpling_hurt_ne_v2_20261112c.png[39m[0m
+[  41% ] [90m[1m_update_scan_actions[22m | mob_carpling_hurt_n_v1_20261112c.png[39m[0m
+[  42% ] [90m[1m_update_scan_actions[22m | mob_carpling_hurt_se_v1_20261112c.png[39m[0m
+[  43% ] [90m[1m_update_scan_actions[22m | mob_carpling_hurt_s_v1_20261112b.png[39m[0m
+[  44% ] [90m[1m_update_scan_actions[22m | mob_carpling_idle_s.png[39m[0m
+[  45% ] [90m[1m_update_scan_actions[22m | mob_carpling_idle_v2.png[39m[0m
+[  46% ] [90m[1m_update_scan_actions[22m | mob_carpling_recovery_01_e_v1_20261112c.png[39m[0m
+[  47% ] [90m[1m_update_scan_actions[22m | mob_carpling_recovery_01_ne_v1_20261112c.png[39m[0m
+[  48% ] [90m[1m_update_scan_actions[22m | mob_carpling_recovery_01_n_v2_20261112c.png[39m[0m
+[  50% ] [90m[1m_update_scan_actions[22m | mob_carpling_recovery_01_se_v1_20261112c.png[39m[0m
+[  51% ] [90m[1m_update_scan_actions[22m | mob_carpling_recovery_01_s_v2_20261112b.png[39m[0m
+[  52% ] [90m[1m_update_scan_actions[22m | mob_carpling_telegraph_01_e_v1_20261112c.png[39m[0m
+[  53% ] [90m[1m_update_scan_actions[22m | mob_carpling_telegraph_01_ne_v1_20261112c.png[39m[0m
+[  54% ] [90m[1m_update_scan_actions[22m | mob_carpling_telegraph_01_n_v1_20261112c.png[39m[0m
+[  55% ] [90m[1m_update_scan_actions[22m | mob_carpling_telegraph_01_se_v1_20261112c.png[39m[0m
+[  56% ] [90m[1m_update_scan_actions[22m | mob_carpling_telegraph_01_s_v1_20261112b.png[39m[0m
+[  57% ] [90m[1m_update_scan_actions[22m | mob_carpling_walk_v1_20261112.png[39m[0m
+[  58% ] [90m[1m_update_scan_actions[22m | mob_shore_stalker_idle_e_v1_20261112b.png[39m[0m
+[  60% ] [90m[1m_update_scan_actions[22m | mob_shore_stalker_idle_ne_v1_20261112b.png[39m[0m
+[  61% ] [90m[1m_update_scan_actions[22m | mob_shore_stalker_idle_n_v1_20261112b.png[39m[0m
+[  62% ] [90m[1m_update_scan_actions[22m | mob_shore_stalker_idle_se_v1_20261112b.png[39m[0m
+[  63% ] [90m[1m_update_scan_actions[22m | mob_shore_stalker_idle_s_v1_20261112.png[39m[0m
+[  64% ] [90m[1m_update_scan_actions[22m | mob_waterroot_idle_e_v1_20261112b.png[39m[0m
+[  65% ] [90m[1m_update_scan_actions[22m | mob_waterroot_idle_ne_v2_20261112c.png[39m[0m
+[  66% ] [90m[1m_update_scan_actions[22m | mob_waterroot_idle_n_v1_20261112b.png[39m[0m
+[  67% ] [90m[1m_update_scan_actions[22m | mob_waterroot_idle_se_v1_20261112b.png[39m[0m
+[  68% ] [90m[1m_update_scan_actions[22m | mob_waterroot_idle_s_v1_20261112.png[39m[0m
+[  70% ] [90m[1m_update_scan_actions[22m | npc_boat_keeper_idle_partial_v1_20261112.png[39m[0m
+[  71% ] [90m[1m_update_scan_actions[22m | npc_boat_keeper_idle_s_v2_20261112.png[39m[0m
+[  72% ] [90m[1m_update_scan_actions[22m | npc_boat_keeper_interact_e_v1_20261112d.png[39m[0m
+[  73% ] [90m[1m_update_scan_actions[22m | npc_boat_keeper_interact_ne_v1_20261112d.png[39m[0m
+[  74% ] [90m[1m_update_scan_actions[22m | npc_boat_keeper_interact_n_v1_20261112d.png[39m[0m
+[  75% ] [90m[1m_update_scan_actions[22m | npc_boat_keeper_interact_se_v1_20261112d.png[39m[0m
+[  76% ] [90m[1m_update_scan_actions[22m | npc_boat_keeper_interact_s_v1_20261112c.png[39m[0m
+[  77% ] [90m[1m_update_scan_actions[22m | npc_boat_keeper_walk_e_v2_20261112d.png[39m[0m
+[  78% ] [90m[1m_update_scan_actions[22m | npc_boat_keeper_walk_ne_v1_20261112d.png[39m[0m
+[  80% ] [90m[1m_update_scan_actions[22m | npc_boat_keeper_walk_n_v1_20261112d.png[39m[0m
+[  81% ] [90m[1m_update_scan_actions[22m | npc_boat_keeper_walk_se_v2_20261112d.png[39m[0m
+[  82% ] [90m[1m_update_scan_actions[22m | npc_boat_keeper_walk_s_v3_20261112c.png[39m[0m
+[  83% ] [90m[1m_update_scan_actions[22m | npc_lyan_idle_v2.png[39m[0m
+[  84% ] [90m[1m_update_scan_actions[22m | npc_lyan_interact.png[39m[0m
+[  85% ] [90m[1m_update_scan_actions[22m | npc_lyan_walk.png[39m[0m
+[  86% ] [90m[1m_update_scan_actions[22m | npc_ta_van_khanh_idle.png[39m[0m
+[  87% ] [90m[1m_update_scan_actions[22m | sk_ad_01_vfx_v2.png[39m[0m
+[  88% ] [90m[1m_update_scan_actions[22m | sk_hb_01_vfx_v2.png[39m[0m
+[  90% ] [90m[1m_update_scan_actions[22m | sk_lc_01_projectile_component_v1_20261112.png[39m[0m
+[  91% ] [90m[1m_update_scan_actions[22m | sk_lc_01_vfx.png[39m[0m
+[  92% ] [90m[1m_update_scan_actions[22m | sk_mk_01_vfx.png[39m[0m
+[  93% ] [90m[1m_update_scan_actions[22m | sk_mk_02_vfx.png[39m[0m
+[  94% ] [90m[1m_update_scan_actions[22m | sk_mk_03_arc_component_v2_20261112.png[39m[0m
+[  95% ] [90m[1m_update_scan_actions[22m | sk_mk_04_vfx.png[39m[0m
+[  96% ] [90m[1m_update_scan_actions[22m | sk_tc_01_crack_component_v1_20261112.png[39m[0m
+[  97% ] [90m[1m_update_scan_actions[22m | sk_tc_01_vfx.png[39m[0m
+[92m[ DONE ][39m [1m_update_scan_actions[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started Nhập lại tài nguyên (2 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | Đang chuẩn bị tệp để nhập lại...[39m[0m
+[  33% ] [90m[1mreimport[22m | Đang chuẩn bị tệp để nhập lại...[39m[0m
+[   0% ] [90m[1mreimport[22m | Thực hiện các hoạt động trước khi nhập lại...[39m[0m
+[   0% ] [90m[1mreimport[22m | npc_boat_keeper_walk_e_v2_20261112d.png[39m[0m
+[   0% ] [90m[1mreimport[22m | npc_boat_keeper_walk_e_v2_20261112d.png[39m[0m
+[  33% ] [90m[1mreimport[22m | npc_boat_keeper_walk_se_v2_20261112d.png[39m[0m
+[  66% ] [90m[1mreimport[22m | Hoàn tất nhập tài sản ...[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started Nhập lại tài nguyên (2 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | Thực hiện các hoạt động sau khi nhập lại...[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started Đang tải editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Đang tải bố cục của editor...[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | Đang tải các tab (docks)...[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m

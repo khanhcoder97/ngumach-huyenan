@@ -56,7 +56,7 @@ class SourceSpec:
 SOURCE_SPECS = {
     "P1_RESOLUTION": SourceSpec("docs/production/P1_Design_Resolution_20261029_vi.md", "2026-10-29"),
     "PRODUCTION_RULES": SourceSpec("docs/production/Production_Rules_Complete_v1_vi.md", "v1-2026-10-28"),
-    "ART_BIBLE": SourceSpec("docs/production/Art_Entity_Weather_UI_Visual_Bible_vi.md", "v2.0"),
+    "ART_BIBLE": SourceSpec("docs/production/Art_Entity_Weather_UI_Visual_Bible_vi.md", "v2.0-ANIM16-20261107"),
     "QUEST_SPEC": SourceSpec("docs/production/Quest_and_Narrative_Production_Spec_vi.md", "v1"),
     "QUEST_DIALOGUE": SourceSpec("docs/production/Quest_Dialogue_Production_Data_vi.csv", "v1-VI_EDITED_P1"),
     "MAP_ATLAS": SourceSpec("docs/production/Map_Production_Atlas_vi.md", "v1.0"),
@@ -66,7 +66,7 @@ SOURCE_SPECS = {
     "ITEM_RARITY": SourceSpec("docs/production/Item_Rarity_Variant_Catalog_vi.csv", "v1"),
     "PRODUCTION_AUDIT": SourceSpec("docs/production/Production_Content_Audit_20261030_vi.md", "2026-10-30"),
     "RUNTIME_PRECISION": SourceSpec("docs/production/Runtime_State_and_Catalog_Precision_vi.md", "DEC-023"),
-    "DECISIONS": SourceSpec("docs/production/Production_Decision_Register_vi.md", "DEC-001..023"),
+    "DECISIONS": SourceSpec("docs/production/Production_Decision_Register_vi.md", "DEC-001..024"),
     "QUEST_SCHEMA": SourceSpec("Implementation/Content/Schemas/QuestDefinition.schema.json", "v1"),
     "ITEM_SCHEMA": SourceSpec("Implementation/Content/Schemas/ItemDefinition.schema.json", "v1"),
     "QUEST_EXAMPLE_P00_01": SourceSpec("Implementation/Content/Examples/QuestDefinition/P00-01.json", "v1"),

@@ -1,0 +1,22 @@
+{
+  "id": "mk_s_parts_v1",
+  "kind": "ISOLATED_PARTS_FITTING_STUDY",
+  "generator": "built-in image_gen",
+  "prompt": "Prompts/mk_s_parts_v1.txt",
+  "source": "Wardrobe_Study/mk_s_parts_v1.png",
+  "columns": 4,
+  "rows": 4,
+  "partCount": 16,
+  "animationFramesPerPart": 1,
+  "placementRecordsPerPart": 16,
+  "direction": "S",
+  "productionApproved": false,
+  "nativeGridReady": false,
+  "layerFitApproved": false,
+  "notes": [
+    "Static parts, not a garment animation sheet.",
+    "Original generated pixels retained unchanged.",
+    "Atlas-wide lab calibration only; not native production.",
+    "No baked skin/character in the isolated part atlas."
+  ]
+}

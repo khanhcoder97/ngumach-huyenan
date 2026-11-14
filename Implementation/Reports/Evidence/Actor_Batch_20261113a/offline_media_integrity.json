@@ -1,0 +1,68 @@
+{
+  "scope": "OFFLINE_NATIVE_VISUAL_REVIEW_NOT_GAMEPLAY_PERFORMANCE",
+  "selectedVideos": 6,
+  "supersededVideos": 0,
+  "files": [
+    {
+      "file": "guard_component_manual_e.mp4",
+      "bytes": 435151,
+      "sha256": "ad539bb859a096a24170e4cb0c5d3c017a595882b29b0efbcce3f7e1f2b8409a",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "guard_raw_n.mp4",
+      "bytes": 340672,
+      "sha256": "111aa7eb8e554abe63cd15d01c1e567de7ee7084be0a09c63ff1aa7385afde15",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "minh_kiem_guard_eight_angles.mp4",
+      "bytes": 554877,
+      "sha256": "cd44be38fa08c0b15af514f63da8e814cb68ce30698e23435c735e7005c68157",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "waterroot_run_eight_angles.mp4",
+      "bytes": 1192231,
+      "sha256": "b20a13a18f948e52e929712bd50bf681eb4f66150ab3b11c7625fd848844dfec",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "waterroot_turn_eight_angles.mp4",
+      "bytes": 1464172,
+      "sha256": "e05503625be8a55a08e0ebadf2911f26eaf711895399f87bf6c2c49c38aa16fc",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "waterroot_walk_eight_angles.mp4",
+      "bytes": 996765,
+      "sha256": "9a39139e846df1c8054f6dee6f4b4cef9d0aca934aa7b88d804f4850084ad715",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    }
+  ],
+  "note": "Source-sheet and native timeline checks are separate. Movie Maker is offline; these rates cannot certify real-time gameplay FPS."
+}

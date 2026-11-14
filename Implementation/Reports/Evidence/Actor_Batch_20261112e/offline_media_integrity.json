@@ -1,0 +1,95 @@
+{
+  "scope": "NATIVE_OFFLINE_REVIEW_NOT_GAMEPLAY_PERFORMANCE",
+  "files": [
+    {
+      "file": "root_ripple.mp4",
+      "bytes": 175461,
+      "sha256": "68d44b7436b220367d757fa8748f9c674df0ce24374b00ced4b738f9e579a54c",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 120,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "waterroot_attack_01_eight_angles.mp4",
+      "bytes": 1865627,
+      "sha256": "8f98bffef5ffecc55e49a739189bd3e8ed4de57495fdc460c93387b843e70e84",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 180,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "waterroot_combat_e.mp4",
+      "bytes": 724648,
+      "sha256": "661f99b5a6119108bd7ee093acb41c1d7fffaee7068132703d0aa19f7d583084",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 180,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "waterroot_combat_n.mp4",
+      "bytes": 736739,
+      "sha256": "5cad8caf3640991215a5a15b3124fb4f334c3d4d107cef622eef5e7834670820",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 180,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "waterroot_combat_ne.mp4",
+      "bytes": 681863,
+      "sha256": "d8032c46c9f57fa25fb711ef0ca175bed6127039a5aa1e11075533a062043b49",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 180,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "waterroot_combat_s.mp4",
+      "bytes": 790049,
+      "sha256": "2858ca3309ff9ce608d3ae0b1d2bb02e652978815ce1611ae160635436a2a867",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 180,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "waterroot_combat_se.mp4",
+      "bytes": 780052,
+      "sha256": "41a476f1088819e0f5b9371f9fe3edff83404b00ae3169d7db767ad5279d3b6a",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 180,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "waterroot_idle_eight_angles.mp4",
+      "bytes": 903327,
+      "sha256": "b8e0a91a833e4dd1be67fee1fb480561de29617fe93bd0f80b0151fea2dffe81",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 180,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "waterroot_recovery_01_eight_angles.mp4",
+      "bytes": 1286886,
+      "sha256": "6bf6772af2e74ea8ead51a29b6de6c55f828a7435ad61b55cf1b50d302d292ba",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 180,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    },
+    {
+      "file": "waterroot_telegraph_01_eight_angles.mp4",
+      "bytes": 1152613,
+      "sha256": "da066b9b658d4448e4b28e1508b4526f06a65a2150935d555c7bc7528c62b162",
+      "decode": "FFmpeg decode to null succeeded",
+      "offlineOutputFrames": 180,
+      "offlineOutputFps": 60,
+      "actualGameplayFpsBenchmark": false
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "scope": "SOURCE_GAIT_APPEARANCE_ONLY_NOT_WORLD_LOCOMOTION",
+  "nativeMovieFrames": [
+    3,
+    15,
+    27,
+    39
+  ],
+  "sourceFrames": [
+    0,
+    4,
+    8,
+    12
+  ],
+  "reviewDate": "2026-11-13",
+  "entries": [
+    {
+      "id": "npc_boat_keeper_walk_e",
+      "evidence": "boatkeeper_walk_e_contacts.png",
+      "opposedContactsDistinguishable": true,
+      "passAndOcclusionDistinguishable": true,
+      "noBakedGroundInSelectedSource": true,
+      "worldFootfallAccepted": false
+    },
+    {
+      "id": "npc_boat_keeper_walk_ne",
+      "evidence": "boatkeeper_walk_ne_contacts.png",
+      "opposedContactsDistinguishable": true,
+      "passAndOcclusionDistinguishable": true,
+      "noBakedGroundInSelectedSource": true,
+      "worldFootfallAccepted": false
+    }
+  ]
+}

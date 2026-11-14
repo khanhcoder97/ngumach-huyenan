@@ -1,0 +1,13 @@
+{
+  "baseCommit": "1effba55cd5da60d2c775fcd8ba5b32ba39258b9",
+  "note": "Local Windows source bytes; evidence validates authoring tool, not native art approval or gameplay. Screenshots inspected before benchmark-only/test additions.",
+  "hashes": {
+    "ClientGodot/scripts/ModularCharacterModel.cs": "e7b446ad4ea76bbd1122ad604997b0f353279f1b7a93f5a7b73c3837af54f786",
+    "ClientGodot/scripts/ModularCharacterRenderer.cs": "ba9eb59413c6b1020a1179faedacf9ec54d02ee00c31c1d3ad440606aada1e67",
+    "ClientGodot/scripts/ModularCharacterSelfTest.cs": "f4761c74d8317fb46b4221d5c8e9696ae8d48484e1e4ca01f92e363e25ce8dc3",
+    "ClientGodot/scripts/PaperDollLab.cs": "1e3dac3b3770e679248b5e64d0dc4f83b220c584e407c8275d4822c8b27d1b79",
+    "ClientGodot/scripts/PaperDollLabData.cs": "d9010e79f4cd9b54be1f93801596ea14c9df79f838061b3b7d3cf6ea54945d1d",
+    "Tools/ArtProduction/export_paperdoll_lab.py": "7095a2b4c2f73db5f8c231e67222377fe114e58ee431441b3c7f81b4e2952cb9",
+    "ClientGodot/assets/paperdoll_lab/catalog.json": "914d0a14866b51c4ed6699a5a19517e90749ba969f6530d292f7a194c7d6ce54"
+  }
+}

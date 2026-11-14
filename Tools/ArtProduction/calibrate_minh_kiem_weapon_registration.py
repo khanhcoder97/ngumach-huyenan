@@ -1,0 +1,43 @@
+"""Register authored boots/neutral body height; never edit or resample PNGs."""
+import argparse,json
+from PIL import Image
+from inspect_actor_library import ART,inspect,boot_foot_pivot
+
+
+def calibrate(record):
+    raw={k:v for k,v in record.items() if k not in ('pivotMode','bodyReferenceHeight','registrationCalibration')}
+    raw['gutterPolicy']='SOLID_CORE_GUTTER'
+    page=inspect(raw);frames=page['directions'][0]['frames']
+    assert len(page['directions'])==1 and len(frames)==16,'directional sixteen-frame source required'
+    neutral=record.get('neutralSourceFrame',0)
+    assert type(neutral) is int and 0<=neutral<len(frames),'invalid neutral source frame'
+    frame=frames[neutral];x,y,w,h=frame['rect']
+    with Image.open(ART/record['source']) as image:
+        region=image.crop((x,y,x+w,y+h))
+        pixels=region.get_flattened_data() if hasattr(region,'get_flattened_data') else region.getdata()
+        pivot=boot_foot_pivot(pixels,w,h)
+    height=pivot[1]-frame['bounds'][1]
+    assert 16<=height<=h,'invalid neutral head-to-boots height'
+    # A defeated body settles onto its side; do not anchor the final prone
+    # pose to a boot that is now lifted above the body/floor contact.
+    floor_mode='FOOT' if record['id'].startswith('class_minh_kiem_death_') else 'BOOT_CORE_FOOT'
+    return dict(id=record['id'],source=record['source'],sourceSha256=page['sha256'],
+                pivotMode=floor_mode,gutterPolicy='SOLID_CORE_GUTTER',bodyReferenceHeight=height,
+                neutralSourceFrames=[neutral],method='EXPLICIT_NEUTRAL_FRAME_HEAD_TO_BROWN_BOOTS_WITH_FIXED_TWO_PIXEL_SOLE_OFFSET',
+                note='Standing height from the declared neutral source frame (default0), excluding steel/gold. Prone death uses floor contact, not a lifted boot. No raster warp; native contact review required.')
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser();parser.add_argument('--apply',action='store_true');parser.add_argument('--batch',choices=('20261113c','20261113d','20261113e'),default='20261113c');args=parser.parse_args()
+    path=ART/'generation_records.json';records=json.loads(path.read_text(encoding='utf8'))
+    selected=[r for r in records if r.get('batch')==args.batch and r['id'].startswith('class_minh_kiem_')]
+    expected=10 if args.batch=='20261113d' else 15
+    assert len(selected)==expected and len({r['id'] for r in selected})==expected,'requires all selected skills x five authored angles'
+    entries=[calibrate(r) for r in selected]
+    if args.apply:
+        for record,entry in zip(selected,entries):
+            for key in ('pivotMode','gutterPolicy','bodyReferenceHeight'):record[key]=entry[key]
+            record['registrationCalibration']='Art_Source/Actor_Library_20261107/body_registration_'+args.batch+'.json'
+        path.write_text(json.dumps(records,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+        (ART/('body_registration_'+args.batch+'.json')).write_text(json.dumps(dict(scope='GEOMETRY_ONLY_REQUIRES_NATIVE_REVIEW',sourcePages=expected,entries=entries),ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+    print(json.dumps(dict(applied=args.apply,pages=len(entries),bodyHeights={r['id']:r['bodyReferenceHeight'] for r in entries})))

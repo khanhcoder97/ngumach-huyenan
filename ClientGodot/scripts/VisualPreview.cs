@@ -516,7 +516,7 @@ public partial class VisualPreview : Node2D
     private void ShowVfxReview()
     {
         _hud.Visible=false;
-        _vfx.ReviewFreeze=true;
+        _vfx.ReviewFreeze=true;_hud.StaticArtReview=true;
         for(int i=0;i<6;i++)
         {
             var foot=_hero.Position+new Vector2(-390+(i%3)*350,-120+(i/3)*260);

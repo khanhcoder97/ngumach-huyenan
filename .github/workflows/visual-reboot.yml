@@ -15,6 +15,10 @@ on:
       - 'Art_Source/Combat_Visuals_20261105/**'
       - 'Art_Source/MoonGlass_UI_20261105/**'
       - 'Art_Source/Motion_16F_20261106/**'
+      - 'Art_Source/Actor_Library_20261107/**'
+      - 'Art_Source/Modular_Characters_20261107/**'
+      - 'Art_Source/Registered_Master_20261110/**'
+      - 'Art_Source/Restored_Pixel_Style_20261110/**'
       - 'Implementation/Content/Maps/BenMua/**'
       - 'Tools/ArtProduction/**'
       - 'Tools/Coordination/**'
@@ -34,13 +38,43 @@ jobs:
         with:
           python-version: '3.12'
       - name: Fetch only the new art batch
-        run: git lfs pull --include="Art_Source/Visual_Reboot_20261104/**,ClientGodot/assets/reboot/**,Art_Source/BenMua_Concept_Rebuild_20261105/**,ClientGodot/assets/ben_mua_v3/**,Art_Source/Combat_Visuals_20261105/**,ClientGodot/assets/combat_v1/**,Art_Source/MoonGlass_UI_20261105/**,ClientGodot/assets/ui_moonglass/**,Art_Source/Motion_16F_20261106/**,ClientGodot/assets/motion16/**" --exclude=""
+        run: git lfs pull --include="Art_Source/Visual_Reboot_20261104/**,ClientGodot/assets/reboot/**,Art_Source/BenMua_Concept_Rebuild_20261105/**,ClientGodot/assets/ben_mua_v3/**,Art_Source/Combat_Visuals_20261105/**,ClientGodot/assets/combat_v1/**,Art_Source/MoonGlass_UI_20261105/**,ClientGodot/assets/ui_moonglass/**,Art_Source/Motion_16F_20261106/**,ClientGodot/assets/motion16/**,Art_Source/Actor_Library_20261107/**,ClientGodot/assets/actor_library_v1/**,Art_Source/Modular_Characters_20261107/**,ClientGodot/assets/paperdoll_lab/**,Art_Source/Registered_Master_20261110/**,Art_Source/Restored_Pixel_Style_20261110/**,ClientGodot/assets/paperdoll_style_v3/**" --exclude=""
       - run: python -m pip install Pillow==11.3.0
       - run: python Tools/ArtProduction/inspect_reboot.py
       - run: python Tools/ArtProduction/inspect_environment.py
       - run: python Tools/ArtProduction/inspect_combat.py
       - run: python Tools/ArtProduction/inspect_moonglass.py
       - run: python Tools/ArtProduction/inspect_motion16.py
+      - run: python Tools/ArtProduction/build_actor_library_plan.py --check
+      - run: python Tools/ArtProduction/inspect_actor_library.py --export --check
+      - run: python Tools/ArtProduction/audit_sprite_restore.py --baseline-report Implementation/Reports/Evidence/Sprite_Studio_20261112/sprite_restore_audit.json
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261112b --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261112c --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261112d --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261112e --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261112f --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261113a --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261113b --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261113c --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261113d --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261113e --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261113f --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261113g --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261113h --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261113i --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261113j --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261114a --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261114b --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261114c --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261114d --check
+      - run: python Tools/ArtProduction/build_asset_batch_20261112.py --batch 20261114e --check
+      - run: python Tools/ArtProduction/build_skill_assembly_profiles.py --check
+      - run: python -m unittest discover -s Tools/ArtProduction -p 'test_*.py' -v
+      - run: python Tools/ArtProduction/inspect_modular_candidates.py --check
+      - run: python Tools/ArtProduction/export_paperdoll_lab.py --check
+      - run: python Tools/ArtProduction/inspect_registered_master.py --check
+      - run: python Tools/ArtProduction/export_restored_style.py --check
       - run: python Tools/ArtProduction/export_ben_mua_terrain.py --check
       - run: python Tools/ArtProduction/export_native_catalog.py --check
       - run: python -m unittest discover -s Tools/Coordination -p 'test_*.py' -v

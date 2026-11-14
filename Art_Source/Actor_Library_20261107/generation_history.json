@@ -1,0 +1,2515 @@
+[
+  {
+    "id": "class_huyen_but_idle",
+    "source": "Sheets/class_huyen_but_idle.png",
+    "prompt": "Prompts/class_huyen_but_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_REPAIR"
+  },
+  {
+    "id": "class_thach_chuy_idle",
+    "source": "Sheets/class_thach_chuy_idle.png",
+    "prompt": "Prompts/class_thach_chuy_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_REPAIR"
+  },
+  {
+    "id": "class_linh_cung_idle",
+    "source": "Sheets/class_linh_cung_idle.png",
+    "prompt": "Prompts/class_linh_cung_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_REPAIR"
+  },
+  {
+    "id": "npc_lyan_idle",
+    "source": "Sheets/npc_lyan_idle.png",
+    "prompt": "Prompts/npc_lyan_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_OR_VISUAL_REPAIR"
+  },
+  {
+    "id": "sk_ad_01_vfx",
+    "source": "Sheets/sk_ad_01_vfx.png",
+    "prompt": "Prompts/sk_ad_01_vfx.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_OR_VISUAL_REPAIR"
+  },
+  {
+    "id": "sk_hb_01_vfx",
+    "source": "Sheets/sk_hb_01_vfx.png",
+    "prompt": "Prompts/sk_hb_01_vfx.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_OR_VISUAL_REPAIR"
+  },
+  {
+    "id": "class_thach_chuy_basic_attack",
+    "source": "Sheets/class_thach_chuy_basic_attack.png",
+    "prompt": "Prompts/class_thach_chuy_basic_attack.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+    "status": "SUPERSEDED_LAYOUT_OR_VISUAL_REPAIR"
+  },
+  {
+    "id": "mob_shore_stalker_idle",
+    "source": "Sheets/mob_shore_stalker_idle.png",
+    "prompt": "Prompts/mob_shore_stalker_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_OR_VISUAL_REPAIR"
+  },
+  {
+    "id": "mob_waterroot_idle",
+    "source": "Sheets/mob_waterroot_idle.png",
+    "prompt": "Prompts/mob_waterroot_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": null,
+    "status": "SUPERSEDED_LAYOUT_OR_VISUAL_REPAIR"
+  },
+  {
+    "id": "mob_carpling_idle",
+    "source": "Sheets/mob_carpling_idle.png",
+    "prompt": "Prompts/mob_carpling_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_idle_s.png",
+    "status": "SUPERSEDED_LAYOUT_OR_VISUAL_REPAIR"
+  },
+  {
+    "id": "class_anh_dao_idle",
+    "source": "Rejections/class_anh_dao_idle_v0.png",
+    "prompt": "Prompts/class_anh_dao_idle_v0.txt",
+    "columns": 8,
+    "rows": 10,
+    "status": "REJECTED_CLIPPED_ATLAS",
+    "generator": "built-in image_gen"
+  },
+  {
+    "id": "class_thach_chuy_basic_attack",
+    "source": "Sheets/class_thach_chuy_basic_attack_v2.png",
+    "prompt": "Prompts/class_thach_chuy_basic_attack_v2.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack.png",
+    "status": "SUPERSEDED_20261112_LAYOUT_REPAIR"
+  },
+  {
+    "id": "sk_mk_03_arc_component",
+    "source": "Rejections/sk_mk_03_arc_component_v1_20261112.png",
+    "prompt": "Prompts/sk_mk_03_arc_component_v1_20261112.txt",
+    "columns": 4,
+    "rows": 4,
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_20261112_VFX_REPAIR",
+    "batch": "20261112",
+    "componentOnly": true
+  },
+  {
+    "id": "npc_boat_keeper_idle_s",
+    "source": "Rejections/npc_boat_keeper_idle_s_v1_20261112.png",
+    "prompt": "Prompts/npc_boat_keeper_idle_s_v1_20261112.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_OPAQUE_MATTE",
+    "batch": "20261112"
+  },
+  {
+    "id": "mob_waterroot_idle",
+    "source": "Sheets/mob_waterroot_idle_v2.png",
+    "prompt": "Prompts/mob_waterroot_idle_v2.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle.png",
+    "status": "SUPERSEDED_20261112B_DIRECTIONAL_REPAIRS",
+    "replacementIds": [
+      "mob_waterroot_idle_s",
+      "mob_waterroot_idle_n",
+      "mob_waterroot_idle_ne",
+      "mob_waterroot_idle_e",
+      "mob_waterroot_idle_se"
+    ]
+  },
+  {
+    "id": "mob_shore_stalker_idle",
+    "source": "Sheets/mob_shore_stalker_idle_v2.png",
+    "prompt": "Prompts/mob_shore_stalker_idle_v2.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_shore_stalker_idle.png",
+    "status": "SUPERSEDED_20261112B_DIRECTIONAL_REPAIRS",
+    "replacementIds": [
+      "mob_shore_stalker_idle_s",
+      "mob_shore_stalker_idle_n",
+      "mob_shore_stalker_idle_ne",
+      "mob_shore_stalker_idle_e",
+      "mob_shore_stalker_idle_se"
+    ]
+  },
+  {
+    "id": "mob_waterroot_idle_ne_rejected_turn",
+    "source": "Rejections/mob_waterroot_idle_ne_rejected_turn_20261112b.png",
+    "prompt": "Prompts/mob_waterroot_idle_ne_rejected_turn_20261112b.txt",
+    "status": "REJECTED_COMPASS_DRIFT",
+    "generator": "built-in image_gen",
+    "batch": "20261112b"
+  },
+  {
+    "id": "mob_shore_stalker_idle_ne_rejected_compass",
+    "source": "Rejections/mob_shore_stalker_idle_ne_rejected_compass_20261112b.png",
+    "prompt": "Prompts/mob_shore_stalker_idle_ne_rejected_compass_20261112b.txt",
+    "status": "REJECTED_HEAD_TAIL_REVERSED",
+    "generator": "built-in image_gen",
+    "batch": "20261112b"
+  },
+  {
+    "id": "mob_carpling_attack_01_s",
+    "source": "Rejections/mob_carpling_attack_01_s_v1_20261112b.png",
+    "prompt": "Prompts/mob_carpling_attack_01_s_v1_20261112b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_NATIVE_BODY_STRETCH",
+    "batch": "20261112b",
+    "inputRole": "IDENTITY_REFERENCE",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_telegraph_01_s_v1_20261112b.png"
+  },
+  {
+    "id": "mob_carpling_recovery_01_s",
+    "source": "Rejections/mob_carpling_recovery_01_s_v1_20261112b.png",
+    "prompt": "Prompts/mob_carpling_recovery_01_s_v1_20261112b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_NATIVE_BODY_STRETCH",
+    "batch": "20261112b",
+    "inputRole": "IDENTITY_REFERENCE",
+    "reference": "Art_Source/Actor_Library_20261107/Rejections/mob_carpling_attack_01_s_v1_20261112b.png"
+  },
+  {
+    "id": "mob_carpling_hurt_ne",
+    "source": "Rejections/mob_carpling_hurt_ne_v1_20261112c.png",
+    "prompt": "Prompts/mob_carpling_hurt_ne_v1_20261112c.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "scaleMode": "LONGEST_AXIS",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_HURT_START_MOUTH_OPEN",
+    "batch": "20261112c",
+    "inputRole": "IDENTITY_REFERENCE",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_attack_01_ne_v1_20261112c.png"
+  },
+  {
+    "id": "mob_carpling_telegraph_01_atlas_trial",
+    "source": "Rejections/mob_carpling_telegraph_01_atlas_trial_20261112c.png",
+    "prompt": "Prompts/mob_carpling_telegraph_01_atlas_trial_20261112c.txt",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_DIAGONAL_COMPASS_DRIFT",
+    "batch": "20261112c"
+  },
+  {
+    "id": "mob_carpling_telegraph_01_atlas_extraction_trial",
+    "source": "Rejections/mob_carpling_telegraph_01_atlas_extraction_trial_20261112c.png",
+    "prompt": "Prompts/mob_carpling_telegraph_01_atlas_extraction_trial_20261112c.txt",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_DIAGONAL_COMPASS_DRIFT",
+    "batch": "20261112c"
+  },
+  {
+    "id": "mob_carpling_attack_01_atlas_trial",
+    "source": "Rejections/mob_carpling_attack_01_atlas_trial_20261112c.png",
+    "prompt": "Prompts/mob_carpling_attack_01_atlas_trial_20261112c.txt",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_OPENING_INSTEAD_OF_CLOSING_ATTACK",
+    "batch": "20261112c"
+  },
+  {
+    "id": "mob_waterroot_idle_ne",
+    "source": "Sheets/mob_waterroot_idle_ne_v1_20261112b.png",
+    "prompt": "Prompts/mob_waterroot_idle_ne_v1_20261112b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_20261112C_REAR_DIAGONAL_SILHOUETTE",
+    "batch": "20261112b",
+    "inputRole": "IDENTITY_REFERENCE",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_n_v1_20261112b.png"
+  },
+  {
+    "id": "mob_carpling_recovery_01_n",
+    "source": "Rejections/mob_carpling_recovery_01_n_v1_20261112c.png",
+    "prompt": "Prompts/mob_carpling_recovery_01_n_v1_20261112c.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_RECOVERY_START_TAIL_COIL",
+    "batch": "20261112c",
+    "inputRole": "IDENTITY_REFERENCE",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_carpling_attack_01_n_v1_20261112c.png",
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SILVER_CORE_CENTER"
+  },
+  {
+    "id": "npc_boat_keeper_walk_s",
+    "source": "Rejections/npc_boat_keeper_walk_s_v1_20261112c.png",
+    "prompt": "Prompts/npc_boat_keeper_walk_s_v1_20261112c.txt",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_OPAQUE_BACKGROUND_AND_SAME_LEADING_FOOT",
+    "batch": "20261112c"
+  },
+  {
+    "id": "npc_boat_keeper_walk_s",
+    "source": "Rejections/npc_boat_keeper_walk_s_v2_20261112c.png",
+    "prompt": "Prompts/npc_boat_keeper_walk_s_v2_20261112c.txt",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_SAME_LEADING_FOOT_BOTH_HALVES",
+    "batch": "20261112c"
+  },
+  {
+    "id": "npc_boat_keeper_walk_e",
+    "source": "Sheets/npc_boat_keeper_walk_e_v1_20261112d.png",
+    "prompt": "Prompts/npc_boat_keeper_walk_e_v1_20261112d.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_DURING_NATIVE_GAIT_REVIEW",
+    "batch": "20261112d",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_idle_partial_v1_20261112.png",
+    "inputRole": "IDENTITY_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_s_v3_20261112c.png"
+    ],
+    "reason": "Replace with v2 for clearer opposing-boot silhouette; original PNG retained unchanged."
+  },
+  {
+    "id": "npc_boat_keeper_walk_se",
+    "source": "Sheets/npc_boat_keeper_walk_se_v1_20261112d.png",
+    "prompt": "Prompts/npc_boat_keeper_walk_se_v1_20261112d.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_DURING_NATIVE_GAIT_REVIEW",
+    "batch": "20261112d",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_idle_partial_v1_20261112.png",
+    "inputRole": "IDENTITY_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_s_v3_20261112c.png"
+    ],
+    "reason": "Replace with v2 for clearer opposing-boot silhouette; original PNG retained unchanged."
+  },
+  {
+    "id": "mob_waterroot_attack_01_n",
+    "source": "Sheets/mob_waterroot_attack_01_n_v1_20261112e.png",
+    "prompt": "Prompts/mob_waterroot_attack_01_n_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "REJECTED_ALPHA_BACKGROUND_RESIDUE",
+    "batch": "20261112e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_n_v1_20261112b.png",
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_attack_01_s_v1_20261112e.png"
+    ],
+    "reason": "Low-alpha grey/yellow background residue across gutters; replaced by background-extracted v2."
+  },
+  {
+    "id": "sk_mob_waterroot_01_ripple_component",
+    "source": "Rejections/sk_mob_waterroot_01_ripple_component_v1_20261112e.png",
+    "prompt": "Prompts/sk_mob_waterroot_01_ripple_component_v1_20261112e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "pivotMode": "CELL_CENTER",
+    "cellCenterOffset": [
+      0,
+      16
+    ],
+    "componentOnly": true,
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_ALPHA_EXTRACTION",
+    "batch": "20261112e",
+    "reference": null,
+    "inputRole": "NEW_EFFECT_GENERATION",
+    "reason": "v2 lowers residual background alpha and retains hollow ring strokes; only v2 goes to native review."
+  },
+  {
+    "id": "sk_lc_01_mark_component",
+    "source": "Sheets/sk_lc_01_mark_component_v1_20261112f.png",
+    "prompt": "Prompts/sk_lc_01_mark_component_v1_20261112f.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "pivotMode": "CELL_CENTER",
+    "componentOnly": true,
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_LOOP_CLOSURE_REPAIR",
+    "batch": "20261112f",
+    "previewDurationSeconds": 1,
+    "previewLoop": true,
+    "reviewScope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL",
+    "reason": "Native review: bottom row restarts growth; frame15 to0 causes a size pop. Source and native v1 evidence retained."
+  },
+  {
+    "id": "mob_waterroot_attack_02_s",
+    "source": "Sheets/mob_waterroot_attack_02_s_v1_20261113b.png",
+    "prompt": "Prompts/mob_waterroot_attack_02_s_v1_20261113b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_PHASE_CONTINUITY_REPAIR",
+    "batch": "20261113b",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_telegraph_02_s_v1_20261113b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/mob_waterroot_idle_s_v1_20261112.png"
+    ],
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "reason": "Initial source starts upright after low windup; would jump at phase boundary."
+  },
+  {
+    "id": "sk_mob_waterroot_02_line_component",
+    "source": "Sheets/sk_mob_waterroot_02_line_component_v2_20261113b.png",
+    "prompt": "Prompts/sk_mob_waterroot_02_line_component_v2_20261113b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "generator": "built-in image_gen",
+    "status": "UNSELECTED_WARNING_VARIANT",
+    "batch": "20261113b",
+    "reference": "Sheets/sk_mob_waterroot_02_line_component_v1_20261113b.png",
+    "additionalReferences": [],
+    "inputRole": "PRECISE_OBJECT_EDIT",
+    "componentOnly": true,
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "pivotMode": "CELL_CENTER",
+    "previewDurationSeconds": 0.7,
+    "previewLoop": false,
+    "reason": "Alternative only; original selection retained pending alpha/native review."
+  },
+  {
+    "id": "class_minh_kiem_skill_02_n",
+    "source": "Sheets/class_minh_kiem_skill_02_n_v1_20261113c.png",
+    "prompt": "Prompts/class_minh_kiem_skill_02_n_v1_20261113c.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113c",
+    "reference": "Art_Source/Motion_16F_20261106/idle_n.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_n_v1_20261113a.png"
+    ],
+    "inputRole": "IDENTITY_AND_POSE_REFERENCE",
+    "reason": "NORTH thrust blade points NE instead of NORTH; targeted forearm/blade aim repair."
+  },
+  {
+    "id": "sk_mk_04_break_component",
+    "source": "Sheets/sk_mk_04_break_component_v1_20261113c.png",
+    "prompt": "Prompts/sk_mk_04_break_component_v1_20261113c.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113c",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_04_gain_component_v1_20261113c.png",
+    "additionalReferences": [],
+    "inputRole": "IDENTITY_REFERENCE",
+    "componentOnly": true,
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "pivotMode": "CELL_CENTER",
+    "previewDurationSeconds": 0.32,
+    "previewLoop": false,
+    "reason": "First variant grows a ring like gain; break must begin at full rim size and fracture without rebuilding."
+  },
+  {
+    "id": "class_minh_kiem_skill_06_e",
+    "source": "Sheets/class_minh_kiem_skill_06_e_v1_20261113d.png",
+    "prompt": "Prompts/class_minh_kiem_skill_06_e_v1_20261113d.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_CHOREOGRAPHY_THUST_INSTEAD_OF_DRAW_CUT",
+    "batch": "20261113d",
+    "reference": "Art_Source/Motion_16F_20261106/idle_e.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_02_e_v1_20261113c.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "reason": "Frames4-10 point almost continuously forward; v2 repairs sweep angles."
+  },
+  {
+    "id": "class_minh_kiem_skill_06_ne",
+    "source": "Sheets/class_minh_kiem_skill_06_ne_v1_20261113d.png",
+    "prompt": "Prompts/class_minh_kiem_skill_06_ne_v1_20261113d.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_PENDING_NATIVE_REVIEW",
+    "batch": "20261113d",
+    "reference": "Art_Source/Motion_16F_20261106/idle_ne_v2.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_06_e_v2_20261113d.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "reason": "v1 opens chest/front shoulders during windup and resembles E; v2 keeps broad coat BACK through all16poses"
+  },
+  {
+    "id": "class_minh_kiem_skill_06_se",
+    "source": "Sheets/class_minh_kiem_skill_06_se_v1_20261113d.png",
+    "prompt": "Prompts/class_minh_kiem_skill_06_se_v1_20261113d.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_PENDING_NATIVE_REVIEW",
+    "batch": "20261113d",
+    "reference": "Art_Source/Motion_16F_20261106/idle_se.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_06_e_v2_20261113d.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "reason": "v1 has extra free palms behind left silhouette at release; v2 removes duplicate limbs while preserving sword choreography"
+  },
+  {
+    "id": "class_minh_kiem_hurt",
+    "source": "Sheets/class_minh_kiem_hurt_v1_20261112.png",
+    "prompt": "Prompts/class_minh_kiem_hurt_v1_20261112.txt",
+    "columns": 8,
+    "rows": 10,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_BY_DIRECTIONAL_REACTION_OR_GAIT_REPAIR",
+    "batch": "20261112",
+    "reference": "Art_Source/Motion_16F_20261106/idle_s.png",
+    "inputRole": "IDENTITY_REFERENCE",
+    "supersededByBatch": "20261113e",
+    "reason": "Original PNG retained. New directional combat reaction retains sword, or corrected worker gait awaits native review."
+  },
+  {
+    "id": "class_minh_kiem_dodge",
+    "source": "Sheets/class_minh_kiem_dodge_partial_v1_20261112.png",
+    "prompt": "Prompts/class_minh_kiem_dodge_partial_v1_20261112.txt",
+    "columns": 8,
+    "rows": 8,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_BY_DIRECTIONAL_REACTION_OR_GAIT_REPAIR",
+    "batch": "20261112",
+    "authoredDirections": [
+      "N",
+      "NE",
+      "E",
+      "SE"
+    ],
+    "reference": "Art_Source/Motion_16F_20261106/idle_s.png",
+    "inputRole": "IDENTITY_REFERENCE",
+    "supersededByBatch": "20261113e",
+    "reason": "Original PNG retained. New directional combat reaction retains sword, or corrected worker gait awaits native review."
+  },
+  {
+    "id": "class_minh_kiem_dodge_s",
+    "source": "Sheets/class_minh_kiem_dodge_s_v1_20261112.png",
+    "prompt": "Prompts/class_minh_kiem_dodge_s_v1_20261112.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_BY_DIRECTIONAL_REACTION_OR_GAIT_REPAIR",
+    "batch": "20261112",
+    "reference": "Art_Source/Motion_16F_20261106/idle_s.png",
+    "inputRole": "IDENTITY_REFERENCE",
+    "supersededByBatch": "20261113e",
+    "reason": "Original PNG retained. New directional combat reaction retains sword, or corrected worker gait awaits native review."
+  },
+  {
+    "id": "class_minh_kiem_death",
+    "source": "Sheets/class_minh_kiem_death_partial_v1_20261112.png",
+    "prompt": "Prompts/class_minh_kiem_death_partial_v1_20261112.txt",
+    "columns": 8,
+    "rows": 8,
+    "direction": null,
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_BY_DIRECTIONAL_REACTION_OR_GAIT_REPAIR",
+    "batch": "20261112",
+    "authoredDirections": [
+      "S",
+      "SE",
+      "E",
+      "N"
+    ],
+    "reference": "Art_Source/Motion_16F_20261106/idle_s.png",
+    "inputRole": "IDENTITY_REFERENCE",
+    "supersededByBatch": "20261113e",
+    "reason": "Original PNG retained. New directional combat reaction retains sword, or corrected worker gait awaits native review."
+  },
+  {
+    "id": "class_minh_kiem_death_ne",
+    "source": "Sheets/class_minh_kiem_death_ne_v1_20261112.png",
+    "prompt": "Prompts/class_minh_kiem_death_ne_v1_20261112.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_BY_DIRECTIONAL_REACTION_OR_GAIT_REPAIR",
+    "batch": "20261112",
+    "reference": "Art_Source/Motion_16F_20261106/idle_s.png",
+    "inputRole": "IDENTITY_REFERENCE",
+    "supersededByBatch": "20261113e",
+    "reason": "Original PNG retained. New directional combat reaction retains sword, or corrected worker gait awaits native review."
+  },
+  {
+    "id": "npc_boat_keeper_walk_ne",
+    "source": "Sheets/npc_boat_keeper_walk_ne_v1_20261112d.png",
+    "prompt": "Prompts/npc_boat_keeper_walk_ne_v1_20261112d.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_BY_DIRECTIONAL_REACTION_OR_GAIT_REPAIR",
+    "batch": "20261112d",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_idle_partial_v1_20261112.png",
+    "inputRole": "IDENTITY_REFERENCE",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_s_v3_20261112c.png"
+    ],
+    "supersededByBatch": "20261113e",
+    "reason": "Original PNG retained. New directional combat reaction retains sword, or corrected worker gait awaits native review."
+  },
+  {
+    "id": "npc_boat_keeper_walk_e",
+    "source": "Sheets/npc_boat_keeper_walk_e_v2_20261112d.png",
+    "prompt": "Prompts/npc_boat_keeper_walk_e_v2_20261112d.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_BY_DIRECTIONAL_REACTION_OR_GAIT_REPAIR",
+    "batch": "20261112d",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_e_v1_20261112d.png",
+    "inputRole": "GAIT_CORRECTION_EDIT",
+    "additionalReferences": [],
+    "replacesSource": "Sheets/npc_boat_keeper_walk_e_v1_20261112d.png",
+    "supersededByBatch": "20261113e",
+    "reason": "Original PNG retained. New directional combat reaction retains sword, or corrected worker gait awaits native review."
+  },
+  {
+    "id": "npc_boat_keeper_walk_ne",
+    "source": "Sheets/npc_boat_keeper_walk_ne_v1_20261113e.png",
+    "prompt": "Prompts/npc_boat_keeper_walk_ne_v1_20261113e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113e",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_ne_v1_20261112d.png",
+    "additionalReferences": [],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "reason": "v1 added brown ground/shadow ovals; v2 removes ground while keeping the corrected sixteen-pose gait"
+  },
+  {
+    "id": "class_minh_kiem_death_s",
+    "source": "Sheets/class_minh_kiem_death_s_v1_20261113e.png",
+    "prompt": "Prompts/class_minh_kiem_death_s_v1_20261113e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113e",
+    "reference": "Art_Source/Motion_16F_20261106/idle_s.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_04_s_v1_20261113c.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "reason": "v1 has a bent L-shaped blade in frame10; v2 preserves the fall and repairs the single straight blade"
+  },
+  {
+    "id": "class_minh_kiem_dodge_e",
+    "source": "Sheets/class_minh_kiem_dodge_e_v1_20261113e.png",
+    "prompt": "Prompts/class_minh_kiem_dodge_e_v1_20261113e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113e",
+    "reference": "Art_Source/Motion_16F_20261106/idle_e.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_04_e_v1_20261113c.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "supersedesActiveSource": "Sheets/class_minh_kiem_dodge_partial_v1_20261112.png",
+    "replacesSource": "Sheets/class_minh_kiem_dodge_partial_v1_20261112.png",
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664
+    ],
+    "reason": "v1 last recovery pose remains shorter than neutral, visible in transition screening; v2 straightens final-row knees/hips instead of scaling or translating the raster"
+  },
+  {
+    "id": "class_minh_kiem_dodge_se",
+    "source": "Sheets/class_minh_kiem_dodge_se_v1_20261113e.png",
+    "prompt": "Prompts/class_minh_kiem_dodge_se_v1_20261113e.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113e",
+    "reference": "Art_Source/Motion_16F_20261106/idle_se.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_04_se_v1_20261113c.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "supersedesActiveSource": "Sheets/class_minh_kiem_dodge_partial_v1_20261112.png",
+    "replacesSource": "Sheets/class_minh_kiem_dodge_partial_v1_20261112.png",
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      30,
+      30,
+      30,
+      30,
+      30,
+      30,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664,
+      36.666666666666664
+    ],
+    "reason": "v1 last recovery pose remains shorter than neutral, visible in transition screening; v2 straightens final-row knees/hips instead of scaling or translating the raster"
+  },
+  {
+    "id": "class_anh_dao_skill_01_se",
+    "source": "Sheets/class_anh_dao_skill_01_se_v1_20261113f.png",
+    "prompt": "Prompts/class_anh_dao_skill_01_se_v1_20261113f.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113f",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      30,
+      30,
+      30,
+      30,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336
+    ],
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "reason": "v1 contains solid matte islands crossing the column2/3 gutter and cannot be safely partitioned. v2 cleans/re-packs original poses, no source-crop or verifier bypass."
+  },
+  {
+    "id": "sk_ad_03_first_cut_component",
+    "source": "Sheets/sk_ad_03_first_cut_component_v1_20261113f.png",
+    "prompt": "Prompts/sk_ad_03_first_cut_component_v1_20261113f.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113f",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_01_cut_component_v1_20261112f.png",
+    "additionalReferences": [],
+    "inputRole": "STYLE_REFERENCE_NEW_COMPONENT",
+    "componentOnly": true,
+    "previewDurationSeconds": 0.32,
+    "previewLoop": false,
+    "pivotMode": "CELL_CENTER",
+    "scaleMode": "LONGEST_AXIS",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "reason": "v1 duplicated the rising leading-edge orientation; v2 authors a downward hot lower lip so first/reverse cuts read differently."
+  },
+  {
+    "id": "sk_ad_02_expire_component",
+    "source": "Sheets/sk_ad_02_expire_component_v1_20261113f.png",
+    "prompt": "Prompts/sk_ad_02_expire_component_v1_20261113f.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113f",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_01_cut_component_v1_20261112f.png",
+    "additionalReferences": [],
+    "inputRole": "STYLE_REFERENCE_NEW_COMPONENT",
+    "componentOnly": true,
+    "previewDurationSeconds": 0.32,
+    "previewLoop": false,
+    "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+    "scaleMode": "LONGEST_AXIS",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "reason": "v1 has an empty final alpha>=200 source cell; v2 supplies genuine nonempty distinct ember-crumb poses without padding/repeating."
+  },
+  {
+    "id": "class_anh_dao_skill_04_ne",
+    "source": "Sheets/class_anh_dao_skill_04_ne_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_04_ne_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_ne_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      40,
+      40,
+      40,
+      40,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336
+    ],
+    "reason": "v1 raises blade above shoulder again during recovery and reads as a second chop. v2 keeps source10-15 below waist and preserves one downward stroke."
+  },
+  {
+    "id": "class_anh_dao_skill_04_se",
+    "source": "Sheets/class_anh_dao_skill_04_se_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_04_se_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_04_e_v1_20261113g.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      33.333333333333336,
+      40,
+      40,
+      40,
+      40,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336,
+      53.333333333333336
+    ],
+    "reason": "v1 drifts to an east side profile. v2 restores a readable southeast front-right face/collar while keeping one downward chop."
+  },
+  {
+    "id": "class_anh_dao_skill_06_se",
+    "source": "Sheets/class_anh_dao_skill_06_se_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_06_se_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_se_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      137.5,
+      137.5,
+      137.5,
+      137.5,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      75,
+      75,
+      75,
+      75
+    ],
+    "reason": "v1 source6/7 face right instead of west/back-left, breaking clockwise revolution. v2 redraws those headings in place; no atlas rotation or duplicated frames."
+  },
+  {
+    "id": "class_anh_dao_skill_06_s",
+    "source": "Sheets/class_anh_dao_skill_06_s_v1_20261113g.png",
+    "prompt": "Prompts/class_anh_dao_skill_06_s_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_skill_03_s_v1_20261113f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png"
+    ],
+    "inputRole": "IDENTITY_REFERENCE_NEW_ACTION",
+    "sourceFrameDurationsMs": [
+      137.5,
+      137.5,
+      137.5,
+      137.5,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      31.25,
+      75,
+      75,
+      75,
+      75
+    ],
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 208,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113g.json",
+    "reason": "v1 west/back-left poses point right during the south-start revolution. v2 redraws source4/5/6 toward southwest/west/northwest, keeping other poses and source order."
+  },
+  {
+    "id": "sk_ad_06_sweep_component",
+    "source": "Sheets/sk_ad_06_sweep_component_v1_20261113g.png",
+    "prompt": "Prompts/sk_ad_06_sweep_component_v1_20261113g.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "OMNI",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "batch": "20261113g",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_ad_03_first_cut_component_v2_20261113f.png",
+    "additionalReferences": [],
+    "inputRole": "STYLE_REFERENCE_NEW_COMPONENT",
+    "componentOnly": true,
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      41.666666666666664,
+      41.666666666666664,
+      41.666666666666664,
+      41.666666666666664,
+      41.666666666666664,
+      41.666666666666664,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25
+    ],
+    "previewDurationSeconds": 0.48,
+    "previewLoop": false,
+    "pivotMode": "CELL_CENTER",
+    "scaleMode": "LONGEST_AXIS",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "translucentTailFromFrame": 12,
+    "reason": "v1 solid ember fringe reaches a source-cell edge in row1 col2. v2 repacks ring/embers with clean wide gutters and intact tips."
+  },
+  {
+    "id": "class_anh_dao_hurt",
+    "source": "Sheets/class_anh_dao_hurt.png",
+    "prompt": "Prompts/class_anh_dao_hurt.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION",
+    "sha256": "4e79a820d1d3bc35179ee0ffddae83051e31db0a80f532cf8fcab60fa69275f7",
+    "reason": "Replaced by five new armed source angles per reaction; previous whole atlas had a repeated recoil or incompatible fall and the standalone SE repair lacked the held dao.",
+    "supersededByBatch": "20261113h",
+    "archiveStatus": "UNAPPROVED_OR_HELD_SOURCE_PRESERVED_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_death",
+    "source": "Sheets/class_anh_dao_death.png",
+    "prompt": "Prompts/class_anh_dao_death.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION",
+    "sha256": "d690026528545918f60f420161cc1a941284a0ac6155505aa6c4d7ab42c58100",
+    "reason": "Replaced by five new armed source angles per reaction; previous whole atlas had a repeated recoil or incompatible fall and the standalone SE repair lacked the held dao.",
+    "supersededByBatch": "20261113h",
+    "archiveStatus": "UNAPPROVED_OR_HELD_SOURCE_PRESERVED_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_death_se",
+    "source": "Sheets/class_anh_dao_death_se_v1.png",
+    "prompt": "Prompts/class_anh_dao_death_se_v1.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_death.png",
+    "status": "GENERATED_PENDING_INSPECTION",
+    "sha256": "2806b302885bb3f58cfb1455ff1deb99e09810a9fb7ec827b2129e1ef044a3b8",
+    "reason": "Replaced by five new armed source angles per reaction; previous whole atlas had a repeated recoil or incompatible fall and the standalone SE repair lacked the held dao.",
+    "supersededByBatch": "20261113h",
+    "archiveStatus": "UNAPPROVED_OR_HELD_SOURCE_PRESERVED_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_idle",
+    "source": "Sheets/class_anh_dao_idle.png",
+    "prompt": "Prompts/class_anh_dao_idle.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_INSPECTION",
+    "reference": "Art_Source/Actor_Library_20261107/Rejections/class_anh_dao_idle_v0.png",
+    "reason": "Replace unapproved whole base atlas with armed five-angle I sources; old PNG/prompt bytes retained.",
+    "supersededByBatch": "20261113i",
+    "archiveStatus": "UNAPPROVED_SOURCE_PRESERVED_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_walk",
+    "source": "Sheets/class_anh_dao_walk.png",
+    "prompt": "Prompts/class_anh_dao_walk.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION",
+    "reason": "Replace unapproved whole base atlas with armed five-angle I sources; old PNG/prompt bytes retained.",
+    "supersededByBatch": "20261113i",
+    "archiveStatus": "UNAPPROVED_SOURCE_PRESERVED_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_basic_attack",
+    "source": "Sheets/class_anh_dao_basic_attack.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack.txt",
+    "columns": 8,
+    "rows": 10,
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle.png",
+    "status": "GENERATED_PENDING_INSPECTION",
+    "reason": "Replace unapproved whole base atlas with armed five-angle I sources; old PNG/prompt bytes retained.",
+    "supersededByBatch": "20261113i",
+    "archiveStatus": "UNAPPROVED_SOURCE_PRESERVED_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_walk_se",
+    "source": "Sheets/class_anh_dao_walk_se_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_se_v1_20261113i.txt",
+    "status": "SUPERSEDED_GAIT_SOURCE_REPAIR",
+    "reason": "Source0 and8 repeat the same leading leg; v2 redraws the opposite near/far support pattern across16poses. Still needs native gait review.",
+    "supersededByBatch": "20261113i",
+    "archiveStatus": "GAIT_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_walk_ne",
+    "source": "Sheets/class_anh_dao_walk_ne_v2_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_ne_v2_20261113i.txt",
+    "status": "REJECTED_GAIT_REVISION",
+    "reason": "Still repeats far trailing boot at source0 and8. Keep v1 selected WIP; neither passes native gait review.",
+    "supersededByBatch": "20261113i",
+    "archiveStatus": "GAIT_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_walk_ne",
+    "source": "Sheets/class_anh_dao_walk_ne_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_ne_v1_20261113i.txt",
+    "status": "SUPERSEDED_GAIT_SOURCE_REPAIR",
+    "reason": "v1/v2 same trailing boot at0/8; v3 source0 right/down-right vs8 left/down-left with intermediate passing legs. Native review still required.",
+    "supersededByBatch": "20261113i",
+    "archiveStatus": "GAIT_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_walk_e",
+    "source": "Sheets/class_anh_dao_walk_e_v2_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_e_v2_20261113i.txt",
+    "status": "REJECTED_GAIT_REVISION",
+    "reason": "Near/far support at0 and8 still insufficiently reversed. Retain selectedv1 as HOLD candidate, not production approval.",
+    "supersededByBatch": "20261113i",
+    "archiveStatus": "GAIT_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_walk_e",
+    "source": "Sheets/class_anh_dao_walk_e_v1_20261113i.png",
+    "prompt": "Prompts/class_anh_dao_walk_e_v1_20261113i.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "batch": "20261113i",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "bodyReferenceHeight": 225.40322580645162,
+    "pivotMode": "DARK_BOOT_CORE_FOOT",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261113i.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_e_v1_20261113i.png"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113i/class_anh_dao_idle_e_v1_20261113i.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_e_v1_20261113i.png",
+        "sourceSha256": "9ef8e354518573a8e6ef8650ccfc430094fdee168eb447b905c52b49abe71919"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "gaitReviewNote": "HOLD: E near/far contact/overlap at0/8 not convincingly opposite; mirroredW inherits hold.",
+    "supersededByBatch": "20261113j",
+    "archiveStatus": "HELD_SOURCE_PRESERVED_NOT_RENDERED",
+    "reason": "New E gait source ready for native review; do not transfer old source approval or clear HOLD before review."
+  },
+  {
+    "id": "class_anh_dao_basic_attack_03_se",
+    "source": "Sheets/class_anh_dao_basic_attack_03_se_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_03_se_v1_20261113j.txt",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "reason": "Remove frame7 white flare and reverse blade motion: cross-waist screen-right load3 to near screen-left outward release7. v2 still awaits other directions and native review.",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "supersededByBatch": "20261113j",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_run_se",
+    "source": "Sheets/class_anh_dao_run_se_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_run_se_v1_20261113j.txt",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "reason": "v1 may repeat lead/occlusion at0/8. v2 redraws second half toward opposite near/right foot; requires native gait/flight review and a virtual ground root, not lowest airborne boot anchoring.",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_se_v1_20261113i.png",
+        "sourceSha256": "a0219ef98870b4ba20b05897787c116b6451ba69edb122555e3fa754f9f8798b"
+      }
+    ],
+    "additionalReferences": [],
+    "referenceRelocations": [],
+    "supersededByBatch": "20261113j",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_anh_dao_basic_attack_03_n",
+    "source": "Sheets/class_anh_dao_basic_attack_03_n_v1_20261113j.png",
+    "prompt": "Prompts/class_anh_dao_basic_attack_03_n_v1_20261113j.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261113j",
+    "generator": "built-in image_gen",
+    "status": "SUPERSEDED_SOURCE_REPAIR",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png"
+    ],
+    "comboStage": 3,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES",
+    "reason": "Raise clearly empty left hand during crossed load; dao tip stays below it and right-hand grip remains occluded at front of waist. Prevent false left-hand weapon reading at3-4; native review pending.",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_idle_n_v1_20261113i.png",
+        "sourceSha256": "5358edf39c3d6e932505ea18f91f30d5c535433e974630a1988c426d06f909d8"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+        "sourceSha256": "c5be664008acc0a84f35e58c291acc019272f655e44eb0f737a254092bc102a8",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_basic_attack_03_se_v2_20261113j.png"
+      }
+    ],
+    "referenceRelocations": [
+      {
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261113j/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+        "deliveredPath": "Art_Source/Actor_Library_20261107/Sheets/class_anh_dao_basic_attack_03_se_v2_20261113j.png",
+        "sourceSha256": "c5be664008acc0a84f35e58c291acc019272f655e44eb0f737a254092bc102a8"
+      }
+    ],
+    "supersededByBatch": "20261113j",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_run_n",
+    "source": "Sheets/class_minh_kiem_run_n_v1_20261114a.png",
+    "prompt": "Prompts/class_minh_kiem_run_n_v1_20261114a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261114a",
+    "generator": "built-in image_gen",
+    "status": "UNBOUND_CANDIDATE_AWAITING_ALL_ANGLES_AND_NATIVE_REVIEW",
+    "sourceFrameDurationsMs": [
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_n_v1_20261113a.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_se_v1_20261114a.png"
+    ],
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceReviewNote": "HOLD before native:0/8 both appear to expose the right/down boot; redraw lower eight leg poses with left/down contact. No automatic approval.",
+    "reason": "HOLD before native:0/8 both appear to expose the right/down boot; redraw lower eight leg poses with left/down contact. No automatic approval.",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_n_v1_20261113a.png",
+        "sourceSha256": "da1abf4b7c9b79adc24cc221e116ffcfc755f36da20fec110cf4a34e278512f9"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_se_v1_20261114a.png",
+        "sourceSha256": "fa74ce67dce056424d5f62d9b3319cd3cb46e40dc2d7c252a2830100ecd96b3f",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114a/class_minh_kiem_run_se_v1_20261114a.png"
+      }
+    ],
+    "supersededByBatch": "20261114a",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_basic_attack_02_s",
+    "source": "Sheets/class_minh_kiem_basic_attack_02_s_v1_20261114a.png",
+    "prompt": "Prompts/class_minh_kiem_basic_attack_02_s_v1_20261114a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "S",
+    "batch": "20261114a",
+    "generator": "built-in image_gen",
+    "status": "UNBOUND_CANDIDATE_AWAITING_ALL_ANGLES_AND_NATIVE_REVIEW",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_s_v1_20261113a.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_02_se_v1_20261114a.png"
+    ],
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "comboStage": 2,
+    "combatAuthority": "PRESENTATION_ONLY_SERVER_OWNS_HIT_INDEX_AND_OUTCOMES",
+    "reason": "Rejected alpha haze/soft white ground shadow; imagegen transparency repair v2",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_s_v1_20261113a.png",
+        "sourceSha256": "5d495f3fd4393476eb0d79370e9d1f2513907d3c3a3c4c9acb58cd09df3fbabb"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_02_se_v1_20261114a.png",
+        "sourceSha256": "c291f60075657246de0718d6f74ecce98417c90a6290be86c8cc70c128367cfa",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114a/class_minh_kiem_basic_attack_02_se_v1_20261114a.png"
+      }
+    ],
+    "supersededByBatch": "20261114a",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_run_ne",
+    "source": "Sheets/class_minh_kiem_run_ne_v2_20261114a.png",
+    "prompt": "Prompts/class_minh_kiem_run_ne_v2_20261114a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261114a",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_GAIT_REPAIR_REJECTED_BEFORE_NATIVE",
+    "sourceFrameDurationsMs": [
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_ne_v1_20261114a.png",
+    "inputRole": "EDIT_TARGET_GAIT_REPAIR",
+    "reason": "Foreground boot at0/8 still not convincingly opposite; keep active v1 pending/HOLD, do not approve either variant.",
+    "sourceSha256": "24120a70a5beccd85691fdff38ccdd9533f1d974ae1819c4902f6b65df00c936",
+    "generationInputs": [
+      {
+        "role": "EDIT_TARGET_GAIT_REPAIR",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_ne_v1_20261114a.png",
+        "sourceSha256": "3b67087507f17e90c3843299b821316fff9c3ed53f39e09315df3febb2a2041f"
+      }
+    ],
+    "supersededByBatch": "20261114a",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_walk_ne",
+    "source": "Sheets/class_minh_kiem_walk_ne_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_walk_ne_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_GEOMETRY_NATIVE_REVIEW",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_ne_v1_20261114b.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_ne_v1_20261114b.png",
+        "sourceSha256": "466cbb9b9014031c833111ab6450a7f2c0d537aa319824294692def29eb2ecba",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_ne_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "ebb779cbc34589e1036f54c84ecb61ff0651170ce02685a7c8dc16dcac714542",
+    "supersededByBatch": "20261114b",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_basic_attack_n",
+    "source": "Sheets/class_minh_kiem_basic_attack_n_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_basic_attack_n_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_GEOMETRY_NATIVE_REVIEW",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_n_v1_20261114b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_s_v1_20261114b.png"
+    ],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_n_v1_20261114b.png",
+        "sourceSha256": "1d36ae46ba252e161db05bb898e9f5e71264d891c8097c2ce25aeb280c8c710c",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_n_v1_20261114b.png"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_s_v1_20261114b.png",
+        "sourceSha256": "b14bb4e7d59c77ebd98b75140156ddb6b23af38128a1f75c8ca5b522237fac2a",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_basic_attack_s_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "e8b5e17b93b3d72460f0a9c6d3c87fa396b812a0e0972a6f4108dad3f0a36fe7",
+    "supersededByBatch": "20261114b",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_run_ne",
+    "source": "Sheets/class_minh_kiem_run_ne_v1_20261114a.png",
+    "prompt": "Prompts/class_minh_kiem_run_ne_v1_20261114a.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261114a",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_ne_v1_20261113a.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_se_v1_20261114a.png"
+    ],
+    "inputRole": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "bodyReferenceHeight": 260.0,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        173.5,
+        291.0
+      ],
+      [
+        173.0,
+        291.5
+      ],
+      [
+        172.5,
+        290.0
+      ],
+      [
+        174.0,
+        287.5
+      ],
+      [
+        174.0,
+        278.0
+      ],
+      [
+        175.0,
+        277.5
+      ],
+      [
+        176.5,
+        276.0
+      ],
+      [
+        177.0,
+        273.5
+      ],
+      [
+        177.0,
+        278.0
+      ],
+      [
+        175.0,
+        278.5
+      ],
+      [
+        175.0,
+        281.0
+      ],
+      [
+        174.0,
+        280.5
+      ],
+      [
+        175.0,
+        283.0
+      ],
+      [
+        173.5,
+        284.5
+      ],
+      [
+        176.5,
+        286.0
+      ],
+      [
+        174.0,
+        286.5
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114a.json",
+    "generationInputs": [
+      {
+        "role": "IDENTITY_FACING_REFERENCE_NEW_SOURCE_ACTION",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_01_ne_v1_20261113a.png",
+        "sourceSha256": "0cb7b70288f650ba98ce966224f85ba3cd71e9808780d9b46a65ba74573b63ce"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_run_se_v1_20261114a.png",
+        "sourceSha256": "fa74ce67dce056424d5f62d9b3319cd3cb46e40dc2d7c252a2830100ecd96b3f",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114a/class_minh_kiem_run_se_v1_20261114a.png"
+      }
+    ],
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "gaitReviewNote": "HOLD: NE run foreground/far boot ownership at0/8 remains unclear in native temporal samples. V2 repair still exposes a similar rear sole; neither variant approved. Mirrored NW inherits this hold.",
+    "supersededByBatch": "20261114c",
+    "archiveStatus": "HELD_SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_walk_ne",
+    "source": "Sheets/class_minh_kiem_walk_ne_v2_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_walk_ne_v2_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_walk_ne_v1_20261114b.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_walk_ne_v1_20261114b.png",
+        "sourceSha256": "ebb779cbc34589e1036f54c84ecb61ff0651170ce02685a7c8dc16dcac714542",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_walk_ne_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "cce05ae787b5ee41e5656bf154bee8a4844c194c9da799a6fe3aba9ce9a7bb58",
+    "bodyReferenceHeight": 257.65765765765764,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        167.018018018018,
+        290.0
+      ],
+      [
+        143.018018018018,
+        289.125
+      ],
+      [
+        142.018018018018,
+        288.25
+      ],
+      [
+        144.018018018018,
+        288.375
+      ],
+      [
+        167.518018018018,
+        277.5
+      ],
+      [
+        143.018018018018,
+        276.625
+      ],
+      [
+        142.518018018018,
+        275.75
+      ],
+      [
+        144.018018018018,
+        274.875
+      ],
+      [
+        167.018018018018,
+        278.0
+      ],
+      [
+        143.018018018018,
+        278.875
+      ],
+      [
+        143.018018018018,
+        279.75
+      ],
+      [
+        144.518018018018,
+        280.625
+      ],
+      [
+        167.018018018018,
+        280.5
+      ],
+      [
+        143.018018018018,
+        281.375
+      ],
+      [
+        143.018018018018,
+        282.25
+      ],
+      [
+        144.018018018018,
+        283.125
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "supersededByBatch": "20261114c",
+    "archiveStatus": "HELD_SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_walk_e",
+    "source": "Sheets/class_minh_kiem_walk_e_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_walk_e_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_e_v1_20261114b.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_e_v1_20261114b.png",
+        "sourceSha256": "d3e952b4f6baf3c92ac881645ba27f6728890c2fb6ade1abc7a43cd4daf1a6a0",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_e_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "4391e704fec18c3a593e251b44cafb9b9ef1b7f6b631a0e79ba0339c1d863caf",
+    "bodyReferenceHeight": 236.25,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        152.875,
+        283.0
+      ],
+      [
+        148.875,
+        282.375
+      ],
+      [
+        144.875,
+        281.75
+      ],
+      [
+        148.875,
+        281.125
+      ],
+      [
+        152.875,
+        266.5
+      ],
+      [
+        149.375,
+        265.875
+      ],
+      [
+        144.875,
+        265.25
+      ],
+      [
+        148.875,
+        264.625
+      ],
+      [
+        152.875,
+        265.0
+      ],
+      [
+        149.375,
+        265.625
+      ],
+      [
+        144.875,
+        266.25
+      ],
+      [
+        148.875,
+        266.875
+      ],
+      [
+        152.875,
+        268.5
+      ],
+      [
+        149.375,
+        269.125
+      ],
+      [
+        144.875,
+        269.75
+      ],
+      [
+        148.875,
+        270.375
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "supersededByBatch": "20261114c",
+    "archiveStatus": "HELD_SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_walk_se",
+    "source": "Sheets/class_minh_kiem_walk_se_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_walk_se_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_se_v1_20261114b.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_se_v1_20261114b.png",
+        "sourceSha256": "772cf9a16e17900dd2f5f8c8ecd783e0e10964862acb1219ef8942ca78c9b0d6",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_se_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "7d380ad354a3de37d7a88cd6290ef8be1a3df49b5474de957e548370f2f9c2f0",
+    "bodyReferenceHeight": 257.4642857142857,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        154.55357142857142,
+        294.0
+      ],
+      [
+        151.55357142857142,
+        293.125
+      ],
+      [
+        155.55357142857142,
+        292.25
+      ],
+      [
+        156.55357142857142,
+        291.375
+      ],
+      [
+        155.05357142857142,
+        279.5
+      ],
+      [
+        151.55357142857142,
+        278.625
+      ],
+      [
+        156.05357142857142,
+        277.75
+      ],
+      [
+        156.55357142857142,
+        276.875
+      ],
+      [
+        155.05357142857142,
+        276.0
+      ],
+      [
+        151.55357142857142,
+        277.875
+      ],
+      [
+        155.55357142857142,
+        277.75
+      ],
+      [
+        156.55357142857142,
+        279.625
+      ],
+      [
+        155.55357142857142,
+        279.5
+      ],
+      [
+        151.55357142857142,
+        280.375
+      ],
+      [
+        156.05357142857142,
+        281.25
+      ],
+      [
+        156.55357142857142,
+        282.125
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "supersededByBatch": "20261114c",
+    "archiveStatus": "HELD_SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_basic_attack_n",
+    "source": "Sheets/class_minh_kiem_basic_attack_n_v2_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_basic_attack_n_v2_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "N",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_n_v1_20261114b.png",
+    "additionalReferences": [],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_n_v1_20261114b.png",
+        "sourceSha256": "e8b5e17b93b3d72460f0a9c6d3c87fa396b812a0e0972a6f4108dad3f0a36fe7",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_basic_attack_n_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "3a09756638b356eecf53f3b477c7d97e38329c91ab2ffedb0dec90070ab8c87a",
+    "bodyReferenceHeight": 223.54128440366972,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        158.27981651376146,
+        290
+      ],
+      [
+        128.27981651376146,
+        285
+      ],
+      [
+        134.77981651376146,
+        285
+      ],
+      [
+        151.27981651376146,
+        289
+      ],
+      [
+        160.77981651376146,
+        265
+      ],
+      [
+        127.77981651376147,
+        267
+      ],
+      [
+        131.77981651376146,
+        267
+      ],
+      [
+        151.77981651376146,
+        265
+      ],
+      [
+        159.27981651376146,
+        266
+      ],
+      [
+        126.77981651376147,
+        268
+      ],
+      [
+        133.77981651376146,
+        270
+      ],
+      [
+        151.27981651376146,
+        268
+      ],
+      [
+        158.27981651376146,
+        269
+      ],
+      [
+        126.77981651376147,
+        269
+      ],
+      [
+        134.27981651376146,
+        272
+      ],
+      [
+        152.27981651376146,
+        272
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "supersededByBatch": "20261114c",
+    "archiveStatus": "HELD_SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_basic_attack_ne",
+    "source": "Sheets/class_minh_kiem_basic_attack_ne_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_basic_attack_ne_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "NE",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_ne_v1_20261114b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_s_v1_20261114b.png"
+    ],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_ne_v1_20261114b.png",
+        "sourceSha256": "466cbb9b9014031c833111ab6450a7f2c0d537aa319824294692def29eb2ecba",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_ne_v1_20261114b.png"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_s_v1_20261114b.png",
+        "sourceSha256": "b14bb4e7d59c77ebd98b75140156ddb6b23af38128a1f75c8ca5b522237fac2a",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_basic_attack_s_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "885cb4cfee7f6371cbd14dc23638c5c0b316e4a97c8dc7f30d9e4fbcf8540d53",
+    "bodyReferenceHeight": 220.18018018018017,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        157.38738738738738,
+        284
+      ],
+      [
+        131.38738738738738,
+        284
+      ],
+      [
+        119.38738738738739,
+        284
+      ],
+      [
+        133.88738738738738,
+        277
+      ],
+      [
+        160.38738738738738,
+        259
+      ],
+      [
+        133.38738738738738,
+        263
+      ],
+      [
+        124.38738738738739,
+        265
+      ],
+      [
+        134.38738738738738,
+        264
+      ],
+      [
+        158.38738738738738,
+        266
+      ],
+      [
+        132.88738738738738,
+        266
+      ],
+      [
+        122.38738738738739,
+        265
+      ],
+      [
+        135.38738738738738,
+        266
+      ],
+      [
+        160.88738738738738,
+        267
+      ],
+      [
+        133.38738738738738,
+        267
+      ],
+      [
+        124.38738738738739,
+        267
+      ],
+      [
+        133.38738738738738,
+        267
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "supersededByBatch": "20261114c",
+    "archiveStatus": "HELD_SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_basic_attack_e",
+    "source": "Sheets/class_minh_kiem_basic_attack_e_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_basic_attack_e_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "E",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_e_v1_20261114b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_02_e_v1_20261114a.png"
+    ],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_e_v1_20261114b.png",
+        "sourceSha256": "d3e952b4f6baf3c92ac881645ba27f6728890c2fb6ade1abc7a43cd4daf1a6a0",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_e_v1_20261114b.png"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_02_e_v1_20261114a.png",
+        "sourceSha256": "14d82ea1192bb83c605584a773ff527cdb97f2b37f06bd8f00e21cf7ab925e18"
+      }
+    ],
+    "sourceSha256": "6e155f3a89d17060ead16f69b8df537b761310bf278b28e1a6e5c68f5de89ec6",
+    "bodyReferenceHeight": 229.5,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        144.15,
+        280
+      ],
+      [
+        97.15,
+        284
+      ],
+      [
+        126.65,
+        285
+      ],
+      [
+        141.15,
+        285
+      ],
+      [
+        145.65,
+        269
+      ],
+      [
+        133.15,
+        269
+      ],
+      [
+        131.15,
+        264
+      ],
+      [
+        140.15,
+        261
+      ],
+      [
+        138.15,
+        266
+      ],
+      [
+        119.65,
+        271
+      ],
+      [
+        136.65,
+        271
+      ],
+      [
+        147.15,
+        269
+      ],
+      [
+        145.15,
+        266
+      ],
+      [
+        119.65,
+        270
+      ],
+      [
+        117.65,
+        270
+      ],
+      [
+        129.15,
+        266
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "supersededByBatch": "20261114c",
+    "archiveStatus": "HELD_SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_minh_kiem_basic_attack_se",
+    "source": "Sheets/class_minh_kiem_basic_attack_se_v1_20261114b.png",
+    "prompt": "Prompts/class_minh_kiem_basic_attack_se_v1_20261114b.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "batch": "20261114b",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_se_v1_20261114b.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_e_v1_20261114b.png"
+    ],
+    "inputRole": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+    "generationInputs": [
+      {
+        "role": "APPROVED_CHARACTER_IDENTITY_FACING_AND_ARMED_STANCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_idle_se_v1_20261114b.png",
+        "sourceSha256": "772cf9a16e17900dd2f5f8c8ecd783e0e10964862acb1219ef8942ca78c9b0d6",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_idle_se_v1_20261114b.png"
+      },
+      {
+        "role": "SUPPORTING_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_basic_attack_e_v1_20261114b.png",
+        "sourceSha256": "6e155f3a89d17060ead16f69b8df537b761310bf278b28e1a6e5c68f5de89ec6",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114b/class_minh_kiem_basic_attack_e_v1_20261114b.png"
+      }
+    ],
+    "sourceSha256": "9dab0e54c665ccd856bfba77dc8b47480bcb16c3628e772a53623bca1a132bfd",
+    "bodyReferenceHeight": 228.85714285714286,
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "gutterPolicy": "SOLID_CORE_GUTTER",
+    "sourceFootPivots": [
+      [
+        149.71428571428572,
+        281
+      ],
+      [
+        133.71428571428572,
+        281
+      ],
+      [
+        140.71428571428572,
+        283
+      ],
+      [
+        149.71428571428572,
+        279
+      ],
+      [
+        125.21428571428572,
+        253
+      ],
+      [
+        138.21428571428572,
+        256
+      ],
+      [
+        142.71428571428572,
+        263
+      ],
+      [
+        154.21428571428572,
+        257
+      ],
+      [
+        125.21428571428572,
+        263
+      ],
+      [
+        139.71428571428572,
+        261
+      ],
+      [
+        147.71428571428572,
+        264
+      ],
+      [
+        155.21428571428572,
+        265
+      ],
+      [
+        154.21428571428572,
+        264
+      ],
+      [
+        139.21428571428572,
+        264
+      ],
+      [
+        144.71428571428572,
+        265
+      ],
+      [
+        153.21428571428572,
+        263
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114b.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "supersededByBatch": "20261114c",
+    "archiveStatus": "HELD_SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "sk_hb_02_frost_gain_component",
+    "source": "Sheets/sk_hb_02_frost_gain_component_v1_20261114e.png",
+    "prompt": "Prompts/sk_hb_02_frost_gain_component_v1_20261114e.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114e",
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_needle_component_v1_20261114e.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_needle_component_v1_20261114e.png",
+        "sourceSha256": "07ecc27c73f227e0346be36c6050bd111b8f285414ab7d4e06930a732a640786",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114e/sk_hb_02_needle_component_v1_20261114e.png"
+      }
+    ],
+    "sourceSha256": "5b30fd61882143a1e4e0cbd8a809566398d11eaac85ea22b366cd1a64fc706c7",
+    "sourceFrameDurationsMs": [
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0
+    ],
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "CELL_CENTER",
+    "previewDurationSeconds": 0.32,
+    "previewLoop": false,
+    "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+    "supersededByBatch": "20261114e",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  }
+]

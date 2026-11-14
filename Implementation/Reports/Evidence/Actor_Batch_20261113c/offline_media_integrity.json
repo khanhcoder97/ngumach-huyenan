@@ -1,0 +1,138 @@
+{
+  "scope": "OFFLINE_NATIVE_VISUAL_REVIEW_NOT_GAMEPLAY_PERFORMANCE",
+  "selectedVideos": 10,
+  "supersededVideos": 3,
+  "files": [
+    {
+      "file": "kiem_tran_raw_n.mp4",
+      "bytes": 188197,
+      "sha256": "234f30508713506069e329ff21b952263e5715669a01a1df803279c91a35f626",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "minh_kiem_kiem_tran_eight_angles.mp4",
+      "bytes": 789123,
+      "sha256": "9d3970608d8fb943f14cfb7848e64ee667043bc911020090f9113418e3bfa32b",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "minh_kiem_tam_long_eight_angles.mp4",
+      "bytes": 720964,
+      "sha256": "1ce9a4a7aec88c0d553c596f71368724b888c38bdd259c4194b9bd36f9a13d0c",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "minh_kiem_thiet_y_eight_angles.mp4",
+      "bytes": 544639,
+      "sha256": "675f20b665d40e497fd5216490c90b88fd6c1b0f5160e9d90cdc91dc1a2838eb",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "Superseded_Playback_Readout/minh_kiem_kiem_tran_eight_angles.mp4",
+      "bytes": 778373,
+      "sha256": "ade781df663799900fa526e4417bb4d3125d75b904e53bb843789debf70227c4",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": false,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "Superseded_Playback_Readout/minh_kiem_tam_long_eight_angles.mp4",
+      "bytes": 711230,
+      "sha256": "20dcad256f45456625ae2ab9a998145ffa65b9fa5f6868dc5aadebb8bd063c7a",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": false,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "Superseded_Playback_Readout/minh_kiem_thiet_y_eight_angles.mp4",
+      "bytes": 541205,
+      "sha256": "c88a2adb6210c3562e1e0a8cf721c9f1dc87eee4ec32434392ddb8c1505d4040",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": false,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tam_long_raw_n.mp4",
+      "bytes": 172020,
+      "sha256": "8992070c5da808fe6d147ddc6a1a3580ac367b9ac8df642af3eddf37bb5b74c2",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tam_long_stop_dust.mp4",
+      "bytes": 130328,
+      "sha256": "21b3c2b780f53116d740a0127870a86a59ac97d449866708cf83d93859baa725",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "tam_long_trail.mp4",
+      "bytes": 127030,
+      "sha256": "7ea7769ab73686e2c7bff541b10428f50b82f8556eed39fbf446bfd1cf82d846",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "thiet_y_break.mp4",
+      "bytes": 144486,
+      "sha256": "b0e10d1a8c9af831595f6f59284fd95f2b0d9e60fed59666c49d29f0aca94f89",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "thiet_y_expire.mp4",
+      "bytes": 132272,
+      "sha256": "ebd07f884ab538cc0792d3790c0e7168448f4b48e8146da3ad885aa38c06c24c",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "thiet_y_gain.mp4",
+      "bytes": 135482,
+      "sha256": "27afd2251a176fa7c99610e3df120c3a00081e7ffd9dedb00c3e5a9ae948c6ca",
+      "decodedFrames": 180,
+      "decodedSeconds": 3.0,
+      "offlineFramesPerSecond": 60.0,
+      "activeSelection": true,
+      "decodedWithoutDiagnostics": true
+    }
+  ],
+  "note": "Source-sheet and native timeline checks are separate. Movie Maker is offline; these rates cannot certify real-time gameplay FPS."
+}

@@ -1,0 +1,73 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  P1NativeCore -> D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\ClientGodot\Portable\bin\Debug\net8.0\Ngumach.P1NativeCore.dll
+  VisualReboot -> D:\Project\NGUMACHHUYENAN-opencode-ui-handoff-20261101\ClientGodot\.godot\mono\temp\bin\Debug\VisualReboot.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:06.28
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Khởi tạo dự án (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Đang quét các tệp tin...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Đang tải các tên lớp toàn cục (global class names)...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Đang xác thực các GDExtension...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Đang tạo các tập lệnh tự động tải (autoload scripts)...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Đang khởi tạo plugin...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Bắt đầu quét hệ thống tệp...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started Đang đăng ký các lớp toàn cục (global classes)... (6 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  14% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  28% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  42% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  57% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  71% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1m_update_scan_actions[22m | Started Đang quét các hành động (actions)... (32 steps)[39m[0m
+[   0% ] [90m[1m_update_scan_actions[22m | class_anh_dao_basic_attack.png[39m[0m
+[   3% ] [90m[1m_update_scan_actions[22m | class_anh_dao_death.png[39m[0m
+[   6% ] [90m[1m_update_scan_actions[22m | class_anh_dao_death_se_v1.png[39m[0m
+[   9% ] [90m[1m_update_scan_actions[22m | class_anh_dao_hurt.png[39m[0m
+[  12% ] [90m[1m_update_scan_actions[22m | class_anh_dao_idle.png[39m[0m
+[  15% ] [90m[1m_update_scan_actions[22m | class_anh_dao_walk.png[39m[0m
+[  18% ] [90m[1m_update_scan_actions[22m | class_huyen_but_basic_attack.png[39m[0m
+[  21% ] [90m[1m_update_scan_actions[22m | class_huyen_but_death.png[39m[0m
+[  24% ] [90m[1m_update_scan_actions[22m | class_huyen_but_death_se_v1.png[39m[0m
+[  27% ] [90m[1m_update_scan_actions[22m | class_huyen_but_hurt.png[39m[0m
+[  30% ] [90m[1m_update_scan_actions[22m | class_huyen_but_idle_v2.png[39m[0m
+[  33% ] [90m[1m_update_scan_actions[22m | class_huyen_but_walk.png[39m[0m
+[  36% ] [90m[1m_update_scan_actions[22m | class_linh_cung_basic_attack.png[39m[0m
+[  39% ] [90m[1m_update_scan_actions[22m | class_linh_cung_hurt.png[39m[0m
+[  42% ] [90m[1m_update_scan_actions[22m | class_linh_cung_idle_v2.png[39m[0m
+[  45% ] [90m[1m_update_scan_actions[22m | class_linh_cung_walk.png[39m[0m
+[  48% ] [90m[1m_update_scan_actions[22m | class_thach_chuy_hurt.png[39m[0m
+[  51% ] [90m[1m_update_scan_actions[22m | class_thach_chuy_idle_v2.png[39m[0m
+[  54% ] [90m[1m_update_scan_actions[22m | class_thach_chuy_walk.png[39m[0m
+[  57% ] [90m[1m_update_scan_actions[22m | mob_carpling_idle_s.png[39m[0m
+[  60% ] [90m[1m_update_scan_actions[22m | mob_carpling_idle_v2.png[39m[0m
+[  63% ] [90m[1m_update_scan_actions[22m | npc_lyan_idle_v2.png[39m[0m
+[  66% ] [90m[1m_update_scan_actions[22m | npc_lyan_interact.png[39m[0m
+[  69% ] [90m[1m_update_scan_actions[22m | npc_lyan_walk.png[39m[0m
+[  72% ] [90m[1m_update_scan_actions[22m | npc_ta_van_khanh_idle.png[39m[0m
+[  75% ] [90m[1m_update_scan_actions[22m | sk_ad_01_vfx_v2.png[39m[0m
+[  78% ] [90m[1m_update_scan_actions[22m | sk_hb_01_vfx_v2.png[39m[0m
+[  81% ] [90m[1m_update_scan_actions[22m | sk_lc_01_vfx.png[39m[0m
+[  84% ] [90m[1m_update_scan_actions[22m | sk_mk_01_vfx.png[39m[0m
+[  87% ] [90m[1m_update_scan_actions[22m | sk_mk_02_vfx.png[39m[0m
+[  90% ] [90m[1m_update_scan_actions[22m | sk_mk_04_vfx.png[39m[0m
+[  93% ] [90m[1m_update_scan_actions[22m | sk_tc_01_vfx.png[39m[0m
+[92m[ DONE ][39m [1m_update_scan_actions[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started Đang tải editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Đang tải bố cục của editor...[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | Đang tải các tab (docks)...[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+ART_STUDIO_SELF_TEST PASS assertions=7582 libraryEntries=36 ORIGINAL_PNG_UNCHANGED NOT_PRODUCTION_APPROVAL

@@ -1,0 +1,15 @@
+{
+  "baseCommit": "dbc07ac2051926a2c292407ddbb33ce1f0f63507",
+  "hashMode": "UTF-8 text normalized to LF",
+  "scope": "Technical source registration and studio, not art or gameplay approval",
+  "hashes": {
+    "ClientGodot/scripts/RegisteredPaperDollMaster.cs": "bff7645ac94ed63d56f978cb848dcdbfca3665282f0279e089dbe0dcfed209f7",
+    "ClientGodot/assets/paperdoll_master/master.json": "1e43bbb657a35d95d5ee4a9aa72c6dcf757a2dfc70094c7f3b9515986f305340",
+    "ClientGodot/scripts/ModularCharacterModel.cs": "73dbec64670a010fd5563fed49161bda1cb6389cad724ebeacc540b990809a23",
+    "ClientGodot/scripts/ModularCharacterRenderer.cs": "30a013d1f93a911e2140c6987264b8ce1884344e0b416aafb787fcf37541d900",
+    "ClientGodot/scripts/PaperDollLab.cs": "65df01f21ca36edae72b45d01f6790821f9fd4450af7724c52b4b519483493fc",
+    "ClientGodot/scripts/PaperDollLabData.cs": "61314c3b71ffaddfcd4fd340683c8e72cee356be2b216198f6fcfbace6bea99a",
+    "ClientGodot/scripts/PaperDollLab.Test.cs": "3d803d86929e853abcbe480268fa4683c609650dd3159abb5b138af78c2d1631",
+    "Tools/ArtProduction/inspect_registered_master.py": "c6bc03d814b8d7d4738a598f29b8a1486511c17c08847b73062162958fb85f96"
+  }
+}

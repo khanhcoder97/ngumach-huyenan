@@ -1,0 +1,396 @@
+{
+  "scope": "SOURCE_CLIP_COMPONENT_REVIEW_NOT_FULL_LIBRARY_OR_GAMEPLAY",
+  "batch": "20261113c",
+  "newSourcePages": 20,
+  "newSourceCells": 320,
+  "decisions": [
+    {
+      "id": "class_minh_kiem_skill_02_e",
+      "sourceSha256": "c5c236e0a1fff8bc7da7244034c60ea2968784622fd48ad1ae2a64d6df4a4345",
+      "bindingSha256": "5257b3dba7cc3c0325557cb3484a6677ed45060477c980489a0e167e5d809762",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_02_e_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "One forward sword thrust with pre-load, drive and recovery. N v2 repairs blade axis. Boot-core floor excludes sword; per-frame .15/.20/.24 presentation timing does not authorize world dash/collision."
+    },
+    {
+      "id": "class_minh_kiem_skill_02_n",
+      "sourceSha256": "22145e351318cbd328c9fb6770ffd42fa20c5178042e2537424e2099ed7eb7e9",
+      "bindingSha256": "b19400c715a7a7f9c70b471af4739e613783d0a961ad87ccddefadf02b238f08",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_02_n_v2_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/tam_long_raw_n.mp4"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "One forward sword thrust with pre-load, drive and recovery. N v2 repairs blade axis. Boot-core floor excludes sword; per-frame .15/.20/.24 presentation timing does not authorize world dash/collision."
+    },
+    {
+      "id": "class_minh_kiem_skill_02_ne",
+      "sourceSha256": "bf79f28a6cef1e8a069506c53b70687b1605c4a8c8a37894048c1fda6f15a1b3",
+      "bindingSha256": "0cf49eb21d15887bffd94480a2fcb4ab49cad7a93cd679c02541d6ac1340ff8f",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_02_ne_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "One forward sword thrust with pre-load, drive and recovery. N v2 repairs blade axis. Boot-core floor excludes sword; per-frame .15/.20/.24 presentation timing does not authorize world dash/collision."
+    },
+    {
+      "id": "class_minh_kiem_skill_02_se",
+      "sourceSha256": "2b4c4715adea11d6043c259f0bb96dd3e3026459e006d58c4595648ce4f927d3",
+      "bindingSha256": "332a60dcc9970d6014ef49584d23820b0e3c722a193e849c9534cf9460e792af",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_02_se_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "One forward sword thrust with pre-load, drive and recovery. N v2 repairs blade axis. Boot-core floor excludes sword; per-frame .15/.20/.24 presentation timing does not authorize world dash/collision."
+    },
+    {
+      "id": "class_minh_kiem_skill_02_s",
+      "sourceSha256": "93787770719150ea20fa954502fdc28990183f75acae7b8150600289d772d52b",
+      "bindingSha256": "081613d405d5a7c97c78cbef433d8174ba304adcf1910c4e0693c78661448726",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_02_s_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_tam_long_eight_angles_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "One forward sword thrust with pre-load, drive and recovery. N v2 repairs blade axis. Boot-core floor excludes sword; per-frame .15/.20/.24 presentation timing does not authorize world dash/collision."
+    },
+    {
+      "id": "class_minh_kiem_skill_03_e",
+      "sourceSha256": "262b533e233fae2b400f7d296e89b23c93fda576485a8b907e7b21b06518fab7",
+      "bindingSha256": "8f408a0e57da99b4c99483c1251f3ae70a9c4fb911ece80b76e7132f48adb9b1",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_03_e_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Three connected cuts and settle; back-view torso occlusion reviewed. .10/.12/.14 cut beats plus .24 presentation recovery; existing separate arc component remains reusable, not baked into actor."
+    },
+    {
+      "id": "class_minh_kiem_skill_03_n",
+      "sourceSha256": "b655799c92e127b686c774cb0562519fb2f83f81e203afbbab1c44c878b1525c",
+      "bindingSha256": "582d9cb4a05c8b822619773804479cd817b2677b00154406d598ca3a49c0bbca",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_03_n_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/kiem_tran_raw_n.mp4"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Three connected cuts and settle; back-view torso occlusion reviewed. .10/.12/.14 cut beats plus .24 presentation recovery; existing separate arc component remains reusable, not baked into actor."
+    },
+    {
+      "id": "class_minh_kiem_skill_03_ne",
+      "sourceSha256": "8b5a44b09e4293f82c493266074022e5517b93d98af512715597591c165435e4",
+      "bindingSha256": "317d648712068565bb02754ae9e28823bb2c6b5da55e710505089bd69e248629",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_03_ne_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Three connected cuts and settle; back-view torso occlusion reviewed. .10/.12/.14 cut beats plus .24 presentation recovery; existing separate arc component remains reusable, not baked into actor."
+    },
+    {
+      "id": "class_minh_kiem_skill_03_se",
+      "sourceSha256": "b9b454351027540703987b13cb99c5174035a3345d83126031e9fd5c464ff48b",
+      "bindingSha256": "5e31d108692ce63a3c730b24f3a80d2238a8b13433dd96bcfeb70a2ae5a582ad",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_03_se_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Three connected cuts and settle; back-view torso occlusion reviewed. .10/.12/.14 cut beats plus .24 presentation recovery; existing separate arc component remains reusable, not baked into actor."
+    },
+    {
+      "id": "class_minh_kiem_skill_03_s",
+      "sourceSha256": "8d4029e13459ea5efbe3f7ebad87c1d1b1e00ece1635a68e5b3ab4d91c558e5b",
+      "bindingSha256": "a86ca088eddf9ad70695e43a22413724e79823e7674426d71ea081fa53445571",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_03_s_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_kiem_tran_eight_angles_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Three connected cuts and settle; back-view torso occlusion reviewed. .10/.12/.14 cut beats plus .24 presentation recovery; existing separate arc component remains reusable, not baked into actor."
+    },
+    {
+      "id": "class_minh_kiem_skill_04_e",
+      "sourceSha256": "c844fe894421f670d1adfd1be2f0c12c37629e86768fc9455836af40fd18295e",
+      "bindingSha256": "e7ff9912b41f3effaa48819e336a1100a443a006176ccb2b1fdb9e851a50451c",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_04_e_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Defensive sword plant/pull and free-palm gesture; back palm occluded by torso. .80 source preview is separate from authoritative 4s shield lifetime; no full-body shield baked."
+    },
+    {
+      "id": "class_minh_kiem_skill_04_n",
+      "sourceSha256": "abf0c580800f29e56f6e1166e5daaf50e46c277058f241917122c0e8cce726d3",
+      "bindingSha256": "0bf7af00e2c131429d67b92222c6e4f1e1c3eff771b044347e59adcb25680343",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_04_n_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Defensive sword plant/pull and free-palm gesture; back palm occluded by torso. .80 source preview is separate from authoritative 4s shield lifetime; no full-body shield baked."
+    },
+    {
+      "id": "class_minh_kiem_skill_04_ne",
+      "sourceSha256": "258944327f445e7f5c92f5482496fd7332d3c07577580fcd401fd1edf76d2546",
+      "bindingSha256": "7fa40f6731a7bcfb8a7ca08bf59047ab5fe9384e66cc1f96bbbb30cc29a69c75",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_04_ne_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Defensive sword plant/pull and free-palm gesture; back palm occluded by torso. .80 source preview is separate from authoritative 4s shield lifetime; no full-body shield baked."
+    },
+    {
+      "id": "class_minh_kiem_skill_04_se",
+      "sourceSha256": "4007f67b165d85515f43b54e954bb9e7c8f171e0e35134e05e20fc46842b1f7f",
+      "bindingSha256": "803b9bbd1ccae4ecb4cce8d5fbdee56837afcefab78875aa35b0045b3ed693e1",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_04_se_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Defensive sword plant/pull and free-palm gesture; back palm occluded by torso. .80 source preview is separate from authoritative 4s shield lifetime; no full-body shield baked."
+    },
+    {
+      "id": "class_minh_kiem_skill_04_s",
+      "sourceSha256": "889b22874dc4e1d741375e312da9f52e481759170eefc0a57f679560d50043e5",
+      "bindingSha256": "3d917b353cf03b05d98a51134e7c624605b30a5265402a68366b229a301534ca",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_SKILL_OR_GAMEPLAY_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_minh_kiem_skill_04_s_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/minh_kiem_thiet_y_eight_angles_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "88px eight-direction library; N140px raw Studio for thrust/cuts",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_CLIP",
+      "notes": "Defensive sword plant/pull and free-palm gesture; back palm occluded by torso. .80 source preview is separate from authoritative 4s shield lifetime; no full-body shield baked."
+    },
+    {
+      "id": "sk_mk_02_trail_component",
+      "sourceSha256": "c14b98d2454ec37a9ff25e582754fa7736e008bd766a4f7cefeac0081f66fb1c",
+      "bindingSha256": "1b3db13d4980b3860fd8bc85ff6f2d8ff22514344b14fa979aab1f9e2f26ca77",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/tam_long_trail.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_02_trail_component_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/tam_long_trail.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/tam_long_trail_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "Independent Studio component",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_COMPONENT",
+      "notes": "Independent sixteen-source VFX component: shape/growth/fracture/fade and alpha viewed in native Studio. Does not approve full ability composition, damage, movement, shield lifetime or UI event binding."
+    },
+    {
+      "id": "sk_mk_02_stop_dust_component",
+      "sourceSha256": "7262008cae0310f08bfe842b0e1c89b6ccccc9a29afe63f79f2e2a13da97552b",
+      "bindingSha256": "6d9676ad669af008fee18d23ff76693a940cfe82d35dbd6cb4c0facca899d8b1",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/tam_long_stop_dust.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_02_stop_dust_component_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/tam_long_stop_dust.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/tam_long_stop_dust_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "Independent Studio component",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_COMPONENT",
+      "notes": "Independent sixteen-source VFX component: shape/growth/fracture/fade and alpha viewed in native Studio. Does not approve full ability composition, damage, movement, shield lifetime or UI event binding."
+    },
+    {
+      "id": "sk_mk_04_gain_component",
+      "sourceSha256": "5fd3b89dfb9b7cd8e1cd4af8b8f1128f1a4422b7975059cd4cf37c45d18c8593",
+      "bindingSha256": "e50d5a7203b2fe221815442dc6d15e864aba915e73b66d1999c28d4e0707cfc0",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/thiet_y_gain.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_04_gain_component_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/thiet_y_gain.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/thiet_y_gain_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "Independent Studio component",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_COMPONENT",
+      "notes": "Independent sixteen-source VFX component: shape/growth/fracture/fade and alpha viewed in native Studio. Does not approve full ability composition, damage, movement, shield lifetime or UI event binding."
+    },
+    {
+      "id": "sk_mk_04_break_component",
+      "sourceSha256": "44219bb105d7ecb09c4ebc93fccf2fc638979f14e2c46436ced77b2779b8d919",
+      "bindingSha256": "8a39f0e211e937efa505bba9c0cdfc04c871686bab72929f301b76282d364c3d",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/thiet_y_break.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_04_break_component_v2_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/thiet_y_break.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/thiet_y_break_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "Independent Studio component",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_COMPONENT",
+      "notes": "Independent sixteen-source VFX component: shape/growth/fracture/fade and alpha viewed in native Studio. Does not approve full ability composition, damage, movement, shield lifetime or UI event binding."
+    },
+    {
+      "id": "sk_mk_04_expire_component",
+      "sourceSha256": "20b84ae6064968bc30bd106edf318875b16cc3e4a59249744990fa05c8891b54",
+      "bindingSha256": "68dc408b115a1b3109cb0bceb9ef1a98e00c3ee6e9c53171fb189e9d36ea546d",
+      "scope": "VISUAL_COMPONENT_ONLY_NOT_FULL_SKILL_OR_GAMEPLAY",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261113c/thiet_y_expire.mp4",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_mk_04_expire_component_v1_20261113c.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/thiet_y_expire.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261113c/thiet_y_expire_samples.png"
+      ],
+      "method": "Viewed original16-frame source and point-filtered native Godot captures/temporal samples. Separately tested60-step traversal, direction mirrors, source timing phase boundaries, seek/resume, one-shot end and raw/group JSON. PNG unmodified.",
+      "reviewScale": "Independent Studio component",
+      "batch": "20261113c",
+      "reviewDate": "2026-11-13",
+      "decision": "APPROVE_SOURCE_COMPONENT",
+      "notes": "Independent sixteen-source VFX component: shape/growth/fracture/fade and alpha viewed in native Studio. Does not approve full ability composition, damage, movement, shield lifetime or UI event binding."
+    }
+  ],
+  "limitations": [
+    "New sources are in-place choreography, not implemented dash distance/collision.",
+    "Full character/ability composition, equipment and idle transitions still require gameplay integration review.",
+    "Existing Kiếm Trận arc is reused separately, not a new source or full-ability approval.",
+    "Offline videos do not certify gameplay60FPS."
+  ]
+}

@@ -1,0 +1,347 @@
+{
+  "scope": "GEOMETRY_CALIBRATION_REQUIRES_NATIVE_REVIEW",
+  "sourcePages": 20,
+  "entries": [
+    {
+      "id": "mob_waterroot_idle_s",
+      "source": "Sheets/mob_waterroot_idle_s_v1_20261112.png",
+      "sourceSha256": "9e3878b5e4d1eee37cf55a723f5efa45d4726c155fcfc235ac8ff89eac35ed75",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 152,
+      "rootFootOffset": [
+        0.01239614766626162,
+        0.48685785693283484
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_idle_n",
+      "source": "Sheets/mob_waterroot_idle_n_v1_20261112b.png",
+      "sourceSha256": "d1e14c0ad6c81979e37c81ac92d2daaaf470fd4a81fcbbfe400a077f80efc79f",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 157,
+      "rootFootOffset": [
+        -0.03713386074973529,
+        0.48023216372064975
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_idle_ne",
+      "source": "Sheets/mob_waterroot_idle_ne_v2_20261112c.png",
+      "sourceSha256": "f3ed3d193dcd55c182f363d80e5dac3c4fb48d093a2b1e430d88ef67ab413fbe",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 175,
+      "rootFootOffset": [
+        0.20293746414228345,
+        0.46607917383821
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_idle_e",
+      "source": "Sheets/mob_waterroot_idle_e_v1_20261112b.png",
+      "sourceSha256": "57ba5ad15bb7d6503a55d19411e67aabe069ef82c086c5b4b48820cf309b3fc3",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 165,
+      "rootFootOffset": [
+        0.13435762115537395,
+        0.4506071955510158
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_idle_se",
+      "source": "Sheets/mob_waterroot_idle_se_v1_20261112b.png",
+      "sourceSha256": "954d3fa4c8a4d10472dccae81d4b50fc2245f796e62e334a1b27b000d9afcd2e",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 157,
+      "rootFootOffset": [
+        0.01900307097361246,
+        0.47669187898089166
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_s",
+      "source": "Sheets/mob_waterroot_telegraph_01_s_v1_20261112e.png",
+      "sourceSha256": "6170980e85bb45068a95e926174a763e872fa1f0342d3ae309223dbd885aa94c",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 154,
+      "rootFootOffset": [
+        0.011564856392442676,
+        0.4794634536013846
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_attack_01_s",
+      "source": "Sheets/mob_waterroot_attack_01_s_v1_20261112e.png",
+      "sourceSha256": "b140a6e7f698d87fa0aaef0739c348d206ef9c0e2585bd95f4ffe3dbacf0a306",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 151,
+      "rootFootOffset": [
+        0.021436221687278042,
+        0.49401287309770536
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_recovery_01_s",
+      "source": "Sheets/mob_waterroot_recovery_01_s_v1_20261112e.png",
+      "sourceSha256": "8837f959f49c308232432633255d586e3cf93f827c7a9b36619b5accd0f6639b",
+      "neutralSourceFrames": [
+        13,
+        14,
+        15
+      ],
+      "bodyReferenceHeight": 146,
+      "rootFootOffset": [
+        -0.01726415740860607,
+        0.5350698103266597
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_n",
+      "source": "Sheets/mob_waterroot_telegraph_01_n_v1_20261112e.png",
+      "sourceSha256": "271faf4952aa022d0db4ee049cc40b155188a3d4cea46c816df00bf48c5979eb",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 154,
+      "rootFootOffset": [
+        -0.012292111370452321,
+        0.519044959137125
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_attack_01_n",
+      "source": "Sheets/mob_waterroot_attack_01_n_v2_20261112e.png",
+      "sourceSha256": "17bcdfea58216c2c331549e547dc1b1bed71d6a95cd02d51337538ea6cc33105",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 154,
+      "rootFootOffset": [
+        -0.09261151692344348,
+        0.5250182060929725
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_recovery_01_n",
+      "source": "Sheets/mob_waterroot_recovery_01_n_v1_20261112e.png",
+      "sourceSha256": "9963bb262d3295d09fe0f91b23944b30a4288bcb3a6a7cdbbb531d6316019e49",
+      "neutralSourceFrames": [
+        13,
+        14,
+        15
+      ],
+      "bodyReferenceHeight": 143,
+      "rootFootOffset": [
+        -0.02496824058793506,
+        0.5308166409861325
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_ne",
+      "source": "Sheets/mob_waterroot_telegraph_01_ne_v1_20261112e.png",
+      "sourceSha256": "52d72cf4a627bb704fd3d18667320c5d441a24e526a8fb177cc389359fd28a5a",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 161,
+      "rootFootOffset": [
+        0.19392446633825947,
+        0.4383029518279482
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_attack_01_ne",
+      "source": "Sheets/mob_waterroot_attack_01_ne_v1_20261112e.png",
+      "sourceSha256": "5fa69702e069c1f2f731e88c8cc1aa851daa433a009057b33769f59f70965e8c",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 165,
+      "rootFootOffset": [
+        0.3693320299771913,
+        0.4757452574525745
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_recovery_01_ne",
+      "source": "Sheets/mob_waterroot_recovery_01_ne_v1_20261112e.png",
+      "sourceSha256": "363b69f351a94904bf13e7560f869cfdc3de38635ed7671539fe429e7adead7b",
+      "neutralSourceFrames": [
+        13,
+        14,
+        15
+      ],
+      "bodyReferenceHeight": 146,
+      "rootFootOffset": [
+        0.15881301895385913,
+        0.5125002186882206
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_e",
+      "source": "Sheets/mob_waterroot_telegraph_01_e_v1_20261112e.png",
+      "sourceSha256": "6ae2258df3124d985bf774106434ff5a4069316752290dfaeeefd925ba9e5730",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 155,
+      "rootFootOffset": [
+        0.15535613967653236,
+        0.4631382868631915
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_attack_01_e",
+      "source": "Sheets/mob_waterroot_attack_01_e_v1_20261112e.png",
+      "sourceSha256": "52d673ccc041ceb0138ca87463bd9c4a31b683a1391ff60a5be3d624a5442785",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 136,
+      "rootFootOffset": [
+        0.3146024816176471,
+        0.4331214351025383
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_recovery_01_e",
+      "source": "Sheets/mob_waterroot_recovery_01_e_v1_20261112e.png",
+      "sourceSha256": "cc7a8dc59d98a33652fc832d2a21a758afb0a26eace6e6f2395594a10a4e5940",
+      "neutralSourceFrames": [
+        13,
+        14,
+        15
+      ],
+      "bodyReferenceHeight": 143,
+      "rootFootOffset": [
+        0.21135042283298097,
+        0.4355281346560417
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_telegraph_01_se",
+      "source": "Sheets/mob_waterroot_telegraph_01_se_v1_20261112e.png",
+      "sourceSha256": "d0c9796427c0d089764569dc219ac5d6ef7cb952abe52f31ede8004dfcdc047e",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 160,
+      "rootFootOffset": [
+        0.06768115942028992,
+        0.49055383022774335
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_attack_01_se",
+      "source": "Sheets/mob_waterroot_attack_01_se_v1_20261112e.png",
+      "sourceSha256": "7ee1f1f3ca6cb0ce7ad300587d7756b9a717ef0013a7dc81db5cc173a618ad36",
+      "neutralSourceFrames": [
+        0,
+        1,
+        2
+      ],
+      "bodyReferenceHeight": 152,
+      "rootFootOffset": [
+        0.10780254777070064,
+        0.5038761314113308
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    },
+    {
+      "id": "mob_waterroot_recovery_01_se",
+      "source": "Sheets/mob_waterroot_recovery_01_se_v1_20261112e.png",
+      "sourceSha256": "a70901129667bbfc3c33d6a6f4b7c6d239f29b91a19bda96d366272c13abee45",
+      "neutralSourceFrames": [
+        13,
+        14,
+        15
+      ],
+      "bodyReferenceHeight": 150,
+      "rootFootOffset": [
+        -0.004643478260869548,
+        0.4981753972925249
+      ],
+      "pivotMode": "MOSS_CORE_ROOT",
+      "method": "Green-core centroid with a fixed neutral-foot offset; neutral body height held through the clip. Geometry calibration, not anatomical/native approval."
+    }
+  ],
+  "fullGameComplete": false
+}

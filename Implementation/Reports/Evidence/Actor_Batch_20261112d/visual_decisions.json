@@ -1,0 +1,153 @@
+{
+  "scope": "SOURCE_CLIPS_ONLY_NOT_FULL_ACTOR_OR_GAMEPLAY",
+  "approved": 8,
+  "held": 2,
+  "decisions": [
+    {
+      "id": "npc_boat_keeper_idle",
+      "sourceSha256": "b363f01ba68335593288898e37bfc1a358c2c8d544e3be71d121ef649af2c4be",
+      "bindingSha256": "0e98e05c45a7f1360b53386a5d3ab764392203f62ddc906a819db7feb8cfbcec",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 64,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_idle_eight_angles.mp4",
+      "method": "Viewed original source sheet and native nearest-filtered captures plus sampled chronological native filmstrips. Source and registration pinned; source/clip review only.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_idle_partial_v1_20261112.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_idle_eight_angles.png"
+      ],
+      "reviewScale": "88px eight-direction library; 140px Studio",
+      "unreviewedUnboundSourceFrames": 8,
+      "decision": "APPROVE_SOURCE_CLIP"
+    },
+    {
+      "id": "npc_boat_keeper_idle_s",
+      "sourceSha256": "da3257351e6d79b4b5cff8c70b30600445456fb39a76148052106aea976669a5",
+      "bindingSha256": "8791bb94be5dd9ac20820df637cb125d5464bfc1fdbca4b0a49c97b2c59d82d4",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_idle_eight_angles.mp4",
+      "method": "Viewed original source sheet and native nearest-filtered captures plus sampled chronological native filmstrips. Source and registration pinned; source/clip review only.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_idle_s_v2_20261112.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_idle_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_idle_eight_angles.png"
+      ],
+      "reviewScale": "88px eight-direction library; 140px Studio",
+      "decision": "APPROVE_SOURCE_CLIP"
+    },
+    {
+      "id": "npc_boat_keeper_walk_n",
+      "sourceSha256": "a1448ee66613af61ed73d87b5951bcbcf00a671574c8eb882467c4ee63b90fa3",
+      "bindingSha256": "538ea8b624c2c9d15e8cacdaf81790d2801b66f9c04c46ae3d2ebdd2c9b51e07",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_walk_n.mp4",
+      "method": "Viewed original source sheet and native nearest-filtered captures plus sampled chronological native filmstrips. Source and registration pinned; source/clip review only.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_n_v1_20261112d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_walk_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_walk_eight_angles.png"
+      ],
+      "reviewScale": "88px eight-direction library; 140px Studio",
+      "decision": "APPROVE_SOURCE_CLIP"
+    },
+    {
+      "id": "npc_boat_keeper_walk_se",
+      "sourceSha256": "28dd23c7c00f89601732cbdc5f49755fd43c4ed2f1f9e571cf99e06df186d421",
+      "bindingSha256": "a1f37bf3d8ba3079522fef9f28b486d8d8f7db724f062988ce91947a418dd590",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_walk_se.mp4",
+      "method": "Viewed original source sheet and native nearest-filtered captures plus sampled chronological native filmstrips. Source and registration pinned; source/clip review only.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_walk_se_v2_20261112d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_walk_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_walk_eight_angles.png"
+      ],
+      "reviewScale": "88px eight-direction library; 140px Studio",
+      "decision": "APPROVE_SOURCE_CLIP"
+    },
+    {
+      "id": "npc_boat_keeper_interact_n",
+      "sourceSha256": "172d1ad1d20fa77b1d8b239557df093ac8eeb102fa641cb945e0d08538fcae7a",
+      "bindingSha256": "039ebfffdfc7269eb76988e0960166c35ce944eb2b66c9cd62c496b67dcd2c22",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_interact_n.mp4",
+      "method": "Viewed original source sheet and native nearest-filtered captures plus sampled chronological native filmstrips. Source and registration pinned; source/clip review only.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_interact_n_v1_20261112d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_interact_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_interact_eight_angles.png"
+      ],
+      "reviewScale": "88px eight-direction library; 140px Studio",
+      "decision": "APPROVE_SOURCE_CLIP"
+    },
+    {
+      "id": "npc_boat_keeper_interact_ne",
+      "sourceSha256": "c9efa1b1921fbcad52e019b1065a018f9e5f0a803f35856dc50481d1ebf75617",
+      "bindingSha256": "cb31b47d41f7d2fa0190c8bc52b4f0d6e8b2a6dd7191244934546aa9e8abb0b8",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_interact_ne.mp4",
+      "method": "Viewed original source sheet and native nearest-filtered captures plus sampled chronological native filmstrips. Source and registration pinned; source/clip review only.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_interact_ne_v1_20261112d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_interact_ne.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_interact_eight_angles.png"
+      ],
+      "reviewScale": "88px eight-direction library; 140px Studio",
+      "decision": "APPROVE_SOURCE_CLIP"
+    },
+    {
+      "id": "npc_boat_keeper_interact_e",
+      "sourceSha256": "02051d43e707943db603d4537129f5c21b263c3d117024aa2e1c9065539fcc4d",
+      "bindingSha256": "dff3e4a564d506f3227d445cb732a0a7c207f1375a82ac9d30b4f3cfdb75f0a6",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_interact_e.mp4",
+      "method": "Viewed original source sheet and native nearest-filtered captures plus sampled chronological native filmstrips. Source and registration pinned; source/clip review only.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_interact_e_v1_20261112d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_interact_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_interact_eight_angles.png"
+      ],
+      "reviewScale": "88px eight-direction library; 140px Studio",
+      "decision": "APPROVE_SOURCE_CLIP"
+    },
+    {
+      "id": "npc_boat_keeper_interact_se",
+      "sourceSha256": "934b9e3c29615c9285285274cf5f3258e13d181754211194d2f023fe0b38851d",
+      "bindingSha256": "96fb5a957db85ae8d6fa2f2f2cbc50689a4f251ee7737476ec3df668f49dc100",
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_ENCOUNTER_ACCEPTANCE",
+      "reviewedSourceFrames": 16,
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_interact_se.mp4",
+      "method": "Viewed original source sheet and native nearest-filtered captures plus sampled chronological native filmstrips. Source and registration pinned; source/clip review only.",
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/npc_boat_keeper_interact_se_v1_20261112d.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_interact_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_interact_eight_angles.png"
+      ],
+      "reviewScale": "88px eight-direction library; 140px Studio",
+      "decision": "APPROVE_SOURCE_CLIP"
+    },
+    {
+      "id": "npc_boat_keeper_walk_e",
+      "decision": "HOLD",
+      "reason": "Native gait review: opposing-leg pass/occlusion remains too similar between half cycles; revise or manually review leg choreography before gameplay use. Sixteen nonidentical PNG cells do not establish an acceptable walk cycle.",
+      "sourceSha256": "4fc15295c846c883ff391c95a5e702802e648168d0195708a475ae7760b68a80",
+      "bindingSha256": "721fb360a346f6b6ac4b688d41f2b3c77f8127eeaff653526df167fc478fd2cb",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_walk_e_native_strip.png"
+    },
+    {
+      "id": "npc_boat_keeper_walk_ne",
+      "decision": "HOLD",
+      "reason": "Native gait review: opposing-leg pass/occlusion remains too similar between half cycles; revise or manually review leg choreography before gameplay use. Sixteen nonidentical PNG cells do not establish an acceptable walk cycle.",
+      "sourceSha256": "331686a2a9c9ed32c21a890bda8d1a7930e7cdee98480a27d447ef1449acf21e",
+      "bindingSha256": "7e6495b3c8d6400d0ce0130bb3718eb0873456c9f5626ecf5cb5fbbbde055074",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261112d/boatkeeper_walk_ne_native_strip.png"
+    }
+  ],
+  "fullGameComplete": false
+}
