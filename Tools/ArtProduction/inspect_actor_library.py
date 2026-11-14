@@ -203,7 +203,8 @@ def inspect(record, art_root=None):
             else:
                 assert record['id'].startswith('sk_'),'uniform effect grid is VFX-only'
             xx=[round(i*w/4) for i in range(5)];yy=[round(i*h/4) for i in range(5)]
-            if record['layout']=='VISUALLY_VERIFIED_DIRECTIONAL_GRID' and 'gridEdges' in record:
+            if 'gridEdges' in record:
+                assert record['layout']=='VISUALLY_VERIFIED_DIRECTIONAL_GRID' or (record.get('componentOnly') and record.get('layoutReviewNote')),'effect edges require a recorded manual layout review'
                 # Explicit atlas regions preserve wide weapon follow-throughs
                 # that cross an ideal equal-cell boundary into a clear gutter.
                 grid=record['gridEdges'];xx=grid['columns'];yy=grid['rows']

@@ -1,0 +1,786 @@
+{
+  "scope": "STAGED_MEDIA_INTEGRITY_NOT_VISUAL_APPROVAL",
+  "stagedMediaPaths": 111,
+  "uniqueObjects": 93,
+  "allMatch": true,
+  "repairsPerformed": 0,
+  "files": [
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_01_e_v1_20261114e.png",
+      "oid": "5e4fa011616ea894deeb3de543c0b24f2ff8f6dc441f898047c57cde9ed1979a",
+      "bytes": 952574,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_01_n_v1_20261114e.png",
+      "oid": "329f9ae9423e86ebe9e5115a26a38687dba678d9cf99b4d9f04834e2ac2ea3e9",
+      "bytes": 1004574,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_01_ne_v1_20261114e.png",
+      "oid": "385e0bbd3b6437b4d146616d011a72207e2642d410f7fdec87d5daaa034c189c",
+      "bytes": 889772,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_01_s_v1_20261114e.png",
+      "oid": "34642d5073ac286888e0d8d5cf3e56455e559aaf72afe2388690195309490fbc",
+      "bytes": 1415466,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_01_se_v1_20261114e.png",
+      "oid": "dd747b3ffee1b658f8191ebfc31d3070759ae79fe17b2ec986a291fe2b06fe4c",
+      "bytes": 1204187,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_02_e_v1_20261114e.png",
+      "oid": "12748eb6d8f44a54196297433a4d898c4080f7facd6ba55b26d0eca05a0559c7",
+      "bytes": 910900,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_02_n_v1_20261114e.png",
+      "oid": "d8f8066cfd10cbe72aec99c988d0739ee978da4daca76e64ff1d58c012612116",
+      "bytes": 1254993,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_02_ne_v1_20261114e.png",
+      "oid": "4f61ba59caf8d01e6f54864048038a013d1cd130ab683d80e6b0a3ace96db78c",
+      "bytes": 1093720,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_02_s_v1_20261114e.png",
+      "oid": "639c002aca33e9a338377738f65e30778a8ce5e80d66f7a93a5cbed1cfb63f44",
+      "bytes": 1095325,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_02_se_v1_20261114e.png",
+      "oid": "4e91716d5489ee3023cc207717b1c7620a31bf8e864f3b43407863b339ab2636",
+      "bytes": 1350513,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_01_stroke_component_v1_20261114e.png",
+      "oid": "b68dfa53e3cfcfca697c987c4c112f685c87357c67ac013fb78d81a98bd51f53",
+      "bytes": 429336,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_01_wave_component_v1_20261114e.png",
+      "oid": "a24f9ed6944d7333fcb0d8b5dd3202612aa6b610c8f2e9bdcdb736efba7b3bd7",
+      "bytes": 512966,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_cast_dots_component_v1_20261114e.png",
+      "oid": "225128b78e1d760d47d4402aa6b92d311240a07399ec3b5923ca84f541fab139",
+      "bytes": 136925,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_frost_expire_component_v1_20261114e.png",
+      "oid": "8d8c3069074704f78bfa6a6be0fd884232fa240ef608e8992d94a278238143f0",
+      "bytes": 973115,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_frost_gain_component_v1_20261114e.png",
+      "oid": "5b30fd61882143a1e4e0cbd8a809566398d11eaac85ea22b366cd1a64fc706c7",
+      "bytes": 955213,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_frost_gain_component_v2_20261114e.png",
+      "oid": "ce4fc8968fb9fd0218c5df1dc12d1c2b61cee1b48aa8444028c892fcf037f5aa",
+      "bytes": 901888,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_needle_component_v1_20261114e.png",
+      "oid": "07ecc27c73f227e0346be36c6050bd111b8f285414ab7d4e06930a732a640786",
+      "bytes": 448777,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_huyen_but_skill_01_e_v1_20261114e.png",
+      "oid": "5e4fa011616ea894deeb3de543c0b24f2ff8f6dc441f898047c57cde9ed1979a",
+      "bytes": 952574,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_huyen_but_skill_01_n_v1_20261114e.png",
+      "oid": "329f9ae9423e86ebe9e5115a26a38687dba678d9cf99b4d9f04834e2ac2ea3e9",
+      "bytes": 1004574,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_huyen_but_skill_01_ne_v1_20261114e.png",
+      "oid": "385e0bbd3b6437b4d146616d011a72207e2642d410f7fdec87d5daaa034c189c",
+      "bytes": 889772,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_huyen_but_skill_01_s_v1_20261114e.png",
+      "oid": "34642d5073ac286888e0d8d5cf3e56455e559aaf72afe2388690195309490fbc",
+      "bytes": 1415466,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_huyen_but_skill_01_se_v1_20261114e.png",
+      "oid": "dd747b3ffee1b658f8191ebfc31d3070759ae79fe17b2ec986a291fe2b06fe4c",
+      "bytes": 1204187,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_huyen_but_skill_02_e_v1_20261114e.png",
+      "oid": "12748eb6d8f44a54196297433a4d898c4080f7facd6ba55b26d0eca05a0559c7",
+      "bytes": 910900,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_huyen_but_skill_02_n_v1_20261114e.png",
+      "oid": "d8f8066cfd10cbe72aec99c988d0739ee978da4daca76e64ff1d58c012612116",
+      "bytes": 1254993,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_huyen_but_skill_02_ne_v1_20261114e.png",
+      "oid": "4f61ba59caf8d01e6f54864048038a013d1cd130ab683d80e6b0a3ace96db78c",
+      "bytes": 1093720,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_huyen_but_skill_02_s_v1_20261114e.png",
+      "oid": "639c002aca33e9a338377738f65e30778a8ce5e80d66f7a93a5cbed1cfb63f44",
+      "bytes": 1095325,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/class_huyen_but_skill_02_se_v1_20261114e.png",
+      "oid": "4e91716d5489ee3023cc207717b1c7620a31bf8e864f3b43407863b339ab2636",
+      "bytes": 1350513,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/sk_hb_01_stroke_component_v1_20261114e.png",
+      "oid": "b68dfa53e3cfcfca697c987c4c112f685c87357c67ac013fb78d81a98bd51f53",
+      "bytes": 429336,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/sk_hb_01_wave_component_v1_20261114e.png",
+      "oid": "a24f9ed6944d7333fcb0d8b5dd3202612aa6b610c8f2e9bdcdb736efba7b3bd7",
+      "bytes": 512966,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/sk_hb_02_cast_dots_component_v1_20261114e.png",
+      "oid": "225128b78e1d760d47d4402aa6b92d311240a07399ec3b5923ca84f541fab139",
+      "bytes": 136925,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/sk_hb_02_frost_expire_component_v1_20261114e.png",
+      "oid": "8d8c3069074704f78bfa6a6be0fd884232fa240ef608e8992d94a278238143f0",
+      "bytes": 973115,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/sk_hb_02_frost_gain_component_v2_20261114e.png",
+      "oid": "ce4fc8968fb9fd0218c5df1dc12d1c2b61cee1b48aa8444028c892fcf037f5aa",
+      "bytes": 901888,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "ClientGodot/assets/actor_library_v1/sheets/sk_hb_02_needle_component_v1_20261114e.png",
+      "oid": "07ecc27c73f227e0346be36c6050bd111b8f285414ab7d4e06930a732a640786",
+      "bytes": 448777,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/Superseded_Source_Sampling/raw_class_huyen_but_skill_01_s.mp4",
+      "oid": "fbd5e64f0a052769bf41eaaa39cc5cf184b2090a16cbdb38992d650e8f78d86a",
+      "bytes": 185599,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/Superseded_Source_Sampling/raw_class_huyen_but_skill_01_s.png",
+      "oid": "04cb1a2f9ce2cbcba438768279311d9fc4c16ab1608382999c0d18946d71da57",
+      "bytes": 542112,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/Superseded_Source_Sampling/raw_class_huyen_but_skill_01_s_samples.png",
+      "oid": "496aac7e722989dec129a3e292778d7fcc519d59923216dab3505c6374ef4865",
+      "bytes": 577016,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/Superseded_Source_Sampling/raw_class_huyen_but_skill_01_s_source_samples.png",
+      "oid": "e4ce755f431e27c4086ea995a71cf6daf0c1b8156b6a09ffff5ebe530559d238",
+      "bytes": 1690426,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/Superseded_Source_Sampling/raw_sk_hb_02_frost_gain_component.mp4",
+      "oid": "c90647d510050227febd364661b5ddd627f1ca481ef410db30829b13ed0f58db",
+      "bytes": 145542,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/Superseded_Source_Sampling/raw_sk_hb_02_frost_gain_component.png",
+      "oid": "302b1cee8526786e9cbdc3b1580d6434e1f0648f00a01ef2b30376f8d6dd0c03",
+      "bytes": 528519,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/Superseded_Source_Sampling/raw_sk_hb_02_frost_gain_component_samples.png",
+      "oid": "15cea2c3ae538f4cb6bd17b88aeea81eefec60aa27497cc5f373239a0fc3177b",
+      "bytes": 520227,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/Superseded_Source_Sampling/raw_sk_hb_02_frost_gain_component_source_samples.png",
+      "oid": "42abb8cc5a989d82ded68704f84b6f02f01fdeb87a91763bbd712a0d76eae71f",
+      "bytes": 1257259,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_e.mp4",
+      "oid": "2eb0511e6f0b1dc8422a241f9e1902858e8c24d6ef5d856ef1762597102f4330",
+      "bytes": 178814,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_e.png",
+      "oid": "9e2a6c08755210065e6bcad095c8f53aac71d1b8356bbeb96381f7159306317a",
+      "bytes": 528231,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_e_samples.png",
+      "oid": "eb2893c4b61e4cde141c869065de04ff259463e36a374cf3db0952801b06ad14",
+      "bytes": 564841,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_e_source_samples.png",
+      "oid": "f63a493c20fbced3a39230d89311e46f50f43e2e0305413831fb769ed9164177",
+      "bytes": 1579276,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_n.mp4",
+      "oid": "9b70545c129e434e5a2fada06e70a16b0bcbcdc8b9ed4a7f297cfeb7fe87b8d6",
+      "bytes": 172651,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_n.png",
+      "oid": "5599ceccc7058051ba47b2bccee01ea8b37edb2682aa7e408b681b18b69ad109",
+      "bytes": 531993,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_n_samples.png",
+      "oid": "838d6bc8d36971b3c953b2d04ae1395392ff7d3e5669cbbd852e5b0a9cda3106",
+      "bytes": 567831,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_n_source_samples.png",
+      "oid": "0ce023e72dc39121674ce1e582ab2cd5ef47ba005f39164f7ee0513bad50a6d5",
+      "bytes": 1587514,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_ne.mp4",
+      "oid": "15928a81a5b47452c08420fe8d0f54503a0b69f594dc6bb3de5687aff8fea0a3",
+      "bytes": 173294,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_ne.png",
+      "oid": "6b5f63f4b568027baebc418347d4f8f850e5ded6b1edec2c4e3bdb5ad649ad05",
+      "bytes": 534700,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_ne_samples.png",
+      "oid": "b9b35af520630a4b197c0dd16b6cd341716cd681c4da938e495e8a986467c76c",
+      "bytes": 567074,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_ne_source_samples.png",
+      "oid": "ac19967fea68cf58451e1733efed8ed4634aeff79df72c87fd0658e9d8adae23",
+      "bytes": 1592726,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_s.mp4",
+      "oid": "fbd5e64f0a052769bf41eaaa39cc5cf184b2090a16cbdb38992d650e8f78d86a",
+      "bytes": 185599,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_s.png",
+      "oid": "b0a8236494270320633987c8426c0d756486ea59ce9d43090f55c926aa190e7d",
+      "bytes": 542238,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_s_samples.png",
+      "oid": "b4c07a61343dcd06e8e61c8044a4f1bcf1d985314c560ed1604b24b6ae304c96",
+      "bytes": 578580,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_s_source_samples.png",
+      "oid": "c88cc7d226cdbbac93c704d061a4d36dc8b880e9c374d1a2c97bad2b09705fc9",
+      "bytes": 1696068,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_se.mp4",
+      "oid": "a159d4d5ce9966a0eb28b1cd6a0740b0f01eba70314ac8b653b33967955df81e",
+      "bytes": 184888,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_se.png",
+      "oid": "1802f52f57797be9c91566d9902806252d3aafeec7bafe17abb359c07a7e145e",
+      "bytes": 536501,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_se_samples.png",
+      "oid": "c55a266c8e0beb01b4f994b32806e20850ea08a2196198d995436b7da4b6dbc1",
+      "bytes": 576945,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_se_source_samples.png",
+      "oid": "be092987eae523bfaf5572bdf8b4f5ce6d998d4fd3c227b699a2c00671317598",
+      "bytes": 1658409,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_e.mp4",
+      "oid": "07092a0c13b2e977acdd7a248f48fa77f7011a0fe99559711a4ba83c6aaae05e",
+      "bytes": 170431,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_e.png",
+      "oid": "77250dde28e57e8a0e79ec133a0d215428ffa6f4e5a39c06b94bd98568ae1c34",
+      "bytes": 525444,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_e_samples.png",
+      "oid": "f1bda465bdcf340d448a4fb16f7c236479b54b85a327aa3e3fcaf3559c401095",
+      "bytes": 554145,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_e_source_samples.png",
+      "oid": "6c237de203ed4d78dc859c9a26e382c29a866cb8d0acb7cd8c47d8d87d640528",
+      "bytes": 1507840,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_n.mp4",
+      "oid": "b46391c3b1a8343a9385655a544d5aca706c854d318d05212e45a4b96d52c691",
+      "bytes": 172160,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_n.png",
+      "oid": "0a22b022195c68447142853c6478b58401f145aae22a8606d58884161420d783",
+      "bytes": 531001,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_n_samples.png",
+      "oid": "b0139b6611b1e3ecbde185766a478e89c8c3fe5eaf4cf28a89234da6f61be115",
+      "bytes": 559277,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_n_source_samples.png",
+      "oid": "78b8c7a15d307b27946b884e99196371dcd189eec3330542b76dff1328a3642c",
+      "bytes": 1557930,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_ne.mp4",
+      "oid": "47b6477b6f492cdf3d76b2f2a840f4291d80522ee3c56ff65ef8103146961c81",
+      "bytes": 173849,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_ne.png",
+      "oid": "1253624dbb30f5005845c1a7cabdfdd63354e0e78ab4bb779707d1afcf434668",
+      "bytes": 532637,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_ne_samples.png",
+      "oid": "b91ca330b283c8e48109be1aca4255d940b89c3b79eb3126010967d06e56e318",
+      "bytes": 560346,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_ne_source_samples.png",
+      "oid": "e30d9a0cc42f15e5eb53c6851cfaaf03ac848d20b78cffb2d49a2cfe28fd348d",
+      "bytes": 1562072,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_s.mp4",
+      "oid": "d30f5ade031764d31a78c5243bc3ff43b09c9194682aaef30e21d9f1a11d0b12",
+      "bytes": 168870,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_s.png",
+      "oid": "e68c08af247cf7ddf174b05dd3c850512afd2d72193036dd5dbb5cf701f4077d",
+      "bytes": 530373,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_s_samples.png",
+      "oid": "f6f6d7100fc58bf40919a2a2e46a5c7f8bdafad124a080713ae7d311925b4427",
+      "bytes": 544986,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_s_source_samples.png",
+      "oid": "931ae8fd0ce3763828c9c05db216f63c0e6b355fcd9e31027ae9f25cdbfd54e6",
+      "bytes": 1533479,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_se.mp4",
+      "oid": "593883e188f0844d9b387f683d7a52c168850a0c834d979f3ec94188e9ac357c",
+      "bytes": 172458,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_se.png",
+      "oid": "921e1cd2d36e94bfd43cab6ffad9a71fe5bdb1833324f3c111cbb01ffa6612e2",
+      "bytes": 533089,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_se_samples.png",
+      "oid": "15248018228e049262cd46ab52dc3948871a4ce64df55953d3b818eda4d2bf32",
+      "bytes": 562718,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_se_source_samples.png",
+      "oid": "4d7eb651d09a7564c36c1facb00539520be6a79104d8ada41f0995d8e03bdfce",
+      "bytes": 1600903,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_stroke_component.mp4",
+      "oid": "c2b6a4625b01955af7b97f2e8f0d324193d01218f7d75399a5ec46ddf65dde0e",
+      "bytes": 140274,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_stroke_component.png",
+      "oid": "6a52170b7b45301d7e8d347531e13827efdcd260570c99273999381a09bff335",
+      "bytes": 513632,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_stroke_component_samples.png",
+      "oid": "64ea9016a1f5822220a50c54217d1e81fdba463f1141ac58c97eec845bb74751",
+      "bytes": 515251,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_stroke_component_source_samples.png",
+      "oid": "8983ffc12a1d2e55719185ef893a8cc2eee88b13448a3a54fdb450e0b07eeaeb",
+      "bytes": 1233704,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_wave_component.mp4",
+      "oid": "b35d926b322e5478714a5124b1117a381a48652c320626614e78493e42170df6",
+      "bytes": 139165,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_wave_component.png",
+      "oid": "eadcf5b2e8d6e50c007e287078c518dae4c6d1a40198f7dd5690431ad625c1a8",
+      "bytes": 518208,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_wave_component_samples.png",
+      "oid": "3a362f05f85c3c7c333d3c0c630b9959c46a7faee36087833f969c6812295736",
+      "bytes": 518567,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_wave_component_source_samples.png",
+      "oid": "d9be484b16a33777ce99bb898c77532922b08433d23a651ef271c451806f5fa9",
+      "bytes": 1252807,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_cast_dots_component.mp4",
+      "oid": "d1e019ee8f4a4375a0c19a7db27735d8b833984b6cdea1da77e6285fdb7683cd",
+      "bytes": 145909,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_cast_dots_component.png",
+      "oid": "9d9376c98b9315301f4d0ddfa79380059ad834b6a54c85ee135a93d5d435a291",
+      "bytes": 547697,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_cast_dots_component_samples.png",
+      "oid": "ec3cadb9520b02c7533b0a170ea0cc7b20bece70fc7d4cc26c3ce12d1b626583",
+      "bytes": 531350,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_cast_dots_component_source_samples.png",
+      "oid": "8d1962f3eb4890c957da614489e03b5df71c7868f7777cc9b4d22881b6eb4e89",
+      "bytes": 1467806,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_expire_component.mp4",
+      "oid": "7bc66e88139f6b08dcbed9d1bf0d1afb46b3c31649c28f5ea4fa188bb8fb593e",
+      "bytes": 149939,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_expire_component.png",
+      "oid": "2ecab7d9793e4f62578acf0c347a571bd43752e6611d97883c96f33f0b7076e9",
+      "bytes": 545055,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_expire_component_samples.png",
+      "oid": "8b65fea093c263243e01eb67343bd379cbf0628a96358d246ec2e95fa411c567",
+      "bytes": 545194,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_expire_component_source_samples.png",
+      "oid": "0d6bfcfd5032d194d9ecfa2cb38304084afa024f23ac6f05810ceb921d8cb61e",
+      "bytes": 1398974,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_gain_component.mp4",
+      "oid": "c90647d510050227febd364661b5ddd627f1ca481ef410db30829b13ed0f58db",
+      "bytes": 145542,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_gain_component.png",
+      "oid": "c9787ffff5bb24622faaa4e3c193f55c35ce7b9913da7aa4bd317a585fd21817",
+      "bytes": 530412,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_gain_component_samples.png",
+      "oid": "a65617fa787e08ed3b3e897a1af5fb33bf5ebfbde318773961b3094010f4619f",
+      "bytes": 531787,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_gain_component_source_samples.png",
+      "oid": "de743eb905f9b52b063807b096bb9bff91fc2af947ba98faaf2ed4cacb6ade66",
+      "bytes": 1310279,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_needle_component.mp4",
+      "oid": "445e1f8f5e99c9c471bfbd9707844f55a78e5f52615d928817adbc13c012bca9",
+      "bytes": 137527,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_needle_component.png",
+      "oid": "22a97b85521b6c324b34174beb154518d04e57d99e9cc45667bd36fbc04228ba",
+      "bytes": 515455,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_needle_component_samples.png",
+      "oid": "0fc9903f53020cfd9e1473dca73d1ff51fcd4eefe9c49c88fe1231e89c0d8994",
+      "bytes": 506576,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_needle_component_source_samples.png",
+      "oid": "c64783d0d49f47947784abafc4fd735cadb402b2e859c01cf516c6f9df90f35f",
+      "bytes": 1217410,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.mp4",
+      "oid": "e204c31c0beedf1f682a933991bda29bbe21229767df1f9075af37a9bad5fa0a",
+      "bytes": 649332,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.png",
+      "oid": "d4bdb70a52ff10130af5549ee016923dfbf0dddfa92c44e64e1017d23605b465",
+      "bytes": 299278,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles_samples.png",
+      "oid": "a25cafb84fd5fb575b16d54a1e72363f188b966e05c29173037ad3e4075d19e3",
+      "bytes": 434299,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.mp4",
+      "oid": "e8c2c67d567e730d34350591f5d374fb784ee5154f49e6bb907aec0ad7768354",
+      "bytes": 655289,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.png",
+      "oid": "5a9a6767985c2c55b5b26e440698db5b56041f8be4a1b3453208024877768498",
+      "bytes": 292143,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    },
+    {
+      "file": "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles_samples.png",
+      "oid": "9ac0dee0cb70b90e9e606bc0acc1d51848232db7b8df3053b611d246e9fe1423",
+      "bytes": 391444,
+      "workspaceMatches": true,
+      "localCacheMatches": true
+    }
+  ]
+}

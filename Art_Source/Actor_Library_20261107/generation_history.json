@@ -2464,5 +2464,52 @@
     "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
     "supersededByBatch": "20261114c",
     "archiveStatus": "HELD_SOURCE_REPAIR_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "sk_hb_02_frost_gain_component",
+    "source": "Sheets/sk_hb_02_frost_gain_component_v1_20261114e.png",
+    "prompt": "Prompts/sk_hb_02_frost_gain_component_v1_20261114e.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114e",
+    "generator": "built-in image_gen",
+    "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_needle_component_v1_20261114e.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_needle_component_v1_20261114e.png",
+        "sourceSha256": "07ecc27c73f227e0346be36c6050bd111b8f285414ab7d4e06930a732a640786",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114e/sk_hb_02_needle_component_v1_20261114e.png"
+      }
+    ],
+    "sourceSha256": "5b30fd61882143a1e4e0cbd8a809566398d11eaac85ea22b366cd1a64fc706c7",
+    "sourceFrameDurationsMs": [
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0
+    ],
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "CELL_CENTER",
+    "previewDurationSeconds": 0.32,
+    "previewLoop": false,
+    "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+    "supersededByBatch": "20261114e",
+    "archiveStatus": "SOURCE_REPAIR_HISTORY_NOT_RENDERED"
   }
 ]

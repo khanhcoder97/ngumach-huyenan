@@ -288,7 +288,21 @@
     "sk_mk_02_aim_component",
     "sk_mk_04_sustain_component",
     "sk_ad_01_bleed_status_component",
-    "sk_ad_04_expire_component"
+    "sk_ad_04_expire_component",
+    "class_huyen_but_skill_01_n",
+    "class_huyen_but_skill_01_e",
+    "class_huyen_but_skill_01_se",
+    "class_huyen_but_skill_01_s",
+    "class_huyen_but_skill_02_n",
+    "class_huyen_but_skill_02_e",
+    "class_huyen_but_skill_02_se",
+    "class_huyen_but_skill_02_s",
+    "sk_hb_01_stroke_component",
+    "sk_hb_01_wave_component",
+    "sk_hb_02_cast_dots_component",
+    "sk_hb_02_needle_component",
+    "sk_hb_02_frost_gain_component",
+    "sk_hb_02_frost_expire_component"
   ],
   "holds": [
     {
@@ -374,6 +388,14 @@
     {
       "id": "class_minh_kiem_walk_se",
       "reason": "HOLD: native sequence still does not clearly reverse anatomical lead-leg ownership between opposite contacts. Do not approve from sixteen unequal pixels/hashes. Next repair should use separately validated contact key-pose guides before regenerating another full cycle."
+    },
+    {
+      "id": "class_huyen_but_skill_01_ne",
+      "reason": "HOLD: native eight-facing comparison shows the nominal NE head/torso silhouette remains too close to N. Brush motion is readable, but a different arm arc alone does not establish a clearly authored northeast facing. Redraw torso/shoulder yaw and head/cheek visibility; NW mirror inherits this hold."
+    },
+    {
+      "id": "class_huyen_but_skill_02_ne",
+      "reason": "HOLD: native eight-facing comparison shows the nominal NE pose is nearly rear-on, too similar to N in head, shoulders and robe silhouette. Wrist dabs do not resolve facing ambiguity. Redraw a clear rear-three-quarter NE body/head orientation; NW mirror remains held too."
     }
   ],
   "policy": "Structure/export permits review only. No new generated actor is approved for live gameplay until visual/native motion QA.",
@@ -6054,6 +6076,404 @@
       "method": "Original and native source review: existing three shallow-U marks fragment progressively to sparse embers over16 authored source poses. No regrowth or explosion. Half-open presentation window removes final surviving specks; image source remains unchanged.",
       "reviewScale": "Whole original PNG plus native point-filtered Studio source samples; assembly placement reviewed separately. Offline movie clock is not measured gameplay FPS.",
       "batch": "20261114d",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_huyen_but_skill_01_n",
+      "sourceSha256": "329f9ae9423e86ebe9e5115a26a38687dba678d9cf99b4d9f04834e2ac2ea3e9",
+      "bindingSha256": "505e08a1bcddabb845c0903008c29a91f105437f8333f88939702de37c244560",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_01_n_v1_20261114e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_n_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_n.mp4": "9b70545c129e434e5a2fada06e70a16b0bcbcdc8b9ed4a7f297cfeb7fe87b8d6",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_n.png": "5599ceccc7058051ba47b2bccee01ea8b37edb2682aa7e408b681b18b69ad109",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_n_source_samples.png": "0ce023e72dc39121674ce1e582ab2cd5ef47ba005f39164f7ee0513bad50a6d5",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_n_samples.png": "838d6bc8d36971b3c953b2d04ae1395392ff7d3e5669cbbd852e5b0a9cda3106",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.mp4": "e204c31c0beedf1f682a933991bda29bbe21229767df1f9075af37a9bad5fa0a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.png": "d4bdb70a52ff10130af5549ee016923dfbf0dddfa92c44e64e1017d23605b465",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles_samples.png": "a25cafb84fd5fb575b16d54a1e72363f188b966e05c29173037ad3e4075d19e3"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_n_source_samples.png",
+      "method": "Native 16-phase review: grounded rear-view horizontal brush sweep, one right-hand brush crossing the far/front side with body occlusion; empty left hand, braid and robe stay intact. Boot pivots remain planted through recovery. Individual source clip only.",
+      "reviewScale": "Whole original PNG and native point-filtered all16 source-phase samples; measured native source trace validates sample identity. Eight-facing body comparison. Offline movie is not measured gameplay FPS.",
+      "batch": "20261114e",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_huyen_but_skill_01_e",
+      "sourceSha256": "5e4fa011616ea894deeb3de543c0b24f2ff8f6dc441f898047c57cde9ed1979a",
+      "bindingSha256": "45f8143acfbdf9789e26dd98e4ac3e1f8b9a57cc643b774481d6ab8863271238",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_01_e_v1_20261114e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_e.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_e_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_e.mp4": "2eb0511e6f0b1dc8422a241f9e1902858e8c24d6ef5d856ef1762597102f4330",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_e.png": "9e2a6c08755210065e6bcad095c8f53aac71d1b8356bbeb96381f7159306317a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_e_source_samples.png": "f63a493c20fbced3a39230d89311e46f50f43e2e0305413831fb769ed9164177",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_e_samples.png": "eb2893c4b61e4cde141c869065de04ff259463e36a374cf3db0952801b06ad14",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.mp4": "e204c31c0beedf1f682a933991bda29bbe21229767df1f9075af37a9bad5fa0a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.png": "d4bdb70a52ff10130af5549ee016923dfbf0dddfa92c44e64e1017d23605b465",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles_samples.png": "a25cafb84fd5fb575b16d54a1e72363f188b966e05c29173037ad3e4075d19e3"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_e_source_samples.png",
+      "method": "Native 16-phase review: east-facing brush chamber, extended horizontal sweep and recovery have distinct authored arm/brush positions. One brush stays in the right hand; boots remain registered, left hand empty, no cropped brush tips. Individual source clip only.",
+      "reviewScale": "Whole original PNG and native point-filtered all16 source-phase samples; measured native source trace validates sample identity. Eight-facing body comparison. Offline movie is not measured gameplay FPS.",
+      "batch": "20261114e",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_huyen_but_skill_01_se",
+      "sourceSha256": "dd747b3ffee1b658f8191ebfc31d3070759ae79fe17b2ec986a291fe2b06fe4c",
+      "bindingSha256": "478f16bfef1046b40d87c941da180d8861c3a2d09d841e57b10426af14474bb2",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_01_se_v1_20261114e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_se.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_se_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_se.mp4": "a159d4d5ce9966a0eb28b1cd6a0740b0f01eba70314ac8b653b33967955df81e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_se.png": "1802f52f57797be9c91566d9902806252d3aafeec7bafe17abb359c07a7e145e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_se_source_samples.png": "be092987eae523bfaf5572bdf8b4f5ce6d998d4fd3c227b699a2c00671317598",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_se_samples.png": "c55a266c8e0beb01b4f994b32806e20850ea08a2196198d995436b7da4b6dbc1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.mp4": "e204c31c0beedf1f682a933991bda29bbe21229767df1f9075af37a9bad5fa0a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.png": "d4bdb70a52ff10130af5549ee016923dfbf0dddfa92c44e64e1017d23605b465",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles_samples.png": "a25cafb84fd5fb575b16d54a1e72363f188b966e05c29173037ad3e4075d19e3"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_se_source_samples.png",
+      "method": "Native 16-phase review: front three-quarter sweep reads separately from east, with visible face, empty supporting palm and intact blue shoulders/white hem. Right-hand brush follows the sweep then returns without ground-root sliding. Individual source clip only.",
+      "reviewScale": "Whole original PNG and native point-filtered all16 source-phase samples; measured native source trace validates sample identity. Eight-facing body comparison. Offline movie is not measured gameplay FPS.",
+      "batch": "20261114e",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_huyen_but_skill_01_s",
+      "sourceSha256": "34642d5073ac286888e0d8d5cf3e56455e559aaf72afe2388690195309490fbc",
+      "bindingSha256": "f0fc45ad8785c95baecb597576244adcd3011c67920abc28d476983c5e159a2e",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_01_s_v1_20261114e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_s.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_s_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_s.mp4": "fbd5e64f0a052769bf41eaaa39cc5cf184b2090a16cbdb38992d650e8f78d86a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_s.png": "b0a8236494270320633987c8426c0d756486ea59ce9d43090f55c926aa190e7d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_s_source_samples.png": "c88cc7d226cdbbac93c704d061a4d36dc8b880e9c374d1a2c97bad2b09705fc9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_s_samples.png": "b4c07a61343dcd06e8e61c8044a4f1bcf1d985314c560ed1604b24b6ae304c96",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.mp4": "e204c31c0beedf1f682a933991bda29bbe21229767df1f9075af37a9bad5fa0a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles.png": "d4bdb70a52ff10130af5549ee016923dfbf0dddfa92c44e64e1017d23605b465",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_01_eight_angles_samples.png": "a25cafb84fd5fb575b16d54a1e72363f188b966e05c29173037ad3e4075d19e3"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_01_s_source_samples.png",
+      "method": "Native 16-phase review: south-facing horizontal calligraphy sweep crosses the body from the anatomical right hand, with empty left palm and a clear chamber/sweep/recovery sequence. Foot anchor remains stable and braid/robe silhouette is intact. Individual source clip only.",
+      "reviewScale": "Whole original PNG and native point-filtered all16 source-phase samples; measured native source trace validates sample identity. Eight-facing body comparison. Offline movie is not measured gameplay FPS.",
+      "batch": "20261114e",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_huyen_but_skill_02_n",
+      "sourceSha256": "d8f8066cfd10cbe72aec99c988d0739ee978da4daca76e64ff1d58c012612116",
+      "bindingSha256": "b17fdb8923ea6dbbd9ef3b365f1d8ece4579e19cc8ef1cac3c73e94f5aa47d4f",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_02_n_v1_20261114e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_n.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_n.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_n_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_n_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_n.mp4": "b46391c3b1a8343a9385655a544d5aca706c854d318d05212e45a4b96d52c691",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_n.png": "0a22b022195c68447142853c6478b58401f145aae22a8606d58884161420d783",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_n_source_samples.png": "78b8c7a15d307b27946b884e99196371dcd189eec3330542b76dff1328a3642c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_n_samples.png": "b0139b6611b1e3ecbde185766a478e89c8c3fe5eaf4cf28a89234da6f61be115",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.mp4": "e8c2c67d567e730d34350591f5d374fb784ee5154f49e6bb907aec0ad7768354",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.png": "5a9a6767985c2c55b5b26e440698db5b56041f8be4a1b3453208024877768498",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles_samples.png": "9ac0dee0cb70b90e9e606bc0acc1d51848232db7b8df3053b611d246e9fe1423"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_n_source_samples.png",
+      "method": "Native all16-phase review: rear-view small wrist raises/dabs and focused extension differ from the broad skill01 sweep. One right-hand brush, empty left hand, intact braid and fixed grounded boot anchor; returns to neutral. Body clip only, no freeze/event acceptance.",
+      "reviewScale": "Whole original PNG and native point-filtered all16 source-phase samples; measured native source trace validates sample identity. Eight-facing body comparison. Offline movie is not measured gameplay FPS.",
+      "batch": "20261114e",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_huyen_but_skill_02_e",
+      "sourceSha256": "12748eb6d8f44a54196297433a4d898c4080f7facd6ba55b26d0eca05a0559c7",
+      "bindingSha256": "d72ea2311b151bb577ff11476756e844e1151654cc8df81485825beb6eab04f4",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_02_e_v1_20261114e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_e.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_e.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_e_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_e_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_e.mp4": "07092a0c13b2e977acdd7a248f48fa77f7011a0fe99559711a4ba83c6aaae05e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_e.png": "77250dde28e57e8a0e79ec133a0d215428ffa6f4e5a39c06b94bd98568ae1c34",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_e_source_samples.png": "6c237de203ed4d78dc859c9a26e382c29a866cb8d0acb7cd8c47d8d87d640528",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_e_samples.png": "f1bda465bdcf340d448a4fb16f7c236479b54b85a327aa3e3fcaf3559c401095",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.mp4": "e8c2c67d567e730d34350591f5d374fb784ee5154f49e6bb907aec0ad7768354",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.png": "5a9a6767985c2c55b5b26e440698db5b56041f8be4a1b3453208024877768498",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles_samples.png": "9ac0dee0cb70b90e9e606bc0acc1d51848232db7b8df3053b611d246e9fe1423"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_e_source_samples.png",
+      "method": "Native all16-phase review: east wrist-dab contractions alternate with short releases before the focused thrust; brush remains attached to right hand, supporting palm empty. Boots stay planted, face/braid/hem intact, no clipped tips. Body source only.",
+      "reviewScale": "Whole original PNG and native point-filtered all16 source-phase samples; measured native source trace validates sample identity. Eight-facing body comparison. Offline movie is not measured gameplay FPS.",
+      "batch": "20261114e",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_huyen_but_skill_02_se",
+      "sourceSha256": "4e91716d5489ee3023cc207717b1c7620a31bf8e864f3b43407863b339ab2636",
+      "bindingSha256": "3b33b82f33c27d49935a331b368db84e375ba88116d9c93f27e2e69698eb62f1",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_02_se_v1_20261114e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_se.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_se.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_se_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_se_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_se.mp4": "593883e188f0844d9b387f683d7a52c168850a0c834d979f3ec94188e9ac357c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_se.png": "921e1cd2d36e94bfd43cab6ffad9a71fe5bdb1833324f3c111cbb01ffa6612e2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_se_source_samples.png": "4d7eb651d09a7564c36c1facb00539520be6a79104d8ada41f0995d8e03bdfce",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_se_samples.png": "15248018228e049262cd46ab52dc3948871a4ce64df55953d3b818eda4d2bf32",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.mp4": "e8c2c67d567e730d34350591f5d374fb784ee5154f49e6bb907aec0ad7768354",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.png": "5a9a6767985c2c55b5b26e440698db5b56041f8be4a1b3453208024877768498",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles_samples.png": "9ac0dee0cb70b90e9e606bc0acc1d51848232db7b8df3053b611d246e9fe1423"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_se_source_samples.png",
+      "method": "Native all16-phase review: southeast body/face angle is distinct from the profile; compact wrist dabs and forward release remain readable with one brush and empty left palm. Neutral/recovery boots share a grounded root. No projectile/debuff acceptance.",
+      "reviewScale": "Whole original PNG and native point-filtered all16 source-phase samples; measured native source trace validates sample identity. Eight-facing body comparison. Offline movie is not measured gameplay FPS.",
+      "batch": "20261114e",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "class_huyen_but_skill_02_s",
+      "sourceSha256": "639c002aca33e9a338377738f65e30778a8ce5e80d66f7a93a5cbed1cfb63f44",
+      "bindingSha256": "31a82802bfdbc793fe13951f2b7ad518c978f7a335b09675b5eecab7aed22b30",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_02_s_v1_20261114e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_s.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_s_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_s_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_s.mp4": "d30f5ade031764d31a78c5243bc3ff43b09c9194682aaef30e21d9f1a11d0b12",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_s.png": "e68c08af247cf7ddf174b05dd3c850512afd2d72193036dd5dbb5cf701f4077d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_s_source_samples.png": "931ae8fd0ce3763828c9c05db216f63c0e6b355fcd9e31027ae9f25cdbfd54e6",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_s_samples.png": "f6f6d7100fc58bf40919a2a2e46a5c7f8bdafad124a080713ae7d311925b4427",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.mp4": "e8c2c67d567e730d34350591f5d374fb784ee5154f49e6bb907aec0ad7768354",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles.png": "5a9a6767985c2c55b5b26e440698db5b56041f8be4a1b3453208024877768498",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/skill_02_eight_angles_samples.png": "9ac0dee0cb70b90e9e606bc0acc1d51848232db7b8df3053b611d246e9fe1423"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_class_huyen_but_skill_02_s_source_samples.png",
+      "method": "Native all16-phase review: frontal scholar performs compact chamber/dab/release/recovery, anatomically right-hand brush and empty opposite palm remain coherent. No missing hands or cut hem, fixed ground pivot. Individual clip approval excludes cross-action size matching.",
+      "reviewScale": "Whole original PNG and native point-filtered all16 source-phase samples; measured native source trace validates sample identity. Eight-facing body comparison. Offline movie is not measured gameplay FPS.",
+      "batch": "20261114e",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "sk_hb_01_stroke_component",
+      "sourceSha256": "b68dfa53e3cfcfca697c987c4c112f685c87357c67ac013fb78d81a98bd51f53",
+      "bindingSha256": "81624f1a053fbd9299830cd094f1b4c3154a27732236308cec9c5fa6432c8de0",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_01_stroke_component_v1_20261114e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_stroke_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_stroke_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_stroke_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_stroke_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_stroke_component.mp4": "c2b6a4625b01955af7b97f2e8f0d324193d01218f7d75399a5ec46ddf65dde0e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_stroke_component.png": "6a52170b7b45301d7e8d347531e13827efdcd260570c99273999381a09bff335",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_stroke_component_source_samples.png": "8983ffc12a1d2e55719185ef893a8cc2eee88b13448a3a54fdb450e0b07eeaeb",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_stroke_component_samples.png": "64ea9016a1f5822220a50c54217d1e81fdba463f1141ac58c97eec845bb74751"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_stroke_component_source_samples.png",
+      "method": "Native all16-phase review: dark indigo/cyan horizontal ink stroke grows from a fixed left origin, crests and separates into sparse fading fragments. Empty transparent surroundings, no box seam or neighboring-cell crop. Source component only; not an impact or full skill.",
+      "reviewScale": "Whole original PNG and native point-filtered all16 source-phase samples; measured native source trace validates sample identity. Eight-facing body comparison. Offline movie is not measured gameplay FPS.",
+      "batch": "20261114e",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "sk_hb_01_wave_component",
+      "sourceSha256": "a24f9ed6944d7333fcb0d8b5dd3202612aa6b610c8f2e9bdcdb736efba7b3bd7",
+      "bindingSha256": "2308990753b7267cc07d9d7317af33800481ca0ade1d2aefe254d41eab671246",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_01_wave_component_v1_20261114e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_wave_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_wave_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_wave_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_wave_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_wave_component.mp4": "b35d926b322e5478714a5124b1117a381a48652c320626614e78493e42170df6",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_wave_component.png": "eadcf5b2e8d6e50c007e287078c518dae4c6d1a40198f7dd5690431ad625c1a8",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_wave_component_source_samples.png": "d9be484b16a33777ce99bb898c77532922b08433d23a651ef271c451806f5fa9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_wave_component_samples.png": "3a362f05f85c3c7c333d3c0c630b9959c46a7faee36087833f969c6812295736"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_01_wave_component_source_samples.png",
+      "method": "Native all16-phase review: flat indigo wave has a cyan leading crescent at the registered right tip and a separate trailing ink body; expands, breaks and fades without a closed explosion. Manual nonuniform cell bounds keep all source strokes intact. Component only, no flight/hit authority.",
+      "reviewScale": "Whole original PNG and native point-filtered all16 source-phase samples; measured native source trace validates sample identity. Eight-facing body comparison. Offline movie is not measured gameplay FPS.",
+      "batch": "20261114e",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "sk_hb_02_cast_dots_component",
+      "sourceSha256": "225128b78e1d760d47d4402aa6b92d311240a07399ec3b5923ca84f541fab139",
+      "bindingSha256": "72bc062253ee011bc788fa6bb2f61b13a3862b5c10c886df917a2e28406691f5",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_cast_dots_component_v1_20261114e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_cast_dots_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_cast_dots_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_cast_dots_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_cast_dots_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_cast_dots_component.mp4": "d1e019ee8f4a4375a0c19a7db27735d8b833984b6cdea1da77e6285fdb7683cd",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_cast_dots_component.png": "9d9376c98b9315301f4d0ddfa79380059ad834b6a54c85ee135a93d5d435a291",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_cast_dots_component_source_samples.png": "8d1962f3eb4890c957da614489e03b5df71c7868f7777cc9b4d22881b6eb4e89",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_cast_dots_component_samples.png": "ec3cadb9520b02c7533b0a170ea0cc7b20bece70fc7d4cc26c3ce12d1b626583"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_cast_dots_component_source_samples.png",
+      "method": "Native all16-phase review: first cyan point forms, second and third build a small triangular tell, then all fade; no extra whole-body glyph or opaque backplate. Stable composition registration. Source review 0.32s is separate from the design 0.18s tell window.",
+      "reviewScale": "Whole original PNG and native point-filtered all16 source-phase samples; measured native source trace validates sample identity. Eight-facing body comparison. Offline movie is not measured gameplay FPS.",
+      "batch": "20261114e",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "sk_hb_02_needle_component",
+      "sourceSha256": "07ecc27c73f227e0346be36c6050bd111b8f285414ab7d4e06930a732a640786",
+      "bindingSha256": "a171c24a0d39d9b6d05ff7a87ff8eeacc11daeac64881246c05e70dc2bdfce1f",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_needle_component_v1_20261114e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_needle_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_needle_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_needle_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_needle_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_needle_component.mp4": "445e1f8f5e99c9c471bfbd9707844f55a78e5f52615d928817adbc13c012bca9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_needle_component.png": "22a97b85521b6c324b34174beb154518d04e57d99e9cc45667bd36fbc04228ba",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_needle_component_source_samples.png": "c64783d0d49f47947784abafc4fd735cadb402b2e859c01cf516c6f9df90f35f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_needle_component_samples.png": "0fc9903f53020cfd9e1473dca73d1ff51fcd4eefe9c49c88fe1231e89c0d8994"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_needle_component_source_samples.png",
+      "method": "Native all16-phase review: thin cyan needle develops along a horizontal axis with a fixed right-facing tip, then separates into small cold fragments and fades. No broad beam, cropped extremity or body sprite. Source duration 0.40s is review timing, not gameplay travel speed.",
+      "reviewScale": "Whole original PNG and native point-filtered all16 source-phase samples; measured native source trace validates sample identity. Eight-facing body comparison. Offline movie is not measured gameplay FPS.",
+      "batch": "20261114e",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "sk_hb_02_frost_gain_component",
+      "sourceSha256": "ce4fc8968fb9fd0218c5df1dc12d1c2b61cee1b48aa8444028c892fcf037f5aa",
+      "bindingSha256": "24ce324cf0080729190025ca4f09370973de1e42905115bde42661c47fd7443c",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_frost_gain_component_v2_20261114e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_gain_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_gain_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_gain_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_gain_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_gain_component.mp4": "c90647d510050227febd364661b5ddd627f1ca481ef410db30829b13ed0f58db",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_gain_component.png": "c9787ffff5bb24622faaa4e3c193f55c35ce7b9913da7aa4bd317a585fd21817",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_gain_component_source_samples.png": "de743eb905f9b52b063807b096bb9bff91fc2af947ba98faaf2ed4cacb6ade66",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_gain_component_samples.png": "a65617fa787e08ed3b3e897a1af5fb33bf5ebfbde318773961b3094010f4619f"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_gain_component_source_samples.png",
+      "method": "Native all16-phase review of selected v2: six separate small icy petals form around an empty centre, then separate/fade without making a solid plate or enclosing a body. Very-low-alpha cyan source RGB does not form an opaque cloud in native Godot. v1 excluded; gain only, sustain still missing.",
+      "reviewScale": "Whole original PNG and native point-filtered all16 source-phase samples; measured native source trace validates sample identity. Eight-facing body comparison. Offline movie is not measured gameplay FPS.",
+      "batch": "20261114e",
+      "reviewDate": "2026-11-14"
+    },
+    {
+      "id": "sk_hb_02_frost_expire_component",
+      "sourceSha256": "8d8c3069074704f78bfa6a6be0fd884232fa240ef608e8992d94a278238143f0",
+      "bindingSha256": "cde87b24a431c272a8314a2dadec1636598cf64906b2aa7f4cecca8f93a0b989",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_frost_expire_component_v1_20261114e.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_expire_component.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_expire_component.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_expire_component_source_samples.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_expire_component_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_expire_component.mp4": "7bc66e88139f6b08dcbed9d1bf0d1afb46b3c31649c28f5ea4fa188bb8fb593e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_expire_component.png": "2ecab7d9793e4f62578acf0c347a571bd43752e6611d97883c96f33f0b7076e9",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_expire_component_source_samples.png": "0d6bfcfd5032d194d9ecfa2cb38304084afa024f23ac6f05810ceb921d8cb61e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_expire_component_samples.png": "8b65fea093c263243e01eb67343bd379cbf0628a96358d246ec2e95fa411c567"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261114e/raw_sk_hb_02_frost_expire_component_source_samples.png",
+      "method": "Native all16-phase review: six separate cold petals crack into smaller pieces and diminish to sparse flecks, centre remains open. No impact burst or last-fragment hold accepted. Component only; target attachment and transition from gain/sustain still require assembly review.",
+      "reviewScale": "Whole original PNG and native point-filtered all16 source-phase samples; measured native source trace validates sample identity. Eight-facing body comparison. Offline movie is not measured gameplay FPS.",
+      "batch": "20261114e",
       "reviewDate": "2026-11-14"
     }
   ],

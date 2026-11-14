@@ -4,7 +4,11 @@
 
 **Đang sản xuất; chưa hoàn thành toàn bộ thư viện.** Chuẩn16–20pose thực/clip/hướng, renderer60FPS. PNG mới là ứng viên review, chưa tự thay asset gameplay.
 
-Đợt mới nhất: [20261114c — sửa cung chém và dáng đi ngang Minh Kiếm](../../docs/production/Actor_Batch_20261114c_vi.md): vẽ lại 8 nguồn đang HOLD, duyệt 5 và giữ lại 3 nguồn vận động chưa đạt. Nhát chém đầu đủ năm góc nguồn đạt; Minh Kiếm 14/16 action đủ hướng duyệt, còn chạy NE và đi NE/SE. 282 pin source, 50/1028 job duyệt, 949 job chưa đủ nguồn. Giữ nguyên mọi PNG/pin đã duyệt và Studio chỉnh tay; chưa nghiệm thu class hoặc gameplay.
+Đợt mới nhất: [20261114e — Mực Triều và Hàn Châm](../../docs/production/Actor_Batch_20261114e_vi.md): 10 sheet thân, 6 component VFX, 256 tư thế nguồn được chọn. Duyệt 14 nguồn; hai thân NE giữ HOLD vì hướng quá gần N, NW lật cũng phụ thuộc HOLD. 301 pin source; 81/1028 job đủ cấu trúc, 50 job đủ hướng duyệt, 947 job thiếu nguồn. 18 video native kiểm đủ 16 pha nguồn, chưa nghiệm thu skill/class/gameplay. Đã khôi phục script lưu ảnh bị byte rỗng, kiểm nguyên vẹn 16 cặp PNG.
+
+Đợt trước: [20261114d — trạng thái và bàn ghép kỹ năng](../../docs/production/Actor_Batch_20261114d_vi.md): năm component/80 tư thế nguồn đã duyệt; bàn chỉnh thân–VFX cho 12 skill/20 tình huống tám hướng, còn chờ nghiệm thu assembly/camera gameplay. Studio chỉnh tay và toàn bộ nguồn cũ giữ nguyên.
+
+Đợt trước: [20261114c — sửa cung chém và dáng đi ngang Minh Kiếm](../../docs/production/Actor_Batch_20261114c_vi.md): vẽ lại 8 nguồn đang HOLD, duyệt 5 và giữ lại 3 nguồn vận động chưa đạt. Nhát chém đầu đủ năm góc nguồn đạt; Minh Kiếm 14/16 action đủ hướng duyệt, còn chạy NE và đi NE/SE. 282 pin source, 50/1028 job duyệt, 949 job chưa đủ nguồn tại thời điểm đợt C. Giữ nguyên mọi PNG/pin đã duyệt và Studio chỉnh tay; chưa nghiệm thu class hoặc gameplay.
 
 Đợt trước: [20261114b — nguồn nền Minh Kiếm có kiếm](../../docs/production/Actor_Batch_20261114b_vi.md), **15 sheet / 240 tư thế nguồn**, 8 nguồn duyệt và 7 HOLD cần sửa. Đứng đủ năm góc đã duyệt; đi NE/E/SE và nhát đầu N/NE/E/SE chưa đạt. Giữ nguyên 46 PNG cũ đã chốt và Studio chỉnh tay. Thống kê hiện hành theo binding ưu tiên của client: Minh Kiếm 13/16 action đủ hướng đã duyệt, toàn catalogue 49/1028 job duyệt, 949 job chưa đủ nguồn. Đây là đếm đúng nguồn thay thế đang có hiệu lực; không cộng page legacy đã bị che. Chưa nghiệm thu class hoặc gameplay.
 

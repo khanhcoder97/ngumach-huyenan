@@ -15,6 +15,8 @@ public partial class ArtStudio : Control
     private string _root = "", _path = "user://art_studio/projects/current.json", _selected = "sprite", _saved = "", _dragBefore = "";
     private int _clip, _frame;
     private bool _sync, _playing, _dirty, _dragChanged;
+    private bool _traceSourceClock;
+    private int _lastTracedSourceFrame = -1;
     private double _time;
     private readonly Stack<string> _undo = new(), _redo = new();
     private readonly Dictionary<string, SpinBox> _numbers = new();
@@ -115,6 +117,7 @@ public partial class ArtStudio : Control
         int defaultIndex = Array.FindIndex(_entries, e => e.Id == "npc_lyan_idle"); _library.Select(defaultIndex);
         SetDocument(ArtStudioLibrary.Load("npc_lyan_idle"), "", "");
         var args = OS.GetCmdlineUserArgs(); int project = Array.IndexOf(args, "--studio-project");
+        _traceSourceClock = args.Contains("--studio-trace-source") && !string.IsNullOrEmpty(Engine.GetWriteMoviePath());
         if (project >= 0 && project + 1 < args.Length) LoadProject(args[project + 1]);
         int entry = Array.IndexOf(args, "--studio-entry");
         if (entry >= 0 && entry + 1 < args.Length) { SetDocument(ArtStudioLibrary.Load(args[entry + 1]), "", ""); int item = Array.FindIndex(_entries, e => e.Id == args[entry + 1]); if (item >= 0) _library.Select(item); }
@@ -335,7 +338,7 @@ public partial class ArtStudio : Control
     }
     public override void _Process(double delta)
     {
-        if (!_playing || _doc == null) return;
+        if (!_playing || _doc == null) { TraceSourceClock(); return; }
         double previous = _time, next = previous + delta * _numbers["speed"].Value;
         foreach (var m in Clip.Markers)
         {
@@ -345,6 +348,13 @@ public partial class ArtStudio : Control
         _time = Clip.Loop ? next % Clip.Duration : Math.Min(next, Clip.Duration); _frame = ArtStudioSampler.FrameAt(Clip, _time);
         if (!Clip.Loop && next >= Clip.Duration) { _playing = false; Refresh(); }
         _sync = true; _timeline.Value = _frame; _sync = false; SyncStage();
+        TraceSourceClock();
+    }
+    private void TraceSourceClock()
+    {
+        if (!_traceSourceClock || _doc == null || _lastTracedSourceFrame == _frame) return;
+        _lastTracedSourceFrame = _frame;
+        GD.Print($"ART_STUDIO_SOURCE_TICK nativeFrame={Engine.GetFramesDrawn()} sourceFrame={_frame}");
     }
     private void LogMarker(ArtStudioMarker m, int cycles)
     { _events.Text = $"[{Clip.Name}/{Clip.Direction}] {m.Kind} / {m.Name} @ ({m.X:0.0},{m.Y:0.0}) f{m.Frame + 1} ×{cycles}\n" + _events.Text; if (_events.Text.Length > 2000) _events.Text = _events.Text[..2000]; }

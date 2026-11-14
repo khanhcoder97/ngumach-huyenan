@@ -1,8 +1,8 @@
 {
   "actors": 130,
   "requiredPages": 1028,
-  "structurePassed": 329,
-  "boundRequiredPages": 79,
+  "structurePassed": 345,
+  "boundRequiredPages": 81,
   "legacyClips": 3,
   "rejected": [
     {
@@ -10,13 +10,11 @@
       "reason": "rows expected 4, got 5"
     }
   ],
-  "pendingPages": 949,
+  "pendingPages": 947,
   "pendingIds": [
     "class_huyen_but_run",
     "class_huyen_but_basic_attack_02",
     "class_huyen_but_basic_attack_03",
-    "class_huyen_but_skill_01",
-    "class_huyen_but_skill_02",
     "class_huyen_but_skill_03",
     "class_huyen_but_skill_04",
     "class_huyen_but_skill_05",
@@ -963,7 +961,7 @@
     "mob_stone_automaton_elite_turn"
   ],
   "productionApprovedPages": 50,
-  "visualHoldPages": 20,
+  "visualHoldPages": 22,
   "modularMigrationReferencePages": 0,
   "structureComplete": false,
   "complete": false,
