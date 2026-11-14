@@ -1,0 +1,58 @@
+{
+ "manifestId": "NGM_CIN020_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 24 - CIN_020 animated take (Goi 30 item 7): closing campaign scene: 3 storyboard keyframes + 18 s Ken Burns clip",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_020",
+ "title": "Thư có hồi âm",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. CIN_020 has an empty pack character list, so no named character lock blocks these pictures; the villager is an unnamed generation-invented figure whose appearance drifts between shots (recorded per shot), not a canon design.",
+ "keyframes": [
+  {
+   "shotId": "CIN_020_S01",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_020_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "f8a2b44714e87ccdfce2e0aa81039c2d46b04399f5c87c3b96ecee8997af6d1a",
+   "sourceStagingFile": "media-generation-keyframe-cin-020-s01-0-a0e5bb3d-23ae-4fce-b77a-334f6483b9b6.webp",
+   "sourceStagingSha256": "47666eed87280cff489f7f7b2dd7bfa3e22da551f5c60e43b47f7943ff8f9415",
+   "sourceSnapshotId": "2f520e4c-506a-43af-871a-2729c1653db2:ojsg4l",
+   "framing": "Medium shot: the villager sits at the repaired plank table on the river dock reading the opened letter; the sealed delivered letter and a worn bowl rest on the table; a newly tied paper lamp hangs from the bamboo post at frame left; stilt houses across the calm river in daylight.",
+   "knownDefects": "The worn bowl holds greens and reads as a food bowl rather than an empty worn prop; the newly tied lamp is boxy and unlit (daylight-correct but ambiguous). No legible text anywhere, as required."
+  },
+  {
+   "shotId": "CIN_020_S02",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_020_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "9fe69c5a14b0b2ac31fe7b7016b0f8a9812451bf348511718ce5c76de001bff6",
+   "sourceStagingFile": "media-generation-keyframe-cin-020-s02-0-e31b02b2-879d-4233-8c35-da32f0a0d164.webp",
+   "sourceStagingSha256": "daac620fd3f0079806c1b7285ec6b330ceba40998c4be684e63930aec2bcfc8a",
+   "sourceSnapshotId": "38c9e9c0-31ae-4754-a6cb-e0883895e78c:sxq6gq",
+   "framing": "Medium interior shot: the villager at a wooden desk by an open window, brush in hand over a fresh sheet bearing the first abstract strokes; ink stone, brush pots and a paper stack on the desk; the river village visible through the window.",
+   "knownDefects": "Framing drift: an interior medium shot at a desk instead of the detail close view of sheet and brush at the riverside table. The villager wears a conical hat and blue tunic here versus the headband and brown vest of S01 -- same-person continuity is broken."
+  },
+  {
+   "shotId": "CIN_020_S03",
+   "camera": "TOPDOWN_MATCH",
+   "file": "keyframes_16x9/keyframe_CIN_020_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "99ee6d93580e5deaa1949c21c38f7de08b826fc83da283fd7a6fd79b403d1705",
+   "sourceStagingFile": "media-generation-keyframe-cin-020-s03-0-7bc07659-3989-4a42-92d6-e826ca6c857c.webp",
+   "sourceStagingSha256": "78f09093b1a19b472fe5aa53d7728174a84268d5b6373410d6c91a4be89227f6",
+   "sourceSnapshotId": "d6278f65-2841-4cb1-b92e-647348f902a2:sn9aoc",
+   "framing": "Top-down view of the table (bowl of food, folded reply, chopsticks, cloth pouch) with the villager seated at frame left seen from behind; open village path beyond the fence with a shoulder-pole carrier, market stalls and garden plots at daily work.",
+   "knownDefects": "The seated villager is a third appearance variant (green top, dark headwrap) -- cross-shot continuity drift; the folded reply reads envelope-like; a faint white steam-like wisp floats above the path mid-frame."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "No named character appears: the pack character list is empty. The villager is an unnamed generation-invented figure, a storyboard placeholder only.",
+  "Continuity defect: the same villager wears three different outfits/headgear across S01/S02/S03, and S02 drifts in framing (interior medium shot instead of a detail close view). All defects are recorded per shot and are first items for the final-picture revision pass."
+ ]
+}

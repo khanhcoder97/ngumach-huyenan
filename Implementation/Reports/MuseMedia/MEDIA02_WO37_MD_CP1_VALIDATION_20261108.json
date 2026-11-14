@@ -1,0 +1,41 @@
+{
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 1 (whole-game score batch 1: 7 missing core cues + 3 transition bridges; 15/15 M-D slots covered, 0 gaps; runtime audio manifest total 627 -> 637)",
+ "base_integration": "6f79853",
+ "branch": "muse/media-production-20261104",
+ "counts": {
+  "md1_cues": 10,
+  "md1_files_checked": 20,
+  "coverage_slots": 15
+ },
+ "mismatches": [],
+ "notes": [
+  "MD1 MUSIC/hub_lac_chau/master: sha/size/codec/duration/loudness re-verified (-22.01 LUFS / -10.37 dBTP)",
+  "MD1 MUSIC/hub_lac_chau/runtime: sha/size/codec/duration/loudness re-verified (-21.95 LUFS / -10.29 dBTP)",
+  "MD1 MUSIC/thanh_lac/master: sha/size/codec/duration/loudness re-verified (-22.00 LUFS / -10.47 dBTP)",
+  "MD1 MUSIC/thanh_lac/runtime: sha/size/codec/duration/loudness re-verified (-21.96 LUFS / -10.45 dBTP)",
+  "MD1 MUSIC/rain_veil/master: sha/size/codec/duration/loudness re-verified (-22.00 LUFS / -7.63 dBTP)",
+  "MD1 MUSIC/rain_veil/runtime: sha/size/codec/duration/loudness re-verified (-21.94 LUFS / -7.56 dBTP)",
+  "MD1 MUSIC/swamp/master: sha/size/codec/duration/loudness re-verified (-22.00 LUFS / -7.96 dBTP)",
+  "MD1 MUSIC/swamp/runtime: sha/size/codec/duration/loudness re-verified (-21.97 LUFS / -7.96 dBTP)",
+  "MD1 MUSIC/dungeon/master: sha/size/codec/duration/loudness re-verified (-22.00 LUFS / -9.14 dBTP)",
+  "MD1 MUSIC/dungeon/runtime: sha/size/codec/duration/loudness re-verified (-21.98 LUFS / -9.02 dBTP)",
+  "MD1 MUSIC/arena/master: sha/size/codec/duration/loudness re-verified (-22.00 LUFS / -7.37 dBTP)",
+  "MD1 MUSIC/arena/runtime: sha/size/codec/duration/loudness re-verified (-21.97 LUFS / -7.38 dBTP)",
+  "MD1 MUSIC/tragedy/master: sha/size/codec/duration/loudness re-verified (-22.00 LUFS / -7.93 dBTP)",
+  "MD1 MUSIC/tragedy/runtime: sha/size/codec/duration/loudness re-verified (-21.95 LUFS / -7.87 dBTP)",
+  "MD1 MUSIC/transition_calm_danger/master: sha/size/codec/duration/loudness re-verified (-25.00 LUFS / -17.37 dBTP)",
+  "MD1 MUSIC/transition_calm_danger/runtime: sha/size/codec/duration/loudness re-verified (-24.94 LUFS / -17.49 dBTP)",
+  "MD1 MUSIC/transition_danger_calm/master: sha/size/codec/duration/loudness re-verified (-25.00 LUFS / -17.39 dBTP)",
+  "MD1 MUSIC/transition_danger_calm/runtime: sha/size/codec/duration/loudness re-verified (-24.93 LUFS / -17.20 dBTP)",
+  "MD1 MUSIC/transition_area/master: sha/size/codec/duration/loudness re-verified (-25.00 LUFS / -16.22 dBTP)",
+  "MD1 MUSIC/transition_area/runtime: sha/size/codec/duration/loudness re-verified (-24.94 LUFS / -16.35 dBTP)",
+  "coverage verified: 15/15 slots covered, 0 gaps, 3 transitions"
+ ],
+ "verdict": "PASS",
+ "limits": [
+  "Loudness/true-peak are re-measured here from real bytes (ffmpeg loudnorm) and compared to the pack within +/-0.5; they are not a mix PASS.",
+  "Loop seams are recorded indicators (wrapJump after the disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it), not a seamlessness PASS.",
+  "No ear audition of the 10 MD1 cues or their loop seams; audition status NOT_AUDITIONED.",
+  "Intro/outro segments, stems and phase-layer candidates remain open for M-D checkpoint 2 (see coverage openForMdCp2)."
+ ]
+}

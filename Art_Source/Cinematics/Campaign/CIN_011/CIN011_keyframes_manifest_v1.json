@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN011_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_011 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "abcf254",
+ "sceneId": "CIN_011",
+ "title": "Chữ khắc bị sửa",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_HA_MAC) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock. Checkpoint 32 (Goi 31 item 2) revises CIN_011_S01, CIN_011_S03; all other shots unchanged.",
+ "keyframes": [
+  {
+   "shotId": "CIN_011_S01",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_011_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "5762cd1600830847ee2b2cae065d8eb4d007dd2db3f02263e1d0af3f6823c302",
+   "sourceStagingFile": "media-generation-keyframe-cin-011-s01-0-901ffe9f-8ca7-4230-8f00-47d050696e84.webp",
+   "sourceStagingSha256": "e0216bd14e37e168d6ba4707efc547e8928970c0487682f9f303a453204e4a2f",
+   "sourceSnapshotId": "318e712b-ff20-49be-aca3-1156b9c5d443:wwtd03",
+   "framing": "Top-down view over a workshop table with no person in frame: three copper relief fragments joined by metal hinges lie at center, surrounded by hammer, chisel, pliers, brush and copper wire coils; open-hand and droplet water-sharing symbols sit beneath rows of tally counting marks.",
+   "knownDefects": "The copper fragments have jagged broken edges and heavy green verdigris; the lower-right fragment carries a small vertical crack so the fragment count could read as 4 if the crack is counted; tally marks appear as two rows on the left fragment instead of a single row. No woman, no second person."
+  },
+  {
+   "shotId": "CIN_011_S02",
+   "camera": "MEMORY_MEDIUM",
+   "file": "keyframes_16x9/keyframe_CIN_011_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "be6468eb522a6e6c2a24d379cf2572074ed699bbfe2e648b1e54c975eef24771",
+   "sourceStagingFile": "media-generation-keyframe-cin-011-s02-0-8a19e0b9-a439-425f-a586-6600a3b303b3.webp",
+   "sourceStagingSha256": "48ad1df29f07c48caac2adcdb68006610390400aec300118081daa9bd0a6ddd4",
+   "sourceSnapshotId": "65519625-db5a-4ade-aac4-44cfec8dcf4a:hv7lep",
+   "framing": "Under a thatched workshop shelter, a younger dark-haired engineer in a blue tunic and tool belt and an older bearded worker in khaki work clothes jointly hold a clay cup of water between them, with baskets, jars, tools and hanging lanterns around.",
+   "knownDefects": "The handoff direction is ambiguous — both men grip the cup together, so who gives and who receives is unclear; modern open-end wrenches hang in the tool rack at frame left and read anachronistic; the younger man's expression reads anxious rather than tired and sincere. (No mechanical back frame on either figure, as required.)"
+  },
+  {
+   "shotId": "CIN_011_S03",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_011_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "6f167581ede016058f2d44fd7ac39000f290ed9f088e6a1eaab30454167a676a",
+   "sourceStagingFile": "media-generation-keyframe-cin-011-s03-0-4999b3ba-582e-450c-8bcd-f7e7c83f7d4e.webp",
+   "sourceStagingSha256": "08c0a4fa7aab0ae1e8900623fb169275ba2f3a63a35411f1696a5a0e4d018a03",
+   "sourceSnapshotId": "bc5cdec1-185a-408b-abcc-45888bcd58c8:sojgl4",
+   "framing": "Detail close-up: Ha Mac leans in close, brush in hand stopped over the diagonal chisel scars of a copper relief (mountains/waves/clouds); his open notebook sits at the lower-left with the right page left blank. Ha Mac alone in frame.",
+   "knownDefects": "The S03 relief is a single framed rectangular copper plate, a different form from S01's three loose joined fragments (relief-form continuity not yet matched); the notebook's left page carries a few abstract teal scribbles (illegible); Ha Mac's face/costume remain generation-invented placeholders without a character lock."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Checkpoint 32 (Goi 31 item 2) revises S01/S03: the unnamed teal-robed woman is removed; S01's relief is three joined copper fragments; S03 is a detail close view of the copper relief with Ha Mac alone. S02 unchanged from checkpoint 25."
+ ]
+}

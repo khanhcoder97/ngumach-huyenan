@@ -1,0 +1,29 @@
+{
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 6 (phase layers: ben_mua intensity, lam_trieu intensity, sa_hoa intensity; runtime audio manifest total 728 -> 731)",
+ "base_integration": "6f79853",
+ "branch": "muse/media-production-20261104",
+ "counts": {
+  "md6_cues": 3,
+  "md6_files_checked": 6,
+  "coverage_slots": 15
+ },
+ "mismatches": [],
+ "notes": [
+  "MD6 MUSIC/ben_mua_layer_intensity: combined base+layer re-measured -20.65 LUFS / -9.34 dBTP",
+  "MD6 MUSIC/ben_mua_layer_intensity/master: sha/size/codec/duration/loudness re-verified (-24.99 LUFS / -9.96 dBTP)",
+  "MD6 MUSIC/ben_mua_layer_intensity/runtime: sha/size/codec/duration/loudness re-verified (-24.95 LUFS / -9.82 dBTP)",
+  "MD6 MUSIC/lam_trieu_layer_intensity: combined base+layer re-measured -20.79 LUFS / -9.02 dBTP",
+  "MD6 MUSIC/lam_trieu_layer_intensity/master: sha/size/codec/duration/loudness re-verified (-24.99 LUFS / -8.51 dBTP)",
+  "MD6 MUSIC/lam_trieu_layer_intensity/runtime: sha/size/codec/duration/loudness re-verified (-24.94 LUFS / -8.48 dBTP)",
+  "MD6 MUSIC/sa_hoa_layer_intensity: combined base+layer re-measured -20.03 LUFS / -6.87 dBTP",
+  "MD6 MUSIC/sa_hoa_layer_intensity/master: sha/size/codec/duration/loudness re-verified (-25.00 LUFS / -10.20 dBTP)",
+  "MD6 MUSIC/sa_hoa_layer_intensity/runtime: sha/size/codec/duration/loudness re-verified (-24.97 LUFS / -10.20 dBTP)",
+  "coverage verified: 15/15 slots covered, 0 gaps, md6 3 layers"
+ ],
+ "verdict": "PASS",
+ "limits": [
+  "Loudness/true-peak are re-measured here from real bytes (ffmpeg loudnorm) and compared to the pack within +/-0.5; they are not a mix PASS.",
+  "Loop seams are recorded indicators (wrapJump after the disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it), not a seamlessness PASS.",
+  "No ear audition of the MD6 layers or their loop seams; audition status NOT_AUDITIONED."
+ ]
+}

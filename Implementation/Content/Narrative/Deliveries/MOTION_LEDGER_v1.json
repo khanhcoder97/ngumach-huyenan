@@ -1,0 +1,2952 @@
+{
+  "ledgerId": "NGM_MOTION_LEDGER_V1",
+  "checkpoint": "MEDIA-02 WO37 M-C: motion / final-picture ledger v1 (63 campaign shots; P0 motion first, then ref-sufficient shots, then character-lock-blocked shots)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "workOrder": "WO37 (issue #116 comment 6716052477, 2026-11-08 11:14 JST)",
+  "branch": "muse/media-production-20261104",
+  "baseSha": "6f79853",
+  "status": "PLAN_NOT_FINAL_PICTURE",
+  "scopeNote": "Covers the 63 campaign shots only (CIN_001-CIN_020). The 12 prologue CIN_000 shots are a separate standalone film and are not in this ledger. All 63 keyframes are STORYBOARD level; no final picture exists for any shot. Ken Burns is the current animatic motion, never final pose animation. Action animation is 8-12 pose fps per WO37 M-C.",
+  "sources": {
+    "timingManifests": "Implementation/Content/Narrative/Deliveries/CIN_XXX/CIN_XXX_timing_v1.json (20 files)",
+    "keyframeManifests": "Art_Source/Cinematics/P0_Animatic/P0_keyframes_16x9_manifest_v1.json (12 shots) + Art_Source/Cinematics/Campaign/*/CIN*_keyframes_manifest_v1.json (17 files, 51 shots)",
+    "exportManifests": "ClientGodot/assets/cinematics/CIN_XXX/scene_export_manifest_v1.json (20 files)",
+    "campaignTotals": "ClientGodot/assets/cinematics/RUNTIME_CINEMATICS_manifest_v1.json: 20 scenes / 63 shots / 378 s / 21 dialogue cues",
+    "shotFixes": "Implementation/Reports/MuseMedia/MEDIA02_CHECKPOINT_32_SHOT_FIXES_20261106.md (14 shots, old->new keyframe SHA)"
+  },
+  "rules": [
+    "R1 P0 shots (CIN_001/002/004, 12 shots): ACTION_ANIMATION priority 1.",
+    "R2 Character lock required when final picture must show a named character recognisably: dialogue speaker with onscreen true, or a named character named in the keyframe framing/knownDefects (a defect-negated mention still requires the character). PLAYER is never lock-relevant (VOICE_PLACEHOLDER_ONLY).",
+    "R3 Non-P0 shots with no lock requirement and no speaker-identifiability defect: ACTION_ANIMATION priority 2 (ref-sufficient).",
+    "R4 Non-P0 lock-blocked shots, and shots whose dialogue speaker is not identifiable in the storyboard keyframe (defect says so, or the speaker is not pictured at all although timing marks them onscreen): KEN_BURNS_HOLD priority 3 until the character lock / final-picture revision exists.",
+    "R5 Guardrails: broken horn (CIN_004_S01, 1 broken + 1 whole, canon); LEFT bandage (CIN_008_S03); no English UI (CIN_012_S03); crystal core + tide serpent subject (CIN_017_S02); underwater not dry yard (CIN_015_S02); no mascots anywhere (asserted: no current framing text mentions a mascot).",
+    "R6 Generic person mentions are recorded for audit only and do not change the class; the motion pass must confirm on the picture that no named character is the motion subject."
+  ],
+  "totals": {
+    "shots": 63,
+    "dialogueShots": 21,
+    "byMotionClass": {
+      "ACTION_ANIMATION": 37,
+      "KEN_BURNS_HOLD": 26
+    },
+    "byPriority": {
+      "1": 12,
+      "2": 25,
+      "3": 26
+    },
+    "characterLockRequired": 32,
+    "speakerIdentifiabilityDefects": 5,
+    "speakerNotInFrame": 2,
+    "cp32FixedShots": 14,
+    "keyframesShaVerifiedOnDisk": 63
+  },
+  "guardrailsGlobal": [
+    "Keep the LEFT bandage (CIN_008_S03); keep the broken horn (CIN_004_S01: exactly one broken + one whole); keep props as staged in each keyframe.",
+    "No mascots anywhere (CP32 removed them from 14 shots; this ledger asserts no current framing text mentions one -- a defect note recording 'no mascot' is positive absence evidence, not a violation).",
+    "No English UI in CIN_012 (CP32 fix); no wrong subject in CIN_017 (CP32 fix); no dry yard in CIN_015 (CP32 fix).",
+    "Ken Burns is animatic motion only -- never call it final pose animation; final picture per shot stays blocked on the character lock where required."
+  ],
+  "executionOrder": [
+    "CIN_001_S01",
+    "CIN_001_S02",
+    "CIN_001_S03",
+    "CIN_001_S04",
+    "CIN_001_S05",
+    "CIN_001_S06",
+    "CIN_002_S01",
+    "CIN_002_S02",
+    "CIN_002_S03",
+    "CIN_004_S01",
+    "CIN_004_S02",
+    "CIN_004_S03",
+    "CIN_003_S01",
+    "CIN_003_S02",
+    "CIN_005_S01",
+    "CIN_005_S02",
+    "CIN_005_S03",
+    "CIN_006_S02",
+    "CIN_007_S01",
+    "CIN_008_S01",
+    "CIN_008_S02",
+    "CIN_009_S01",
+    "CIN_009_S02",
+    "CIN_009_S03",
+    "CIN_010_S01",
+    "CIN_011_S01",
+    "CIN_011_S02",
+    "CIN_012_S01",
+    "CIN_013_S01",
+    "CIN_015_S01",
+    "CIN_015_S02",
+    "CIN_016_S01",
+    "CIN_018_S01",
+    "CIN_019_S01",
+    "CIN_019_S02",
+    "CIN_020_S01",
+    "CIN_020_S02",
+    "CIN_003_S03",
+    "CIN_006_S01",
+    "CIN_006_S03",
+    "CIN_007_S02",
+    "CIN_007_S03",
+    "CIN_008_S03",
+    "CIN_010_S02",
+    "CIN_010_S03",
+    "CIN_011_S03",
+    "CIN_012_S02",
+    "CIN_012_S03",
+    "CIN_013_S02",
+    "CIN_013_S03",
+    "CIN_014_S01",
+    "CIN_014_S02",
+    "CIN_014_S03",
+    "CIN_015_S03",
+    "CIN_016_S02",
+    "CIN_016_S03",
+    "CIN_017_S01",
+    "CIN_017_S02",
+    "CIN_017_S03",
+    "CIN_018_S02",
+    "CIN_018_S03",
+    "CIN_019_S03",
+    "CIN_020_S03"
+  ],
+  "milestones": {
+    "M-C checkpoint 2 (P0 motion/AB)": [
+      "CIN_001_S01",
+      "CIN_001_S02",
+      "CIN_001_S03",
+      "CIN_001_S04",
+      "CIN_001_S05",
+      "CIN_001_S06",
+      "CIN_002_S01",
+      "CIN_002_S02",
+      "CIN_002_S03",
+      "CIN_004_S01",
+      "CIN_004_S02",
+      "CIN_004_S03"
+    ],
+    "M-C checkpoint 3 (campaign motion)": [
+      "CIN_003_S01",
+      "CIN_003_S02",
+      "CIN_005_S01",
+      "CIN_005_S02",
+      "CIN_005_S03",
+      "CIN_006_S02",
+      "CIN_007_S01",
+      "CIN_008_S01",
+      "CIN_008_S02",
+      "CIN_009_S01",
+      "CIN_009_S02",
+      "CIN_009_S03",
+      "CIN_010_S01",
+      "CIN_011_S01",
+      "CIN_011_S02",
+      "CIN_012_S01",
+      "CIN_013_S01",
+      "CIN_015_S01",
+      "CIN_015_S02",
+      "CIN_016_S01",
+      "CIN_018_S01",
+      "CIN_019_S01",
+      "CIN_019_S02",
+      "CIN_020_S01",
+      "CIN_020_S02",
+      "CIN_003_S03",
+      "CIN_006_S01",
+      "CIN_006_S03",
+      "CIN_007_S02",
+      "CIN_007_S03",
+      "CIN_008_S03",
+      "CIN_010_S02",
+      "CIN_010_S03",
+      "CIN_011_S03",
+      "CIN_012_S02",
+      "CIN_012_S03",
+      "CIN_013_S02",
+      "CIN_013_S03",
+      "CIN_014_S01",
+      "CIN_014_S02",
+      "CIN_014_S03",
+      "CIN_015_S03",
+      "CIN_016_S02",
+      "CIN_016_S03",
+      "CIN_017_S01",
+      "CIN_017_S02",
+      "CIN_017_S03",
+      "CIN_018_S02",
+      "CIN_018_S03",
+      "CIN_019_S03",
+      "CIN_020_S03"
+    ]
+  },
+  "shots": [
+    {
+      "shotId": "CIN_001_S01",
+      "sceneId": "CIN_001",
+      "sceneTitle": "Nước không soi bóng",
+      "camera": "WIDE_STATIC",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S01.png",
+        "sha256": "ea9d42287274d46c5b8c1cedb70c00a4d795f61d757484233fbbfd019ba9bce8",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD_ONLY"
+      },
+      "keyframeDefects": [],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": null,
+        "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+        "motionMeanAbsChannelDiff": null,
+        "identityMeanAbsChannelDiff": null
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 1,
+      "reason": "P0: Codex direction, P0 motion first",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_001_S02",
+      "sceneId": "CIN_001",
+      "sceneTitle": "Nước không soi bóng",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S02.png",
+        "sha256": "b09dfb68f439b034ecbc102f5df6b52f4d8e6babe14b89fce38d1fd66dbf343e",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD_ONLY"
+      },
+      "keyframeDefects": [],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": null,
+        "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+        "motionMeanAbsChannelDiff": null,
+        "identityMeanAbsChannelDiff": null
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 1,
+      "reason": "P0: Codex direction, P0 motion first",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_001_S03",
+      "sceneId": "CIN_001",
+      "sceneTitle": "Nước không soi bóng",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S03.png",
+        "sha256": "c07ddc98665021894c4cd92099dd24faac3a6f18f10610d3d67f81d34f1467bb",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD_ONLY"
+      },
+      "keyframeDefects": [],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": null,
+        "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+        "motionMeanAbsChannelDiff": null,
+        "identityMeanAbsChannelDiff": null
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 1,
+      "reason": "P0: Codex direction, P0 motion first",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_001_S04",
+      "sceneId": "CIN_001",
+      "sceneTitle": "Nước không soi bóng",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 18.0,
+      "endSeconds": 24.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S04.png",
+        "sha256": "0722da26101620a15e622f9bf54237ad929f10cc65ddf0555447c582299aa741",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD_ONLY"
+      },
+      "keyframeDefects": [],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": null,
+        "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+        "motionMeanAbsChannelDiff": null,
+        "identityMeanAbsChannelDiff": null
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 1,
+      "reason": "P0: Codex direction, P0 motion first",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_001_S05",
+      "sceneId": "CIN_001",
+      "sceneTitle": "Nước không soi bóng",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 24.0,
+      "endSeconds": 30.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S05.png",
+        "sha256": "0d48a6283d82aec6b1e5b77051d80c0e0714b12b86c4ef48d153d129ba098656",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD_ONLY"
+      },
+      "keyframeDefects": [],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": null,
+        "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+        "motionMeanAbsChannelDiff": null,
+        "identityMeanAbsChannelDiff": null
+      },
+      "dialogue": {
+        "speaker": "NPC_LYAN",
+        "speakerCanonical": "NPC_LYAN",
+        "speakerDisplay": null,
+        "onscreen": true,
+        "windowSeconds": [
+          24.8,
+          28.5
+        ],
+        "text": "Đầu kia! Giữ giúp tôi đầu kia!"
+      },
+      "speakerIdentifiableInStoryboard": true,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_LYAN"
+      ],
+      "namedCharactersRequired": [
+        "NPC_LYAN"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 1,
+      "reason": "P0: Codex direction, P0 motion first",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_001_S06",
+      "sceneId": "CIN_001",
+      "sceneTitle": "Nước không soi bóng",
+      "camera": "TOPDOWN_MATCH",
+      "startSeconds": 30.0,
+      "endSeconds": 36.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_001_S06.png",
+        "sha256": "0678aa59b4c856b724ba53981132bcf27ff33bdee44bf64130b0296d34184278",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD_ONLY"
+      },
+      "keyframeDefects": [],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": null,
+        "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+        "motionMeanAbsChannelDiff": null,
+        "identityMeanAbsChannelDiff": null
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_LYAN"
+      ],
+      "namedCharactersRequired": [
+        "NPC_LYAN"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 1,
+      "reason": "P0: Codex direction, P0 motion first",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_002_S01",
+      "sceneId": "CIN_002",
+      "sceneTitle": "Âm cuối dưới nước",
+      "camera": "GROUND_DETAIL",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_002_S01.png",
+        "sha256": "3553e28e24322bbea33affabfd900d5d2360a132c5a492355a7fe3a173906fb3",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD_ONLY"
+      },
+      "keyframeDefects": [],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": null,
+        "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+        "motionMeanAbsChannelDiff": null,
+        "identityMeanAbsChannelDiff": null
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 1,
+      "reason": "P0: Codex direction, P0 motion first",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_002_S02",
+      "sceneId": "CIN_002",
+      "sceneTitle": "Âm cuối dưới nước",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_002_S02.png",
+        "sha256": "4c5b7b3523c59efa4d7e4a081fc936b0781b21b0f9f16c595360430212c0cafa",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD_ONLY"
+      },
+      "keyframeDefects": [],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": null,
+        "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+        "motionMeanAbsChannelDiff": null,
+        "identityMeanAbsChannelDiff": null
+      },
+      "dialogue": {
+        "speaker": "NPC_TA_VAN_KHANH",
+        "speakerCanonical": "NPC_TA_VAN_KHANH",
+        "speakerDisplay": null,
+        "onscreen": true,
+        "windowSeconds": [
+          7.0,
+          11.0
+        ],
+        "text": "Trên bờ chỉ nghe nửa tiếng. Phần còn lại ở dưới ấy."
+      },
+      "speakerIdentifiableInStoryboard": true,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_TA_VAN_KHANH"
+      ],
+      "namedCharactersRequired": [
+        "NPC_TA_VAN_KHANH"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 1,
+      "reason": "P0: Codex direction, P0 motion first",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_002_S03",
+      "sceneId": "CIN_002",
+      "sceneTitle": "Âm cuối dưới nước",
+      "camera": "TOPDOWN_MATCH",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_002_S03.png",
+        "sha256": "71d1a25239eb8c7720243e96e1be9195859b801409f97952d37cd037db39e3d6",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD_ONLY"
+      },
+      "keyframeDefects": [],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": null,
+        "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+        "motionMeanAbsChannelDiff": null,
+        "identityMeanAbsChannelDiff": null
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 1,
+      "reason": "P0: Codex direction, P0 motion first",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_003_S01",
+      "sceneId": "CIN_003",
+      "sceneTitle": "Hai người, hai bóng",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_003/keyframes_16x9/keyframe_CIN_003_S01.png",
+        "sha256": "aeffda939892e64c76c62b06a9af66b3a4e4cb1300cd26a6e34fc791085d8d39",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The net reads intact rather than visibly torn, and the second fisher (back to camera) reads youthful, so 'two adult fishers' is only loosely matched; no text anywhere, as required."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 25.097,
+        "identityMeanAbsChannelDiff": 4.107
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_003_S02",
+      "sceneId": "CIN_003",
+      "sceneTitle": "Hai người, hai bóng",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_003/keyframes_16x9/keyframe_CIN_003_S02.png",
+        "sha256": "8ab2b85b34316a7f1acb0fdccbfced27a8aebcd4c8bed57efbf6e66c4fae9f07",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Scale/framing drift: the water reads as a stream or pond rather than a shallow puddle, and the silhouettes stand as full figures above the waterline instead of reflections held in the puddle; palette is markedly darker and bluer (dusk) than the daylight of S01/S03 — cross-shot lighting drift."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 23.901,
+        "identityMeanAbsChannelDiff": 3.277
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_003_S03",
+      "sceneId": "CIN_003",
+      "sceneTitle": "Hai người, hai bóng",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_003/keyframes_16x9/keyframe_CIN_003_S03.png",
+        "sha256": "41a134445e1d13efac489472fd40532ada546199052ae4f9017d9fb3cf915750",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Cross-shot inconsistency: both fishers wear conical hats here and read as two older, heavier men, whereas S01 pairs one conical-hat fisher with a youthful headband-wearing figure; Ly An is staged front-facing and portrait-like rather than caught mid-gesture listening."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 37.476,
+        "identityMeanAbsChannelDiff": 4.213
+      },
+      "dialogue": {
+        "speaker": "NPC_LYAN",
+        "speakerCanonical": "NPC_LYAN",
+        "speakerDisplay": "Ly An",
+        "onscreen": true,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Có thể họ đã đứng ở hai chỗ khác nhau. Cứ để họ kể."
+      },
+      "speakerIdentifiableInStoryboard": true,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_LYAN"
+      ],
+      "namedCharactersRequired": [
+        "NPC_LYAN"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_004_S01",
+      "sceneId": "CIN_004",
+      "sceneTitle": "Vết đau của linh thú",
+      "camera": "WIDE_STATIC",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_004_S01.png",
+        "sha256": "e43df4ff0178dcc2dc390ee907bd1d05e35632cdbc9e8672b2310eb535d54829",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD_ONLY"
+      },
+      "keyframeDefects": [],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": null,
+        "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+        "motionMeanAbsChannelDiff": null,
+        "identityMeanAbsChannelDiff": null
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "BOSS_MANG_COT"
+      ],
+      "namedCharactersRequired": [
+        "BOSS_MANG_COT"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 1,
+      "reason": "P0: Codex direction, P0 motion first",
+      "guardrails": [
+        "BROKEN_HORN: exactly one broken horn (short jagged stump) + one whole curved horn (canon, checkpoint 13 fix)"
+      ],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_004_S02",
+      "sceneId": "CIN_004",
+      "sceneTitle": "Vết đau của linh thú",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_004_S02.png",
+        "sha256": "fc0450bf902e9020dd2d1548168712653e20566ba1f437de80a9a26f09615cf5",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD_ONLY"
+      },
+      "keyframeDefects": [],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": null,
+        "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+        "motionMeanAbsChannelDiff": null,
+        "identityMeanAbsChannelDiff": null
+      },
+      "dialogue": {
+        "speaker": "NPC_LYAN",
+        "speakerCanonical": "NPC_LYAN",
+        "speakerDisplay": null,
+        "onscreen": false,
+        "windowSeconds": [
+          7.5,
+          9.5
+        ],
+        "text": "Nó cứ tránh chỗ nước ấy."
+      },
+      "speakerIdentifiableInStoryboard": false,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "BOSS_MANG_COT"
+      ],
+      "namedCharactersRequired": [
+        "BOSS_MANG_COT"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 1,
+      "reason": "P0: Codex direction, P0 motion first",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_004_S03",
+      "sceneId": "CIN_004",
+      "sceneTitle": "Vết đau của linh thú",
+      "camera": "TOPDOWN_MATCH",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/P0_Animatic/keyframes_16x9/keyframe_CIN_004_S03.png",
+        "sha256": "e7493991a21827df7dc5a5d4e115d3aa12ebf986c5301e6ea183bdea662cf59b",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD_ONLY"
+      },
+      "keyframeDefects": [],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": null,
+        "videoStatus": "VIDEO_FROM_STORYBOARD_PANELS",
+        "motionMeanAbsChannelDiff": null,
+        "identityMeanAbsChannelDiff": null
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "BOSS_MANG_COT"
+      ],
+      "namedCharactersRequired": [
+        "BOSS_MANG_COT"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 1,
+      "reason": "P0: Codex direction, P0 motion first",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_005_S01",
+      "sceneId": "CIN_005",
+      "sceneTitle": "Một thành phố vẫn sống",
+      "camera": "WIDE_STATIC",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_005/keyframes_16x9/keyframe_CIN_005_S01.png",
+        "sha256": "949c7f07cbbafeddf1e5f6fefd46db8c2531964e31c7ca879786d3a970d32e88",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Tiny illegible glyph-like mark on the tea-stall sign (right edge); roofs read more saturated red than the prompt's 'muted lacquer-red'."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 43.339,
+        "identityMeanAbsChannelDiff": 6.062
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_005_S02",
+      "sceneId": "CIN_005",
+      "sceneTitle": "Một thành phố vẫn sống",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_005/keyframes_16x9/keyframe_CIN_005_S02.png",
+        "sha256": "7c47e5c88f1bdcc5d82a80d6b2d0f26f1c2851fade762747e1d26ee4b4d3db48",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Roof tiles in this frame are blue-grey, inconsistent with the red roofs of S01 (cross-shot palette drift; needs art-direction lock at final). One generic unidentified figure in a conical hat stands mid-courtyard (not in the prompt; not a named character, no canon conflict)."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in biased to upper flags",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 39.402,
+        "identityMeanAbsChannelDiff": 4.165
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_005_S03",
+      "sceneId": "CIN_005",
+      "sceneTitle": "Một thành phố vẫn sống",
+      "camera": "TOPDOWN_MATCH",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_005/keyframes_16x9/keyframe_CIN_005_S03.png",
+        "sha256": "f2db67721c4cbb19650485d4a991b02eae4a0b1cf8cac66f328f5262f9699d35",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Two small hanging signs at the bottom-right carry tiny illegible glyph-like marks; roof edges are cropped at the frame borders."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "zoom-out centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 40.144,
+        "identityMeanAbsChannelDiff": 8.877
+      },
+      "dialogue": {
+        "speaker": "NPC_LYAN",
+        "speakerCanonical": "NPC_LYAN",
+        "speakerDisplay": "Ly An",
+        "onscreen": false,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Ở đây ai cũng nói mình giữ bình yên. Hãy nghe xem họ đang giữ cho ai."
+      },
+      "speakerIdentifiableInStoryboard": false,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_006_S01",
+      "sceneId": "CIN_006",
+      "sceneTitle": "Con dấu qua phố",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_006/keyframes_16x9/keyframe_CIN_006_S01.png",
+        "sha256": "53859a1946cb9ac6ea3609cb67de7c74be2efda5c9187587e5ca9a741c7fe830",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Scene reads as night (lit lanterns, deep-blue background) although the investigation plays as a daytime market scene; small illegible glyph-like marks on a hanging sign behind the stall (left-center). Face and costume are generation-invented: no approved Sam Chu Quy character lock exists yet."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 38.23,
+        "identityMeanAbsChannelDiff": 5.637
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_SAM_CHU_QUY"
+      ],
+      "namedCharactersRequired": [
+        "NPC_SAM_CHU_QUY"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_006_S02",
+      "sceneId": "CIN_006",
+      "sceneTitle": "Con dấu qua phố",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_006/keyframes_16x9/keyframe_CIN_006_S02.png",
+        "sha256": "ef1a9a09e83d2e7d5d2757dc6755c98a554c7e7c9cd31c88f3e757382f250ac0",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The gloved hand holds the paper edge rather than aligning the stamp directly; the composition is wider than a strict close-up (per the repair direction); the glove is dark green. No oversized/blurred hand, no face or eye, no second person, no legible text. Staging attempts 1-2 (oversized hand) superseded, kept in staging only."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered on the seal die",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 41.352,
+        "identityMeanAbsChannelDiff": 3.669
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": {
+        "oldShaPrefix": "0f8c4f10",
+        "newShaPrefix": "ef1a9a09",
+        "fix": "Desk with seal marks; small gloved hand in frame"
+      }
+    },
+    {
+      "shotId": "CIN_006_S03",
+      "sceneId": "CIN_006",
+      "sceneTitle": "Con dấu qua phố",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_006/keyframes_16x9/keyframe_CIN_006_S03.png",
+        "sha256": "37366a0eae11496a68270b223f41250cee2c98d13d6d5b5ab961d907ed40b2bc",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Ledger pages carry illegible glyph-like scribbles; the name cover reads as a rigid grey board rather than a paper sheet; the folded magnifier is not clearly visible. Lighting is cool daylight, drifting from S01's warm lantern-lit palette (cross-shot lighting inconsistency). Face and costume are generation-invented: no approved Ha Mac character lock exists yet."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "zoom-out centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 43.119,
+        "identityMeanAbsChannelDiff": 7.041
+      },
+      "dialogue": {
+        "speaker": "NPC_HA_MAC",
+        "speakerCanonical": "NPC_HA_MAC",
+        "speakerDisplay": null,
+        "onscreen": true,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Ba thứ cùng đi qua một tuyến. Chưa có thứ nào bảo người bán biết mình đang chở gì."
+      },
+      "speakerIdentifiableInStoryboard": true,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_HA_MAC"
+      ],
+      "namedCharactersRequired": [
+        "NPC_HA_MAC"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_007_S01",
+      "sceneId": "CIN_007",
+      "sceneTitle": "Tên trong vỏ cây",
+      "camera": "WIDE_STATIC",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_007/keyframes_16x9/keyframe_CIN_007_S01.png",
+        "sha256": "9d3233d4c0c93495ba27e61de37b85785f28b768782cadfa1e8587128e566efd",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The prompt frames an empty environment shot, but a lone figure in a conical hat and green cloak stands center-right (unnamed traveler, not an enemy, so no canon conflict, but an added figure). Otherwise faithful: fungi path, trickle, no enemies, no text."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 28.9,
+        "identityMeanAbsChannelDiff": 3.865
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_007_S02",
+      "sceneId": "CIN_007",
+      "sceneTitle": "Tên trong vỏ cây",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_007/keyframes_16x9/keyframe_CIN_007_S02.png",
+        "sha256": "d416f874bf82e81963a5cf19c3db85f587265f9e4c72b64ac13c8c8bc824db78",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The four grooves render as wide, strongly luminous cyan canals, far brighter and larger than the prompt's shallow grooves brightening gently; Ly An appears in frame although the prompt is a pure bark/water detail shot; the leaf shadow is rendered as an actual oversized leaf lying on the bark rather than only a passing shadow. The in-groove strokes stay abstract and unreadable, as required."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 23.579,
+        "identityMeanAbsChannelDiff": 2.555
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_LYAN"
+      ],
+      "namedCharactersRequired": [
+        "NPC_LYAN"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_007_S03",
+      "sceneId": "CIN_007",
+      "sceneTitle": "Tên trong vỏ cây",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_007/keyframes_16x9/keyframe_CIN_007_S03.png",
+        "sha256": "d63aae2bc98946ece924e63ad17331c7319e0886d51999ed765c1f2245926dfe",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Setting drift: a tiled-roof structure with hanging signboards stands at frame left (not in the prompt), and its signboards carry glyph-like marks that approach lettering (illegible, but borderline against the no-readable-writing rule). She holds the slip up reading it instead of laying it beside the bark — the laid slip is the blank one, so the prompt's action is only half-present. Her satchel bears a small envelope pictogram. Lighting is warm daylight, drifting from the deep-green gloom of S01/S02. Minor continuity nit: her carry-gear differs between S02 (woven backpack) and S03 (leather satchel), though hair (dark topknot) and blue courier dress read as the same person."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 33.797,
+        "identityMeanAbsChannelDiff": 3.751
+      },
+      "dialogue": {
+        "speaker": "NPC_LYAN",
+        "speakerCanonical": "NPC_LYAN",
+        "speakerDisplay": "Ly An",
+        "onscreen": true,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Trong sổ người ấy đã mất. Ở đây vẫn có người gọi tên."
+      },
+      "speakerIdentifiableInStoryboard": true,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_LYAN"
+      ],
+      "namedCharactersRequired": [
+        "NPC_LYAN"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_008_S01",
+      "sceneId": "CIN_008",
+      "sceneTitle": "Bàn tay đã ký",
+      "camera": "MEMORY_DETAIL",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_008/keyframes_16x9/keyframe_CIN_008_S01.png",
+        "sha256": "65bc88c32426d7122d246be724c247b264a3410d69884523e095b8fb3bfc8d16",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The seal reads as a large round stamp already impressed on the paper rather than a seal block the hand pauses over, and the page is densely filled with abstract glyphs (illegible, as required), reading more like a completed form than the moment of signing; the sleeve's scale pattern is an unusual invented detail."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 23.454,
+        "identityMeanAbsChannelDiff": 2.979
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_008_S02",
+      "sceneId": "CIN_008",
+      "sceneTitle": "Bàn tay đã ký",
+      "camera": "MEMORY_WIDE",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_008/keyframes_16x9/keyframe_CIN_008_S02.png",
+        "sha256": "c34be2f4e9e2c8ddd914de7cd862f936306ef529fcaeae0c52a004deaaa08aab",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "No material defect observed at storyboard level."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 20.926,
+        "identityMeanAbsChannelDiff": 2.977
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_008_S03",
+      "sceneId": "CIN_008",
+      "sceneTitle": "Bàn tay đã ký",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_008/keyframes_16x9/keyframe_CIN_008_S03.png",
+        "sha256": "e41232c9c3b552d5523b1239edc6cb69cceb6f331e1f2ee495d64db16516e4f1",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Character is still a placeholder without a character lock: high topknot + ponytail, dark grey-blue robe with brown belt, differing from the checkpoint 25 rendering (short hair, blue robe with gold trim) -- to be checked against the lock at final picture. The good right hand sits on the pool side rather than the outer side; the bandaged hand closes near the right frame edge but stays fully visible. The bandaged hand holds nothing."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 32.029,
+        "identityMeanAbsChannelDiff": 3.668
+      },
+      "dialogue": {
+        "speaker": "NPC_TA_VAN_KHANH",
+        "speakerCanonical": "NPC_TA_VAN_KHANH",
+        "speakerDisplay": "Tạ Vân Khanh",
+        "onscreen": true,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Không ai ép tay ta ký. Đó mới là điều khó nói."
+      },
+      "speakerIdentifiableInStoryboard": true,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_TA_VAN_KHANH"
+      ],
+      "namedCharactersRequired": [
+        "NPC_TA_VAN_KHANH"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [
+        "LEFT_BANDAGE: bandage on the LEFT forearm (CP32 fix); right hand unbandaged and open"
+      ],
+      "cp32Fixed": {
+        "oldShaPrefix": "ac807d2e",
+        "newShaPrefix": "e41232c9",
+        "fix": "Bandage on the LEFT forearm"
+      }
+    },
+    {
+      "shotId": "CIN_009_S01",
+      "sceneId": "CIN_009",
+      "sceneTitle": "Tiếng rừng được đáp",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_009/keyframes_16x9/keyframe_CIN_009_S01.png",
+        "sha256": "5d64d3e203105788591923c9e416e50f876e3ec4e8896ac602ca3212b29080d7",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The composition reads as a wide stream channel between two root banks rather than a single narrow split-root cleft; light flecks are still small square glows; some background bushes and stones are generic generation detail. No person, no hooded figure, no mascot; bright daylight."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered on the spring",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 37.23,
+        "identityMeanAbsChannelDiff": 4.361
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": true,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": {
+        "oldShaPrefix": "d38c7ad8",
+        "newShaPrefix": "5d64d3e2",
+        "fix": "Hooded figure removed; daylight stream"
+      }
+    },
+    {
+      "shotId": "CIN_009_S02",
+      "sceneId": "CIN_009",
+      "sceneTitle": "Tiếng rừng được đáp",
+      "camera": "WIDE_STATIC",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_009/keyframes_16x9/keyframe_CIN_009_S02.png",
+        "sha256": "fd0051fc7904de9c9f26c33c0f97cd4029f06ba72009459c258ac152d3d46581",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The three workers are generic generation-invented figures (unnamed, no lock needed: the pack character list is empty); the dark tree crowds the right third of the frame."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered on the workers",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 36.266,
+        "identityMeanAbsChannelDiff": 3.759
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_009_S03",
+      "sceneId": "CIN_009",
+      "sceneTitle": "Tiếng rừng được đáp",
+      "camera": "TOPDOWN_MATCH",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_009/keyframes_16x9/keyframe_CIN_009_S03.png",
+        "sha256": "d3abc86cd30bc7f4f30fefb9cae467e5e3e1e85bb3dfbc861b800885d3851966",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Not strictly top-down (slight 3/4 angle on the rocks and the small shrine at left); the shrine building at frame left is not in the prompt."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "zoom-out centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 32.275,
+        "identityMeanAbsChannelDiff": 7.305
+      },
+      "dialogue": {
+        "speaker": "NPC_LYAN",
+        "speakerCanonical": "NPC_LYAN",
+        "speakerDisplay": "Ly An",
+        "onscreen": false,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Có tiếng đã được trả lời. Có tiếng mình còn chưa biết gọi thế nào."
+      },
+      "speakerIdentifiableInStoryboard": false,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_010_S01",
+      "sceneId": "CIN_010",
+      "sceneTitle": "Bình nước cuối xe",
+      "camera": "WIDE_STATIC",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_010/keyframes_16x9/keyframe_CIN_010_S01.png",
+        "sha256": "cc6cda9f2d27aaaba61e554b92163fd5ba623d37283689eaee55153b1da5cc9b",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Two small teal hanging signs on the canopy carry glyph-like abstract marks (not legible text, but motif-like); the barrel reads as a wide open vat with debris and a spill puddle beneath it rather than a lidded barrel. Otherwise on-prompt — no ambush, no readable writing."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 45.678,
+        "identityMeanAbsChannelDiff": 5.68
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_010_S02",
+      "sceneId": "CIN_010",
+      "sceneTitle": "Bình nước cuối xe",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_010/keyframes_16x9/keyframe_CIN_010_S02.png",
+        "sha256": "b89f28480c08c4f16c98aee123b01a12be343f84c3a4f3b2d4dbdb891503c213",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The barrel lid is drawn leaning open rather than shut; the water stream reads bright blue against the muted palette; pixel detail is finer than strict hard-edged clusters. No legible text, no HUD. Environment now matches S01's ash-gold desert caravan rest."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 39.721,
+        "identityMeanAbsChannelDiff": 3.866
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_SAM_CHU_QUY"
+      ],
+      "namedCharactersRequired": [
+        "NPC_SAM_CHU_QUY"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": {
+        "oldShaPrefix": "318ffd4e",
+        "newShaPrefix": "b89f2848",
+        "fix": "Ash-gold desert matches S01; Sam middle-aged"
+      }
+    },
+    {
+      "shotId": "CIN_010_S03",
+      "sceneId": "CIN_010",
+      "sceneTitle": "Bình nước cuối xe",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_010/keyframes_16x9/keyframe_CIN_010_S03.png",
+        "sha256": "d998bf59e9980bf031fe51282d87c432debf2c1ee5bf84bdb610164dd7fbfa71",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Sam's costume differs from S02 (brown woven vest + wrapped headcloth vs blue tunic + headband in S02) -- costume continuity between the two revised shots is not fully matched; the second cord curves toward a shaded area on the cloth so 'scattered shade' reads loosely; the flask sits ON the cloth edge rather than beside it; faint map-like lines on the cloth (no legible text). Face/costume remain placeholders without a character lock."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 41.157,
+        "identityMeanAbsChannelDiff": 4.081
+      },
+      "dialogue": {
+        "speaker": "NPC_SAM_CHU_QUY",
+        "speakerCanonical": "NPC_SAM_CHU_QUY",
+        "speakerDisplay": "Sầm Chủ Quỹ",
+        "onscreen": true,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Đường ngắn thì đỡ khát. Nếu xe qua được."
+      },
+      "speakerIdentifiableInStoryboard": true,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_SAM_CHU_QUY"
+      ],
+      "namedCharactersRequired": [
+        "NPC_SAM_CHU_QUY"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": {
+        "oldShaPrefix": "856aa420",
+        "newShaPrefix": "d998bf59",
+        "fix": "Ash-gold desert matches S01; Sam middle-aged"
+      }
+    },
+    {
+      "shotId": "CIN_011_S01",
+      "sceneId": "CIN_011",
+      "sceneTitle": "Chữ khắc bị sửa",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_011/keyframes_16x9/keyframe_CIN_011_S01.png",
+        "sha256": "5762cd1600830847ee2b2cae065d8eb4d007dd2db3f02263e1d0af3f6823c302",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The copper fragments have jagged broken edges and heavy green verdigris; the lower-right fragment carries a small vertical crack so the fragment count could read as 4 if the crack is counted; tally marks appear as two rows on the left fragment instead of a single row. No woman, no second person."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 32.751,
+        "identityMeanAbsChannelDiff": 4.421
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": {
+        "oldShaPrefix": "81d4d3c0",
+        "newShaPrefix": "5762cd16",
+        "fix": "Seated woman removed; bronze relief only"
+      }
+    },
+    {
+      "shotId": "CIN_011_S02",
+      "sceneId": "CIN_011",
+      "sceneTitle": "Chữ khắc bị sửa",
+      "camera": "MEMORY_MEDIUM",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_011/keyframes_16x9/keyframe_CIN_011_S02.png",
+        "sha256": "be6468eb522a6e6c2a24d379cf2572074ed699bbfe2e648b1e54c975eef24771",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The handoff direction is ambiguous — both men grip the cup together, so who gives and who receives is unclear; modern open-end wrenches hang in the tool rack at frame left and read anachronistic; the younger man's expression reads anxious rather than tired and sincere. (No mechanical back frame on either figure, as required.)"
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 42.859,
+        "identityMeanAbsChannelDiff": 4.47
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_011_S03",
+      "sceneId": "CIN_011",
+      "sceneTitle": "Chữ khắc bị sửa",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_011/keyframes_16x9/keyframe_CIN_011_S03.png",
+        "sha256": "6f167581ede016058f2d44fd7ac39000f290ed9f088e6a1eaab30454167a676a",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The S03 relief is a single framed rectangular copper plate, a different form from S01's three loose joined fragments (relief-form continuity not yet matched); the notebook's left page carries a few abstract teal scribbles (illegible); Ha Mac's face/costume remain generation-invented placeholders without a character lock."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 35.422,
+        "identityMeanAbsChannelDiff": 3.933
+      },
+      "dialogue": {
+        "speaker": "NPC_HA_MAC",
+        "speakerCanonical": "NPC_HA_MAC",
+        "speakerDisplay": "Hạ Mặc",
+        "onscreen": true,
+        "windowSeconds": [
+          12.2,
+          17.8
+        ],
+        "text": "Nét sau không xóa được điều tốt trước đó. Cũng không được dùng điều tốt để xóa nét sau."
+      },
+      "speakerIdentifiableInStoryboard": true,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_HA_MAC"
+      ],
+      "namedCharactersRequired": [
+        "NPC_HA_MAC"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": {
+        "oldShaPrefix": "316a9435",
+        "newShaPrefix": "6f167581",
+        "fix": "Ha Mac alone, detail close-up"
+      }
+    },
+    {
+      "shotId": "CIN_012_S01",
+      "sceneId": "CIN_012",
+      "sceneTitle": "Giữ tên người sống",
+      "camera": "WIDE_STATIC",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_012/keyframes_16x9/keyframe_CIN_012_S01.png",
+        "sha256": "489eb56b85cd3480628ae8ab0265b69086df0bcb562d8ff4e15f98bfd8982cb2",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Composition differs from the old frame (furnace centered, workers seated lower); the right worker wears a ponytail and the left worker no longer wears a conical hat -- staging detail, no prompt violation. No mascot, exactly two workers, stepped orange heat palette."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 33.486,
+        "identityMeanAbsChannelDiff": 5.474
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": true,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": {
+        "oldShaPrefix": "8c2efbd4",
+        "newShaPrefix": "489eb56b",
+        "fix": "Mascot removed; 2 workers at the stone kiln"
+      }
+    },
+    {
+      "shotId": "CIN_012_S02",
+      "sceneId": "CIN_012",
+      "sceneTitle": "Giữ tên người sống",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_012/keyframes_16x9/keyframe_CIN_012_S02.png",
+        "sha256": "069d26835f3e4d8b89a2aa31f15d7a9afa3f13a1c41f9ec56e3870ddb04a9777",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Framing drift: a medium shot of Ha Mac at the desk instead of the detail close view of the journal and papers the camera asks for. The journal and copy sheet carry illegible dashed pseudo-writing (abstract, not readable). His dark solid robe and dark hair bow here differ from S03's layered teal-over-cream robe with blue ribbon — the placeholder appearance is inconsistent within the scene."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 21.829,
+        "identityMeanAbsChannelDiff": 3.075
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_HA_MAC"
+      ],
+      "namedCharactersRequired": [
+        "NPC_HA_MAC"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_012_S03",
+      "sceneId": "CIN_012",
+      "sceneTitle": "Giữ tên người sống",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_012/keyframes_16x9/keyframe_CIN_012_S03.png",
+        "sha256": "848370053c2f6768a1f13597db84fea6e3ed27c4a3f14dcd423f012d552230a0",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Ha Mac's hands are hidden behind the table so their withdrawn position at the table edge is not clearly visible (hands not on the papers, as 'withdrawn' requires, but not clearly seen); the framing is a tighter medium shot than the old frame; face/costume remain placeholders without a character lock. No UI bar, no buttons, no text anywhere."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 24.129,
+        "identityMeanAbsChannelDiff": 2.989
+      },
+      "dialogue": {
+        "speaker": "NPC_HA_MAC",
+        "speakerCanonical": "NPC_HA_MAC",
+        "speakerDisplay": "Hạ Mặc",
+        "onscreen": true,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Có thể đưa chuyện này ra ánh sáng mà không đẩy người làm chứng vào lửa."
+      },
+      "speakerIdentifiableInStoryboard": true,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_HA_MAC"
+      ],
+      "namedCharactersRequired": [
+        "NPC_HA_MAC"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [
+        "NO_ENGLISH_UI: no readable English UI text in frame (CP32 fix)"
+      ],
+      "cp32Fixed": {
+        "oldShaPrefix": "39ba784c",
+        "newShaPrefix": "84837005",
+        "fix": "English UI bar removed; clean frame"
+      }
+    },
+    {
+      "shotId": "CIN_013_S01",
+      "sceneId": "CIN_013",
+      "sceneTitle": "Qua cổng, còn người đợi",
+      "camera": "WIDE_STATIC",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_013/keyframes_16x9/keyframe_CIN_013_S01.png",
+        "sha256": "5da44673482b52c415c0a6a99efb7ca2e18a0d96fa06d0e5953fb173172dbafd",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The right-hand pair's carried item reads as a small wooden box rather than a clearly readable repaired bowl; the figures read young/chibi-proportioned for adults. No legible text; no crowd."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 29.204,
+        "identityMeanAbsChannelDiff": 4.181
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_013_S02",
+      "sceneId": "CIN_013",
+      "sceneTitle": "Qua cổng, còn người đợi",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_013/keyframes_16x9/keyframe_CIN_013_S02.png",
+        "sha256": "c58532f4912797ae1fadc79e0c0e1f8be1a2dae82e4b321f14d3a82aef8dae02",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Reads as dusk (dark teal palette) rather than the muted stone-blue afternoon of S01, and the background is a thatched village instead of the refuge gate — cross-shot lighting/setting drift. The folded map is a plain gridded sheet with no legible writing, as required."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 24.657,
+        "identityMeanAbsChannelDiff": 2.81
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_REFUGEE_LEAD"
+      ],
+      "namedCharactersRequired": [
+        "NPC_REFUGEE_LEAD"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_013_S03",
+      "sceneId": "CIN_013",
+      "sceneTitle": "Qua cổng, còn người đợi",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_013/keyframes_16x9/keyframe_CIN_013_S03.png",
+        "sha256": "4ed37e37ae1a302bca111a6a1e3722c6368b38155320d1dfd4b5a330fb5ac6db",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The gate is a rustic wooden village gate, not the blue stone refuge gate with gatehouse shown in S01 (environment continuity drift across the scene); the route marker reads as a decorative bow rather than a ribbon strip."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 33.276,
+        "identityMeanAbsChannelDiff": 3.279
+      },
+      "dialogue": {
+        "speaker": "NPC_REFUGEE_LEADER",
+        "speakerCanonical": "NPC_REFUGEE_LEAD",
+        "speakerDisplay": "Trưởng đoàn",
+        "onscreen": true,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Chưa đóng cổng. Còn một người đi sau."
+      },
+      "speakerIdentifiableInStoryboard": false,
+      "speakerIdentifiabilityDefect": true,
+      "speakerNotInFrame": true,
+      "namedCharactersVisible": [
+        "NPC_LYAN"
+      ],
+      "namedCharactersRequired": [
+        "NPC_LYAN",
+        "NPC_REFUGEE_LEAD"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture + speaker not identifiable in storyboard",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_014_S01",
+      "sceneId": "CIN_014",
+      "sceneTitle": "Dấu lệnh đặt xuống",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_014/keyframes_16x9/keyframe_CIN_014_S01.png",
+        "sha256": "7b86ccd06052602eced18ae642a281f500090fa1418fc1073ac13b3766f7772b",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The asymmetrical single large shoulder guard is only weakly expressed (he wears heavy armor on both shoulders), and the armor reads as battlefield debris more than deliberately disconnected siege plates; otherwise matches the prompt at storyboard level."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 33.52,
+        "identityMeanAbsChannelDiff": 4.233
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_TONG_BANH"
+      ],
+      "namedCharactersRequired": [
+        "NPC_TONG_BANH"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_014_S02",
+      "sceneId": "CIN_014",
+      "sceneTitle": "Dấu lệnh đặt xuống",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_014/keyframes_16x9/keyframe_CIN_014_S02.png",
+        "sha256": "71df6b897fe8b15262fdf535e948cdea185f0fc1b0e23ca21a619b157149c203",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Framing drift — medium shot of the whole upper body instead of a tight detail close-up of hand, seal and glove; the command seal reads as a flat patterned plaque rather than a seal stamp and the removed piece reads as a vambrace, not a glove; character rendering is inconsistent with S01 (woven hat, dark cloak, teal armor here vs headband and bronze lamellar there)."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 27.886,
+        "identityMeanAbsChannelDiff": 3.248
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_TONG_BANH"
+      ],
+      "namedCharactersRequired": [
+        "NPC_TONG_BANH"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_014_S03",
+      "sceneId": "CIN_014",
+      "sceneTitle": "Dấu lệnh đặt xuống",
+      "camera": "WIDE_STATIC",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_014/keyframes_16x9/keyframe_CIN_014_S03.png",
+        "sha256": "1646f8adccbc206b6ebd4cc799354720aa454eb791000ec8244ad04a2dd27dd2",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Tong Banh is not identifiable — two unarmored candidates (robed man mid-ground; conical-hat man foreground right, an extra figure the prompt does not call for), neither matching his S01/S02 armor, so the intended foreground separation is ambiguous; the refugees stand inside the gate rather than clearly behind it in the background, and the palette shifts to dusk blue against the daylight of S01/S02."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 29.43,
+        "identityMeanAbsChannelDiff": 3.627
+      },
+      "dialogue": {
+        "speaker": "NPC_TONG_BANH",
+        "speakerCanonical": "NPC_TONG_BANH",
+        "speakerDisplay": "Tống Bành",
+        "onscreen": true,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Ta biết lệnh ấy là giả. Ta vẫn cho đóng dấu."
+      },
+      "speakerIdentifiableInStoryboard": false,
+      "speakerIdentifiabilityDefect": true,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [
+        "NPC_TONG_BANH"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture + speaker not identifiable in storyboard",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_015_S01",
+      "sceneId": "CIN_015",
+      "sceneTitle": "Thành phố dưới nước",
+      "camera": "WIDE_STATIC",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_015/keyframes_16x9/keyframe_CIN_015_S01.png",
+        "sha256": "6b067babad5b0adba570a85129cef0768f14098ecd56ef44a9b93dcf20034b29",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Bubble columns still run slightly dense and long vertically, a little heavier than the prompt's 'restrained'; a few roof fragments read fairly intact rather than collapsed. No person, no figure, no lantern-holder."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 24.277,
+        "identityMeanAbsChannelDiff": 3.91
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": {
+        "oldShaPrefix": "6dd170f8",
+        "newShaPrefix": "6b067bab",
+        "fix": "No figure standing dry on the ruin wall"
+      }
+    },
+    {
+      "shotId": "CIN_015_S02",
+      "sceneId": "CIN_015",
+      "sceneTitle": "Thành phố dưới nước",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_015/keyframes_16x9/keyframe_CIN_015_S02.png",
+        "sha256": "11847adf7efeb5dc44af008e7a5f3e9f84c191772c376e8dd8d03603d4edc4f7",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The diver's hand/forearm in the foreground is fairly large and cropped at the right edge (close-up angle; it still reads slightly oversized although the strap and glove are gone); the bowl pattern reads more Greek-key than Vietnamese; the rope winds around the table base in a slightly tangled way. No mascot, no clay pot, no laundry, no dry courtyard."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 17.263,
+        "identityMeanAbsChannelDiff": 2.794
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": true,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [
+        "UNDERWATER_NOT_DRY: fully underwater teal; no dry yard (CP32 fix)"
+      ],
+      "cp32Fixed": {
+        "oldShaPrefix": "fc4e92eb",
+        "newShaPrefix": "11847adf",
+        "fix": "Underwater, not a dry yard"
+      }
+    },
+    {
+      "shotId": "CIN_015_S03",
+      "sceneId": "CIN_015",
+      "sceneTitle": "Thành phố dưới nước",
+      "camera": "TOPDOWN_MATCH",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_015/keyframes_16x9/keyframe_CIN_015_S03.png",
+        "sha256": "e7db810dc5c1c7fcac1b47d69926467f905ee1830748df1c472c52fc05fb52b7",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The view carries a slight tilt/perspective rather than a strict top-down; the three brass motifs read slightly like machinery valves/pipes; the diver is very small and seen only from behind (placeholder, awaiting character lock)."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "zoom-out centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 17.032,
+        "identityMeanAbsChannelDiff": 4.695
+      },
+      "dialogue": {
+        "speaker": "NPC_DIVER_LEAD",
+        "speakerCanonical": "NPC_DIVER_LEAD",
+        "speakerDisplay": "Đội trưởng thợ lặn",
+        "onscreen": true,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Lần trước có người đã buộc dây này cho chúng ta."
+      },
+      "speakerIdentifiableInStoryboard": false,
+      "speakerIdentifiabilityDefect": true,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [
+        "NPC_DIVER_LEAD"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture + speaker not identifiable in storyboard",
+      "guardrails": [],
+      "cp32Fixed": {
+        "oldShaPrefix": "eb8af0fd",
+        "newShaPrefix": "e7db810d",
+        "fix": "Clearly underwater (teal tint + bubbles)"
+      }
+    },
+    {
+      "shotId": "CIN_016_S01",
+      "sceneId": "CIN_016",
+      "sceneTitle": "Quyền được kể lại",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_016/keyframes_16x9/keyframe_CIN_016_S01.png",
+        "sha256": "0125c345f7bb73a4d4a476206071bd2f43a523aea9a356cb86f2eaf5b5b5ea82",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The scraped-away line renders as one broad pale horizontal band rather than a single line, and the page carries several hatched abstract clusters (illegible, as required); otherwise faithful to the prompt."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 20.392,
+        "identityMeanAbsChannelDiff": 3.161
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_016_S02",
+      "sceneId": "CIN_016",
+      "sceneTitle": "Quyền được kể lại",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_016/keyframes_16x9/keyframe_CIN_016_S02.png",
+        "sha256": "37a48f86f6cad9d1e4e23bd53ee047290dc7c332698fbe31a88e615c1ca996ae",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The survivor wears a modern buckled backpack/rucksack — an anachronistic prop not in the prompt; the core staging (pen flat, survivor's face out of frame, no contact) matches."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 34.05,
+        "identityMeanAbsChannelDiff": 2.859
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_HA_MAC"
+      ],
+      "namedCharactersRequired": [
+        "NPC_HA_MAC"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_016_S03",
+      "sceneId": "CIN_016",
+      "sceneTitle": "Quyền được kể lại",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_016/keyframes_16x9/keyframe_CIN_016_S03.png",
+        "sha256": "0f815f701aa2a6d2db8637aefe9e6ca15b63dc9dd3c2f7efcf336053c5946e7d",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Renders as a medium two-shot rather than the DETAIL_LOCKED close view; the gesture beats are merged — the page-turning figure already holds the pen raised, instead of the survivor turning the page first and only then Ha Mac lifting the pen; Ha Mac's rendering is inconsistent with S02 (ponytail with blue band and an earring here vs topknot/bun in S02)."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 29.524,
+        "identityMeanAbsChannelDiff": 3.136
+      },
+      "dialogue": {
+        "speaker": "NPC_HA_MAC",
+        "speakerCanonical": "NPC_HA_MAC",
+        "speakerDisplay": "Hạ Mặc",
+        "onscreen": true,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Tôi có thể ghi lại phần ông muốn kể không?"
+      },
+      "speakerIdentifiableInStoryboard": true,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_HA_MAC"
+      ],
+      "namedCharactersRequired": [
+        "NPC_HA_MAC"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_017_S01",
+      "sceneId": "CIN_017",
+      "sceneTitle": "Lõi và dòng triều",
+      "camera": "WIDE_STATIC",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_017/keyframes_16x9/keyframe_CIN_017_S01.png",
+        "sha256": "71f35b2980c03426e55d26d7bdebb5e5e0ae309401f2390212b987adb8f18e4e",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "No material defect observed at storyboard level: no legible text, no rainbow aura (crystal glow stays white-blue), palette is restrained teal; the serpent's head carries small white antlers the prompt does not mention (minor, within the placeholder-design latitude since no boss lock exists)."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 32.018,
+        "identityMeanAbsChannelDiff": 4.871
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "BOSS_TIDE_SERPENT"
+      ],
+      "namedCharactersRequired": [
+        "BOSS_TIDE_SERPENT"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_017_S02",
+      "sceneId": "CIN_017",
+      "sceneTitle": "Lõi và dòng triều",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_017/keyframes_16x9/keyframe_CIN_017_S02.png",
+        "sha256": "710c1941fb89b3b4ee01dd89bc1c070c22646000b0965272b26745865183a57d",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The three stone channels read as carved stone structures (culvert/stone bridge) more than distinct 'pressure channels'; the serpent's head/tail are not clearly distinguished; the serpent coils around the stone more than directly around the core (only one loop hugs the core); small light rays around the core. Serpent design remains a placeholder without a boss lock."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 36.053,
+        "identityMeanAbsChannelDiff": 3.932
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "BOSS_TIDE_SERPENT"
+      ],
+      "namedCharactersRequired": [
+        "BOSS_TIDE_SERPENT"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [
+        "SUBJECT_CORE_SERPENT: crystal core + tide serpent are the subject (CP32 fix)"
+      ],
+      "cp32Fixed": {
+        "oldShaPrefix": "6e747e26",
+        "newShaPrefix": "710c1941",
+        "fix": "Crystal core + tide serpent are the subject"
+      }
+    },
+    {
+      "shotId": "CIN_017_S03",
+      "sceneId": "CIN_017",
+      "sceneTitle": "Lõi và dòng triều",
+      "camera": "WIDE_STATIC",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_017/keyframes_16x9/keyframe_CIN_017_S03.png",
+        "sha256": "fe4a603b1c5628baa5f375bc8d562e137872ef752df278116a1b631c70d6974e",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The serpent reads as a flat dark streak on the water rather than a submerged shadow with volume; the 'broken bamboo gear' reads as a woven fish trap basket + bamboo pole (plausible but vague); the palette carries less teal than S02. No person, no armed figure, no dotted glint rows on the water."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 14.69,
+        "identityMeanAbsChannelDiff": 2.452
+      },
+      "dialogue": {
+        "speaker": "NPC_DIVER_LEAD",
+        "speakerCanonical": "NPC_DIVER_LEAD",
+        "speakerDisplay": "Đội trưởng thợ lặn",
+        "onscreen": false,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Mang lõi đi thì phải giữ đường nước còn lại."
+      },
+      "speakerIdentifiableInStoryboard": false,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "BOSS_TIDE_SERPENT"
+      ],
+      "namedCharactersRequired": [
+        "BOSS_TIDE_SERPENT"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": {
+        "oldShaPrefix": "decd8051",
+        "newShaPrefix": "fe4a603b",
+        "fix": "Armed figure removed; serpent shadow only"
+      }
+    },
+    {
+      "shotId": "CIN_018_S01",
+      "sceneId": "CIN_018",
+      "sceneTitle": "Điều ông không cho ai từ chối",
+      "camera": "MEMORY_MEDIUM",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_018/keyframes_16x9/keyframe_CIN_018_S01.png",
+        "sha256": "cd345c964e8cc5d3641cf23bb74629df726474ca3bbd2ce483d8bdfd426dab9f",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The petition renders as a modern wax-sealed envelope rather than a folded petition sheet; otherwise the beats match the prompt (own water ration shared, gauge post present, no current-day mechanical frame, no legible text)."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 38.956,
+        "identityMeanAbsChannelDiff": 4.641
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_018_S02",
+      "sceneId": "CIN_018",
+      "sceneTitle": "Điều ông không cho ai từ chối",
+      "camera": "MEMORY_DETAIL",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_018/keyframes_16x9/keyframe_CIN_018_S02.png",
+        "sha256": "52ad288cee2d24163113f47803c2761069c96ef9f20e29bfd2ba5557f3b1e7da",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Framing is a medium shot rather than the detail close view of hand, petition and ledger; the figure's hair (topknot with long side locks) differs from S01's short-haired young engineer although both shots are the same memory period — in-scene appearance inconsistency."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 24.587,
+        "identityMeanAbsChannelDiff": 2.621
+      },
+      "dialogue": {
+        "speaker": "NPC_CO_VO_TUONG",
+        "speakerCanonical": "NPC_CO_VO_TUONG",
+        "speakerDisplay": "Cơ Vô Tướng",
+        "onscreen": true,
+        "windowSeconds": [
+          6.5,
+          11.5
+        ],
+        "text": "Ta không còn chấp nhận phần ta không biết."
+      },
+      "speakerIdentifiableInStoryboard": true,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_CO_VO_TUONG"
+      ],
+      "namedCharactersRequired": [
+        "NPC_CO_VO_TUONG"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_018_S03",
+      "sceneId": "CIN_018",
+      "sceneTitle": "Điều ông không cho ai từ chối",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_018/keyframes_16x9/keyframe_CIN_018_S03.png",
+        "sha256": "5a03d1045b06025ee8449e281aedf2eca3112b1ed70f32c532d320efab077c9b",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The porcelain mask covers the full face instead of the specified cracked half mask; the copper machinery spans the whole torso, reading more automaton than a man wearing a chest core and back brace; small white spark-like specks float near the raised hand; night palette (the prompt specifies no time of day)."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 27.557,
+        "identityMeanAbsChannelDiff": 3.463
+      },
+      "dialogue": {
+        "speaker": "PLAYER",
+        "speakerCanonical": "PLAYER",
+        "speakerDisplay": "Người chơi",
+        "onscreen": null,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Ở Sa Hỏa ông đã cho nước. Ở nơi khác, người ta không được hỏi vì sao nước mất."
+      },
+      "speakerIdentifiableInStoryboard": false,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [
+        "NPC_CO_VO_TUONG"
+      ],
+      "namedCharactersRequired": [
+        "NPC_CO_VO_TUONG"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_019_S01",
+      "sceneId": "CIN_019",
+      "sceneTitle": "Năm mạch, không một chủ nhân",
+      "camera": "WIDE_STATIC",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_019/keyframes_16x9/keyframe_CIN_019_S01.png",
+        "sha256": "95d4ee945f24a7fdccdfd2286edb5f1a4b9b033c4ca26c6a6cf891847fa92fbd",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Minor: the earth pillar reads as a half-collapsed rubble stack rather than a clean geometric earth motif, and the wood pillar's motif is plain bamboo scaffolding; otherwise the ring arrangement, lateral energy flow, and no-central-avatar rule all hold, with no legible text."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 19.846,
+        "identityMeanAbsChannelDiff": 3.692
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_019_S02",
+      "sceneId": "CIN_019",
+      "sceneTitle": "Năm mạch, không một chủ nhân",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_019/keyframes_16x9/keyframe_CIN_019_S02.png",
+        "sha256": "f7683d11f17783495863c91e851cf404f75891a6a97806fe038a493b046664e5",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Only one additional warden works the surrounding controls (the prompt says 'other wardens'; the third figure supervises instead); the failing lever throws heavy sparks and debris, reading closer to an exploding mechanism than a jammed lever being braced. No crown/worship imagery and no harm to anyone, as required; panel marks are illegible ticks, not readable text."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 40.943,
+        "identityMeanAbsChannelDiff": 4.541
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_019_S03",
+      "sceneId": "CIN_019",
+      "sceneTitle": "Năm mạch, không một chủ nhân",
+      "camera": "WIDE_STATIC",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_019/keyframes_16x9/keyframe_CIN_019_S03.png",
+        "sha256": "02622ebd570568a7906b37c3bf588dfe92539db2cc110d4e7cc8596fab8a8016",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Ly An (the S03 dialogue speaker, marked onscreen in the timing) is not individually identifiable among the small distant figures, and couriers are not distinguishable from general workers; the channel flow reads fully established over finished-looking stone weirs rather than a first trickle through freshly repaired channels. Dawn light, patchwork roofs, and unfinished scaffolds all match the prompt; no legible text."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 25.923,
+        "identityMeanAbsChannelDiff": 3.989
+      },
+      "dialogue": {
+        "speaker": "NPC_LYAN",
+        "speakerCanonical": "NPC_LYAN",
+        "speakerDisplay": "Ly An",
+        "onscreen": true,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Lần này không ai giữ hết năm con đường."
+      },
+      "speakerIdentifiableInStoryboard": false,
+      "speakerIdentifiabilityDefect": true,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [
+        "NPC_LYAN"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": false,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture + speaker not identifiable in storyboard",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_020_S01",
+      "sceneId": "CIN_020",
+      "sceneTitle": "Thư có hồi âm",
+      "camera": "MEDIUM_STATIC",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_020/keyframes_16x9/keyframe_CIN_020_S01.png",
+        "sha256": "f8a2b44714e87ccdfce2e0aa81039c2d46b04399f5c87c3b96ecee8997af6d1a",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The worn bowl holds greens and reads as a food bowl rather than an empty worn prop; the newly tied lamp is boxy and unlit (daylight-correct but ambiguous). No legible text anywhere, as required."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered on the table and letter",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 40.979,
+        "identityMeanAbsChannelDiff": 5.029
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_020_S02",
+      "sceneId": "CIN_020",
+      "sceneTitle": "Thư có hồi âm",
+      "camera": "DETAIL_LOCKED",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_020/keyframes_16x9/keyframe_CIN_020_S02.png",
+        "sha256": "9fe69c5a14b0b2ac31fe7b7016b0f8a9812451bf348511718ce5c76de001bff6",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "Framing drift: an interior medium shot at a desk instead of the detail close view of sheet and brush at the riverside table. The villager wears a conical hat and blue tunic here versus the headband and brown vest of S01 -- same-person continuity is broken."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "push-in centered on the sheet and brush",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 41.891,
+        "identityMeanAbsChannelDiff": 3.723
+      },
+      "dialogue": null,
+      "speakerIdentifiableInStoryboard": null,
+      "speakerIdentifiabilityDefect": false,
+      "speakerNotInFrame": false,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [],
+      "characterLockRequired": false,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "ACTION_ANIMATION",
+      "priority": 2,
+      "reason": "Ref-sufficient: motion subject is environment / props / crowd / water, no named character to lock",
+      "guardrails": [],
+      "cp32Fixed": null
+    },
+    {
+      "shotId": "CIN_020_S03",
+      "sceneId": "CIN_020",
+      "sceneTitle": "Thư có hồi âm",
+      "camera": "TOPDOWN_MATCH",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "keyframe": {
+        "file": "Art_Source/Cinematics/Campaign/CIN_020/keyframes_16x9/keyframe_CIN_020_S03.png",
+        "sha256": "99ee6d93580e5deaa1949c21c38f7de08b826fc83da283fd7a6fd79b403d1705",
+        "sha256VerifiedOnDisk": true,
+        "status": "STORYBOARD"
+      },
+      "keyframeDefects": [
+        "The seated villager is a third appearance variant (green top, dark headwrap) -- cross-shot continuity drift; the folded reply reads envelope-like; a faint white steam-like wisp floats above the path mid-frame."
+      ],
+      "currentMotion": {
+        "model": "ANIMATIC_MOTION_KEN_BURNS",
+        "shotMove": "zoom-out centered",
+        "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+        "motionMeanAbsChannelDiff": 35.249,
+        "identityMeanAbsChannelDiff": 6.484
+      },
+      "dialogue": {
+        "speaker": "LETTER_RECIPIENT",
+        "speakerCanonical": "LETTER_RECIPIENT",
+        "speakerDisplay": "Người nhận thư",
+        "onscreen": true,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "text": "Chờ một chút. Tôi muốn gửi lại vài lời."
+      },
+      "speakerIdentifiableInStoryboard": false,
+      "speakerIdentifiabilityDefect": true,
+      "speakerNotInFrame": true,
+      "namedCharactersVisible": [],
+      "namedCharactersRequired": [
+        "LETTER_RECIPIENT"
+      ],
+      "characterLockRequired": true,
+      "genericPersonMention": true,
+      "mascotFreeConfirmed": false,
+      "motionClass": "KEN_BURNS_HOLD",
+      "priority": 3,
+      "reason": "Character lock required for final picture + speaker not identifiable in storyboard",
+      "guardrails": [],
+      "cp32Fixed": null
+    }
+  ]
+}

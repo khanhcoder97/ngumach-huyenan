@@ -1,0 +1,157 @@
+{
+  "checker": "check_fresh_delta_mg_cp8_v1",
+  "checkpoint": "MEDIA-02 WO37 M-G CP8",
+  "freshHead": "81f33e6e061e79ca10778b8961680e7c4b043245",
+  "baseline": "129b363",
+  "checksTotal": 117,
+  "checksPassed": 117,
+  "failures": [],
+  "status": "PASS",
+  "runtimeAudioFilesFresh": 784,
+  "runtimeAudioFilesWork": 784,
+  "deltaFiles": 45,
+  "lfsTrackedFresh": 2831,
+  "lfsOidsFresh": 2135,
+  "mixes": [
+    {
+      "file": "Art_Source/Audio/Muse/MIX/CIN006_DRAFT_V2/CIN_006_mix_draft_v2.wav",
+      "scene": "CIN_006",
+      "durationSeconds": 18.0,
+      "integratedLUFS": -23.69,
+      "truePeakDBTP": -6.71,
+      "sha256": "ca35b80711c5145febd6f89016ebfe64c8c1e5bf369c4dfff4bae48fb0671195",
+      "sizeBytes": 3456100,
+      "status": "PASS"
+    },
+    {
+      "file": "Art_Source/Audio/Muse/MIX/CIN008_DRAFT_V2/CIN_008_mix_draft_v2.wav",
+      "scene": "CIN_008",
+      "durationSeconds": 18.0,
+      "integratedLUFS": -26.07,
+      "truePeakDBTP": -4.88,
+      "sha256": "f804bde118bd8aa7758b50ae8a7addedcc4e79ad96a7aa5eba8f86d8b60dfc8e",
+      "sizeBytes": 3456100,
+      "status": "PASS"
+    },
+    {
+      "file": "Art_Source/Audio/Muse/MIX/CIN010_DRAFT_V2/CIN_010_mix_draft_v2.wav",
+      "scene": "CIN_010",
+      "durationSeconds": 18.0,
+      "integratedLUFS": -26.2,
+      "truePeakDBTP": -8.7,
+      "sha256": "5db32b7ca714acf246d1be27d0fe05d423667b3503947410a283e22d4a016a03",
+      "sizeBytes": 3456100,
+      "status": "PASS"
+    },
+    {
+      "file": "Art_Source/Audio/Muse/MIX/CIN011_DRAFT_V2/CIN_011_mix_draft_v2.wav",
+      "scene": "CIN_011",
+      "durationSeconds": 18.0,
+      "integratedLUFS": -24.32,
+      "truePeakDBTP": -6.54,
+      "sha256": "2ab6719f6b8cf0d465bdd774f23f3e9853666d0d51a925e901d89d9b29d09ac6",
+      "sizeBytes": 3456100,
+      "status": "PASS"
+    },
+    {
+      "file": "Art_Source/Audio/Muse/MIX/CIN012_DRAFT_V2/CIN_012_mix_draft_v2.wav",
+      "scene": "CIN_012",
+      "durationSeconds": 18.0,
+      "integratedLUFS": -26.0,
+      "truePeakDBTP": -5.83,
+      "sha256": "003176859e26f01b5826d83cc36e370fb28ca9992ef510af5ea58989f1f7baaf",
+      "sizeBytes": 3456100,
+      "status": "PASS"
+    },
+    {
+      "file": "Art_Source/Audio/Muse/MIX/CIN013_DRAFT_V2/CIN_013_mix_draft_v2.wav",
+      "scene": "CIN_013",
+      "durationSeconds": 18.0,
+      "integratedLUFS": -24.51,
+      "truePeakDBTP": -3.68,
+      "sha256": "51f4eefba4898a76195bc494ef3fe7fce5d4f438206bd8db62dd93c362226828",
+      "sizeBytes": 3456100,
+      "status": "PASS"
+    },
+    {
+      "file": "Art_Source/Audio/Muse/MIX/CIN014_DRAFT_V2/CIN_014_mix_draft_v2.wav",
+      "scene": "CIN_014",
+      "durationSeconds": 18.0,
+      "integratedLUFS": -26.16,
+      "truePeakDBTP": -5.65,
+      "sha256": "ea44770389feb0b5205c57c5c83b497958c1ecbb9a9bb2699d8fd73569be6ac9",
+      "sizeBytes": 3456100,
+      "status": "PASS"
+    },
+    {
+      "file": "Art_Source/Audio/Muse/MIX/CIN015_DRAFT_V2/CIN_015_mix_draft_v2.wav",
+      "scene": "CIN_015",
+      "durationSeconds": 18.0,
+      "integratedLUFS": -25.33,
+      "truePeakDBTP": -5.81,
+      "sha256": "21ff97589b50a04099699c3872369e4298c85045ef50db23504f516fca2071d8",
+      "sizeBytes": 3456100,
+      "status": "PASS"
+    },
+    {
+      "file": "Art_Source/Audio/Muse/MIX/CIN016_DRAFT_V2/CIN_016_mix_draft_v2.wav",
+      "scene": "CIN_016",
+      "durationSeconds": 18.0,
+      "integratedLUFS": -25.4,
+      "truePeakDBTP": -6.54,
+      "sha256": "63f47babb580105baf870886baf0c780526293bb5f331e13d73babc2a6b30b74",
+      "sizeBytes": 3456100,
+      "status": "PASS"
+    },
+    {
+      "file": "Art_Source/Audio/Muse/MIX/CIN017_DRAFT_V2/CIN_017_mix_draft_v2.wav",
+      "scene": "CIN_017",
+      "durationSeconds": 18.0,
+      "integratedLUFS": -25.95,
+      "truePeakDBTP": -5.92,
+      "sha256": "a364c9823a95a3282498ce879bd9bb01686aa162784daab1a379daf21fd813bf",
+      "sizeBytes": 3456100,
+      "status": "PASS"
+    },
+    {
+      "file": "Art_Source/Audio/Muse/MIX/CIN018_DRAFT_V2/CIN_018_mix_draft_v2.wav",
+      "scene": "CIN_018",
+      "durationSeconds": 18.0,
+      "integratedLUFS": -22.97,
+      "truePeakDBTP": -4.71,
+      "sha256": "58cead03dc644e1a1f4675bbc0972ab7b289328c7719c172e6610af3001890b2",
+      "sizeBytes": 3456100,
+      "status": "PASS"
+    },
+    {
+      "file": "Art_Source/Audio/Muse/MIX/CIN020_DRAFT_V2/CIN_020_mix_draft_v2.wav",
+      "scene": "CIN_020",
+      "durationSeconds": 18.0,
+      "integratedLUFS": -25.97,
+      "truePeakDBTP": -9.61,
+      "sha256": "e8afd307d20a2d59456fece2298065b7496d290530f6fd67bf40eef3d0328c19",
+      "sizeBytes": 3456100,
+      "status": "PASS"
+    },
+    {
+      "file": "Art_Source/Audio/Muse/MIX/P0_DRAFT_V4/CIN_002_mix_draft_v4.wav",
+      "scene": "CIN_002",
+      "durationSeconds": 18.0,
+      "integratedLUFS": -26.28,
+      "truePeakDBTP": -2.93,
+      "sha256": "27d4259f4a458dab8340aa6e7e6a2d2cf9cf353160706ebd6e6de270dbfee2f0",
+      "sizeBytes": 3456100,
+      "status": "PASS"
+    },
+    {
+      "file": "Art_Source/Audio/Muse/MIX/CIN000_DRAFT_V2/CIN_000_mix_draft_v2.wav",
+      "scene": "CIN_000",
+      "durationSeconds": 87.367,
+      "integratedLUFS": -21.75,
+      "truePeakDBTP": -1.98,
+      "sha256": "5d405505ab17a51d358f9bd5bc6af280f0441f3d0cb9667746d8dc1808e74868",
+      "sizeBytes": 16774542,
+      "status": "PASS"
+    }
+  ]
+}

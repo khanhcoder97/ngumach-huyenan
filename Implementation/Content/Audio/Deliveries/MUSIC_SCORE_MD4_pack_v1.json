@@ -1,0 +1,179 @@
+{
+ "packId": "NGM_MUSIC_SCORE_MD4_V1",
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 4 - phase layers (boss phase 4, swamp intensity, dungeon intensity; Work Order 37 module M-D)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "6f79853",
+ "provenance": "ORIGINAL_COMPOSED_BY_MUSE: phase layers authored as data in Tools/MediaProduction/Muse/build_composed_score_md4.py (synthesis engine and checkpoint-26 / MD1 arrangements reused from build_composed_music.py and build_composed_score_md1.py) and rendered by procedural synthesis. No external samples, no ported bytes. These 3 files are NEW audio, counted separately from the 541 ported PackV1 files and from the checkpoint-26, checkpoint-30, MD1, MD2 and MD3 packs, which keep their own provenance and are untouched.",
+ "counts": {
+  "intro": 0,
+  "outro": 0,
+  "stems": 0,
+  "layers": 3,
+  "total": 3
+ },
+ "cues": [
+  {
+   "cueKey": "MUSIC/boss_mang_cot_layer_phase4",
+   "nameVi": "Mãng Cốt · Lớp giai đoạn 4",
+   "kind": "LAYER",
+   "loop": true,
+   "parentCueKey": "MUSIC/boss_mang_cot",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 66,
+    "bars": 10,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Additive phase-4 layer over boss_mang_cot (10 bars @ 66 bpm): double-time drums (beats + offbeats), alternating D1/D2 octave bass in 8ths, high D6 bell toll every 2 bars, minor-head pluck fragment doubled an octave up on bars 2 and 7 (the base's own statements). Phases 2/3 already fill the beats, the 8th/16th D1 pulse and the F4 bells, so phase 4 adds the offbeats, the octave bass and the high bell. No pad, no flute -- those stay in the base cue. -25 LUFS target; combined base+layer loudness measured from real bytes.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md4.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 / MD1 arrangements (build_composed_music.py / build_composed_score_md1.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/layers/boss_mang_cot_layer_phase4.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 36.3636,
+    "sizeBytes": 10472832,
+    "sha256": "b87df137a7449a2aa4dce06892190bc3d1633492da31d6fd6a9c393d9124fae0",
+    "integratedLufs": -25.0,
+    "truePeakDbtp": -12.36
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/layers/boss_mang_cot_layer_phase4.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 36.3636,
+    "sizeBytes": 309100,
+    "sha256": "1d3ffbf98b57dc8e42d86941c208625e33ecd1c06191842c632398b3e8069cd8",
+    "integratedLufs": -24.96,
+    "truePeakDbtp": -12.32
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.07085,
+    "tailRms": 0.028002,
+    "wrapJump": 7e-06,
+    "wrapJumpRaw": 0.142624,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   },
+   "combinedWithBase": {
+    "baseCueKey": "MUSIC/boss_mang_cot",
+    "method": "base master + layer master summed from real bytes, ffmpeg loudnorm",
+    "integratedLufs": -20.04,
+    "truePeakDbtp": -4.6
+   }
+  },
+  {
+   "cueKey": "MUSIC/swamp_layer_intensity",
+   "nameVi": "Đầm · Lớp tăng cường",
+   "kind": "LAYER",
+   "loop": true,
+   "parentCueKey": "MUSIC/swamp",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 58,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Additive intensity layer over swamp (16 bars @ 58 bpm): soft drums on beats 0 and 2, quarter-note bass pedal on the bar's own root (the base's root progression), E3 toll every 4 bars (E is the cue's hanging note), and the base's own (D4, A4) pluck figure on bars 3 and 11. The base is drumless by design (Bm/Em pads, B0 drone, one low bell per phrase); this layer adds the pulse the base withholds. -25 LUFS target; combined base+layer loudness measured from real bytes.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md4.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 / MD1 arrangements (build_composed_music.py / build_composed_score_md1.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/layers/swamp_layer_intensity.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 66.2069,
+    "sizeBytes": 19067688,
+    "sha256": "fbc4bffbb2a44aa2a39897b5e546ebb39b4030423a1afc58caec1d483714f2f3",
+    "integratedLufs": -24.99,
+    "truePeakDbtp": -11.16
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/layers/swamp_layer_intensity.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 66.2069,
+    "sizeBytes": 310892,
+    "sha256": "209b558a987389756500e236a4a8def04db811ab86a94a9cd88cb5af8eb1d23d",
+    "integratedLufs": -24.96,
+    "truePeakDbtp": -11.15
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.090405,
+    "tailRms": 0.041036,
+    "wrapJump": 1e-05,
+    "wrapJumpRaw": 0.227719,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   },
+   "combinedWithBase": {
+    "baseCueKey": "MUSIC/swamp",
+    "method": "base master + layer master summed from real bytes, ffmpeg loudnorm",
+    "integratedLufs": -18.81,
+    "truePeakDbtp": -5.34
+   }
+  },
+  {
+   "cueKey": "MUSIC/dungeon_layer_intensity",
+   "nameVi": "Hầm · Lớp tăng cường",
+   "kind": "LAYER",
+   "loop": true,
+   "parentCueKey": "MUSIC/dungeon",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 70,
+    "bars": 12,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; the full flute tail stays reserved for the resolve stinger and rift_finale",
+    "structure": "Additive intensity layer over dungeon (12 bars @ 70 bpm): drums on beats 1/2/3 around the base's soft bar-line drum, 8th-note D1 bass pulse, cold F4 bell every 2 bars on the even bars the base leaves free (0/2/6/10; the base's bells are D4 bar 4 and F4 bar 8), and the minor-head pluck fragment on bars 3 and 10. -25 LUFS target; combined base+layer loudness measured from real bytes.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md4.py on the checkpoint-26 engine (build_composed_music.py) and the checkpoint-26 / MD1 arrangements (build_composed_music.py / build_composed_score_md1.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/layers/dungeon_layer_intensity.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 41.1429,
+    "sizeBytes": 11849244,
+    "sha256": "e6917206ca05c9824a63a43a5544a2d22487fc7f8cb41637f331af4a9da7dc80",
+    "integratedLufs": -25.0,
+    "truePeakDbtp": -8.68
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/layers/dungeon_layer_intensity.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 41.1429,
+    "sizeBytes": 278765,
+    "sha256": "9044afe34af8304b2f8f3f778c6c5c482cf65b6389275e50d97b182d4b0b1d81",
+    "integratedLufs": -24.95,
+    "truePeakDbtp": -8.62
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.11328,
+    "tailRms": 0.071002,
+    "wrapJump": 1.7e-05,
+    "wrapJumpRaw": 0.3068,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   },
+   "combinedWithBase": {
+    "baseCueKey": "MUSIC/dungeon",
+    "method": "base master + layer master summed from real bytes, ffmpeg loudnorm",
+    "integratedLufs": -20.32,
+    "truePeakDbtp": -5.88
+   }
+  }
+ ],
+ "notes": [
+  "Phase layers are ADDITIVE loops at the parent cue's tempo/bars (-25 LUFS target): they play over the base cue, they do not replace it. Combined base+layer loudness/true-peak is measured from real bytes and recorded per layer.",
+  "Each MD4 layer adds only what its base and the earlier layers do not already do: boss phase 4 goes double-time with octave bass and a high D6 bell (phases 2/3 already fill the beats and the F4 bells); swamp intensity adds the pulse a drumless base withholds; dungeon intensity fills beats 1/2/3 around the base's bar-line drum.",
+  "Adoption is a presentation-adapter decision (Codex): the MD4 files are delivered in parallel under ClientGodot/assets/audio/composed/layers/ and do NOT replace the ported PackV1 files, their cue bindings, or the checkpoint-26/30/MD1/MD2/MD3 cues.",
+  "No ear audition has been done; loudness/true-peak are measured from real bytes. Loop seams are recorded per looping cue in the delivery manifest: wrapJump after a disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it."
+ ]
+}

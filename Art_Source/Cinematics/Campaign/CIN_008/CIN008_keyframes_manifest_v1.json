@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN008_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_008 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "abcf254",
+ "sceneId": "CIN_008",
+ "title": "Bàn tay đã ký",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_TA_VAN_KHANH) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock. Checkpoint 32 (Goi 31 item 2) revises CIN_008_S03; all other shots unchanged.",
+ "keyframes": [
+  {
+   "shotId": "CIN_008_S01",
+   "camera": "MEMORY_DETAIL",
+   "file": "keyframes_16x9/keyframe_CIN_008_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "65bc88c32426d7122d246be724c247b264a3410d69884523e095b8fb3bfc8d16",
+   "sourceStagingFile": "media-generation-keyframe-cin-008-s01-0-9265c416-8597-401d-a696-7e8933cff89d.webp",
+   "sourceStagingSha256": "922355475df95878fb59fc62f878c824355160d35e22432ec48e59acb9aa4eca",
+   "sourceSnapshotId": "2563797e-2f34-42bd-a710-4f9719575a31:kvzaph",
+   "framing": "Extreme close view of a brush hand in an indigo scale-patterned sleeve writing abstract glyphs across a paper order, with a round seal stamp and ink stone at the paper's lower-left, all in a desaturated indigo palette.",
+   "knownDefects": "The seal reads as a large round stamp already impressed on the paper rather than a seal block the hand pauses over, and the page is densely filled with abstract glyphs (illegible, as required), reading more like a completed form than the moment of signing; the sleeve's scale pattern is an unusual invented detail."
+  },
+  {
+   "shotId": "CIN_008_S02",
+   "camera": "MEMORY_WIDE",
+   "file": "keyframes_16x9/keyframe_CIN_008_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "c34be2f4e9e2c8ddd914de7cd862f936306ef529fcaeae0c52a004deaaa08aab",
+   "sourceStagingFile": "media-generation-keyframe-cin-008-s02-0-7f909d93-158f-4276-bb73-3435db94eeb2.webp",
+   "sourceStagingSha256": "ec9913de59a14efcb87e17895d5dcfbab7b43762544727129da4ee29adbb2021",
+   "sourceSnapshotId": "7a6b5d19-4e80-43fb-beb8-77fd4cfa4f21:7yk4po",
+   "framing": "Wide shot from outside a tall wooden double gate standing nearly shut with a lantern-lit sliver of the chamber beyond, while a robed adult waits at frame left holding a clay water vessel.",
+   "knownDefects": "No material defect observed at storyboard level."
+  },
+  {
+   "shotId": "CIN_008_S03",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_008_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "e41232c9c3b552d5523b1239edc6cb69cceb6f331e1f2ee495d64db16516e4f1",
+   "sourceStagingFile": "media-generation-keyframe-cin-008-s03-0-26afee66-7e40-43a7-a087-b91cabeb3888.webp",
+   "sourceStagingSha256": "3512f03a4418083303b7040dfbaa8ebee892d484f8b87fbe544e26b98720709f",
+   "sourceSnapshotId": "94c55a17-1eee-4233-920f-07c16d41892e:rwbkdx",
+   "framing": "Medium shot of Ta Van Khanh standing at frame right beside a bamboo forest pool (duckweed, lotus buds, reeds, stones, bamboo), looking off-frame left toward the unseen listener; his bandaged LEFT forearm is lowered on the outer side away from the pool and his good right hand is open at his side toward the pool.",
+   "knownDefects": "Character is still a placeholder without a character lock: high topknot + ponytail, dark grey-blue robe with brown belt, differing from the checkpoint 25 rendering (short hair, blue robe with gold trim) -- to be checked against the lock at final picture. The good right hand sits on the pool side rather than the outer side; the bandaged hand closes near the right frame edge but stays fully visible. The bandaged hand holds nothing."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Checkpoint 32 (Goi 31 item 2) revises S03: the bandage now wraps the LEFT forearm (outer side, away from the pool); the bandaged hand holds nothing. S01/S02 unchanged from checkpoint 25."
+ ]
+}

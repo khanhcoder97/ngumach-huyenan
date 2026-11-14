@@ -1,0 +1,2783 @@
+{
+  "checkpoint": "MEDIA-02 checkpoint 33 — A/B review shortlist (Goi 31 item 3)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "baseSha": "6f2b4659b1935dc739df688942b5142a13dde770",
+  "auditionStatus": "NOT_AUDITIONED",
+  "auditionNote": "This environment cannot listen. All loudness/codec/seam numbers are measurements from real bytes, never a listening PASS. A human listener must work through the playlists and answer the defect table.",
+  "provenanceRule": "Alternate takes keep their own takeId/version and never replace canonical dialogue (DEC-MEDIA-P0 Q3). v1/v2/v3 mixes are delivered in parallel; adoption is Codex's adapter decision at PR #119 review.",
+  "mixesAB": [
+    {
+      "scene": "CIN_001",
+      "v1": {
+        "file": "CIN_001_mix_draft_v1.wav",
+        "integrated_lufs": -22.46,
+        "true_peak_dbtp": -1.46,
+        "duration_s": 36.0
+      },
+      "v2": {
+        "file": "CIN_001_mix_draft_v2.wav",
+        "integrated_lufs": -21.24,
+        "true_peak_dbtp": -1.51,
+        "duration_s": 36.0
+      },
+      "v3": {
+        "file": "CIN_001_mix_draft_v3.wav",
+        "integrated_lufs": -21.06,
+        "true_peak_dbtp": -1.66,
+        "duration_s": 36.0
+      },
+      "delta_v2_minus_v1_lufs": 1.22,
+      "delta_v3_minus_v1_lufs": 1.4,
+      "delta_v3_minus_v2_lufs": 0.18
+    },
+    {
+      "scene": "CIN_002",
+      "v1": {
+        "file": "CIN_002_mix_draft_v1.wav",
+        "integrated_lufs": -21.55,
+        "true_peak_dbtp": -3.98,
+        "duration_s": 18.0
+      },
+      "v2": {
+        "file": "CIN_002_mix_draft_v2.wav",
+        "integrated_lufs": -22.81,
+        "true_peak_dbtp": -4.26,
+        "duration_s": 18.0
+      },
+      "v3": {
+        "file": "CIN_002_mix_draft_v3.wav",
+        "integrated_lufs": -22.67,
+        "true_peak_dbtp": -4.25,
+        "duration_s": 18.0
+      },
+      "delta_v2_minus_v1_lufs": -1.26,
+      "delta_v3_minus_v1_lufs": -1.12,
+      "delta_v3_minus_v2_lufs": 0.14
+    },
+    {
+      "scene": "CIN_004",
+      "v1": {
+        "file": "CIN_004_mix_draft_v1.wav",
+        "integrated_lufs": -25.51,
+        "true_peak_dbtp": -7.94,
+        "duration_s": 18.0
+      },
+      "v2": {
+        "file": "CIN_004_mix_draft_v2.wav",
+        "integrated_lufs": -26.62,
+        "true_peak_dbtp": -8.33,
+        "duration_s": 18.0
+      },
+      "v3": {
+        "file": "CIN_004_mix_draft_v3.wav",
+        "integrated_lufs": -26.78,
+        "true_peak_dbtp": -8.27,
+        "duration_s": 18.0
+      },
+      "delta_v2_minus_v1_lufs": -1.11,
+      "delta_v3_minus_v1_lufs": -1.27,
+      "delta_v3_minus_v2_lufs": -0.16
+    },
+    {
+      "scene": "REVIEW_72S",
+      "v1": {
+        "file": "P0_mix_review_72s_draft_v1.wav",
+        "integrated_lufs": -22.66,
+        "true_peak_dbtp": -1.46,
+        "duration_s": 72.0
+      },
+      "v2": {
+        "file": "P0_mix_review_72s_draft_v2.wav",
+        "integrated_lufs": -22.72,
+        "true_peak_dbtp": -1.51,
+        "duration_s": 72.0
+      },
+      "v3": {
+        "file": "P0_mix_review_72s_draft_v3.wav",
+        "integrated_lufs": -22.49,
+        "true_peak_dbtp": -1.66,
+        "duration_s": 72.0
+      },
+      "delta_v2_minus_v1_lufs": -0.06,
+      "delta_v3_minus_v1_lufs": 0.17,
+      "delta_v3_minus_v2_lufs": 0.23
+    }
+  ],
+  "mixStemProvenance": {
+    "v1": "ported PackV1 music + ambience + stingers",
+    "v2": "composed music + stingers (CP26), ported ambience",
+    "v3": "fully composed stems: music + stingers (CP26), ambience (CP30)"
+  },
+  "mixDucking": {
+    "v1": {
+      "CIN_001": [
+        {
+          "bus": "music",
+          "windowSeconds": [
+            24.8,
+            27.368
+          ],
+          "referenceSeconds": [
+            22.3,
+            24.3
+          ],
+          "depthInWindowDb": -14.32,
+          "depthOutsideWindowDb": 0.0
+        }
+      ],
+      "CIN_002": [
+        {
+          "bus": "ambience",
+          "windowSeconds": [
+            7.0,
+            10.792
+          ],
+          "referenceSeconds": [
+            4.5,
+            6.5
+          ],
+          "depthInWindowDb": -6.48,
+          "depthOutsideWindowDb": 0.0
+        }
+      ],
+      "CIN_004": [
+        {
+          "bus": "music",
+          "windowSeconds": [
+            7.5,
+            9.252
+          ],
+          "referenceSeconds": [
+            5.0,
+            7.0
+          ],
+          "depthInWindowDb": -4.99,
+          "depthOutsideWindowDb": 0.0
+        }
+      ]
+    },
+    "v2": {
+      "CIN_001": [
+        {
+          "bus": "music",
+          "windowSeconds": [
+            24.8,
+            27.368
+          ],
+          "referenceSeconds": [
+            22.3,
+            24.3
+          ],
+          "depthInWindowDb": -3.92,
+          "depthOutsideWindowDb": 0.0
+        }
+      ],
+      "CIN_002": [
+        {
+          "bus": "ambience",
+          "windowSeconds": [
+            7.0,
+            10.792
+          ],
+          "referenceSeconds": [
+            4.5,
+            6.5
+          ],
+          "depthInWindowDb": -6.48,
+          "depthOutsideWindowDb": 0.0
+        }
+      ],
+      "CIN_004": [
+        {
+          "bus": "music",
+          "windowSeconds": [
+            7.5,
+            9.252
+          ],
+          "referenceSeconds": [
+            5.0,
+            7.0
+          ],
+          "depthInWindowDb": -5.16,
+          "depthOutsideWindowDb": 0.0
+        }
+      ]
+    },
+    "v3": {
+      "CIN_001": [
+        {
+          "bus": "music",
+          "windowSeconds": [
+            24.8,
+            27.368
+          ],
+          "referenceSeconds": [
+            22.3,
+            24.3
+          ],
+          "depthInWindowDb": -3.92,
+          "depthOutsideWindowDb": 0.0
+        }
+      ],
+      "CIN_002": [
+        {
+          "bus": "ambience",
+          "windowSeconds": [
+            7.0,
+            10.792
+          ],
+          "referenceSeconds": [
+            4.5,
+            6.5
+          ],
+          "depthInWindowDb": -7.32,
+          "depthOutsideWindowDb": 0.0
+        }
+      ],
+      "CIN_004": [
+        {
+          "bus": "music",
+          "windowSeconds": [
+            7.5,
+            9.252
+          ],
+          "referenceSeconds": [
+            5.0,
+            7.0
+          ],
+          "depthInWindowDb": -5.16,
+          "depthOutsideWindowDb": 0.0
+        }
+      ]
+    }
+  },
+  "mixLoopQA": {
+    "v1": {
+      "CIN_001": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00543,
+              "bedP999Jump": 0.00775,
+              "ratioToP999": 0.701
+            },
+            {
+              "atSeconds": 30.5,
+              "maxJump": 0.00543,
+              "bedP999Jump": 0.00775,
+              "ratioToP999": 0.701
+            }
+          ]
+        },
+        {
+          "cue": "AMBIENCE/rain_light",
+          "joins": []
+        }
+      ],
+      "CIN_002": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00543,
+              "bedP999Jump": 0.00783,
+              "ratioToP999": 0.694
+            }
+          ]
+        },
+        {
+          "cue": "AMBIENCE/underwater",
+          "joins": []
+        }
+      ],
+      "CIN_004": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00543,
+              "bedP999Jump": 0.00783,
+              "ratioToP999": 0.694
+            }
+          ]
+        }
+      ]
+    },
+    "v2": {
+      "CIN_001": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00543,
+              "bedP999Jump": 0.00775,
+              "ratioToP999": 0.701
+            },
+            {
+              "atSeconds": 30.5,
+              "maxJump": 0.00543,
+              "bedP999Jump": 0.00775,
+              "ratioToP999": 0.701
+            }
+          ]
+        },
+        {
+          "cue": "AMBIENCE/rain_light",
+          "joins": []
+        }
+      ],
+      "CIN_002": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00543,
+              "bedP999Jump": 0.00783,
+              "ratioToP999": 0.694
+            }
+          ]
+        },
+        {
+          "cue": "AMBIENCE/underwater",
+          "joins": []
+        }
+      ],
+      "CIN_004": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00543,
+              "bedP999Jump": 0.00783,
+              "ratioToP999": 0.694
+            }
+          ]
+        }
+      ]
+    },
+    "v3": {
+      "CIN_001": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00154,
+              "bedP999Jump": 0.00256,
+              "ratioToP999": 0.601
+            },
+            {
+              "atSeconds": 30.5,
+              "maxJump": 0.00154,
+              "bedP999Jump": 0.00256,
+              "ratioToP999": 0.601
+            }
+          ]
+        },
+        {
+          "cue": "AMBIENCE/rain_light",
+          "joins": []
+        }
+      ],
+      "CIN_002": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00154,
+              "bedP999Jump": 0.00266,
+              "ratioToP999": 0.58
+            }
+          ]
+        },
+        {
+          "cue": "AMBIENCE/underwater",
+          "joins": []
+        }
+      ],
+      "CIN_004": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00154,
+              "bedP999Jump": 0.00266,
+              "ratioToP999": 0.58
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "music": [
+    {
+      "cueKey": "MUSIC/ben_mua",
+      "nameVi": "Bến Mưa · câu nhạc bỏ lửng",
+      "kind": "MUSIC",
+      "runtimePath": "ClientGodot/assets/audio/composed/music/ben_mua.ogg",
+      "duration_s": 56.6667,
+      "measured_lufs": -21.93,
+      "measured_dbtp": -10.33,
+      "pack_lufs": -21.93,
+      "pack_dbtp": -10.33,
+      "sha256": "2fd558ec7de84b5bd7099afb6cee12f49624f60330168e08c8abd3e2dca097db",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+      "loop": true,
+      "wrap_jump_recorded": 4e-06,
+      "wrap_jump_raw_recorded": 0.138464,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "seam_measured": {
+        "head_rms": 0.14241,
+        "tail_rms": 0.021511,
+        "wrap_jump": 0.00144
+      }
+    },
+    {
+      "cueKey": "MUSIC/thang_long",
+      "nameVi": "Thăng Long · phố và dòng nước",
+      "kind": "MUSIC",
+      "runtimePath": "ClientGodot/assets/audio/composed/music/thang_long.ogg",
+      "duration_s": 41.7391,
+      "measured_lufs": -21.96,
+      "measured_dbtp": -10.55,
+      "pack_lufs": -21.96,
+      "pack_dbtp": -10.55,
+      "sha256": "8df21008d70a9e372656b1eb5edd11099079cdeb67fa19ccac826104768ea468",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+      "loop": true,
+      "wrap_jump_recorded": 4e-06,
+      "wrap_jump_raw_recorded": 0.14585,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "seam_measured": {
+        "head_rms": 0.135989,
+        "tail_rms": 0.022329,
+        "wrap_jump": 0.00141
+      }
+    },
+    {
+      "cueKey": "MUSIC/boss_mang_cot",
+      "nameVi": "Mãng Cốt · áp lực dòng",
+      "kind": "MUSIC",
+      "runtimePath": "ClientGodot/assets/audio/composed/music/boss_mang_cot.ogg",
+      "duration_s": 36.3636,
+      "measured_lufs": -21.98,
+      "measured_dbtp": -7.35,
+      "pack_lufs": -21.98,
+      "pack_dbtp": -7.35,
+      "sha256": "2762bc371f34ef46727002e1a4f0a963d0930b98f6b9437b1f9a185f65e116d1",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+      "loop": true,
+      "wrap_jump_recorded": 2e-06,
+      "wrap_jump_raw_recorded": 0.039379,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "seam_measured": {
+        "head_rms": 0.122097,
+        "tail_rms": 0.010641,
+        "wrap_jump": 0.002311
+      }
+    },
+    {
+      "cueKey": "MUSIC/quiet_discovery",
+      "nameVi": "Khoảng lặng khám phá",
+      "kind": "MUSIC",
+      "runtimePath": "ClientGodot/assets/audio/composed/music/quiet_discovery.ogg",
+      "duration_s": 64.0,
+      "measured_lufs": -21.72,
+      "measured_dbtp": -13.09,
+      "pack_lufs": -21.72,
+      "pack_dbtp": -13.09,
+      "sha256": "3499555be5bbd30fe3bbee42ba092d3cb347a62e8501d1c129185a413066e2d3",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+      "loop": true,
+      "wrap_jump_recorded": 3e-06,
+      "wrap_jump_raw_recorded": 0.064427,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "seam_measured": {
+        "head_rms": 0.101169,
+        "tail_rms": 0.020017,
+        "wrap_jump": 0.000194
+      }
+    },
+    {
+      "cueKey": "MUSIC/lam_trieu",
+      "nameVi": "Lâm Triều — Rừng nhớ tên",
+      "kind": "MUSIC",
+      "runtimePath": "ClientGodot/assets/audio/composed/music/lam_trieu.ogg",
+      "duration_s": 53.3333,
+      "measured_lufs": -21.93,
+      "measured_dbtp": -10.98,
+      "pack_lufs": -21.93,
+      "pack_dbtp": -10.98,
+      "sha256": "2684e3d094c28060e6bdbc1274b1dfcdc05e5eec7c0bfe236e788dfb8a426a1e",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+      "loop": true,
+      "wrap_jump_recorded": 1e-06,
+      "wrap_jump_raw_recorded": 0.043153,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "seam_measured": {
+        "head_rms": 0.114683,
+        "tail_rms": 0.008271,
+        "wrap_jump": 5.9e-05
+      }
+    },
+    {
+      "cueKey": "MUSIC/sa_hoa",
+      "nameVi": "Sa Hỏa — Lò và cát",
+      "kind": "MUSIC",
+      "runtimePath": "ClientGodot/assets/audio/composed/music/sa_hoa.ogg",
+      "duration_s": 43.6364,
+      "measured_lufs": -21.96,
+      "measured_dbtp": -8.58,
+      "pack_lufs": -21.96,
+      "pack_dbtp": -8.58,
+      "sha256": "7934d01c93b460854900fded9cb29c75f28e77c730ef38eae446d1c2d407a402",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+      "loop": true,
+      "wrap_jump_recorded": 0.0,
+      "wrap_jump_raw_recorded": 0.005716,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "seam_measured": {
+        "head_rms": 0.17957,
+        "tail_rms": 0.001963,
+        "wrap_jump": 0.016015
+      }
+    },
+    {
+      "cueKey": "MUSIC/tran_son",
+      "nameVi": "Trấn Sơn — Người qua cửa",
+      "kind": "MUSIC",
+      "runtimePath": "ClientGodot/assets/audio/composed/music/tran_son.ogg",
+      "duration_s": 40.0,
+      "measured_lufs": -21.95,
+      "measured_dbtp": -8.32,
+      "pack_lufs": -21.95,
+      "pack_dbtp": -8.32,
+      "sha256": "6b53bae4acef0ac7000069b2376d4d8f125f212d325bf037c94835785836fe78",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+      "loop": true,
+      "wrap_jump_recorded": 2.1e-05,
+      "wrap_jump_raw_recorded": 0.404087,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "seam_measured": {
+        "head_rms": 0.184817,
+        "tail_rms": 0.11995,
+        "wrap_jump": 0.008203
+      }
+    },
+    {
+      "cueKey": "MUSIC/bach_uyen",
+      "nameVi": "Bạch Uyên — Thành dưới triều",
+      "kind": "MUSIC",
+      "runtimePath": "ClientGodot/assets/audio/composed/music/bach_uyen.ogg",
+      "duration_s": 58.0645,
+      "measured_lufs": -21.96,
+      "measured_dbtp": -10.77,
+      "pack_lufs": -21.96,
+      "pack_dbtp": -10.77,
+      "sha256": "9497cb062d19e136d377dcd49614f4ce354d9a69ca1867ad9aff3531628fd64f",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+      "loop": true,
+      "wrap_jump_recorded": 1.3e-05,
+      "wrap_jump_raw_recorded": 0.295172,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "seam_measured": {
+        "head_rms": 0.18173,
+        "tail_rms": 0.074878,
+        "wrap_jump": 0.000568
+      }
+    },
+    {
+      "cueKey": "MUSIC/rift_finale",
+      "nameVi": "Ngũ Mạch — Năm dòng cùng chảy",
+      "kind": "MUSIC",
+      "runtimePath": "ClientGodot/assets/audio/composed/music/rift_finale.ogg",
+      "duration_s": 38.4,
+      "measured_lufs": -21.95,
+      "measured_dbtp": -9.91,
+      "pack_lufs": -21.95,
+      "pack_dbtp": -9.91,
+      "sha256": "5821084dd017558ac3751f000b3fcee1ba12e32b827d46618795b0075965f436",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+      "loop": true,
+      "wrap_jump_recorded": 3e-06,
+      "wrap_jump_raw_recorded": 0.091384,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "seam_measured": {
+        "head_rms": 0.147939,
+        "tail_rms": 0.016763,
+        "wrap_jump": 0.00036
+      }
+    }
+  ],
+  "stingers": [
+    {
+      "cueKey": "SFX/CINEMA/reveal",
+      "nameVi": "Vén một điều lạ",
+      "kind": "CINEMA_STINGER",
+      "runtimePath": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+      "duration_s": 3.0,
+      "measured_lufs": -24.96,
+      "measured_dbtp": -15.5,
+      "pack_lufs": -24.96,
+      "pack_dbtp": -15.5,
+      "sha256": "8e02d990c58ecbc8c7603177ac15fd80a931ddec6130fb5a3fd70bb922684091",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+      "loop": false
+    },
+    {
+      "cueKey": "SFX/CINEMA/tension",
+      "nameVi": "Mạch chưa khép",
+      "kind": "CINEMA_STINGER",
+      "runtimePath": "ClientGodot/assets/audio/composed/cinema/tension.ogg",
+      "duration_s": 3.0,
+      "measured_lufs": -24.93,
+      "measured_dbtp": -17.04,
+      "pack_lufs": -24.93,
+      "pack_dbtp": -17.04,
+      "sha256": "ebb976e0a01065224f7f3b7b8fb302b39b22d48b1f79dcf881850957fe22423f",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+      "loop": false
+    },
+    {
+      "cueKey": "SFX/CINEMA/resolve",
+      "nameVi": "Điều đã đối chiếu",
+      "kind": "CINEMA_STINGER",
+      "runtimePath": "ClientGodot/assets/audio/composed/cinema/resolve.ogg",
+      "duration_s": 3.0,
+      "measured_lufs": -24.93,
+      "measured_dbtp": -18.3,
+      "pack_lufs": -24.93,
+      "pack_dbtp": -18.3,
+      "sha256": "6c0040f357185a4b94fa6826224d4481c43ac5dcdc175f43df693a04d08c7660",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+      "loop": false
+    },
+    {
+      "cueKey": "SFX/CINEMA/transition",
+      "nameVi": "Qua một miền nước",
+      "kind": "CINEMA_STINGER",
+      "runtimePath": "ClientGodot/assets/audio/composed/cinema/transition.ogg",
+      "duration_s": 3.0,
+      "measured_lufs": -24.97,
+      "measured_dbtp": -16.16,
+      "pack_lufs": -24.97,
+      "pack_dbtp": -16.16,
+      "sha256": "bea1975fcedbc243c782dc54c986673922c6c65e5fe6f589defff5c0fb4334fe",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+      "loop": false
+    }
+  ],
+  "ambienceComposed": [
+    {
+      "cueKey": "AMBIENCE/rain_light",
+      "nameVi": "Mưa nhẹ",
+      "version": "composed",
+      "runtimePath": "ClientGodot/assets/audio/composed/ambience/rain_light.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -27.8,
+      "measured_dbtp": -16.59,
+      "target_lufs_ported": -27.48,
+      "pack_lufs": -27.8,
+      "seam_measured": {
+        "head_rms": 0.038544,
+        "tail_rms": 0.010084,
+        "wrap_jump": 0.000181
+      },
+      "seam_recorded": {
+        "head_rms": 0.027993,
+        "tail_rms": 0.007066,
+        "wrap_jump": 2e-06
+      },
+      "wrap_jump_raw_recorded": 0.064621,
+      "seamBasis": "runtime OGG (CP30)",
+      "sha256": "0f1d0246a0e23ae6874ce1863993d731ee761cafe1d87b90429464ee77de125e",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE"
+    },
+    {
+      "cueKey": "AMBIENCE/rain_heavy",
+      "nameVi": "Mưa nặng hạt",
+      "version": "composed",
+      "runtimePath": "ClientGodot/assets/audio/composed/ambience/rain_heavy.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -27.85,
+      "measured_dbtp": -17.35,
+      "target_lufs_ported": -27.47,
+      "pack_lufs": -27.85,
+      "seam_measured": {
+        "head_rms": 0.036969,
+        "tail_rms": 0.00719,
+        "wrap_jump": 0.001097
+      },
+      "seam_recorded": {
+        "head_rms": 0.027262,
+        "tail_rms": 0.005027,
+        "wrap_jump": 1e-06
+      },
+      "wrap_jump_raw_recorded": 0.050852,
+      "seamBasis": "runtime OGG (CP30)",
+      "sha256": "0216bddfdff8c222c185937fd5b3a23b30c43365a111079e0c9cb33f8d783a96",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE"
+    },
+    {
+      "cueKey": "AMBIENCE/river_shore",
+      "nameVi": "Nước ven bờ",
+      "version": "composed",
+      "runtimePath": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -29.69,
+      "measured_dbtp": -17.08,
+      "target_lufs_ported": -29.53,
+      "pack_lufs": -29.69,
+      "seam_measured": {
+        "head_rms": 0.04053,
+        "tail_rms": 0.019256,
+        "wrap_jump": 0.000188
+      },
+      "seam_recorded": {
+        "head_rms": 0.029045,
+        "tail_rms": 0.013487,
+        "wrap_jump": 3e-06
+      },
+      "wrap_jump_raw_recorded": 0.130838,
+      "seamBasis": "runtime OGG (CP30)",
+      "sha256": "00f6af8830cb4a1232f11cf8980f0839972bd635028b3ae3135b1b951bec1c1b",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE"
+    },
+    {
+      "cueKey": "AMBIENCE/underwater",
+      "nameVi": "Dòng nước sâu",
+      "version": "composed",
+      "runtimePath": "ClientGodot/assets/audio/composed/ambience/underwater.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -33.11,
+      "measured_dbtp": -20.68,
+      "target_lufs_ported": -33.02,
+      "pack_lufs": -33.11,
+      "seam_measured": {
+        "head_rms": 0.027835,
+        "tail_rms": 0.003825,
+        "wrap_jump": 9e-06
+      },
+      "seam_recorded": {
+        "head_rms": 0.01995,
+        "tail_rms": 0.002683,
+        "wrap_jump": 1e-06
+      },
+      "wrap_jump_raw_recorded": 0.036428,
+      "seamBasis": "runtime OGG (CP30)",
+      "sha256": "3ba6d29be6c832f4bf91e6f4ef36c6016b14cc2381fbe178800267eb4c0d753b",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE"
+    },
+    {
+      "cueKey": "AMBIENCE/waterfall",
+      "nameVi": "Thác nước",
+      "version": "composed",
+      "runtimePath": "ClientGodot/assets/audio/composed/ambience/waterfall.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -29.53,
+      "measured_dbtp": -16.02,
+      "target_lufs_ported": -29.31,
+      "pack_lufs": -29.53,
+      "seam_measured": {
+        "head_rms": 0.037102,
+        "tail_rms": 0.002681,
+        "wrap_jump": 0.002209
+      },
+      "seam_recorded": {
+        "head_rms": 0.026423,
+        "tail_rms": 0.001876,
+        "wrap_jump": 0.0
+      },
+      "wrap_jump_raw_recorded": 0.018953,
+      "seamBasis": "runtime OGG (CP30)",
+      "sha256": "1777af175035f87489258a21c0a8b1abf40c5067be7594239a477297da44e2ae",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE"
+    },
+    {
+      "cueKey": "AMBIENCE/wind_canopy",
+      "nameVi": "Gió qua tán cây",
+      "version": "composed",
+      "runtimePath": "ClientGodot/assets/audio/composed/ambience/wind_canopy.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -29.7,
+      "measured_dbtp": -16.06,
+      "target_lufs_ported": -29.55,
+      "pack_lufs": -29.7,
+      "seam_measured": {
+        "head_rms": 0.036025,
+        "tail_rms": 0.004199,
+        "wrap_jump": 0.000222
+      },
+      "seam_recorded": {
+        "head_rms": 0.026017,
+        "tail_rms": 0.002926,
+        "wrap_jump": 1e-06
+      },
+      "wrap_jump_raw_recorded": 0.024843,
+      "seamBasis": "runtime OGG (CP30)",
+      "sha256": "c1bdd50d176b72c938cfdde992970d9f38037254c1666596327248ba32e36933",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE"
+    },
+    {
+      "cueKey": "AMBIENCE/desert_wind",
+      "nameVi": "Gió Sa Hỏa",
+      "version": "composed",
+      "runtimePath": "ClientGodot/assets/audio/composed/ambience/desert_wind.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -29.93,
+      "measured_dbtp": -17.26,
+      "target_lufs_ported": -29.57,
+      "pack_lufs": -29.93,
+      "seam_measured": {
+        "head_rms": 0.027434,
+        "tail_rms": 0.027568,
+        "wrap_jump": 0.000514
+      },
+      "seam_recorded": {
+        "head_rms": 0.020253,
+        "tail_rms": 0.019283,
+        "wrap_jump": 5e-06
+      },
+      "wrap_jump_raw_recorded": 0.201266,
+      "seamBasis": "runtime OGG (CP30)",
+      "sha256": "ea99c01d7548c8e1b0a55572e0683bc1bf70a6230188cf06f4ee19c3e26fb671",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE"
+    },
+    {
+      "cueKey": "AMBIENCE/mountain_wind",
+      "nameVi": "Gió tháp",
+      "version": "composed",
+      "runtimePath": "ClientGodot/assets/audio/composed/ambience/mountain_wind.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -29.55,
+      "measured_dbtp": -16.18,
+      "target_lufs_ported": -29.56,
+      "pack_lufs": -29.55,
+      "seam_measured": {
+        "head_rms": 0.039778,
+        "tail_rms": 0.021912,
+        "wrap_jump": 0.000734
+      },
+      "seam_recorded": {
+        "head_rms": 0.028108,
+        "tail_rms": 0.01532,
+        "wrap_jump": 4e-06
+      },
+      "wrap_jump_raw_recorded": 0.156608,
+      "seamBasis": "runtime OGG (CP30)",
+      "sha256": "8e28aec28d87a43a0c5fd8875269015858a8ec67244967c4d1b488b0492c5608",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE"
+    },
+    {
+      "cueKey": "AMBIENCE/cave_drips",
+      "nameVi": "Hang nhỏ giọt",
+      "version": "composed",
+      "runtimePath": "ClientGodot/assets/audio/composed/ambience/cave_drips.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -29.56,
+      "measured_dbtp": -13.08,
+      "target_lufs_ported": -29.54,
+      "pack_lufs": -29.56,
+      "seam_measured": {
+        "head_rms": 0.032538,
+        "tail_rms": 0.017087,
+        "wrap_jump": 0.000362
+      },
+      "seam_recorded": {
+        "head_rms": 0.023096,
+        "tail_rms": 0.011975,
+        "wrap_jump": 3e-06
+      },
+      "wrap_jump_raw_recorded": 0.072681,
+      "seamBasis": "runtime OGG (CP30)",
+      "sha256": "717e823507cf9e2390ff153c795e40466e6f13345ffc6e66d04c5a541174fc7a",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE"
+    },
+    {
+      "cueKey": "AMBIENCE/forge",
+      "nameVi": "Lò rèn",
+      "version": "composed",
+      "runtimePath": "ClientGodot/assets/audio/composed/ambience/forge.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -29.49,
+      "measured_dbtp": -15.85,
+      "target_lufs_ported": -29.5,
+      "pack_lufs": -29.49,
+      "seam_measured": {
+        "head_rms": 0.050575,
+        "tail_rms": 0.021851,
+        "wrap_jump": 0.000533
+      },
+      "seam_recorded": {
+        "head_rms": 0.035624,
+        "tail_rms": 0.015265,
+        "wrap_jump": 4e-06
+      },
+      "wrap_jump_raw_recorded": 0.127903,
+      "seamBasis": "runtime OGG (CP30)",
+      "sha256": "66882abe905473f0cf1f27ff6b3b66cbfe8a458765105836fae83c586461e654",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE"
+    },
+    {
+      "cueKey": "AMBIENCE/thang_long_crowd",
+      "nameVi": "Phố Thăng Long",
+      "version": "composed",
+      "runtimePath": "ClientGodot/assets/audio/composed/ambience/thang_long_crowd.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -30.59,
+      "measured_dbtp": -17.81,
+      "target_lufs_ported": -30.34,
+      "pack_lufs": -30.59,
+      "seam_measured": {
+        "head_rms": 0.02844,
+        "tail_rms": 0.005555,
+        "wrap_jump": 0.000286
+      },
+      "seam_recorded": {
+        "head_rms": 0.02067,
+        "tail_rms": 0.003888,
+        "wrap_jump": 1e-06
+      },
+      "wrap_jump_raw_recorded": 0.044936,
+      "seamBasis": "runtime OGG (CP30)",
+      "sha256": "f137d6551d2ab5912d78b294ea3a539057ffb643988dbbad8425c0aeb8b9fe15",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE"
+    },
+    {
+      "cueKey": "AMBIENCE/city_night",
+      "nameVi": "Phố đêm",
+      "version": "composed",
+      "runtimePath": "ClientGodot/assets/audio/composed/ambience/city_night.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -30.4,
+      "measured_dbtp": -16.66,
+      "target_lufs_ported": -30.34,
+      "pack_lufs": -30.4,
+      "seam_measured": {
+        "head_rms": 0.041779,
+        "tail_rms": 0.020536,
+        "wrap_jump": 4.2e-05
+      },
+      "seam_recorded": {
+        "head_rms": 0.029545,
+        "tail_rms": 0.014404,
+        "wrap_jump": 4e-06
+      },
+      "wrap_jump_raw_recorded": 0.156806,
+      "seamBasis": "runtime OGG (CP30)",
+      "sha256": "37c52c30e20dac66a3a36814ea1835cc85a7a0c2c612b66487e14ee850c361ec",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE"
+    },
+    {
+      "cueKey": "AMBIENCE/rift",
+      "nameVi": "Mạch nghịch",
+      "version": "composed",
+      "runtimePath": "ClientGodot/assets/audio/composed/ambience/rift.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -30.46,
+      "measured_dbtp": -21.3,
+      "target_lufs_ported": -30.48,
+      "pack_lufs": -30.46,
+      "seam_measured": {
+        "head_rms": 0.052866,
+        "tail_rms": 0.012713,
+        "wrap_jump": 0.000382
+      },
+      "seam_recorded": {
+        "head_rms": 0.037313,
+        "tail_rms": 0.008909,
+        "wrap_jump": 2e-06
+      },
+      "wrap_jump_raw_recorded": 0.136555,
+      "seamBasis": "runtime OGG (CP30)",
+      "sha256": "b7083b0fcd40ef2f3562cffb62cf022eda3719c7835b5565bb7c4b1d6ed770d1",
+      "provenance": "ORIGINAL_COMPOSED_BY_MUSE"
+    }
+  ],
+  "ambiencePorted": [
+    {
+      "cueKey": "AMBIENCE/rain_light",
+      "nameVi": "Mưa nhẹ",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/ambience/rain_light.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -27.48,
+      "measured_dbtp": -18.6,
+      "pack_lufs": -27.48,
+      "pack_dbtp": -18.6,
+      "seam_measured": {
+        "head_rms": 0.031792,
+        "tail_rms": 0.031344,
+        "wrap_jump": 0.005862
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.031792,
+        "tail_rms": 0.031344,
+        "wrap_jump": 0.005862
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "8bbf339896ad52a8344e7f3e0b7f8af9be84272f794183481c222130f6806ec4",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "AMBIENCE/river_shore",
+      "nameVi": "Nước ven bờ",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/ambience/river_shore.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -29.53,
+      "measured_dbtp": -17.96,
+      "pack_lufs": -29.53,
+      "pack_dbtp": -17.96,
+      "seam_measured": {
+        "head_rms": 0.033217,
+        "tail_rms": 0.029538,
+        "wrap_jump": 0.004403
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.033217,
+        "tail_rms": 0.029538,
+        "wrap_jump": 0.004403
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "42e7983d4537e6b0323f310ba5f712761d9998884a607697b576c32c6a339f81",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "AMBIENCE/thang_long_crowd",
+      "nameVi": "Phố Thăng Long",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/ambience/thang_long_crowd.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -30.34,
+      "measured_dbtp": -18.08,
+      "pack_lufs": -30.34,
+      "pack_dbtp": -18.08,
+      "seam_measured": {
+        "head_rms": 0.031957,
+        "tail_rms": 0.03158,
+        "wrap_jump": 0.001995
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.031957,
+        "tail_rms": 0.03158,
+        "wrap_jump": 0.001995
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "3169bbbedc55a1075b6a1a51070ed43366525269dfc228ca2261f10399e77ae5",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "AMBIENCE/forge",
+      "nameVi": "Lò rèn",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/ambience/forge.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -29.5,
+      "measured_dbtp": -17.74,
+      "pack_lufs": -29.5,
+      "pack_dbtp": -17.74,
+      "seam_measured": {
+        "head_rms": 0.029823,
+        "tail_rms": 0.031609,
+        "wrap_jump": 0.01175
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.029823,
+        "tail_rms": 0.031609,
+        "wrap_jump": 0.01175
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "d482e42f3b14d03660f6718a4bf153800c93daf2ab08a20caca2d00d016c44b3",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "AMBIENCE/wind_canopy",
+      "nameVi": "Gió qua tán cây",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/ambience/wind_canopy.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -29.55,
+      "measured_dbtp": -19.23,
+      "pack_lufs": -29.55,
+      "pack_dbtp": -19.23,
+      "seam_measured": {
+        "head_rms": 0.033266,
+        "tail_rms": 0.030533,
+        "wrap_jump": 0.00519
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.033266,
+        "tail_rms": 0.030533,
+        "wrap_jump": 0.00519
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "af24e394b74091af986d36b8cbc97249e3ed3f6642b4dcc297e52e09de085422",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "AMBIENCE/rain_heavy",
+      "nameVi": "Mưa nặng hạt",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/ambience/rain_heavy.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -27.47,
+      "measured_dbtp": -17.35,
+      "pack_lufs": -27.47,
+      "pack_dbtp": -17.35,
+      "seam_measured": {
+        "head_rms": 0.030238,
+        "tail_rms": 0.030504,
+        "wrap_jump": 0.053787
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.030238,
+        "tail_rms": 0.030504,
+        "wrap_jump": 0.053787
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "7f9dbb6ed59809ca49b9b78a77a242560ea3a7383070b79eda2757421bec17c8",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "AMBIENCE/desert_wind",
+      "nameVi": "Gió Sa Hỏa",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/ambience/desert_wind.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -29.57,
+      "measured_dbtp": -18.69,
+      "pack_lufs": -29.57,
+      "pack_dbtp": -18.69,
+      "seam_measured": {
+        "head_rms": 0.032489,
+        "tail_rms": 0.02974,
+        "wrap_jump": 0.003816
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.032489,
+        "tail_rms": 0.02974,
+        "wrap_jump": 0.003816
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "1629f384d54d39974ada4b538599ba20f921acde3d2e8d238bdd092463add705",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "AMBIENCE/underwater",
+      "nameVi": "Dòng nước sâu",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/ambience/underwater.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -33.02,
+      "measured_dbtp": -19.12,
+      "pack_lufs": -33.02,
+      "pack_dbtp": -19.12,
+      "seam_measured": {
+        "head_rms": 0.022451,
+        "tail_rms": 0.031513,
+        "wrap_jump": 0.002945
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.022451,
+        "tail_rms": 0.031513,
+        "wrap_jump": 0.002945
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "18eb65c71c5ca8c05ed9b5e7ae6f36ce6ff070aad4120011f8e0c0a46ca94fc1",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "AMBIENCE/cave_drips",
+      "nameVi": "Hang nhỏ giọt",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/ambience/cave_drips.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -29.54,
+      "measured_dbtp": -19.4,
+      "pack_lufs": -29.54,
+      "pack_dbtp": -19.4,
+      "seam_measured": {
+        "head_rms": 0.033443,
+        "tail_rms": 0.031351,
+        "wrap_jump": 0.003115
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.033443,
+        "tail_rms": 0.031351,
+        "wrap_jump": 0.003115
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "3507d2d977682885ac5ed4e6e15fc801409092214edd605bac3a51ba3427a6d5",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "AMBIENCE/waterfall",
+      "nameVi": "Thác nước",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/ambience/waterfall.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -29.31,
+      "measured_dbtp": -17.87,
+      "pack_lufs": -29.31,
+      "pack_dbtp": -17.87,
+      "seam_measured": {
+        "head_rms": 0.033349,
+        "tail_rms": 0.031807,
+        "wrap_jump": 0.015198
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.033349,
+        "tail_rms": 0.031807,
+        "wrap_jump": 0.015198
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "ef11ebb2cb177a66e25ea7f25a4365fd6a6f52a606561457115c2caef8bf5dce",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "AMBIENCE/city_night",
+      "nameVi": "Phố đêm",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/ambience/city_night.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -30.34,
+      "measured_dbtp": -17.75,
+      "pack_lufs": -30.34,
+      "pack_dbtp": -17.75,
+      "seam_measured": {
+        "head_rms": 0.033332,
+        "tail_rms": 0.029189,
+        "wrap_jump": 0.004276
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.033332,
+        "tail_rms": 0.029189,
+        "wrap_jump": 0.004276
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "32585ef2e866919a56e74bbd43ee192ee5c7197016866ba6f3c008fb5b4e8e41",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "AMBIENCE/mountain_wind",
+      "nameVi": "Gió tháp",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/ambience/mountain_wind.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -29.56,
+      "measured_dbtp": -18.34,
+      "pack_lufs": -29.56,
+      "pack_dbtp": -18.34,
+      "seam_measured": {
+        "head_rms": 0.030767,
+        "tail_rms": 0.031589,
+        "wrap_jump": 0.004983
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.030767,
+        "tail_rms": 0.031589,
+        "wrap_jump": 0.004983
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "c1c295d2f0fdc042746720daf2fd2142779f8f48642191b2b4bb1495afd6575e",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "AMBIENCE/rift",
+      "nameVi": "Mạch nghịch",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/ambience/rift.ogg",
+      "duration_s": 16.0,
+      "measured_lufs": -30.48,
+      "measured_dbtp": -18.05,
+      "pack_lufs": -30.48,
+      "pack_dbtp": -18.05,
+      "seam_measured": {
+        "head_rms": 0.029194,
+        "tail_rms": 0.031957,
+        "wrap_jump": 0.00095
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.029194,
+        "tail_rms": 0.031957,
+        "wrap_jump": 0.00095
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "7a30d09a8ef1277be5e37e5e7466c68937542b30abceb5c43a8273fa90693623",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    }
+  ],
+  "musicPorted": [
+    {
+      "cueKey": "MUSIC/ben_mua",
+      "nameVi": "Bến Mưa · câu nhạc bỏ lửng",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/music/ben_mua.ogg",
+      "duration_s": 56.4706,
+      "measured_lufs": -21.92,
+      "measured_dbtp": -10.77,
+      "pack_lufs": -21.92,
+      "pack_dbtp": -10.77,
+      "seam_measured": {
+        "head_rms": 0.140283,
+        "tail_rms": 0.021364,
+        "wrap_jump": 0.001742
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.140283,
+        "tail_rms": 0.021364,
+        "wrap_jump": 0.001742
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "ad93ae036d3b2da91749783dba10d83b89e7655ea756f984f5fec69aab68a00c",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "MUSIC/thang_long",
+      "nameVi": "Thăng Long · phố và dòng nước",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/music/thang_long.ogg",
+      "duration_s": 41.7391,
+      "measured_lufs": -21.86,
+      "measured_dbtp": -10.79,
+      "pack_lufs": -21.86,
+      "pack_dbtp": -10.79,
+      "seam_measured": {
+        "head_rms": 0.145458,
+        "tail_rms": 0.0246,
+        "wrap_jump": 0.000161
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.145458,
+        "tail_rms": 0.0246,
+        "wrap_jump": 0.000161
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "1ed70afc63634706032b9c773d6e09d9d097ed850c77a1ea64667ff9a2d31aaa",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "MUSIC/boss_mang_cot",
+      "nameVi": "Mãng Cốt · áp lực dòng",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/music/boss_mang_cot.ogg",
+      "duration_s": 36.9231,
+      "measured_lufs": -23.34,
+      "measured_dbtp": -10.3,
+      "pack_lufs": -23.34,
+      "pack_dbtp": -10.3,
+      "seam_measured": {
+        "head_rms": 0.166777,
+        "tail_rms": 0.024913,
+        "wrap_jump": 0.000533
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.166777,
+        "tail_rms": 0.024913,
+        "wrap_jump": 0.000533
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "9c8a4d88fd3c86058b49d33535c0717abee05e711b24f3f5f2aad1a14b106e6c",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "MUSIC/quiet_discovery",
+      "nameVi": "Khoảng lặng khám phá",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/music/quiet_discovery.ogg",
+      "duration_s": 64.0,
+      "measured_lufs": -21.58,
+      "measured_dbtp": -9.27,
+      "pack_lufs": -21.58,
+      "pack_dbtp": -9.27,
+      "seam_measured": {
+        "head_rms": 0.184677,
+        "tail_rms": 0.025944,
+        "wrap_jump": 0.000724
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.184677,
+        "tail_rms": 0.025944,
+        "wrap_jump": 0.000724
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "015e2494d4bc5ddb0248f12549f7f22392bdec5d6d1b22fe46914df80e053ae4",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "MUSIC/lam_trieu",
+      "nameVi": "Lâm Triều — Rừng nhớ tên",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/music/lam_trieu.ogg",
+      "duration_s": 53.3333,
+      "measured_lufs": -21.8,
+      "measured_dbtp": -11.4,
+      "pack_lufs": -21.8,
+      "pack_dbtp": -11.4,
+      "seam_measured": {
+        "head_rms": 0.150335,
+        "tail_rms": 0.023713,
+        "wrap_jump": 0.002703
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.150335,
+        "tail_rms": 0.023713,
+        "wrap_jump": 0.002703
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "db19c573ed73e7c09ba61d430dc546e2b77380efaa566c475eeb1e5fd210e006",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "MUSIC/sa_hoa",
+      "nameVi": "Sa Hỏa — Lò và cát",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/music/sa_hoa.ogg",
+      "duration_s": 43.6364,
+      "measured_lufs": -22.13,
+      "measured_dbtp": -10.92,
+      "pack_lufs": -22.13,
+      "pack_dbtp": -10.92,
+      "seam_measured": {
+        "head_rms": 0.141793,
+        "tail_rms": 0.023461,
+        "wrap_jump": 0.001461
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.141793,
+        "tail_rms": 0.023461,
+        "wrap_jump": 0.001461
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "e72e0427bd16a4cda44e550539fc5ff6dc7404d9b71d9bd203c08f7c888e362f",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "MUSIC/tran_son",
+      "nameVi": "Trấn Sơn — Người qua cửa",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/music/tran_son.ogg",
+      "duration_s": 40.0,
+      "measured_lufs": -22.83,
+      "measured_dbtp": -11.03,
+      "pack_lufs": -22.83,
+      "pack_dbtp": -11.03,
+      "seam_measured": {
+        "head_rms": 0.147017,
+        "tail_rms": 0.020928,
+        "wrap_jump": 0.001479
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.147017,
+        "tail_rms": 0.020928,
+        "wrap_jump": 0.001479
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "01d4ec863a0a0bbec5c5f99374eb6c24c4ae2b9c84e0b10e7f8349755e930eb4",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "MUSIC/bach_uyen",
+      "nameVi": "Bạch Uyên — Thành dưới triều",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/music/bach_uyen.ogg",
+      "duration_s": 58.1818,
+      "measured_lufs": -22.22,
+      "measured_dbtp": -10.6,
+      "pack_lufs": -22.22,
+      "pack_dbtp": -10.6,
+      "seam_measured": {
+        "head_rms": 0.139011,
+        "tail_rms": 0.021535,
+        "wrap_jump": 0.000263
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.139011,
+        "tail_rms": 0.021535,
+        "wrap_jump": 0.000263
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "c329299b56006d3346d47ca243d3aba3c52d05678b61b4a2c62ebccaef501184",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    },
+    {
+      "cueKey": "MUSIC/rift_finale",
+      "nameVi": "Ngũ Mạch — Năm dòng cùng chảy",
+      "version": "ported",
+      "runtimePath": "ClientGodot/assets/audio/music/rift_finale.ogg",
+      "duration_s": 38.4,
+      "measured_lufs": -21.94,
+      "measured_dbtp": -10.92,
+      "pack_lufs": -21.94,
+      "pack_dbtp": -10.92,
+      "seam_measured": {
+        "head_rms": 0.145751,
+        "tail_rms": 0.022675,
+        "wrap_jump": 0.001645
+      },
+      "seam_recorded": {
+        "method": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+        "head_rms": 0.145751,
+        "tail_rms": 0.022675,
+        "wrap_jump": 0.001645
+      },
+      "seamBasis": "runtime OGG (CP07)",
+      "sha256": "eb15595f578edaa9c5f8ab20c2d73f823b73686c80248373495937914292043f",
+      "provenance": "PORTED_PACKV1",
+      "loop": true
+    }
+  ],
+  "seamTable": [
+    {
+      "cueKey": "AMBIENCE/rain_heavy",
+      "version": "ported",
+      "wrap_jump_measured": 0.053787,
+      "head_rms": 0.030238,
+      "tail_rms": 0.030504,
+      "wrap_jump_recorded": 0.053787,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": true
+    },
+    {
+      "cueKey": "MUSIC/sa_hoa",
+      "version": "composed",
+      "wrap_jump_measured": 0.016015,
+      "head_rms": 0.17957,
+      "tail_rms": 0.001963,
+      "wrap_jump_recorded": 0.0,
+      "wrap_jump_raw_recorded": 0.005716,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "flag_ear_check": true
+    },
+    {
+      "cueKey": "AMBIENCE/waterfall",
+      "version": "ported",
+      "wrap_jump_measured": 0.015198,
+      "head_rms": 0.033349,
+      "tail_rms": 0.031807,
+      "wrap_jump_recorded": 0.015198,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": true
+    },
+    {
+      "cueKey": "AMBIENCE/forge",
+      "version": "ported",
+      "wrap_jump_measured": 0.01175,
+      "head_rms": 0.029823,
+      "tail_rms": 0.031609,
+      "wrap_jump_recorded": 0.01175,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/tran_son",
+      "version": "composed",
+      "wrap_jump_measured": 0.008203,
+      "head_rms": 0.184817,
+      "tail_rms": 0.11995,
+      "wrap_jump_recorded": 2.1e-05,
+      "wrap_jump_raw_recorded": 0.404087,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/rain_light",
+      "version": "ported",
+      "wrap_jump_measured": 0.005862,
+      "head_rms": 0.031792,
+      "tail_rms": 0.031344,
+      "wrap_jump_recorded": 0.005862,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/wind_canopy",
+      "version": "ported",
+      "wrap_jump_measured": 0.00519,
+      "head_rms": 0.033266,
+      "tail_rms": 0.030533,
+      "wrap_jump_recorded": 0.00519,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/mountain_wind",
+      "version": "ported",
+      "wrap_jump_measured": 0.004983,
+      "head_rms": 0.030767,
+      "tail_rms": 0.031589,
+      "wrap_jump_recorded": 0.004983,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/river_shore",
+      "version": "ported",
+      "wrap_jump_measured": 0.004403,
+      "head_rms": 0.033217,
+      "tail_rms": 0.029538,
+      "wrap_jump_recorded": 0.004403,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/city_night",
+      "version": "ported",
+      "wrap_jump_measured": 0.004276,
+      "head_rms": 0.033332,
+      "tail_rms": 0.029189,
+      "wrap_jump_recorded": 0.004276,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/desert_wind",
+      "version": "ported",
+      "wrap_jump_measured": 0.003816,
+      "head_rms": 0.032489,
+      "tail_rms": 0.02974,
+      "wrap_jump_recorded": 0.003816,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/cave_drips",
+      "version": "ported",
+      "wrap_jump_measured": 0.003115,
+      "head_rms": 0.033443,
+      "tail_rms": 0.031351,
+      "wrap_jump_recorded": 0.003115,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/underwater",
+      "version": "ported",
+      "wrap_jump_measured": 0.002945,
+      "head_rms": 0.022451,
+      "tail_rms": 0.031513,
+      "wrap_jump_recorded": 0.002945,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/lam_trieu",
+      "version": "ported",
+      "wrap_jump_measured": 0.002703,
+      "head_rms": 0.150335,
+      "tail_rms": 0.023713,
+      "wrap_jump_recorded": 0.002703,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/boss_mang_cot",
+      "version": "composed",
+      "wrap_jump_measured": 0.002311,
+      "head_rms": 0.122097,
+      "tail_rms": 0.010641,
+      "wrap_jump_recorded": 2e-06,
+      "wrap_jump_raw_recorded": 0.039379,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/waterfall",
+      "version": "composed",
+      "wrap_jump_measured": 0.002209,
+      "head_rms": 0.037102,
+      "tail_rms": 0.002681,
+      "wrap_jump_recorded": 0.0,
+      "wrap_jump_raw_recorded": 0.018953,
+      "seamBasis": "runtime OGG (CP30)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/thang_long_crowd",
+      "version": "ported",
+      "wrap_jump_measured": 0.001995,
+      "head_rms": 0.031957,
+      "tail_rms": 0.03158,
+      "wrap_jump_recorded": 0.001995,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/ben_mua",
+      "version": "ported",
+      "wrap_jump_measured": 0.001742,
+      "head_rms": 0.140283,
+      "tail_rms": 0.021364,
+      "wrap_jump_recorded": 0.001742,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/rift_finale",
+      "version": "ported",
+      "wrap_jump_measured": 0.001645,
+      "head_rms": 0.145751,
+      "tail_rms": 0.022675,
+      "wrap_jump_recorded": 0.001645,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/tran_son",
+      "version": "ported",
+      "wrap_jump_measured": 0.001479,
+      "head_rms": 0.147017,
+      "tail_rms": 0.020928,
+      "wrap_jump_recorded": 0.001479,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/sa_hoa",
+      "version": "ported",
+      "wrap_jump_measured": 0.001461,
+      "head_rms": 0.141793,
+      "tail_rms": 0.023461,
+      "wrap_jump_recorded": 0.001461,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/ben_mua",
+      "version": "composed",
+      "wrap_jump_measured": 0.00144,
+      "head_rms": 0.14241,
+      "tail_rms": 0.021511,
+      "wrap_jump_recorded": 4e-06,
+      "wrap_jump_raw_recorded": 0.138464,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/thang_long",
+      "version": "composed",
+      "wrap_jump_measured": 0.00141,
+      "head_rms": 0.135989,
+      "tail_rms": 0.022329,
+      "wrap_jump_recorded": 4e-06,
+      "wrap_jump_raw_recorded": 0.14585,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/rain_heavy",
+      "version": "composed",
+      "wrap_jump_measured": 0.001097,
+      "head_rms": 0.036969,
+      "tail_rms": 0.00719,
+      "wrap_jump_recorded": 1e-06,
+      "wrap_jump_raw_recorded": 0.050852,
+      "seamBasis": "runtime OGG (CP30)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/rift",
+      "version": "ported",
+      "wrap_jump_measured": 0.00095,
+      "head_rms": 0.029194,
+      "tail_rms": 0.031957,
+      "wrap_jump_recorded": 0.00095,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/mountain_wind",
+      "version": "composed",
+      "wrap_jump_measured": 0.000734,
+      "head_rms": 0.039778,
+      "tail_rms": 0.021912,
+      "wrap_jump_recorded": 4e-06,
+      "wrap_jump_raw_recorded": 0.156608,
+      "seamBasis": "runtime OGG (CP30)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/quiet_discovery",
+      "version": "ported",
+      "wrap_jump_measured": 0.000724,
+      "head_rms": 0.184677,
+      "tail_rms": 0.025944,
+      "wrap_jump_recorded": 0.000724,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/bach_uyen",
+      "version": "composed",
+      "wrap_jump_measured": 0.000568,
+      "head_rms": 0.18173,
+      "tail_rms": 0.074878,
+      "wrap_jump_recorded": 1.3e-05,
+      "wrap_jump_raw_recorded": 0.295172,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/forge",
+      "version": "composed",
+      "wrap_jump_measured": 0.000533,
+      "head_rms": 0.050575,
+      "tail_rms": 0.021851,
+      "wrap_jump_recorded": 4e-06,
+      "wrap_jump_raw_recorded": 0.127903,
+      "seamBasis": "runtime OGG (CP30)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/boss_mang_cot",
+      "version": "ported",
+      "wrap_jump_measured": 0.000533,
+      "head_rms": 0.166777,
+      "tail_rms": 0.024913,
+      "wrap_jump_recorded": 0.000533,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/desert_wind",
+      "version": "composed",
+      "wrap_jump_measured": 0.000514,
+      "head_rms": 0.027434,
+      "tail_rms": 0.027568,
+      "wrap_jump_recorded": 5e-06,
+      "wrap_jump_raw_recorded": 0.201266,
+      "seamBasis": "runtime OGG (CP30)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/rift",
+      "version": "composed",
+      "wrap_jump_measured": 0.000382,
+      "head_rms": 0.052866,
+      "tail_rms": 0.012713,
+      "wrap_jump_recorded": 2e-06,
+      "wrap_jump_raw_recorded": 0.136555,
+      "seamBasis": "runtime OGG (CP30)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/cave_drips",
+      "version": "composed",
+      "wrap_jump_measured": 0.000362,
+      "head_rms": 0.032538,
+      "tail_rms": 0.017087,
+      "wrap_jump_recorded": 3e-06,
+      "wrap_jump_raw_recorded": 0.072681,
+      "seamBasis": "runtime OGG (CP30)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/rift_finale",
+      "version": "composed",
+      "wrap_jump_measured": 0.00036,
+      "head_rms": 0.147939,
+      "tail_rms": 0.016763,
+      "wrap_jump_recorded": 3e-06,
+      "wrap_jump_raw_recorded": 0.091384,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/thang_long_crowd",
+      "version": "composed",
+      "wrap_jump_measured": 0.000286,
+      "head_rms": 0.02844,
+      "tail_rms": 0.005555,
+      "wrap_jump_recorded": 1e-06,
+      "wrap_jump_raw_recorded": 0.044936,
+      "seamBasis": "runtime OGG (CP30)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/bach_uyen",
+      "version": "ported",
+      "wrap_jump_measured": 0.000263,
+      "head_rms": 0.139011,
+      "tail_rms": 0.021535,
+      "wrap_jump_recorded": 0.000263,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/wind_canopy",
+      "version": "composed",
+      "wrap_jump_measured": 0.000222,
+      "head_rms": 0.036025,
+      "tail_rms": 0.004199,
+      "wrap_jump_recorded": 1e-06,
+      "wrap_jump_raw_recorded": 0.024843,
+      "seamBasis": "runtime OGG (CP30)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/quiet_discovery",
+      "version": "composed",
+      "wrap_jump_measured": 0.000194,
+      "head_rms": 0.101169,
+      "tail_rms": 0.020017,
+      "wrap_jump_recorded": 3e-06,
+      "wrap_jump_raw_recorded": 0.064427,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/river_shore",
+      "version": "composed",
+      "wrap_jump_measured": 0.000188,
+      "head_rms": 0.04053,
+      "tail_rms": 0.019256,
+      "wrap_jump_recorded": 3e-06,
+      "wrap_jump_raw_recorded": 0.130838,
+      "seamBasis": "runtime OGG (CP30)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/rain_light",
+      "version": "composed",
+      "wrap_jump_measured": 0.000181,
+      "head_rms": 0.038544,
+      "tail_rms": 0.010084,
+      "wrap_jump_recorded": 2e-06,
+      "wrap_jump_raw_recorded": 0.064621,
+      "seamBasis": "runtime OGG (CP30)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/thang_long",
+      "version": "ported",
+      "wrap_jump_measured": 0.000161,
+      "head_rms": 0.145458,
+      "tail_rms": 0.0246,
+      "wrap_jump_recorded": 0.000161,
+      "wrap_jump_raw_recorded": null,
+      "seamBasis": "runtime OGG (CP07)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "MUSIC/lam_trieu",
+      "version": "composed",
+      "wrap_jump_measured": 5.9e-05,
+      "head_rms": 0.114683,
+      "tail_rms": 0.008271,
+      "wrap_jump_recorded": 1e-06,
+      "wrap_jump_raw_recorded": 0.043153,
+      "seamBasis": "master WAV (CP26, post-landing)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/city_night",
+      "version": "composed",
+      "wrap_jump_measured": 4.2e-05,
+      "head_rms": 0.041779,
+      "tail_rms": 0.020536,
+      "wrap_jump_recorded": 4e-06,
+      "wrap_jump_raw_recorded": 0.156806,
+      "seamBasis": "runtime OGG (CP30)",
+      "flag_ear_check": false
+    },
+    {
+      "cueKey": "AMBIENCE/underwater",
+      "version": "composed",
+      "wrap_jump_measured": 9e-06,
+      "head_rms": 0.027835,
+      "tail_rms": 0.003825,
+      "wrap_jump_recorded": 1e-06,
+      "wrap_jump_raw_recorded": 0.036428,
+      "seamBasis": "runtime OGG (CP30)",
+      "flag_ear_check": false
+    }
+  ],
+  "seamMethod": "mono 48kHz f32 decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS (CP07 method)",
+  "seamFlagThreshold": 0.015,
+  "voCanonical": [
+    {
+      "key": "CIN001_S05",
+      "shotId": "CIN_001_S05",
+      "speaker": "NPC_LYAN",
+      "speakerDisplay": "Ly An",
+      "voice": "Aria (fictional system voice)",
+      "text": "Đầu kia! Giữ giúp tôi đầu kia!",
+      "windowSceneSeconds": [
+        24.8,
+        28.5
+      ],
+      "window_s": 3.7,
+      "takeDuration_s": 2.568,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/p0/VO_CIN001_S05_LYAN_draft_v1.wav",
+      "wav": "VO_CIN001_S05_LYAN_draft_v1.wav",
+      "measured_lufs": -16.01,
+      "measured_dbtp": -1.85,
+      "status": "DECIDED_DEC_MEDIA_P0",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Ly An — kiểm tra độ hợp vai",
+      "sha256": "51fc65de235916c3c8b4a002564db7a6e484298f11567af803ff0437b4c1d113",
+      "canonical": true
+    },
+    {
+      "key": "CIN002_S02",
+      "shotId": "CIN_002_S02",
+      "speaker": "NPC_TA_VAN_KHANH",
+      "speakerDisplay": "Tạ Vân Khanh",
+      "voice": "Helio (fictional system voice)",
+      "text": "Trên bờ chỉ nghe nửa tiếng. Phần còn lại ở dưới ấy.",
+      "windowSceneSeconds": [
+        7.0,
+        11.0
+      ],
+      "window_s": 4.0,
+      "takeDuration_s": 3.792,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/p0/VO_CIN002_S02_TAVANKHANH_draft_v1.wav",
+      "wav": "VO_CIN002_S02_TAVANKHANH_draft_v1.wav",
+      "measured_lufs": -21.61,
+      "measured_dbtp": -4.24,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Tạ Vân Khanh — kiểm tra độ hợp vai",
+      "sha256": "4439578bfb58f5a29cd4d5177c6e53474621ec516b527c08b0802193d407bdcc",
+      "canonical": true
+    },
+    {
+      "key": "CIN003_S03",
+      "shotId": "CIN_003_S03",
+      "speaker": "NPC_LYAN",
+      "speakerDisplay": "Ly An",
+      "voice": "Aria (fictional system voice)",
+      "text": "Có thể họ đã đứng ở hai chỗ khác nhau. Cứ để họ kể.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 4.032,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_003_S03_LYAN_draft_v1.wav",
+      "wav": "VO_CIN_003_S03_LYAN_draft_v1.wav",
+      "measured_lufs": -19.32,
+      "measured_dbtp": -4.36,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Ly An — kiểm tra độ hợp vai",
+      "sha256": "e493ca6264f8733ccf3d764e4969765d9d4d7de09bf0295c09fd523fb0e96176",
+      "canonical": true
+    },
+    {
+      "key": "CIN004_S02",
+      "shotId": "CIN_004_S02",
+      "speaker": "NPC_LYAN",
+      "speakerDisplay": "Ly An",
+      "voice": "Aria (fictional system voice)",
+      "text": "Nó cứ tránh chỗ nước ấy.",
+      "windowSceneSeconds": [
+        7.5,
+        9.5
+      ],
+      "window_s": 2.0,
+      "takeDuration_s": 1.752,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/p0/VO_CIN004_S02_LYAN_OFFSCREEN_draft_v1.wav",
+      "wav": "VO_CIN004_S02_LYAN_OFFSCREEN_draft_v1.wav",
+      "measured_lufs": -21.41,
+      "measured_dbtp": -8.56,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT; OFFSCREEN_DECIDED_DEC_MEDIA_P0",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Ly An — kiểm tra độ hợp vai",
+      "sha256": "1fcc662e7621f83bc5f51940b5481ae0342868f7f46c038d3d074ac254028496",
+      "canonical": true
+    },
+    {
+      "key": "CIN005_S03",
+      "shotId": "CIN_005_S03",
+      "speaker": "NPC_LYAN",
+      "speakerDisplay": "Ly An",
+      "voice": "Aria (fictional system voice)",
+      "text": "Ở đây ai cũng nói mình giữ bình yên. Hãy nghe xem họ đang giữ cho ai.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 5.16,
+      "fit": "OVERRUN",
+      "overrun_s": 0.16,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_005_S03_LYAN_draft_v1.wav",
+      "wav": "VO_CIN_005_S03_LYAN_draft_v1.wav",
+      "measured_lufs": -20.5,
+      "measured_dbtp": -6.31,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Ly An — kiểm tra độ hợp vai",
+      "sha256": "6e01c87f309cf1dacf5e552297b91cf8d6297ab8d59e606da5b85acd566ab7b2",
+      "canonical": true
+    },
+    {
+      "key": "CIN006_S03",
+      "shotId": "CIN_006_S03",
+      "speaker": "NPC_HA_MAC",
+      "speakerDisplay": "Hạ Mặc",
+      "voice": "Helio (fictional system voice)",
+      "text": "Ba thứ cùng đi qua một tuyến. Chưa có thứ nào bảo người bán biết mình đang chở gì.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 5.52,
+      "fit": "OVERRUN",
+      "overrun_s": 0.52,
+      "runtimePath": "ClientGodot/assets/audio/vo/cin006/VO_CIN_006_S03_HAMAC_draft_v1.wav",
+      "wav": "VO_CIN_006_S03_HAMAC_draft_v1.wav",
+      "measured_lufs": -21.96,
+      "measured_dbtp": -3.42,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Hạ Mặc — kiểm tra độ hợp vai",
+      "sha256": "41d7c11df3c230cfff6bbb4dbbb382d855c813a08612f1142e8144cf9d298245",
+      "canonical": true
+    },
+    {
+      "key": "CIN007_S03",
+      "shotId": "CIN_007_S03",
+      "speaker": "NPC_LYAN",
+      "speakerDisplay": "Ly An",
+      "voice": "Aria (fictional system voice)",
+      "text": "Trong sổ người ấy đã mất. Ở đây vẫn có người gọi tên.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 3.912,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_007_S03_LYAN_draft_v1.wav",
+      "wav": "VO_CIN_007_S03_LYAN_draft_v1.wav",
+      "measured_lufs": -18.1,
+      "measured_dbtp": -1.38,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Ly An — kiểm tra độ hợp vai",
+      "sha256": "e2897902bc706a430dd97fda1fc7fd965ebb01599d056e337ce91ff04d84823c",
+      "canonical": true
+    },
+    {
+      "key": "CIN008_S03",
+      "shotId": "CIN_008_S03",
+      "speaker": "NPC_TA_VAN_KHANH",
+      "speakerDisplay": "Tạ Vân Khanh",
+      "voice": "Helio (fictional system voice)",
+      "text": "Không ai ép tay ta ký. Đó mới là điều khó nói.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 3.552,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_008_S03_TAVANKHANH_draft_v1.wav",
+      "wav": "VO_CIN_008_S03_TAVANKHANH_draft_v1.wav",
+      "measured_lufs": -23.1,
+      "measured_dbtp": -1.94,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Tạ Vân Khanh — kiểm tra độ hợp vai",
+      "sha256": "11ac4a8284f27275b90cc7180d0e86cb533ffcc2747521c55ebd3d6d3c9da68d",
+      "canonical": true
+    },
+    {
+      "key": "CIN009_S03",
+      "shotId": "CIN_009_S03",
+      "speaker": "NPC_LYAN",
+      "speakerDisplay": "Ly An",
+      "voice": "Aria (fictional system voice)",
+      "text": "Có tiếng đã được trả lời. Có tiếng mình còn chưa biết gọi thế nào.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 4.08,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_009_S03_LYAN_draft_v1.wav",
+      "wav": "VO_CIN_009_S03_LYAN_draft_v1.wav",
+      "measured_lufs": -17.23,
+      "measured_dbtp": -3.13,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Ly An — kiểm tra độ hợp vai",
+      "sha256": "5573f563ee79aacc1fd4d746e813f00a5d6fa3452e0d73dcd8925bee72eff1ba",
+      "canonical": true
+    },
+    {
+      "key": "CIN010_S03",
+      "shotId": "CIN_010_S03",
+      "speaker": "NPC_SAM_CHU_QUY",
+      "speakerDisplay": "Sầm Chủ Quỹ",
+      "voice": "Helio (fictional system voice)",
+      "text": "Đường ngắn thì đỡ khát. Nếu xe qua được.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 2.808,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_010_S03_SAMCHUQUY_draft_v1.wav",
+      "wav": "VO_CIN_010_S03_SAMCHUQUY_draft_v1.wav",
+      "measured_lufs": -22.01,
+      "measured_dbtp": -4.71,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Sầm Chủ Quỹ — kiểm tra độ hợp vai",
+      "sha256": "f92937a8b2e960c928b0df8433b20b67f2eb1df2bb1176abbaf78ae07a605f8d",
+      "canonical": true
+    },
+    {
+      "key": "CIN011_S03",
+      "shotId": "CIN_011_S03",
+      "speaker": "NPC_HA_MAC",
+      "speakerDisplay": "Hạ Mặc",
+      "voice": "Helio (fictional system voice)",
+      "text": "Nét sau không xóa được điều tốt trước đó. Cũng không được dùng điều tốt để xóa nét sau.",
+      "windowSceneSeconds": [
+        12.2,
+        17.8
+      ],
+      "window_s": 5.6,
+      "takeDuration_s": 5.592,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_011_S03_HAMAC_draft_v1.wav",
+      "wav": "VO_CIN_011_S03_HAMAC_draft_v1.wav",
+      "measured_lufs": -21.5,
+      "measured_dbtp": -3.42,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Hạ Mặc — kiểm tra độ hợp vai",
+      "sha256": "d51f2eb6edb630694cd280a620048565fabeb54277de224f44f973eef4cfa370",
+      "canonical": true
+    },
+    {
+      "key": "CIN012_S03",
+      "shotId": "CIN_012_S03",
+      "speaker": "NPC_HA_MAC",
+      "speakerDisplay": "Hạ Mặc",
+      "voice": "Helio (fictional system voice)",
+      "text": "Có thể đưa chuyện này ra ánh sáng mà không đẩy người làm chứng vào lửa.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 4.32,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_012_S03_HAMAC_draft_v1.wav",
+      "wav": "VO_CIN_012_S03_HAMAC_draft_v1.wav",
+      "measured_lufs": -25.38,
+      "measured_dbtp": -5.33,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Hạ Mặc — kiểm tra độ hợp vai",
+      "sha256": "87f9ecfacd5da329fbf14397dad88e0b3c8a76880a57c24be70b00d186cda9e5",
+      "canonical": true
+    },
+    {
+      "key": "CIN013_S03",
+      "shotId": "CIN_013_S03",
+      "speaker": "NPC_REFUGEE_LEADER",
+      "speakerDisplay": "Trưởng đoàn",
+      "voice": "Helio (fictional system voice)",
+      "text": "Chưa đóng cổng. Còn một người đi sau.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 2.472,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_013_S03_REFUGEELEADER_draft_v1.wav",
+      "wav": "VO_CIN_013_S03_REFUGEELEADER_draft_v1.wav",
+      "measured_lufs": -22.51,
+      "measured_dbtp": -5.33,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Trưởng đoàn — kiểm tra độ hợp vai",
+      "sha256": "21bf362fe3d3f9dc4062d467f33e3fbed4dc0f09786c8530df4427ee0b6f8eff",
+      "canonical": true
+    },
+    {
+      "key": "CIN014_S03",
+      "shotId": "CIN_014_S03",
+      "speaker": "NPC_TONG_BANH",
+      "speakerDisplay": "Tống Bành",
+      "voice": "Helio (fictional system voice)",
+      "text": "Ta biết lệnh ấy là giả. Ta vẫn cho đóng dấu.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 3.072,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_014_S03_TONGBANH_draft_v1.wav",
+      "wav": "VO_CIN_014_S03_TONGBANH_draft_v1.wav",
+      "measured_lufs": -22.05,
+      "measured_dbtp": -2.01,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Tống Bành — kiểm tra độ hợp vai",
+      "sha256": "71195d946417c4978d865d2be4d066b520da09c96b8e511a1c332d27e36101dc",
+      "canonical": true
+    },
+    {
+      "key": "CIN015_S03",
+      "shotId": "CIN_015_S03",
+      "speaker": "NPC_DIVER_LEAD",
+      "speakerDisplay": "Đội trưởng thợ lặn",
+      "voice": "Helio (fictional system voice)",
+      "text": "Lần trước có người đã buộc dây này cho chúng ta.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 2.88,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_015_S03_DIVERLEAD_draft_v1.wav",
+      "wav": "VO_CIN_015_S03_DIVERLEAD_draft_v1.wav",
+      "measured_lufs": -23.27,
+      "measured_dbtp": -4.01,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Đội trưởng thợ lặn — kiểm tra độ hợp vai",
+      "sha256": "988d767631e150f0ac618e5e7db4c8d7b42cda6887471d9a49921573e4d8c733",
+      "canonical": true
+    },
+    {
+      "key": "CIN016_S03",
+      "shotId": "CIN_016_S03",
+      "speaker": "NPC_HA_MAC",
+      "speakerDisplay": "Hạ Mặc",
+      "voice": "Helio (fictional system voice)",
+      "text": "Tôi có thể ghi lại phần ông muốn kể không?",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 2.472,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_016_S03_HAMAC_draft_v1.wav",
+      "wav": "VO_CIN_016_S03_HAMAC_draft_v1.wav",
+      "measured_lufs": -21.92,
+      "measured_dbtp": -4.4,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Hạ Mặc — kiểm tra độ hợp vai",
+      "sha256": "ba1b23820bd63811c59279c9d5d95cbf74b9adcb362ce9e4ec6c0f73e611fa4c",
+      "canonical": true
+    },
+    {
+      "key": "CIN017_S03",
+      "shotId": "CIN_017_S03",
+      "speaker": "NPC_DIVER_LEAD",
+      "speakerDisplay": "Đội trưởng thợ lặn",
+      "voice": "Helio (fictional system voice)",
+      "text": "Mang lõi đi thì phải giữ đường nước còn lại.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 3.168,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_017_S03_DIVERLEAD_draft_v1.wav",
+      "wav": "VO_CIN_017_S03_DIVERLEAD_draft_v1.wav",
+      "measured_lufs": -22.33,
+      "measured_dbtp": -2.63,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Đội trưởng thợ lặn — kiểm tra độ hợp vai",
+      "sha256": "af353ca2e88fdbeff15645a2becff0c6e78cd8dac5d42a8ec2528211b5fd7989",
+      "canonical": true
+    },
+    {
+      "key": "CIN018_S02",
+      "shotId": "CIN_018_S02",
+      "speaker": "NPC_CO_VO_TUONG",
+      "speakerDisplay": "Cơ Vô Tướng",
+      "voice": "Helio (fictional system voice)",
+      "text": "Ta không còn chấp nhận phần ta không biết.",
+      "windowSceneSeconds": [
+        6.5,
+        11.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 2.88,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_018_S02_COVOTUONG_draft_v1.wav",
+      "wav": "VO_CIN_018_S02_COVOTUONG_draft_v1.wav",
+      "measured_lufs": -23.77,
+      "measured_dbtp": -2.35,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Cơ Vô Tướng — kiểm tra độ hợp vai",
+      "sha256": "3b6113fc6fa81467ae23c16320cf84c030ca7bed6cde1df666f7c96dbd5f7754",
+      "canonical": true
+    },
+    {
+      "key": "CIN018_S03",
+      "shotId": "CIN_018_S03",
+      "speaker": "PLAYER",
+      "speakerDisplay": "Người chơi",
+      "voice": "Helio (fictional system voice)",
+      "text": "Ở Sa Hỏa ông đã cho nước. Ở nơi khác, người ta không được hỏi vì sao nước mất.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 5.28,
+      "fit": "OVERRUN",
+      "overrun_s": 0.28,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_018_S03_PLAYER_draft_v1.wav",
+      "wav": "VO_CIN_018_S03_PLAYER_draft_v1.wav",
+      "measured_lufs": -22.54,
+      "measured_dbtp": -3.91,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [
+        "Sa Hỏa"
+      ],
+      "listenFor": "Phát âm tên riêng trong câu: Sa Hỏa",
+      "sha256": "ad02b698377113b11bae412a25d464b9b161c1405b97c4be90e6f40a146b6590",
+      "canonical": true
+    },
+    {
+      "key": "CIN019_S03",
+      "shotId": "CIN_019_S03",
+      "speaker": "NPC_LYAN",
+      "speakerDisplay": "Ly An",
+      "voice": "Aria (fictional system voice)",
+      "text": "Lần này không ai giữ hết năm con đường.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 2.88,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_019_S03_LYAN_draft_v1.wav",
+      "wav": "VO_CIN_019_S03_LYAN_draft_v1.wav",
+      "measured_lufs": -25.52,
+      "measured_dbtp": -8.76,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Ly An — kiểm tra độ hợp vai",
+      "sha256": "511cd1e9713adceae80c0d7eaf31f1f801e76a44c369ef5d28680b42fb40208f",
+      "canonical": true
+    },
+    {
+      "key": "CIN020_S03",
+      "shotId": "CIN_020_S03",
+      "speaker": null,
+      "speakerDisplay": "Người nhận thư",
+      "voice": "Aria (fictional system voice)",
+      "text": "Chờ một chút. Tôi muốn gửi lại vài lời.",
+      "windowSceneSeconds": [
+        12.5,
+        17.5
+      ],
+      "window_s": 5.0,
+      "takeDuration_s": 3.0,
+      "fit": "FITS",
+      "overrun_s": 0.0,
+      "runtimePath": "ClientGodot/assets/audio/vo/campaign/VO_CIN_020_S03_LETTERRECIPIENT_draft_v1.wav",
+      "wav": "VO_CIN_020_S03_LETTERRECIPIENT_draft_v1.wav",
+      "measured_lufs": -19.59,
+      "measured_dbtp": -5.29,
+      "status": "PROPOSED_ANIMATIC_PLACEMENT",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Người nhận thư — kiểm tra độ hợp vai",
+      "sha256": "3b9007c5b86fa0d67f4560a161553e87c9ebaee03a850e09c43ac7fb333ba232",
+      "canonical": true
+    }
+  ],
+  "voAlternate": [
+    {
+      "key": "CIN006_ALT_T01",
+      "shotId": null,
+      "speaker": "NPC_HA_MAC",
+      "speakerDisplay": "Hạ Mặc",
+      "voice": "Helio (fictional system voice)",
+      "text": "Tới đây ta theo được. Chỗ trống này giữ nguyên.",
+      "windowSceneSeconds": null,
+      "window_s": null,
+      "takeDuration_s": 3.0,
+      "fit": "NO_WINDOW_ASSIGNED",
+      "overrun_s": null,
+      "runtimePath": "ClientGodot/assets/audio/vo/cin006/VO_CIN_006_ALT_T01_HAMAC_draft_v1-alt.wav",
+      "wav": "VO_CIN_006_ALT_T01_HAMAC_draft_v1-alt.wav",
+      "measured_lufs": -22.37,
+      "measured_dbtp": -5.54,
+      "status": "ALTERNATE_TAKE_DOES_NOT_REPLACE_CANONICAL",
+      "properNamesInText": [],
+      "listenFor": "Giọng đóng vai Hạ Mặc — kiểm tra độ hợp vai",
+      "sha256": "619da3e6016ef3bb163554819f17ff216745affc7289c5829ea9aab287bbc073",
+      "takeId": "CIN_006_ALT_T01",
+      "takeVersion": "v1-alt",
+      "canonical": false
+    }
+  ],
+  "voCounts": {
+    "canonical": 21,
+    "alternateSeparate": 1,
+    "overruns": [
+      "CIN_005_S03",
+      "CIN_006_S03",
+      "CIN_018_S03"
+    ]
+  },
+  "p0VoLoudnessDelta": {
+    "CIN001_S05_minus_other_p0_mean_lufs": 5.5,
+    "takes": {
+      "CIN001_S05": -16.01,
+      "CIN002_S02": -21.61,
+      "CIN004_S02": -21.41
+    }
+  },
+  "defects": [
+    {
+      "id": "D-01",
+      "area": "VO overrun (3 windows)",
+      "evidence": "CIN_005_S03 +0.16 s (take 5.16 s vs window 5.0 s); CIN_006_S03 +0.52 s (take 5.52 s vs window 5.0 s); CIN_018_S03 +0.28 s (take 5.28 s vs window 5.0 s)",
+      "listenAt": "ab_shortlist_vo_playlist.txt — CIN_005_S03, CIN_006_S03, CIN_018_S03",
+      "question": "Câu thoại có bị cắt/nghe vội ở cuối cửa sổ không? Cửa sổ giữ nguyên chờ Codex quyết — không cắt thoại, không nới cửa sổ, không tăng tốc.",
+      "status": "OPEN_FOR_DIRECTOR"
+    },
+    {
+      "id": "D-02",
+      "area": "VO male voices not distinct",
+      "evidence": "Mọi nhân vật nam dùng chung một production voice Helio trong bản nháp (ghi trong VO manifest CP17/CP19).",
+      "listenAt": "ab_shortlist_vo_playlist.txt — CIN_008_S03, CIN_010_S03, CIN_011_S03, CIN_012_S03, CIN_014_S03, CIN_016_S03",
+      "question": "Có phân biệt được Tạ Vân Khanh / Sầm / Hạ Mặc / Tống Bành qua giọng không, hay nghe như một người?",
+      "status": "OPEN_FOR_DIRECTOR"
+    },
+    {
+      "id": "D-03",
+      "area": "P0 VO loudness imbalance",
+      "evidence": "CIN001_S05 take đo lại -16.01 LUFS, cao hơn trung bình 2 take P0 còn lại 5.5 LUFS (ghi chú CP04: ~5,5 LUFS). VO giữ unity trong mix nên chênh này đi thẳng vào mix.",
+      "listenAt": "ab_shortlist_vo_playlist.txt — CIN_001_S05 vs CIN_002_S02 / CIN_004_S02; ab_shortlist_p0_mixes_playlist.txt — CIN_001",
+      "question": "Câu S05 có to hẳn lên so với 2 câu P0 còn lại không? Cần gain-stage lại take hay giữ nguyên làm neo?",
+      "status": "OPEN_FOR_DIRECTOR"
+    },
+    {
+      "id": "D-04",
+      "area": "Loop seam — rain_heavy (ported)",
+      "evidence": "wrap jump đo lại 0.053787 (CP07 ghi 0.053787), cao nhất trong 22 cue ported; RMS đầu/cuối gần bằng nhau (0.030238 / 0.030504).",
+      "listenAt": "ab_shortlist_ambience_playlist.txt — AMBIENCE/rain_heavy PORTED",
+      "question": "Có nghe tiếng click/nấc ở điểm nối vòng lặp 16 s không?",
+      "status": "OPEN_FOR_LISTENER"
+    },
+    {
+      "id": "D-05",
+      "area": "Loop seam — composed music wrapJumpRaw",
+      "evidence": "tran_son wrapJumpRaw 0.404, bach_uyen 0.295 (trước landing 0,25 s, CP26); wrap jump sau landing trên master ≈ 0, nhưng trên runtime OGG đo lại tran_son 0.008203 / bach_uyen 0.000568 (lệch do Vorbis mã hóa lại). Nghe tai vẫn còn nợ.",
+      "listenAt": "ab_shortlist_music_playlist.txt — MUSIC/tran_son, MUSIC/bach_uyen",
+      "question": "Vòng lặp nhạc có liền mạch không, hay nghe rõ điểm nối?",
+      "status": "OPEN_FOR_LISTENER"
+    },
+    {
+      "id": "D-06",
+      "area": "Ducking — CIN_002 v3 deeper than v2",
+      "evidence": "Duck ambience CIN_002: v3 −7,32 dB vs v2 −6,48 dB (cùng tham số sidechain; chênh do RMS bed composed trên cửa sổ 2 s, CP31).",
+      "listenAt": "ab_shortlist_p0_mixes_playlist.txt — CIN_002 v2 rồi v3 (cửa sổ VO 7,0–11,0 s)",
+      "question": "Ở v3, ambience có bị dìm quá sâu dưới VO trong cửa sổ 7–11 s không?",
+      "status": "OPEN_FOR_LISTENER"
+    },
+    {
+      "id": "D-07",
+      "area": "Crowd beds are filtered noise, not speech",
+      "evidence": "thang_long_crowd / city_night composed là nhiễu qua dải formant trôi chậm — theo cấu trúc không thể tạo lời nói có nghĩa (CP30). Độ 'giống đám đông' là nhận định nghe tai.",
+      "listenAt": "ab_shortlist_ambience_playlist.txt — AMBIENCE/thang_long_crowd COMPOSED, AMBIENCE/city_night COMPOSED",
+      "question": "Bed có đọc như đám đông thật không, hay nghe như nhiễu trắng lọc?",
+      "status": "OPEN_FOR_LISTENER"
+    },
+    {
+      "id": "D-08",
+      "area": "Stinger placements PROPOSED",
+      "evidence": "reveal @30,0 s CIN_001; tension trong CIN_004 — vị trí PROPOSED chờ picture lock (CP20/CP29/CP31).",
+      "listenAt": "ab_shortlist_p0_mixes_playlist.txt — CIN_001 v1/v2/v3 (30 s), CIN_004 v1/v2/v3",
+      "question": "Stinger có rơi đúng nhịp hình không, hay lệch/thừa?",
+      "status": "OPEN_FOR_DIRECTOR"
+    },
+    {
+      "id": "D-09",
+      "area": "P0 mixes are DRAFT, never auditioned",
+      "evidence": "v1/v2/v3 đều DRAFT_MIX_NOT_FINAL; cân bằng VO/nhạc/ambience chưa nghiệm thu bằng tai. Chênh LUFS giữa các version ≤ 1,4 LUFS/scene theo bảng A/B.",
+      "listenAt": "ab_shortlist_p0_mixes_playlist.txt — toàn bộ 12 file",
+      "question": "Version nào nghe cân bằng nhất (VO rõ, nhạc không lấn, ambience không rỗng)? Ghi lựa chọn v1/v2/v3 theo scene.",
+      "status": "OPEN_FOR_LISTENER"
+    },
+    {
+      "id": "D-10",
+      "area": "VO proper-name pronunciation",
+      "evidence": "Tên riêng nói ra trong câu thoại: Sa Hỏa — chỉ 'Sa Hỏa' (CIN_018_S03). Tên người nói mà mỗi giọng phải đóng vai: Cơ Vô Tướng, Hạ Mặc, Ly An, Người chơi, Người nhận thư, Sầm Chủ Quỹ, Trưởng đoàn, Tạ Vân Khanh, Tống Bành, Đội trưởng thợ lặn. TTS hư cấu, chưa nghe tai.",
+      "listenAt": "ab_shortlist_vo_playlist.txt — toàn bộ 21 take",
+      "question": "Tên riêng có phát âm đúng và thống nhất qua các take không? Giọng có hợp với nhân vật mình đóng vai không? Ghi lại tên nào nghe sai.",
+      "status": "OPEN_FOR_LISTENER"
+    },
+    {
+      "id": "D-11",
+      "area": "Placeholder voices (cinematic-only)",
+      "evidence": "CIN_020 dùng VOICE_LETTER_RECIPIENT cho Người nhận thư vô danh (vai giọng cinematic, không phải NPC gameplay); CIN_018_S03 PLAYER là timing-only placeholder, VOICE_GUIDE không gán giọng nói cho player.",
+      "listenAt": "ab_shortlist_vo_playlist.txt — CIN_020_S03, CIN_018_S03",
+      "question": "Giọng placeholder có chấp nhận được cho bản nháp không, hay cần casting riêng?",
+      "status": "OPEN_FOR_DIRECTOR"
+    },
+    {
+      "id": "D-12",
+      "area": "Tên nhân vật viết không thống nhất — ĐÃ CHỐT",
+      "evidence": "Chủ dự án chốt 2026-11-07: cách viết canonical là 'Tạ Vân Khanh' — khớp docs/production (176 lần; 'Văn Khánh' 0 lần), campaign VO manifest (CIN_008_S03), Cinema Production Pack và questkit PR #118. Cách viết sai 'Tạ Văn Khánh' không nằm trong manifest nào: P0 VO manifest chỉ lưu speaker ID NPC_TA_VAN_KHANH, nhãn hiển thị của take CIN_002_S02 do ánh xạ SPEAKER_DISPLAY dự phòng trong chính tool shortlist này sinh ra. Đã sửa ánh xạ và sinh lại nhãn tại checkpoint 36. Không thu lại VO: cả hai câu thoại đều không đọc tên nhân vật.",
+      "listenAt": "ab_shortlist_vo_playlist.txt — CIN_002_S02 vs CIN_008_S03",
+      "question": "Đã chốt — không còn câu hỏi mở về cách viết. Khi nghe hai take, kiểm tra giọng có đọc như cùng một nhân vật không (xem thêm D-02).",
+      "status": "RESOLVED_OWNER_DECISION_20261107"
+    }
+  ],
+  "playlists": {
+    "ab_shortlist_p0_mixes_playlist.txt": {
+      "entries": 12,
+      "totalDuration_s": 432.0,
+      "path": "Implementation/Reports/MuseMedia/ab_shortlist_p0_mixes_playlist.txt"
+    },
+    "ab_shortlist_music_playlist.txt": {
+      "entries": 13,
+      "totalDuration_s": 444.204,
+      "path": "Implementation/Reports/MuseMedia/ab_shortlist_music_playlist.txt"
+    },
+    "ab_shortlist_ambience_playlist.txt": {
+      "entries": 26,
+      "totalDuration_s": 416.0,
+      "path": "Implementation/Reports/MuseMedia/ab_shortlist_ambience_playlist.txt"
+    },
+    "ab_shortlist_vo_playlist.txt": {
+      "entries": 21,
+      "totalDuration_s": 75.192,
+      "path": "Implementation/Reports/MuseMedia/ab_shortlist_vo_playlist.txt"
+    },
+    "ab_shortlist_vo_alt_playlist.txt": {
+      "entries": 1,
+      "totalDuration_s": 3.0,
+      "path": "Implementation/Reports/MuseMedia/ab_shortlist_vo_alt_playlist.txt"
+    },
+    "ab_shortlist_all_playlist.txt": {
+      "entries": 72,
+      "totalDuration_s": 1367.396,
+      "path": "Implementation/Reports/MuseMedia/ab_shortlist_all_playlist.txt"
+    }
+  },
+  "counts": {
+    "mixFiles": 12,
+    "musicCues": 9,
+    "stingers": 4,
+    "ambienceComposed": 13,
+    "ambiencePorted": 13,
+    "portedMusic": 9,
+    "voCanonical": 21,
+    "voAlternate": 1
+  }
+}

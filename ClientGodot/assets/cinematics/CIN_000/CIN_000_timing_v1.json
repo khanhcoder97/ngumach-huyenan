@@ -1,0 +1,148 @@
+{
+ "sceneId": "CIN_000",
+ "questId": "INTRO_PROLOGUE",
+ "title": "Trước khi tới Bến Mưa",
+ "durationSeconds": 87.367,
+ "playback": "PRE_GAME_INTRO_AFTER_CHARACTER_CREATION",
+ "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+ "revealTier": "PROLOGUE_NO_SPOILER",
+ "charactersOnScreen": [],
+ "staging": "NO_NAMED_CHARACTER_ON_SCREEN; the traveler in S11 is an unnamed back-view silhouette (no class design, no face, no weapon); no persistent ID, no spawn claim",
+ "stagingNote": "The prologue is a standalone pre-game film, separate from the 20-scene campaign pack; it is NOT counted in the campaign totals.",
+ "audioDirection": "Vietnamese narration (draft TTS) over the checkpoint 26 composed Ben Mua theme + ported rain/river ambience, sidechain-ducked; the mixed track is embedded in the film files. Final line reuses the CP04 CIN_001_S05 take.",
+ "dialogueWindowStatus": "OWNER_APPROVED_SCRIPT_20261106",
+ "dialogueWindowNote": "Narration script approved by the owner in main chat 2026-11-06; shot windows derive from the measured VO durations, not from a pack timecode.",
+ "shots": [
+  {
+   "shotId": "CIN_000_S01",
+   "startSeconds": 0.0,
+   "endSeconds": 6.233,
+   "camera": "WIDE_AERIAL",
+   "dialogue": [
+    {
+     "speaker": "NARRATOR",
+     "startSeconds": 1.4,
+     "endSeconds": 17.912,
+     "text": "Xưa, Lạc Châu sống nhờ năm dòng mạch chảy dưới lòng đất và mặt nước. Năm mạch trao nhau dòng chảy qua một cơ chế điều hòa gọi là Huyền Ấn — và năm ngọn tháp canh giữ sự trao đổi ấy, để không vùng nào thừa nước, không vùng nào cạn khô.",
+     "takeId": "VO_CIN000_SEG01"
+    }
+   ]
+  },
+  {
+   "shotId": "CIN_000_S02",
+   "startSeconds": 5.533,
+   "endSeconds": 18.833,
+   "camera": "WIDE_PANORAMA",
+   "dialogue": []
+  },
+  {
+   "shotId": "CIN_000_S03",
+   "startSeconds": 18.133,
+   "endSeconds": 25.733,
+   "camera": "WIDE",
+   "dialogue": [
+    {
+     "speaker": "NARRATOR",
+     "startSeconds": 19.033,
+     "endSeconds": 34.561,
+     "text": "Ba trăm năm trước, một cơn địa chấn phá vỡ cơ chế điều hòa. Để ngăn thảm họa, người ta tách năm tháp ra khỏi nhau. Thảm họa qua đi — nhưng từ đó, điều tiết dần biến thành sở hữu. Mỗi tháp giữ mạch của mình, và giữ cả những danh sách ghi tên người sống dưới mạch ấy.",
+     "takeId": "VO_CIN000_SEG02"
+    }
+   ]
+  },
+  {
+   "shotId": "CIN_000_S04",
+   "startSeconds": 25.033,
+   "endSeconds": 35.467,
+   "camera": "WIDE",
+   "dialogue": []
+  },
+  {
+   "shotId": "CIN_000_S05",
+   "startSeconds": 34.767,
+   "endSeconds": 43.067,
+   "camera": "WIDE",
+   "dialogue": [
+    {
+     "speaker": "NARRATOR",
+     "startSeconds": 35.667,
+     "endSeconds": 55.419,
+     "text": "Ba mươi năm trước, hạn hán và lũ lụt nối nhau tràn qua một vùng quê. Trong cơn tuyệt vọng, người ta thử nối các mạch lại làm một. Thí nghiệm vỡ. Một phần thành phố chìm xuống nước — và nhiều người còn sống bị ghi vào sổ là đã chết. Một lệnh phong tỏa được ký. Rồi hồ sơ bị xóa dần, như thể chưa từng có ai ở đó.",
+     "takeId": "VO_CIN000_SEG03"
+    }
+   ]
+  },
+  {
+   "shotId": "CIN_000_S06",
+   "startSeconds": 42.367,
+   "endSeconds": 48.267,
+   "camera": "WIDE",
+   "dialogue": []
+  },
+  {
+   "shotId": "CIN_000_S07",
+   "startSeconds": 47.567,
+   "endSeconds": 50.767,
+   "camera": "DETAIL",
+   "dialogue": []
+  },
+  {
+   "shotId": "CIN_000_S08",
+   "startSeconds": 50.067,
+   "endSeconds": 54.933,
+   "camera": "WIDE",
+   "dialogue": []
+  },
+  {
+   "shotId": "CIN_000_S09",
+   "startSeconds": 54.233,
+   "endSeconds": 62.033,
+   "camera": "DETAIL",
+   "dialogue": [
+    {
+     "speaker": "NARRATOR",
+     "startSeconds": 55.133,
+     "endSeconds": 70.061,
+     "text": "Ngày nay, dòng chảy ở Lạc Châu không còn đi đúng đường. Có tiếng chuông ngân dưới mặt nước, ở nơi không hề treo chuông. Có những cái tên bị mất khỏi danh sách. Và vẫn còn những lá thư — niêm sáp năm vạch — đi qua các tuyến đường thủy, chờ người nhận chịu mở.",
+     "takeId": "VO_CIN000_SEG04"
+    }
+   ]
+  },
+  {
+   "shotId": "CIN_000_S10",
+   "startSeconds": 61.333,
+   "endSeconds": 70.967,
+   "camera": "DETAIL",
+   "dialogue": []
+  },
+  {
+   "shotId": "CIN_000_S11",
+   "startSeconds": 70.267,
+   "endSeconds": 84.467,
+   "camera": "WIDE",
+   "dialogue": [
+    {
+     "speaker": "NARRATOR",
+     "startSeconds": 71.167,
+     "endSeconds": 79.207,
+     "text": "Bến Mưa là một bến đò nhỏ nơi các tuyến ấy giao nhau. Mưa không ngớt. Và hôm nay, một người khách lạ vừa bước lên bến...",
+     "takeId": "VO_CIN000_SEG05"
+    },
+    {
+     "speaker": "NPC_LYAN",
+     "startSeconds": 80.907,
+     "endSeconds": 83.475,
+     "text": "Đầu kia! Giữ giúp tôi đầu kia!",
+     "takeId": "VO_CIN001_S05_LYAN (reused CP04)"
+    }
+   ]
+  },
+  {
+   "shotId": "CIN_000_S12",
+   "startSeconds": 83.767,
+   "endSeconds": 87.367,
+   "camera": "TITLE_CARD",
+   "dialogue": []
+  }
+ ]
+}

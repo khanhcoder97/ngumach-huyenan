@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN006_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 32 - CIN_006 revised take (Goi 31 item 2): shot-content fixes + re-export (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "abcf254",
+ "sceneId": "CIN_006",
+ "title": "Con dấu qua phố",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. CIN_006 names NPC_HA_MAC and NPC_SAM_CHU_QUY but no approved character lock exists for either, so their faces and costumes here are placeholders; per DEC-MEDIA-P0 Q4 they are cinematic-only staging and these frames create no persistent design canon. Checkpoint 32 (Goi 31 item 2) revises CIN_006_S02; all other shots unchanged.",
+ "keyframes": [
+  {
+   "shotId": "CIN_006_S01",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_006_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "53859a1946cb9ac6ea3609cb67de7c74be2efda5c9187587e5ca9a741c7fe830",
+   "sourceStagingFile": "media-generation-keyframe-cin-006-s01-0-03c6ff29-92a0-4f7d-bce2-3473cb7ce095.webp",
+   "sourceStagingSha256": "b3b09d1a56485b92bc49ed46d4398e66f5b190e1a5dc3f8ccfdc7751e0a25712",
+   "sourceSnapshotId": "48c80f4f-fa6d-485e-a37c-7f98f9ed1ab3:gbogn2",
+   "framing": "Medium shot of Sam Chu Quy's stall under an amber awning: wooden balance scale on the table at frame left, three folded trade slips with abstract marks center-front, his hands over the middle slip; lantern-lit market stalls and hanging produce behind.",
+   "knownDefects": "Scene reads as night (lit lanterns, deep-blue background) although the investigation plays as a daytime market scene; small illegible glyph-like marks on a hanging sign behind the stall (left-center). Face and costume are generation-invented: no approved Sam Chu Quy character lock exists yet."
+  },
+  {
+   "shotId": "CIN_006_S02",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_006_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "ef1a9a09e83d2e7d5d2757dc6755c98a554c7e7c9cd31c88f3e757382f250ac0",
+   "sourceStagingFile": "media-generation-keyframe-cin-006-s02-retry3-0-36425724-194b-4e43-a3ab-85836d8da787.webp",
+   "sourceStagingSha256": "ac435918dd6bc0e746366a1106847791da41fc21af4b02e82b42adb2f71568c2",
+   "sourceSnapshotId": "20bc59c1-e49a-459a-b0ae-3ce4704945c6:xzm2zu",
+   "framing": "Whole work table seen from slightly above: a brass hand stamp stands on a stack of rough paper sheets at center, thin green resin fibers visible between the paper layers, and one small green-gloved hand at the lower-right corner holding the paper edge, fully inside the frame.",
+   "knownDefects": "The gloved hand holds the paper edge rather than aligning the stamp directly; the composition is wider than a strict close-up (per the repair direction); the glove is dark green. No oversized/blurred hand, no face or eye, no second person, no legible text. Staging attempts 1-2 (oversized hand) superseded, kept in staging only."
+  },
+  {
+   "shotId": "CIN_006_S03",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_006_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "37366a0eae11496a68270b223f41250cee2c98d13d6d5b5ab961d907ed40b2bc",
+   "sourceStagingFile": "media-generation-keyframe-cin-006-s03-0-a6f8878b-b76d-4b90-a74a-2aa119b6d052.webp",
+   "sourceStagingSha256": "eb850711a4ba28c7d09888913652608e3a2de0f4bda351ffff1996ebe9aef5d5",
+   "sourceSnapshotId": "151b197d-2921-4945-b870-2c36fb784280:ssf97v",
+   "framing": "Medium shot of Ha Mac at a market table: he offers a blank sheet toward frame left with his right hand, left hand resting on a grey cover sheet over an open ledger; paper pockets and scroll cases on his robe; calm market street with shoppers behind.",
+   "knownDefects": "Ledger pages carry illegible glyph-like scribbles; the name cover reads as a rigid grey board rather than a paper sheet; the folded magnifier is not clearly visible. Lighting is cool daylight, drifting from S01's warm lantern-lit palette (cross-shot lighting inconsistency). Face and costume are generation-invented: no approved Ha Mac character lock exists yet."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Checkpoint 32 (Goi 31 item 2) revises S02: the oversized blurred gloved hand and pale face-like intrusion from frame right are removed; the green resin now reads as a fiber trapped inside the rough paper. S01/S03 unchanged from checkpoint 22."
+ ]
+}

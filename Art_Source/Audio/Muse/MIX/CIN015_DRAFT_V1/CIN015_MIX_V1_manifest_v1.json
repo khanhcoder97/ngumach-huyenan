@@ -1,0 +1,151 @@
+{
+  "checkpoint": "MEDIA-02 checkpoint 49 - CIN_015 draft mix v1 (twelfth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1, CIN_012 v1, CIN_013 v1 and CIN_014 v1, same recipe as P0 v3)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_MIX_NOT_FINAL",
+  "mixVersion": "v1_cin015_proposed",
+  "mixVerdict": "DRAFT_MIX_FOR_REVIEW: twelfth scene mix after CIN_006 v1, CIN_003 v1, CIN_005 v1, CIN_007 v1, CIN_008 v1, CIN_009 v1, CIN_010 v1, CIN_011 v1, CIN_012 v1, CIN_013 v1 and CIN_014 v1, built with the P0 v3 recipe (same gain targets, ducking params, peak guard, loop joins). Stem assignment is NEW and PROPOSED_CANDIDATE (the CP02 stem table assigns nothing to CIN_015; the scene timing manifest lists only the reveal stinger as a candidate stem). VO take is the CP17 draft; the take FITS its window (2.880 s, 12.5-15.380 s) by 2.120 s: no overrun, no tail trim at the scene edge. NOT a mix PASS: no ear audition, stem table not locked, stinger placement PROPOSED pending picture lock. Adoption is Codex's adapter decision.",
+  "stemAssignment": {
+    "status": "PROPOSED_CANDIDATE_NEW",
+    "source": "No CP02 assignment exists for CIN_015; bach_uyen music + underwater ambience are the drowned-city cues (composed, CP26/CP30) for this scene (S01: wide view of the submerged ruined town, red-tiled roofs under water, stone arch and bubbles, WIDE_STATIC; S02: detail of the dining bowl tied to a stone table, guide rope and a bare diver hand, DETAIL_LOCKED; S03: top-down underwater corridor with a small diver figure in a conical hat at the bottom centre, TOPDOWN_MATCH; keyframes CIN_015 S01/S02/S03). bach_uyen is the composed set's underwater low-passed form (850 Hz) -- the setting-exact cue for a drowned city, for the line about a rope someone tied for the divers before ('Lan truoc co nguoi da buoc day nay cho chung ta.'). Its only previous mix use was the P0 v3 review reel; this is its first scene-mix use. underwater is the composed underwater bed for the submerged city framing all three shots; also first scene-mix use (P0 v3 review reel only before). ben_mua was passed over: just used for CIN_014, the immediately preceding scene. lam_trieu was passed over: the pastoral flute, used for CIN_013. tran_son ('Tran Son — Nguoi qua cua', the bell-led gate form) was passed over: already used for CIN_008 and CIN_012. quiet_discovery was passed over: used for CIN_007 and CIN_011. thang_long is the capital-city form (wrong setting); sa_hoa is desert/dry (wrong setting); rift_finale is the set's only full close (finale material, wrong for a mid-campaign chapter beat); boss_mang_cot is boss material. wind_canopy was passed over: just used for CIN_014; mountain_wind was used for CIN_013, forge for CIN_012, river_shore for CIN_003 and CIN_008 (water-edge, not submerged), waterfall for CIN_009; rain_light and rain_heavy are above-water rain; cave_drips is a cave bed, not an open drowned city; desert_wind, city_night, thang_long_crowd and rift are wrong for this setting. The reveal stinger is the scene's only manifest-listed candidate stem (CIN_015_timing_v1.json).",
+    "alternateTakeExcluded": "N/A: CIN_015 has no alternate take."
+  },
+  "gainStaging": {
+    "vo": "unity (anchor; take as delivered)",
+    "musicTargetLUFS": -30.0,
+    "ambiencePrimaryTargetLUFS": -36.0,
+    "stingers": "unity",
+    "peakCeilingDBTP": -1.0
+  },
+  "notes": [
+    "VO window 12.5-17.5 s is PROPOSED_ANIMATIC_PLACEMENT (only CIN_001_S05 is DECIDED); all 21 windows are approved for DRAFT VO per Goi 30 D1. The window is the uniform 12.5-17.5 s; it was NOT widened.",
+    "VO take runs 12.5-15.380 s: 2.880 s, ending 2.120 s BEFORE the 17.5 s window end -- the take FITS inside its window by 2120 ms (no overrun, unlike CIN_005/CIN_006). The take ends 2.620 s before the 18.00 s scene end, so no tail trim at the scene edge. The window, the take and the timing are unchanged.",
+    "The CP17 VO take measures -23.27 LUFS (checkpoint 17, re-verified from real bytes this run, vs -22.05 LUFS for the CIN_014 take). VO is kept at unity per the recipe, not normalized.",
+    "Staging: the timing manifest marks the S03 dialogue onscreen: true for the Diver Lead (NPC_DIVER_LEAD), and the S03 keyframe places a small diver figure with a conical hat at the bottom centre of a top-down underwater corridor -- the intended speaker position. But the figure is tiny and seen from above/behind, so the speaker is not identifiable by face or gear from the picture alone; S02 shows only a bare diver hand at the guide rope (no face) and S01 has no figure at all. That ambiguity is a final-picture/character-lock matter, not a mix defect; the mix does not move the VO.",
+    "Ducking depth is measured on the ducked bus against its unducked render (RMS over the full VO window vs a 2 s reference before the window). The full-window method from checkpoint 39 is retained so the depth is comparable across the CIN_003/CIN_005/CIN_007/CIN_008/ CIN_009/CIN_010/CIN_011/CIN_012/CIN_013/CIN_014/CIN_015 mixes (a 2 s slice can understate the cut on cues whose window opening is quiet).",
+    "Ambience loop join uses a 1 s acrossfade; loopQA reports the max sample jump at the join against the bed's own 99.9th-percentile jump.",
+    "Stinger placement at 6.0 s (S02 start) is PROPOSED pending picture lock, mirroring the CIN_004 reveal at 6.0 s."
+  ],
+  "scenes": [
+    {
+      "sceneId": "CIN_015",
+      "seconds": 18.0,
+      "vo": {
+        "take": "VO_CIN_015_S03_DIVERLEAD_draft_v1.wav",
+        "windowSeconds": [
+          12.5,
+          15.38
+        ],
+        "takeDurationSeconds": 2.88,
+        "takeEndSeconds": 15.38,
+        "tailTrimmedAtSceneEdgeSeconds": 0.0,
+        "overrunVsWindowSeconds": -2.12,
+        "gainDb": 0.0
+      },
+      "stems": [
+        {
+          "cue": "MUSIC/bach_uyen",
+          "role": "music",
+          "source": "ClientGodot/assets/audio/composed/music/bach_uyen.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -30.0,
+          "packMeasuredLUFS": -21.96,
+          "remeasuredLUFS": -21.96,
+          "gainDb": -8.04,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/underwater",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/composed/ambience/underwater.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -36.0,
+          "packMeasuredLUFS": -33.11,
+          "remeasuredLUFS": -33.11,
+          "gainDb": -2.89,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/reveal",
+          "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "atSeconds": 6.0,
+          "gainDb": 0.0,
+          "packMeasuredLUFS": -24.96,
+          "remeasuredLUFS": -24.96,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "music",
+            "windowSeconds": [
+              12.5,
+              15.38
+            ],
+            "referenceSeconds": [
+              10.0,
+              12.0
+            ],
+            "depthInWindowDb": -6.87,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/reveal",
+        "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+        "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+        "atSeconds": 6.0,
+        "gainDb": 0.0,
+        "packMeasuredLUFS": -24.96,
+        "remeasuredLUFS": -24.96,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/underwater",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00049,
+              "bedP999Jump": 0.00082,
+              "ratioToP999": 0.593
+            }
+          ]
+        }
+      ],
+      "mix": {
+        "file": "CIN_015_mix_draft_v1.wav",
+        "sha256": "635afb8fce8a48bb7930936d0d34312fdee42a8e8a7da094332b82c8d783c5ee",
+        "durationSeconds": 18.0,
+        "integratedLUFS": "-25.30",
+        "truePeakDBTP": "-3.89",
+        "loudnessRangeLU": "10.60",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 3456100
+        }
+      }
+    }
+  ]
+}

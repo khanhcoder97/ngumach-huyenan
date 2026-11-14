@@ -1,0 +1,61 @@
+{
+ "manifestId": "NGM_PROLOGUE_MIX_V1",
+ "checkpoint": "MEDIA-02 checkpoint 27",
+ "file": "PROLOGUE_mix_v1.wav",
+ "sha256": "4f8224e108fd86ecec4deb8b950344ed7c526ef4bd6bd66a79b58c9a71122e63",
+ "sizeBytes": 16774542,
+ "durationSeconds": 87.3667,
+ "integratedLufs": -22.37,
+ "truePeakDbtp": -3.11,
+ "assetState": "DRAFT_MIX_NOT_FINAL",
+ "stems": [
+  {
+   "role": "narration",
+   "source": "PROLOGUE_VO_manifest_v1.json (checkpoint 27 draft TTS)",
+   "provenance": "NEW_DRAFT_VO"
+  },
+  {
+   "role": "final line",
+   "source": "VO_CIN001_S05_LYAN_draft_v1.wav (checkpoint 04 take, reused bytes)",
+   "provenance": "REUSED_CP04"
+  },
+  {
+   "role": "music bed",
+   "source": "MUSIC/ben_mua composed runtime OGG (checkpoint 26)",
+   "gainDb": -9.07,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE_CP26"
+  },
+  {
+   "role": "ambience",
+   "source": "AMBIENCE/rain_light + AMBIENCE/river_shore runtime OGGs (checkpoint 07 pack)",
+   "gainDb": [
+    -8.52,
+    -8.47
+   ],
+   "provenance": "PORTED_CODEX_PACKV1"
+  },
+  {
+   "role": "title stinger",
+   "source": "SFX/CINEMA/resolve composed runtime OGG (checkpoint 26)",
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE_CP26"
+  }
+ ],
+ "ducking": "sidechaincompress on the music+ambience bed, keyed by the VO bus: threshold 0.03, ratio 4, attack 15 ms, release 350 ms (checkpoint 20 settled values); peak guard trims the whole mix only above -1.0 dBTP",
+ "notes": [
+  "DRAFT_MIX_NOT_FINAL: formula gain staging, no ear audition; narration pronunciation not yet reviewed by a native listener.",
+  "Prologue v1 plumbing fix (2026-11-13, owner order): the CP27 mix graph fed one ffmpeg label to two consumers and lost the narration; the mix was re-rendered with the plumbing corrected (apad + asplit), same takes / recipe / timeline, and the runtime film + variants were re-derived from it. Broken mix sha f026ed3e... stays in git history."
+ ],
+ "plumbingFix": {
+  "checkpoint": "MEDIA-02 prologue v1 plumbing fix (2026-11-13)",
+  "defect": "CP27 graph fed the single [vo] label to both the sidechaincompress key and the final amix; narration frames were stolen between consumers (take-vs-mix correlations 0.008-0.020; renders non-reproducible)",
+  "supersededSha256": "f026ed3e10499b42ea4fcc39ada9a1b42e0b5b749d16ab77208afd54016ffb54",
+  "supersededMeasurements": {
+   "integratedLufs": -20.81,
+   "truePeakDbtp": -9.08
+  },
+  "fixedRender": "Art_Source/Audio/Muse/MIX/PROLOGUE_DRAFT_V1_FIXED/PROLOGUE_mix_v1_fixed.wav",
+  "fixedRenderManifest": "Art_Source/Audio/Muse/MIX/PROLOGUE_DRAFT_V1_FIXED/PROLOGUE_MIX_V1_FIXED_manifest_v1.json",
+  "recipeDeltaVsCp27": "NONE (plumbing only: apad + asplit on the VO bus)",
+  "ownerApproval": "main chat 2026-11-13 02:58 JST"
+ }
+}

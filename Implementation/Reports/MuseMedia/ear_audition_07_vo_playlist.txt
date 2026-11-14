@@ -1,0 +1,66 @@
+#EXTM3U
+# MEDIA-02 WO37 M-D checkpoint 9 — ear-audition pack: VO takes (P0 + campaign + CIN_006 alt + prologue)
+# AUDITION STATUS: NOT_AUDITIONED (prepared for a human listener)
+# M3U content under a .txt name (.m3u is not a policy extension);
+# rename a copy to .m3u to open it directly in a player.
+# Paths are relative to Implementation/Reports/MuseMedia/.
+#EXTINF:-1,VO-001 CAMPAIGN_VO_timeline_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/CAMPAIGN_VO_timeline_draft_v1.wav
+#EXTINF:-1,VO-002 VO_CIN_003_S03_LYAN_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_003_S03_LYAN_draft_v1.wav
+#EXTINF:-1,VO-003 VO_CIN_005_S03_LYAN_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_005_S03_LYAN_draft_v1.wav
+#EXTINF:-1,VO-004 VO_CIN_007_S03_LYAN_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_007_S03_LYAN_draft_v1.wav
+#EXTINF:-1,VO-005 VO_CIN_008_S03_TAVANKHANH_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_008_S03_TAVANKHANH_draft_v1.wav
+#EXTINF:-1,VO-006 VO_CIN_009_S03_LYAN_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_009_S03_LYAN_draft_v1.wav
+#EXTINF:-1,VO-007 VO_CIN_010_S03_SAMCHUQUY_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_010_S03_SAMCHUQUY_draft_v1.wav
+#EXTINF:-1,VO-008 VO_CIN_011_S03_HAMAC_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_011_S03_HAMAC_draft_v1.wav
+#EXTINF:-1,VO-009 VO_CIN_012_S03_HAMAC_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_012_S03_HAMAC_draft_v1.wav
+#EXTINF:-1,VO-010 VO_CIN_013_S03_REFUGEELEADER_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_013_S03_REFUGEELEADER_draft_v1.wav
+#EXTINF:-1,VO-011 VO_CIN_014_S03_TONGBANH_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_014_S03_TONGBANH_draft_v1.wav
+#EXTINF:-1,VO-012 VO_CIN_015_S03_DIVERLEAD_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_015_S03_DIVERLEAD_draft_v1.wav
+#EXTINF:-1,VO-013 VO_CIN_016_S03_HAMAC_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_016_S03_HAMAC_draft_v1.wav
+#EXTINF:-1,VO-014 VO_CIN_017_S03_DIVERLEAD_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_017_S03_DIVERLEAD_draft_v1.wav
+#EXTINF:-1,VO-015 VO_CIN_018_S02_COVOTUONG_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_018_S02_COVOTUONG_draft_v1.wav
+#EXTINF:-1,VO-016 VO_CIN_018_S03_PLAYER_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_018_S03_PLAYER_draft_v1.wav
+#EXTINF:-1,VO-017 VO_CIN_019_S03_LYAN_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_019_S03_LYAN_draft_v1.wav
+#EXTINF:-1,VO-018 VO_CIN_020_S03_LETTERRECIPIENT_draft_v1
+../../../ClientGodot/assets/audio/vo/campaign/VO_CIN_020_S03_LETTERRECIPIENT_draft_v1.wav
+#EXTINF:-1,VO-019 CIN006_VO_timeline_draft_v1
+../../../ClientGodot/assets/audio/vo/cin006/CIN006_VO_timeline_draft_v1.wav
+#EXTINF:-1,VO-020 VO_CIN_006_ALT_T01_HAMAC_draft_v1-alt
+../../../ClientGodot/assets/audio/vo/cin006/VO_CIN_006_ALT_T01_HAMAC_draft_v1-alt.wav
+#EXTINF:-1,VO-021 VO_CIN_006_S03_HAMAC_draft_v1
+../../../ClientGodot/assets/audio/vo/cin006/VO_CIN_006_S03_HAMAC_draft_v1.wav
+#EXTINF:-1,VO-022 P0_VO_timeline_draft_v1
+../../../ClientGodot/assets/audio/vo/p0/P0_VO_timeline_draft_v1.wav
+#EXTINF:-1,VO-023 VO_CIN001_S05_LYAN_draft_v1
+../../../ClientGodot/assets/audio/vo/p0/VO_CIN001_S05_LYAN_draft_v1.wav
+#EXTINF:-1,VO-024 VO_CIN002_S02_TAVANKHANH_draft_v1
+../../../ClientGodot/assets/audio/vo/p0/VO_CIN002_S02_TAVANKHANH_draft_v1.wav
+#EXTINF:-1,VO-025 VO_CIN004_S02_LYAN_OFFSCREEN_draft_v1
+../../../ClientGodot/assets/audio/vo/p0/VO_CIN004_S02_LYAN_OFFSCREEN_draft_v1.wav
+#EXTINF:-1,VO-026 VO_CIN000_SEG01_NARRATOR
+../../../ClientGodot/assets/audio/vo/prologue/VO_CIN000_SEG01_NARRATOR.wav
+#EXTINF:-1,VO-027 VO_CIN000_SEG02_NARRATOR
+../../../ClientGodot/assets/audio/vo/prologue/VO_CIN000_SEG02_NARRATOR.wav
+#EXTINF:-1,VO-028 VO_CIN000_SEG03_NARRATOR
+../../../ClientGodot/assets/audio/vo/prologue/VO_CIN000_SEG03_NARRATOR.wav
+#EXTINF:-1,VO-029 VO_CIN000_SEG04_NARRATOR
+../../../ClientGodot/assets/audio/vo/prologue/VO_CIN000_SEG04_NARRATOR.wav
+#EXTINF:-1,VO-030 VO_CIN000_SEG05_NARRATOR
+../../../ClientGodot/assets/audio/vo/prologue/VO_CIN000_SEG05_NARRATOR.wav

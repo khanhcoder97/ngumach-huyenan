@@ -1,0 +1,63 @@
+{
+  "sceneId": "CIN_006",
+  "questId": "C1-06",
+  "title": "Con dấu qua phố",
+  "durationSeconds": 18,
+  "playback": "OPTIONAL_SKIP_SAFE_LAYER",
+  "runtimeActivation": "DESIGN_HANDOFF_NOT_YET_INTEGRATED",
+  "charactersOnScreen": [
+    "NPC_HA_MAC",
+    "NPC_SAM_CHU_QUY"
+  ],
+  "staging": "CINEMATIC_ONLY_NO_PERSISTENT_ID_DUPLICATION_NO_SPAWN_MOVE",
+  "stagingNote": "DEC-MEDIA-P0 Q4: NPC_HA_MAC / NPC_SAM_CHU_QUY are staged for cinema only; this timing duplicates no persistent NPC ID and moves no default spawn.",
+  "audioDirection": "Original sparse ambience; use chapter palette and cue sheet in Directors Pack. Separate music, ambience and voice stems.",
+  "candidateStems": [
+    "SFX/CINEMA/reveal"
+  ],
+  "stemStatus": "CANDIDATE_POOL_NOT_LOCKED",
+  "stemNote": "Only the manifest-bound stinger is listed. No Thang Long market ambience stem exists in the measured P0 stem pool; none is assigned to this scene.",
+  "fallback": "Approved still keyframe plus localized recap; never blocks quest",
+  "alternateTake": {
+    "takeId": "CIN_006_ALT_T01",
+    "version": "v1-alt",
+    "status": "ALTERNATE_TAKE_DOES_NOT_REPLACE_CANONICAL",
+    "text": "Tới đây ta theo được. Chỗ trống này giữ nguyên.",
+    "windowSeconds": null,
+    "note": "DEC-MEDIA-P0 Q3: kept under its own takeId/version. It is NOT in the SRT. If an animatic lock ever chooses it, assign it a labelled window then; never merge both takes into one line.",
+    "source": "docs/narrative/workshop/MUSE_THANG_LONG_CIN006_DIRECTION_vi.md"
+  },
+  "shots": [
+    {
+      "shotId": "CIN_006_S01",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "camera": "MEDIUM_STATIC",
+      "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design"
+    },
+    {
+      "shotId": "CIN_006_S02",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "camera": "DETAIL_LOCKED",
+      "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design"
+    },
+    {
+      "shotId": "CIN_006_S03",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "camera": "MEDIUM_STATIC",
+      "referenceRequirement": "Approved keyframe and character lock; absent reference means create storyboard first, do not guess final design",
+      "dialogue": {
+        "speaker": "NPC_HA_MAC",
+        "onscreen": true,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "status": "PROPOSED_ANIMATIC_PLACEMENT",
+        "text": "Ba thứ cùng đi qua một tuyến. Chưa có thứ nào bảo người bán biết mình đang chở gì."
+      }
+    }
+  ]
+}

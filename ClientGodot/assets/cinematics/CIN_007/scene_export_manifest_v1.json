@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "MEDIA-02 checkpoint 39 - CIN_007 draft mix v1: embedded draft mix audio in the runtime OGV + review MP4 (video streams bit-identical); poster/SRT/timing unchanged",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "baseSha": "f0859d0",
+  "sceneId": "CIN_007",
+  "title": "Tên trong vỏ cây",
+  "durationSeconds": 18.0,
+  "dialogueCues": 1,
+  "dialogueWindowStatus": "PROPOSED_ANIMATIC_PLACEMENT",
+  "videoStatus": "VIDEO_ANIMATED_TAKE_KEN_BURNS",
+  "motionModel": {
+    "kind": "ANIMATIC_MOTION_KEN_BURNS",
+    "method": "ffmpeg zoompan on 1280x720 upscales of the 640x360 storyboard keyframes; no optical flow, no morphing",
+    "shots": {
+      "CIN_007_S01": "push-in centered",
+      "CIN_007_S02": "push-in centered",
+      "CIN_007_S03": "push-in centered"
+    }
+  },
+  "reelOffsetSeconds": null,
+  "reelTotalSeconds": null,
+  "files": {
+    "mp4": {
+      "path": "assets/cinematics/CIN_007/CIN_007_640x360_30fps.mp4",
+      "sha256": "771aff2582faa890f90f644b709d6961e841382ab9e9faa2bfc241a5e5bdd125",
+      "sizeBytes": 1488744,
+      "codec": "h264",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "frames": 540,
+      "audio": {
+        "codec": "aac",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 192,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN007_DRAFT_V1/CIN_007_mix_draft_v1.wav",
+        "sourceMixSha256": "ee9f4c0aed0549878ba2d62c2f387aecb87488097809e7427fc82eae950aa03a",
+        "mixVersion": "v1_cin007_proposed",
+        "integratedLUFS": "-18.02",
+        "truePeakDBTP": "-1.46",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 540
+      }
+    },
+    "ogv": {
+      "path": "assets/cinematics/CIN_007/CIN_007_640x360_30fps.ogv",
+      "sha256": "804d6dfb7b5c8deee5e1325f39389796f46f53cbf8a8c524f51f5cfc068921ec",
+      "sizeBytes": 736697,
+      "codec": "theora",
+      "width": 640,
+      "height": 360,
+      "fps": 30,
+      "durationSeconds": 18.0,
+      "storedFrames": 503,
+      "audio": {
+        "codec": "vorbis",
+        "sampleRateHz": 48000,
+        "channels": 2,
+        "bitRateKbps": 160,
+        "sourceMix": "Art_Source/Audio/Muse/MIX/CIN007_DRAFT_V1/CIN_007_mix_draft_v1.wav",
+        "sourceMixSha256": "ee9f4c0aed0549878ba2d62c2f387aecb87488097809e7427fc82eae950aa03a",
+        "mixVersion": "v1_cin007_proposed",
+        "integratedLUFS": "-17.98",
+        "truePeakDBTP": "-1.54",
+        "durationSeconds": 18.0,
+        "videoStoredFrames": 503
+      }
+    },
+    "poster": {
+      "path": "assets/cinematics/CIN_007/CIN_007_poster.png",
+      "sha256": "9d3233d4c0c93495ba27e61de37b85785f28b768782cadfa1e8587128e566efd",
+      "sizeBytes": 384897,
+      "sourceKeyframe": "keyframe_CIN_007_S01.png"
+    },
+    "timing": {
+      "path": "assets/cinematics/CIN_007/CIN_007_timing_v1.json",
+      "sha256": "df7827c416ffe61f83f2a081a5b503d19789d2739e630d32b11d1c93bb298bfd",
+      "sizeBytes": 2375
+    },
+    "srt": {
+      "path": "assets/cinematics/CIN_007/CIN_007_vi.srt",
+      "sha256": "ce95f8d4351ebdc83641d2d5f7896dab4131f0f024c18f212253a83792ddfbb6",
+      "sizeBytes": 110,
+      "status": "DRAFT"
+    }
+  },
+  "frameCheck": {
+    "CIN_007_S01": {
+      "identitySeconds": 0.0,
+      "identityMeanAbsChannelDiff": 3.865,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 5.9,
+      "motionMeanAbsChannelDiff": 28.9,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 25.006,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_007_S02": {
+      "identitySeconds": 6.0,
+      "identityMeanAbsChannelDiff": 2.555,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 11.9,
+      "motionMeanAbsChannelDiff": 23.579,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 17.113,
+      "continuousMinRequired": 0.5
+    },
+    "CIN_007_S03": {
+      "identitySeconds": 12.0,
+      "identityMeanAbsChannelDiff": 3.751,
+      "identityMaxAllowed": 10.0,
+      "motionSeconds": 17.9,
+      "motionMeanAbsChannelDiff": 33.797,
+      "motionMinRequired": 1.5,
+      "continuousMotionMeanAbsChannelDiff": 28.792,
+      "continuousMinRequired": 0.5
+    }
+  },
+  "shots": [
+    {
+      "shotId": "CIN_007_S01",
+      "startSeconds": 0.0,
+      "endSeconds": 6.0,
+      "camera": "WIDE_STATIC",
+      "keyframe": "keyframe_CIN_007_S01.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_007_S02",
+      "startSeconds": 6.0,
+      "endSeconds": 12.0,
+      "camera": "DETAIL_LOCKED",
+      "keyframe": "keyframe_CIN_007_S02.png",
+      "motion": "push-in centered"
+    },
+    {
+      "shotId": "CIN_007_S03",
+      "startSeconds": 12.0,
+      "endSeconds": 18.0,
+      "camera": "MEDIUM_STATIC",
+      "keyframe": "keyframe_CIN_007_S03.png",
+      "motion": "push-in centered"
+    }
+  ],
+  "notes": [
+    "Campaign animated take (Goi 30 item 7, checkpoint 25 batch): real camera motion, not a panel hold. Motion is animatic-level Ken Burns; NOT a final pose-animated take (pack pose cadence 8-12 fps needs approved character reference + pose animation).",
+    "No audio track in the clip: VO/music/ambience are added separately in editing per the pack dialoguePolicy. No baked subtitles.",
+    "CIN_007 is NOT part of the 72 s P0 reel; it has no reel offset. The reel stays review/gallery only, NOT auto-run as opening.",
+    "Scene SRT carries 1 cue (Ly An, CIN_007_S03 at 12.5-17.5 s). Dialogue window status in the campaign manifest: PROPOSED_ANIMATIC_PLACEMENT, approved for DRAFT VO production only by the checkpoint-14 D1 decision. The checkpoint 17 VO draft for this cue measures 3.912 s at natural speed (windowFit FITS, not sped up).",
+    "Recorded keyframe defects: S01 adds an unnamed conical-hat figure to what the prompt frames as an empty environment shot; S02's grooves render as wide, strongly luminous cyan canals and Ly An appears in what the prompt frames as a pure bark detail; S03 adds a tiled-roof structure with borderline glyph-like signboards and Ly An holds the slip up reading instead of laying it beside the bark. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+  ],
+  "hasAudioTrack": true
+}

@@ -1,0 +1,81 @@
+{
+  "tool": "check_windows_compat_mg_cp4_v1.py",
+  "tool_version": "1.0.0",
+  "checkpoint": "MEDIA-02 WO37 M-G CP4",
+  "head": "e7cb9e49111c3e9ef5b950bb8ba66f727c6910e7",
+  "branch": "muse/media-production-20261104",
+  "checks": {
+    "head_matches": true,
+    "no_illegal_chars": true,
+    "no_reserved_names": true,
+    "no_case_collisions": true,
+    "path_length_ok": true,
+    "no_symlinks": true,
+    "lfs_coverage": true,
+    "text_lf_endings": true
+  },
+  "details": {
+    "head": "e7cb9e49111c3e9ef5b950bb8ba66f727c6910e7",
+    "branch": "muse/media-production-20261104",
+    "expected_head": "e7cb9e49111c3e9ef5b950bb8ba66f727c6910e7",
+    "tracked_under_media_roots": 2025,
+    "illegal_char_paths": [],
+    "reserved_name_paths": [],
+    "case_collisions": [],
+    "longest_paths": [
+      {
+        "path": "Implementation/Reports/MuseMedia/MEDIA02_CHECKPOINT_16_GOI30_FIX_KEYFRAMES_S02_20261105.json",
+        "length": 92
+      },
+      {
+        "path": "Implementation/Reports/MuseMedia/MEDIA02_CHECKPOINT_14_GOI30_FIX_DIALOGUE_CUES_20261105.json",
+        "length": 92
+      },
+      {
+        "path": "Implementation/Reports/MuseMedia/MEDIA02_CHECKPOINT_13_M8_ANIMATIC_REVISION_V2_20261105.json",
+        "length": 92
+      },
+      {
+        "path": "Implementation/Reports/MuseMedia/MEDIA02_CHECKPOINT_16_GOI30_FIX_KEYFRAMES_S02_20261105.md",
+        "length": 90
+      },
+      {
+        "path": "Implementation/Reports/MuseMedia/MEDIA02_CHECKPOINT_14_GOI30_FIX_DIALOGUE_CUES_20261105.md",
+        "length": 90
+      },
+      {
+        "path": "Implementation/Reports/MuseMedia/MEDIA02_CHECKPOINT_13_M8_ANIMATIC_REVISION_V2_20261105.md",
+        "length": 90
+      },
+      {
+        "path": "Implementation/Reports/MuseMedia/MEDIA02_CHECKPOINT_35_FRESH_CHECKOUT_ITEM5_20261106.json",
+        "length": 89
+      },
+      {
+        "path": "ClientGodot/assets/audio/vo/palette_pickups/VO_CIN_020_S03_LETTERRECIPIENT_palette_v1.wav",
+        "length": 89
+      },
+      {
+        "path": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN_020_S03_LETTERRECIPIENT_palette_v1.wav",
+        "length": 89
+      },
+      {
+        "path": "Implementation/Reports/MuseMedia/MEDIA02_CHECKPOINT_54_SOURCE_REVALIDATION_20261108.json",
+        "length": 88
+      }
+    ],
+    "paths_over_260": [],
+    "paths_over_200_count": 0,
+    "max_length": 92,
+    "non_ascii_paths": [],
+    "non_ascii_count": 0,
+    "symlink_paths": [],
+    "binary_files_under_media_roots": 1564,
+    "lfs_tracked_under_media_roots": 1564,
+    "binary_not_in_lfs": [],
+    "text_files_checked": 461,
+    "cr_files": []
+  },
+  "result": "PASS",
+  "mismatches": 0
+}

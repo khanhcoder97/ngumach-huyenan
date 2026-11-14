@@ -1,0 +1,63 @@
+{
+  "validator": "check_p0_candidate_m38a_v1",
+  "subset": "P0_CANDIDATE_M38A_SUBSET_v1.json",
+  "checks": [
+    {
+      "check": "hashes_all_subset_entries",
+      "pass": true,
+      "detail": "76 entries, bad=[]"
+    },
+    {
+      "check": "ffprobe_candidate_scene_take_CIN_001",
+      "pass": true,
+      "detail": "dur=36.000 streams=2"
+    },
+    {
+      "check": "ffprobe_candidate_scene_take_CIN_002",
+      "pass": true,
+      "detail": "dur=18.000 streams=2"
+    },
+    {
+      "check": "ffprobe_candidate_scene_take_CIN_004",
+      "pass": true,
+      "detail": "dur=18.000 streams=2"
+    },
+    {
+      "check": "ffprobe_candidate_review_reel_72s",
+      "pass": true,
+      "detail": "dur=72.021 streams=2"
+    },
+    {
+      "check": "ffprobe_ab_CIN_001",
+      "pass": true,
+      "detail": "640x720"
+    },
+    {
+      "check": "ffprobe_ab_CIN_002",
+      "pass": true,
+      "detail": "640x720"
+    },
+    {
+      "check": "ffprobe_ab_CIN_004",
+      "pass": true,
+      "detail": "640x720"
+    },
+    {
+      "check": "contact_sheet_size",
+      "pass": true,
+      "detail": "(1920, 720)"
+    },
+    {
+      "check": "srt_windows_match_notes",
+      "pass": true,
+      "detail": "bad=[]"
+    },
+    {
+      "check": "runtime_trees_unmodified",
+      "pass": true,
+      "detail": "0 changed lines"
+    }
+  ],
+  "pass": true,
+  "failures": []
+}

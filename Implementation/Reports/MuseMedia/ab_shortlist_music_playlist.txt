@@ -1,0 +1,34 @@
+#EXTM3U
+# MEDIA-02 checkpoint 33 — Goi 31 item 3 A/B review shortlist
+# AUDITION STATUS: NOT_AUDITIONED (this environment cannot listen)
+# This file holds valid M3U content under a .txt name because
+# .m3u is not in the scope policy mediaExtensions; rename a
+# copy to .m3u to open it directly in a player. Open this file
+# from the repo so the relative paths resolve.
+# Measurements are loudness/codec numbers, NOT a listening PASS.
+#EXTINF:57,COMPOSED MUSIC — MUSIC/ben_mua (Bến Mưa · câu nhạc bỏ lửng)
+../../../ClientGodot/assets/audio/composed/music/ben_mua.ogg
+#EXTINF:42,COMPOSED MUSIC — MUSIC/thang_long (Thăng Long · phố và dòng nước)
+../../../ClientGodot/assets/audio/composed/music/thang_long.ogg
+#EXTINF:36,COMPOSED MUSIC — MUSIC/boss_mang_cot (Mãng Cốt · áp lực dòng)
+../../../ClientGodot/assets/audio/composed/music/boss_mang_cot.ogg
+#EXTINF:64,COMPOSED MUSIC — MUSIC/quiet_discovery (Khoảng lặng khám phá)
+../../../ClientGodot/assets/audio/composed/music/quiet_discovery.ogg
+#EXTINF:53,COMPOSED MUSIC — MUSIC/lam_trieu (Lâm Triều — Rừng nhớ tên)
+../../../ClientGodot/assets/audio/composed/music/lam_trieu.ogg
+#EXTINF:44,COMPOSED MUSIC — MUSIC/sa_hoa (Sa Hỏa — Lò và cát)
+../../../ClientGodot/assets/audio/composed/music/sa_hoa.ogg
+#EXTINF:40,COMPOSED MUSIC — MUSIC/tran_son (Trấn Sơn — Người qua cửa)
+../../../ClientGodot/assets/audio/composed/music/tran_son.ogg
+#EXTINF:58,COMPOSED MUSIC — MUSIC/bach_uyen (Bạch Uyên — Thành dưới triều)
+../../../ClientGodot/assets/audio/composed/music/bach_uyen.ogg
+#EXTINF:38,COMPOSED MUSIC — MUSIC/rift_finale (Ngũ Mạch — Năm dòng cùng chảy)
+../../../ClientGodot/assets/audio/composed/music/rift_finale.ogg
+#EXTINF:3,COMPOSED STINGER — SFX/CINEMA/reveal
+../../../ClientGodot/assets/audio/composed/cinema/reveal.ogg
+#EXTINF:3,COMPOSED STINGER — SFX/CINEMA/tension
+../../../ClientGodot/assets/audio/composed/cinema/tension.ogg
+#EXTINF:3,COMPOSED STINGER — SFX/CINEMA/resolve
+../../../ClientGodot/assets/audio/composed/cinema/resolve.ogg
+#EXTINF:3,COMPOSED STINGER — SFX/CINEMA/transition
+../../../ClientGodot/assets/audio/composed/cinema/transition.ogg

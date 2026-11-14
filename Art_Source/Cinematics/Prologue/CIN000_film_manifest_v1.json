@@ -1,0 +1,132 @@
+{
+ "manifestId": "NGM_CIN000_FILM_V1",
+ "sceneId": "CIN_000",
+ "title": "Trước khi tới Bến Mưa",
+ "checkpoint": "MEDIA-02 checkpoint 27",
+ "scriptApproval": "Owner approved the narration script in main chat 2026-11-06",
+ "durationSeconds": 87.3667,
+ "keyframesManifest": "CIN000_keyframes_manifest_v1.json",
+ "keyframesManifestSha256": "b8f7ae6dff3008e09d40dbf79c0d612cb72e53426dc01ba5ea445f7b5be02bea",
+ "timingFile": "Implementation/Content/Narrative/Deliveries/CIN_000/CIN_000_timing_v1.json",
+ "timingSha256": "bcd17d90578852b3f1bfdf2f372a767daa286cf5bffd8d893525f175ac15d350",
+ "srtSha256": "0bc4151acff93982acbed8f82192aae6a820653611451a15c436d99f20af1af0",
+ "voManifest": "Art_Source/Audio/Muse/VO/PROLOGUE_VO_manifest_v1.json",
+ "mixManifest": "Art_Source/Audio/Muse/MIX/PROLOGUE_DRAFT/PROLOGUE_mix_manifest_v1.json",
+ "mixSha256": "4f8224e108fd86ecec4deb8b950344ed7c526ef4bd6bd66a79b58c9a71122e63",
+ "exports": {
+  "sceneId": "CIN_000",
+  "title": "Trước khi tới Bến Mưa",
+  "checkpoint": "MEDIA-02 checkpoint 27",
+  "videoStatus": "VIDEO_PROLOGUE_FILM_WITH_MIXED_AUDIO",
+  "hasAudioTrack": true,
+  "durationSeconds": 87.3667,
+  "mp4": {
+   "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.mp4",
+   "sha256": "86b7cdd95f942a0a2507837494f649461ddde30d20932a37425a00e76157f578",
+   "sizeBytes": 12248889,
+   "durationSeconds": 87.2667
+  },
+  "ogv": {
+   "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_640x360_30fps.ogv",
+   "sha256": "50e6ca450da7da031143559b71abcaed92e6b2b2763e070f5c8076233fa5f2b2",
+   "sizeBytes": 25245216,
+   "durationSeconds": 87.2667
+  },
+  "poster": {
+   "path": "ClientGodot/assets/cinematics/CIN_000/CIN_000_poster.png",
+   "sha256": "ad4effe96b9be78aff447e70401b6b714dd8d7914d80353cacb7eb43f2b8367e",
+   "sizeBytes": 32609,
+   "rule": "poster is the title-card keyframe (CIN_000_S12), a documented choice for this standalone film"
+  },
+  "timingFile": "CIN_000_timing_v1.json",
+  "timingSha256": "bcd17d90578852b3f1bfdf2f372a767daa286cf5bffd8d893525f175ac15d350",
+  "srtFile": "CIN_000_vi.srt",
+  "srtSha256": "0bc4151acff93982acbed8f82192aae6a820653611451a15c436d99f20af1af0",
+  "identityDiffs": {
+   "CIN_000_S01": {
+    "fullRes": 12.682,
+    "structure160x90": 4.942
+   },
+   "CIN_000_S02": {
+    "fullRes": 12.077,
+    "structure160x90": 5.214
+   },
+   "CIN_000_S03": {
+    "fullRes": 15.266,
+    "structure160x90": 6.472
+   },
+   "CIN_000_S04": {
+    "fullRes": 8.582,
+    "structure160x90": 4.002
+   },
+   "CIN_000_S05": {
+    "fullRes": 14.438,
+    "structure160x90": 5.366
+   },
+   "CIN_000_S06": {
+    "fullRes": 10.135,
+    "structure160x90": 4.198
+   },
+   "CIN_000_S07": {
+    "fullRes": 9.253,
+    "structure160x90": 4.312
+   },
+   "CIN_000_S08": {
+    "fullRes": 8.265,
+    "structure160x90": 3.896
+   },
+   "CIN_000_S09": {
+    "fullRes": 9.031,
+    "structure160x90": 3.675
+   },
+   "CIN_000_S10": {
+    "fullRes": 13.715,
+    "structure160x90": 5.697
+   },
+   "CIN_000_S11": {
+    "fullRes": 13.067,
+    "structure160x90": 5.536
+   }
+  },
+  "motionDiffs": {
+   "CIN_000_S01": 21.267,
+   "CIN_000_S02": 16.567,
+   "CIN_000_S03": 24.342,
+   "CIN_000_S04": 12.022,
+   "CIN_000_S05": 22.279,
+   "CIN_000_S06": 18.698,
+   "CIN_000_S07": 23.896,
+   "CIN_000_S08": 18.057,
+   "CIN_000_S09": 16.822,
+   "CIN_000_S10": 21.8,
+   "CIN_000_S11": 16.068
+  },
+  "notes": [
+   "Standalone pre-game prologue; NOT part of the 20-scene campaign pack or its totals.",
+   "Picture is cinematic panels with Ken Burns motion; character/spoiler guardrails per the timing JSON staging note."
+  ]
+ },
+ "subtitledVariant": {
+  "file": "CIN_000_640x360_30fps_sub_vi.mp4",
+  "sha256": "50ec6a9853bf98054777c5d93fdf118312ce4887f0c6271e4b09d2780f1f1b9d",
+  "checkpoint": "MEDIA-02 checkpoint 28; re-rendered at the prologue v1 plumbing fix (2026-11-13)",
+  "readableSrtSha256": "762b86690b0b7ac925a17080f67fdde046403b56c8129365e7e10f373ef7d508"
+ },
+ "prologueV1PlumbingFix": {
+  "date": "2026-11-13",
+  "supersededMixSha256": "f026ed3e10499b42ea4fcc39ada9a1b42e0b5b749d16ab77208afd54016ffb54",
+  "fixedMixSha256": "4f8224e108fd86ecec4deb8b950344ed7c526ef4bd6bd66a79b58c9a71122e63",
+  "note": "Prologue v1 plumbing fix (2026-11-13, owner order): the CP27 mix graph fed one ffmpeg label to two consumers and lost the narration; the mix was re-rendered with the plumbing corrected (apad + asplit), same takes / recipe / timeline, and the runtime film + variants were re-derived from it. Broken mix sha f026ed3e... stays in git history."
+ },
+ "subtitledVariantV2": {
+  "file": "CIN_000_640x360_30fps_sub_vi_v2.mp4",
+  "sha256": "f8d6ac322c9123113eedb080a0c464ce2d2e297ee9921b092b59317b2f8ca0be",
+  "sizeBytes": 11927191,
+  "checkpoint": "MEDIA-02 WO37 M-B CP5",
+  "readableSrtSha256": "b4495c2506295535df3a0c6508ccfee28d3a61c3236f66942b22a8515185b0d0",
+  "presentationGainDb": 0.9,
+  "loudnessLufs": -20.87,
+  "truePeakDbtp": -1.24,
+  "manifest": "STANDARD720_SUBTITLED_V2_MB_CP5_v1"
+ }
+}

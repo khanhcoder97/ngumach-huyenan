@@ -1,0 +1,194 @@
+{
+  "checkpoint": "MEDIA-02 WO37 M-F CP2 - CIN_020 draft mix v2 (palette re-mix of the checkpoint 54 v1 mix; M-F CP1 palette applied under the owner-delegated voice decision, 2026-11-12)",
+  "decisionId": "DEC-MEDIA-P0-20261105",
+  "branch": "muse/media-production-20261104",
+  "status": "DRAFT_NOT_FINAL",
+  "mixVersion": "v2_palette_mf_cp2",
+  "mixVerdict": "DRAFT_MIX_FOR_REVIEW (v2, MEDIA-02 WO37 M-F CP2 palette re-mix): built with the exact v1 recipe (same composed stems, gain targets, ducking params, peak guard, loop joins); the ONLY change is the VO take -- Người nhận thư is now the M-F CP1 palette pickup (VO_CIN_020_S03_LETTERRECIPIENT_palette_v1.wav; Ethereal Star (fictional system voice), avocado_v2:ElvenWizard) instead of the draft take voiced by avocado_v2:MAI_01. The palette take FITS its window (12.5-15.572 s inside 12.5-17.5 s, slack 1.928 s), measured from the real pickup bytes. The pickup is a NEUTRAL PLACEHOLDER voice (not a casting or gender decision); the manifest keeps the placeholder flag. NOT a mix PASS: no ear audition; the stem assignment remains PROPOSED_CANDIDATE from v1; adoption is Codex's adapter decision. The runtime still embeds the v1 mix.",
+  "stemAssignment": {
+    "status": "PROPOSED_CANDIDATE_NEW",
+    "source": "No CP02 assignment exists for CIN_020; ben_mua music + river_shore ambience are the home-river cues (composed, CP26/CP30) for this scene (S01: medium shot, the villager at the repaired plank table on the river dock reading the opened letter, the sealed delivered letter and a worn bowl on the table, a newly tied paper lamp on the bamboo, MEDIUM_STATIC; S02: interior, the villager at a wooden desk by an open window writing the reply, brush over a fresh sheet, ink stone and brush pots on the desk, the river beyond the window, DETAIL_LOCKED; S03: top-down view of the table -- bowl of food, folded reply, chopsticks, cloth pouch -- the villager seated at frame left seen from behind, an open village path beyond the fence, TOPDOWN_MATCH; keyframes CIN_020 S01/S02/S03). ben_mua is the composed set's rain-quay leitmotif -- the theme of the opening quay where the sealed letter changed hands -- for the line that answers it ('Cho mot chut. Toi muon gui lai vai loi.'). It was used before in scene mixes CIN_003 and CIN_014 (third scene-mix use; the P0 mixes also carry it, as the opening's own). river_shore is the composed water-edge bed for the dock and the river beyond the window; also used for CIN_003, CIN_008 and CIN_019 (fourth scene-mix use). rift_finale was passed over: the set's only full close, spent at CIN_019's resolution -- this scene is the quiet morning after, not a second climax. quiet_discovery was passed over: the exploration silence (CIN_007/CIN_011/CIN_016), wrong for a homecoming. thang_long is the capital-city form (wrong setting); tran_son is the bell-led gate form (CIN_008/CIN_012); lam_trieu is the pastoral flute (CIN_009/CIN_013); sa_hoa is desert/dry (CIN_010/CIN_018); bach_uyen is the underwater low-passed form (CIN_015/CIN_017); boss_mang_cot is boss material and there is no boss in this beat. wind_canopy is a forest bed; waterfall was used for CIN_009; mountain_wind was used for CIN_013; rain_light and rain_heavy are rain beds, but no rain is depicted in any of the three keyframes (dock daylight, desk interior, top-down table); underwater is a submerged bed; cave_drips is a cave bed; desert_wind, city_night, thang_long_crowd, forge and rift are wrong for this setting. The reveal stinger is the scene's only manifest-listed candidate stem (CIN_020_timing_v1.json).",
+    "alternateTakeExcluded": "N/A: CIN_020 has no alternate take."
+  },
+  "gainStaging": {
+    "vo": "unity (anchor; take as delivered)",
+    "musicTargetLUFS": -30.0,
+    "ambiencePrimaryTargetLUFS": -36.0,
+    "stingers": "unity",
+    "peakCeilingDBTP": -1.0
+  },
+  "notes": [
+    "M-F CP2 palette re-mix: the VO take(s) listed under paletteRemix.changes replace the v1 draft take(s). Any v1 note below describing the canonical take's duration or overrun describes the v1 mix only and does not apply to v2.",
+    "VO window 12.5-17.5 s is PROPOSED_ANIMATIC_PLACEMENT (only CIN_001_S05 is DECIDED); all 21 windows are approved for DRAFT VO per Goi 30 D1. The window is the uniform 12.5-17.5 s; it was NOT widened.",
+    "VO take runs 12.5-15.500 s: 3.000 s, ending 2.000 s BEFORE the 17.5 s window end -- the take FITS inside its window by 2000 ms (no overrun, unlike CIN_005/CIN_006/CIN_018). The take ends 2.500 s before the 18.00 s scene end, so no tail trim at the scene edge. The window, the take and the timing are unchanged.",
+    "The CP17 VO take measures -19.59 LUFS (checkpoint 17, re-verified from real bytes this run, vs -25.52 LUFS for the CIN_019 take and -22.54 LUFS for the CIN_018 S03 take). VO is kept at unity per the recipe, not normalized.",
+    "Casting: the recipient's voice is a placeholder role voice (CP17 roleNote VOICE_LETTER_RECIPIENT; recipient identity/gender undecided), and the draft take uses the same fictional system voice as Ly An's drafts (avocado_v2:MAI_01, Aria) -- a draft-casting collision for the WO37 M-F palette work to resolve with a distinct voice, not a mix decision.",
+    "Staging: the timing manifest records the S03 dialogue onscreen: null for the letter recipient. The S03 keyframe does show the villager -- seated at frame left, seen from behind in the top-down match frame -- so the speaker is present in the frame but his face is not visible and the line reads as an on-set voice from behind. The CP24 keyframe manifest also records that this unnamed villager's appearance drifts between all three shots (S01 headband and brown vest; S02 conical hat and blue tunic; S03 green top and dark headwrap) -- the scene's pack character list is empty, so no named character lock exists for him. Final-picture/casting matters, not mix defects; the mix does not move the VO.",
+    "Ducking depth is measured on the ducked bus against its unducked render (RMS over the full VO window vs a 2 s reference before the window). The full-window method from checkpoint 39 is retained so the depth is comparable across the CIN_003/CIN_005/CIN_007/CIN_008/ CIN_009/CIN_010/CIN_011/CIN_012/CIN_013/CIN_014/CIN_015/CIN_016/CIN_017/CIN_018/CIN_019/CIN_020 mixes (a 2 s slice can understate the cut on cues whose window opening is quiet).",
+    "Ducking depth is measured from real bytes over the full VO window (CP39 method, same params as every scene mix); ben_mua carries real signal inside this window (segment RMS -20.5 dBFS measured from the stem bytes this run), so a real cut is expected here, and the number in the manifest is the measured one, not a target. If the depth came out 0.0 dB it would mean the cue is silent in this window -- that is NOT the case for ben_mua (unlike quiet_discovery in CIN_016, which is digitally silent 12-15 s); a 0.0 dB reading here would be investigated, not reported as a silence pocket.",
+    "Ambience loop join uses a 1 s acrossfade; loopQA reports the max sample jump at the join against the bed's own 99.9th-percentile jump.",
+    "Stinger placement at 6.0 s (S02 start) is PROPOSED pending picture lock, mirroring the CIN_004 reveal at 6.0 s.",
+    "With this mix embedded, every one of the 21 cinematics entries carries an embedded soundtrack (0 silent) and Work Order 37 M-B big checkpoint 1 is complete."
+  ],
+  "scenes": [
+    {
+      "sceneId": "CIN_020",
+      "seconds": 18.0,
+      "vo": {
+        "take": "VO_CIN_020_S03_LETTERRECIPIENT_palette_v1.wav",
+        "windowSeconds": [
+          12.5,
+          15.572
+        ],
+        "takeDurationSeconds": 3.072,
+        "takeEndSeconds": 15.572,
+        "tailTrimmedAtSceneEdgeSeconds": 0.0,
+        "overrunVsWindowSeconds": -1.928,
+        "gainDb": 0.0
+      },
+      "stems": [
+        {
+          "cue": "MUSIC/ben_mua",
+          "role": "music",
+          "source": "ClientGodot/assets/audio/composed/music/ben_mua.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -30.0,
+          "packMeasuredLUFS": -21.93,
+          "remeasuredLUFS": -21.93,
+          "gainDb": -8.07,
+          "duckedByVo": true
+        },
+        {
+          "cue": "AMBIENCE/river_shore",
+          "role": "ambience",
+          "source": "ClientGodot/assets/audio/composed/ambience/river_shore.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 30)",
+          "segmentSceneSeconds": [
+            0.0,
+            18.0
+          ],
+          "targetLUFS": -36.0,
+          "packMeasuredLUFS": -29.69,
+          "remeasuredLUFS": -29.69,
+          "gainDb": -6.31,
+          "duckedByVo": false
+        },
+        {
+          "cue": "SFX/CINEMA/reveal",
+          "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+          "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+          "atSeconds": 6.0,
+          "gainDb": 0.0,
+          "packMeasuredLUFS": -24.96,
+          "remeasuredLUFS": -24.96,
+          "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK",
+          "role": "stinger"
+        }
+      ],
+      "ducking": {
+        "params": {
+          "threshold": 0.03,
+          "ratio": 4,
+          "attackMs": 15,
+          "releaseMs": 350
+        },
+        "evidence": [
+          {
+            "bus": "music",
+            "windowSeconds": [
+              12.5,
+              15.572
+            ],
+            "referenceSeconds": [
+              10.0,
+              12.0
+            ],
+            "depthInWindowDb": -3.37,
+            "depthOutsideWindowDb": 0.0
+          }
+        ]
+      },
+      "stinger": {
+        "cue": "SFX/CINEMA/reveal",
+        "source": "ClientGodot/assets/audio/composed/cinema/reveal.ogg",
+        "provenance": "ORIGINAL_COMPOSED_BY_MUSE (checkpoint 26)",
+        "atSeconds": 6.0,
+        "gainDb": 0.0,
+        "packMeasuredLUFS": -24.96,
+        "remeasuredLUFS": -24.96,
+        "placementStatus": "PROPOSED_PENDING_PICTURE_LOCK"
+      },
+      "loopQA": [
+        {
+          "cue": "AMBIENCE/river_shore",
+          "joins": [
+            {
+              "atSeconds": 15.5,
+              "maxJump": 0.00154,
+              "bedP999Jump": 0.00266,
+              "ratioToP999": 0.58
+            }
+          ]
+        }
+      ],
+      "mix": {
+        "file": "CIN_020_mix_draft_v2.wav",
+        "sha256": "e8afd307d20a2d59456fece2298065b7496d290530f6fd67bf40eef3d0328c19",
+        "durationSeconds": 18.0,
+        "integratedLUFS": "-25.97",
+        "truePeakDBTP": "-9.61",
+        "loudnessRangeLU": "5.80",
+        "peakTrimDb": 0.0,
+        "format": {
+          "codec": "pcm_s16le",
+          "sampleRateHz": 48000,
+          "channels": 2,
+          "bytes": 3456100
+        }
+      }
+    }
+  ],
+  "decisionRef": {
+    "decision": "Apply the M-F CP1 voice palette (side B of the WO39 M39-B CP1 level-matched A/B review) to every role that has a distinct pickup take",
+    "delegatedBy": "Project owner delegated the voice choice to Muse (main chat, 2026-11-12 18:30 JST)",
+    "chosenBy": "Muse (decision recorded in the dev queue, 2026-11-12 ~18:32 JST)",
+    "checkpoint": "MEDIA-02 WO37 M-F CP2",
+    "paletteSourceManifest": "Implementation/Content/Audio/Deliveries/VO_PALETTE_PICKUPS_pack_v1.json",
+    "reason": "Fixes the draft casting defect: every male speaker shared one draft voice (avocado_v2:MAI_03) and the CIN_020 letter recipient shared Ly An's draft voice (avocado_v2:MAI_01)",
+    "adoption": "Draft v2 mixes live in Art_Source only; the runtime still embeds the v1 mixes (runtime audio count unchanged at 783) until Codex adopts v2 at review. Final casting remains Codex's review decision."
+  },
+  "auditionStatus": "NOT_AUDITIONED",
+  "paletteRemix": {
+    "checkpoint": "MEDIA-02 WO37 M-F CP2",
+    "palette": "M-F CP1 (side B)",
+    "changes": [
+      {
+        "takeKey": "CIN020_S03",
+        "shotId": "CIN_020_S03",
+        "role": "LETTER_RECIPIENT",
+        "speakerDisplay": "Người nhận thư",
+        "previousVoice": "avocado_v2:MAI_01",
+        "paletteVoice": "avocado_v2:ElvenWizard",
+        "paletteVoiceLabel": "Ethereal Star (fictional system voice)",
+        "paletteTakeFile": "Art_Source/Audio/Muse/VO/PALETTE_PICKUPS_v1/VO_CIN_020_S03_LETTERRECIPIENT_palette_v1.wav",
+        "paletteTakeSha256": "d6e1a2e118bff86a88b7047fd1352f2715722446b67697a5afc56f6abe2953c5",
+        "paletteTakeDurationSeconds": 3.072,
+        "windowSeconds": [
+          12.5,
+          17.5
+        ],
+        "takeStartSeconds": 12.5,
+        "takeEndSeconds": 15.572,
+        "slackSeconds": 1.928,
+        "fit": "FITS",
+        "voGainDb": 0.0,
+        "voiceStatus": "PLACEHOLDER_NEUTRAL"
+      }
+    ],
+    "unchanged": "Stems, stem gains, ducking, peak guard, placements and scene-edge fades run the exact v1 code; only the VO take source(s) changed."
+  }
+}

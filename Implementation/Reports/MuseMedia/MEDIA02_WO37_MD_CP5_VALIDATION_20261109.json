@@ -1,0 +1,29 @@
+{
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 5 (phase layers: boss phase 5, hub intensity, rain intensity; runtime audio manifest total 725 -> 728)",
+ "base_integration": "6f79853",
+ "branch": "muse/media-production-20261104",
+ "counts": {
+  "md5_cues": 3,
+  "md5_files_checked": 6,
+  "coverage_slots": 15
+ },
+ "mismatches": [],
+ "notes": [
+  "MD5 MUSIC/boss_mang_cot_layer_phase5: combined base+layer re-measured -20.33 LUFS / -4.86 dBTP",
+  "MD5 MUSIC/boss_mang_cot_layer_phase5/master: sha/size/codec/duration/loudness re-verified (-25.00 LUFS / -10.39 dBTP)",
+  "MD5 MUSIC/boss_mang_cot_layer_phase5/runtime: sha/size/codec/duration/loudness re-verified (-24.96 LUFS / -10.38 dBTP)",
+  "MD5 MUSIC/hub_layer_intensity: combined base+layer re-measured -20.56 LUFS / -8.62 dBTP",
+  "MD5 MUSIC/hub_layer_intensity/master: sha/size/codec/duration/loudness re-verified (-24.99 LUFS / -9.96 dBTP)",
+  "MD5 MUSIC/hub_layer_intensity/runtime: sha/size/codec/duration/loudness re-verified (-24.95 LUFS / -10.01 dBTP)",
+  "MD5 MUSIC/rain_layer_intensity: combined base+layer re-measured -21.09 LUFS / -7.89 dBTP",
+  "MD5 MUSIC/rain_layer_intensity/master: sha/size/codec/duration/loudness re-verified (-24.93 LUFS / -10.74 dBTP)",
+  "MD5 MUSIC/rain_layer_intensity/runtime: sha/size/codec/duration/loudness re-verified (-24.82 LUFS / -10.63 dBTP)",
+  "coverage verified: 15/15 slots covered, 0 gaps, md5 3 layers"
+ ],
+ "verdict": "PASS",
+ "limits": [
+  "Loudness/true-peak are re-measured here from real bytes (ffmpeg loudnorm) and compared to the pack within +/-0.5; they are not a mix PASS.",
+  "Loop seams are recorded indicators (wrapJump after the disclosed 0.25 s end-landing loop construction, wrapJumpRaw before it), not a seamlessness PASS.",
+  "No ear audition of the MD5 layers or their loop seams; audition status NOT_AUDITIONED."
+ ]
+}

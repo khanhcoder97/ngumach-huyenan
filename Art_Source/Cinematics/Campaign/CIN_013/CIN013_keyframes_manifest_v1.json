@@ -1,0 +1,57 @@
+{
+ "manifestId": "NGM_CIN013_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 25 - CIN_013 animated take (Goi 30 item 7 batch): campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_013",
+ "title": "Qua cổng, còn người đợi",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. The scene's on-screen characters (NPC_REFUGEE_LEADER, NPC_LYAN) have no approved cinematic character lock, so faces and costumes are storyboard placeholders under DEC-MEDIA-P0-20261105; final picture per shot stays blocked on the character lock.",
+ "keyframes": [
+  {
+   "shotId": "CIN_013_S01",
+   "camera": "WIDE_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_013_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "5da44673482b52c415c0a6a99efb7ca2e18a0d96fa06d0e5953fb173172dbafd",
+   "sourceStagingFile": "media-generation-keyframe-cin-013-s01-0-c15b559c-28db-498c-9fc9-ae565aff017e.webp",
+   "sourceStagingSha256": "2f1e79b9e74d72d79db88219681faf31d6a006123745a6da0d9a73b0054ade43",
+   "sourceSnapshotId": "6e52d694-a294-474f-843c-d9ec8d8ff67b:e7touv",
+   "framing": "Wide shot of the Tran Son stone refuge gate in muted stone-blue afternoon light: three small refugee groups cross the courtyard — a pair carrying a cloth bundle at left, a pair passing through the open gate with a rolled mat on a shoulder pole, and a pair at right carrying a small container between them.",
+   "knownDefects": "The right-hand pair's carried item reads as a small wooden box rather than a clearly readable repaired bowl; the figures read young/chibi-proportioned for adults. No legible text; no crowd."
+  },
+  {
+   "shotId": "CIN_013_S02",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_013_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "c58532f4912797ae1fadc79e0c0e1f8be1a2dae82e4b321f14d3a82aef8dae02",
+   "sourceStagingFile": "media-generation-keyframe-cin-013-s02-0-77ded62a-2531-4c29-85ba-fda3f1140afd.webp",
+   "sourceStagingSha256": "892bf60e6871ccc41cf24c31bb7973dd867a0786cb373faee6745100f59d816d",
+   "sourceSnapshotId": "9668ff19-e64b-4737-b422-5c180c4cd474:377iak",
+   "framing": "Medium profile shot of the refugee leader in patched layered clothes and a checkered headwrap, clutching a folded map to his chest with one index finger raised for the person still outside the frame, thatched village houses and mountains behind him.",
+   "knownDefects": "Reads as dusk (dark teal palette) rather than the muted stone-blue afternoon of S01, and the background is a thatched village instead of the refuge gate — cross-shot lighting/setting drift. The folded map is a plain gridded sheet with no legible writing, as required."
+  },
+  {
+   "shotId": "CIN_013_S03",
+   "camera": "MEDIUM_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_013_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "4ed37e37ae1a302bca111a6a1e3722c6368b38155320d1dfd4b5a330fb5ac6db",
+   "sourceStagingFile": "media-generation-keyframe-cin-013-s03-0-dfb5d004-257b-463f-8e05-f30475803588.webp",
+   "sourceStagingSha256": "df1a53a560a10bba1991cb47b68c2f6fd3e4b01f144301953004758a95547b68",
+   "sourceSnapshotId": "82d95c91-8669-487f-b35f-7241189da360:n34thp",
+   "framing": "Medium shot from inside the open gate: Ly An stands at the right gatepost with her mail satchel at her hip and a conical hat on her back, looking back out along the road across the rice fields, a clean cream ribbon tied on the left gatepost and the gate standing open.",
+   "knownDefects": "The gate is a rustic wooden village gate, not the blue stone refuge gate with gatehouse shown in S01 (environment continuity drift across the scene); the route marker reads as a decorative bow rather than a ribbon strip."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "Recorded keyframe defects: the gate design changes across the scene (blue stone refuge gate with gatehouse in S01 vs rustic wooden village gate in S03) and S02 reads as dusk against S01's afternoon, with a thatched-village background instead of the refuge gate; S01's repaired bowl reads as a small wooden box and its figures read young/chibi-proportioned for adults. All three shots are first candidates for the final-picture revision pass once the character lock exists."
+ ]
+}

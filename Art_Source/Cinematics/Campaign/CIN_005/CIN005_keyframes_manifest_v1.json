@@ -1,0 +1,58 @@
+{
+ "manifestId": "NGM_CIN005_KEYFRAMES_V1",
+ "checkpoint": "MEDIA-02 checkpoint 21 - CIN_005 animated take (Goi 30 item 7): first campaign video with real motion (Ken Burns animatic motion on 3 storyboard keyframes, 18 s / 3 shots)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "f0859d0",
+ "sceneId": "CIN_005",
+ "title": "Một thành phố vẫn sống",
+ "packSha256": "09e8685f42bcbd4f559c36c220a2d86bce96121749d46445f436aac758b93148",
+ "status": "STORYBOARD",
+ "statusNote": "Storyboard-level keyframes generated from the pack shot prompts verbatim; NOT final picture. CIN_005 has no named characters in the pack, so no character lock blocks these frames.",
+ "keyframes": [
+  {
+   "shotId": "CIN_005_S01",
+   "camera": "WIDE_STATIC",
+   "file": "keyframes_16x9/keyframe_CIN_005_S01.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "949c7f07cbbafeddf1e5f6fefd46db8c2531964e31c7ca879786d3a970d32e88",
+   "sourceStagingFile": "media-generation-keyframe-cin-005-s01-0-924d995d-7a0b-46b3-90bb-bc544b01d0b3.webp",
+   "sourceStagingSha256": "aa892df52ee87c76d70ae4c7422de4e5bb407345070b2751d9902d06423343c8",
+   "sourceSnapshotId": "def2fcb2-ab01-4952-9e9f-570d6971331f:m2dob4",
+   "framing": "Wide Thanh Lac courtyard in late morning; lacquer-red roofs, blue-green stone paths; merchants lifting shutters, an adult on a ladder repairing a flag, a tea stall setting out bowls; whole courtyard in frame.",
+   "knownDefects": "Tiny illegible glyph-like mark on the tea-stall sign (right edge); roofs read more saturated red than the prompt's 'muted lacquer-red'."
+  },
+  {
+   "shotId": "CIN_005_S02",
+   "camera": "DETAIL_LOCKED",
+   "file": "keyframes_16x9/keyframe_CIN_005_S02.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "7c47e5c88f1bdcc5d82a80d6b2d0f26f1c2851fade762747e1d26ee4b4d3db48",
+   "sourceStagingFile": "media-generation-keyframe-cin-005-s02-0-8434fa31-7d33-4152-914b-713fb7ac3037.webp",
+   "sourceStagingSha256": "3b649c91cae128d4a6bbd52200db8aecb37a03a23eb2966db497dbabfcccf886",
+   "sourceSnapshotId": "7dcf557d-bfca-4d81-8cd4-03b6c54aae25:j2jlbu",
+   "framing": "Five small faction flags with distinct geometric elemental motifs (earth spiral, water waves, flame, wind spiral, wood leaf) pulling in different directions in one courtyard breeze; no letters.",
+   "knownDefects": "Roof tiles in this frame are blue-grey, inconsistent with the red roofs of S01 (cross-shot palette drift; needs art-direction lock at final). One generic unidentified figure in a conical hat stands mid-courtyard (not in the prompt; not a named character, no canon conflict)."
+  },
+  {
+   "shotId": "CIN_005_S03",
+   "camera": "TOPDOWN_MATCH",
+   "file": "keyframes_16x9/keyframe_CIN_005_S03.png",
+   "width": 640,
+   "height": 360,
+   "sha256": "f2db67721c4cbb19650485d4a991b02eae4a0b1cf8cac66f328f5262f9699d35",
+   "sourceStagingFile": "media-generation-keyframe-cin-005-s03-0-4e422970-fe41-4963-9c51-5c90c9fbe432.webp",
+   "sourceStagingSha256": "81ea5bdfe4f1c440fd3927725371855ff4416e13df54174571d340da04e1cb4c",
+   "sourceSnapshotId": "fda43d2e-34a3-47f8-ad44-6f6fbe507e82:whotho",
+   "framing": "Strict top-down courtyard; five paths converge around an empty public notice stand (blank wooden board); people continue small daily tasks; player arrival corridor at the south is clear.",
+   "knownDefects": "Two small hanging signs at the bottom-right carry tiny illegible glyph-like marks; roof edges are cropped at the frame borders."
+  }
+ ],
+ "notes": [
+  "3 separate 16:9 keyframes, one per shot, 640x360 each.",
+  "S02 roof palette (blue-grey) drifts from S01 red roofs; art-direction lock required at final picture.",
+  "S01/S03 carry tiny illegible glyph-like marks on small signs; S02 carries one extra generic unidentified figure (not a named character, no canon conflict)."
+ ]
+}

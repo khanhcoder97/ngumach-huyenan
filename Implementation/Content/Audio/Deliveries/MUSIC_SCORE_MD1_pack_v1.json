@@ -1,0 +1,448 @@
+{
+ "packId": "NGM_MUSIC_SCORE_MD1_V1",
+ "checkpoint": "MEDIA-02 WO37 M-D checkpoint 1 - whole-game score batch 1: 7 missing core cues + 3 transition bridges (Work Order 37 module M-D)",
+ "decisionId": "DEC-MEDIA-P0-20261105",
+ "branch": "muse/media-production-20261104",
+ "baseSha": "6f79853",
+ "provenance": "ORIGINAL_COMPOSED_BY_MUSE: melodies, harmony and arrangements authored as data in Tools/MediaProduction/Muse/build_composed_score_md1.py (synthesis engine reused from checkpoint 26 build_composed_music.py) and rendered by procedural synthesis. No external samples, no ported bytes. These 10 cues are NEW audio and are counted separately from the 541 ported PackV1 files of checkpoints 07/08 and from the checkpoint-26 composed pack, which keep their own provenance and are untouched.",
+ "counts": {
+  "music": 7,
+  "transitions": 3,
+  "total": 10
+ },
+ "cues": [
+  {
+   "cueKey": "MUSIC/hub_lac_chau",
+   "nameVi": "Lạc Châu · Nơi trở về",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 80,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Hub form: warm D/G/Bm pads, bell on every bar line, flute states the question twice; a low pluck answers with the tail at bars 10-11 (the quiet answer a home may give); final bar rests on a soft D bell over the tonic pad.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md1.py on the checkpoint-26 engine (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/hub_lac_chau.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 48.0,
+    "sizeBytes": 13824102,
+    "sha256": "d6affbbcdba2583817e13704ffa0b7740404f34848f161d4b48fd780088ef004",
+    "integratedLufs": -22.01,
+    "truePeakDbtp": -10.37
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/hub_lac_chau.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 48.0,
+    "sizeBytes": 392179,
+    "sha256": "43c62fd82f8a02c061bcbe68e163a23ccde97ccd824dd339d8b1dcbc7ff2c4a5",
+    "integratedLufs": -21.95,
+    "truePeakDbtp": -10.29
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.121221,
+    "tailRms": 0.015433,
+    "wrapJump": 4e-06,
+    "wrapJumpRaw": 0.115503,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/thanh_lac",
+   "nameVi": "Thanh Lạc · Chợ sáng",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 96,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Town form: busiest street arrangement -- pluck arpeggios every bar plus a second off-beat pluck voice an octave down, bells, shaker; flute motif at bars 0 and 8, low pluck tail at bar 12.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md1.py on the checkpoint-26 engine (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/thanh_lac.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 40.0,
+    "sizeBytes": 11520102,
+    "sha256": "6d16a2798909b800a125a1c1013bb0c92c7709a46a0565d0b54ecd5c2e7bb0f7",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -10.47
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/thanh_lac.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 40.0,
+    "sizeBytes": 557144,
+    "sha256": "6cd65e4e40438a1feb9f10ae11cec45ee6d562c3c8b95eee2a0a60d8980371a6",
+    "integratedLufs": -21.96,
+    "truePeakDbtp": -10.45
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.086147,
+    "tailRms": 0.043902,
+    "wrapJump": 1.1e-05,
+    "wrapJumpRaw": 0.376895,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/rain_veil",
+   "nameVi": "Mưa · Màn nước mỏng",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 66,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Rain form: sparse flute fragments (head at bar 0, second half at bar 8) over long pads, frequent drops, whole mix low-passed at 1200 Hz so rain ambience can sit on top; ends hanging on E.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md1.py on the checkpoint-26 engine (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/rain_veil.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 58.1818,
+    "sizeBytes": 16756464,
+    "sha256": "2a42273f6f58faf688f1634ab2fe840056f8e67bd98948ca5ccff68e7f412229",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -7.63
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/rain_veil.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 58.1818,
+    "sizeBytes": 401912,
+    "sha256": "6d2d9b22a04c6fd0a0253bcbc326ca1ce94ced8c2f545f073b2651771f31a82d",
+    "integratedLufs": -21.94,
+    "truePeakDbtp": -7.56
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.148255,
+    "tailRms": 0.009555,
+    "wrapJump": 2e-06,
+    "wrapJumpRaw": 0.040216,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/swamp",
+   "nameVi": "Đầm · Nước đứng",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 58,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Swamp form: motif an octave down at half density over Bm/Em pads, low B0 drone, slow deep drops, one low bell per phrase; no drums; ends on a low hanging E.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md1.py on the checkpoint-26 engine (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/swamp.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 66.2069,
+    "sizeBytes": 19067688,
+    "sha256": "a78dc26f3b7901679036a12913c6494a65866e7285ddaff41209190097dca60c",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -7.96
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/swamp.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 66.2069,
+    "sizeBytes": 434291,
+    "sha256": "c6f51842e207cf57b753c35b34d48f5ba2f114e8d5807b1628bb0390b6670b00",
+    "integratedLufs": -21.97,
+    "truePeakDbtp": -7.96
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.167976,
+    "tailRms": 0.019624,
+    "wrapJump": 5e-06,
+    "wrapJumpRaw": 0.119513,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/dungeon",
+   "nameVi": "Hầm · Đá lạnh",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 70,
+    "bars": 12,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Dungeon form: D-minor fragments in low pluck, soft drum on the bar line, D1 drone, cold bell marks; the motif never completes -- the hanging E is the only high note, once, in the last bar.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md1.py on the checkpoint-26 engine (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/dungeon.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 41.1429,
+    "sizeBytes": 11849244,
+    "sha256": "cc696c508c677ebab5e589a96da95e3917dc15adee600d7bb073d8a94979e559",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -9.14
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/dungeon.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 41.1429,
+    "sizeBytes": 250178,
+    "sha256": "ec1261b5f561ae4158388dfd8fa9f4d7dbc4e200686f71dfd623cd6243863580",
+    "integratedLufs": -21.98,
+    "truePeakDbtp": -9.02
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.125222,
+    "tailRms": 0.036055,
+    "wrapJump": 9e-06,
+    "wrapJumpRaw": 0.173217,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/arena",
+   "nameVi": "Đấu trường · Hồi trống",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 120,
+    "bars": 16,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Arena form: drum-led drive -- drum every beat plus offbeat hit, pluck ostinato in eighth notes, motif in bright pluck at bars 0 and 8, bell hits on the bar line; the one cue that lands, drum + bell D closing the loop.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md1.py on the checkpoint-26 engine (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/arena.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 32.0,
+    "sizeBytes": 9216102,
+    "sha256": "d34c2d7277d60c8f1b34481f21206a9f489946cae207d1ba81c360998cd44509",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -7.37
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/arena.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 32.0,
+    "sizeBytes": 436903,
+    "sha256": "c8bf3d675523a31aa77a4110d664036c3fb5563db0ed24baecbe47748159ff55",
+    "integratedLufs": -21.97,
+    "truePeakDbtp": -7.38
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.152891,
+    "tailRms": 0.006848,
+    "wrapJump": 2e-06,
+    "wrapJumpRaw": 0.055996,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/tragedy",
+   "nameVi": "Bi kịch · Dây đứt",
+   "kind": "MUSIC",
+   "loop": true,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": 56,
+    "bars": 12,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Tragedy form: slow D minor, solo flute fragments with long silences between them, single bells, one low pluck figure; no drums, no tail -- the last note is the hanging E alone over a Dm pad.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md1.py on the checkpoint-26 engine (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/music/tragedy.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 51.4286,
+    "sizeBytes": 14811528,
+    "sha256": "587da249af7ac658ab1d3267a1321cf0511894002ebc23626174c29830ce4498",
+    "integratedLufs": -22.0,
+    "truePeakDbtp": -7.93
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/music/tragedy.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 51.4286,
+    "sizeBytes": 320415,
+    "sha256": "a1ab3c02213dea9d7539ecf859cc05027004c7f1025685fb4619c6427ef9430c",
+    "integratedLufs": -21.95,
+    "truePeakDbtp": -7.87
+   },
+   "seam": {
+    "method": "mono 48kHz decode; head/tail = first/last 100 ms; wrap jump = |last sample - first sample|; indicator only, not a seamlessness PASS",
+    "headRms": 0.128367,
+    "tailRms": 0.000543,
+    "wrapJump": 0.0,
+    "wrapJumpRaw": 0.002808,
+    "landingNote": "wrapJump is measured after a 0.25 s end-landing blend to the first sample (loop crossfade construction); wrapJumpRaw is the step before it"
+   }
+  },
+  {
+   "cueKey": "MUSIC/transition_calm_danger",
+   "nameVi": "Chuyển · Yên sang hiểm",
+   "kind": "TRANSITION",
+   "loop": false,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": null,
+    "bars": null,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Calm to danger (6 s): flute head, pluck fragments quicken, low drum pulse enters at 4 s; ends on the hanging E over a minor pad. Use at encounter start; do not replay the intro of the danger cue (per Audio Direction, no intro replay on a non-reset encounter).",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md1.py on the checkpoint-26 engine (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/transitions/transition_calm_danger.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 6.0,
+    "sizeBytes": 1728102,
+    "sha256": "5dcba45c22b8265eb9338b20a85fe121ae7d868c39e7822e89714babb2fe5e5e",
+    "integratedLufs": -25.0,
+    "truePeakDbtp": -17.37
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/transitions/transition_calm_danger.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 6.0,
+    "sizeBytes": 63979,
+    "sha256": "130c285caa1a75f37f7739aec1e78825dbb41f56e1f1ec48a4afb915ec0e42bf",
+    "integratedLufs": -24.94,
+    "truePeakDbtp": -17.49
+   }
+  },
+  {
+   "cueKey": "MUSIC/transition_danger_calm",
+   "nameVi": "Chuyển · Hiểm về yên",
+   "kind": "TRANSITION",
+   "loop": false,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": null,
+    "bars": null,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Danger to calm (6 s): heartbeat pulse fades by 2.5 s, minor pad lifts to D major, flute head returns softly; ends on a D pad + bell. Use at encounter end / safe-area return.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md1.py on the checkpoint-26 engine (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/transitions/transition_danger_calm.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 6.0,
+    "sizeBytes": 1728102,
+    "sha256": "e72a71f0e7f88baf3d37953011223033a20edf2a5aa784c80751b4faa0209826",
+    "integratedLufs": -25.0,
+    "truePeakDbtp": -17.39
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/transitions/transition_danger_calm.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 6.0,
+    "sizeBytes": 54609,
+    "sha256": "467027b66b255e7152c1b4a118969414f688fcbe97107eebfd0e21aa4c9f1265",
+    "integratedLufs": -24.93,
+    "truePeakDbtp": -17.2
+   }
+  },
+  {
+   "cueKey": "MUSIC/transition_area",
+   "nameVi": "Chuyển · Qua miền khác",
+   "kind": "TRANSITION",
+   "loop": false,
+   "provenance": "ORIGINAL_COMPOSED_BY_MUSE",
+   "composition": {
+    "tempoBpm": null,
+    "bars": null,
+    "mode": "see structure",
+    "motif": "Ben Mua leitmotif: D major pentatonic question phrase hanging on scale degree 2; tail withheld unless the structure says otherwise",
+    "structure": "Area to area (6 s): water-crossing pluck arpeggio rising D5-D6 over a wash, G pad at 3 s, D bell at 4.5 s; ends soft on the new shore. Use at map/biome change; fuller than the 3 s cinema transition stinger, which stays presentation-only.",
+    "rendering": "procedural synthesis (additive pluck/flute/bell/pad/bass + noise percussion), authored in build_composed_score_md1.py on the checkpoint-26 engine (build_composed_music.py); no external samples"
+   },
+   "master": {
+    "path": "Art_Source/Audio/Muse/COMPOSED/transitions/transition_area.wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 6.0,
+    "sizeBytes": 1728102,
+    "sha256": "819244bdc6ebfdca55d63e5fb8f1d1b644a7b1c2a1fbab69247709eb570eb8fa",
+    "integratedLufs": -25.0,
+    "truePeakDbtp": -16.22
+   },
+   "runtime": {
+    "path": "ClientGodot/assets/audio/composed/transitions/transition_area.ogg",
+    "codec": "vorbis",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "durationSeconds": 6.0,
+    "sizeBytes": 86636,
+    "sha256": "710cdc9084f0108afda488b133d699b7cdc7f5ebe633557dd8837f8b9701384d",
+    "integratedLufs": -24.94,
+    "truePeakDbtp": -16.35
+   }
+  }
+ ],
+ "notes": [
+  "Adoption is a presentation-adapter decision (Codex): the MD1 cues are delivered in parallel under ClientGodot/assets/audio/composed/ and do NOT replace the ported PackV1 files, their cue bindings, or the checkpoint-26 composed cues.",
+  "Music cues loop by construction (1.5 s tail wrap); the seam block records the checkpoint-07 indicator, not a seamlessness PASS. No ear audition has been done; loudness/true-peak are measured from real bytes.",
+  "Transitions are 6.0 s one-shots (-25 LUFS target). They bridge score states (calm/danger/area); they do NOT replay a destination cue's intro, per the Audio Direction rule for non-reset encounters.",
+  "The composition concept follows the audio direction doc: Ben Mua's theme is a phrase left hanging ('cau nhac bo lung'); the full flute tail is reserved for the resolve stinger and rift_finale. A low pluck tail is the quiet answer a home/street cue may give (thang_long precedent, checkpoint 26).",
+  "Remaining M-D work for a later checkpoint: per-cue intro/outro segments, stems, and phase-layer candidates for the new cues; the coverage matrix (MUSIC_SCORE_MD_COVERAGE_v1.json) lists them as open."
+ ]
+}

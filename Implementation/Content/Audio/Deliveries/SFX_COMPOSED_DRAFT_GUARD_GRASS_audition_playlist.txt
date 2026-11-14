@@ -1,0 +1,35 @@
+#EXTM3U
+# MEDIA-02 WO39 M39-A CP1 — composed SFX draft: guard + grass
+# AUDITION STATUS: NOT_AUDITIONED (this environment cannot listen)
+# This file holds valid M3U content under a .txt name because
+# .m3u is not in the scope policy mediaExtensions; rename a
+# copy to .m3u to open it directly in a player. Open this file
+# from the repo so the relative paths resolve: this playlist
+# sits 4 levels deep (Implementation/Content/Audio/Deliveries)
+# so entries start with ../../../../ .
+# Measurements are loudness/codec/spectrum numbers, NOT a
+# listening PASS. Baselines at the end are the ported cues
+# these drafts must be told apart from.
+
+#EXTINF:0.5,SFX/COMBAT/guard_expire v01 — Hết thế thủ (không bị đánh) (LUFS -28.03, TP -10.0 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v01.wav
+#EXTINF:0.5,SFX/COMBAT/guard_expire v02 — Hết thế thủ (không bị đánh) (LUFS -27.5, TP -10.81 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v02.wav
+#EXTINF:0.5,SFX/COMBAT/guard_expire v03 — Hết thế thủ (không bị đánh) (LUFS -27.76, TP -10.0 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/guard_expire_v03.wav
+#EXTINF:0.21,SFX/WORLD/step_grass v01 — Bước trên cỏ (LUFS None, TP -8.86 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v01.wav
+#EXTINF:0.21,SFX/WORLD/step_grass v02 — Bước trên cỏ (LUFS None, TP -8.0 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v02.wav
+#EXTINF:0.21,SFX/WORLD/step_grass v03 — Bước trên cỏ (LUFS None, TP -9.17 dBTP)
+../../../../Art_Source/Audio/Muse/COMPOSED/sfx/step_grass_v03.wav
+
+# --- baseline A/B (ported, for comparison only) ---
+#EXTINF:0.4632,SFX/SKILL/metal_parry v01 — confirmed counter (guard_expire must NOT sound like this)
+../../../../ClientGodot/assets/audio/sfx/skill/metal_parry_v01.wav
+#EXTINF:0.2026,SFX/WORLD/step_stone v01 — footstep on stone
+../../../../ClientGodot/assets/audio/sfx/world/step_stone_v01.wav
+#EXTINF:0.2026,SFX/WORLD/step_wood v01 — footstep on wood
+../../../../ClientGodot/assets/audio/sfx/world/step_wood_v01.wav
+#EXTINF:0.2026,SFX/WORLD/step_mud v01 — footstep on wet mud
+../../../../ClientGodot/assets/audio/sfx/world/step_mud_v01.wav

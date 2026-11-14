@@ -1,0 +1,98 @@
+{
+  "id": "STANDARD720_SUBTITLED_V2_MB_CP5_v1",
+  "checkpoint": "WO37 M-B CP5",
+  "status": "DRAFT_STANDARD_VERSION_NOT_IN_RUNTIME",
+  "method": "640 variant: CP28 recipe with the M-F CP2 draft v2 mix (History narration) + subtitles re-timed to the v2 narration windows (same chunk split as v1, only timings move); presentation gain true-peak-limited to -1.0 dBTP. 720p: integer 2x nearest-neighbour upscale of the 640 v2 variant (CP3 recipe); NOT a native 720p capture; H.264 crf26; audio + subtitle tracks stream-copied; no OGV sample (CP28: no OGV subtitled variant exists)",
+  "sourceMix": {
+    "file": "CIN_000_mix_draft_v2.wav",
+    "sha256": "5d405505ab17a51d358f9bd5bc6af280f0441f3d0cb9667746d8dc1808e74868",
+    "integratedLufs": -21.75,
+    "truePeakDbtp": -1.98
+  },
+  "v2Windows": [
+    {
+      "cue": 1,
+      "start": 1.4,
+      "end": 14.408
+    },
+    {
+      "cue": 2,
+      "start": 19.033,
+      "end": 35.785
+    },
+    {
+      "cue": 3,
+      "start": 35.667,
+      "end": 51.915
+    },
+    {
+      "cue": 4,
+      "start": 55.133,
+      "end": 67.901
+    },
+    {
+      "cue": 5,
+      "start": 71.167,
+      "end": 77.839
+    },
+    {
+      "cue": 6,
+      "start": 80.907,
+      "end": 83.475
+    }
+  ],
+  "entries": [
+    {
+      "path": "Art_Source/Cinematics/Prologue/CIN_000_640x360_30fps_sub_vi_v2.mp4",
+      "sha256": "f8d6ac322c9123113eedb080a0c464ce2d2e297ee9921b092b59317b2f8ca0be",
+      "sizeBytes": 11927191,
+      "durationSeconds": 87.2667,
+      "streams": [
+        "video:h264",
+        "audio:aac",
+        "subtitle:mov_text"
+      ],
+      "subtitles": {
+        "burnedIn": true,
+        "embeddedTrack": "mov_text, language vie, default",
+        "renderer": "libass subtitles filter, DejaVu Sans bold 16, white on semi-transparent black box",
+        "sourceFile": "CIN_000_vi_readable_v2.srt",
+        "chunks": 26,
+        "timingBasis": "M-F CP2 draft v2 narration windows (History take file spans at CP27 slot starts; Ly An line unchanged); chunk texts identical to the v1 readable SRT"
+      },
+      "audio": {
+        "source": "M-F CP2 draft v2 mix (History narration), Art_Source only — runtime still embeds the fixed v1 mix",
+        "presentationGainDb": 0.9,
+        "loudnessLufs": -20.87,
+        "truePeakDbtp": -1.24
+      },
+      "note": "Viewing variant of the prologue with the v2 draft mix; subtitles re-timed to the History narration (WO37 M-B CP5). Canonical v1 files unchanged; runtime tree untouched."
+    },
+    {
+      "sceneId": "CIN_000_subtitled_v2",
+      "sourcePath": "Art_Source/Cinematics/Prologue/CIN_000_640x360_30fps_sub_vi_v2.mp4",
+      "sourceSha256": "f8d6ac322c9123113eedb080a0c464ce2d2e297ee9921b092b59317b2f8ca0be",
+      "sourceBytes": 11927191,
+      "sourceDuration": 87.2667,
+      "outPath": "Art_Source/Cinematics/Standard720/CIN_000_subtitled_v2/CIN_000_1280x720_30fps_sub_vi_v2.mp4",
+      "outSha256": "472c116718f294663b2f9aac700e20fda72ed96db8a4229942fdc12ed234e760",
+      "outBytes": 32342539,
+      "outDuration": 87.2667
+    }
+  ],
+  "budget": {
+    "mp4Set": {
+      "files": 2,
+      "bytes640": 11927191,
+      "bytes720": 32342539,
+      "totalBytes": 44269730,
+      "ratio720vs640": 2.712,
+      "totalDuration": 87.2667
+    }
+  },
+  "runtimeTreeModified": false,
+  "notes": [
+    "Closes the follow-up named in the M-B CP4 report (subtitled variant re-timing to the v2 narration). Lives in Art_Source only; the runtime still carries the v1 subtitled variant (mp4SubVi, fixed mix). Adoption is Codex's decision.",
+    "The SEG02/SEG03 window overlap (0.118 s, silent file tail) is resolved by the CP28 monotonic rule: SEG03 chunks shift +0.168 s."
+  ]
+}
