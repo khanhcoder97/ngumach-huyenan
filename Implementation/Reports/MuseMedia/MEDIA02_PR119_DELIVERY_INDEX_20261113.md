@@ -1,4 +1,4 @@
-# MEDIA-02 — PR #119 Delivery Index (head `fd27b6f`)
+# MEDIA-02 — PR #119 Delivery Index (head `22117a7`)
 
 Chi tiết đầy đủ từng khối bàn giao của PR #119, chuyển ra khỏi mô tả PR
 khi mô tả cũ (114.929 ký tự tại head `be9ccb8`) chạm trần truyền của connector
@@ -7,14 +7,14 @@ khi mô tả cũ (114.929 ký tự tại head `be9ccb8`) chạm trần truyền 
 
 ## Mốc xác minh
 
-- Head nhánh `muse/media-production-20261104`: `fd27b6fc91b30e3af8cca18cc57aaa4695f56920`
-- Commit trên nhánh (diff từ merge-base `cf17178`): **203 commit / 2413 file** (khớp API PR: commits 203, changed_files 2413, additions 225575, deletions 0)
-- Integration: `f3db6b3` (ls-remote 2026-11-14 ~09:40 JST, không đổi)
-- Mergeable: true (API đọc 2026-11-14 ~09:40 JST tại head `fd27b6f`, mergeable_state clean; `git merge-tree --write-tree` vs `f3db6b3` exit 0, 0 conflict, tree `3b658470…`)
+- Head nhánh `muse/media-production-20261104`: `22117a74215711400bde5f730f17f3dc7812d916`
+- Commit trên nhánh (diff từ merge-base `cf17178`): **205 commit / 2416 file** (khớp API PR: commits 205, changed_files 2416, additions 225795, deletions 0)
+- Integration: `f3db6b3` (ls-remote 2026-11-14 ~10:41 JST, không đổi)
+- Mergeable: true (API đọc 2026-11-14 ~10:41 JST tại head `22117a7`, mergeable_state clean; `git merge-tree --write-tree` vs `f3db6b3` exit 0, 0 conflict, tree `102e3843…`)
 - Issue #116: 34 comment, mới nhất ACK `6862732081` (CP5 + M-G CP10 + R2, đăng 2026-11-14 ~04:24 JST); trước đó Gói 39 của Codex `6815238814`, không chỉ đạo mới.
 - Scope audit toàn nhánh: 1 violation duy nhất là `.gitattributes` — artifact của cách tính diff từ merge-base `cf17178` (chưa có các dòng LF); file này byte-identical với integration, không phải lệch nội dung thật.
 
-## Tổng quan bàn giao (số thật tại head `fd27b6f`)
+## Tổng quan bàn giao (số thật tại head `22117a7`)
 
 | Hạng mục | Số liệu |
 |---|---|
@@ -146,6 +146,7 @@ Cột Nội dung = commit chứa asset/tool; cột Báo cáo/Head = commit báo 
 | PR119 BODY RESTRUCTURE R4 | `cc0885e` | `56c2ceb` | delivery index đã gộp đủ dòng cho R3 (bao phủ tới `82c8ef6`); body v2 trong repo đã đồng bộ với bản live R2 + đoạn R3; checker PASS 17/17; bản cập nhật mô tả PR từ bản v2 này đang chờ owner tap (payload `pr119_update_body_v2_r4.json` tại `godot-prototype/pr_comments/`); scope audit block 3 paths / 0 violations, cumulative 2405 / 1 known artifact | PASS 17/17 |
 | PR119 BODY RESTRUCTURE R5 | `a9730c0` | `b70fd56` | delivery index đã gộp đủ dòng cho R4 (bao phủ tới `56c2ceb`); body v2 trong repo đã đồng bộ với bản live R2 + đoạn R4; checker PASS 17/17; bản cập nhật mô tả PR từ bản v2 R5 đã chuẩn bị xong, chờ owner tap — bị bản v2 R6 supersede trước khi đăng; scope audit block 3 paths / 0 violations, cumulative 2408 / 1 known artifact | PASS 17/17 |
 | PR119 BODY RESTRUCTURE R6 | `19b8c06` | `fd27b6f` | delivery index đã gộp đủ dòng cho R5 (bao phủ tới `b70fd56`); body v2 trong repo đã đồng bộ với bản live R2 + đoạn R5; checker PASS 17/17; mô tả PR đã đăng lại từ bản v2 này 2026-11-14 ~09:29 JST (head `fd27b6f` · 203 · 2413, mergeable true/clean); không cần ACK riêng cho R6; scope audit block 3 paths / 0 violations, cumulative 2411 / 1 known artifact | PASS 17/17 |
+| PR119 BODY RESTRUCTURE R7 | `fa45858` | `22117a7` | delivery index đã gộp đủ dòng cho R6 (bao phủ tới `fd27b6f`); body v2 trong repo đã đồng bộ với bản live R2 + đoạn R6; checker PASS 17/17; bản cập nhật mô tả PR từ bản v2 này đã chuẩn bị xong, chờ owner tap — bị bản v2 R8 supersede trước khi đăng; scope audit block 3 paths / 0 violations, cumulative 2414 / 1 known artifact | PASS 17/17 |
 
 ## Ghi chú
 
@@ -155,6 +156,7 @@ Cột Nội dung = commit chứa asset/tool; cột Báo cáo/Head = commit báo 
 - Cập nhật R5 (2026-11-14): index bao phủ tới head `56c2ceb` (199 commit) — đã gộp 2 commit của R4; 2 commit của chính R5 sẽ gộp vào index ở lần cập nhật tiếp theo (R6).
 - Cập nhật R6 (2026-11-14): index bao phủ tới head `b70fd56` (201 commit) — đã gộp 2 commit của R5; 2 commit của chính R6 sẽ gộp vào index ở lần cập nhật tiếp theo (R7).
 - Cập nhật R7 (2026-11-14): index bao phủ tới head `fd27b6f` (203 commit) — đã gộp 2 commit của R6; 2 commit của chính R7 sẽ gộp vào index ở lần cập nhật tiếp theo (R8).
+- Cập nhật R8 (2026-11-14): index bao phủ tới head `22117a7` (205 commit) — đã gộp 2 commit của R7; 2 commit của chính R8 sẽ gộp vào index ở lần cập nhật tiếp theo (R9).
 - Cách đếm commit/file: `git rev-list --count cf17178..HEAD` và `git diff --name-only cf17178 HEAD | wc -l` (cách đếm của mọi payload trước). Một commit báo cáo làm head tăng thêm 4 file so với con số 'cumulative' trong chính báo cáo đó (báo cáo md + 3 JSON) — luôn dùng head count cho payload.
 - Trường `base.sha` mà API pull trả về (`f383233…`) là giá trị cũ (merge PR #118), không phải integration hiện tại; integration hiện tại xác minh bằng ls-remote.
 - Trạng thái: mọi VO/mix DRAFT_NOT_FINAL, NOT_AUDITIONED; final picture 32 shot chờ character lock; 3 VO overrun để Codex quyết ở review; full OGV 720p deferred (Gói 39).
