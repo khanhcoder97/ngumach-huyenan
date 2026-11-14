@@ -34,7 +34,7 @@ def record(job):
            batch=batch,generator='built-in image_gen',status='GENERATED_PENDING_SOURCE_NATIVE_REVIEW',reference=refs[0],
            additionalReferences=refs[1:],generationInputs=inputs,sourceSha256=sha(png),sourceFrameDurationsMs=timing)
     if job.get('direction'):
-        r.update(direction=job['direction'],inputRole='OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE')
+        r.update(direction=job['direction'],inputRole=job.get('inputRole','OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE'))
         if job.get('layoutVerified'):r.update(layout='VISUALLY_VERIFIED_DIRECTIONAL_GRID',layoutReviewNote='Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.')
     else:r.update(componentOnly=True,scaleMode='LONGEST_AXIS',pivotMode='CELL_CENTER',previewDurationSeconds=seconds,
                   previewLoop=job.get('loop',False),inputRole='VFX_STYLE_OR_MECHANIC_REFERENCE')

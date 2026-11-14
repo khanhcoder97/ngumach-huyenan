@@ -1,0 +1,40 @@
+{
+  "selected": 31,
+  "sourcePoses": 496,
+  "bodySources": 22,
+  "components": 9,
+  "explicitGutterSources": [
+    "class_huyen_but_skill_03_ne",
+    "class_huyen_but_skill_04_n",
+    "sk_hb_04_expire_component"
+  ],
+  "beltFallbacks": {
+    "class_huyen_but_skill_03_n": [
+      0,
+      1,
+      3,
+      5,
+      6
+    ],
+    "class_huyen_but_skill_05_n": [
+      9
+    ],
+    "class_huyen_but_skill_05_se": [
+      4,
+      5
+    ],
+    "class_huyen_but_skill_06_n": [
+      2,
+      5,
+      6,
+      7,
+      8,
+      9,
+      11,
+      14,
+      15
+    ]
+  },
+  "productionApproved": false,
+  "rasterModified": false
+}

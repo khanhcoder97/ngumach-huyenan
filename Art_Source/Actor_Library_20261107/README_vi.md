@@ -4,7 +4,9 @@
 
 **Đang sản xuất; chưa hoàn thành toàn bộ thư viện.** Chuẩn16–20pose thực/clip/hướng, renderer60FPS. PNG mới là ứng viên review, chưa tự thay asset gameplay.
 
-Đợt mới nhất: [20261114e — Mực Triều và Hàn Châm](../../docs/production/Actor_Batch_20261114e_vi.md): 10 sheet thân, 6 component VFX, 256 tư thế nguồn được chọn. Duyệt 14 nguồn; hai thân NE giữ HOLD vì hướng quá gần N, NW lật cũng phụ thuộc HOLD. 301 pin source; 81/1028 job đủ cấu trúc, 50 job đủ hướng duyệt, 947 job thiếu nguồn. 18 video native kiểm đủ 16 pha nguồn, chưa nghiệm thu skill/class/gameplay. Đã khôi phục script lưu ảnh bị byte rỗng, kiểm nguyên vẹn 16 cặp PNG.
+Đợt mới nhất: [20261114f — Huyền Bút hỗ trợ/cơ động và VFX](../../docs/production/Actor_Batch_20261114f_vi.md): 31 sheet/496 tư thế nguồn chọn, 28 nguồn đạt; Thủy Kính N, Mưa Tinh N và mưa duy trì HOLD cần sửa. Hai sửa NE của đợt E đã đạt góc nguồn và chuyển HOLD cũ vào lịch sử. 329 pin source; 85/1028 job đủ cấu trúc, 54 job đủ hướng duyệt, 943 job thiếu nguồn. 37 video native và 11 bản cũ giữ riêng; đã sửa neo giày/vòng khiên qua kiểm thực. Guide NE là ảnh tham khảo do AI tạo, không phải approval của chủ dự án. Chưa nghiệm thu class, skill assembly hoặc gameplay.
+
+Đợt trước: [20261114e — Mực Triều và Hàn Châm](../../docs/production/Actor_Batch_20261114e_vi.md): 10 sheet thân, 6 component VFX, 256 tư thế nguồn được chọn tại thời điểm giao. Duyệt 14 nguồn; hai thân NE từng HOLD và được sửa trong đợt F. Giữ báo cáo E như mốc lịch sử; inventory theo selection hiện hành. Đã khôi phục script lưu ảnh bị byte rỗng, kiểm nguyên vẹn 16 cặp PNG.
 
 Đợt trước: [20261114d — trạng thái và bàn ghép kỹ năng](../../docs/production/Actor_Batch_20261114d_vi.md): năm component/80 tư thế nguồn đã duyệt; bàn chỉnh thân–VFX cho 12 skill/20 tình huống tám hướng, còn chờ nghiệm thu assembly/camera gameplay. Studio chỉnh tay và toàn bộ nguồn cũ giữ nguyên.
 

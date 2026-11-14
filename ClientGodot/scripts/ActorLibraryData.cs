@@ -104,7 +104,7 @@ public sealed class ActorLibraryData : IDisposable
         "CLASS_ANH_DAO"=>clip switch{"skill_01"=>.64,"skill_02"=>.72,"skill_03"=>.66,"skill_04"=>.68,"skill_05"=>.50,"skill_06"=>1.10,_=>Duration(clip)},
         // Huyen But body review clocks; projectile flight/debuff lifetimes
         // are separate and must never be inferred from these source poses.
-        "CLASS_HUYEN_BUT"=>clip switch{"skill_01"=>.72,"skill_02"=>.64,_=>Duration(clip)},
+        "CLASS_HUYEN_BUT"=>clip switch{"skill_01"=>.72,"skill_02"=>.64,"skill_03"=>.80,"skill_04"=>.90,"skill_05"=>.60,"skill_06"=>1.10,_=>Duration(clip)},
         _=>Duration(clip)
     };
     public static double Duration(string actor,string clip,Direction direction)=>direction.SourceFrameDurationsMs?.Sum()/1000??Duration(actor,clip);

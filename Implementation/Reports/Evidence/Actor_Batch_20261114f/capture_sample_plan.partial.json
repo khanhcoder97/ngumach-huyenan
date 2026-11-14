@@ -1,0 +1,74 @@
+[
+  {
+    "Name": "raw_class_huyen_but_skill_03_ne",
+    "SourceDurationMs": 800.0,
+    "Scope": "SOURCE_REVIEW_NOT_GAMEPLAY_FPS",
+    "NativeSampleIndices": [
+      1,
+      4,
+      7,
+      10,
+      14,
+      16,
+      19,
+      22,
+      26,
+      29,
+      31,
+      34,
+      37,
+      40,
+      43,
+      45
+    ],
+    "RenderedSourceFramesVerified": 16
+  },
+  {
+    "Name": "raw_sk_hb_03_gain_component",
+    "SourceDurationMs": 400.0,
+    "Scope": "SOURCE_REVIEW_NOT_GAMEPLAY_FPS",
+    "NativeSampleIndices": [
+      1,
+      2,
+      3,
+      5,
+      7,
+      8,
+      9,
+      11,
+      13,
+      14,
+      16,
+      17,
+      18,
+      20,
+      21,
+      23
+    ],
+    "RenderedSourceFramesVerified": 16
+  },
+  {
+    "Name": "raw_sk_hb_04_heal_tick_component",
+    "SourceDurationMs": 320.0,
+    "Scope": "SOURCE_REVIEW_NOT_GAMEPLAY_FPS",
+    "NativeSampleIndices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9,
+      10,
+      11,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "RenderedSourceFramesVerified": 16
+  }
+]
