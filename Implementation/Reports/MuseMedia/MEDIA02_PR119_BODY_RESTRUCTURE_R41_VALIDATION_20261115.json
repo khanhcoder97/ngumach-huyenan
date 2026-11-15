@@ -1,0 +1,80 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R40",
+ "validator": "check_pr119_restructure_r41_v1.py",
+ "checks": {
+  "total": 17,
+  "passed": 17
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == ebafaed": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 6ef10cf": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha ebafaed": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 271/2515": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R41 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R40 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "git commits cf17178..ebafaed == 271": {
+   "pass": true,
+   "detail": "271"
+  },
+  "git files cf17178..ebafaed == 2515": {
+   "pass": true,
+   "detail": "2515"
+  },
+  "git additions == 233754, deletions 0": {
+   "pass": true,
+   "detail": "2515 files changed, 233754 insertions(+)"
+  },
+  "merge-tree ebafaed vs integration exit 0": {
+   "pass": true,
+   "detail": "2755fa4c9c9f054c2a4a640f64c45fcbf884072d"
+  },
+  "body head line ebafaed/271/2515": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R40 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R34 and R40": {
+   "pass": true,
+   "detail": "8 + PR119 BODY RESTRUCTURE R39 + PR119 BODY RESTRUCTURE R40)"
+  },
+  "body index reference at ebafaed": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R41 note": {
+   "pass": true,
+   "detail": ""
+  }
+ },
+ "status": "PASS"
+}
