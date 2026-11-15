@@ -386,7 +386,8 @@
     "class_huyen_but_death_n",
     "class_huyen_but_death_ne",
     "class_huyen_but_death_e",
-    "class_huyen_but_death_s"
+    "class_huyen_but_death_s",
+    "class_huyen_but_walk_s"
   ],
   "holds": [
     {
@@ -475,23 +476,19 @@
     },
     {
       "id": "class_huyen_but_walk_n",
-      "reason": "HOLD: arm counterphase is present but opposite leading boot contacts at0/8 are obscured beneath hem. Sixteen unique poses do not establish a correct two-step gait. Native16 and actual wrap inspected; redraw with distinct left/right knee and boot contacts. All eight native cells and sixteen temporal samples inspected. Clear facing labels and no blank cells, but source gait leg-exchange defects remain in N/NE/E/SE/S and mirror references inherit them. E/W reads as a hopping/run-like stride, noticeably different from quiet N/S. Hold all five authored walking sources for redraw; do not pass from arm phase changes. Source clip review only; cross-action transitions, world travel/collision, final skill events and live60FPS remain unaccepted."
+      "reason": "Both opposite contacts are more readable at0/8 than I, but actual14/15/0/1wrap retains the opposite trailing-foot ordering until15 then swaps feet abruptly at0. Inspected original/all16native phases/actual wrap; repair final passing/contact approach before acceptance. Manually inspected all8native cells and all16temporal samples:5authored facings and3labelled mirrors. No blank imported texture cells or new hand/brush defects. South leg exchange/wrap remains readable at native catalogue scale. North wrap snap and NE/E/SEleg-ownership uncertainty remain held; permitted mirrors inherit their source decision. This is not transition/world-movement acceptance. No full class,gameplay aim/collision or live60FPS acceptance."
     },
     {
       "id": "class_huyen_but_walk_ne",
-      "reason": "HOLD after closer phase comparison: arms reverse at0/8, but similarly placed boot silhouettes do not unambiguously identify exchanged near/far leg contacts. Native16 and actual wrap inspected. Require readable leg exchange before source acceptance. All eight native cells and sixteen temporal samples inspected. Clear facing labels and no blank cells, but source gait leg-exchange defects remain in N/NE/E/SE/S and mirror references inherit them. E/W reads as a hopping/run-like stride, noticeably different from quiet N/S. Hold all five authored walking sources for redraw; do not pass from arm phase changes. Source clip review only; cross-action transitions, world travel/collision, final skill events and live60FPS remain unaccepted."
+      "reason": "Clear back-quarter camera and quiet actual wrap,one retained brush,two arms; all16native phases inspected. Dominant boot/leg ownership at0/8 remains obscured under hem and contact swap cannot be certified from changed right-arm phase. Keep hold. Manually inspected all8native cells and all16temporal samples:5authored facings and3labelled mirrors. No blank imported texture cells or new hand/brush defects. South leg exchange/wrap remains readable at native catalogue scale. North wrap snap and NE/E/SEleg-ownership uncertainty remain held; permitted mirrors inherit their source decision. This is not transition/world-movement acceptance. No full class,gameplay aim/collision or live60FPS acceptance."
     },
     {
       "id": "class_huyen_but_walk_e",
-      "reason": "HOLD after closer phase comparison: arm changes at0/8 while same leading boot silhouette recurs. Pose15-to0 also raises torso noticeably and reads as running/hopping rather than gentle walk. Native16 and actual wrap inspected; redraw real opposite foot contacts and quiet continuous walk seam. All eight native cells and sixteen temporal samples inspected. Clear facing labels and no blank cells, but source gait leg-exchange defects remain in N/NE/E/SE/S and mirror references inherit them. E/W reads as a hopping/run-like stride, noticeably different from quiet N/S. Hold all five authored walking sources for redraw; do not pass from arm phase changes. Source clip review only; cross-action transitions, world travel/collision, final skill events and live60FPS remain unaccepted."
+      "reason": "Upright torso and quiet actual14/15/0/1wrap improve on run-like I. All16native phases inspected,brush intact. Contact0/8still repeats the same visible leading near-boot shape rather than clearly showing near-right leg exchange; require more readable leg ownership. Manually inspected all8native cells and all16temporal samples:5authored facings and3labelled mirrors. No blank imported texture cells or new hand/brush defects. South leg exchange/wrap remains readable at native catalogue scale. North wrap snap and NE/E/SEleg-ownership uncertainty remain held; permitted mirrors inherit their source decision. This is not transition/world-movement acceptance. No full class,gameplay aim/collision or live60FPS acceptance."
     },
     {
       "id": "class_huyen_but_walk_se",
-      "reason": "HOLD: two boots visible but near/far leg ownership remains ambiguous at0/8; changed arm swing alone cannot prove exchanged support legs. Native16 and actual wrap inspected. Redraw explicitly opposite contacts with walk weight transfer. All eight native cells and sixteen temporal samples inspected. Clear facing labels and no blank cells, but source gait leg-exchange defects remain in N/NE/E/SE/S and mirror references inherit them. E/W reads as a hopping/run-like stride, noticeably different from quiet N/S. Hold all five authored walking sources for redraw; do not pass from arm phase changes. Source clip review only; cross-action transitions, world travel/collision, final skill events and live60FPS remain unaccepted."
-    },
-    {
-      "id": "class_huyen_but_walk_s",
-      "reason": "HOLD: dominant centered boot/knee keeps the same leading shape across both half-cycles and obscures other leg. Native16 and actual wrap inspected. Require distinct left-leading/right-leading contact poses. All eight native cells and sixteen temporal samples inspected. Clear facing labels and no blank cells, but source gait leg-exchange defects remain in N/NE/E/SE/S and mirror references inherit them. E/W reads as a hopping/run-like stride, noticeably different from quiet N/S. Hold all five authored walking sources for redraw; do not pass from arm phase changes. Source clip review only; cross-action transitions, world travel/collision, final skill events and live60FPS remain unaccepted."
+      "reason": "Quiet actual wrap and coherent face/brush through16native phases, but dominant lower-right boot shape persists across0/8. Changed arm/robe do not prove opposite leg ownership. Keep hold for a clearer advancing left knee/right trailing leg. Manually inspected all8native cells and all16temporal samples:5authored facings and3labelled mirrors. No blank imported texture cells or new hand/brush defects. South leg exchange/wrap remains readable at native catalogue scale. North wrap snap and NE/E/SEleg-ownership uncertainty remain held; permitted mirrors inherit their source decision. This is not transition/world-movement acceptance. No full class,gameplay aim/collision or live60FPS acceptance."
     }
   ],
   "policy": "Structure/export permits review only. No new generated actor is approved for live gameplay until visual/native motion QA.",
@@ -9187,6 +9184,37 @@
       "reviewScale": "ORIGINAL_16_NATIVE_PHASES_8_FACINGS_AND_REAL_LOOP_WRAPS",
       "batch": "20261115i",
       "reviewDate": "2026-11-16"
+    },
+    {
+      "id": "class_huyen_but_walk_s",
+      "sourceSha256": "06f45a9e9734226a15169936540802ffd1ab5344381e38a2cce2d3100ace0924",
+      "bindingSha256": "dad627c7d6d8f97751f710455d1269e0463099fa67059375c0d459b6fdbda039",
+      "reviewedSourceFrames": 16,
+      "sourceSheet": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_walk_s_v1_20261116a.png",
+      "nativeEvidence": [
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_s.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_s.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_s_poses.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_s_loop_seam.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/walk_eight_angles.mp4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/walk_eight_angles.png",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/walk_eight_angles_samples.png"
+      ],
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_s.mp4": "4a7a04f818d540ab87e2180449956beda93f23f2a19ebe673f65b8b3a3d7b47e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_s.png": "eb7bfa444c245396528ded4ab8ce902e41bb0a92e13860978d847b9310403a9b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_s_poses.png": "a54c48a433af7d9d16ef0efab86cb2b617d893923ba964b580fccf72f609516d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_s_loop_seam.png": "6b332daed4fe77a6528945355ef28f60e4192996bbf12352a517f8fe2895e02e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/walk_eight_angles.mp4": "d6cd956083b65eb1d1a4fe98b015ff561f17cbbe73a21faac8a61a30aaf26c68",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/walk_eight_angles.png": "df44f2c2505d1baadf8a1ccfa3f54c46327caa42ed57a0057547d6f99f1d7001",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116a/walk_eight_angles_samples.png": "e241a6c98cdf7ccc27aabca7b0542f89a485f029d0cc7b3e5fe7d68ae8297f9b"
+      },
+      "scope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+      "evidence": "Implementation/Reports/Evidence/Actor_Batch_20261116a/raw_class_huyen_but_walk_s_poses.png",
+      "method": "Inspected original/all16native phases and actual14/15/0/1wrap. Contact0screen-left/right-anatomical boot leads down,contact8opposite screen-right/left boot leads; separate boots pass between contacts. Upright quiet torso,connected hands,one brush retained. Native gutter registration preserves whole source; no new hand/weapon/background. Actual wrap small and coherent. World travel/foot planting/transitions remain unaccepted. Manually inspected all8native cells and all16temporal samples:5authored facings and3labelled mirrors. No blank imported texture cells or new hand/brush defects. South leg exchange/wrap remains readable at native catalogue scale. North wrap snap and NE/E/SEleg-ownership uncertainty remain held; permitted mirrors inherit their source decision. This is not transition/world-movement acceptance. No full class,gameplay aim/collision or live60FPS acceptance.",
+      "reviewScale": "ORIGINAL_16_NATIVE_PHASES_8_FACINGS_AND_REAL_LOOP_WRAPS",
+      "batch": "20261116a",
+      "reviewDate": "2026-11-16"
     }
   ],
   "historicalHolds": [
@@ -9356,6 +9384,13 @@
       "resolvedByBatch": "20261115h",
       "replacementSourceSha256": "8a9f2d8b4c81b6ade7bd0fa03dff3b2399ca2439a69426d346b43d4006f8f287",
       "resolution": "PASS source NE: inspected original/all16native phases plus NE/NW eight-facing and temporal comparison after import. Obsolete hanging far-hand removed during open-palm phases; right brush hand remains,far arm occludes naturally,no third hand. Clear rear-three-quarter back plane and stable root. Cross-action/style continuity and full dialogue gameplay unaccepted."
+    },
+    {
+      "id": "class_huyen_but_walk_s",
+      "reason": "HOLD: dominant centered boot/knee keeps the same leading shape across both half-cycles and obscures other leg. Native16 and actual wrap inspected. Require distinct left-leading/right-leading contact poses. All eight native cells and sixteen temporal samples inspected. Clear facing labels and no blank cells, but source gait leg-exchange defects remain in N/NE/E/SE/S and mirror references inherit them. E/W reads as a hopping/run-like stride, noticeably different from quiet N/S. Hold all five authored walking sources for redraw; do not pass from arm phase changes. Source clip review only; cross-action transitions, world travel/collision, final skill events and live60FPS remain unaccepted.",
+      "resolvedByBatch": "20261116a",
+      "replacementSourceSha256": "06f45a9e9734226a15169936540802ffd1ab5344381e38a2cce2d3100ace0924",
+      "resolution": "Inspected original/all16native phases and actual14/15/0/1wrap. Contact0screen-left/right-anatomical boot leads down,contact8opposite screen-right/left boot leads; separate boots pass between contacts. Upright quiet torso,connected hands,one brush retained. Native gutter registration preserves whole source; no new hand/weapon/background. Actual wrap small and coherent. World travel/foot planting/transitions remain unaccepted. Manually inspected all8native cells and all16temporal samples:5authored facings and3labelled mirrors. No blank imported texture cells or new hand/brush defects. South leg exchange/wrap remains readable at native catalogue scale. North wrap snap and NE/E/SEleg-ownership uncertainty remain held; permitted mirrors inherit their source decision. This is not transition/world-movement acceptance. No full class,gameplay aim/collision or live60FPS acceptance."
     }
   ],
   "sourceApprovalHistory": [
