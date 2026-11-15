@@ -1,0 +1,9 @@
+{
+  "id": "sk_hb_06_expire_component",
+  "oldBinding": "0ce877334a3ce9b105ab5d985ac8309529e9f8c0296965cb62044ed3c5c23cf1",
+  "newBinding": "c7686fe4668e0c5b81fde9b4b08ac4172e5ea0e48e9b0768bac14f33fadbfe12",
+  "sha256": "681d0373ac15b49f9fb467915cf7a26f09dad7376b17a10c1ce2a7c891fe0a3c",
+  "pixelEditing": false,
+  "sourcePinsUnchanged": 329,
+  "reason": "Pilot frame8..11 included the next row top node; explicit empty gutter876 retains each complete three-node triangle."
+}

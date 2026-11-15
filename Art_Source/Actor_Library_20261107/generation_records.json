@@ -16785,40 +16785,47 @@
   },
   {
     "id": "class_huyen_but_skill_03_n",
-    "source": "Sheets/class_huyen_but_skill_03_n_v1_20261114f.png",
-    "prompt": "Prompts/class_huyen_but_skill_03_n_v1_20261114f.txt",
+    "source": "Sheets/class_huyen_but_skill_03_n_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_skill_03_n_v1_20261114g.txt",
     "columns": 4,
     "rows": 4,
-    "batch": "20261114f",
+    "batch": "20261114g",
     "generator": "built-in image_gen",
-    "status": "SOURCE_NATIVE_REVIEW_HOLD",
-    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
-    "additionalReferences": [],
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_06_n_v1_20261114f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png"
+    ],
     "generationInputs": [
+      {
+        "role": "PREVIOUS_BODY_SOURCE_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_06_n_v1_20261114f.png",
+        "sourceSha256": "cb36e5566245cdfe85e42725ce129f5b94f14d8d8c7ea49892148ff860e72f33"
+      },
       {
         "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
         "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
         "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
       }
     ],
-    "sourceSha256": "8a2ff583baf39000244881077223312dce4adae84c58a367af7bf16e26f5c94b",
+    "sourceSha256": "c630efa5bf1b3ebc30ccf873e0858526ae69d92a4040a9029372eeaa32a58662",
     "sourceFrameDurationsMs": [
-      50,
-      50,
-      50,
-      50,
-      50,
-      50,
-      50,
-      50,
-      50,
-      50,
-      50,
-      50,
-      50,
-      50,
-      50,
-      50
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0
     ],
     "direction": "N",
     "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
@@ -16827,73 +16834,74 @@
     "pivotMode": "SOURCE_FOOT_PIVOTS",
     "sourceFootPivots": [
       [
-        170.5,
-        262
+        174.0,
+        281
       ],
       [
         162.0,
-        262
-      ],
-      [
-        153.0,
-        262
-      ],
-      [
-        146.0,
-        262
-      ],
-      [
-        170.0,
-        258
-      ],
-      [
-        162.0,
-        257
-      ],
-      [
-        156.5,
-        258
-      ],
-      [
-        142.0,
-        257
-      ],
-      [
-        170.5,
-        253
-      ],
-      [
-        162.0,
-        253
-      ],
-      [
-        153.0,
-        253
+        281
       ],
       [
         147.5,
-        253
+        281
       ],
       [
-        170.5,
-        249
+        134.5,
+        281
       ],
       [
-        162.0,
-        249
+        174.5,
+        281
       ],
       [
-        153.0,
-        249
+        161.5,
+        281
       ],
       [
-        146.5,
-        249
+        147.5,
+        281
+      ],
+      [
+        135.5,
+        281
+      ],
+      [
+        174.5,
+        281
+      ],
+      [
+        161.5,
+        281
+      ],
+      [
+        147.5,
+        281
+      ],
+      [
+        135.5,
+        281
+      ],
+      [
+        174.5,
+        280
+      ],
+      [
+        161.5,
+        280
+      ],
+      [
+        147.5,
+        280
+      ],
+      [
+        134.5,
+        280
       ]
     ],
-    "bodyReferenceHeight": 207,
-    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114f.json",
-    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+    "bodyReferenceHeight": 214,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "replacesSource": "Sheets/class_huyen_but_skill_03_n_v1_20261114f.png"
   },
   {
     "id": "class_huyen_but_skill_03_ne",
@@ -17368,131 +17376,123 @@
   },
   {
     "id": "class_huyen_but_skill_04_n",
-    "source": "Sheets/class_huyen_but_skill_04_n_v1_20261114f.png",
-    "prompt": "Prompts/class_huyen_but_skill_04_n_v1_20261114f.txt",
+    "source": "Sheets/class_huyen_but_skill_04_n_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_skill_04_n_v1_20261114g.txt",
     "columns": 4,
     "rows": 4,
-    "batch": "20261114f",
+    "batch": "20261114g",
     "generator": "built-in image_gen",
-    "status": "SOURCE_NATIVE_REVIEW_HOLD",
-    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
-    "additionalReferences": [],
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_06_n_v1_20261114f.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png"
+    ],
     "generationInputs": [
+      {
+        "role": "PREVIOUS_BODY_SOURCE_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_skill_06_n_v1_20261114f.png",
+        "sourceSha256": "cb36e5566245cdfe85e42725ce129f5b94f14d8d8c7ea49892148ff860e72f33"
+      },
       {
         "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
         "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
         "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
       }
     ],
-    "sourceSha256": "c0404ae18a940e6c4025078f64850708e02ae608b9e9491473396e686d6f8333",
+    "sourceSha256": "6e5f07197472a17eb2d07f09a86f9c9825b1c85e6e495263a8af36d0761ec89e",
     "sourceFrameDurationsMs": [
-      50,
-      50,
-      50,
-      50,
-      50,
-      50,
-      50,
-      50,
-      50,
-      64.28571428571429,
-      64.28571428571429,
-      64.28571428571429,
-      64.28571428571429,
-      64.28571428571429,
-      64.28571428571429,
-      64.28571428571429
+      56.25,
+      56.25,
+      56.25,
+      56.25,
+      56.25,
+      56.25,
+      56.25,
+      56.25,
+      56.25,
+      56.25,
+      56.25,
+      56.25,
+      56.25,
+      56.25,
+      56.25,
+      56.25
     ],
     "direction": "N",
     "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
     "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
     "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
-    "gridEdges": {
-      "columns": [
-        0,
-        353,
-        619,
-        894,
-        1269
-      ],
-      "rows": [
-        0,
-        346,
-        628,
-        917,
-        1240
-      ]
-    },
     "pivotMode": "SOURCE_FOOT_PIVOTS",
     "sourceFootPivots": [
       [
-        208.5,
-        302
+        170.0,
+        277
       ],
       [
-        137.0,
-        302
+        155.0,
+        277
       ],
       [
-        152.0,
-        302
+        141.5,
+        277
       ],
       [
-        158.5,
-        304
+        129.5,
+        277
       ],
       [
-        204.5,
-        244
+        171.5,
+        276
       ],
       [
-        137.0,
-        244
+        156.0,
+        276
       ],
       [
-        153.5,
-        244
+        139.5,
+        276
       ],
       [
-        162.5,
-        244
+        128.5,
+        276
       ],
       [
-        209.5,
-        251
+        169.5,
+        274
       ],
       [
-        139.0,
-        251
+        155.5,
+        274
       ],
       [
-        154.0,
-        252
+        139.5,
+        274
       ],
       [
-        161.5,
-        252
+        131.5,
+        274
       ],
       [
-        207.5,
-        260
+        170.5,
+        279
       ],
       [
-        137.0,
-        260
+        158.0,
+        279
       ],
       [
-        153.5,
-        260
+        143.0,
+        280
       ],
       [
-        162.0,
-        260
+        131.5,
+        280
       ]
     ],
-    "bodyReferenceHeight": 230,
-    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114f.json",
-    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+    "bodyReferenceHeight": 215,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "replacesSource": "Sheets/class_huyen_but_skill_04_n_v1_20261114f.png"
   },
   {
     "id": "class_huyen_but_skill_04_ne",
@@ -19637,23 +19637,23 @@
   },
   {
     "id": "sk_hb_04_rain_component",
-    "source": "Sheets/sk_hb_04_rain_component_v1_20261114f.png",
-    "prompt": "Prompts/sk_hb_04_rain_component_v1_20261114f.txt",
+    "source": "Sheets/sk_hb_04_rain_component_v1_20261114g.png",
+    "prompt": "Prompts/sk_hb_04_rain_component_v1_20261114g.txt",
     "columns": 4,
     "rows": 4,
-    "batch": "20261114f",
+    "batch": "20261114g",
     "generator": "built-in image_gen",
-    "status": "SOURCE_NATIVE_REVIEW_HOLD",
-    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_needle_component_v1_20261114e.png",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_rain_component_v1_20261114f.png",
     "additionalReferences": [],
     "generationInputs": [
       {
         "role": "PREVIOUS_VFX_STYLE_REFERENCE",
-        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_02_needle_component_v1_20261114e.png",
-        "sourceSha256": "07ecc27c73f227e0346be36c6050bd111b8f285414ab7d4e06930a732a640786"
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_rain_component_v1_20261114f.png",
+        "sourceSha256": "ad0c4a67497bfe531319bc4453c14a968d2dc5a0178ed6571100039ee0bc4de2"
       }
     ],
-    "sourceSha256": "ad0c4a67497bfe531319bc4453c14a968d2dc5a0178ed6571100039ee0bc4de2",
+    "sourceSha256": "2e5b8863eaf8393b218321f99d9c9bf254c75b3ce0483db247e97938709517f1",
     "sourceFrameDurationsMs": [
       50.0,
       50.0,
@@ -19679,75 +19679,76 @@
     "previewLoop": true,
     "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
     "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
-    "layoutReviewNote": "Original manually viewed as4x4 effect groups; droplets/glints are within a group. Explicit clear gutters do not relax crop/empty/duplicate gates.",
-    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114f.json",
-    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "layoutReviewNote": "Original 4x4 atlas manually viewed; explicit empty solid-core gutters retain crop/empty/duplicate gates.",
     "sourcePivots": [
       [
-        163.5,
-        197.5
+        173.5,
+        185.5
       ],
       [
-        159.0,
-        197.5
+        161.0,
+        185.5
       ],
       [
-        153.0,
-        197.5
+        155.5,
+        185.5
       ],
       [
-        145.0,
-        197.5
+        143.5,
+        185.5
       ],
       [
-        163.5,
-        168.0
+        173.5,
+        159.5
       ],
       [
-        159.0,
-        168.0
+        161.0,
+        159.5
       ],
       [
-        153.0,
-        168.0
+        155.5,
+        159.5
       ],
       [
-        145.0,
-        168.0
+        143.5,
+        159.5
       ],
       [
-        163.5,
-        146.5
+        173.5,
+        135.0
       ],
       [
-        159.0,
-        146.5
+        161.0,
+        135.0
       ],
       [
-        153.0,
-        146.5
+        155.5,
+        135.0
       ],
       [
-        145.0,
-        146.5
+        143.5,
+        135.0
       ],
       [
-        163.5,
-        112.0
+        173.5,
+        113.0
       ],
       [
-        159.0,
-        112.0
+        161.0,
+        113.0
       ],
       [
-        153.0,
-        112.0
+        155.5,
+        113.0
       ],
       [
-        145.0,
-        112.0
+        143.5,
+        113.0
       ]
-    ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "replacesSource": "Sheets/sk_hb_04_rain_component_v1_20261114f.png"
   },
   {
     "id": "sk_hb_04_heal_tick_component",
@@ -19992,5 +19993,3829 @@
         133.5
       ]
     ]
+  },
+  {
+    "id": "class_huyen_but_run_n",
+    "source": "Sheets/class_huyen_but_run_n_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_run_n_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "04880ab21984c7cee0d4ea5e633e998c75d9c13f52ce807b99bc7f0034768241",
+    "sourceFrameDurationsMs": [
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0
+    ],
+    "direction": "N",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        175.0,
+        276
+      ],
+      [
+        163.5,
+        276
+      ],
+      [
+        151.5,
+        278
+      ],
+      [
+        140.5,
+        268
+      ],
+      [
+        175.0,
+        267
+      ],
+      [
+        163.5,
+        272
+      ],
+      [
+        151.5,
+        270
+      ],
+      [
+        140.0,
+        272
+      ],
+      [
+        175.0,
+        261
+      ],
+      [
+        164.0,
+        258
+      ],
+      [
+        152.0,
+        258
+      ],
+      [
+        140.5,
+        246
+      ],
+      [
+        175.5,
+        250
+      ],
+      [
+        163.5,
+        255
+      ],
+      [
+        152.0,
+        255
+      ],
+      [
+        140.5,
+        255
+      ]
+    ],
+    "bodyReferenceHeight": 207,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_run_ne",
+    "source": "Sheets/class_huyen_but_run_ne_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_run_ne_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Guides_20261114f/huyen_but_ne_orientation_v1.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png"
+    ],
+    "generationInputs": [
+      {
+        "role": "AI_ORIENTATION_GUIDE_NOT_OWNER_APPROVED",
+        "path": "Art_Source/Actor_Library_20261107/Guides_20261114f/huyen_but_ne_orientation_v1.png",
+        "sourceSha256": "540597ab63601f3f2959885d2f5e806b127669c17b3d096401bdb3a51b0d0bca"
+      },
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "bcc433e492cc7ae55cb22611701a649a86f734a529b858fb142a41288a75df4d",
+    "sourceFrameDurationsMs": [
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0
+    ],
+    "direction": "NE",
+    "inputRole": "AI_ORIENTATION_GUIDE_PLUS_OWNER_IDENTITY",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        173.5,
+        272
+      ],
+      [
+        154.5,
+        273
+      ],
+      [
+        137.5,
+        272
+      ],
+      [
+        120.0,
+        272
+      ],
+      [
+        174.5,
+        264
+      ],
+      [
+        156.5,
+        262
+      ],
+      [
+        138.5,
+        262
+      ],
+      [
+        122.0,
+        249
+      ],
+      [
+        175.0,
+        249
+      ],
+      [
+        155.0,
+        254
+      ],
+      [
+        137.5,
+        254
+      ],
+      [
+        120.0,
+        253
+      ],
+      [
+        174.5,
+        246
+      ],
+      [
+        156.0,
+        238
+      ],
+      [
+        137.5,
+        240
+      ],
+      [
+        120.5,
+        239
+      ]
+    ],
+    "bodyReferenceHeight": 212,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_run_e",
+    "source": "Sheets/class_huyen_but_run_e_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_run_e_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "2c6da64173d96d824549d287f48d0e84ecc31a6acd615daadf5e8e014e142aed",
+    "sourceFrameDurationsMs": [
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0
+    ],
+    "direction": "E",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        223.5,
+        240
+      ],
+      [
+        217.0,
+        240
+      ],
+      [
+        215.0,
+        239
+      ],
+      [
+        213.5,
+        232
+      ],
+      [
+        222.5,
+        236
+      ],
+      [
+        218.5,
+        238
+      ],
+      [
+        215.0,
+        238
+      ],
+      [
+        217.0,
+        236
+      ],
+      [
+        223.0,
+        241
+      ],
+      [
+        218.5,
+        240
+      ],
+      [
+        216.0,
+        235
+      ],
+      [
+        215.5,
+        219
+      ],
+      [
+        223.0,
+        235
+      ],
+      [
+        218.0,
+        234
+      ],
+      [
+        211.0,
+        234
+      ],
+      [
+        218.0,
+        235
+      ]
+    ],
+    "bodyReferenceHeight": 206,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_run_se",
+    "source": "Sheets/class_huyen_but_run_se_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_run_se_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "b5b3873574f9859d84b1e6a968fb031a463c92904a908c7196e9c06e25dfc217",
+    "sourceFrameDurationsMs": [
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0
+    ],
+    "direction": "SE",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        176.0,
+        280
+      ],
+      [
+        175.0,
+        279
+      ],
+      [
+        173.0,
+        277
+      ],
+      [
+        172.5,
+        263
+      ],
+      [
+        171.5,
+        270
+      ],
+      [
+        165.0,
+        261
+      ],
+      [
+        162.0,
+        266
+      ],
+      [
+        174.0,
+        270
+      ],
+      [
+        176.5,
+        265
+      ],
+      [
+        164.0,
+        261
+      ],
+      [
+        160.0,
+        250
+      ],
+      [
+        169.0,
+        248
+      ],
+      [
+        168.0,
+        248
+      ],
+      [
+        164.0,
+        262
+      ],
+      [
+        175.0,
+        260
+      ],
+      [
+        173.0,
+        265
+      ]
+    ],
+    "bodyReferenceHeight": 222,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_run_s",
+    "source": "Sheets/class_huyen_but_run_s_v3_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_run_s_v3_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_run_s_v2_20261114g.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png"
+    ],
+    "generationInputs": [
+      {
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_run_s_v2_20261114g.png",
+        "sourceSha256": "70614b5e5f797dcdcf84693cbc5f6c7ab5966a351704954742c35969a9986a3d",
+        "role": "EDIT_TARGET_PREVIOUS_REJECTED_GAIT",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114g/class_huyen_but_run_s_v2_20261114g.png"
+      },
+      {
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca",
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png"
+      }
+    ],
+    "sourceSha256": "de4d8056b928cf7d0de260849b88bd4ff430c6680b6b2390d4e6c3ab0d1419ee",
+    "sourceFrameDurationsMs": [
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0
+    ],
+    "direction": "S",
+    "inputRole": "EDIT_TARGET_GAIT_PLUS_OWNER_SELECTED_COSTUME_IDENTITY",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        164.5,
+        280
+      ],
+      [
+        149.5,
+        282
+      ],
+      [
+        134.5,
+        265
+      ],
+      [
+        121.5,
+        260
+      ],
+      [
+        161.5,
+        264
+      ],
+      [
+        147.0,
+        270
+      ],
+      [
+        135.0,
+        272
+      ],
+      [
+        125.0,
+        272
+      ],
+      [
+        161.0,
+        263
+      ],
+      [
+        147.5,
+        265
+      ],
+      [
+        135.5,
+        253
+      ],
+      [
+        125.5,
+        242
+      ],
+      [
+        161.0,
+        253
+      ],
+      [
+        147.5,
+        255
+      ],
+      [
+        136.0,
+        258
+      ],
+      [
+        125.5,
+        257
+      ]
+    ],
+    "bodyReferenceHeight": 219,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "replacesSource": "Sheets/class_huyen_but_run_s_v1_20261114g.png",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_basic_attack_02_n",
+    "source": "Sheets/class_huyen_but_basic_attack_02_n_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_basic_attack_02_n_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "94f46648f555adc61ce55af20e479955f79ca9d6baf8bf01a7f9fea1b8f5e7bb",
+    "sourceFrameDurationsMs": [
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0
+    ],
+    "direction": "N",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        182.0,
+        274
+      ],
+      [
+        167.5,
+        275
+      ],
+      [
+        152.5,
+        276
+      ],
+      [
+        136.5,
+        276
+      ],
+      [
+        182.5,
+        261
+      ],
+      [
+        168.0,
+        261
+      ],
+      [
+        151.5,
+        261
+      ],
+      [
+        137.0,
+        261
+      ],
+      [
+        184.5,
+        249
+      ],
+      [
+        168.5,
+        249
+      ],
+      [
+        152.5,
+        249
+      ],
+      [
+        137.0,
+        250
+      ],
+      [
+        183.5,
+        241
+      ],
+      [
+        168.0,
+        241
+      ],
+      [
+        152.0,
+        241
+      ],
+      [
+        136.0,
+        241
+      ]
+    ],
+    "bodyReferenceHeight": 209,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_basic_attack_02_ne",
+    "source": "Sheets/class_huyen_but_basic_attack_02_ne_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_basic_attack_02_ne_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Guides_20261114f/huyen_but_ne_orientation_v1.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png"
+    ],
+    "generationInputs": [
+      {
+        "role": "AI_ORIENTATION_GUIDE_NOT_OWNER_APPROVED",
+        "path": "Art_Source/Actor_Library_20261107/Guides_20261114f/huyen_but_ne_orientation_v1.png",
+        "sourceSha256": "540597ab63601f3f2959885d2f5e806b127669c17b3d096401bdb3a51b0d0bca"
+      },
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "1ee6e94479f8f35dcc542d46f805b36eb6d326f5e703b3be60d9fb2835201071",
+    "sourceFrameDurationsMs": [
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0
+    ],
+    "direction": "NE",
+    "inputRole": "AI_ORIENTATION_GUIDE_PLUS_OWNER_IDENTITY",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        186.5,
+        302
+      ],
+      [
+        166.0,
+        300
+      ],
+      [
+        144.0,
+        299
+      ],
+      [
+        121.0,
+        299
+      ],
+      [
+        189.5,
+        280
+      ],
+      [
+        166.5,
+        280
+      ],
+      [
+        144.5,
+        280
+      ],
+      [
+        121.0,
+        280
+      ],
+      [
+        190.0,
+        259
+      ],
+      [
+        167.0,
+        260
+      ],
+      [
+        144.5,
+        260
+      ],
+      [
+        122.0,
+        261
+      ],
+      [
+        188.5,
+        243
+      ],
+      [
+        166.0,
+        243
+      ],
+      [
+        143.5,
+        242
+      ],
+      [
+        119.5,
+        242
+      ]
+    ],
+    "bodyReferenceHeight": 221,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_basic_attack_02_e",
+    "source": "Sheets/class_huyen_but_basic_attack_02_e_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_basic_attack_02_e_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "04b10de8b023ce50f150634197d16842cc4cc0bb9bfae5332be77c79e61474b1",
+    "sourceFrameDurationsMs": [
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0
+    ],
+    "direction": "E",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        189.5,
+        247
+      ],
+      [
+        187.5,
+        247
+      ],
+      [
+        185.5,
+        247
+      ],
+      [
+        184.5,
+        247
+      ],
+      [
+        185.0,
+        247
+      ],
+      [
+        184.0,
+        247
+      ],
+      [
+        182.0,
+        247
+      ],
+      [
+        186.5,
+        247
+      ],
+      [
+        185.0,
+        247
+      ],
+      [
+        186.5,
+        248
+      ],
+      [
+        186.0,
+        247
+      ],
+      [
+        185.0,
+        247
+      ],
+      [
+        186.5,
+        247
+      ],
+      [
+        187.0,
+        247
+      ],
+      [
+        188.5,
+        247
+      ],
+      [
+        187.5,
+        247
+      ]
+    ],
+    "bodyReferenceHeight": 200,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_basic_attack_02_se",
+    "source": "Sheets/class_huyen_but_basic_attack_02_se_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_basic_attack_02_se_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "79eb30c88a572615570bfd42e97b3f9eccf54ea905e0fd76f7f55b15498aa292",
+    "sourceFrameDurationsMs": [
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0
+    ],
+    "direction": "SE",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        199.0,
+        250
+      ],
+      [
+        199.0,
+        250
+      ],
+      [
+        199.0,
+        250
+      ],
+      [
+        199.0,
+        250
+      ],
+      [
+        199.0,
+        249
+      ],
+      [
+        199.0,
+        249
+      ],
+      [
+        199.0,
+        249
+      ],
+      [
+        199.0,
+        249
+      ],
+      [
+        199.5,
+        250
+      ],
+      [
+        199.0,
+        249
+      ],
+      [
+        199.0,
+        249
+      ],
+      [
+        199.0,
+        249
+      ],
+      [
+        199.0,
+        249
+      ],
+      [
+        199.0,
+        249
+      ],
+      [
+        199.0,
+        250
+      ],
+      [
+        199.5,
+        249
+      ]
+    ],
+    "bodyReferenceHeight": 206,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_basic_attack_02_s",
+    "source": "Sheets/class_huyen_but_basic_attack_02_s_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_basic_attack_02_s_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "252995e0d75a91de321152bf501cf0e51af91552b2730a05eff6564ec5b752ff",
+    "sourceFrameDurationsMs": [
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0
+    ],
+    "direction": "S",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        198.0,
+        237
+      ],
+      [
+        198.0,
+        237
+      ],
+      [
+        198.0,
+        237
+      ],
+      [
+        198.0,
+        237
+      ],
+      [
+        198.0,
+        236
+      ],
+      [
+        198.0,
+        236
+      ],
+      [
+        198.5,
+        236
+      ],
+      [
+        198.0,
+        236
+      ],
+      [
+        198.0,
+        237
+      ],
+      [
+        198.5,
+        237
+      ],
+      [
+        198.0,
+        237
+      ],
+      [
+        198.0,
+        237
+      ],
+      [
+        198.0,
+        238
+      ],
+      [
+        198.0,
+        238
+      ],
+      [
+        198.0,
+        238
+      ],
+      [
+        198.0,
+        238
+      ]
+    ],
+    "bodyReferenceHeight": 200,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_basic_attack_03_n",
+    "source": "Sheets/class_huyen_but_basic_attack_03_n_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_basic_attack_03_n_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "06b145a96d7df5d9785a41629edc3c1118b888acbfbeea600f98baf862d0a795",
+    "sourceFrameDurationsMs": [
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0
+    ],
+    "direction": "N",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        175.5,
+        278
+      ],
+      [
+        166.0,
+        278
+      ],
+      [
+        155.0,
+        280
+      ],
+      [
+        145.5,
+        281
+      ],
+      [
+        174.0,
+        270
+      ],
+      [
+        163.5,
+        271
+      ],
+      [
+        151.0,
+        274
+      ],
+      [
+        136.5,
+        274
+      ],
+      [
+        168.5,
+        265
+      ],
+      [
+        161.5,
+        265
+      ],
+      [
+        148.5,
+        267
+      ],
+      [
+        139.5,
+        265
+      ],
+      [
+        172.0,
+        264
+      ],
+      [
+        162.5,
+        265
+      ],
+      [
+        153.0,
+        265
+      ],
+      [
+        144.0,
+        265
+      ]
+    ],
+    "bodyReferenceHeight": 205,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_basic_attack_03_ne",
+    "source": "Sheets/class_huyen_but_basic_attack_03_ne_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_basic_attack_03_ne_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Guides_20261114f/huyen_but_ne_orientation_v1.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png"
+    ],
+    "generationInputs": [
+      {
+        "role": "AI_ORIENTATION_GUIDE_NOT_OWNER_APPROVED",
+        "path": "Art_Source/Actor_Library_20261107/Guides_20261114f/huyen_but_ne_orientation_v1.png",
+        "sourceSha256": "540597ab63601f3f2959885d2f5e806b127669c17b3d096401bdb3a51b0d0bca"
+      },
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "1a9b243ccf3b1d5f9b6d1793c8b04a027a0bd72d11d704e52584752bc61c7d51",
+    "sourceFrameDurationsMs": [
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0
+    ],
+    "direction": "NE",
+    "inputRole": "AI_ORIENTATION_GUIDE_PLUS_OWNER_IDENTITY",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "gridEdges": {
+      "columns": [
+        0,
+        316,
+        574,
+        830,
+        1122
+      ],
+      "rows": [
+        0,
+        379,
+        716,
+        1046,
+        1402
+      ]
+    },
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        164.0,
+        322
+      ],
+      [
+        109.5,
+        325
+      ],
+      [
+        109.5,
+        326
+      ],
+      [
+        115.0,
+        326
+      ],
+      [
+        155.5,
+        274
+      ],
+      [
+        100.5,
+        277
+      ],
+      [
+        106.0,
+        276
+      ],
+      [
+        111.5,
+        275
+      ],
+      [
+        153.0,
+        270
+      ],
+      [
+        101.5,
+        275
+      ],
+      [
+        103.0,
+        277
+      ],
+      [
+        115.0,
+        278
+      ],
+      [
+        162.5,
+        282
+      ],
+      [
+        111.5,
+        282
+      ],
+      [
+        116.5,
+        283
+      ],
+      [
+        125.0,
+        284
+      ]
+    ],
+    "bodyReferenceHeight": 229,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_basic_attack_03_e",
+    "source": "Sheets/class_huyen_but_basic_attack_03_e_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_basic_attack_03_e_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "84181ce2d4e14875f96f678bd1771964698010d19410b4c3b03ca4e9ed4b4f02",
+    "sourceFrameDurationsMs": [
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0
+    ],
+    "direction": "E",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        173.0,
+        279
+      ],
+      [
+        166.0,
+        279
+      ],
+      [
+        160.0,
+        279
+      ],
+      [
+        155.5,
+        279
+      ],
+      [
+        162.0,
+        277
+      ],
+      [
+        154.5,
+        277
+      ],
+      [
+        141.0,
+        277
+      ],
+      [
+        148.0,
+        277
+      ],
+      [
+        140.0,
+        275
+      ],
+      [
+        140.0,
+        275
+      ],
+      [
+        138.0,
+        275
+      ],
+      [
+        141.5,
+        275
+      ],
+      [
+        159.5,
+        273
+      ],
+      [
+        160.0,
+        273
+      ],
+      [
+        161.0,
+        273
+      ],
+      [
+        160.5,
+        273
+      ]
+    ],
+    "bodyReferenceHeight": 218,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_basic_attack_03_se",
+    "source": "Sheets/class_huyen_but_basic_attack_03_se_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_basic_attack_03_se_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "59405886eada0565d09a524693094d0d7465ef1404b5704778e0712cbfa2c10a",
+    "sourceFrameDurationsMs": [
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0
+    ],
+    "direction": "SE",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        194.5,
+        280
+      ],
+      [
+        179.0,
+        280
+      ],
+      [
+        163.5,
+        282
+      ],
+      [
+        146.0,
+        282
+      ],
+      [
+        188.0,
+        262
+      ],
+      [
+        172.0,
+        263
+      ],
+      [
+        154.0,
+        264
+      ],
+      [
+        140.0,
+        265
+      ],
+      [
+        180.5,
+        250
+      ],
+      [
+        165.5,
+        249
+      ],
+      [
+        152.5,
+        249
+      ],
+      [
+        140.0,
+        248
+      ],
+      [
+        188.5,
+        242
+      ],
+      [
+        177.0,
+        246
+      ],
+      [
+        163.0,
+        247
+      ],
+      [
+        152.0,
+        247
+      ]
+    ],
+    "bodyReferenceHeight": 206,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_basic_attack_03_s",
+    "source": "Sheets/class_huyen_but_basic_attack_03_s_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_basic_attack_03_s_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "6f8be054ea51ff26fa59e14d9c42cf3c98f54b766e9f98abebb5e897d7e14a2d",
+    "sourceFrameDurationsMs": [
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0,
+      50.0
+    ],
+    "direction": "S",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        186.0,
+        269
+      ],
+      [
+        169.5,
+        269
+      ],
+      [
+        157.0,
+        269
+      ],
+      [
+        144.0,
+        270
+      ],
+      [
+        181.0,
+        262
+      ],
+      [
+        165.0,
+        261
+      ],
+      [
+        150.5,
+        262
+      ],
+      [
+        139.5,
+        262
+      ],
+      [
+        178.5,
+        256
+      ],
+      [
+        166.5,
+        256
+      ],
+      [
+        157.5,
+        256
+      ],
+      [
+        145.0,
+        256
+      ],
+      [
+        185.5,
+        256
+      ],
+      [
+        171.0,
+        256
+      ],
+      [
+        158.0,
+        257
+      ],
+      [
+        145.0,
+        257
+      ]
+    ],
+    "bodyReferenceHeight": 212,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_dodge_n",
+    "source": "Sheets/class_huyen_but_dodge_n_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_dodge_n_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "a5052734221b8d094039c0ea03ccc6a286d19343d4001dff649b08b0a0780c54",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "direction": "N",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        171.5,
+        282
+      ],
+      [
+        156.0,
+        283
+      ],
+      [
+        146.5,
+        289
+      ],
+      [
+        136.0,
+        287
+      ],
+      [
+        171.5,
+        265
+      ],
+      [
+        161.5,
+        264
+      ],
+      [
+        146.5,
+        263
+      ],
+      [
+        140.5,
+        265
+      ],
+      [
+        180.0,
+        245
+      ],
+      [
+        163.5,
+        243
+      ],
+      [
+        147.5,
+        241
+      ],
+      [
+        135.0,
+        241
+      ],
+      [
+        172.0,
+        225
+      ],
+      [
+        161.0,
+        224
+      ],
+      [
+        149.0,
+        224
+      ],
+      [
+        140.5,
+        223
+      ]
+    ],
+    "bodyReferenceHeight": 205,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_dodge_ne",
+    "source": "Sheets/class_huyen_but_dodge_ne_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_dodge_ne_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Guides_20261114f/huyen_but_ne_orientation_v1.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png"
+    ],
+    "generationInputs": [
+      {
+        "role": "AI_ORIENTATION_GUIDE_NOT_OWNER_APPROVED",
+        "path": "Art_Source/Actor_Library_20261107/Guides_20261114f/huyen_but_ne_orientation_v1.png",
+        "sourceSha256": "540597ab63601f3f2959885d2f5e806b127669c17b3d096401bdb3a51b0d0bca"
+      },
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "71f280643786df02092df848a6e3088eab754cd23518d238ad9fa28a2dde7f5c",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "direction": "NE",
+    "inputRole": "AI_ORIENTATION_GUIDE_PLUS_OWNER_IDENTITY",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "gridEdges": {
+      "columns": [
+        0,
+        331,
+        629,
+        936,
+        1263
+      ],
+      "rows": [
+        0,
+        331,
+        616,
+        908,
+        1246
+      ]
+    },
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        170.5,
+        292
+      ],
+      [
+        144.5,
+        292
+      ],
+      [
+        156.0,
+        292
+      ],
+      [
+        160.0,
+        292
+      ],
+      [
+        190.0,
+        251
+      ],
+      [
+        160.5,
+        251
+      ],
+      [
+        158.5,
+        257
+      ],
+      [
+        166.5,
+        258
+      ],
+      [
+        193.0,
+        267
+      ],
+      [
+        158.0,
+        258
+      ],
+      [
+        155.5,
+        262
+      ],
+      [
+        151.0,
+        262
+      ],
+      [
+        172.5,
+        264
+      ],
+      [
+        143.5,
+        261
+      ],
+      [
+        144.5,
+        261
+      ],
+      [
+        141.5,
+        261
+      ]
+    ],
+    "bodyReferenceHeight": 243,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_dodge_e",
+    "source": "Sheets/class_huyen_but_dodge_e_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_dodge_e_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "1e4e3f66c328536ce6a0db2eae309245db72d3feedfcd1c09917038d0c3f9e4f",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "direction": "E",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        205.0,
+        234
+      ],
+      [
+        205.0,
+        233
+      ],
+      [
+        207.0,
+        234
+      ],
+      [
+        201.5,
+        234
+      ],
+      [
+        206.0,
+        236
+      ],
+      [
+        213.5,
+        233
+      ],
+      [
+        210.5,
+        237
+      ],
+      [
+        213.0,
+        231
+      ],
+      [
+        217.0,
+        229
+      ],
+      [
+        211.5,
+        226
+      ],
+      [
+        206.5,
+        227
+      ],
+      [
+        204.0,
+        229
+      ],
+      [
+        205.5,
+        231
+      ],
+      [
+        205.0,
+        231
+      ],
+      [
+        204.5,
+        231
+      ],
+      [
+        204.0,
+        231
+      ]
+    ],
+    "bodyReferenceHeight": 201,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_dodge_se",
+    "source": "Sheets/class_huyen_but_dodge_se_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_dodge_se_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "396c621b7234e48fcda3d719ecf29df884d23db97034b1d01dfe24cff2262feb",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "direction": "SE",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        187.0,
+        287
+      ],
+      [
+        182.5,
+        287
+      ],
+      [
+        166.0,
+        287
+      ],
+      [
+        151.5,
+        287
+      ],
+      [
+        182.5,
+        275
+      ],
+      [
+        173.5,
+        271
+      ],
+      [
+        164.0,
+        276
+      ],
+      [
+        153.0,
+        278
+      ],
+      [
+        180.0,
+        260
+      ],
+      [
+        166.5,
+        260
+      ],
+      [
+        154.0,
+        256
+      ],
+      [
+        140.5,
+        260
+      ],
+      [
+        183.0,
+        244
+      ],
+      [
+        172.5,
+        244
+      ],
+      [
+        155.5,
+        244
+      ],
+      [
+        140.0,
+        244
+      ]
+    ],
+    "bodyReferenceHeight": 216,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_dodge_s",
+    "source": "Sheets/class_huyen_but_dodge_s_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_dodge_s_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "258dee7614bcafa92cf4851afb04add6daac4a0fd8ef9fcbf08c9bb0c174bbdc",
+    "sourceFrameDurationsMs": [
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5,
+      37.5
+    ],
+    "direction": "S",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        182.0,
+        287
+      ],
+      [
+        172.0,
+        285
+      ],
+      [
+        156.5,
+        289
+      ],
+      [
+        144.0,
+        290
+      ],
+      [
+        184.0,
+        272
+      ],
+      [
+        169.0,
+        271
+      ],
+      [
+        153.5,
+        273
+      ],
+      [
+        133.0,
+        274
+      ],
+      [
+        179.5,
+        263
+      ],
+      [
+        165.5,
+        264
+      ],
+      [
+        152.0,
+        262
+      ],
+      [
+        139.0,
+        264
+      ],
+      [
+        183.5,
+        258
+      ],
+      [
+        172.0,
+        258
+      ],
+      [
+        157.5,
+        258
+      ],
+      [
+        143.0,
+        258
+      ]
+    ],
+    "bodyReferenceHeight": 224,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_interact_n",
+    "source": "Sheets/class_huyen_but_interact_n_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_interact_n_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "6f7480099b801ab2f3f2cad0528d79f17f0dd2cd53783696a9cf0c83ebce7f22",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "direction": "N",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        163.0,
+        316
+      ],
+      [
+        149.5,
+        316
+      ],
+      [
+        132.5,
+        316
+      ],
+      [
+        121.0,
+        317
+      ],
+      [
+        165.0,
+        286
+      ],
+      [
+        152.0,
+        287
+      ],
+      [
+        136.5,
+        286
+      ],
+      [
+        121.5,
+        287
+      ],
+      [
+        166.0,
+        257
+      ],
+      [
+        151.5,
+        257
+      ],
+      [
+        136.5,
+        256
+      ],
+      [
+        121.5,
+        257
+      ],
+      [
+        165.5,
+        227
+      ],
+      [
+        149.5,
+        227
+      ],
+      [
+        135.0,
+        227
+      ],
+      [
+        120.0,
+        227
+      ]
+    ],
+    "bodyReferenceHeight": 216,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_interact_ne",
+    "source": "Sheets/class_huyen_but_interact_ne_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_interact_ne_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_REVIEW_HOLD",
+    "reference": "Art_Source/Actor_Library_20261107/Guides_20261114f/huyen_but_ne_orientation_v1.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png"
+    ],
+    "generationInputs": [
+      {
+        "role": "AI_ORIENTATION_GUIDE_NOT_OWNER_APPROVED",
+        "path": "Art_Source/Actor_Library_20261107/Guides_20261114f/huyen_but_ne_orientation_v1.png",
+        "sourceSha256": "540597ab63601f3f2959885d2f5e806b127669c17b3d096401bdb3a51b0d0bca"
+      },
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "1f93fa58dc98a9fe642a181ee12d49b192322b06cec4373ac47d721e92b524dc",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "direction": "NE",
+    "inputRole": "AI_ORIENTATION_GUIDE_PLUS_OWNER_IDENTITY",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        172.0,
+        270
+      ],
+      [
+        157.5,
+        270
+      ],
+      [
+        151.5,
+        270
+      ],
+      [
+        138.0,
+        271
+      ],
+      [
+        162.0,
+        265
+      ],
+      [
+        157.0,
+        263
+      ],
+      [
+        146.0,
+        262
+      ],
+      [
+        136.0,
+        262
+      ],
+      [
+        166.0,
+        257
+      ],
+      [
+        156.5,
+        257
+      ],
+      [
+        146.5,
+        254
+      ],
+      [
+        139.0,
+        256
+      ],
+      [
+        171.5,
+        250
+      ],
+      [
+        161.0,
+        249
+      ],
+      [
+        150.5,
+        250
+      ],
+      [
+        141.5,
+        250
+      ]
+    ],
+    "bodyReferenceHeight": 224,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_interact_e",
+    "source": "Sheets/class_huyen_but_interact_e_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_interact_e_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "0583f055bb0f529b38bb1e79b6310c1360e763c83301f4deff3d1327dc47146f",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "direction": "E",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        182.5,
+        282
+      ],
+      [
+        159.0,
+        282
+      ],
+      [
+        137.5,
+        282
+      ],
+      [
+        118.5,
+        282
+      ],
+      [
+        163.0,
+        261
+      ],
+      [
+        155.5,
+        262
+      ],
+      [
+        142.5,
+        262
+      ],
+      [
+        126.5,
+        262
+      ],
+      [
+        181.5,
+        243
+      ],
+      [
+        161.5,
+        243
+      ],
+      [
+        144.0,
+        243
+      ],
+      [
+        128.0,
+        243
+      ],
+      [
+        183.0,
+        224
+      ],
+      [
+        164.0,
+        224
+      ],
+      [
+        145.0,
+        224
+      ],
+      [
+        129.5,
+        224
+      ]
+    ],
+    "bodyReferenceHeight": 205,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_interact_se",
+    "source": "Sheets/class_huyen_but_interact_se_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_interact_se_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "5f3a98953cd94fcdba5a998909e439bb4e2bafd8fd5a93ff6ed724475a7be4c5",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "direction": "SE",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        191.5,
+        270
+      ],
+      [
+        182.5,
+        270
+      ],
+      [
+        174.5,
+        271
+      ],
+      [
+        166.5,
+        271
+      ],
+      [
+        174.0,
+        266
+      ],
+      [
+        175.5,
+        266
+      ],
+      [
+        173.0,
+        266
+      ],
+      [
+        169.5,
+        267
+      ],
+      [
+        179.5,
+        258
+      ],
+      [
+        177.5,
+        258
+      ],
+      [
+        174.5,
+        258
+      ],
+      [
+        172.0,
+        258
+      ],
+      [
+        183.0,
+        251
+      ],
+      [
+        180.5,
+        251
+      ],
+      [
+        177.0,
+        251
+      ],
+      [
+        174.0,
+        251
+      ]
+    ],
+    "bodyReferenceHeight": 206,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "class_huyen_but_interact_s",
+    "source": "Sheets/class_huyen_but_interact_s_v1_20261114g.png",
+    "prompt": "Prompts/class_huyen_but_interact_s_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+      }
+    ],
+    "sourceSha256": "f487ff1e9401e42360c126b8877043a1adf4c3e2366aba885b508728510f51d7",
+    "sourceFrameDurationsMs": [
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5,
+      62.5
+    ],
+    "direction": "S",
+    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+    "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
+    "pivotMode": "SOURCE_FOOT_PIVOTS",
+    "sourceFootPivots": [
+      [
+        182.5,
+        269
+      ],
+      [
+        170.5,
+        269
+      ],
+      [
+        159.0,
+        269
+      ],
+      [
+        150.0,
+        269
+      ],
+      [
+        182.5,
+        259
+      ],
+      [
+        171.5,
+        259
+      ],
+      [
+        159.5,
+        259
+      ],
+      [
+        149.5,
+        259
+      ],
+      [
+        182.5,
+        249
+      ],
+      [
+        170.5,
+        249
+      ],
+      [
+        159.5,
+        249
+      ],
+      [
+        150.5,
+        249
+      ],
+      [
+        182.5,
+        246
+      ],
+      [
+        171.0,
+        246
+      ],
+      [
+        159.5,
+        246
+      ],
+      [
+        150.0,
+        246
+      ]
+    ],
+    "bodyReferenceHeight": 207,
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "sk_hb_05_departure_component",
+    "source": "Sheets/sk_hb_05_departure_component_v1_20261114g.png",
+    "prompt": "Prompts/sk_hb_05_departure_component_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_heal_tick_component_v2_20261114f.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "PREVIOUS_VFX_STYLE_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_heal_tick_component_v2_20261114f.png",
+        "sourceSha256": "45860c2a32b4efde52a32a29ab16a33c6975b59a0dfd8a0567d32d685482484c"
+      }
+    ],
+    "sourceSha256": "d914a82d99a4d8714a59d06e3564b6399437ac4421105bb25ea90a36a97ae2c1",
+    "sourceFrameDurationsMs": [
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      20
+    ],
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SOURCE_PIVOTS",
+    "previewDurationSeconds": 0.32,
+    "previewLoop": false,
+    "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "layoutReviewNote": "Original 4x4 atlas manually viewed; explicit empty solid-core gutters retain crop/empty/duplicate gates.",
+    "previewTimingNote": "SOURCE_PREVIEW_0.32S_NOT_SERVER_MOVEMENT_DURATION",
+    "gridEdges": {
+      "columns": [
+        0,
+        341,
+        621,
+        911,
+        1269
+      ],
+      "rows": [
+        0,
+        338,
+        603,
+        871,
+        1240
+      ]
+    },
+    "sourcePivots": [
+      [
+        199.5,
+        228.0
+      ],
+      [
+        142.5,
+        228.0
+      ],
+      [
+        145.5,
+        228.0
+      ],
+      [
+        145.0,
+        228.0
+      ],
+      [
+        199.5,
+        135.5
+      ],
+      [
+        142.5,
+        135.5
+      ],
+      [
+        145.5,
+        135.5
+      ],
+      [
+        145.0,
+        135.5
+      ],
+      [
+        199.5,
+        130.0
+      ],
+      [
+        142.5,
+        130.0
+      ],
+      [
+        145.5,
+        130.0
+      ],
+      [
+        145.0,
+        130.0
+      ],
+      [
+        199.5,
+        122.5
+      ],
+      [
+        142.5,
+        122.5
+      ],
+      [
+        145.5,
+        122.5
+      ],
+      [
+        145.0,
+        122.5
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "sk_hb_05_trail_component",
+    "source": "Sheets/sk_hb_05_trail_component_v1_20261114g.png",
+    "prompt": "Prompts/sk_hb_05_trail_component_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_heal_tick_component_v2_20261114f.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "PREVIOUS_VFX_STYLE_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_heal_tick_component_v2_20261114f.png",
+        "sourceSha256": "45860c2a32b4efde52a32a29ab16a33c6975b59a0dfd8a0567d32d685482484c"
+      }
+    ],
+    "sourceSha256": "c721fb847002bdac2645eb41902db13628aba07912038613dd34a3c7754bc11b",
+    "sourceFrameDurationsMs": [
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75
+    ],
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SOURCE_PIVOTS",
+    "previewDurationSeconds": 0.3,
+    "previewLoop": false,
+    "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "layoutReviewNote": "Original 4x4 atlas manually viewed; explicit empty solid-core gutters retain crop/empty/duplicate gates.",
+    "gridEdges": {
+      "columns": [
+        0,
+        333,
+        621,
+        913,
+        1263
+      ],
+      "rows": [
+        0,
+        335,
+        606,
+        886,
+        1246
+      ]
+    },
+    "sourcePivots": [
+      [
+        189.5,
+        225.0
+      ],
+      [
+        139.0,
+        225.0
+      ],
+      [
+        148.0,
+        225.0
+      ],
+      [
+        146.5,
+        225.0
+      ],
+      [
+        189.5,
+        142.0
+      ],
+      [
+        139.0,
+        142.0
+      ],
+      [
+        148.0,
+        142.0
+      ],
+      [
+        146.5,
+        142.0
+      ],
+      [
+        189.5,
+        137.0
+      ],
+      [
+        139.0,
+        137.0
+      ],
+      [
+        148.0,
+        137.0
+      ],
+      [
+        146.5,
+        137.0
+      ],
+      [
+        189.5,
+        121.5
+      ],
+      [
+        139.0,
+        121.5
+      ],
+      [
+        148.0,
+        121.5
+      ],
+      [
+        146.5,
+        121.5
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "sk_hb_05_expire_component",
+    "source": "Sheets/sk_hb_05_expire_component_v2_20261114g.png",
+    "prompt": "Prompts/sk_hb_05_expire_component_v2_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_heal_tick_component_v2_20261114f.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "PREVIOUS_VFX_STYLE_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_heal_tick_component_v2_20261114f.png",
+        "sourceSha256": "45860c2a32b4efde52a32a29ab16a33c6975b59a0dfd8a0567d32d685482484c"
+      }
+    ],
+    "sourceSha256": "54c1e34da29d4b419125ead5d3bb035c16697193bba78e39e0755721cc43c56c",
+    "sourceFrameDurationsMs": [
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75,
+      18.75
+    ],
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SOURCE_PIVOTS",
+    "previewDurationSeconds": 0.3,
+    "previewLoop": false,
+    "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "layoutReviewNote": "Original 4x4 atlas manually viewed; explicit empty solid-core gutters retain crop/empty/duplicate gates.",
+    "sourcePivots": [
+      [
+        189.5,
+        268.0
+      ],
+      [
+        169.5,
+        268.0
+      ],
+      [
+        147.5,
+        268.0
+      ],
+      [
+        127.5,
+        268.0
+      ],
+      [
+        189.5,
+        221.0
+      ],
+      [
+        169.5,
+        221.0
+      ],
+      [
+        147.5,
+        221.0
+      ],
+      [
+        127.5,
+        221.0
+      ],
+      [
+        189.5,
+        158.5
+      ],
+      [
+        169.5,
+        158.5
+      ],
+      [
+        147.5,
+        158.5
+      ],
+      [
+        127.5,
+        158.5
+      ],
+      [
+        189.5,
+        104.25
+      ],
+      [
+        169.5,
+        104.25
+      ],
+      [
+        147.5,
+        104.25
+      ],
+      [
+        127.5,
+        104.25
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "sk_hb_06_tell_component",
+    "source": "Sheets/sk_hb_06_tell_component_v1_20261114g.png",
+    "prompt": "Prompts/sk_hb_06_tell_component_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_heal_tick_component_v2_20261114f.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "PREVIOUS_VFX_STYLE_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_heal_tick_component_v2_20261114f.png",
+        "sourceSha256": "45860c2a32b4efde52a32a29ab16a33c6975b59a0dfd8a0567d32d685482484c"
+      }
+    ],
+    "sourceSha256": "ee1dc17a803cf2abda64d31e060095240ec91eda8ea0fa6359f87f942e2cec24",
+    "sourceFrameDurationsMs": [
+      34.375,
+      34.375,
+      34.375,
+      34.375,
+      34.375,
+      34.375,
+      34.375,
+      34.375,
+      34.375,
+      34.375,
+      34.375,
+      34.375,
+      34.375,
+      34.375,
+      34.375,
+      34.375
+    ],
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SOURCE_PIVOTS",
+    "previewDurationSeconds": 0.55,
+    "previewLoop": false,
+    "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "layoutReviewNote": "Original 4x4 atlas manually viewed; explicit empty solid-core gutters retain crop/empty/duplicate gates.",
+    "gridEdges": {
+      "columns": [
+        0,
+        355,
+        632,
+        914,
+        1263
+      ],
+      "rows": [
+        0,
+        383,
+        636,
+        888,
+        1246
+      ]
+    },
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourcePivots": [
+      [
+        214.2701387588461,
+        282.31854790930703
+      ],
+      [
+        138.9754175422228,
+        281.2093016158024
+      ],
+      [
+        141.95033560476074,
+        277.916044537551
+      ],
+      [
+        141.96650225304703,
+        276.5279308515313
+      ],
+      [
+        214.81556982797125,
+        146.82819471142722
+      ],
+      [
+        141.11857095082073,
+        145.64525001336924
+      ],
+      [
+        144.3069313671131,
+        142.21901653468584
+      ],
+      [
+        143.16101677563358,
+        144.2491327457034
+      ],
+      [
+        214.9506392043742,
+        139.64635584619143
+      ],
+      [
+        141.16842935831644,
+        139.41051992326527
+      ],
+      [
+        141.47412927023166,
+        139.36226988736425
+      ],
+      [
+        141.99179666390876,
+        138.77106278480514
+      ],
+      [
+        214.11921739698926,
+        138.7974924396742
+      ],
+      [
+        139.21874249002283,
+        138.67111516140213
+      ],
+      [
+        143.0525231888534,
+        136.38934736724562
+      ],
+      [
+        142.00626310010065,
+        138.41931428818705
+      ]
+    ],
+    "supportPilotRefined": true
+  },
+  {
+    "id": "sk_hb_06_wave_component",
+    "source": "Sheets/sk_hb_06_wave_component_v1_20261114g.png",
+    "prompt": "Prompts/sk_hb_06_wave_component_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_heal_tick_component_v2_20261114f.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "PREVIOUS_VFX_STYLE_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_heal_tick_component_v2_20261114f.png",
+        "sourceSha256": "45860c2a32b4efde52a32a29ab16a33c6975b59a0dfd8a0567d32d685482484c"
+      }
+    ],
+    "sourceSha256": "2ddaa7c9ff53bf064d2b8c7c39a202fe62a939a174f26214aa4831b683b9b9ca",
+    "sourceFrameDurationsMs": [
+      28.125,
+      28.125,
+      28.125,
+      28.125,
+      28.125,
+      28.125,
+      28.125,
+      28.125,
+      28.125,
+      28.125,
+      28.125,
+      28.125,
+      28.125,
+      28.125,
+      28.125,
+      28.125
+    ],
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SYMMETRIC_BOUNDS_CENTER",
+    "previewDurationSeconds": 0.45,
+    "previewLoop": false,
+    "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "layoutReviewNote": "Original 4x4 atlas manually viewed; explicit empty solid-core gutters retain crop/empty/duplicate gates.",
+    "gridEdges": {
+      "columns": [
+        0,
+        342,
+        624,
+        910,
+        1263
+      ],
+      "rows": [
+        0,
+        373,
+        625,
+        876,
+        1246
+      ]
+    },
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "sk_hb_06_ally_heal_component",
+    "source": "Sheets/sk_hb_06_ally_heal_component_v1_20261114g.png",
+    "prompt": "Prompts/sk_hb_06_ally_heal_component_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_heal_tick_component_v2_20261114f.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "PREVIOUS_VFX_STYLE_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_heal_tick_component_v2_20261114f.png",
+        "sourceSha256": "45860c2a32b4efde52a32a29ab16a33c6975b59a0dfd8a0567d32d685482484c"
+      }
+    ],
+    "sourceSha256": "61182e1acd53668aa85736d082f1555c757de86b6abdef07f71fd6bc89fa18fd",
+    "sourceFrameDurationsMs": [
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      30.0
+    ],
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SOURCE_PIVOTS",
+    "previewDurationSeconds": 0.48,
+    "previewLoop": false,
+    "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "layoutReviewNote": "Original 4x4 atlas manually viewed; explicit empty solid-core gutters retain crop/empty/duplicate gates.",
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourcePivots": [
+      [
+        186.0,
+        291
+      ],
+      [
+        157.0,
+        291
+      ],
+      [
+        135.5,
+        291
+      ],
+      [
+        124.0,
+        291
+      ],
+      [
+        186.0,
+        255
+      ],
+      [
+        157.0,
+        255
+      ],
+      [
+        135.5,
+        255
+      ],
+      [
+        124.0,
+        255
+      ],
+      [
+        186.0,
+        220
+      ],
+      [
+        157.0,
+        220
+      ],
+      [
+        135.5,
+        220
+      ],
+      [
+        124.0,
+        220
+      ],
+      [
+        186.0,
+        185
+      ],
+      [
+        157.0,
+        185
+      ],
+      [
+        135.5,
+        185
+      ],
+      [
+        124.0,
+        185
+      ]
+    ],
+    "supportPilotRefined": true
+  },
+  {
+    "id": "sk_hb_06_cleanse_component",
+    "source": "Sheets/sk_hb_06_cleanse_component_v1_20261114g.png",
+    "prompt": "Prompts/sk_hb_06_cleanse_component_v1_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_heal_tick_component_v2_20261114f.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "PREVIOUS_VFX_STYLE_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_04_heal_tick_component_v2_20261114f.png",
+        "sourceSha256": "45860c2a32b4efde52a32a29ab16a33c6975b59a0dfd8a0567d32d685482484c"
+      }
+    ],
+    "sourceSha256": "9cd4e658aa0c4b7a511c6cc521f56f3d94c5ef70717bdf15b66e5eb184caa7af",
+    "sourceFrameDurationsMs": [
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0
+    ],
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SOURCE_PIVOTS",
+    "previewDurationSeconds": 0.32,
+    "previewLoop": false,
+    "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "layoutReviewNote": "Original 4x4 atlas manually viewed; explicit empty solid-core gutters retain crop/empty/duplicate gates.",
+    "gridEdges": {
+      "columns": [
+        0,
+        343,
+        615,
+        909,
+        1263
+      ],
+      "rows": [
+        0,
+        350,
+        614,
+        893,
+        1246
+      ]
+    },
+    "sourcePivots": [
+      [
+        200.0,
+        243.5
+      ],
+      [
+        138.5,
+        243.5
+      ],
+      [
+        149.5,
+        243.5
+      ],
+      [
+        142.0,
+        243.5
+      ],
+      [
+        200.0,
+        134.5
+      ],
+      [
+        138.5,
+        134.5
+      ],
+      [
+        149.5,
+        134.5
+      ],
+      [
+        142.0,
+        134.5
+      ],
+      [
+        200.0,
+        126.0
+      ],
+      [
+        138.5,
+        126.0
+      ],
+      [
+        149.5,
+        126.0
+      ],
+      [
+        142.0,
+        126.0
+      ],
+      [
+        200.0,
+        119.0
+      ],
+      [
+        138.5,
+        119.0
+      ],
+      [
+        149.5,
+        119.0
+      ],
+      [
+        142.0,
+        119.0
+      ]
+    ],
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
+  },
+  {
+    "id": "sk_hb_06_expire_component",
+    "source": "Sheets/sk_hb_06_expire_component_v3_20261114g.png",
+    "prompt": "Prompts/sk_hb_06_expire_component_v3_20261114g.txt",
+    "columns": 4,
+    "rows": 4,
+    "batch": "20261114g",
+    "generator": "built-in image_gen",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_06_tell_component_v1_20261114g.png",
+    "additionalReferences": [],
+    "generationInputs": [
+      {
+        "role": "PREVIOUS_VFX_STYLE_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/sk_hb_06_tell_component_v1_20261114g.png",
+        "sourceSha256": "ee1dc17a803cf2abda64d31e060095240ec91eda8ea0fa6359f87f942e2cec24",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261114g/sk_hb_06_tell_component_v1_20261114g.png"
+      }
+    ],
+    "sourceSha256": "681d0373ac15b49f9fb467915cf7a26f09dad7376b17a10c1ce2a7c891fe0a3c",
+    "sourceFrameDurationsMs": [
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0,
+      25.0
+    ],
+    "componentOnly": true,
+    "scaleMode": "LONGEST_AXIS",
+    "pivotMode": "SOURCE_PIVOTS",
+    "previewDurationSeconds": 0.4,
+    "previewLoop": false,
+    "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+    "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+    "layoutReviewNote": "Original 4x4 atlas manually viewed; explicit empty solid-core gutters retain crop/empty/duplicate gates.",
+    "gridEdges": {
+      "columns": [
+        0,
+        353,
+        632,
+        912,
+        1263
+      ],
+      "rows": [
+        0,
+        397,
+        633,
+        876,
+        1246
+      ]
+    },
+    "registrationCalibration": "Art_Source/Actor_Library_20261107/component_registration_20261114g.json",
+    "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE",
+    "sourcePivots": [
+      [
+        208.5,
+        274.5
+      ],
+      [
+        138.0,
+        274.5
+      ],
+      [
+        139.5,
+        274.5
+      ],
+      [
+        139.5,
+        274.5
+      ],
+      [
+        208.5,
+        114.0
+      ],
+      [
+        138.0,
+        114.0
+      ],
+      [
+        139.5,
+        114.0
+      ],
+      [
+        139.5,
+        114.0
+      ],
+      [
+        208.5,
+        117.0
+      ],
+      [
+        138.0,
+        117.0
+      ],
+      [
+        139.5,
+        117.0
+      ],
+      [
+        139.5,
+        117.0
+      ],
+      [
+        208.5,
+        111.75
+      ],
+      [
+        138.0,
+        111.75
+      ],
+      [
+        139.5,
+        111.75
+      ],
+      [
+        139.5,
+        111.75
+      ]
+    ],
+    "semanticGridReview": "MANUAL_COMPLETE_THREE_NODE_TRIANGLES_ROW_BOUNDARY876"
   }
 ]
