@@ -162118,9 +162118,9 @@
     },
     {
       "id": "class_huyen_but_run_n",
-      "file": "sheets/class_huyen_but_run_n_v1_20261114g.png",
-      "source": "Sheets/class_huyen_but_run_n_v1_20261114g.png",
-      "sha256": "04880ab21984c7cee0d4ea5e633e998c75d9c13f52ce807b99bc7f0034768241",
+      "file": "sheets/class_huyen_but_run_n_v1_20261115h.png",
+      "source": "Sheets/class_huyen_but_run_n_v1_20261115h.png",
+      "sha256": "b4700e546cb94e3972342f08f0b0775a37cc192e0bef96a2aaa8686b96f13ce9",
       "imageSize": [
         1247,
         1261
@@ -162129,7 +162129,7 @@
         {
           "direction": "N",
           "flip": false,
-          "referenceHeight": 207,
+          "referenceHeight": 213,
           "frames": [
             {
               "rect": [
@@ -162139,14 +162139,14 @@
                 315
               ],
               "bounds": [
-                125,
+                124,
                 69,
-                235,
-                276
+                241,
+                282
               ],
               "pivot": [
-                175.0,
-                276
+                184.0,
+                282
               ]
             },
             {
@@ -162157,14 +162157,14 @@
                 315
               ],
               "bounds": [
-                108,
-                68,
-                224,
-                276
+                110,
+                69,
+                232,
+                280
               ],
               "pivot": [
-                163.5,
-                276
+                171.0,
+                280
               ]
             },
             {
@@ -162175,14 +162175,14 @@
                 315
               ],
               "bounds": [
-                97,
-                67,
-                215,
-                278
+                96,
+                69,
+                221,
+                279
               ],
               "pivot": [
-                151.5,
-                278
+                159.0,
+                279
               ]
             },
             {
@@ -162194,13 +162194,13 @@
               ],
               "bounds": [
                 86,
-                67,
-                204,
-                268
+                69,
+                209,
+                269
               ],
               "pivot": [
-                140.5,
-                268
+                147.5,
+                269
               ]
             },
             {
@@ -162212,13 +162212,13 @@
               ],
               "bounds": [
                 123,
-                58,
-                239,
-                267
+                57,
+                245,
+                266
               ],
               "pivot": [
-                175.0,
-                267
+                184.5,
+                266
               ]
             },
             {
@@ -162229,194 +162229,194 @@
                 315
               ],
               "bounds": [
-                112,
-                61,
-                226,
-                272
+                111,
+                58,
+                232,
+                274
               ],
               "pivot": [
-                163.5,
-                272
+                171.5,
+                274
               ]
             },
             {
               "rect": [
                 624,
                 315,
+                311,
+                315
+              ],
+              "bounds": [
+                96,
+                59,
+                217,
+                273
+              ],
+              "pivot": [
+                159.5,
+                273
+              ]
+            },
+            {
+              "rect": [
+                935,
+                315,
+                312,
+                315
+              ],
+              "bounds": [
+                85,
+                58,
+                202,
+                273
+              ],
+              "pivot": [
+                147.5,
+                273
+              ]
+            },
+            {
+              "rect": [
+                0,
+                630,
+                312,
+                316
+              ],
+              "bounds": [
+                118,
+                50,
+                245,
+                260
+              ],
+              "pivot": [
+                183.0,
+                260
+              ]
+            },
+            {
+              "rect": [
+                312,
+                630,
+                312,
+                316
+              ],
+              "bounds": [
+                107,
+                49,
+                230,
+                258
+              ],
+              "pivot": [
+                172.5,
+                258
+              ]
+            },
+            {
+              "rect": [
+                624,
+                630,
+                311,
+                316
+              ],
+              "bounds": [
+                97,
+                48,
+                219,
+                259
+              ],
+              "pivot": [
+                159.5,
+                259
+              ]
+            },
+            {
+              "rect": [
+                935,
+                630,
+                312,
+                316
+              ],
+              "bounds": [
+                86,
+                49,
+                209,
+                237
+              ],
+              "pivot": [
+                148.5,
+                237
+              ]
+            },
+            {
+              "rect": [
+                0,
+                946,
+                312,
+                315
+              ],
+              "bounds": [
+                121,
+                41,
+                239,
+                243
+              ],
+              "pivot": [
+                184.0,
+                243
+              ]
+            },
+            {
+              "rect": [
+                312,
+                946,
+                312,
+                315
+              ],
+              "bounds": [
+                109,
+                42,
+                229,
+                255
+              ],
+              "pivot": [
+                172.0,
+                255
+              ]
+            },
+            {
+              "rect": [
+                624,
+                946,
                 311,
                 315
               ],
               "bounds": [
                 97,
-                61,
-                212,
-                270
-              ],
-              "pivot": [
-                151.5,
-                270
-              ]
-            },
-            {
-              "rect": [
-                935,
-                315,
-                312,
-                315
-              ],
-              "bounds": [
-                89,
-                62,
-                200,
-                272
-              ],
-              "pivot": [
-                140.0,
-                272
-              ]
-            },
-            {
-              "rect": [
-                0,
-                630,
-                312,
-                316
-              ],
-              "bounds": [
-                122,
-                53,
-                242,
-                261
-              ],
-              "pivot": [
-                175.0,
-                261
-              ]
-            },
-            {
-              "rect": [
-                312,
-                630,
-                312,
-                316
-              ],
-              "bounds": [
-                110,
-                51,
-                224,
+                43,
+                217,
                 258
               ],
               "pivot": [
-                164.0,
-                258
-              ]
-            },
-            {
-              "rect": [
-                624,
-                630,
-                311,
-                316
-              ],
-              "bounds": [
-                98,
-                50,
-                213,
-                258
-              ],
-              "pivot": [
-                152.0,
+                159.0,
                 258
               ]
             },
             {
               "rect": [
                 935,
-                630,
-                312,
-                316
-              ],
-              "bounds": [
-                89,
-                51,
-                201,
-                246
-              ],
-              "pivot": [
-                140.5,
-                246
-              ]
-            },
-            {
-              "rect": [
-                0,
                 946,
                 312,
                 315
               ],
               "bounds": [
-                125,
+                85,
                 42,
-                235,
-                250
+                209,
+                258
               ],
               "pivot": [
-                175.5,
-                250
-              ]
-            },
-            {
-              "rect": [
-                312,
-                946,
-                312,
-                315
-              ],
-              "bounds": [
-                110,
-                45,
-                222,
-                255
-              ],
-              "pivot": [
-                163.5,
-                255
-              ]
-            },
-            {
-              "rect": [
-                624,
-                946,
-                311,
-                315
-              ],
-              "bounds": [
-                99,
-                45,
-                215,
-                255
-              ],
-              "pivot": [
-                152.0,
-                255
-              ]
-            },
-            {
-              "rect": [
-                935,
-                946,
-                312,
-                315
-              ],
-              "bounds": [
-                86,
-                45,
-                205,
-                255
-              ],
-              "pivot": [
-                140.5,
-                255
+                148.0,
+                258
               ]
             }
           ]
@@ -162424,7 +162424,7 @@
       ],
       "sourceFrames": 16,
       "framesPerDirection": 16,
-      "referenceHeight": 208.5,
+      "referenceHeight": 211.0,
       "status": "STRUCTURE_PASS_NOT_VISUAL_APPROVAL",
       "pivotMode": "SOURCE_FOOT_PIVOTS",
       "sourceFrameDurationsMs": [
@@ -162445,10 +162445,10 @@
         40.0,
         40.0
       ],
-      "bindingSha256": "604432aecd0bed647df9c559f91acb8948a2e4862f9cf958cdad39e60e56474c",
-      "productionApproved": false,
-      "visualState": "HOLD",
-      "visualNotes": "HOLD: Native16 poses repeat very similar leading-foot/arm silhouettes at0 and8. The intended opposite support remains ambiguous behind the robe; redraw readable alternating contacts. Pixel uniqueness does not prove a16-phase stride."
+      "bindingSha256": "47dbc8b94f3d7cdc681c12ebb8335deae1825d341f7b193d9727d4f50e4b7526",
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "visualNotes": ""
     },
     {
       "id": "class_huyen_but_run_ne",
@@ -162786,9 +162786,9 @@
     },
     {
       "id": "class_huyen_but_run_e",
-      "file": "sheets/class_huyen_but_run_e_v1_20261114g.png",
-      "source": "Sheets/class_huyen_but_run_e_v1_20261114g.png",
-      "sha256": "2c6da64173d96d824549d287f48d0e84ecc31a6acd615daadf5e8e014e142aed",
+      "file": "sheets/class_huyen_but_run_e_v4_20261115h.png",
+      "source": "Sheets/class_huyen_but_run_e_v4_20261115h.png",
+      "sha256": "687602dc0bff4b5675c3bb415c8b0ca0c04a1486d0773ed98cf0c6afc4fd4331",
       "imageSize": [
         1448,
         1086
@@ -162797,7 +162797,7 @@
         {
           "direction": "E",
           "flip": false,
-          "referenceHeight": 206,
+          "referenceHeight": 213,
           "frames": [
             {
               "rect": [
@@ -162807,14 +162807,14 @@
                 272
               ],
               "bounds": [
-                134,
-                34,
-                262,
-                240
+                103,
+                32,
+                255,
+                245
               ],
               "pivot": [
-                223.5,
-                240
+                182.0,
+                245
               ]
             },
             {
@@ -162825,14 +162825,14 @@
                 272
               ],
               "bounds": [
-                127,
-                34,
-                255,
-                240
+                103,
+                32,
+                251,
+                246
               ],
               "pivot": [
-                217.0,
-                240
+                177.0,
+                246
               ]
             },
             {
@@ -162843,14 +162843,14 @@
                 272
               ],
               "bounds": [
-                121,
-                35,
+                104,
+                32,
                 253,
-                239
+                245
               ],
               "pivot": [
-                215.0,
-                239
+                177.5,
+                245
               ]
             },
             {
@@ -162861,14 +162861,14 @@
                 272
               ],
               "bounds": [
-                113,
-                33,
-                253,
-                232
+                104,
+                32,
+                252,
+                245
               ],
               "pivot": [
-                213.5,
-                232
+                177.0,
+                245
               ]
             },
             {
@@ -162879,14 +162879,14 @@
                 271
               ],
               "bounds": [
-                116,
-                31,
-                262,
-                236
+                102,
+                33,
+                252,
+                241
               ],
               "pivot": [
-                222.5,
-                236
+                176.5,
+                241
               ]
             },
             {
@@ -162897,14 +162897,14 @@
                 271
               ],
               "bounds": [
-                110,
+                102,
                 33,
-                262,
-                238
+                260,
+                243
               ],
               "pivot": [
-                218.5,
-                238
+                176.0,
+                243
               ]
             },
             {
@@ -162915,104 +162915,104 @@
                 271
               ],
               "bounds": [
-                109,
+                103,
                 33,
+                272,
+                242
+              ],
+              "pivot": [
+                177.0,
+                242
+              ]
+            },
+            {
+              "rect": [
+                1086,
+                272,
+                362,
+                271
+              ],
+              "bounds": [
+                103,
+                33,
+                275,
+                237
+              ],
+              "pivot": [
+                177.5,
+                237
+              ]
+            },
+            {
+              "rect": [
+                0,
+                543,
+                362,
+                271
+              ],
+              "bounds": [
+                102,
+                34,
+                268,
+                242
+              ],
+              "pivot": [
+                177.0,
+                242
+              ]
+            },
+            {
+              "rect": [
+                362,
+                543,
+                362,
+                271
+              ],
+              "bounds": [
+                102,
+                34,
+                267,
+                243
+              ],
+              "pivot": [
+                177.0,
+                243
+              ]
+            },
+            {
+              "rect": [
+                724,
+                543,
+                362,
+                271
+              ],
+              "bounds": [
+                103,
+                34,
+                263,
+                236
+              ],
+              "pivot": [
+                178.5,
+                236
+              ]
+            },
+            {
+              "rect": [
+                1086,
+                543,
+                362,
+                271
+              ],
+              "bounds": [
+                103,
+                34,
                 259,
-                238
-              ],
-              "pivot": [
-                215.0,
-                238
-              ]
-            },
-            {
-              "rect": [
-                1086,
-                272,
-                362,
-                271
-              ],
-              "bounds": [
-                111,
-                32,
-                255,
-                236
-              ],
-              "pivot": [
-                217.0,
-                236
-              ]
-            },
-            {
-              "rect": [
-                0,
-                543,
-                362,
-                271
-              ],
-              "bounds": [
-                129,
-                35,
-                262,
-                241
-              ],
-              "pivot": [
-                223.0,
-                241
-              ]
-            },
-            {
-              "rect": [
-                362,
-                543,
-                362,
-                271
-              ],
-              "bounds": [
-                125,
-                35,
-                257,
-                240
-              ],
-              "pivot": [
-                218.5,
-                240
-              ]
-            },
-            {
-              "rect": [
-                724,
-                543,
-                362,
-                271
-              ],
-              "bounds": [
-                118,
-                31,
-                254,
                 235
               ],
               "pivot": [
-                216.0,
+                179.5,
                 235
-              ]
-            },
-            {
-              "rect": [
-                1086,
-                543,
-                362,
-                271
-              ],
-              "bounds": [
-                112,
-                28,
-                254,
-                219
-              ],
-              "pivot": [
-                215.5,
-                219
               ]
             },
             {
@@ -163023,32 +163023,32 @@
                 272
               ],
               "bounds": [
-                113,
-                33,
-                264,
-                235
-              ],
-              "pivot": [
-                223.0,
-                235
-              ]
-            },
-            {
-              "rect": [
-                362,
-                814,
-                362,
-                272
-              ],
-              "bounds": [
-                109,
-                32,
+                102,
+                35,
                 258,
-                234
+                244
               ],
               "pivot": [
-                218.0,
-                234
+                176.5,
+                244
+              ]
+            },
+            {
+              "rect": [
+                362,
+                814,
+                362,
+                272
+              ],
+              "bounds": [
+                102,
+                34,
+                251,
+                241
+              ],
+              "pivot": [
+                177.5,
+                241
               ]
             },
             {
@@ -163059,14 +163059,14 @@
                 272
               ],
               "bounds": [
-                109,
+                102,
                 35,
-                257,
-                234
+                252,
+                241
               ],
               "pivot": [
-                211.0,
-                234
+                177.5,
+                241
               ]
             },
             {
@@ -163077,14 +163077,14 @@
                 272
               ],
               "bounds": [
-                111,
-                37,
-                257,
-                235
+                103,
+                35,
+                260,
+                237
               ],
               "pivot": [
-                218.0,
-                235
+                180.0,
+                237
               ]
             }
           ]
@@ -163092,7 +163092,7 @@
       ],
       "sourceFrames": 16,
       "framesPerDirection": 16,
-      "referenceHeight": 204.0,
+      "referenceHeight": 208.5,
       "status": "STRUCTURE_PASS_NOT_VISUAL_APPROVAL",
       "pivotMode": "SOURCE_FOOT_PIVOTS",
       "sourceFrameDurationsMs": [
@@ -163113,10 +163113,10 @@
         40.0,
         40.0
       ],
-      "bindingSha256": "5f2c78305373f8302bb039b09c3563d1d294b94aebe579ad86aabbfcb035df91",
-      "productionApproved": false,
-      "visualState": "HOLD",
-      "visualNotes": "HOLD: Native side-view16 poses return to a very similar front-boot/empty-fist configuration at0 and8. Opposite anatomical supports for the intended single stride are not clear enough; redraw leg passing/contact shapes before approval."
+      "bindingSha256": "4cb32ef1c1911a935abb3448ba7ce919d2e9c73018d3bcc353bf7fd2807486c4",
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "visualNotes": ""
     },
     {
       "id": "class_huyen_but_run_se",
@@ -169132,9 +169132,9 @@
     },
     {
       "id": "class_huyen_but_interact_ne",
-      "file": "sheets/class_huyen_but_interact_ne_v1_20261114g.png",
-      "source": "Sheets/class_huyen_but_interact_ne_v1_20261114g.png",
-      "sha256": "1f93fa58dc98a9fe642a181ee12d49b192322b06cec4373ac47d721e92b524dc",
+      "file": "sheets/class_huyen_but_interact_ne_v1_20261115h.png",
+      "source": "Sheets/class_huyen_but_interact_ne_v1_20261115h.png",
+      "sha256": "8a9f2d8b4c81b6ade7bd0fa03dff3b2399ca2439a69426d346b43d4006f8f287",
       "imageSize": [
         1292,
         1218
@@ -169143,7 +169143,7 @@
         {
           "direction": "NE",
           "flip": false,
-          "referenceHeight": 224,
+          "referenceHeight": 225,
           "frames": [
             {
               "rect": [
@@ -169153,14 +169153,14 @@
                 304
               ],
               "bounds": [
-                120,
+                123,
                 46,
                 235,
-                270
+                271
               ],
               "pivot": [
-                172.0,
-                270
+                171.5,
+                271
               ]
             },
             {
@@ -169171,14 +169171,14 @@
                 304
               ],
               "bounds": [
-                106,
-                49,
-                231,
-                270
+                110,
+                56,
+                236,
+                272
               ],
               "pivot": [
-                157.5,
-                270
+                154.5,
+                272
               ]
             },
             {
@@ -169189,14 +169189,14 @@
                 304
               ],
               "bounds": [
-                97,
-                59,
-                230,
-                270
+                96,
+                67,
+                234,
+                272
               ],
               "pivot": [
-                151.5,
-                270
+                142.0,
+                272
               ]
             },
             {
@@ -169207,14 +169207,14 @@
                 304
               ],
               "bounds": [
-                85,
-                69,
+                82,
+                78,
                 231,
-                271
+                272
               ],
               "pivot": [
-                138.0,
-                271
+                128.5,
+                272
               ]
             },
             {
@@ -169225,13 +169225,13 @@
                 305
               ],
               "bounds": [
-                113,
-                51,
-                243,
+                116,
+                53,
+                242,
                 265
               ],
               "pivot": [
-                162.0,
+                159.5,
                 265
               ]
             },
@@ -169243,14 +169243,14 @@
                 305
               ],
               "bounds": [
-                109,
-                42,
-                236,
-                263
+                112,
+                45,
+                234,
+                264
               ],
               "pivot": [
-                157.0,
-                263
+                154.0,
+                264
               ]
             },
             {
@@ -169261,14 +169261,14 @@
                 305
               ],
               "bounds": [
-                100,
-                36,
-                233,
-                262
+                99,
+                40,
+                232,
+                263
               ],
               "pivot": [
                 146.0,
-                262
+                263
               ]
             },
             {
@@ -169279,14 +169279,14 @@
                 305
               ],
               "bounds": [
-                91,
-                34,
-                231,
-                262
+                90,
+                37,
+                234,
+                264
               ],
               "pivot": [
-                136.0,
-                262
+                137.0,
+                264
               ]
             },
             {
@@ -169298,12 +169298,12 @@
               ],
               "bounds": [
                 117,
-                30,
-                259,
+                31,
+                260,
                 257
               ],
               "pivot": [
-                166.0,
+                167.0,
                 257
               ]
             },
@@ -169316,12 +169316,12 @@
               ],
               "bounds": [
                 105,
-                30,
+                31,
                 236,
                 257
               ],
               "pivot": [
-                156.5,
+                157.0,
                 257
               ]
             },
@@ -169333,14 +169333,14 @@
                 305
               ],
               "bounds": [
-                98,
-                30,
-                221,
-                254
+                97,
+                32,
+                217,
+                255
               ],
               "pivot": [
-                146.5,
-                254
+                147.0,
+                255
               ]
             },
             {
@@ -169351,14 +169351,14 @@
                 305
               ],
               "bounds": [
-                89,
-                30,
-                200,
-                256
+                88,
+                31,
+                202,
+                257
               ],
               "pivot": [
-                139.0,
-                256
+                140.0,
+                257
               ]
             },
             {
@@ -169369,14 +169369,14 @@
                 304
               ],
               "bounds": [
-                118,
+                117,
                 24,
-                231,
-                250
+                232,
+                249
               ],
               "pivot": [
                 171.5,
-                250
+                249
               ]
             },
             {
@@ -169387,14 +169387,14 @@
                 304
               ],
               "bounds": [
-                107,
+                106,
                 25,
-                221,
-                249
+                223,
+                250
               ],
               "pivot": [
-                161.0,
-                249
+                161.5,
+                250
               ]
             },
             {
@@ -169406,13 +169406,13 @@
               ],
               "bounds": [
                 97,
-                25,
-                214,
-                250
+                26,
+                213,
+                249
               ],
               "pivot": [
                 150.5,
-                250
+                249
               ]
             },
             {
@@ -169426,11 +169426,11 @@
                 89,
                 25,
                 203,
-                250
+                249
               ],
               "pivot": [
-                141.5,
-                250
+                142.5,
+                249
               ]
             }
           ]
@@ -169438,7 +169438,7 @@
       ],
       "sourceFrames": 16,
       "framesPerDirection": 16,
-      "referenceHeight": 224.5,
+      "referenceHeight": 223.5,
       "status": "STRUCTURE_PASS_NOT_VISUAL_APPROVAL",
       "pivotMode": "SOURCE_FOOT_PIVOTS",
       "sourceFrameDurationsMs": [
@@ -169459,10 +169459,10 @@
         62.5,
         62.5
       ],
-      "bindingSha256": "6fdec9ae16357633ac6b02be4309403d3af5c4262b54963cdbb94854fd6ae09f",
-      "productionApproved": false,
-      "visualState": "HOLD",
-      "visualNotes": "HOLD: Around sources5..10 the idle rear-left dangling hand remains visible while another empty palm reaches in front and the right hand holds the brush. This reads as three hands; remove the retained idle hand and redraw proper far-arm occlusion."
+      "bindingSha256": "8fe8e2bdd8003e58077b1cbc7bff234fc9ebaddfddc626a01d616cc99646ea8a",
+      "productionApproved": true,
+      "visualState": "APPROVED",
+      "visualNotes": ""
     },
     {
       "id": "class_huyen_but_interact_e",

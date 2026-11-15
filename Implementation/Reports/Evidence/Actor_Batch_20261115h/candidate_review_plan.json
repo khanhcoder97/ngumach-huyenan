@@ -1,0 +1,84 @@
+{
+  "batch": "20261115h",
+  "selected": 3,
+  "sourcePoses": 48,
+  "scope": "ISOLATED_STUDIO_CANDIDATE_REVIEW_NOT_RUNTIME_SELECTION",
+  "catalogueUnchanged": true,
+  "entries": [
+    {
+      "id": "class_huyen_but_interact_ne",
+      "project": "Implementation/Reports/Evidence/Actor_Batch_20261115h/Candidate_Studio/class_huyen_but_interact_ne/project.json",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115h/class_huyen_but_interact_ne_v1_20261115h.png",
+      "sourceSha256": "8a9f2d8b4c81b6ade7bd0fa03dff3b2399ca2439a69426d346b43d4006f8f287",
+      "timing": [
+        62.5,
+        62.5,
+        62.5,
+        62.5,
+        62.5,
+        62.5,
+        62.5,
+        62.5,
+        62.5,
+        62.5,
+        62.5,
+        62.5,
+        62.5,
+        62.5,
+        62.5,
+        62.5
+      ],
+      "loop": false
+    },
+    {
+      "id": "class_huyen_but_run_e",
+      "project": "Implementation/Reports/Evidence/Actor_Batch_20261115h/Candidate_Studio/class_huyen_but_run_e/project.json",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115h/class_huyen_but_run_e_v4_20261115h.png",
+      "sourceSha256": "687602dc0bff4b5675c3bb415c8b0ca0c04a1486d0773ed98cf0c6afc4fd4331",
+      "timing": [
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0
+      ],
+      "loop": true
+    },
+    {
+      "id": "class_huyen_but_run_n",
+      "project": "Implementation/Reports/Evidence/Actor_Batch_20261115h/Candidate_Studio/class_huyen_but_run_n/project.json",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115h/class_huyen_but_run_n_v1_20261115h.png",
+      "sourceSha256": "b4700e546cb94e3972342f08f0b0775a37cc192e0bef96a2aaa8686b96f13ce9",
+      "timing": [
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0,
+        40.0
+      ],
+      "loop": true
+    }
+  ]
+}

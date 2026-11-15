@@ -1,0 +1,58 @@
+{
+  "selectedVideos": 5,
+  "supersededVideos": 3,
+  "supersededFiles": [
+    {
+      "file": "Superseded_Run_E_v1/raw_class_huyen_but_run_e.mp4",
+      "sha256": "2aab2d8f3df9656a013eeb6faf01cb9303d507970d6fb4eddc6d726656c5ee01"
+    },
+    {
+      "file": "Superseded_Run_E_v2/raw_class_huyen_but_run_e.mp4",
+      "sha256": "0602021b55b57b82c9d1b5bb555c981e442ecd11770d08ba864edffb683bc2c7"
+    },
+    {
+      "file": "Superseded_Run_E_v3/raw_class_huyen_but_run_e.mp4",
+      "sha256": "563ed2e756214110126c1d415a14f4e5309b61d9f55bfc8ac1376eb0a081662f"
+    }
+  ],
+  "files": [
+    {
+      "file": "raw_class_huyen_but_interact_ne.mp4",
+      "sha256": "d091098f7728a4b36ffa2811a8eaeb13b60f632505c2e120c2fc0974a588f4bd",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "sourceSha256": "8a9f2d8b4c81b6ade7bd0fa03dff3b2399ca2439a69426d346b43d4006f8f287"
+    },
+    {
+      "file": "raw_class_huyen_but_run_e.mp4",
+      "sha256": "eecbdecbc3f68f7b096d03c3d0ca142074f6605afdfb4b51ad5f58ae9a309e6e",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "sourceSha256": "687602dc0bff4b5675c3bb415c8b0ca0c04a1486d0773ed98cf0c6afc4fd4331"
+    },
+    {
+      "file": "raw_class_huyen_but_run_n.mp4",
+      "sha256": "00381819f1708aa4c20e6f29211cb9dc94966b05018bfff47774d99cfcc8d09a",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "sourceSha256": "b4700e546cb94e3972342f08f0b0775a37cc192e0bef96a2aaa8686b96f13ce9"
+    },
+    {
+      "file": "run_eight_angles.mp4",
+      "sha256": "aa1f8a4f875cdf0776c59ed0bdc3dc524043712fb824a4e6d8d54114bf1d8583",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "scope": "EIGHT_FACING_NATIVE_COMPARISON"
+    },
+    {
+      "file": "interact_eight_angles.mp4",
+      "sha256": "19a36f89653d8583a6de0e62d58b663385dec47631666abe1225f6033cc445cc",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "scope": "EIGHT_FACING_NATIVE_COMPARISON"
+    }
+  ],
+  "sourceFramesMeasured": 48,
+  "scope": "SOURCE_NATIVE_REVIEW_NOT_CLASS_ACCEPTANCE",
+  "failedImportTrials": 2
+}

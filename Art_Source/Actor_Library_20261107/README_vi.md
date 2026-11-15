@@ -4,7 +4,9 @@
 
 **Đang sản xuất; chưa hoàn thành toàn bộ thư viện.** Chuẩn16–20pose thực/clip/hướng, renderer60FPS. PNG mới là ứng viên review, chưa tự thay asset gameplay.
 
-Đợt mới nhất: [20261114g — Huyền Bút combo, né, tương tác và VFX](../../docs/production/Actor_Batch_20261114g_vi.md): 36 sheet/576 tư thế nguồn chọn, 33 nguồn đạt kiểm riêng; chạy N/E và tương tác NE còn HOLD. Đã sửa ba nguồn F từng HOLD, sửa đường chia ô và neo VFX qua kiểm native. 362 pin source; 90/1028 job đủ cấu trúc, 59 job đủ hướng duyệt, 938 job thiếu nguồn. Huyền Bút 9/16 action đủ góc đã duyệt nguồn. Có 43 video native hiện hành, năm video thử cũ và một snapshot trùng nguồn hiện hành lưu riêng. Chưa nghiệm thu toàn class, skill assembly Huyền Bút hoặc gameplay.
+Đợt mới nhất: [20261115h — sửa chạy N/E và tương tác NE](../../docs/production/Actor_Batch_20261115h_vi.md): ba nguồn/48 tư thế chọn đã đạt kiểm riêng; giữ sáu phiên bản PNG nguyên gốc. Đã sửa contact chân, bút bật khi nối vòng/mất đầu bút một pha và bàn tay thừa. Có năm video native hiện hành; ba video E cũ và hai thử import lỗi giữ riêng. 365 pin source; 90/1028 job đủ cấu trúc,61 job đủ hướng duyệt,938 job thiếu nguồn,20 page HOLD. Huyền Bút 11/16 action đủ góc duyệt; năm action nền đang làm tiếp. Chưa nghiệm thu toàn class hoặc gameplay.
+
+Đợt trước: [20261114g — Huyền Bút combo, né, tương tác và VFX](../../docs/production/Actor_Batch_20261114g_vi.md): tại thời điểm giao chọn36sheet/576tư thế,duyệt33nguồn. Ba nguồn HOLD được sửa trong H; inventory G hiện chọn33sheet. Giữ báo cáo/video G như mốc lịch sử.
 
 Đợt trước: [20261114f — Huyền Bút hỗ trợ/cơ động và VFX](../../docs/production/Actor_Batch_20261114f_vi.md): tại thời điểm giao chọn 31 sheet/496 tư thế, duyệt 28 nguồn; ba nguồn HOLD đã được thay bằng nguồn sửa G. Inventory F hiện chọn 28 sheet; báo cáo F giữ mốc lịch sử. Guide NE do AI tạo, không phải approval của chủ dự án.
 

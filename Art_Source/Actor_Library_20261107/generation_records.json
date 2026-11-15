@@ -19996,23 +19996,30 @@
   },
   {
     "id": "class_huyen_but_run_n",
-    "source": "Sheets/class_huyen_but_run_n_v1_20261114g.png",
-    "prompt": "Prompts/class_huyen_but_run_n_v1_20261114g.txt",
+    "source": "Sheets/class_huyen_but_run_n_v1_20261115h.png",
+    "prompt": "Prompts/class_huyen_but_run_n_v1_20261115h.txt",
     "columns": 4,
     "rows": 4,
-    "batch": "20261114g",
+    "batch": "20261115h",
     "generator": "built-in image_gen",
-    "status": "SOURCE_NATIVE_REVIEW_HOLD",
-    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
-    "additionalReferences": [],
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_run_n_v1_20261114g.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png"
+    ],
     "generationInputs": [
       {
-        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_run_n_v1_20261114g.png",
+        "sourceSha256": "04880ab21984c7cee0d4ea5e633e998c75d9c13f52ce807b99bc7f0034768241",
+        "role": "PREVIOUS_HELD_SOURCE_EDIT_TARGET"
+      },
+      {
         "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
-        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca",
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE"
       }
     ],
-    "sourceSha256": "04880ab21984c7cee0d4ea5e633e998c75d9c13f52ce807b99bc7f0034768241",
+    "sourceSha256": "b4700e546cb94e3972342f08f0b0775a37cc192e0bef96a2aaa8686b96f13ce9",
     "sourceFrameDurationsMs": [
       40.0,
       40.0,
@@ -20032,78 +20039,78 @@
       40.0
     ],
     "direction": "N",
-    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "inputRole": "EDIT_TARGET_PREVIOUS_HELD_SOURCE_PLUS_OWNER_IDENTITY",
     "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
     "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
     "pivotMode": "SOURCE_FOOT_PIVOTS",
     "sourceFootPivots": [
       [
-        175.0,
-        276
+        184.0,
+        282
       ],
       [
-        163.5,
-        276
+        171.0,
+        280
       ],
       [
-        151.5,
-        278
+        159.0,
+        279
       ],
       [
-        140.5,
-        268
+        147.5,
+        269
       ],
       [
-        175.0,
-        267
+        184.5,
+        266
       ],
       [
-        163.5,
-        272
+        171.5,
+        274
       ],
       [
-        151.5,
-        270
+        159.5,
+        273
       ],
       [
-        140.0,
-        272
+        147.5,
+        273
       ],
       [
-        175.0,
-        261
+        183.0,
+        260
       ],
       [
-        164.0,
+        172.5,
         258
       ],
       [
-        152.0,
+        159.5,
+        259
+      ],
+      [
+        148.5,
+        237
+      ],
+      [
+        184.0,
+        243
+      ],
+      [
+        172.0,
+        255
+      ],
+      [
+        159.0,
         258
       ],
       [
-        140.5,
-        246
-      ],
-      [
-        175.5,
-        250
-      ],
-      [
-        163.5,
-        255
-      ],
-      [
-        152.0,
-        255
-      ],
-      [
-        140.5,
-        255
+        148.0,
+        258
       ]
     ],
-    "bodyReferenceHeight": 207,
-    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "bodyReferenceHeight": 213,
+    "replacesSource": "Sheets/class_huyen_but_run_n_v1_20261114g.png",
     "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
   },
   {
@@ -20227,23 +20234,31 @@
   },
   {
     "id": "class_huyen_but_run_e",
-    "source": "Sheets/class_huyen_but_run_e_v1_20261114g.png",
-    "prompt": "Prompts/class_huyen_but_run_e_v1_20261114g.txt",
+    "source": "Sheets/class_huyen_but_run_e_v4_20261115h.png",
+    "prompt": "Prompts/class_huyen_but_run_e_v4_20261115h.txt",
     "columns": 4,
     "rows": 4,
-    "batch": "20261114g",
+    "batch": "20261115h",
     "generator": "built-in image_gen",
-    "status": "SOURCE_NATIVE_REVIEW_HOLD",
-    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
-    "additionalReferences": [],
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_run_e_v3_20261115h.png",
+    "additionalReferences": [
+      "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png"
+    ],
     "generationInputs": [
       {
-        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_run_e_v3_20261115h.png",
+        "sourceSha256": "2148bba61bd0964f72df39c541e4605a172ee49fe0bdf30d84208b6008ac7803",
+        "role": "PREVIOUS_REJECTED_CANDIDATE_EDIT_TARGET",
+        "generationInputPath": "Art_Source/Actor_Library_20261107/Candidates_20261115h/class_huyen_but_run_e_v3_20261115h.png"
+      },
+      {
         "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
-        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca",
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE"
       }
     ],
-    "sourceSha256": "2c6da64173d96d824549d287f48d0e84ecc31a6acd615daadf5e8e014e142aed",
+    "sourceSha256": "687602dc0bff4b5675c3bb415c8b0ca0c04a1486d0773ed98cf0c6afc4fd4331",
     "sourceFrameDurationsMs": [
       40.0,
       40.0,
@@ -20263,78 +20278,78 @@
       40.0
     ],
     "direction": "E",
-    "inputRole": "OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE",
+    "inputRole": "EDIT_TARGET_PREVIOUS_HELD_SOURCE_PLUS_OWNER_IDENTITY",
     "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
     "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
     "pivotMode": "SOURCE_FOOT_PIVOTS",
     "sourceFootPivots": [
       [
-        223.5,
-        240
+        182.0,
+        245
       ],
       [
-        217.0,
-        240
+        177.0,
+        246
       ],
       [
-        215.0,
-        239
+        177.5,
+        245
       ],
       [
-        213.5,
-        232
+        177.0,
+        245
       ],
       [
-        222.5,
-        236
-      ],
-      [
-        218.5,
-        238
-      ],
-      [
-        215.0,
-        238
-      ],
-      [
-        217.0,
-        236
-      ],
-      [
-        223.0,
+        176.5,
         241
       ],
       [
-        218.5,
-        240
+        176.0,
+        243
       ],
       [
-        216.0,
+        177.0,
+        242
+      ],
+      [
+        177.5,
+        237
+      ],
+      [
+        177.0,
+        242
+      ],
+      [
+        177.0,
+        243
+      ],
+      [
+        178.5,
+        236
+      ],
+      [
+        179.5,
         235
       ],
       [
-        215.5,
-        219
+        176.5,
+        244
       ],
       [
-        223.0,
-        235
+        177.5,
+        241
       ],
       [
-        218.0,
-        234
+        177.5,
+        241
       ],
       [
-        211.0,
-        234
-      ],
-      [
-        218.0,
-        235
+        180.0,
+        237
       ]
     ],
-    "bodyReferenceHeight": 206,
-    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "bodyReferenceHeight": 213,
+    "replacesSource": "Sheets/class_huyen_but_run_e_v1_20261114g.png",
     "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
   },
   {
@@ -22418,30 +22433,30 @@
   },
   {
     "id": "class_huyen_but_interact_ne",
-    "source": "Sheets/class_huyen_but_interact_ne_v1_20261114g.png",
-    "prompt": "Prompts/class_huyen_but_interact_ne_v1_20261114g.txt",
+    "source": "Sheets/class_huyen_but_interact_ne_v1_20261115h.png",
+    "prompt": "Prompts/class_huyen_but_interact_ne_v1_20261115h.txt",
     "columns": 4,
     "rows": 4,
-    "batch": "20261114g",
+    "batch": "20261115h",
     "generator": "built-in image_gen",
-    "status": "SOURCE_NATIVE_REVIEW_HOLD",
-    "reference": "Art_Source/Actor_Library_20261107/Guides_20261114f/huyen_but_ne_orientation_v1.png",
+    "status": "SOURCE_NATIVE_VISUAL_REVIEWED",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_interact_ne_v1_20261114g.png",
     "additionalReferences": [
       "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png"
     ],
     "generationInputs": [
       {
-        "role": "AI_ORIENTATION_GUIDE_NOT_OWNER_APPROVED",
-        "path": "Art_Source/Actor_Library_20261107/Guides_20261114f/huyen_but_ne_orientation_v1.png",
-        "sourceSha256": "540597ab63601f3f2959885d2f5e806b127669c17b3d096401bdb3a51b0d0bca"
+        "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_interact_ne_v1_20261114g.png",
+        "sourceSha256": "1f93fa58dc98a9fe642a181ee12d49b192322b06cec4373ac47d721e92b524dc",
+        "role": "PREVIOUS_HELD_SOURCE_EDIT_TARGET"
       },
       {
-        "role": "OWNER_SELECTED_IDENTITY_REFERENCE",
         "path": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_idle_v2.png",
-        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca"
+        "sourceSha256": "034eb7c82224423354bba72cad470fe127d5d991f8ba93ee6353eb07f11a65ca",
+        "role": "OWNER_SELECTED_IDENTITY_REFERENCE"
       }
     ],
-    "sourceSha256": "1f93fa58dc98a9fe642a181ee12d49b192322b06cec4373ac47d721e92b524dc",
+    "sourceSha256": "8a9f2d8b4c81b6ade7bd0fa03dff3b2399ca2439a69426d346b43d4006f8f287",
     "sourceFrameDurationsMs": [
       62.5,
       62.5,
@@ -22461,78 +22476,78 @@
       62.5
     ],
     "direction": "NE",
-    "inputRole": "AI_ORIENTATION_GUIDE_PLUS_OWNER_IDENTITY",
+    "inputRole": "EDIT_TARGET_PREVIOUS_HELD_SOURCE_PLUS_OWNER_IDENTITY",
     "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
     "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
     "pivotMode": "SOURCE_FOOT_PIVOTS",
     "sourceFootPivots": [
       [
-        172.0,
-        270
-      ],
-      [
-        157.5,
-        270
-      ],
-      [
-        151.5,
-        270
-      ],
-      [
-        138.0,
+        171.5,
         271
       ],
       [
-        162.0,
+        154.5,
+        272
+      ],
+      [
+        142.0,
+        272
+      ],
+      [
+        128.5,
+        272
+      ],
+      [
+        159.5,
         265
       ],
       [
-        157.0,
-        263
+        154.0,
+        264
       ],
       [
         146.0,
-        262
+        263
       ],
       [
-        136.0,
-        262
+        137.0,
+        264
       ],
       [
-        166.0,
+        167.0,
         257
       ],
       [
-        156.5,
+        157.0,
         257
       ],
       [
-        146.5,
-        254
+        147.0,
+        255
       ],
       [
-        139.0,
-        256
+        140.0,
+        257
       ],
       [
         171.5,
-        250
-      ],
-      [
-        161.0,
         249
       ],
       [
-        150.5,
+        161.5,
         250
       ],
       [
-        141.5,
-        250
+        150.5,
+        249
+      ],
+      [
+        142.5,
+        249
       ]
     ],
-    "bodyReferenceHeight": 224,
-    "registrationCalibration": "Art_Source/Actor_Library_20261107/body_registration_20261114g.json",
+    "bodyReferenceHeight": 225,
+    "replacesSource": "Sheets/class_huyen_but_interact_ne_v1_20261114g.png",
     "reviewScope": "SOURCE_VISUAL_CLIP_REVIEW_NOT_ACTOR_OR_GAMEPLAY_ACCEPTANCE"
   },
   {
