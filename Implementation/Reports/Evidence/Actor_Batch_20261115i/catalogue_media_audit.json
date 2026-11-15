@@ -1,0 +1,36 @@
+{
+  "selectedVideos": 5,
+  "files": [
+    {
+      "file": "idle_eight_angles.mp4",
+      "sha256": "f04d250ef7ce0a50148f2212c6cbeb5c946b466c70d1470c59e6dcb383a1c5d0",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "walk_eight_angles.mp4",
+      "sha256": "23ad839e5dee31c49c02267975800bb701507aa34b14c4de72fe3044c9db4be8",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "basic_attack_eight_angles.mp4",
+      "sha256": "e6471cdd8137e2c75d3e7a22e48c02816b611234beb1e0f86d94a9744416ef80",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "hurt_eight_angles.mp4",
+      "sha256": "a092a49d9619a9656f72c5b92fde3c715d6b4a0555d08ac9ddb9253f1a8c1186",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    },
+    {
+      "file": "death_eight_angles.mp4",
+      "sha256": "a50e241478de6fc26e05a763ecaf0a5f72b5f5e4fde537b9cd609e230c11b716",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true
+    }
+  ],
+  "scope": "EIGHT_FACING_SOURCE_COMPARISON_NOT_GAMEPLAY_FPS"
+}

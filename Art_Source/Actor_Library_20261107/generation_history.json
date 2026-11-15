@@ -4014,5 +4014,18 @@
     "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.",
     "supersededByBatch": "20261115h",
     "archiveStatus": "REJECTED_CANDIDATE_HISTORY_NOT_RENDERED"
+  },
+  {
+    "id": "class_huyen_but_death_se",
+    "source": "Sheets/class_huyen_but_death_se_v1.png",
+    "prompt": "Prompts/class_huyen_but_death_se_v1.txt",
+    "columns": 4,
+    "rows": 4,
+    "direction": "SE",
+    "generator": "built-in image_gen",
+    "reference": "Art_Source/Actor_Library_20261107/Sheets/class_huyen_but_death.png",
+    "status": "GENERATED_PENDING_INSPECTION",
+    "supersededByBatch": "20261115i",
+    "archiveStatus": "UNAPPROVED_SOURCE_REPAIR_HISTORY_NOT_RENDERED"
   }
 ]

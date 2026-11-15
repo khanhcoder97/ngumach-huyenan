@@ -1,0 +1,398 @@
+{
+  "batch": "20261115i",
+  "manualReviewComplete": false,
+  "selectedSources": 25,
+  "sourcePoses": 400,
+  "registeredSources": 25,
+  "individualNativeSourcesInspected": 25,
+  "actualLoopWrapsInspected": 10,
+  "sourceApprovalsApplied": 0,
+  "scope": "MANUAL_WORKING_OBSERVATIONS_NOT_APPROVAL_LEDGER",
+  "entries": [
+    {
+      "id": "class_huyen_but_idle_n",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_idle_n_v1_20261115i.png",
+      "sourceSha256": "6e05a88d8e01cec2b0281a04f12fc0d82f7597d706560ce3d5a50975afec28c3",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Quiet rear breathing/robe movement; no face on back of head, one brush in right hand, empty left; all16 poses and actual wrap viewed.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_n.mp4": "be02aad6e3a7c722ee9ddcad1bc1965454211269f4368b54d1b9452c6a683ab8",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_n.png": "b00585606a8bba2f8565ae4ea78ee3b188d8e370216be30efb8e12f41ee05257",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_n_poses.png": "f8d2d64749c92aa3c17d46c1daad1a3108d87045ff7af61296970752014576e1",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_n_loop_seam.png": "0eb04ccf048d5c05b8bb85e236ece3708043a69b7c982e09e00be31e32ded162"
+      }
+    },
+    {
+      "id": "class_huyen_but_idle_ne",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_idle_ne_v1_20261115i.png",
+      "sourceSha256": "7183a81a9c9044dd092b0ae45fe85315065d3521b60ae572e9c5586208850a74",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Clear back plane and small near-face sliver, rear braid continuous, quiet breathing with one retained brush; all16 poses and actual wrap viewed.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_ne.mp4": "ecdf590bcd34ac8d6aafe1ce9c587a781139f32c7c191d2ca471f7825e86dd14",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_ne.png": "4a9c2f47769dda98ab8a4c8ce2b6ae0f7fa728f009aa5e173c460bf7120a95ab",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_ne_poses.png": "73877babac7d2ceda666cb65ca2e7eea1bbf7b265f4e23fcbe64fbc4d418e441",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_ne_loop_seam.png": "e5b33cc66996e6d84fb0bf0168071f19d1e35926e36ad83f0b0767144d91f865"
+      }
+    },
+    {
+      "id": "class_huyen_but_idle_e",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_idle_e_v1_20261115i.png",
+      "sourceSha256": "a8c82f1595b47ff484c487494b1a0043c1394417e7971315c43b27a7a16465c0",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Native profile remains distinct from SE; one readable near eye, continuous hand/brush and quiet breathing; all16 poses and actual wrap viewed.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_e.mp4": "d5afa04ec2ca71820b750d94f0285587c85139691cf25f85d72ab93508645046",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_e.png": "205d08432db2fe111b98b4990455463c2ead6b30be756a7756da8501aeca1cf5",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_e_poses.png": "c594a8d5ea21ae0bfea0ca95dcfea99ceef867ee502b35cc5675ace9f19b2a25",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_e_loop_seam.png": "b21c746f96b7ce25b92b43de7b1517b82c8f703c30302cdfa5c1c11165e123ed"
+      }
+    },
+    {
+      "id": "class_huyen_but_idle_se",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_idle_se_v1_20261115i.png",
+      "sourceSha256": "38af6b784835876086696ac6f2947e48c97696ae34c2ca8b45daa980642f96a0",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Front-three-quarter face, quiet breathing and blink around8/9, one cream brush tip and stable feet; all16 poses and actual wrap viewed.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_se.mp4": "5fb91ae1009d2685f51ab9dbbf1fc5338233f17cd86971c5f20ff5328570eb69",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_se.png": "e6eda21465165c4ebf92e326eb7a59dc4a55bebc2ca3469778549afcc2af6218",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_se_poses.png": "745e73eccce5b5cab612c5e22366932fc1af7086b591afe1ab58223d50db569d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_se_loop_seam.png": "402b5090b9591632d353ad6e5230847d2438097a429325ff0dfe86971c3045eb"
+      }
+    },
+    {
+      "id": "class_huyen_but_idle_s",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_idle_s_v1_20261115i.png",
+      "sourceSha256": "90d509d231981030365e968b43646f984910d3dd0193fb6d9c35863289ba124f",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Frontal breathing/blink, coherent proportions and one right brush; all16 poses and actual wrap viewed.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_s.mp4": "884c73d17bb086737e4fd2703ff480a89ead4bc83d03e3711bbbf6bcee1621b5",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_s.png": "fec5746b750311414fadb5487c4a663d1cf2eca45445d327ef8e0bd549f7f339",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_s_poses.png": "1593f3d55817a9498d6a83123dca7108fa19ede8d0fa69a8c08244071b166f57",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_idle_s_loop_seam.png": "011edc94e1777b361bb52cb1e205f099440616aa980eb33ce57896ae513a8652"
+      }
+    },
+    {
+      "id": "class_huyen_but_walk_n",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_walk_n_v1_20261115i.png",
+      "sourceSha256": "2b09833e3eb4195f62e7bf1400a7064e7433122fd2f966b64b632f62048b5f13",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "HOLD_GAIT_LEG_EXCHANGE_UNCLEAR",
+      "visualNotes": "HOLD: arm counterphase is present but opposite leading boot contacts at0/8 are obscured beneath hem. Sixteen unique poses do not establish a correct two-step gait. Native16 and actual wrap inspected; redraw with distinct left/right knee and boot contacts.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_n.mp4": "a0cc4709a11aadbc5a689210375ce99535a51d0b92ba7575d8291a24a92683a2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_n.png": "958fb9922d5ced559284b716526123ab7725e66020fc03d1fe54fe28d8336069",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_n_poses.png": "1d7d5f4556632b577b8f077236dde342533b33dbfe3a8bb07dd124b50695fdf0",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_n_loop_seam.png": "9542027a8279be6fdc0e029e4a0644c34b593c6376de5b797d3f150f7be85e5d"
+      }
+    },
+    {
+      "id": "class_huyen_but_walk_ne",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_walk_ne_v1_20261115i.png",
+      "sourceSha256": "d7baf795865aa9201d33155dbd1a22f235c7bb35d9ff5d194aecc95d7bea522b",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "HOLD_GAIT_LEG_EXCHANGE_UNCLEAR",
+      "visualNotes": "HOLD after closer phase comparison: arms reverse at0/8, but similarly placed boot silhouettes do not unambiguously identify exchanged near/far leg contacts. Native16 and actual wrap inspected. Require readable leg exchange before source acceptance.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_ne.mp4": "199d1f1db49086b389f7a018faaf5a60cecf9a6cd314a3b0bd0bdb33ae90eb79",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_ne.png": "a59bdd31017b71c9bff03c3fb74e58444a764eb4f905734a7c93dd941affcb39",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_ne_poses.png": "a66446ecfcba926c485a4684d2b676ec748339a229349ac0fe76d14151d2e647",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_ne_loop_seam.png": "7e6c3d0ba2cd07b0f6d2309cb9c5c8289c1542c285340587eb996ef1e8242a66"
+      }
+    },
+    {
+      "id": "class_huyen_but_walk_e",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_walk_e_v1_20261115i.png",
+      "sourceSha256": "b2f07a904d19e85398fb5a5e2239ab8cb16d87d91e447339c2e410d44ff3ee7d",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "HOLD_GAIT_LEG_EXCHANGE_UNCLEAR",
+      "visualNotes": "HOLD after closer phase comparison: arm changes at0/8 while same leading boot silhouette recurs. Pose15-to0 also raises torso noticeably and reads as running/hopping rather than gentle walk. Native16 and actual wrap inspected; redraw real opposite foot contacts and quiet continuous walk seam.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_e.mp4": "6842ad17d4fc1e7aeee5e15b34d8728f1221b82a8277dd3b6d5cc930759674ac",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_e.png": "4cc479a44908e50e18f62e34b787fa6cd49f88d4e4e3e1d5345283c7a3145d3d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_e_poses.png": "f22014eddafc8bf30c4a46ce37aaaa596ee546a15e80dfc9112a7f24ad82e7e7",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_e_loop_seam.png": "bff3fdb993c3985ee4ca275364eec4081272f07f0a23c20783f162452b02e1b1"
+      }
+    },
+    {
+      "id": "class_huyen_but_walk_se",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_walk_se_v1_20261115i.png",
+      "sourceSha256": "e6e2929a4d98d04434a7122fc0e60ab261266fef525882af2688ed4adce1ce64",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "HOLD_GAIT_LEG_EXCHANGE_UNCLEAR",
+      "visualNotes": "HOLD: two boots visible but near/far leg ownership remains ambiguous at0/8; changed arm swing alone cannot prove exchanged support legs. Native16 and actual wrap inspected. Redraw explicitly opposite contacts with walk weight transfer.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_se.mp4": "cebcfd06d13d6b576223e365e4e38719f1836273232c147b349954e537174a8d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_se.png": "1a87507a0abdb9d891bed584fe1ac0f731dc7b2db4807902b6186bc6e43d785c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_se_poses.png": "04ec6658c01fe7d894e2c6c77c49d28a2ee96580327a9fdb63fdb49df225dfce",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_se_loop_seam.png": "18682dc21ab11e0d378ab64d37d4f482f492b24d00ada3155e28b5593910feaa"
+      }
+    },
+    {
+      "id": "class_huyen_but_walk_s",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_walk_s_v1_20261115i.png",
+      "sourceSha256": "34c521ef145efab128eacaec40803325692de30996ba2e2c1d1e957a280809eb",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": true,
+      "status": "HOLD_GAIT_LEG_EXCHANGE_UNCLEAR",
+      "visualNotes": "HOLD: dominant centered boot/knee keeps the same leading shape across both half-cycles and obscures other leg. Native16 and actual wrap inspected. Require distinct left-leading/right-leading contact poses.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_s.mp4": "7fbfbd3f0f0f3889a9b423633febb936d5d72e68864b2bff390cd90d49241057",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_s.png": "97b5c0c5e71e3249eb7e5b81965aeed3c1b79d0c9bdd83a3fa326cf26662502e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_s_poses.png": "c17e44d0c4f5f993e25b88863beb501df7f2e7361d9e806026ac9e53940bd456",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_walk_s_loop_seam.png": "ab0e28d60ab58887d90d5b05450372fcb516d8048371b2abe8122735edc20b71"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_n",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_basic_attack_n_v1_20261115i.png",
+      "sourceSha256": "df824ad3fe1fc8d28ecb241b2d64e124557f925c77c84d98b8cbccc4b1046156",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Rear facing remains clear, one continuous right-brush wind-up/flick/recovery, left empty, two arms and steady planted feet. All16 native poses viewed; no combat-hit timing acceptance.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_n.mp4": "ed5a8a850a88b1d57005b188f7585d7d48c2c8515727c6f04990cdb4f4b23061",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_n.png": "eadea76a111d223c897427328cb7e527bcf1fbd1a16fa8da439a7d78644b3074",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_n_poses.png": "cc301e22b91391bd2134a1a51d8718d8b16bf14da3d34c330fad2389f065d437"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_ne",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_basic_attack_ne_v1_20261115i.png",
+      "sourceSha256": "813d60f3c317cac178376d27132f8b5c452b43dedd8322029f43841e90689f45",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Rear-three-quarter brush flick, clear back plane and two connected arms, one brush throughout. All16 native poses viewed; gameplay emission/event coupling pending.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_ne.mp4": "f0813b071aba45aa8d66f3459a53a1610d8b0f64256cd2bae0e5ea58ed4cad73",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_ne.png": "979c288677bde398b08c7fc96b827e3f36b375103bef8aea0fca5a8f198746b0",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_ne_poses.png": "e78d54f00f81421ca25074f4cd4609ce8e6b221b4b45f08d7ddbe5c5a71ba1ec"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_e",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_basic_attack_e_v1_20261115i.png",
+      "sourceSha256": "c08b399a5697a15cf5b4a2a027628bda93fb63ec96832467704781ab272ad4e2",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Side brush wind-up and waist flick/recovery with natural torso yaw, one retained brush and empty left. All16 native poses viewed; no extra tip or direction flip.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_e.mp4": "7acaa4ec1f5ef7661e0842424e7ec9bc7873c2445d3cd556c70c0a6e8a5f1687",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_e.png": "fdc9f89468a3e06c471f6781bb5137d8abbfb6b85fac26fb1bd0f62e8e7f6aa3",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_e_poses.png": "93b4cc5a5c8dc8eef294fff8b9423574a6d7e3ae207e5bb2efe1a5056b4e14eb"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_se",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_basic_attack_se_v1_20261115i.png",
+      "sourceSha256": "14b7d04e329ca5cc964508e97f9daf58dd21c92eb1e9ac016dfe9e4e36df4697",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Front-three-quarter single brush flick/recovery, two continuous arms. Native16 confirms grey RGB tool preview is transparent in actual render, without baked halo/background.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_se.mp4": "6c287b4a6ca45e12d59e77bdb680a3bb0ff403409f86458ad1bcf5dcba798e90",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_se.png": "e65001e4b99b7abfe5a243f47096506a62c356890740a2cb743c5e51eb85059f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_se_poses.png": "24fe1d690a17a2a0706193b6ccbabaeaec99e914c2994f507fbcce17232a4c80"
+      }
+    },
+    {
+      "id": "class_huyen_but_basic_attack_s",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_basic_attack_s_v1_20261115i.png",
+      "sourceSha256": "1546ce6910c49e4a5400da517ee7adf1b631c72855d8271fe66237c3a1ff9113",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Frontal wind-up/waist sweep/recovery with one right brush, empty left and stable stature. All16 native poses viewed; confirmed impact coupling pending.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_s.mp4": "587b0aa64fabf38ee96208430d5decedd777594f895861cf311f03664c428074",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_s.png": "72179902ed9214cca5816001a5cc41836665b4952ef706c5c4c56def5273f990",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_basic_attack_s_poses.png": "002e99d64b2d12476b2f22d39a2e07a239f5580136b41ac9c9929822bca64d34"
+      }
+    },
+    {
+      "id": "class_huyen_but_hurt_n",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_hurt_n_v1_20261115i.png",
+      "sourceSha256": "3fde32aa63d42db5d6a79dbb9af1239cfd151e31696f94d9c9e1a07b6620cc10",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "One rear tension/recoil/recovery, no face on back, brush retained and feet grounded. All16 native poses viewed; actual damage-event integration pending.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_n.mp4": "70d11552ad378386d916cb4cb514373d3f6559d7045adfb70ef12588105bf25a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_n.png": "e973a9df38bcb3f1273f352de97e4ff9f0f8adb916d60e03b0d4c803973bbf52",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_n_poses.png": "b782afaae5fc89d9b6837373475fb5e8b65c7f0702e97bd1970bf3f0cd907e52"
+      }
+    },
+    {
+      "id": "class_huyen_but_hurt_ne",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_hurt_ne_v1_20261115i.png",
+      "sourceSha256": "28e59233cb331801b34eec19f24cb8e75b435a7c82c66be084b7f881a9dfa221",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "One rear-three-quarter shoulder/knee recoil and recovery, no extra limb/brush or attack cycle. All16 native poses viewed.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_ne.mp4": "638320692673a048453803599122b8f5679ab9b8344d1b28fae6db68c2cd5e25",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_ne.png": "90e337066dd64ef7df0c3efd2da73cb870d258d67891b132240206c3c898281f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_ne_poses.png": "6ea1fbfa3397b3a7281d399c9c3874fd53910c6a6034f4e8138de93db1a43b9e"
+      }
+    },
+    {
+      "id": "class_huyen_but_hurt_e",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_hurt_e_v1_20261115i.png",
+      "sourceSha256": "7ad10559d985b0d294ac6e476868ec30f848d15f4a0f3e4a3b60941a51efe7ae",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "One side recoil/recovery with face and knee response, brush retained, no fall. All16 native poses viewed; contact estimator is not physics acceptance.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_e.mp4": "37cac870be6e4874c393135c39bc1c359e3e1715058e560804b9da75bc0767cb",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_e.png": "9e09f57e1e1ccd41eeece7fcf716d170fc9d35c72ec741e3ce3ab2aa4e53edf5",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_e_poses.png": "2e88b5c0ba754743f36c4aa94e69e71eb0f6fd1769643974e38340dfd38fe1c7"
+      }
+    },
+    {
+      "id": "class_huyen_but_hurt_se",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_hurt_se_v1_20261115i.png",
+      "sourceSha256": "0a8e97737d4d4993ec1d777bd7ea951de7f87191999b2e69ed3345a4eb18fcdd",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "One front-three-quarter recoil/recovery with coherent shoulder/face/knee progression and retained brush. All16 native poses viewed.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_se.mp4": "0bb30705b11126b8316d2a18041090a533a975657d9f64b83e64c0902379bf8e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_se.png": "23141fd373d4de469ebf5640fbbae2d068aa757311431197933c8b25a2f1e9cb",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_se_poses.png": "07e6289d8b270b5c7ec8206f151b1c207f200640f3da8724ae56aacb471f6d59"
+      }
+    },
+    {
+      "id": "class_huyen_but_hurt_s",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_hurt_s_v1_20261115i.png",
+      "sourceSha256": "e8f458da5bd8181e288dbdf11df2e293a03a6ce8071b172466aa5c21424ae341",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "One frontal recoil/return with shoulder/knee progression and pain expression, retained brush, no attack or collapse. All16 native poses viewed.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_s.mp4": "535a7dd0973703284e0523f661f59172d5a1d15daca820f2785bac248d7c266c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_s.png": "39d37712fb8bea413f56cacea47fa102d998c9d0650285ac134eb8ec98a3c7c0",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_hurt_s_poses.png": "aecc23c6495da1cd7cad75f944d96a8803f3243019135bb97e583b92a66af5db"
+      }
+    },
+    {
+      "id": "class_huyen_but_death_n",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_death_n_v1_20261115i.png",
+      "sourceSha256": "087c308c2725b81d7a78b259f9e0ffe32c9bbe6f61974ce36a741c4c6da3a440",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Single continuous rear buckle/kneel/collapse/settle across16, no middle reset; one brush and connected body. Fixed neutral-body scale keeps corpse low. Isolated ground anchor only, not world physics/collision.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_n.mp4": "c9b9102f26966dd64f95f04f04ac15ca4f3bbf6c887a0e90100a33a83876495f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_n.png": "a53968907dac6893a83f4a135e41d2a84968f0d2b57d1b68dd207caa45f6b76b",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_n_poses.png": "c72ea5dc90b5fc48020cb868052892bc3c8bea5206df285e97b5b302957163f4"
+      }
+    },
+    {
+      "id": "class_huyen_but_death_ne",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_death_ne_v1_20261115i.png",
+      "sourceSha256": "04704a5246d625fac314558430c33fa59b2591b15aec54f7b38134bf6c15f9e0",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Single continuous rear-three-quarter kneel/collapse/settle across16; no repeated eight-pose fall, extra limb or brush. Gutter registration retains complete source; world corpse collision pending.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_ne.mp4": "e44f32a2e80f80d24112a02d1c1c3f9e7a84be2c21f03f83dc293f625a026bae",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_ne.png": "c5023064b99e89e8bebcea01de2145c4f4fe3c570b1046648bfe8ce4c2f47bd8",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_ne_poses.png": "7bbfaad9d0634b1ab8b79afffe2b9626abff55ad6ffc38cf076c8d1da3fdc2be"
+      }
+    },
+    {
+      "id": "class_huyen_but_death_e",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_death_e_v1_20261115i.png",
+      "sourceSha256": "7c3e57c30a8376acd4730ecc8a3b7e84233b47e431869fdab90b4c1ef032441e",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Single side buckle/kneel/forward collapse/settle through16, no stand-up reset. Right brush remains with hand, body stays naturally low; native16 viewed. No world-root/collision acceptance.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_e.mp4": "4047f8a9d488ce86f258b9723ab1f34bf85cfc3f4287b3249b8354ee1e131286",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_e.png": "255fbf9474122392be01faf90aaa36c3897baf899c0b2f9307277e68745173de",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_e_poses.png": "7c5415a0d92814be2752abfd4fa5d28494c23231dc987e7eeffb94c10630ad25"
+      }
+    },
+    {
+      "id": "class_huyen_but_death_se",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_death_se_v1_20261115i.png",
+      "sourceSha256": "678aea6f123bdc4f091316e80de94756815e2dcacb12845a42a87f2494d667cf",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Single front-three-quarter buckle/kneel/ground collapse/settle through16, no reset. Complete art after gutter registration, retained right brush and constant neutral-body scale. World-root/collision pending.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_se.mp4": "535df40fb474b083e8264190790f0074db492c8bd9783ba0899e4435d1163707",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_se.png": "911e88544e5c362067b7164d293c626ec90768c92ac4c25b413ef48e3e3b73bb",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_se_poses.png": "bb9f651a5c492d89717a4a7fc595580e6b636a110800a3fdbdbb4642753438a1"
+      }
+    },
+    {
+      "id": "class_huyen_but_death_s",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261115i/class_huyen_but_death_s_v1_20261115i.png",
+      "sourceSha256": "d854d9ea048be64ffce11cc26833d026790b0c81b1e55a8fd6a75f3896a566f5",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "actualLoopWrapInspected": false,
+      "status": "SOURCE_POSES_REVIEWED_PENDING_EIGHT_FACING_COMPARISON",
+      "visualNotes": "Single frontal buckle/kneel/ground collapse/settle across16, no reset or extra head/arms. Brush rests with right hand and low corpse scale remains natural; native16 viewed. World-root/collision pending.",
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_s.mp4": "bda012cafbfb84a01b4450fc046c77c434b56d9ca1ffe3741bdada458dfb68cf",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_s.png": "6dbcf61c6782dc318fe3f18629ae9a603044ddf045b81b83b0468a59b5fecfc4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261115i/raw_class_huyen_but_death_s_poses.png": "31369a7d3d688e512f79345e50885124f8acc1c308f118b250a8ce257ff5f03c"
+      }
+    }
+  ]
+}

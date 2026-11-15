@@ -1,0 +1,385 @@
+{
+  "SchemaVersion": 1,
+  "Scope": "PRESENTATION_AUTHORING_ONLY",
+  "Name": "class_huyen_but_death_n",
+  "ProductionApproved": false,
+  "Layers": [
+    {
+      "Id": "sprite",
+      "Name": "class_huyen_but_death_n",
+      "Kind": "sprite",
+      "Texture": "textures/087c308c2725b81d7a78b259f9e0ffe32c9bbe6f61974ce36a741c4c6da3a440.png",
+      "Regions": [
+        [
+          0,
+          0,
+          315,
+          312
+        ],
+        [
+          315,
+          0,
+          315,
+          312
+        ],
+        [
+          630,
+          0,
+          316,
+          312
+        ],
+        [
+          946,
+          0,
+          315,
+          312
+        ],
+        [
+          0,
+          312,
+          315,
+          312
+        ],
+        [
+          315,
+          312,
+          315,
+          312
+        ],
+        [
+          630,
+          312,
+          316,
+          312
+        ],
+        [
+          946,
+          312,
+          315,
+          312
+        ],
+        [
+          0,
+          624,
+          315,
+          311
+        ],
+        [
+          315,
+          624,
+          315,
+          311
+        ],
+        [
+          630,
+          624,
+          316,
+          311
+        ],
+        [
+          946,
+          624,
+          315,
+          311
+        ],
+        [
+          0,
+          935,
+          315,
+          312
+        ],
+        [
+          315,
+          935,
+          315,
+          312
+        ],
+        [
+          630,
+          935,
+          316,
+          312
+        ],
+        [
+          946,
+          935,
+          315,
+          312
+        ]
+      ],
+      "Rest": {
+        "X": 0,
+        "Y": 0,
+        "PivotX": 171.5,
+        "PivotY": 281,
+        "ScaleX": 0.6698564593301436,
+        "ScaleY": 0.6698564593301436,
+        "Angle": 0,
+        "Alpha": 1,
+        "SourceFrame": 0
+      },
+      "Z": 0,
+      "Visible": true
+    }
+  ],
+  "Sockets": [],
+  "Clips": [
+    {
+      "Name": "class_huyen_but_death_n",
+      "Direction": "N",
+      "Loop": false,
+      "SourceNote": "SOURCE_CANDIDATE_NOT_APPROVED; COOL_BODY_CONTACT_FOOTPRINT_DEATH_PENDING_NATIVE_WORLD_ROOT_REVIEW",
+      "DurationsMs": [
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
+      ],
+      "Tracks": [
+        {
+          "LayerId": "sprite",
+          "Interpolate": false,
+          "Keys": [
+            {
+              "Frame": 0,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 171.5,
+                "PivotY": 281,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 0
+              }
+            },
+            {
+              "Frame": 1,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 162.0,
+                "PivotY": 281,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 1
+              }
+            },
+            {
+              "Frame": 2,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 150.5,
+                "PivotY": 281,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 2
+              }
+            },
+            {
+              "Frame": 3,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 140.5,
+                "PivotY": 287,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 3
+              }
+            },
+            {
+              "Frame": 4,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 171.5,
+                "PivotY": 284,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 4
+              }
+            },
+            {
+              "Frame": 5,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 160.5,
+                "PivotY": 284,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 5
+              }
+            },
+            {
+              "Frame": 6,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 152.5,
+                "PivotY": 284,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 6
+              }
+            },
+            {
+              "Frame": 7,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 143.0,
+                "PivotY": 284,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 7
+              }
+            },
+            {
+              "Frame": 8,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 172.5,
+                "PivotY": 277,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 8
+              }
+            },
+            {
+              "Frame": 9,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 159.5,
+                "PivotY": 276,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 9
+              }
+            },
+            {
+              "Frame": 10,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 144.5,
+                "PivotY": 276,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 10
+              }
+            },
+            {
+              "Frame": 11,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 125.0,
+                "PivotY": 273,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 11
+              }
+            },
+            {
+              "Frame": 12,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 156.5,
+                "PivotY": 261,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 12
+              }
+            },
+            {
+              "Frame": 13,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 146.5,
+                "PivotY": 261,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 13
+              }
+            },
+            {
+              "Frame": 14,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 138.0,
+                "PivotY": 260,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 14
+              }
+            },
+            {
+              "Frame": 15,
+              "Pose": {
+                "X": 0,
+                "Y": 0,
+                "PivotX": 125.5,
+                "PivotY": 261,
+                "ScaleX": 0.6698564593301436,
+                "ScaleY": 0.6698564593301436,
+                "Angle": 0,
+                "Alpha": 1,
+                "SourceFrame": 15
+              }
+            }
+          ]
+        }
+      ],
+      "Markers": []
+    }
+  ]
+}
