@@ -17,10 +17,14 @@ def record_views():
         'sk_tc_05_stop_dust_component':('SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED','All16current native phases viewed after low baseline proposal. Small tan settling clumps and grains, no shockwave or hit star. Keep at an externally confirmed stop foot location; blocked-path dust must not create target damage.'),
     }
     path=EV/'manual_review_observations.json';observations=read(path)
+    bindings={e['id']:e for e in read(EV/'manual_view_bindings.dash_20261117a.json')['entries']}
     for identifier,(status,note) in notes.items():
         record=records[identifier];movie=movies[identifier];project=EV/'Candidate_Studio'/identifier/'project.json'
         assert movie['sourceSha256']==record['sourceSha256'] and movie['portableProjectSha256']==sha(project)
         assert movie['sha256']==sha(EV/movie['file'])
+        locked=bindings[identifier]
+        assert locked['sourceSha256']==record['sourceSha256'] and locked['portableProjectSha256']==sha(project),'Revised source/project needs a fresh manual view, not old notes'
+        assert locked['movieSha256']==movie['sha256'] and locked['montageSha256']==sha(EV/('raw_'+identifier+'_poses.png')),'Revised native evidence needs a fresh manual view'
         item=dict(id=identifier,sourceSha256=record['sourceSha256'],portableProjectSha256=sha(project),movieSha256=movie['sha256'],montageSha256=sha(EV/('raw_'+identifier+'_poses.png')),originalAtlasViewed=True,nativePoseFramesInspected=16,status=status,visualNotes=note,productionApproved=False)
         if identifier in ('class_thach_chuy_skill_05_n','class_thach_chuy_skill_05_se'):
             wider=EV/('raw_'+identifier+'_source_samples.png')

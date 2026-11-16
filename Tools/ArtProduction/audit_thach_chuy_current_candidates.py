@@ -14,6 +14,10 @@ def audit(expected, ffmpeg):
     current={r['id']:r for r in manifest['records']}
     registrations={r['record']['id']:r for r in read(ART/'body_registration_20261116c.json')['entries']}
     assert set(current)==set(registrations)
+    previous_path=EV/'native_media_audit.current.json'
+    previous=read(previous_path) if previous_path.exists() else {}
+    previous_movies={e['file']:e for e in previous.get('files',[])}
+    previous_seams={e['id']:e for e in previous.get('loopSeams',[])}
     files=[];capture_plan=[];wraps=[]
     for record in manifest['records']+manifest['history']:
         assert sha(ART/record['source'])==record['sourceSha256']
@@ -63,7 +67,10 @@ def audit(expected, ffmpeg):
             select='+'.join('eq(n,%d)'%n for n in seam)
             result=subprocess.run([ffmpeg,'-v','error','-y','-i',str(movie),'-vf',"select='"+select+"',crop=256:256:550:120,tile=4x1",'-frames:v','1',str(output)],capture_output=True,text=True)
             assert result.returncode==0,result.stderr
-            wraps.append(dict(id=identifier,sourceFrames=[14,15,0,1],nativeFrames=seam,file=output.name,sha256=sha(output),manualViewed=False))
+            previous_movie=previous_movies.get(movie.name,{})
+            previous_seam=previous_seams.get(identifier,{})
+            unchanged=previous_movie.get('sourceSha256')==record['sourceSha256'] and previous_movie.get('portableProjectSha256')==sha(project) and previous_movie.get('sha256')==sha(movie) and previous_seam.get('sha256')==sha(output) and previous_seam.get('nativeFrames')==seam
+            wraps.append(dict(id=identifier,sourceFrames=[14,15,0,1],nativeFrames=seam,file=output.name,sha256=sha(output),manualViewed=bool(unchanged and previous_seam.get('manualViewed'))))
     for name in ('generation_records.json','visual_review.json','structure_report.json'):
         baseline=json.loads(subprocess.check_output(['git','show','HEAD:'+(ART/name).relative_to(ROOT).as_posix()],cwd=ROOT).decode('utf-8-sig'))
         assert baseline==read(ART/name),'Published catalogue changed'

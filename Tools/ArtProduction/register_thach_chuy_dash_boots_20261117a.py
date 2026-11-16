@@ -1,7 +1,8 @@
 """Pin two reviewed dark-sole proposals; do not relax the shared root guard."""
 import json
 from PIL import Image
-from inspect_actor_library import ART, inspect
+from inspect_actor_library import ART, inspect, binary_projection
+from calibrate_huyen_but_20261114f import gutter_edges
 from calibrate_anh_dao_mobility import head_landmark
 from prepare_thach_chuy_candidates_20261116c import boot_contact, neutral_foot_center, sash_landmark, read, save, sha
 
@@ -11,14 +12,22 @@ SOURCES={
 }
 
 
-def register():
+def register(sources=None, mechanic='DASH'):
+    assert mechanic in ('DASH','TAUNT')
+    sources=SOURCES if sources is None else sources
     records={r['id']:r for r in read(ART/'Candidates_20261116c/candidate_manifest.json')['records']}
     path=ART/'registration_overrides_20261116c.json';overrides=read(path)
     proposals=[]
-    for identifier,(expected,expected_offset) in SOURCES.items():
+    for identifier,(expected,expected_offset) in sources.items():
         r=records[identifier]
         assert r['sourceSha256']==sha(ART/r['source'])==expected,'Proposal belongs to another source version'
-        frames=inspect(r)['directions'][0]['frames'];height=frames[0]['bounds'][3]-frames[0]['bounds'][1]
+        try:page=inspect(r)
+        except AssertionError as error:
+            assert 'clipped/overlapping' in str(error),str(error)
+            with Image.open(ART/r['source']) as image:
+                xs,ys=binary_projection(image.getchannel('A').point(lambda a:255 if a>=16 else 0))
+            r['gridEdges']=dict(columns=gutter_edges(xs),rows=gutter_edges(ys));page=inspect(r)
+        frames=page['directions'][0]['frames'];height=frames[0]['bounds'][3]-frames[0]['bounds'][1]
         pivots=[];diagnostics=[];sash_reference=None
         with Image.open(ART/r['source']) as image:
             for index,frame in enumerate(frames):
@@ -38,8 +47,11 @@ def register():
                 pivot=[root_x,ground+expected_offset]
                 assert 0<=pivot[0]<w and 0<pivot[1]<=h
                 pivots.append(pivot);diagnostics.append(dict(head=head,root=pivot,method=method,sashPixels=pixels))
-        fields=dict(pivotMode='SOURCE_FOOT_PIVOTS',sourceFootPivots=pivots,bodyReferenceHeight=height,sourceBootDiagnostics=diagnostics,registrationMethod='SHA_BOUND_DASH_DARK_SOLE_PROPOSAL_REQUIRES_NATIVE_AND_AIRBORNE_ROOT_REVIEW')
-        proposals.append(dict(id=identifier,sourceSha256=expected,reviewNote='Original whole4x4 manually viewed. Neutral pose shows boots below hammer; saturated warm mask omits the dark sole outline by exactly%dsourcepx. Source-specific offset is pinned to this PNG; shared8px guard remains unchanged. Per-pose boot/sash tracking is only an editable review proposal. Dash flight/root travel and ground contact remain unaccepted.'%expected_offset,fields=fields))
+        method='SHA_BOUND_DASH_DARK_SOLE_PROPOSAL_REQUIRES_NATIVE_AND_AIRBORNE_ROOT_REVIEW' if mechanic=='DASH' else 'SHA_BOUND_TAUNT_DARK_SOLE_PROPOSAL_REQUIRES_NATIVE_ROOT_REVIEW'
+        remaining='Dash flight/root travel and ground contact remain unaccepted.' if mechanic=='DASH' else 'Tap contact and owner-idle root continuity remain unaccepted.'
+        fields=dict(pivotMode='SOURCE_FOOT_PIVOTS',sourceFootPivots=pivots,bodyReferenceHeight=height,sourceBootDiagnostics=diagnostics,registrationMethod=method)
+        if r.get('gridEdges'):fields['gridEdges']=r['gridEdges']
+        proposals.append(dict(id=identifier,sourceSha256=expected,reviewNote='Original whole4x4 manually viewed. Neutral pose shows boots below hammer; saturated warm mask omits the dark sole outline by exactly%dsourcepx. Source-specific offset is pinned to this PNG; shared8px guard remains unchanged. Per-pose boot/sash tracking is only an editable review proposal. '%expected_offset+remaining,fields=fields))
     for proposal in proposals:
         overrides['entries']=[e for e in overrides['entries'] if e['id']!=proposal['id']]+[proposal]
     save(path,overrides)

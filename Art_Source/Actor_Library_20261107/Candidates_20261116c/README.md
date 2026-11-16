@@ -16,7 +16,7 @@ Cập nhật 17/11/2026. Đây là gói nguồn đang dựng và kiểm tra tron
 | VFX Phá Nham: bụi kéo, va trúng, bụi dừng | 3 | 48 |
 | Tổng nguồn được chọn | **41** | **656** |
 
-`candidate_manifest.json` xác định 41 nguồn hiện hành và giữ sáu phiên bản cũ trong `history`. Mỗi PNG có prompt `.txt` đi kèm. Nguồn được tạo bằng công cụ image_gen tích hợp; PNG được sao chép nguyên byte. `Jobs/` và `production_job_plan.json` chứa đủ 50 tác vụ, phân biệt rõ nguồn đã tạo với nguồn chưa tạo. Khiêu Chiến E/SE còn chờ sửa biểu cảm gọi; Phá Nham cần kiểm tra/sửa trục hướng Bắc và root pha lao. Đủ ô nguồn không có nghĩa là nguồn đã đạt yêu cầu.
+`candidate_manifest.json` xác định 41 nguồn hiện hành và giữ tám phiên bản cũ trong `history`. Mỗi PNG có prompt `.txt` đi kèm. Nguồn được tạo bằng công cụ image_gen tích hợp; PNG được sao chép nguyên byte. `Jobs/` và `production_job_plan.json` chứa đủ 50 tác vụ, phân biệt rõ nguồn đã tạo với nguồn chưa tạo. Khiêu Chiến E/SE v2 đã sửa biểu cảm gọi và xem lại native; hướng/root/idle vẫn chờ kiểm tra. Phá Nham cần kiểm tra/sửa trục hướng Bắc và root pha lao. Đủ ô nguồn không có nghĩa là nguồn đã đạt yêu cầu.
 
 ## Xem và chỉnh trong Studio
 

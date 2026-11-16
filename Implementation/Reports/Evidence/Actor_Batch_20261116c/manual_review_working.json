@@ -376,30 +376,30 @@
     },
     {
       "id": "class_thach_chuy_skill_04_e",
-      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_04_e_v1_20261116c.png",
-      "sourceSha256": "a90dd401a801cf53da1ac733a8d6552231a4fc265b367cae5c0db8b52d28169c",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_04_e_v2_20261116c.png",
+      "sourceSha256": "57cd7fbd732a2d0dab69ad0bafa630b3fac12fe6c9ab067a41a35d6585a5cc1c",
       "originalAtlasViewed": true,
       "nativePoseFramesInspected": 16,
-      "status": "HOLD_CALL_EXPRESSION_AND_FIXED_FACING_REVIEW",
-      "visualNotes": "All16original/native poses explicitly viewed. Single tap and head/chest lift readable; mouth remains closed, so the call is weaker than intended. Near/far shoulder/eye presentation also needs exact-E review. Keep as unapproved candidate; improve call expression before source acceptance.",
+      "status": "CALL_VISIBILITY_REPAIRED_OTHER_SOURCE_ACCEPTANCE_PENDING",
+      "visualNotes": "All16original and current native v2 poses explicitly viewed. Targeted expression revision now shows a readable call while preserving single tap,connected one-hammer grip and recovery. E phases7–10show an open mouth, then close. This clears the closed-mouth observation for this version only. Exact facing,root/owner-idle continuity and wide gameplay/event acceptance remain pending.",
       "productionApproved": false,
       "nativeEvidenceSha256": {
-        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_e.mp4": "c915de1d0c00004b35f187e41cf387ae4ae55100b7c918b3d40e77a949e8f62d",
-        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_e_poses.png": "f366dc5de5cd7f3a1f9329918f4299b6a88121d988b763a414b5fa78bd423140"
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_e.mp4": "e0fbc9bf2dd44e7359246e6aaa08b4e86b6b3f076d2768555faae657fdf4eccc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_e_poses.png": "4291b8c20e14073dd9952fadc339275ed2c7298c451e73d155d78309db469b74"
       }
     },
     {
       "id": "class_thach_chuy_skill_04_se",
-      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_04_se_v1_20261116c.png",
-      "sourceSha256": "88eaa6aef83eded4cc49a537923aa9deb3fbb92651d9422e98aa7d5f2592b51e",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_04_se_v2_20261116c.png",
+      "sourceSha256": "13b4880f4226aac411e114149c9027ee57b8ca130f67e690bb886460297ed056",
       "originalAtlasViewed": true,
       "nativePoseFramesInspected": 16,
-      "status": "HOLD_CALL_EXPRESSION_REPAIR",
-      "visualNotes": "All16original/native poses explicitly viewed. Distinct single tap/raise/recovery and coherent one hammer. Mouth is closed during call; needs expression revision. Root/neutral continuity still requires fixed-camera idle comparison.",
+      "status": "CALL_VISIBILITY_REPAIRED_OTHER_SOURCE_ACCEPTANCE_PENDING",
+      "visualNotes": "All16original and current native v2 poses explicitly viewed. Targeted expression revision now shows a readable call while preserving single tap,connected one-hammer grip and recovery. SE phases7–9show an open mouth; phase10already closes as the head settles. This clears the closed-mouth observation for this version only. Exact facing,root/owner-idle continuity and wide gameplay/event acceptance remain pending. Source gutters are registered separately; SHA-bound10px neutral dark-sole proposal remains geometry-only.",
       "productionApproved": false,
       "nativeEvidenceSha256": {
-        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_se.mp4": "e79d503f09199dd652d8e6668556bff7a19fc58962aa33f0875fc59f3938810d",
-        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_se_poses.png": "3f7f837da676d661b9eeabeaac0dc3b64b5cff806456eca82638d10e9c7d6e92"
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_se.mp4": "db9d0921f9b22676dde9b6308c79320fd39a00eb3312389911f8ed9fc6e1c338",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_se_poses.png": "3825e2954983b4c8bd743be34fa536a135ac11c8b144b70aaa3e11a5a85e202d"
       }
     },
     {

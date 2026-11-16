@@ -17,12 +17,16 @@ def record_views():
         'sk_tc_04_target_status_component':('SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED','All16current native phases and actual14→15→0→1wrap explicitly viewed. One compact hammer/attention glyph, stable silhouette and quiet brightness loop, no extinction/restart. Nameplate/world-UI sizing and authoritative status expiration still pending.'),
     }
     path=EV/'manual_review_observations.json';observations=read(path)
+    bindings={e['id']:e for e in read(EV/'manual_view_bindings.taunt_20261117a.json')['entries']}
     for identifier,(status,note) in notes.items():
         record=records[identifier];movie=movies[identifier]
         project=EV/'Candidate_Studio'/identifier/'project.json'
         assert record['sourceSha256']==movie['sourceSha256']
         assert sha(project)==movie['portableProjectSha256']
         assert sha(EV/movie['file'])==movie['sha256']
+        locked=bindings[identifier]
+        assert locked['sourceSha256']==record['sourceSha256'] and locked['portableProjectSha256']==sha(project),'Revised source/project needs a fresh manual view, not old notes'
+        assert locked['movieSha256']==movie['sha256'] and locked['montageSha256']==sha(EV/('raw_'+identifier+'_poses.png')),'Revised native evidence needs a fresh manual view'
         item=dict(id=identifier,sourceSha256=record['sourceSha256'],portableProjectSha256=sha(project),movieSha256=movie['sha256'],montageSha256=sha(EV/('raw_'+identifier+'_poses.png')),originalAtlasViewed=True,nativePoseFramesInspected=16,visualNotes=note,status=status,productionApproved=False)
         observations['entries']=[e for e in observations['entries'] if e['id']!=identifier]+[item]
     save(path,observations)
