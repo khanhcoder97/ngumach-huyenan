@@ -32,3 +32,9 @@ Implementation/Content/Narrative/Deliveries/**/*.srt text eol=lf
 ClientGodot/assets/cinematics/**/*.json text eol=lf
 ClientGodot/assets/cinematics/**/*.srt text eol=lf
 ClientGodot/assets/audio/**/*.json text eol=lf
+
+# TC candidate review projects/receipts must keep portable UTF-8 LF hashes.
+Art_Source/Actor_Library_20261107/Candidates_20261116c/**/*.json text eol=lf
+Art_Source/Actor_Library_20261107/Candidates_20261116c/**/*.txt text eol=lf
+Art_Source/Actor_Library_20261107/*_20261116c.json text eol=lf
+Implementation/Reports/Evidence/Actor_Batch_20261116c/**/*.json text eol=lf

@@ -1,0 +1,33 @@
+{
+  "batch": "20261116c",
+  "id": "sk_tc_06_zone_end_component",
+  "version": 1,
+  "expectedSourcePages": 50,
+  "scope": "THACH_CHUY_SIX_SKILL_BODY_ACTIONS_FIVE_FACINGS_AND_TWENTY_SPLIT_VFX_COMPONENTS",
+  "seconds": 0.64,
+  "timing": [
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40,
+    40
+  ],
+  "loop": false,
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png"
+  ],
+  "prompt": "Use case: stylized-concept. Production standalone PIXEL-ART VFX COMPONENT for Thach Chuy earth/stone skills in Ngu Mach Huyen An. Input owner character is PALETTE/STYLE guidance only; draw NOcharacter,body,hand,weapon or UI frame. Refined crisp coherent pixel clusters,earth ochre/bronze,slate-grey/tan,pale cream readable cores,dark clean edges. No neon fire,lava,water,lightning,photorealism,painted fog or bloom blur.\nExact4columns4rows=16genuinely authored chronological animation drawings of ONE component. Fixed elevated top-down orthographic camera,ground circles are low projected ellipses,not isometric platforms. Complete effect inside central65%of each cell with broad fully transparent alpha0gutters and outerpadding. Actual RGBA alpha0background/corners: no floor,shadow,grey/white matte,checkerboard,grid,text,labels or contact shadows. Everyphase has a visible solid clean core;lastframe keeps a tiny readable cluster rather than empty frame. Do not duplicate8pose sequences or simply resize/translate one drawing. ONE activation/development/ending through16phases,not repeated pulses;preserve intentional changing shapes and coherent disappearance.\nCOMPONENT zone_end;ATTACH GROUND_ZONE. The OPEN low sanctuary rim/back-and-side slabs gently lose light and dissolve into sparse low dust ONCE. Preserve broad SOUTH/foreground opening and clear center every frame. No second slam,blast,terrain crater or collision. Final small visible grain before hide;actual expiry/last-second timing external.\nMechanic source: Skill_VFX_Cards_v1_vi.md SK-TC-06 and Combat_Skills_VFX_Animation_Spec_vi.md. Only presentation artwork: no gameplay damage,state,collision,lifetime or server timing is implemented by the sheet. No invented extras.",
+  "layoutVerified": false,
+  "state": "NOT_GENERATED"
+}

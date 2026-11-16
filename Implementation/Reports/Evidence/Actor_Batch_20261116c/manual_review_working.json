@@ -1,0 +1,364 @@
+{
+  "batch": "20261116c",
+  "manualReviewComplete": false,
+  "selectedSources": 25,
+  "plannedSources": 50,
+  "selectedSourcePoses": 400,
+  "plannedSourcePoses": 800,
+  "nativeSourcePosesInspected": 400,
+  "sourceApprovalsApplied": 0,
+  "productionApproved": false,
+  "catalogueUnchanged": true,
+  "entries": [
+    {
+      "id": "class_thach_chuy_skill_01_s",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_s_v1_20261116c.png",
+      "sourceSha256": "86d18e99f9b1e714472ee64037dc7934a05e68efeb954b96b68bd4e6fcf37a51",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16current native poses viewed. One diagonal shoulder lift/smash/recovery,whole baked body,one hammer. Full-neutral boot-envelope registration improves ground contact. Need return-to-owner-idle and fixed-camera assembly review.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_01_s.mp4": "3d5a27d60200d00311e3aed45801ad36ef050793f227b13e019ef96de2f84786",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_01_s_poses.png": "51356ef48adcf583d8aec55d2822437c385b205ef79afe144ca6c73915a68b1d"
+      }
+    },
+    {
+      "id": "sk_tc_01_charge_wedge_component",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_01_charge_wedge_component_v2_20261116c.png",
+      "sourceSha256": "e398682b0d6331d37e30c12097b0ad90e8a7f1d76f083735e1136b1a9b0f657e",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "Original v2 and all16current ground-registered native phases viewed. Flat ochre/cream east-local wedge grows forward from registered rear origin and erases once; no raised terrain. Need per-facing aim,world span and prep timing in assembly.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_01_charge_wedge_component.mp4": "4e1cc40d904745e7d4eb4a771e4204b704e1eb5a5642bbf645ba6fe44381bb4e",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_01_charge_wedge_component_poses.png": "67f4cb3038fbd18145be4fb1e5a54ecd295400d0adfae4e6c9011f01e0c020b3"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_01_n",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_n_v1_20261116c.png",
+      "sourceSha256": "4af64d5f2e7c0da3e63a99e5e06d74e87dd0d5df5daf86604412c33c7364d7c6",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16current native poses viewed. Locked rear view,one hammer swing,continuous arms. Natural torso twist; rear scale/reference no longer inferred from dark-hair mask. Need fixed-camera cross-action comparison.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_01_n.mp4": "07b011f8cf0b283ee665bf44b0a3e2cce4fd9a4d3413267392f3b0b9384a8c03",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_01_n_poses.png": "5ada3ac60a8e9c21e7ff6505fa7d83181bd8c6762e5b0f45e1c499114b3944e1"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_01_ne",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_ne_v1_20261116c.png",
+      "sourceSha256": "4492a533c1d4196ebad9c791173526da4b77c410eb03a988fcf2fa49f7df8bbb",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16current native poses viewed. Back-right view and one swing; neutral two-boot X correction removes single warm-boot bias. Need world-ground/cross-action seam review.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_01_ne.mp4": "f5697800af472dd1f93669ad7ae1860328b393c73b3dc495a78589743e7104d5",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_01_ne_poses.png": "cc50cf0e02574ee26cfa2ea0a8ea58186ac69e142008bca63472f7492e3c15c4"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_01_e",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_e_v1_20261116c.png",
+      "sourceSha256": "62196ee03b8197541db1cfc9aa04c27b4a43359c98d54c0154e78f54710685a3",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16current native poses viewed. Side-right single arc,source gutters preserve long follow-through. Fixed neutral X no longer favours one boot. Need fixed-view scale/return-to-idle review.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_01_e.mp4": "e1d99485754d0c7cc9041b3f28ea295aa0d32b3c47ce6c9a5608a51c5b84a1ba",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_01_e_poses.png": "b9ae015b7e355f33e38a15abd84d1b335a769f5fe9d41da2baa13ae170d324cf"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_01_se",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_se_v1_20261116c.png",
+      "sourceSha256": "49b52756906272592d0aa29da57a9f2cfe395ad4c5a368a1ef590ba17809feaa",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16current native poses viewed. Front-right one lift/smash/recovery with planted foot envelope. Need owner-idle seam,aim direction and actual-camera review.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_01_se.mp4": "ca41a1a1ddc055897e8d3cbb39a3fdca8e0b73d455c3668048e34cd7a3fad3be",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_01_se_poses.png": "8a6ede74b46cc17f35033b0313d847f24c21a52333f16673e69c4108f89a814d"
+      }
+    },
+    {
+      "id": "sk_tc_01_impact_crack_component",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_01_impact_crack_component_v1_20261116c.png",
+      "sourceSha256": "afb1f96a524d746c97e4a06f962e43ec1c37c333ff715095a67fe6c9c5fa7a52",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "Original and all16current native phases viewed after second hub repair. Dense ochre branch stole the first proposed origin; cream-intersection centroid now keeps the central crack near the guide through growth/decay. Earlier cell-centre/dense-branch captures retained. Need ground surface contrast and confirmed-hit coupling.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_01_impact_crack_component.mp4": "419cb17556dc128f301e4afe1323896bc7e766b4ab0c6893d7629db38922fe43",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_01_impact_crack_component_poses.png": "38d2c0cc998e484a02c9a8290b4e882a4146adc4fbc304604ad64a54991e33d7"
+      }
+    },
+    {
+      "id": "sk_tc_01_dust_end_component",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_01_dust_end_component_v2_20261116c.png",
+      "sourceSha256": "c799b48e16967677381e83bf39744f11527d2f436ade904e1a3954c5b944d753",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "Dust v2 original and all16current ground-registered phases viewed. Soft beige powder replaces rejected chunky v1rocks; puff stays above registered footprint baseline and breaks into grains. Need real-world footprint/last-grain placement in assembly.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_01_dust_end_component.mp4": "1f9856abf3081f9a46881d55b69dd973deb875e1ed2ce0cf7a52f3490439074c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_01_dust_end_component_poses.png": "eaadbdffe4c0602e0313f900468fa52938b5ebbad249deda4da3b369a49c53b0"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_02_s",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_02_s_v2_20261116c.png",
+      "sourceSha256": "e855de1aefda036e1181f1c879be46fde96b37c07ec64ff98991fa41111513a3",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "S v2 original and all16current native poses viewed. First/last neutral hammer head is now SCREEN LEFT,matching TC1S and TC3S after rejectedv1right-side grip. One vertical overhead lift/slam/recovery,not a diagonal shoulder sweep. Both visible boots define ground while planted hammer extends below them and hides red sash. SHA-bound visible-boot roots avoid the inappropriate absent-sash fallback. Need fixed-camera owner-idle seam and impact/VFX assembly before approval.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_02_s.mp4": "c61160629b981ababd7525ed22600b5cc3b8d480783b1c3df1d6ef943203505a",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_02_s_poses.png": "14f7a8d66c76ece23417a2b4771577b26bdb68657a3b1a8b52844bbc4ae5dee9"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_02_n",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_02_n_v2_20261116c.png",
+      "sourceSha256": "6228f2839b2213d2fbe239d5f2009519b3b14107f921d2cd99a8fe09c6b3fd0e",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "N v2 original and all16current native poses viewed. Rejected v1 showed hands/hammer across the back; v2 now hides forward grip naturally and exposes head beside right silhouette. Lowest alpha boot envelope keeps the rear soles grounded. Need assembly/cross-action review.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_02_n.mp4": "43b901ab3ff54341726a2d68f5e663571122651fb6ae28c51d0c397e6b96f121",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_02_n_poses.png": "548fab56936c49301b3576d662b0763b007300b508d81c533df85cad4eceb833"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_02_ne",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_02_ne_v1_20261116c.png",
+      "sourceSha256": "1ea96d2956dba00b27747c77a2c260d02c9a6e716d2ccca44718d4aee19b455a",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "Original and all16current native poses viewed. Forward grip and far-hand occlusion read coherently; one vertical lift/slam/recovery. Need idle seam and impact point in assembly.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_02_ne.mp4": "62bf24d329bb1eaaf7afdc05592615f240a681266e2961810f6fd584466a6241",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_02_ne_poses.png": "3b099d4cb80b8872705bcd96cc312d547bd8990fd5b2554b3f68076d6fe79ca1"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_02_e",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_02_e_v1_20261116c.png",
+      "sourceSha256": "c55b698d8e950dd23979ccddaa57a7e681313b4da69a2bf0af438b78ccd914a4",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "Original and all16current native poses viewed. One vertical arc with continuous shaft/gloves,readable side-facing stance. Need neutral weapon-pose comparison with owner idle and fixed-camera scale.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_02_e.mp4": "a6b089db796cb0a48c7cd9a84278f31cd770396efc36a406e3b042c5b24bcb03",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_02_e_poses.png": "f9c66da705935bb89d28996e43e7767c04bf21178ee422837c12e0dd4b23b6b2"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_02_se",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_02_se_v1_20261116c.png",
+      "sourceSha256": "552d0b4db717c1ee37c86faf84026d12c52720efad3f7eed6827c381b8c763f2",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "Original and all16current native poses viewed. One vertical overhead/slam/recovery. Shoulder/head turn toward front in raised poses needs aim-consistency review at actual scale; do not mark whole action approved yet.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_02_se.mp4": "f67dd4698e7c0177e2504a0919112e8ad53f507c070d5fd1feef2049f1c9608d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_02_se_poses.png": "4597219185fe7e9620646da14151bfc53ae5cc84b296d0476795a1800376de98"
+      }
+    },
+    {
+      "id": "sk_tc_02_pre_ring_component",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_02_pre_ring_component_v1_20261116c.png",
+      "sourceSha256": "6655abfd12b94366492e98e9ea2fe50f390b5ff13ebb298d119ccaee44f7e96a",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "Original and all16current native phases viewed. Clean alpha gives a low hollow ochre dust ellipse,one formation/ending. Pre-cue volume still needs comparison against shockwave and caster size; no production approval.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_02_pre_ring_component.mp4": "c6a8e3b70b53139dfe4b8f3d3b35002c70200f9d757ff2950b922d83002cb48c",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_02_pre_ring_component_poses.png": "94b1c3850f02267e12fca980ba66989fd21eec4925e139d79447ab00ceed3ce2"
+      }
+    },
+    {
+      "id": "sk_tc_02_shockwave_component",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_02_shockwave_component_v1_20261116c.png",
+      "sourceSha256": "9e865b7e3146c772c7be7b717af1553333a4b3e47df586b94f7385d925382f1d",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "Original and all16current native phases viewed. One low outward ripple with sparse chips and clear interior; no terrain/platform. Whole source cells pass crop checks but actual game/world span and final debris-origin behaviour need assembly review.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_02_shockwave_component.mp4": "f583678dbe5a8904839a26d235f2d6c410bea1308f3f63a2364b42e16aaec847",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_02_shockwave_component_poses.png": "fe851d8375f97d05572217aae4a6486d6eed90e42c723217dfc760fa7b5a41bb"
+      }
+    },
+    {
+      "id": "sk_tc_02_dust_end_component",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_02_dust_end_component_v1_20261116c.png",
+      "sourceSha256": "b823e3bdc96a95e99908edbd575cc555ed9613d173779e0ee0841cd20b673c80",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "Original and all16current native phases viewed. Low scattered dust curls/chips settle after one wave. Current footprint baseline removes row-to-row floating; fading asymmetric grains may need hand-adjusted positions in whole-skill playback.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_02_dust_end_component.mp4": "64ea7b7590a240a99cfb7e38d946ac3115622d2db90ecf7b470c2a1f08701bbc",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_02_dust_end_component_poses.png": "f95209ac4cb0a89c0550d896b417199f3c0fbac54e7a5a982bcb8d2ec80a2695"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_03_s",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_03_s_v1_20261116c.png",
+      "sourceSha256": "2ba76e3d4583d8429706a10e15476501940b8d629aa0114eac08803d8c03b169",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "Original and all16current native poses viewed. Controlled planted-hammer defensive brace and recovery,not another overhead attack. First/last screen-left neutral agrees with TC1S. Plates correctly absent from baked body. Need four other facings and separate buff overlays.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_03_s.mp4": "56f10a36c62e7a86d7aabd723dea918f77b82b642e2bbd825d73d06b0a7d9247",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_03_s_poses.png": "7ed5cb2e303b1d85c7461ab52f8d316ded4d65d2e6f56b985cc7c56e58e0c0f2"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_03_n",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_03_n_v1_20261116c.png",
+      "sourceSha256": "2caeccc8d99770e04fcb12474ad1aad09108215d6f5a8f2e08f044f8f1c383f4",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "Whole original and all16native poses viewed. Rear-facing single hammer lowers gently to forward-right ground support,torso/shoulders brace,knees settle,then return to neutral. No extra overhead attack or baked stone plates. Far arm stays naturally occluded. Need owner-idle/cross-action seam and body-socket/depth assembly review.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_03_n.mp4": "bfca794dc0f2cf2e0e6b48d47d49003eeebde076ead8db1aac3ccd818ea3a1d2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_03_n_poses.png": "cee50e1289228a88567fc57c329efee9971f7004920c5fb5eabbbd41d3a8c86f"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_03_ne",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_03_ne_v1_20261116c.png",
+      "sourceSha256": "ccae48f6ae5a263cd4665253531d44bc9820252815695560c04687ee29bf55b2",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "Whole original and all16native poses viewed. Back-right view,one planted short-shaft hammer and connected forward arm; controlled brace/recovery with readable knee bend. Neutral returns to reference grip. Need actual-world ground position,back plate occlusion and per-pose sockets.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_03_ne.mp4": "8a601b6785b7a83852f374df9fe0edae067ca47d61792063c5cd4fdbd07363aa",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_03_ne_poses.png": "63548f9938d0893ff94d60fa67f43207ac01b47fce214b3865d4562a39d0e5e7"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_03_e",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_03_e_v1_20261116c.png",
+      "sourceSha256": "39a251a00665c018245294a5946548183239ebf6df2f96811a4eaf841c89ca39",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "Whole original and all16native poses viewed. Side-right neutral/low planted brace/return,one cuboid head and continuously connected shaft. Both boots remain planted while hammer sits slightly forward. Need fixed-camera scale comparison and shoulder/back/knee overlay positions.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_03_e.mp4": "6fda8ac4266cab57491983670d679af03957912da2d4e77fe09ca02999ce4f76",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_03_e_poses.png": "a5c693085f18ea1ca371e0e12f1291440787926ffdaf7d7386b6589ca8bc07bc"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_03_se",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_03_se_v1_20261116c.png",
+      "sourceSha256": "d7910f8f5b4fd492e4bd639f690385be04b5ba4210aa04265b315c61be388d6c",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "Whole original and all16native poses viewed. Front-right defensive brace,not another slam,one shaft/head and stable ground baseline. Controlled head/torso lean; final neutral matches initial grip. Need actual camera aim consistency and per-frame plate depth/positions.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_03_se.mp4": "8029d0f50ea0fedb4244b7eea31d1d5b046d2e33acbe227dbc0262f73ca40831",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_03_se_poses.png": "06f67bef8efa410371e3e8ebaf3c3bd6e1e74375fca2d0aec96255e2f6653c3a"
+      }
+    },
+    {
+      "id": "sk_tc_03_plate_gain_component",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_03_plate_gain_component_v1_20261116c.png",
+      "sourceSha256": "e306355ae1d619dbf41de61cbd33bc75272c02c4e7e0af8310f5d033704a81d9",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "PENDING_THREE_SOCKET_EIGHT_FACING_ASSEMBLY",
+      "visualNotes": "Original and all16current native poses viewed. Several small fragments join once into one compact chipped-corner ochre/slate plate. Explicit envelope-centre pivots remove row-dependent cell placement. One reusable component,not a three-plate baked cluster; needs three separate socket instances and gain/sustain footprint review with a body.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_03_plate_gain_component.mp4": "34bceba42403fe7a10b93bb56527f409b439ef5af44dc43fba7278ec2e967465",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_03_plate_gain_component_poses.png": "00ebf0c4d737c6d5ad6c1ecece39b9bcc9de0ca94dbd8579e93f91258c2052e7"
+      }
+    },
+    {
+      "id": "sk_tc_03_plate_sustain_component",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_03_plate_sustain_component_v1_20261116c.png",
+      "sourceSha256": "f45eb41a3351501e7d47ac4c1d4da636e38e0a0986f16ceeb56c455231e5d5b0",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "PENDING_THREE_SOCKET_EIGHT_FACING_ASSEMBLY",
+      "visualNotes": "Original and all16current native phases plus actual14,15,0,1wrap viewed. One intact compact plate stays centred,quiet bevel/mineral glint,no disappearance or repeated gain. Source material/silhouette follows gain final plate. Actual loop receipt verified separately. Needs real body scale,three socket depths and gain-to-loop seam in assembly.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_03_plate_sustain_component.mp4": "2f8319ef699f7541e21a9e9b23b2af64c5ca338151c7d17e759f6b240dcaf4eb",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_03_plate_sustain_component_poses.png": "2b6ec95aed61da2fde4703c28ff17f21c8825678cca8e55dcddd932df64398ce"
+      }
+    },
+    {
+      "id": "sk_tc_03_plate_crack_overlay_component",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_03_plate_crack_overlay_component_v1_20261116c.png",
+      "sourceSha256": "227d99d81536938d85add810adeebe4883f08f1e42e72995264373a3163322c9",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "HOLD_FOR_PARENT_PLATE_PHASE_ALIGNMENT",
+      "visualNotes": "Original and all16native phases viewed. Alpha correctly contains only compact stress/fracture lines,not another filled plate. Pattern develops and settles once. Keep intended footprint origin rather than centring each growing line. HOLD: align footprint/UV and source-row placement against parent plate in assembly before approval.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_03_plate_crack_overlay_component.mp4": "c6a03058e971127b5f8c923c1c48d3fb0bb15757773133f5b166c6cab63a5ca4",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_03_plate_crack_overlay_component_poses.png": "33100da3fd77495c91b66dc2bbf3bae87c52c3a62ff3d6ab45eba89e531e43d6"
+      }
+    },
+    {
+      "id": "sk_tc_03_plate_end_component",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_03_plate_end_component_v1_20261116c.png",
+      "sourceSha256": "04941ff303134a5a646cccfffe8e766646f7816cce24caa98598d022e6c2ec40",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "HOLD_FOR_PARENT_PLATE_PHASE_ALIGNMENT",
+      "visualNotes": "Original and all16native phases viewed. Matching ochre/slate plate cracks and disperses once to a few tiny grains,no new intact plate or explosion. HOLD: first intact plate is offset from its current cell-centre origin,so sustain-to-end attachment needs explicit alignment in the whole-skill prefab. Do not count this as a seamless phase handoff.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_03_plate_end_component.mp4": "224f4ee114bec1e35c19e578530dd9b1e7fcace6aee5bd34063803d6df829742",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_03_plate_end_component_poses.png": "58d138ad814b7755fe87dc913a4b478bbea2be1dd83968277e2178df3b236149"
+      }
+    }
+  ]
+}

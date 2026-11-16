@@ -1,0 +1,313 @@
+{
+  "batch": "20261116c",
+  "expected": 50,
+  "bodySheets": 30,
+  "vfxComponents": 20,
+  "sourcePoses": 800,
+  "selected": 25,
+  "generatedVariants": 29,
+  "remaining": 25,
+  "productionApproved": false,
+  "jobs": [
+    {
+      "id": "class_thach_chuy_skill_01_n",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_01_n.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_01_ne",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_01_ne.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_01_e",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_01_e.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_01_se",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_01_se.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_01_s",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_01_s.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_02_n",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_02_n.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_02_ne",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_02_ne.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_02_e",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_02_e.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_02_se",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_02_se.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_02_s",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_02_s.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_03_n",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_03_n.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_03_ne",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_03_ne.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_03_e",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_03_e.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_03_se",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_03_se.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_03_s",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_03_s.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "class_thach_chuy_skill_04_n",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_04_n.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "class_thach_chuy_skill_04_ne",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_04_ne.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "class_thach_chuy_skill_04_e",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_04_e.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "class_thach_chuy_skill_04_se",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_04_se.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "class_thach_chuy_skill_04_s",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_04_s.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "class_thach_chuy_skill_05_n",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_05_n.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "class_thach_chuy_skill_05_ne",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_05_ne.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "class_thach_chuy_skill_05_e",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_05_e.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "class_thach_chuy_skill_05_se",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_05_se.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "class_thach_chuy_skill_05_s",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_05_s.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "class_thach_chuy_skill_06_n",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_06_n.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "class_thach_chuy_skill_06_ne",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_06_ne.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "class_thach_chuy_skill_06_e",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_06_e.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "class_thach_chuy_skill_06_se",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_06_se.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "class_thach_chuy_skill_06_s",
+      "kind": "BODY",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_06_s.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "sk_tc_01_charge_wedge_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_01_charge_wedge_component.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "sk_tc_01_impact_crack_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_01_impact_crack_component.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "sk_tc_01_dust_end_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_01_dust_end_component.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "sk_tc_02_pre_ring_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_02_pre_ring_component.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "sk_tc_02_shockwave_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_02_shockwave_component.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "sk_tc_02_dust_end_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_02_dust_end_component.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "sk_tc_03_plate_gain_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_03_plate_gain_component.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "sk_tc_03_plate_sustain_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_03_plate_sustain_component.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "sk_tc_03_plate_crack_overlay_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_03_plate_crack_overlay_component.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "sk_tc_03_plate_end_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_03_plate_end_component.json",
+      "state": "GENERATED_PENDING_REVIEW"
+    },
+    {
+      "id": "sk_tc_04_caster_pulse_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_04_caster_pulse_component.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "sk_tc_04_target_chevron_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_04_target_chevron_component.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "sk_tc_04_target_status_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_04_target_status_component.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "sk_tc_05_dash_trail_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_05_dash_trail_component.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "sk_tc_05_hit_impact_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_05_hit_impact_component.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "sk_tc_05_stop_dust_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_05_stop_dust_component.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "sk_tc_06_zone_charge_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_06_zone_charge_component.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "sk_tc_06_plate_gain_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_06_plate_gain_component.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "sk_tc_06_open_zone_sustain_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_06_open_zone_sustain_component.json",
+      "state": "NOT_GENERATED"
+    },
+    {
+      "id": "sk_tc_06_zone_end_component",
+      "kind": "VFX",
+      "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_06_zone_end_component.json",
+      "state": "NOT_GENERATED"
+    }
+  ]
+}

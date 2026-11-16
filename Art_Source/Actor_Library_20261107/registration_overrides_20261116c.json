@@ -1,0 +1,757 @@
+{
+  "scope": "SHA_BOUND_REGISTRATION_ONLY_NOT_SOURCE_APPROVAL",
+  "entries": [
+    {
+      "id": "class_thach_chuy_skill_02_n",
+      "sourceSha256": "6228f2839b2213d2fbe239d5f2009519b3b14107f921d2cd99a8fe09c6b3fd0e",
+      "reviewNote": "Whole original N v2 manually viewed. All16poses keep both boot soles below the hammer; front-held hammer is occluded by torso at low poses. Saturated warm boot palette misses dark sole outlines. Read the lowest alpha200 foot envelope instead; native root stability remains unaccepted.",
+      "fields": {
+        "pivotMode": "SOURCE_FOOT_PIVOTS",
+        "sourceFootPivots": [
+          [
+            159.0,
+            272
+          ],
+          [
+            158.5,
+            272
+          ],
+          [
+            159.0,
+            272
+          ],
+          [
+            160.0,
+            272
+          ],
+          [
+            160.5,
+            274
+          ],
+          [
+            160.5,
+            274
+          ],
+          [
+            159.5,
+            274
+          ],
+          [
+            160.0,
+            273
+          ],
+          [
+            158.5,
+            277
+          ],
+          [
+            157.5,
+            277
+          ],
+          [
+            155.5,
+            277
+          ],
+          [
+            158.5,
+            277
+          ],
+          [
+            158.5,
+            278
+          ],
+          [
+            157.0,
+            276
+          ],
+          [
+            157.5,
+            274
+          ],
+          [
+            157.5,
+            274
+          ]
+        ],
+        "bodyReferenceHeight": 206,
+        "registrationMethod": "MANUALLY_VIEWED_REAR_BODY_LOWEST_ALPHA_BOOT_ENVELOPE_PENDING_NATIVE_REVIEW"
+      }
+    },
+    {
+      "id": "sk_tc_01_charge_wedge_component",
+      "sourceSha256": "e398682b0d6331d37e30c12097b0ad90e8a7f1d76f083735e1136b1a9b0f657e",
+      "reviewNote": "Source atlas and initial native rendering reviewed where available. Uneven atlas placement made cell-centre attachments drift. These landmark coordinates are registration candidates only: inspect all16native phases and whole-skill/ground attachment before acceptance. Fading asymmetric debris may still need hand-tuned coordinates; no automatic gameplay or source approval.",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            204.4,
+            176.5
+          ],
+          [
+            149.04,
+            177.0
+          ],
+          [
+            133.04,
+            178.5
+          ],
+          [
+            111.4,
+            176.5
+          ],
+          [
+            123.72,
+            130.0
+          ],
+          [
+            86.84,
+            129.0
+          ],
+          [
+            89.0,
+            130.0
+          ],
+          [
+            83.88,
+            129.5
+          ],
+          [
+            108.68,
+            123.5
+          ],
+          [
+            82.12,
+            126.0
+          ],
+          [
+            88.08,
+            126.0
+          ],
+          [
+            92.0,
+            126.0
+          ],
+          [
+            125.88,
+            117.0
+          ],
+          [
+            125.56,
+            117.5
+          ],
+          [
+            143.28,
+            118.5
+          ],
+          [
+            143.08,
+            116.0
+          ]
+        ],
+        "registrationMethod": "SHORT_WEDGE_REAR_GROUND_ORIGIN_NOT_APPROVED"
+      }
+    },
+    {
+      "id": "sk_tc_01_impact_crack_component",
+      "sourceSha256": "afb1f96a524d746c97e4a06f962e43ec1c37c333ff715095a67fe6c9c5fa7a52",
+      "reviewNote": "Source atlas and initial native rendering reviewed where available. Uneven atlas placement made cell-centre attachments drift. These landmark coordinates are registration candidates only: inspect all16native phases and whole-skill/ground attachment before acceptance. Fading asymmetric debris may still need hand-tuned coordinates; no automatic gameplay or source approval.",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            184.59574468085106,
+            161.5744680851064
+          ],
+          [
+            162.65686274509804,
+            162.3235294117647
+          ],
+          [
+            164.95959595959596,
+            159.87373737373738
+          ],
+          [
+            162.85911179173047,
+            160.0229709035222
+          ],
+          [
+            194.35294117647058,
+            149.89329685362517
+          ],
+          [
+            178.76962809917356,
+            152.5464876033058
+          ],
+          [
+            190.2383275261324,
+            151.8822299651568
+          ],
+          [
+            180.7712532865907,
+            152.07186678352323
+          ],
+          [
+            188.8113730929265,
+            134.23300970873785
+          ],
+          [
+            171.67061143984222,
+            132.99802761341223
+          ],
+          [
+            169.87214611872147,
+            137.1689497716895
+          ],
+          [
+            152.75,
+            133.63636363636363
+          ],
+          [
+            181.76859504132233,
+            114.99173553719008
+          ],
+          [
+            171.33333333333334,
+            112.56140350877193
+          ],
+          [
+            168.47058823529412,
+            112.17647058823529
+          ],
+          [
+            165.0,
+            114.0
+          ]
+        ],
+        "registrationMethod": "CREAM_CRACK_INTERSECTION_WITH_FADING_REMNANT_NOT_APPROVED"
+      }
+    },
+    {
+      "id": "sk_tc_01_dust_end_component",
+      "sourceSha256": "c799b48e16967677381e83bf39744f11527d2f436ade904e1a3954c5b944d753",
+      "reviewNote": "Source atlas and initial native rendering reviewed where available. Uneven atlas placement made cell-centre attachments drift. These landmark coordinates are registration candidates only: inspect all16native phases and whole-skill/ground attachment before acceptance. Fading asymmetric debris may still need hand-tuned coordinates; no automatic gameplay or source approval.",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            194.0,
+            254
+          ],
+          [
+            172.5,
+            252
+          ],
+          [
+            150.0,
+            254
+          ],
+          [
+            118.0,
+            254
+          ],
+          [
+            194.0,
+            238
+          ],
+          [
+            167.0,
+            238
+          ],
+          [
+            144.5,
+            238
+          ],
+          [
+            118.5,
+            238
+          ],
+          [
+            198.0,
+            210
+          ],
+          [
+            170.5,
+            210
+          ],
+          [
+            147.0,
+            210
+          ],
+          [
+            121.0,
+            204
+          ],
+          [
+            195.5,
+            180
+          ],
+          [
+            167.5,
+            179
+          ],
+          [
+            149.5,
+            175
+          ],
+          [
+            125.5,
+            175
+          ]
+        ],
+        "registrationMethod": "LOW_DUST_VISIBLE_FOOTPRINT_BASELINE_NOT_APPROVED"
+      }
+    },
+    {
+      "id": "sk_tc_02_pre_ring_component",
+      "sourceSha256": "6655abfd12b94366492e98e9ea2fe50f390b5ff13ebb298d119ccaee44f7e96a",
+      "reviewNote": "Source atlas and initial native rendering reviewed where available. Uneven atlas placement made cell-centre attachments drift. These landmark coordinates are registration candidates only: inspect all16native phases and whole-skill/ground attachment before acceptance. Fading asymmetric debris may still need hand-tuned coordinates; no automatic gameplay or source approval.",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            153.5,
+            234.0
+          ],
+          [
+            144.0,
+            231.5
+          ],
+          [
+            127.5,
+            227.0
+          ],
+          [
+            112.5,
+            227.0
+          ],
+          [
+            159.5,
+            174.0
+          ],
+          [
+            143.0,
+            174.0
+          ],
+          [
+            127.5,
+            174.5
+          ],
+          [
+            112.0,
+            175.0
+          ],
+          [
+            160.0,
+            123.0
+          ],
+          [
+            143.5,
+            125.5
+          ],
+          [
+            126.0,
+            123.0
+          ],
+          [
+            112.0,
+            127.5
+          ],
+          [
+            157.0,
+            75.0
+          ],
+          [
+            145.5,
+            78.0
+          ],
+          [
+            127.5,
+            79.0
+          ],
+          [
+            111.0,
+            66.0
+          ]
+        ],
+        "registrationMethod": "RADIAL_FOOTPRINT_CENTRE_PENDING_NATIVE_REVIEW_NOT_APPROVED"
+      }
+    },
+    {
+      "id": "sk_tc_02_shockwave_component",
+      "sourceSha256": "9e865b7e3146c772c7be7b717af1553333a4b3e47df586b94f7385d925382f1d",
+      "reviewNote": "Source atlas and initial native rendering reviewed where available. Uneven atlas placement made cell-centre attachments drift. These landmark coordinates are registration candidates only: inspect all16native phases and whole-skill/ground attachment before acceptance. Fading asymmetric debris may still need hand-tuned coordinates; no automatic gameplay or source approval.",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            168.5,
+            168.0
+          ],
+          [
+            163.5,
+            165.0
+          ],
+          [
+            156.5,
+            165.5
+          ],
+          [
+            150.0,
+            164.0
+          ],
+          [
+            163.5,
+            151.5
+          ],
+          [
+            159.5,
+            152.0
+          ],
+          [
+            157.0,
+            149.0
+          ],
+          [
+            157.5,
+            148.5
+          ],
+          [
+            165.0,
+            145.0
+          ],
+          [
+            160.0,
+            144.0
+          ],
+          [
+            156.0,
+            145.0
+          ],
+          [
+            153.5,
+            146.5
+          ],
+          [
+            159.0,
+            144.5
+          ],
+          [
+            157.0,
+            141.0
+          ],
+          [
+            154.5,
+            137.5
+          ],
+          [
+            156.0,
+            142.0
+          ]
+        ],
+        "registrationMethod": "RADIAL_FOOTPRINT_CENTRE_PENDING_NATIVE_REVIEW_NOT_APPROVED"
+      }
+    },
+    {
+      "id": "sk_tc_02_dust_end_component",
+      "sourceSha256": "b823e3bdc96a95e99908edbd575cc555ed9613d173779e0ee0841cd20b673c80",
+      "reviewNote": "Source atlas and initial native rendering reviewed where available. Uneven atlas placement made cell-centre attachments drift. These landmark coordinates are registration candidates only: inspect all16native phases and whole-skill/ground attachment before acceptance. Fading asymmetric debris may still need hand-tuned coordinates; no automatic gameplay or source approval.",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            190.0,
+            288
+          ],
+          [
+            119.5,
+            294
+          ],
+          [
+            126.5,
+            304
+          ],
+          [
+            126.0,
+            311
+          ],
+          [
+            193.0,
+            207
+          ],
+          [
+            124.5,
+            210
+          ],
+          [
+            124.5,
+            217
+          ],
+          [
+            124.0,
+            212
+          ],
+          [
+            189.5,
+            214
+          ],
+          [
+            121.5,
+            209
+          ],
+          [
+            127.5,
+            206
+          ],
+          [
+            126.0,
+            204
+          ],
+          [
+            193.0,
+            174
+          ],
+          [
+            117.0,
+            165
+          ],
+          [
+            123.0,
+            157
+          ],
+          [
+            138.5,
+            156
+          ]
+        ],
+        "registrationMethod": "LOW_DUST_VISIBLE_FOOTPRINT_BASELINE_NOT_APPROVED"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_02_s",
+      "sourceSha256": "e855de1aefda036e1181f1c879be46fde96b37c07ec64ff98991fa41111513a3",
+      "reviewNote": "Whole S v2 atlas viewed. The planted hammer hides the red waist sash but BOTH boot silhouettes remain visible at the sides. Do not infer boot occlusion from absent sash. Use warm boot roots plus first-pose sole/centre calibration for this exact PNG; native playback still required. Hammer extends below boots in low poses and must not define the floor.",
+      "fields": {
+        "pivotMode": "SOURCE_FOOT_PIVOTS",
+        "sourceFootPivots": [
+          [
+            196.0,
+            293
+          ],
+          [
+            174.5,
+            293
+          ],
+          [
+            158.0,
+            292
+          ],
+          [
+            141.5,
+            293
+          ],
+          [
+            194.0,
+            279
+          ],
+          [
+            174.5,
+            278
+          ],
+          [
+            156.5,
+            280
+          ],
+          [
+            143.5,
+            279
+          ],
+          [
+            191.0,
+            259
+          ],
+          [
+            176.5,
+            260
+          ],
+          [
+            157.5,
+            260
+          ],
+          [
+            141.0,
+            259
+          ],
+          [
+            193.5,
+            263
+          ],
+          [
+            181.0,
+            262
+          ],
+          [
+            160.5,
+            262
+          ],
+          [
+            145.0,
+            261
+          ]
+        ],
+        "bodyReferenceHeight": 220,
+        "registrationMethod": "MANUALLY_VIEWED_FRONTAL_VISIBLE_BOOTS_WITH_OCCLUDED_SASH_PENDING_NATIVE_REVIEW"
+      }
+    },
+    {
+      "id": "sk_tc_03_plate_gain_component",
+      "sourceSha256": "e306355ae1d619dbf41de61cbd33bc75272c02c4e7e0af8310f5d033704a81d9",
+      "reviewNote": "Whole original atlas viewed. One compact nearly symmetric plate forms or sustains at a fixed body socket. Initial gain native capture showed row-dependent cell-centre offset. Centre the actual plate/assembly envelope in each source cell; native per-pose and loop/phase seam review still required. Not a ground dust origin or an asymmetric travelling projectile.",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            184.5,
+            180.5
+          ],
+          [
+            164.0,
+            185.0
+          ],
+          [
+            142.0,
+            185.0
+          ],
+          [
+            121.0,
+            181.0
+          ],
+          [
+            181.0,
+            164.5
+          ],
+          [
+            162.0,
+            164.0
+          ],
+          [
+            143.5,
+            164.0
+          ],
+          [
+            125.5,
+            165.5
+          ],
+          [
+            184.5,
+            148.0
+          ],
+          [
+            164.0,
+            147.5
+          ],
+          [
+            144.0,
+            147.5
+          ],
+          [
+            123.5,
+            147.5
+          ],
+          [
+            186.0,
+            136.5
+          ],
+          [
+            165.5,
+            136.5
+          ],
+          [
+            144.0,
+            136.5
+          ],
+          [
+            125.0,
+            136.5
+          ]
+        ],
+        "registrationMethod": "SINGLE_PLATE_ENVELOPE_CENTRE_PENDING_NATIVE_REVIEW"
+      }
+    },
+    {
+      "id": "sk_tc_03_plate_sustain_component",
+      "sourceSha256": "f45eb41a3351501e7d47ac4c1d4da636e38e0a0986f16ceeb56c455231e5d5b0",
+      "reviewNote": "Whole original atlas viewed. One compact nearly symmetric plate forms or sustains at a fixed body socket. Initial gain native capture showed row-dependent cell-centre offset. Centre the actual plate/assembly envelope in each source cell; native per-pose and loop/phase seam review still required. Not a ground dust origin or an asymmetric travelling projectile.",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            197.5,
+            210.0
+          ],
+          [
+            171.0,
+            210.5
+          ],
+          [
+            146.0,
+            210.5
+          ],
+          [
+            119.5,
+            210.5
+          ],
+          [
+            197.5,
+            178.0
+          ],
+          [
+            171.5,
+            178.0
+          ],
+          [
+            146.0,
+            178.0
+          ],
+          [
+            120.0,
+            178.0
+          ],
+          [
+            197.5,
+            147.5
+          ],
+          [
+            171.5,
+            148.0
+          ],
+          [
+            146.0,
+            148.0
+          ],
+          [
+            120.0,
+            148.0
+          ],
+          [
+            197.5,
+            118.0
+          ],
+          [
+            171.5,
+            118.0
+          ],
+          [
+            146.0,
+            118.0
+          ],
+          [
+            120.5,
+            118.0
+          ]
+        ],
+        "registrationMethod": "SINGLE_PLATE_ENVELOPE_CENTRE_PENDING_NATIVE_REVIEW"
+      }
+    }
+  ]
+}

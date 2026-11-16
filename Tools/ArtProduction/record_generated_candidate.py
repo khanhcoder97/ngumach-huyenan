@@ -36,8 +36,14 @@ def record(job):
     if job.get('direction'):
         r.update(direction=job['direction'],inputRole=job.get('inputRole','OWNER_SELECTED_IDENTITY_AND_NEW_CHOREOGRAPHY_REFERENCE'))
         if job.get('layoutVerified'):r.update(layout='VISUALLY_VERIFIED_DIRECTIONAL_GRID',layoutReviewNote='Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained.')
-    else:r.update(componentOnly=True,scaleMode='LONGEST_AXIS',pivotMode='CELL_CENTER',previewDurationSeconds=seconds,
-                  previewLoop=job.get('loop',False),inputRole='VFX_STYLE_OR_MECHANIC_REFERENCE')
+    else:
+        r.update(componentOnly=True,scaleMode='LONGEST_AXIS',pivotMode='CELL_CENTER',previewDurationSeconds=seconds,
+                 previewLoop=job.get('loop',False),inputRole='VFX_STYLE_OR_MECHANIC_REFERENCE')
+        if job.get('layoutVerified'):
+            r.update(layout='VISUALLY_VERIFIED_UNIFORM_GRID',layoutReviewNote='Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval.')
+        if job.get('authoringUse'):
+            assert type(job['authoringUse']) is dict,'Component authoring instructions must be structured data'
+            r['authoringUse']=job['authoringUse']
     path=folder/'candidate_manifest.json'
     m=read(path) if path.exists() else dict(batch=batch,expectedSourcePages=expected,scope=job['scope'],records=[],history=[])
     assert m['expectedSourcePages']==expected

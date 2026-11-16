@@ -1,0 +1,1418 @@
+{
+  "batch": "20261116c",
+  "expectedSourcePages": 50,
+  "scope": "THACH_CHUY_SIX_SKILL_BODY_ACTIONS_FIVE_FACINGS_AND_TWENTY_SPLIT_VFX_COMPONENTS",
+  "records": [
+    {
+      "id": "class_thach_chuy_skill_01_s",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_01_s_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_01_s_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png",
+          "sourceSha256": "7e5e56df4bb3bd8be6379637abaf62195d147d59e80235740877f499e9d186c7"
+        }
+      ],
+      "sourceSha256": "86d18e99f9b1e714472ee64037dc7934a05e68efeb954b96b68bd4e6fcf37a51",
+      "sourceFrameDurationsMs": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "direction": "S",
+      "inputRole": "OWNER_SELECTED_IDENTITY_WITH_UNAPPROVED_EARLIER_MOTION_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "sk_tc_01_charge_wedge_component",
+      "source": "Candidates_20261116c/sk_tc_01_charge_wedge_component_v2_20261116c.png",
+      "prompt": "Candidates_20261116c/sk_tc_01_charge_wedge_component_v2_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        }
+      ],
+      "sourceSha256": "e398682b0d6331d37e30c12097b0ad90e8a7f1d76f083735e1136b1a9b0f657e",
+      "sourceFrameDurationsMs": [
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.4,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE"
+    },
+    {
+      "id": "class_thach_chuy_skill_01_n",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_01_n_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_01_n_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png",
+          "sourceSha256": "7e5e56df4bb3bd8be6379637abaf62195d147d59e80235740877f499e9d186c7"
+        }
+      ],
+      "sourceSha256": "4af64d5f2e7c0da3e63a99e5e06d74e87dd0d5df5daf86604412c33c7364d7c6",
+      "sourceFrameDurationsMs": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "direction": "N",
+      "inputRole": "OWNER_SELECTED_IDENTITY_WITH_UNAPPROVED_EARLIER_MOTION_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed after sequential bulk capture:4columns4rows16complete whole-body poses. Facing/grip/root/timing acceptance still pending native review."
+    },
+    {
+      "id": "class_thach_chuy_skill_01_ne",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_01_ne_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_01_ne_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png",
+          "sourceSha256": "7e5e56df4bb3bd8be6379637abaf62195d147d59e80235740877f499e9d186c7"
+        }
+      ],
+      "sourceSha256": "4492a533c1d4196ebad9c791173526da4b77c410eb03a988fcf2fa49f7df8bbb",
+      "sourceFrameDurationsMs": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "direction": "NE",
+      "inputRole": "OWNER_SELECTED_IDENTITY_WITH_UNAPPROVED_EARLIER_MOTION_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed after sequential bulk capture:4columns4rows16complete whole-body poses. Facing/grip/root/timing acceptance still pending native review."
+    },
+    {
+      "id": "class_thach_chuy_skill_01_e",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_01_e_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_01_e_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png",
+          "sourceSha256": "7e5e56df4bb3bd8be6379637abaf62195d147d59e80235740877f499e9d186c7"
+        }
+      ],
+      "sourceSha256": "62196ee03b8197541db1cfc9aa04c27b4a43359c98d54c0154e78f54710685a3",
+      "sourceFrameDurationsMs": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "direction": "E",
+      "inputRole": "OWNER_SELECTED_IDENTITY_WITH_UNAPPROVED_EARLIER_MOTION_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed after sequential bulk capture:4columns4rows16complete whole-body poses. Facing/grip/root/timing acceptance still pending native review."
+    },
+    {
+      "id": "class_thach_chuy_skill_01_se",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_01_se_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_01_se_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png",
+          "sourceSha256": "7e5e56df4bb3bd8be6379637abaf62195d147d59e80235740877f499e9d186c7"
+        }
+      ],
+      "sourceSha256": "49b52756906272592d0aa29da57a9f2cfe395ad4c5a368a1ef590ba17809feaa",
+      "sourceFrameDurationsMs": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "direction": "SE",
+      "inputRole": "OWNER_SELECTED_IDENTITY_WITH_UNAPPROVED_EARLIER_MOTION_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed after sequential bulk capture:4columns4rows16complete whole-body poses. Facing/grip/root/timing acceptance still pending native review."
+    },
+    {
+      "id": "sk_tc_01_impact_crack_component",
+      "source": "Candidates_20261116c/sk_tc_01_impact_crack_component_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/sk_tc_01_impact_crack_component_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        }
+      ],
+      "sourceSha256": "afb1f96a524d746c97e4a06f962e43ec1c37c333ff715095a67fe6c9c5fa7a52",
+      "sourceFrameDurationsMs": [
+        21.875,
+        21.875,
+        21.875,
+        21.875,
+        21.875,
+        21.875,
+        21.875,
+        21.875,
+        21.875,
+        21.875,
+        21.875,
+        21.875,
+        21.875,
+        21.875,
+        21.875,
+        21.875
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.35,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE"
+    },
+    {
+      "id": "sk_tc_01_dust_end_component",
+      "source": "Candidates_20261116c/sk_tc_01_dust_end_component_v2_20261116c.png",
+      "prompt": "Candidates_20261116c/sk_tc_01_dust_end_component_v2_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        }
+      ],
+      "sourceSha256": "c799b48e16967677381e83bf39744f11527d2f436ade904e1a3954c5b944d753",
+      "sourceFrameDurationsMs": [
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.4,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval."
+    },
+    {
+      "id": "class_thach_chuy_skill_02_s",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_02_s_v2_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_02_s_v2_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_s_v1_20261116c.png",
+        "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_02_s_v1_20261116c.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_s_v1_20261116c.png",
+          "sourceSha256": "86d18e99f9b1e714472ee64037dc7934a05e68efeb954b96b68bd4e6fcf37a51"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_02_s_v1_20261116c.png",
+          "sourceSha256": "9047cef4a6b53e5d430ac4f18f26f097941e305cb88a2d1b8e52ffa1d3bbd502"
+        }
+      ],
+      "sourceSha256": "e855de1aefda036e1181f1c879be46fde96b37c07ec64ff98991fa41111513a3",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "direction": "S",
+      "inputRole": "OWNER_IDENTITY_WITH_TRAN_SON_NEUTRAL_GUIDE_AND_REJECTED_CHAN_DIA_GRIP_EDIT_TARGET",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_thach_chuy_skill_02_n",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_02_n_v2_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_02_n_v2_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_02_n_v1_20261116c.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_02_n_v1_20261116c.png",
+          "sourceSha256": "c3714d6db986e07d2708d047f3b4452eea58a8e9f77a70b67165a8ea5cb9181c"
+        }
+      ],
+      "sourceSha256": "6228f2839b2213d2fbe239d5f2009519b3b14107f921d2cd99a8fe09c6b3fd0e",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "direction": "N",
+      "inputRole": "OWNER_IDENTITY_WITH_REJECTED_REAR_GRIP_EDIT_TARGET",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_thach_chuy_skill_02_ne",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_02_ne_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_02_ne_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png",
+          "sourceSha256": "7e5e56df4bb3bd8be6379637abaf62195d147d59e80235740877f499e9d186c7"
+        }
+      ],
+      "sourceSha256": "1ea96d2956dba00b27747c77a2c260d02c9a6e716d2ccca44718d4aee19b455a",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "direction": "NE",
+      "inputRole": "OWNER_SELECTED_IDENTITY_WITH_UNAPPROVED_EARLIER_MOTION_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_thach_chuy_skill_02_e",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_02_e_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_02_e_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png",
+          "sourceSha256": "7e5e56df4bb3bd8be6379637abaf62195d147d59e80235740877f499e9d186c7"
+        }
+      ],
+      "sourceSha256": "c55b698d8e950dd23979ccddaa57a7e681313b4da69a2bf0af438b78ccd914a4",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "direction": "E",
+      "inputRole": "OWNER_SELECTED_IDENTITY_WITH_UNAPPROVED_EARLIER_MOTION_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_thach_chuy_skill_02_se",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_02_se_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_02_se_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png",
+          "sourceSha256": "7e5e56df4bb3bd8be6379637abaf62195d147d59e80235740877f499e9d186c7"
+        }
+      ],
+      "sourceSha256": "552d0b4db717c1ee37c86faf84026d12c52720efad3f7eed6827c381b8c763f2",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "direction": "SE",
+      "inputRole": "OWNER_SELECTED_IDENTITY_WITH_UNAPPROVED_EARLIER_MOTION_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "sk_tc_02_pre_ring_component",
+      "source": "Candidates_20261116c/sk_tc_02_pre_ring_component_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/sk_tc_02_pre_ring_component_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        }
+      ],
+      "sourceSha256": "6655abfd12b94366492e98e9ea2fe50f390b5ff13ebb298d119ccaee44f7e96a",
+      "sourceFrameDurationsMs": [
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.4,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval."
+    },
+    {
+      "id": "sk_tc_02_shockwave_component",
+      "source": "Candidates_20261116c/sk_tc_02_shockwave_component_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/sk_tc_02_shockwave_component_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        }
+      ],
+      "sourceSha256": "9e865b7e3146c772c7be7b717af1553333a4b3e47df586b94f7385d925382f1d",
+      "sourceFrameDurationsMs": [
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.48,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval."
+    },
+    {
+      "id": "sk_tc_02_dust_end_component",
+      "source": "Candidates_20261116c/sk_tc_02_dust_end_component_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/sk_tc_02_dust_end_component_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        }
+      ],
+      "sourceSha256": "b823e3bdc96a95e99908edbd575cc555ed9613d173779e0ee0841cd20b673c80",
+      "sourceFrameDurationsMs": [
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.4,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval."
+    },
+    {
+      "id": "class_thach_chuy_skill_03_s",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_03_s_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_03_s_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_s_v1_20261116c.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_s_v1_20261116c.png",
+          "sourceSha256": "86d18e99f9b1e714472ee64037dc7934a05e68efeb954b96b68bd4e6fcf37a51"
+        }
+      ],
+      "sourceSha256": "2ba76e3d4583d8429706a10e15476501940b8d629aa0114eac08803d8c03b169",
+      "sourceFrameDurationsMs": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "direction": "S",
+      "inputRole": "OWNER_IDENTITY_WITH_UNAPPROVED_TRAN_SON_NEUTRAL_GRIP_GUIDE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_thach_chuy_skill_03_n",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_03_n_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_03_n_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_n_v1_20261116c.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_n_v1_20261116c.png",
+          "sourceSha256": "4af64d5f2e7c0da3e63a99e5e06d74e87dd0d5df5daf86604412c33c7364d7c6"
+        }
+      ],
+      "sourceSha256": "2caeccc8d99770e04fcb12474ad1aad09108215d6f5a8f2e08f044f8f1c383f4",
+      "sourceFrameDurationsMs": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "direction": "N",
+      "inputRole": "OWNER_IDENTITY_WITH_UNAPPROVED_SAME_FACING_NEUTRAL_GUIDE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_thach_chuy_skill_03_ne",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_03_ne_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_03_ne_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_ne_v1_20261116c.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_ne_v1_20261116c.png",
+          "sourceSha256": "4492a533c1d4196ebad9c791173526da4b77c410eb03a988fcf2fa49f7df8bbb"
+        }
+      ],
+      "sourceSha256": "ccae48f6ae5a263cd4665253531d44bc9820252815695560c04687ee29bf55b2",
+      "sourceFrameDurationsMs": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "direction": "NE",
+      "inputRole": "OWNER_IDENTITY_WITH_UNAPPROVED_SAME_FACING_NEUTRAL_GUIDE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_thach_chuy_skill_03_e",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_03_e_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_03_e_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_e_v1_20261116c.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_e_v1_20261116c.png",
+          "sourceSha256": "62196ee03b8197541db1cfc9aa04c27b4a43359c98d54c0154e78f54710685a3"
+        }
+      ],
+      "sourceSha256": "39a251a00665c018245294a5946548183239ebf6df2f96811a4eaf841c89ca39",
+      "sourceFrameDurationsMs": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "direction": "E",
+      "inputRole": "OWNER_IDENTITY_WITH_UNAPPROVED_SAME_FACING_NEUTRAL_GUIDE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_thach_chuy_skill_03_se",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_03_se_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_03_se_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_se_v1_20261116c.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_01_se_v1_20261116c.png",
+          "sourceSha256": "49b52756906272592d0aa29da57a9f2cfe395ad4c5a368a1ef590ba17809feaa"
+        }
+      ],
+      "sourceSha256": "d7910f8f5b4fd492e4bd639f690385be04b5ba4210aa04265b315c61be388d6c",
+      "sourceFrameDurationsMs": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "direction": "SE",
+      "inputRole": "OWNER_IDENTITY_WITH_UNAPPROVED_SAME_FACING_NEUTRAL_GUIDE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "sk_tc_03_plate_gain_component",
+      "source": "Candidates_20261116c/sk_tc_03_plate_gain_component_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/sk_tc_03_plate_gain_component_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        }
+      ],
+      "sourceSha256": "e306355ae1d619dbf41de61cbd33bc75272c02c4e7e0af8310f5d033704a81d9",
+      "sourceFrameDurationsMs": [
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.48,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval.",
+      "authoringUse": {
+        "mode": "SINGLE_PLATE_COMPONENT_INSTANCED_AT_THREE_BODY_SOCKETS",
+        "instancesPerActor": 3,
+        "socketRoles": [
+          "guard_shoulder",
+          "back",
+          "guard_knee"
+        ],
+        "requiresPerFacingPerPoseAttachment": true,
+        "requiresDepthReview": true,
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "sk_tc_03_plate_sustain_component",
+      "source": "Candidates_20261116c/sk_tc_03_plate_sustain_component_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/sk_tc_03_plate_sustain_component_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_03_plate_gain_component_v1_20261116c.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_03_plate_gain_component_v1_20261116c.png",
+          "sourceSha256": "e306355ae1d619dbf41de61cbd33bc75272c02c4e7e0af8310f5d033704a81d9"
+        }
+      ],
+      "sourceSha256": "f45eb41a3351501e7d47ac4c1d4da636e38e0a0986f16ceeb56c455231e5d5b0",
+      "sourceFrameDurationsMs": [
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80,
+        80
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 1.28,
+      "previewLoop": true,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval.",
+      "authoringUse": {
+        "mode": "SINGLE_PLATE_COMPONENT_INSTANCED_AT_THREE_BODY_SOCKETS",
+        "instancesPerActor": 3,
+        "socketRoles": [
+          "guard_shoulder",
+          "back",
+          "guard_knee"
+        ],
+        "requiresPerFacingPerPoseAttachment": true,
+        "requiresDepthReview": true,
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "sk_tc_03_plate_crack_overlay_component",
+      "source": "Candidates_20261116c/sk_tc_03_plate_crack_overlay_component_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/sk_tc_03_plate_crack_overlay_component_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_03_plate_gain_component_v1_20261116c.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_03_plate_gain_component_v1_20261116c.png",
+          "sourceSha256": "e306355ae1d619dbf41de61cbd33bc75272c02c4e7e0af8310f5d033704a81d9"
+        }
+      ],
+      "sourceSha256": "227d99d81536938d85add810adeebe4883f08f1e42e72995264373a3163322c9",
+      "sourceFrameDurationsMs": [
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.4,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval.",
+      "authoringUse": {
+        "mode": "SINGLE_PLATE_COMPONENT_INSTANCED_AT_THREE_BODY_SOCKETS",
+        "instancesPerActor": 3,
+        "socketRoles": [
+          "guard_shoulder",
+          "back",
+          "guard_knee"
+        ],
+        "requiresPerFacingPerPoseAttachment": true,
+        "requiresDepthReview": true,
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "sk_tc_03_plate_end_component",
+      "source": "Candidates_20261116c/sk_tc_03_plate_end_component_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/sk_tc_03_plate_end_component_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_03_plate_gain_component_v1_20261116c.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_03_plate_gain_component_v1_20261116c.png",
+          "sourceSha256": "e306355ae1d619dbf41de61cbd33bc75272c02c4e7e0af8310f5d033704a81d9"
+        }
+      ],
+      "sourceSha256": "04941ff303134a5a646cccfffe8e766646f7816cce24caa98598d022e6c2ec40",
+      "sourceFrameDurationsMs": [
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.4,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval.",
+      "authoringUse": {
+        "mode": "SINGLE_PLATE_COMPONENT_INSTANCED_AT_THREE_BODY_SOCKETS",
+        "instancesPerActor": 3,
+        "socketRoles": [
+          "guard_shoulder",
+          "back",
+          "guard_knee"
+        ],
+        "requiresPerFacingPerPoseAttachment": true,
+        "requiresDepthReview": true,
+        "productionApproved": false
+      }
+    }
+  ],
+  "history": [
+    {
+      "id": "sk_tc_01_charge_wedge_component",
+      "source": "Candidates_20261116c/sk_tc_01_charge_wedge_component_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/sk_tc_01_charge_wedge_component_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        }
+      ],
+      "sourceSha256": "4539abc840d90a5a60ffc4874c709ef3db092cba62584d467c5c11ba10f07914",
+      "sourceFrameDurationsMs": [
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.4,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE"
+    },
+    {
+      "id": "sk_tc_01_dust_end_component",
+      "source": "Candidates_20261116c/sk_tc_01_dust_end_component_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/sk_tc_01_dust_end_component_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        }
+      ],
+      "sourceSha256": "7102ba4470fe858cfb8cf2cff6f77a35b8d74751127c6e2d255d18a737481ac6",
+      "sourceFrameDurationsMs": [
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.4,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Original full PNG manually viewed: four rows and four columns, sixteen separated dust/debris drawings. Sparse particle islands confuse projection row count. Uniform cell geometry only; dust appearance and root stability remain pending native review."
+    },
+    {
+      "id": "class_thach_chuy_skill_02_n",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_02_n_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_02_n_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png",
+          "sourceSha256": "7e5e56df4bb3bd8be6379637abaf62195d147d59e80235740877f499e9d186c7"
+        }
+      ],
+      "sourceSha256": "c3714d6db986e07d2708d047f3b4452eea58a8e9f77a70b67165a8ea5cb9181c",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "direction": "N",
+      "inputRole": "OWNER_SELECTED_IDENTITY_WITH_UNAPPROVED_EARLIER_MOTION_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "class_thach_chuy_skill_02_s",
+      "source": "Candidates_20261116c/class_thach_chuy_skill_02_s_v1_20261116c.png",
+      "prompt": "Candidates_20261116c/class_thach_chuy_skill_02_s_v1_20261116c.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261116c",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+      "additionalReferences": [
+        "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png"
+      ],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_idle_v2.png",
+          "sourceSha256": "f0b0862ac4b1ecb574da253d5903b2deddcff2a09ae4f4dc7a35bedd5e821f12"
+        },
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_thach_chuy_basic_attack_v3_20261112.png",
+          "sourceSha256": "7e5e56df4bb3bd8be6379637abaf62195d147d59e80235740877f499e9d186c7"
+        }
+      ],
+      "sourceSha256": "9047cef4a6b53e5d430ac4f18f26f097941e305cb88a2d1b8e52ffa1d3bbd502",
+      "sourceFrameDurationsMs": [
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70,
+        70
+      ],
+      "direction": "S",
+      "inputRole": "OWNER_SELECTED_IDENTITY_WITH_UNAPPROVED_EARLIER_MOTION_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    }
+  ],
+  "selected": 25,
+  "generatedVariants": 29,
+  "remainingSourcePages": 25,
+  "sourceCells": 400,
+  "productionApproved": false
+}
