@@ -1,0 +1,80 @@
+{
+ "checkpoint": "PR119 BODY RESTRUCTURE R64",
+ "validator": "check_pr119_restructure_r65_v1.py",
+ "checks": {
+  "total": 17,
+  "passed": 17
+ },
+ "failures": [],
+ "details": {
+  "index header coverage head == 66ea5ce": {
+   "pass": true,
+   "detail": ""
+  },
+  "index milestone full head sha": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha f9a4ef0": {
+   "pass": true,
+   "detail": ""
+  },
+  "index has row sha 66ea5ce": {
+   "pass": true,
+   "detail": ""
+  },
+  "index counts line 319/2587": {
+   "pass": true,
+   "detail": ""
+  },
+  "index issue line 34 comments ACK 6862732081": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R65 note": {
+   "pass": true,
+   "detail": ""
+  },
+  "index R64 row label": {
+   "pass": true,
+   "detail": ""
+  },
+  "git commits cf17178..66ea5ce == 319": {
+   "pass": true,
+   "detail": "319"
+  },
+  "git files cf17178..66ea5ce == 2587": {
+   "pass": true,
+   "detail": "2587"
+  },
+  "git additions == 240036, deletions 0": {
+   "pass": true,
+   "detail": "2587 files changed, 240036 insertions(+)"
+  },
+  "merge-tree 66ea5ce vs integration exit 0": {
+   "pass": true,
+   "detail": "4ca02cb1ceb0dd67f6f8dfad1964e5ca3659d742"
+  },
+  "body head line 66ea5ce/319/2587": {
+   "pass": true,
+   "detail": ""
+  },
+  "body has R64 paragraph": {
+   "pass": true,
+   "detail": ""
+  },
+  "body title mentions R36 and R64": {
+   "pass": true,
+   "detail": "2 + PR119 BODY RESTRUCTURE R63 + PR119 BODY RESTRUCTURE R64)"
+  },
+  "body index reference at 66ea5ce": {
+   "pass": true,
+   "detail": ""
+  },
+  "body R65 note": {
+   "pass": true,
+   "detail": ""
+  }
+ },
+ "status": "PASS"
+}
