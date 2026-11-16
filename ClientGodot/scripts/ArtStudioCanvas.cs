@@ -58,6 +58,14 @@ public partial class ArtStudioCanvas : Control
         Zoom = Math.Clamp(Math.Min((Size.X - 30) / bounds.Size.X, (Size.Y - 30) / bounds.Size.Y), .1f, 8);
         Pan = Size / 2 - new Vector2(Size.X / 2, Size.Y * .86f) - bounds.GetCenter() * Zoom; QueueRedraw();
     }
+    public void UseFixedReviewView()
+    {
+        // Compare actor/effect scale and attachment offsets across projects.
+        // FitContent deliberately changes zoom with each atlas envelope.
+        Zoom = 1;
+        Pan = new Vector2(0, Size.Y * (.52f - .86f));
+        QueueRedraw();
+    }
     public Texture2D SourceTexture(string file)
     {
         if (!_textures.TryGetValue(file, out var texture)) { texture = ArtStudioCodec.Texture(file, SourceRoot); _textures.Add(file, texture); }

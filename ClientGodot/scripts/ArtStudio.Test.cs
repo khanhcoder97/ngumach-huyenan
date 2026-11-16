@@ -14,6 +14,13 @@ public partial class ArtStudio
             int n = 0;
             void Check(bool ok, string why) { if (!ok) throw new Exception(why); n++; }
             void Reject(Action action, string why) { bool rejected = false; try { action(); } catch { rejected = true; } Check(rejected, why); }
+            var comparison = new ArtStudioCanvas { Size = new Vector2(640, 480), Zoom = 3, Pan = new Vector2(60, 20) };
+            comparison.UseFixedReviewView();
+            Check(comparison.Zoom == 1, "fixed review must not inherit auto-fit zoom");
+            Check((comparison.View * Vector2.Zero).DistanceTo(new Vector2(320, 249.6f)) < .001f, "fixed review root must be stable");
+            comparison.Size = new Vector2(800, 600); comparison.UseFixedReviewView();
+            Check((comparison.View * Vector2.Zero).DistanceTo(new Vector2(400, 312)) < .001f && comparison.Zoom == 1, "fixed review resize must preserve world scale");
+            comparison.Free();
             foreach (var e in _entries)
             {
                 var doc = ArtStudioLibrary.Load(e.Id); ArtStudioCodec.ValidateTextures(doc, "");

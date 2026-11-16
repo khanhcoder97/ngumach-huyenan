@@ -16,6 +16,7 @@ public partial class ArtStudio : Control
     private int _clip, _frame;
     private bool _sync, _playing, _dirty, _dragChanged;
     private bool _traceSourceClock;
+    private bool _fixedReviewView;
     private int _lastTracedSourceFrame = -1;
     private double _time;
     private readonly Stack<string> _undo = new(), _redo = new();
@@ -117,6 +118,7 @@ public partial class ArtStudio : Control
         int defaultIndex = Array.FindIndex(_entries, e => e.Id == "npc_lyan_idle"); _library.Select(defaultIndex);
         SetDocument(ArtStudioLibrary.Load("npc_lyan_idle"), "", "");
         var args = OS.GetCmdlineUserArgs(); int project = Array.IndexOf(args, "--studio-project");
+        _fixedReviewView = args.Contains("--studio-fixed-view");
         _traceSourceClock = args.Contains("--studio-trace-source") && !string.IsNullOrEmpty(Engine.GetWriteMoviePath());
         if (project >= 0 && project + 1 < args.Length) LoadProject(args[project + 1]);
         int entry = Array.IndexOf(args, "--studio-entry");
@@ -326,7 +328,11 @@ public partial class ArtStudio : Control
         if (active != null) _selected = active.Id; Refresh();
     }
     private async void FitAfterLayout(bool play = false)
-    { for (int i = 0; i < 2; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame); _stage.FitContent(wholeClip: play); if (play) TogglePlay(); }
+    {
+        for (int i = 0; i < 2; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        if (_fixedReviewView) _stage.UseFixedReviewView(); else _stage.FitContent(wholeClip: play);
+        if (play) TogglePlay();
+    }
     private void Seek(int frame) { _playing = false; _frame = Math.Clamp(frame, 0, Clip.DurationsMs.Count - 1); _time = ArtStudioSampler.TimeAt(Clip, _frame); Refresh(); }
     private void TogglePlay()
     {
