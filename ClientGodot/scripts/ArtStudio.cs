@@ -16,6 +16,7 @@ public partial class ArtStudio : Control
     private int _clip, _frame;
     private bool _sync, _playing, _dirty, _dragChanged;
     private bool _traceSourceClock;
+    private bool _traceLayerSources;
     private bool _fixedReviewView;
     private int _lastTracedSourceFrame = -1;
     private double _time;
@@ -84,7 +85,7 @@ public partial class ArtStudio : Control
         var views = Row(center);
         var tool = new OptionButton(); foreach (var name in new[] { "Kéo layer", "Kéo pivot", "Kéo socket", "Kéo mốc VFX/hit" }) tool.AddItem(name); views.AddChild(tool);
         tool.ItemSelected += i => _stage.Tool = new[] { "move", "pivot", "socket", "marker" }[(int)i];
-        Toggle(views, "Lưới", true, v => { _stage.Guides = v; _stage.QueueRedraw(); });
+        var guidesToggle = Toggle(views, "Lưới", true, v => { _stage.Guides = v; _stage.QueueRedraw(); });
         Toggle(views, "Onion", false, v => { _stage.Onion = v; _stage.QueueRedraw(); });
         Toggle(views, "Nền sáng", true, v => { _stage.Light = v; _stage.QueueRedraw(); });
         Button(views, "Fit khung", () => _stage.FitContent());
@@ -119,7 +120,9 @@ public partial class ArtStudio : Control
         SetDocument(ArtStudioLibrary.Load("npc_lyan_idle"), "", "");
         var args = OS.GetCmdlineUserArgs(); int project = Array.IndexOf(args, "--studio-project");
         _fixedReviewView = args.Contains("--studio-fixed-view");
-        _traceSourceClock = args.Contains("--studio-trace-source") && !string.IsNullOrEmpty(Engine.GetWriteMoviePath());
+        _traceLayerSources = args.Contains("--studio-trace-layers") && !string.IsNullOrEmpty(Engine.GetWriteMoviePath());
+        _traceSourceClock = (args.Contains("--studio-trace-source") || _traceLayerSources) && !string.IsNullOrEmpty(Engine.GetWriteMoviePath());
+        if (args.Contains("--studio-clean-view")) guidesToggle.ButtonPressed = false;
         if (project >= 0 && project + 1 < args.Length) LoadProject(args[project + 1]);
         int entry = Array.IndexOf(args, "--studio-entry");
         if (entry >= 0 && entry + 1 < args.Length) { SetDocument(ArtStudioLibrary.Load(args[entry + 1]), "", ""); int item = Array.FindIndex(_entries, e => e.Id == args[entry + 1]); if (item >= 0) _library.Select(item); }
@@ -361,6 +364,12 @@ public partial class ArtStudio : Control
         if (!_traceSourceClock || _doc == null || _lastTracedSourceFrame == _frame) return;
         _lastTracedSourceFrame = _frame;
         GD.Print($"ART_STUDIO_SOURCE_TICK nativeFrame={Engine.GetFramesDrawn()} sourceFrame={_frame}");
+        if (_traceLayerSources)
+            foreach (var layer in _doc.Layers.Where(l => l.Visible))
+            {
+                var pose = ArtStudioSampler.Pose(layer, Clip, _frame);
+                if (pose.Alpha > 0) GD.Print($"ART_STUDIO_LAYER_TICK nativeFrame={Engine.GetFramesDrawn()} layer={layer.Id} sourceFrame={pose.SourceFrame}");
+            }
     }
     private void LogMarker(ArtStudioMarker m, int cycles)
     { _events.Text = $"[{Clip.Name}/{Clip.Direction}] {m.Kind} / {m.Name} @ ({m.X:0.0},{m.Y:0.0}) f{m.Frame + 1} ×{cycles}\n" + _events.Text; if (_events.Text.Length > 2000) _events.Text = _events.Text[..2000]; }

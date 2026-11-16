@@ -1,0 +1,184 @@
+{
+  "scope": "THREE_SOCKET_PHASE_ALIGNMENT_TRIAL_NOT_GAMEPLAY_OR_SOURCE_ACCEPTANCE",
+  "projectSha256": "dce0e32dac94e3d95feacccff667d607e80b8d9f12c77c4076c5e77b42e5bab5",
+  "bodySourcePoses": 16,
+  "componentSourcePoses": 64,
+  "timelineSegments": 75,
+  "durationMs": 3040,
+  "bodyAfterActivation": "FINAL_POSE_HOLD_FOR_INSPECTION_NOT_GAMEPLAY_IDLE",
+  "socketRoles": [
+    "guard_shoulder",
+    "back",
+    "guard_knee"
+  ],
+  "sourceInputs": {
+    "body": {
+      "id": "class_thach_chuy_skill_03_s",
+      "pngSha256": "2ba76e3d4583d8429706a10e15476501940b8d629aa0114eac08803d8c03b169",
+      "registrationSha256": "6f75c6d9483332a3a605eed083dd3bb4d582fc33ba31b241033f1f772a569975"
+    },
+    "gain": {
+      "id": "sk_tc_03_plate_gain_component",
+      "pngSha256": "e306355ae1d619dbf41de61cbd33bc75272c02c4e7e0af8310f5d033704a81d9",
+      "registrationSha256": "6252ea8b9814ea2acf3b4dbfca71764fc04ed5d525b46a707ae88b88a9edfc18"
+    },
+    "sustain": {
+      "id": "sk_tc_03_plate_sustain_component",
+      "pngSha256": "f45eb41a3351501e7d47ac4c1d4da636e38e0a0986f16ceeb56c455231e5d5b0",
+      "registrationSha256": "4993f74ad0b173f4a19519be63728a894494933f6f738e178f3800b44c073fe3"
+    },
+    "crack_overlay": {
+      "id": "sk_tc_03_plate_crack_overlay_component",
+      "pngSha256": "227d99d81536938d85add810adeebe4883f08f1e42e72995264373a3163322c9",
+      "registrationSha256": "2c3d6f1717689c8dd565f6f52f75dc7b89c60804206f28042775e0a76e651dce"
+    },
+    "end": {
+      "id": "sk_tc_03_plate_end_component",
+      "pngSha256": "04941ff303134a5a646cccfffe8e766646f7816cce24caa98598d022e6c2ec40",
+      "registrationSha256": "4fd123d7f57dce43a27afa93e93d8f1953ddc3645da6b5e2b39cbd7174e6f41b"
+    }
+  },
+  "phaseReferenceFootprints": {
+    "gain": {
+      "referenceSourceFrame": 15,
+      "visibleWidth": 168,
+      "parentOriginFraction": [
+        0.3968253968253968,
+        0.4375
+      ],
+      "footprintFactor": 1
+    },
+    "sustain": {
+      "referenceSourceFrame": 0,
+      "visibleWidth": 169,
+      "parentOriginFraction": [
+        0.6230283911671924,
+        0.6774193548387096
+      ],
+      "footprintFactor": 1
+    },
+    "crack_overlay": {
+      "referenceSourceFrame": 15,
+      "visibleWidth": 137,
+      "parentOriginFraction": [
+        0.4182692307692308,
+        0.3682539682539683
+      ],
+      "footprintFactor": 0.82
+    },
+    "end": {
+      "referenceSourceFrame": 0,
+      "visibleWidth": 174,
+      "parentOriginFraction": [
+        0.6163522012578616,
+        0.6282467532467533
+      ],
+      "footprintFactor": 1
+    }
+  },
+  "phaseWindowsMs": {
+    "gain": [
+      240,
+      720,
+      30
+    ],
+    "sustain": [
+      720,
+      2320,
+      80
+    ],
+    "crack_overlay": [
+      1920,
+      2320,
+      25
+    ],
+    "end": [
+      2320,
+      2720,
+      25
+    ]
+  },
+  "sourcePoseAnchorNotes": [
+    {
+      "kneePixels": 505,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 570,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 5,
+      "kneeMethod": "NOMINAL_KNEE_PENDING_HAND_REVIEW",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 477,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 458,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 490,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 611,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 487,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 514,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 617,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 597,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 606,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 483,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 538,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 490,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    },
+    {
+      "kneePixels": 452,
+      "kneeMethod": "VISIBLE_WARM_RIGHT_LEG_BAND",
+      "productionApproved": false
+    }
+  ],
+  "productionApproved": false
+}

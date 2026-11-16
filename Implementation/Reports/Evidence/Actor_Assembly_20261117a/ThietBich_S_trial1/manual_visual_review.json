@@ -1,0 +1,82 @@
+{
+  "scope": "TWELVE_PHASE_SAMPLES_OF_SOUTH_SOCKET_ASSEMBLY_ONLY",
+  "projectSha256": "dce0e32dac94e3d95feacccff667d607e80b8d9f12c77c4076c5e77b42e5bab5",
+  "movieSha256": "42370c6b078f368164e95739a8d3219bf8bf394bed7e1085eb8e2c94f1863f34",
+  "montageSha256": "636a727ecfa4e4225535714dc14e6e4a354a682189eecd01e417ac70be88700d",
+  "sampleOrder": [
+    {
+      "layer": "guard_shoulder_gain",
+      "sourceFrame": 0,
+      "nativeFrame": 16
+    },
+    {
+      "layer": "guard_shoulder_gain",
+      "sourceFrame": 8,
+      "nativeFrame": 30
+    },
+    {
+      "layer": "guard_shoulder_gain",
+      "sourceFrame": 15,
+      "nativeFrame": 43
+    },
+    {
+      "layer": "guard_shoulder_sustain",
+      "sourceFrame": 0,
+      "nativeFrame": 45
+    },
+    {
+      "layer": "guard_shoulder_sustain",
+      "sourceFrame": 8,
+      "nativeFrame": 83
+    },
+    {
+      "layer": "guard_shoulder_sustain",
+      "sourceFrame": 15,
+      "nativeFrame": 117
+    },
+    {
+      "layer": "guard_shoulder_crack_overlay",
+      "sourceFrame": 0,
+      "nativeFrame": 117
+    },
+    {
+      "layer": "guard_shoulder_crack_overlay",
+      "sourceFrame": 8,
+      "nativeFrame": 129
+    },
+    {
+      "layer": "guard_shoulder_crack_overlay",
+      "sourceFrame": 15,
+      "nativeFrame": 139
+    },
+    {
+      "layer": "guard_shoulder_end",
+      "sourceFrame": 0,
+      "nativeFrame": 141
+    },
+    {
+      "layer": "guard_shoulder_end",
+      "sourceFrame": 8,
+      "nativeFrame": 153
+    },
+    {
+      "layer": "guard_shoulder_end",
+      "sourceFrame": 15,
+      "nativeFrame": 163
+    }
+  ],
+  "manuallyViewed": true,
+  "productionApproved": false,
+  "observations": [
+    "Shoulder/knee plates stay on the front right-side body surfaces during the viewed phases.",
+    "Back plate remains occluded by the frontal body; active layer coverage is not evidence of its visible silhouette.",
+    "Crack overlay stays within the plate envelope; source fixed parent origin avoids centre drift of early fracture strokes.",
+    "End starts on the sustain footprint, then reveals the underlying metal armour as it breaks down. This is only a south-view trial."
+  ],
+  "remaining": [
+    "All8facings and per-action hand/face occlusion.",
+    "All64FXsource phases against each parent socket, not just12selected samples.",
+    "Owner idle transition, actual wide gameplay camera and confirmed server buff lifecycle.",
+    "Body is held at final activation pose for inspection; replace with gameplay idle before integration."
+  ]
+}

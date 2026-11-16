@@ -752,6 +752,307 @@
         ],
         "registrationMethod": "SINGLE_PLATE_ENVELOPE_CENTRE_PENDING_NATIVE_REVIEW"
       }
+    },
+    {
+      "id": "class_thach_chuy_skill_04_ne",
+      "sourceSha256": "d981f91c857155622809f4508f9b05c57e436fce9acb52b2cfb668782ecd8841",
+      "reviewNote": "Original4x4 manually viewed. Automatic neutral sole guard failed: warm colour detection omitted9px of dark sole. Source-specific boot-band proposals preserve immutable PNG. This only fixes geometry registration; root sway, far-boot balance and cross-action seam remain unaccepted.",
+      "fields": {
+        "pivotMode": "SOURCE_FOOT_PIVOTS",
+        "sourceFootPivots": [
+          [
+            194.5,
+            243
+          ],
+          [
+            189.0,
+            242
+          ],
+          [
+            185.5,
+            244
+          ],
+          [
+            195.0,
+            243
+          ],
+          [
+            196.0,
+            245
+          ],
+          [
+            185.0,
+            242
+          ],
+          [
+            185.5,
+            242
+          ],
+          [
+            183.5,
+            242
+          ],
+          [
+            189.5,
+            242
+          ],
+          [
+            190.0,
+            242
+          ],
+          [
+            188.5,
+            242
+          ],
+          [
+            186.0,
+            242
+          ],
+          [
+            191.5,
+            241
+          ],
+          [
+            192.0,
+            241
+          ],
+          [
+            193.0,
+            241
+          ],
+          [
+            193.5,
+            241
+          ]
+        ],
+        "bodyReferenceHeight": 197,
+        "registrationMethod": "SOURCE_SPECIFIC_NEAR_BOOT_DARK_SOLE_BAND_PENDING_FIXED_CAMERA_NATIVE_REVIEW"
+      }
+    },
+    {
+      "id": "sk_tc_04_caster_pulse_component",
+      "sourceSha256": "3bc17cbc40eb28b229d35b2c828f81c6cf9692e74b78e840a6f7d85848893582",
+      "reviewNote": "Whole original4x4 visually inspected. Thin elliptical pulse and compact direction/status glyphs are centred envelopes, not moving projectiles. Cell-centre capture drifted vertically by source row. This metadata centres each visible symbol; actual target/caster anchoring, scale and wide-camera readability remain unaccepted.",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            171.0,
+            328.5
+          ],
+          [
+            119.0,
+            328.5
+          ],
+          [
+            136.5,
+            328.0
+          ],
+          [
+            137.5,
+            328.0
+          ],
+          [
+            170.0,
+            146.0
+          ],
+          [
+            121.0,
+            145.5
+          ],
+          [
+            136.5,
+            145.5
+          ],
+          [
+            139.5,
+            145.5
+          ],
+          [
+            170.0,
+            132.5
+          ],
+          [
+            121.5,
+            132.5
+          ],
+          [
+            136.5,
+            134.0
+          ],
+          [
+            139.0,
+            133.5
+          ],
+          [
+            172.5,
+            122.5
+          ],
+          [
+            122.0,
+            120.5
+          ],
+          [
+            137.0,
+            119.0
+          ],
+          [
+            140.5,
+            121.5
+          ]
+        ],
+        "registrationMethod": "COMPACT_THREAT_SYMBOL_ENVELOPE_CENTRE_PENDING_NATIVE_REVIEW"
+      }
+    },
+    {
+      "id": "sk_tc_04_target_chevron_component",
+      "sourceSha256": "3589861b605386e03a1433d4d1d59ab82bd85eb990f154a631642766ca34b4f1",
+      "reviewNote": "Whole original4x4 visually inspected. Thin elliptical pulse and compact direction/status glyphs are centred envelopes, not moving projectiles. Cell-centre capture drifted vertically by source row. This metadata centres each visible symbol; actual target/caster anchoring, scale and wide-camera readability remain unaccepted.",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            184.0,
+            252.0
+          ],
+          [
+            151.5,
+            250.0
+          ],
+          [
+            124.0,
+            250.5
+          ],
+          [
+            93.0,
+            250.5
+          ],
+          [
+            188.5,
+            206.0
+          ],
+          [
+            160.5,
+            205.5
+          ],
+          [
+            133.5,
+            205.0
+          ],
+          [
+            97.5,
+            205.0
+          ],
+          [
+            188.5,
+            160.5
+          ],
+          [
+            157.0,
+            161.0
+          ],
+          [
+            123.5,
+            161.0
+          ],
+          [
+            91.0,
+            161.0
+          ],
+          [
+            180.0,
+            110.5
+          ],
+          [
+            150.5,
+            109.0
+          ],
+          [
+            115.0,
+            108.5
+          ],
+          [
+            85.5,
+            108.0
+          ]
+        ],
+        "registrationMethod": "COMPACT_THREAT_SYMBOL_ENVELOPE_CENTRE_PENDING_NATIVE_REVIEW"
+      }
+    },
+    {
+      "id": "sk_tc_04_target_status_component",
+      "sourceSha256": "5917494ac1cab3efadd4ca608db32cc03e910d9df5d8e2f611d80d783f08f803",
+      "reviewNote": "Whole original4x4 visually inspected. Thin elliptical pulse and compact direction/status glyphs are centred envelopes, not moving projectiles. Cell-centre capture drifted vertically by source row. This metadata centres each visible symbol; actual target/caster anchoring, scale and wide-camera readability remain unaccepted.",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            190.5,
+            263.5
+          ],
+          [
+            122.0,
+            263.5
+          ],
+          [
+            123.5,
+            263.5
+          ],
+          [
+            124.0,
+            263.5
+          ],
+          [
+            191.0,
+            143.0
+          ],
+          [
+            123.0,
+            143.0
+          ],
+          [
+            123.0,
+            143.0
+          ],
+          [
+            124.0,
+            143.0
+          ],
+          [
+            193.0,
+            144.5
+          ],
+          [
+            123.0,
+            144.5
+          ],
+          [
+            123.0,
+            144.5
+          ],
+          [
+            123.5,
+            145.0
+          ],
+          [
+            190.5,
+            144.0
+          ],
+          [
+            122.5,
+            144.0
+          ],
+          [
+            123.5,
+            144.0
+          ],
+          [
+            124.0,
+            144.5
+          ]
+        ],
+        "registrationMethod": "COMPACT_THREAT_SYMBOL_ENVELOPE_CENTRE_PENDING_NATIVE_REVIEW"
+      }
     }
   ]
 }

@@ -1,11 +1,11 @@
 {
   "batch": "20261116c",
   "manualReviewComplete": false,
-  "selectedSources": 25,
+  "selectedSources": 33,
   "plannedSources": 50,
-  "selectedSourcePoses": 400,
+  "selectedSourcePoses": 528,
   "plannedSourcePoses": 800,
-  "nativeSourcePosesInspected": 400,
+  "nativeSourcePosesInspected": 528,
   "sourceApprovalsApplied": 0,
   "productionApproved": false,
   "catalogueUnchanged": true,
@@ -358,6 +358,118 @@
       "nativeEvidenceSha256": {
         "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_03_plate_end_component.mp4": "224f4ee114bec1e35c19e578530dd9b1e7fcace6aee5bd34063803d6df829742",
         "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_03_plate_end_component_poses.png": "58d138ad814b7755fe87dc913a4b478bbea2be1dd83968277e2178df3b236149"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_04_s",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_04_s_v1_20261116c.png",
+      "sourceSha256": "79d0c65566fbec5b33817ff68659a07eaaf68f8e0be568f0c3f6ffc88f4376c9",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16original/native poses explicitly viewed. One gentle downward hammer tap then readable open-mouth call, returning to same frontal hammer side. Whole body remains coherent. Fixed-camera owner-idle seam and confirmed taunt cue integration still pending.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_s.mp4": "7973dd01b966317dda5271c45d110d845a4639e17f96320fb63b059710ce3c1f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_s_poses.png": "bdccd8662c58e8cbd2a674a9dd99f0ca93f4caf26c7b712b5c5db8003e33b4e9"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_04_e",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_04_e_v1_20261116c.png",
+      "sourceSha256": "a90dd401a801cf53da1ac733a8d6552231a4fc265b367cae5c0db8b52d28169c",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "HOLD_CALL_EXPRESSION_AND_FIXED_FACING_REVIEW",
+      "visualNotes": "All16original/native poses explicitly viewed. Single tap and head/chest lift readable; mouth remains closed, so the call is weaker than intended. Near/far shoulder/eye presentation also needs exact-E review. Keep as unapproved candidate; improve call expression before source acceptance.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_e.mp4": "c915de1d0c00004b35f187e41cf387ae4ae55100b7c918b3d40e77a949e8f62d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_e_poses.png": "f366dc5de5cd7f3a1f9329918f4299b6a88121d988b763a414b5fa78bd423140"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_04_se",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_04_se_v1_20261116c.png",
+      "sourceSha256": "88eaa6aef83eded4cc49a537923aa9deb3fbb92651d9422e98aa7d5f2592b51e",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "HOLD_CALL_EXPRESSION_REPAIR",
+      "visualNotes": "All16original/native poses explicitly viewed. Distinct single tap/raise/recovery and coherent one hammer. Mouth is closed during call; needs expression revision. Root/neutral continuity still requires fixed-camera idle comparison.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_se.mp4": "e79d503f09199dd652d8e6668556bff7a19fc58962aa33f0875fc59f3938810d",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_se_poses.png": "3f7f837da676d661b9eeabeaac0dc3b64b5cff806456eca82638d10e9c7d6e92"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_04_n",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_04_n_v1_20261116c.png",
+      "sourceSha256": "989080bffc970417a67494ded9836baa09fc799443983e57abe2819f7db5ee50",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16original/native poses explicitly viewed. Back remains readable, one low tap then chest/head rise; forward grip largely hidden naturally. Need exact-N yaw check, native idle/weapon seam and world-root stability review.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_n.mp4": "8f6ee7e91518d5ac1c64a9c8d9a45d3b5b6753b90b848ee194f8b32606410c88",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_n_poses.png": "6613d53b20eb1c12daa44efe41d58c30e6e17d9a9b09a874ea31759ab3612d38"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_04_ne",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/class_thach_chuy_skill_04_ne_v1_20261116c.png",
+      "sourceSha256": "d981f91c857155622809f4508f9b05c57e436fce9acb52b2cfb668782ecd8841",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16original/native poses explicitly viewed. Rear-quarter tap/call/recovery readable. Warm boot mask missed dark soles; SHA-bound source-specific boot proposal registers the near foot. It avoids the initial failure, but near/far foot balance and root sway remain unaccepted. No blanket alpha-bottom rule applied to other sources.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_ne.mp4": "9bd11384dc1b4aa1d45808c478b6ff32abf209130e90c08473196337d402b5d6",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_class_thach_chuy_skill_04_ne_poses.png": "622a897f246f44e31cb10d93d5dfb4c44768a230f0b169eaf58d61845ea86e82"
+      }
+    },
+    {
+      "id": "sk_tc_04_caster_pulse_component",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_04_caster_pulse_component_v2_20261116c.png",
+      "sourceSha256": "3bc17cbc40eb28b229d35b2c828f81c6cf9692e74b78e840a6f7d85848893582",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16current native phases explicitly viewed after envelope-centre registration. V2 is a thin low expanding broken ellipse, with open interior and no stone platform. Centres now remain at the anchor across source rows. Actual caster-foot/world scale and low-contrast ground readability still need gameplay review. V1 raised annulus is rejected.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_04_caster_pulse_component.mp4": "0223afa70a02cdf2ff9c9786282b2a23a9c550c5fd1f466204c7207abfaef440",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_04_caster_pulse_component_poses.png": "574ccb539394bd1a7397c19fb4af4af639a48b494b39e360cee95ccf4e5412d8"
+      }
+    },
+    {
+      "id": "sk_tc_04_target_chevron_component",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_04_target_chevron_component_v2_20261116c.png",
+      "sourceSha256": "3589861b605386e03a1433d4d1d59ab82bd85eb990f154a631642766ca34b4f1",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16current native phases explicitly viewed. V2 one clean right-pointing chevron, no orbiting rocks or multi-arrow clutter. Quiet split-stroke ending remains nonempty. Actor-relative direction routing and24px gameplay readability pending. V1 noisy debris symbol is rejected.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_04_target_chevron_component.mp4": "7f521be9c82e52977c52b7bb2d1ac39189dd3409974f9072e54515adbe8c27d2",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_04_target_chevron_component_poses.png": "bf5f2a199b2f1cded191a2bc73896e29951e7879d0ca4b3485c4d1f9f485c285"
+      }
+    },
+    {
+      "id": "sk_tc_04_target_status_component",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261116c/sk_tc_04_target_status_component_v1_20261116c.png",
+      "sourceSha256": "5917494ac1cab3efadd4ca608db32cc03e910d9df5d8e2f611d80d783f08f803",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16current native phases and actual14→15→0→1wrap explicitly viewed. One compact hammer/attention glyph, stable silhouette and quiet brightness loop, no extinction/restart. Nameplate/world-UI sizing and authoritative status expiration still pending.",
+      "productionApproved": false,
+      "nativeEvidenceSha256": {
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_04_target_status_component.mp4": "e4dbbfef9b692118261633a881051446b93c6dd2336e2fdfba109ecf27d03b6f",
+        "Implementation/Reports/Evidence/Actor_Batch_20261116c/raw_sk_tc_04_target_status_component_poses.png": "4a0297a9ec2f2c16e6d0aaca6216a7d0796f4224dc4074a3bcd1dac301d2ebe8"
       }
     }
   ]
