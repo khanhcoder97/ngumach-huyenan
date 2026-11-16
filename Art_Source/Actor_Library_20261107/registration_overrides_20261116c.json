@@ -1053,6 +1053,995 @@
         ],
         "registrationMethod": "COMPACT_THREAT_SYMBOL_ENVELOPE_CENTRE_PENDING_NATIVE_REVIEW"
       }
+    },
+    {
+      "id": "class_thach_chuy_skill_05_se",
+      "sourceSha256": "ce74fdcfdf82ef929874164fcab9ac1b213f6fd3cfe50b35478318b9921a19cd",
+      "reviewNote": "Original whole4x4 manually viewed. Neutral pose shows boots below hammer; saturated warm mask omits the dark sole outline by exactly10sourcepx. Source-specific offset is pinned to this PNG; shared8px guard remains unchanged. Per-pose boot/sash tracking is only an editable review proposal. Dash flight/root travel and ground contact remain unaccepted.",
+      "fields": {
+        "pivotMode": "SOURCE_FOOT_PIVOTS",
+        "sourceFootPivots": [
+          [
+            198.5,
+            257
+          ],
+          [
+            172.0,
+            252
+          ],
+          [
+            160.0,
+            247
+          ],
+          [
+            165.5,
+            251
+          ],
+          [
+            198.0,
+            239
+          ],
+          [
+            184.0,
+            241
+          ],
+          [
+            166.0,
+            243
+          ],
+          [
+            204.5,
+            249
+          ],
+          [
+            225.0,
+            237
+          ],
+          [
+            154.0,
+            224
+          ],
+          [
+            188.5,
+            232
+          ],
+          [
+            121.5,
+            236
+          ],
+          [
+            222.0,
+            235
+          ],
+          [
+            185.5,
+            233
+          ],
+          [
+            168.0,
+            233
+          ],
+          [
+            175.5,
+            234
+          ]
+        ],
+        "bodyReferenceHeight": 204,
+        "sourceBootDiagnostics": [
+          {
+            "head": {
+              "span": 118,
+              "centerX": 199.0,
+              "top": 53,
+              "searchRect": [
+                126,
+                53,
+                287,
+                139
+              ]
+            },
+            "root": [
+              198.5,
+              257
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 308
+          },
+          {
+            "head": {
+              "span": 136,
+              "centerX": 190.0,
+              "top": 63,
+              "searchRect": [
+                112,
+                63,
+                274,
+                144
+              ]
+            },
+            "root": [
+              172.0,
+              252
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 347
+          },
+          {
+            "head": {
+              "span": 140,
+              "centerX": 173.0,
+              "top": 76,
+              "searchRect": [
+                93,
+                76,
+                260,
+                152
+              ]
+            },
+            "root": [
+              160.0,
+              247
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 283
+          },
+          {
+            "head": {
+              "span": 158,
+              "centerX": 155.0,
+              "top": 93,
+              "searchRect": [
+                76,
+                93,
+                261,
+                161
+              ]
+            },
+            "root": [
+              165.5,
+              251
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 387
+          },
+          {
+            "head": {
+              "span": 159,
+              "centerX": 190.5,
+              "top": 83,
+              "searchRect": [
+                111,
+                83,
+                304,
+                149
+              ]
+            },
+            "root": [
+              198.0,
+              239
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 329
+          },
+          {
+            "head": {
+              "span": 163,
+              "centerX": 197.5,
+              "top": 75,
+              "searchRect": [
+                100,
+                75,
+                316,
+                145
+              ]
+            },
+            "root": [
+              184.0,
+              241
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 226
+          },
+          {
+            "head": {
+              "span": 169,
+              "centerX": 189.5,
+              "top": 67,
+              "searchRect": [
+                86,
+                67,
+                315,
+                141
+              ]
+            },
+            "root": [
+              166.0,
+              243
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 443
+          },
+          {
+            "head": {
+              "span": 166,
+              "centerX": 201.0,
+              "top": 70,
+              "searchRect": [
+                72,
+                70,
+                323,
+                145
+              ]
+            },
+            "root": [
+              204.5,
+              249
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 343
+          },
+          {
+            "head": {
+              "span": 160,
+              "centerX": 212.0,
+              "top": 58,
+              "searchRect": [
+                85,
+                58,
+                329,
+                131
+              ]
+            },
+            "root": [
+              225.0,
+              237
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 221
+          },
+          {
+            "head": {
+              "span": 152,
+              "centerX": 196.0,
+              "top": 51,
+              "searchRect": [
+                90,
+                51,
+                316,
+                124
+              ]
+            },
+            "root": [
+              154.0,
+              224
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 305
+          },
+          {
+            "head": {
+              "span": 148,
+              "centerX": 175.0,
+              "top": 46,
+              "searchRect": [
+                97,
+                46,
+                290,
+                124
+              ]
+            },
+            "root": [
+              188.5,
+              232
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 178
+          },
+          {
+            "head": {
+              "span": 141,
+              "centerX": 163.5,
+              "top": 40,
+              "searchRect": [
+                88,
+                40,
+                267,
+                122
+              ]
+            },
+            "root": [
+              121.5,
+              236
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 393
+          },
+          {
+            "head": {
+              "span": 135,
+              "centerX": 190.5,
+              "top": 35,
+              "searchRect": [
+                113,
+                35,
+                291,
+                119
+              ]
+            },
+            "root": [
+              222.0,
+              235
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 381
+          },
+          {
+            "head": {
+              "span": 130,
+              "centerX": 182.0,
+              "top": 29,
+              "searchRect": [
+                111,
+                29,
+                277,
+                115
+              ]
+            },
+            "root": [
+              185.5,
+              233
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 392
+          },
+          {
+            "head": {
+              "span": 124,
+              "centerX": 174.0,
+              "top": 28,
+              "searchRect": [
+                101,
+                28,
+                267,
+                115
+              ]
+            },
+            "root": [
+              168.0,
+              233
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 364
+          },
+          {
+            "head": {
+              "span": 123,
+              "centerX": 171.5,
+              "top": 28,
+              "searchRect": [
+                98,
+                28,
+                263,
+                115
+              ]
+            },
+            "root": [
+              175.5,
+              234
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 355
+          }
+        ],
+        "registrationMethod": "SHA_BOUND_DASH_DARK_SOLE_PROPOSAL_REQUIRES_NATIVE_AND_AIRBORNE_ROOT_REVIEW"
+      }
+    },
+    {
+      "id": "class_thach_chuy_skill_05_ne",
+      "sourceSha256": "2821363b1a34c4f0014527692137c1642519cbcebd21a0492667c5c0993c4d74",
+      "reviewNote": "Original whole4x4 manually viewed. Neutral pose shows boots below hammer; saturated warm mask omits the dark sole outline by exactly9sourcepx. Source-specific offset is pinned to this PNG; shared8px guard remains unchanged. Per-pose boot/sash tracking is only an editable review proposal. Dash flight/root travel and ground contact remain unaccepted.",
+      "fields": {
+        "pivotMode": "SOURCE_FOOT_PIVOTS",
+        "sourceFootPivots": [
+          [
+            207.0,
+            246
+          ],
+          [
+            226.0,
+            247
+          ],
+          [
+            209.0,
+            247
+          ],
+          [
+            195.0,
+            248
+          ],
+          [
+            204.5,
+            238
+          ],
+          [
+            168.5,
+            237
+          ],
+          [
+            175.0,
+            233
+          ],
+          [
+            180.0,
+            228
+          ],
+          [
+            125.0,
+            233
+          ],
+          [
+            187.0,
+            231
+          ],
+          [
+            191.5,
+            229
+          ],
+          [
+            182.5,
+            234
+          ],
+          [
+            195.5,
+            231
+          ],
+          [
+            197.5,
+            232
+          ],
+          [
+            227.5,
+            232
+          ],
+          [
+            205.5,
+            233
+          ]
+        ],
+        "bodyReferenceHeight": 198,
+        "sourceBootDiagnostics": [
+          {
+            "head": {
+              "span": 159,
+              "centerX": 205.5,
+              "top": 48,
+              "searchRect": [
+                125,
+                48,
+                289,
+                131
+              ]
+            },
+            "root": [
+              207.0,
+              246
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 496
+          },
+          {
+            "head": {
+              "span": 160,
+              "centerX": 200.0,
+              "top": 60,
+              "searchRect": [
+                115,
+                60,
+                281,
+                138
+              ]
+            },
+            "root": [
+              226.0,
+              247
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 630
+          },
+          {
+            "head": {
+              "span": 159,
+              "centerX": 198.5,
+              "top": 66,
+              "searchRect": [
+                103,
+                66,
+                278,
+                142
+              ]
+            },
+            "root": [
+              209.0,
+              247
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 637
+          },
+          {
+            "head": {
+              "span": 165,
+              "centerX": 196.5,
+              "top": 74,
+              "searchRect": [
+                87,
+                74,
+                279,
+                146
+              ]
+            },
+            "root": [
+              195.0,
+              248
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 705
+          },
+          {
+            "head": {
+              "span": 167,
+              "centerX": 214.5,
+              "top": 61,
+              "searchRect": [
+                103,
+                61,
+                298,
+                135
+              ]
+            },
+            "root": [
+              204.5,
+              238
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 707
+          },
+          {
+            "head": {
+              "span": 171,
+              "centerX": 217.5,
+              "top": 60,
+              "searchRect": [
+                88,
+                60,
+                303,
+                134
+              ]
+            },
+            "root": [
+              168.5,
+              237
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 742
+          },
+          {
+            "head": {
+              "span": 174,
+              "centerX": 223.0,
+              "top": 61,
+              "searchRect": [
+                74,
+                61,
+                310,
+                136
+              ]
+            },
+            "root": [
+              175.0,
+              233
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 776
+          },
+          {
+            "head": {
+              "span": 169,
+              "centerX": 226.5,
+              "top": 61,
+              "searchRect": [
+                67,
+                61,
+                311,
+                135
+              ]
+            },
+            "root": [
+              180.0,
+              228
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 671
+          },
+          {
+            "head": {
+              "span": 174,
+              "centerX": 230.0,
+              "top": 57,
+              "searchRect": [
+                70,
+                57,
+                317,
+                130
+              ]
+            },
+            "root": [
+              125.0,
+              233
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 792
+          },
+          {
+            "head": {
+              "span": 174,
+              "centerX": 228.0,
+              "top": 51,
+              "searchRect": [
+                91,
+                51,
+                315,
+                127
+              ]
+            },
+            "root": [
+              187.0,
+              231
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 789
+          },
+          {
+            "head": {
+              "span": 170,
+              "centerX": 214.0,
+              "top": 45,
+              "searchRect": [
+                98,
+                45,
+                299,
+                122
+              ]
+            },
+            "root": [
+              191.5,
+              229
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 762
+          },
+          {
+            "head": {
+              "span": 165,
+              "centerX": 199.5,
+              "top": 39,
+              "searchRect": [
+                103,
+                39,
+                283,
+                120
+              ]
+            },
+            "root": [
+              182.5,
+              234
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 853
+          },
+          {
+            "head": {
+              "span": 162,
+              "centerX": 206.0,
+              "top": 38,
+              "searchRect": [
+                120,
+                38,
+                287,
+                120
+              ]
+            },
+            "root": [
+              195.5,
+              231
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 768
+          },
+          {
+            "head": {
+              "span": 155,
+              "centerX": 204.5,
+              "top": 34,
+              "searchRect": [
+                121,
+                34,
+                286,
+                118
+              ]
+            },
+            "root": [
+              197.5,
+              232
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 598
+          },
+          {
+            "head": {
+              "span": 151,
+              "centerX": 198.5,
+              "top": 30,
+              "searchRect": [
+                122,
+                30,
+                283,
+                115
+              ]
+            },
+            "root": [
+              227.5,
+              232
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 635
+          },
+          {
+            "head": {
+              "span": 152,
+              "centerX": 197.0,
+              "top": 31,
+              "searchRect": [
+                121,
+                31,
+                280,
+                116
+              ]
+            },
+            "root": [
+              205.5,
+              233
+            ],
+            "method": "BOOT_COMPONENTS_NEUTRAL_FOOT_ENVELOPE_AND_REVIEWED_DARK_SOLE_OFFSET",
+            "sashPixels": 539
+          }
+        ],
+        "registrationMethod": "SHA_BOUND_DASH_DARK_SOLE_PROPOSAL_REQUIRES_NATIVE_AND_AIRBORNE_ROOT_REVIEW"
+      }
+    },
+    {
+      "id": "sk_tc_05_dash_trail_component",
+      "sourceSha256": "461b6b2beb36ae5de23da8bf5b38ce116e4a0903995bd58e5136e19c166fe224",
+      "reviewNote": "Original4x4 viewed. Cell-centre drift is replaced with a trail front/baseline or low radial footprint proposal. Source PNG stays immutable. Last asymmetric impact debris and exact emitter position may still need hand tuning in whole-skill assembly. No contact,damage,terrain or root authority is inferred from art.",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            225,
+            313
+          ],
+          [
+            210,
+            316
+          ],
+          [
+            195,
+            319
+          ],
+          [
+            184,
+            319
+          ],
+          [
+            255,
+            265
+          ],
+          [
+            237,
+            265
+          ],
+          [
+            217,
+            269
+          ],
+          [
+            202,
+            269
+          ],
+          [
+            261,
+            212
+          ],
+          [
+            233,
+            210
+          ],
+          [
+            201,
+            207
+          ],
+          [
+            177,
+            208
+          ],
+          [
+            233,
+            148
+          ],
+          [
+            211,
+            147
+          ],
+          [
+            179,
+            144
+          ],
+          [
+            155,
+            141
+          ]
+        ],
+        "registrationMethod": "BACKWARD_TRAIL_FRONT_RIGHT_BASELINE_PROPOSAL_NOT_APPROVED"
+      }
+    },
+    {
+      "id": "sk_tc_05_hit_impact_component",
+      "sourceSha256": "96a270afc564180255ed8a4bc7b41a5c846e8ee3a5fe5b5d1c1ade8c8551467c",
+      "reviewNote": "Original4x4 viewed. Cell-centre drift is replaced with a trail front/baseline or low radial footprint proposal. Source PNG stays immutable. Last asymmetric impact debris and exact emitter position may still need hand tuning in whole-skill assembly. No contact,damage,terrain or root authority is inferred from art.",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            191.0,
+            275.5
+          ],
+          [
+            120.5,
+            273.5
+          ],
+          [
+            130.0,
+            274.5
+          ],
+          [
+            127.5,
+            275.5
+          ],
+          [
+            193.5,
+            163.5
+          ],
+          [
+            119.0,
+            160.0
+          ],
+          [
+            126.0,
+            155.5
+          ],
+          [
+            121.0,
+            157.5
+          ],
+          [
+            195.5,
+            146.5
+          ],
+          [
+            121.5,
+            146.0
+          ],
+          [
+            128.0,
+            146.5
+          ],
+          [
+            125.0,
+            149.0
+          ],
+          [
+            195.0,
+            141.5
+          ],
+          [
+            121.5,
+            138.5
+          ],
+          [
+            124.0,
+            140.0
+          ],
+          [
+            123.0,
+            139.0
+          ]
+        ],
+        "registrationMethod": "RADIAL_IMPACT_ENVELOPE_CENTRE_PROPOSAL_NOT_APPROVED"
+      }
+    },
+    {
+      "id": "sk_tc_05_stop_dust_component",
+      "sourceSha256": "c571170a8c55f20f87021b6c75ffd85a858d0892013aa2579203da3e63c1901b",
+      "reviewNote": "Original4x4 viewed. Cell-centre drift is replaced with a trail front/baseline or low radial footprint proposal. Source PNG stays immutable. Last asymmetric impact debris and exact emitter position may still need hand tuning in whole-skill assembly. No contact,damage,terrain or root authority is inferred from art.",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            183.5,
+            294
+          ],
+          [
+            155.0,
+            294
+          ],
+          [
+            123.0,
+            294
+          ],
+          [
+            106.0,
+            298
+          ],
+          [
+            174.5,
+            251
+          ],
+          [
+            153.5,
+            254
+          ],
+          [
+            126.5,
+            254
+          ],
+          [
+            101.5,
+            254
+          ],
+          [
+            176.0,
+            215
+          ],
+          [
+            154.0,
+            215
+          ],
+          [
+            129.0,
+            215
+          ],
+          [
+            107.5,
+            215
+          ],
+          [
+            178.0,
+            167
+          ],
+          [
+            149.5,
+            165
+          ],
+          [
+            118.5,
+            165
+          ],
+          [
+            100.0,
+            165
+          ]
+        ],
+        "registrationMethod": "SMALL_STOP_DUST_BASELINE_PROPOSAL_NOT_APPROVED"
+      }
     }
   ]
 }

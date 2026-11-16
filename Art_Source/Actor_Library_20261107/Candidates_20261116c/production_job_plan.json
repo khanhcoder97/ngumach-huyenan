@@ -4,9 +4,9 @@
   "bodySheets": 30,
   "vfxComponents": 20,
   "sourcePoses": 800,
-  "selected": 33,
-  "generatedVariants": 39,
-  "remaining": 17,
+  "selected": 41,
+  "generatedVariants": 47,
+  "remaining": 9,
   "productionApproved": false,
   "jobs": [
     {
@@ -133,31 +133,31 @@
       "id": "class_thach_chuy_skill_05_n",
       "kind": "BODY",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_05_n.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "class_thach_chuy_skill_05_ne",
       "kind": "BODY",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_05_ne.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "class_thach_chuy_skill_05_e",
       "kind": "BODY",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_05_e.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "class_thach_chuy_skill_05_se",
       "kind": "BODY",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_05_se.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "class_thach_chuy_skill_05_s",
       "kind": "BODY",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_05_s.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "class_thach_chuy_skill_06_n",
@@ -271,19 +271,19 @@
       "id": "sk_tc_05_dash_trail_component",
       "kind": "VFX",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_05_dash_trail_component.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "sk_tc_05_hit_impact_component",
       "kind": "VFX",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_05_hit_impact_component.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "sk_tc_05_stop_dust_component",
       "kind": "VFX",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_05_stop_dust_component.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "sk_tc_06_zone_charge_component",

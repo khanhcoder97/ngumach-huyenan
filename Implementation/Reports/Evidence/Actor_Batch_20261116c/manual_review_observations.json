@@ -397,6 +397,116 @@
       "visualNotes": "All16current native phases and actual14→15→0→1wrap explicitly viewed. One compact hammer/attention glyph, stable silhouette and quiet brightness loop, no extinction/restart. Nameplate/world-UI sizing and authoritative status expiration still pending.",
       "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
       "productionApproved": false
+    },
+    {
+      "id": "class_thach_chuy_skill_05_s",
+      "sourceSha256": "3915cb4ad2037d8acb96262d7abfc99747b3e1808340337232596c55bd9ef23f",
+      "portableProjectSha256": "18e35b00a5267e6bdcebdfe77b170f98aba8a5b3f3f12e36d5883b6b23808d28",
+      "movieSha256": "4e012944c0714629e6b630ef39e52a0edec35ca6505c336a08aec6228a374db9",
+      "montageSha256": "4b91b2833d919437f30fe31a71a53de0220bac3b6751223c703582c2bf0922a6",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "HOLD_DASH_WORLD_ROOT_AND_FLIGHT_REVIEW",
+      "visualNotes": "All16original/native poses viewed. One crouch, forward braced drive with reaching boot, deceleration and neutral recovery; one hammer remains screen-left. Boot-based root follows the reaching foot during the dash. Need fixed-camera world/root and idle seam review; source art does not move the server character.",
+      "productionApproved": false
+    },
+    {
+      "id": "class_thach_chuy_skill_05_e",
+      "sourceSha256": "6449dbe57b1ded7bb5d5d6fb6eed7a07b8c001d7f676a93748f6db5fcaea65fd",
+      "portableProjectSha256": "223743ac9bf1e3f269f5e1a9676909741dc9bd460fa3b61e17019a1fc4faab3e",
+      "movieSha256": "90de3665eb87b2b4d4e3a9d945087c5927352a281d4e67086f78ebbd795ffc82",
+      "montageSha256": "51d6bd95f779ce253af741227f7b1e8b2f76cb9e53aa9939d01f9027885dfdfd",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16original/native poses viewed. Clear rightward shoulder-braced drive/recovery with connected hands and one hammer. Forward lean remains readable without repeated run cycle. Exact-E yaw, planted/airborne root registration and actual terrain-aware movement still pending.",
+      "productionApproved": false
+    },
+    {
+      "id": "class_thach_chuy_skill_05_se",
+      "sourceSha256": "ce74fdcfdf82ef929874164fcab9ac1b213f6fd3cfe50b35478318b9921a19cd",
+      "portableProjectSha256": "ddb3fc0774949f64ca8c2df3074af28e7b6074c85e138cbd8560df9dae43e599",
+      "movieSha256": "5f38fb91a01d8ee21b9c3441701b0d751528e5eca41e3532c7e39712909674ab",
+      "montageSha256": "7f29a8da4f7c140cd06feddd38315467e72d1d58d3e7220e410f1b5bdd36f95b",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "HOLD_DASH_WORLD_ROOT_AND_FLIGHT_REVIEW",
+      "visualNotes": "All16original/native poses viewed, including wider native montage because compact crop cuts the hammer in extreme lean. Source itself and full Studio viewport retain whole weapon. SHA-bound10px neutral dark-sole proposal bypasses no global guard. Airborne pose/root and return-to-idle remain unaccepted.",
+      "productionApproved": false,
+      "additionalNativeViews": [
+        {
+          "file": "raw_class_thach_chuy_skill_05_se_source_samples.png",
+          "sha256": "ded27368a1fc0caae082681bd2df2d72fd300a0949ecf56aafb7bbef8f1acaa8",
+          "reason": "Compact crop clips extreme lean; wider native stage shows all16whole poses."
+        }
+      ]
+    },
+    {
+      "id": "class_thach_chuy_skill_05_n",
+      "sourceSha256": "7778367821dabf12cd29f5d46205d2be0275b1d5ee22fa5082e851380853d613",
+      "portableProjectSha256": "bae7a4df0bf36f49b7d5aee21f3d2b74a4b2198f80d8584cf05e977c49dc6476",
+      "movieSha256": "9fdcbe32725f9fe2b5fbf656ae470a684439a99d338951adda2a4a74cc6ed660",
+      "montageSha256": "6ecf86e6ba258621a47a5a75d6dd3e3d15c2ae0eb6d684d4c82aa81b6d613d79",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "HOLD_NORTH_DASH_AXIS_VERIFICATION",
+      "visualNotes": "All16original/native poses viewed, including wider native montage. Back-facing neutral retained, but drive leans strongly diagonally toward upper-right. Verify or redraw exact-N dash axis before acceptance. Root follows alternating visible boots; actual northward movement/grounding and idle seam are unaccepted.",
+      "productionApproved": false,
+      "additionalNativeViews": [
+        {
+          "file": "raw_class_thach_chuy_skill_05_n_source_samples.png",
+          "sha256": "19317cff6dbef96faadefad2d707bd2aff0a66322fb343560e154dfd2047cb18",
+          "reason": "Compact crop clips extreme lean; wider native stage shows all16whole poses."
+        }
+      ]
+    },
+    {
+      "id": "class_thach_chuy_skill_05_ne",
+      "sourceSha256": "2821363b1a34c4f0014527692137c1642519cbcebd21a0492667c5c0993c4d74",
+      "portableProjectSha256": "135645783447cf47f7e4b3346be70a2a984f932da61713daa29ae2b2d0336775",
+      "movieSha256": "243c0668129ad2ccad3e31750849b23a7bc94cd7320ccf47988ddc165a1131e3",
+      "montageSha256": "ae4f78cee4f621857a419c3739d68fcf1a37440b55bf5a5c8cd941ba955084ee",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "HOLD_DASH_WORLD_ROOT_AND_FLIGHT_REVIEW",
+      "visualNotes": "All16original/native poses viewed. Connected rear-quarter hammer brace, one drive and recovery. SHA-bound9px dark-sole proposal corrects neutral mask omission. Foot/flight root balance needs fixed-camera world review; no collision or displacement authority is implied.",
+      "productionApproved": false
+    },
+    {
+      "id": "sk_tc_05_dash_trail_component",
+      "sourceSha256": "461b6b2beb36ae5de23da8bf5b38ce116e4a0903995bd58e5136e19c166fe224",
+      "portableProjectSha256": "efe352681fd0e6d9c7b91c49e788e453176f4e8e11e421e45676e6c308769668",
+      "movieSha256": "9e50802a34b21386554580653b8a7f8e7c0cbef7f3203e3b9a803353240c89da",
+      "montageSha256": "08a0e9e2f991f24d3daaed2fb778fd7ab8d74c3b7d4af7cdc08c03ce56b53852",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16current native phases viewed after front-right/baseline proposal. Short low tan dust extends left from its proposed emitter, with only small grains, then settles. Emission point can still shift with an irregular front silhouette; verify against moving caster foot and terrain before acceptance.",
+      "productionApproved": false
+    },
+    {
+      "id": "sk_tc_05_hit_impact_component",
+      "sourceSha256": "96a270afc564180255ed8a4bc7b41a5c846e8ee3a5fe5b5d1c1ade8c8551467c",
+      "portableProjectSha256": "f191cb29d23a9bddd9a1b4d338266a4e747ba4d5e99967bf56c1ed0ad98c188f",
+      "movieSha256": "41d3c214f4b42d6ba0a5fc79819c356b107b5b38c4b9412c3fc1e1b6f6c105a5",
+      "montageSha256": "98664cec733cc436ab780044c7b9b1b062b1bbc103e864aa96b497977b304ee6",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16current native phases viewed after radial envelope proposal. One thin open ring with a few fragments; no raised solid annulus. Asymmetric late grains are not proof of a stable physical hit hub. Hand-tune ground centre in assembly and emit only for confirmed contact.",
+      "productionApproved": false
+    },
+    {
+      "id": "sk_tc_05_stop_dust_component",
+      "sourceSha256": "c571170a8c55f20f87021b6c75ffd85a858d0892013aa2579203da3e63c1901b",
+      "portableProjectSha256": "775cc3207ea2127f440ada9f86825b3991b5cf9de99f6b139f4d928ca59c66fe",
+      "movieSha256": "5b5d212221adaa28beec76b65505cd327f9a421d7e70b4ed7e2bedec0baaf212",
+      "montageSha256": "07a53f319de98f5870343e79028fb33bdaeadfc798cb9763a11d2f7562815be9",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "visualNotes": "All16current native phases viewed after low baseline proposal. Small tan settling clumps and grains, no shockwave or hit star. Keep at an externally confirmed stop foot location; blocked-path dust must not create target damage.",
+      "productionApproved": false
     }
   ]
 }

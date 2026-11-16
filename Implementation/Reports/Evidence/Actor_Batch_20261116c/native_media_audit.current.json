@@ -1,7 +1,7 @@
 {
   "batch": "20261116c",
-  "selectedVideos": 33,
-  "sourceFramesMeasured": 528,
+  "selectedVideos": 41,
+  "sourceFramesMeasured": 656,
   "files": [
     {
       "file": "raw_class_thach_chuy_skill_01_s.mp4",
@@ -296,6 +296,78 @@
       "sha256": "e4dbbfef9b692118261633a881051446b93c6dd2336e2fdfba109ecf27d03b6f",
       "sourceSha256": "5917494ac1cab3efadd4ca608db32cc03e910d9df5d8e2f611d80d783f08f803",
       "portableProjectSha256": "fb6e5edffa1599bd5c403e44dca6308c9a6bb6a07bd3e541a49d6924095a488f",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_class_thach_chuy_skill_05_s.mp4",
+      "sha256": "4e012944c0714629e6b630ef39e52a0edec35ca6505c336a08aec6228a374db9",
+      "sourceSha256": "3915cb4ad2037d8acb96262d7abfc99747b3e1808340337232596c55bd9ef23f",
+      "portableProjectSha256": "18e35b00a5267e6bdcebdfe77b170f98aba8a5b3f3f12e36d5883b6b23808d28",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_class_thach_chuy_skill_05_e.mp4",
+      "sha256": "90de3665eb87b2b4d4e3a9d945087c5927352a281d4e67086f78ebbd795ffc82",
+      "sourceSha256": "6449dbe57b1ded7bb5d5d6fb6eed7a07b8c001d7f676a93748f6db5fcaea65fd",
+      "portableProjectSha256": "223743ac9bf1e3f269f5e1a9676909741dc9bd460fa3b61e17019a1fc4faab3e",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_class_thach_chuy_skill_05_se.mp4",
+      "sha256": "5f38fb91a01d8ee21b9c3441701b0d751528e5eca41e3532c7e39712909674ab",
+      "sourceSha256": "ce74fdcfdf82ef929874164fcab9ac1b213f6fd3cfe50b35478318b9921a19cd",
+      "portableProjectSha256": "ddb3fc0774949f64ca8c2df3074af28e7b6074c85e138cbd8560df9dae43e599",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_class_thach_chuy_skill_05_n.mp4",
+      "sha256": "9fdcbe32725f9fe2b5fbf656ae470a684439a99d338951adda2a4a74cc6ed660",
+      "sourceSha256": "7778367821dabf12cd29f5d46205d2be0275b1d5ee22fa5082e851380853d613",
+      "portableProjectSha256": "bae7a4df0bf36f49b7d5aee21f3d2b74a4b2198f80d8584cf05e977c49dc6476",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_class_thach_chuy_skill_05_ne.mp4",
+      "sha256": "243c0668129ad2ccad3e31750849b23a7bc94cd7320ccf47988ddc165a1131e3",
+      "sourceSha256": "2821363b1a34c4f0014527692137c1642519cbcebd21a0492667c5c0993c4d74",
+      "portableProjectSha256": "135645783447cf47f7e4b3346be70a2a984f932da61713daa29ae2b2d0336775",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_sk_tc_05_dash_trail_component.mp4",
+      "sha256": "9e50802a34b21386554580653b8a7f8e7c0cbef7f3203e3b9a803353240c89da",
+      "sourceSha256": "461b6b2beb36ae5de23da8bf5b38ce116e4a0903995bd58e5136e19c166fe224",
+      "portableProjectSha256": "efe352681fd0e6d9c7b91c49e788e453176f4e8e11e421e45676e6c308769668",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_sk_tc_05_hit_impact_component.mp4",
+      "sha256": "41d3c214f4b42d6ba0a5fc79819c356b107b5b38c4b9412c3fc1e1b6f6c105a5",
+      "sourceSha256": "96a270afc564180255ed8a4bc7b41a5c846e8ee3a5fe5b5d1c1ade8c8551467c",
+      "portableProjectSha256": "f191cb29d23a9bddd9a1b4d338266a4e747ba4d5e99967bf56c1ed0ad98c188f",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_sk_tc_05_stop_dust_component.mp4",
+      "sha256": "5b5d212221adaa28beec76b65505cd327f9a421d7e70b4ed7e2bedec0baaf212",
+      "sourceSha256": "c571170a8c55f20f87021b6c75ffd85a858d0892013aa2579203da3e63c1901b",
+      "portableProjectSha256": "775cc3207ea2127f440ada9f86825b3991b5cf9de99f6b139f4d928ca59c66fe",
       "decodedFrames": 180,
       "decodedWithoutDiagnostics": true,
       "renderedSourceFramesVerified": 16
