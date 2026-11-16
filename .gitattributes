@@ -11,6 +11,12 @@
 *.ogv filter=lfs diff=lfs merge=lfs -text
 *.flac filter=lfs diff=lfs merge=lfs -text
 
+# TC candidate review projects/receipts must keep portable UTF-8 LF hashes.
+Art_Source/Actor_Library_20261107/Candidates_20261116c/**/*.json text eol=lf
+Art_Source/Actor_Library_20261107/Candidates_20261116c/**/*.txt text eol=lf
+Art_Source/Actor_Library_20261107/*_20261116c.json text eol=lf
+Implementation/Reports/Evidence/Actor_Batch_20261116c/**/*.json text eol=lf
+
 # Stable textual provenance for the authored audio generator and music scores.
 Tools/AudioProduction/*.py text eol=lf
 Tools/AudioProduction/requirements.txt text eol=lf
@@ -32,9 +38,5 @@ Implementation/Content/Narrative/Deliveries/**/*.srt text eol=lf
 ClientGodot/assets/cinematics/**/*.json text eol=lf
 ClientGodot/assets/cinematics/**/*.srt text eol=lf
 ClientGodot/assets/audio/**/*.json text eol=lf
-
-# TC candidate review projects/receipts must keep portable UTF-8 LF hashes.
-Art_Source/Actor_Library_20261107/Candidates_20261116c/**/*.json text eol=lf
-Art_Source/Actor_Library_20261107/Candidates_20261116c/**/*.txt text eol=lf
-Art_Source/Actor_Library_20261107/*_20261116c.json text eol=lf
-Implementation/Reports/Evidence/Actor_Batch_20261116c/**/*.json text eol=lf
+Implementation/Content/Audio/Deliveries/**/*.json text eol=lf
+Implementation/Reports/MuseMedia/**/*.json text eol=lf

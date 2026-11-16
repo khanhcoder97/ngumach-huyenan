@@ -1,0 +1,185 @@
+{
+  "head": "694ddb6e8fc8149118f2d45c0b2c2b941220cdfc",
+  "manifests": {
+    "audio/RUNTIME_AUDIO_manifest_v1.json": {
+      "references": 618,
+      "mismatches": []
+    },
+    "cinematics/RUNTIME_CINEMATICS_manifest_v1.json": {
+      "references": 107,
+      "mismatches": []
+    }
+  },
+  "streamChecks": [
+    {
+      "sceneId": "CIN_000",
+      "hasAudio": true,
+      "expected": true,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_001",
+      "hasAudio": true,
+      "expected": true,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_002",
+      "hasAudio": true,
+      "expected": true,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_003",
+      "hasAudio": true,
+      "expected": true,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_004",
+      "hasAudio": true,
+      "expected": true,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_005",
+      "hasAudio": true,
+      "expected": true,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_006",
+      "hasAudio": true,
+      "expected": true,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_007",
+      "hasAudio": true,
+      "expected": true,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_008",
+      "hasAudio": true,
+      "expected": true,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_009",
+      "hasAudio": true,
+      "expected": true,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_010",
+      "hasAudio": true,
+      "expected": true,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_011",
+      "hasAudio": true,
+      "expected": true,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_012",
+      "hasAudio": false,
+      "expected": false,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_013",
+      "hasAudio": false,
+      "expected": false,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_014",
+      "hasAudio": false,
+      "expected": false,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_015",
+      "hasAudio": false,
+      "expected": false,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_016",
+      "hasAudio": false,
+      "expected": false,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_017",
+      "hasAudio": false,
+      "expected": false,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_018",
+      "hasAudio": false,
+      "expected": false,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_019",
+      "hasAudio": false,
+      "expected": false,
+      "decodeExit": 0,
+      "matches": true
+    },
+    {
+      "sceneId": "CIN_020",
+      "hasAudio": false,
+      "expected": false,
+      "decodeExit": 0,
+      "matches": true
+    }
+  ],
+  "limits": [
+    "No ear audition",
+    "No native playback",
+    "No loudness remeasurement",
+    "Only first 50ms decoded per OGV stream check"
+  ],
+  "playbackCounts": {
+    "scenesTotal": 21,
+    "withEmbeddedSoundtrack": 12,
+    "silent": 9
+  },
+  "pronunciationCounts": {
+    "names": 16,
+    "namesSpokenInAudio": 4,
+    "namesDecided": 1,
+    "playbackCueRows": 18,
+    "seamRows": 19,
+    "seamRowsFlaggedEarCheck": 1,
+    "fallbackScenes": 21,
+    "fallbackFilesVerified": 130
+  },
+  "auditionStatus": "NOT_AUDITIONED",
+  "verdict": "PASS"
+}
