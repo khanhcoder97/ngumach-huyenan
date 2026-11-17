@@ -1,0 +1,83 @@
+{
+  "batch": "20261118a",
+  "selected": 3,
+  "expected": 7,
+  "catalogueUnchanged": true,
+  "entries": [
+    {
+      "id": "class_linh_cung_skill_01_e",
+      "project": "Implementation/Reports/Evidence/Actor_Batch_20261118a/Candidate_Studio/class_linh_cung_skill_01_e/project.json",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_e_v1_20261118a.png",
+      "sourceSha256": "1debff8d9292b9eb0f88e7e1054bbe6e02a802f1f530cb9ea1c099859ec2b2d3",
+      "timing": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "loop": false
+    },
+    {
+      "id": "sk_lc_01_projectile_component",
+      "project": "Implementation/Reports/Evidence/Actor_Batch_20261118a/Candidate_Studio/sk_lc_01_projectile_component/project.json",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261118a/sk_lc_01_projectile_component_v2_20261118a.png",
+      "sourceSha256": "d072a37c3503ae6a0af7e24f9642a2c6e8e8a717fd8d91ada12ac69e784bc852",
+      "timing": [
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "loop": true
+    },
+    {
+      "id": "sk_lc_01_leaf_dissipate_component",
+      "project": "Implementation/Reports/Evidence/Actor_Batch_20261118a/Candidate_Studio/sk_lc_01_leaf_dissipate_component/project.json",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261118a/sk_lc_01_leaf_dissipate_component_v1_20261118a.png",
+      "sourceSha256": "ba3f1c6d9ffdb81c4e8c0490dcaccb26d7e0136aff7d886eeb3b80774e51b97b",
+      "timing": [
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25
+      ],
+      "loop": false
+    }
+  ]
+}

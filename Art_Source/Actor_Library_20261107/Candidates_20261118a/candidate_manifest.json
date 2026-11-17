@@ -1,0 +1,156 @@
+{
+  "batch": "20261118a",
+  "expectedSourcePages": 7,
+  "scope": "LINH_CUNG_KHOA_MACH_FIVE_AUTHORED_FACINGS_AND_TWO_NEW_EFFECTS_REUSING_REVIEWED_TARGET_MARK",
+  "records": [
+    {
+      "id": "class_linh_cung_skill_01_e",
+      "source": "Candidates_20261118a/class_linh_cung_skill_01_e_v1_20261118a.png",
+      "prompt": "Candidates_20261118a/class_linh_cung_skill_01_e_v1_20261118a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261118a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+          "sourceSha256": "10a2533898cfe3fbbd6797bf6f4545c3a1decfcfa6cabeba2785a51f268b5369"
+        }
+      ],
+      "sourceSha256": "1debff8d9292b9eb0f88e7e1054bbe6e02a802f1f530cb9ea1c099859ec2b2d3",
+      "sourceFrameDurationsMs": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "direction": "E",
+      "inputRole": "OWNER_SELECTED_IDLE_IDENTITY_AND_FACING_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_DIRECTIONAL_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 body poses; per-cell alpha/crop/duplicate checks retained."
+    },
+    {
+      "id": "sk_lc_01_projectile_component",
+      "source": "Candidates_20261118a/sk_lc_01_projectile_component_v2_20261118a.png",
+      "prompt": "Candidates_20261118a/sk_lc_01_projectile_component_v2_20261118a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261118a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Sheets/sk_lc_01_projectile_component_v1_20261112.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Sheets/sk_lc_01_projectile_component_v1_20261112.png",
+          "sourceSha256": "302bc01735a5a285bbfcc58f2b1cb6ff54e77f676b4ec7c87059a65c65d58f5b"
+        }
+      ],
+      "sourceSha256": "d072a37c3503ae6a0af7e24f9642a2c6e8e8a717fd8d91ada12ac69e784bc852",
+      "sourceFrameDurationsMs": [
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.8,
+      "previewLoop": true,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval.",
+      "authoringUse": {
+        "role": "PROJECTILE",
+        "canonicalForward": "E",
+        "attach": "BOW_RELEASE_TO_CONFIRMED_TARGET",
+        "origin": "SHAFT_AXIS_NEAR_TIP"
+      }
+    },
+    {
+      "id": "sk_lc_01_leaf_dissipate_component",
+      "source": "Candidates_20261118a/sk_lc_01_leaf_dissipate_component_v1_20261118a.png",
+      "prompt": "Candidates_20261118a/sk_lc_01_leaf_dissipate_component_v1_20261118a.txt",
+      "columns": 4,
+      "rows": 4,
+      "batch": "20261118a",
+      "generator": "built-in image_gen",
+      "status": "GENERATED_PENDING_SOURCE_NATIVE_REVIEW",
+      "reference": "Art_Source/Actor_Library_20261107/Candidates_20261118a/sk_lc_01_projectile_component_v2_20261118a.png",
+      "additionalReferences": [],
+      "generationInputs": [
+        {
+          "path": "Art_Source/Actor_Library_20261107/Candidates_20261118a/sk_lc_01_projectile_component_v2_20261118a.png",
+          "sourceSha256": "d072a37c3503ae6a0af7e24f9642a2c6e8e8a717fd8d91ada12ac69e784bc852"
+        }
+      ],
+      "sourceSha256": "ba3f1c6d9ffdb81c4e8c0490dcaccb26d7e0136aff7d886eeb3b80774e51b97b",
+      "sourceFrameDurationsMs": [
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25,
+        25
+      ],
+      "componentOnly": true,
+      "scaleMode": "LONGEST_AXIS",
+      "pivotMode": "CELL_CENTER",
+      "previewDurationSeconds": 0.4,
+      "previewLoop": false,
+      "inputRole": "VFX_STYLE_OR_MECHANIC_REFERENCE",
+      "layout": "VISUALLY_VERIFIED_UNIFORM_GRID",
+      "layoutReviewNote": "Whole original manually viewed as4x4 component phases. Sparse particles are not additional rows; per-cell alpha/crop/duplicate checks retained. This is geometry only,not VFX approval.",
+      "authoringUse": {
+        "role": "PROJECTILE_END",
+        "canonicalForward": "E",
+        "attach": "CONFIRMED_CONTACT",
+        "origin": "RIGHT_END_OF_FLIGHT_AXIS"
+      }
+    }
+  ],
+  "history": [],
+  "selected": 3,
+  "generatedVariants": 3,
+  "remainingSourcePages": 4,
+  "sourceCells": 48,
+  "productionApproved": false
+}

@@ -1,5 +1,6 @@
 param(
  [switch]$Resume,[string[]]$Only,
+ [ValidatePattern('^[0-9]{8}[a-z]$')][string]$Batch = '20261116c',
  [string]$GodotPath='D:/Project/NGUMACHHUYENAN-tools/godot-4.7.2/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe',
  [string]$FfmpegPath='D:/Project/NGUMACHHUYENAN-tools/review-media/imageio_ffmpeg/binaries/ffmpeg-win-x86_64-v7.1.exe',
  [string]$CacheRoot='D:/Project/NGUMACHHUYENAN-tools/review-media',
@@ -7,7 +8,8 @@ param(
 )
 $ErrorActionPreference='Stop'
 $repo=[System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
-$ev=Join-Path $repo 'Implementation/Reports/Evidence/Actor_Batch_20261116c'
+$ev=Join-Path $repo ('Implementation/Reports/Evidence/Actor_Batch_'+$Batch)
+$capturePrefix='actor_'+$Batch+'_'
 $cache=[IO.Path]::GetFullPath($CacheRoot)
 $godot=$GodotPath
 $ffmpeg=$FfmpegPath
@@ -30,7 +32,7 @@ foreach($entry in $candidatePlan.entries){
 if($Only -and @($Only | Where-Object {$_ -notin $jobs.Name}).Count){throw 'Unknown C capture job'}
 $plan=@()
 foreach($job in @($jobs | Where-Object {-not $Only -or $_.Name -in $Only})){
- $avi=Join-Path $cache ('actor_20261116c_'+$job.Name+'.avi');$mp4=Join-Path $ev ($job.Name+'.mp4')
+ $avi=Join-Path $cache ($capturePrefix+$job.Name+'.avi');$mp4=Join-Path $ev ($job.Name+'.mp4')
  $receiptPath=Join-Path $ev ($job.Name+'.capture_receipt.json')
  if($Resume -and (Test-Path -LiteralPath $mp4)){
   if(-not (Test-Path -LiteralPath $receiptPath)){throw ('No capture receipt for resume: '+$job.Name)}
@@ -74,7 +76,7 @@ foreach($job in @($jobs | Where-Object {-not $Only -or $_.Name -in $Only})){
  $plan+=@{Name=$job.Name;SourceDurationMs=$elapsed;NativeSampleIndices=$samples;RenderedSourceFramesVerified=$(if($job.Raw){16}else{0});Scope='SOURCE_REVIEW_NOT_GAMEPLAY_FPS'}
  foreach($suffix in @('.avi','.wav')){
   $target=[System.IO.Path]::GetFullPath([System.IO.Path]::ChangeExtension($avi,$suffix))
-  if((Split-Path $target -Parent) -ne [System.IO.Path]::GetFullPath($cache) -or (Split-Path $target -Leaf) -notlike 'actor_20261116c_*'){throw 'Unsafe C cache path'}
+  if((Split-Path $target -Parent) -ne [System.IO.Path]::GetFullPath($cache) -or (Split-Path $target -Leaf) -notlike ($capturePrefix+'*')){throw 'Unsafe candidate cache path'}
   if(Test-Path -LiteralPath $target){Remove-Item -LiteralPath $target -Force}
  }
  @{sourceSha256=$job.SourceSha256;projectSha256=$job.ProjectSha256;projectHashEncoding='UTF8_LF';capturedOriginalProjectSha256=$job.OriginalProjectSha256;movieSha256=(Get-FileHash -LiteralPath $mp4 -Algorithm SHA256).Hash.ToLowerInvariant();scope='NATIVE_SOURCE_CAPTURE_NOT_APPROVAL'} | ConvertTo-Json | Set-Content -LiteralPath $receiptPath -Encoding utf8
