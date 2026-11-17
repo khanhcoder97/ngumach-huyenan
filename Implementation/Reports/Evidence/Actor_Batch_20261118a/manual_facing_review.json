@@ -1,0 +1,66 @@
+{
+  "batch": "20261118a",
+  "nativeAuditSha256": "a0016f9af7301d04de52d3ae0b70175848a376bbf100bc12d602c0ee461b89f9",
+  "nativeDirectionMontageSha256": "09f81dbca2de89c8a3ff52e900fa8b27d5190378067f9d4371df0c9ac449c999",
+  "facingChecks": [
+    {
+      "id": "class_linh_cung_skill_01_e",
+      "sourceSha256": "1debff8d9292b9eb0f88e7e1054bbe6e02a802f1f530cb9ea1c099859ec2b2d3",
+      "nativePoseMontageSha256": "7d25c615c849df95b8033466acaa3b312f741d67708fca64d25c952d976373e1",
+      "nativeShotAuditSha256": "f87e6a5831f55885503c85721ff04ae16b24ace35a7a9d5b4235c2f6bd3ba058",
+      "note": "Confirmed one release and horizontal flight, with readable grounded stance across sixteen poses."
+    },
+    {
+      "id": "class_linh_cung_skill_01_s",
+      "sourceSha256": "9f4709597dc78c9f219789661da2cee7aec453e0141c0d093703d7036f031f70",
+      "nativePoseMontageSha256": "375abb94d02af660ae6186f3ef09f13909b2e2e4264dc5d1b9922489b497f2c4",
+      "nativeShotAuditSha256": "f0dc8951da2dbd50e531a6d1c8954084e1763a45240f251ac95e4d249ae16af3",
+      "note": "Single foreshortened arrow faces down through draw. The bow remains on the character left."
+    },
+    {
+      "id": "class_linh_cung_skill_01_se",
+      "sourceSha256": "fa95e7758df232b5ba3f7a70ef030faf9fa99d8b4951458d8e14649001b786d4",
+      "nativePoseMontageSha256": "b2d9fc8187f3b3ca64133ee2d3ba27586fc6dea399b5bae39bb314787d099507",
+      "nativeShotAuditSha256": "01cffe67459bac7bd203bbbcb91c5aaa988267d08bab843cf39919473354d064",
+      "note": "Measured boot interval excludes low arrow tip. The right-down shaft and travelling leaf arrow share an axis."
+    },
+    {
+      "id": "class_linh_cung_skill_01_n",
+      "sourceSha256": "8ed97d099f2e38d5ae92eefd6b82d224cda73244eafa0bf66c43fb49a28d3929",
+      "nativePoseMontageSha256": "c657e89b7fa47af155fee77036f44481c94bab7f8342cb97b415867b8e1c33f4",
+      "nativeShotAuditSha256": "352c229035a6399f61c9766471cce993d3e32f8da362e018bb11b71380d66bf5",
+      "note": "Left bow grip and right quiver read from behind. The pale tip faces up."
+    },
+    {
+      "id": "class_linh_cung_skill_01_ne",
+      "sourceSha256": "aff3783df8358db77376587d2bd40b3b52d1db9ab3997631a1d84dc0d6f8f717",
+      "nativePoseMontageSha256": "ed8407f09d856a46f12875c658f3ac9d29809748eebd9a84cec47387c3b3fa38",
+      "nativeShotAuditSha256": "100393d341432e969b76b9159066f0d972473192cf68f41deb65873bc1c5f948",
+      "note": "Low ready and return poses restored. The shot still holds a nocked arrow at phase 8, then releases at 9."
+    }
+  ],
+  "rejectedSourceRevisions": [
+    {
+      "id": "class_linh_cung_skill_01_s",
+      "sourceSha256": "0e6a1c851c5031e9a5d6170fe817211c918e20d53923991df6eebc8ac419a7f0",
+      "reason": "Two visible arrow shapes at the draw."
+    },
+    {
+      "id": "class_linh_cung_skill_01_se",
+      "sourceSha256": "016dd5674653e555bb0a82f11413485854f2bc8117d54758c9c0056699b180b4",
+      "reason": "Nocked arrow pointed horizontally."
+    },
+    {
+      "id": "class_linh_cung_skill_01_n",
+      "sourceSha256": "e89533857119659a771500c4e29144bbcef61db80d8fdba9edc1ee8b44d71a26",
+      "reason": "Rear view held bow on anatomical right."
+    },
+    {
+      "id": "class_linh_cung_skill_01_ne",
+      "sourceSha256": "dc2020234492a20eb42fd0159983fa01cbfcffca75cdb7f90c9bdf01883f65e2",
+      "reason": "Already nocked at ready and no low return."
+    }
+  ],
+  "catalogueUnchanged": true,
+  "productionApproved": false
+}

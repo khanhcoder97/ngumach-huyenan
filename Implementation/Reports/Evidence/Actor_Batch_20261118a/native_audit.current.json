@@ -1,0 +1,94 @@
+{
+  "sourceViews": [
+    {
+      "id": "class_linh_cung_skill_01_e",
+      "projectSha256": "b5c292e494d66954e589e9f2f6b86e3d0fc50b4ab9d1c7e7bbda8d39eb582d54",
+      "sourceSha256": "1debff8d9292b9eb0f88e7e1054bbe6e02a802f1f530cb9ea1c099859ec2b2d3",
+      "movieSha256": "0ff3d03045930ab5bb35a4fb16ab7725e88a625108feb4db39ae998903ee4fca",
+      "montageSha256": "7d25c615c849df95b8033466acaa3b312f741d67708fca64d25c952d976373e1",
+      "decodedFrames": 180,
+      "sourcePosesObserved": 16
+    },
+    {
+      "id": "sk_lc_01_projectile_component",
+      "projectSha256": "047d4f2b956cbcba3e603e8d0b209ce50b42794b2f6c7bb9cc3a5a23a3e36acd",
+      "sourceSha256": "d072a37c3503ae6a0af7e24f9642a2c6e8e8a717fd8d91ada12ac69e784bc852",
+      "movieSha256": "dc5025839d14d39bb2b6dfc75aacc3026c0b5faa1a5734edfed66c4804b67188",
+      "montageSha256": "8ff358d7b7bf27feb0eaf76c2b3fc0df0b402bd0422369d0ff68961135635dc6",
+      "decodedFrames": 180,
+      "sourcePosesObserved": 16,
+      "loopWrap": {
+        "nativeFrames": [
+          43,
+          46,
+          49,
+          52
+        ],
+        "montage": "raw_sk_lc_01_projectile_component_loop_wrap.png",
+        "sha256": "b2930e96f6f3fe1c3dd3515791dc696e479d8c6c7da43df144cfddde0350e46c"
+      }
+    },
+    {
+      "id": "sk_lc_01_leaf_dissipate_component",
+      "projectSha256": "f40f762f13cbf278f1389522497f6f817adcf9f9ad122c960704a3df2bddee07",
+      "sourceSha256": "ba3f1c6d9ffdb81c4e8c0490dcaccb26d7e0136aff7d886eeb3b80774e51b97b",
+      "movieSha256": "2a2583ccf6884b0092fe547e97963fe97589f124fc055f02d02e47147904f6c3",
+      "montageSha256": "5c8fb2f0a74141a5116acebf0ec94234eeaaaef7ac44d2166052db732b7c0ee6",
+      "decodedFrames": 180,
+      "sourcePosesObserved": 16
+    },
+    {
+      "id": "class_linh_cung_skill_01_s",
+      "projectSha256": "c897719e897736b3658815137918e3e4002e2590b42126bbcaaeb8ce7eacbc8d",
+      "sourceSha256": "9f4709597dc78c9f219789661da2cee7aec453e0141c0d093703d7036f031f70",
+      "movieSha256": "136bc87ae31b786346b85fd2610fb0fed3938dd2cc5e18519ed2d264eb8626f4",
+      "montageSha256": "375abb94d02af660ae6186f3ef09f13909b2e2e4264dc5d1b9922489b497f2c4",
+      "decodedFrames": 180,
+      "sourcePosesObserved": 16
+    },
+    {
+      "id": "class_linh_cung_skill_01_se",
+      "projectSha256": "4c24dfe498156daa1fa65ab919a0b26b91aac967e867bbeb07a2f115ea5e7ed9",
+      "sourceSha256": "fa95e7758df232b5ba3f7a70ef030faf9fa99d8b4951458d8e14649001b786d4",
+      "movieSha256": "106eab9d04c525fd70de3f1488a5464e988aecef1a02af299bde6f82bc02b477",
+      "montageSha256": "b2d9fc8187f3b3ca64133ee2d3ba27586fc6dea399b5bae39bb314787d099507",
+      "decodedFrames": 180,
+      "sourcePosesObserved": 16
+    },
+    {
+      "id": "class_linh_cung_skill_01_n",
+      "projectSha256": "b66066739e2fe6ba216192799c6a77d6e90673df55df95ee5cb4a3f0e515c537",
+      "sourceSha256": "8ed97d099f2e38d5ae92eefd6b82d224cda73244eafa0bf66c43fb49a28d3929",
+      "movieSha256": "0e51b9d1286f7ab9a8122f63fb0a2137b962ab6bbb9ebf195b64c0e7174e1e50",
+      "montageSha256": "c657e89b7fa47af155fee77036f44481c94bab7f8342cb97b415867b8e1c33f4",
+      "decodedFrames": 180,
+      "sourcePosesObserved": 16
+    },
+    {
+      "id": "class_linh_cung_skill_01_ne",
+      "projectSha256": "73c66d5eba20ee7c2e870aa88cb42b90ab6ff04d24cb571a4cc0dd436fff1f4f",
+      "sourceSha256": "aff3783df8358db77376587d2bd40b3b52d1db9ab3997631a1d84dc0d6f8f717",
+      "movieSha256": "3ced5acc6cf524e49bc84906c2caa8b15b4015674d86cc3e24ab27d77484afd3",
+      "montageSha256": "ed8407f09d856a46f12875c658f3ac9d29809748eebd9a84cec47387c3b3fa38",
+      "decodedFrames": 180,
+      "sourcePosesObserved": 16
+    }
+  ],
+  "previewFacings": [
+    "E",
+    "S",
+    "SE",
+    "N",
+    "NE"
+  ],
+  "previewAudits": {
+    "E": "f87e6a5831f55885503c85721ff04ae16b24ace35a7a9d5b4235c2f6bd3ba058",
+    "S": "f0dc8951da2dbd50e531a6d1c8954084e1763a45240f251ac95e4d249ae16af3",
+    "SE": "01cffe67459bac7bd203bbbcb91c5aaa988267d08bab843cf39919473354d064",
+    "N": "352c229035a6399f61c9766471cce993d3e32f8da362e018bb11b71380d66bf5",
+    "NE": "100393d341432e969b76b9159066f0d972473192cf68f41deb65873bc1c5f948"
+  },
+  "sourceFramesDecoded": 1260,
+  "previewFramesDecoded": 600,
+  "productionApproved": false
+}

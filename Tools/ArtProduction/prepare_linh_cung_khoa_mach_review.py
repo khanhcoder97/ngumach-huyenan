@@ -8,22 +8,32 @@ from prepare_thach_chuy_candidates_20261116c import ART, ROOT, inspect, read, sa
 
 BATCH = '20261118a'
 OUTPUT = ROOT / 'Implementation/Reports/Evidence/Actor_Batch_20261118a'
+REVIEWED_STANCE_SOURCES = {
+    '1debff8d9292b9eb0f88e7e1054bbe6e02a802f1f530cb9ea1c099859ec2b2d3': None,  # E v1
+    '9f4709597dc78c9f219789661da2cee7aec453e0141c0d093703d7036f031f70': None,  # S v2
+    '8ed97d099f2e38d5ae92eefd6b82d224cda73244eafa0bf66c43fb49a28d3929': None,  # N v2
+    'aff3783df8358db77376587d2bd40b3b52d1db9ab3997631a1d84dc0d6f8f717': None,  # NE v2
+    # SE v2: the low arrowhead reaches the boot line outside this X window.
+    'fa95e7758df232b5ba3f7a70ef030faf9fa99d8b4951458d8e14649001b786d4': (80, 200),
+}
 
 
 def approximate_stance(record, frames, path):
     """Review first with a narrow sole envelope anchored to the lowest boot."""
-    # The viewed E sheet keeps bow and quiver above the boot line. Other
-    # facings need their own source review before using this registration.
-    assert record['sourceSha256'] == '1debff8d9292b9eb0f88e7e1054bbe6e02a802f1f530cb9ea1c099859ec2b2d3'
+    boot_window = REVIEWED_STANCE_SOURCES[record['sourceSha256']]
     pivots = []
     with Image.open(path) as atlas:
         alpha = atlas.getchannel('A').point(lambda value: 255 if value >= 200 else 0)
         for frame in frames:
             x, y, width, _ = frame['rect']
+            left, right = boot_window or (0, width)
             bottom = frame['bounds'][3]
-            soles = alpha.crop((x, y + bottom - 12, x + width, y + bottom)).getbbox()
+            floor = alpha.crop((x + left, y + bottom - 18, x + right, y + bottom)).getbbox()
+            assert floor
+            bottom += floor[3] - 18
+            soles = alpha.crop((x + left, y + bottom - 12, x + right, y + bottom)).getbbox()
             assert soles
-            pivots.append([(soles[0] + soles[2]) / 2, bottom])
+            pivots.append([left + (soles[0] + soles[2]) / 2, bottom])
     return pivots
 
 
@@ -45,12 +55,17 @@ def projectile_tip_pivots(frames, path):
 def prepare():
     manifest = read(ART / f'Candidates_{BATCH}/candidate_manifest.json')
     plan = []
+    held = []
     for source_record in manifest['records']:
         record = dict(source_record)
         identifier = record['id']
         source = ART / record['source']
         source_sha = sha(source)
         assert source_sha == record['sourceSha256']
+        if record.get('direction') and source_sha not in REVIEWED_STANCE_SOURCES:
+            held.append(dict(id=identifier, sourceSha256=source_sha,
+                             reason='SOURCE_FACING_OR_STANCE_REVIEW_REQUIRED'))
+            continue
         if identifier == 'sk_lc_01_leaf_dissipate_component':
             assert source_sha == 'ba3f1c6d9ffdb81c4e8c0490dcaccb26d7e0136aff7d886eeb3b80774e51b97b'
             # The final fading fleck has sixteen alpha>=64 pixels and
@@ -111,7 +126,7 @@ def prepare():
                          timing=record['sourceFrameDurationsMs'], loop=loop))
     save(OUTPUT / 'candidate_review_plan.json',
          dict(batch=BATCH, selected=len(plan), expected=manifest['expectedSourcePages'],
-              catalogueUnchanged=True, entries=plan))
+              catalogueUnchanged=True, entries=plan, held=held))
     print(f'Registered {len(plan)} Khoa Mach Studio projects.')
 
 
