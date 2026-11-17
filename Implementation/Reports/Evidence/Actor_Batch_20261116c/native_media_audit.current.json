@@ -1,7 +1,7 @@
 {
   "batch": "20261116c",
-  "selectedVideos": 41,
-  "sourceFramesMeasured": 656,
+  "selectedVideos": 50,
+  "sourceFramesMeasured": 800,
   "files": [
     {
       "file": "raw_class_thach_chuy_skill_01_s.mp4",
@@ -371,9 +371,90 @@
       "decodedFrames": 180,
       "decodedWithoutDiagnostics": true,
       "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_class_thach_chuy_skill_06_s.mp4",
+      "sha256": "c0d09363ace7632d89c06e84c0af13c73b93bfd47a86ac910270d7923e083899",
+      "sourceSha256": "cd4d43da5064a2b1f6a04b234c9ffc27f04ad6595af7471b589c1744f84bd4da",
+      "portableProjectSha256": "16288dd20b007c61f91d3f4ee413b3f91526216c3f2139efe1c79ccf67440653",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_class_thach_chuy_skill_06_e.mp4",
+      "sha256": "1ad91a3675ca237c5d7cd5677f2f0162e1ee135c7a665e36cc267c9899b0c996",
+      "sourceSha256": "f4b7528db88ab39098ac36885a632c7ec1dcfed2129346b352619ddf863b163e",
+      "portableProjectSha256": "20dce4ed25d2b34370d1d15964b3b3656ec3af14b069b5a2658eef45ec2688e1",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_class_thach_chuy_skill_06_se.mp4",
+      "sha256": "a9973de498b9402741cb65e54fafbec3fdc932f2426d2c2de8c3771b384e5278",
+      "sourceSha256": "29a189053cfbbfde100d5da37cbd16a3270a1ebfacfd2fad924fff384ceb9d5f",
+      "portableProjectSha256": "e2a08abfff8d7bdd94394130aec8424b7046d32cd132ee0124a0e7c211382db3",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_class_thach_chuy_skill_06_n.mp4",
+      "sha256": "a4487a43b16496749042555b5c5d8582d07a332c6fcc4d155ef567e866231169",
+      "sourceSha256": "9915a4bbb48b808eb3a6e6118850c31e6594aa7f3766e84c0245dd54f6f4428e",
+      "portableProjectSha256": "32c3a98a858896814375b7a4a00a83a858aa03883b754450908368aeaf5d2e0e",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_class_thach_chuy_skill_06_ne.mp4",
+      "sha256": "6611a553fa380ed8a77bce8995990e8d09e39bc07f8e4a0836b780dda88d7bc5",
+      "sourceSha256": "903a90565b57cb2442212c7909ca7b15343d74fb69b454f380b87cd38063bc13",
+      "portableProjectSha256": "7b0181000e4024ffe92f5f577726bfa4b6e40024dbe10ad9fa34eb6f29d47a92",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_sk_tc_06_open_zone_sustain_component.mp4",
+      "sha256": "a4ad61389d8ef267f60c88c53c059a499f2e07a44fffdcc54fa913a6b09bacb3",
+      "sourceSha256": "6125b704a2886ac0714d81ec9a26e55aa70cd07a8443a786e5df4de3f3b31269",
+      "portableProjectSha256": "3abc8ef7f3fd707b2921b585f8db0ec352bd21cd3e24e85d13cb190fe57ba49d",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_sk_tc_06_zone_charge_component.mp4",
+      "sha256": "6d772c500f34f02ce7c5947be92a4ad0664ac3dbd98647a5a445657e3a4f2438",
+      "sourceSha256": "15c54b62a221620aadbe27c6c57c92d50615169ba980fd7178cc30827dc6296e",
+      "portableProjectSha256": "1864d9602e6f88aa89e3dbeea03b353a34548e678967e391e4f74fe205a21293",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_sk_tc_06_zone_end_component.mp4",
+      "sha256": "310e1ee113a10fb58ff73d579429a187d2562743324e6ceb889ccd0caa5d86f0",
+      "sourceSha256": "4b01869dd87cfa65c3c77cb19c7add4895cbfbc01cac5c084ee3beec84a07757",
+      "portableProjectSha256": "d67d4bda99e634e953eaec248042495306d7c80171fccbf63150ae180bdbb9fd",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
+    },
+    {
+      "file": "raw_sk_tc_06_plate_gain_component.mp4",
+      "sha256": "fc3a5f07298f107a1a2ad4532f199ceaa08848f8f483a4773c6474225167538d",
+      "sourceSha256": "da9346bfec5561728c5d241ac19c46d089f1b0636f4da7265a8cd5dda55f9ec5",
+      "portableProjectSha256": "9975840b275b04f4f3ce078e994236fd2342a20ef2a5176faa4cda4d0f979d65",
+      "decodedFrames": 180,
+      "decodedWithoutDiagnostics": true,
+      "renderedSourceFramesVerified": 16
     }
   ],
-  "actualLoopWrapsExtracted": 2,
+  "actualLoopWrapsExtracted": 3,
   "loopSeams": [
     {
       "id": "sk_tc_03_plate_sustain_component",
@@ -409,6 +490,24 @@
       ],
       "file": "raw_sk_tc_04_target_status_component_loop_wrap.png",
       "sha256": "cd132ce05bb8fb6180dc665d1ad62400c1d5f39ea06d7788f8883ebad4c86c2c",
+      "manualViewed": true
+    },
+    {
+      "id": "sk_tc_06_open_zone_sustain_component",
+      "sourceFrames": [
+        14,
+        15,
+        0,
+        1
+      ],
+      "nativeFrames": [
+        85,
+        92,
+        98,
+        104
+      ],
+      "file": "raw_sk_tc_06_open_zone_sustain_component_loop_wrap.png",
+      "sha256": "ecaef6872b41d1bdcae5dc8f1d12230a7bbb6f02d2724d81033441b0dc158dbe",
       "manualViewed": true
     }
   ],

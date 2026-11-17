@@ -2440,6 +2440,550 @@
           ]
         }
       }
+    },
+    {
+      "id": "class_thach_chuy_skill_06_s",
+      "sourceSha256": "cd4d43da5064a2b1f6a04b234c9ffc27f04ad6595af7471b589c1744f84bd4da",
+      "fields": {
+        "pivotMode": "SOURCE_FOOT_PIVOTS",
+        "sourceFootPivots": [
+          [
+            189.0,
+            294
+          ],
+          [
+            170.0,
+            294
+          ],
+          [
+            149.0,
+            294
+          ],
+          [
+            129.0,
+            294
+          ],
+          [
+            188.0,
+            276
+          ],
+          [
+            172.0,
+            276
+          ],
+          [
+            150.0,
+            275
+          ],
+          [
+            126.5,
+            275
+          ],
+          [
+            187.5,
+            262
+          ],
+          [
+            166.5,
+            262
+          ],
+          [
+            146.5,
+            262
+          ],
+          [
+            125.0,
+            261
+          ],
+          [
+            193.0,
+            256
+          ],
+          [
+            170.5,
+            256
+          ],
+          [
+            149.5,
+            256
+          ],
+          [
+            129.5,
+            256
+          ]
+        ],
+        "bodyReferenceHeight": 207,
+        "registrationMethod": "SOUTH_SANCTUARY_VISIBLE_BOOTS_PENDING_NATIVE_REVIEW"
+      },
+      "reviewNote": "Both boots remain visible when the planted hammer covers the red sash. Use the reviewed boot envelope and neutral sole/centre offsets for this PNG. Confirm contact and idle transition in Studio before gameplay integration."
+    },
+    {
+      "id": "class_thach_chuy_skill_06_se",
+      "sourceSha256": "29a189053cfbbfde100d5da37cbd16a3270a1ebfacfd2fad924fff384ceb9d5f",
+      "fields": {
+        "pivotMode": "SOURCE_FOOT_PIVOTS",
+        "sourceFootPivots": [
+          [
+            189,
+            245
+          ],
+          [
+            186,
+            245
+          ],
+          [
+            184,
+            245
+          ],
+          [
+            185,
+            244
+          ],
+          [
+            188,
+            244
+          ],
+          [
+            191,
+            243
+          ],
+          [
+            189,
+            244
+          ],
+          [
+            187,
+            244
+          ],
+          [
+            179,
+            237
+          ],
+          [
+            182,
+            238
+          ],
+          [
+            175,
+            239
+          ],
+          [
+            181,
+            238
+          ],
+          [
+            185,
+            241
+          ],
+          [
+            185,
+            243
+          ],
+          [
+            183,
+            242
+          ],
+          [
+            184,
+            243
+          ]
+        ],
+        "bodyReferenceHeight": 212,
+        "registrationMethod": "SOUTHEAST_SANCTUARY_HAND_CHECKED_STANCE_PROPOSAL"
+      },
+      "reviewNote": "Warm-mask X jumps from two boots to one when the hammer covers the far boot. These reviewed source-cell proposals keep the stance midpoint. Confirm contact and recovery in the native clip."
+    },
+    {
+      "id": "class_thach_chuy_skill_06_ne",
+      "sourceSha256": "903a90565b57cb2442212c7909ca7b15343d74fb69b454f380b87cd38063bc13",
+      "fields": {
+        "gridEdges": {
+          "columns": [
+            0,
+            311,
+            615,
+            917,
+            1230
+          ],
+          "rows": [
+            0,
+            291,
+            638,
+            933,
+            1278
+          ]
+        },
+        "pivotMode": "SOURCE_FOOT_PIVOTS",
+        "sourceFootPivots": [
+          [
+            124,
+            262
+          ],
+          [
+            130,
+            264
+          ],
+          [
+            134,
+            264
+          ],
+          [
+            137,
+            264
+          ],
+          [
+            130,
+            292
+          ],
+          [
+            128,
+            292
+          ],
+          [
+            129,
+            293
+          ],
+          [
+            114,
+            293
+          ],
+          [
+            114,
+            242
+          ],
+          [
+            110,
+            243
+          ],
+          [
+            108,
+            243
+          ],
+          [
+            114,
+            244
+          ],
+          [
+            120,
+            275
+          ],
+          [
+            121,
+            275
+          ],
+          [
+            122,
+            276
+          ],
+          [
+            130,
+            276
+          ]
+        ],
+        "bodyReferenceHeight": 221,
+        "registrationMethod": "NORTHEAST_SANCTUARY_HAND_CHECKED_STANCE_PROPOSAL"
+      },
+      "reviewNote": "The top of the raised hammer needs unequal row gutters. Warm-mask X alternates across boots. Use hand-checked stance centres and verify the low brace and recovery in Studio."
+    },
+    {
+      "id": "sk_tc_06_open_zone_sustain_component",
+      "sourceSha256": "6125b704a2886ac0714d81ec9a26e55aa70cd07a8443a786e5df4de3f3b31269",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            165.0,
+            205
+          ],
+          [
+            158.0,
+            205
+          ],
+          [
+            157.5,
+            205
+          ],
+          [
+            155.5,
+            205
+          ],
+          [
+            164.5,
+            186
+          ],
+          [
+            158.0,
+            186
+          ],
+          [
+            159.0,
+            186
+          ],
+          [
+            155.5,
+            186
+          ],
+          [
+            163.5,
+            167
+          ],
+          [
+            159.0,
+            167
+          ],
+          [
+            158.5,
+            167
+          ],
+          [
+            156.0,
+            167
+          ],
+          [
+            161.5,
+            148
+          ],
+          [
+            158.0,
+            148
+          ],
+          [
+            157.5,
+            148
+          ],
+          [
+            156.0,
+            148
+          ]
+        ],
+        "registrationMethod": "SANCTUARY_GROUND_FOOTPRINT_VISUALLY_PROPOSED"
+      },
+      "reviewNote": "Use the projected open ring centre or the single plate baseline. The remaining dust and sparse marks retain the parent footprint. Confirm the phase seams in Studio."
+    },
+    {
+      "id": "sk_tc_06_zone_charge_component",
+      "sourceSha256": "15c54b62a221620aadbe27c6c57c92d50615169ba980fd7178cc30827dc6296e",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            162,
+            200
+          ],
+          [
+            159,
+            200
+          ],
+          [
+            157,
+            200
+          ],
+          [
+            155,
+            200
+          ],
+          [
+            162,
+            177
+          ],
+          [
+            159,
+            177
+          ],
+          [
+            157,
+            177
+          ],
+          [
+            155,
+            177
+          ],
+          [
+            162,
+            154
+          ],
+          [
+            159,
+            154
+          ],
+          [
+            157,
+            154
+          ],
+          [
+            155,
+            154
+          ],
+          [
+            162,
+            134
+          ],
+          [
+            159,
+            134
+          ],
+          [
+            157,
+            134
+          ],
+          [
+            155,
+            134
+          ]
+        ],
+        "registrationMethod": "SANCTUARY_GROUND_FOOTPRINT_VISUALLY_PROPOSED"
+      },
+      "reviewNote": "Use the projected open ring centre or the single plate baseline. The remaining dust and sparse marks retain the parent footprint. Confirm the phase seams in Studio."
+    },
+    {
+      "id": "sk_tc_06_zone_end_component",
+      "sourceSha256": "4b01869dd87cfa65c3c77cb19c7add4895cbfbc01cac5c084ee3beec84a07757",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            162,
+            212
+          ],
+          [
+            160,
+            212
+          ],
+          [
+            158,
+            212
+          ],
+          [
+            155,
+            212
+          ],
+          [
+            162,
+            189
+          ],
+          [
+            160,
+            189
+          ],
+          [
+            158,
+            189
+          ],
+          [
+            155,
+            189
+          ],
+          [
+            162,
+            169
+          ],
+          [
+            160,
+            169
+          ],
+          [
+            158,
+            169
+          ],
+          [
+            155,
+            169
+          ],
+          [
+            162,
+            149
+          ],
+          [
+            160,
+            149
+          ],
+          [
+            158,
+            149
+          ],
+          [
+            155,
+            149
+          ]
+        ],
+        "registrationMethod": "SANCTUARY_GROUND_FOOTPRINT_VISUALLY_PROPOSED"
+      },
+      "reviewNote": "Use the projected open ring centre or the single plate baseline. The remaining dust and sparse marks retain the parent footprint. Confirm the phase seams in Studio."
+    },
+    {
+      "id": "sk_tc_06_plate_gain_component",
+      "sourceSha256": "da9346bfec5561728c5d241ac19c46d089f1b0636f4da7265a8cd5dda55f9ec5",
+      "fields": {
+        "pivotMode": "SOURCE_PIVOTS",
+        "sourcePivots": [
+          [
+            169.0,
+            220
+          ],
+          [
+            158.5,
+            220
+          ],
+          [
+            156.0,
+            223
+          ],
+          [
+            148.0,
+            221
+          ],
+          [
+            170.0,
+            200
+          ],
+          [
+            160.0,
+            200
+          ],
+          [
+            155.5,
+            200
+          ],
+          [
+            148.0,
+            200
+          ],
+          [
+            168.0,
+            177
+          ],
+          [
+            162.5,
+            178
+          ],
+          [
+            155.0,
+            179
+          ],
+          [
+            149.0,
+            179
+          ],
+          [
+            168.5,
+            159
+          ],
+          [
+            162.5,
+            160
+          ],
+          [
+            156.5,
+            160
+          ],
+          [
+            149.0,
+            160
+          ]
+        ],
+        "registrationMethod": "SANCTUARY_GROUND_FOOTPRINT_VISUALLY_PROPOSED"
+      },
+      "reviewNote": "Use the projected open ring centre or the single plate baseline. The remaining dust and sparse marks retain the parent footprint. Confirm the phase seams in Studio."
     }
   ]
 }

@@ -4,9 +4,9 @@
   "bodySheets": 30,
   "vfxComponents": 20,
   "sourcePoses": 800,
-  "selected": 41,
-  "generatedVariants": 49,
-  "remaining": 9,
+  "selected": 50,
+  "generatedVariants": 59,
+  "remaining": 0,
   "productionApproved": false,
   "jobs": [
     {
@@ -163,31 +163,31 @@
       "id": "class_thach_chuy_skill_06_n",
       "kind": "BODY",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_06_n.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "class_thach_chuy_skill_06_ne",
       "kind": "BODY",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_06_ne.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "class_thach_chuy_skill_06_e",
       "kind": "BODY",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_06_e.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "class_thach_chuy_skill_06_se",
       "kind": "BODY",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_06_se.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "class_thach_chuy_skill_06_s",
       "kind": "BODY",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/class_thach_chuy_skill_06_s.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "sk_tc_01_charge_wedge_component",
@@ -289,25 +289,25 @@
       "id": "sk_tc_06_zone_charge_component",
       "kind": "VFX",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_06_zone_charge_component.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "sk_tc_06_plate_gain_component",
       "kind": "VFX",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_06_plate_gain_component.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "sk_tc_06_open_zone_sustain_component",
       "kind": "VFX",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_06_open_zone_sustain_component.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     },
     {
       "id": "sk_tc_06_zone_end_component",
       "kind": "VFX",
       "path": "Art_Source/Actor_Library_20261107/Candidates_20261116c/Jobs/sk_tc_06_zone_end_component.json",
-      "state": "NOT_GENERATED"
+      "state": "GENERATED_PENDING_REVIEW"
     }
   ]
 }

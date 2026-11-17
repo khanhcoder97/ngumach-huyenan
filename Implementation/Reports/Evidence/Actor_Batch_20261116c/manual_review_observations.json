@@ -507,6 +507,114 @@
       "status": "CALL_VISIBILITY_REPAIRED_OTHER_SOURCE_ACCEPTANCE_PENDING",
       "visualNotes": "All16original and current native v2 poses explicitly viewed. Targeted expression revision now shows a readable call while preserving single tap,connected one-hammer grip and recovery. SE phases7–9show an open mouth; phase10already closes as the head settles. This clears the closed-mouth observation for this version only. Exact facing,root/owner-idle continuity and wide gameplay/event acceptance remain pending. Source gutters are registered separately; SHA-bound10px neutral dark-sole proposal remains geometry-only.",
       "productionApproved": false
+    },
+    {
+      "id": "class_thach_chuy_skill_06_s",
+      "sourceSha256": "cd4d43da5064a2b1f6a04b234c9ffc27f04ad6595af7471b589c1744f84bd4da",
+      "portableProjectSha256": "16288dd20b007c61f91d3f4ee413b3f91526216c3f2139efe1c79ccf67440653",
+      "movieSha256": "c0d09363ace7632d89c06e84c0af13c73b93bfd47a86ac910270d7923e083899",
+      "montageSha256": "7b91dec82842a8c7b4ecad02f1abcfa36cc7e9b9036441144b1a57edd1eb590a",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "visualNotes": "One lift and planted hammer in all 16 views. Boots stay on the ground reference while the hammer drops below them. Check the neutral hand and foot transition against owner idle.",
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "productionApproved": false
+    },
+    {
+      "id": "class_thach_chuy_skill_06_e",
+      "sourceSha256": "f4b7528db88ab39098ac36885a632c7ec1dcfed2129346b352619ddf863b163e",
+      "portableProjectSha256": "20dce4ed25d2b34370d1d15964b3b3656ec3af14b069b5a2658eef45ec2688e1",
+      "movieSha256": "1ad91a3675ca237c5d7cd5677f2f0162e1ee135c7a665e36cc267c9899b0c996",
+      "montageSha256": "16f92da97c33c44767dd5af952450725e1a316e39f9c5d163f1e6bd73b423cd6",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "visualNotes": "Right-facing profile with one hammer, one plant and a readable standing recovery. Check the forward lean against the gameplay camera and the initial idle grip.",
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "productionApproved": false
+    },
+    {
+      "id": "class_thach_chuy_skill_06_se",
+      "sourceSha256": "29a189053cfbbfde100d5da37cbd16a3270a1ebfacfd2fad924fff384ceb9d5f",
+      "portableProjectSha256": "e2a08abfff8d7bdd94394130aec8424b7046d32cd132ee0124a0e7c211382db3",
+      "movieSha256": "a9973de498b9402741cb65e54fafbec3fdc932f2426d2c2de8c3771b384e5278",
+      "montageSha256": "9be8a2312a498fd9780ad2f6266b60464a0ddc0b9bf20ddc99650b0df32b74a7",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "visualNotes": "Sixteen down-right poses viewed. The hammer partly hides the far boot during the low brace, so a hand-checked stance pivot holds the centre. Confirm its transition to the owner idle.",
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "productionApproved": false
+    },
+    {
+      "id": "class_thach_chuy_skill_06_ne",
+      "sourceSha256": "903a90565b57cb2442212c7909ca7b15343d74fb69b454f380b87cd38063bc13",
+      "portableProjectSha256": "7b0181000e4024ffe92f5f577726bfa4b6e40024dbe10ad9fa34eb6f29d47a92",
+      "movieSha256": "6611a553fa380ed8a77bce8995990e8d09e39bc07f8e4a0836b780dda88d7bc5",
+      "montageSha256": "1c30579f082f0a184dda7f65fe69ce7ce05a9785aa8c3d981fb4ab74a81d3d09",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "visualNotes": "Upper-right rear-quarter lean and one connected hammer throughout the set. Unequal row gutters preserve the overhead pose. Verify the hand-checked stance pivot against idle and world scale.",
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "productionApproved": false
+    },
+    {
+      "id": "class_thach_chuy_skill_06_n",
+      "sourceSha256": "9915a4bbb48b808eb3a6e6118850c31e6594aa7f3766e84c0245dd54f6f4428e",
+      "portableProjectSha256": "32c3a98a858896814375b7a4a00a83a858aa03883b754450908368aeaf5d2e0e",
+      "movieSha256": "a4487a43b16496749042555b5c5d8582d07a332c6fcc4d155ef567e866231169",
+      "montageSha256": "b386f5633d4005930a8da79e757a4f7fe7b8c445a93e508e864a9dd228b938f2",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "visualNotes": "V2 removes the second hammer silhouette at the plant. One head and shaft are readable throughout. Phase 11 leans away from the registered centre and needs a fixed-camera root check.",
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "productionApproved": false
+    },
+    {
+      "id": "sk_tc_06_zone_charge_component",
+      "sourceSha256": "15c54b62a221620aadbe27c6c57c92d50615169ba980fd7178cc30827dc6296e",
+      "portableProjectSha256": "1864d9602e6f88aa89e3dbeea03b353a34548e678967e391e4f74fe205a21293",
+      "movieSha256": "6d772c500f34f02ce7c5947be92a4ad0664ac3dbd98647a5a445657e3a4f2438",
+      "montageSha256": "858a0e602208675cda200c49ae582ed8ea7a0834689c8de3b6c6e317bb3617de",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "visualNotes": "Sparse footing marks accumulate around the rim and clear as the stones rise. Lower opening stays empty. The fixed footprint avoids recentering when only three upper markers are drawn.",
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "productionApproved": false
+    },
+    {
+      "id": "sk_tc_06_plate_gain_component",
+      "sourceSha256": "da9346bfec5561728c5d241ac19c46d089f1b0636f4da7265a8cd5dda55f9ec5",
+      "portableProjectSha256": "9975840b275b04f4f3ce078e994236fd2342a20ef2a5176faa4cda4d0f979d65",
+      "movieSha256": "fc3a5f07298f107a1a2ad4532f199ceaa08848f8f483a4773c6474225167538d",
+      "montageSha256": "227ff9af8f02be2dfe21d75eba50e59afd89d5604c29f483149a37ea628c7031",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "visualNotes": "One shallow footing emerges from small grains. The bottom aligns through the rise and settle. Validate how its ending shape meets the sustained stones.",
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "productionApproved": false
+    },
+    {
+      "id": "sk_tc_06_open_zone_sustain_component",
+      "sourceSha256": "6125b704a2886ac0714d81ec9a26e55aa70cd07a8443a786e5df4de3f3b31269",
+      "portableProjectSha256": "3abc8ef7f3fd707b2921b585f8db0ec352bd21cd3e24e85d13cb190fe57ba49d",
+      "movieSha256": "a4ad61389d8ef267f60c88c53c059a499f2e07a44fffdcc54fa913a6b09bacb3",
+      "montageSha256": "d8c5bb2190382eddd1313762f7e0b3ac6419689212001f5bd729c5f32425481b",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "visualNotes": "Sixteen quiet gold-rim phases viewed. The bottom gap stays open at the wrap from phase 15 to phase 0. Validate the full-width rim in the assembled view.",
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "productionApproved": false
+    },
+    {
+      "id": "sk_tc_06_zone_end_component",
+      "sourceSha256": "4b01869dd87cfa65c3c77cb19c7add4895cbfbc01cac5c084ee3beec84a07757",
+      "portableProjectSha256": "d67d4bda99e634e953eaec248042495306d7c80171fccbf63150ae180bdbb9fd",
+      "movieSha256": "310e1ee113a10fb58ff73d579429a187d2562743324e6ceb889ccd0caa5d86f0",
+      "montageSha256": "b944008f2ccf49c555137b3945cd3f7d7ca1dc4a09025c569dd907fdb133ec9c",
+      "originalAtlasViewed": true,
+      "nativePoseFramesInspected": 16,
+      "visualNotes": "Starts with a low open rim and dissolves once into small chips around it. The inner area and closest opening stay clear. Verify the handoff from the last sustained pose.",
+      "status": "SOURCE_REVIEW_IN_PROGRESS_NOT_APPROVED",
+      "productionApproved": false
     }
   ]
 }

@@ -1,0 +1,196 @@
+{
+  "scope": "SANCTUARY_FIVE_FACING_STUDIO_PLAYBACK",
+  "projectSha256": "9eafa6d3e4f951fe8f20842be579c2c9b25f15c78099cf32452b119c0882eac0",
+  "sourceInputs": {
+    "class_thach_chuy_skill_06_s": {
+      "pngSha256": "cd4d43da5064a2b1f6a04b234c9ffc27f04ad6595af7471b589c1744f84bd4da",
+      "registrationSha256": "7a3339d6548050aef261c037998fa13d75c5f25fdf5a6b31fc3de924042e662d"
+    },
+    "class_thach_chuy_skill_06_se": {
+      "pngSha256": "29a189053cfbbfde100d5da37cbd16a3270a1ebfacfd2fad924fff384ceb9d5f",
+      "registrationSha256": "d5e8912fed8e1c323199f72c6ff770a7dbbcdb5678d6c8ee58dfbd3964101a0a"
+    },
+    "class_thach_chuy_skill_06_e": {
+      "pngSha256": "f4b7528db88ab39098ac36885a632c7ec1dcfed2129346b352619ddf863b163e",
+      "registrationSha256": "e32211e4031ebd017dba53353c116919c65d059a1d7b224dbdef1c8b4f61bf1c"
+    },
+    "class_thach_chuy_skill_06_ne": {
+      "pngSha256": "903a90565b57cb2442212c7909ca7b15343d74fb69b454f380b87cd38063bc13",
+      "registrationSha256": "a1f91c03ddcb78c1460419c27548cdfff5047eacb672b27a745c68b7f434e52e"
+    },
+    "class_thach_chuy_skill_06_n": {
+      "pngSha256": "9915a4bbb48b808eb3a6e6118850c31e6594aa7f3766e84c0245dd54f6f4428e",
+      "registrationSha256": "3e1736fc980289f7737dbe2382dd3d2454e0f4f374cc77a60d8cb85d533de781"
+    },
+    "sk_tc_06_zone_charge_component": {
+      "pngSha256": "15c54b62a221620aadbe27c6c57c92d50615169ba980fd7178cc30827dc6296e",
+      "registrationSha256": "aa13690215b3098c5a6aa3beb99a9edce6c6af57e435679a17d789ecc68eb13b"
+    },
+    "sk_tc_06_open_zone_sustain_component": {
+      "pngSha256": "6125b704a2886ac0714d81ec9a26e55aa70cd07a8443a786e5df4de3f3b31269",
+      "registrationSha256": "63fd6146c326600e6711a0e78e126bef21df9d9bb4e41582ad9dd30c30f2b676"
+    },
+    "sk_tc_06_zone_end_component": {
+      "pngSha256": "4b01869dd87cfa65c3c77cb19c7add4895cbfbc01cac5c084ee3beec84a07757",
+      "registrationSha256": "e35e80f6044fa87e3f5ba1f15c9095addb7f7615d8571be30842f0ddf3554bff"
+    },
+    "sk_tc_06_plate_gain_component": {
+      "pngSha256": "da9346bfec5561728c5d241ac19c46d089f1b0636f4da7265a8cd5dda55f9ec5",
+      "registrationSha256": "7f9282af31e3adfd351c18491de8d31728d97258c7b3ddc0f3a48edaa49ed69b"
+    }
+  },
+  "previewFrameClock": 60,
+  "captures": [
+    {
+      "direction": "S",
+      "movie": "preview_S.mp4",
+      "movieSha256": "8cd45cca6302c6ee6d539df2ec06c0324a66ed925f1d25f997d72cc27ef1e003",
+      "logSha256": "1d47201f0258f70cf8d01d5e16f8d039d08076739f2eff74c57d870abdc4d1d9",
+      "decodedFrames": 324,
+      "sourcePhasesByLayer": {
+        "body_S": 16,
+        "charge": 16,
+        "plate_back": 16,
+        "plate_left": 16,
+        "plate_right": 16,
+        "sustain": 16,
+        "end": 16
+      },
+      "sustainCyclesObserved": 2,
+      "montage": "preview_S.phases.png",
+      "montageSha256": "911a9219d65a65e5e34e35d44c8f457d9d2639f911c0236d206a1a02112f53ee",
+      "nativeFrames": [
+        1,
+        30,
+        35,
+        57,
+        62,
+        147,
+        249,
+        268,
+        285
+      ]
+    },
+    {
+      "direction": "SE",
+      "movie": "preview_SE.mp4",
+      "movieSha256": "820da524a8c3de981c65b4e86d49c1b98001dde90d783e94b58a3ca0a23694c4",
+      "logSha256": "20d9123ebc382dcfad76e8d90f53458283b562fae52703b7812f5f2ea9594b41",
+      "decodedFrames": 324,
+      "sourcePhasesByLayer": {
+        "body_SE": 16,
+        "charge": 16,
+        "plate_back": 16,
+        "plate_left": 16,
+        "plate_right": 16,
+        "sustain": 16,
+        "end": 16
+      },
+      "sustainCyclesObserved": 2,
+      "montage": "preview_SE.phases.png",
+      "montageSha256": "32e787029c592c692e3a3710cbbff6aad7e79917b70092929a59250cb594f1bd",
+      "nativeFrames": [
+        1,
+        30,
+        35,
+        57,
+        62,
+        147,
+        249,
+        268,
+        285
+      ]
+    },
+    {
+      "direction": "E",
+      "movie": "preview_E.mp4",
+      "movieSha256": "4e0b47775fe4ec83300f5cb2f885b8925b8c8d93da39f8d29bc7da52e4287303",
+      "logSha256": "f49d99d44a1730244d15c9c65bbaac1e13e93532f5f3a29353b1ca7e2565b62d",
+      "decodedFrames": 324,
+      "sourcePhasesByLayer": {
+        "body_E": 16,
+        "charge": 16,
+        "plate_back": 16,
+        "plate_left": 16,
+        "plate_right": 16,
+        "sustain": 16,
+        "end": 16
+      },
+      "sustainCyclesObserved": 2,
+      "montage": "preview_E.phases.png",
+      "montageSha256": "e1e426209b85a5f637432ec635807f71ed613625ecb692bffc74225c42babc0e",
+      "nativeFrames": [
+        1,
+        30,
+        35,
+        57,
+        62,
+        147,
+        249,
+        268,
+        285
+      ]
+    },
+    {
+      "direction": "NE",
+      "movie": "preview_NE.mp4",
+      "movieSha256": "db3400a4900a4a27eea3a5174c6b86b348273be7e7185b0176d45299ffe38e83",
+      "logSha256": "699080305427d85d883cf9b9695ea2060abf5371c6f2900d200b64ddccae7904",
+      "decodedFrames": 324,
+      "sourcePhasesByLayer": {
+        "body_NE": 16,
+        "charge": 16,
+        "plate_back": 16,
+        "plate_left": 16,
+        "plate_right": 16,
+        "sustain": 16,
+        "end": 16
+      },
+      "sustainCyclesObserved": 2,
+      "montage": "preview_NE.phases.png",
+      "montageSha256": "ed445a49f23f55a87a85acfd5a4c197a924fcfdd680f61cf9042252d804efa9b",
+      "nativeFrames": [
+        1,
+        30,
+        35,
+        57,
+        62,
+        147,
+        249,
+        268,
+        285
+      ]
+    },
+    {
+      "direction": "N",
+      "movie": "preview_N.mp4",
+      "movieSha256": "c8b9d836af26e4aaa7dcde8902339245c642a115c71ef28b9c150792e6fb4874",
+      "logSha256": "4331852c3b7f1e0913ceeb395094d7711f0dcbd2ebe283ccb66e7b4042784c47",
+      "decodedFrames": 324,
+      "sourcePhasesByLayer": {
+        "body_N": 16,
+        "charge": 16,
+        "plate_back": 16,
+        "plate_left": 16,
+        "plate_right": 16,
+        "sustain": 16,
+        "end": 16
+      },
+      "sustainCyclesObserved": 2,
+      "montage": "preview_N.phases.png",
+      "montageSha256": "47ed76a9a3cda02e3e02d214372d8b039b91180d8406006c1dbae976f6913610",
+      "nativeFrames": [
+        1,
+        30,
+        35,
+        57,
+        62,
+        147,
+        249,
+        268,
+        285
+      ]
+    }
+  ],
+  "productionApproved": false
+}

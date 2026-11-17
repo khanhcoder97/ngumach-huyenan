@@ -1,6 +1,6 @@
-# Thạch Chùy — bản lưu tiến độ 41/50 sheet
+# Thạch Chùy — 50 sheet nguồn của sáu kỹ năng
 
-Cập nhật 17/11/2026. Đây là gói nguồn đang dựng và kiểm tra trong Studio. Toàn bộ thư viện asset game tiếp tục phát triển; 50 sheet của gói này chỉ bao phủ sáu kỹ năng Thạch Chùy.
+Cập nhật 18/11/2026. Gói này bao phủ sáu kỹ năng Thạch Chùy. Các bản xem và chỉnh sửa chạy trong Sprite & VFX Studio.
 
 | Thành phần hiện có | Sheet | Pose nguồn |
 | --- | ---: | ---: |
@@ -9,14 +9,16 @@ Cập nhật 17/11/2026. Đây là gói nguồn đang dựng và kiểm tra tron
 | Thiết Bích — N, NE, E, SE, S | 5 | 80 |
 | Khiêu Chiến — N, NE, E, SE, S, chưa nghiệm thu | 5 | 80 |
 | Phá Nham — N, NE, E, SE, S, còn hold hướng/root | 5 | 80 |
+| Sơn Thần Giáng Thế — N, NE, E, SE, S | 5 | 80 |
 | VFX Trấn Sơn: chuẩn bị, vết nứt, bụi lắng | 3 | 48 |
 | VFX Chấn Địa: vòng chuẩn bị, sóng chấn động, bụi tan | 3 | 48 |
 | VFX Thiết Bích: hình thành, duy trì, lớp nứt, tan vỡ | 4 | 64 |
 | VFX Khiêu Chiến: sóng âm, chevron mục tiêu, trạng thái | 3 | 48 |
 | VFX Phá Nham: bụi kéo, va trúng, bụi dừng | 3 | 48 |
-| Tổng nguồn được chọn | **41** | **656** |
+| VFX Sơn Thần Giáng Thế: báo vùng, phiến dựng, duy trì, tan | 4 | 64 |
+| Tổng nguồn được chọn | **50** | **800** |
 
-`candidate_manifest.json` xác định 41 nguồn hiện hành và giữ tám phiên bản cũ trong `history`. Mỗi PNG có prompt `.txt` đi kèm. Nguồn được tạo bằng công cụ image_gen tích hợp; PNG được sao chép nguyên byte. `Jobs/` và `production_job_plan.json` chứa đủ 50 tác vụ, phân biệt rõ nguồn đã tạo với nguồn chưa tạo. Khiêu Chiến E/SE v2 đã sửa biểu cảm gọi và xem lại native; hướng/root/idle vẫn chờ kiểm tra. Phá Nham cần kiểm tra/sửa trục hướng Bắc và root pha lao. Đủ ô nguồn không có nghĩa là nguồn đã đạt yêu cầu.
+`candidate_manifest.json` xác định 50 nguồn hiện hành và giữ chín phiên bản cũ trong `history`. Mỗi PNG có prompt `.txt` đi kèm. Nguồn được tạo bằng công cụ ImageGen tích hợp và lưu nguyên byte. `Jobs/` và `production_job_plan.json` chứa thông số cho từng sheet. Khiêu Chiến E/SE v2 đã sửa biểu cảm gọi và xem lại trong Studio. Phá Nham cần sửa trục hướng Bắc và kiểm tra điểm đặt chân khi lao.
 
 ## Xem và chỉnh trong Studio
 
@@ -38,9 +40,11 @@ Gain nối sang sustain; sustain chỉ lặp khi trạng thái buff còn hiệu 
 
 ## Bằng chứng và phần tiếp theo
 
-- 41 bản quay Godot, đủ 16 pose mỗi nguồn; 7.380 frame video giải mã được.
-- Vòng lặp sustain Thiết Bích và trạng thái Khiêu Chiến đã xem mối nối thực tế 14 → 15 → 0 → 1.
+- 50 bản quay Godot, đủ 16 pose mỗi nguồn và 9.000 frame video giải mã được.
+- Đã xem đoạn nối 14 → 15 → 0 → 1 của vòng lặp Thiết Bích, Khiêu Chiến và Sơn Thần Giáng Thế.
 - 119 test công cụ đã chạy qua. Báo cáo và ghi chú hình ảnh nằm trong `Implementation/Reports/Evidence/Actor_Batch_20261116c/`.
 - Chưa áp dụng phê duyệt nguồn C; catalogue và PNG runtime hiện hành giữ nguyên.
 
-Còn chín nguồn Sơn Thần Giáng Thế: năm sheet nhân vật, bốn VFX. Tiếp tục sửa các hold đã ghi và kiểm tra root/neutral ở camera cố định. `native_media_audit.current.json` và `capture_sample_plan.current.json` phản ánh mốc mới; báo cáo pilot và các tài liệu Checkpoint25/33 giữ bằng chứng của mốc trước. Tiếp tục kiểm tra đủ tám hướng, chuyển về idle, tỷ lệ ở camera gameplay rộng, lớp che khuất và cue từ gameplay. Frame nguồn và video xuất theo clock 60 FPS chưa chứng minh FPS thực tế của game trên máy người chơi.
+Mở `Implementation/Reports/Evidence/Actor_Assembly_20261117a/Sanctuary_TC06_v2/project.json` để xem năm hướng của Sơn Thần Giáng Thế ở cùng tỷ lệ. Ba phiến đá xuất hiện theo ba neo riêng rồi hòa vào vùng duy trì. Tâm vùng và khoảng mở phía trước dùng cùng tọa độ qua các hướng. Trục Bắc tại một số pose vẫn cần căn lại khi so với idle.
+
+`native_media_audit.current.json` và `capture_sample_plan.current.json` ghi kết quả hiện tại. Công việc tích hợp còn phần chuyển về idle, hướng đối diện, tỷ lệ camera rộng, lớp che khuất và cue ở gameplay. Video Studio dùng đồng hồ xuất 60 FPS. Đo FPS trên map và xử lý cue máy chủ là các bước kiểm tra riêng.
