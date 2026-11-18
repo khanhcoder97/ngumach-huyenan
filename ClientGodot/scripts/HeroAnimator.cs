@@ -8,7 +8,7 @@ namespace Ngumach.VisualReboot;
 public partial class HeroAnimator : Sprite2D
 {
     private sealed record PoseFrame(Texture2D Texture,Rect2 Rect,Vector2 Pivot,bool Flip);
-    private sealed record Clip(double Duration,float Height,PoseFrame[] Frames);
+    private sealed record Clip(double Duration,float Height,PoseFrame[] Frames,double Release,Vector2 Muzzle);
     private readonly Dictionary<string,Clip[]> _clips=new();
     private readonly Dictionary<string,Texture2D> _textures=new();
     private int _direction=4,_actionDirection=4;
@@ -18,13 +18,17 @@ public partial class HeroAnimator : Sprite2D
     private double _clock,_actionClock;
     private (string Action,int Direction,int PoseFrame)? _review;
     public int DisplayedFrame{get;private set;}
+    internal int ActionDirection=>_actionDirection;
     public int AnimationFrameCount=>16;
+    public const float BodyHeight=36f;
+    public string AssetRoot{get;init;}="res://assets/motion16/";
+    public event Action<Vector2>? ProjectileReleased;
     public bool IsAttacking=>_action.Length>0;
     public string CurrentAction=>_review?.Action??(_action.Length>0?_action:_moving?"walk":"idle");
     public override void _Ready()
     {
         RegionEnabled=true;Centered=false;TextureFilter=TextureFilterEnum.Nearest;
-        using var json=JsonDocument.Parse(FileAccess.GetFileAsString("res://assets/motion16/manifest.json"));
+        using var json=JsonDocument.Parse(FileAccess.GetFileAsString(AssetRoot+"manifest.json"));
         foreach(var action in json.RootElement.GetProperty("clips").EnumerateObject())
         {
             var directions=new List<Clip>();
@@ -34,12 +38,21 @@ public partial class HeroAnimator : Sprite2D
                 foreach(var f in clip.GetProperty("frames").EnumerateArray())
                 {
                     string file=f.GetProperty("file").GetString()!;
-                    if(!_textures.TryGetValue(file,out var texture)){texture=GD.Load<Texture2D>("res://assets/motion16/"+file);_textures[file]=texture;}
+                    if(!_textures.TryGetValue(file,out var texture))
+                    {
+                        string path=file.StartsWith("res://",StringComparison.Ordinal)?file:AssetRoot+file;
+                        texture=GD.Load<Texture2D>(path)??throw new InvalidOperationException("Motion texture unavailable: "+path);
+                        _textures[file]=texture;
+                    }
                     var r=f.GetProperty("rect");var p=f.GetProperty("pivot");
                     frames.Add(new PoseFrame(texture,new Rect2(r[0].GetSingle(),r[1].GetSingle(),r[2].GetSingle(),r[3].GetSingle()),new Vector2(p[0].GetSingle(),p[1].GetSingle()),f.GetProperty("flip").GetBoolean()));
                 }
                 if(frames.Count!=16)throw new InvalidOperationException("Motion clip must contain16 authored poses");
-                directions.Add(new Clip(clip.GetProperty("duration").GetDouble(),clip.GetProperty("sourceHeight").GetSingle(),frames.ToArray()));
+                double duration=clip.GetProperty("duration").GetDouble();
+                double release=clip.TryGetProperty("release",out var at)?at.GetDouble():-1;
+                var muzzle=clip.TryGetProperty("muzzle",out var m)?new Vector2(m[0].GetSingle(),m[1].GetSingle()):Vector2.Zero;
+                if(release>=duration)throw new InvalidOperationException("Release time must be inside the motion clip.");
+                directions.Add(new Clip(duration,clip.GetProperty("sourceHeight").GetSingle(),frames.ToArray(),release,muzzle));
             }
             if(directions.Count!=8)throw new InvalidOperationException("Motion clip must cover8directions");
             _clips[action.Name]=directions.ToArray();
@@ -55,13 +68,27 @@ public partial class HeroAnimator : Sprite2D
     }
     public void Attack()=>StartAction("attack");
     public void Cast()=>StartAction("cast");
+    public bool TryCast()
+    {
+        if(IsAttacking)return false;
+        Cast();
+        return true;
+    }
     public void ReviewPose(string action,int direction,int frame){_review=(action,direction,frame);RenderFrame();}
     public void ClearReview(){_review=null;_action="";_clock=0;RenderFrame();}
     public override void _Process(double delta)
     {
         if(_review!=null)return;
         _clock+=delta;
-        if(_action.Length>0){_actionClock+=delta;if(_actionClock>=_clips[_action][_actionDirection].Duration)_action="";}
+        if(_action.Length>0)
+        {
+            var clip=_clips[_action][_actionDirection];
+            var previous=_actionClock;
+            _actionClock+=delta;
+            if(previous<clip.Release&&_actionClock>=clip.Release)
+                ProjectileReleased?.Invoke(clip.Muzzle*BodyHeight);
+            if(_actionClock>=clip.Duration){_action="";if(clip.Release>=0)_clock=0;}
+        }
         RenderFrame();
     }
     private void RenderFrame()
@@ -74,6 +101,6 @@ public partial class HeroAnimator : Sprite2D
         if(ReferenceEquals(_shown,frame))return;_shown=frame;
         Texture=frame.Texture;RegionRect=frame.Rect;FlipH=frame.Flip;
         var pivot=frame.Pivot;if(frame.Flip)pivot.X=frame.Rect.Size.X-pivot.X;
-        Offset=-pivot;Scale=Vector2.One*(36f/clip.Height);
+        Offset=-pivot;Scale=Vector2.One*(BodyHeight/clip.Height);
     }
 }

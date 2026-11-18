@@ -23,4 +23,18 @@ Góc xoay áp dụng cho mũi tên lá và vệt lá tan. Dấu rễ giữ hư�
 
 Toàn gói có 128 tư thế nhân vật và 32 pha VFX nguồn. Godot Movie Maker ghi ở 60 FPS. Mười video nguồn giải mã đủ 1.800 frame, tám video ghép đủ 960 frame. Xem kết quả theo hướng trong `native_audit.json` và bản tổng hợp `Implementation/Reports/Evidence/Actor_Batch_20261118a/native_audit.current.json`.
 
-Các khoảng cách, nhịp bắn và thời điểm chạm trong bảng là giá trị để xem hoạt ảnh trong Studio. Đưa vào gameplay còn cần chuyển tiếp từ và về idle, kiểm tra ở camera rộng, và nối dấu rễ với xác nhận trúng của hệ thống chiến đấu. Dữ liệu catalog và sprite hiện hành của client vẫn ở phiên bản trước.
+## Thử Khóa Mạch tại Bến Mưa
+
+Trên Windows, mở PowerShell tại thư mục dự án và chạy:
+
+```powershell
+& .\ClientGodot\Run_Preview.ps1 -LinhCungPractice
+```
+
+Rễ Nước tập luyện được chọn lúc vào khu tập. Nhấn **1** hoặc bấm ô Khóa Mạch để giương cung và bắn. Dùng **WASD** để đổi hướng hoặc vị trí. Bấm vào bia để khóa lại mục tiêu, bấm chuột phải để nhắm theo hướng đứng. **F2** đổi giữa camera rộng và camera gần.
+
+Ở cảnh này, mũi tên xuất phát từ đầu tên ở tư thế kéo dây cuối. Mũi tên dừng ở va chạm đầu tiên với bia hoặc địa hình. Chạm bia mới kích hoạt lá tan và dấu rễ. Phần thử đã có tư thế chờ trước và sau chiêu. Dấu rễ ở khu tập dùng thời lượng hiển thị 0,96 giây để xem animation. Kỹ năng online còn cần hợp đồng cast, xác nhận trúng và trạng thái dấu từ server.
+
+Chạy lại bài kiểm bằng `Run_Preview.ps1 -LinhCungPractice -Test`. Lệnh `python Tools/ArtProduction/export_linh_cung_practice.py --check` đối chiếu pack ở `ClientGodot/assets/linh_cung_practice` với nguồn và biên bản Studio.
+
+Bài chạy Godot đã kiểm tra đủ 128 tư thế nhân vật, nhận nút HUD và phím 1, chặn lần bấm lặp khi đang giương cung, xử lý bia và tường, rồi trở lại thế chờ. Các ảnh trong `Implementation/Reports/Evidence/Linh_Cung_Practice_20261118a/` chụp tại camera rộng. Bài đo riêng khi di chuyển với GeForce 820M đạt trung bình 60,06 FPS trên 722 frame, p95 16,94 ms.

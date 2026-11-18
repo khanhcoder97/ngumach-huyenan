@@ -30,6 +30,8 @@ public partial class PreviewHud : Node2D
     {if(_ink!=null){_ink.QueueRedraw();_cache.RenderTargetUpdateMode=SubViewport.UpdateMode.Once;}QueueRedraw();}
     private readonly Dictionary<(string,int),TextLine> _textCache=new();
     private Texture2D _skills=null!;
+    private TextureRect _avatar=null!;
+    private (Texture2D Texture,Rect2 Region)? _practiceSkill;
     private readonly Rect2[] _icons=new Rect2[6];
     private MoonMapView _map=null!;
     private int _hover=-1,_questTab;
@@ -63,7 +65,7 @@ public partial class PreviewHud : Node2D
         for(int i=0;i<6;i++){var f=manifest.RootElement.GetProperty("uiIcons")[i];var r=f.GetProperty("rect");var b=f.GetProperty("contentBounds");_icons[i]=new Rect2(r[0].GetSingle()+b[0].GetSingle()-2,r[1].GetSingle()+b[1].GetSingle()-2,b[2].GetSingle()-b[0].GetSingle()+4,b[3].GetSingle()-b[1].GetSingle()+4);}
         var avatar=MoonGlassTheme.Image(MoonGlassTheme.Portrait,new Vector2(78,78),false);avatar.Position=new Vector2(29,31);avatar.Size=new Vector2(78,78);
         var shader=new Shader{Code="shader_type canvas_item; void fragment(){ if(distance(UV,vec2(0.5))>0.49){discard;} vec2 p=(UV-vec2(0.5))*0.78+vec2(0.53,0.49); COLOR=texture(TEXTURE,p); }"};
-        avatar.Material=new ShaderMaterial{Shader=shader};AddChild(avatar);
+        avatar.Material=new ShaderMaterial{Shader=shader};AddChild(avatar);_avatar=avatar;
         _map=new MoonMapView{Position=new Vector2(1060,54),Size=new Vector2(188,110)};AddChild(_map);
         AddButton(new Rect2(22,134,40,38),"Character","Nhân vật · C",()=>MenuPressed?.Invoke("Character"));
         AddButton(new Rect2(68,134,40,38),"Inventory","Túi đồ · I",()=>InventoryPressed?.Invoke());
@@ -79,6 +81,16 @@ public partial class PreviewHud : Node2D
         AddButton(new Rect2(22,608,40,32),"Chat","Nhật ký hệ thống",()=>_chat=!_chat);
         InvalidateRender();
     }
+    public void ConfigurePractice(Texture2D icon,Rect2 iconRegion,Texture2D body,Rect2 portrait)
+    {
+        _practiceSkill=(icon,iconRegion);
+        _avatar.Material=null;
+        _avatar.Texture=new AtlasTexture{Atlas=body,Region=portrait,FilterClip=true};
+        _avatar.StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered;
+        StatusText="Luyện Linh Cung · 1 bắn · F2 đổi tầm nhìn";
+        InvalidateRender();
+    }
+    private bool SkillUnavailable(int slot)=>_practiceSkill.HasValue?slot!=0:Online&&slot>=3;
     private void AddButton(Rect2 rect,string icon,string tip,Action action)=>_buttons.Add((rect,icon,tip,action));
     public void ApplyOnline(NativeOnlineFrame frame)
     {
@@ -198,15 +210,20 @@ public partial class PreviewHud : Node2D
         Panel(new Rect2(22,22,348,100),.79f);
         _drawer.DrawCircle(new Vector2(68,70),42,new Color(.3f,.33f,.55f,.8f));_drawer.DrawArc(new Vector2(68,70),43,0,Mathf.Tau,64,MoonGlassTheme.Gold,1.3f,true);
         _drawer.DrawArc(new Vector2(68,70),40,-Mathf.Pi*.7f,Mathf.Pi*.65f,48,MoonGlassTheme.Silver,1.2f,true);
-        Text(new Vector2(120,43),"MINH KIẾM",17);Text(new Vector2(235,42),Online?"KIẾM KHÁCH":"THỬ GIAO DIỆN",10,MoonGlassTheme.Gold);
+        bool practice=_practiceSkill.HasValue;
+        Text(new Vector2(120,43),practice?"LINH CUNG":"MINH KIẾM",17);
+        Text(new Vector2(235,42),practice?"LUYỆN TẬP":Online?"KIẾM KHÁCH":"THỬ GIAO DIỆN",10,MoonGlassTheme.Gold);
         var self=_frame?.World?.self;int hp=self?.hp??120,maxHp=self?.maxHp??120,mp=self?.mp??100,maxMp=self?.maxMp??100;
         Bar(new Rect2(120,51,233,15),hp/(float)Math.Max(1,maxHp),Color.FromHtml("#b84478"),MoonGlassTheme.Hp);Center(new Vector2(236,63),$"{hp} / {maxHp}",10);
         Bar(new Rect2(120,73,233,12),mp/(float)Math.Max(1,maxMp),Color.FromHtml("#4265b8"),MoonGlassTheme.Blue);Center(new Vector2(236,83),$"{mp} / {maxMp}",9);
         _drawer.DrawCircle(new Vector2(124,101),3,Online?Color.FromHtml("#83ddc3"):MoonGlassTheme.Violet);
         Text(new Vector2(134,105),Online?"Bến Mưa":"Ngoại tuyến",11,MoonGlassTheme.Muted);
         long? coins=_frame?.Inventory?.currencies?.FirstOrDefault(c=>c.currencyId=="COIN")?.amount;
-        Text(new Vector2(252,105),Online?"Đồng  "+(coins?.ToString()??"—"):"Kiếm ý",11,MoonGlassTheme.Gold);
-        if(!Online||self!=null)for(int i=0;i<5;i++)_drawer.DrawCircle(new Vector2(328+i*5,103),1.5f,i<(self?.swordIntent??0)?MoonGlassTheme.Violet:new Color(.61f,.64f,.8f,.3f));
+        if(!practice)
+        {
+            Text(new Vector2(252,105),Online?"Đồng  "+(coins?.ToString()??"—"):"Kiếm ý",11,MoonGlassTheme.Gold);
+            if(!Online||self!=null)for(int i=0;i<5;i++)_drawer.DrawCircle(new Vector2(328+i*5,103),1.5f,i<(self?.swordIntent??0)?MoonGlassTheme.Violet:new Color(.61f,.64f,.8f,.3f));
+        }
         if(_target is {} target)
         {
             Panel(new Rect2(448,22,376,100),.80f);
@@ -227,11 +244,11 @@ public partial class PreviewHud : Node2D
         var q=NativeQuestCatalog.Tracked(_frame);
         if(_questTab==0)
         {
-            Text(new Vector2(36,247),q!=null?NativeQuestCatalog.Find(q.questId)?.Title??"Nhật ký":"Hành trình Bến Mưa",15,MoonGlassTheme.Gold);
-            var summary=Online?NativeQuestCatalog.Summary(q):"Khám phá ngôi làng bên dòng nước.";
+            Text(new Vector2(36,247),practice?"Khu tập bắn Bến Mưa":q!=null?NativeQuestCatalog.Find(q.questId)?.Title??"Nhật ký":"Hành trình Bến Mưa",15,MoonGlassTheme.Gold);
+            var summary=practice?"1 · Giương cung và bắn Khóa Mạch":Online?NativeQuestCatalog.Summary(q):"Khám phá ngôi làng bên dòng nước.";
             Text(new Vector2(36,272),summary.Length>35?summary[..32]+"…":summary,12);
-            Text(new Vector2(36,296),q!=null?NativeQuestCatalog.StateLabel(q.state):"WASD · di chuyển  /  E · tương tác",11,MoonGlassTheme.Muted);
-            Text(new Vector2(36,329),"J  Mở nhật ký",11,MoonGlassTheme.Silver);
+            Text(new Vector2(36,296),practice?"Chuột trái chọn bia · Chuột phải bỏ":q!=null?NativeQuestCatalog.StateLabel(q.state):"WASD · di chuyển  /  E · tương tác",11,MoonGlassTheme.Muted);
+            Text(new Vector2(36,329),practice?"WASD di chuyển · F2 đổi tầm nhìn":"J  Mở nhật ký",11,MoonGlassTheme.Silver);
         }
         else{Text(new Vector2(36,254),_questTab==1?"Nhiệm vụ hằng ngày":"Sự kiện đang diễn ra",14,MoonGlassTheme.Gold);Text(new Vector2(36,281),"Chưa có dữ liệu trong phiên này.",12,MoonGlassTheme.Muted);}
         Panel(new Rect2(1050,22,208,160),.8f);Text(new Vector2(1063,43),"BẾN MƯA",13,MoonGlassTheme.Ink);Text(new Vector2(1230,43),"N",11,MoonGlassTheme.Gold);
@@ -252,10 +269,15 @@ public partial class PreviewHud : Node2D
         var positions=SkillPositions;
         for(int i=0;i<6;i++)
         {
-            var p=positions[i];bool disabled=Online&&i>=3;
+            var p=positions[i];bool disabled=SkillUnavailable(i);
             _drawer.DrawCircle(p,27,new Color(.03f,.05f,.15f,.35f));_drawer.DrawCircle(p,25,_slotPress[i]>0?new Color(.72f,.67f,1,.88f):new Color(.21f,.24f,.42f,.78f));
             _drawer.DrawArc(p,25,0,Mathf.Tau,48,disabled?new Color(.5f,.55f,.7f,.5f):_hover==i?MoonGlassTheme.Gold:MoonGlassTheme.Silver,_hover==i?2.3f:1,true);
-            var source=_icons[i];var size=source.Size*(34/Math.Max(source.Size.X,source.Size.Y));_drawer.DrawTextureRectRegion(_skills,new Rect2(p-size/2,size),source,disabled?new Color(.55f,.57f,.74f,.62f):Colors.White);
+            if(!practice||i==0)
+            {
+                var (texture,source)=_practiceSkill??(_skills,_icons[i]);
+                var size=source.Size*(34/Math.Max(source.Size.X,source.Size.Y));
+                _drawer.DrawTextureRectRegion(texture,new Rect2(p-size/2,size),source,disabled?new Color(.55f,.57f,.74f,.62f):Colors.White);
+            }
             if(_slotPress[i]>0)_drawer.DrawArc(p,29,0,Mathf.Tau,32,Colors.White,2);
             double remaining=Cooldown(i);if(remaining>0){_drawer.DrawCircle(p,24,new Color(.05f,.06f,.17f,.66f));Center(p+new Vector2(0,5),Math.Ceiling(remaining).ToString(),14,MoonGlassTheme.Ink);}
             _drawer.DrawCircle(p+new Vector2(17,18),8,new Color(.15f,.18f,.34f,.96f));Center(p+new Vector2(17,22),(i+1).ToString(),9,MoonGlassTheme.Ink);
@@ -265,12 +287,12 @@ public partial class PreviewHud : Node2D
         Text(new Vector2(34,670),$"{Coordinates.X:0.0}, {Coordinates.Y:0.0}    ·    "+(StaticArtReview?"Ảnh tĩnh · không đo FPS":$"{Engine.GetFramesPerSecond()} FPS"),11,MoonGlassTheme.Muted);
         string status=Friendly(StatusText);Text(new Vector2(34,691),status.Length>43?status[..40]+"…":status,11);
         if(_chat){Panel(new Rect2(22,465,327,135),.86f);Text(new Vector2(35,486),"Nhật ký hệ thống",13,MoonGlassTheme.Gold);int y=509;foreach(var message in _messages.TakeLast(4)){Text(new Vector2(35,y),message.Length>42?message[..39]+"…":message,11,MoonGlassTheme.Muted);y+=21;}}
-        string? tip=_hover>=0?SkillVfxPlayer.Names[_hover]:_buttons.Where(b=>b.Rect.HasPoint(GetLocalMousePosition())).Select(b=>b.Tip).FirstOrDefault();
+        string? tip=_hover>=0?(practice?(_hover==0?LinhCungPractice.SkillName:"Ô kỹ năng khóa"):SkillVfxPlayer.Names[_hover]):_buttons.Where(b=>b.Rect.HasPoint(GetLocalMousePosition())).Select(b=>b.Tip).FirstOrDefault();
         if(tip!=null)
         {
             var at=GetLocalMousePosition()+new Vector2(-95,-65);at.X=Mathf.Clamp(at.X,16,1020);at.Y=Mathf.Clamp(at.Y,20,640);
             Panel(new Rect2(at,new Vector2(240,_hover>=0?49:31)),.96f);Text(at+new Vector2(10,20),tip,13,MoonGlassTheme.Ink);
-            if(_hover>=0)Text(at+new Vector2(10,38),Online&&_hover>=3?"Chưa khả dụng trong phiên này":"Phím "+(_hover+1),10,MoonGlassTheme.Muted);
+            if(_hover>=0)Text(at+new Vector2(10,38),SkillUnavailable(_hover)?"Chưa khả dụng trong phiên này":"Phím "+(_hover+1),10,MoonGlassTheme.Muted);
         }
     }
 }
