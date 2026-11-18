@@ -1,11 +1,14 @@
 """Package reviewed Linh Cung skill sources for local Bến Mưa practice."""
 import argparse
+from itertools import accumulate
 import json
 import shutil
 
 from build_linh_cung_khoa_mach_preview import ARROW, MARK, TAIL, TARGET, FACING_LAYOUTS
 from prepare_linh_cung_khoa_mach_review import OUTPUT
 from prepare_linh_cung_day_gai import BODY as TRAP_BODY, EFFECTS as TRAP_EFFECTS, OUTPUT as TRAP_OUTPUT
+from prepare_linh_cung_lien_chau import (ARROW as VOLLEY_ARROW, NOCK as VOLLEY_NOCK,
+                                       OUTPUT as VOLLEY_OUTPUT, RELEASE_MS, RELEASE_POSES, SOURCE_MS)
 from prepare_thach_chuy_candidates_20261116c import ART, ROOT, inspect, read, sha
 
 CLIENT = ROOT / 'ClientGodot/assets'
@@ -21,7 +24,13 @@ def export(check):
     trap_audit_path = TRAP_OUTPUT / 'native_audit.json'
     assert trap_review['nativeAuditSha256'] == sha(trap_audit_path)
     trap_audit = read(trap_audit_path)
-    reviewed = {item['id']: item['sourceSha256'] for item in audit['sourceViews'] + trap_audit['sourceViews']}
+    volley_review = read(VOLLEY_OUTPUT / 'manual_review.json')
+    volley_audit_path = VOLLEY_OUTPUT / 'native_audit.json'
+    assert volley_review['nativeAuditSha256'] == sha(volley_audit_path)
+    volley_audit = read(volley_audit_path)
+    assert set(volley_review['nativeAssemblyFacingsReviewed']) == set(FACINGS)
+    reviewed = {item['id']: item['sourceSha256'] for report in (audit, trap_audit, volley_audit)
+                for item in report['sourceViews']}
     manifest = dict(clips={}, effects={}, sources={})
 
     def package(identifier, record):
@@ -113,6 +122,28 @@ def export(check):
         if role == 'armed':
             effect['iconRect'] = icon_rect(direction['frames'][0])
         manifest['effects']['trap_' + role] = effect
+    volley = []
+    for facing in FACINGS:
+        identifier = 'class_linh_cung_skill_03_' + facing.lower()
+        record, direction = candidate(identifier, VOLLEY_OUTPUT)
+        registration = read(VOLLEY_OUTPUT / 'Candidate_Studio' / identifier / 'source_registration.json')
+        assert direction['direction'] == facing and record['sourceFrameDurationsMs'] == list(SOURCE_MS)
+        grips = registration['releaseSourcePoints']
+        assert len(grips) == len(RELEASE_POSES)
+        releases = []
+        for index, time, grip in zip(RELEASE_POSES, RELEASE_MS, grips):
+            pivot = direction['frames'][index]['pivot']
+            muzzle = [(point - root) / direction['referenceHeight'] for point, root in zip(grip, pivot)]
+            releases.append(dict(time=time / 1000, offset=muzzle))
+        volley.append(dict(format_clip(direction, package(identifier, record), sum(SOURCE_MS) / 1000),
+                           frameEnds=[end / 1000 for end in accumulate(SOURCE_MS)], releases=releases))
+    manifest['clips']['volley'] = volley
+    for label, identifier in (('volley_arrow', VOLLEY_ARROW), ('volley_nock', VOLLEY_NOCK)):
+        record, direction = candidate(identifier, VOLLEY_OUTPUT)
+        effect = format_clip(direction, package(identifier, record), sum(record['sourceFrameDurationsMs']) / 1000)
+        effect['iconRect'] = icon_rect(direction['frames'][0])
+        effect['sourceHeight'] = effect['iconRect'][2]
+        manifest['effects'][label] = effect
     records = {record['id']: record for record in read(ART / 'generation_records.json')}
     approvals = {record['id']: record['sourceSha256'] for record in read(ART / 'visual_review.json')['sourceApprovals']}
     for label, identifier, duration in (('mark', MARK, .96), ('dummy', TARGET, 1.6),
@@ -133,7 +164,7 @@ def export(check):
         assert output.read_text(encoding='utf-8') == document, 'Practice pack is out of date'
     else:
         output.write_text(document, encoding='utf-8', newline='\n')
-    print('Linh Cung practice: two skills, eight authored facings each, six skill effects and two reused effects.')
+    print('Linh Cung practice: three skills with eight authored facings each.')
 
 
 if __name__ == '__main__':

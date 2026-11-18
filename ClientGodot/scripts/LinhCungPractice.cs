@@ -72,8 +72,9 @@ public partial class LinhCungPractice : Node2D
     private Vector2? _castTarget;
     private double _flightTime, _dummyTime, _tailTime, _markTime;
     public bool Selected => _selectedTarget != null;
-    public bool IsCasting => _animator.CurrentAction is "cast" or "trap";
+    public bool IsCasting => _animator.CurrentAction is "cast" or "trap" or "volley";
     public LinhCungTrapPractice Trap { get; private set; } = null!;
+    public LinhCungVolleyPractice Volley { get; private set; } = null!;
     public bool LowFx { get; set; }
     public event Action<string, bool>? Feedback;
     internal bool ArrowVisible => _arrow.Sprite.Visible;
@@ -115,6 +116,9 @@ public partial class LinhCungPractice : Node2D
         Trap = new LinhCungTrapPractice();
         AddChild(Trap);
         Trap.Configure(hero, animator, actors, environment, effects, face);
+        Volley = new LinhCungVolleyPractice();
+        AddChild(Volley);
+        Volley.Configure(hero, animator, new Node2D[] { _dummy, Trap.Target }, effects);
         _animator.ActionReleased += Release;
     }
 
@@ -141,6 +145,7 @@ public partial class LinhCungPractice : Node2D
     }
 
     public void ClearTarget() { _selectedTarget = null; _ring.Visible = false; }
+    public bool TryVolley(Vector2 aim) => Volley.TryCast(aim, _selectedTarget?.GlobalPosition + TargetOffset);
 
     public bool TryCast(Vector2 aim)
     {

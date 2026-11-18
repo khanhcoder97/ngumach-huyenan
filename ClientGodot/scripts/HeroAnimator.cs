@@ -8,7 +8,8 @@ namespace Ngumach.VisualReboot;
 public partial class HeroAnimator : Sprite2D
 {
     private sealed record PoseFrame(Texture2D Texture,Rect2 Rect,Vector2 Pivot,bool Flip);
-    private sealed record Clip(double Duration,float Height,PoseFrame[] Frames,double Release,Vector2 ReleaseOffset);
+    private sealed record ReleaseCue(double Time, Vector2 Offset);
+    private sealed record Clip(double Duration, float Height, PoseFrame[] Frames, double[]? FrameEnds, ReleaseCue[] Releases);
     private readonly Dictionary<string,Clip[]> _clips=new();
     private readonly Dictionary<string,Texture2D> _textures=new();
     private int _direction=4,_actionDirection=4;
@@ -49,16 +50,49 @@ public partial class HeroAnimator : Sprite2D
                 }
                 if(frames.Count!=16)throw new InvalidOperationException("Motion clip must contain16 authored poses");
                 double duration=clip.GetProperty("duration").GetDouble();
-                double release=clip.TryGetProperty("release",out var at)?at.GetDouble():-1;
-                var offset=clip.TryGetProperty("releaseOffset",out var m)?new Vector2(m[0].GetSingle(),m[1].GetSingle()):Vector2.Zero;
-                if(release>=duration)throw new InvalidOperationException("Release time must be inside the motion clip.");
-                directions.Add(new Clip(duration,clip.GetProperty("sourceHeight").GetSingle(),frames.ToArray(),release,offset));
+                var releases = new List<ReleaseCue>();
+                if (clip.TryGetProperty("releases", out var cues))
+                {
+                    foreach (var cue in cues.EnumerateArray())
+                        releases.Add(new ReleaseCue(cue.GetProperty("time").GetDouble(), ReadOffset(cue.GetProperty("offset"))));
+                }
+                else if (clip.TryGetProperty("release", out var at) && at.GetDouble() > 0)
+                {
+                    var offset = clip.TryGetProperty("releaseOffset", out var m) ? ReadOffset(m) : Vector2.Zero;
+                    releases.Add(new ReleaseCue(at.GetDouble(), offset));
+                }
+                double previous = 0;
+                foreach (var release in releases)
+                {
+                    if (release.Time <= previous || release.Time >= duration)
+                        throw new InvalidOperationException("Release times must be increasing and inside the motion clip.");
+                    previous = release.Time;
+                }
+                double[]? frameEnds = null;
+                if (clip.TryGetProperty("frameEnds", out var timing))
+                {
+                    frameEnds = new double[frames.Count];
+                    if (timing.GetArrayLength() != frames.Count)
+                        throw new InvalidOperationException("Each source pose needs a frame end time.");
+                    previous = 0;
+                    for (int i = 0; i < frameEnds.Length; i++)
+                    {
+                        frameEnds[i] = timing[i].GetDouble();
+                        if (frameEnds[i] <= previous) throw new InvalidOperationException("Frame end times must be increasing.");
+                        previous = frameEnds[i];
+                    }
+                    if (previous != duration) throw new InvalidOperationException("The last pose must end at the clip duration.");
+                }
+                directions.Add(new Clip(duration, clip.GetProperty("sourceHeight").GetSingle(), frames.ToArray(),
+                                        frameEnds, releases.ToArray()));
             }
             if(directions.Count!=8)throw new InvalidOperationException("Motion clip must cover8directions");
             _clips[action.Name]=directions.ToArray();
         }
         RenderFrame();
     }
+    private static Vector2 ReadOffset(JsonElement offset) => new(offset[0].GetSingle(), offset[1].GetSingle());
+    internal Vector2 FirstReleaseOffset(string action) => _clips[action][_actionDirection].Releases[0].Offset * BodyHeight;
     public void SetFacing(int direction)=>_direction=((direction%8)+8)%8;
     public void SetMoving(bool moving){if(moving!=_moving)_clock=0;_moving=moving;}
     private void StartAction(string action)
@@ -85,9 +119,14 @@ public partial class HeroAnimator : Sprite2D
             var clip=_clips[_action][_actionDirection];
             var previous=_actionClock;
             _actionClock+=delta;
-            if(previous<clip.Release&&_actionClock>=clip.Release)
-                ActionReleased?.Invoke(_action,clip.ReleaseOffset*BodyHeight);
-            if(_actionClock>=clip.Duration){_action="";if(clip.Release>=0)_clock=0;}
+            foreach (var release in clip.Releases)
+                if (previous < release.Time && _actionClock >= release.Time)
+                    ActionReleased?.Invoke(_action, release.Offset * BodyHeight);
+            if (_actionClock >= clip.Duration)
+            {
+                _action = "";
+                if (clip.Releases.Length > 0) _clock = 0;
+            }
         }
         RenderFrame();
     }
@@ -96,11 +135,19 @@ public partial class HeroAnimator : Sprite2D
         if(_clips.Count==0)return;
         string action=CurrentAction;int direction=_review?.Direction??(_action.Length>0?_actionDirection:_direction);
         var clip=_clips[action][direction];
-        int phase=_review?.PoseFrame??(_action.Length>0?Math.Min(15,(int)(_actionClock/clip.Duration*16)):(int)(_clock/clip.Duration*16)%16);
+        int phase = _review?.PoseFrame ?? CurrentPose(clip);
         var frame=clip.Frames[phase];DisplayedFrame=phase;
         if(ReferenceEquals(_shown,frame))return;_shown=frame;
         Texture=frame.Texture;RegionRect=frame.Rect;FlipH=frame.Flip;
         var pivot=frame.Pivot;if(frame.Flip)pivot.X=frame.Rect.Size.X-pivot.X;
         Offset=-pivot;Scale=Vector2.One*(BodyHeight/clip.Height);
+    }
+    private int CurrentPose(Clip clip)
+    {
+        if (_action.Length == 0) return (int)(_clock / clip.Duration * 16) % 16;
+        if (clip.FrameEnds == null) return Math.Min(15, (int)(_actionClock / clip.Duration * 16));
+        for (int i = 0; i < clip.FrameEnds.Length; i++)
+            if (_actionClock < clip.FrameEnds[i]) return i;
+        return 15;
     }
 }

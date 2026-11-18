@@ -49,7 +49,7 @@ public partial class VisualPreview
                 for (int i = 0; i < 12; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
             }
             await Capture("ready");
-            KeyPress(Key.Key3);
+            KeyPress(Key.Key4);
             await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
             Check(!practice.IsCasting && practice.Releases == 0, "Unavailable skill does not start the animation.");
             Click(PreviewHud.SkillCenters()[0]);
@@ -106,7 +106,7 @@ public partial class VisualPreview
             var start = _hero.GlobalPosition;
             Click(PreviewHud.SkillCenters()[1]);
             await Until(() => trap.IsAiming, "The second HUD button selects a trap position.");
-            Click(PreviewHud.SkillCenters()[2]);
+            Click(PreviewHud.SkillCenters()[3]);
             Check(trap.IsAiming && trap.Placed == 0, "Clicking another HUD slot never plants under the HUD.");
             KeyPress(Key.Escape);
             await Until(() => !trap.IsAiming, "Escape cancels ground selection.");
@@ -200,6 +200,74 @@ public partial class VisualPreview
             }
             Check(trap.Placed == 2, "An animation alone cannot add a trap.");
             GD.Print($"LINH_CUNG_TRAP PASS assertions={assertions - beforeTrap} facings=8 authoringFrames=128");
+
+            int beforeVolley = assertions;
+            var volley = practice.Volley;
+            Check(practice.SelectAt(practice.TargetPoint), "The volley can lock the east dummy before drawing.");
+            Click(PreviewHud.SkillCenters()[2]);
+            await Until(() => volley.Active, "The third HUD button starts Liên Châu.");
+            Check(animator.CurrentAction == "volley" && volley.Released == 0 && volley.InFlight == 0,
+                  "Windup keeps all arrows in the quiver.");
+            await Until(() => volley.NocksVisible == 5, "Five ready dots appear before releasing.");
+            await Capture("volley_ready");
+            var releaseFrames = new List<int>();
+            bool flightCaptured = false;
+            for (int frame = 0; volley.Active && frame < 90; frame++)
+            {
+                if (volley.Released > releaseFrames.Count)
+                {
+                    Check(volley.Released == releaseFrames.Count + 1, "Each release comes from a separate action cue.");
+                    releaseFrames.Add(frame);
+                    Check(volley.NocksVisible == 5 - volley.Released, "A firing cue removes one ready dot.");
+                }
+                if (!flightCaptured && releaseFrames.Count == 2 && volley.InFlight == 2)
+                {
+                    flightCaptured = true;
+                    await Capture("volley_flight");
+                    KeyPress(Key.Key3);
+                }
+                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+            }
+            Check(!volley.Active && volley.Released == 5 && releaseFrames.Count == 5, "The volley resolves exactly five times.");
+            Check(flightCaptured, "Two distinct arrows can fly at once.");
+            for (int i = 1; i < releaseFrames.Count; i++)
+                Check(releaseFrames[i] - releaseFrames[i - 1] is 6 or 7, "Shot spacing is 110 ms at fixed 60 FPS.");
+            Check(volley.Hits == 3 && volley.Capped == 2 && volley.Blocked == 0 && volley.Expired == 0,
+                  "Five arrows contact the dummy, with only three counted hits.");
+            await Capture("volley_result");
+            await Until(() => !practice.IsCasting, "The volley body recovers fully.");
+
+            var barrier = new StaticBody2D { Position = _hero.Position + new Vector2(58, -16), CollisionLayer = 1 };
+            AddChild(barrier);
+            barrier.AddChild(new CollisionShape2D { Shape = new RectangleShape2D { Size = new Vector2(8, 70) } });
+            for (int i = 0; i < 3; i++) await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+            KeyPress(Key.Key3);
+            await Until(() => volley.Active, "Key 3 starts the volley.");
+            await Until(() => !volley.Active, "The blocked burst resolves to recovery.");
+            Check(volley.Released == 5 && volley.Blocked == 5 && volley.Hits == 0 && volley.Capped == 0,
+                  "Terrain stops all five arrows before the selected dummy.");
+            barrier.QueueFree();
+            await Until(() => !practice.IsCasting, "The blocked volley body recovers.");
+
+            practice.ClearTarget();
+            for (int facing = 0; facing < 8; facing++)
+            {
+                FaceDirection(Vector2.Up.Rotated(facing * Mathf.Pi / 4));
+                KeyPress(Key.Key3);
+                await Until(() => animator.CurrentAction == "volley", $"Volley starts in facing {facing}.");
+                Check(animator.ActionDirection == facing, $"Volley selects its dedicated art for facing {facing}.");
+                var frames = new HashSet<int>();
+                for (int tick = 0; tick < 80 && practice.IsCasting; tick++)
+                {
+                    frames.Add(animator.DisplayedFrame);
+                    await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+                }
+                Check(frames.Count == 16, $"Volley facing {facing} renders all sixteen poses.");
+                await Until(() => !volley.Active, $"Volley facing {facing} resolves all projectiles.");
+                Check(volley.Released == 5 && volley.Hits + volley.Capped + volley.Blocked + volley.Expired == 5,
+                      $"Volley facing {facing} accounts for every distinct arrow.");
+            }
+            GD.Print($"LINH_CUNG_VOLLEY PASS assertions={assertions - beforeVolley} facings=8 authoringFrames=128");
             GetTree().Quit();
         }
         catch (Exception error)

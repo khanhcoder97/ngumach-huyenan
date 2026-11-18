@@ -81,20 +81,22 @@ public partial class PreviewHud : Node2D
         AddButton(new Rect2(22,608,40,32),"Chat","Nhật ký hệ thống",()=>_chat=!_chat);
         InvalidateRender();
     }
-    public void ConfigurePractice((Texture2D,Rect2) arrow,(Texture2D,Rect2) trap,Texture2D body,Rect2 portrait)
+    public void ConfigurePractice((Texture2D,Rect2) arrow,(Texture2D,Rect2) trap,(Texture2D,Rect2) volley,
+                                  Texture2D body,Rect2 portrait)
     {
-        _practiceSkills=new[]{arrow,trap};
+        _practiceSkills=new[]{arrow,trap,volley};
         _avatar.Material=null;
         _avatar.Texture=new AtlasTexture{Atlas=body,Region=portrait,FilterClip=true};
         _avatar.StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered;
-        StatusText="Luyện Linh Cung · 1 bắn · 2 đặt bẫy";
+        StatusText="Luyện Linh Cung";
         InvalidateRender();
     }
     private bool SkillUnavailable(int slot)=>_practiceSkills!=null?slot>=_practiceSkills.Length:Online&&slot>=3;
     private string SkillName(int slot)
     {
         if(_practiceSkills==null)return SkillVfxPlayer.Names[slot];
-        return slot switch{0=>LinhCungPractice.SkillName,1=>LinhCungTrapPractice.SkillName,_=>"Ô kỹ năng khóa"};
+        return slot switch{0=>LinhCungPractice.SkillName,1=>LinhCungTrapPractice.SkillName,
+                           2=>LinhCungVolleyPractice.SkillName,_=>"Ô kỹ năng khóa"};
     }
     private void AddButton(Rect2 rect,string icon,string tip,Action action)=>_buttons.Add((rect,icon,tip,action));
     public void ApplyOnline(NativeOnlineFrame frame)
@@ -250,8 +252,8 @@ public partial class PreviewHud : Node2D
         if(_questTab==0)
         {
             Text(new Vector2(36,247),practice?"Khu tập bắn Bến Mưa":q!=null?NativeQuestCatalog.Find(q.questId)?.Title??"Nhật ký":"Hành trình Bến Mưa",15,MoonGlassTheme.Gold);
-            var summary=practice?"1 bắn · 2 đặt bẫy · Chọn điểm đất":Online?NativeQuestCatalog.Summary(q):"Khám phá ngôi làng bên dòng nước.";
-            Text(new Vector2(36,272),summary.Length>35?summary[..32]+"…":summary,12);
+            var summary=practice?"1 Khóa Mạch · 2 Dây Gai · 3 Liên Châu":Online?NativeQuestCatalog.Summary(q):"Khám phá ngôi làng bên dòng nước.";
+            Text(new Vector2(36,272),!practice&&summary.Length>35?summary[..32]+"…":summary,12);
             Text(new Vector2(36,296),practice?"Chuột trái xác nhận · Chuột phải bỏ":q!=null?NativeQuestCatalog.StateLabel(q.state):"WASD · di chuyển  /  E · tương tác",11,MoonGlassTheme.Muted);
             Text(new Vector2(36,329),practice?"WASD di chuyển · F2 đổi tầm nhìn":"J  Mở nhật ký",11,MoonGlassTheme.Silver);
         }
@@ -281,7 +283,17 @@ public partial class PreviewHud : Node2D
             {
                 var (texture,source)=_practiceSkills==null?(_skills,_icons[i]):_practiceSkills[i];
                 var size=source.Size*(34/Math.Max(source.Size.X,source.Size.Y));
-                _drawer.DrawTextureRectRegion(texture,new Rect2(p-size/2,size),source,disabled?new Color(.55f,.57f,.74f,.62f):Colors.White);
+                if (practice && i == 2)
+                {
+                    size *= .65f;
+                    for (int row = -2; row <= 2; row++)
+                    {
+                        var offset = new Vector2(-2 * Math.Abs(row), row * 5);
+                        _drawer.DrawTextureRectRegion(texture, new Rect2(p + offset - size / 2, size), source, Colors.White);
+                    }
+                }
+                else _drawer.DrawTextureRectRegion(texture,new Rect2(p-size/2,size),source,
+                                                   disabled?new Color(.55f,.57f,.74f,.62f):Colors.White);
             }
             if(_slotPress[i]>0)_drawer.DrawArc(p,29,0,Mathf.Tau,32,Colors.White,2);
             double remaining=Cooldown(i);if(remaining>0){_drawer.DrawCircle(p,24,new Color(.05f,.06f,.17f,.66f));Center(p+new Vector2(0,5),Math.Ceiling(remaining).ToString(),14,MoonGlassTheme.Ink);}

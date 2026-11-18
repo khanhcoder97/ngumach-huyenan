@@ -22,6 +22,20 @@ Mở `Implementation/Reports/Evidence/Actor_Batch_20261118c/LienChau/<hướng>/
 
 Mỗi project có 12 lớp gồm thân, bia thử, năm đốm và năm mũi tên. Chọn lớp tương ứng để chỉnh điểm neo, vị trí, góc, độ hiển thị và thứ tự vẽ. Có thể đổi thời lượng từng đoạn trên timeline để xem tốc độ bay khác. Bia Rễ Nước chỉ giúp đọc hướng bay trên sân kiểm hình.
 
+## Chơi thử tại Bến Mưa
+
+Mở PowerShell tại thư mục dự án và chạy.
+
+```powershell
+& .\ClientGodot\Run_Preview.ps1 -LinhCungPractice
+```
+
+Chọn bia bằng chuột trái, rồi nhấn **3** hoặc bấm ô có năm mũi tên. Hướng ngắm được giữ từ lúc giương cung. Khi bỏ chọn bia bằng chuột phải, Liên Châu bắn theo hướng nhân vật đang nhìn. Ô **1** vẫn bắn Khóa Mạch và ô **2** vẫn chọn đất để đặt Dây Gai.
+
+Trong khu tập, mũi tên bay tối đa 150 px theo tọa độ bản đồ. Mỗi mũi kiểm tra va chạm riêng trên suốt đoạn di chuyển. Một bia nhận tối đa ba hit trong cùng loạt. Mũi chạm vật cản dừng tại đó. HUD báo số hit, số vượt giới hạn và số bị chặn sau khi cả năm mũi đã được xử lý. Có thể thử lại sau khi hoạt ảnh và loạt tên kết thúc.
+
+Cảnh này chạy cục bộ. Sát thương, chi phí 18 MP, hồi chiêu 8 giây và hợp đồng `VOLLEY_PROJECTILE_STATE` còn cần nối với máy chủ.
+
 ## Kiểm hình
 
 Godot Movie Maker ghi đủ tám hướng ghép tại 60 FPS. Bài kiểm đã đọc 1.800 frame từ mười video nguồn và 768 frame từ tám video ghép. Mỗi hướng phát đủ 16 khung thân và mỗi mũi tên phát đủ 16 pha. Bản hướng Bắc đầu tiên có đầu tên lặp trên khung nhả. Bản đã chọn loại phần dư đó, với tóc đuôi ngựa che một phần tay nhả cuối. Các tệp `native_audit.json` và `manual_review.json` ghim kết quả vào nguồn, project và video tương ứng.
@@ -33,4 +47,4 @@ Godot Movie Maker ghi đủ tám hướng ghép tại 60 FPS. Bài kiểm đã �
 3. Chạy Godot Movie Maker ở 60 FPS và 96 frame cho mỗi hướng. Mở `ArtStudio.tscn` với `--studio-project` trỏ tới project tương ứng, `--studio-direction` trùng mã thư mục và thêm `--studio-play --studio-clean-view --studio-trace-layers`. Xuất video thành `preview.mp4` và lưu log thành `preview.godot.log` cạnh project.
 4. Chạy `python Tools/ArtProduction/audit_linh_cung_lien_chau.py` để đối chiếu SHA-256, nhịp nhả, các pha nguồn và bản ghi Studio.
 
-Hợp đồng `VOLLEY_PROJECTILE_STATE`, sát thương, chi phí linh lực, hồi chiêu và giới hạn ba mũi trúng mỗi mục tiêu sẽ được kiểm khi nối gameplay. Bản này bàn giao hoạt ảnh và VFX Liên Châu trong Studio.
+Chạy thêm `Run_Preview.ps1 -LinhCungPractice -Test` để kiểm tra nút HUD, phím 3, đủ tám hướng chơi, nhịp năm lần nhả, giới hạn ba hit và chặn tên bằng vật cản.
