@@ -1,4 +1,4 @@
-# MEDIA-02 — PR #119 Delivery Index (head `648d0d5`)
+# MEDIA-02 — PR #119 Delivery Index (head `f58b9a6`)
 
 Chi tiết đầy đủ từng khối bàn giao của PR #119, chuyển ra khỏi mô tả PR
 khi mô tả cũ (114.929 ký tự tại head `be9ccb8`) chạm trần truyền của connector
@@ -7,11 +7,11 @@ khi mô tả cũ (114.929 ký tự tại head `be9ccb8`) chạm trần truyền 
 
 ## Mốc xác minh
 
-- Head nhánh `muse/media-production-20261104`: `648d0d5aea16284c649ad1ac6fec55d17241fb30`
-- Commit trên nhánh (diff từ merge-base `cf17178`): **367 commit / 2659 file** (đếm bằng diff từ merge-base `cf17178` qua git — đọc mới lượt này ~18:41 JST: commits 367, changed_files 2659, additions 246650, deletions 0; đọc public API của PR lượt này: head_sha `648d0d5`, commits 367, changed_files 2659, additions 246650, deletions 0, mergeable true, mergeable_state clean, body_len 47.708 = body R78 đã đăng live — git và API khớp tuyệt đối; delta `c80ffb8..648d0d5`: 5 path đổi, 286 insertions, 9 deletions)
-- Integration: `f3db6b3` (fetch 2026-11-18 ~18:41 JST, không đổi)
-- Mergeable: **true / clean** tại head `648d0d5` (API đọc 2026-11-18 ~18:41 JST; git và API khớp tuyệt đối). Kiểm chéo `git merge-tree --write-tree` tại head `648d0d5` vs `f3db6b3` exit 0, 0 conflict, tree `134eb199…`.
-- Issue #116: 34 comment, mới nhất ACK `6862732081` (CP5 + M-G CP10 + R2, đăng 2026-11-14 ~04:24 JST); trước đó Gói 39 của Codex `6815238814`, không chỉ đạo mới. (Đọc tươi lượt này qua public API comments endpoint ~18:41 JST: 34 comment, mới nhất ACK `6862732081` (2026-11-13T19:24:48Z), không chỉ đạo mới sau Gói 39.)
+- Head nhánh `muse/media-production-20261104`: `f58b9a63918636146ec1d8bf51bd1462a94e9624`
+- Commit trên nhánh (diff từ merge-base `cf17178`): **369 commit / 2662 file** (đếm bằng diff từ merge-base `cf17178` qua git — đọc mới lượt này ~19:43 JST: commits 369, changed_files 2662, additions 246926, deletions 0; đọc public API của PR lượt này: head_sha `f58b9a6`, commits 369, changed_files 2662, additions 246926, deletions 0, mergeable true, mergeable_state clean, body_len 47.708 = body R78 đã đăng live — git và API khớp tuyệt đối; delta `648d0d5..f58b9a6`: 5 path đổi, 285 insertions, 9 deletions)
+- Integration: `f3db6b3` (fetch 2026-11-18 ~19:43 JST, không đổi)
+- Mergeable: **true / clean** tại head `f58b9a6` (API đọc 2026-11-18 ~19:43 JST; git và API khớp tuyệt đối). Kiểm chéo `git merge-tree --write-tree` tại head `f58b9a6` vs `f3db6b3` exit 0, 0 conflict, tree `c2552bfb…`.
+- Issue #116: 34 comment, mới nhất ACK `6862732081` (CP5 + M-G CP10 + R2, đăng 2026-11-14 ~04:24 JST); trước đó Gói 39 của Codex `6815238814`, không chỉ đạo mới. (Đọc tươi lượt này qua public API comments endpoint ~19:43 JST: 34 comment, mới nhất ACK `6862732081` (2026-11-13T19:24:48Z), không chỉ đạo mới sau Gói 39.)
 - Scope audit toàn nhánh: 1 violation duy nhất là `.gitattributes` — artifact của cách tính diff từ merge-base `cf17178` (chưa có các dòng LF); file này byte-identical với integration, không phải lệch nội dung thật.
 
 ## Tổng quan bàn giao (số thật tại head `e13e3f5`)
@@ -228,6 +228,7 @@ Cột Nội dung = commit chứa asset/tool; cột Báo cáo/Head = commit báo 
 | PR119 BODY RESTRUCTURE R86 | `44c8c34` | `81492b5` | delivery index đã gộp đủ dòng cho R85 (bao phủ tới `4feb993`); body v2 trong repo đã đồng bộ với bản live R78 + đoạn R85; checker PASS 17/17; mô tả PR chưa đăng lại từ bản này — payload `pr119_update_body_v2_r86.json` đã chuẩn bị xong, chưa đăng (live vẫn R78, đọc tươi ~16:41 JST) — bị bản v2 R87 supersede trước khi đăng; không cần ACK riêng cho R86; scope audit block 3 paths / 0 violations, cumulative 2651 paths / 1 known artifact | PASS 17/17 |
 | PR119 BODY RESTRUCTURE R87 | `34e9492` | `c80ffb8` | delivery index đã gộp đủ dòng cho R86 (bao phủ tới `81492b5`); body v2 trong repo đã đồng bộ với bản live R78 + đoạn R86; checker PASS 17/17; mô tả PR chưa đăng lại từ bản này — payload `pr119_update_body_v2_r87.json` đã chuẩn bị xong, chưa đăng (live vẫn R78, đọc tươi ~17:41 JST) — bị bản v2 R88 supersede trước khi đăng; không cần ACK riêng cho R87; scope audit block 3 paths / 0 violations, cumulative 2654 paths / 1 known artifact | PASS 17/17 |
 | PR119 BODY RESTRUCTURE R88 | `744af7e` | `648d0d5` | delivery index đã gộp đủ dòng cho R87 (bao phủ tới `c80ffb8`); body v2 trong repo đã đồng bộ với bản live R78 + đoạn R87; checker PASS 17/17; mô tả PR chưa đăng lại từ bản này — payload `pr119_update_body_v2_r88.json` đã chuẩn bị xong, chưa đăng (live vẫn R78, đọc tươi ~18:41 JST) — bị bản v2 R89 supersede trước khi đăng; không cần ACK riêng cho R88; scope audit block 3 paths / 0 violations, cumulative 2657 paths / 1 known artifact | PASS 17/17 |
+| PR119 BODY RESTRUCTURE R89 | `1423f4c` | `f58b9a6` | delivery index đã gộp đủ dòng cho R88 (bao phủ tới `648d0d5`); body v2 trong repo đã đồng bộ với bản live R78 + đoạn R88; checker PASS 17/17; mô tả PR chưa đăng lại từ bản này — payload `pr119_update_body_v2_r89.json` đã chuẩn bị xong, chưa đăng (live vẫn R78, đọc tươi ~19:43 JST) — bị bản v2 R90 supersede trước khi đăng; không cần ACK riêng cho R89; scope audit block 3 paths / 0 violations, cumulative 2660 paths / 1 known artifact | PASS 17/17 |
 
 ## Ghi chú
 
@@ -319,6 +320,7 @@ Cột Nội dung = commit chứa asset/tool; cột Báo cáo/Head = commit báo 
 - Cập nhật R87 (2026-11-18): index bao phủ tới head `81492b5` (363 commit) — đã gộp 2 commit của R86; 2 commit của chính R87 sẽ gộp vào index ở lần cập nhật tiếp theo (R88).
 - Cập nhật R88 (2026-11-18): index bao phủ tới head `c80ffb8` (365 commit) — đã gộp 2 commit của R87; 2 commit của chính R88 sẽ gộp vào index ở lần cập nhật tiếp theo (R89).
 - Cập nhật R89 (2026-11-18): index bao phủ tới head `648d0d5` (367 commit) — đã gộp 2 commit của R88; 2 commit của chính R89 sẽ gộp vào index ở lần cập nhật tiếp theo (R90).
+- Cập nhật R90 (2026-11-18): index bao phủ tới head `f58b9a6` (369 commit) — đã gộp 2 commit của R89; 2 commit của chính R90 sẽ gộp vào index ở lần cập nhật tiếp theo (R91).
 - Đính chính R37: tiêu đề body v2 ở bản R36 bị thiếu "PR119 BODY RESTRUCTURE R33" (rơi mất khi sửa tay ở commit `386216b` — tiêu đề cũ kết thúc "...R32 + R33 + R34" thành "...R32 + R34 + R35"); R37 khôi phục R33 vào tiêu đề và thêm R36. Nội dung khối R33 (đoạn văn trong body v2 + dòng trong bảng index) không hề mất — chỉ tiêu đề bị thiếu một mục.
 - Cách đếm commit/file: `git rev-list --count cf17178..HEAD` và `git diff --name-only cf17178 HEAD | wc -l` (cách đếm của mọi payload trước). Một commit báo cáo (vòng R) làm head tăng thêm 2 file so với con số 'cumulative' trong chính báo cáo đó (báo cáo md + validation JSON) — luôn dùng head count cho payload. (Đính chính R19: câu cũ ghi 4 file là sai với mẫu vòng R; đã kiểm chứng tại `fad0994`: commit báo cáo thêm đúng 2 file, cumulative 2447 → head 2449.)
 - Trường `base.sha` mà API pull trả về (`f383233…`) là giá trị cũ (merge PR #118), không phải integration hiện tại; integration hiện tại xác minh bằng ls-remote.
