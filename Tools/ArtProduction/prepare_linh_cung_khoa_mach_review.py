@@ -13,6 +13,9 @@ REVIEWED_STANCE_SOURCES = {
     '9f4709597dc78c9f219789661da2cee7aec453e0141c0d093703d7036f031f70': None,  # S v2
     '8ed97d099f2e38d5ae92eefd6b82d224cda73244eafa0bf66c43fb49a28d3929': None,  # N v2
     'aff3783df8358db77376587d2bd40b3b52d1db9ab3997631a1d84dc0d6f8f717': None,  # NE v2
+    '1cc140e0bc6e47971639980e3b87272fcb979b0e6b62ab1576648448546a3d33': None,  # W v1
+    '8d04b0f69645a493a182672e17439b790699629c4fd70fccf3d4f57f88cf593a': None,  # SW v2
+    'f0787066a4312317ef226410a045a034a554829af9089b9f33476f653aa85b06': None,  # NW v2
     # SE v2: the low arrowhead reaches the boot line outside this X window.
     'fa95e7758df232b5ba3f7a70ef030faf9fa99d8b4951458d8e14649001b786d4': (80, 200),
 }

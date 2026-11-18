@@ -1,0 +1,34 @@
+{
+  "batch": "20261118a",
+  "id": "class_linh_cung_skill_01_nw",
+  "version": 1,
+  "expectedSourcePages": 10,
+  "scope": "LINH_CUNG_KHOA_MACH_EIGHT_AUTHORED_FACINGS_AND_TWO_NEW_EFFECTS_REUSING_REVIEWED_TARGET_MARK",
+  "direction": "NW",
+  "seconds": 0.96,
+  "timing": [
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60,
+    60
+  ],
+  "references": [
+    "Art_Source/Actor_Library_20261107/Sheets/class_linh_cung_idle_v2.png",
+    "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_ne_v2_20261118a.png"
+  ],
+  "inputRole": "OWNER_IDLE_IDENTITY_AND_EXISTING_KHOA_MACH_ACTION_REFERENCE",
+  "prompt": "Draw a NEW original 16-pose (4 x 4 sheet, row major) sprite atlas for Linh Cung, matching reference 1 original chibi pixel game identity: olive green tunic, sage shoulder cape, brown boots and bracers, high dark brown ponytail with olive tie, cream fletchings and compact recurved wooden bow. Ref 2 demonstrates timing only, from the opposite facing. Use fixed NORTHWEST back-left three-quarter view, back and cape dominate, show only the edge of the LEFT cheek. No frontal face. Anatomical LEFT arm on the near side grips the bow forward-left, right fingers draw beside far cheek, with natural hair occlusion. The right-shoulder quiver is on the far side. The one arrowhead points UP-LEFT at 40 degrees above horizontal, clearly higher and left of the draw hand. Hold the facing and shot axis throughout. Camera fixed top-down-oblique, same scale and silhouette as the references. Exact phases, all 16 visibly different: 0 and 1 bow low at hip with no arrow, 2–4 raise and nock only one ordinary arrow, 5–7 pull a single taut V bowstring until drawing hand touches cheek, 8 fingers open once and arrow completely gone, 9–11 the draw fingers recoil while bow remains connected to grip, 12–15 lower to low hip-height ready with NO arrow. No per-cell turning. Two arms. Same grip hand, no extra hands, no back-facing or sideways change mid-action, no bow or string clipping. Draw left and right arms with correct different near/far silhouettes, not a mirror of the input. Both planted boot soles and bow remain visible inside each cell. Render 4 columns, 4 rows, clear empty gutters and transparent alpha. No target, magic effects, airborne arrow, floor, checkerboard, labels or decorative marks. Clean pixel clusters, natural shape of outfit, same material colors and top-down rendering.",
+  "state": "READY_FOR_IMAGEGEN"
+}

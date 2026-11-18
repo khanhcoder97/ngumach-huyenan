@@ -1,6 +1,6 @@
 {
   "batch": "20261118a",
-  "nativeAuditSha256": "a0016f9af7301d04de52d3ae0b70175848a376bbf100bc12d602c0ee461b89f9",
+  "nativeAuditSha256": "1736a0b060faeb8be326f27f82d14c2e3e4911caf367d72bd82efe0f64725de3",
   "nativeDirectionMontageSha256": "09f81dbca2de89c8a3ff52e900fa8b27d5190378067f9d4371df0c9ac449c999",
   "facingChecks": [
     {
@@ -37,6 +37,27 @@
       "nativePoseMontageSha256": "ed8407f09d856a46f12875c658f3ac9d29809748eebd9a84cec47387c3b3fa38",
       "nativeShotAuditSha256": "100393d341432e969b76b9159066f0d972473192cf68f41deb65873bc1c5f948",
       "note": "Low ready and return poses restored. The shot still holds a nocked arrow at phase 8, then releases at 9."
+    },
+    {
+      "id": "class_linh_cung_skill_01_w",
+      "sourceSha256": "1cc140e0bc6e47971639980e3b87272fcb979b0e6b62ab1576648448546a3d33",
+      "nativePoseMontageSha256": "98b9aafdce0193e004066cfcf3330d82e61bf491aab6fb3be97184b05c2d8218",
+      "nativeShotAuditSha256": "923ed7708ff26c0c44b1bc4ca56dae5b753ca6c88cc048505cfef9a77f7e29c0",
+      "note": "Distinct left-side poses. Arrow leaves the left bow side on a horizontal trajectory, and the ready pose returns."
+    },
+    {
+      "id": "class_linh_cung_skill_01_sw",
+      "sourceSha256": "8d04b0f69645a493a182672e17439b790699629c4fd70fccf3d4f57f88cf593a",
+      "nativePoseMontageSha256": "07b418e5502b0a96db6a49b0bd787a19ae07592cf227dd3759e14fa2cfe166f9",
+      "nativeShotAuditSha256": "949fac4f073774163471c288653bd94407cdafe445b24a5ea6e363f32f8b2154",
+      "note": "Down-left draw and flight share the same diagonal. The boots stay readable under the low bow."
+    },
+    {
+      "id": "class_linh_cung_skill_01_nw",
+      "sourceSha256": "f0787066a4312317ef226410a045a034a554829af9089b9f33476f653aa85b06",
+      "nativePoseMontageSha256": "97baba736ce85ea00c7a3d041a79faf4351f4b95b561c7cc51fecb1e21f27b2e",
+      "nativeShotAuditSha256": "f3706abdff30d85fa56e6818aa80d21188649cd25ff52f45d39bb1e5184e6c4f",
+      "note": "Repaired bow retains one upper limb and one lower limb through release. Arrow is absent at index 8."
     }
   ],
   "rejectedSourceRevisions": [
@@ -59,8 +80,19 @@
       "id": "class_linh_cung_skill_01_ne",
       "sourceSha256": "dc2020234492a20eb42fd0159983fa01cbfcffca75cdb7f90c9bdf01883f65e2",
       "reason": "Already nocked at ready and no low return."
+    },
+    {
+      "id": "class_linh_cung_skill_01_sw",
+      "sourceSha256": "0f9ac13b077be5b98da240536825c382fa2d99c10def714c4f94a59c822b861e",
+      "reason": "Head faces down-left, but arrow and grip aim down-right."
+    },
+    {
+      "id": "class_linh_cung_skill_01_nw",
+      "sourceSha256": "e552e4a92ab2049e37551b79fc1b9ab45a700466c5868b0bb65aa661da6e51ee",
+      "reason": "Extra top curl attached to bow in recovery and arrow tip visible at phase 8."
     }
   ],
   "catalogueUnchanged": true,
-  "productionApproved": false
+  "productionApproved": false,
+  "nativeWestMontageSha256": "4eaaa3d4da37e76f65c0cca7db4164cf2670804260b9d7899f7571f81f1a2d89"
 }

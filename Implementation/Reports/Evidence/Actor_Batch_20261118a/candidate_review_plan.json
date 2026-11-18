@@ -1,7 +1,7 @@
 {
   "batch": "20261118a",
-  "selected": 7,
-  "expected": 7,
+  "selected": 10,
+  "expected": 10,
   "catalogueUnchanged": true,
   "entries": [
     {
@@ -159,6 +159,81 @@
       "project": "Implementation/Reports/Evidence/Actor_Batch_20261118a/Candidate_Studio/class_linh_cung_skill_01_ne/project.json",
       "source": "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_ne_v2_20261118a.png",
       "sourceSha256": "aff3783df8358db77376587d2bd40b3b52d1db9ab3997631a1d84dc0d6f8f717",
+      "timing": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "loop": false
+    },
+    {
+      "id": "class_linh_cung_skill_01_w",
+      "project": "Implementation/Reports/Evidence/Actor_Batch_20261118a/Candidate_Studio/class_linh_cung_skill_01_w/project.json",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_w_v1_20261118a.png",
+      "sourceSha256": "1cc140e0bc6e47971639980e3b87272fcb979b0e6b62ab1576648448546a3d33",
+      "timing": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "loop": false
+    },
+    {
+      "id": "class_linh_cung_skill_01_sw",
+      "project": "Implementation/Reports/Evidence/Actor_Batch_20261118a/Candidate_Studio/class_linh_cung_skill_01_sw/project.json",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_sw_v2_20261118a.png",
+      "sourceSha256": "8d04b0f69645a493a182672e17439b790699629c4fd70fccf3d4f57f88cf593a",
+      "timing": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "loop": false
+    },
+    {
+      "id": "class_linh_cung_skill_01_nw",
+      "project": "Implementation/Reports/Evidence/Actor_Batch_20261118a/Candidate_Studio/class_linh_cung_skill_01_nw/project.json",
+      "source": "Art_Source/Actor_Library_20261107/Candidates_20261118a/class_linh_cung_skill_01_nw_v2_20261118a.png",
+      "sourceSha256": "f0787066a4312317ef226410a045a034a554829af9089b9f33476f653aa85b06",
       "timing": [
         60,
         60,

@@ -122,7 +122,8 @@ def audit(ffmpeg, facing):
                                        if view['id'] in (ARROW, TAIL, 'class_linh_cung_skill_01_' + facing.lower())])
         print(f'Checked {facing} shot and its native source captures.')
         return
-    assert len(source_views) == 7
+    # One east body, every other authored facing, and two new effect sources.
+    assert len(source_views) == len(FACING_LAYOUTS) + 3
     # The already reviewed E pilot keeps its original proof and pin.
     east = read(BUNDLE / 'native_audit.json')
     assert east['movieSha256'] == sha(BUNDLE / 'preview.mp4')

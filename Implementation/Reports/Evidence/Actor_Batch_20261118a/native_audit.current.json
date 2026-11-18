@@ -72,6 +72,33 @@
       "montageSha256": "ed8407f09d856a46f12875c658f3ac9d29809748eebd9a84cec47387c3b3fa38",
       "decodedFrames": 180,
       "sourcePosesObserved": 16
+    },
+    {
+      "id": "class_linh_cung_skill_01_w",
+      "projectSha256": "f4ed39baf3f1aa60e073995d8687c44fa3ae487c36743e7d1dffdb5103a5833c",
+      "sourceSha256": "1cc140e0bc6e47971639980e3b87272fcb979b0e6b62ab1576648448546a3d33",
+      "movieSha256": "68cb0f8d901502f7a8e2a2f024e4b1c3c4a4726d36eb99fe79888863a208ab28",
+      "montageSha256": "98b9aafdce0193e004066cfcf3330d82e61bf491aab6fb3be97184b05c2d8218",
+      "decodedFrames": 180,
+      "sourcePosesObserved": 16
+    },
+    {
+      "id": "class_linh_cung_skill_01_sw",
+      "projectSha256": "b95ebcb9cb09f6a01fc43f1fe82969bef3cb8c7a2176dc3e85d51a0b21c47519",
+      "sourceSha256": "8d04b0f69645a493a182672e17439b790699629c4fd70fccf3d4f57f88cf593a",
+      "movieSha256": "4d7b2234149d09792f9e08cf2542952b0a746b1559b674d6cc74a1782c84514d",
+      "montageSha256": "07b418e5502b0a96db6a49b0bd787a19ae07592cf227dd3759e14fa2cfe166f9",
+      "decodedFrames": 180,
+      "sourcePosesObserved": 16
+    },
+    {
+      "id": "class_linh_cung_skill_01_nw",
+      "projectSha256": "8a0d6d9c28665a32027470c901cd5b9061f5cff9f3871a018758636ec1cb1c8b",
+      "sourceSha256": "f0787066a4312317ef226410a045a034a554829af9089b9f33476f653aa85b06",
+      "movieSha256": "c4305db306f842e8e64592b376b39a98ceca2c25bc8873731aa4f5ccaf77cfa3",
+      "montageSha256": "97baba736ce85ea00c7a3d041a79faf4351f4b95b561c7cc51fecb1e21f27b2e",
+      "decodedFrames": 180,
+      "sourcePosesObserved": 16
     }
   ],
   "previewFacings": [
@@ -79,16 +106,22 @@
     "S",
     "SE",
     "N",
-    "NE"
+    "NE",
+    "W",
+    "SW",
+    "NW"
   ],
   "previewAudits": {
     "E": "f87e6a5831f55885503c85721ff04ae16b24ace35a7a9d5b4235c2f6bd3ba058",
     "S": "f0dc8951da2dbd50e531a6d1c8954084e1763a45240f251ac95e4d249ae16af3",
     "SE": "01cffe67459bac7bd203bbbcb91c5aaa988267d08bab843cf39919473354d064",
     "N": "352c229035a6399f61c9766471cce993d3e32f8da362e018bb11b71380d66bf5",
-    "NE": "100393d341432e969b76b9159066f0d972473192cf68f41deb65873bc1c5f948"
+    "NE": "100393d341432e969b76b9159066f0d972473192cf68f41deb65873bc1c5f948",
+    "W": "923ed7708ff26c0c44b1bc4ca56dae5b753ca6c88cc048505cfef9a77f7e29c0",
+    "SW": "949fac4f073774163471c288653bd94407cdafe445b24a5ea6e363f32f8b2154",
+    "NW": "f3706abdff30d85fa56e6818aa80d21188649cd25ff52f45d39bb1e5184e6c4f"
   },
-  "sourceFramesDecoded": 1260,
-  "previewFramesDecoded": 600,
+  "sourceFramesDecoded": 1800,
+  "previewFramesDecoded": 960,
   "productionApproved": false
 }

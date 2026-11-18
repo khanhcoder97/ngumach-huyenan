@@ -1,0 +1,64 @@
+{
+  "projectSha256": "786840a13b29fb51b10accfff317bf23ca2d253487540ba6cca7bd44ce5ba656",
+  "sourceViews": [
+    {
+      "id": "sk_lc_01_projectile_component",
+      "projectSha256": "047d4f2b956cbcba3e603e8d0b209ce50b42794b2f6c7bb9cc3a5a23a3e36acd",
+      "sourceSha256": "d072a37c3503ae6a0af7e24f9642a2c6e8e8a717fd8d91ada12ac69e784bc852",
+      "movieSha256": "dc5025839d14d39bb2b6dfc75aacc3026c0b5faa1a5734edfed66c4804b67188",
+      "montageSha256": "8ff358d7b7bf27feb0eaf76c2b3fc0df0b402bd0422369d0ff68961135635dc6",
+      "decodedFrames": 180,
+      "sourcePosesObserved": 16,
+      "loopWrap": {
+        "nativeFrames": [
+          43,
+          46,
+          49,
+          52
+        ],
+        "montage": "raw_sk_lc_01_projectile_component_loop_wrap.png",
+        "sha256": "b2930e96f6f3fe1c3dd3515791dc696e479d8c6c7da43df144cfddde0350e46c"
+      }
+    },
+    {
+      "id": "sk_lc_01_leaf_dissipate_component",
+      "projectSha256": "f40f762f13cbf278f1389522497f6f817adcf9f9ad122c960704a3df2bddee07",
+      "sourceSha256": "ba3f1c6d9ffdb81c4e8c0490dcaccb26d7e0136aff7d886eeb3b80774e51b97b",
+      "movieSha256": "2a2583ccf6884b0092fe547e97963fe97589f124fc055f02d02e47147904f6c3",
+      "montageSha256": "5c8fb2f0a74141a5116acebf0ec94234eeaaaef7ac44d2166052db732b7c0ee6",
+      "decodedFrames": 180,
+      "sourcePosesObserved": 16
+    },
+    {
+      "id": "class_linh_cung_skill_01_w",
+      "projectSha256": "f4ed39baf3f1aa60e073995d8687c44fa3ae487c36743e7d1dffdb5103a5833c",
+      "sourceSha256": "1cc140e0bc6e47971639980e3b87272fcb979b0e6b62ab1576648448546a3d33",
+      "movieSha256": "68cb0f8d901502f7a8e2a2f024e4b1c3c4a4726d36eb99fe79888863a208ab28",
+      "montageSha256": "98b9aafdce0193e004066cfcf3330d82e61bf491aab6fb3be97184b05c2d8218",
+      "decodedFrames": 180,
+      "sourcePosesObserved": 16
+    }
+  ],
+  "movieSha256": "b047457ac47df997b1076048b4821004ebfa5079be3c9c1e86ccc5abd2f43058",
+  "logSha256": "fef8d55ec7cfd738f9771cd8500b908830b5777ea1f2939e957b1918a612d045",
+  "montageSha256": "25a4a67bcbb17b9adc7548c876b51addcea1874b2540391d5a9b4bbe52b98409",
+  "framesDecoded": 120,
+  "reviewFrames": [
+    1,
+    26,
+    29,
+    39,
+    47,
+    48,
+    62,
+    103
+  ],
+  "sourcePhasesPerLayer": {
+    "class_linh_cung_skill_01_w": 16,
+    "mob_waterroot_idle_s": 16,
+    "sk_lc_01_projectile_component": 16,
+    "sk_lc_01_leaf_dissipate_component": 16,
+    "sk_lc_01_mark_component": 16
+  },
+  "productionApproved": false
+}
